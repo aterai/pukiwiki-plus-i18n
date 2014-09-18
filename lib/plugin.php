@@ -29,7 +29,7 @@ function get_plugin_option($args, &$params, $tolower=TRUE, $separator=':')
 	$keys = array_keys($params);
 
 	foreach($args as $val) {
-		list($_key, $_val) = array_pad(split($separator, $val, 2), 2, TRUE);
+		list($_key, $_val) = array_pad(explode($separator, $val, 2), 2, TRUE);
 		if ($tolower === TRUE) $_key = strtolower($_key);
 		$_key = trim($_key);
 		if (is_string($_val)) $_val = trim($_val);

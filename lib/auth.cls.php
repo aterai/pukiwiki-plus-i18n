@@ -26,7 +26,7 @@ class auth
 	 * 認証者名を取得
 	 * @static
 	 */
-	function check_auth()
+	public static function check_auth()
 	{
 		$login = auth::check_auth_pw();
 		if (! empty($login)) return $login;
@@ -41,7 +41,7 @@ class auth
 		return $auth_key['nick'];
 	}
 
-	function check_auth_pw()
+	public static function check_auth_pw()
 	{
 		global $auth_type;
 
@@ -62,7 +62,7 @@ class auth
 		return $login;
 	}
 
-	function check_auth_basic()
+	public static function check_auth_basic()
 	{
 		global $auth_users;
 
@@ -104,7 +104,7 @@ class auth
 		return (pkwk_hash_compute($pass,$auth_users[$user][0]) === $auth_users[$user][0]) ? $user : '';
         }
 
-	function check_auth_digest()
+	public static function check_auth_digest()
 	{
 		global $auth_users;
 
@@ -114,7 +114,7 @@ class auth
 		return '';
         }
 
-	function get_user_info()
+	public static function get_user_info()
 	{
 		// Array ( [role] => 0 [nick] => [key] => [group] => [displayname] => [api] => )
 		$retval = auth::get_auth_pw_info();
@@ -124,7 +124,7 @@ class auth
 		return auth::get_auth_api_info();
 	}
 
-	function get_auth_pw_info()
+	public static function get_auth_pw_info()
 	{
 		global $auth_users, $defaultpage;
 		$retval = array('role'=>ROLE_GUEST,'nick'=>'','key'=>'','api'=>'','group'=>'','displayname'=>'','home'=>'','mypage'=>'');
@@ -149,7 +149,7 @@ class auth
 		return $retval;
 	}
 
-	function get_auth_api_info()
+	public static function get_auth_api_info()
 	{
 		global $auth_api, $auth_wkgrp_user, $defaultpage;
 
@@ -190,7 +190,7 @@ class auth
 		return array('role'=>ROLE_GUEST,'nick'=>'','key'=>'','group'=>'','displayname'=>'','home'=>'','mypage'=>'','api'=>'');
 	}
 
-	function get_user_name()
+	public static function get_user_name()
 	{
 		$auth_key = auth::get_user_info();
 		if (empty($auth_key['nick'])) return $auth_key;
@@ -204,7 +204,7 @@ class auth
 	 * ユーザのROLEを取得
 	 * @static
 	 */
-	function get_role_level()
+	public static function get_role_level()
 	{
 		$info = auth::get_user_info();
 		return $info['role'];
@@ -214,7 +214,7 @@ class auth
 	 * 指定されるROLEに属するユーザを列挙
 	 * @static
 	 */
-	function get_user_list($role)
+	public static function get_user_list($role)
 	{
 		global $auth_users;
 		$rc = array();
@@ -240,7 +240,7 @@ class auth
 	 * @return bool
 	 * @static
 	 */
-	function is_temp_admin()
+	public static function is_temp_admin()
 	{
 		global $adminpass;
 		// 管理者パスワードなのかどうか？
@@ -257,7 +257,7 @@ class auth
 	 * @return bool
 	 * @static
 	 */
-	function check_role($func='')
+	public static function check_role($func='')
 	{
 		global $adminpass;
 
@@ -319,7 +319,7 @@ class auth
 		return auth::is_check_role($chk_role);
 	}
 
-	function is_check_role($chk_role)
+	public static function is_check_role($chk_role)
 	{
 		static $now_role;
 		if ($chk_role == ROLE_GUEST) return FALSE;      // 機能無効
@@ -335,7 +335,7 @@ class auth
 	 * NTLM, Negotiate 認証 (IIS 4.0/5.0)
 	 * @static
 	 */
-	function auth_ntlm()
+	public static function auth_ntlm()
 	{
 		if($_SERVER['HTTP_AUTHORIZATION'] == NULL){
 			header( "HTTP/1.0 401 Unauthorized" );
@@ -385,7 +385,7 @@ class auth
 	 * HTTP_AUTHORIZATION の解読
 	 * @static
 	 */
-	function ntlm_decode()
+	public static function ntlm_decode()
 	{
 		$rc = array('','','','');
 		if (!function_exists('base64_decode')) return $rc;
@@ -427,7 +427,7 @@ class auth
 	 * 認証 (PukiWikiの設定に準ずる)
 	 * @static
 	 */
-	function auth_pw($auth_users)
+	public static function auth_pw($auth_users)
 	{
 		$user = '';
 		foreach (array('PHP_AUTH_USER', 'AUTH_USER') as $x) {
@@ -465,7 +465,7 @@ class auth
 		return true;
 	}
 
-	function auth_digest($auth_users)
+	public static function auth_digest($auth_users)
 	{
 		if (! isset($_SERVER['PHP_AUTH_DIGEST']) || empty($_SERVER['PHP_AUTH_DIGEST'])) return false;
 		$data = auth::http_digest_parse($_SERVER['PHP_AUTH_DIGEST']);
@@ -487,7 +487,7 @@ class auth
 	 * function to parse the http auth header
 	 * @static
 	 */
-	function http_digest_parse($txt)
+	public static function http_digest_parse($txt)
 	{
 		// protect against missing data
 		$needed_parts = array('nonce'=>1, 'nc'=>1, 'cnonce'=>1, 'qop'=>1, 'username'=>1, 'uri'=>1, 'response'=>1);
@@ -510,7 +510,7 @@ class auth
 	 * データの分解
 	 * @static
 	 */
-	function get_data($user,$auth_users)
+	public static function get_data($user,$auth_users)
 	{
 		if (!isset($auth_users[$user])) {
 			// scheme, salt, role
@@ -526,7 +526,7 @@ class auth
 	 * PukiWiki Passwd の分解
 	 * @static
 	 */
-	function passwd_parse($passwd)
+	public static function passwd_parse($passwd)
 	{
 		$regs = array();
 		if (preg_match('/^(\{.+\})(.*)$/', $passwd, $regs)) {
@@ -539,7 +539,7 @@ class auth
 	 * 署名の抽出
 	 * @static
 	 */
-	function get_signature($lines)
+	public static function get_signature($lines)
 	{
 		$patterns = array(
 			"'.*? -- \[\[(.*?)\]\] &new{.*?};'si",	// -- [[xxx]] &new{xxx};
@@ -561,15 +561,15 @@ class auth
 		return '';
 	}
 
-	function is_auth_digest() { return version_compare(phpversion(), '5.1', '>='); }
+	public static function is_auth_digest() { return version_compare(phpversion(), '5.1', '>='); }
 
-	function is_page_readable($page,$uname,$gname='')
+	public static function is_page_readable($page,$uname,$gname='')
 	{
 		global $read_auth, $read_auth_pages;
 		return auth::is_page_auth($page, $read_auth, $read_auth_pages, $uname, $gname);
 	}
 
-	function is_page_editable($page,$uname,$gname='')
+	public static function is_page_editable($page,$uname,$gname='')
 	{
 		global $edit_auth, $edit_auth_pages;
 		global $read_auth, $read_auth_pages;
@@ -577,7 +577,7 @@ class auth
                 return auth::is_page_auth($page, $edit_auth, $edit_auth_pages, $uname, $gname);
 	}
 
-	function is_page_auth($page, $auth_flag, $auth_pages, $uname, $gname='')
+	public static function is_page_auth($page, $auth_flag, $auth_pages, $uname, $gname='')
 	{
 		global $auth_method_type;
 		static $info;
@@ -623,7 +623,7 @@ class auth
 		return false;
 	}
 
-	function get_existpages($dir = DATA_DIR, $ext = '.txt')
+	public static function get_existpages($dir = DATA_DIR, $ext = '.txt')
 	{
 		$rc = array();
 
@@ -651,7 +651,7 @@ class auth
 		return $rc;
 	}
 
-	function is_role_page($lines)
+	public static function is_role_page($lines)
 	{
 		global $check_role;
 		if (! $check_role) return FALSE;
@@ -661,7 +661,7 @@ class auth
 		return TRUE;
 	}
 
-	function des_session_get($session_name)
+	public static function des_session_get($session_name)
 	{
 		global $adminpass;
 
@@ -676,7 +676,7 @@ class auth
 		return '';
 	}
 
-	function des_session_put($session_name,$val)
+	public static function des_session_put($session_name,$val)
 	{
 		global $adminpass;
 
@@ -690,7 +690,7 @@ class auth
 	// See:
 	// Web Services Security: UsernameToken Profile 1.0
 	// http://www.xmlconsortium.org/wg/sec/oasis-200401-wss-username-token-profile-1.0-jp.pdf
-	function wsse_header($uid,$pass)
+	public static function wsse_header($uid,$pass)
 	{
 		$nonce = hex2bin(md5(rand().UTIME));
 		$created = gmdate('Y-m-d\TH:i:s\Z',UTIME);
@@ -698,12 +698,12 @@ class auth
 		return 'UsernameToken Username="'.$uid.'", PasswordDigest="'.$digest.'", Nonce="'.base64_encode($nonce).'", Created="'.$created.'"';
 	}
 
-	function b64_sha1($x)
+	public static function b64_sha1($x)
 	{
 		return base64_encode(hex2bin(sha1($x)));
 	}
 
-	function is_protect_plugin_action($x)
+	public static function is_protect_plugin_action($x)
 	{
 		global $auth_api;
 		static $plugin_list = array('login','redirect');
@@ -721,12 +721,12 @@ class auth
         	return false;
 	}
 
-	function is_protect()
+	public static function is_protect()
 	{
 		return (PLUS_PROTECT_MODE && auth::is_check_role(PLUS_PROTECT_MODE));
 	}
 
-	function user_list()
+	public static function user_list()
 	{
 		global $auth_users, $auth_wkgrp_user, $defaultpage;
 		$rc = array();

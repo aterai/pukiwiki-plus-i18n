@@ -373,7 +373,7 @@ class ElementEx
 		return $this->last = & $obj->last;
 	}
 
-	function canContain($obj)
+	function canContain(& $obj)
 	{
 		return TRUE;
 	}
@@ -504,7 +504,7 @@ class InlineEx extends ElementEx
 		return $this;
 	}
 
-	function canContain($obj)
+	function canContain(& $obj)
 	{
 		return is_a($obj, 'InlineEx');
 	}
@@ -540,7 +540,7 @@ class ParagraphEx extends ElementEx
 		$this->insert(Factory_InlineEx($text));
 	}
 
-	function canContain($obj)
+	function canContain(& $obj)
 	{
 		return is_a($obj, 'InlineEx');
 	}

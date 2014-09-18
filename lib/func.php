@@ -621,7 +621,7 @@ function get_glossary_pattern(& $pages, $min_len = -1)
 {
 	global $WikiName, $autoglossary, $nowikiname;
 
-	$config = &new Config('Glossary');
+	$config = new Config('Glossary');
 	$config->read();
 	$ignorepages      = $config->get('IgnoreList');
 	$forceignorepages = $config->get('ForceIgnoreList');
@@ -657,7 +657,7 @@ function get_autolink_pattern(& $pages, $min_len = -1)
 {
 	global $WikiName, $autolink, $nowikiname;
 
-	$config = &new Config('AutoLink');
+	$config = new Config('AutoLink');
 	$config->read();
 	$ignorepages      = $config->get('IgnoreList');
 	$forceignorepages = $config->get('ForceIgnoreList');
