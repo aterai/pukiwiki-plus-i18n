@@ -41,6 +41,7 @@ $foot_explain = array();	// Footnotes
 $related      = array();	// Related pages
 $head_tags    = array();	// XHTML tags in <head></head>
 $foot_tags    = array();
+$page_tags    = array();
 
 /////////////////////////////////////////////////
 // Require INI_FILE

@@ -94,7 +94,7 @@ $use_local_time = 0;
 // 3) HTTP_USER_AGENT までの見做し判定
 // 4) HTTP_ACCEPT_CHARSET までの見做し判定
 // 5) REMOTE_ADDR までの見做し判定
-$language_considering_setting_level = 2;
+$language_considering_setting_level = 1;
 
 // Please define it when two or more TimeZone such as en_US exists.
 // Please refer to lib/timezone.php for the defined character string.
@@ -154,13 +154,14 @@ defined('THEME_TDIARY_NAME') or define('THEME_TDIARY_NAME','tdiary-theme/');	// 
 /////////////////////////////////////////////////
 // Title of your Wikisite (Name this)
 // Also used as RSS feed's channel name etc
-$page_title = 'PukiWiki Plus!';
+$page_title = 'てんぷらメモ';
 
 // Specify PukiWiki Plus! URI(absoluteURI or relativeURI) (default: auto)
 // 必要であれば、絶対URIまたは相対URIを指定して下さい。
 // 省略時は、絶対URIが自動で設定されます。
 //$script = 'http://example.com/pukiwiki/';
 //$script = './';
+$script = 'http://terai.xrea.jp/';
 
 // Shorten $script: Cut its file name (default: not cut)
 //$script_directory_index = 'index.php';
@@ -179,22 +180,23 @@ $absolute_uri = 1;
 //$script_abs = '';
 
 // Site admin's name (CHANGE THIS)
-$modifier = 'anonymous';
+$modifier = 'aterai';
 
 // Site admin's Web page (CHANGE THIS)
-$modifierlink = get_script_absuri();
+//$modifierlink = get_script_absuri();
 //$modifierlink = dirname($_SCRIPT_NAME);
+$modifierlink = '//terai.xrea.jp/aterai.html';
 
 // Default page name
 $defaultpage  = 'FrontPage';     // Top / Default page
 $whatsnew     = 'RecentChanges'; // Modified page list
-$whatsdeleted = 'RecentDeleted'; // Removeed page list
-$interwiki    = 'InterWikiName'; // Set InterWiki definition here
-$aliaspage    = 'AutoAliasName'; // Set AutoAlias definition here
-$glossarypage = 'Glossary';	 // Set Glossary definition here
-$menubar      = 'MenuBar';       // Menu
-$sidebar      = 'SideBar';       // Side
-$navigation   = 'Navigation';
+$whatsdeleted = ':RecentDeleted'; // Removeed page list
+$interwiki    = ':InterWikiName'; // Set InterWiki definition here
+$aliaspage    = ':AutoAliasName'; // Set AutoAlias definition here
+$glossarypage = ':Glossary';	 // Set Glossary definition here
+$menubar      = ':MenuBar';       // Menu
+$sidebar      = ':SideBar';       // Side
+$navigation   = ':Navigation';
 $headarea     = ':Header';
 $footarea     = ':Footer';
 $protect      = ':login';        // Protect mode
@@ -225,10 +227,10 @@ defined('PLUS_ALLOW_SESSION') or define('PLUS_ALLOW_SESSION', 1);
 defined('PKWK_ALLOW_JAVASCRIPT') or define('PKWK_ALLOW_JAVASCRIPT', 1);
 
 // Javascript Async Library Extenstion
-$ajax = 1;
+$ajax = 0;
 
 // Control of form unloading which you do not intend 
-$ctrl_unload = 1;
+$ctrl_unload = 0;
 
 // LOG
 require_once(add_homedir('config-log.ini.php'));
@@ -316,7 +318,7 @@ $nowikiname = 1;
 
 /////////////////////////////////////////////////
 // Symbol of not exists WikiName/BracketName
-$_symbol_noexists = '?';
+$_symbol_noexists = '？';
 
 /////////////////////////////////////////////////
 // AutoLink feature
@@ -324,7 +326,7 @@ $_symbol_noexists = '?';
 
 // Minimum length of page name
 // Pukiwiki Plus! Recommended "5"
-$autolink = 5; // Bytes, 0 = OFF (try 8)
+$autolink = 0; // Bytes, 0 = OFF (try 8)
 
 /////////////////////////////////////////////////
 // AutoAlias feature
@@ -332,7 +334,7 @@ $autolink = 5; // Bytes, 0 = OFF (try 8)
 
 // Minimum length of alias "from" word
 // Pukiwiki Plus! Recommended "4"
-$autoalias = 4; // Bytes, 0 = OFF (try 8)
+$autoalias = 0; // Bytes, 0 = OFF (try 8)
 
 // Limit loading valid alias pairs in AutoAliasName page
 $autoalias_max_words = 50; // pairs
@@ -349,7 +351,7 @@ $autobasealias_nonlist = '^\:|(^|\/)template$';
 
 // Minimum length of glossary "from" word
 // Pukiwiki Plus! Recommended "2"
-$autoglossary = 2; // NChars, 0 = OFF
+$autoglossary = 0; // NChars, 0 = OFF
 
 // Limit loading valid glossary pairs
 $autoglossary_max_words = 50; // pairs
@@ -361,7 +363,7 @@ $function_freeze = 1;
 /////////////////////////////////////////////////
 // Allow to use 'Do not change timestamp' checkbox
 // (0:Disable, 1:For everyone,  2:Only for the administrator)
-$notimeupdate = 1;
+$notimeupdate = 2;
 
 // Authentication
 require_once(add_homedir('auth.ini.php'));
@@ -431,11 +433,11 @@ $sortable_tracker = 1;
 
 /////////////////////////////////////////////////
 // $whatsnew: Max number of RecentChanges
-$maxshow = 60;
+$maxshow = 6000;
 
 // $whatsdeleted: Max number of RecentDeleted
 // (0 = Disabled)
-$maxshow_deleted = 60;
+$maxshow_deleted = 0;
 
 /////////////////////////////////////////////////
 // Page names can't be edit via PukiWiki
@@ -454,9 +456,9 @@ $time_format = 'H:i:s';
 
 /////////////////////////////////////////////////
 // Max number of RSS feed
-$rss_max = 15;
+$rss_max = 50;
 // Description
-$rss_description = 'PukiWiki Plus! i18n RecentChanges';
+$rss_description = 'てんぷらメモ RecentChanges';
 
 /////////////////////////////////////////////////
 // Backup related settings
@@ -572,7 +574,7 @@ $search_non_list = 1;
 /////////////////////////////////////////////////
 // Template setting
 
-$auto_template_func = 1;
+$auto_template_func = 0;
 $auto_template_rules = array(
 	'((.+)\/([^\/]+))' => '\2/template'
 );

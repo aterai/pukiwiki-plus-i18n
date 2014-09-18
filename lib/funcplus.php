@@ -10,7 +10,7 @@
 defined('FUNC_POSTLOG')   or define('FUNC_POSTLOG', FALSE);
 defined('FUNC_SPAMLOG')   or define('FUNC_SPAMLOG', FALSE);
 defined('FUNC_BLACKLIST') or define('FUNC_BLACKLIST', TRUE);
-defined('FUNC_SPAMREGEX') or define('FUNC_SPAMREGEX', '#(?:cialis|hydrocodone|viagra|levitra|tramadol|xanax|\[/link\]|\[/url\])#i');
+defined('FUNC_SPAMREGEX') or define('FUNC_SPAMREGEX', '#(?:cialis|hydrocodone|viagra|levitra|tramadol|xanax|johnharoldbrowne|happier|\[/link\]|\[/url\])#i');
 defined('FUNC_SPAMCOUNT') or define('FUNC_SPAMCOUNT', 2);
 
 // Session start

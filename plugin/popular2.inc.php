@@ -29,7 +29,7 @@
 
 defined('PLUGIN_POPULAR_DEFAULT') or define('PLUGIN_POPULAR_DEFAULT', 10);
 
-function plugin_popular_convert()
+function plugin_popular2_convert()
 {
 	global $vars;
 //	global $_popular_plugin_frame, $_popular_plugin_today_frame;
@@ -82,7 +82,7 @@ function plugin_popular_convert()
 
 	$counters = array();
 	foreach (auth::get_existpages(COUNTER_DIR, '.count') as $file=>$page) {
-		if (($except != '' && preg_match($except, $page)===1) ||
+		if (preg_match($except, $page) === 0 ||
 		    is_cantedit($page) || check_non_list($page) ||
 		    ! is_page($page))
 			continue;

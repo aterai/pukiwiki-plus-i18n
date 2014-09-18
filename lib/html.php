@@ -21,6 +21,8 @@ function catbody($title, $page, $body)
 	global $trackback, $referer, $javascript;
 	global $newtitle, $newbase, $language, $use_local_time; // Plus! skin extension
 	global $nofollow;
+	global $page_author;
+	global $page_pubdate;
 	global $_LANG, $_LINK, $_IMAGE;
 
 	global $pkwk_dtd;     // XHTML 1.1, XHTML1.0, HTML 4.01 Transitional...
@@ -172,7 +174,7 @@ function catbody($title, $page, $body)
 
 	// 1.3.x compat
 	// Last modification date (UNIX timestamp) of the page
-	$fmt = $is_read ? get_filetime($_page) : 0;
+	// $fmt = $is_read ? get_filetime($_page) : 0;
 
 	// Search words
 	if ($search_word_color && isset($vars['word'])) {
@@ -305,12 +307,12 @@ EOD;
 		$add_notimestamp .= '&nbsp;';
 	}
 	$refpage = isset($vars['refpage']) ? htmlspecialchars($vars['refpage']) : '';
-	$add_assistant = edit_form_assistant();
+	$add_assistant = ''; //edit_form_assistant();
 
 	$body = <<<EOD
 <div id="realview_outer"><div id="realview"></div><br /></div>
-<form action="$script" method="post" id="form">
- <div class="edit_form" onmouseup="pukiwiki_pos()" onkeyup="pukiwiki_pos()">
+<form action="$script" method="post">
+ <div class="edit_form">
 $template
   $addtag
   <input type="hidden" name="cmd"    value="edit" />
@@ -318,7 +320,7 @@ $template
   <input type="hidden" name="digest" value="$s_digest" />
   <input type="hidden" name="ticket" value="$s_ticket" />
   <input type="hidden" name="id"     value="$s_id" />
-  <textarea id="msg" name="msg" rows="$rows" cols="$cols" onselect="pukiwiki_apv(this.form.page.value,this)" onfocus="pukiwiki_apv(this.form.page.value,this)" onkeyup="pukiwiki_apv(this.form.page.value,this)" onmouseup="pukiwiki_apv(this.form.page.value,this)">$s_postdata</textarea>
+  <textarea id="msg" name="msg" rows="$rows" cols="$cols">$s_postdata</textarea>
   <br />
   $add_assistant
   <br />

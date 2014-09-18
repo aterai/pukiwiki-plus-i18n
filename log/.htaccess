@@ -1,2 +1,7 @@
-Order allow,deny
-Deny from all
+AuthUserFile /virtual/aterai/public_html/log/.htpasswd
+AuthGroupFile /dev/null
+AuthName LOG
+AuthType Basic
+<Limit GET POST>
+require valid-user
+</Limit> 

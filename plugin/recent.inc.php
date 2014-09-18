@@ -23,13 +23,16 @@ define('PLUGIN_RECENT_USAGE', '#recent(number-to-show)');
 // Place of the cache of 'RecentChanges'
 define('PLUGIN_RECENT_CACHE', CACHE_DIR . PKWK_MAXSHOW_CACHE);
 
+// RecentChangesViewerのタイトル
+define('PLUGIN_RECENT_TITLE', 'RecentChanges');
+
 function plugin_recent_convert()
 {
 	global $vars, $date_format, $show_passage; // , $_recent_plugin_frame;
 	static $exec_count = 1;
 
 	$_recent_plugin_frame_s = _('recent(%d)');
-	$_recent_plugin_frame   = sprintf('<h5>%s</h5><div>%%s</div>', $_recent_plugin_frame_s);
+	$_recent_plugin_frame   = sprintf('<h3>%s</h3><div>%%s</div>', $_recent_plugin_frame_s);
 
 	$recent_lines = PLUGIN_RECENT_DEFAULT_LINES;
 	if (func_num_args()) {
@@ -61,7 +64,7 @@ function plugin_recent_convert()
 		list($time, $page) = explode("\t", rtrim($line));
 		if (! auth::is_page_readable($page,$auth_key['key'],$auth_key['group'])) continue;
 
-		$_date = get_date($date_format, $time);
+		$_date = date($date_format, $time);
 		if ($date != $_date) {
 			// End of the day
 			if ($date != '') $items .= '</ul>' . "\n";
@@ -87,5 +90,130 @@ function plugin_recent_convert()
 	if ($date != '') $items .= '</ul>' . "\n";
 
 	return sprintf($_recent_plugin_frame, count($lines), $items);
+}
+
+function plugin_recent_action()
+{
+	global $vars;
+//	global $_recent_plugin_header;
+
+	$offset = isset($vars['offset']) ? $vars['offset'] : 0;
+	$lines  = isset($vars['lines'] ) ? $vars['lines']  : PLUGIN_RECENT_DEFAULT_LINES;
+
+	$retval = plugin_recent_getlist($offset,$lines,'');
+	$header = PLUGIN_RECENT_TITLE;
+	$body   = "<div>".$retval['items']."</div>";
+
+	$prev_offset = 0;
+	$prev_lines  = 0;
+	if($offset > 0)
+	{
+		if($offset > $lines)
+		{
+			$prev_offset = $offset - $lines;
+			$prev_lines  = $lines;
+		}
+		else
+		{
+			$prev_offset = 0;
+			$prev_lines  = $offset;
+		}
+	}
+
+	$next_offset = 0;
+	$next_lines  = 0;
+	if($retval['count'] == $lines)
+	{
+		$next_offset = $offset + $lines;
+		$next_lines = $lines;
+	}
+	if($retval['total'] > $lines)
+	{
+		$total_page = ceil($retval['total'] / $lines) + 1;
+		$now_page = ceil($offset / $lines);
+	}
+
+	$prev_link = '';
+	$next_link = '';
+	$page_link = '';
+	$script = get_script_uri();
+	if($prev_lines > 0)
+	{
+		$prev_link = "<a href=\"$script?plugin=recent" . "&amp;offset=$prev_offset&amp;lines=$prev_lines\" >" . "&lt;&lt;Prev</a>";
+	}
+	if($next_lines > 0)
+	{
+		$next_link = "<a href=\"$script?plugin=recent" . "&amp;offset=$next_offset&amp;lines=$next_lines\" >" . "Next&gt;&gt;</a>";
+	}
+	if($total_page > 1)
+	{
+		for( $i=0; $i<$total_page; )
+		{
+			$page_offset = $i * $lines;
+			$page_num = $i + 1;
+			if($i!=$now_page)
+			{
+				$page_link .= "<a href=\"$script?plugin=recent" . "&amp;offset=$page_offset&amp;lines=$lines\">$page_num</a>";
+			}
+			else
+			{
+				$page_link .= "<strong>$page_num</strong>";
+			}
+			$i++;
+			if($i<$total_page)
+			{
+				$page_link .= " / ";
+			}
+		}
+	}
+	$body .= <<<EOD
+<hr class="full_hr" />
+<ul class="navi">
+<li class="navi_left">$prev_link</li>
+<li class="navi_right">$next_link</li>
+<li class="navi_none">$page_link</li>
+</ul>
+EOD;
+
+	return array('msg' => $header, 'body' => $body);
+}
+
+function plugin_recent_getlist($offset, $recent_lines, $varpage)
+{
+	global $date_format;
+
+	// N件(行)を取り出す
+	$recent_pages = file(PLUGIN_RECENT_CACHE);
+	$lines = array_splice($recent_pages, $offset, $recent_lines);
+
+	$date = $items = '';
+	foreach ($lines as $line) {
+		list($time, $page) = explode("\t", rtrim($line));
+		$_date = date($date_format, $time);
+		if ($date != $_date) {
+			if ($date != '') $items .= '</ul>' . "\n";
+
+			$date = $_date;
+			$items .= '<strong>' . $date . '</strong>' . "\n" .
+				'<ul class="recent_list">' . "\n";
+		}
+		$s_page = htmlspecialchars($page);
+		$r_page = rawurlencode($page);
+		$pg_passage = get_pg_passage($page, FALSE);
+		if($page == $varpage) {
+			// No need to link itself, notifies where you just read
+			$items .= ' <li>' . $s_page . '</li>' . "\n";
+		} else {
+			$items .= ' <li>' . make_pagelink($page, '', '', '', FALSE) . "</li>\n";
+		}
+	}
+	if (! empty($lines)) $items .= '</ul>' . "\n";
+
+	$retval = array();
+	$retval['items'] = $items;
+	$retval['count'] = count($lines);
+	$retval['total'] = count($recent_pages);
+
+	return $retval;
 }
 ?>

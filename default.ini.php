@@ -11,20 +11,23 @@
 @include(add_homedir('default.usr.ini.php'));
 /////////////////////////////////////////////////
 // Skin file
-if (isset($_COOKIE['tdiary_theme'])) {
-	defined('TDIARY_THEME') or define('TDIARY_THEME', $_COOKIE['tdiary_theme']);
-}
+// if (isset($_COOKIE['tdiary_theme'])) {
+// 	defined('TDIARY_THEME') or define('TDIARY_THEME', $_COOKIE['tdiary_theme']);
+// }
+//
+// if (defined('TDIARY_THEME')) {
+// 	defined('SKIN_FILE_DEFAULT') or define('SKIN_FILE_DEFAULT', add_skindir('tdiary'));
+// } else {
+// 	if (defined('PLUS_THEME')) {
+// 		defined('SKIN_FILE_DEFAULT') or define('SKIN_FILE_DEFAULT', add_skindir(PLUS_THEME));
+// 	} else {
+// 		defined('SKIN_FILE_DEFAULT') or define('SKIN_FILE_DEFAULT', add_skindir('default'));
+// 	}
+// }
+// $skin_file = (isset($_COOKIE['skin_file'])) ? $_COOKIE['skin_file'] : SKIN_FILE_DEFAULT;
 
-if (defined('TDIARY_THEME')) {
-	defined('SKIN_FILE_DEFAULT') or define('SKIN_FILE_DEFAULT', add_skindir('tdiary'));
-} else {
-	if (defined('PLUS_THEME')) {
-		defined('SKIN_FILE_DEFAULT') or define('SKIN_FILE_DEFAULT', add_skindir(PLUS_THEME));
-	} else {
-		defined('SKIN_FILE_DEFAULT') or define('SKIN_FILE_DEFAULT', add_skindir('default'));
-	}
-}
-$skin_file = (isset($_COOKIE['skin_file'])) ? $_COOKIE['skin_file'] : SKIN_FILE_DEFAULT;
+define('SKIN_FILE_DEFAULT', SKIN_DIR . 'default.skin.php');
+$skin_file = SKIN_FILE_DEFAULT;
 
 /////////////////////////////////////////////////
 // メニューバー/サイドバーを常に表示する(1:する 0:しない)
@@ -44,14 +47,14 @@ $search_word_color = 1;
 
 /////////////////////////////////////////////////
 // 一覧ページに頭文字インデックスをつける(1:つける 0:つけない)
-$list_index = 1;
+$list_index = 0;
 
 /////////////////////////////////////////////////
 // 特殊シンボル
-$_symbol_paraedit = '<img src="'. IMAGE_URI.'plus/paraedit.png" width="9" height="9" alt="Edit" title="Edit" />';
-$_symbol_paraguiedit = '<img src="'. IMAGE_URI.'plus/paraguiedit.png" width="9" height="10" alt="Edit(GUI)" title="Edit(GUI)" />';
-$_symbol_extanchor = '<img src="'.IMAGE_URI.'plus/ext.png" alt="" title="" class="ext" onclick="return open_uri(\'$1\', \'$2\');" />';
-$_symbol_innanchor = '<img src="'.IMAGE_URI.'plus/inn.png" alt="" title="" class="inn" onclick="return open_uri(\'$1\', \'$2\');" />';
+$_symbol_paraedit = ''; //'<img src="'. IMAGE_URI.'plus/paraedit.png" width="9" height="9" alt="Edit" title="Edit" />';
+$_symbol_paraguiedit = ''; //'<img src="'. IMAGE_URI.'plus/paraguiedit.png" width="9" height="10" alt="Edit(GUI)" title="Edit(GUI)" />';
+$_symbol_extanchor = ''; //'<img src="'.IMAGE_URI.'plus/ext.png" alt="" title="" class="ext" onclick="return open_uri(\'$1\', \'$2\');" />';
+$_symbol_innanchor = ''; //'<img src="'.IMAGE_URI.'plus/inn.png" alt="" title="" class="inn" onclick="return open_uri(\'$1\', \'$2\');" />';
 
 /////////////////////////////////////////////////
 // 先頭・最後へジャンプ
@@ -66,7 +69,8 @@ $_ol_left_margin = 0;   // リストと画面左端との間隔(px)
 $_ol_margin = 16;       // リストの階層間の間隔(px)
 $_dl_left_margin = 0;   // リストと画面左端との間隔(px)
 $_dl_margin = 16;        // リストの階層間の間隔(px)
-$_list_pad_str = ' class="list%d" style="padding-left:%dpx;margin-left:%dpx"';
+//$_list_pad_str = ' class="list%d" style="padding-left:%dpx;margin-left:%dpx"';
+$_list_pad_str = ' class="list%d"';
 
 /////////////////////////////////////////////////
 // テキストエリアのカラム数
@@ -82,11 +86,11 @@ $top = $_msg_content_back_to_top;
 
 /////////////////////////////////////////////////
 // 添付ファイルの一覧を常に表示する (負担がかかります)
-$attach_link = 1;
+$attach_link = 0;
 
 /////////////////////////////////////////////////
 // 関連するページのリンク一覧を常に表示する(負担がかかります)
-$related_link = 1;
+$related_link = 0;
 
 // リンク一覧の区切り文字
 $related_str = "\n ";
@@ -96,7 +100,7 @@ $rule_related_str = "</li>\n<li>";
 
 /////////////////////////////////////////////////
 // 水平線のタグ
-$hr = '<hr class="full_hr" />';
+$hr = '<hr />';
 
 /////////////////////////////////////////////////
 // 脚注機能関連
@@ -115,7 +119,7 @@ $note_hr = '<hr class="note_hr" />';
 
 /////////////////////////////////////////////////
 // WikiName,BracketNameに経過時間を付加する
-$show_passage = 1;
+$show_passage = 0;
 
 /////////////////////////////////////////////////
 // リンク表示をコンパクトにする
@@ -125,7 +129,7 @@ $link_compact = 0;
 
 /////////////////////////////////////////////////
 // フェイスマークを使用する
-$usefacemark = 1;
+$usefacemark = 0;
 
 /////////////////////////////////////////////////
 // ユーザ定義ルール
@@ -144,10 +148,13 @@ $line_rules = array(
 	'SIZE\(([^\(\)]*)\):((?:(?!SIZE\([^\)]+\)\:).)*)'	=> '<span class="size$1">$2</span>',
 	'SUP{([^}]*)}' => '<span style="font-size:60%;vertical-align:super;">$1</span>',
 	'SUB{([^}]*)}' => '<span style="font-size:60%;vertical-align:sub;">$1</span>',
+	'KBD{([^}]*)}' => '<kbd>$1</kbd>',
 	'%%%(?!%)((?:(?!%%%).)*)%%%'	=> '<ins>$1</ins>',
 	'%%(?!%)((?:(?!%%).)*)%%'	=> '<del>$1</del>',
 	"'''(?!')((?:(?!''').)*)'''"	=> '<em>$1</em>',
 	"''(?!')((?:(?!'').)*)''"	=> '<strong>$1</strong>',
+	"``(?!`)((?:(?!``).)*)``"	=> '<code>$1</code>',
+	"`(?!`)((?:(?!`).)*)`"	=> '<code>$1</code>',
 );
 
 /////////////////////////////////////////////////

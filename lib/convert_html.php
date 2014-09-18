@@ -727,7 +727,7 @@ class YTable extends Element
 		foreach ($this->elements as $str) {
 			$rows .= "\n" . '<tr class="style_tr">' . $str . '</tr>' . "\n";
 		}
-		$rows = $this->wrap($rows, 'table', ' class="style_table" cellspacing="1" border="0"');
+		$rows = $this->wrap($rows, 'table', ' class="style_table" cellspacing="1"');
 		return $this->wrap($rows, 'div', ' class="ie5"');
 	}
 }

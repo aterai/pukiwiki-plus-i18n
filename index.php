@@ -30,7 +30,7 @@ define('SITE_HOME',	'');
 // define('DATA_HOME',     '../../wiki-data/contents/');
 define('DATA_HOME',	'');
 
-define('ROOT_URI', '');
+define('ROOT_URI', '//terai.xrea.jp/');
 define('WWW_HOME', '');
 
 define('LIB_DIR',	SITE_HOME . 'lib/');

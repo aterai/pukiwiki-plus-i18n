@@ -14,7 +14,7 @@ function plugin_keywords_convert()
 	$args = func_get_args();
 	$contents = array_map("htmlspecialchars", $args);
 
-	$head_tags[] = ' <meta http-equiv="Keywords" content="'.join(',', $contents).'" />';
+	$head_tags[] = '<meta name="keywords" content="'.join(',', $contents).'" />';
 	return '';
 }
 ?>

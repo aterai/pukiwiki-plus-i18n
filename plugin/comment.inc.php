@@ -200,27 +200,69 @@ function plugin_comment_convert()
 		$_SESSION[$keyword] = md5(get_ticket() . $digest);
 	}
 
-	$string = <<<EOD
+	return <<<EOD
 <br />
-$auth_guide
-<form action="$script" method="post">
- <div class="commentform" onmouseup="pukiwiki_pos()" onkeyup="pukiwiki_pos()">
-  <input type="hidden" name="refpage" value="$refpage" />
-  <input type="hidden" name="plugin" value="comment" />
-  <input type="hidden" name="refer"  value="$s_page" />
-  <input type="hidden" name="comment_no" value="$comment_no" />
-  <input type="hidden" name="nodate" value="$nodate" />
-  <input type="hidden" name="above"  value="$above" />
-  <input type="hidden" name="digest" value="$digest" />
-  <input type="hidden" name="ticket" value="$ticket" />
-  $nametags
-  <input type="text"   name="msg" id="_p_comment_comment_{$comment_all_no}" size="$comment_cols" />
-  <input type="submit" name="comment" value="$_btn_comment" />
-  $helptags
- </div>
-</form>
+<div id="disqus_thread" itemprop="comment" itemscope="itemscope" itemtype="http://schema.org/UserComments"></div>
+<script>
+var disqus_shortname = 'javaswingtips';
+(function() {
+var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<br />
+<div class="ad_bar">
+<!-- responsive -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6939179021013694"
+     data-ad-slot="1067574330"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
 EOD;
-
-	return $string;
 }
+// <!-- START: Livefyre Embed -->
+// <div id="livefyre-comments"></div>
+// <script src="//zor.livefyre.com/wjs/v3.0/javascripts/livefyre.js"></script>
+// <script>
+// (function () {
+//     var articleId = fyre.conv.load.makeArticleId(null);
+//     fyre.conv.load({}, [{
+//         el: 'livefyre-comments',
+//         network: "livefyre.com",
+//         siteId: "348441",
+//         articleId: articleId,
+//         signed: false,
+//         collectionMeta: {
+//             articleId: articleId,
+//             url: fyre.conv.load.makeCollectionUrl(),
+//         }
+//     }], function() {});
+// }());
+// </script>
+// <!-- END: Livefyre Embed -->
+// </div>
+// </div> <!-- row -->
+// <br />
+// <div class="row">
+// <div class="ad_bar col-xs-12">
+// <!-- responsive -->
+// <ins class="adsbygoogle"
+//      style="display:block"
+//      data-ad-client="ca-pub-6939179021013694"
+//      data-ad-slot="1067574330"
+//      data-ad-format="auto"></ins>
+// <script>
+// (adsbygoogle = window.adsbygoogle || []).push({});
+// </script>
+// </div>
+// </div> <!-- row -->
+// EOD;
+// }
 ?>

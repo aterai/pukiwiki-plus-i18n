@@ -13,7 +13,7 @@ defined('PLUGIN_TOPICPATH_TOP_DISPLAY') or define('PLUGIN_TOPICPATH_TOP_DISPLAY'
 // Label for $defaultpage
 defined('PLUGIN_TOPICPATH_TOP_LABEL') or define('PLUGIN_TOPICPATH_TOP_LABEL', 'Top');
 // Separetor / of / topic / path
-defined('PLUGIN_TOPICPATH_TOP_SEPARATOR') or define('PLUGIN_TOPICPATH_TOP_SEPARATOR', ' &gt; ');
+defined('PLUGIN_TOPICPATH_TOP_SEPARATOR') or define('PLUGIN_TOPICPATH_TOP_SEPARATOR', ' » ');
 // Show the page itself or not
 defined('PLUGIN_TOPICPATH_THIS_PAGE_DISPLAY') or define('PLUGIN_TOPICPATH_THIS_PAGE_DISPLAY', 1);
 // If PLUGIN_TOPICPATH_THIS_PAGE_DISPLAY, add a link to itself
@@ -66,6 +66,6 @@ function plugin_topicpath_inline()
 	if (PLUGIN_TOPICPATH_TOP_DISPLAY)
 		$topic_path[] = make_pagelink($defaultpage, PLUGIN_TOPICPATH_TOP_LABEL);
 
-	return join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path));
+	return '<span itemprop="breadcrumb">' . join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path)) . '</span>';
 }
 ?>

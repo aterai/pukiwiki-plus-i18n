@@ -366,7 +366,7 @@ function plugin_ref_body($args)
 			$width  = (int)($width  * $params['_%'] / 100);
 			$height = (int)($height * $params['_%'] / 100);
 		}
-		if ($width && $height) $info = 'width="' . $width . '" height="' . $height .'" ';
+		if ($width && $height) $info = 'class="img-responsive" itemprop="image" width="' . $width . '" height="' . $height .'" ';
 	}
 
 	// Check alignment

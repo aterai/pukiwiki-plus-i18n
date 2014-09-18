@@ -9,7 +9,7 @@
 // Authentication Type
 // 1: basic
 // 2: digest
-$auth_type = 1;
+$auth_type = 2;
 
 /////////////////////////////////////////////////
 // Authentication Parameter REALM
@@ -19,7 +19,7 @@ $realm = 'PukiWikiAuth';
 // Admin password for this Wikisite
 
 // CHANGE THIS
-$adminpass = '{x-php-md5}1a1dc91c907325c69271ddf0c944bc72'; // md5('pass')
+$adminpass = '{x-php-md5}75a6e3b52be2e4eb7a2db00914002691'; // md5('pass')
 //$adminpass = '{CRYPT}$1$AR.Gk94x$uCe8fUUGMfxAPH83psCZG/'; // CRYPT 'pass'
 //$adminpass = '{MD5}Gh3JHJBzJcaScd3wyUS8cg==';             // MD5   'pass'
 //$adminpass = '{SMD5}o7lTdtHFJDqxFOVX09C8QnlmYmZnd2Qx';    // SMD5  'pass'
@@ -63,6 +63,7 @@ $edit_auth = 0;
 
 $edit_auth_pages = array(
 	// Regex                   Username or array('user'=>Username,'group'=>Groupname,'role'=>Role),
+	'#.+#'	=> 'aterai',
 	'#Barの公開日記#'	=> 'bar',
 	'#ひきこもるほげ#'	=> 'hoge',
 	'#(ネタバレ|ねたばれ)#'	=> 'foo,bar,hoge',

@@ -34,6 +34,7 @@
  *   foobar/1  - One of child pages, includes one or two '#navi(foobar)'
  *   foobar/2  - One of child pages, includes one or two '#navi(foobar)'
  */
+include_once(PLUGIN_DIR.'topicpath.inc.php');
 
 // Exclusive regex pattern of child pages
 define('PLUGIN_NAVI_EXCLUSIVE_REGEX', '');
@@ -43,10 +44,9 @@ define('PLUGIN_NAVI_EXCLUSIVE_REGEX', '');
 define('PLUGIN_NAVI_LINK_TAGS', FALSE);	// FALSE, TRUE
 
 // ----
-
 function plugin_navi_convert()
 {
-	global $vars, $head_tags;
+	global $vars, $head_tags, $whatsnew;
 //	global $_navi_prev, $_navi_next, $_navi_up, $_navi_home;
 	static $navi = array();
 	$_navi_prev = _('Prev');
@@ -55,6 +55,12 @@ function plugin_navi_convert()
 	$_navi_home = _('Home');
 
 	$current = $vars['page'];
+
+    $_page  = isset($vars['page']) ? $vars['page'] : '';
+    $is_page = (is_pagename($_page) && ! arg_check('backup') && $_page != $whatsnew);
+    $is_read = (arg_check('read') && is_page($_page));
+	$fmt = $is_read ? get_filetime($_page) : 0;
+
 	$reverse = FALSE;
 	if (func_num_args()) {
 		list($home, $reverse) = array_pad(func_get_args(), 2, '');
@@ -123,7 +129,7 @@ function plugin_navi_convert()
 			$navi[$home]['next']  = make_pagelink($next);
 			$navi[$home]['next1'] = make_pagelink($next, $_navi_next);
 		}
-		$navi[$home]['home']  = make_pagelink($home);
+		$navi[$home]['home']  = plugin_topicpath_inline(); //make_pagelink($home);
 		$navi[$home]['home1'] = make_pagelink($home, $_navi_home);
 
 		// Generate <link> tag: start next prev(previous) parent(up)
@@ -165,23 +171,26 @@ function plugin_navi_convert()
 	} else if (! $footer) {
 		// Header
 		$ret = <<<EOD
+<nav>
 <ul class="navi">
  <li class="navi_left">{$navi[$home]['prev1']}</li>
  <li class="navi_right">{$navi[$home]['next1']}</li>
  <li class="navi_none">{$navi[$home]['home']}</li>
 </ul>
-<hr class="full_hr" />
+</nav>
+<hr />
 EOD;
-
 	} else {
 		// Footer
 		$ret = <<<EOD
 <hr class="full_hr" />
+<nav>
 <ul class="navi">
  <li class="navi_left">{$navi[$home]['prev1']}<br />{$navi[$home]['prev']}</li>
  <li class="navi_right">{$navi[$home]['next1']}<br />{$navi[$home]['next']}</li>
  <li class="navi_none">{$navi[$home]['home1']}<br />{$navi[$home]['up']}</li>
 </ul>
+</nav>
 EOD;
 	}
 	return $ret;

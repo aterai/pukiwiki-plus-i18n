@@ -580,9 +580,9 @@ function format_date($val, $paren = FALSE)
 
 	$val += ZONETIME;
 
-        $date = gmdate($date_format, $val) .
-                ' (' . $weeklabels[gmdate('w', $val)] . ') ' .
-                gmdate($time_format, $val);
+        $date = date($date_format, $val) .
+                ' (' . $weeklabels[date('w', $val)] . ') ' .
+                date($time_format, $val);
 
 	return $paren ? '(' . $date . ')' : $date;
 }
@@ -995,10 +995,15 @@ function get_resolve_uri($cmd='', $page='', $path_reference='rel', $query='', $f
 		$page_pref = 'page=';
 	}
 
-        if (! empty($page)) {
-		$ret .= $flag.$page_pref.rawurlencode($page);
-		$flag = '&';
+    if (! empty($page)) {
+		//$ret .= $flag.$page_pref.rawurlencode($page);
+        if ( empty($cmd) && empty($query) ) {
+            $ret .= $page . '.html';
+        } else {
+            $ret .= $flag.$page_pref.rawurlencode($page);
         }
+		$flag = '&';
+    }
 
 	// query
 	if (! empty($query)) {
