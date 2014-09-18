@@ -20,7 +20,7 @@ function convert_html($lines)
 
 	if (! is_array($lines)) $lines = explode("\n", $lines);
 
-	$body = & new Body(++$contents_id);
+	$body = new Body(++$contents_id);
 	$body->parse($lines);
 
 	return $body->toString();
@@ -61,7 +61,7 @@ class Element
 		return $this->last = & $obj->last;
 	}
 
-	function canContain($obj)
+	function canContain(& $obj)
 	{
 		return TRUE;
 	}
@@ -98,20 +98,22 @@ function & Factory_Inline($text)
 {
 	// Check the first letter of the line
 	if (substr($text, 0, 1) == '~') {
-		return new Paragraph(' ' . substr($text, 1));
+		$elm = new Paragraph(' ' . substr($text, 1));
 	} else {
-		return new Inline($text);
+		$elm = new Inline($text);
 	}
+    return $elm;
 }
 
 function & Factory_DList(& $root, $text)
 {
 	$out = explode('|', ltrim($text), 2);
 	if (count($out) < 2) {
-		return Factory_Inline($text);
+		$elm = Factory_Inline($text);
 	} else {
-		return new DList($out);
+		$elm = new DList($out);
 	}
+    return $elm;
 }
 
 // '|'-separated table
@@ -120,7 +122,8 @@ function & Factory_Table(& $root, $text)
 	if (! preg_match('/^\|(.+)\|([hHfFcC]?)$/', $text, $out)) {
 		return Factory_Inline($text);
 	} else {
-		return new Table($out);
+        $table = new Table($out);
+		return $table;
 	}
 }
 
@@ -128,10 +131,11 @@ function & Factory_Table(& $root, $text)
 function & Factory_YTable(& $root, $text)
 {
 	if ($text == ',') {
-		return Factory_Inline($text);
+		$elm = Factory_Inline($text);
 	} else {
-		return new YTable(csv_explode(',', substr($text, 1)));
+		$elm = new YTable(csv_explode(',', substr($text, 1)));
 	}
+    return $elm;
 }
 
 function & Factory_Div(& $root, $text)
@@ -143,7 +147,8 @@ function & Factory_Div(& $root, $text)
 		// Usual code
 		if (preg_match('/^\#([^\(]+)(?:\((.*)\))?/', $text, $matches) &&
 		    exist_plugin_convert($matches[1])) {
-			return new Div($matches);
+            $elm = new Div($matches);
+            return $elm;
 		}
 	} else {
 		// Hack code
@@ -152,15 +157,16 @@ function & Factory_Div(& $root, $text)
 			$len  = strlen($matches[3]);
 			$body = array();
 			if ($len == 0) {
-				return new Div($matches); // Seems legacy block plugin
+				$div = new Div($matches); // Seems legacy block plugin
 			} else if (preg_match('/\{{' . $len . '}\s*\r(.*)\r\}{' . $len . '}/', $text, $body)) { 
 				$matches[2] .= "\r" . $body[1] . "\r";
-				return new Div($matches); // Seems multiline-enabled block plugin
+				$div = new Div($matches); // Seems multiline-enabled block plugin
 			}
+            return $div;
 		}
 	}
-
-	return new Paragraph($text);
+    $para = new Paragraph($text);
+	return $para;
 }
 
 // Inline elements
@@ -179,7 +185,7 @@ class Inline extends Element
 		return $this;
 	}
 
-	function canContain($obj)
+	function canContain(& $obj)
 	{
 		return is_a($obj, 'Inline');
 	}
@@ -192,7 +198,7 @@ class Inline extends Element
 
 	function & toPara($class = '')
 	{
-		$obj = & new Paragraph('', $class);
+		$obj = new Paragraph('', $class);
 		$obj->insert($this);
 		return $obj;
 	}
@@ -215,7 +221,7 @@ class Paragraph extends Element
 		$this->insert(Factory_Inline($text));
 	}
 
-	function canContain($obj)
+	function canContain(& $obj)
 	{
 		return is_a($obj, 'Inline');
 	}
@@ -580,7 +586,7 @@ class Table extends Element
 		$is_template = ($this->type == 'c');
 		$row = array();
 		foreach ($cells as $cell)
-			$row[] = & new TableCell($cell, $is_template);
+			$row[] = new TableCell($cell, $is_template);
 		$this->elements[] = $row;
 	}
 
@@ -769,7 +775,7 @@ class CPre extends Element
 		if (substr($text, 0, 2) === '# ') $text=substr($text,1);
 		$this->elements[] = (!$preformat_ltrim or $text == '' or substr($text, 0, 1) !== ' ') ? $text : substr($text,1);
 	}
-	function canContain(&$obj)
+	function canContain(& $obj)
 	{
 		return is_a($obj, 'CPre');
 	}
@@ -860,7 +866,7 @@ class Body extends Element
 	function Body($id)
 	{
 		$this->id            = $id;
-		$this->contents      = & new Element();
+		$this->contents      = new Element();
 		$this->contents_last = & $this->contents;
 		parent::Element();
 	}

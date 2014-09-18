@@ -109,7 +109,7 @@ function plugin_cvscheck_action()
 
 	$interval = $local_flag = $optional_flag = 0;
 	if ( array_key_exists('param', $vars) ) $param = $vars['param'];
-	foreach ( split(',',$param) as $arg ){
+	foreach ( explode(',',$param) as $arg ){
 		if ( $arg == 'local' ) $local_flag = 1;
 		else if ( preg_match('/^(\d+)([mhd]?)$/',$arg,$match) ) {
 			$interval = $match[1];

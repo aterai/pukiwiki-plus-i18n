@@ -503,9 +503,15 @@ function make_heading(& $str, $strip = TRUE)
 	}
 
 	// Cut footnotes and tags
-	if ($strip === TRUE)
-		$str = strip_htmltag(make_link(preg_replace($NotePattern, '', $str)));
-
+	//if ($strip === TRUE)
+	//	$str = strip_htmltag(make_link(preg_replace($NotePattern, '', $str)));
+	if ($strip === TRUE) {
+        //$tmp = preg_replace($NotePattern, '', $str);
+        $str = preg_replace_callback($NotePattern, function($matches) {
+            return '';
+        }, $str);
+		$str = strip_htmltag(make_link($str));
+    }
 	return $id;
 }
 
