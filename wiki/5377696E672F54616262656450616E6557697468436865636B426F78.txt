@@ -1,0 +1,81 @@
+TITLE:JTabbedPaneの余白にJCheckBoxを配置
+#tags(JTabbedPane, JCheckBox, Border)
+#author(aterai)
+#pubdate(2006-04-03T01:35:12+09:00)
+* 概要 [#jf5f1d6a]
+`JTabbedPane`の余白に`JCheckBox`を配置して特定のタブの開閉を行います。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUQ8ALIWI/AAAAAAAAAlw/7jfCbNrxWK8/s800/TabbedPaneWithCheckBox.png)
+
+* サンプルコード [#hd0302da]
+#code(link){{
+class TabbedPaneWithCompBorder implements Border, MouseListener, SwingConstants {
+  private final JComponent  dummy = new JPanel();
+  private final JCheckBox   cbox;
+  private final JTabbedPane tab;
+  private Rectangle rect;
+  public TabbedPaneWithCompBorder(JCheckBox cbox, JTabbedPane tab) {
+    this.cbox = cbox;
+    this.tab  = tab;
+    tab.addMouseListener(this);
+    cbox.setFocusPainted(false);
+    cbox.addMouseListener(new MouseAdapter() {
+      @Override public void mouseClicked(MouseEvent me) {
+        JCheckBox cb = (JCheckBox)me.getSource();
+        cb.setSelected(!cb.isSelected());
+      }
+    });
+  }
+  @Override public void paintBorder(Component c, Graphics g, int x, int y, int w, int h) {
+    Dimension size = cbox.getPreferredSize();
+    int xx = tab.getSize().width - size.width;
+    Rectangle lastTab = tab.getUI().getTabBounds(tab, tab.getTabCount()-1);
+    int tabEnd = lastTab.x + lastTab.width;
+    if(xx<tabEnd) xx = tabEnd;
+    rect = new Rectangle(xx, -2, size.width, size.height);
+    SwingUtilities.paintComponent(g, cbox, dummy, rect);
+  }
+  @Override public Insets getBorderInsets(Component c) {
+    return new Insets(0,0,0,0);
+  }
+  @Override public boolean isBorderOpaque() {
+    return true;
+  }
+  private void dispatchEvent(MouseEvent me) {
+    if(rect==null || !rect.contains(me.getX(), me.getY())) return;
+    cbox.setBounds(rect);
+    cbox.dispatchEvent(SwingUtilities.convertMouseEvent(tab,me,cbox));
+  }
+  @Override public void mouseClicked(MouseEvent me)  { dispatchEvent(me); }
+  @Override public void mouseEntered(MouseEvent me)  { dispatchEvent(me); }
+  @Override public void mouseExited(MouseEvent me)   { dispatchEvent(me); }
+  @Override public void mousePressed(MouseEvent me)  { dispatchEvent(me); }
+  @Override public void mouseReleased(MouseEvent me) { dispatchEvent(me); }
+}
+}}
+
+* 解説 [#md0e801a]
+`JTabbedPane`の`Border`に`SwingUtilities.paintComponent`メソッドを使って`JCheckBox`を描画しています。`JCheckBox`が`JTabbedPane`の子になってタブが増えないように、ダミーパネルを中間コンテナに指定しています。
+
+`JTabbedPane`で受け取ったマウスイベントを、`SwingUtilities.convertMouseEvent`メソッドを利用し、チェックボックス用に座標などを変換して送り出しています。
+
+----
+タブとチェックボックスが重ならないように、フレームの最小サイズを設定しています。
+
+#code{{
+frame.setMinimumSize(new Dimension(240, 80));
+}}
+
+----
+他にも、レイアウトマネージャーを利用して同様のことを行う方法があります。
+
+- [https://forums.oracle.com/thread/1389350 Swing - Any layout suggestions for this?]
+-- レイアウトマネージャーを自作するweebibさんの投稿 (reply 1)
+-- `OverlayLayout`を利用するcamickrさんの投稿 (reply 2)
+
+* 参考リンク [#ze3b3f0b]
+- [[JTabbedPaneの余白に文字列を表示>Swing/TabbedPaneWithText]]
+- [[JTabbedPaneの余白にJButtonを配置>Swing/TabbedPaneWithButton]]
+
+* コメント [#n00381b0]
+#comment

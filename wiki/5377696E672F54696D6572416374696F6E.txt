@@ -1,0 +1,51 @@
+TITLE:Timerの使用数を変更
+#tags(Timer, Animation)
+#author(aterai)
+#pubdate(2014-04-14T00:48:39+09:00)
+* 概要 [#sc2aa067]
+パネルのタイルアニメーションで使用する`java.swing.Timer`の数を変更して動作のテストを行います。
+
+#download(https://lh6.googleusercontent.com/-Kc02XwN3fHA/U0qu1BcXNEI/AAAAAAAACDg/UDwGuPoJmjk/s800/TimerAction.png)
+
+* サンプルコード [#xd44e1f4]
+#code(link){{
+//Timer: 1, ActionListener: 100
+class Tile2 extends JComponent {
+  private int red;
+  public Tile2(final Random rnd, Timer timer) {
+    super();
+    timer.addActionListener(new ActionListener() {
+      @Override public void actionPerformed(ActionEvent e) {
+        red = rnd.nextInt(255);
+        repaint();
+      }
+    });
+  }
+  @Override public Dimension getPreferredSize() {
+    return new Dimension(10, 10);
+  }
+  @Override protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    g.setColor(new Color(red, 255 - red, 0));
+    g.fillRect(0, 0, getWidth(), getHeight());
+  }
+}
+}}
+
+* 解説 [#ffd4e6ea]
+- `Timer: 100`
+-- `10x10`個のアニメーション用タイル一つに、`Timer`を生成して使用(その為、`Timer`も`10x10`個存在する)
+-- `JDK 1.7.0_40`以降で低速
+-- `JDK 1.8.0`は、`JDK 1.7.0_25`と同等？
+- `Timer: 1, ActionListener: 100`
+-- `Timer`は`1`個、`Timer#addActionListener(...)`で、`100`個の`ActionListener`を追加して使用
+- `Timer: 1, ActionListener: 1`
+-- `1`個の`Timer`を使用し、`for`ループで`10x10`のラベルの色を変更してアニメーションを実行
+
+* 参考リンク [#xd75a5c0]
+- [http://stackoverflow.com/questions/18933986/javax-swing-timer-slowdown-in-java7u40 java - javax.swing.Timer slowdown in Java7u40 - Stack Overflow]
+-- `JDK 1.7.0_25`までは、どれも同じような速度でアニメーションするが、`JDK 1.7.0_40`以降は`Timer`の数を減らさないと遅くなる？
+-- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7167780 Bug ID: JDK-7167780 Hang javasoft.sqe.tests.api.javax.swing.Timer.Ctor2Tests]の修正が影響している？
+
+* コメント [#t096266b]
+#comment

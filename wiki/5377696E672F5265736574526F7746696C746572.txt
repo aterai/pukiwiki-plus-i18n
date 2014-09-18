@@ -1,0 +1,67 @@
+TITLE:JTableのRowFilterを一旦解除してソート
+#tags(JTable, RowFilter, TableRowSorter)
+#author(aterai)
+#pubdate(2008-11-03T16:35:24+09:00)
+* 概要 [#w1c7ac54]
+`JTable`の`RowFilter`を一旦解除してソートし、再びフィルタを設定することで表示される行を更新します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTRuQZLwOI/AAAAAAAAAho/ovjovr-5nuI/s800/ResetRowFilter.png)
+
+* サンプルコード [#w70af4db]
+#code(link){{
+final RowFilter<TableModel, Integer> filter = new RowFilter<TableModel, Integer>() {
+  @Override public boolean include(Entry<? extends TableModel, ? extends Integer> entry) {
+    int vidx = table.convertRowIndexToView(entry.getIdentifier());
+    return vidx<USER_SPECIFIED_NUMBER_OF_ROWS;
+  }
+};
+final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
+  @Override public void toggleSortOrder(int column) {
+    if(check.isSelected()) {
+      RowFilter<? super TableModel, ? super Integer> f = getRowFilter();
+      setRowFilter(null);
+      super.toggleSortOrder(column);
+      setRowFilter(f);
+    }else{
+      super.toggleSortOrder(column);
+    }
+  }
+};
+table.setRowSorter(sorter);
+sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.DESCENDING)));
+}}
+
+* 解説 [#d46c2258]
+上記のサンプルでは、☑ `viewRowIndex<5`をチェックすると、ソートされていても表示上の`0`から`4`行目までの`5`行のみ表示されるフィルタがかかります。
+
+- `Costom Sorting`チェック無し
+-- ☑ `viewRowIndex<5`のフィルタで`AA-ee`が表示されている場合、`String`列で昇順から降順にソートすると`ee-AA`となる
+
+- `Costom Sorting` チェック有り
+-- ☑ `viewRowIndex<5`のフィルタで`AA-ee`が表示されている場合、`String`列で昇順から降順にソートすると`OO-KK`となる
+--- `toggleSortOrder`メソッドをオーバーライドして、一旦`RowFilter`を解除(`setRowFilter(null)`)してから昇順から降順にソート`OO-KK-AA`、その後再び`RowFilter`を設定するので`OO-KK`が表示される
+
+----
+以下は、`toggleSortOrder`メソッドをオーバーライドし、すべての行が変更されている可能性があることをリスナーに通知してから、もう一度ソートのやり直しを行う方法です。
+
+#code{{
+final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
+  @Override public void toggleSortOrder(int column) {
+    super.toggleSortOrder(column);
+    if(check.isSelected()) {
+      model.fireTableDataChanged();
+      //??? allRowsChanged();
+      //modelRowCount = getModelWrapper().getRowCount();
+      sort();
+    }
+  }
+};
+}}
+
+* 参考リンク [#qb585f6b]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6301297 Specification for the javax.swing.DefaultRowSorter.setSortsOnUpdates/rowsUpdated method is not clear]
+
+* コメント [#y76c22c5]
+- もっと簡単な方法がありそう・・・。 -- [[aterai]] &new{2008-11-03 (月) 16:35:24};
+
+#comment

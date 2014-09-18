@@ -1,0 +1,30 @@
+TITLE:JLabelに設定したニーモニックでフォーカス移動
+#tags(JLabel, JTextField, Mnemonic)
+#author(aterai)
+#pubdate(2012-08-20T15:34:19+09:00)
+* 概要 [#kc4d4813]
+`JLabel`にニーモニックを設定し、これに関連付けした`JTextField`へのフォーカス移動を行います。
+
+#download(https://lh4.googleusercontent.com/-c8oDt2QGtY0/UDHQKTuRMGI/AAAAAAAABRQ/dzH-cDi9lEw/s800/LabelForDisplayedMnemonic.png)
+
+* サンプルコード [#gd5c4817]
+#code(link){{
+JLabel label = new JLabel("Mail Adress: ");
+label.setDisplayedMnemonic('M');
+JTextField textField = new JTextField(12);
+label.setLabelFor(textField);
+}}
+
+* 解説 [#w4f1950f]
+上記のサンプルでは、`JLabel`に`setDisplayedMnemonic(...)`メソッドを使って、ニーモニックを設定し、`setLabelFor(...)`メソッドでニーモニックがアクティブになった時にフォーカス移動の対象となるコンポーネントを指定しています。
+
+----
+- 編集不可の`JComboBox`などで、この方法ではフォーカスが移動しない？
+-- KBD{Tab}キーなどによるフォーカス移動や`JComboBox#requestFocusInWindow()`を実行した場合のようにならない
+-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JLabel.html#setLabelFor(java.awt.Component) JLabel#setLabelFor(Component) (Java Platform SE 6)]
+-- 「ニーモニックがアクティブになったときに、`labelFor`プロパティーで指定されているコンポーネントの`requestFocus`メソッドを呼び出します。」
+- `JTextComponent`などのフォーカスアクセラレータ: [http://docs.oracle.com/javase/jp/6/api/javax/swing/text/JTextComponent.html#setFocusAccelerator(char) JTextComponent#setFocusAccelerator(char) (Java Platform SE 6)]
+
+//**参考リンク
+* コメント [#m3543e30]
+#comment

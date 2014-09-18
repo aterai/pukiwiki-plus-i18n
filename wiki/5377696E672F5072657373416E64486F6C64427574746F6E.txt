@@ -1,0 +1,97 @@
+TITLE:JPopupMenuをボタンの長押しで表示
+#tags(JToolBar, JButton, JPopupMenu, MouseListener, GridLayout, Timer)
+#author(aterai)
+#pubdate(2009-01-26T13:29:29+09:00)
+* 概要 [#m55da14e]
+`JToolBar`に、長押しで`JPopupMenu`、クリックで選択されたメニューを表示するボタンを追加します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRIzHMLNI/AAAAAAAAAgs/0_PwsyZOl-I/s800/PressAndHoldButton.png)
+
+* サンプルコード [#n8b1ddb4]
+#code(link){{
+class PressAndHoldHandler extends AbstractAction implements MouseListener {
+  public final JPopupMenu pop = new JPopupMenu();
+  public final ButtonGroup bg = new ButtonGroup();
+  private AbstractButton arrowButton;
+  private final Timer holdTimer = new Timer(1000, new ActionListener() {
+    @Override public void actionPerformed(ActionEvent e) {
+      System.out.println("InitialDelay(1000)");
+      if (arrowButton != null && arrowButton.getModel().isPressed()
+          && holdTimer.isRunning()) {
+        holdTimer.stop();
+        pop.show(arrowButton, 0, arrowButton.getHeight());
+        pop.requestFocusInWindow();
+      }
+    }
+  });
+  public PressAndHoldHandler() {
+    super();
+    holdTimer.setInitialDelay(1000);
+    pop.setLayout(new GridLayout(0, 3, 5, 5));
+    for (MenuContext m: makeMenuList()) {
+      AbstractButton b = new JRadioButton(m.command);
+      b.setActionCommand(m.command);
+      b.setForeground(m.color);
+      b.setBorder(BorderFactory.createEmptyBorder());
+      b.addActionListener(new ActionListener() {
+        @Override public void actionPerformed(ActionEvent e) {
+          System.out.println(bg.getSelection().getActionCommand());
+          pop.setVisible(false);
+        }
+      });
+      pop.add(b);
+      bg.add(b);
+    }
+  }
+  private List<MenuContext> makeMenuList() {
+    return Arrays.asList(
+      new MenuContext("BLACK",   Color.BLACK),
+      new MenuContext("BLUE",  Color.BLUE),
+      new MenuContext("CYAN",  Color.CYAN),
+      new MenuContext("GREEN",   Color.GREEN),
+      new MenuContext("MAGENTA", Color.MAGENTA),
+      new MenuContext("ORANGE",  Color.ORANGE),
+      new MenuContext("PINK",  Color.PINK),
+      new MenuContext("RED",   Color.RED),
+      new MenuContext("YELLOW",  Color.YELLOW));
+  }
+  @Override public void actionPerformed(ActionEvent e) {
+    System.out.println("actionPerformed");
+    if (holdTimer.isRunning()) {
+      ButtonModel model = bg.getSelection();
+      if (model != null) {
+        System.out.println(model.getActionCommand());
+      }
+      holdTimer.stop();
+    }
+  }
+  @Override public void mousePressed(MouseEvent e) {
+    System.out.println("mousePressed");
+    Component c = e.getComponent();
+    if (SwingUtilities.isLeftMouseButton(e) && c.isEnabled()) {
+      arrowButton = (AbstractButton) c;
+      holdTimer.start();
+    }
+  }
+  @Override public void mouseReleased(MouseEvent e) {
+    holdTimer.stop();
+  }
+  @Override public void mouseExited(MouseEvent e) {
+    if (holdTimer.isRunning()) {
+      holdTimer.stop();
+    }
+  }
+  @Override public void mouseEntered(MouseEvent e) { /* not needed */ }
+  @Override public void mouseClicked(MouseEvent e) { /* not needed */ }
+}
+}}
+
+* 解説 [#m649a122]
+上記のサンプルでは、`1000`ミリ秒ボタンを押したままにしておくと、`JRadioButton`を配置した`JPopupMenu`を表示します。普通にクリックした場合は、現在選択されている`JRadioButton`の色をコンソールに出力するようになっています。
+
+----
+`JPopupMenu`のレイアウトを`pop.setLayout(new GridLayout(0,3));`で変更し、三列に`JRadioButton`を並べています。
+
+//**参考リンク
+* コメント [#b93295c6]
+#comment

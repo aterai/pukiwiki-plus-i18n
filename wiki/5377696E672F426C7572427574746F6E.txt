@@ -1,0 +1,66 @@
+TITLE:ConvolveOpでコンポーネントにぼかしを入れる
+#tags(JButton, ConvolveOp, BufferedImage)
+#author(aterai)
+#pubdate(2013-12-09T00:54:27+09:00)
+* 概要 [#s496b23a]
+`ConvolveOp`を使って、使用不可状態の`JButton`にぼかしを入れます。
+
+#download(https://lh6.googleusercontent.com/-KJB6Hz9n1R0/UqSGnCNV3HI/AAAAAAAAB70/sTyoJce2HZQ/s800/BlurButton.png)
+
+* サンプルコード [#pa5f0d91]
+#code(link){{
+class BlurButton extends JButton {
+  private final ConvolveOp op = new ConvolveOp(
+      new Kernel(3, 3, new float[] {
+    .05f, .05f, .05f,
+    .05f, .60f, .05f,
+    .05f, .05f, .05f
+  }), ConvolveOp.EDGE_NO_OP, null);
+  private int iw = -1;
+  private int ih = -1;
+  private BufferedImage buf;
+  public BlurButton(String label) {
+    super(label);
+    //System.out.println(op.getEdgeCondition());
+  }
+  @Override protected void paintComponent(Graphics g) {
+    if(isEnabled()) {
+      super.paintComponent(g);
+    }else{
+      if(buf==null || iw!=getWidth() || ih!=getHeight()) {
+        iw = getWidth();
+        ih = getHeight();
+        buf = new BufferedImage(iw, ih, BufferedImage.TYPE_INT_ARGB);
+      }
+      Graphics2D g2 = (Graphics2D)buf.getGraphics();
+      super.paintComponent(g2);
+      g2.dispose();
+      g.drawImage(op.filter(buf, null), 0, 0, null);
+    }
+  }
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.width += 3 * 3;
+    return d;
+  }
+}
+}}
+
+* 解説 [#u10c29db]
+- 上
+-- デフォルトの`JButton`
+- 中
+-- `ConvolveOp`を使って、使用不可状態の`JButton`にぼかし
+-- [http://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks 9. 使用不可状態のコンポーネントをぼかし表示する]から引用
+- 下
+-- `WindowsLookAndFeel`の場合、右端`1`ドットの表示が乱れる場合があるので、`EdgeCondition`をデフォルトの`EDGE_ZERO_FILL`から、`EDGE_NO_OP`に変更
+-- `WindowsLookAndFeel`の場合、これらのぼかしを入れると文字が拡大されて？(左右の`Border`が広いから？)、文字列が省略されてしまうので、`JButton#getPreferredSize()`をオーバーライドして幅を拡大
+
+* 参考リンク [#pbb0935e]
+- [http://docs.oracle.com/javase/jp/7/api/java/awt/image/ConvolveOp.html ConvolveOp (Java Platform SE 7)]
+- [http://docs.oracle.com/javase/jp/1.4/guide/2d/spec/j2d-image.fm8.html 5.8.1 イメージ処理操作の使用方法]
+- [http://www.jhlabs.com/ip/blurring.html Java Image Processing - Blurring for Beginners]
+- [http://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks 9. 使用不可状態のコンポーネントをぼかし表示する]
+
+* コメント [#n46593bb]
+#comment

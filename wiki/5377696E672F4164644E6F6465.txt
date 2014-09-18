@@ -1,0 +1,82 @@
+TITLE:JTreeのノード追加、削除
+#tags(JTree, JPopupMenu, TreeNode, TreeModel)
+#author(aterai)
+#pubdate(2011-05-02T16:45:24+09:00)
+* 概要 [#y57e98ab]
+`JTree`にノードを追加、削除します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/Tb5bkDzXJHI/AAAAAAAAA6c/qxz0Vzwy4Ts/s800/AddNode.png)
+
+* サンプルコード [#l888db92]
+#code(link){{
+class TreePopupMenu extends JPopupMenu {
+  private TreePath path;
+  public TreePopupMenu() {
+    super();
+    add(new AbstractAction("add") {
+      @Override public void actionPerformed(ActionEvent e) {
+        JTree tree = (JTree)getInvoker();
+        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        DefaultMutableTreeNode parent =
+          (DefaultMutableTreeNode)path.getLastPathComponent();
+        DefaultMutableTreeNode child  = new DefaultMutableTreeNode("New");
+        model.insertNodeInto(child, parent, parent.getChildCount());
+        //parent.add(child);
+        //model.reload(); //= model.nodeStructureChanged(parent);
+        tree.expandPath(path);
+      }
+    });
+    add(new AbstractAction("remove") {
+      @Override public void actionPerformed(ActionEvent e) {
+        JTree tree = (JTree)getInvoker();
+        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        DefaultMutableTreeNode node =
+          (DefaultMutableTreeNode)path.getLastPathComponent();
+        //if(path.getParentPath()!=null) {
+        if(!node.isRoot()) {
+          model.removeNodeFromParent(node);
+        }
+      }
+    });
+  }
+  @Override public void show(Component c, int x, int y) {
+    JTree tree = (JTree)c;
+    TreePath[] tsp = tree.getSelectionPaths();
+    if(tsp!=null) {
+      path = tree.getPathForLocation(x, y);
+      if(path!=null && Arrays.asList(tsp).contains(path)) {
+        super.show(c, x, y);
+      }
+    }
+  }
+}
+}}
+
+* 解説 [#f470d783]
+上記のサンプルでは、`JPopupMenu`を使って、選択したノードに子ノードの追加、削除、名前変更ができます。
+
+- 追加
+-- `DefaultTreeModel#insertNodeInto(...)`メソッドを使用して、ノードを追加
+- 追加とリロード
+-- `DefaultMutableTreeNode#add(DefaultMutableTreeNode)`メソッドを使ってノードを追加し、`DefaultTreeModel#reload(...)`、または`DefaultTreeModel#nodeStructureChanged(DefaultMutableTreeNode)`で更新を通知
+--- 兄弟ノードの展開状態などがリセットされてしまう
+- 削除
+-- ルートノードでない場合(`DefaultMutableTreeNode#isRoot()`が`false`)、`DefaultTreeModel#removeNodeFromParent(DefaultMutableTreeNode)`で削除
+- 名前変更
+-- [[JTreeのノード編集をPopupからのみに制限する>Swing/StartEditingPopupMenu]]と同じ
+
+#code{{
+model.valueForPathChanged(path, str);
+//もしくは、
+//leaf.setUserObject(str);
+//model.nodeChanged(leaf);
+}}
+
+* 参考リンク [#gb30e7d7]
+- [[JTreeのノード上でJPopupMenuを表示 >Swing/TreeNodePopupMenu]]
+- [[JTreeのノード編集をPopupからのみに制限する>Swing/StartEditingPopupMenu]]
+
+* コメント [#ad4d46ba]
+- ソースなどのリンク切れを修正。 -- [[aterai]] &new{2011-05-06 (金) 18:46:23};
+
+#comment

@@ -1,0 +1,52 @@
+TITLE:JavaDocをサイト内検索(JavaDocを除外して検索)
+#author(aterai)
+#pubdate(2012-08-02)
+//[http://d.hatena.ne.jp/aterai/20071129 2007-11-29 - てんぷらメモ@はてな]から、こちらに移動
+
+#contents(big)
+
+* 概要 [#y91bc55a]
+- 検索エンジンで`Java`関係の単語を普通に検索すると、`JDK1.4`などの古いバージョンの`JavaDoc`が上位にきて鬱陶しい
+- 例えば、`google`で、`Java 6`の日本語`API`ドキュメントだけを検索する場合は、以下のように`site`制約を使用する
+
+ 常に前面 site:docs.oracle.com/javase/jp/6/api/
+
+* コード [#da070a01]
+#code{{
+(function(){
+    var p=window.prompt("google",""),
+        g="http://www.google.com/search?q=site:docs.oracle.com/javase/jp/6/api/+";
+    if(p!=null){
+        g+=encodeURIComponent(p)
+    };
+    location.href=g;
+}());
+}}
+
+- オプションを付けるのが面倒なので、ブックマークレットなどを登録
+#code{{
+javascript:(function(){var p=window.prompt("google",""),g="http://www.google.com/search?q=site:docs.oracle.com/javase/jp/6/api/+";if(p!=null){g+=encodeURIComponent(p)};location.href=g;})();
+}}
+
+* JavaDoc以外から検索 [#h9f11fe1]
+- 反対に、`JavaDoc`以外から検索したい場合は、`site`制約にマイナスを付けて検索
+
+ java JFrame -site:java.sun.com
+
+- 上記の場合、`sdc.sun.co.jp`などが引っ掛かるので、以下は代わりに`inurl`制約を使う方法
+-- `url`に`docs`や`api`が含まれる場合を除いて`java JFrame`を検索
+
+ java JFrame -inurl:(docs|api)
+
+ javascript:(function(){var p=window.prompt("google",""),g="http://www.google.com/search?q=-inurl:(docs|api)+";if(p!=null){g+=encodeURIComponent(p)};location.href=g;})();
+
+* 参考リンク [#q4f5a0a3]
+- [http://www.ayati.com/kobako/bkmklt.htm Bookmarklets for W21CAII]
+- [http://d.hatena.ne.jp/bleis-tift/20071129/1196340448 Sleipnirの検索バーをカスタマイズ - 予定は未定Blog版]
+-- こちらはブックマークレットではなく、ブラウザの検索に追加する方法。`Opera`でも検索ボックスを右クリックして、「検索の作成」で、同様のことが可能。
+
+* コメント [#g2848c12]
+- %%現状、`java.sun.com`で、`1.6.0`を検索している。`1.7.0`、`oracle`ではまだ駄目？%% -- [[aterai]] &new{2012-08-02 (木) 17:44:08};
+- `docs.oracle.com/javase/jp/6/api/`に変更。 -- [[aterai]] &new{2012-10-04 (木) 21:46:24};
+
+#comment

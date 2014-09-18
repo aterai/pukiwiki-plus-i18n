@@ -1,0 +1,33 @@
+TITLE:JSpinnerのモデルの値をループさせる
+#tags(JSpinner, SpinnerNumberModel)
+#author(aterai)
+#pubdate(2010-02-01T01:53:39+09:00)
+* 概要 [#g1e8aa14]
+`JSpinner`のモデルで値が最大、最小を超えるとループするように設定します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKYcCKxAI/AAAAAAAAAV4/T8OdovAF6EY/s800/CyclingSpinnerModel.png)
+
+* サンプルコード [#ld341dbc]
+#code(link){{
+spinner.setModel(new SpinnerNumberModel(20, 0, 59, 1) {
+  @Override public Object getNextValue() {
+    Object n = super.getNextValue();
+    if(n==null) n = getMinimum();
+    return n;
+  }
+  @Override public Object getPreviousValue() {
+    Object n = super.getPreviousValue();
+    if(n==null) n = getMaximum();
+    return n;
+  }
+});
+}}
+
+* 解説 [#m44dfbfa]
+上記のサンプルでは、各モデルの`getNextValue`、`getPreviousValue`メソッドをオーバーライドすることでループするように設定しています。
+
+* 参考リンク [#w63c8b19]
+- [http://docs.oracle.com/javase/tutorial/uiswing/components/spinner.html#model Creating Custom Spinner Models and Editors]
+
+* コメント [#d1f3740f]
+#comment

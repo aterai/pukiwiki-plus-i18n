@@ -1,0 +1,29 @@
+TITLE:JFrameのIconを変更
+#tags(JFrame, Icon, Image)
+#author(aterai)
+#pubdate(2004-08-30T05:11:06+09:00)
+* 概要 [#ld8b9d90]
+`JFrame`のタイトルバー左に表示されているアイコンを別の画像に変更します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTNO_p95yI/AAAAAAAAAac/gl0vOOoKH14/s800/FrameIcon.png)
+
+* サンプルコード [#v02c3fee]
+#code(link){{
+MainPanel panel = new MainPanel();
+URL url = panel.getClass().getResource("16x16.png");
+JFrame frame = new JFrame();
+frame.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
+}}
+
+* 解説 [#y6aff739]
+`JFrame#setIconImage`メソッドでアイコンを設定しています。
+
+サンプルでは[http://www.gimp.org/ GIMP]を使って作成した`16x16`の透過`PNG`をアイコンとして使用しています。
+
+* 参考リンク [#d3455ff6]
+- [http://www.gimp.org/ GIMP]
+
+* コメント [#x176a30a]
+- %%`JDK 1.6.0`で試すとアイコンの表示が乱れる？ -- [[aterai]] &new{2006-06-29 (木) 17:57:16};%%
+
+#comment

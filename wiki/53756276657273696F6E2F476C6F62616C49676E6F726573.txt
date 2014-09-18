@@ -1,0 +1,98 @@
+TITLE:Subversionで無視パターンを指定
+#author(aterai)
+#pubdate(2003-09-25)
+#contents(big)
+
+* 概要 [#ka3cbecd]
+例として`bak`ファイル(`*.bak`、`*.BAK`)などを、ステータス表示(`svn status`)で無視する設定方法を、以下に`3`つ紹介しています。
+
+- `config`ファイルで`global-ignores`を設定する(ローカル)
+- レジストリで`global-ignores`を設定する(ローカル)
+- `svn:ignore`属性をディレクトリに設定する
+
+* 設定方法 [#f7c527a4]
+** configファイルでglobal-ignoresを設定する(ローカル) [#c62e3ccb]
+ローカルで無視したいファイルの拡張子などを`config`ファイルに設定します。
+
+`C:\Documents and Settings\ユーザ名\Application Data\Subversion\Config`(`cygwin`なら`~/.subversion/config`) をエディタで開き、`[miscellany]`のコメントアウトを外して`global-ignores`にパターンを追加します。区切りはホワイトスペース、パターン指定にはワイルドカードの`*`と`?`が使用できます。詳細は[http://svnbook.red-bean.com/en/1.1/ch07.html#svn-ch-7-sect-1.3.2 Config]を参照してみてください。
+
+#code{{
+### Section for configuring miscelleneous Subversion options.
+[miscellany]
+### Set global-ignores to a set of whitespace-delimited globs
+### which Subversion will ignore in its 'status' output.
+# global-ignores = *.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store
+global-ignores = *.o *.lo *.la #*# .*~ *~ .#* .DS_Store *.bak *.BAK
+}}
+
+`no-ignore`オプションをつけてステータスを表示すると、`*.BAK`などに`I`が付き、無視されていることが確認できます。
+
+ C:\temp\test>svn st --no-ignore
+ I      build.BAK
+ ?      src\Test.java
+ I      src\Test.java.1~
+ I      src\Test.BAK
+ ?      src\Test.BAK2
+
+日本語を使用する場合は、`config`ファイルを`UTF-8`(`BOM`なしで保存、`xyzzy`の場合は`UTF-8N`)で保存します。例えば`コピー ～ Hoge.java`のような日本語やスペースを含むファイルを無視する場合は、以下のように設定します。
+
+#code{{
+global-ignores = #*# .*~ *~ *.bak *.BAK XTAGS *.tmp コピー?～*
+}}
+
+** レジストリでglobal-ignoresを設定する(ローカル) [#kae4325b]
+`Windows`版の場合、レジストリに`global-ignores`を設定することもできます。以下を`.reg`ファイルにして実行するか、`regedit.exe`で直接編集してください。
+
+#code{{
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\miscellany]
+"global-ignores"="*.o *.lo *.la #*# .*~ *~ .#* .DS_Store *.bak *.BAK"
+}}
+
+** svn:ignore属性をディレクトリに設定する [#la613547]
+リポジトリの任意ディレクトリに無視パターンを設定する場合は、`svn:ignore`属性を使用します。詳細は[http://svnbook.red-bean.com/en/1.1/ch07s02.html#svn-ch-7-sect-2.3.3 svn:ignore]を参照してみてください。
+
+ C:\temp\test>svn st
+ ?      lib\Test.BAK
+ ?      src\Test.BAK
+
+上記のような状態から、`src`ディレクトリは`*.BAK`を無視するよう`propset`します。
+
+ C:\temp\test>svn propset svn:ignore *.BAK .\src
+ property 'svn:ignore' set on 'src'
+ C:\temp\test>svn st
+ ?      lib\Test.BAK
+ M      src
+
+これにより、`src`ディレクトリの属性が変更されたのでチェックインします。
+
+ C:\temp\test>svn ci -m "src ignore BAK"
+ Sending        src
+ 
+ Committed revision 23.
+
+`propedit`を使う場合は、`SVN_EDITOR`で指定したエディタで一行ずつパターンを記入してやります(またはファイルを作って`-F`オプションで指定)。
+
+ C:\temp\test>svn propedit svn:ignore src
+
+ *.bak
+ *.BAK
+
+`proplist`を使って属性を確認します。
+
+ C:\temp\test>svn proplist -v http://localhost/svn/test/src
+ Properties on 'http://localhost/svn/test/src':
+   svn:ignore : *.BAK
+
+- 注意点
+-- %%svn:ignoreはサブディレクトリには効かない%%
+--- [http://d.hatena.ne.jp/tell-k/20090806/1249575564 svn:ignoreを再帰的に適用したい。 - Study03.net 対シンバシ専用]
+--- [http://sj6.org/subversion_svn_ignore_for_reflexive_directory/ svn:ignoreを再帰的に適用させるコマンド - 適当な日々]
+--- [http://subversion.tigris.org/issues/show_bug.cgi?id=1794 subversion: #1794 Recursive propset corrupt WC]
+-- `svn add *.BAK`のようにした場合は、無視せずリポジトリに追加される
+
+* コメント [#x340b5c4]
+- `Emacs`などで生成される自動バックアップ中のファイル`#Hoge.java#`を`.hgignore`で無視する場合のメモ:  `#`がコメントになるので、`\#*\#`とエスケープする -- [[aterai]] &new{2013-07-16 (火) 16:27:59};
+
+#comment

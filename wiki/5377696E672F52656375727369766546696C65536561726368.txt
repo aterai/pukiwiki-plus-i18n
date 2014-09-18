@@ -1,0 +1,69 @@
+TITLE:Fileの再帰的検索
+#tags(File, JProgressBar, SwingWorker)
+#author(aterai)
+#pubdate(2003-12-15)
+* 概要 [#la10adfb]
+ファイルを再帰的に検索します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRh7du1II/AAAAAAAAAhU/jcMUoOTcbTU/s800/RecursiveFileSearch.png)
+
+* サンプルコード [#n78bba98]
+#code(link){{
+public void recursiveSearch(File dir, final Vector list)
+    throws InterruptedException {
+  String[] contents = dir.list();
+  for(int i=0;i<contents.length;i++) {
+    if(Thread.interrupted()) {
+      throw new InterruptedException();
+    }
+    File sdir = new File(dir, contents[i]);
+    if(sdir.isDirectory()) {
+      recursiveSearch(sdir, list);
+    }else if(isGraphicsFile(sdir.getName())) {
+      list.add(sdir);
+    }
+  }
+}
+}}
+
+* 解説 [#l9b71aa9]
+上記のサンプルでは、選択したフォルダ以下のファイルを再帰的にすべて検索して表示するようになっています。
+
+----
+`JProgressBar`を使った進捗状況の表示とキャンセルには、`SwingWorker`を利用しています。
+
+----
+`JDK 7`の場合は、`Files.walkFileTree(...)`などを使用する方法もあります。
+
+- [http://docs.oracle.com/javase/tutorial/essential/io/walk.html Walking the File Tree (The Java™ Tutorials > Essential Classes > Basic I/O)]
+- [http://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html#walkFileTree(java.nio.file.Path,%20java.nio.file.FileVisitor) Files (Java Platform SE 7)]
+
+#code{{
+private void recursiveSearch(Path dir, final ArrayList<Path> list) throws IOException {
+  Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
+    @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+      if(Thread.interrupted()) {
+        throw new IOException();
+      }
+      if(attrs.isRegularFile()) {
+        list.add(file);
+      }
+      return FileVisitResult.CONTINUE;
+    }
+  });
+}
+}}
+
+* 参考リンク [#oc687cdf]
+- [http://msugai.fc2web.com/java/IO/fileObj.html Java入門 ファイル]
+- [http://docs.oracle.com/javase/tutorial/uiswing/components/progress.html How to Use Progress Bars]
+- [http://docs.oracle.com/javase/jp/6/api/javax/swing/SwingWorker.html SwingWorker (Java Platform SE 6)]
+- [http://web.archive.org/web/20090830092511/http://java.sun.com/products/jfc/tsc/articles/threads/threads2.html Using a Swing Worker Thread]
+- [http://web.archive.org/web/20090811085550/http://java.sun.com/products/jfc/tsc/articles/threads/src/SwingWorker.java SwingWorker.java]
+- [http://www.javaworld.com/javaworld/jw-06-2003/jw-0606-swingworker-p3.html Customize SwingWorker to improve Swing GUIs]
+
+* コメント [#v7736a30]
+- 実際に動作するサンプルを追加してみました。 -- [[aterai]] &new{2006-04-28 (金) 21:50:55};
+- `JDK 6`の`SwingWorker`を使用するように変更しました。 -- [[aterai]] &new{2008-07-11 (金) 15:32:26};
+
+#comment

@@ -1,0 +1,47 @@
+TITLE:JFileChooserで読み取り専用ファイルのリネームを禁止
+#tags(JFileChooser, File, BasicDirectoryModel)
+#author(aterai)
+#pubdate(2011-10-17T12:57:18+09:00)
+* 概要 [#u21472b3]
+`JFileChooser`で読み取り専用属性ファイルのリネームを禁止します。
+
+#download(https://lh5.googleusercontent.com/-7ODSj6DaIig/TpsQEay0NqI/AAAAAAAABDs/8fz14wjADj0/s800/RenameIfCanWriteFileChooser.png)
+
+* サンプルコード [#y089b0c5]
+#code(link){{
+class CanWriteFileChooserUI extends MetalFileChooserUI{
+  protected CanWriteFileChooserUI(JFileChooser chooser) {
+    super(chooser);
+  }
+  public static ComponentUI createUI(JComponent c) {
+    return new CanWriteFileChooserUI((JFileChooser)c);
+  }
+  private BasicDirectoryModel model2 = null;
+  @Override public void createModel() {
+    if(model2!=null) {
+      model2.invalidateFileCache();
+    }
+    model2 = new BasicDirectoryModel(getFileChooser()) {
+      @Override public boolean renameFile(File oldFile, File newFile) {
+        return oldFile.canWrite()?super.renameFile(oldFile, newFile):false;
+      }
+    };
+  }
+  @Override public BasicDirectoryModel getModel() {
+    return model2;
+  }
+}
+}}
+
+* 解説 [#u34dc296]
+上記のサンプルでは、`BasicDirectoryModel#renameFile(...)`をオーバーライドして取り専用属性ファイルのリネームを確定しようとすると警告ダイアログが表示されるようになっています。
+
+----
+`sun.swing.FilePane#canWrite(File)`をオーバーライドすれば、編集開始自体を禁止にすることもできそうですが、`MetalFileChooserUI`などの`UI`で`FilePane`が`private`になっているためかなり面倒です。
+
+* 参考リンク [#ta778ea1]
+- [https://forums.oracle.com/thread/2300004 Swing - How does the JFileChooser "readOnly" property work?]
+- [[JFileChooserを編集不可にする>Swing/ROFileChooser]]
+
+* コメント [#rf34c8a6]
+#comment

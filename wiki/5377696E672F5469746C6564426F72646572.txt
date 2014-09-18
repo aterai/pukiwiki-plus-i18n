@@ -1,0 +1,58 @@
+TITLE:TitledBorderのタイトル位置
+#tags(TitledBorder, Border)
+#author(aterai)
+#pubdate(2007-08-06T12:08:09+09:00)
+* 概要 [#x572c279]
+`TitledBorder`のタイトル位置や揃えを切り替えてテストします。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVZeDhwBI/AAAAAAAAAnk/QmV1N3Uqp3o/s800/TitledBorder.png)
+
+* サンプルコード [#ae811e62]
+#code(link){{
+VerticalOrientation vo = (VerticalOrientation)verticalOrientationChoices.getSelectedItem();
+switch(vo) {
+  case DEFAULT_POSITION: border.setTitlePosition(TitledBorder.DEFAULT_POSITION); break;
+  case ABOVE_TOP:        border.setTitlePosition(TitledBorder.ABOVE_TOP);        break;
+  case TOP:              border.setTitlePosition(TitledBorder.TOP);              break;
+  case BELOW_TOP:        border.setTitlePosition(TitledBorder.BELOW_TOP);        break;
+  case ABOVE_BOTTOM:     border.setTitlePosition(TitledBorder.ABOVE_BOTTOM);     break;
+  case BOTTOM:           border.setTitlePosition(TitledBorder.BOTTOM);           break;
+  case BELOW_BOTTOM:     border.setTitlePosition(TitledBorder.BELOW_BOTTOM);     break;
+}
+Justification jc = (Justification)justificationChoices.getSelectedItem();
+switch(jc) {
+  case DEFAULT_JUSTIFICATION: border.setTitleJustification(
+                                              TitledBorder.DEFAULT_JUSTIFICATION); break;
+  case LEFT:     border.setTitleJustification(TitledBorder.LEFT);     break;
+  case CENTER:   border.setTitleJustification(TitledBorder.CENTER);   break;
+  case RIGHT:    border.setTitleJustification(TitledBorder.RIGHT);    break;
+  case LEADING:  border.setTitleJustification(TitledBorder.LEADING);  break;
+  case TRAILING: border.setTitleJustification(TitledBorder.TRAILING); break;
+}
+panel.repaint();
+}}
+
+* 解説 [#e93f52ba]
+上記のサンプルでは、以下のような定数フィールド値をコンボボックスで指定することで、タイトルの位置や揃えを変更できるようになっています。
+
+- タイトルの位置を`TitledBorder#setTitlePosition`メソッドで指定します。
+-- `DEFAULT_POSITION`
+-- `ABOVE_TOP`
+-- `TOP`
+-- `BELOW_TOP`
+-- `ABOVE_BOTTOM`
+-- `BOTTOM`
+-- `BELOW_BOTTOM`
+
+- タイトルの揃えを`TitledBorder#setTitleJustification`メソッドで指定します。
+-- `LEFT`
+-- `CENTER`
+-- `RIGHT`
+-- `LEADING`
+-- `TRAILING`
+
+//**参考リンク
+* コメント [#t2d56f55]
+- メモ: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6658876 TitledBorder API inconsitent with implementation: uses TOP instead of DEFAULT_POSITION] -- [[aterai]] &new{2008-04-12 (土) 00:35:59};
+
+#comment

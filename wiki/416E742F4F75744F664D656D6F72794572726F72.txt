@@ -1,0 +1,50 @@
+TITLE:AntでOutOfMemoryErrorが発生する場合
+#author(aterai)
+#pubdate(2003-09-25)
+#contents(big)
+
+* 概要 [#he5b1ced]
+`Ant`を実行すると`OutOfMemoryError`が発生する場合の処置方法について解説しています。
+
+----
+- 注: `Java 8`では、これらの設定をしなくても、`OutOfMemoryError`は発生しないはず。
+-- [http://equj65.net/tech/java8hotspot/ Java8のHotSpotVMからPermanent領域が消えた理由とその影響 | ギークを目指して]
+-- [http://stackoverflow.com/questions/18339707/permgen-elimination-in-jdk-8 java - PermGen elimination in jdk 8 - Stack Overflow]
+
+* javacタスク [#hb7645c8]
+`javac`タスクなどで`OutOfMemoryError`が発生する場合、以下のようなユーザー環境変数(またはシステム環境変数)を設定して`ant`が使用できるメモリサイズを増加しておく必要があります。
+
+ 変数名: ANT_OPTS
+ 変数値: -Xmx256m
+
+#ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQsClEsXSeI/AAAAAAAAAs4/5xuD5e2933E/s800/ant_opts.png)
+
+----
+`javac`タスクのオプションで、`memoryMaximumSize`属性などを使用する方法もあります(`fork="true"`も必要)。
+
+#code{{
+<javac srcdir="${src}"
+       destdir="${build}"
+       fork="true"
+       memoryInitialSize="128m"
+       memoryMaximumSize="256m"
+/>
+}}
+
+* javaタスク [#c2d4057c]
+`java`タスクの場合は、`maxmemory`属性を使用する方法もあります。
+
+#code{{
+<java jar="${relaxer.home}/Relaxer.jar" fork="true" maxmemory="256m">
+  <!-- arg value="-Xmx256m"/ ←は意味が無い？ -->
+  <arg value="-dir:${build.src}/relaxer"/>
+  <arg value="-properties:${basedir}/Relaxer.properties"/>
+  <arg value="${src.dir}/relaxng/xslfo.rng"/>
+  <classpath>
+    <fileset dir="${relaxer.home}" includes="*.jar"/>
+  </classpath>
+</java>
+}}
+
+* コメント [#v95e1772]
+#comment

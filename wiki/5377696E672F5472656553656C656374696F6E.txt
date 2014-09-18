@@ -1,0 +1,27 @@
+TITLE:JTreeの選択モードを切り替える
+#tags(JTree, TreePath)
+#author(aterai)
+#pubdate(2011-08-01T15:39:38+09:00)
+* 概要 [#f9ac165a]
+`JTree`の選択モードを切り替えます。
+
+#download(https://lh6.googleusercontent.com/-bPltus2wD6w/TjZCCGnH40I/AAAAAAAABAE/tgmolSg-2Ys/s800/TreeSelection.png)
+
+* サンプルコード [#cd4092ab]
+#code(link){{
+tree.getSelectionModel().setSelectionMode(TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
+}}
+
+* 解説 [#ubefa354]
+上記のサンプルでは、`tree.getSelectionModel().setSelectionMode(...)`メソッドを使用して、選択モードを設定しています。
+
+- `TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION`
+-- Ctrl-クリック、Shift-クリックなどで、自由に`TreePath`を選択状態にすることができます。
+- `TreeSelectionModel.SINGLE_TREE_SELECTION`
+-- `TreePath`をひとつだけ選択状態にすることができます。
+- `TreeSelectionModel.CONTIGUOUS_TREE_SELECTION`
+-- `TreePath`が連続している場合は、複数選択できます。
+
+//**参考リンク
+* コメント [#p7b4ab11]
+#comment

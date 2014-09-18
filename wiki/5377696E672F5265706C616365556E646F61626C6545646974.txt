@@ -1,0 +1,61 @@
+TITLE:UndoManagerを使用した文字列選択ペーストの動作を変更する
+#tags(JTextField, UndoManager, PlainDocument, JTextComponent, CompoundEdit, DocumentFilter, UndoableEdit)
+#author(aterai)
+#pubdate(2012-10-15T14:31:20+09:00)
+* 概要 [#g8638a3f]
+`JTextField`などに`UndoManager`を設定し、文字列を選択してペーストした後の`Undo`の動作を変更します。
+
+#download(https://lh5.googleusercontent.com/-GEc9R-QZvos/UKt2czK61tI/AAAAAAAABXk/vqH8TKxkqCM/s800/ReplaceUndoableEdit.png)
+
+* サンプルコード [#g8b58a74]
+#code(link){{
+class CustomUndoPlainDocument extends PlainDocument {
+  private CompoundEdit compoundEdit;
+  @Override protected void fireUndoableEditUpdate(UndoableEditEvent e) {
+    if (compoundEdit == null) {
+      super.fireUndoableEditUpdate(e);
+    } else {
+      compoundEdit.addEdit(e.getEdit());
+    }
+  }
+  @Override public void replace(int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+    if (length == 0) { //insert
+      System.out.println("insert");
+      super.replace(offset, length, text, attrs);
+    } else { //replace
+      System.out.println("replace");
+      compoundEdit = new CompoundEdit();
+      super.fireUndoableEditUpdate(new UndoableEditEvent(this, compoundEdit));
+      super.replace(offset, length, text, attrs);
+      compoundEdit.end();
+      compoundEdit = null;
+    }
+  }
+}
+}}
+
+* 解説 [#c90ce0a6]
+- 上: `Default`
+-- `JTextComponent#setText(String)`や、文字列を選択してペーストした場合、`Document#replace(...)`で実行される`Document#remove(...)`と`Document#insertString(...)`が別々に`UndoManager`に登録される仕様?なので、二回`Undo`しないとペースト前の状態に戻らない
+- 中: `Document#replace()+AbstractDocument#fireUndoableEditUpdate()`
+-- `Document#replace(...)`をオーバーライドし、%%直接`UndoManager#undoableEditHappened(...)`を使って取り消し可能な編集を登録%% `setText(...)`での文字列の削除と追加を`CompoundEdit`にまとめる
+-- %%実際の置換は、`removeUndoableEditListener(...)`で`UndoManager`を一時的に削除した後に行う(直後に`addUndoableEditListener()`で再登録)%%
+-- %%登録する`UndoableEdit`での`Undo`, `Redo`時の置換も`UndoManager`を一時的に削除して行う%%
+-- メモ: このサンプルでは選択状態を復元していない
+- 下: `DocumentFilter#replace()+UndoableEditListener#undoableEditHappened()`
+-- `DocumentFilter#replace(...)`をオーバーライドし、文字列の置換で発生する削除と追加の`UndoableEdit`を別途用意した`CompoundEdit`にまとめてから`UndoManager#addEdit(...)`で追加
+
+* 参考リンク [#z0683651]
+- [https://community.oracle.com/thread/1509622 Undo two or more actions at once | Oracle Community]
+- [http://www.java2s.com/Code/Java/Swing-JFC/Undomanager.htm Undo manager : Undo Redo « Swing JFC « Java]
+- [http://tips4java.wordpress.com/2008/10/27/compound-undo-manager/ Compound Undo Manager ≪ Java Tips Weblog]
+- [http://java-sl.com/tip_merge_undo_edits.html Merging UndoableEdits in one to be undone all together in JEditorPane.]
+- [http://stackoverflow.com/questions/24433089/jtextarea-settext-undomanager java - JTextArea setText() & UndoManager - Stack Overflow]
+- [http://stackoverflow.com/questions/12844520/undo-in-jtextfield-and-settext java - Undo in JTextField and setText - Stack Overflow]
+- [http://www.ne.jp/asahi/hishidama/home/tech/java/swing/UndoManager.html Java Swing「UndoManager」メモ(Hishidama's Swing-UndoManager Memo)]
+- [http://kyopc.at.webry.info/201007/article_1.html Java Swingで複数のJTextFieldに対してUndo、Redoを行う（その2）－解決編 kyoはパソコンMaster or Slave?/ウェブリブログ]
+- [http://bakagaiku.hsbt.org/entry/20100316 バカが征く on Rails 2010年03月16日()]
+- [[UndoManagerでJTextFieldのUndo、Redoを行う>Swing/UndoManager]]
+
+* コメント [#pda09258]
+#comment

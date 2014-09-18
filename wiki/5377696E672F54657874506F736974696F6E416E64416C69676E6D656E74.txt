@@ -1,0 +1,25 @@
+TITLE:JLabelのアイコンと文字列の位置
+#tags(JLabel, Icon, Alignment, JButton)
+#author(aterai)
+#pubdate(2009-03-16T13:43:23+09:00)
+* 概要 [#k61b6047]
+`JLabel`のアイコンと文字列の位置をテストします。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVPS5wBUI/AAAAAAAAAnU/2hri1cAlfoM/s800/TextPositionAndAlignment.png)
+
+* サンプルコード [#yd654120]
+#code(link){{
+label.setVerticalAlignment(SwingConstants.CENTER);
+label.setVerticalTextPosition(SwingConstants.TOP);
+label.setHorizontalAlignment(SwingConstants.RIGHT);
+label.setHorizontalTextPosition(SwingConstants.LEFT);
+}}
+
+* 解説 [#e49a55c3]
+上記のサンプルでは、`setVerticalAlignment`、`setVerticalTextPosition`、`setHorizontalAlignment`、`setHorizontalTextPosition`といったメソッドを使用して、`JLabel`のアイコンと文字列の位置関係を変更しています。
+
+`JButton`などにも、アイコンと文字列の位置を設定する同名のメソッドが存在します(引数は`SwingConstants`インタフェースで定義された共通の定数が使用可)。
+
+//**参考リンク
+* コメント [#yeda804e]
+#comment

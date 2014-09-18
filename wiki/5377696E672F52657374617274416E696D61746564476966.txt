@@ -1,0 +1,39 @@
+TITLE:ImageIconのリソースを開放してAnimatedGifを最初から再生する
+#tags(ImageIcon, Animation, JButton, JLabel)
+#author(aterai)
+#pubdate(2013-08-19T00:06:01+09:00)
+* 概要 [#e89891b7]
+`JButton`などのコンポーネントに設定した`AnimatedGif`のリソースを一旦解放して最初から再生します。[http://stackoverflow.com/questions/18270701/animated-imageicon-as-button java - Animated ImageIcon as Button - Stack Overflow]を参考にしています。
+
+#download(https://lh4.googleusercontent.com/-qShu8SKEKus/UhDUybKOCYI/AAAAAAAAByg/QRDcWyIqcmU/s800/RestartAnimatedGif.png)
+
+* サンプルコード [#k32562f6]
+#code(link){{
+final ImageIcon animatedIcon = new ImageIcon(url);
+JButton button = new JButton(icon9) {
+  @Override protected void fireStateChanged() {
+    ButtonModel m = getModel();
+    if(isRolloverEnabled() && m.isRollover()) {
+      animatedIcon.getImage().flush();
+    }
+    super.fireStateChanged();
+  };
+};
+}}
+
+* 解説 [#w2905edd]
+上記のサンプルでは、`Image#flush()`メソッドを使用して`Image`オブジェクトのリソースを解放することで、`Animated GIF`画像のアニメーションを初期状態までリセットしています。
+
+- 左: `JButton`
+-- `JButton#setRolloverIcon(...)`で`Animated GIF`を設定し、マウスのロールオーバーで`Image#flush()`され、カウントダウンアニメーションが最初からスタート
+-- `JButton#setIcon(...)`には先頭画像のアイコン、`JButton#setPressedIcon(...)`には、空アイコンを設定
+- 右: `JLabel`
+-- マウスリスナーを追加し、クリックで`Image#flush()`が呼ばれて、アニメーションが再開
+-- `JButton`で、`Image#flush()`されると、同じ`Image`オブジェクトを使用しているのでアニメーションが止まる
+
+* 参考リンク [#g92aeb42]
+- [http://stackoverflow.com/questions/18270701/animated-imageicon-as-button java - Animated ImageIcon as Button - Stack Overflow]
+- [http://docs.oracle.com/javase/jp/7/api/java/awt/Image.html#flush%28%29 Image#flush() (Java Platform SE 7)]
+
+* コメント [#z97f4768]
+#comment

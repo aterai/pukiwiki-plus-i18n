@@ -1,0 +1,46 @@
+TITLE:RowFilterでJTableの行をフィルタリング
+#tags(JTable, TableRowSorter, RowFilter)
+#author(aterai)
+#pubdate(2007-09-03T15:45:16+09:00)
+* 概要 [#k5e18a60]
+`JDK 6`で導入された`TableRowSorter`に`RowFilter`を設定して、行のフィルタリングを行います。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTST-FvjRI/AAAAAAAAAik/ZbU9nuVVCiI/s800/RowFilter.png)
+
+* サンプルコード [#n69c6a49]
+#code(link){{
+final TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(model);
+final Set<RowFilter<? super TestModel, ? super Integer>> filters = new HashSet<>(2);
+final RowFilter<TableModel,Integer> filter1 = new RowFilter<TableModel,Integer>() {
+  @Override public boolean include(
+      Entry<? extends TableModel, ? extends Integer> entry) {
+    TableModel model = entry.getModel();
+    Test t = model.getTest(entry.getIdentifier());
+    return !t.getComment().trim().isEmpty();
+  }
+};
+final RowFilter<TableModel,Integer> filter2 = new RowFilter<TableModel,Integer>() {
+  @Override public boolean include(
+      Entry<? extends TableModel, ? extends Integer> entry) {
+    return entry.getIdentifier() % 2 == 0;
+  }
+};
+sorter.setRowFilter(RowFilter.andFilter(filters));
+//sorter.setRowFilter(filter1);
+}}
+
+* 解説 [#xc758c87]
+上記のサンプルは、以下のような複数の行フィルタを、`and`条件で`JTable`に適用することができます。
+
+- コメントが空でない行のみ表示
+- 行番号が偶数の場合のみ表示
+-- 行番号はソートされている場合でも、元のモデルのインデックスで判断する
+
+* 参考リンク [#d5eabb84]
+- [http://web.archive.org/web/20090419180550/http://java.sun.com/developer/JDCTechTips/2005/tt1115.html Splash Screens and Java SE 6, and Sorting and Filtering Tables Tech Tips]
+- [http://docs.oracle.com/javase/tutorial/uiswing/components/table.html#sorting Sorting and Filtering (How to Use Tables)]
+
+* コメント [#p94b744a]
+- 「`IndexOutOfBoundsException`が発生する…」は、[[TableRowSorterでJTableのソート>Swing/TableRowSorter]]に移動しました。 -- [[aterai]] &new{2011-02-04 (金) 15:19:12};
+
+#comment

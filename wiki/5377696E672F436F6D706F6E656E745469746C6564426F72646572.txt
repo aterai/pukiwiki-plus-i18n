@@ -1,0 +1,37 @@
+TITLE:BorderにJComponentを配置
+#tags(Border, TitledBorder, JCheckBox, JButton)
+#author(aterai)
+#pubdate(2006-04-10T12:01:31+09:00)
+* 概要 [#w546bab3]
+`Border`に`JCheckBox`や`JButton`などを配置します。[http://www.jroller.com/page/santhosh Santhosh Kumar's Weblog]の[http://www.jroller.com/page/santhosh?entry=component_titled_border ComponentTitledBorder]を利用しています。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKEdJmyzI/AAAAAAAAAVY/FTQKJ7__MnE/s800/ComponentTitledBorder.png)
+
+* サンプルコード [#z4b6066a]
+#code(link){{
+JCheckBox c = new JCheckBox("CheckBox", true);
+c.setFocusPainted(false);
+JLabel l1 = new JLabel("adfasdfasdfa");
+Border eb = BorderFactory.createEtchedBorder();
+l1.setBorder(new ComponentTitledBorder(c, l1, eb));
+}}
+
+* 解説 [#q5789869]
+上記のサンプルは、[http://www.jroller.com/page/santhosh Santhosh Kumar's Weblog]の[http://www.jroller.com/page/santhosh?entry=component_titled_border ComponentTitledBorder]を参考にして作成しています。
+
+`SwingUtilities.paintComponent`で`Border`にコンポーネントを描画しているため、`JComboBox`などが選択されてもイベントが伝わりません。このため`ComponentTitledBorder`では、マウスリスナーを設定して`Component#dispatchEvent`メソッドで描画しているコンポーネントにイベントを飛ばしています。
+
+#code{{
+@Override public void mouseClicked(MouseEvent me) {
+  Component src = me.getComponent();
+  tgtCmp.dispatchEvent(SwingUtilities.convertMouseEvent(src, me, tgtCmp));
+  src.repaint();
+}
+}}
+
+* 参考リンク [#d3ff2e40]
+- [http://www.jroller.com/page/santhosh?entry=component_titled_border ComponentTitledBorder]
+- [[Borderの右下にJComponentを配置>Swing/RightAlignComponentBorder]]
+
+* コメント [#wf7dfbe7]
+#comment

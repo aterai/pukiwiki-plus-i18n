@@ -1,0 +1,40 @@
+TITLE:JSplitPaneに2つのJTableを配置してスクロールを同期する
+#tags(JTable, JScrollPane, JScrollBar, JSplitPane)
+#author(aterai)
+#pubdate(2012-11-12T02:37:41+09:00)
+* 概要 [#i455f67c]
+`JSplitPane`の左右に、`JTable`をそれぞれ配置し、スクロールや追加などが同期するようにモデルを共有します。
+
+#download(https://lh4.googleusercontent.com/-mAnvPJlUJSI/UJ_bYI_kJsI/AAAAAAAABWo/a_jdyUqFLwM/s800/SynchronizedScrollingTables.png)
+
+* サンプルコード [#s244a26b]
+#code(link){{
+JScrollPane scroll1 = new JScrollPane(leftTable);
+//scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+scroll1.setVerticalScrollBar(new JScrollBar(JScrollBar.VERTICAL) {
+  @Override public Dimension getPreferredSize() {
+    Dimension dim = super.getPreferredSize();
+    return new Dimension(0, dim.height);
+  }
+});
+JScrollPane scroll2 = new JScrollPane(table);
+scroll2.getVerticalScrollBar().setModel(scroll1.getVerticalScrollBar().getModel());
+}}
+
+* 解説 [#d56365ac]
+- `JTable`
+-- `TableModel`を共有し、`JTable#removeColumn()`で、それぞれで非表示にする列を指定
+-- 左右で`RowSorter`、`SelectionModel`を共有
+- `JScrollPane`
+-- それぞれ内部に配置する`JTable`の高さは、常に同じになるので、`VerticalScrollBar`の`BoundedRangeModel`を共有
+
+* 参考リンク [#g8d15937]
+- [[JTableの列固定とソート>Swing/FixedColumnTableSorting]]
+-- `ChangeListener`を使用、`1`つの`JScrollPane`に、`JTable`を`2`つ配置
+- [[JScrollPaneのスクロールを同期>Swing/SynchronizedScroll]]
+-- `ChangeListener`を使用
+- [http://d.hatena.ne.jp/argius/20080325/1206454660 2つのJTableを同時にスクロール - argius note]
+-- `AdjustmentListener`を使用
+
+* コメント [#qe8b0ef4]
+#comment

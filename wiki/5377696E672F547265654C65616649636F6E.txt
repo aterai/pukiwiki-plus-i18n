@@ -1,0 +1,56 @@
+TITLE:JTreeのOpenIcon、ClosedIcon、LeafIconを変更
+#tags(JTree, Icon, TreeCellRenderer)
+#author(aterai)
+#pubdate(2011-03-14T15:52:42+09:00)
+* 概要 [#ba23c22f]
+`JTree`の`OpenIcon`、`ClosedIcon`、`LeafIcon`の表示表示を切り替えます。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TX24gbN5bHI/AAAAAAAAA30/l8Pn8nUfJiA/s800/TreeLeafIcon.png)
+
+* サンプルコード [#i6a5d9a6]
+#code(link){{
+folderCheck.addActionListener(new ActionListener() {
+  @Override public void actionPerformed(ActionEvent e) {
+    DefaultTreeCellRenderer r = (DefaultTreeCellRenderer)tree.getCellRenderer();
+    if(((JCheckBox)e.getSource()).isSelected()) {
+      r.setOpenIcon(r.getDefaultOpenIcon());
+      r.setClosedIcon(r.getDefaultClosedIcon());
+    }else{
+      r.setOpenIcon(emptyIcon);
+      r.setClosedIcon(emptyIcon);
+    }
+    allNodesChanged(tree);
+  }
+});
+}}
+
+* 解説 [#ca75ec26]
+- `DefaultTreeCellRenderer#setOpenIcon(Icon)`
+- `DefaultTreeCellRenderer#getDefaultOpenIcon()`
+- `DefaultTreeCellRenderer#setClosedIcon(Icon)`
+- `DefaultTreeCellRenderer#getDefaultClosedIcon()`
+- `DefaultTreeCellRenderer#setLeafIcon(Icon)`
+- `DefaultTreeCellRenderer#getDefaultLeafIcon()`
+
+上記のメソッドを使用して、デフォルトアイコンと空アイコンを設定し、表示非表示を切り替えています。
+
+----
+各アイコンの幅が変化するので、表示を切り替えた後で、以下のようにすべてのノードを更新しています。
+#code{{
+private static void allNodesChanged(JTree tree) {
+  DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+  DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+  java.util.Enumeration depth = root.depthFirstEnumeration();
+  while(depth.hasMoreElements()) {
+    model.nodeChanged((TreeNode)depth.nextElement());
+  }
+  //tree.revalidate();
+  //tree.repaint();
+}
+}}
+
+* 参考リンク [#i455cd40]
+- [[JTreeの展開、折畳みアイコンを非表示にする>Swing/TreeExpandedIcon]]
+
+* コメント [#u7c9ede9]
+#comment

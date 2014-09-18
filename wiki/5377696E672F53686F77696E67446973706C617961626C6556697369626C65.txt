@@ -1,0 +1,53 @@
+TITLE:JComponentの表示状態
+#tags(JComponent, HierarchyListener, JScrollPane, JTabbedPane, CardLayout)
+#author(aterai)
+#pubdate(2009-04-20T14:24:13+09:00)
+* 概要 [#t8509340]
+`JComponent`の表示状態をテストします。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTS-a1ZnQI/AAAAAAAAAjo/jB4n-1WmEIs/s800/ShowingDisplayableVisible.png)
+
+* サンプルコード [#e72673c3]
+#code(link){{
+button.addHierarchyListener(new HierarchyListener() {
+  @Override public void hierarchyChanged(HierarchyEvent e) {
+    if((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED)!=0) {
+      printInfo("SHOWING_CHANGED");
+    }else if((e.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED)!=0) {
+      printInfo("DISPLAYABILITY_CHANGED");
+    }
+  }
+});
+}}
+
+* 解説 [#c904a45d]
+上記のサンプルでは、コンポーネント(`JButton`)に`HierarchyListener`を追加して、表示状態が切り替わった時の`isDisplayable`、`isShowing`、`isVisible`を調べています。
+
+- 開始時: `HierarchyEvent.DISPLAYABILITY_CHANGED`
+-- `isDisplayable`: `true`
+-- `isShowing`: `false`
+-- `isVisible`: `true`
+
+- `HierarchyEvent.SHOWING_CHANGED`
+-- `isDisplayable`: `true`
+-- `isShowing`: `true`⇔`false`
+-- `isVisible`: `true`
+
+- コンポーネントが`JScrollPane`の表示領域にない、フレームがアイコン化、別パネルの裏に隠れているといった場合
+-- `isDisplayable`: `true`
+-- `isShowing`: `true`
+-- `isVisible`: `true`
+
+- コンポーネントが`JTabbedPane`や`CardLayout`の表示領域にないなど(親コンポーネントが非表示)の場合
+-- `isDisplayable`: `true`
+-- `isShowing`: `false`
+-- `isVisible`: `true`
+
+- コンポーネントが`setVisible(false)`と設定された場合
+-- `isDisplayable`: `true`
+-- `isShowing`: `false`
+-- `isVisible`: `false`
+
+//**参考リンク
+* コメント [#s4735b0e]
+#comment

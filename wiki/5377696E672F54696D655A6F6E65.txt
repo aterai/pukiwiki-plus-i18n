@@ -1,0 +1,47 @@
+TITLE:TimeZoneによる日付表示の変換
+#tags(DateFormat)
+#author(aterai)
+#pubdate(2004-04-19T10:36:59+09:00)
+* 概要 [#e2715c6a]
+`TimeZone`などを使って、日付の表示を変換します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVW5Ljb9I/AAAAAAAAAng/mMDH4E_v9ZQ/s800/TimeZone.png)
+
+* サンプルコード [#fc90bfc8]
+#code(link){{
+final SimpleDateFormat format =
+  new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.US);
+final DateFormat df = DateFormat.getDateTimeInstance();
+//field.setText("Mon, 19 Apr 2004 16:31:41 +0900");
+outf.setEditable(false);
+df.setTimeZone(TimeZone.getTimeZone("JST"));
+JButton button = new JButton(new AbstractAction("Convert") {
+  @Override public void actionPerformed(ActionEvent e) {
+    String str = field.getText().trim();
+    ParsePosition pp = new ParsePosition(0);
+    Date date = format.parse(str, pp);
+    outf.setText((date!=null)?df.format(date):"error");
+  }
+});
+}}
+
+* 解説 [#j9b9048c]
+上記のサンプルは、メールなどの日付文字列を、一旦`Date`に変換し、デフォルトロケールのフォーマットスタイルに変換しています。
+
+----
+- `Java 1.7.0`から、タイムゾーンに`X`で`ISO 8601`形式が使用できるようになった
+-- `X`: `+09`
+-- `XX`: `+0900`
+-- `XXX`: `+09:00`
+
+#code{{
+DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+System.out.println("pubdate: " + format.format(new Date()));
+//pubdate: 2014-09-08T00:05:45+09:00
+}}
+
+* 参考リンク [#z58eb27e]
+- [http://docs.oracle.com/javase/jp/8/api/java/text/SimpleDateFormat.html SimpleDateFormat (Java Platform SE 8 )]
+
+* コメント [#k068837c]
+#comment

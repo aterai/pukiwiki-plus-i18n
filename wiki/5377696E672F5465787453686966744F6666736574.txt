@@ -1,0 +1,25 @@
+TITLE:JButtonのテキストシフト量を変更
+#tags(JButton, UIManager)
+#author(aterai)
+#pubdate(2007-12-31T16:51:19+09:00)
+* 概要 [#q33481d1]
+`JButton`をクリックしたときのテキストシフト量を変更します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVR92SsdI/AAAAAAAAAnY/_wKFJTNu2oY/s800/TextShiftOffset.png)
+
+* サンプルコード [#fd17120e]
+#code(link){{
+UIManager.put("Button.textShiftOffset", 0);
+SwingUtilities.updateComponentTreeUI(this);
+}}
+
+* 解説 [#m09c32c8]
+上記のサンプルでは、テキストシフト量を、`0`、`1`、`-1`と切り替えることができます。
+
+- メモ
+-- `Java 1.5.0` + `WindowsLookAndFeel`のデフォルトは`1`
+-- `Java 1.6.0` + `WindowsLookAndFeel`のデフォルトは`0`
+
+//**参考リンク
+* コメント [#i782599b]
+#comment

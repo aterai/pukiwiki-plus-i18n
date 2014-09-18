@@ -1,0 +1,575 @@
+TITLE:PukiWiki形式のテキストをMarkdown形式のファイルに変換する
+#keywords(Ruby Swing)
+#author(aterai)
+#pubdate(2012-09-27)
+#contents(big)
+
+* 概要 [#h1b34392]
+このサイトで使用している`PukiWiki`形式のテキストを`Markdown`形式のファイルに変換するテスト。
+
+- 以下のソースコードは、[http://jp.rubyist.net/magazine/?0010-CodeReview Rubyist Magazine - あなたの Ruby コードを添削します 【第 1 回】 pukipa.rb] より引用、改変
+- 注: このサイトを変換することだけが目的なので、テストしていない、適当、制限多数
+
+ > jruby -E UTF-8 p2m.rb .\wiki
+
+* ソースコード [#i99db5ec]
+- [http://terai.xrea.jp/data/jruby/p2m.rb p2m.rb]
+- [https://gist.github.com/aterai/5dedec2b950b8b317394 PukiWiki 2 Markdown forked from: http://magazine.rubyist.net/?0010-CodeReview]
+
+#code{{
+# -*- mode: ruby; encoding: utf-8 -*-
+require 'uri'
+require 'date'
+
+module HTMLUtils
+  ESC = {
+    '&' => '&amp;',
+    '"' => '&quot;',
+    '<' => '&lt;',
+    '>' => '&gt;'
+  }
+  def escape(str)
+    table = ESC   # optimize
+    str.gsub(/[&"<>]/u) {|s| table[s]}
+  end
+  CODE = {
+    '<' => '&lt;',
+    '>' => '&gt;',
+    '&' => '&amp;'
+  }
+  def code_escape(str)
+    table = CODE
+    str.gsub(/[<>&]/u) {|s| table[s]}
+  end
+  URIENC = {
+    '(' => '%28',
+    ')' => '%29',
+    ' ' => '%20'
+  }
+  def uri_encode(str)
+    table = URIENC
+    str.gsub(/[\(\) ]/u) {|s| table[s]}
+  end
+  def urldecode(str)
+    str.gsub(/[A-F\d]{2}/u) {|x| [x.hex].pack('C*')}
+  end
+end
+
+class PukiWikiParser
+  include HTMLUtils
+
+  def initialize()
+    @h_start_level = 2
+  end
+  def filename(pw_name)
+    decoded_name = HTMLUtils.urldecode(pw_name).sub(/\:/, '_').downcase.split("/").last
+    name = decoded_name.sub(/\.txt$/, '.md')
+    if @timestamp.nil? || @timestamp.size===0
+      return name
+    else
+      return "#{@timestamp}-#{name}"
+    end
+  end
+#   def timestamp()
+#     @timestamp
+#   end
+  def to_md(src, page_names, page, base_uri = 'http://terai.xrea.jp/', suffix= '/')
+    @page_names = page_names
+    @base_uri = base_uri
+    #@page = page.sub!(/\.txt$/, '')
+    @page = page.sub(/\ASwing\/(.+)\.txt$/) { $1 }
+    @pagelist_suffix = suffix
+    @inline_re = nil # invalidate cache
+
+    @timestamp = ''
+    @title  = ''
+    @author = ''
+    @tags = ''
+
+    buf = []
+    lines = src.rstrip.split(/\r?\n/).map {|line| line.chomp }
+    while lines.first
+      case lines.first
+      when ''
+        buf.push lines.shift
+      when /\ATITLE:/
+        @title = lines.shift.sub(/\ATITLE:/, '')
+      when /\ARIGHT:/
+        #/at &time\((\w{4}-\w{2}-\w{2})\);/ =~ lines.first
+        #@timestamp = $1
+        buf.push parse_inline(lines.shift.sub(/\ARIGHT:/, '').concat("\n"))
+      when /\A----/
+        lines.shift
+        buf.push '- - - -' #hr
+      when /\A\*/
+        buf.push parse_h(lines.shift)
+      when /\A\#code.*\{\{/
+        buf.concat parse_pre2(take_multi_block(lines))
+      when /\A\#.+/
+        buf.push parse_block_plugin(lines.shift)
+      when /\A\s/
+        buf.concat parse_pre(take_block(lines, /\A\s/))
+      when /\A\/\//
+        #buf.concat parse_comment(take_block(lines, /\A\/\//))
+        take_block(lines, /\A\/\//)
+      when /\A>/
+        buf.concat parse_quote(take_block(lines, /\A>/))
+      when /\A-/
+        buf.concat parse_list('ul', take_list_block(lines))
+      when /\A\+/
+        buf.concat parse_list('ol', take_block(lines, /\A\+/))
+      when /\A:/
+        buf.concat parse_dl(take_block(lines, /\A:/))
+      else
+        buf.concat parse_p(take_block(lines, /\A(?![*\s>:\-\+\#]|----|\z)/))
+      end
+    end
+    buf.join("\n")
+
+    head = []
+    head.push("---")
+    head.push("layout: post")
+    head.push("title: #{@title}")
+    head.push("category: swing")
+    head.push("folder: #{@page}")
+    head.push("tags: [#{@tags}]")
+    head.push("author: #{@author}")
+    head.push("comments: true")
+    head.push("---")
+
+    head.join("\n").strip.concat(buf.join("\n"))
+  end
+
+  private
+
+  def take_block(lines, marker)
+    buf = []
+    until lines.empty?
+      break unless marker =~ lines.first
+      if /\A\/\// =~ lines.first then
+        lines.shift
+      else
+        buf.push lines.shift.sub(marker, '')
+      end
+    end
+    buf
+  end
+
+  def take_multi_block(lines)
+    buf = []
+    until lines.empty?
+      l = lines.shift
+      break if /^\}\}$/ =~ l
+      next  if /^.code.*$/ =~ l
+      buf.push l
+    end
+    buf
+  end
+
+  def parse_h(line)
+    level = @h_start_level + (line.slice(/\A\*{1,4}/).length - 1)
+    h = "#"*level
+    # content = line.sub(/\A\*+/, '')
+    ##content = line.gsub(/\A\*+(.+) \[#\w+\]$/) { $1 }
+    #"<h#{level}>#{parse_inline(content)}</h#{level}>"
+    content = line.gsub(/\A\*+(.+)$/) { $1.gsub(/ +\[#\w+\]$/, "") }
+    "#{h} #{parse_inline(content).strip}"
+  end
+
+  def take_list_block(lines)
+    marker = /\A-/
+    buf = []
+    codeblock = false
+    listblock = false
+    until lines.empty?
+      #break unless marker =~ lines.first
+      #while lines.first
+      case lines.first
+      when /\A\/\//
+        lines.shift
+      when /\A----/
+        if codeblock then
+          buf.push "<!-- dummy comment line for breaking list -->"
+        end
+        #buf.push "<!-- dummy comment line for breaking list -->"
+        break
+      when marker
+        l = lines.shift
+        #puts l
+        buf.push l #lines.shift #.sub(marker, '')
+        listblock = true
+        codeblock = false
+        #puts buf.last
+#       when /\A$/
+#         buf.push lines.shift
+      when /\A\s/
+        buf.push '#' + lines.shift
+        codeblock = true
+        listblock = false
+      when /\A\#code.*\{\{/
+        array = []
+        until lines.empty?
+          l = lines.shift
+          array.push l
+          break if /^\}\}$/ =~ l
+        end
+        buf.concat array
+        codeblock = true
+        listblock = false
+      else
+        if listblock then
+          buf.push "<!-- dummy comment line for breaking list -->"
+          break
+        elsif codeblock then
+          buf.push lines.shift
+        else
+          break
+        end
+      end
+    end
+    buf
+  end
+
+  def parse_list(type, lines)
+    marker = ((type == 'ul') ? /\A-+/ : /\A\++/)
+    parse_list0(type, lines, marker)
+  end
+
+  def parse_list0(type, lines, marker)
+    buf = []
+    level = 0
+    blockflag = false
+    until lines.empty?
+      line = lines.shift.strip
+      aaa = line.slice(marker)
+      if aaa then
+        level = aaa.length - 1
+        line = line.sub(marker,'').strip
+      #else
+      #  level = 0
+      end
+      h = "    "*level
+      s = (type == 'ul') ? '-' : '1.'
+
+      if line.empty? then
+        #buf.push line
+      elsif line.start_with?('#code') then
+        hh = "    "*(level+1)
+        array = take_multi_block(lines).map{|ll| hh + code_escape(ll)}
+        line = array.shift.strip
+        buf.concat [hh, %Q|#{hh}<pre class="prettyprint"><code>|.concat(line), array.join("\n"), "</code></pre>"]
+        blockflag = false
+      elsif line.start_with?('#') then
+        unless blockflag then
+          blockflag = true
+          buf.push h
+        end
+        x = "\t"*2
+        line = code_escape(line.sub(/\A\#\s/, ''))
+        buf.push "#{h}#{x}#{line}"
+      elsif  line.start_with?('<!--') then
+        buf.concat ['', line]
+        break
+      else
+        blockflag = false
+        #puts "#{level}: #{line}"
+        buf.push "#{h}#{s} #{parse_inline(line)}"
+      end
+    end
+    buf
+  end
+
+  def parse_dl(lines)
+    buf = ["<dl>"]
+    lines.each do |line|
+      dt, dd = *line.split('|', 2)
+      buf.push "<dt>#{parse_inline(dt)}</dt>"
+      buf.push "<dd>#{parse_inline(dd)}</dd>" if dd
+    end
+    buf.push "</dl>"
+    buf
+  end
+
+  def parse_quote(lines)
+    ["<blockquote><p>", lines.join("\n"), "</p></blockquote>"]
+  end
+
+  def parse_pre(lines)
+    #[%Q|#{lines.map {|line| "\t".concat(line) }.join("\n")}|, %Q|{:class="prettyprint"}|]
+    lines.map{|line| "\t".concat(line)} #.join("\n")
+  end
+
+  def parse_pre2(lines)
+    array = lines.map{|line| code_escape(line)}
+    array[0] = %Q|<pre class="prettyprint"><code>|.concat(array[0])
+    [array.join("\n"), "</code></pre>"]
+  end
+
+  def parse_pre3(lines)
+    ["```java", lines.join("\n"), "```"]
+  end
+
+  def parse_comment(lines)
+    ["<!-- #{lines.map {|line| escape(line) }.join("\n")}",
+      ' -->']
+  end
+
+  def parse_p(lines)
+    lines.map {|line| parse_inline(line)}
+  end
+
+  def parse_inline(str)
+    str = str.gsub(/%%(?!%)((?:(?!%%).)*)%%/) { ['~~', $1, '~~'].join() } #<del>, <strike>
+    str = str.gsub(/``(?!`)((?:(?!``).)*)``/) { ['`', $1, '`'].join() }   #<code>
+    str = str.gsub(/\'\'(?!\')((?:(?!\'\').)*)\'\'/) { ['**', $1, '**'].join() } #<strong>
+    str = str.gsub(/KBD{([^}]*)}/) { ['<kbd>', $1, '</kbd>'].join() } #<kbd>
+    @inline_re ||= %r!
+        &([A-Za-z]+)(?:\(([^\)]+)\))?(?:{([^}]+)})?; # $1: plugin, $2: parameter, $3: inline
+      | \[\[([^>]+)>?([^\]]*)\]\]     # $4: label,  $5: URI
+      | \[(https?://\S+)\s+([^\]]+)\] # $6: label,  $7: URI
+      | (#{autolink_re()})            # $8: Page name autolink
+      | (#{URI.regexp('http')})       # $9: URI autolink
+    !x
+    str.gsub(@inline_re) {
+      case
+      when plugin   = $1 then parse_inline_plugin(plugin.strip, $2, $3)
+      when bracket  = $4 then a_href($5.strip, bracket, 'pagelink')
+      when bracket  = $7 then a_href($6.strip, bracket, 'outlink')
+      when pagename = $8 then a_href(page_uri(pagename), pagename, 'pagelink')
+      when uri      = $9 then a_href(uri, uri, 'outlink')
+      else
+        raise 'must not happen'
+      end
+    }
+  end
+
+  def parse_inline_plugin(plugin, para, inline)
+    case plugin
+    when 'jnlp'
+      %Q|{% jnlp %}|
+    when 'jar2'
+      %Q|{% jar %}|
+    when 'zip'
+      %Q|{% src %}\n- {% svn %}|
+    when 'author'
+      @author = para.strip #.delete("()")
+      %Q|[#{@author}](#{@base_uri}#{@author}.html)|
+    when 'time'
+      @timestamp = DateTime.parse(para).strftime('%Y-%m-%d')
+      para
+    when 'new'
+      inline.strip #.delete("{}")
+    else
+      plugin
+    end
+  end
+
+  def parse_block_plugin(line)
+    @plugin_re = %r<
+        \A\#([^\(]+)\(?([^\)]*)\)?
+      >x
+    args = []
+    line.gsub(@plugin_re) {
+      args.push $1
+      args.push $2 #.slice(",")
+    }
+    buf = []
+    case args.first
+    when 'download'
+      buf.push %Q<{% download #{args[1]} %}>
+    when 'ref'
+      buf.push %Q<![screenshot](#{args[1]})>
+    when 'tags'
+      @tags = args[1]
+    else
+      buf.push ''
+    end
+    buf
+  end
+
+  def a_href(uri, label, cssclass)
+    str = label.strip
+    if(cssclass.casecmp('pagelink')==0) then
+      if(uri.size===0) then
+        %Q<[#{str}](#{@base_uri}#{escape(str)}.html)>
+      else
+        %Q<[#{str}](#{@base_uri}#{escape(uri.strip)}.html)>
+      end
+    else
+      #%Q<[#{str}](#{URI.escape(uri.strip)})>
+      %Q<[#{str}](#{uri_encode(uri.strip)})>
+    end
+  end
+
+  def autolink_re
+    Regexp.union(* @page_names.reject {|name| name.size <= 3 })
+  end
+
+  def page_uri(page_name)
+    "#{@base_uri}#{urldecode(page_name)}#{@pagelist_suffix}"
+  end
+end
+
+def main
+  include HTMLUtils
+  srcpath = ARGV[0]
+  tgtpath = ARGV[1]
+
+  if File.exist?(srcpath)
+    Dir::glob("#{srcpath}/5377696E672F*.txt").each {|f|
+    #Dir::glob("#{srcpath}/*.txt").each {|f|
+      fname = File.basename(f)
+      tbody = File.read(f)
+      page_names = []
+      parser = PukiWikiParser.new()
+      buf    = parser.to_md(tbody, page_names, HTMLUtils.urldecode(fname))
+      tmp = parser.filename(fname)
+
+      unless /^_/ =~ tmp
+        if /-/ =~ tmp
+          nname  = [tgtpath, tmp].join('/')
+          puts tmp
+          outf   = open(nname, "wb")
+          outf.puts(buf)
+          outf.close()
+        end
+      end
+    }
+  else
+    puts srcpath
+    puts "No such directory"
+  end
+end
+main
+}}
+
+* 参考リンク [#g2e28f3f]
+- [http://jp.rubyist.net/magazine/?0010-CodeReview Rubyist Magazine - あなたの Ruby コードを添削します 【第 1 回】 pukipa.rb]
+
+* メモ [#o28adcba]
+以下、`Markdown`に変換して、`Jekyll`などで利用する場合のメモ。いつか別ページに移行する予定。
+
+* Jekyll [#tbbbbed6]
+- ''注意: `Jekyll`書出しディレクトリの削除''
+-- [https://github.com/mojombo/jekyll/issues/534 Jekyll happily destroys all dot files when building the site ・ Issue #534 ・ mojombo/jekyll ・ GitHub]
+-- [https://github.com/mojombo/jekyll/pull/535 Add source and destination directory protection by jasonroelofs ・ Pull Request #535 ・ mojombo/jekyll ・ GitHub]
+-- `jekyll c:\public_html\jekyll c:\public_html`や、`jekyll . ..`を実行してしまうと、`public_html`内のディレクトリ、ファイルを全削除してファイル生成が行われる
+--- 同名ファイルは上書きされるだろうと思っていたけど、まさか関係ないファイルが消されるとは…
+--- `jekyll`ディレクトリ自身とか、`.git`とか、ローカルメモ(`PukiWiki`の`txt`)とか、数週間分のログファイルとか、全部消えて脱力中
+--- 現在は、`.git`、`.svn`は、デフォルトで`keep_files`に指定されているので削除はされない？
+
+ // _config.yml に設定
+ keep_files:   [".git", ".svn", ".hg"]
+
+-- ログファイルの大部分は復元できたけど、`26`日分は消失(ファイルが壊れている)したので、空ファイルを生成
+
+#code{{
+require 'fileutils'
+require 'date'
+Date.parse("2012-01-02").upto(Date.parse('2013-01-01')) {|d|
+  fn  = "terai.xrea.jp.#{d.strftime("%Y%m%d")}.log"
+  next if FileTest.file?(fn)
+  puts fn
+  File.open(fn, "w").close()
+}
+}}
+
+- `Jekyll 1.0.0`で、以下のように変換結果の表示してテスト
+-- `Ubuntu 13.04` `64bit`版
+-- `Ruby 1.9.3`
+-- http://terai.xrea.jp/index.html
+
+ > jekyll server
+ > http://localhost:4000/swing/2011/09/26/swing-linesplittinglabel/
+
+- イタリック
+ 1.6.0_02 で発生し、1.7.0_05 で修正された
+
+-- などで、「02 で発生し、1.7.0」がイタリックになってしまう
+
+- リストがうまく変換されない場合がある
+-- `Maruku: <a href="...">...</a>`のようなリンクだけで文字列がないリストを作成しようとすると空になる？
+-- `Kramdown`: リストとブロック要素の間に空行が必要？ `redcarpet`でも同様？
+--- `Kramdown`で変換する場合、以下のような数値文字参照(`Numeric character reference`)をコードブロック(`<pre><code>`)に変換するときにエラーになる？
+ JEditorPane OK: &#xD85B;&#xDE40;
+ JEditorPane NG: &#x26E40;
+-- 上記のようにリスト中にコードブロックがある場合、`- `で始まる行の後に、空行(もしくは空白文字のみのインデント)が必要だが、`p2m.rb`では生成できていない
+--- コードブロックも、(リスト階層+1)*4スペース(もしくはタブ)のインデントが必要だが、`p2m.rb`では生成できていない
+
+- `markdown`のパーサーを`redcarpet`に変更
+-- [https://github.com/mojombo/jekyll/wiki/Configuration Configuration ・ mojombo/jekyll Wiki ・ GitHub]
+-- [https://github.com/mrcaron/jekyll/commit/cf8fde495d1689c40b016c4155f4d48fe8377347 updated jekyll to latest RedCarpet version ・ cf8fde4 ・ mrcaron/jekyll ・ GitHub]
+
+ #_config.yml に追加
+ markdown: redcarpet
+
+** Liquid [#cc063cb0]
+`PukiWiki`のプラグインを`Liquid`タグに移植
+
+- C:\jekyll-bootstrap\_plugins\src.rb
+#code{{
+# -*- encoding: utf-8 -*-
+class Src < Liquid::Tag
+  def initialize(tagName, id, tokens)
+    super
+    @id = id
+  end
+
+  def render(context)
+    #page_url = context.environments.first["page"]["url"]
+    url = "src.zip"
+    gaq  = %Q|_gaq.push(['_trackEvent', 'Source', 'Download', '#{@id}']);location.href='#{url}'|
+    %Q|<a href="#{url}" onclick="#{gaq}">Source code(src.zip)</a>|
+  end
+
+  Liquid::Template.register_tag "src", self
+end
+}}
+
+ PukiWikiプラグインの&zip(swing/surrogatepair); などを {% src swing/surrogatepair %} に置き換える
+
+* Jekyll で google-code-prettify [#o7f107ec]
+- 参考: [http://fnordig.de/2011/09/02/kramdown-test/ fnordig.de]
+
+パーサーを`kramdown`にして、行頭タブ(`4`スペース)ブロックの直後に`{:class="prettyprint"}`、または`{:.prettyprint}`を追加
+  def parse_pre(lines)
+    [%Q|#{lines.map {|line| "\t".concat(line) }.join("\n")}|, %Q|{:class="prettyprint"}|]
+  end
+
+ ### サンプルコード
+ 	trayIcon.displayMessage("caption", "text", TrayIcon.MessageType.ERROR);
+ {:class="prettyprint"}
+
+結果
+#code{{
+<h3 id="section">サンプルコード</h3>
+<pre class="prettyprint"><code>trayIcon.displayMessage("caption", "text", TrayIcon.MessageType.ERROR);
+</code></pre>
+}}
+
+`default.html`に`.js`, `.css`を追加
+ <link href="{{ ASSET_PATH }}/css/prettify.css" type="text/css" rel="stylesheet" />
+ </head>
+ <body onload="prettyPrint()">
+ ...
+ <script src="{{ ASSET_PATH }}/js/prettify.js"></script>
+ </body>
+
+* redcarpet [#e5920334]
+ # _config.yml
+ markdown: redcarpet
+ redcarpet:
+    renderer: Redcarpet::Render::XHTML
+    extensions: ["xhtml", "fenced_code_blocks", "strikethrough", "no_intra_emphasis", "lax_spacing"]
+
+- `no_intra_emphasis`
+-- `<pre><code>`の中でも、アンダーライン(例: `InputMap im = combobox.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);`)が、`<em>...</em>`に変換されるので、`no_intra_emphasis`で回避
+
+* テスト [#id32e40e]
+- 変換結果のテスト
+ # 変換したすべてのmdファイルのn行目(以下は3行目のタイトル)だけ一覧表示
+ $ cd _posts
+ $ find . -type f -name "*.md" -exec sed -n "3,3p" {} \;
+
+* コメント [#w483296e]
+#comment

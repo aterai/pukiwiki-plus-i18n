@@ -1,0 +1,87 @@
+TITLE:Java Swing 動作環境
+#description(このサイトにあるサンプルの動作・テスト環境や、JDKのダウンロード、利用方法など)
+#contents(big)
+
+* サンプル利用方法 [#wdd24dcc]
+//** JavaWebStart で起動する場合 [#s924777b]
+//各ページにあるアイコン &ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TRD2KGq73BI/AAAAAAAAAwA/N8-6EXongNk/s800/webstart.png); (`example.jnlp`へのリンク)をクリックすると、サンプルプログラムが起動します。
+
+** Jarファイルで起動する場合 [#s5311996]
+`example.jar`をダウンロードしてサンプルプログラムを起動する場合は、コマンドプロンプトで、以下のように入力します。
+
+ java -jar example.jar
+
+`Jar`ファイルが`Java`に関連付けされている場合は、マウスでダブルクリックでも起動します。
+
+** ソースをコンパイルして起動する場合 [#d9b0bcd0]
+`src.zip`をダウンロード、展開したり、[[Subversion]]で`checkout`や`export`することでソースコード一式を取得することができます。
+
+- [[Subversion]]で`export`する場合の例:
+ svn export http://java-swing-tips.googlecode.com/svn/trunk/AccordionPanel
+
+各サンプルには、[[Ant]]を利用できるように`build.xml`が用意されているので、環境変数`JAVA_HOME`、`ANT_HOME`を設定し、その`build.xml`があるディレクトリに移動して、コマンドプロンプトから`ant`と入力するとソースコードがコンパイルされます。コンパイルからサンプルの起動をまとめて実行する場合は、`run`ターゲットを使用します。
+
+ ant run
+
+以下のように、コンパイルした後で`run.bat`(`run.sh`)を実行してサンプルを起動する方法もあります。
+
+ cd AccordionPanel
+ ant compile
+ sh run.sh
+
+* 動作環境 [#j82ab918]
+このサイトにあるサンプルコードは、主に以下の環境で開発と動作確認を行っています。
+
+- Windows 7 64bit
+ >ver
+ Microsoft Windows [Version 6.1.7601]
+ 
+ >"%JAVA_HOME%¥bin¥java" -version
+ java version "1.8.0_20"
+ Java(TM) SE Runtime Environment (build 1.8.0_20-b26)
+ Java HotSpot(TM) 64-Bit Server VM (build 25.20-b23, mixed mode)
+
+- Windows 7 64bit + Cygwin x86
+ $ bash -version
+ GNU bash, version 4.1.10(4)-release (i686-pc-cygwin)
+ Copyright (C) 2009 Free Software Foundation, Inc.
+ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+ 
+ $ export JAVA_HOME="/cygdrive/c/Program Files/Java/jdk1.7.0_65"
+ $ "$JAVA_HOME/bin/java" -version
+ java version "1.7.0_65"
+ Java(TM) SE Runtime Environment (build 1.7.0_65-b19)
+ Java HotSpot(TM) 64-Bit Server VM (build 24.65-b04, mixed mode)
+
+- Ubuntu 14.04 64bit
+ $ lsb_release -a
+ No LSB modules are available.
+ Distributor ID: Ubuntu
+ Description:    Ubuntu 14.04 LTS
+ Release:        14.04
+ Codename:       trusty
+ 
+ $ echo $JAVA_HOME
+ /usr/lib/jvm/jdk1.7.0_65
+ 
+ $ $JAVA_HOME/bin/java -version
+ java version "1.7.0_65"
+ Java(TM) SE Runtime Environment (build 1.7.0_65-b17)
+ Java HotSpot(TM) 64-Bit Server VM (build 24.65-b04, mixed mode)
+
+** JDKのダウンロードについて [#nd0d5847]
+- 最新の`JDK`をダウンロード
+-- [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java SE Downloads]
+- 古いバージョンの`JDK`をダウンロード
+-- [http://www.oracle.com/technetwork/java/archive-139210.html Oracle Java Archive]
+
+* サイト内検索について [#z6171a9f]
+ナビバーにあるサイト内検索などで、このサイトを検索することができます。
+
+- `search`プラグインを使った簡易検索
+-- 入力した単語を含むページを、その単語を含むパラグラフとともに一覧表示します。
+-- 複数単語を入力して`and`、`or`検索しても、現在うまく動きません。
+
+* 質問、不具合報告 [#c2d3c661]
+- 「サンプルがうまく動かない」、「説明が間違っている」といった、各`Tips`に関連するものはそれぞれのページのコメントで指摘して頂けると助かります。
+- `Swing`全体に関する話題や、このサイトに対する要望、雑談などは、[[Swing]]の下部にあるコメントでお願いします。

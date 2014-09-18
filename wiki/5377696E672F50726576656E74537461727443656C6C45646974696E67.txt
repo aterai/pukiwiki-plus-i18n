@@ -1,0 +1,42 @@
+TITLE:JTableでキー入力によるセル編集開始を禁止する
+#tags(JTable, TableModel, DefaultCellEditor)
+#author(aterai)
+#pubdate(2008-06-16T13:18:37+09:00)
+* 概要 [#he44aefe]
+キー入力やマウスクリックによる`JTable`のセル編集開始を禁止します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRLZXQW1I/AAAAAAAAAgw/ufR0d0md6Bc/s800/PreventStartCellEditing.png)
+
+* サンプルコード [#q96b37cb]
+#code(link){{
+table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);
+}}
+#code{{
+DefaultCellEditor ce = (DefaultCellEditor)table.getDefaultEditor(Object.class);
+ce.setClickCountToStart(Integer.MAX_VALUE);
+}}
+
+* 解説 [#qf178f64]
+- `default`
+-- `0`列目だけ、編集禁止です。
+
+- `prevent KeyStroke autoStartsEdit`
+-- `table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`で、キー入力(KBD{F2}は除く)によるセルの編集開始を禁止します。
+
+- `prevent mouse from starting edit`
+-- `DefaultCellEditor#setClickCountToStart`に大きな値を設定して、事実上マウスクリックによる編集開始が不可能になっています。
+
+- `start cell editing only F2`
+-- 上二つを設定して、セルの編集開始は、KBD{F2}キーのみ可能になっています。
+
+- `isCellEditable retrun false`
+-- `TableModel#isCellEditable`が常に`false`を返し、セルエディタは起動されません。
+
+* 参考リンク [#md0c00c5]
+- [http://0xc000013a.blog96.fc2.com/blog-entry-19.html 片っ端から忘れていけばいいじゃない。  JTableで、セル上でキータイプされただけでは編集を開始しないようにする。JTable.autoStartsEdit]
+- [http://www.stateofmind.fr/confluence/display/java/TIPs+JTable TIPs JTable - Space Of Mind - Confluence]
+- [[JTableのセルを編集不可にする>Swing/CellEditor]]
+- [[JTableでキー入力によるセル編集自動開始を一部禁止する>Swing/FunctionKeyStartEditing]]
+
+* コメント [#i06ddb22]
+#comment

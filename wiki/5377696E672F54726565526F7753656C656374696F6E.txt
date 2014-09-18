@@ -1,0 +1,64 @@
+TITLE:JTreeを行クリックで選択し、行全体を選択状態の背景色で描画
+#tags(JTree, TreeCellRenderer)
+#author(aterai)
+#pubdate(2011-01-17T15:24:56+09:00)
+* 概要 [#w37a10e2]
+`JTree`の行をクリックして選択し、行全体を選択状態の背景色で描画します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TTPdCvaUyfI/AAAAAAAAAyQ/QnF4vHjyUiM/s800/TreeRowSelection.png)
+
+* サンプルコード [#n08c6886]
+#code(link){{
+final Color SELC = new Color(100,150,200);
+JTree tree = new JTree() {
+  @Override public void paintComponent(Graphics g) {
+    g.setColor(getBackground());
+    g.fillRect(0,0,getWidth(),getHeight());
+    if(getSelectionCount()>0) {
+      for(int i: getSelectionRows()) {
+        Rectangle r = getRowBounds(i);
+        g.setColor(SELC);
+        g.fillRect(0, r.y, getWidth(), r.height);
+      }
+    }
+    super.paintComponent(g);
+    if(getLeadSelectionPath()!=null) {
+      Rectangle r = getRowBounds(getRowForPath(getLeadSelectionPath()));
+      g.setColor(SELC.darker());
+      g.drawRect(0, r.y, getWidth()-1, r.height-1);
+    }
+  }
+};
+tree.setUI(new javax.swing.plaf.basic.BasicTreeUI() {
+  @Override public Rectangle getPathBounds(JTree tree, TreePath path) {
+    if(tree != null && treeState != null) {
+      return getPathBounds(path, tree.getInsets(), new Rectangle());
+    }
+    return null;
+  }
+  private Rectangle getPathBounds(TreePath path, Insets insets, Rectangle bounds) {
+    bounds = treeState.getBounds(path, bounds);
+    if(bounds != null) {
+      bounds.width = tree.getWidth();
+      bounds.y += insets.top;
+    }
+    return bounds;
+  }
+});
+tree.setOpaque(false);
+}}
+
+* 解説 [#vd003856]
+以下のような設定で、`JTree`を行選択できるように変更し、表示も`NimbusLookAndFeel`風に行全体を選択状態の背景色で描画するようにしています。
+
+- `BasicTreeUI#getPathBounds(...)`をオーバーライドして、ノードではなく、行のクリックで選択可能に変更
+- `JTree`の背景を`setOpaque(false)`で透明(非描画)にし、`JTree#paintComponent(...)`をオーバーライドして選択された行を背景色で描画
+- 不透明にした`TreeCellRenderer`を使用して、ノードの選択色を`JTree#paintComponent(...)`の背景色と同じものに変更
+
+* 参考リンク [#l98bff1d]
+- [http://d.hatena.ne.jp/KrdLab/20071209/1197143960 JTable でセルのないところに行っぽい表示を出せますか？ - KrdLabの不定期日記]
+- [http://jroller.com/santhosh/entry/highlight_a_node_s_descendants Highlight a node's descendants in JTree - Santhosh Kumar's Weblog]
+-- via: [https://forums.oracle.com/thread/2160338 Swing - JTree - highlight entire row on selection]
+
+* コメント [#pf976939]
+#comment

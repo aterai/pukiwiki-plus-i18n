@@ -1,0 +1,147 @@
+TITLE:Swingコンポーネントの再描画をJXLayerのDebugPainterを使ってデバッグ
+#author(aterai)
+#pubdate(2008-06-05)
+#contents
+
+- [http://terai.xrea.jp/data/swing/debugpainter.jar debugpainter.jar]
+- [http://terai.xrea.jp/data/swing/debugpainter_src.zip debugpainter_src.zip]
+
+#ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TUFGtJHiIaI/AAAAAAAAAzs/ye6so-pxydw/s800/DebugPainterAgent.png)
+
+* 概要 [#s39fd9e5]
+`JXLayer`の`DebugPainter`を使用したコンポーネントの再描画を可視化する`javaagent`でデバッグを行います。
+
+* ソースコード [#ee5a0207]
+#code{{
+package org.jdesktop.swinghelper.layer.demo;
+import java.awt.*;
+import java.lang.instrument.*;
+import javax.swing.*;
+import org.jdesktop.jxlayer.JXLayer;
+import org.jdesktop.jxlayer.plaf.ext.DebugRepaintingUI;
+
+public class DebugPainterAgent {
+  public static void premain(String args) throws Exception {
+    //System.out.println("premain");
+    agentmain(args);
+  }
+  public static void agentmain(String args) throws Exception {
+    System.out.println("agentmain start");
+    new Thread() {
+      @Override public void run() {
+        System.out.println("Thread run");
+        Frame[] list = Frame.getFrames();
+        while (list.length==0) { //FIX ME!
+          try {
+            sleep(1000);
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+          System.out.print(".");
+          list = Frame.getFrames();
+        }
+        System.out.println(" ");
+        System.out.println("Loop out");
+        replaceLayer();
+        System.out.println("Thread exit");
+      }
+    } .start();
+    System.out.println("agentmain end");
+  }
+  private static void replaceLayer() {
+    for (Frame f:Frame.getFrames()) {
+      if (f instanceof JFrame) {
+        final JFrame frame = (JFrame)f;
+        EventQueue.invokeLater(new Runnable() {
+          @Override public void run() {
+            System.out.println("replace layer");
+            JComponent c = (JComponent)frame.getContentPane();
+            JXLayer<JComponent> layer = new JXLayer<JComponent>(c);
+            layer.setUI(new DebugRepaintingUI());
+            frame.setContentPane(layer);
+            frame.pack();
+          }
+        });
+      }
+    }
+  }
+}
+}}
+
+* 解説 [#f431243c]
+例えば、`repaint`が無限ループしているバグのあるサンプルを以下のように起動すると、`JLabel`の描画が無駄に繰り返され、`CPU`の使用率も異常になっている様子がすぐに分かります。
+//--debugpainter.batをクリックします。
+//--このデモに添付している TableCellProgressBar などは、JTableのセルや、ポップアップメニューを開いたときの再描画が分かりやすくて面白いかも。
+
+- https://jxlayer.dev.java.net/ から`jxlayer.jar`をダウンロードし、カレントもしくは、`.\lib`以下に配置
+- [http://terai.xrea.jp/data/swing/debugpainter.jar debugpainter.jar] をダウンロードし、カレントディレクトリに配置
+-- または、[http://terai.xrea.jp/data/swing/debugpainter_src.zip debugpainter_src.zip]から生成
+
+#code{{
+javac RepaintLoopTest.java
+java -javaagent:debugpainter.jar RepaintLoopTest
+REM java -javaagent:debugpainter.jar -jar example.jar
+}}
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.table.*;
+public class RepaintLoopTest {
+  public JComponent makeUI() {
+    String[] columnNames = {"String", "Integer", "Boolean"};
+    Object[][] data = {
+      {"aaa", 12, true}, {"bbb", 5, false},
+      {"CCC", 92, true}, {"DDD", 0, false}
+    };
+    DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+      @Override public Class<?> getColumnClass(int column) {
+        return getValueAt(0, column).getClass();
+      }
+    };
+    JTable table = new JTable(model);
+    table.setAutoCreateRowSorter(true);
+
+    JLabel label = new JLabel("aaaaaaaaa") {
+      int h = 10;
+      int d = 1;
+      @Override public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        repaint(); //BUG: an infinite repaint loop
+      }
+    };
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(new JScrollPane(table));
+    p.add(label, BorderLayout.SOUTH);
+    p.setPreferredSize(new Dimension(320, 240));
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new RepaintLoopTest().makeUI());
+    f.pack(); //setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
+* 参考リンク [#fcba71b7]
+- [https://jxlayer.dev.java.net/ jxlayer: Project Home Page]
+- [http://weblogs.java.net/blog/alexfromsun/archive/2007/11/debug_swing_rep.html Alexander Potochkin's Blog: Debug Swing repainting]
+- [http://weblogs.java.net/blog/alexfromsun/archive/2008/06/the_new_jxlayer.html Alexander Potochkin's Blog: JXLayer 3.0 - Getting started]
+- [http://docs.oracle.com/javase/jp/7/api/javax/swing/JComponent.html#setDebugGraphicsOptions(int) JComponent#setDebugGraphicsOptions(int debugOptions) (Java Platform SE 7)]
+-- [http://www.java2s.com/Tutorial/Java/0240__Swing/DebugGraphics.htm DebugGraphics : DebugGraphics « Swing « Java Tutorial]
+-- `DebugGraphicsOptions`を設定して、コンポーネントの描画を逐次表示してデバックする
+
+* コメント [#ff4ef8a7]
+#comment

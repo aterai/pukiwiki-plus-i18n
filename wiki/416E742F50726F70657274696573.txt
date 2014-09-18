@@ -1,0 +1,50 @@
+TITLE:AntのプロパティファイルをXMLにする
+#author(aterai)
+#pubdate(2007-04-05)
+#contents
+
+* 概要 [#a4250645]
+プロパティファイルのエンコーディングなどを気にせずに使えるように、`Ant`のプロパティファイルを`XML`にしてみます。
+
+* サンプルbuild.xml、properties.xml [#p9021c24]
+** build.xml [#v1ae5fd1]
+#code{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="example" default="compile" basedir=".">
+  <import file="config/properties.xml" />
+......
+}}
+
+** properties.xml [#vea0f1e4]
+#code{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+<!-- プロジェクト -->
+<property name="Name"   value="Example" />
+<property name="name"   value="example" />
+<property name="vendor" value="てんぷらメモ - at.terai@gmail.com" />
+<!-- コンパイルオプション -->
+<property name="compile.debug"    value="on" />
+<property name="compile.optimize" value="on" />
+<property name="compile.nowarn"   value="off" />
+<property name="compile.source"   value="1.4" />
+<property name="compile.encoding" value="UTF-8" />
+<!-- ターゲットフォルダ -->
+<property name="build.dir"  value="${basedir}/target" />
+<property name="build.src"  value="${build.dir}/src" />
+<property name="build.dest" value="${build.dir}/classes" />
+<property name="build.docs" value="${build.dir}/apidocs" />
+......
+</project>
+}}
+
+* 解説 [#l533aab4]
+`Ant`で環境に依存するプロパティなどを、`build.xml`から分離したい場合、`build.properties`といったファイルを作成して`import`する方法がありますが、プロパティの値に日本語が入っていると`native2ascii`する必要があり、すこし面倒です。
+
+上記のサンプルでは、`import`タスクを使って、`property`タスクだけ記述したビルドファイルを取り込むことで、`xml`ファイルをプロパティファイルとして代用しています。
+
+//*参考リンク
+* コメント [#gec46f53]
+- メモ: `XmlProperty`タスクを使用する方法も調べること。 -- [[aterai]] &new{2007-10-19 (金) 16:13:57};
+
+#comment

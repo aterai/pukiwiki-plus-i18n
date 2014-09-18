@@ -1,0 +1,46 @@
+TITLE:JComboBoxのArrowButtonを隠す
+#tags(JComboBox, ArrowButton, UIManager)
+#author(aterai)
+#pubdate(2008-12-22T13:06:25+09:00)
+* 概要 [#x5fb6947]
+`ArrowButton`を隠して、`JComboBox`の表示を`JLabel`風にします。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTN0Yp0GRI/AAAAAAAAAbY/WvXw5vm2_LI/s800/HideComboArrowButton.png)
+
+* サンプルコード [#l1b78e9d]
+#code(link){{
+JPanel p = new JPanel(new BorderLayout(5, 5));
+Object[] items = {"JComboBox 11111:", "JComboBox 222:", "JComboBox 33:"};
+
+UIManager.put("ComboBox.squareButton", Boolean.FALSE);
+JComboBox comboBox = new JComboBox(items);
+comboBox.setUI(new BasicComboBoxUI() {
+  @Override protected JButton createArrowButton() {
+    JButton button = new JButton(); //super.createArrowButton();
+    button.setBorder(BorderFactory.createEmptyBorder());
+    button.setVisible(false);
+    return button;
+  }
+});
+comboBox.setOpaque(true);
+comboBox.setBackground(p.getBackground());
+comboBox.setBorder(BorderFactory.createEmptyBorder(0,2,0,2));
+comboBox.setFocusable(false);
+
+UIManager.put("ComboBox.squareButton", Boolean.TRUE);
+}}
+
+* 解説 [#q1e91fd3]
+上記のサンプルでは、以下のようにして、`JComboBox`を`JLabel`風に表示しています。
+
+- `UIManager.put("ComboBox.squareButton", Boolean.FALSE);`で、`ArrowButton`の幅をそのまま使用するように変更
+- `BasicComboBoxUI#createArrowButton`をオーバーライドして、`ArrowButton`の代わりに幅高さ`0`で`setVisible(false)`なボタンを作成
+- `JComboBox`の背景色を親の`JPanel`と同じにする
+- `JComboBox`がフォーカスを取得しないようにする
+
+* 参考リンク [#o78e1c11]
+- [https://forums.oracle.com/thread/1359216 Swing - Hide JComboBox Arrow?]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6337518 Bug ID: 6337518 Null Arrow Button Throws Exception in BasicComboBoxUI]
+
+* コメント [#mce6b916]
+#comment

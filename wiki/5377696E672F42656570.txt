@@ -1,0 +1,28 @@
+TITLE:Beep音を鳴らす
+#tags(Toolkit, UIManager, Sound)
+#author(aterai)
+#pubdate(2003-12-08)
+* 概要 [#obbcac28]
+`Toolkit`を使ってビープ音を鳴らします。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIE6ivySI/AAAAAAAAASM/H5qY8r_auGc/s800/Beep.png)
+
+* サンプルコード [#c10a0766]
+#code(link){{
+//UIManager.put("AuditoryCues.playList",
+//              UIManager.get("AuditoryCues.noAuditoryCues"));
+java.awt.Toolkit.getDefaultToolkit().beep();
+JOptionPane.showMessageDialog(this,"error","title",JOptionPane.ERROR_MESSAGE);
+}}
+
+* 解説 [#g4e528ae]
+上記のサンプルでは、ボタンをクリックしてダイアログを開くときに、`Toolkit#beep()`メソッドを使ってビープ音を鳴らしています。
+
+* 参考リンク [#ib1228e6]
+- [[MIDIファイルの演奏>Swing/MidiSystem]]
+- [[Wavファイルの演奏>Swing/Sound]]
+- [[AuditoryCuesでイベント音を設定する>Swing/AuditoryCues]]
+-- こちらは、システムが設定している警告音など(無ければ無音)を`AuditoryCues.playList`を使って鳴らす方法
+
+* コメント [#zb47e132]
+#comment

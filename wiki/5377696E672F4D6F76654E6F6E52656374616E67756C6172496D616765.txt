@@ -1,0 +1,30 @@
+TITLE:JComponentの形状を変更する
+#tags(JComponent, JLabel, BufferedImage, DragAndDrop)
+#author(aterai)
+#pubdate(2008-11-17T16:07:53+09:00)
+* 概要 [#hda649fc]
+コンポーネントの形状を画像の不透明領域に合わせて変更します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTQKdiDk4I/AAAAAAAAAfI/tb322r8ngL0/s800/MoveNonRectangularImage.png)
+
+* サンプルコード [#h071e116]
+#code(link){{
+JLabel label = new JLabel(dukeIcon) {
+  @Override public boolean contains(int x, int y) {
+    return super.contains(x, y) && ((image.getRGB(x, y) >> 24) & 0xff) > 0;
+  }
+};
+}}
+
+* 解説 [#lea73de2]
+- `JLabel#contains(int, int)`メソッドをオーバーライドし、与えられた座標が画像の透明部分に当たる場合は、`false`を返すように設定
+- 画像の透明部分は`JLabel`に含まれないことになり、`JLabel`に設定した`MouseListener`などに反応しない
+- 非矩形画像の不透明部分だけマウスでドラッグ可能になる
+
+* 参考リンク [#va0cebde]
+- [http://duke.kenai.com/iconSized/index.html Duke Images: iconSized]
+- [[JButtonの形を変更>Swing/RoundButton]]
+- [[ImageIconの形でJButtonを作成>Swing/RoundImageButton]]
+
+* コメント [#a017a413]
+#comment

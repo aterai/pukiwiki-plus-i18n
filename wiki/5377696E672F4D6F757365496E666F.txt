@@ -1,0 +1,47 @@
+TITLE:Screen上にあるMouseの位置を取得する
+#tags(MouseInfo, Timer)
+#author(aterai)
+#pubdate(2007-10-29T13:39:49+09:00)
+* 概要 [#pec7a075]
+`Screen`上にある`Mouse`の絶対位置を取得して、パネル内のラケットを移動します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQC6wobCI/AAAAAAAAAe8/3UnK314olDM/s800/MouseInfo.png)
+
+* サンプルコード [#o397b7d8]
+#code(link){{
+public static final Dimension panelDim = new Dimension(320, 240);
+private final Racket racket = new Racket(panelDim);
+public MainPanel() {
+  super(new BorderLayout());
+  setPreferredSize(panelDim);
+  new javax.swing.Timer(10, this).start();
+}
+@Override public void paintComponent(Graphics g) {
+  super.paintComponent(g);
+  racket.draw(g);
+}
+@Override public void actionPerformed(ActionEvent e) {
+  PointerInfo pi = MouseInfo.getPointerInfo();
+  Point pt = pi.getLocation();
+  SwingUtilities.convertPointFromScreen(pt, this);
+  racket.move(pt.x);
+  repaint();
+}
+}}
+
+* 解説 [#z2793b7a]
+上記のサンプルでは、マウスカーソルがパネル外に移動した場合でもラケットを動かせるように、以下のような方法を使用しています。
+
++ `10`ミリ秒ごとに`MouseInfo`から`PointerInfo`を取得
++ `PointerInfo`から画面上でのポインタ座標を取得
++ `SwingUtilities.convertPointFromScreen`メソッドで、これをパネル相対のポインタ座標に変換
++ ラケットに変換した座標を与えて、`repaint`
+
+* 参考リンク [#ia57502a]
+- [http://www.javainthebox.net/laboratory/J2SE1.5/GUI/MouseLocation/MouseLocation.html J2SE 5.0 Tiger 虎の穴 マウスの位置]
+- [http://d.hatena.ne.jp/aidiary/20070601/1251545490 ラケットを動かす - Javaでゲーム作りますが何か？]
+
+* コメント [#h33780ab]
+- スクリーンショットの間違いを修正。 -- [[aterai]] &new{2007-12-28 (金) 14:41:53};
+
+#comment

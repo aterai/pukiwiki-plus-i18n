@@ -1,0 +1,81 @@
+TITLE:SpringLayoutの使用
+#tags(SpringLayout, LayoutManager)
+#author(aterai)
+#pubdate(2004-03-22)
+* 概要 [#sf3d3df1]
+`SpringLayout`を使用して、各ラベルのサイズとパネルからの距離が一定の比率になるような配置を指定します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTwX9UR-I/AAAAAAAAAk8/TLNZjmIrPnw/s800/SpringLayout.png)
+
+* サンプルコード [#a420aa84]
+#code(link){{
+private static void setScaleAndAdd(JComponent parent, SpringLayout layout, JComponent child,
+                                   float sx, float sy, float sw, float sh) {
+  Spring panelw = layout.getConstraint(SpringLayout.WIDTH,  parent);
+  Spring panelh = layout.getConstraint(SpringLayout.HEIGHT, parent);
+
+  SpringLayout.Constraints c = layout.getConstraints(child);
+  c.setX(Spring.scale(panelw, sx));
+  c.setY(Spring.scale(panelh, sy));
+  c.setWidth(Spring.scale(panelw,  sw));
+  c.setHeight(Spring.scale(panelh, sh));
+
+  parent.add(child);
+}
+//public void initLayout() {
+//  SpringLayout layout = new SpringLayout();
+//  Insets i = panel.getInsets();
+//  int w = panel.getWidth()  - i.left - i.right;
+//  int h = panel.getHeight() - i.top  - i.bottom;
+//
+//  l1.setPreferredSize(new Dimension( w*90/100, h*55/100 ) );
+//  l2.setPreferredSize(new Dimension( w*40/100, h*30/100 ) );
+//
+//  layout.putConstraint(SpringLayout.WEST,  l1, w*5/100,
+//                       SpringLayout.WEST,  panel);
+//  layout.putConstraint(SpringLayout.NORTH, l1, h*5/100,
+//                       SpringLayout.NORTH, panel);
+//  layout.putConstraint(SpringLayout.WEST,  l2, w*50/100,
+//                       SpringLayout.WEST,  panel);
+//  //layout.putConstraint(SpringLayout.WEST, l2, 0, SpringLayout.WEST, l1);
+//  layout.putConstraint(SpringLayout.SOUTH, l2, -h*5/100,
+//                       SpringLayout.SOUTH, panel);
+//
+//  panel.setLayout(layout);
+//  panel.revalidate();
+//}
+}}
+
+* 解説 [#he0e3381]
+上記のサンプルでは、`SpringLayout`を使って`2`つの`JComponent`をパネル内にレイアウトしています。
+
+%%パネルのサイズが変更されるたびに、各ラベルのサイズとパネルからの距離が一定の割合になるように設定し直しています(ただしパネルの余白は無視)。%%
+
+- `JLabel`
+-- 幅はパネルの`90%`、高さは`55%`
+-- 左上座標は、親パネルの左上から`x`:`5%`, `y`:`5%`の位置
+-- %%パネルと自身の`WEST`からの距離`5%`、パネルと自身の`NORTH`からの距離`5%`%%
+- `JButton`
+-- 幅はパネルの`40%`、高さは`30%`
+-- 左上座標は、親パネルの左上から`x`:`50%`, `y`:`65%`の位置
+-- %%パネルと自身のWESTからの距離`50%`、パネルと自身の`SOUTH`からの距離`-5%`%%
+
+%%`SpringLayout`では原点は左上で、右方向、下方向に正の値を取る為、例えばパネルの南辺からコンポーネントの南辺までの距離を指定する場合は、`layout.putConstraint`する際にマイナスの値を指定する必要があります。%%
+
+%%距離を`0`にすることも可能で、例えばサンプルコードのコメントアウトされたような指定をすると、ラベル`1`、`2`を左揃えで並べることができます。%%
+
+//**参考リンク
+* コメント [#v98c3ed9]
+- 以前の内容は、[[BoxLayoutでリスト状に並べる>Swing/ComponentList]]に移動しました。 -- [[aterai]] &new{2006-06-15 (木) 19:40:17};
+- リスナーを使わなくても次ので出来ました。 --  &new{2010-09-02 (木) 02:41:13};
+
+#code{{
+panel.setLayout(layout);
+Spring panelw = layout.getConstraint(SpringLayout.WIDTH, panel);
+layout.getConstraints(name).setWidth(Spring.scale(panelw, 0.9f));
+layout.getConstraints(name).setX(Spring.scale(panelw, 0.05f));
+}}
+
+- ご指摘ありがとうございます。こんなメソッドがあったんですね。サンプルを全体的に修正してみました。 -- [[aterai]] &new{2010-09-02 (木) 07:01:18};
+
+#comment

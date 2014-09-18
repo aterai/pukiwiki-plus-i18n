@@ -1,0 +1,63 @@
+TITLE:JRootPaneの背景として画像を表示
+#tags(JRootPane, BufferedImage, ContentPane, JDesktopPane, Translucent, Transparent)
+#author(aterai)
+#pubdate(2013-01-07T00:31:26+09:00)
+* 概要 [#f08d639c]
+`JRootPane`の背景として画像を表示しています。
+
+#download(https://lh6.googleusercontent.com/-2HEcpl-4XqA/UOmSieyPnxI/AAAAAAAABaI/KBA4i6QGH3E/s800/RootPaneBackground.png)
+
+* サンプルコード [#fb81420b]
+#code(link){{
+JFrame frame = new JFrame("@title@") {
+  @Override protected JRootPane createRootPane() {
+    JRootPane rp = new JRootPane() {
+      //private final TexturePaint texture = makeCheckerTexture();
+      @Override protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D)g.create();
+        g2.setPaint(texture);
+        g2.fillRect(0, 0, getWidth(), getHeight());
+        g2.dispose();
+      }
+      @Override public void updateUI() {
+        super.updateUI();
+        BufferedImage bi = makeBufferedImage("test.jpg");
+        setBorder(new CentredBackgroundBorder(bi));
+        setOpaque(false);
+      }
+    };
+    return rp;
+  }
+};
+//frame.getRootPane().setBackground(Color.BLUE);
+//frame.getLayeredPane().setBackground(Color.GREEN);
+//frame.getContentPane().setBackground(Color.RED);
+((JComponent)frame.getContentPane()).setOpaque(false);
+frame.setJMenuBar(createMenubar());
+frame.getContentPane().add(new MainPanel());
+}}
+
+* 解説 [#z9d95979]
+このサンプルでは、`JFrame#createRootPane()`メソッドをオーバーライドして、以下の方法で背景に画像を描画する`JRootPane`を作成しています。
+
+- 中央の画像: [https://forums.oracle.com/thread/1395763 CentredBackgroundBorder]を使用
+- チェック柄: `JRootPane#paintComponent(...)`をオーバーライド
+
+----
+- `JRootPane`の子コンポーネントの透明化、半透明化
+-- `ContentPane`: `setOpaque(false);`で透明化
+-- `JDesktopPane`:  `setOpaque(false);`で透明化
+--- 参考: [[JInternalFrameを半透明にする>Swing/TransparentFrame]]
+--- `NimbusLookAndFeel`には未対応
+-- `JMenuBar`: `setOpaque(false);`で透明化し、`JMenuBar#paintComponent(...)`をオーバーライドして半透明化
+-- `JMenu`, `JMenuItem`など: `setOpaque(false);`で透明化、`LookAndFeel`によって、`JMenu#setBackground(new Color(0,0,0,0));`、`UIManager.put("Menu.selectionBackground", new Color(0,0,100,100));`などを使用
+--- 参考: [[JMenuBarの背景に画像を表示する>Swing/MenuBarBackground]]
+-- `JPopupMenu`: [[JMenuなどから開くPopupMenuを半透明化>Swing/TranslucentSubMenu]]などで、半透明化
+
+* 参考リンク [#h743d79e]
+- [https://forums.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]
+-- [[JTextAreaの背景に画像を表示>Swing/CentredBackgroundBorder]]
+
+* コメント [#eeb6c50d]
+#comment

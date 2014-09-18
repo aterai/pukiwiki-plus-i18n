@@ -1,0 +1,50 @@
+TITLE:JComboBoxのドロップダウンリスト幅を指定値以上に保つ
+#tags(JComboBox, PopupMenuListener)
+#author(aterai)
+#pubdate(2007-09-10)
+* 概要 [#i9a11225]
+`JComboBox`のドロップダウンリストが表示されたとき、本体の幅が狭くても一定の幅以下にはならないように設定します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJ8wQD77I/AAAAAAAAAVM/Ade6cu49JUQ/s800/ComboPopupWidth.png)
+
+* サンプルコード [#v4b8bfc8]
+#code(link){{
+class MinWidthPopupMenuListener implements PopupMenuListener{
+  private static final int POPUP_MIN_WIDTH = 320;
+  private boolean adjusting = false;
+  @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+    JComboBox combo = (JComboBox)e.getSource();
+    Dimension size  = combo.getSize();
+    if(size.width>=POPUP_MIN_WIDTH) return;
+    if(!adjusting) {
+      adjusting = true;
+      combo.setSize(POPUP_MIN_WIDTH, size.height);
+      combo.showPopup();
+    }
+    combo.setSize(size);
+    adjusting = false;
+  }
+  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
+  @Override public void popupMenuCanceled(PopupMenuEvent e) {}
+}
+}}
+
+* 解説 [#cc7f021e]
+上記のサンプルでは、下二つの`JComboBox`に`PopupMenuListener`を実装したリスナーを設定しています。このリスナーでは、ポップアップメニュー(ドロップダウンリスト)が開かれる前に`JComboBox`本体の幅を指定値と比較し、小さかった場合は以下のような通常とは異なる手順でポップアップメニューの表示を行っています。
+
+- `JComboBox`のサイズを取得し保存
+- `JComboBox`の幅を指定値まで拡大
+- `JComboBox#showPopup`でポップアップメニューを表示
+-- ポップアップメニューの幅も、指定値まで拡大している
+- `JComboBox`本体のサイズを保存していた元の値に戻す
+
+* 参考リンク [#a112d945]
+- [https://forums.oracle.com/thread/1368300 Swing - How to widen the drop-down list in a JComboBox]
+-- dlinderm さんの投稿(2007/06/08 23:24)を参考にして、`PopupMenuListener`を使用しています。
+- [http://www.jroller.com/santhosh/entry/make_jcombobox_popup_wide_enough Make JComboBox popup wide enough - Santhosh Kumar's Weblog]
+-- こちらには、`JComboBox#doLayout()`と、`JComboBox#getSize()`をオーバーライドして、十分な幅のドロップダウンリストを表示するサンプルがあります。
+
+* コメント [#p6e4cf7f]
+- メモ: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4743225 Bug ID: 4743225 Size of JComboBox list is wrong when list is populated via PopupMenuListener]  -- [[aterai]] &new{2011-06-05 (日) 02:34:16};
+
+#comment

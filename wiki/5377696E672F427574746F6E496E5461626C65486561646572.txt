@@ -1,0 +1,55 @@
+TITLE:JTableHeaderにJButtonを追加する
+#tags(JTable, JTableHeader, JButton, JPopupMenu, MouseListener)
+#author(aterai)
+#pubdate(2011-11-07T22:14:09+09:00)
+* 概要 [#m34a7190]
+`JTableHeader`にクリックするとポップアップメニューを表示する`JButton`を追加します。
+
+#download(https://lh3.googleusercontent.com/-ccZ08VSXYwE/Trd27UaeD2I/AAAAAAAABEk/1NAYoZ1NGV0/s800/ButtonInTableHeader.png)
+
+* サンプルコード [#g556fd49]
+#code(link){{
+@Override public void mouseClicked(MouseEvent e) {
+  JTableHeader header = (JTableHeader)e.getSource();
+  JTable table = header.getTable();
+  TableColumnModel columnModel = table.getColumnModel();
+  int vci = columnModel.getColumnIndexAtX(e.getX());
+  int mci = table.convertColumnIndexToModel(vci);
+  TableColumn column = table.getColumnModel().getColumn(mci);
+  Rectangle r = header.getHeaderRect(vci);
+  Container c = (Container)getTableCellRendererComponent(table, "", true, true, -1, vci);
+  //if(!isNimbus) {
+  //  Insets i = c.getInsets();
+  //  r.translate(r.width-i.right, 0);
+  //}else{
+  r.translate(r.width-BUTTON_WIDTH, 0);
+  r.setSize(BUTTON_WIDTH, r.height);
+  Point pt = e.getPoint();
+  if(c.getComponentCount()>0 && r.contains(pt) && pop!=null) {
+    pop.show(header, r.x, r.height);
+    JButton b = (JButton)c.getComponent(0);
+    b.doClick();
+    e.consume();
+  }
+}
+@Override public void mouseExited(MouseEvent e) {
+  rolloverIndex = -1;
+}
+@Override public void mouseMoved(MouseEvent e) {
+  JTableHeader header = (JTableHeader)e.getSource();
+  JTable table = header.getTable();
+  TableColumnModel columnModel = table.getColumnModel();
+  int vci = columnModel.getColumnIndexAtX(e.getX());
+  int mci = table.convertColumnIndexToModel(vci);
+  rolloverIndex = mci;
+}
+}}
+
+* 解説 [#m5fb923c]
+上記のサンプルでは、`JTableHeader`の各カラムにマウスカーソルがある場合、`HeaderRenderer#getTableCellRendererComponent(...)`内で、右端に`JButton`を追加しています。ボタンがクリックされたときに表示する`JPopupMenu`は、`JTableHeader`に追加したマウスリスナーでクリックされた位置などを取得して表示するようになっています。
+
+//**参考リンク
+* コメント [#p1ee78e8]
+- `NimbusLookAndFeel`で、`JPopupMenu`が表示されないのを修正。 -- [[aterai]] &new{2011-11-07 (月) 22:15:02};
+
+#comment

@@ -1,0 +1,180 @@
+TITLE:JLabelの文字揃え
+#tags(JLabel, Alignment, GlyphVector)
+#author(aterai)
+#pubdate(2008-03-31T00:41:18+09:00)
+* 概要 [#sd977538]
+`JLabel`で、左右中央両端などの文字揃えをテストします。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTOwQzSk-I/AAAAAAAAAc4/bD-z_hTSHB8/s800/JustifiedLabel.png)
+
+* サンプルコード [#ad114894]
+#code(link){{
+JLabel l0 = new JLabel("打率");
+JLabel l1 = new JLabel("打率", JLabel.RIGHT);
+JLabel l2 = new JustifiedLabel("打率");
+JLabel l3 = new JLabel("出塁率", JLabel.CENTER);
+JLabel l4 = new JustifiedLabel("出塁率");
+JLabel l5 = new JustifiedLabel("チーム出塁率");
+//...
+class JustifiedLabel extends JLabel {
+  private GlyphVector gvtext;
+  private int prevWidth = -1;
+  public JustifiedLabel() {
+    this(null);
+  }
+  public JustifiedLabel(String str) {
+    super(str);
+  }
+  @Override protected void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    Insets i = getInsets();
+    int w = getWidth() - i.left - i.right;
+    if (w != prevWidth) {
+      gvtext = getJustifiedGlyphVector(getText(), getFont(), g2.getFontRenderContext());
+      prevWidth = w;
+    }
+    if (gvtext == null) {
+      super.paintComponent(g);
+    } else {
+      g2.drawGlyphVector(gvtext, i.left, i.top + getFont().getSize());
+    }
+    g2.dispose();
+  }
+  private GlyphVector getJustifiedGlyphVector(String str, Font font, FontRenderContext frc) {
+    GlyphVector gv = font.createGlyphVector(frc, str);
+    Rectangle2D r = gv.getVisualBounds();
+    float jwidth = (float) getWidth();
+    float vwidth = (float) r.getWidth();
+    if (jwidth < vwidth) {
+      return gv;
+    }
+    float xx = (jwidth - vwidth) / (float) (gv.getNumGlyphs() - 1);
+    float xpos = 0f;
+    Point2D gmPos = new Point2D.Double(0.0d, 0.0d);
+    for (int i = 0; i < gv.getNumGlyphs(); i++) {
+      GlyphMetrics gm = gv.getGlyphMetrics(i);
+      gmPos.setLocation(xpos, 0);
+      gv.setGlyphPosition(i, gmPos);
+      xpos = xpos + gm.getAdvance() + xx;
+    }
+    return gv;
+  }
+}
+}}
+
+* 解説 [#yb37fc4e]
+`JLabel`の文字揃えは、デフォルトが左揃えで、その他に右揃え、中央揃えがあります。両端揃え(文字の均等割り付け)は存在しないようなので、上記のサンプルでは、`JustifiedLabel`(幅が足りない場合などは、通常の`JLabel`と同様にクリップ)を作成して使用しています。
+
+----
+- `JTextPane`に挿入、一文字の場合などのテスト
+
+#code{{
+//package example;
+//-*- mode:java; encoding:utf-8 -*-
+// vim:set fileencoding=utf-8:
+//@homepage@
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.font.*;
+import java.awt.geom.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.text.*;
+
+public class JustifiedLabelDemo {
+  public JComponent makeUI() {
+    String s = "\u2605";
+    JTextPane textPane = new JTextPane();
+    textPane.insertComponent(new JustifiedLabel(s));
+    textPane.replaceSelection(": 111\n");
+    textPane.insertComponent(new JustifiedLabel(s+s));
+    textPane.replaceSelection(": 2222222\n");
+    textPane.insertComponent(new JustifiedLabel(s+s+s));
+    textPane.replaceSelection(": 3333\n");
+    textPane.insertComponent(new JustifiedLabel(s+s+s+s));
+    textPane.replaceSelection(": 4444444\n");
+    textPane.insertComponent(new JustifiedLabel(s+s+s+s+s));
+    textPane.replaceSelection(": 555\n");
+    return new JScrollPane(textPane);
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    UIManager.put("swing.boldMetal", Boolean.FALSE);
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new JustifiedLabelDemo().makeUI());
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+class JustifiedLabel extends JLabel {
+  private GlyphVector gvtext;
+  private int prev_width = -1;
+  public JustifiedLabel() {
+    this(null);
+  }
+  public JustifiedLabel(String str) {
+    super(str);
+    Dimension d = getPreferredSize();
+    int baseline = getBaseline(d.width, d.height);
+    setAlignmentY(baseline/(float)d.height);
+  }
+  @Override public Dimension getMinimumSize() {
+    return getPreferredSize();
+  }
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.width = getWidth();
+    return d;
+  }
+  @Override public int getWidth() {
+    return 120;
+  }
+  @Override protected void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D)g;
+    Insets i = getInsets();
+    int w = getWidth() - i.left - i.right;
+    if(w!=prev_width) {
+      gvtext = getJustifiedGlyphVector(getText(), getFont(), g2.getFontRenderContext());
+      prev_width = w;
+    }
+    if(gvtext!=null) {
+      g2.drawGlyphVector(gvtext, i.left, i.top + getFont().getSize());
+    } else {
+      super.paintComponent(g);
+    }
+  }
+  private GlyphVector getJustifiedGlyphVector(String str, Font font, FontRenderContext frc) {
+    GlyphVector gv = font.createGlyphVector(frc, str);
+    Rectangle2D r = gv.getVisualBounds();
+    float jwidth = (float)getWidth();
+    float vwidth = (float)r.getWidth();
+    if(jwidth<vwidth) return null;
+    int num = gv.getNumGlyphs();
+    float xx = (jwidth-vwidth) / (float)(num-1);
+    float xpos = num==1?(jwidth-vwidth)*.5f:0f;
+    Point2D gmPos = new Point2D.Double(0.0d, 0.0d);
+    if(num==1) System.out.println(gmPos);
+    for(int i=0; i<num; i++) {
+      GlyphMetrics gm = gv.getGlyphMetrics(i);
+      gmPos.setLocation(xpos, 0);
+      gv.setGlyphPosition(i, gmPos);
+      xpos += gm.getAdvance() + xx;
+    }
+    return gv;
+  }
+}
+}}
+
+* 参考リンク [#h4ff08e9]
+- [http://docs.oracle.com/javase/jp/6/api/java/awt/font/TextLayout.html#getJustifiedLayout(float) TextLayout#getJustifiedLayout(float)]
+
+* コメント [#b9352af4]
+#comment

@@ -1,0 +1,32 @@
+TITLE: Java Swing Tips 旧更新履歴
+#contents
+
+* 古い更新履歴 [#lcb5ab47]
+** 2006年 [#m987b0aa]
+- [[2006年>Swing/_ChangeLog/2006]]
+
+** 2005年 [#i3d049ce]
+- [[2005年>Swing/_ChangeLog/2005]]
+
+** 2004年 [#i26bc351]
+- [[2004年>Swing/_ChangeLog/2004]]
+
+** メモ [#n8e558c2]
+- 削除
+-- 2005-02-07 月 JTableのソート2（Swing/SortableTableに統合）
+-- 2005-02-14 月 SwingWorkerを使った処理の中断（「2006-06-10 SwingWorkerを使った処理の中断と進捗状況表示」に変換）
+-- 2005-02-21 月 JTableの列を強調（Swing/SortableTableに統合）
+- 月曜以外
+-- 2005-03-24 木 JLayeredPaneで小さなウインドを表示
+-- 2006-06-10 土 SwingWorkerを使った処理の中断と進捗状況表示(「2005-02-14 SwingWorkerを使った処理の中断」を変換)
+-- 2006-06-15 木 BoxLayoutでリスト状に並べる(「2004-03-22 SpringLayoutの使用」から分離)
+- 2003年
+-- 元々2003年あたりの古い記事についている日付はデタラメ(ローカルのYukiWikiから移動した日付になっている)だったので、以下のスクリプトで月曜日の一覧を作成して、適当に割り振るように修正
+
+#code{{
+require 'fileutils'
+require 'date'
+Date.parse("2003-09-01").step(Date.parse('2013-02-27'), 7) {|d|
+  puts "#{d.strftime("%Y-%m-%d")}"
+}
+}}

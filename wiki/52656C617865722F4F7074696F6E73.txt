@@ -1,0 +1,474 @@
+TITLE:Relaxerオプション
+*Relaxerオプション [#lad21cac]
+>編集者:[[Terai Atsuhiro>aterai]]~
+作成日:2003-09-25~
+更新日:&lastmod;
+
+#contents
+**Common [#cfea0e23]
+すべてのジェネレーターで使用できる共通のオプションです。
+
+-[[Common>http://www.relaxer.org/doc/refman/1.0/html/refman_p1_c5_s1_en.html]]
+***verbose [#b9bf3d9a]
+以下のような実行要約を表示します。
+
+ C:\fo\>relaxer -verbose xslfo.rng
+ Copyright(c) 2000-2004 ASAMI,Tomoharu. All rights reserved.
+ Relaxer Version 1.1b (20040405) by asami@relaxer.org
+ Source file     : file:/C:/fo/xslfo.rng
+        artifact = IXslStylesheetChoice.java
+        artifact = IXslTemplateMixed.java
+        artifact = IXslTemplateMixedChoice.java
+        artifact = IFoBlockContainerMixed.java
+ ......
+
+***properties [#cab08b71]
+任意のファイルをプロパティファイルとして指定します。以下の例では、カレントディレクトリにある''hogehoge.properties''をプロパティファイルとして指定しています。
+
+ relaxer -properties:hogehoge.properties relax/hoge.rng
+
+指定しない場合は、カレントディレクトリにある''Relaxer.properties''ファイルが使用されます。
+***dir [#ndba1437]
+ソースコードを生成するディレクトリを指定します。
+
+-コマンドラインでの指定例
+ -dir:./target/src/java
+ -dir:c:\temp\target\src
+ -dir:file://localhost/c:/temp/target/src
+
+-''Relaxer.properties''ファイルでの指定例
+ dir=./target/src/java
+ dir=c:\temp\target\src
+ dir=file://localhost/c:/temp/target/src
+
+-指定が無い場合のデフォルトはカレントディレクトリです。
+-指定したディレクトリが存在しない場合は、再帰的に自動生成してくれます。
+-両方指定した場合は、コマンドラインが優先されます。
+-ディレクトリ内に同名ファイルが存在しても上書きされます。
+-リードオンリー属性の同名ファイルがある場合はエラーとなります。
+
+***dir.package [#acc8bf52]
+Relaxerの生成するライブラリの配置ディレクトリをパッケージに合わせるかどうかを指定します。
+
+ dir=src
+ dir.package=true
+ java.package.library=com.example.relaxer.lib
+
+上記のように java.package.libraryオプションなどと併せて指定すると、''URelaxer.java'' などのライブラリが、
+ src\com\example\relaxer\lib
+以下に生成されます。
+
+**Java [#j4990f2e]
+***java.package [#i8fcca4c]
+生成されるクラスのパッケージを指定します。
+-[[The java.package option>http://www.relaxer.org/doc/refman/1.0/html/refman_p2_c7_s26_en.html]]
+
+以下のように指定すると、
+ java.package=com.example.relaxer
+生成されるクラスにパッケージの設定が追加されます。
+ package com.example.relaxer;
+
+***java.package.library [#r21ad7dd]
+''URelaxer.java''、''UJAXP.java''などのライブラリのパッケージを別途指定する場合に使用します。指定しない場合は、java.packageで指定したものが使われます。
+ java.package.library=com.example.relaxer.lib
+
+***java.name.class.prefix [#af58344c]
+生成するクラス名のプレフィクスを指定することができます。
+-[[The java.name.class.prefix option>http://www.relaxer.org/doc/refman/1.0/html/refman_p2_c7_s28_en.html]]
+
+例えば、"Hoge"をプレフィクスにした場合、要素名"book"から''HogeBook.java''ファイルが生成されます。
+
+-コマンドラインで指定する場合
+ -java.name.class.prefix:Hoge
+
+-''Relaxer.properties''ファイルに記入する場合
+ java.name.class.prefix=Hoge
+
+***java.name.class.prefixes [#wb45ae21]
+名前空間を利用すると、複数のプレフィクスをスキーマの要素で使い分けることが出来ます。
+-[[The java.name.class.prefixes option>http://www.relaxer.org/doc/refman/1.0/html/refman_p2_c7_s29_en.html]]
+
+以下、"xsl"と"fo"で異なるプレフィクスを使用したサンプルです。
+
++名前空間を設定し、<element>要素の"name"属性にタグを付加
+#code{{
+<?xml version="1.0" encoding="Shift_JIS"?>
+<grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+ xmlns="http://relaxng.org/ns/structure/1.0"
+ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+ xmlns:fo="http://www.w3.org/XSL/Format"
+>
+......
+<element name="xsl:attribute-set"> ...... </element>
+<element name="fo:layout-master-set"> ...... </element>
+......
+</grammar>
+}}
++"java.xml.namespace"オプションを指定し、"java.name.class.prefixes"オプションで名前空間URIとプレフィクスの対応を記述
+ #Relaxer.properties
+ java.xml.namespace=true
+ java.name.class.prefixes=http://www.w3.org/1999/XSL/Transform:Xsl, (一行で)
+                          http://www.w3.org/XSL/Format:Fo
++Relaxerでソースコード生成
+ prepare-src:
+    [mkdir] Created dir: C:\fo\target\src
+     [java] Copyright(c) 2000-2004 ASAMI,Tomoharu. All rights reserved.
+     [java] Relaxer Version 1.1b (20040203) by asami@relaxer.org
+     [java] Property file       : C:\fo/Relaxer.properties
+     [java] Source file : file:/C:/fo/src/relaxng/xslfo.rng
+     ......
+     [java]     artifact = XslAttributeSet.java
+     [java]     artifact = FoLayoutMasterSet.java
+     ......
+**Pattern [#a99eeb95]
+*** java.pattern.factory [#t6610756]
+factoryパターン((デザインパターンは勉強中なので、いろいろ間違いがあるかもしれません…))のソースコードが生成されます。
+
+-[[The java.pattern.factory option>http://www.relaxer.org/doc/refman/1.0/html/refman_p2_c7_s18_en.html]]
+-[[Factory helper>http://www.relaxer.org/doc/refman/1.0/html/refman_p2_c9_s5_en.html]]
+
+このパターンを使うときは、
+#code{{
+FoRoot root = new FoRoot();
+}}
+とする代わりに
+ //設定しなければDefaultFondocFactoryが使われる。
+#code{{
+FondocFactory.setFactory(new XslfonFactory());
+}}
+と、設定しておいて、
+#code{{
+IFondocFactory factory = FondocFactory.getFactory();
+FoRoot root = factory.createFoRoot();
+}}
+のように、オブジェクトを生成します。
+
+面倒なようですが、自動生成したクラスを編集せずに、機能拡張したりする場合に便利なことがあります。
+例えば、スキーマで検証できない部分を、すこしだけ機能拡張しようとします。
+このとき、もし自動生成されたソースを編集して機能を追加したりすると、スキーマを修正してソースを再生成するたびに、大量にコピペする羽目になります。
+そこで新しいFactoryを作って、これが機能拡張したクラスを返すようにしてやります。こうするとスキーマを再コンパイルしても、少しの修正でそのFactoryが使えますし、別のFactoryを使って機能を切り替えることもできます。
+
+以下の例では、Factory(Concrete Creator)として以下のようなクラスを作り、バリデータに新しい検証機能(例えば、ある属性のどちらかが必要など)を追加しています。
+#code{{
+public class XslfonFactory extends DefaultFondocFactory{
+ /**
+  * Creates a default <code>FoRoot</code>.
+  * This method is a hook method of the AbstractXslfoFactory.
+  *
+  * @return FoRoot
+  */
+  //......
+  /**
+   * Creates a default <code>XslTemplate</code>.
+   * This method is a hook method of the AbstractFondocFactory.
+   *
+   * @return XslTemplate
+   */
+ public XslTemplate createXslTemplate() {
+    XslTemplate node = new XslTemplate() {
+      public void verify(RVerifyReport report, int index,
+                         RVerifyContext context) {
+        super.verify(report, index, context);
+        report = report.newContext("template");
+        String strMatch = getMatch();
+        String strName  = getName();
+        if(strMatch==null && strName==null) {
+          report.addError(
+            "@match|@name",index,RVerifyReport.INVALID_VALUE,"","string",
+             "match、name属性のどちらかを設定する必要があります。"
+          );
+          return;
+        }
+      }
+    };
+    node.rGetRNSContext().declareNamespace(
+      "xsl", "http://www.w3.org/1999/XSL/Transform"
+    );
+    return node;
+    //return (new XslTemplate());
+  }
+}
+}}
+***java.pattern.visitor [#dda3df1c]
+Vistorパターンが手軽に使用できます。
+-[[ビジタ>http://www.asamioffice.com/jaba2/relaxer-howto/visitor.html]]
+-[[The java.pattern.visitor option>http://www.relaxer.org/doc/refman/1.0/html/refman_p2_c7_s20_en.html]]
+-[[Visitor helper>http://www.relaxer.org/doc/refman/1.0/html/refman_p2_c9_s7_en.html]]
+
+文書指向のXMLが扱いやすくなります。例えばXMLの何所にでも置くことのできる要素を検索して取り出したりする場合などに使うと便利です。またスキーマが修正されてXMLのデータ構造が変わっても影響を受けないので、
+データ構造に依存せずに、任意の処理を記述することができます。
+
+java.pattern.visitorオプションをつけてスキーマをコンパイルすると、各要素から生成されたクラスがAcceptorであるIRVisitableをimplementsし、Concrete Acceptorになります。あとはVisitorであるRVisitorBaseをextendsするConcrete Visitorを作って利用します。
+
+下のサンプルコードでは、MasterNameVisitorというConcrete Visitorで、root要素以下にあるsimple-page-master要素(Concrete Acceptorになる)を全て訪問し、その名前を収集しています。
+#code{{
+XslRoot root = new XslRoot("test.xml"); // 検索のトップ要素
+MasterNameVisitor mnv = new MasterNameVisitor();
+URVisitor.traverse(root, mnv);
+//Vector simplePageMasterList = mnv.getSimplePageMasterList();
+Vector masterNameList = mnv.getMasterNameList();
+JComboBox referenceComboBox = new JComboBox(masterNameList);
+}}
+
+#code{{
+public class MasterNameVisitor extends RVisitorBase{
+  private final Vector namelist = new Vector();
+  private final Vector list = new Vector();
+  public Vector getMasterNameList() {
+    return namelist;
+  }
+  public Vector getSimplePageMasterList() {
+    return list;
+  }
+  public boolean enter(FoSimplePageMaster visitable) {
+    list.add(visitable);
+    namelist.add(visitable.getMasterName());
+    System.out.println("addMasterNameList "+visitable.getMasterName());
+    return(true);
+  }
+}
+}}
+
+または
+
+#code{{
+XslRoot root = new XslRoot("test.xml");
+final Vector namelist = new Vector();
+URVisitor.traverse(root, new RVisitorBase() {
+  public boolean enter(FoSimplePageMaster visitable) {
+    //System.out.println("addMasterName "+visitable.getMasterName());
+    namelist.add(visitable.getMasterName());
+    return(true);
+  }
+});
+JComboBox referenceComboBox = new JComboBox(namelist);
+}}
+
+通常、Concrete Acceptorの追加は面倒らしいのですが、Relaxerはそれを自動生成してくれるので非常に楽です。
+
+//***java.swing.treeオプション
+//-Relaxer Reference Manual/Java/Java/Options/The java.swing.tree option
+//--file://localhost/C:/relaxer-beta/doc/refman/html/refman_beta_p2_c4_s19_en.html
+
+***java.pattern.idmap [#v389285e]
+-[[ID管理>http://www.asamioffice.com/jaba2/relaxer-howto/idmap.html]]
+-[[IDREF>http://www.asamioffice.com/jaba2/relaxer-howto/idref.html]]
+
+**Swing [#kc65b524]
+Swingの各種モデルで生成してくれます。
+
+***java.swing.comboBox(java.swing.list) [#k7ca5e8c]
+-[[relax-users-j 02780 Re: Relaxer 1.0 RC2 beta (5/1版)>http://www2.xml.gr.jp/log.html?MLID=relax-users-j&N=02780]]より引用。
+
+#code{{
+<define name="account">
+  <element name="account">
+    <attribute name="accountNo">
+      <choice>
+        <value>A12345</value>
+        <value>B23456</value>
+        <value>C34567</value>
+      </choice>
+    </attribute>
+  </element>
+</define>
+}}
+
+上記のような''選択肢''のあるスキーマを-java.swing.comboBoxオプションをつけてコンパイルすると以下のように簡単にComboBoxModelを生成することができます。java.swing.listも同じ要領で使用することができます。
+
+#code{{
+JComboBox accountNoComboBox = new JComboBox(account.swingComboBoxAccountNo());
+}}
+
+#ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQsGqWT_QWI/AAAAAAAAAtQ/V2TGTS6wKts/s800/relaxer-combomodel.png)
+
+**Java/Extension Grammar [#gecfd14f]
+Relaxerで使える拡張文法について。
+
+-[[拡張文法>http://www.asamioffice.com/jaba2/relaxer-howto/extension.html]]
+***java:role [#df4c824c]
+クラス間で共通のメソッドを定義したインタフェースが自動生成されます。
+
+-[[role>http://www.relaxer.org/doc/refman/1.0/html/refman_p2_c8_s11_en.html]]
+-[[relax-users-j 02825>http://www2.xml.gr.jp/log.html?MLID=relax-users-j&N=02825]]より引用。
+>java:roleの場合は、以下のようにjava:roleで指定したロール名(インタフェース)を同じロールとなるクラス間で共通のメソッドを定義したインタフェースを自動生成し、クラスが自動的にimplementsします。
+
+#code{{
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--java:roleの例-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+         xmlns:java="http://www.relaxer.org/xmlns/relaxer/java">
+  <start>
+    <choice>
+      <ref name="person"/>
+      <ref name="company"/>
+    </choice>
+  </start>
+  <define name="person">
+    <element name="person" java:role="ICommon">
+      <ref name="common"/>
+    </element>
+  </define>
+  <define name="company">
+    <element name="company" java:role="ICommon">
+      <ref name="common"/>
+    </element>
+  </define>
+  <define name="common">
+    <attribute name="zip">
+      <data type="token"/>
+    </attribute>
+    <element name="address">
+      <data type="token"/>
+    </element>
+  </define>
+</grammar>
+}}
+
+上記の例では、Person、CompanyクラスにICommonインタフェースがimplementsされます。このICommonインタフェースはPerson、Companyクラスに共通するメソッドから自動的に定義され、''ICommon.java''ファイルが生成されます。
+
+スペースで区切って複数のインタフェースを生成するよう指定することもできるようです。
+#code{{
+<element name="company" java:role="ICommon IFontProperties IBorderProperies">
+}}
+
+:TODOメモ| XSLTスタイルシートを作れば、java:roleを自動的に付加することも出来そう？時間が取れたら実験すること。
+
+***java:default [#u5b66a5a]
+属性などの初期値を設定することができます。
+-[[default>http://www.relaxer.org/doc/refman/1.0/html/refman_p2_c8_s2_en.html]]
+
+以下、整数、文字列などの初期値を指定しています。
+#code{{
+<optional>
+  <attribute name="column-count" java:default="1">
+    <data type="int"/>
+  </attribute>
+</optional>
+<optional>
+  <attribute name="column-gap" java:default="12.0pt">
+    <data type="string"/>
+  </attribute>
+</optional>
+<optional>
+  <attribute name="padding-start.conditionality" java:default="discard">
+    <choice>
+      <value type="NMTOKEN">discard</value>
+      <value type="NMTOKEN">retain</value>
+    </choice>
+  </attribute>
+</optional>
+}}
+
+getColumnGap()メソッドなどが以下のように生成されます。
+#code{{
+public final String getColumnGap() {
+  if (columnGap_ == null) {
+    return ("12.0pt");
+  }
+  return (columnGap_);
+}
+public final String getPaddingStartConditionality() {
+  if (paddingStartConditionality_ == null) {
+    return ("discard");
+  }
+  return (paddingStartConditionality_);
+}
+}}
+
+***java:classNameとjava:propertyName [#o5cf3ef9]
+生成されるクラス名と属性名を指定することができます。
+
+スキーマでelement要素にjava:classNameを以下のように指定すると、''String.java''ではなく、''Hoge.java''が生成されます。
+#code{{
+<element name="string" java:className="Hoge">
+  <empty/>
+</element>
+}}
+
+Hogeは、string要素を操作するクラスになります。
+#code{{
+//Hoge.javaの一部
+public void makeTextElement(StringBuffer buffer) {
+   int size;
+  buffer.append("<string");
+  buffer.append(">");
+  buffer.append("</string>");
+}
+}}
+
+***java:dataTypeとjava:dataClass [#ke402c70]
+データを自作のクラスに格納できます。
+
+***java:extendsとjava:implements [#u9d3371e]
+それぞれ指定したクラス、インタフェースを継承させることができます。
+
+#code{{
+<define name="aaa">
+  <element name="aaa" java:extends="com.example.relaxer.Company"
+                      java:implements="com.example.relaxer.ICompany">
+    <ref name="common"/>
+  </element>
+</define>
+}}
+
+この例では、以下のような''Aaa.java''が生成されます。
+
+#code{{
+public class Aaa extends com.example.relaxer.Company
+  implements com.example.relaxer.ICompany, java.io.Serializable, Cloneable, IRNode {
+//......
+}}
+
+***java:abstract [#dc79cf18]
+-[[relax-users-j 02219 Relaxer 修正版 (7/29)>http://www2.xml.gr.jp/log.html?MLID=relax-users-j&N=02219]]
+
+生成されるクラスを、abstractクラスにすることができます。
+#code{{
+<define name="company">
+  <element name="company" java:abstract="true"
+                          java:extends="com.example.relaxer.AbstractCompany">
+    <ref name="common"/>
+  </element>
+</define>
+}}
+
+この例では、以下のような''Company.java''が生成されます。
+
+#code{{
+public abstract class Company extends com.example.relaxer.AbstractCompany
+  implements java.io.Serializable, Cloneable, IRNode {
+//......
+}}
+
+com.example.relaxer.AbstractCompanyクラスは、別途用意することになります。
+
+***java:mapKey [#nb6bc84c]
+-以下より引用
+--[[relax-users-j 03255 unique なキーを属性として持つXML要素群をMapオブジェクトに格納するようなJavaコードを生成するようなデータバインディングツール>http://www2.xml.gr.jp/log.html?MLID=relax-users-j&N=03255]]
+--[[relax-users-j 03257 Re: unique なキーを属性として持つXML要素群をMapオブジェクトに格納するようなJavaコードを生成するようなデータバインディングツール>http://www2.xml.gr.jp/log.html?MLID=relax-users-j&N=03257]]
+
+java:mapKey="true"を使用すると、unique なキーを属性として持つXML要素群をMapオブジェクトに格納するようなJavaコードを生成してくれます。
+**その他 [#z8263a37]
+***java:code [#j38d987c]
+コンパイル時に使用するオプションではなく、スキーマに記述するオプション要素?です。element要素の子要素として<java:code>要素を置くことができ、この<java:code>要素の中にはJavaコードを自由に書くことができます。
+
+#code{{
+<define name="account">
+  <element name="account">
+    <ref name="address"/>
+    <zeroOrMore>
+      <ref name="phone"/>
+    </zeroOrMore>
+<java:code xmlns:java="http://www.relaxer.org/xmlns/relaxer/java">
+public boolean isOk() {
+   return (true);
+}
+</java:code>
+  </element>
+</define>
+}}
+
+*コメント [#af720737]
+#comment

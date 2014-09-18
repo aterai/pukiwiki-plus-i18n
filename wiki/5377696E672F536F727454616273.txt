@@ -1,0 +1,57 @@
+TITLE:JTabbedPaneのタブをソート
+#tags(JTabbedPane)
+#author(aterai)
+#pubdate(2006-04-24T15:47:22+09:00)
+* 概要 [#bb32089f]
+`JTabbedPane`のタブをソートします。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTe98QmaI/AAAAAAAAAkc/w7tzozy5FqM/s800/SortTabs.png)
+
+* サンプルコード [#ue218b7d]
+#code(link){{
+class SortAction extends AbstractAction {
+  public SortAction(String label, Icon icon) {
+    super(label,icon);
+  }
+  @Override public void actionPerformed(ActionEvent evt) {
+    setSortedTab(tab, makeSortedVector(tab));
+  }
+  private Vector makeSortedVector(JTabbedPane t) {
+    Vector l = new Vector();
+    for(int i=0;i<t.getTabCount();i++) {
+      l.addElement(new ComparableTab(t.getTitleAt(i), t.getComponentAt(i)));
+    }
+    Collections.sort(l);
+    return l;
+  }
+  private void setSortedTab(final JTabbedPane t, final Vector l) {
+    t.setVisible(false);
+    t.removeAll();
+    for(int i=0;i<l.size();i++) {
+      ComparableTab c = (ComparableTab)l.get(i);
+      t.addTab(c.title, c.comp);
+    }
+    t.setVisible(true);
+  }
+  class ComparableTab implements Comparable{
+    final public String title;
+    final public Component comp;
+    public ComparableTab(String title, Component comp) {
+      this.title = title;
+      this.comp  = comp;
+    }
+    @Override public int compareTo(Object o) {
+      return this.title.compareTo(((ComparableTab)o).title);
+    }
+  }
+}
+}}
+
+* 解説 [#g820882f]
+上記のサンプルでは、ソートしたリストを作成したあと、一旦タブをすべて削除し、リストから`JTabbedPane`にタブを戻しています。
+
+タブを追加、削除、ダブルクリックで名前変更して確認してみてください。
+
+//**参考リンク
+* コメント [#v048c1a4]
+#comment

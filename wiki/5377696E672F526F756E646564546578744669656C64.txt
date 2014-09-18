@@ -1,0 +1,84 @@
+TITLE:JTextFieldの角を丸める
+#tags(JTextField, Border, Shape)
+#author(aterai)
+#pubdate(2010-10-04T21:07:50+09:00)
+* 概要 [#f7c187e5]
+角丸の`JTextField`を作成します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTSMYm3vgI/AAAAAAAAAiY/37FVcZLSXI0/s800/RoundedTextField.png)
+
+* サンプルコード [#ecbd0878]
+#code(link){{
+JTextField textField01 = new JTextField(20) {
+  //Unleash Your Creativity with Swing and the Java 2D API!
+  //http://web.archive.org/web/20091205092230/http://java.sun.com/products/jfc/tsc/articles/swing2d/index.html
+  @Override protected void paintComponent(Graphics g) {
+    if(!isOpaque()) {
+      int w = getWidth();
+      int h = getHeight();
+      Graphics2D g2 = (Graphics2D)g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setColor(UIManager.getColor("TextField.background"));
+      g2.fillRoundRect(0, 0, w-1, h-1, h, h);
+      g2.setColor(Color.GRAY);
+      g2.drawRoundRect(0, 0, w-1, h-1, h, h);
+      g2.dispose();
+    }
+    super.paintComponent(g);
+  }
+};
+textField01.setOpaque(false);
+textField01.setBackground(new Color(0,0,0,0)); //Nimbus
+textField01.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+textField01.setText("aaaaaaaaaaa");
+}}
+
+* 解説 [#sc0a1c68]
+- 上
+-- `JTextField#paintComponent(...)`をオーバーライド、`BorderをEmptyBorder`、`JTextField#setOpaque(false);`
+-- 参考: [http://web.archive.org/web/20091205092230/http://java.sun.com/products/jfc/tsc/articles/swing2d/index.html Unleash Your Creativity with Swing and the Java 2D API!]
+
+- 下
+-- `RoundedCornerBorder`を設定
+//--RoundTextUIを作成して、JTextField#setUI(...)で設定
+//--参考: [https://forums.oracle.com/thread/1500417 Swing - custom JTextField]
+
+#code{{
+class RoundedCornerBorder extends AbstractBorder {
+  @Override public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+    Graphics2D g2 = (Graphics2D)g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    int r = height-1;
+    RoundRectangle2D round = new RoundRectangle2D.Float(x, y, width-1, height-1, r, r);
+    Container parent = c.getParent();
+    if(parent!=null) {
+      g2.setColor(parent.getBackground());
+      Area corner = new Area(new Rectangle2D.Float(x, y, width, height));
+      corner.subtract(new Area(round));
+      g2.fill(corner);
+    }
+    g2.setColor(Color.GRAY);
+    g2.draw(round);
+    g2.dispose();
+  }
+  @Override public Insets getBorderInsets(Component c) {
+    return new Insets(4, 8, 4, 8);
+  }
+  @Override public Insets getBorderInsets(Component c, Insets insets) {
+    insets.left = insets.right = 8;
+    insets.top = insets.bottom = 4;
+    return insets;
+  }
+}
+}}
+
+* 参考リンク [#mcc5799a]
+- [http://web.archive.org/web/20091205092230/http://java.sun.com/products/jfc/tsc/articles/swing2d/index.html Unleash Your Creativity with Swing and the Java 2D API!]
+- [http://www.coderanch.com/t/336048/GUI/java/Border-rounded-JTextField Border on an rounded JTextField? (Swing / AWT / SWT / JFace forum at JavaRanch)]
+- [http://stackoverflow.com/questions/9785911/how-i-remove-unneeded-background-under-roundedborder java - how i remove unneeded background under roundedborder? - Stack Overflow]
+
+* コメント [#o62b0e9d]
+- `TextUI#paintSafely(...)`をオーバーライドして、`JTextField`内を上書きする方法はやめて、`Area#subtract`で切り抜いた図形を親の背景色で描画する方法に変更。 -- [[aterai]] &new{2012-03-21 (水) 02:37:10};
+
+#comment

@@ -1,0 +1,34 @@
+TITLE:JFrameの縦横比を一定にする
+#tags(JFrame)
+#author(aterai)
+#pubdate(2006-11-06)
+* 概要 [#kdb0783d]
+`JFrame`の幅と高さの比率が一定になるように制限します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKJeWlAAI/AAAAAAAAAVg/GMclfo0TYBM/s800/ConstrainedProportions.png)
+
+* サンプルコード [#ff7d99b8]
+#code(link){{
+final int mw = 320;
+final int mh = 200;
+frame.addComponentListener(new ComponentAdapter() {
+  @Override public void componentResized(ComponentEvent e) {
+    int fw = frame.getSize().width;
+    int fh = mh*fw/mw;
+    frame.setSize((mw>fw)?mw:fw, (mh>fh)?mh:fh);
+  }
+});
+}}
+
+* 解説 [#x3c35daf]
+上記のサンプルでは、`JFrame`のサイズを変更した後、その幅から縦横比が同じになるような高さを計算して、`JFrame#setSize(int,int)`でサイズを設定し直しています。
+
+* 参考リンク [#qf286589]
+- [[JFrameの最小サイズ>Swing/MinimumFrame]]
+- [[DynamicLayoutでレイアウトの動的評価>Swing/DynamicLayout]]
+
+* コメント [#ndb3de0e]
+- これはドラッグ中は自由なサイズでボタンを離したときにサイズが正しく変更されます。ドラッグ中も正しい比率になるのは無理でしょうか？ --  &new{2007-11-10 (土) 00:17:13};
+-- ども。今の`Java`だけだと難しいかもしれません。すこし調べてみます。 -- [[aterai]] &new{2007-11-12 (月) 11:45:22};
+
+#comment

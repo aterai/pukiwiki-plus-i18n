@@ -1,0 +1,40 @@
+TITLE:JInternalFrameを固定
+#tags(JInternalFrame, MouseMotionListener)
+#author(aterai)
+#pubdate(2005-10-10)
+* 概要 [#o5f11a62]
+`JInternalFrame`をマウスなどで移動できないように固定します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTOXXz-C5I/AAAAAAAAAcQ/0qYBPzKq7js/s800/ImmovableFrame.png)
+
+* サンプルコード [#a83e5c01]
+#code(link){{
+BasicInternalFrameUI ui = (BasicInternalFrameUI)immovableFrame.getUI();
+Component titleBar = ui.getNorthPane();
+for(MouseMotionListener l:titleBar.getListeners(MouseMotionListener.class)) {
+  titleBar.removeMouseMotionListener(l);
+}
+}}
+
+* 解説 [#k07f6217]
+`JInternalFrame`の`MouseMotionListener`をすべて削除することで、マウスによる移動を不可能にしています。
+
+----
+以下のようにしてタイトルバー自体を削除して移動できないフレームを作成する方法もあります。
+
+#code{{
+ui.setNorthPane(null);
+internalframe.setBorder(BorderFactory.createEmptyBorder());
+internalframe.setSize(200,50);
+internalframe.add(new JLabel("移動できないフレーム", SwingConstants.CENTER));
+internalframe.setLocation(10,10);
+internalframe.pack();
+}}
+
+#ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOZ803FiI/AAAAAAAAAcU/Bj1t9F8ZKqI/s800/ImmovableFrame1.png)
+
+* 参考リンク [#t17ee3f9]
+- [https://forums.oracle.com/thread/1392111 Swing - Lock JInternalPane]
+
+* コメント [#rd25830b]
+#comment

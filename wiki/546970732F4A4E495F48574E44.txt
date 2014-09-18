@@ -1,0 +1,162 @@
+TITLE:JNIでJFrameのHWNDを取得
+#author(aterai)
+#pubdate(2008-09-04) (([[コメント欄>Comments/Swing]]から移動))
+#contents
+
+- [http://terai.xrea.jp/data/swing/hwndTest.zip hwndTest.zip(サンプル)]
+
+#ref(https://lh3.googleusercontent.com/-NNjiMJe_o94/TeSO493_q3I/AAAAAAAAA8k/KU8B7ms4SQE/s800/JNI_HWND.png)
+
+* 概要 [#d54756f6]
+[http://www.telejapan.com/af/master/memo/memo_Java.html JNI Windowsでウィンドウハンドルを取得する - Memo of Master]の方法２を参考にして、`JNI`(`Java Native Interface`) で`JFrame`(`SunAwtFrame`)の`HWND`(ウィンドウハンドル)を取得します。
+
+* 環境 [#q9fd6c07]
+- `Microsoft Windows XP [Version 5.1.2600]`
+- `JDK 1.6.0_04`
+- `Microsoft Visual Studio .NET 2003\vc7`
+
+* サンプルコード [#yfef3d00]
+#code{{
+import java.awt.*;
+import javax.swing.*;
+
+public class windowHandler{
+  public native static int getHWND(Object obj);
+  static {
+    System.loadLibrary("hwndTest");
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    try{
+      //UIManager.getInstalledLookAndFeels();
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    }catch(Exception e) {
+      e.printStackTrace();
+    }
+    JFrame frame = new JFrame();
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.setSize(320, 240);
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+    int hwnd = getHWND(frame);
+    frame.setTitle("HWND: 0x"+Integer.toHexString(hwnd).toUpperCase());
+  }
+}
+}}
+
+#code{{
+#include "windowHandler.h"
+#include "jawt_md.h"
+#include <windows.h>
+JNIEXPORT jint JNICALL Java_windowHandler_getHWND(
+            JNIEnv *env, jobject jobj, jobject jframe) {
+  JAWT awt;
+  JAWT_DrawingSurface* ds;
+  JAWT_DrawingSurfaceInfo* dsi;
+  JAWT_Win32DrawingSurfaceInfo* dsi_win;
+  jint lock;
+  HWND hWnd;
+  awt.version = JAWT_VERSION_1_4;
+  if (JAWT_GetAWT(env, &awt) == JNI_FALSE) {
+    return 0;
+  }
+  ds = awt.GetDrawingSurface(env, jframe);
+  if (ds == NULL) {
+    return 0;
+  }
+
+  lock = ds->Lock(ds);
+  if ((lock & JAWT_LOCK_ERROR) != 0) {
+    awt.FreeDrawingSurface(ds);
+    return 0;
+  }
+
+  dsi = ds->GetDrawingSurfaceInfo(ds);
+  if (dsi == NULL) {
+    ds->Unlock(ds);
+    awt.FreeDrawingSurface(ds);
+    return 0;
+  }
+  dsi_win = (JAWT_Win32DrawingSurfaceInfo*)dsi->platformInfo;
+  hWnd = dsi_win->hwnd;
+
+  /* Free the drawing surface info */
+  ds->FreeDrawingSurfaceInfo(dsi);
+
+  /* Unlock the drawing surface */
+  ds->Unlock(ds);
+
+  /* Free the drawing surface */
+  awt.FreeDrawingSurface(ds);
+
+  return (jint)hWnd;
+}
+}}
+
+* 解説 [#gcd89e73]
+以下のようにコンパイル、実行すると`JFrame`のタイルトバーに`HWND`が表示されます。
+
+#code{{
+@echo off
+SETLOCAL
+
+"%JAVA_HOME%\bin\javac" windowHandler.java
+"%JAVA_HOME%\bin\javah" -jni windowHandler
+
+set SDK=C:\Program Files\Microsoft Visual Studio .NET 2003\vc7
+"%SDK%\bin\cl.exe" /c -I"%SDK%\include" -I"%SDK%\PlatformSDK\include" -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -IhwndTest.h hwndTest.c
+
+set LIB=%SDK%\lib;%SDK%\PlatformSDK\lib
+"%SDK%\bin\link.exe" /DLL hwndTest.obj "%JAVA_HOME%\lib\jawt.lib"
+
+set Path=%Path%;%JAVA_HOME%\jre\bin
+
+"%JAVA_HOME%\bin\java" windowHandler
+}}
+
+----
+`JNI`を使用せず、以下のように`HWND`を取得する方法もあります。
+
+-[http://stackoverflow.com/questions/386792/in-java-swing-how-do-you-get-a-win32-window-handle-hwnd-reference-to-a-window winapi - In Java Swing how do you get a Win32 window handle (hwnd) reference to a window? - Stack Overflow]に投稿されているJared MacD.さんのコードを引用
+
+#code{{
+import java.awt.*;
+import javax.swing.*;
+import sun.awt.windows.WComponentPeer;
+public class WComponentPeerTest {
+  public static long getHWnd(Frame f) {
+    return f.getPeer()!=null ? ((WComponentPeer)f.getPeer()).getHWnd() : 0;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() { createAndShowGUI(); }
+    });
+  }
+  public static void createAndShowGUI() {
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+    f.setTitle("HWnd: "+getHWnd(f));
+  }
+}
+}}
+
+* 参考リンク [#z82fc32a]
+- [http://www.telejapan.com/af/master/memo/memo_Java.html JNI Windowsでウィンドウハンドルを取得する - Memo of Master]
+- [http://docs.oracle.com/javase/jp/6/technotes/guides/jni/ JDK 6 Java Native Interface 関連 API & 開発者ガイド -- Sun Microsystems]
+
+* コメント [#h2768609]
+- `Win32`の`MS Visual C++`の`WndProc()`にコールバックされるメッセージを`JNI`で検出する掲載もあると助かります。 -- [[Java, C, JNI どれも超初心者]] &new{2011-07-29 (金) 22:06:11};
+-- `JNI`関係勉強しないとと思いながら最近はさっぱりです。どこかにサンプルがないか適当に検索してみたら、`JNA`に`WndProcCallbackListener`([http://stackoverflow.com/questions/4041174/create-a-native-windows-window-in-jna-and-some-getwindowlong-with-gwl-wndproc Create a native Windows window in JNA and some GetWindowLong with GWL_WNDPROC])というそれっぽいのがあるみたいです。 -- [[aterai]] &new{2011-08-01 (月) 15:30:50};
+- ありがとうござます。一応リンク拝見しましたがもう少し自力で調査してみます。もし分かったら簡単に報告を書き込みます。 -- [[Java, C, JNI どれも超初心者]] &new{2011-08-02 (火) 13:06:26};
+- 結論：あきらめました。リスナー各所にコールバックで処理したい内容をベタに記述しました。 -- [[Java, C, JNI どれも超初心者?]] &new{2011-08-20 (土) 21:37:18};
+
+#comment

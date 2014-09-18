@@ -1,0 +1,105 @@
+TITLE:MemoryImageSourceで配列から画像を生成
+#tags(BufferedImage, MouseListener, MouseMotionListener, MemoryImageSource)
+#author(aterai)
+#pubdate(2010-06-07T15:20:45+09:00)
+* 概要 [#n6e7348a]
+マウスのドラッグに応じて線を描画、消しゴムで消去する機能を実装します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPu_OEqoI/AAAAAAAAAec/z6MobKhblfI/s800/MemoryImageSource.png)
+
+* サンプルコード [#g703e7b6]
+#code(link){{
+int[] pixels = new int[320 * 240];
+MemoryImageSource source = new MemoryImageSource(320, 240, pixels, 0, 320);
+int penc = 0x0;
+@Override public void paintComponent(Graphics g) {
+  super.paintComponent(g);
+  if(backImage!=null) {
+    ((Graphics2D)g).drawImage(backImage, 0, 0, this);
+  }
+  if(source!=null) {
+    g.drawImage(createImage(source), 0, 0, null);
+  }
+}
+@Override public void mouseDragged(MouseEvent e) {
+  Point pt = e.getPoint();
+  double xDelta = e.getX() - startPoint.getX();
+  double yDelta = e.getY() - startPoint.getY();
+  double delta = Math.max(Math.abs(xDelta), Math.abs(yDelta));
+
+  double xIncrement = xDelta / delta;
+  double yIncrement = yDelta / delta;
+  double xStart = startPoint.x;
+  double yStart = startPoint.y;
+  for(int i=0; i<delta; i++) {
+    Point p = new Point((int)xStart, (int)yStart);
+    if(p.x<0 || p.y<0 || p.x>=320 || p.y>=240) break;
+    pixels[p.x + p.y * 320] = penc;
+    for(int n=-1;n<=1;n++) {
+      for(int m=-1;m<=1;m++) {
+        int t = (p.x+n) + (p.y+m) * 320;
+        if(t>=0 && t<320*240) {
+          pixels[t] = penc;
+        }
+      }
+    }
+    repaint(p.x-2, p.y-2, 4, 4);
+    xStart += xIncrement;
+    yStart += yIncrement;
+  }
+  startPoint = pt;
+}
+@Override public void mousePressed(MouseEvent e) {
+  startPoint = e.getPoint();
+  penc = (e.getButton()==MouseEvent.BUTTON1)?0xff000000:0x0;
+}
+}}
+
+* 解説 [#n39bed19]
+上記のサンプルでは、左クリックでドラッグすると黒で、右クリックでドラッグすると透過色(`0xff000000`、消しゴム)で、自由曲線を描画することができます。
+`MemoryImageSource`に設定した画像の各ピクセルを表す`int`配列を、マウスのドラッグに応じて操作して`Image`を作成しています。
+
+----
+以下のような方法もあります。
+#code{{
+private static final Color ERASER = new Color(0,0,0,0);
+private boolean isPen = true;
+private Point startPoint = new Point(-10,-10);
+private BufferedImage currentImage = null;
+private BufferedImage backImage = null;
+@Override public void paintComponent(Graphics g) {
+  super.paintComponent(g);
+  if(backImage!=null) {
+    g.drawImage(backImage, 0, 0, this);
+  }
+  if(currentImage!=null) {
+    g.drawImage(currentImage, 0, 0, this);
+  }
+}
+@Override public void mouseDragged(MouseEvent e) {
+  Point pt = e.getPoint();
+  Graphics2D g2d = currentImage.createGraphics();
+  g2d.setStroke(new BasicStroke(3.0F));
+  if(isPen) {
+    g2d.setPaint(Color.BLACK);
+  }else{
+    g2d.setComposite(AlphaComposite.Clear);
+    g2d.setPaint(ERASER);
+  }
+  g2d.drawLine(startPoint.x, startPoint.y, pt.x, pt.y);
+  g2d.dispose();
+  startPoint = pt;
+  repaint();
+}
+@Override public void mousePressed(MouseEvent e) {
+  startPoint = e.getPoint();
+  isPen = e.getButton()==MouseEvent.BUTTON1;
+}
+}}
+
+* 参考リンク [#rbf383fa]
+- [[JPanelにマウスで自由曲線を描画>Swing/PaintPanel]]
+- [[PixelGrabberで画像を配列として取得し編集、書出し>Swing/PixelGrabber]]
+
+* コメント [#y800721a]
+#comment

@@ -1,0 +1,30 @@
+TITLE:JSplitPaneでドラッグ中のDividerの背景色を設定する
+#tags(JSplitPane, UIManager)
+#author(aterai)
+#pubdate(2014-09-15T00:00:21+09:00)
+* 概要 [#o80016ef]
+`JSplitPane`の`Divider`がドラッグ中の場合に、その移動先を示す矩形の色を変更します。
+
+#download(https://lh5.googleusercontent.com/-M9cMsnuWpL0/VBWl0TfGYyI/AAAAAAAACNI/qvejKL7NGVk/s800/DividerDraggingColor.png)
+
+* サンプルコード [#ya9caa72]
+#code(link){{
+UIManager.put("SplitPaneDivider.draggingColor", new Color(255, 100, 100, 100));
+}}
+
+* 解説 [#ff320695]
+上記のサンプルでは、`JSplitPane#setContinuousLayout(false)`で、`JSplitPane`の`Divider`がドラッグ中の場合に、`Divider`の移動先を示す矩形の色を変更しています。
+
+----
+ドラッグ中ではない`Divider`の色は、`LookAndFeel`によっては、以下のような方法で変更することができます。
+
+#code{{
+BasicSplitPaneDivider divider = ((BasicSplitPaneUI) getUI()).getDivider();
+divider.setBackground(Color.ORANGE);
+}}
+
+* 参考リンク [#z74232ef]
+- [[JSplitPaneでディバイダの移動を連続的に再描画>Swing/ContinuousLayout]]
+
+* コメント [#uc73b3da]
+#comment

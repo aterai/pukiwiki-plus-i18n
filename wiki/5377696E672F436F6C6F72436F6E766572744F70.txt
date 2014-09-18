@@ -1,0 +1,81 @@
+TITLE:ColorConvertOpで画像をグレースケールに変換
+#tags(ColorConvertOp, BufferedImage, RGBImageFilter, ImageIcon)
+#author(aterai)
+#pubdate(2005-11-21)
+* 概要 [#t5e7fcf3]
+`ColorConvertOp`を使って画像をグレースケールに変換します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTJmEhFayI/AAAAAAAAAUo/x4JGGk_f08c/s800/ColorConvertOp.png)
+
+* サンプルコード [#a2a42159]
+#code(link){{
+Image img = icon1.getImage();
+BufferedImage source = new BufferedImage(
+    img.getWidth(this), img.getHeight(this),
+    BufferedImage.TYPE_INT_ARGB);
+Graphics g = source.createGraphics();
+g.drawImage(img, 0, 0, this);
+g.dispose();
+ColorConvertOp colorConvert = new ColorConvertOp(
+    ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
+BufferedImage destination = colorConvert.filter(source, null);
+icon2 = new ImageIcon(destination);
+}}
+
+* 解説 [#s9c1238a]
+用意したアイコンから、`BufferedImage`を作成し、これを`ColorConvertOp#filter`メソッドを使ってグレースケールに変換しています。
+
+上記のサンプルでは、ラベルをクリックすると元画像とグレースケール画像とが切り替わるようになっています。
+
+----
+以下のように`GrayFilter.createDisabledImage`を使った場合よりきれいに変換できるようです。
+
+#code{{
+icon2 = new ImageIcon(GrayFilter.createDisabledImage(img));
+}}
+
+----
+`GrayFilter`の代わりに、以下のような`RGBImageFilter`を継承したフィルタを使う方法もあります。
+
+#code{{
+class MyGrayFilter extends RGBImageFilter {
+  public int filterRGB(int x, int y, int argb) {
+    //int a = (argb >> 24) & 0xff;
+    int r = (argb >> 16) & 0xff;
+    int g = (argb >>  8) & 0xff;
+    int b = (argb      ) & 0xff;
+    //http://ofo.jp/osakana/cgtips/grayscale.phtml
+    int m = (2 * r + 4 * g + b) / 7; //NTSC Coefficients
+    return (argb & 0xff000000) | (m<<16) | (m<<8) | (m);
+  }
+}
+//...
+ImageProducer ip = new FilteredImageSource(img.getSource(), new MyGrayFilter());
+icon2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(ip));
+}}
+
+----
+`BufferedImage.TYPE_BYTE_GRAY`で、`BufferedImage`を作成して複写してもグレースケールに変換できますが、透過色を使用している場合はすこし注意が必要なようです(参考:[https://forums.oracle.com/thread/1373262 Swing - Color to Grayscale to Binary])。
+
+#code{{
+BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_GRAY);
+Graphics g = bi.createGraphics();
+//g.setColor(Color.WHITE);
+g.fillRect(0, 0, w, h); // pre-fill: alpha
+g.drawImage(img, 0, 0, this);
+g.dispose();
+}}
+
+* 参考リンク [#wb3b736d]
+- [http://www.java2s.com/Code/Java/2D-Graphics-GUI/ImageColorGrayEffect.htm Image Color Gray Effect : Java examples (example source code) » 2D Graphics GUI » Image]
+- [http://opus-i.biz/ opus-i | シンプル素材 テンプレート 音楽素材]
+- %%[http://numata.aquasky.jp/programming/java/graphics/FilteringImage.html フィルタによる半透明な画像の作成]%%
+- [http://ofo.jp/osakana/cgtips/grayscale.phtml osakana.factory - グレースケールのひみつ]
+--via [http://programamemo2.blogspot.com/2007/08/blog-post_21.html プログラマメモ2: グレースケール]
+- [https://forums.oracle.com/thread/1903279 Swing - image manipulation]
+
+* コメント [#i2aa6deb]
+- リンクを参考にして`RGBImageFilter`を使うサンプルを修正しました。 -- [[aterai]] &new{2007-08-21 (火) 13:06:10};
+- グレイスケールからグレースケールに変更。 -- [[aterai]] &new{2008-01-10 (木) 14:31:00};
+
+#comment

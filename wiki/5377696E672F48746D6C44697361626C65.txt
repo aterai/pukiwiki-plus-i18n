@@ -1,0 +1,28 @@
+TITLE:JLabelなどのHtmlレンダリングを無効化
+#tags(JLabel, Html, JToolTip)
+#author(aterai)
+#pubdate(2008-04-21T13:43:08+09:00)
+* 概要 [#w86356de]
+`JLabel`などの`Html`レンダリングを無効化して、タグ文字列をそのまま表示します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTODbO-ktI/AAAAAAAAAbw/bTVYI0sgEY4/s800/HtmlDisable.png)
+
+* サンプルコード [#l921f158]
+#code(link){{
+label1.putClientProperty("html.disable", Boolean.TRUE);
+label1.setText("<html><font color=red>Html Test</font></html>");
+label1.setToolTipText("<html>&lt;html&gt;&lt;font color=red&gt;Html Test&lt;/font&gt;&lt;/html&gt;</html>");
+}}
+
+* 解説 [#w8cdc1ca]
+上記のサンプルでは、`JLabel`などに`putClientProperty("html.disable", Boolean.TRUE)`を設定することで、タグをレンダリングせずにそのまま文字列として表示しています。
+
+----
+`JLabel`に、`putClientProperty("html.disable", Boolean.TRUE)`としても、その `JLabel`の`JToolTip`には反映されないので、`<html>`タグの中で文字実体参照を使っています。
+
+----
+`Html`レンダリングされた文字列を、`setEnabled(false)`で無効化(灰色にする)する場合は、[[Htmlを使ったJLabelとJEditorPaneの無効化>Swing/DisabledHtmlLabel]]を参考にしてください。
+
+//**参考リンク
+* コメント [#n441a4f7]
+#comment

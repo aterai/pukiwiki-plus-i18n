@@ -1,0 +1,68 @@
+TITLE:Htmlタグで文字列を修飾
+#tags(Html)
+#author(aterai)
+#pubdate(2004-07-05T10:15:47+09:00)
+* 概要 [#y5ef8764]
+`Html`タグを使って`Swing`コンポーネントで使用する文字列を修飾します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOA5i9OdI/AAAAAAAAAbs/1c_xZ6W4mdo/s800/Html.png)
+
+* サンプルコード [#bbee9a55]
+#code(link){{
+public class TestModel extends DefaultTableModel {
+  private static final String[] columnNames = {
+    "<html><p>No.</p><p><font color=blue>Number</font></p></html>",
+    "<html>Name<p><font color=\"red\">etc.</font></p></html>",
+    "<html><font color='green'>Comment</font></html>"
+  };
+  //......
+}}
+
+* 解説 [#nd3ae2dd]
+上記のサンプルでは、`JTable`のヘッダと`JTabbedPane`のタブに`html`タグを使用しています。`<p>`タグなどで簡単に改行するとこができます。
+
+整形式になっていなくても、ある程度なら大丈夫なようです。属性も、エスケープした`"`や、`'`で囲んでいなくても認識されます。
+
+* 参考リンク [#s4bf4aa9]
+- [http://docs.oracle.com/javase/tutorial/uiswing/components/label.html How to Use Labels]
+- [http://web.archive.org/web/20090608140218/http://java.sun.com/developer/JDCTechTips/2003/tt1210.html More About Handling Exceptions and Using HTML in Swing Components Tech Tips]
+- [http://docs.oracle.com/javase/jp/7/api/javax/swing/text/html/HTML.Tag.html HTML.Tag (Java Platform SE 7)]
+
+* コメント [#m546e28c]
+- メモ: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6670274 Bug ID: 6670274 Incorrect tab titles for JTabbedPane if using HTML (BasicTabbedPanelUI problem)] -- [[aterai]] &new{2010-01-04 (月) 22:49:01};
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+public class bug6670274x {
+  private static void createGui() {
+    JFrame frame = new JFrame();
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    final JTabbedPane pane = new JTabbedPane();
+    pane.add("one", new JLabel("1"));
+    pane.add("<html>Title broken<BR>across 2 lines</html>", new JLabel("2"));
+    pane.add("three", new JLabel("3"));
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(pane);
+    p.add(new JButton(new AbstractAction("setTitleAt: 0") {
+      @Override public void actionPerformed(ActionEvent e) {
+        pane.setTitleAt(0, "<html>setTitleAt:0<BR>xxxxx</html>");
+      }
+    }), BorderLayout.NORTH);
+    frame.add(p);
+    frame.setSize(640, 200);
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+  }
+  public static void main(String[] args) throws Exception {
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override public void run() { bug6670274x.createGui(); }
+    });
+  }
+}
+}}
+
+- `JDK 1.6.0_18`, `JDK 1.7.0`で修正済: [http://hg.openjdk.java.net/jdk7/swing/jdk/rev/82524b068f77 6670274: Incorrect tab titles for JTabbedPane if using HTML (BasicTabbedPanelUI problem)] -- [[aterai]] &new{2010-05-30 (日) 00:26:16};
+
+#comment

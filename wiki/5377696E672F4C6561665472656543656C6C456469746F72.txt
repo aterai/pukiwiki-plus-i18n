@@ -1,0 +1,41 @@
+TITLE:JTreeの葉ノードだけ編集可能にする
+#tags(JTree, TreeCellEditor, TreeNode)
+#author(aterai)
+#pubdate(2010-04-12T18:23:41+09:00)
+* 概要 [#ja3545ca]
+`JTree`の葉ノードだけ編集可能にします。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPB-TVk9I/AAAAAAAAAdU/Aq5YDSMvqaY/s800/LeafTreeCellEditor.png)
+
+* サンプルコード [#bc2dfe8c]
+#code(link){{
+class LeafTreeCellEditor extends DefaultTreeCellEditor {
+  public LeafTreeCellEditor(JTree tree, DefaultTreeCellRenderer renderer) {
+    super(tree, renderer);
+  }
+  @Override public boolean isCellEditable(java.util.EventObject e) {
+    boolean b = super.isCellEditable(e);
+    Object o = tree.getLastSelectedPathComponent();
+    if(b && o instanceof TreeNode) {
+      return ((TreeNode)o).isLeaf();
+    }else{
+      return b;
+    }
+  }
+}
+}}
+
+* 解説 [#n0670581]
+上記のサンプルでは、`CellEditor#isCellEditable`メソッドを葉ノードの場合だけ、編集を開始できるようにオーバーライドしたセルエディタを作成、設定しています。
+
+#code{{
+tree.setCellEditor(new LeafTreeCellEditor(tree, (DefaultTreeCellRenderer)tree.getCellRenderer()));
+}}
+
+ルートノードなどの枝ノードは、トリプルクリックしても編集不可になっています。
+
+* 参考リンク [#ha42a5fc]
+- [https://forums.oracle.com/thread/1371600 Swing - How can I persist all changes I made to these edited leaves and nodes??]
+
+* コメント [#zc7bd3a1]
+#comment

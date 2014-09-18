@@ -1,0 +1,60 @@
+TITLE:JList間でのドラッグ＆ドロップによるアイテムの移動
+#tags(JList, DragAndDrop, TransferHandler)
+#author(aterai)
+#pubdate(2010-08-09T16:02:07+09:00)
+* 概要 [#k3091dd8]
+`JList`間でのドラッグ＆ドロップによるアイテムの移動や並べ替えを行います。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLUTkzH4I/AAAAAAAAAXY/tSQriEN1G_Y/s800/DnDBetweenLists.png)
+
+* サンプルコード [#s91101a9]
+#code(link){{
+class ListItemTransferHandler extends TransferHandler {
+  private JList source = null;
+  @Override protected Transferable createTransferable(JComponent c) {
+    source = (JList) c;
+    indices = source.getSelectedIndices();
+    transferedObjects = source.getSelectedValues();
+    return new DataHandler(transferedObjects, localObjectFlavor.getMimeType());
+  }
+  @Override public boolean importData(TransferSupport info) {
+    if (!canImport(info)) return false;
+    JList target = (JList)info.getComponent();
+    JList.DropLocation dl = (JList.DropLocation)info.getDropLocation();
+    DefaultListModel listModel = (DefaultListModel)target.getModel();
+    int index = dl.getIndex();
+    int max = listModel.getSize();
+    if(index<0 || index>max) index = max;
+    addIndex = index;
+    try{
+      Object[] values = (Object[])info.getTransferable().getTransferData(localObjectFlavor);
+      for(int i=0;i<values.length;i++) {
+        int idx = index++;
+        listModel.add(idx, values[i]);
+        target.addSelectionInterval(idx, idx);
+      }
+      //---->
+      addCount = (target==source)? values.length : 0;
+      //<----
+      return true;
+    }catch(UnsupportedFlavorException ufe) {
+      ufe.printStackTrace();
+    }catch(java.io.IOException ioe) {
+      ioe.printStackTrace();
+    }
+    return false;
+  }
+//......
+}}
+
+* 解説 [#g42b41be]
+上記のサンプルでは、一つの`JList`内でのアイテムの並べ替えを行う[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]を元に`ListItemTransferHandler`を作成し、`JList`間でのアイテム移動もできるようになっています。変更した箇所は、[[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]から、[[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]と同じで、ドロップ先がドラッグ元と同じかどうかを調べて処理を変更しているだけです。
+
+* 参考リンク [#b2863a5e]
+- [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]
+- [[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]
+
+* コメント [#d595f5a2]
+- アイテムをカット(KBD{Ctrl+X})すると`ClassCastException`が発生するのを修正。 -- [[aterai]] &new{2011-02-25 (金) 20:28:45};
+
+#comment

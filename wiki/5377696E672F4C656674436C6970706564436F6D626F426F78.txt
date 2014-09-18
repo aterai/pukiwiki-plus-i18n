@@ -1,0 +1,74 @@
+TITLE:JComboBoxのアイテム文字列を左側からクリップ
+#tags(JComboBox, ListCellRenderer, ArrowButton)
+#author(aterai)
+#pubdate(2007-06-18T19:09:42+09:00)
+* 概要 [#ia7b0026]
+`JComboBox`のアイテム文字列がコンポーネントより長い場合、これを左側からクリップします。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTPEaiR2iI/AAAAAAAAAdY/E5fxUtKW0sM/s800/LeftClippedComboBox.png)
+
+* サンプルコード [#x51d3784]
+#code(link){{
+final JButton arrowButton = getArrowButton(combo02);
+combo02.setRenderer(new DefaultListCellRenderer() {
+  @Override public Component getListCellRendererComponent(
+        JList list, Object value, int index,
+        boolean isSelected, boolean cellHasFocus) {
+    super.getListCellRendererComponent(list,value,index,isSelected,cellHasFocus);
+    int itb=0, ilr=0;
+    Insets insets = getInsets();
+    itb+=insets.top+insets.bottom; ilr+=insets.left+insets.right;
+    insets = combo02.getInsets();
+    itb+=insets.top+insets.bottom; ilr+=insets.left+insets.right;
+    int availableWidth = combo02.getWidth()-ilr;
+    if(index<0) {
+      //@see BasicComboBoxUI#rectangleForCurrentValue
+      int buttonSize = combo02.getHeight()-itb;
+      if(arrowButton!=null) {
+        buttonSize = arrowButton.getWidth();
+      }
+      availableWidth -= buttonSize;
+      JTextField tf = (JTextField)combo02.getEditor().getEditorComponent();
+      insets = tf.getMargin();
+      availableWidth -= (insets.left + insets.right);
+    }
+    String cellText = (value!=null)?value.toString():"";
+    //<blockquote cite="http://tips4java.wordpress.com/2008/11/12/left-dot-renderer/">
+    //@title Left Dot Renderer
+    //@auther Rob Camick
+    FontMetrics fm = getFontMetrics(getFont());
+    if(fm.stringWidth(cellText)>availableWidth) {
+      String dots = "...";
+      int textWidth = fm.stringWidth(dots);
+      int nChars = cellText.length() - 1;
+      while(nChars>0) {
+        textWidth += fm.charWidth(cellText.charAt(nChars));
+        if(textWidth > availableWidth) break;
+        nChars--;
+      }
+      setText(dots+cellText.substring(nChars+1));
+    }
+    //</blockquote>
+    return this;
+  }
+});
+}}
+
+* 解説 [#qf9b52f8]
+標準の`JComboBox`では、長い文字列は右側をクリップするので、上記のサンプルでは左側を切り取り、`...`で置き換えるようにセルレンダラーを変更しています。
+
+例えば、コンボボックスのセルよりファイル名が長くても、拡張子が表示できるようにしたいといった場合に使用します。
+
+エディタ部分(`index<0`の場合)を描画するときは、矢印ボタンの幅を考慮する必要があります。
+
+`LookAndFeel`によって余白などのサイズが微妙に異なる場合がある？ため、うまく表示されないことがあります。
+
+* 参考リンク [#u56983b7]
+- [https://forums.oracle.com/thread/1389543 Swing - JTable - right align in cell even if the text is wider than the cell]
+-- camickr さんの投稿(2005/06/10 5:52)した`JTable`でのサンプルを参考にしています。
+- [http://tips4java.wordpress.com/2008/11/12/left-dot-renderer/ Left Dot Renderer « Java Tips Weblog]
+
+* コメント [#h4fa25ab]
+- 参考リンク、スクリーンショット更新。 -- [[aterai]] &new{2008-11-13 (木) 14:26:39};
+
+#comment

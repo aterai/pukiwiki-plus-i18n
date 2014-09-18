@@ -1,0 +1,41 @@
+TITLE:JTableの列にEnumSetを使用する
+#tags(JTable, EnumSet, JCheckBox, TableCellRenderer, TableCellEditor)
+#author(aterai)
+#pubdate(2012-05-21T14:20:44+09:00)
+* 概要 [#fd986dd9]
+`JTable`の列に`EnumSet`を設定し、その状態を`JCheckBox`を使ったレンダラーで表示します。
+
+#download(https://lh6.googleusercontent.com/-sFAMn6DioFo/T7nL6BrEaHI/AAAAAAAABM0/QqVOr4uGNdE/s800/EnumSet.png)
+
+* サンプルコード [#r2000810]
+#code(link){{
+enum Permissions { EXECUTE, WRITE, READ; }
+}}
+
+#code{{
+private final Object[][] data = {
+  {"owner", EnumSet.of(Permissions.READ, Permissions.WRITE, Permissions.EXECUTE)},
+  {"group", EnumSet.of(Permissions.READ)},
+  {"other", EnumSet.noneOf(Permissions.class)}
+};
+}}
+
+#code{{
+@Override public Object getCellEditorValue() {
+  EnumSet<Permissions> f = EnumSet.noneOf(Permissions.class);
+  if(buttons[0].isSelected()) f.add(Permissions.READ);
+  if(buttons[1].isSelected()) f.add(Permissions.WRITE);
+  if(buttons[2].isSelected()) f.add(Permissions.EXECUTE);
+  return f;
+}
+}}
+
+* 解説 [#h7f85cf3]
+上記のサンプルでは、[[JTableのCellにJCheckBoxを複数配置する>Swing/CheckBoxesInTableCell]]と同様に、パーミッション(第`1`列目)を`JCheckBox`を配置した`JPanel`で作成したセルレンダラーで表現していますが、モデルのデータはビットフラグではなく、`EnumSet`を使用するように変更しています。
+
+* 参考リンク [#a8c6193a]
+- [[JTableのCellにJCheckBoxを複数配置する>Swing/CheckBoxesInTableCell]]
+- [http://www.ne.jp/asahi/hishidama/home/tech/java/enum.html#h2_flag フラグとしての論理和(EnumSetの例) - Java列挙型メモ(Hishidama's Java enum Memo)]
+
+* コメント [#z3cd7fd6]
+#comment

@@ -1,0 +1,61 @@
+TITLE:TableRowSorter RowFilter
+#description(TableRowSorter、RowFilter関係の記事へのスクリーンショット付きリンク一覧)
+このページでは、`JDK 1.6.0`で追加された、`TableRowSorter`、`RowFilter`関係のメモを集めて一覧にしています。
+#contents(big)
+* TableRowSorter RowFilter [#pecbb4cf]
+** TableRowSorterでJTableのソート [#l28d950b]
+#swingdescription(Swing/TableRowSorter,TableRowSorterでJTableのソート,JDK 6 で導入された、TableRowSorterを利用して、JTableの行を降順、昇順にソートします。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUnbg2jyI/AAAAAAAAAmU/-7yjlGSjBmo/s144/TableRowSorter.png)
+
+** TableRowSorterのソートをヘッダクリックで昇順、降順、初期状態に変更 [#l78a120a]
+#swingdescription(Swing/TriStateSorting,TableRowSorterのソートをヘッダクリックで昇順、降順、初期状態に変更,JDK 6 で導入された TableRowSorter のソートを、TableSorter.java のようにヘッダクリックで昇順、降順、初期状態に切り替わるように設定します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWVWrGvdI/AAAAAAAAApE/-DL1kAZzGsM/s144/TriStateSorting.png)
+
+** RowFilterでJTableの行をフィルタリング [#u66d5ba7]
+#swingdescription(Swing/RowFilter,RowFilterでJTableの行をフィルタリング,JDK 6 で導入されたTableRowSorterにRowFilterを設定して、行のフィルタリングを行います。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTST-FvjRI/AAAAAAAAAik/ZbU9nuVVCiI/s144/RowFilter.png)
+
+** RowFilterでJTableのページ分割 [#e22712e8]
+#swingdescription(Swing/TablePagination,RowFilterでJTableのページ分割,JDK 6 で導入されたRowFilterを使って、JTableの行をPagination風に分割して表示します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUiUh8yiI/AAAAAAAAAmM/eY1zd24d0ac/s144/TablePagination.png)
+
+** JTableをソートした後の選択状態 [#tf1dd38d]
+#swingdescription(Swing/UpdateSelectionOnSort,JTableをソートした後の選択状態,JDK 1.6 で導入された RowSorter を使って、JTableをソートした場合、直前の選択状態がどう変化するかテストします。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTWaXC_E3I/AAAAAAAAApM/H9h2pJw-VSQ/s144/UpdateSelectionOnSort.png)
+
+** JTableのRowFilterを一旦解除してソート [#s867a64d]
+#swingdescription(Swing/ResetRowFilter,JTableのRowFilterを一旦解除してソート,JTableのRowFilterを一旦解除してソートし、再びフィルタを設定することで表示される行を更新します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTRuQZLwOI/AAAAAAAAAho/ovjovr-5nuI/s144/ResetRowFilter.png)
+
+** JTableでソート中のカラムセル色 [#ha73d2eb]
+#swingdescription(Swing/SortColumnColor,JTableでソート中のカラムセル色,どのカラムでソートされているかを表示するために、セルの背景色を変更します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTZ75OnPI/AAAAAAAAAkU/k4lx4c2XKK8/s144/SortColumnColor.png)
+
+** JTableにソートされないサマリー行を表示する [#tc06b3ae]
+#swingdescription(Swing/FixedSummaryRow,JTableにソートされないサマリー行を表示する,JTableの行をソートしても、常に最終行にサマリーを表示します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTM63Y0s8I/AAAAAAAAAZ8/o3lbm9QBcIs/s144/FixedSummaryRow.png)
+
+** TableRowSorterのSortKeysをクリアする [#s02b6854]
+#swingdescription(Swing/ClearSortingState,TableRowSorterのSortKeysをクリアする,JDK 6 で導入されたTableRowSorterでの行ソートを、テーブルヘッダの「Shift+クリック」でクリアします。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJF8YbgvI/AAAAAAAAAT0/NDSO1fqmVNw/s144/ClearSortingState.png)
+
+** JTableの列固定とソート [#s5c9c706]
+#swingdescription(Swing/FixedColumnTableSorting,JTableの列固定とソート,列固定したJTableで、JDK 6 で導入されたTableRowSorterを使った行ソートを行います。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMzes1hqI/AAAAAAAAAZw/-m-PZSFzYAk/s144/FixedColumnTableSorting.png)
+
+* ↑10 ↓11 [#vc5bba89]
+#adsensebar
+
+** JTableのソートアイコンを変更 [#p35a2765]
+#swingdescription(Swing/TableSortIcon,JTableのソートアイコンを変更,JTableのソートアイコンを非表示にしたり、別の画像に変更します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUsaUYVkI/AAAAAAAAAmc/34Qz14LqOGc/s144/TableSortIcon.png)
+
+** JTableのRowSorterをフィルタありソート不可にする [#a95eb56b]
+#swingdescription(Swing/FilterWithoutSorting,JTableのRowSorterをフィルタありソート不可にする,フィルタありでソート不可の TableRowSorter を作成します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMr425A3I/AAAAAAAAAZk/ZFpsuUZWGcQ/s144/FilterWithoutSorting.png)
+
+** JTableHeaderにJPopupMenuを追加してソート [#ue26cd9b]
+#swingdescription(Swing/RowSorterPopupMenu,JTableHeaderにJPopupMenuを追加してソート,JTableHeaderにJPopupMenuを追加してソートします。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSY9WWpNI/AAAAAAAAAis/Z0YqvftAIh8/s144/RowSorterPopupMenu.png)
+
+** JTableでファイルとディレクトリを別々にソート [#j8982ffc]
+#swingdescription(Swing/FileDirectoryComparator,JTableでファイルとディレクトリを別々にソート,JTableでファイルとディレクトリを別々にソートし、ディレクトリが常に先頭になるように設定します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQXAQuafMsI/AAAAAAAAAqU/BDQdRbMeSnE/s144/FileDirectoryComparator.png)
+
+** JTableがデフォルトでソートする列を設定する [#sb1908a1]
+#swingdescription(Swing/DefaultSortingColumn,JTableがデフォルトでソートする列を設定する,JTableがデフォルトでソートする列とその方向を設定します。,https://lh5.googleusercontent.com/-qvzRq_TxwSg/Texuvm22ELI/AAAAAAAAA84/DhfjZ3TEATk/s144/DefaultSortingColumn.png)
+
+** JTableの検索結果をRowFilterとHighlighterで強調表示する [#tbdad639]
+#swingdescription(Swing/TableHighlightRegexFilter,JTableの検索結果をRowFilterとHighlighterで強調表示する,JTableで正規表現による検索結果をRowFilterとHighlighterを使用して表現します。,https://lh3.googleusercontent.com/-9b6L1m5fhBk/UfUzbWaYGtI/AAAAAAAABw8/xhrIa_pJXls/s144/TableHighlightRegexFilter.png)
+
+** JTableの複数キーを使ったソートをヘッダに表示する [#x37b2657]
+#swingdescription(Swing/MultisortHeaderRenderer,JTableの複数キーを使ったソートをヘッダに表示する,JTableの複数キーを使ったソートの状態をヘッダ上に別途表示します。,https://lh3.googleusercontent.com/-QNe3lJ3oXH0/Ulqu3vaS91I/AAAAAAAAB3U/Tb2kXiKV8Fs/s144/MultisortHeaderRenderer.png)
+
+** JTableのPaginationとSwingWorkerでの逐次読み込み [#c5344bfe]
+#swingdescription(Swing/PageInputForPagination,JTableのPaginationとSwingWorkerでの逐次読み込み,JTableでRowFilterを使ったPaginationとSwingWorkerでの逐次読み込みを行います。,https://lh5.googleusercontent.com/-1qIJd4HlwkQ/UnaN9fNNZtI/AAAAAAAAB5Y/JqssphQAq3Q/s144/PageInputForPagination.png)

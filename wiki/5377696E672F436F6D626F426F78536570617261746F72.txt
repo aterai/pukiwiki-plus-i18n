@@ -1,0 +1,105 @@
+TITLE:JComboBoxにJSeparatorを挿入
+#tags(JComboBox, JSeparator, ListCellRenderer, ItemListener, ActionMap, InputMap)
+#author(aterai)
+#pubdate(2005-08-29)
+* 概要 [#xfede4a1]
+`JComboBox`に選択できない`JSeparator`を挿入します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJt9fH4ZI/AAAAAAAAAU0/c9vovQi9Jvo/s800/ComboBoxSeparator.png)
+
+* サンプルコード [#gc9aec18]
+#code(link){{
+final ListCellRenderer lcr = combobox.getRenderer();
+combobox.setRenderer(new ListCellRenderer() {
+  @Override public Component getListCellRendererComponent(JList list, Object value,
+                    int index, boolean isSelected, boolean cellHasFocus) {
+    if(value instanceof JSeparator) {
+      return (JSeparator)value;
+    }else{
+      return (JLabel)lcr.getListCellRendererComponent(
+                  list,value,index,isSelected,cellHasFocus);
+    }
+ }
+});
+DefaultComboBoxModel model = new DefaultComboBoxModel() {
+  @Override public void setSelectedItem(Object o) {
+    if(o instanceof JSeparator) return;
+    super.setSelectedItem(o);
+  }
+};
+model.addElement("aaaa");
+model.addElement(new JSeparator());
+model.addElement("bbb1");
+combobox.setModel(model);
+}}
+
+* 解説 [#ha026ab6]
+- `ListCellRenderer`
+-- `JSeparator`が選択された場合は、`JSeparator`にキャストして返すような`ListCellRenderer`を設定しています。
+
+- `DefaultComboBoxModel`
+-- `JSeparator`が選択された場合は何もしないよう、`setSelectedItem`メソッドをオーバーライドしています。
+
+`DefaultComboBoxModel#setSelectedItem`メソッドをオーバーライドする代わりに、以下のように`JSeparator`が選択された場合はひとつ前の`Item`に戻すような`ItemListener`を追加しても同様になります。
+
+#code{{
+combobox.addItemListener(new ItemListener() {
+  private Object prev;
+  @Override public void itemStateChanged(ItemEvent e) {
+    if(e.getStateChange()==ItemEvent.SELECTED) {
+      Object obj = e.getItem();
+      if(obj instanceof JSeparator) {
+        if(prev==null) prev = combobox.getItemAt(0);
+        combobox.setSelectedItem(prev);
+      }else{
+        prev = obj;
+      }
+    }
+  }
+});
+}}
+
+さらに、KBD{Up}KBD{Down}キーでの選択状態移動を可能にする(`JSeparator`なら飛ばす)場合は、以下のようなキーストロークのアクションを設定する必要があります。
+
+#code{{
+Action up = new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    int index = combobox.getSelectedIndex();
+    if(index==0) return;
+    Object o = combobox.getItemAt(index-1);
+    if(o instanceof JSeparator) {
+      combobox.setSelectedIndex(index-2);
+    }else{
+      combobox.setSelectedIndex(index-1);
+    }
+  }
+};
+Action down = new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    int index = combobox.getSelectedIndex();
+    if(index==combobox.getItemCount()-1) return;
+    Object o = combobox.getItemAt(index+1);
+    if(o instanceof JSeparator) {
+      combobox.setSelectedIndex(index+2);
+    }else{
+      combobox.setSelectedIndex(index+1);
+    }
+  }
+};
+ActionMap am = combobox.getActionMap();
+am.put("selectPrevious3", up);
+am.put("selectNext3", down);
+InputMap im = combobox.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0),      "selectPrevious3");
+im.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_UP, 0),   "selectPrevious3");
+im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),    "selectNext3");
+im.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, 0), "selectNext3");
+}}
+
+* 参考リンク [#ad16a9b2]
+- [[JComboBoxのアイテムをBorderで修飾してグループ分け>Swing/BorderSeparator]]
+
+* コメント [#v07260fb]
+- KBD{Up}KBD{Down}キーでの選択状態移動に対応しました。 -- [[aterai]] &new{2007-08-10 (金) 18:54:05};
+
+#comment

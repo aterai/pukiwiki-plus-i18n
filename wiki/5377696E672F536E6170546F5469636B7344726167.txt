@@ -1,0 +1,72 @@
+TITLE:JSliderのSnapToTicksをマウスのドラッグでも適用する
+#tags(JSlider, MouseMotionListener)
+#author(aterai)
+#pubdate(2009-12-14T13:49:28+09:00)
+* 概要 [#ec2028a2]
+`JSlider`の`SnapToTicks`をマウスでのドラッグ中にも適用されるように設定します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTU-ruijI/AAAAAAAAAkM/p3Mze4pjyEk/s800/SnapToTicksDrag.png)
+
+* サンプルコード [#hccb5c20]
+#code(link){{
+slider.setUI(new MetalSliderUI() {
+  @Override protected TrackListener createTrackListener(final JSlider slider) {
+    return new TrackListener() {
+      @Override public void mouseDragged(MouseEvent e) {
+        if(!slider.getSnapToTicks() || slider.getMajorTickSpacing()==0) {
+          super.mouseDragged(e);
+          return;
+        }
+        //case JSlider.HORIZONTAL:
+        int halfThumbWidth = thumbRect.width / 2;
+        final int trackLength = trackRect.width;
+        final int trackLeft   = trackRect.x - halfThumbWidth;
+        final int trackRight  = trackRect.x + trackRect.width - 1 + halfThumbWidth;
+        int xPos = e.getX();
+        int snappedPos = xPos;
+        if(xPos <= trackLeft) {
+          snappedPos = trackLeft;
+        }else if(xPos >= trackRight) {
+          snappedPos = trackRight;
+        }else{
+          //int tickSpacing = slider.getMajorTickSpacing();
+          //float actualPixelsForOneTick = trackLength * tickSpacing / (float)slider.getMaximum();
+
+          // a problem if you choose to set a negative MINIMUM for the JSlider;
+          // the calculated drag-positions are wrong.
+          // Fixed by bobndrew:
+          int possibleTickPositions = slider.getMaximum() - slider.getMinimum();
+          int tickSpacing = (slider.getMinorTickSpacing()==0)
+                      ? slider.getMajorTickSpacing()
+                      : slider.getMinorTickSpacing();
+          float actualPixelsForOneTick = trackLength * tickSpacing / (float) possibleTickPositions;
+          xPos -= trackLeft;
+          snappedPos = (int) (Math.round(xPos/actualPixelsForOneTick) * actualPixelsForOneTick + 0.5) + trackLeft;
+          offset = 0;
+          //System.out.println(snappedPos);
+        }
+        MouseEvent me = new MouseEvent(
+          e.getComponent(), e.getID(), e.getWhen(), e.getModifiers(),
+          snappedPos, e.getY(),
+          e.getXOnScreen(), e.getYOnScreen(),
+          e.getClickCount(), e.isPopupTrigger(), e.getButton());
+        e.consume();
+        super.mouseDragged(me);
+      }
+    };
+  }
+});
+}}
+
+* 解説 [#idd12036]
+- 上:デフォルト
+-- `slider.setSnapToTicks(true);`としているので、マウスをリリースした時点で、ノブを置いた位置にもっとも近い目盛にスナップされる
+- 下:
+-- `TrackListener#mouseDragged`をオーバーライドして、マウスでドラッグ中でもカーソルからもっとも近い目盛にスナップされる
+
+//**参考リンク
+* コメント [#h246efdc]
+- `JSlider.HORIZONTAL`にしか対応していません。 -- [[aterai]] &new{2009-12-21 (月) 11:01:51};
+- bobndrewさんからの指摘で、ミニマムにマイナスの値を入れるとおかしくなるバグ修正と、`MinorTickSpacing`に対応。 -- [[aterai]] &new{2010-10-26 (火) 15:32:11};
+
+#comment

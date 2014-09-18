@@ -1,0 +1,55 @@
+TITLE:JTableのセルの高さを自動調整
+#tags(JTable, JTextArea, TableCellRenderer)
+#author(aterai)
+#pubdate(2010-10-25T14:24:03+09:00)
+* 概要 [#pe4a7c92]
+`JTable`のセルの高さを、文字列の折り返しに応じて自動調整します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTH4TWFB1I/AAAAAAAAAR4/8C89wEJ8EUA/s800/AutoWrapTableCell.png)
+
+* サンプルコード [#f1f7d94f]
+#code(link){{
+private List<List<Integer>> rowColHeight = new ArrayList<>();
+private void adjustRowHeight(JTable table, int row, int column) {
+  //int cWidth = table.getTableHeader().getColumnModel().getColumn(column).getWidth();
+  int cWidth = table.getCellRect(row, column, false).width; //セルの内余白は含めない
+  //setSize(new Dimension(cWidth, 1000)); //注目
+  setBounds(table.getCellRect(row, column, false)); //もしくは？
+  //doLayout();
+
+  int prefH = getPreferredSize().height;
+  while(rowColHeight.size() <= row) {
+    rowColHeight.add(new ArrayList<Integer>(column));
+  }
+  List<Integer> colHeights = rowColHeight.get(row);
+  while(colHeights.size() <= column) {
+    colHeights.add(0);
+  }
+  colHeights.set(column, prefH);
+  int maxH = prefH;
+  for(Integer colHeight : colHeights) {
+    if(colHeight > maxH) {
+      maxH = colHeight;
+    }
+  }
+  if(table.getRowHeight(row) != maxH) {
+    table.setRowHeight(row, maxH);
+  }
+}
+}}
+
+* 解説 [#cef4d3e6]
+上記のサンプルでは、セルレンダラーに、`setLineWrap(true)`とした`JTextArea`を使用し、カラムサイズの変更などがあったときに、その`JTextArea`の高さを取得して`JTable#setRowHeight(int)`メソッドで各行の高さとして設定しています。
+
+* 参考リンク [#xfcd757b]
+- [http://tips4java.wordpress.com/2008/10/26/text-utilities/ Text Utilities « Java Tips Weblog]
+- [[JTableのセル幅で文字列を折り返し>Swing/TableCellRenderer]]
+
+* コメント [#y52d6f46]
+- 高さが微妙に更新されない場合がある…。 -- [[aterai]] &new{2010-10-27 (水) 14:02:02};
+- フレームのサイズ(`JTable`の高さ)を微妙に調整すると、スクロールバーが表示・非表示を繰り返す場合がある。 -- [[aterai]] &new{2010-11-02 (火) 20:23:55};
+- %%上二つの原因は同じだと思うけど、今のところ何が問題なのか分からず、お手上げ状態です。%% -- [[aterai]] &new{2010-11-02 (火) 20:26:21};
+- レンダラーに以下のようなコードを追加して調整するサンプルを発見: [http://blog.botunge.dk/post/2009/10/09/JTable-multiline-cell-renderer.aspx JTable multiline cell renderer] -- [[aterai]] &new{2013-05-21 (火) 04:18:52};
+-- この方法だと、セルを描画する毎に、行の高さを調整するようになるので、これまでのドラッグでリサイズ中の微妙なサイズは無くなるはず(多少重くなるかもしれないけど、違いは全く感じられない)。 -- [[aterai]] &new{2013-05-21 (火) 18:43:54};
+
+#comment

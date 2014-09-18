@@ -1,0 +1,327 @@
+TITLE:Typo、変換ミス
+#author(aterai)
+#pubdate(2010-10-05)
+#contents(big)
+
+* 未修正 [#qdf2a73a]
+** デーモンスレッドになます。 [#wa52b6cd]
+- http://docs.oracle.com/javase/jp/8/api/java/lang/Thread.html
+-- デーモンスレッドになます。
+- 修正案
+-- デーモンスレッドになります。
+
+「デーモンスレッドになます。」で検索したら、[http://phinloda.cocolog-nifty.com/uraura/2004/07/post_20.html ナマスとは一体何だっけと思ったのだがナマス切りにしたみたいな表現がそういえばあったような肝: Phinloda の裏の裏ページ]が見つかったので、少なくとも2004年以前からのtypoらしい。
+
+** JtextComponent [#q02003d2]
+-  http://docs.oracle.com/javase/jp/8/api/javax/swing/text/JTextComponent.html#loadKeymap-javax.swing.text.Keymap-javax.swing.text.JTextComponent.KeyBinding:A-javax.swing.Action:A-
+-- JtextComponent
+- 修正案
+-- JTextComponent
+
+小文字のtextになっている。
+
+** 翻訳されていない [#w4ee516e]
+- http://docs.oracle.com/javase/jp/8/api/java/awt/Component.html#setBounds-int-int-int-int-
+-- width - このコンポーネントの新しい width
+-- height - このコンポーネントの新しい height
+- 変更案
+-- width - このコンポーネントの新しい幅
+-- height - このコンポーネントの新しい高さ
+
+英語版の<code>タグの付け方が、このメソッドだけ他と異なるようだ。
+
+** デフォルトでは…が二回 [#gd94b8e2]
+- http://docs.oracle.com/javase/jp/8/api/java/awt/Frame.html#isUndecorated--
+-- デフォルトではすべてのフレームが装飾を持ちます。デフォルトでは、すべてのフレームが初期状態で装飾を持ちます。
+- http://docs.oracle.com/javase/8/docs/api/java/awt/Frame.html#isUndecorated--
+-- Indicates whether this frame is undecorated. By default, all frames are initially decorated.
+- 変更案
+-- このフレームが装飾されていないかどうか示します。デフォルトでは、すべてのフレームが初期状態で装飾を持ちます。
+
+** 特に、余分のスペースの差 (1 - ウエイト) * を取得 [#m716961c]
+- http://docs.oracle.com/javase/jp/8/api/javax/swing/JSplitPane.html#setResizeWeight-double-
+-- 特に、左または上のコンポーネントは余分なスペース (ウエイト * 差) を取得し、右または下のコンポーネントは余分のスペースの差 (1 - ウエイト) * を取得します。
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html#setResizeWeight-double-
+-- Specifically, the left/top component gets (weight * diff) extra space and the right/bottom component gets (1 - weight) * diff extra space.
+- 変更案
+-- 具体的には、左/上のコンポーネントは、(ウェイト * 差)の余分なスペースを取得し、右/下のコンポーネントは、((1 - ウェイト) * 差) の余分なスペースを取得します。
+
+カッコの後に* ではなく、* 差が良さそう。ついでに「ウエイト」はここだけで、他は「ウェイト」が多いみたい。
+
+** JFileCHooser.ERROR_OPTION [#icd80dca]
+// - http://docs.oracle.com/javase/6/docs/api/javax/swing/JFileChooser.html#showDialog(java.awt.Component,%20java.lang.String)
+- http://docs.oracle.com/javase/jp/7/api/javax/swing/JFileChooser.html#showDialog(java.awt.Component,%20java.lang.String)
+-- JFileCHooser.ERROR_OPTION
+- 修正案
+-- JFileChooser.ERROR_OPTION
+
+JFileChooserのHが大文字になっている。7 の英語版はすべて修正されているが、日本語版は、三箇所残っている。
+
+** HyperLinkListener [#u6abe699]
+- http://docs.oracle.com/javase/7/docs/api/javax/swing/JEditorPane.html#getHyperlinkListeners()
+- http://docs.oracle.com/javase/jp/7/api/javax/swing/JEditorPane.html#getHyperlinkListeners()
+-- HyperLinkListener
+- 修正案
+-- HyperlinkListener
+
+英語版、日本語版ともに、HyperlinkのLが大文字になっている。
+
+** パージョン [#zad2b58f]
+- http://docs.oracle.com/javase/jp/7/technotes/guides/deployment/deployment-guide/tracing_logging.html
+- http://docs.oracle.com/javase/jp/7/technotes/guides/plugin/developer_guide/version.html
+-- メジャー、マイナー、およびパッチパージョン番号が含まれます
+
+** g2とg2d [#j9c6b8e7]
+- http://docs.oracle.com/javase/jp/7/api/java/awt/Graphics2D.html#setTransform(java.awt.geom.AffineTransform)
+-- 一サンプルコード内で、g2とg2dが使われているので、どちらかにした方がいいかも。
+
+#code{{
+// Get the current transform
+AffineTransform saveAT = g2.getTransform();
+// Perform transformation
+g2d.transform(...);
+// Render
+g2d.draw(...);
+// Restore original transform
+g2d.setTransform(saveAT);
+}}
+
+** Returns the Component's "visible rect rectangle" [#f1c606b0]
+- http://docs.oracle.com/javase/7/docs/api/javax/swing/JComponent.html#computeVisibleRect(java.awt.Rectangle)
+-- getVisibleRect() は、"visible rect rectangle" ではなく、"visible rectangle" なので、typoかも。
+
+** 限定されてます。 [#wc29eea2]
+- http://docs.oracle.com/javase/jp/7/api/javax/swing/text/html/ObjectView.html
+-- 限定されてます。
+- 変更案
+-- 限定されています。
+
+多分、1.6.0に有った「い」抜き？は、これ以外はすべて修正されているようなので。
+
+* 1.8.0で修正済み [#fd924ec4]
+** 余計な括弧 [#c09bd0af]
+- http://docs.oracle.com/javase/jp/7/api/javax/swing/UIManager.html
+-- このため、一般に、ある Look & Feel が提供する ComponentUI) は、別の Look & Feel では動作しません。
+- http://docs.oracle.com/javase/7/docs/api/javax/swing/UIManager.html
+--so that in general a ComponentUI provided by one look and feel will not work with another look and feel.
+- 変更案
+-- このため、一般に、ある Look & Feel が提供する ComponentUI は、別の Look & Feel では動作しません。
+
+* 1.7.0 で修正済み [#s58dd65f]
+** 行わないためでです。 [#g44519a4]
+- http://docs.oracle.com/javase/jp/6/api/java/security/SecurityPermission.html
+-- 行わないためでです。
+- 修正案
+-- 行わないためです。
+
+** 書き込む。FileHandler を初期化してます。 [#f9eee108]
+- http://docs.oracle.com/javase/jp/6/api/java/util/logging/FileHandler.html#FileHandler(java.lang.String,%20boolean)
+-- オプションの追加モードで、指定されたファイル名を書き込む。FileHandler を初期化してます。
+
+** 奨励されてます。 [#y13ef266]
+- http://docs.oracle.com/javase/jp/6/api/java/util/RandomAccess.html
+-- 奨励されてます。
+
+直前は、「奨励されています。」になっている。
+
+** 注 - [#q3c0d766]
+- http://docs.oracle.com/javase/jp/6/api/java/awt/Container.html
+-- 注 -フォーカスサブシステムの詳細については
+- http://docs.oracle.com/javase/jp/6/api/java/awt/Container.html#setComponentZOrder(java.awt.Component,%20int)
+-- 注 -removeNotify
+- 変更案
+-- 注: フォーカスサブシステムの詳細については
+-- 注: removeNotify
+
+** これはこのメソッドの戻り値です。 [#yc019451]
+- http://docs.oracle.com/javase/jp/6/api/javax/swing/JComponent.html#getVisibleRect()
+-- これはこのメソッドの戻り値です。 Component の「可視矩形」を返します。 これは、このコンポーネントの可視矩形、new Rectangle(0, 0, getWidth(), getHeight())、およびそのすべての上位オブジェクトの可視矩形の共通部分です。
+- http://docs.oracle.com/javase/7/docs/api/javax/swing/JComponent.html#getVisibleRect()
+-- Returns the Component's "visible rectangle" - the intersection of this component's visible rectangle, new Rectangle(0, 0, getWidth(), getHeight()), and all of its ancestors' visible rectangles.
+- 変更案
+-- Component の「可視矩形」を返します。 これは、このコンポーネントの可視矩形、new Rectangle(0, 0, getWidth(), getHeight())、およびそのすべての上位オブジェクトの可視矩形の共通部分です。
+
+** リンクとカギ括弧 [#w116484d]
+- http://docs.oracle.com/javase/jp/6/technotes/tools/share/pack200.html
+-- <li><a href="../index.html#jar">「<code>jar</code></a> - Java Archive ツール」</li>
+- 変更案
+-- <li>「<a href="../index.html#jar"><code>jar</code></a> - Java Archive ツール」</li>
+
+カギ括弧自体削除してもいいかもしれない。英語版には存在しないし。
+
+** 句点が二度出現 [#l3272fe6]
+- http://docs.oracle.com/javase/jp/6/api/javax/swing/text/JTextComponent.html#setMargin(java.awt.Insets)
+-- Border オブジェクトが適切なマージン空白を作成します。 (それ以外の場合、このプロパティーは事実上無視される)。
+- 変更案
+-- Border オブジェクトが適切なマージン空白を作成します(それ以外の場合、このプロパティーは事実上無視される)。
+
+** 同一文章が二回出現 [#c3d8ffeb]
+- http://docs.oracle.com/javase/jp/6/api/javax/swing/text/JTextComponent.html#setCaretPosition(int)
+-- TextComponent のテキスト挿入キャレットの位置を設定します。TextComponent のテキスト挿入キャレットの位置を設定します。
+- http://docs.oracle.com/javase/6/docs/api/javax/swing/text/JTextComponent.html#setCaretPosition(int)
+-- Sets the position of the text insertion caret for the TextComponent.
+
+** SimpleDateFormat getNativeImageMetadataFormat から 午前/午後 [#e842520b]
+- http://docs.oracle.com/javase/jp/6/api/java/text/SimpleDateFormat.html
+-- getNativeImageMetadataFormat から
+- http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html
+-- a
+
+何かの変換ミスか？
+
+** 括弧の対応 [#mebe1d6d]
+- http://docs.oracle.com/javase/jp/6/api/javax/swing/DefaultRowSorter.html
+-- デフォルトの Comparator を検出するには、具象実装 (たとえば、TableRowSorter を参照します。
+- http://docs.oracle.com/javase/6/docs/api/javax/swing/DefaultRowSorter.html
+-- To find the default Comparators, see the concrete implementation (for example, TableRowSorter).
+- 変更案
+-- デフォルトの Comparator を検出するには、具象実装 (たとえば、TableRowSorter) を参照します。
+
+** code タグの対応 [#l90844e1]
+- http://docs.oracle.com/javase/jp/6/api/java/awt/CardLayout.html
+-- CardLayout</code> オブジェクトに最初に追加されるコンポーネントは、コンテナが最初に表示されるときの可視コンポーネントになります。
+-- <code><code>CardLayout</code> は、アプリケーションがこれらのカードを順番にめくったり、指定したカードを表示したりできるようにするメソッドのセットを定義します。
+
+- http://java.sun.com/javase/ja/6/docs/ja/api/java/awt/geom/AffineTransform.html#transform(java.awt.geom.Point2D%5b%5d,%20int,%20java.awt.geom.Point2D%5b%5d,%20int,%20int)
+-- この変換によってポイントオブジェクトの配列を変換します。<code><code>ptDst</code> 配列の要素のいずれかが <code>null</code> であれば、
+
+** @code [#j3815e10]
+- http://docs.oracle.com/javase/jp/6/api/javax/swing/DefaultListSelectionModel.html
+-- どちらのインデックスも @code -1} でなく、
+--- DefaultListSelectionModel.html 内に三箇所あり
+
+- http://docs.oracle.com/javase/jp/6/api/java/util/AbstractList.html#modCount
+-- @code add(int, E)} または remove(int) に対する 1 回の呼び出しでは、フィールドに 1 だけ加える必要があります。
+
+- http://docs.oracle.com/javase/jp/6/api/java/util/Random.html#nextGaussian()
+-- Random クラスによるメソッド @code nextGaussian} の実装は、
+
+** 句点がない [#d29c43ee]
+- http://docs.oracle.com/javase/jp/6/api/javax/swing/JTable.html#changeSelection(int,%20int,%20boolean,%20boolean)
+-- toggle:false、extend:false既存の選択をクリアし、新しいセルが確実に選択されるようにする
+-- toggle:false、extend:true既存の選択をアンカーから指定のセルまで拡張して、ほかのすべての選択をクリアする
+-- toggle:true、extend:false指定されたセルが選択されている場合、そのセルを選択解除する。選択されていない場合、そのセルを選択する
+-- toggle:true、extend:trueアンカーの選択状態を、そのアンカーと指定されたセル間のすべてのセルに適用する。
+- http://docs.oracle.com/javase/6/docs/api/javax/swing/JTable.html#changeSelection(int,%20int,%20boolean,%20boolean)
+-- toggle: false, extend: false. Clear the previous selection and ensure the new cell is selected.
+-- toggle: false, extend: true. Extend the previous selection from the anchor to the specified cell, clearing all other selections.
+-- toggle: true, extend: false. If the specified cell is selected, deselect it. If it is not selected, select it.
+-- toggle: true, extend: true. Apply the selection state of the anchor to all cells between it and the specified cell.
+- 変更案
+-- toggle:false、extend:false。既存の選択をクリアし、新しいセルが確実に選択されるようにする。
+-- toggle:false、extend:true。既存の選択をアンカーから指定のセルまで拡張して、ほかのすべての選択をクリアする。
+-- toggle:true、extend:false。指定されたセルが選択されている場合、そのセルを選択解除する。選択されていない場合、そのセルを選択する。
+-- toggle:true、extend:true。アンカーの選択状態を、そのアンカーと指定されたセル間のすべてのセルに適用する。
+
+** 文字実体参照 [#ld87b16f]
+- http://docs.oracle.com/javase/jp/6/api/java/awt/Frame.html#setIconImage(java.awt.Image)
+-- ArrayList<Image> imageList = new ArrayList<Image>();
+- http://docs.oracle.com/javase/7/docs/api/java/awt/Frame.html#setIconImage(java.awt.Image)
+-- ArrayList&amp;lt;Image&amp;gt; imageList = new ArrayList&amp;lt;Image&amp;gt;();
+
+preタグ内の不等号が、文字実体参照になっていないので、Imageタグになっている？
+
+** <code>, <i> [#w539a74c]
+- http://docs.oracle.com/javase/jp/6/api/java/lang/Math.html#E
+-- 自然対数の底 <code>e</code> にもっとも近い <i>double</i> 値です。
+- http://docs.oracle.com/javase/6/docs/api/java/lang/Math.html#E
+-- The <code>double</code> value that is closer than any other to <i>e</i>, the base of the natural logarithms.
+- 変更案
+-- 自然対数の底 <i>e</i> にもっとも近い <code>double</code> 値です。
+
+** Hashtable 指定された TreeNode [#w767c97c]
+- http://docs.oracle.com/javase/jp/6/api/javax/swing/JTree.html#JTree(javax.swing.tree.TreeNode)
+-- Hashtable 指定された TreeNode をルートに持つ、ルートノードを表示する JTree を返します。
+- http://docs.oracle.com/javase/6/docs/api/javax/swing/JTree.html#JTree(javax.swing.tree.TreeNode)
+-- Returns a JTree with the specified TreeNode as its root, which displays the root node.
+- 変更案
+-- 指定された TreeNode をルートに持ち、ルートノードを表示する JTree を返します。
+
+多分直前の、public JTree(Hashtable<?,?> value) から、コピペミス。
+
+** Java? 2 [#hbb5d887]
+- http://docs.oracle.com/javase/jp/6/technotes/guides/lang/hook-design.html
+-- Java<sup><font size=-2>TM</font></sup>?2 プラットフォームのバージョン 1.2 では
+- http://docs.oracle.com/javase/6/docs/technotes/guides/lang/hook-design.html
+-- in version 1.2 of the Java<sup><font size="-2">TM</font></sup>&nbsp;2 Platform.
+
+ &nbsp; が?に化けている？
+ &nbsp;などを使用するなら、トレードマークも <sup><font size="-2">TM</font></sup> ではなく、&trade; か、UTF-8なので普通に™でもよさそう。
+
+** 注:注: 1 つの「*」で構成されるパス名は、 [#l71e4563]
+- http://docs.oracle.com/javase/jp/6/api/java/io/FilePermission.html
+-- 一箇所、「注:注:」になっている
+
+** 注:注: イベントをサブコンポーネントに転送する必要はありません。 [#i340aa99]
+- http://docs.oracle.com/javase/jp/6/api/javax/swing/JMenuItem.html#processMouseEvent(java.awt.event.MouseEvent,%20javax.swing.MenuElement%5B%5D,%20javax.swing.MenuSelectionManager)
+- http://docs.oracle.com/javase/jp/6/api/javax/swing/JMenuItem.html#processKeyEvent(java.awt.event.KeyEvent,%20javax.swing.MenuElement%5B%5D,%20javax.swing.MenuSelectionManager)
+-- 二箇所、「注:注:」になっている
+
+** パラメータ値値 [#p6a56684]
+- http://docs.oracle.com/javase/jp/6/api/java/sql/CallableStatement.html
+-- 複数箇所で、「パラメータ値値」になっている
+
+** さまさまなビューの配置場所を探せます。 [#y474beb7]
+- http://docs.oracle.com/javase/jp/6/api/javax/swing/text/BoxView.html#getChildAllocation(int,%20java.awt.Shape)
+-- 一箇所、「さまさま」になっている
+
+** または または [#x659a582]
+- http://docs.oracle.com/javase/jp/6/api/org/omg/CORBA/Any.html#extract_fixed()
+- http://docs.oracle.com/javase/jp/6/api/org/omg/CORBA/Any.html#extract_Principal()
+-- 二箇所、「または または」になっている
+
+** アサーションの有効/無効ににかかわらず、 [#w429baa1]
+- http://docs.oracle.com/javase/jp/6/technotes/guides/language/assert.html
+-- 一箇所、「無効にに」になっている
+
+** メソッドの引数 (NVList オブジェクトのの形式) [#kf09f018]
+- http://docs.oracle.com/javase/jp/6/api/org/omg/CORBA/ServerRequest.html#params(org.omg.CORBA.NVList)
+-- 一箇所、「のの形式」になっている
+
+** またはトランスミッタを を提供する [#q2200058]
+- http://docs.oracle.com/javase/jp/6/api/javax/sound/midi/MidiSystem.html#getTransmitter()
+-- 一箇所、「を を提供する」になっている
+//-- [http://docs.oracle.com/javase/jp/6/api/javax/sound/midi/MidiSystem.html を を提供する]
+
+** IllegalArgumentException を をラップする。 [#l6053cb8]
+- http://docs.oracle.com/javase/jp/6/api/javax/management/modelmbean/RequiredModelMBean.html#invoke(java.lang.String,%20java.lang.Object%5B%5D,%20java.lang.String%5B%5D)
+-- 一箇所、「を をラップする」になっている
+//-[http://docs.oracle.com/javase/jp/6/api/javax/management/modelmbean/RequiredModelMBean.html  を をラップする]
+
+** が が配置 [#ge9f8996]
+-[http://docs.oracle.com/javase/jp/6/api/javax/imageio/stream/FileImageInputStream.html が がディレクトリであるか]
+-[http://docs.oracle.com/javase/jp/6/api/javax/imageio/metadata/IIOMetadataFormatImpl.html が が負の値]
+-[http://docs.oracle.com/javase/jp/6/api/javax/imageio/ImageWriter.html が が配置]
+-[http://docs.oracle.com/javase/jp/6/api/javax/imageio/ImageReader.html が が配置]
+
+* 1.7.0 ではページが存在しない？ [#o2751b36]
+** Fild [#cb03687e]
+- http://docs.oracle.com/javase/jp/6/technotes/guides/swing/SwingChanges.html#Miscellaneous
+-- UIManager.put("MenuItem.commandSound", "pathToNewSoundFild");
+- 変更案
+-- UIManager.put("MenuItem.commandSound", "pathToNewSoundFile");
+
+** NOT_SUPPORTED_ERR:要求されたモードまたはスキーマ型がサポート サポートされていない場合 [#pf40be1e]
+- http://docs.oracle.com/javase/jp/6/jre/api/plugin/dom/org/w3c/dom/ls/DOMImplementationLS.html#createLSParser(short,%20java.lang.String)
+-- 一箇所、「サポート サポート」になっている
+
+** アプリケーションで値 値 [#y5fc6ed9]
+- http://docs.oracle.com/javase/jp/6/jre/api/plugin/dom/org/w3c/dom/ls/DOMImplementationLS.html#createLSParser(short,%20java.lang.String)
+-- 一箇所、「値 値」になっている
+
+* 1.6.0 で修正済み [#hdbe433f]
+-そのその例外
+-このこのパーサー
+-シーケンスとと同じ
+-有効なな
+-たとえば、たとえば
+-場合、場合
+-印刷ししたり
+-持つかかどうか
+-さまざなな場面で
+
+* コメント [#tb51020e]
+- ツボに来たので... [http://www.infoq.com/jp/news/2012/09/java-security 可能であれば完全にJavaを案院ストールするという大胆な方法を推奨している。] -- [[aterai]] &new{2012-09-18 (火) 17:00:27};
+- 「注:注:」とか「パラメータ値値」などの繰り返し系？は、Java SE 7 API ドキュメント日本語版では発生していないみたい。  -- [[aterai]] &new{2013-05-28 (火) 21:15:33};
+
+#comment

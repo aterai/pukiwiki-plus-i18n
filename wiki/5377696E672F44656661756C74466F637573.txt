@@ -1,0 +1,91 @@
+TITLE:Windowを開いたときのフォーカスを指定
+#tags(JFrame, JDialog, Focus, FocusTraversalPolicy, WindowListener, ComponentListener, KeyboardFocusManager)
+#author(aterai)
+#pubdate(2004-10-11)
+* 概要 [#q0754f35]
+`JFrame`や`JDialog`などの`Window`を開いたときに、デフォルトでフォーカスを持つコンポーネントを指定します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKp09XXEI/AAAAAAAAAWU/p3YhSijyS90/s800/DefaultFocus.png)
+
+* サンプルコード [#c961d3aa]
+#code(link){{
+EventQueue.invokeLater(new Runnable() {
+  @Override public void run() {
+    field.requestFocusInWindow();
+  }
+});
+}}
+
+* 解説 [#u7271535]
+上記のサンプルでは、`JTextField`がデフォルトのフォーカスを持つように、`JComponent#requestFocusInWindow()`メソッドを使用しています。
+
+`JComponent#requestFocusInWindow()`メソッドは、チュートリアル([http://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html How to Use the Focus Subsystem])にあるように、`JFrame#pack()`、もしくは`JFrame#setSize(...)`などでリサイズされた後(フォーカスを取得するコンポーネントのサイズが決まった後)で実行する必要があります。このため、このサンプルでは`EventQueue.invokeLater(...)`を使って、待ち状態のすべてのイベントが処理された一番後で実行するようにしています。
+
+----
+以下のように、`FocusTraversalPolicy`や`WindowListener`を使う方法でも、同様にデフォルトのフォーカスを持つコンポーネントを指定することが出来ます。
+
+- `FocusTraversalPolicy`を使用
+-- `FocusTraversalPolicy`を設定して、最初にフォーカスの当たるコンポーネントを指定(`JDK 1.4.0`以降)
+
+#code{{
+frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
+  @Override public Component getInitialComponent(Window w) {
+    return field;
+  }
+});
+}}
+
+- `WindowListener#windowOpened(...)`で、`requestFocusInWindow()`
+-- フレームに`WindowListener`を設定して、`windowOpened(...)`が呼び出されたときに、`requestFocusInWindow()`
+
+#code{{
+frame.addWindowListener(new WindowAdapter() {
+  @Override public void windowOpened(WindowEvent e) {
+    field.requestFocusInWindow();
+  }
+});
+}}
+
+- `ComponentListener#componentShown(...)`で、`requestFocusInWindow()`
+-- フレームに`ComponentListener`を設定して、`componentShown(...)`が呼び出されたとき(=フレームが`setVisible(true)`されたとき)に、`requestFocusInWindow()`
+
+#code{{
+frame.addComponentListener(new ComponentAdapter() {
+  @Override public void componentShown(ComponentEvent e) {
+    field.requestFocusInWindow();
+  }
+});
+}}
+
+- `KeyboardFocusManager#addPropertyChangeListener(...)`で、`requestFocusInWindow()`
+-- `KeyboardFocusManager`に`PropertyChangeListener`を設定して、`propertyChange(...)`が呼び出され、`PropertyName`が、`activeWindow`、かつ`PropertyChangeEvent#getNewValue()`が`null`でないときに、`requestFocusInWindow()`
+
+#code{{
+KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+kfm.addPropertyChangeListener(new PropertyChangeListener() {
+  @Override public void propertyChange(PropertyChangeEvent e) {
+    String prop = e.getPropertyName();
+    if("activeWindow".equals(prop) && e.getNewValue()!=null) {
+      System.out.println("activeWindow");
+      field.requestFocusInWindow();
+    }
+  }
+});
+}}
+
+* 参考リンク [#z4f652d0]
+- [[Focusの移動>Swing/FocusTraversal]]
+- [https://forums.oracle.com/thread/1367389 Swing - When does requestFocusInWindow() fail]
+- [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]
+
+* コメント [#x1950fff]
+- `JFrame#getRootPane()#setDefaultButton()`は使用方法がよくわからない… -- [[aterai]]
+- `setDefaultButton`って、KBD{Enter}したときに押されたとみなすボタンだったかな…… --  &new{2004-10-14 (木) 23:21:53};
+-- ありがとうございます。おかげでようやく理解できました。`JTextField`などにフォーカスがある状態でKBD{Enter}キーを入力すると`setDefaultButton`したボタンが押されるのですね。 -- [[aterai]] &new{2004-10-18 (月) 12:14:15};
+-- というわけで、`frame.getRootPane().setDefaultButton(eb);`を追加してみました。上記のサンプルでは、中央の`JTextField`にフォーカスがある状態で、KBD{Enter}キーを押すと、`EAST`ボタンが押されたことになります。 -- [[aterai]] &new{2004-10-18 (月) 12:20:58};
+-- %%いつか、`DefaultButton`のページを別に作成すること。 -- [[aterai]] &new{2008-05-07 (水) 19:19:44};%%
+-- [[DefaultButtonの設定>Swing/DefaultButton]]に移動。 -- [[aterai]] &new{2008-05-12 (月) 14:40:15};
+- `HierarchyListener`を使用する場合のテスト -- [[aterai]] &new{2009-03-19 (木) 14:51:30};
+-- [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]に移動
+
+#comment

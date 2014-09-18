@@ -1,0 +1,54 @@
+TITLE:MouseWheelで画像のズームイン・アウト表示
+#tags(MouseWheelListener, ImageIcon, JComponent)
+#author(aterai)
+#pubdate(2006-10-16)
+* 概要 [#g39f1afa]
+マウスホイールなどで画像をズームイン、ズームアウトします。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTW1yBNHvI/AAAAAAAAAp4/ba6eQ-Ul2sg/s800/Zoom.png)
+
+* サンプルコード [#n33b6ada]
+#code(link){{
+class ZoomImage extends JComponent implements MouseWheelListener {
+  private final ImageIcon icon;
+  private final int iw;
+  private final int ih;
+  private double scale = 1.0d;
+  public ZoomImage(final ImageIcon icon) {
+    super();
+    this.icon = icon;
+    iw = icon.getIconWidth();
+    ih = icon.getIconHeight();
+    addMouseWheelListener(this);
+  }
+  @Override public void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D) g;
+    g2.scale(scale, scale);
+    g2.drawImage(icon.getImage(), 0, 0, iw, ih, this);
+  }
+  @Override public void mouseWheelMoved(MouseWheelEvent e) {
+    changeScale(e.getWheelRotation());
+  }
+  public void initScale() {
+    scale = 1.0d;
+    repaint();
+  }
+  @Override public void changeScale(int iv) {
+    scale = Math.max(0.05d, Math.min(5.0d, scale-iv*0.05d));
+    repaint();
+  }
+}
+}}
+
+* 解説 [#h16d4c28]
+上記のサンプルではホイールの上回転で拡大、下回転で縮小しています。
+
+* 参考リンク [#ud24b7c5]
+- [[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]
+-- `JScrollPane`を使用せずに、画像のズーム、スクロール
+
+* コメント [#g84ab533]
+- `ih = icon.getIconWidth();`の部分は`getIconHeight();`ではありませんでしょうか？ -- [[syo]] &new{2007-05-18 (金) 13:11:04};
+-- ご指摘ありがとうございます。スクリーンショットもよく見たら中の画像が正方形になってますね(^^;。修正しておきます。 -- [[aterai]] &new{2007-05-18 (金) 13:25:06};
+
+#comment

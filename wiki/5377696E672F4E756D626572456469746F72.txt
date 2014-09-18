@@ -1,0 +1,25 @@
+TITLE:JSpinnerの値をパーセントで指定
+#tags(JSpinner)
+#author(aterai)
+#pubdate(2005-10-31T11:17:46+09:00)
+* 概要 [#t29c7b07]
+`JSpinner`の値をパーセントで指定するように設定します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQecBWSoI/AAAAAAAAAfo/IOSdDmzOIBs/s800/NumberEditor.png)
+
+* サンプルコード [#k32fce56]
+#code(link){{
+JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, 1, 0.01));
+JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner, "0%");
+editor.getTextField().setEditable(false);
+spinner.setEditor(editor);
+}}
+
+* 解説 [#af34e284]
+`JSpinner.NumberEditor`のコンストラクタに、`DecimalFormat`オブジェクトのパターンを入力すると数値の解析とフォーマットを行ってくれます。
+
+上記のサンプルでは、数字を表す`0`と、`100`倍してパーセントを表す`%`を組み合わせたフォーマットパターンを使用しています。
+
+//**参考リンク
+* コメント [#f777681c]
+#comment

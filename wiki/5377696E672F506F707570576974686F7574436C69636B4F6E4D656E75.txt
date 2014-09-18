@@ -1,0 +1,81 @@
+TITLE:JMenuの領域内にマウスカーソルでポップアップメニューを表示する
+#tags(JMenu, MouseListener)
+#author(aterai)
+#pubdate(2013-02-18T00:29:59+09:00)
+* 概要 [#vc583f1f]
+`JMenu`の領域内にマウスカーソルが入ったときにポップアップメニューが開くように設定します。
+
+#download(https://lh3.googleusercontent.com/-shu8CDTfLvg/USCnbrWYstI/AAAAAAAABd0/qODgUmweras/s800/PopupWithoutClickOnMenu.png)
+
+* サンプルコード [#b248cd30]
+#code(link){{
+visitAll(menubar, new MouseAdapter() {
+  @Override public void mousePressed(MouseEvent e) {
+    if(check.isSelected()) {
+      ((AbstractButton)e.getSource()).doClick();
+    }
+  }
+  @Override public void mouseEntered(MouseEvent e) {
+    if(check.isSelected()) {
+      ((AbstractButton)e.getSource()).doClick();
+    }
+  }
+});
+}}
+
+* 解説 [#gf9e01fc]
+上記のサンプルでは、`JMenuBar`の子コンポーネントになっている`JMenu`の領域内にマウスカーソルが入った場合に自動的にポップアップメニューが開くように、`JMenu#doClick()`を実行する`MouseListener`を追加しています。
+
+- 注:
+-- マウスボタンを押した場合も、入った場合にすでに表示したポップアップメニューが非表示にならないように`JMenu#doClick()`を実行
+-- このサンプルのすべての`JMenuItem`は、`beep`音を鳴らすだけのダミー
+
+----
+- この`JMenu`の入った、`JPopupMenu`を`JComponent#setComponentPopupMenu(...)`で`JMenuBar`以外のコンポーネントに設定すると無限ループする
+-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6949414 Bug ID: JDK-6949414 JMenu.buildMenuElementArray() endless loop]
+- 回避方法: 
+-- マウスイベントを作成し、`menu.dispatchEvent(new MouseEvent(menu, MouseEvent.MOUSE_ENTERED, e.getWhen(), 0, 0, 0, 0, false));`を実行する
+--- [http://stackoverflow.com/questions/25260684/programmatically-expand-sub-jmenuitems java - Programmatically expand sub JMenuItems - Stack Overflow]
+-- `MenuElement`の配列を作成し、`MenuSelectionManager.defaultManager().setSelectedPath(new MenuElement[]{...});`を実行する
+--- ドキュメントには、[http://docs.oracle.com/javase/jp/7/api/javax/swing/MenuSelectionManager.html#setSelectedPath(javax.swing.MenuElement%5B%5D) 「このメソッドは public ですが、Look & Feel エンジンで使用されるため、クライアントアプリケーションからは呼び出さないでください。」]とあるが、現状では`JMenu`の`buildMenuElementArray(...)`が以下の状態なので仕方ない
+
+#code{{
+/*
+ * Build an array of menu elements - from <code>PopupMenu</code> to
+ * the root <code>JMenuBar</code>.
+ * @param  leaf  the leaf node from which to start building up the array
+ * @return the array of menu items
+ */
+private MenuElement[] buildMenuElementArray(JMenu leaf) {
+    Vector<MenuElement> elements = new Vector<MenuElement>();
+    Component current = leaf.getPopupMenu();
+    JPopupMenu pop;
+    JMenu menu;
+    JMenuBar bar;
+
+    while (true) {
+        if (current instanceof JPopupMenu) {
+            pop = (JPopupMenu) current;
+            elements.insertElementAt(pop, 0);
+            current = pop.getInvoker();
+        } else if (current instanceof JMenu) {
+            menu = (JMenu) current;
+            elements.insertElementAt(menu, 0);
+            current = menu.getParent();
+        } else if (current instanceof JMenuBar) {
+            bar = (JMenuBar) current;
+            elements.insertElementAt(bar, 0);
+            MenuElement me[] = new MenuElement[elements.size()];
+            elements.copyInto(me);
+            return me;
+        }
+    }
+}
+}}
+
+* 参考リンク [#a9e5d0d2]
+- [http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=9327&forum=12 JMenuBarの動作 － Java Solution － ＠IT]
+- [http://stackoverflow.com/questions/12125402/activate-jmenubar-on-hover java - Activate JMenuBar on hover - Stack Overflow]
+
+* コメント [#q749117e]
+#comment

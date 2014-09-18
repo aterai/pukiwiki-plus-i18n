@@ -1,0 +1,67 @@
+TITLE:JTextAreaの一部を編集不可にする
+#tags(JTextArea, DocumentFilter, Highlighter)
+#author(aterai)
+#pubdate(2010-02-22T14:50:22+09:00)
+* 概要 [#qcda2065]
+`JTextArea`の一部の行を編集不可になるよう設定します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQW4ZQhAI/AAAAAAAAAfc/JkImmzMvG6I/s800/NonEditableLine.png)
+
+* サンプルコード [#d9a23670]
+#code(link){{
+class NonEditableLineDocumentFilter extends DocumentFilter {
+  @Override public void insertString(
+      DocumentFilter.FilterBypass fb, int offset,
+      String string, AttributeSet attr) throws BadLocationException {
+    if(string == null) {
+      return;
+    }else{
+      replace(fb, offset, 0, string, attr);
+    }
+  }
+  @Override public void remove(
+      DocumentFilter.FilterBypass fb, int offset,
+      int length) throws BadLocationException {
+    replace(fb, offset, length, "", null);
+  }
+  @Override public void replace(
+      DocumentFilter.FilterBypass fb, int offset, int length,
+      String text, AttributeSet attrs) throws BadLocationException {
+    Document doc = fb.getDocument();
+    if(doc.getDefaultRootElement().getElementIndex(offset)<2) return;
+    fb.replace(offset, length, text, attrs);
+  }
+}
+}}
+
+* 解説 [#c7b230d4]
+上記のサンプルでは、`DocumentFilter`を使って、`JTextArea`の一行目と二行目で追加、削除などの編集ができないように設定しています。
+
+#code{{
+((AbstractDocument)textArea.getDocument()).setDocumentFilter(new NonEditableLineDocumentFilter());
+}}
+
+----
+一行目と二行目の背景色は、編集不可のための`DocumentFilter`とは関係なく、`Highlighter`を使って別途設定しています。
+#code{{
+try{
+  Highlighter hilite = textArea.getHighlighter();
+  Document doc = textArea.getDocument();
+  Element root = doc.getDefaultRootElement();
+  for(int i=0;i<2;i++) {
+    Element elem = root.getElement(i);
+    hilite.addHighlight(elem.getStartOffset(),
+                        elem.getEndOffset()-1,
+                        highlightPainter);
+  }
+}catch(BadLocationException ble) {
+  ble.printStackTrace();
+}
+}}
+
+* 参考リンク [#j8d6a25e]
+- [http://www.jroller.com/santhosh/date/20050622 Document Guard - Santhosh Kumar's Weblog]
+- [[JTextAreaの最終行だけ編集可能になるよう設定する>Swing/LastLineEditableTextArea]]
+
+* コメント [#y8571e33]
+#comment

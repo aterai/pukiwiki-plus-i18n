@@ -1,0 +1,45 @@
+TITLE:CellEditorのBorderを変更
+#tags(JTable, TableCellEditor, Border)
+#author(aterai)
+#pubdate(2005-08-22T08:08:31+09:00)
+* 概要 [#ia1fb931]
+`JTable`の`CellEditor`に`Border`を設定します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIiyFXk2I/AAAAAAAAAS8/Dgu1EqDMma4/s800/CellEditorBorder.png)
+
+* サンプルコード [#t48217b5]
+#code(link){{
+JTextField field = new JTextField();
+field.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+table.setDefaultEditor(Object.class, new DefaultCellEditor(field));
+}}
+
+* 解説 [#q9485122]
+上記のサンプルでは、`BorderFactory.createLineBorder(Color.RED, 2)`を設定した`JTextField`を使用する`DefaultCellEditor`を作成し、`JTable#setDefaultEditor(...)`で、`Object.class`のデフォルトエディタとして設定しています。
+
+----
+`JTable#setDefaultEditor(...)`を使用せずに、`JTable#prepareEditor(...)`をオーバーライドして、セルエディタとして使用するコンポーネントの背景色や`Border`を変更することもできます。
+
+#code{{
+JTable table = new JTable(model) {
+  @Override public Component prepareEditor(
+      TableCellEditor editor, int row, int column) {
+    Component c = super.prepareEditor(editor, row, column);
+    if(c instanceof JCheckBox) {
+      JCheckBox b = (JCheckBox)c;
+      b.setBorderPainted(true);
+      b.setBackground(getSelectionBackground());
+    }else if(c instanceof JComponent && convertColumnIndexToModel(column)==1) {
+      ((JComponent)c).setBorder(
+        BorderFactory.createLineBorder(Color.GREEN, 2));
+    }
+    return c;
+  }
+};
+}}
+
+* 参考リンク [#ydf6ae4b]
+- [[JTableが使用するBooleanCellEditorの背景色を変更>Swing/BooleanCellEditor]]
+
+* コメント [#x84e6240]
+#comment

@@ -1,0 +1,59 @@
+TITLE:JTextFieldに透かし画像を表示する
+#tags(JTextField, Focus, ImageIcon)
+#author(aterai)
+#pubdate(2009-10-26T13:04:26+09:00)
+* 概要 [#l4413cba]
+`JTextField`の文字列が空でフォーカスがない場合、透かし画像を表示するように設定します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWh1Qjh4I/AAAAAAAAApY/bLarzjLy7-8/s800/WatermarkInTextField.png)
+
+* サンプルコード [#bef878a0]
+#code(link){{
+class WatermarkTextField extends JTextField implements FocusListener {
+  private final ImageIcon image;
+  private boolean showWatermark = true;
+  public WatermarkTextField() {
+    super();
+    image = new ImageIcon(getClass().getResource("watermark.png"));
+    addFocusListener(this);
+  }
+  @Override public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    if(showWatermark) {
+      Graphics2D g2d = (Graphics2D)g;
+      //Insets i = getMargin();
+      Insets i = getInsets();
+      int yy = (getHeight()-image.getIconHeight())/2;
+      g2d.drawImage(image.getImage(), i.left, yy, this);
+    }
+  }
+  @Override public void focusGained(FocusEvent e) {
+    showWatermark = false;
+    repaint();
+  }
+  @Override public void focusLost(FocusEvent e) {
+    showWatermark = "".equals(getText().trim());
+    repaint();
+  }
+}
+}}
+
+* 解説 [#kcbc0705]
+- 上
+-- [[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]
+- 下
+-- `JTextField`の文字列が空で、フォーカスも無い場合、上記のように文字列ではなく、画像を表示します。
+
+----
+[[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]では、`JPasswordField`に応用できないので、以下のように透かし画像の表示と同じような方法で文字列を表示します。
+
+- [[JPasswordFieldにヒント文字列を描画する>Swing/InputHintPasswordField]] に移動
+
+* 参考リンク [#w2323b40]
+- [[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]
+- [[JPasswordFieldにヒント文字列を描画する>Swing/InputHintPasswordField]]
+
+* コメント [#rbb7650a]
+//- 右上の`google`カスタム検索のような %%…と書こうと思ったら透かし画像が消えている？%% FireFox では問題なし。Opera10.10だと表示されない。キャッシュが壊れているだけかも。 -- [[aterai]] &new{2009-10-26 (月) 13:04:26};
+
+#comment

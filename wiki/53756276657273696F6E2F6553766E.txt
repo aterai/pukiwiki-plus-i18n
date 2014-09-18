@@ -1,0 +1,65 @@
+#nofollow
+#author(aterai)
+#pubdate(2005-12-20)
+
+- %%このページでは、`Subversion`の`GUI`クライアントである`eSvn`についてメモしています。%%
+- サイトが見つからなくなったので、記事を削除。
+
+// * 概要 [#g3d836d7]
+// このページでは、`Subversion`の`GUI`クライアントである`eSvn`についてメモしています。
+//
+// * eSvnについて [#i8682315]
+// `CVS`の場合の`WinCVS`のような使い方ができます。`TortoiseSvn`のように、エクスプローラにプラグインを導入するのが不安な場合に、使用されることが多いようです。
+//
+// #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQr8FfEwfLI/AAAAAAAAArs/1Tqtiyj2ueA/s800/esvn.png)
+//
+// メニューなどは英語ですが、ログメッセージなどに日本語を使用しても特に問題ないようです。
+//
+// #ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQr8Fu4arKI/AAAAAAAAAr4/640lZvYM8QA/s800/esvnlog.png)
+//
+// * インストール [#xec0b464]
+// `Windows`版の場合、`Subversion`をインストールしてパスを通してあれば、アーカイブをダウンロードして任意の場所に展開するだけです。
+//
+// - [http://zoneit.free.fr/esvn/download.php eSvnのダウンロードページ]
+//
+// * 使い方 [#r6945a7f]
+// 初期状態では、なにも表示されないのでメニューからリポジトリのチェックアウトと、ワークスペースの作成を行います。
+//
+// ** リポジトリのチェックアウト [#ac5f58dc]
+// メニューの`File→Checkout`を選択すると、`Checkout`パネルが開きます。
+//
+// #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQr8Fho_blI/AAAAAAAAAr0/fUJ5IFCvkaU/s800/esvncheckout.png)
+//
+// リポジトリのURLと、ローカルで展開するディレクトリを指定してチェックアウトします。
+//
+// - リポジトリのURL例
+// -- http://localhost/svn/hoge/trunk
+// - 展開先のローカルディレクトリ例
+// -- `c:\tmp\hoge`
+//
+// ** ワークスペースの作成 [#g51b8dc5]
+// メニューの`File→Workspace`を選択すると、`Workspace manager`パネルが開きます。新しいワークスペースを作成したいので、`New@ボタンを押して任意のワークスペース名を入力します。
+//
+// #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQr8FjiL2NI/AAAAAAAAAr8/o2oItnsmmYw/s800/esvnworkspace.png)
+//
+// 名前を入力して`OK`すると自動的にディレクトリを追加するためのパネルが開くので、ローカルに展開したディレクトリを指定します。
+//
+// #ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQr8Fd2HSdI/AAAAAAAAArw/qLXhcISqloU/s800/esvnadd.png)
+//
+// - 追加するローカルのディレクトリ例
+// -- `c:\tmp\hoge`
+//
+// ** ワークスペース [#jaa3b36a]
+// ワークスペースは複数作成でき、`eSvn`は最後に開いていたワークスペースを覚えています。ファイルメニューから履歴で選択したり、ワークスペースマネージャーで編集、読込、削除などが出来ます。
+//
+// ** unknown files [#kc092806]
+// メニューの`View→Hide unknown files`で表示非表示を切り替えることができます。
+//
+// *参考リンク [#ra635edb]
+// - [http://zoneit.free.fr/esvn/ eSvn]
+//
+// * コメント [#f301f4be]
+// - %%eSvnのサイトが落ちている？%% -- [[aterai]] &new{2007-06-07 (木) 13:00:09};
+// -- 移転したみたいです。 -- [[aterai]] &new{2007-07-20 (金) 16:14:21};
+//
+// #comment

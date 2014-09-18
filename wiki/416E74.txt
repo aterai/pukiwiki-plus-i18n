@@ -1,0 +1,108 @@
+#keywords(Ant)
+#description(JavaベースのビルドツールであるAntの使い方についてメモしています。)
+#author(aterai)
+#pubdate(2003-09-25)
+#contents(big)
+
+* 概要 [#b59a5f9b]
+`Ant`は、`Java`ベースのビルドツールです。理論的には、`make`の欠点がない`make`の一種です(`Ant`翻訳より引用)。
+
+このページでは、`Java`ベースのビルドツールである`Ant`の使い方についてメモしています。
+
+* インストールと環境変数の設定 [#v1ec3010]
+[http://ant.apache.org/ Apache Ant - Welcome]などからダウンロードしたアーカイブを展開して、そこを環境変数`ANT_HOME`に設定します。「システムのプロパティ→詳細設定→環境変数」で、"ANT_HOME"を新規作成、もしくは編集してください。
+
+#ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQsClLJ428I/AAAAAAAAAs0/B0-VGelgHu4/s800/ant_home.png)
+
+また、`%ANT_HOME%\bin\ant.bat`を使うために、パスを通しておきます。「システムのプロパティ→詳細設定→環境変数」で、`Path`を編集してください。
+
+#ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQsClNPEp4I/AAAAAAAAAs8/hdtpb5o_pG4/s800/ant_path.png)
+
+* タスクのサンプル [#of688f72]
+`build.xml`、タスクなどのサンプルや、その他のちょっとした`Tips`などを、以下別ページにまとめています。
+
+** AntのConditionタスクで条件分岐を行う [#aa49e22c]
+`Condition`タスクを使って、例えばディレクトリの有無などによる条件で、`Target`タスクを実行するかどうかを振り分けます。
+
+- [[AntのConditionタスクで条件分岐を行う>Ant/Condition]]
+
+** AntのScriptタスク中でif文を使った条件分岐を行う [#k88bfb49]
+`Condition`タスクの条件が複雑になるようなら、`<script language="javascript">`タスクなどで`if`文を使う方法もあります。
+
+- [[AntのScriptタスク中でif文を使った条件分岐を行う>Ant/Script]]
+
+** AntのTaskを自作 [#d8026cb6]
+`Ant`の`Task`を自作し、これを利用する方法をテストします。
+
+- [[AntのTaskを自作>Ant/Task]]
+
+** AntのScriptタスクでJavaScriptを使用する [#b7ff3b37]
+`Ant`の`Script`タスクで`JavaScript`を使用し、簡単なタスクを作成、実行します。
+
+- [[AntのScriptタスクでJavaScriptを使用する>Ant/NewProperty]]
+
+** AntのJarタスクで実行可能なJarファイルの作成 [#q763cefc]
+`Ant`を使って、`Windows`環境などでダブルクリックすると起動する`Jar`ファイルを作成します。
+
+- [[AntのJarタスクで実行可能なJarファイルの作成>Ant/JarPackage]]
+
+** AntでOutOfMemoryErrorが発生する場合 [#yee90b60]
+`Ant`を実行すると`OutOfMemoryError`が発生する場合の処置方法について解説しています。
+
+- [[AntでOutOfMemoryErrorが発生する場合>Ant/OutOfMemoryError]]
+
+** AntのプロパティファイルをXMLにする [#fb0bd314]
+プロパティファイルのエンコーディングなどを気にせずに使えるように、`Ant`のプロパティファイルを`XML`にしてみます。
+
+- [[AntのプロパティファイルをXMLにする>Ant/Properties]]
+
+** Antで子フォルダのbuild.xmlを全部実行 [#cca68c8e]
+`Subant`タスクを使って、一度に全部同じターゲットで子フォルダの`build.xml`を実行します。
+
+- [[Antで子フォルダのbuild.xmlを全部実行>Ant/Subant]]
+
+** Antのbasedirを子フォルダに変更して全部実行 [#i684141c]
+`basedir`をカレントディレクトリ(`${user.dir}`)とは別の場所に指定して、`ant.bat`を実行します。
+
+- [[Antのbasedirを子フォルダに変更して全部実行>Ant/basedir]]
+
+** AntでFindBugsを実行する [#eeb19868]
+`Ant`から`FindBugs`を実行します。
+
+- [[AntでFindBugsを実行する>Ant/FindBugs]]
+
+** AntでPMDを実行する [#nf28b60e]
+`Ant`から`PMD`を実行します。
+
+- [[AntでPMDを実行する>Ant/PMD]]
+
+* `buildfile`オプション [#e6cb38d3]
+`build.xml`ファイルを作ってコマンドプロンプトから`ant.bat`を実行します。引数が無い場合、カレントフォルダにある`build.xml`が使用されます。
+ ant
+
+任意の`build.xml`を使いたいときは、以下のようなオプションを使って指定します。
+ ant -buildfile "c:\hoge project\hoge_build.xml"
+ ant -f "c:\hoge project\hoge_build.xml"
+
+[[xyzzy]]などから、`ant.bat`をサブプロセス(C-x &)として実行する場合は、-emacsオプションをつけてやります。このオプションをつけると、xyzzyのバッファに表示されたエラー上で"F10"キー((標準のキーバインドでは、"F11"キーを押すと次のエラーへ移動します))を押すだけで、そのエラーの出たファイルの該当する行に、自動的にジャンプすることができます。
+ ant -emacs -buildfile "c:\hoge\build.xml"
+ ant -e -f "c:\hoge\build.xml"
+
+* `build.xml`ファイル [#v251ad1c]
+ネットを検索すれば、いろんな`build.xml`が見つかるので、まずはその中からサンプルを選び、[http://ant.apache.org/manual/index.html マニュアル]([http://www.jajakarta.org/ant/ant-1.6.1/docs/ja/manual/index.html 日本語訳])を見ながら修正すると、手っ取り早く作成することができます。
+
+- build.xmlとbuild.propertiesのサンプル
+-- http://terai.xrea.jp/data/ant/build.zip
+-- この`build.zip`ファイルには、ソースコードのほかに、`build.xml`と`build.properties`を添付しています。`build.properties`は、環境依存しそうな記述を`build.xml`から抜き出したプロパティファイルです。[http://www.jdom.org/ JDOM]などから拾ってきた記述を追加、編集したりして作成しています。実際に使用する場合は、`build.properties`ファイルを環境に合わせて編集してください。そのまま使用する場合は、`build.xml`を展開し、src\javaフォルダ以下にソースコード(Shift_JIS)を置いてください。
+
+-[[Java Swing Tips>Swing]]以下のサンプル
+-- http://terai.xrea.jp/swing/toolbarlayout/src.zip
+-- このサイトの[[Java Swing Tips>Swing]]のサンプルに添付されているbuild.xmlはすべて同一です。こちらは、「build.xmlとbuild.propertiesのサンプル」とは違い、ソースコードはUTF-8で、`build.properties`ではなく、`xml`ファイル(`properties.xml`)をプロパティファイルとして使用しています。
+
+* 参考リンク [#v9b28311]
+- [http://ant.apache.org/ Apache Ant]
+- [http://ant.apache.org/manual/index.html Apache Ant Manual]
+- [http://amateras.sourceforge.jp/cgi-bin/fswiki/wiki.cgi/free?page=xyzzy xyzzy Antモード]
+
+* コメント [#i47478e7]
+#comment

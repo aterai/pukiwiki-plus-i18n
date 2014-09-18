@@ -1,0 +1,70 @@
+TITLE:Fontのアウトラインを取得して文字列の内部を修飾する
+#tags(Font, Shape, Graphics, TextLayout, GlyphVector, JComponent)
+#author(aterai)
+#pubdate(2011-09-26T17:16:34+09:00)
+* 概要 [#l027d156]
+クリップを設定することで描画範囲を制限し、文字列の内部を異なる色で修飾します。
+
+#download(https://lh5.googleusercontent.com/-1UyXoR9Qkyo/ToAw2259JmI/AAAAAAAABC4/xHq03u7R3v4/s800/LineSplittingLabel.png)
+
+* サンプルコード [#t02ac525]
+#code(link){{
+class TricoloreLabel extends JComponent {
+  private final GlyphVector gv;
+  public TricoloreLabel(String str) {
+    super();
+    Font font = new Font(Font.SERIF, Font.PLAIN, 64);
+    FontRenderContext frc = new FontRenderContext(null, true, true);
+    gv = font.createGlyphVector(frc, str);
+  }
+  @Override public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    int w = getWidth();
+    int h = getHeight();
+    g.setColor(Color.WHITE);
+    g.fillRect(0,0,w,h);
+
+    Graphics2D g2 = (Graphics2D)g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+    Rectangle2D b = gv.getVisualBounds();
+    Point2D.Double p = new Point2D.Double(
+        b.getX() + b.getWidth()/2d, b.getY() + b.getHeight()/2d);
+    AffineTransform toCenterAT = AffineTransform.getTranslateInstance(
+        w/2d - p.getX(), h/2d - p.getY());
+
+    double d = b.getHeight()/3;
+    Rectangle2D.Double clip  = new Rectangle2D.Double(
+        b.getX(), b.getY(), b.getWidth(), b.getHeight());
+    Rectangle2D.Double clip1 = new Rectangle2D.Double(
+        b.getX(), b.getY(), b.getWidth(), d);
+    Rectangle2D.Double clip2 = new Rectangle2D.Double(
+        b.getX(), b.getY()+2*d, b.getWidth(), d);
+
+    Shape s = toCenterAT.createTransformedShape(gv.getOutline());
+
+    g2.setClip(toCenterAT.createTransformedShape(clip1));
+    g2.setPaint(Color.BLUE);
+    g2.fill(s);
+
+    g2.setClip(toCenterAT.createTransformedShape(clip2));
+    g2.setPaint(Color.RED);
+    g2.fill(s);
+
+    g2.setClip(toCenterAT.createTransformedShape(clip));
+    g2.setPaint(Color.BLACK);
+    g2.draw(s);
+    g2.dispose();
+  }
+}
+}}
+
+* 解説 [#b26d2b7e]
+- 左
+-- `TextLayout`からアウトラインを取得し、上下にクリップを設定して色分け
+- 右
+-- `GlyphVector`からアウトラインを取得し、上中下にクリップを設定して色分け
+
+//**参考リンク
+* コメント [#d14fc3b5]
+#comment

@@ -1,0 +1,58 @@
+TITLE:JFileChooserのデフォルトをDetails Viewに設定
+#tags(JFileChooser, FilePane)
+#author(aterai)
+#pubdate(2011-01-10T17:02:55+09:00)
+* 概要 [#f6a8221b]
+`JFileChooser`を開いたときのデフォルトをリストではなく詳細に変更します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TSq77M-soeI/AAAAAAAAAxg/0nnen-n-cAY/s800/DetailsViewFileChooser.png)
+
+* サンプルコード [#bb304f2a]
+#code(link){{
+//java - How can I start the JFileChooser in the Details view? - Stack Overflow]
+//http://stackoverflow.com/questions/16292502/how-can-i-start-the-jfilechooser-in-the-details-view
+//for(Object key: chooser.getActionMap().allKeys()) {
+//    System.out.println(key);
+//}
+Action detailsAction = chooser.getActionMap().get("viewTypeDetails");
+if(detailsAction!=null) detailsAction.actionPerformed(null);
+}}
+
+* 解説 [#d6cd620d]
+- 以下のリンクで紹介されているように、`ActionMap`から`viewTypeDetails`アクションを取得する方法が一番簡単なようです。
+-- [http://stackoverflow.com/questions/16292502/how-can-i-start-the-jfilechooser-in-the-details-view java - How can I start the JFileChooser in the Details view? - Stack Overflow]
+-- 何時から使用できるようになったのか、それとも元から使用可能だったのかなどを調査中。
+
+----
+`JFileChooser`の子で`UIManager.getIcon("FileChooser.detailsViewIcon")`アイコンが設定されている`JToggleButton`を検索、`doClick()`することで、`List`から`DetailsView`(詳細)に切り替える方法もあります。
+
+#code{{
+//searchAndClick(chooser, UIManager.getIcon("FileChooser.detailsViewIcon"));
+private static boolean searchAndClick(Container parent, Icon icon) {
+  for(Component c:parent.getComponents()) {
+    if(c instanceof JToggleButton && ((JToggleButton)c).getIcon()==icon) {
+      ((AbstractButton)c).doClick();
+      return true;
+    }else{
+      if(searchAndClick((Container)c, icon)) return true;
+    }
+  }
+  return false;
+}
+}}
+
+----
+警告されますが、以下のように`sun.swing.FilePane#setViewType(sun.swing.FilePane.VIEWTYPE_DETAILS)`メソッドを使用する方法もあります。
+#code{{
+FilePane filePane = (FilePane)findChildComponent(chooser, FilePane.class);
+filePane.setViewType(FilePane.VIEWTYPE_DETAILS);
+}}
+
+* 参考リンク [#k11fb09b]
+- [http://stackoverflow.com/questions/16292502/how-can-i-start-the-jfilechooser-in-the-details-view java - How can I start the JFileChooser in the Details view? - Stack Overflow]
+- [http://tips4java.wordpress.com/2008/11/13/swing-utils/ Swing Utils « Java Tips Weblog]
+-- via: [http://www.java-forums.org/awt-swing/13733-set-jfilechooser-default-details-view.html set jFileChooser default to details view - Java Forums]
+- [http://www.docjar.com/html/api/sun/swing/FilePane.java.html sun.swing: FilePane.java]
+
+* コメント [#k2202d2b]
+#comment

@@ -1,0 +1,31 @@
+TITLE:JFileChooserにLocaleを設定する
+#tags(JFileChooser, Locale)
+#author(aterai)
+#pubdate(2008-01-07T12:38:12+09:00)
+* 概要 [#d5c5fe75]
+`JFileChooser`に`Locale`を設定して、タイトルやボタンの文字列を変更します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPdRLH4_I/AAAAAAAAAeA/tZciS7a5CCc/s800/Locale.png)
+
+* サンプルコード [#o0d6f00f]
+#code(link){{
+//JFileChooser.setDefaultLocale(Locale.ENGLISH);
+fileChooser.setLocale((Locale)combo.getSelectedItem());
+fileChooser.updateUI();
+}}
+
+* 解説 [#h2e72623]
+上記のサンプルでは、コンボボックスで指定したロケールを`JFileChooser`に設定してから開くようになっています。
+タイトル、ボタンのラベルなどが、指定したロケールに変更されます。
+
+- `JDK 1.5.0_13`では、`JVM`のデフォルトが`English`以外だった場合、`Component#setLocale(Locale.ENGLISH)`や、`JComponent.setDefaultLocale(Locale.ENGLISH)`としても反映されないようです。
+-- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6606475 Bug ID: 6606475 JComponent.setDefaultLocale(Locale.ENGLISH) useless if def locale is non-english]
+-- `JDK 1.6.0`では問題無し
+
+* 参考リンク [#gbe40f72]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6606475 Bug ID: 6606475 JComponent.setDefaultLocale(Locale.ENGLISH) useless if def locale is non-english]
+
+* コメント [#h2cbdcae]
+- メモ: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6342301 Bug ID: 6342301 Bad interaction between setting the ui and file filters in JFileChooser] -- [[aterai]] &new{2011-01-18 (火) 02:29:14};
+
+#comment

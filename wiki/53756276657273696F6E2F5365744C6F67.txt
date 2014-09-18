@@ -1,0 +1,75 @@
+TITLE:Subversionのコミットログを修正
+#author(aterai)
+#pubdate(2003-09-25)
+#contents(big)
+
+* 概要 [#p3bcb564]
+コミットログの誤字脱字などを修正します。上書きされてしまうので十分注意して実行してください。
+- [http://subversion.apache.org/faq.html#change-log-msg How do I change the log message for a revision after it's been committed?]
+
+* 変更方法 [#ub774040]
+以下に、`svnadmin setlog`、または`svn propset`を使ってログを修正する方法をメモしています。
+
+** svnadmin setlog [#eda1d9b1]
+管理者として`svnadmin setlog`を使用し、コミットログの誤字脱字などを修正します。以下に例を載せていますが、実行する前に、[http://svnbook.red-bean.com/en/1.1/ch05s03.html#svn-ch-5-sect-3.2 Repository Cleanup]や、[http://svnbook.red-bean.com/en/1.1/re40.html svnadmin setlog]などをよく読んで、''注意深く実行''してください。
+
++ 修正するリビジョンを確認し、そのコミットログをバックアップしておきます。
+ c:\tmp> svn log file://localhost/c:/svn/hoge -r 24
+ ------------------------------------------------------------------------
+ r24 | terai | 2004-02-17 16:08:26 +0900 (Tue, 17 Feb 2004) | 1 lines
+ 誤字が修正
+ ------------------------------------------------------------------------
+ c:\tmp> svn log file://localhost/c:/svn/hoge -r 1:HEAD > log.txt
++ 新しいログファイルを作成し、コミットログを''上書き''します。
+ c:\tmp> echo 誤字を修正 > c:\tmp\newlog.txt
+ c:\tmp> svnadmin setlog --bypass-hooks c:\svn\hoge -r 24 c:\tmp\newlog.txt
++ 修正を確認します。
+ c:\tmp> svn log file://localhost/c:/svn/hoge -r 24
+ ------------------------------------------------------------------------
+ r24 | terai | 2004-02-17 16:08:26 +0900 (Tue, 17 Feb 2004) | 1 lines
+ 誤字を修正
+ ------------------------------------------------------------------------
+
+- `svnadmin setlog`は、`--bypass-hooks`を指定すれば`pre-revprop-change`を用意しなくていいようです。 -- [[rabbit]]
+- `--bypass-hooks`スイッチを指定しない場合は、コミット前後にフックが実行されるため、リポジトリの`hooks`ディレクトリに`pre-revprop-change.bat`を作成しておく必要があります。テキストエディタなどで作成し、何もしないなら中身は空でもかまいません。
+ c:\tmp> echo exit 0 > c:\svn\hoge\hooks\pre-revprop-change.bat
+
+** svn propset --revprop [#qb1f24c3]
+`svn propset --revprop`を使用し、コミットログの誤字脱字などを修正します。以下に例を載せていますが、実行する前に、[http://svnbook.red-bean.com/en/1.1/ch05.html#svn-ch-5-sect-1.2 Unversioned Properties]や、[http://svnbook.red-bean.com/en/1.1/re23.html svn propset]などをよく読んで、''注意深く実行''してください。
+
++ あらかじめ対象リポジトリの`hooks`ディレクトリに`pre-revprop-change.bat`を作成します。
+ REM #[1]REPOS-PATH(the path to this repository)
+ REM #[2]REV       (the revision that was tweaked)
+ REM #[3]USER      (the username of the person tweaking the property)
+ REM #[4]PROPNAME  (the property that was changed)
+ REM #[5]ACTION    (the property was 'A'dded, 'M'odified, or 'D'eleted)
+ REM set REPOS=%1
+ REM set REV=%2
+ REM set USER=%3
+ set PROPNAME=%4
+ REM set ACTION="$5"
+ rem if "%4"=="svn:log" goto :end
+ if "%PROPNAME%"=="svn:log" goto :end
+ :err
+ exit 1
+ :end
+ exit 0
++ 修正するリビジョンを確認し、ログを念のためバックアップしておきます。
+ c:\temp> svn log http://localhost/svn/hoge -r 24
+ ------------------------------------------------------------------------
+ r24 | terai | 2004-02-17 16:08:26 +0900 (Tue, 17 Feb 2004) | 1 lines
+ 誤字が修正
+ ------------------------------------------------------------------------
+ c:\temp> svn log http://localhost/svn/hoge -r 1:HEAD > log.txt
++ `svn propset`でリビジョンのログ属性を''上書き''します。
+ c:\temp> svn propset --revprop -r 24 svn:log 誤字を修正 http://localhost/svn/hoge
+ property 'svn:log' set on repository revision '24'
++ 修正を確認します。
+ c:\temp> svn log http://localhost/svn/hoge -r 24
+ ------------------------------------------------------------------------
+ r24 | terai | 2004-02-17 16:08:26 +0900 (Tue, 17 Feb 2004) | 1 lines
+ 誤字を修正
+ ------------------------------------------------------------------------
+
+* コメント [#t8a6a3d8]
+#comment

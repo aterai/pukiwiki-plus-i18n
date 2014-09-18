@@ -1,0 +1,97 @@
+TITLE:JEditorPaneのHTMLタグにToolTipTextを設定する
+#tags(JEditorPane, JTextPane, HTMLDocument, JToolTip, HyperlinkListener)
+#author(aterai)
+#pubdate(2011-08-08T15:04:19+09:00)
+* 概要 [#r24f4ad3]
+`JEditorPane`で`div`や`span`タグの`title`属性を`ToolTip`で表示できるように設定します。
+
+#download(https://lh4.googleusercontent.com/-3HQ42PjgBfs/Tj97O_2VS6I/AAAAAAAABAc/EnrOPXrJxfE/s800/ElementAttribute.png)
+
+* サンプルコード [#c3b2443d]
+#code(link){{
+JTextPane editor1 = new JTextPane() {
+  private transient Position.Bias[] bias = new Position.Bias[1];
+  @Override public String getToolTipText(MouseEvent e) {
+    String title = super.getToolTipText(e);
+    JEditorPane editor = (JEditorPane) e.getSource();
+    if(!editor.isEditable()) {
+      Point pt = new Point(e.getX(), e.getY());
+      int pos = editor.getUI().viewToModel(editor, pt, bias);
+      if(bias[0] == Position.Bias.Backward && pos > 0) {
+        pos--;
+      }
+      if(pos >= 0 &&(editor.getDocument() instanceof HTMLDocument)) {
+        HTMLDocument hdoc = (HTMLDocument)editor.getDocument();
+        Element elem = hdoc.getCharacterElement(pos);
+        if(elem != null) {
+          AttributeSet a = elem.getAttributes();
+          AttributeSet span = (AttributeSet)a.getAttribute(HTML.Tag.SPAN);
+          if(span != null) {
+            title = (String)span.getAttribute(HTML.Attribute.TITLE);
+          }
+        }
+      }
+    }
+    return title;
+  }
+};
+editor1.setEditorKit(new HTMLEditorKit());
+}}
+
+* 解説 [#g114332d]
+上記のサンプルでは、`JEditorPane`で`HTMLEditorKit`を使った場合の`ToolTip`表示についてテストしています。`img`タグの`alt`属性は自動的に`ToolTip`表示され、リンクは`HyperlinkListener`を追加することで`ToolTip`を変更することができます。
+
+#code{{
+private final String htmlText =
+  "<html><body>" +
+  "<span style='background:#88ff88;' title='tooltip: span[@title]'>span</span><br />" +
+  "<div title='tooltip: div[@title]'>div tag: div div div div</div>" +
+  "<div style='padding: 2 24;'><img src='"+ image +"' alt='16x16 favicon' />&nbsp;" +
+  "<a href='http://terai.xrea.jp/'>Java Swing Tips</a></div>" +
+  "</body></html>";
+}}
+
+- 上: `span`タグの`title`属性を`ToolTip`で表示
+-- `HTMLEditorKit`の`LinkController`クラスを参考に`JEditorPane#getToolTipText(MouseEvent)`をオーバーライド
+- 下: `dvi`タグの`title`属性を`ToolTip`で表示
+-- `ImageView#getToolTipText(...)`を参考
+-- `HyperlinkListener`を追加
+
+#code{{
+class TooltipEditorKit extends HTMLEditorKit {
+  @Override public ViewFactory getViewFactory() {
+    return new HTMLFactory() {
+      @Override public View create(Element elem) {
+        AttributeSet attrs = elem.getAttributes();
+        Object elementName = attrs.getAttribute(
+            AbstractDocument.ElementNameAttribute);
+        Object o = (elementName != null)
+          ? null : attrs.getAttribute(StyleConstants.NameAttribute);
+        if(o instanceof HTML.Tag) {
+          HTML.Tag kind = (HTML.Tag) o;
+          if(kind == HTML.Tag.DIV) {
+            return new BlockView(elem, View.Y_AXIS) {
+              @Override public String getToolTipText(
+                  float x, float y, Shape allocation) {
+                String s = super.getToolTipText(x, y, allocation);
+                if(s==null) {
+                  s = (String)getElement().getAttributes().getAttribute(
+                      HTML.Attribute.TITLE);
+                }
+                return s;
+              }
+            };
+          }
+        }
+        return super.create(elem);
+      }
+    };
+  }
+}
+}}
+
+* 参考リンク [#p5154cf7]
+- [[JEditorPaneにリンクを追加>Swing/HyperlinkListener]]
+
+* コメント [#h336329b]
+#comment

@@ -1,0 +1,114 @@
+#author(aterai)
+#pubdate(2004-02-04)
+#contents(big)
+
+* 概要 [#s201a4d6]
+このページでは、`ViewCVS`を導入して、`Subversion`のリポジトリをブラウザから閲覧する方法についてメモしています。最新版では、[[ViewVC>Subversion/ViewVC]]に名前が変更され、標準で`Subversion`に対応しています。
+
+* インストール [#i930e1f7]
+まず、以下をインストールしておきます。
+
+- `Apache2`
+- `Active Python 2.3.2`
+- `mod_python-3.1.2b.win32-py2.3`
+- `ViewCVS for Windows`
+- `rlog.exe`, `rcsdiff.exe`, `co.exe`
+
+これらのインストールについては、次のサイトなどで解説されているので参考にしてください。
+
+- [http://starry.night.nu/web/prog/memo/viewcvs_win2k.php Windows 2000 + Apache 環境に ViewCVS を導入]
+- [http://subversion.tigris.org/servlets/ReadMsg?list=users&msgId=297646 HOWTO: Installing ViewCVS with Subversion?]
+- %%[http://cvs.sourceforge.net/viewcvs.py/*checkout*/viewcvs/viewcvs/windows/README?rev=1.13 viewcvs/windows/README]%%
+- [http://www.cs.purdue.edu/homes/trinkle/RCS/ Official RCS Homepage]
+
+`httpd.conf`は、以下のようにしています。
+
+ LoadModule python_module modules/mod_python.so
+ 
+ ScriptAlias /viewcvs "C:/Program Files/viewcvs-1.0-dev/www/mod_python/viewcvs.py"
+ <location /viewcvs>
+    AddHandler python-program .py
+    PythonPath "[r'c:\\Program Files\\viewcvs-1.0-dev\\lib']+sys.path"
+    PythonHandler apache
+    PythonDebug On
+    AddDefaultCharset UTF-8
+ </location>
+
+* viewcvs.confの編集 [#xb07bd2a]
+次に、`viewcvs.conf`を`Subversion`用に修正します。
+
+ svn_roots = svntest: c:/svn/hoge, gachk: c:/svn/gachk
+
+%%または、%%
+%%#リポジトリの親パス%%
+%%svn_parent_path = c:\svn%%
+%%#上記のパスにあるリポジトリのどれをデフォルトにするか%%
+%%default_root = hoge%%
+
+`cvs_roots`は念のためコメントアウトしておきます。
+
+ #cvs_roots
+
+`languages`の指定方法はよくわからないので、とりあえず以下のようにしています。
+
+ languages = ja-JP
+
+* Python 2.3 bindings for Subversionのコピー [#a2e79bcb]
+最後に、以下のフォルダを`C:\Python23\Lib`などにコピーします。
+
+- `libsvn`
+- `svn`
+
+[http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=91 ここ]から、`svn-win32-*.*.*_py.zip`(インストールした`Subversion`に対応するバージョンを使用すること)をダウンロードして解凍するか、`C:\Program Files\Subversion\python`にあるものを使用することができます。
+
+* 確認 [#ab476b6e]
+http://localhost/viewcvs/ にアクセスできれば成功です。
+
+[https://lh4.googleusercontent.com/_9Z4BYR88imo/TQr3bmZPvLI/AAAAAAAAArc/Ap68Go0MZGo/s800/viewcvs.png &ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQr3bmZPvLI/AAAAAAAAArc/Ap68Go0MZGo/s400/viewcvs.png);] 
+
+* その他 [#h50b0062]
+** diff [#zda34b4c]
+- %%スタンドアロン((python standalone.py))では、文字化けもないし、diffも問題なく動作しているようです。ただ、どうしても CGI Mode on Apache や、Mod_Python Mode on Apache で、diffが正常に動いてくれません。何が悪いのやらさっぱりです…。%%
+-%%[http://websvn.tigris.org/ WebSvn]でも、diffだけうまくいかないから、もしかしたらApacheの設定がまずいのかもしれません…。%%
+- `Apache`をサービスとして起動していましたが、システム環境変数で`diff`に`Path`を通していませんでした。
+
+* 参考リンク [#l6d89e50]
+- %%[http://mailman.lyra.org/mailman/listinfo/viewcvs viewcvs Info Page]%%
+- [http://starry.night.nu/web/prog/memo/viewcvs_win2k.php Windows 2000 + Apache 環境に ViewCVS を導入]
+- [http://subversion.tigris.org/servlets/ReadMsg?list=users&msgId=297646 HOWTO: Installing ViewCVS with Subversion?]
+- [http://e.tir.jp/wiliki?viewcvs コミットログ、ソース表示時の日本語コード変換パッチ]
+
+* コメント [#w23e42e5]
+- メモ: `ViewCVS`を更新するときは、キャッシュ(`*.pyc`)を消しておく？ -- [[aterai]] &new{2004-03-12 (金) 13:01:22};
+- メモ: `config`の`log-encoding`を実験すること -- [[aterai]] &new{2004-03-29 (月) 16:53:18};
+- 以下のエラーが発生してしまうのですが…-- [[通りすがり]] &new{2004-04-08 (木) 16:05:44};
+ make_obcallback: could not import mod_python.apache.\n
+ Child 3996: Child process is exiting
+ 'import site' failed; use -v for traceback
+ 'import site' failed; use -v for traceback
+ ImportError: No module named mod_python.apache
+- `python standalone.py`を起動すると http://localhost:7467/ にアクセスできますか？ また、[http://www.modpython.org/live/current/doc-html/inst-testing.html Testing]を試すとどうなるでしょう？ > 通りすがりさん -- [[aterai]] &new{2004-04-08 (木) 16:59:36};
+- 日本語の「能」とか「ソ」が化けます。`0x5c`のダメ文字なのはわかってるんですが、`Shift_JIS`から変更はできないのです。どうしたらいいですか？ --  &new{2004-05-12 (水) 20:54:24};
+- コミットログが化けるのでしょうか？ -- [[aterai]] &new{2004-05-13 (木) 13:33:24};
+- 説明不足ですみません。このページの一番最後の「確認」のところにあるように、`WEB`ブラウザでアクセスした時に例えば「機能」というフォルダは「機能 this entry is unreadable」のように、`ViewCVS`側ではきちんと認識されないようなのです（元発言の通り「能」に`0x5c`が含まれるため）。 -- [[yo]] &new{2004-05-13 (木) 19:55:33};
+- （続き）`ActivePython`が`Shift_JIS`をきちんとパースしてくれない所為かと思って、[http://www.python.jp/Zope/ PyJUG] の`SJIS`対応版`Python`(`Win32`用)を代わりに入れてみたら、今度は`ViewCVS`がコンパイルエラーで動かない始末・・・。`Python`は全く馴染みがないので途方にくれております。  -- [[yo]] &new{2004-05-13 (木) 19:58:41};
+- `SJIS`対応版を入れたことによるエラーは[http://starship.python.net/crew/mhammond/win32/Downloads.html Win32Extension]を入れることにより解決しました。これにより「機能」というディレクトリも`ViewCVS`で表示はしてくれるようになりましたが、アンカーをクリックしても`404`になってしまいます。`URL`を見ると`%8B%40%94%5C`と正しくエンコードされているようなのですが・・・長々と場違いな話ですみません。 -- [[yo]] &new{2004-05-13 (木) 23:10:32};
+- いえ、`SJIS`対応版があるなんて全然知らなかったですし、参考になりました。 -- [[aterai]] &new{2004-05-14 (金) 14:05:43};
+- `IE`なら「常に`UTF-8`として`URL`を送信する」のチェックをはずしてみる、または、直接`URL`に、
+ http://localhost/viewcvs/trunk/機能/
+ http://localhost/viewcvs/trunk/%E6%A9%9F%E8%83%BD/
+みたいな感じで入力してみると、SJIS対応版の場合どうなるのでしょう？-- [[aterai]] &new{2004-05-14 (金) 14:07:07};
+-diffを動かすにはOptions ExecCGIです。 -- [[nag]] &new{2004-11-30 (火) 01:48:09};
+-情報どうもです。httpd.confにOptions ExecCGIを追加してみましたが、まだうまく動いてくれません。もう少し調べてみます。 -- [[aterai]] &new{2004-11-30 (火) 12:44:53};
+-成功したのはXP Proだったのですが、今日w2k Proで構築したらだめでした。なぜorz -- [[nag]] &new{2004-12-01 (水) 01:10:01};
+-%%c:\windows\tempとか作ってみると、どうなるでしょう？%%ってそんな訳ないですね。 -- [[aterai]] &new{2004-12-01 (水) 13:07:35};
+-今日確認したらw2kでもdiffできました。よくわかりません。 -- [[nag]] &new{2004-12-01 (水) 23:38:12};
+-ExecCGIがなくてもdiff動きました。というかちゃんと動くときと動かないときがあります。とりあえずブラウズできてログが見られれば良しとしています。 -- [[nag]] &new{2004-12-02 (木) 21:14:55};
+-ぼくもしばらくは、python standalone.pyで良しときます(^^; -- [[aterai]] &new{2004-12-03 (金) 13:47:49};
+-「機能」というディレクトリもViewCVSで表示はしてくれるようになりましたが、アンカーをクリックしても 404 になってしまいます。 -- [[mac]] &new{2005-01-27 16:21:37 (木)};
+-メモ、[http://lists.sourceforge.jp/mailman/archives/cvs-jp-info/2005-February/000637.html cvs-jp-info 638 Re: ViewCVSの日本語（特殊文字）対応] -- [[aterai]] &new{2005-02-02 16:49:22 (水)};
+- ViewCVSインストールの際に参考にさせていただきました。ありがとうございます。diffですが、pathを通しておくというのはだめでしょうか？僕のところはそれで動いています（＾＾；； -- [[syo]] &new{2005-06-18 (土) 11:34:17};
+-pathは通してたと思うけど、なんだか思っているだけの気もしてきました(´･ω･`)。週明け確認してみます。 -- [[aterai]] &new{2005-06-18 (土) 17:20:09};
+-ユーザー環境変数の方でPath通してました。システム環境変数でPathを通して再起動すると正常に動作しました。 Apacheをサービスとして動かしていたので、diffを見つけられなかったようです…orz。syoさん、ありがとうございました。 -- [[aterai]] &new{2005-06-20 (月) 13:08:17};
+
+#comment

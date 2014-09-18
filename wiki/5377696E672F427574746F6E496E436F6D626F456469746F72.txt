@@ -1,0 +1,127 @@
+TITLE:JComboBoxのEditorComponentにJButtonを配置
+#tags(JComboBox, LayoutManager, JButton, JLabel, Icon, RGBImageFilter, RescaleOp)
+#author(aterai)
+#pubdate(2009-08-17T12:55:55+09:00)
+* 概要 [#j9d62836]
+`JComboBox`の`EditorComponent`に`JButton`や`JLabel`などを配置します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTIT4iCWGI/AAAAAAAAASk/pFFcvRBoyIg/s800/ButtonInComboEditor.png)
+
+* サンプルコード [#o63272a1]
+#code(link){{
+combo02.setLayout(new LayoutManager() {
+  @Override public void addLayoutComponent(String name, Component comp) {}
+  @Override public void removeLayoutComponent(Component comp) {}
+  @Override public Dimension preferredLayoutSize(Container parent) {
+    return parent.getPreferredSize();
+  }
+  @Override public Dimension minimumLayoutSize(Container parent) {
+    return parent.getMinimumSize();
+  }
+  @Override public void layoutContainer(Container parent) {
+    if(!(parent instanceof JComboBox)) return;
+    JComboBox cb   = (JComboBox)parent;
+    int width    = cb.getWidth();
+    int height     = cb.getHeight();
+    Insets insets  = cb.getInsets();
+    int buttonHeight = height - (insets.top + insets.bottom);
+    int buttonWidth  = buttonHeight;
+    int labelWidth   = buttonHeight;
+    int loupeWidth   = buttonHeight;
+
+    JButton arrowButton = (JButton)cb.getComponent(0);
+    if(arrowButton != null) {
+      Insets arrowInsets = arrowButton.getInsets();
+      buttonWidth = arrowButton.getPreferredSize().width
+        + arrowInsets.left + arrowInsets.right;
+      arrowButton.setBounds(width - (insets.right + buttonWidth),
+                            insets.top, buttonWidth, buttonHeight);
+    }
+    if(label != null) {
+      Insets labelInsets = label.getInsets();
+      labelWidth = label.getPreferredSize().width
+        + labelInsets.left + labelInsets.right;
+      label.setBounds(insets.left, insets.top, labelWidth, buttonHeight);
+    }
+    JButton rssButton = button;
+    if(rssButton != null && rssButton.isVisible()) {
+      Insets loupeInsets = rssButton.getInsets();
+      loupeWidth = rssButton.getPreferredSize().width
+        + loupeInsets.left + loupeInsets.right;
+      rssButton.setBounds(width - (insets.right + loupeWidth + buttonWidth),
+                          insets.top, loupeWidth, buttonHeight);
+    }else{
+      loupeWidth = 0;
+    }
+
+    Component editor = cb.getEditor().getEditorComponent();
+    if ( editor != null ) {
+      editor.setBounds(insets.left + labelWidth, insets.top,
+        width -(insets.left+insets.right+buttonWidth+labelWidth+loupeWidth),
+        height-(insets.top +insets.bottom));
+    }
+  }
+});
+}}
+
+* 解説 [#g2c763e2]
+上記のサンプルでは、`JComboBox`に独自のレイアウトマネージャーを設定して、`JButton`や`JLabel`を配置しています。
+
+----
+`RolloverIcon`は、元のアイコンに以下のようなフィルタを掛けて作成しています。
+
+- `RGBImageFilter`を使用
+
+#code{{
+private static ImageIcon makeFilteredImage(ImageIcon srcIcon) {
+  RGBImageFilter filter = new SelectedImageFilter();
+  FilteredImageSource fis = new FilteredImageSource(srcIcon.getImage().getSource(), filter);
+  return new ImageIcon(Toolkit.getDefaultToolkit().createImage(fis));
+}
+static class SelectedImageFilter extends RGBImageFilter {
+  public SelectedImageFilter() {
+    canFilterIndexColorModel = false;
+  }
+  private final float scale = 1.2f;
+  public int filterRGB(int x, int y, int argb) {
+    //int a = (argb >> 24) & 0xff;
+    int r = (argb >> 16) & 0xff;
+    int g = (argb >> 8)  & 0xff;
+    int b = (argb)       & 0xff;
+    r = (int)(r*scale);
+    g = (int)(g*scale);
+    b = (int)(b*scale);
+    if(r > 255) r = 255;
+    if(g > 255) g = 255;
+    if(b > 255) b = 255;
+    return (argb & 0xff000000) | (r<<16) | (g<<8) | (b);
+  }
+}
+}}
+
+- `RescaleOp`を使用
+
+#code{{
+private static ImageIcon makeFilteredImage2(ImageIcon srcIcon) {
+  RescaleOp op = new RescaleOp(
+      new float[] { 1.2f,1.2f,1.2f,1.0f },
+      new float[] { 0f,0f,0f,0f }, null);
+  BufferedImage img = new BufferedImage(
+      srcIcon.getIconWidth(), srcIcon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+  Graphics g = img.getGraphics();
+  //g.drawImage(srcIcon.getImage(), 0, 0, null);
+  srcIcon.paintIcon(null, g, 0, 0);
+  g.dispose();
+  return new ImageIcon(op.filter(img, null));
+}
+}}
+
+* 参考リンク [#eb8b8cf3]
+- [http://feedicons.com/ Feed Icons - Home of the Standard Web Feed Icon]
+- [[JComboBoxにアイコンを表示>Swing/IconComboBox]]
+- [[JTextField内にアイコンを追加>Swing/IconTextField]]
+
+* コメント [#i9c7403d]
+- `EditorComponent`に追加した`JButton`をクリックすると例外が発生する場合があるバグを修正 -- [[aterai]] &new{2009-08-28 (金) 16:42:47};
+
+#comment

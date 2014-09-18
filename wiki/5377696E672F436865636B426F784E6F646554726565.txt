@@ -1,0 +1,127 @@
+TITLE:JTreeの葉ノードをJCheckBoxにする
+#tags(JTree, JCheckBox, TreeCellRenderer, TreeCellEditor)
+#author(aterai)
+#pubdate(2011-03-21T16:05:37+09:00)
+* 概要 [#kbc9469a]
+`JTree`の葉ノードを編集可能な`JCheckBox`にします。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TYb2-BFsTHI/AAAAAAAAA4U/Fs8-t9x9XSw/s800/CheckBoxNodeTree.png)
+
+* サンプルコード [#le0a2547]
+#code(link){{
+class CheckBoxNode {
+  public final String text;
+  public final boolean selected;
+  public CheckBoxNode(String text, boolean selected) {
+    this.text = text;
+    this.selected = selected;
+  }
+  @Override public String toString() {
+    return text;
+  }
+}
+}}
+#code{{
+JTree tree = new JTree() {
+  @Override public void updateUI() {
+    setCellRenderer(null);
+    setCellEditor(null);
+    super.updateUI();
+    //???: JDK 1.6.0 LnF bug???
+    setCellRenderer(new CheckBoxNodeRenderer());
+    setCellEditor(new CheckBoxNodeEditor());
+  }
+};
+}}
+#code{{
+class CheckBoxNodeRenderer extends JCheckBox implements TreeCellRenderer {
+  @Override public Component getTreeCellRendererComponent(JTree tree,
+      Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+    this.tree = tree;
+    if(leaf && value instanceof DefaultMutableTreeNode) {
+      this.setEnabled(tree.isEnabled());
+      this.setFont(tree.getFont());
+      this.setOpaque(false);
+      Object userObject = ((DefaultMutableTreeNode)value).getUserObject();
+      if(userObject instanceof CheckBoxNode) {
+        CheckBoxNode node = (CheckBoxNode)userObject;
+        this.setText(node.text);
+        this.setSelected(node.selected);
+      }
+      return this;
+    }
+    return renderer.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+  }
+  private JTree tree = null;
+  private DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+  @Override public void updateUI() {
+    super.updateUI();
+    setName("Tree.cellRenderer");
+  }
+}
+}}
+#code{{
+class CheckBoxNodeEditor extends JCheckBox implements TreeCellEditor {
+  private final JTree tree;
+  public CheckBoxNodeEditor(JTree tree) {
+    super();
+    this.tree = tree;
+    setFocusable(false);
+    setRequestFocusEnabled(false);
+    setOpaque(false);
+    addActionListener(new ActionListener() {
+      @Override public void actionPerformed(ActionEvent e) {
+        stopCellEditing();
+      }
+    });
+  }
+  @Override public Component getTreeCellEditorComponent(JTree tree,
+      Object value, boolean isSelected, boolean expanded, boolean leaf, int row) {
+    if(leaf && value instanceof DefaultMutableTreeNode) {
+      Object userObject = ((DefaultMutableTreeNode)value).getUserObject();
+      if(userObject instanceof CheckBoxNode) {
+        this.setSelected(((CheckBoxNode)userObject).selected);
+      }else{
+        this.setSelected(false);
+      }
+      this.setText(value.toString());
+    }
+    return this;
+  }
+  @Override public Object getCellEditorValue() {
+    return new CheckBoxNode(getText(), isSelected());
+  }
+  @Override public boolean isCellEditable(EventObject e) {
+    if(e instanceof MouseEvent) {
+      TreePath path = tree.getPathForLocation(
+          ((MouseEvent)e).getX(), ((MouseEvent)e).getY());
+      Object o = path.getLastPathComponent();
+      if(o instanceof TreeNode) {
+        return ((TreeNode)o).isLeaf();
+      }
+    }
+    return false;
+  }
+//......
+}}
+
+* 解説 [#kfab6821]
+`JCheckBox`を継承する`TreeCellRenderer`、`TreeCellEditor`を作成して、`setEditable(true)`とした`JTree`に設定し、葉ノードをチェックできるようにしています。ノードがチェックされているかどうかといった状態の保存は、`DefaultMutableTreeNode#setUserObject(Object)`でタイトルと選択状態をもつオブジェクトを設定することで行っています。
+
+----
+葉ノードでない場合、表示には`DefaultTreeCellRenderer`を使っています。逆に`DefaultTreeCellRenderer`を継承する`TreeCellRenderer`で、葉ノードの表示を`JCheckBox`に委譲する方法でも同様となりますが、この場合、`JDK 1.6.0`では`Look And Feel`を変更してもアイコンや選択色が更新されないようです。
+
+- `JDK 1.7.0`で修正されている
+
+----
+葉ノードだけ編集可能に制限するため、`TreeCellEditor#isCellEditable(EventObject)`でクリックしたノードが`TreeNode#isLeaf()`かを判断しています。
+
+- [[JTreeの葉ノードだけ編集可能にする>Swing/LeafTreeCellEditor]]
+
+* 参考リンク [#o07a01b5]
+- [http://www.crionics.com/products/opensource/faq/swing_ex/JTreeExamples2.html CheckNode - JTree Examples 2]
+- [[JTreeの葉ノードだけ編集可能にする>Swing/LeafTreeCellEditor]]
+- [[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]]
+
+* コメント [#f566e35a]
+#comment

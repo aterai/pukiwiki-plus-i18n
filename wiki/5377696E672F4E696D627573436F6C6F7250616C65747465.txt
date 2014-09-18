@@ -1,0 +1,61 @@
+TITLE:NimbusLookAndFeelのカラーパレット
+#tags(NimbusLookAndFeel, UIDefaults, JProgressBar)
+#author(aterai)
+#pubdate(2012-07-30T13:49:19+09:00)
+* 概要 [#kf3f6f47]
+`NimbusLookAndFeel`のカラーパレットを変更します。
+
+#download(https://lh4.googleusercontent.com/-ZPZIywXgxwc/UBYR3-EyETI/AAAAAAAABP4/Y2KglYmMKo8/s800/NimbusColorPalette.png)
+
+* サンプルコード [#kb6eef2f]
+#code(link){{
+UIDefaults def = UIManager.getLookAndFeelDefaults();
+def.put("nimbusOrange", new Color(255,220,35,200));
+}}
+
+* 解説 [#j922dab2]
+- 上:
+-- `NimbusLookAndFeel`の`Primary Colors`の一つ(上記のサンプルでは`nimbusOrange`)を変更して全体で色を変更
+
+以下の一覧は、[http://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]より引用
+|240|240|80|c
+|Key                       |Value                |Preview          |h
+|control                   |#d6d9df (214,217,223)|BGCOLOR(#d6d9df):|
+|info                      |#f2f2bd (242,242,189)|BGCOLOR(#f2f2bd):|
+|nimbusAlertYellow         |#ffdc23 (255,220,35) |BGCOLOR(#ffdc23):|
+|nimbusBase                |#33628c (51,98,140)  |BGCOLOR(#33628c):|
+|nimbusDisabledText        |#8e8f91 (142,143,145)|BGCOLOR(#8e8f91):|
+|nimbusFocus               |#73a4d1 (115,164,209)|BGCOLOR(#73a4d1):|
+|nimbusGreen               |#b0b332 (176,179,50) |BGCOLOR(#b0b332):|
+|nimbusInfoBlue            |#2f5cb4 (47,92,180)  |BGCOLOR(#2f5cb4):|
+|nimbusLightBackground     |#ffffff (255,255,255)|BGCOLOR(#ffffff):|
+|nimbusOrange              |#bf6204 (191,98,4)   |BGCOLOR(#bf6204):|
+|nimbusRed                 |#a92e22 (169,46,34)  |BGCOLOR(#a92e22):|
+|nimbusSelectedText        |#ffffff (255,255,255)|BGCOLOR(#ffffff):|
+|nimbusSelectionBackground |#39698a (57,105,138) |BGCOLOR(#39698a):|
+|text                      |#000000 (0,0,0)      |BGCOLOR(#000000):|
+
+- 下:
+-- 指定した領域を塗りつぶす`Painter`を作成して、`JProgressBar#putClientProperty("Nimbus.Overrides", d);`で特定のコンポーネントの色を設定
+
+#code{{
+UIDefaults d = new UIDefaults();
+d.put("ProgressBar[Enabled].foregroundPainter", new Painter<JProgressBar>() { //JDK 1.6.0 new com.sun.java.swing.Painter() {
+  @Override public void paint(Graphics2D g, JProgressBar c, int w, int h) {
+    g.setColor(new Color(100,250,120,50));
+    g.fillRect(0,0,w-1,h-1);
+    g.setColor(new Color(100,250,120,150));
+    g.fillRect(3,h/2,w-5,h/2-2);
+  }
+});
+progressbar.putClientProperty("Nimbus.Overrides", d);
+}}
+
+* 参考リンク [#je95a8c5]
+- [http://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
+- [http://stackoverflow.com/questions/10847308/how-to-change-the-color-of-a-single-jprogressbar-in-nimbus java - How to change the color of a single JProgressBar in Nimbus? - Stack Overflow]
+- [[JLayerを使ってJProgressBarの色相を変更する>Swing/ColorChannelSwapFilter]]
+-- 指定した`JProgressBar`の色変更は、`JLayer`+`RGBImageFilter`+`JProgressBar#setOpaque(true);`で可能。
+
+* コメント [#x2d9373f]
+#comment

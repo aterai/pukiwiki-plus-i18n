@@ -1,0 +1,41 @@
+TITLE:JTreeで展開不可のノードを設定する
+#tags(JTree, TreeWillExpandListener, File)
+#author(aterai)
+#pubdate(2014-01-27T00:45:37+09:00)
+* 概要 [#s658b7b2]
+`JTree`で特定のノードだけ展開できないように設定します。
+
+#download(https://lh4.googleusercontent.com/-WcBsEg_mxgc/UuUbyvn84EI/AAAAAAAAB-0/iZ6t8_EGeZQ/s800/PreventNodeExpanding.png)
+
+* サンプルコード [#a2d19b1b]
+#code(link){{
+class DirectoryExpandVetoListener implements TreeWillExpandListener {
+  @Override public void treeWillExpand(TreeExpansionEvent e)
+        throws ExpandVetoException {
+    TreePath path = e.getPath();
+    Object o = path.getLastPathComponent();
+    if(o instanceof DefaultMutableTreeNode) {
+      DefaultMutableTreeNode node = (DefaultMutableTreeNode)o;
+      File file = (File)node.getUserObject();
+      String title = file.getName();
+      System.out.println(title);
+      if(title.startsWith(".")) {
+        throw new ExpandVetoException(e, "Tree expansion cancelled");
+      }
+    }
+  }
+  @Override public void treeWillCollapse(TreeExpansionEvent e)
+        throws ExpandVetoException {}
+}
+}}
+
+* 解説 [#kffe6e96]
+- `TreeWillExpandListener`を実装し、`treeWillExpand(...)`メソッド内で、ノード(`File`)の名前がドットで始まる場合、`ExpandVetoException`を投げて展開をキャンセル
+-- これらのノードは展開は不可だが、選択自体は可能
+- `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`内で、名前がドットで始まる場合、ノードを`setEnabled(false)`で無効状態にして描画
+
+* 参考リンク [#uf2330a5]
+- [http://docs.oracle.com/javase/tutorial/uiswing/events/treewillexpandlistener.html How to Write a Tree-Will-Expand Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]
+
+* コメント [#jee1557e]
+#comment

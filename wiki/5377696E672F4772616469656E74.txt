@@ -1,0 +1,56 @@
+TITLE:Separatorのグラデーション
+#tags(JSeparator, GradientPaint)
+#author(aterai)
+#pubdate(2004-03-29T04:50:14+09:00)
+* 概要 [#m51f3588]
+グラデーションするセパレータを作ってみます。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNgUSWNnI/AAAAAAAAAa4/92SfYb-Z3zs/s800/Gradient.png)
+
+* サンプルコード [#z73fe6d9]
+#code(link){{
+class GradientSeparatorUI extends BasicSeparatorUI{
+  public static ComponentUI createUI(JComponent c) {
+    return new GradientSeparatorUI();
+  }
+  private Color bgc,ssc,shc;
+  private void updateColors(JComponent c) {
+    Color uc = UIManager.getColor("Panel.background");
+    bgc = (uc instanceof ColorUIResource)? uc:c.getBackground();
+    uc = UIManager.getColor("Separator.shadow");
+    ssc = (uc instanceof ColorUIResource)? uc:c.getBackground().brighter();
+    uc = UIManager.getColor("Separator.highlight");
+    shc = (uc instanceof ColorUIResource)? uc:c.getBackground().darker();
+  }
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    updateColors(c);
+  }
+  @Override public void paint(Graphics g, JComponent c) {
+    Graphics2D g2 = (Graphics2D)g;
+    Dimension s = c.getSize();
+    if(((JSeparator)c).getOrientation()==JSeparator.VERTICAL) {
+      g2.setPaint(new GradientPaint(0, 0, ssc, 0, s.height, bgc, true));
+      g2.fillRect(0, 0, 1, s.height);
+      g2.setPaint(new GradientPaint(0, 0, shc, 0, s.height, bgc, true));
+      g2.fillRect(1, 0, 1, s.height);
+    }else{
+      g2.setPaint(new GradientPaint(0, 0, ssc, s.width, 0, bgc, true));
+      g2.fillRect(0, 0, s.width, 1);
+      g2.setPaint(new GradientPaint(0, 0, shc, s.width, 0, bgc, true));
+      g2.fillRect(0, 1, s.width, 1);
+    }
+  }
+}
+}}
+
+* 解説 [#u88fd1d8]
+上記のサンプルでは下の`JSeparator`の描画に`GradientPaint`を使用し、グラデーションさせています。
+
+`JSeparator`に`setBorder()`すると、セパレータが見えなくなる場合があるのですこし注意が必要です。
+
+//**参考リンク
+* コメント [#x0186bae]
+- `JSeparator.VERTICAL`に対応。 -- [[aterai]] &new{2008-04-11 (金) 14:32:04};
+
+#comment

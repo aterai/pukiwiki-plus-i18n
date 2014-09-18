@@ -1,0 +1,77 @@
+TITLE:Antのbasedirを子フォルダに変更して全部実行
+#author(aterai)
+#pubdate(2013-02-18)
+#contents
+
+* 概要 [#k5f41878]
+`basedir`をカレントディレクトリ(`Working directory`, `${user.dir}`)とは別の場所に指定して、`ant.bat`を実行します。
+
+* サンプル [#ca4676e6]
+#code{{
+## 子フォルダAuxiliaryLookAndFeelをbasedirにしてant findbugsを実行
+ant clean findbugs -Dbasedir=AuxiliaryLookAndFeel
+
+## .gitなどを除く子フォルダをbasedirにしてant findbugsを実行
+for i in $(find . -maxdepth 1 -type d ! -name ".*"); do
+  ant -f foo.xml -Dbasedir=$i clean findbugs
+done
+
+## Aで始まる子フォルダをbasedirにしてant findbugsを実行
+for i in $(find . -maxdepth 1 -type d -name "A*"); do ant -f build.xml -Dbasedir=$i clean findbugs; done
+}}
+
+#code{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="swingall" default="clean" basedir=".">
+  <!-- ... 省略 ... -->
+  <condition property="have.findbugs">
+    <and>
+      <available classname="edu.umd.cs.findbugs.anttask.FindBugsTask" />
+      <available file="${env.FINDBUGS_HOME}" />
+    </and>
+  </condition>
+  <target name="findbugs" depends="compile" if="have.findbugs">
+    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" />
+    <mkdir dir="${build.reports}" />
+    <echo>userdir: ${user.dir}</echo>
+    <echo>basedir: ${basedir}</echo>
+    <findbugs home="${env.FINDBUGS_HOME}" effort="max" reportLevel="low"
+            excludeFilter="${user.dir}/excludefilter.xml"
+            output="xml" outputFile="${build.reports}/findbugs.xml" >
+      <auxClasspath refid="project.class.path" />
+      <sourcePath path="${src.dir}" />
+      <class location="${build.dest}" />
+    </findbugs>
+  </target>
+</project>
+}}
+
+* 解説 [#mc94cc13]
+`-Dbasedir=XXX`で、`basedir`を`XXX`に変更し、カレントディレクトリ(`${user.dir}`)にある`foo.xml`ビルドファイルの`findbugs`タスクを実行しています。
+
+- メモ
+-- `XXX`ディレクトリ内で`basedir`を変更せずに実行すると、`<project name="swingall" default="clean" basedir=".">`と指定しているので、`${user.dir}`と`${basedir}`は等しくなる
+-- `findbugs`タスクの`excludeFilter`オプションは、例えば`excludeFilter="excludefilter.xml"`と省略すると`${basedir}`基準の`excludeFilter="${basedir}/excludefilter.xml"`と同じになる
+-- `pmd`タスクの`rulesetfiles`オプションは、例えば`rulesetfiles="ruleset.xml"`と省略すると`${user.dir}`基準の`rulesetfiles="${user.dir}/ruleset.xml"`と同じになる
+
+#code{{
+  <target name="pmd">
+    <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" />
+    <mkdir dir="${build.reports}" />
+    <pmd rulesetfiles="ruleset.xml" encoding="${compile.encoding}">
+      <sourceLanguage name="java" version="1.7"/>
+      <classpath refid="project.class.path" />
+      <formatter type="xml" toFile="${build.reports}/pmd.xml" />
+      <formatter type="text" toConsole="true" />
+      <fileset dir="${src.dir}">
+        <include name="**/*.java" />
+      </fileset>
+    </pmd>
+  </target>
+}}
+
+* 参考リンク [#t060222e]
+- [http://stackoverflow.com/questions/1596318/find-working-directory-from-ant java - Find working directory from Ant - Stack Overflow]
+
+* コメント [#w3adfcb0]
+#comment

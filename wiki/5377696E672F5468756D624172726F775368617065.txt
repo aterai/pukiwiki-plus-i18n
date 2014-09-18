@@ -1,0 +1,29 @@
+TITLE:JSliderのつまみの形状を変更
+#tags(JSlider, LookAndFeel)
+#author(aterai)
+#pubdate(2014-04-07T00:03:19+09:00)
+* 概要 [#id74320f]
+`JSlider`のつまみの形状を目盛り表示ありの場合と同じになるよう変更します。
+
+#download(https://lh3.googleusercontent.com/-wnMCy-QjKqI/U0Fp9vKfehI/AAAAAAAACDE/fem_kGyz1KM/s800/ThumbArrowShape.png)
+
+* サンプルコード [#i67facab]
+#code(link){{
+slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);
+}}
+
+* 解説 [#t48120b4]
+上記のサンプルでは、`slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);`を使用して、つまみの形状を、目盛り表示ありの場合に使用する矢印型に変更しています。
+
+- メモ
+-- 矢印型に変化するかどうかは、`LookAndFeel`による
+--- `NimbusLookAndFeel`では、目盛り表示ありの場合でも矢印型にはならないが、`Slider.paintThumbArrowShape`で三角形になる
+-- `WindowsLookAndFeel`でつまみが小さすぎる場合に使用可
+--- `slider.putClientProperty("Slider.minimumHorizontalSize", new Dimension(30, 30));`などは効果がない
+-- `slider.setPaintTicks(true);`だけ使用する場合と異なり、目盛り表示領域の余白がない
+
+* 参考リンク [#j62aa3e4]
+- [[JScrollBarのKnobの最小サイズを設定する>Swing/MinimumThumbSize]]
+
+* コメント [#ba40d489]
+#comment

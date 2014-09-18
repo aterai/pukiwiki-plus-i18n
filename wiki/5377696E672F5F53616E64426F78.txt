@@ -1,0 +1,377 @@
+TITLE:来週のネタとか(ﾟεﾟ)
+#nofollow
+//#author(aterai)
+#pubdate(2006-01-29)
+#contents(big)
+
+* 概要 [#qd04dac9]
+[[Swing]]関係の自分用のメモとかネタ帳みたいなものです。
+
+* 移動: ネタのリクエスト、Swingのサンプルに関するメモ [#l7de666d]
+- 以前ここで頂いたコメントは、[[Comments/Swing]]に移動しました。
+
+* Swing調整中のネタ一覧 [#n8fba4d5]
+** 調整中 [#q66b670c]
+以下テスト中なので、`Exception`が発生したり、まともに動作しなくても(ﾟεﾟ)ｷﾆｼﾅｲ!!
+
+- [[Swing/CubeEffect]]
+-- [https://java.net/projects/animatingcardlayout Animatingcardlayout — Project Kenai]
+-- [http://www.kawa.net/works/js/animation/cube-e.html (JavaScript) Animation.Cube - Rotating Cube Animation Effect]
+-- http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=36768&forum=12&7
+-- [https://jogl-demos.dev.java.net/ jogl-demos:]
+-- [http://programamemo2.blogspot.com/2008/06/image-processing.html プログラマメモ2: Image Processing 台形変形への道 - へたれなので。]
+-- [http://www.javaworld.com/javaworld/jw-03-2008/jw-03-opensourcejava-animatingcardlayout.html Open source Java projects: AnimatingCardLayout - JavaWorld]
+-- [https://animatingcardlayout.dev.java.net/ animatingcardlayout: ホーム]
+- [[Swing/DropOnTabTitle]]
+- [[Swing/DefaultLookAndFeelDecorated]]
+- [[Swing/NoArrowButtonCellEditor]]
+- [[Swing/UninstallListeners]]
+- [[Swing/ScrollPaneCorner]]
+
+----
+[http://stackoverflow.com/questions/16547365/swing-gui-flickering-white-error java - swing gui flickering white error - Stack Overflow]のサンプルを試していたら面白い挙動に遭遇。
+
+- `JDK1.7.0_21`
+-- IllegalArgumentException: Comparison method violates its general contract!
+ Exception in thread "AWT-EventQueue-0" java.lang.IllegalArgumentException: Comparison method violates its general contract!
+ 	at java.util.TimSort.mergeLo(TimSort.java:747)
+ 	at java.util.TimSort.mergeAt(TimSort.java:483)
+ 	at java.util.TimSort.mergeCollapse(TimSort.java:410)
+ 	at java.util.TimSort.sort(TimSort.java:214)
+ 	at java.util.TimSort.sort(TimSort.java:173)
+ 	at java.util.Arrays.sort(Arrays.java:659)
+ 	at java.util.Collections.sort(Collections.java:217)
+-- フレームのリサイズで上下左右に余白？
+- `JDK1.6.0_41`
+-- フレームのリサイズで右と下に余白？
+
+#code{{
+import java.awt.*;
+import javax.swing.*;
+
+public class Gui {
+  public JComponent makeUI() {
+    JPanel p = new JPanel(new GridLayout(22,12,10,10));
+    p.setBackground(Color.WHITE);
+    p.setBorder(BorderFactory.createLineBorder(Color.BLUE, 10));
+    for (int i = 0; i < 22; i++) {
+      for (int j = 0; j < 12; j++) {
+        JLabel label = new JLabel();
+        label.setBorder(BorderFactory.createLineBorder(Color.RED));
+        label.setBackground(Color.GRAY);
+        label.setOpaque(true);
+        //label.setPreferredSize(new Dimension(50, 50));
+        p.add(label);
+      }
+    }
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new Gui().makeUI());
+    f.setSize(320, 240);
+    //f.pack();
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
+----
+`JMenuBar`を検索して`JRadioButtonMenuItem`に、`ActionListener`を追加
+
+#code{{
+Arrays.stream(menuBar.getSubElements())
+  .flatMap(new Function<MenuElement, Stream<MenuElement>> () {
+      @Override public Stream<MenuElement> apply(MenuElement me) {
+          MenuElement[] sub = me.getSubElements();
+          if (sub.length != 0) {
+              return Arrays.stream(sub).flatMap(sme -> apply(sme));
+          } else {
+              return Stream.of(me);
+          }
+      }
+  })
+  .filter(mi -> mi instanceof JRadioButtonMenuItem)
+  .forEach(mi -> ((JRadioButtonMenuItem) mi).addActionListener(al));
+}}
+
+** 検討中で未実装 [#xa28093f]
+こっそり消えても(ﾟεﾟ)ｷﾆｼﾅｲ!!
+- [[Swing/FileChooserWithOptionPane]]
+-- %JAVA_HOME%\demo\jfc\FileChooserDemo\src\FileChooserDemo.java
+-- %JAVA_HOME%\demo\jfc\SwingSet2\src\FileChooserDemo.java
+- [[Swing/ClearComboBoxSelection]]
+- [[Swing/SecondaryLoop]]
+-- [http://stackoverflow.com/questions/10196809/secondaryloop-instead-of-swingworker java - SecondaryLoop instead of SwingWorker? - Stack Overflow]
+
+** メモ [#bb7c5eda]
+- JTree Table
+- JPopupMenu BlankIcon
+- UIDefaults ProxyLazyValue
+- JTable setSurrendersFocusOnKeystroke
+- File createTempFile
+- JTable Vertical Table Header
+- File getTotalSpace, getFreeSpace, getUsableSpace
+- JTabbedPane tab height animation
+- Formatter and password char
+- Cells with rouded corners in JTable
+- Tearaway tabs
+- Multi selection JComboBox
+- JSplitPane hide unhide tab
+- JScrollBar BlockIncrement
+- JScrollPane MapView subview
+- JDesktopPane JInternalFrame Tab Loop
+- JTabbedPane ScrollButton Layout
+- JTabbedPane Transparency
+- JTextField(search) in JButton(Tab, ButtonBar)
+- switch JInternalFrame to JTabbedPane
+- JTree JList(1.8.0) Nimbus Selection Rect
+- Highlighter#removeAllHighlights()
+- http://docs.oracle.com/javase/jp/7/api/javax/swing/text/html/HTMLDocument.html#getIterator(javax.swing.text.html.HTML.Tag)
+
+//----
+//-`1.6.0_14`にすると、`web start`(`2`回目以降？) で`CPU 100%`になる？
+//--自宅のPCでは再現しない。
+//- [https://forums.oracle.com/thread/1305835 Java Web Start & JNLP - BouncyCastle via Java Web Start 1.6.0_14]
+//- [https://forums.oracle.com/thread/1306088 Java Web Start & JNLP - Upgrade to 1.6.0_14 causing Webstart launched application to fail]
+//-`JTableHeader` + `KeyEvent.VK_SPACE`
+//`Windows XP`(日本語?)+`JDK 1.6.0_17`では、KBD{F8}キーで`JTableHeader`にフォーカスを移動して、KBD{SPACE}キーを押してもソートされない？
+//以下のように設定しても、`KeyEvent.VK_SPACE`はうまくいかない。`KeyEvent.VK_F9`とかなら大丈夫。
+//#code{{
+//InputMap im = table.getTableHeader().getInputMap(
+//    JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+//im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "toggleSortOrder");
+//}}
+//キーボードが壊れたのかもと思ったけど、`JDK 1.7.0`では、問題なく動作している？。暇なときに、`Bug Database`を調べること。追記:`IME`を変更したら再現しなくなった…。関係ないけど、最近`Bug Database`に繋がらない。
+
+* Swingのサンプルに関するメモ(引用) [#p449f4e0]
+目標にしようと思っているけど、なかなか難しそう…。
+
+** シンプルで、小さなサンプル(Simple Client Applications) [#r4b29da4]
+- [http://forums.java.net/jive/thread.jspa?messageID=165001&tstart=0#165001 java.net Forums : Simple Client Applications ...]
+-- via: [http://weblogs.java.net/blog/editors/archives/2006/10/all_i_want.html Editor's Daily Blog: All I Want]
+ What surprises me about Java on the desktop is that there are very few simple clean example of it in use that are fundamental.
+
+** 「チュートリアル」「小さなサンプル」「レビュー」 [#t1152eab]
+- [http://dodgson.org/omo/t/?date=20070706#p02 社内ライブラリのチュートリアル]
+ 社内にはそのライブラリで作られたアプリケーションが色々あり, ライブラリを使う時はその中から欲しいコード片を掘り起こすのが常だった.苦労の多い作業だった. オブジェクトの初期化, 設定, 利用のシーケンスはコード内に分散しており, それを漏れなく抜き出すのは難しい. コードの質も玉石混合で, バグを持ったままコピペされることもあった. 私達の目的は, 極端に言えば便利で正しいコピペ素材を提供することだった.
+
+** Examples should be exemplary (例は典型的であるべき) [#kf951705]
+- [http://www.javalobby.org/java/forums/t99065.html Interested in Writing New Tutorial Demos for Sun?]についてたコメントを引用
+-- 開発者はサンプルコードに頼って(コピペして)いる
+-- [http://www.javalobby.org/java/forums/t99065.html Examples should be exemplary]
+ He references a research study that found that a bug in one of the original JDK applet examples was replicated in 75% of applets attempting similar goal in their sampling of applets found on the internet. This underscores the fact that developers rely on example code, even, unfortunately, to the point that we copy bugs too. This is sometimes described as "Monkey see, monkey do", or "Rape and Paste".
+
+** コピー指向プログラミング [#bda55670]
+- http://ameblo.jp/argv/entry-10144604985.html
+-- あらかじめ完成度の高い「コピー元」を用意する
+-- コピー元を品質の高いコードに集中させることで、「バグのコピー」や「似て非なるバージョンの散在」を防ぐ。
+-- 「コピーされたもの」が分かるようにする
+--- 例えば、コピー元のコードに特殊なコメントを埋め込む（もちろん、コピー先でも消さないでおく）などして、後からコピー先を検索しやすくする。これは、不具合修正や仕様変更などの際に、影響範囲（全てのコピー先）を特定しやすくするためである。
+
+** Best Practice for Swing coding [#o5cd5e26]
+- [http://weblogs.java.net/blog/alexfromsun/archive/2007/09/why_i_dont_like.html Alexander Potochkin's Blog: Why I don't use Swing hacks (in production code)]についてたコメントを引用
+-- For deities sake, coordinate your documentation and example in one single place. And make sure they demonstrate best practice. 
+-- [http://sourceforge.jp/magazine/10/01/20/0420230 米Microsoft、コードサンプル集「All-In-One Code Framework」 - SourceForge.JP Magazine]
+#code{{
+http://weblogs.java.net/blog/alexfromsun/archive/2007/09/why_i_dont_like.html:title=Best Practice for Swing coding>
+The problem with the "Swing Hacks" book is that it contains solutions in search for problems. And that is just the wrong motivation to add a hack to production code. 
+
+There are other, good motivations to add hacks to production code. Let's start with a better definition of the word hack: 
+A creative circumvention of a limitation 
+And unfortunately Swing has many limitations which hurt in the real world. If your customer insists that you make something happen "or else ..." you have a very good motivation for a hack. I do not agree that a programmer has to understand all implications of a hack. Swing is such a complex system, itself full of ugly hacks, bugs, and badly documented, that this is just not feasible. 
+
+When it comes to Swing then part of the problem is not only that Swing is so limited, but also that the limitations don't get fixed. This is an attitude problem at Sun. Sun lacks the understanding and imagination of what is needed on the desktop. Many Sun people still seem to live in SunView (ups, I am showing my age here) lala-land. Sun thinks it's always right. 
+
+Sun has totally failed to establish a best-practice for Swing coding. The examples that ship with the JDK are some of the worst Swing code. What is even worse, while Sun employees were busy writing shiny conference demos, no one at Sun could be arsed to clean up the JDK example mess during the last ten years. This is not an isolated case. The Swing tutorial examples are equally bad. They can't even be bothered to use JavaDoc for documentation and typically demonstrate badly structured code for badly structured GUIs. 
+
+Sun also has fragmented and hidden GUI information in unbelievable ways. For example, try to find a single page listing all Swing system properties. Good luck. In general, some Swing information comes with the JDK. Some can be found in the TSC (which is on life support). Others on ominous pages like JDCTechTips, Almanac (blech!), Code samples, Online Training article, Java.net articles, multi-media samples, technical articles, 2D examples in four places (did you know Sun has a half-finished Postscript Interpreter in Java http://java.sun.com/products/java-media/2D/samples/postscript/PostscriptDemo.zip?). Then there are dev.java.net examples, JDC, SDN, whatnot. I have probably forgot another ten places where Sun hides Swing, 2D, media, GUI or desktop information. 
+
+No one at Sun seems to coordinate the stuff. Instead everyone at Sun seems to run the his own show, trying to establish an own kingdom. For deities sake, coordinate your documentation and example in one single place. And make sure they demonstrate best practice. 
+
+Posted by: ewin on September 28, 2007 at 02:58 PM
+}}
+
+* Swing 修正予定・検討メモ [#h1c0f889]
+実際にやるかどうかは未定ですが、今後`Swing Tips`を改良したいと思っていることをメモしています(順不同)。
+
+- `Swing Tips`のみ分離して、`Markdown`、静的サイト生成に移行できないか検討中
+-- http://terai.xrea.jp/index.html で、`Jekyll Bootstrap`、`DISQUS`のテスト中
+-- `Jekyll`、タグ付け
+-- `inline`の`<code>`タグ
+--- `JDK 1.6.0_10`などのアンダーライン
+--- `new JPanel()`などの翻訳拒否
+--- 人名？
+- https://sites.google.com/site/javaswingtips/ は、`500`ページ近く手動でアップロードすることになりそうなので無理かも
+
+- ソースコード
+-- `Wiki`中のサンプルコードでクラスなどを`javadoc`に自動リンク
+-- 日本語、文字コード
+--- [http://www.javalobby.org/java/forums/t103377.html Awesome Translator API!]
+
+//-Swing、Java2D、javaFXなどDesktop関係専用の質問掲示板(日本語)
+//--いい掲示板を探すor作ってもらう
+//--質問者が画像、スクリーンショットを貼れる
+//---UIの質問には是非欲しい(ただしグロ除けで管理者が認証)
+//--質問者がソースコード、JWS(jnlp)などが投稿できるように
+//---質問内容を把握できるサンプルを、SandBox内で安全に実行
+//--OS、Javaのバージョンが簡単に入力できる
+//---入力しないと投稿できないでも可
+//--質問が解決してもCloseしない
+//--できれば検索機能が充実したもの
+//--管理者、回答者などが勝手にタイトル変更or分類可能
+//---「タイトル: 教えてください」除け
+//--匿名で回答は可、匿名で質問は不可
+//--メールアドレスなどを登録している回答者には、質問者はポイント付与できる
+
+- 簡単にコンパイル、実行
+-- Ant(build.xml)、バッチファイル、シェルスクリプトの改良
+--- build.xml の整理
+-- NetBeans (Eclipse) .classpath、.projectの追加
+-- src.zipのファイル名を、それぞれ適当なものに変更？
+
+- 各Tipsの難易度表示
+-- こちらで適当に評価するか、ユーザに評価してもらうか…
+-- レーティングバー
+
+- Web Start
+-- 「プログラムの追加と削除」に登録されない方法を探す
+--- キャッシュを無効にする
+-- UI操作無しで全部削除できる方法を探す
+--- javaws -uninstall
+-- 起動時にスプラッシュスクリーンを表示しない方法を探す
+--- javaws -Xnosplash <jnlp>
+
+- バージョンの表記
+-- JDK 6 と JDK 1.6 どちらかに揃える
+
+* 変更済み [#q15744bf]
+//-%%ソースコードだけ検索%%
+//-- [http://www.google.com/codesearch Google ソースコード検索]
+//--- http://www.google.com/codesearch?hl=ja&q=show:PrTRJvkJHHU:pBaDj-hkq2c&ct=rdp&cs_p=http://terai.xrea.jp&cs_f=swing
+
+- ライセンス
+-- google code においたソースコードは、[http://www.opensource.org/licenses/mit-license.php MIT License]
+-- [http://stackoverflow.com/questions/259384/what-license-should-i-use-for-code-snippets-released-on-my-blog What license should I use for code snippets released on my blog? - Stack Overflow]
+-- http://hobbylinux.info/download/rtl8181/src/GPL/wireless_tools.25-broken!!!/sample_pm.c
+-- This particular snipset of code is available under the Apache license, BSD license, CC0, ..., WTFPL (at your choice).
+
+- スクリーンショット
+-- %%screenshot一覧ページの分割%%
+-- スクリーンショットはすべて Picasa に移動
+-- 一覧は https://picasaweb.google.com/112210866074949770793/JavaSwingTips02?authuser=0&feat=directlink
+
+- スパム対策
+-- %%英数のみのコメント禁止%% %%別の対策を導入%% 再度英数のみのコメント禁止
+
+- %%ソースコード、FindBugs, PMD%%
+-- %%リポジトリ(Subversion)を公開(JavaForge、sourceforge.jpとか調べる)%%
+-- http://code.google.com/p/java-swing-tips/source/checkout
+--- %%もしくは全ソースコードの一括ダウンロードを簡単に(wgetなどの対策)%%
+--- %%Mercurial にするかも%%
+- %%ソースコード、Ubuntuなどでも実行できるように%%
+-- %%e.isPopupTrigger()を使ってJPopupMenuを表示している箇所(JDK 5 以前のソース)を、すべてsetComponentPopupMenuに変更する。%%
+- %%ソースコード、1.5以上対応に変更%%
+- %%Color クラスにおける定数の大文字化%%
+- %%ソースコード、codeプラグインで色分け%%
+-%%ソースコード、build.xmlなどをすべてUTF-8化%%
+- %%バッチファイルの代わりにantのタスクを使うように変更%%
+-- antのbuild.xmlにrunタスクを追加、ただしバッチファイルも残すことに
+- %%sampleをexampleに統一%%
+- %%[[Swing/JarFile]]を[[Ant]]の下に移動する%%
+- %%分類: JTree JButton%%
+- %%TableSorter.javaをJDK6のTableRwoSorterに置き換える%%
+-- %%ソートする意味のないサンプルで使用しているTableSorter.javaは削除%%
+- %%スクリーンショット%%
+-- %%すべて撮り直す(prefixのコロン:)%%
+-- %%screenshot一覧ページの分割、画像サイズ削減%%
+-- %%キャッシュ一覧で探しやすいように、タイトルの頭に「サ:」(サンプル)を付けていたのを、「JST 」(Java Swing Tips)に変更%%
+-- %%日本標準時ではない…%%
+- %%分類%%
+-- %%JTableのTipsを分割%%
+-- ソースを一つにまとめる(ワンクリックで全ソースコードを表示したい)ためにTestModel.javaを検索してpackageプライベートなクラスに変更中
+ >find . -type f -name TestModel.java -ls | gawk "{print $7, $11}" | sort
+-- Look&Feel関係でpublic クラスでないとダメなのは…、放置。
+
+* リンクメモ(自分用) [#e0861111]
+- [https://bugs.openjdk.java.net/browse/JDK-8039464 #JDK-8039464 The scrollbar in JScrollPane has no right border if used WindowsLookAndFeel - Java Bug System]
+- [http://java.sun.com/developer/JDCTechTips/ Core Java Technologies Tech Tips]
+- [http://java.sun.com/developer/JDCTechTips/2004/tt0210.html Styling Digital Images with ConvolveOp and Using HttpURLConnection to Access Web Pages Tech Tips]
+- [http://java.sun.com/developer/onlineTraining/ Online Training and Tutorials]
+- [http://java.sun.com/developer/onlineTraining/new2java/supplements/2005/jan05.html Java Technology Fundamentals Newsletter]
+- [http://java.sun.com/developer/onlineTraining/Programming/JDCBook/advprint.html Chapter 6 Continued: Advanced Printing]
+- [http://java.sun.com/developer/onlineTraining/GUI/Swing1/shortcourse.html Short Course]
+- [http://java.sun.com/developer/technicalArticles/GUI/java2d/java2dpart1.html Learning Java 2D, Part 1]
+- [http://java.sun.com/developer/technicalArticles/GUI/swing/wizard/ Creating Wizard Dialogs with Java Swing]
+- [http://java.sun.com/developer/technicalArticles/J2SE/jconsole.html Using JConsole to Monitor Applications]
+- [http://java.sun.com/developer/technicalArticles/Media/imagestrategies/ VolatileBufferedToolkitImage Strategies]
+- [http://java.sun.com/developer/technicalArticles/Media/intimages/ Intermediate Images]
+- [http://java.sun.com/developer/technicalArticles/Printing/Java2DPrinting/ Java 2D: New Printing Package]
+- [http://java.sun.com/developer/technicalArticles/Programming/jnlp/ Deploying Software with JNLP and Java Web Start]
+- [http://java.sun.com/developer/techDocs/hi/repository/ Java look and feel Graphics Repository]
+- [http://java.sun.com/products/java-media/2D/samples/suite/ Java 2D API Sample Programs]
+
+- [http://www.oracle.com/technetwork/java/jlf-135985.html Java Look and Feel Design Guidelines]
+- [http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html How to Write Doc Comments for the Javadoc Tool]
+
+//- [http://java.sun.com/products/jlf/ed2/book/HIGTitle.html Java Look and Feel Design Guidelines]
+//- [http://java.sun.com/j2se/javadoc/writingdoccomments/ How to Write Doc Comments for the Javadoc Tool]
+
+* Bugリンクメモ(自分用) [#n41d9755]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6723524 Bug ID: 6723524 Invalid background of components displayed in JTable in Nimbus L&F]
+- Release Fixed: 1.7.0 %%[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6910490 Bug ID: 6910490 MatteBorder JScrollpane interaction]%%
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6612928 Bug ID: 6612928 Win32ShellFolder2 throws RejectedExecutionException on application exit]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4280944 Bug ID: 4280944 Attributes on last newline character cause undesirable extra spacing.]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6780505 Bug ID: 6780505 java.awt.Desktop.getDesktop().open() fails on shared files with white spaces]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4777210 Bug ID: 4777210 setText causes deadlock in JFormattedTextField, JTextComponent]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6937538 Bug ID: 6937538 Nimbus: JInternalFrame() causes exception if user UI installed]
+- Release Fixed: 1.4.0  %%[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4463424 Bug ID: 4463424 LineBreakMeasurer inconsistent with TextLayout]%%
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6700748 Bug ID: 6700748 Cursor flickering during D&D when using CellRendererPane with validation]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6723524 Bug ID: 6723524 Invalid background of components displayed in JTable in Nimbus L&F]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4292511 Bug ID: 4292511 JTableHeader height determined by first column given HTML text]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6826514 Bug ID: 6826514 SwingWorker: done() called before doInBackground() returns, when cancelled]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6413228 Bug ID: 6413228 Many links broken with "?is-external=true".]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4908277 Bug ID: 4908277 Animated GIF does not play inside JTable, customized TableCellRenderer]
+- Release Fixed: 1.7.0, 1.6.0_18 %%[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4833524 Bug ID: 4833524 BasicTreeUI.isToggleSelectionEvent() does not properly handle popup triggers]%%
+- Release Fixed: 1.7.0, 1.6.0_18 %%[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6840086 Bug ID: 6840086 JFileChooser lacks icons on top right when running on Windows 7]%%
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4765261 Bug ID: 4765261 JTextArea.append does not follow spec (it is not ThreadSafe)]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4760477 Bug ID: 4760477 JTextArea.append(String) is not ThreadSafe]
+- Release Fixed: 1.7.0 %%[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4765383 Bug ID: 4765383 JTextArea.append(String) not thread safe]%%
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7140863 Bug ID: 7140863 Lots of Japanese OpenType fonts do not render correctly]
+- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=5036549 Bug ID: JDK-5036549 PopupMenu not adjusting its location correctly depending on taskbar's position.]
+
+//*1180447205*[Java]
+* メモ: 痒いところに手が届かないJavaのコード [#d7c7d8f2]
+- 以下、[http://d.hatena.ne.jp/nowokay/20070529#1180430016 Java6でLogger.globalが非推奨になっている]から引用
+
+ 初期化時にデッドロックの可能性があるからということで、それはいいとして。
+ 代わりに使うのが
+ Logger.getLogger(Logger.GLOBAL_LOGGER_NAME)
+ だなんて、どうにかしてほしい。
+ Logger.getGlobal()
+ を用意してくれればいいのに。なに考えてんだろう？EoDじゃなかったの？
+ Javaのコード書きにくさって、静的動的よりも、こういう痒いところに手が届かないことの積み重ねが大きいと思う。
+
+----
+Swing関係
+
+- 表の全行を削除するメソッド
+-- [[表の全行を削除>Swing/ClearTable]]する場合、`DefaultTableModel#setRowCount(0);`ではなく、もっと分かりやすいメソッドが欲しい。
+-- 例えば`DefaultComboBoxModel#removeAllElements()`、`DefaultListModel#clear()`のような(これはこれでどれかひとつに統一して欲しい…)。
+
+- フレームを画面中央に表示するメソッド
+-- [[フレームを画面中央に表示>Swing/CenterFrame]]する場合、`Window#setLocationRelativeTo(null);`ではなく、もっと分かりやすいメソッドが欲しい。
+-- `JavaFX Script`では、`centerOnScreen: true`が用意されていたが…。
+
+- ポイントからインデックスを取得するメソッド
+-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JTabbedPane.html#indexAtLocation(int,%20int) JTabbedPane#indexAtLocation(int, int) (Java Platform SE 6)]
+-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JList.html#locationToIndex(java.awt.Point) JList#locationToIndex(java.awt.Point) (Java Platform SE 6)]

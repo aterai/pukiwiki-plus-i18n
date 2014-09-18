@@ -1,0 +1,138 @@
+TITLE:翻訳元から
+#author(aterai)
+#pubdate(2010-10-05)
+#contents(big)
+
+* 未修正 [#k5733681]
+** TableModelevent [#e8b81142]
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/event/TableModelEvent.html
+-- the TableModelevent can be used to specify the following types of changes:
+- 修正案
+-- the TableModelEvent can be used to specify the following types of changes:
+
+** HTML.Attribute.id [#j0917455]
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/text/html/HTMLDocument.html#getElement-java.lang.String-
+-- This is a convenience method for getElement(RootElement, HTML.Attribute.id, id). 
+- 修正案
+-- This is a convenience method for getElement(RootElement, HTML.Attribute.ID, id). 
+
+** Typo: any of of them [#wedb8a36]
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/JLayer.html
+-- using any of of them will cause UnsupportedOperationException to be thrown,
+- 変更案
+-- using any of them will cause UnsupportedOperationException to be thrown,
+
+** JMX Specification., [#xe79f485]
+- http://docs.oracle.com/javase/8/docs/api/java/lang/management/MemoryPoolMXBean.html
+//- http://docs.oracle.com/javase/8/docs/api/java/lang/management/ManagementFactory.html
+-- JMX Specification.,
+
+** TableModel#isCellEditable(...) [#m34adfd8]
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/table/TableModel.html#isCellEditable-int-int-
+-- Returns true if the cell at rowIndex and columnIndex is editable. Otherwise, setValueAt on the cell will not change the value of that cell.
+-- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4292804 Bug ID: 4292804 DefaultTableModel doc confusion between isCellEditable and setValueAt]
+--- DefaultTableModel は修正されている？、TableModel は関係ない？
+
+** Htmlの表がずれている [#p5e32821]
+- http://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#setFocusTraversalKeys-int-java.util.Set-
+-- KeyboardFocusManager.DOWN_CYCLE_TRAVERSAL_KEYS,	1 つ下のフォーカストラバーサルサイクルに移動	none
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4470006 Bug ID: 4470006 Table shown for Traversal Keys in setDefaultFocusTraversalKeys() not proper]
+-- Submit Date 	14-JUN-2001
+
+** サンプルコードが一行になっている [#p188f78e]
+- http://docs.oracle.com/javase/8/docs/api/java/awt/BasicStroke.html
+-- // sets the Graphics2D object's Transform attirbute g2d.scale(10, 10); // sets the Graphics2D object's Storoke attribute g2d.setStroke(new BasicStroke(1.5f));
+
+** JSpinnerサンプルコード [#nc09884d]
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/JSpinner.html
+
+- 余計な`{`がある。
+-- `catch (ParseException pe) {{`
+
+- `;`が抜けている。
+-- `JComponent editor = spinner.getEditor()`
+
+- `)`が足りない。
+-- `((DefaultEditor)editor).getTextField().setValue(spinner.getValue();`
+
+** 文字化け？ [#j58229fa]
+- http://docs.oracle.com/javase/8/docs/technotes/guides/swing/1.4/w2k_props.html
+-- "win.frame.textColor?????"
+-- 「メッセージボックスのフォントカラー」のプロパティー名が文字化け？
+-- http://java.sun.com/j2se/1.5.0/ja/docs/ja/guide/swing/1.4/w2k_props.html
+は、「ウィンドウのフォントカラー」と同じ値になっている
+
+本来は、"win.messagebox.textColor" とか、全然別の値なのか、あるいは、この
+ページの先頭付近に載っているサンプルコード
+
+#code{{
+String propnames[] = (String[])Toolkit.getDefaultToolkit().getDesktopProperty("win.propNames");
+}}
+で、プロパティー一覧を取得しても、"win.messagebox.textColor" は存在しないので、
+「メッセージボックスのフォントカラー」自体が設定できないのかもしれない。
+
+他にも同様に、?がついて重複するプロパティー名が存在する。
+
+#code{{
+「アイコンのサイズ」 "win.icon.hspacing" "win.icon.vspacing"???
+「アイコンの横の間隔」 "win.icon.hspacing"
+「アイコンの縦の間隔」 "win.icon.vspacing"
+}}
+
+** dataModelとnewModel [#pb842784]
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html#setModel-javax.swing.table.TableModel-
+-- 引数のdataModelとnewModelが混ざっている？
+
+#code{{
+public void setModel(TableModel dataModel)
+このテーブルのデータモデルを newModel に設定し、それに新しいデータモデルからのリスナー通知を登録します。
+パラメータ:
+dataModel - このテーブルの新しいデータソース
+例外:
+IllegalArgumentException - newModel が null の場合
+}}
+
+** Dimension オブジェクト、寸法オブジェクト [#gfb4e02f]
+- http://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#getSize--
+-- a Dimension object
+- http://docs.oracle.com/javase/jp/8/api/java/awt/Component.html#getSize--
+-- Dimension オブジェクト
+
+- http://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#getPreferredSize--
+-- a dimension object
+- http://docs.oracle.com/javase/jp/8/api/java/awt/Component.html#getPreferredSize--
+-- 寸法オブジェクト
+
+** Component.AccessibleAWTComponent.getAccessibleIndexInParent() [#n8ee376d]
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html
+-- Note: as of the Java 2 platform v1.3, it is recommended that developers call Component.AccessibleAWTComponent.getAccessibleIndexInParent() instead of using this method.
+
+コピペして、修正し忘れてるようで、注:が全部getAccessibleIndexInParentのものと同じになっている。
+
+* 1.8.0 で修正済み [#m9daeceb]
+** Typo: agressively [#d899477e]
+- http://docs.oracle.com/javase/7/docs/api/javax/swing/UIManager.html
+-- agressively
+- 変更案
+-- aggressively
+
+- メモ1
+-- Some look and feels may agressively look up defaults, so that changing a default may not have an effect after installing the look and feel. Other look and feels may lazily access defaults so that a change to the defaults may effect an existing look and feel.
+
+この説明がよく分からない。逆のような気がするような、しないような…。
+
+- メモ2
+-- UIManager.getString("Table.foreground")
+
+この例だと、色をgetStringで取得しようとしているので、常に null になる。UIManager.get("Table.foreground") とか UIManager.getColor("Table.foreground") にした方がよさそう。
+
+** class MyApp java.io.Serializable [#o8876b77]
+- http://docs.oracle.com/javase/7/docs/api/java/awt/Component.html
+-- class MyApp java.io.Serializable
+- 変更案
+-- class MyApp implements  java.io.Serializable
+
+サンプルコードで、implements が抜けている。
+
+* コメント [#z1d2c369]
+#comment

@@ -1,0 +1,121 @@
+TITLE:AntのTaskを自作
+#author(aterai)
+#pubdate(2003-09-25)
+#contents
+
+* 概要 [#g68b00f6]
+`Ant`の`Task`を自作し、これを利用する方法をテストします。
+
+* サンプルコード [#vc9d5deb]
+#code{{
+import org.apache.tools.ant.*;
+import java.io.*;
+import java.util.*;
+
+public class MoveImportDirTask extends Task{
+  private File m_sourceDirectory;
+  private File m_destinationDirectory;
+  public MoveImportDirTask(){}
+
+  public void setSrc(File sourceDir){
+    m_sourceDirectory = sourceDir;
+  }
+
+  public void setDest(File destinationDirectory){
+    m_destinationDirectory = destinationDirectory;
+  }
+
+  private void recursive(File dir, final Vector list){
+    String[] contents = dir.list();
+    for(int i=0;i<contents.length;i++){
+      File sdir = new File(dir, contents[i]);
+      if(sdir.isDirectory()) {
+        recursive(sdir, list);
+      }else{
+        if(sdir.getName().endsWith(".java")) list.add(sdir);
+      }
+    }
+  }
+
+  public void execute() throws BuildException{
+    if(m_sourceDirectory==null || !m_sourceDirectory.exists()){
+      throw new BuildException("Source directory not found (src attribute): "+m_sourceDirectory);
+    }
+    if(m_destinationDirectory==null){
+      throw new BuildException("Destination directory not set (dest attribute)");
+    }
+    m_destinationDirectory.mkdirs();
+
+    int directoriesCreated = 0;
+    int filesCopied = 0;
+    try{
+      Vector list = new Vector();
+      recursive(m_sourceDirectory, list);
+      Enumeration entries = list.elements();
+      // Look at all the entries in the JAR
+      while(entries.hasMoreElements()){
+        File srcFile = (File)entries.nextElement();
+        String packageName = null;
+        BufferedReader in = new BufferedReader(new FileReader(srcFile));
+        while(in.ready()){
+          String s = in.readLine().trim();
+          if(s.startsWith("package")){
+            packageName = s.substring(7, s.lastIndexOf(";")).trim();
+            break;
+          }
+        }
+        in.close();
+        if(packageName==null || packageName.length()<=0) continue;
+        String dirName = packageName.replaceAll("\\.", "/");
+        File newDirectory = new File(m_destinationDirectory, dirName);
+        //log(newDirectory.getAbsolutePath());
+        if(!newDirectory.exists() && newDirectory.getCanonicalPath()!=null){
+          newDirectory.mkdirs();
+          directoriesCreated++;
+        }
+
+        String javaFileName = dirName + File.separator + srcFile.getName();
+        if(srcFile.exists()){
+          // If we can find the .java file, copy it
+          File destFile = new File(m_destinationDirectory, javaFileName);
+          FileInputStream fis  = new FileInputStream(srcFile);
+          FileOutputStream fos = new FileOutputStream(destFile);
+          byte[] buffer = new byte[1024];
+          int i = 0;
+          while((i=fis.read(buffer))!=-1){
+            fos.write(buffer,0,i);
+          }
+          fis.close();
+          fos.close();
+          filesCopied++;
+        }
+      }
+    }catch(IOException e){
+      throw new BuildException("Problem loading JAR file - "+e.getMessage());
+    }
+    log(directoriesCreated+" directories created, "+filesCopied+" files copied");
+  }
+}
+}}
+
+- [[アーカイブのダウンロード>http://terai.xrea.jp/data/ant/importdir.zip]]
+
+* 解説 [#ved4f34f]
+上記のサンプルは、`java`ファイルを`import`に対応するディレクトリに移動するプラグインです。何処かで(失念)拾ってきたサンプルを改造して作ったものです。マニュアルの[http://ant.apache.org/manual/develop.html Developing with Ant(Writing Your Own Task)]なども参考にしてください。
+
+生成された`jar`ファイルを`%ANT_HOME%\lib`に置き、以下の要領でタスクを定義します。
+
+#code{{
+<target name="move-import">
+  <taskdef name="MoveImportDir"
+           classname="jp.co.ant.misc.MoveImportDirTask"
+           classpath="importdir.jar" />
+  <MoveImportDir src="./src" dest="./src-clean" />
+</target>
+}}
+
+* 参考リンク [#lb09a959]
+- [http://ant.apache.org/manual/develop.html Developing with Ant(Writing Your Own Task)]
+
+* コメント [#l89922bd]
+#comment

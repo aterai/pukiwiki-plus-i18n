@@ -1,0 +1,33 @@
+TITLE:FileのSystemIconを取得する
+#tags(SystemIcon, FileSystemView, ShellFolder)
+#author(aterai)
+#pubdate(2008-06-30T17:25:49+09:00)
+* 概要 [#k9549786]
+ファイル、ディレクトリなどの`SystemIcon`を取得します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUG6tI4SI/AAAAAAAAAlg/bci1geT80EM/s800/SystemIcon.png)
+
+* サンプルコード [#b874c8ce]
+#code(link){{
+smallLabel.setIcon(FileSystemView.getFileSystemView().getSystemIcon(file));
+}}
+#code{{
+largeLabel.setIcon(new ImageIcon(ShellFolder.getShellFolder(file).getIcon(true)));
+}}
+
+* 解説 [#g2997187]
+上記のサンプルでは、`Windows`環境でファイルをドロップするとそのファイルの`SystemIcon`を表示することが出来ます。
+
+- `16x16`
+-- `FileSystemView#getSystemIcon(File f)`で小さいアイコンを取得
+
+- `32x32`
+-- `ShellFolder.getShellFolder(file).getIcon(true)`で大きいアイコンを取得
+-- %%「`sun.awt.shell.ShellFolder` は Sun が所有する `API` であり、今後のリリースで削除される可能性があります。」と警告される%%
+-- 「`ShellFolder`は内部所有の`API`であり、今後のリリースで削除される可能性があります」と警告される
+
+* 参考リンク [#k6280a75]
+- [http://blog.codebeach.com/2008/02/get-file-type-icon-with-java.html Code Beach: Get the File Type Icon with Java]
+
+* コメント [#w80dd0d3]
+#comment

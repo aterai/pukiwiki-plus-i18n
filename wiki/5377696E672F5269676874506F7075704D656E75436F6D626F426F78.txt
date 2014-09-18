@@ -1,0 +1,58 @@
+TITLE:JComboBoxのPopupMenuを右側に表示する
+#tags(JComboBox, JPopupMenu, PopupMenuListener, ArrowButton, Icon)
+#author(aterai)
+#pubdate(2010-03-22T02:10:46+09:00)
+* 概要 [#ma908247]
+`JComboBox`の右側に`PopupMenu`が表示されるように設定します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTR6-BHykI/AAAAAAAAAh8/0mx4AWajd58/s800/RightPopupMenuComboBox.png)
+
+* サンプルコード [#y31611e4]
+#code(link){{
+class RightPopupMenuListener implements PopupMenuListener {
+  @Override public void popupMenuWillBecomeVisible(final PopupMenuEvent e) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        JComboBox combo = (JComboBox)e.getSource();
+        Accessible a = combo.getUI().getAccessibleChild(combo, 0);
+        if(a instanceof BasicComboPopup) {
+          BasicComboPopup pop = (BasicComboPopup)a;
+          Point p = new Point(combo.getSize().width, 0);
+          SwingUtilities.convertPointToScreen(p, combo);
+          pop.setLocation(p);
+        }
+      }
+    });
+  }
+  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
+  @Override public void popupMenuCanceled(PopupMenuEvent e) {}
+}
+}}
+
+* 解説 [#f8654556]
+上記のサンプルでは、`JComboBox`の`PopupMenu`が開くときに、その位置を変更するような`PopupMenuListener`を作成し、`addPopupMenuListener`メソッドで追加しています。
+
+----
+`JComboBox`の矢印アイコンも、以下のようにして変更しています。
+
+#code{{
+combo2.setUI(new com.sun.java.swing.plaf.windows.WindowsComboBoxUI() {
+  @Override protected JButton createArrowButton() {
+    JButton button = new JButton(icon) {
+      @Override public Dimension getPreferredSize() {
+        return new Dimension(14, 14);
+      }
+    };
+    button.setRolloverIcon(makeRolloverIcon(icon));
+    button.setFocusPainted(false);
+    button.setContentAreaFilled(false);
+    return button;
+  }
+});
+}}
+
+//**参考リンク
+* コメント [#s2b13935]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4743225 Bug ID: 4743225 Size of JComboBox list is wrong when list is populated via PopupMenuListener]のせいで？、正常に動作しなくなっていたので修正。 -- [[aterai]] &new{2012-04-24 (火) 16:54:17};
+
+#comment

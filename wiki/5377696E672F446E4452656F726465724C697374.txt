@@ -1,0 +1,129 @@
+TITLE:TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え
+#tags(JList, TransferHandler, DragAndDrop)
+#author(aterai)
+#pubdate(2008-09-29T13:33:14+09:00)
+* 概要 [#t227e219]
+`JList`のアイテムを複数選択し、ドラッグ＆ドロップで並べ替えを可能にする`TransferHandler`を作成します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLeSCyHuI/AAAAAAAAAXo/v2OLiSPdgEY/s800/DnDReorderList.png)
+
+* サンプルコード [#p71d9322]
+#code(link){{
+class ListItemTransferHandler extends TransferHandler {
+  private final DataFlavor localObjectFlavor;
+  private Object[] transferedObjects = null;
+  public ListItemTransferHandler() {
+    localObjectFlavor = new ActivationDataFlavor(
+      Object[].class, DataFlavor.javaJVMLocalObjectMimeType, "Array of items");
+  }
+  @Override protected Transferable createTransferable(JComponent c) {
+    JList list = (JList) c;
+    indices = list.getSelectedIndices();
+    transferedObjects = list.getSelectedValues();
+    return new DataHandler(transferedObjects, localObjectFlavor.getMimeType());
+  }
+  @Override public boolean canImport(TransferSupport info) {
+    if (!info.isDrop() || !info.isDataFlavorSupported(localObjectFlavor)) {
+      return false;
+    }
+    return true;
+  }
+  @Override public int getSourceActions(JComponent c) {
+    return TransferHandler.MOVE; //TransferHandler.COPY_OR_MOVE;
+  }
+  @Override public boolean importData(TransferSupport info) {
+    if (!canImport(info)) {
+      return false;
+    }
+    JList target = (JList)info.getComponent();
+    JList.DropLocation dl = (JList.DropLocation)info.getDropLocation();
+    DefaultListModel listModel = (DefaultListModel)target.getModel();
+    int index = dl.getIndex();
+    //boolean insert = dl.isInsert();
+    int max = listModel.getSize();
+    if(index<0 || index>max) {
+      index = max;
+    }
+    addIndex = index;
+
+    try {
+      Object[] values = (Object[])info.getTransferable().getTransferData(localObjectFlavor);
+      addCount = values.length;
+      for(int i=0;i<values.length;i++) {
+        int idx = index++;
+        listModel.add(idx, values[i]);
+        target.addSelectionInterval(idx, idx);
+      }
+      return true;
+    }catch(UnsupportedFlavorException ufe) {
+      ufe.printStackTrace();
+    }catch(java.io.IOException ioe) {
+      ioe.printStackTrace();
+    }
+    return false;
+  }
+  @Override protected void exportDone(JComponent c, Transferable data, int action) {
+    cleanup(c, action == TransferHandler.MOVE);
+  }
+  private void cleanup(JComponent c, boolean remove) {
+    if(remove && indices != null) {
+      JList source = (JList)c;
+      DefaultListModel model  = (DefaultListModel)source.getModel();
+      if(addCount > 0) {
+        for(int i=0;i<indices.length;i++) {
+          if(indices[i]>=addIndex) {
+            indices[i] += addCount;
+          }
+        }
+      }
+      for(int i=indices.length-1;i>=0;i--) {
+        model.remove(indices[i]);
+      }
+    }
+    indices  = null;
+    addCount = 0;
+    addIndex = -1;
+  }
+  private int[] indices = null;
+  private int addIndex  = -1; //Location where items were added
+  private int addCount  = 0;  //Number of items added.
+}
+}}
+
+* 解説 [#mebd4560]
+上記のサンプルの`TransferHandler`は、主に[http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#BasicDnD Drag and Drop and Data Transfer: Examples (The Java™ Tutorials > Creating a GUI with JFC/Swing > Drag and Drop and Data Transfer)]の[http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/DropDemoProject/src/dnd/ListTransferHandler.java ListTransferHandler.java]を参考にして作成しています。ただし、この`ListTransferHandler.java`は項目を複数選択して、`JList`内での並べ替えは想定していない？(もしくはバグ)ようなので、`importData(...)`メソッドや、`cleanup()`メソッドをすこし変更しています。
+
+#code{{
+JList list = new JList(listModel);
+list.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+list.setTransferHandler(new ListItemTransferHandler());
+list.setDropMode(DropMode.INSERT);
+list.setDragEnabled(true);
+}}
+
+- `importData`
+-- 使用されていない？`importString(...)`の内容をこちらに移動
+
+- `cleanup`
+-- 例えば、項目`0`,`1`,`2`を複数選択して、`1`と`2`の間にドロップすると、`1`,`2`,`2`になる
+
+#code{{
+for(int i=0;i<indices.length;i++) {
+  //if(indices[i]>addIndex) {
+  if(indices[i]>=addIndex) {
+//...
+}}
+
+----
+[[JListの項目をドラッグ＆ドロップ>Swing/DnDList]]とは異なり、複数アイテムを選択して`Drag&Drop`による移動が可能になっています。
+
+* 参考リンク [#qf7f31ba]
+- [http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#BasicDnD Drag and Drop and Data Transfer: Examples (The Java™ Tutorials > Creating a GUI with JFC/Swing > Drag and Drop and Data Transfer)]
+-- [http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/DropDemoProject/src/dnd/ListTransferHandler.java ListTransferHandler.java]
+- [[JListの項目をドラッグ＆ドロップ>Swing/DnDList]]
+- [[JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え>Swing/DragSelectDropReordering]]
+
+* コメント [#x063bcab]
+- 複数選択して選択されたアイテムのインデックスに移動した場合、複写されるバグ？を修正。 -- [[aterai]] &new{2008-10-10 (金) 21:44:34};
+
+#comment

@@ -1,0 +1,41 @@
+TITLE:JSpinnerの文字列を非表示にする
+#tags(JSpinner, SpinnerNumberModel, JFormattedTextField, DecimalFormatSymbols)
+#author(aterai)
+#pubdate(2009-08-03T20:40:16+09:00)
+* 概要 [#yf2c696d]
+`SpinnerNumberModel`を使用する`JSpinner`を無効にしたとき、数値を非表示にします。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKfhstbcI/AAAAAAAAAWE/MMaDVyQ9jNY/s800/DecimalFormatSymbols.png)
+
+* サンプルコード [#a40d872c]
+#code(link){{
+private static JSpinner makeSpinner1(SpinnerNumberModel m) {
+  JSpinner s = new JSpinner(m);
+  JFormattedTextField ftf = getJFormattedTextField(s);
+  DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+  ftf.setFormatterFactory(makeFFactory(dfs));
+  ftf.setDisabledTextColor(UIManager.getColor("TextField.disabledColor"));
+  return s;
+}
+}}
+
+#code{{
+private static JSpinner makeSpinner2(SpinnerNumberModel m) {
+  JSpinner s = new JSpinner(m);
+  JFormattedTextField ftf = getJFormattedTextField(s);
+  DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+  dfs.setNaN(" ");
+  ftf.setFormatterFactory(makeFFactory(dfs));
+  return s;
+}
+}}
+
+* 解説 [#e7cbe202]
++デフォルト
++`JSpinner`から`JFormattedTextField`を取得し、この無効の場合の文字色を無効場合の背景色と同じにして、非表示になるようにしています。
++`JSpinner`から`JFormattedTextField`を取得し、`DecimalFormatSymbols#setNaN`メソッドを使用して、値が`NaN`の場合、表示する文字列をスペースに変更しています。
++`JSpinner`から`JFormattedTextField`を取得し、`DecimalFormatSymbols#setNaN`メソッドを使用して、値が`NaN`の場合、表示する文字列を`----`に変更しています。
+
+//**参考リンク
+* コメント [#v85ff054]
+#comment

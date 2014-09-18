@@ -1,0 +1,47 @@
+TITLE:JTableのセル編集を文字入力変換中からでも可能にする
+#tags(JTable, InputContext)
+#author(aterai)
+#pubdate(2008-06-23T13:43:43+09:00)
+* 概要 [#c63972a9]
+`IME`が直接入力以外で、一時ウィンドウが表示されていても、入力確定でセル編集を開始します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKG6DmuHI/AAAAAAAAAVc/WfOft65kSaQ/s800/CompositionEnabled.png)
+
+* サンプルコード [#s9f0a82f]
+#code(link){{
+JTable table = new JTable(model) {
+  @Override protected boolean processKeyBinding(
+      KeyStroke ks, KeyEvent e, int condition, boolean pressed) {
+    boolean retValue = super.processKeyBinding(ks, e, condition, pressed);
+    //if(!check.isSelected()) return retValue;
+    if(KeyStroke.getKeyStroke('\t').equals(ks) || KeyStroke.getKeyStroke('\n').equals(ks)) {
+      System.out.println("tab or enter typed");
+      return retValue;
+    }
+    if(getInputContext().isCompositionEnabled() && !isEditing() &&
+       !pressed && !ks.isOnKeyRelease()) {
+      int selectedRow = getSelectedRow();
+      int selectedColumn = getSelectedColumn();
+      if(selectedRow!=-1 && selectedColumn!=-1 && !editCellAt(selectedRow, selectedColumn)) {
+        return retValue;
+      }
+    }
+    return retValue;
+  }
+};
+//table.setSurrendersFocusOnKeystroke(true);
+}}
+
+* 解説 [#x3a49a31]
+上記のサンプルでは、以下のような設定になっています。
+
+- KBD{Tab}やKBD{Enter}キーでのセルフォーカス移動では編集開始しない
+- `JTable#processKeyBinding`をオーバーライドして、入力モードが確定したら選択セルの編集開始
+
+インプットメソッドが起動中かどうかは、`Component#getInputContext#isCompositionEnabled`メソッドで判断しています。
+
+* 参考リンク [#hde57819]
+- [http://docs.oracle.com/javase/jp/6/technotes/guides/imf/index.html Java Input Method Framework テクノロジ]
+
+* コメント [#x94a88eb]
+#comment

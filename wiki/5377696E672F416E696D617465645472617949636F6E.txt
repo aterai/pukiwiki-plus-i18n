@@ -1,0 +1,34 @@
+TITLE:TrayIconのアニメーション
+#tags(SystemTray, Icon, Animation)
+#author(aterai)
+#pubdate(2007-02-05T02:07:43+09:00)
+* 概要 [#fe9b32a0]
+`SystemTray`に追加したアイコン(`JDK 6`以上)をアニメーションさせます。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHtWabBgI/AAAAAAAAARk/J0ExgthCnn4/s800/AnimatedTrayIcon.png)
+
+* サンプルコード [#l1766e4f]
+#code(link){{
+final TrayIcon icon = new TrayIcon(imglist[0], "TRAY", popup);
+animator = new javax.swing.Timer(100, new ActionListener() {
+  private int idx = 0;
+  @Override public void actionPerformed(ActionEvent e) {
+    icon.setImage(imglist[idx]);
+    idx = (idx + 1) % imglist.length;
+  }
+});
+}}
+
+* 解説 [#s4dc164c]
+`16*16`の画像を`3`パターン用意し、これを`JDK 6`で追加された`TrayIcon#setImage(Image)`メソッドを使って切り替えることでアニメーションしています。
+
+* 参考リンク [#af1e3679]
+- [[SystemTrayにアイコンを表示>Swing/SystemTray]]
+- [[TrayIconのダブルクリック>Swing/ClickTrayIcon]]
+
+* コメント [#x7cedb82]
+- `animated gif`を使うほうが簡単だと思うのですが、作った`Gif`が悪いのか、環境のせいなのか、残像がでてしまいます。 -- [[aterai]] &new{2007-02-05 (月) 19:00:34};
+-- メモ: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6453582 Bug ID: 6453582 Animation gif too fast] -- [[aterai]] &new{2007-04-19 (木) 21:11:50};
+-- 上のバグ？でウェイトが効かずに残像が残っていたのではなく、前のコマがそのまま残して透過色(背景色)でクリアしないタイプ？のアニメ`GIF`になっていたようです。[http://homepage3.nifty.com/furumizo/giamd.htm Giam]を使って、全コマの消去方法を「背景色で塗りつぶす」に変更したファイルを使用すると、正常に描画されるようになりました。 -- [[aterai]] &new{2007-04-19 (木) 22:04:52};
+
+#comment

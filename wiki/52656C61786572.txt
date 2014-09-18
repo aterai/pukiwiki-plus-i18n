@@ -1,0 +1,190 @@
+#keywords(Relaxer Java XML)
+#description(Relaxer関連のニュースや、個人的によく使うオプションのサンプルなどを置いています。)
+#author(aterai)
+#pubdate(2003-09-25)
+#contents(big)
+
+* 概要 [#ye36f86d]
+このページには、MLに流れたRelaxer関連のニュースや、個人的によく使うオプションのサンプルなどを置いています。
+
+* Relaxerとは [#c08f65a5]
+Relaxerは、''スキーマコンパイラ''((Relaxerは、データバインディングツール、マーシャリング・フレームワークとしても使えます))です。
+-Relaxerは、''「RELAX NGなどで定義されたXML文書」を操作するための「Javaクラス」を自動生成する''ことが出来ます。
+-Relaxerを使えば、XMLを操作するプログラムを作成するのに、''繁雑なDOMプログラミングが不要''になります。
+-RelaxerはRELAX NGでモデル化されたXMLドキュメントのインフォセットを、Javaオブジェクトにマップします。そしてインフォセットのインスタンスである、XMLドキュメント、DOMツリーとJavaオブジェクトの相互変換を行うプログラムを自動生成します。
+
+RIGHT:[[Relaxer>http://www.asahi-net.or.jp/~dp8t-asm/java/tools/Relaxer/index_ja.html]]より引用
+
+* ニュースメモ [#j0516f08]
+Relaxer関係のニュースを勝手にメモしています([[ニュース過去ログ>Relaxer/NewsLog]])。
+
+2007-01-22
+- &relaxml(Re: Relaxer 1.1b (20070116), 03354);がリリース
+-- http://www.relaxer.jp/download/beta.zip
+-- &relaxml(名前空間, 03353);
+
+2007-01-16
+- &relaxml(Relaxer 1.1b (20070116), 03350);がリリース
+-- http://www.relaxer.jp/download/beta-20070116.zip
+-- &relaxml(名前空間&属性&choice, 03343);
+-- &relaxml(mixd->mixed, 03348);
+-- ベータ版にもrelaxer-1.0と同様のドキュメントを同梱
+
+2007-01-08
+- &relaxml(www.relaxer.jp, 03347);
+-- www.relaxer.orgの代替として、http://www.relaxer.jpがオープン
+
+* 事例紹介 [#s7a4fdff]
+以下の表は、あるライブラリを作成するためにRelaxerを用いた時のデータです。スキーマをRELAX NGで作成し(4000行程度)、Relaxerを使ってこれから全部で約17万行のJavaソースコードを生成しています。
+
+具体的には、XSL-FOを生成するためのXSLTスタイルシートを編集するエディタを作る際、その入出力や、妥当性を検証するためのライブラリです。フォントの扱いなどは多少異なりますが、おおまかな要素の構造などは、FOの仕様に沿ったものとなっています。
+
+||RIGHT:70|RIGHT:60|RIGHT:60|RIGHT:60|RIGHT:60|RIGHT:60|RIGHT:70|c
+||ファイル数|サイズ|総行数|コメント行|実行数|空行数|コメント率|h
+|合計|  169|5291916|174370|     77045| 84804| 12521|          |
+|平均|     |  31313|  1031|       455|   501|    74|    44.13%|
+CENTER:[[コメント書うんた>http://homepage3.nifty.com/masenaru/html/cmtw.htm]]で計算
+
+-効率的にシステムを構築する
+--要素や属性が多い文書構造(重複する属性なども大量にある)のXMLファイルを扱うプログラムを考えたとき、これをDOMなどで実装するのはかなり大変です((属性のgetter、setterだけを考えても気が遠くなります…))。Relaxerを使えば、スキーマから上記の表のあるような大量のソースコードを一気に自動生成することができます。
+
+-XMLとJavaを簡単に繋げる
+--Relaxerの生成するコードを利用すれば、DOMやSAXを使うより直感的に、XMLの読み書きや妥当性の検証などを行うことが出来ます。
+
+-デザインパターンテンプレートの埋め込み
+--factoryパターンや、visitorパターンなどのテンプレートをソースコードに埋め込み利用することができます。上記のライブラリでは、factoryパターンを利用して別途7000行程度のコードを追加し、スキーマだけでは検証出来ない妥当性のチェックなどを実装しています。
+
+* インストール [#x507dcbb]
+インストールはコマンドラインから行います。
+[[Download>http://www.relaxer.jp/download/index.html]]から、''relaxer-1.0.zip''、もしくは最新のベータ版をダウンロードし、以下のようにインストーラを起動します。
+ java -jar relaxer-1.0.zip
+
+本体を展開する場所と、バッチファイルを展開する場所、バッチファイルに記入するメモリオプションなどを入力します。Command directoryはPathの通っている場所を指定します。
+
+ [Configuration]
+ Install directory = c:\relaxer
+ Command directory = c:\cygwin\bin
+// Java memory size option = -Xmx128M
+
+インストールしたフォルダのパスにスペースなどが含まれる場合は、''relaxer.bat''を以下のように(パスを""で括る)編集します。
+
+ java -jar "C:\Program Files\relaxer-beta\Relaxer.jar" %1 %2 %3
+
+*基本的な使い方 [#c14ec6eb]
+RELAX NGのスキーマを作って、これを以下のようにコンパイルするとJavaのソースファイルが生成されます。
+ relaxer test.rng
+
+RELAX NGスキーマの書き方については、[[RelaxerユーザのためのRELAX NG入門>http://www.asamioffice.com/jaba2/relaxng-primer/index.html]]や、正式版の''relaxer-1.0.zip''に付属のサンプルスキーマを参考にしてください。
+
+** プロパティファイル [#qb70e851]
+自作のスキーマをコンパイルする場合は、一々コマンドラインでオプションを入力してると大変なので、プロパティファイルを作っておきます。デフォルトでは、カレントフォルダにある''Relaxer.properties''ファイルが使用されます。任意のファイルを使用する場合は、以下のように指定します。
+ relaxer -properties:hogehoge.properties relax/hoge.rng
+
+プロパティファイル例
+ #詳細出力
+ verbose=true
+ #出力先
+ dir=./src/relaxer/jp/co/hoge/relaxer
+ #validation=none
+ #パッケージ
+ java.package=com.example.relaxer
+ #各種デザインパターン
+ #java.pattern.factory=true
+ #java.pattern.visitor=true
+ #java.pattern.composite=true
+ #ネームスペースとDOMの使用
+ java.xml.element=true
+ java.xml.namespace=true
+ #<aaa>要素がHogeAaa.javaに
+ java.name.class.prefix=Hoge
+
+出力ディレクトリに同名のソースファイルがある場合でも、''問答無用で上書き''されてしまうので、注意が必要です。
+
+** Antタスク [#x29c961a]
+-[[relax-users-j 03128>http://www2.xml.gr.jp/log.html?MLID=relax-users-j&N=3128]]
+によると、RelaxerTaskが使用できるようです。
+--[[RelaxerTask>http://sdoctask.sourceforge.jp/pukiwiki.php?RelaxerTask]]
+#code{{
+<target name="relaxer" depends="prepare">
+  <taskdef name="relaxer" classname="org.relaxer.Relaxer.ant.RelaxerTask">
+    <classpath refid="relaxer.jar.path"/>
+  </taskdef>
+  <relaxer srcdir="${src.dir}"/>
+</target>
+}}
+
+-[[relax-users-j 03055>http://www2.xml.gr.jp/log.html?MLID=relax-users-j&N=3055]]を参考に、以下のようなタスクを作って利用しています。${build.src}、${relaxer.home}などのプロパティは環境に合わせて値を入力しておきます。このサンプルでは、出力ディレクトリ以外のRelaxerのオプションは、''Relaxer.properties''ファイルに設定しています。OutOfMemoryErrorがでる場合は、javaタスクのmaxmemory="128m"を変更してみてください。このタスクの場合、バッチファイルを利用しないので、インストール時に指定したメモリサイズは適用されないことに注意してください。
+#code{{
+<target name="prepare-src" depends="prepare">
+  <delete dir="${build.src}" />
+  <mkdir dir="${build.src}" />
+  <java jar="${relaxer.home}/Relaxer.jar" fork="true" maxmemory="128m">
+    <arg value="-dir:${build.src}/relaxer"/>
+    <arg value="-properties:${basedir}/Relaxer.properties"/>
+    <arg value="${src.dir}/relaxng/xslfo.rng"/>
+    <classpath>
+      <fileset dir="${relaxer.home}" includes="*.jar"/>
+    </classpath>
+  </java>
+  <copy todir="${build.src}" filtering="yes">
+    <fileset dir="${src.dir}" excludes="**/*.bak" />
+  </copy>
+</target>
+}}
+
+* オプション [#h7fdc7fc]
+以下に、個人的によく使うオプションの使い方についてメモしておきます。
+-[[Relaxerのオプション>Relaxer/Options]]
+
+* Tips [#s10d1f8a]
+
+** 候補値 [#scb39008]
+Relaxerが生成するクラスには、choice要素で指定した候補値が、public static final で埋め込まれます。これを使えば、値を直書きしてスペルミスすることも無くなりますし、入力補完を使って楽をすることもできます。
+-[[relax-users-j 03039 Re: <choice><value></value></choice>の候補値>http://www2.xml.gr.jp/log.html?MLID=relax-users-j&N=3039]]
+#code{{
+<optional>
+ <attribute name="text-align">
+  <choice>
+   <value type="NMTOKEN">auto</value>
+   <value type="NMTOKEN">start</value>
+   <value type="NMTOKEN">justify</value>
+  </choice>
+ </attribute>
+</optional>
+}}
+#code{{
+public static final String TEXTALIGN_AUTO = "auto";
+public static final String TEXTALIGN_START = "start";
+public static final String TEXTALIGN_JUSTIFY = "justify";
+}}
+
+** Relax Core(+Namespace)からRELAX NGへの移行 [#oc326c43]
+Relax CoreからRELAX NGへ変換する方法はいろいろありますが、Relaxerで扱うことを考えると、お勧めは以下の方法です。
+
+ relaxer -properties:rng.properties -rng relax/fondoc.rxg
+
+''rng.properties''ファイルには出力ディレクトリを設定しているだけです。この例だと、''./relax/fondoc.rng''が生成され、上書きさてれしまう点に注意が必要です。
+
+Ref1.javaなどのよく分からないクラスができたら、そのクラスの先頭付近にある要素をさがしだし、スキーマを修正します。無駄なネストや、重複が存在している場合が多いようです。
+
+また、設定が間違っているのか、Relax namespaceがうまく反映されません。手で修正する必要があります。RELAX NGでのnamespaceについては、[[有修飾名(Qualified Name) の取扱い>http://yupotan.sppd.ne.jp/relax-ng/qname.html]]が参考になります。
+
+-[relax-users-j 02822] 属性だけのdefine
+  現在は、名前空間をまたがった最適化を抑制しているので、このような形に
+ なります。属性に関しては、もう少し最適化を効かした方がよい感じですね。
+上のRelax namespaceがうまく反映されないのも関係あり？
+
+* メモ [#qa987228]
+-0.17から1.0での変更点
+--以下のメソッドの名前が変わっています。スキーマから生成されるgetterなどと区別して、リフレクションしやすくするためでしょうか？
+ getContentCount()→rGerContentCount()
+ getParentRNode()→rGerParentRNode()
+ getXMLElement()→rGerXMLElement()
+ getRNSContext()→rGerRNSContext()
+
+* 参考リンク [#ta6b49ce]
+Relaxer関係のリンクです。
+-[[Relaxer参考リンク>Relaxer/_Link]]
+
+* コメント [#b33a9367]
+#comment

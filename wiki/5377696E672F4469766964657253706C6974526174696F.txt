@@ -1,0 +1,63 @@
+TITLE:JSplitPaneのDividerの位置を最大化後に変更する
+#tags(JSplitPane, JFrame)
+#author(aterai)
+#pubdate(2011-11-14T11:39:46+09:00)
+* 概要 [#c2bc19e0]
+`JFrame`を最大化した後で`JSplitPane`の`Divider`の位置を変更する場合のテストをします。
+
+#download(https://lh3.googleusercontent.com/-w5-YQDwojUs/TsB7EdoVlLI/AAAAAAAABEw/p_PcxHKKeRk/s800/DividerSplitRatio.png)
+
+* サンプルコード [#z59fb02b]
+#code(link){{
+class SplitPaneWrapper extends JPanel {
+  public SplitPaneWrapper(JSplitPane splitPane) {
+    super(new BorderLayout());
+    this.sp = splitPane;
+    add(sp);
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        sp.setDividerLocation(0.5);
+      }
+    });
+  }
+  private static int getOrientedSize(JSplitPane sp) {
+    return (sp.getOrientation() == JSplitPane.VERTICAL_SPLIT)
+      ? sp.getHeight() - sp.getDividerSize()
+      : sp.getWidth()  - sp.getDividerSize();
+  }
+  private int prev_state = Frame.NORMAL;
+  @Override public void doLayout() {
+    int size = getOrientedSize(sp);
+    final double proportionalLocation = sp.getDividerLocation()/(double)size;
+    super.doLayout();
+    if(!flag) return;
+    int state = ((Frame)SwingUtilities.getWindowAncestor(sp)).getExtendedState();
+    if(sp.isShowing() && state!=prev_state) {
+      EventQueue.invokeLater(new Runnable() {
+        @Override public void run() {
+          int s = getOrientedSize(sp);
+          int iv = (int)Math.round(s * proportionalLocation);
+          sp.setDividerLocation(iv);
+        }
+      });
+      prev_state = state;
+    }
+  }
+}
+}}
+
+* 解説 [#bba59268]
+- `JSplitPane#setResizeWeight(0.0)`なので、`JFrame`をマウスでリサイズしても上コンポーネントの高さが維持される
+- `JSplitPane`をラップする`JPanel`の`doLayout()`メソッドをオーバーライドして、最大化、通常化の前後で上下コンポーネントの高さの比率を維持する
+-- `EventQueue.invokeLater(...)`を使って、後で`JSplitPane#setDividerLocation(int)`でディバイダの位置を調節
+-- デフォルト(`MAXIMIZED_BOTH: keep the same splitting ratio`チェックボックスのチェックを外している状態):
+--- 例えば、最大化後にディバイダをすこし上に移動して`JFrame`を元に戻す(縮小)と、上コンポーネントの方が下コンポーネントより高くなる
+
+----
+`JSplitPane#setDividerLocation(double)`は、内部で`JSplitPane#setDividerLocation(int)`を呼び出しているが、その変換の際に値を切り捨てているので、上記のサンプルでは最大化、元に戻す(縮小)を行なっても、同じ値になるように四捨五入するよう変更している。
+
+* 参考リンク [#n51c02d3]
+- [[JSplitPaneを等分割する>Swing/DividerLocation]]
+
+* コメント [#bfc3dc9c]
+#comment

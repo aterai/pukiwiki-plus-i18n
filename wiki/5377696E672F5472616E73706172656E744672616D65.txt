@@ -1,0 +1,77 @@
+TITLE:JInternalFrameを半透明にする
+#tags(JInternalFrame, JDesktopPane, ContentPane, Transparent, Translucent)
+#author(aterai)
+#pubdate(2007-04-30T21:08:08+09:00)
+* 概要 [#dc212a57]
+`JInternalFrame`のフレーム内を半透明にします。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTV8kztxuI/AAAAAAAAAoc/oXSU5-bQorE/s800/TransparentFrame.png)
+
+* サンプルコード [#w6d0f503]
+#code(link){{
+JPanel p1 = new JPanel();
+p1.setOpaque(false);
+
+JPanel p2 = new JPanel() {
+  @Override protected void paintComponent(Graphics g) {
+    //super.paintComponent(g);
+    g.setColor(new Color(100,50,50,100));
+    g.fillRect(0,0,getWidth(), getHeight());
+  }
+};
+
+JPanel p3 = new JPanel() {
+  @Override protected void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D) g;
+    //g2.setPaint(new Color(100,120,100,100));
+    g2.setPaint(texture);
+    g2.fillRect(0,0,getWidth(),getHeight());
+    //int cs = 4;
+    //for(int i=0;i*cs<getWidth();i++) {
+    //  for(int j=0;j*cs<getHeight();j++) {
+    //    if((i+j)%2==0) g2.fillRect(i*cs, j*cs, cs, cs);
+    //  }
+    //}
+  }
+};
+
+protected JInternalFrame createFrame(JPanel panel) {
+  MyInternalFrame frame = new MyInternalFrame();
+  if(panel!=null) {
+    frame.setContentPane(panel);
+    //JButton button = new JButton("button");
+    //button.setOpaque(false);
+    panel.add(new JLabel("label"));
+    panel.add(new JButton("button"));
+  }
+  desktop.add(frame);
+  frame.setOpaque(false);
+  frame.setVisible(true);
+  //......
+}}
+
+* 解説 [#z8b1a843]
+各フレームは、`JInternalFrame#setContentPane(Container)`メソッドを使用して、`ContentPane`を以下のような半透明パネルに変更しています。
+
+- `Frame#1` (`Transparent`)
+-- `ContentPane`を`setOpaque(false)`して透過しています。
+
+- `Frame#2` (`Translucent`)
+-- `ContentPane`を半透明な色で塗りつぶしています。
+
+- `Frame#3` (`Translucent`)
+-- `ContentPane`を半透明な色を使ってチェック柄で塗りつぶしています。
+
+* 参考リンク [#a3727514]
+- [http://www.bekkoame.ne.jp/~bootan/free2.html デジタル出力工房　絵写楽]
+- [[SynthでJInternalFrameを半透明にする>Swing/TranslucentFrame]]
+
+* コメント [#vc94b782]
+- `JRE6.0`だと、半透明にならずチェック模様が描画されるだけですね。仕様変わったのかな… --  &new{2007-05-25 (金) 11:05:17};
+-- 御指摘ありがとうございます。`Windows XP`で、`Java 1.6.0_01`、`1.5.0_11`は、半透明になったのですが、`Ubuntu 7.04`で、`Java 1.6.0`では駄目みたいです。`Mac`は環境がないので試せてません。 -- [[aterai]] &new{2007-05-25 (金) 13:02:13};
+-- すこし調べてみたのですが、`Ubuntu`(`GNOME`) でも半透明にするには`JInternalFrame#setOpaque(false)`も必要みたいです。修正しておきます。 -- [[aterai]] &new{2007-05-25 (金) 13:07:50};
+-- 再度試してみたら、`JInternalFrame#setOpaque(false)`しても、`Ubuntu`(`GNOME`)+`JDK 1.6.0`+`GTKLookAndFeel`で半透明になってくれません。%%なにか`Ubuntu`の設定を弄ったから？%% -- [[aterai]] &new{2007-10-10 (水) 18:49:22};
+- `NimbusLookAndFeel`でも透明にできないようです。どちらも`SynthLookAndFeel`がベースなので、それが原因？ -- [[aterai]] &new{2007-11-15 (木) 13:32:50};
+-- 追記:[[SynthでJInternalFrameを半透明にする>Swing/TranslucentFrame]] -- [[aterai]] &new{2008-12-01 (月) 15:06:12};
+
+#comment

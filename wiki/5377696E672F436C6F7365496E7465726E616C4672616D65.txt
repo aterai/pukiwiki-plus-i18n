@@ -1,0 +1,83 @@
+TITLE:JInternalFrameを閉じる
+#tags(JInternalFrame, JDesktopPane, DesktopManager)
+#author(aterai)
+#pubdate(2008-05-05T20:51:51+09:00)
+* 概要 [#uf3146bf]
+`JInternalFrame`を閉じます。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJcTXtdNI/AAAAAAAAAUY/zL_wkJJa_Ks/s800/CloseInternalFrame.png)
+
+* サンプルコード [#y0ad6085]
+#code(link){{
+closeSelectedFrameAction1 = new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    JInternalFrame f = desktop.getSelectedFrame();
+    if(f!=null) {
+      desktop.getDesktopManager().closeFrame(f);
+    }
+  }
+};
+}}
+
+#code{{
+closeSelectedFrameAction2 = new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    JInternalFrame f = desktop.getSelectedFrame();
+    if(f!=null) {
+      f.doDefaultCloseAction();
+    }
+  }
+};
+}}
+
+#code{{
+closeSelectedFrameAction3 = new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    try{
+      JInternalFrame f = desktop.getSelectedFrame();
+      if(f!=null) {
+        f.setClosed(true);
+      }
+    }catch(java.beans.PropertyVetoException ex) {
+      ex.printStackTrace();
+    }
+  }
+};
+}}
+
+#code{{
+disposeSelectedFrameAction = new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    JInternalFrame f = desktop.getSelectedFrame();
+    if(f!=null) {
+      f.dispose();
+    }
+  }
+};
+}}
+
+* 解説 [#v8ddc342]
+上記のサンプルでは、選択されている`JInternalFrame`をツールバーのボタンやKBD{Esc}キー(`OS`が`Windows`の場合のデフォルトは、KBD{Ctrl+F4})で閉じることができます。
+
+- `RED`
+-- `JInternalFrame#dispose`メソッドを使用
+-- 閉じた後、他のフレームに選択状態が移動しない
+- `GREEN`
+-- `DesktopManager#closeFrame`メソッドを使用
+- `BLUE`
+-- `JInternalFrame#doDefaultCloseAction`メソッドを使用
+//-- `JInternalFrame#setDefaultCloseOperation`の設定に従う
+- `YELLOW`
+-- `JInternalFrame#setClosed(true)`メソッドを使用
+
+----
+`JDK 1.5` + `WindowsLookAndFeel`では、`JInternalFrame`を閉じたとき、アイコン化されている`JInternalFrame`には選択状態は移動しません。
+
+----
+- メモ
+-- [http://mail.openjdk.java.net/pipermail/swing-dev/2013-April/002688.html <Swing Dev> 8 Review request for 8012004: JINTERNALFRAME NOT BEING FINALIZED AFTER CLOSING]
+-- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4759312 Bug ID: 4759312 JInternalFrame Not Being Finalized After Closing]
+
+//**参考リンク
+* コメント [#o6a47604]
+#comment

@@ -1,0 +1,85 @@
+TITLE:JTreeの余白をドラッグしてスクロール
+#tags(MouseListener, MouseMotionListener, JViewport, JScrollPane, JTree, JComponent)
+#author(aterai)
+#pubdate(2011-12-26T14:16:38+09:00)
+* 概要 [#b1773617]
+`JTree`の余白などをマウスでドラッグしてスクロールします。
+
+#download(https://lh3.googleusercontent.com/-8b-0M5bS9Tw/Tvf_XhVVreI/AAAAAAAABHU/BdECxkBAdzU/s800/TreeDragScroll.png)
+
+* サンプルコード [#g24696ef]
+#code(link){{
+class DragScrollListener extends MouseAdapter {
+  Cursor defCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+  Cursor hndCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+  Point pp = new Point();
+  @Override public void mouseDragged(MouseEvent e) {
+    JComponent jc = (JComponent)e.getSource();
+    Container c = jc.getParent();
+    if(c instanceof JViewport) {
+      JViewport vport = (JViewport)c;
+      Point cp = SwingUtilities.convertPoint(jc,e.getPoint(),vport);
+      Point vp = vport.getViewPosition();
+      vp.translate(pp.x-cp.x, pp.y-cp.y);
+      jc.scrollRectToVisible(new Rectangle(vp, vport.getSize()));
+      pp.setLocation(cp);
+    }
+  }
+  @Override public void mousePressed(MouseEvent e) {
+    JComponent jc = (JComponent)e.getSource();
+    Container c = jc.getParent();
+    if(c instanceof JViewport) {
+      jc.setCursor(hndCursor);
+      JViewport vport = (JViewport)c;
+      Point cp = SwingUtilities.convertPoint(jc,e.getPoint(),vport);
+      pp.setLocation(cp);
+    }
+  }
+  @Override public void mouseReleased(MouseEvent e) {
+    ((JComponent)e.getSource()).setCursor(defCursor);
+  }
+}
+}}
+
+* 解説 [#qf2b1d96]
+上記のサンプルでは、`JTree`に`MouseListener`, `MouseMotionListener`を設定し、マウスドラッグを`JViewport`の座標に変換して、`scrollRectToVisible(...)`メソッドを使ったスクロールをおこなっています。
+
+#code{{
+MouseAdapter ma = new DragScrollListener();
+tree2.addMouseMotionListener(ma);
+tree2.addMouseListener(ma);
+}}
+
+----
+[[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]と、ぼぼ同じことをしていますが、`JLabel`とは異なり、`JTree`にはデフォルトで`MouseListener`, `MouseMotionListener`が設定されているため、`JViewport`にリスナーを設定しても`JTree`までマウスイベントが伝わりません。例えば、以下のように`JComponent#dispatchEvent(...)`で、`JTree`の親の`JViewport`にイベントを投げる必要があります。
+
+#code{{
+MouseAdapter ma = new HandScrollListener();
+JScrollPane scroll = new JScrollPane(tree1);
+JViewport vport = scroll.getViewport();
+vport.addMouseMotionListener(ma);
+vport.addMouseListener(ma);
+MouseAdapter dummy = new MouseAdapter() {
+  private void dispatchEvent(MouseEvent e) {
+    JComponent c = (JComponent)e.getComponent();
+    JComponent p = (JComponent)e.getComponent().getParent();
+    p.dispatchEvent(SwingUtilities.convertMouseEvent(c,e,p));
+  }
+  @Override public void mouseDragged(MouseEvent e)  { dispatchEvent(e); }
+  @Override public void mouseClicked(MouseEvent e)  { dispatchEvent(e); }
+  @Override public void mouseEntered(MouseEvent e)  { dispatchEvent(e); }
+  @Override public void mouseExited(MouseEvent e)   { dispatchEvent(e); }
+  @Override public void mousePressed(MouseEvent e)  { dispatchEvent(e); }
+  @Override public void mouseReleased(MouseEvent e) { dispatchEvent(e); }
+};
+}}
+
+- 上記のような`JComponent#dispatchEvent(...)`を伝搬させるリスナーを追加なくても、`JDK 1.7.0`以上の場合、`JLayer`を使用して子コンポーネントのすべての`MouseEvent`キャッチする方法を使用することができます。
+-- [[JScrollPane内にある複数Componentを配置したJPanelをJLayerを使ってドラッグスクロール>Swing/DragScrollLayer]]
+
+* 参考リンク [#p851da48]
+- [[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]
+- [[JScrollPane内にある複数Componentを配置したJPanelをJLayerを使ってドラッグスクロール>Swing/DragScrollLayer]]
+
+* コメント [#y1967494]
+#comment

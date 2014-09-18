@@ -1,0 +1,72 @@
+TITLE:Menuに半透明の影を付ける
+#tags(JPopupMenu, UIManager, Robot, Translucent)
+#author(aterai)
+#pubdate(2006-10-23T14:11:21+09:00)
+* 概要 [#u32fd4be]
+メニューに半透明の影を付けます。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPz0ZEG6I/AAAAAAAAAek/pd0ErBB9eBg/s800/MenuWithShadow.png)
+
+* サンプルコード [#eb189a65]
+#code(link){{
+public class CustomPopupMenuUI extends BasicPopupMenuUI {
+  public static ComponentUI createUI(JComponent c) {
+    return new CustomPopupMenuUI();
+  }
+  private static boolean isHeavyWeightContainer(Component contents) {
+    for(Container p=contents.getParent();p!=null;p=p.getParent()) {
+      if((p instanceof JWindow) || (p instanceof Panel)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  public Popup getPopup(JPopupMenu popup, int x, int y) {
+    Popup pp = super.getPopup(popup,x,y);
+    JPanel panel = (JPanel)popup.getParent();
+    if(isHeavyWeightContainer(panel)) {
+        System.out.println("outer");
+        Point p = new Point(x,y);
+        panel.setBorder(new ShadowBorder(panel,p));
+    }else{
+        System.out.println("inner");
+        panel.setBorder(new ShadowBorderInPanel());
+    }
+    panel.setOpaque(false);
+    return pp;
+  }
+//......
+}}
+
+* 解説 [#d73e76f4]
+上記のサンプルでは、`BasicPopupMenuUI`を継承した、`CustomPopupMenuUI`を作成して、これを`UIManager`に登録しています。
+
+#code{{
+UIManager.put("PopupMenuUI","example.CustomPopupMenuUI");
+}}
+
+この`CustomPopupMenuUI`では、ポップアップメニューがフレームの中にあるか外にあるかで、影のつけ方を切り替えています。外にある場合は、`Robot`を使って画面をキャプチャーしています。
+
+%%メニューがフレームの外にはみ出す場合に、メニューをすばやく切り替えたりすると、ゴミが残ることがあるようです。参考リンクの`contrib.com.jgoodies.looks.common.ShadowPopupFactory`を使っても同様のゴミが出る場合があります。%% 再現しなくなった？ようです。
+
+----
+`contrib.com.jgoodies.looks.common.ShadowPopupFactory`を使用しても、同様の影を作成することができます。http://www.jgoodies.com/ などからダウンロードして、以下のように設定してみてください。
+
+#code{{
+//UIManager.put("PopupMenuUI","example.CustomPopupMenuUI");
+contrib.com.jgoodies.looks.common.ShadowPopupFactory.install();
+}}
+
+----
+`Web Start`で起動してフレームの外側にメニューが表示される場合は、`java.security.AccessControlException: access denied (java.awt.AWTPermission createRobot)`が発生します。
+
+* 参考リンク [#w4e129d8]
+- [http://www.oreilly.co.jp/books/4873112788/toc.html Java Swing Hacks #11 ドロップシャドウ付きのメニューを作る]
+- [https://substance.dev.java.net/ substance: Substance Java look and feel - main page]
+-- contrib.com.jgoodies.looks.common.ShadowPopupFactory
+- [[JPopupMenuに半透明の影を付ける>Swing/DropShadowPopup]]
+
+* コメント [#r700cff6]
+- ポップアップメニューがフレーム内にあるかどうかではなく、`HeavyWeightContainer`かどうかで影のつけ方を切り替えるように変更。 -- [[aterai]] &new{2008-05-29 (木) 16:13:30};
+
+#comment

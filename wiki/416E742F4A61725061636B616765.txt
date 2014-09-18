@@ -1,0 +1,111 @@
+TITLE:AntのJarタスクで実行可能なJarファイルの作成
+#author(aterai)
+#pubdate(2003-09-25)
+#contents
+
+* 概要 [#q989a75a]
+`Ant`を使って、`Windows`環境などでダブルクリックすると起動する`Jar`ファイルを作成します。
+
+* サンプルターゲット [#f0c358aa]
+#code{{
+<target name="package" depends="compile">
+ <echo message="Creating the jar file ${build.dir}/${name}.jar"/>
+ <tstamp>
+  <format property="ts" pattern="yyyyMMdd-HHmmss-z"/>
+ </tstamp>
+ <jar jarfile="${build.dir}/${name}.jar" basedir="${build.dest}">
+  <manifest>
+   <attribute name="Main-Class" value="${main.class}"/>
+   <attribute name="Class-Path" value="${runtime.classpath}"/>
+   <attribute name="Implementation-Title"   value="${Name}"/>
+   <attribute name="Implementation-Version" value="${version}"/>
+   <attribute name="Implementation-Vendor"  value="${vendor}"/>
+   <attribute name="Build-Id"
+    value="${ts} (${user.name} [${os.name} ${os.version} ${os.arch}])"/>
+  </manifest>
+ </jar>
+</target>
+}}
+
+- [[JToolBarでアイコンボタンを右寄せ>Swing/ToolBarLayout]]
+-- http://terai.xrea.jp/swing/toolbarlayout/src.zip
+
+* 解説 [#n5babbd3]
+[[Swing]]以下の`src.zip`などで、サンプルをダウンロードすることができます。
+
+`${main.class}`、`${runtime.classpath}`などのプロパティは、`config`以下にある、`properties.xml`ファイルを編集して環境に合わせて修正してください。
+
+#code{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <property name="main.class"        value="example.MainPanel" />
+  <property name="runtime.classpath" value=". jlfgr-1_0.jar lib/test.jar" />
+  <!-- 中略 -->
+</project>
+}}
+
+以下のように、`package`ターゲットで`ant`を実行すると、`jar`ファイルが作成されます。
+
+ > ant package
+
+`Ant`を使わない場合は、以下のような`manifest.txt`を作って、
+
+ Main-Class: demo
+ Class-Path: SampleLib.jar
+
+`jar.exe`で作成します。
+
+ > jar -cvfm hogehoge.jar manifest.txt demo.class
+
+ただ、マニフェスト・ファイルを手で書くと、名前の後には`:`と半角スペースが必須だったり、最終行末に改行がないとおかしくなるなど([http://docs.oracle.com/javase/jp/6/technotes/guides/jar/jar.html JAR ファイルの仕様])、細かい制限があるようです。
+
+//*参考リンク
+* コメント [#fa161f0a]
+- 参照する`jar`ファイルが多い場合は、`pathconvert`タスクを使ってマニフェストのクラスパスを自動生成するのが楽です --  &new{2007-09-23 (日) 00:36:14};
+-- たしかに数が多いと大変そうですね。上記の`package`ターゲットを修正して、`pathconvert`タスクを使うサンプルを以下においてみました((もうすこし整理できそう？))。 -- [[aterai]] &new{2007-09-23 (日) 15:58:48};
+
+#code{{
+<pathconvert pathsep=" " dirsep="/" property="jar.runtime.classpath">
+  <path>
+    <pathelement location="${build.dir}" />
+  </path>
+  <map from="${build.dir}" to="."/>
+</pathconvert>
+<target name="jarpath" if="have.library">
+  <path id="jar.path">
+    <pathelement location="${build.dir}" />
+    <fileset dir="${lib.dir}">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+  <!-- lib.dirは相対パスで指定しているので、これを絶対パスに変換 -->
+  <!-- これは、あとでmapを使ってjar.pathから絶対パスを削るため -->
+  <pathconvert property="lib.path">
+    <path path="${lib.dir}" />
+  </pathconvert>
+  <echo message="-------------------------- ${lib.path}" />
+  <pathconvert pathsep=" " dirsep="/" property="jar.runtime.classpath" refid="jar.path">
+    <map from="${lib.path}"  to="."/>
+    <map from="${build.dir}" to="."/>
+  </pathconvert>
+  <echo message="-------------------------- ${jar.runtime.classpath}" />
+</target>
+<target name="package" depends="compile, jarpath">
+  <echo message="Creating the jar file ${build.dir}/${name}.jar" />
+  <tstamp>
+    <format property="ts" pattern="yyyyMMdd-HHmmss-z" />
+  </tstamp>
+  <jar jarfile="${build.dir}/${name}.jar" basedir="${build.dest}">
+    <manifest>
+      <attribute name="Main-Class" value="${main.class}" />
+      <attribute name="Class-Path" value="${jar.runtime.classpath}" />
+      <attribute name="Implementation-Title"   value="${Name}" />
+      <attribute name="Implementation-Version" value="${version}" />
+      <attribute name="Implementation-Vendor"  value="${vendor}" />
+      <attribute name="Build-Id" value="${ts} (${user.name} [${os.name} ${os.version} ${os.arch}])" />
+    </manifest>
+  </jar>
+</target>
+}}
+
+#comment

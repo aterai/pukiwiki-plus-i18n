@@ -1,0 +1,29 @@
+TITLE:DynamicLayoutでレイアウトの動的評価
+#tags(DefaultToolkit, LayoutManager)
+#author(aterai)
+#pubdate(2005-09-05T12:06:35+09:00)
+* 概要 [#m403640d]
+ウィンドウのリサイズなどに応じてレイアウトを再評価するように、`DynamicLayout`を設定します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMDyaDeJI/AAAAAAAAAYk/-EIAq3TyJbw/s800/DynamicLayout.png)
+
+* サンプルコード [#z7ca7790]
+#code(link){{
+Toolkit.getDefaultToolkit().setDynamicLayout(true);
+}}
+
+* 解説 [#h95a943d]
+上記のサンプルでは、`DynamicLayout`にチェックするとウィンドウのリサイズなどに応じて内部のレイアウトを再評価するように、`DefaultToolkit`の`setDynamicLayout`メソッドを使って`DynamicLayout`の設定をしています。
+
+----
+`OS`などが、この機能をサポートしているかどうかは、以下のメソッドで調べることができます。
+
+#code{{
+Toolkit.getDefaultToolkit().getDesktopProperty("awt.dynamicLayoutSupported");
+}}
+
+* 参考リンク [#hfb11949]
+- [http://docs.oracle.com/javase/jp/6/api/java/awt/Toolkit.html#setDynamicLayout(boolean) Toolkit (Java Platform SE 6)]
+
+* コメント [#h2fab599]
+#comment

@@ -1,0 +1,56 @@
+TITLE:JCheckBoxのセルをロールオーバーする
+#tags(JTable, JCheckBox, MouseListener, TableCellRenderer)
+#author(aterai)
+#pubdate(2010-06-21T15:14:48+09:00)
+* 概要 [#sfa6e22d]
+`JTable`のセルに`JCheckBox`を使用したときでも、マウスカーソルでロールオーバーするように設定します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSCUU481I/AAAAAAAAAiI/LzyeHFbwP40/s800/RolloverBooleanRenderer.png)
+
+* サンプルコード [#h80337c0]
+#code(link){{
+class RolloverBooleanRenderer extends JCheckBox implements TableCellRenderer, UIResource {
+  private static final Border noFocusBorder = new EmptyBorder(1, 1, 1, 1);
+  private final HighlightListener highlighter;
+  public RolloverBooleanRenderer(HighlightListener highlighter) {
+    super();
+    this.highlighter = highlighter;
+    setHorizontalAlignment(JLabel.CENTER);
+    setBorderPainted(true);
+    setRolloverEnabled(true);
+    setOpaque(true);
+  }
+  @Override public Component getTableCellRendererComponent(JTable table, Object value,
+                               boolean isSelected, boolean hasFocus, int row, int column) {
+    if(highlighter.isHighlightableCell(row, column)) {
+      getModel().setRollover(true);
+    }else{
+      getModel().setRollover(false);
+    }
+    if(isSelected) {
+      setForeground(table.getSelectionForeground());
+      super.setBackground(table.getSelectionBackground());
+    }else{
+      setForeground(table.getForeground());
+      setBackground(table.getBackground());
+    }
+    setSelected((value != null && ((Boolean)value).booleanValue()));
+    if(hasFocus) {
+      setBorder(UIManager.getBorder("Table.focusCellHighlightBorder"));
+    }else{
+      setBorder(noFocusBorder);
+    }
+    return this;
+  }
+}
+}}
+
+* 解説 [#r4c302c8]
+- 上: デフォルト
+- 下: `JTable#setDefaultRenderer`メソッドで、`Object`, `Number`, `Boolean`クラスそれぞれに、マウスカーソルに反応するレンダラーを設定
+-- これらは、`JTable$BooleanRenderer`クラスなどを参考に作成
+-- `JCheckBox`のロールオーバーは、`JCheckBox#getModel()#setRollover(boolean)`メソッドを使用
+
+//**参考リンク
+* コメント [#ie467e8b]
+#comment

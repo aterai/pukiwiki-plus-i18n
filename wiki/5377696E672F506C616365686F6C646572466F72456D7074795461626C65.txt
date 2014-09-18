@@ -1,0 +1,56 @@
+TITLE:JTableが空の場合、中央にJComponentを表示する
+#tags(JTable, JEditorPane, GridBagLayout, URL)
+#author(aterai)
+#pubdate(2010-09-13T11:14:48+09:00)
+* 概要 [#rde6e8d9]
+`JTable`が空の場合、表領域の中央に任意の`JComponent`が表示されるように設定します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRDxbcszI/AAAAAAAAAgk/5iisfYFJom0/s800/PlaceholderForEmptyTable.png)
+
+* サンプルコード [#qf7e20d3]
+#code(link){{
+JEditorPane hint = new JEditorPane("text/html", "<html><a href='dummy'>No data!</a></html>");
+
+table.setFillsViewportHeight(true);
+table.setLayout(new GridBagLayout());
+table.add(hint);
+
+model.addTableModelListener(new TableModelListener() {
+  @Override public void tableChanged(TableModelEvent e) {
+    DefaultTableModel model = (DefaultTableModel)e.getSource();
+    hint.setVisible(model.getRowCount()==0);
+  }
+});
+}}
+
+* 解説 [#d4225e0d]
+上記のサンプルでは、`JTable`に編集不可にした`JEditorPane`を追加し、以下のように設定して、常に中央にレイアウトされるように設定しています。
+
+- `JTable#setFillsViewportHeight(true)`として、`JTable`の高さが`JViewport`の高さより小さい場合、両者が同じ高さになるように設定
+- `JTable`のレイアウトを`null`から、`GridBagLayout`に変更
+
+%%追加した`JEditorPane`の表示非表示の切り替えは、ポップアップメニューで行の追加削除を行ったとき、`JTable#getRowCount()==0`かどうかで判断しています。%% `TableModelListener`を使って行の追加削除を行ったときに`JEditorPane`の表示非表示を切り替えるように変更しました。
+
+//#code{{
+//private class TablePopupMenu extends JPopupMenu {
+//  private final Action deleteAction = new AbstractAction("delete") {
+//    @Override public void actionPerformed(ActionEvent e) {
+//      JTable table = (JTable)getInvoker();
+//      DefaultTableModel model = (DefaultTableModel)table.getModel();
+//      int[] selection = table.getSelectedRows();
+//      if(selection==null || selection.length<=0) return;
+//      for(int i=selection.length-1;i>=0;i--) {
+//        model.removeRow(table.convertRowIndexToModel(selection[i]));
+//      }
+//      if(table.getRowCount()==0) editor.setVisible(true);
+//    }
+//  };
+////......
+//}}
+
+//**参考リンク
+* コメント [#tbc8d393]
+- 大変素晴らしいです。参考にさせていただきました。 -- [[shuna]] &new{2010-09-18 (土) 12:12:50};
+-- ありがとうございます。どうもです。 -- [[aterai]] &new{2010-09-18 (土) 20:19:21};
+
+#comment

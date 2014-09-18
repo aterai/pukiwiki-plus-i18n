@@ -1,0 +1,123 @@
+#keywords(Subversion ViewVC)
+#description(Windows環境でViewVCを導入し、Subversionのリポジトリをブラウザから閲覧する方法についてメモしています。)
+#author(aterai)
+#pubdate(2006-01-17)
+#contents(big)
+
+* 概要 [#v373e40d]
+このページでは、`Windows`環境で`ViewVC`を導入し、`Subversion`のリポジトリをブラウザから閲覧する方法についてメモしています。前準備の`Python`などのインストールは、ほぼ[[Subversion/ViewCVS]]と同じです。
+
+* 前準備(Pythonなどのインストール) [#t10480ce]
+まず、以下をインストールしておきます。
+
+** Active Python 2.5 [#hcccb42e]
+今回は、`Active Python 2.5`を使用します。特になにも設定する必要はなく、デフォルトのままで`OK`です。
+
+- [http://www.activestate.com/Products/ActivePython/ ActiveState - ActivePython free Python open source language distribution - Dynamic Tools for Dynamic Languages]
+-- `ActivePython-2.5.1.1-win32-x86.msi`
+
+** Apache 2.0 + mod_python [#fcd1229b]
+`Apache 2.0`と`mod_python`で`ViewVC`を利用する場合は、これらをインストールします。
+`Apache 2.2`は、`Subversion`の`Windows`用インストーラーが対応していないようので、ここでは`Apache 2.0`を使用しています(`Apache 2.2`を使用する場合は、[http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=8100&expandFolder=8100&folderID=8100 subversion: ドキュメント & ファイル: Windows Apache 2.2.x]で置き換える)。
+
+- [http://www.apache.org/dist/httpd/binaries/win32/ Index of /dist/httpd/binaries/win32]
+-- `apache_2.0.59-win32-x86-no_ssl.msi`
+
+続いて、`Apache`を一旦停止してから、`mod_python`をインストールします。インストーラーは、`Python2.5`用、`Apache2.0`用を間違えないように選択ます。`Apache 2.0`をインストールした場所を尋ねられるので入力すると完了です。
+
+- [http://www.modpython.org/ Mod_python - Apache/Python Integration]
+-- [http://archive.apache.org/dist/httpd/modpython/win/3.3.1/ Index of /dist/httpd/modpython/win/3.3.1]
+-- `mod_python-3.3.1.win32-py2.5-Apache2.0.exe`
+
+`diff`コマンドなどが入っていない場合は、`cygwin`や[http://www.cs.purdue.edu/homes/trinkle/RCS/ Official RCS Homepage]などからインストールしておきます。`Apache`がこれらのコマンドを利用できるように、ユーザー環境変数、またはシステム環境変数で`Path`を通しておく必要があります。
+
+* ダウンロード [#kf5b7948]
+アーカイブをダウンロードするか、最新版をリポジトリから取得します。
+
+** ファイルをダウンロードする場合 [#e7f119de]
+[http://www.viewvc.org/download.html ViewVC: Download] の、[http://viewvc.tigris.org/servlets/ProjectDocumentList?folderID=6004 File and Documents area] からダウンロードすることができます。
+
+** リポジトリからチェックアウトする場合 [#rfc93ac4]
+以下の例では、カレントに`viewvc`ディレクトリを作成し、そこへリポジトリの`trunk`以下をチェックアウトしています。ユーザ名、パスワードともに`guest`でいいようです。
+
+ svn co http://viewvc.tigris.org/svn/viewvc/trunk viewvc
+
+* インストール [#ub43a18f]
+ダウンロードが終わったら、以下のようにインストーラを起動します。旧バージョンのフォルダが残っている場合は、リネームするなどしてから新しくインストールしたほうがいいかもしれません。
+
+ python viewvc-install
+
+デフォルトでよければ、KBD{Enter}キーを押していくだけです。
+
+次に、`Python`用の`Subversion`ライブラリをインストールします。[http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=91 subversion: ドキュメント & ファイル: Windows]などから、`Subversion`、`Python`のそれぞれのバージョンに対応するインストーラーをダウンロードします。ここでは、`svn-python-1.4.3.win32-py2.5.exe`を使用してインストールします。
+
+* 設定 [#k250cf2d]
+`ViewVC`をインストールしたフォルダ(例えば`C:\Program Files\viewvc-1.1-dev`)にある`viewvc.conf`ファイルを編集します。
+
+ #SVNParentPathを指定
+ root_parents = c:\svn : svn
+ #default_rootをコメントアウト
+ #default_root = cvs
+
+* 起動 [#je870075]
+** standalone.pyを使用する場合 [#l76619e9]
+デフォルトの場所にインストールした場合、以下のようにしてスタンドアロンで起動することができます。
+ cd "C:\Program Files\viewvc-1.1-dev\bin"
+ python standalone.py
+
+コマンドラインに表示された http://localhost:49152/viewvc などにアクセスするとリポジトリが閲覧できます。
+
+** apache+mod_pythonを使用する場合 [#nbafcc40]
+`httpd.conf`に以下の設定を追加します。
+
+ #ScriptAlias /viewvc "C:/Installした場所/bin/mod_python/viewvc_mp.py"
+ ScriptAlias /viewvc "C:/Program Files/viewvc-1.1-dev/bin/mod_python/viewvc.py"
+ <Location /viewvc>
+  AddHandler mod_python .py
+  PythonPath "[r'C:/Program Files/viewvc-1.1-dev/bin/mod_python']+sys.path"
+  PythonHandler handler
+  PythonDebug On
+  AddDefaultCharset UTF-8
+  Options +Includes
+  ##Apache 2.2 ?
+  #AllowOverride All
+  #Order allow,deny
+  #Allow from all
+ </Location>
+
+`apache`を起動し、http://localhost/viewvc にアクセスできれば成功です。
+
+* 参考リンク [#wc5e9567]
+- [http://www.viewvc.org/ ViewVC: Repository Browsing]
+-- [http://viewvc.tigris.org/ viewvc.tigris.org]
+- [http://subversion.tigris.org/servlets/ReadMsg?list=users&msgId=297646 HOWTO: Installing ViewCVS with Subversion?]
+- [http://e.tir.jp/wiliki?viewcvs コミットログ、ソース表示時の日本語コード変換パッチ]
+- [http://yuichi.tea-nifty.com/blog/2006/03/viewcvs_for_win_4c63.html な○の 屋: ViewCVS for Windows から ViewVC に更新]
+
+* コメント [#vd9a3b16]
+- http://viewvc.tigris.org/svn/viewvc/trunk　認証かかっちゃってますね -- [[rio128]] &new{2006-01-23 (月) 13:57:05};
+- guest, guest でいけますね -- [[rio128]] &new{2006-01-23 (月) 14:10:11};
+- 補足どうもです((書き忘れてたので助かりました。))。[http://viewvc.tigris.org/servlets/ProjectSource viewvc: Subversion client setup] -- [[aterai]] &new{2006-01-23 (月) 17:55:46};
+- %%guestのパスワードは無しでも良くなっているようです。http://www.viewvc.org/download.html %% %%認証が無くなって、ユーザ名もパスワードも必要なくなっているようです。%% やっぱりguest, guest必要？ -- [[aterai]] &new{2006-04-26 (水) 21:16:01};
+- template/include/header.eztに<meta http-equiv...などとしてコンテンツをUTF-8だと強制することでIEでの日本語表示をさせています。 -- [[やの]] &new{2006-11-28 (火) 10:43:55};
+- FireFox2で見るとコメントが日本語で表示されるのであれと思って試してみました。コード類はさわっていません。 -- [[やの]] &new{2006-11-28 (火) 10:48:43};
+- 言い忘れましたがリポジトリはSubversionです。 -- [[やの]] &new{2006-11-28 (火) 11:55:42};
+-- 情報ありがとうございます。テンプレート弄るのは簡単でいいですね。 -- [[aterai]] &new{2006-11-28 (火) 16:36:01};
+- 情報参考になりました。　standalone.pyを使用する場合ではうまくブラウザでの表示ができました。　しかし、apache+mod_pythonを使用する場合ではAssertionErrorでとまります。Python24ではだめでしょうか？ -- [[Yoshi]] &new{2007-05-03 (木) 19:15:12};
+-- Python24でも大丈夫だとは思うのですが、もしかしたらどこかでなにかのバージョンの対応が食い違っているのかもしれませんね。一応うまく動いてるっぽい以下の環境に合わせて、このページも少し修正してみました。 -- [[aterai]] &new{2007-05-04 (金) 00:15:45};
+ ActivePython-2.5.0.0-win32-x86.msi
+ apache_2.0.59-win32-x86-no_ssl.msi
+ mod_python-3.3.1.win32-py2.5-Apache2.0.exe
+ svn-python-1.4.3.win32-py2.5.exe
+ viewvc-1.1-dev
+- 修正ありがとうございます。　ど素人の質問ですみません。　httpd.confにおいて、viewvc.pyはviewvc_mp.pyになりますね？どうも改名されているようです。　それから、PythonPath "[r'C:\\Program Files\\viewvc-1.1-dev\\bin\\mod_python']+sys.path"ですが、/でなく\\が使用されていますが正しいのでどちらでもよいのでしょうか？ -- [[Yoshi]] &new{2007-05-04 (金) 10:56:35};
+- 同じコメントを何度も送りすみません。　Viewvc_mp.pyへ修正されていることに気がつきませんでした。　上記の組み合わせ無事動作できました。　ありがとうございました。 -- [[Yoshi]] &new{2007-05-04 (金) 12:48:22};
+-- 最近、書き込みの調子が悪いことが結構あるみたいで、失礼しました。というわけで、重複部分勝手に消しておきますm(_ _)m。 -- [[aterai]] &new{2007-05-07 (月) 13:33:46};
+- bin/mod_python/viewvc_mp.py が bin/mod_python/viewvc.pyに戻っている。ViewVC側での認証は必要ないのに、以下のようなエラーが出る場合は、viewvc.confのauthorizer を空にすればよい？ -- [[aterai]] &new{2008-09-17 (水) 19:59:34};
+ An Exception Has Occurred
+ Invalid authorizer (forbidden) specified for root "HogeHoge"
+ HTTP Response Status
+ 500 Internal Server Error
+- 以下、メモ: 職場のPCがwindows7の64bit版になったし、Subversionも1.7.2が出ているので、CollabNet Subversion Edge 2.2.0 (for Windows 64 bit)をインストール。Apacheは問題なく動作したが、ViewVCが「ImportError: DLL load failed: 文字化け」(C:\csvn\lib\svn-python\libsvn\fs.py)起動しない。結局事前にインストールしてあったPython25やcygwinのpythonなどをすべてアンインストールして再起動するとViewVCも動作するようになった。 -- [[aterai]] &new{2012-01-13 (金) 18:15:16};
+
+#comment

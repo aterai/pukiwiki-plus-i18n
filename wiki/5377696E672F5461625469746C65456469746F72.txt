@@ -1,0 +1,71 @@
+TITLE:JTabbedPaneのタブにJTextFieldを配置してタイトルを編集
+#tags(JTabbedPane, JTextField, MouseListener, ChangeListener, InputMap, ActionMap)
+#author(aterai)
+#pubdate(2008-09-08T14:02:08+09:00)
+* 概要 [#d882fb01]
+`JTabbedPane`で選択されたタブに`JTextField`を配置し、そのタイトルを編集します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTU43AZWdI/AAAAAAAAAmw/6klnGPa4D9o/s800/TabTitleEditor.png)
+
+* サンプルコード [#h79b831e]
+#code(link){{
+private Component tabComponent = null;
+private int editing_idx = -1;
+private int len = -1;
+private Dimension dim;
+private void startEditing() {
+  //System.out.println("start");
+  editing_idx  = tabbedPane.getSelectedIndex();
+  tabComponent = tabbedPane.getTabComponentAt(editing_idx);
+  tabbedPane.setTabComponentAt(editing_idx, editor);
+  editor.setVisible(true);
+  editor.setText(tabbedPane.getTitleAt(editing_idx));
+  editor.selectAll();
+  editor.requestFocusInWindow();
+  len = editor.getText().length();
+  dim = editor.getPreferredSize();
+  editor.setMinimumSize(dim);
+}
+private void cancelEditing() {
+  //System.out.println("cancel");
+  if(editing_idx>=0) {
+    tabbedPane.setTabComponentAt(editing_idx, tabComponent);
+    editor.setVisible(false);
+    editing_idx = -1;
+    len = -1;
+    tabComponent = null;
+    editor.setPreferredSize(null);
+  }
+}
+private void renameTabTitle() {
+  //System.out.println("rename");
+  String title = editor.getText().trim();
+  if(editing_idx>=0 && !title.isEmpty()) {
+    tabbedPane.setTitleAt(editing_idx, title);
+  }
+  cancelEditing();
+}
+}}
+
+* 解説 [#zc941476]
+`JTabbedPane`のタブタイトルを直接編集します。
+
+`JDK 6`で導入された、`JTabbedPane#setTabComponentAt`メソッドを使用してタブに`JTextField`を追加しています。
+
+操作方法などは、以下のように、`GlassPane`を使用している[[JTabbedPaneのタブタイトルを変更>Swing/EditTabTitle]]と同じですが、こちらは文字が入力されるたびに(`JTabbedPane#revalidate`しているので)タブの幅が広がります。
+
+- 操作方法
+-- マウスでタブをダブルクリック、またはタブを選択してKBD{Enter}キーで編集開始
+-- 編集中に入力欄以外をクリック、またはKBD{Enter}キーでタイトル文字列が確定
+-- 編集中KBD{Tab}キーを押しても無視
+-- KBD{Esc}で編集をキャンセル
+-- `0`文字で確定した場合も、キャンセル扱い
+
+* 参考リンク [#a112019d]
+- [[JTabbedPaneのタブタイトルを変更>Swing/EditTabTitle]]
+-- こちらは、`JDK 6`以前でも動作するように、`GlassPane`に`JTextField`を配置してタブタイトルの編集を行っています。
+
+* コメント [#y13cc0d8]
+- `setTabComponentAt(...)`メソッドで閉じるボタンなどと併用していた場合、編集後にそのボタンなどが消える不具合をメールで指摘してもらったので、修正。 -- [[aterai]] &new{2010-08-10 (火) 16:47:33};
+
+#comment

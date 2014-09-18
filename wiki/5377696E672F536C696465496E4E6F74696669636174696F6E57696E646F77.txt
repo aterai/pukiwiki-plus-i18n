@@ -1,0 +1,107 @@
+TITLE:JWindowをデスクトップにスライドインで表示する
+#tags(JWindow, JOptionPane, Animation)
+#author(aterai)
+#pubdate(2014-08-04T16:21:27+09:00)
+* 概要 [#c4e76dcc]
+`JOptionPane`を追加した`JWindow`を、スライドインアニメーションを使ってデスクトップ上に表示します。
+
+#download(https://lh4.googleusercontent.com/-axruZWDGZys/U98iB0eZi8I/AAAAAAAACK0/hh_jWt5nsi4/s800/SlideInNotificationWindow.png)
+
+* サンプルコード [#qa611e74]
+#code(link){{
+class SlideInNotification implements PropertyChangeListener, HierarchyListener {
+  private static final int DELAY = 5;
+  private final JFrame frame;
+  private JWindow dialog;
+  private Timer animator;
+  private int dx;
+  private int dy;
+
+  public SlideInNotification(JFrame frame) {
+    super();
+    this.frame = frame;
+  }
+  public void startSlideIn(final SlideInAnimation slideInAnimation) {
+    if (animator != null && animator.isRunning()) {
+      return;
+    }
+    if (dialog != null && dialog.isVisible()) {
+      dialog.dispose();
+    }
+    GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    Rectangle desktopBounds = env.getMaximumWindowBounds();
+
+    JOptionPane optionPane = new JOptionPane("Warning", JOptionPane.WARNING_MESSAGE);
+    DragWindowListener dwl = new DragWindowListener();
+    optionPane.addMouseListener(dwl);
+    optionPane.addMouseMotionListener(dwl);
+    optionPane.addPropertyChangeListener(this);
+    optionPane.addHierarchyListener(this);
+
+    GraphicsConfiguration gc = frame.getGraphicsConfiguration();
+    dialog = new JWindow(gc);
+    dialog.getContentPane().add(optionPane);
+    dialog.pack();
+
+    final Dimension d = dialog.getContentPane().getPreferredSize();
+    dx = desktopBounds.width - d.width;
+    dy = desktopBounds.height;
+
+    dialog.setLocation(new Point(dx, dy));
+    dialog.setVisible(true);
+
+    animator = new Timer(DELAY, new ActionListener() {
+      private int count;
+      @Override public void actionPerformed(ActionEvent e) {
+        double a = 1d;
+        switch (slideInAnimation) {
+          case EASE_IN:
+          a = AnimationUtil.easeIn(count++ / (double) d.height);
+          break;
+          case EASE_OUT:
+          a = AnimationUtil.easeOut(count++ / (double) d.height);
+          break;
+          case EASE_IN_OUT:
+          default:
+          a = AnimationUtil.easeInOut(count++ / (double) d.height);
+          break;
+        }
+        int visibleHeidht = (int) (.5 + a * d.height);
+        if (visibleHeidht >= d.height) {
+          visibleHeidht = d.height;
+          animator.stop();
+        }
+        dialog.setLocation(new Point(dx, dy - visibleHeidht));
+      }
+    });
+    animator.start();
+  }
+  @Override public void propertyChange(PropertyChangeEvent e) {
+    if (dialog != null && dialog.isVisible() && e.getNewValue() != null &&
+        e.getNewValue() != JOptionPane.UNINITIALIZED_VALUE) {
+      dialog.dispose();
+    }
+  }
+  @Override public void hierarchyChanged(HierarchyEvent e) {
+    JComponent c = (JComponent) e.getComponent();
+    if ((e.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED) != 0 &&
+        animator != null && !c.isDisplayable()) {
+      animator.stop();
+    }
+  }
+}
+}}
+
+* 解説 [#y6f66acc]
+上記のサンプルでは、`Window#setLocation(int, int)`メソッドを使用して`JOptionPane`を追加した`JWindow`のデスクトップ上での表示位置を変更し、画面右下からそれがスライドインしてくるように設定しています。
+
+- 注: 
+-- マルチスクリーン環境では、メインの`JFrame`が存在する画面(`frame.getGraphicsConfiguration()`)に警告(`new JWindow(GraphicsConfiguration)`)がスライドインすることを想定しているが、テストしていない
+-- `JOptionPane.WARNING_MESSAGE`以外の`JOptionPane`はテストしていない
+-- スクリーンショットでは親フレーム中央に`JOptionPane`が表示されているが、これは手動で移動している
+
+* 参考リンク [#p0c30bd8]
+- [[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]
+
+* コメント [#tf7339ea]
+#comment

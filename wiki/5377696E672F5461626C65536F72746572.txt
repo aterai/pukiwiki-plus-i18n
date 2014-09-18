@@ -1,0 +1,182 @@
+TITLE:TableSorterでJTableをソート
+#tags(JTable, TableSorter)
+#author(aterai)
+#pubdate(2005-02-28)
+* 概要 [#j367981a]
+`JDK 1.5.0`以前に、`The Java™ Tutorial`にあった`TableSorter.java`を使用して、`JTable`の行を降順、昇順、初期状態にソートします。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUp0MLx6I/AAAAAAAAAmY/omjw4LoJbbc/s800/TableSorter.png)
+
+* サンプルコード [#nba2e358]
+#code(link){{
+//DefaultTableModel model = new DefaultTableModel();
+TestModel model = new TestModel();
+TableSorter sorter = new TableSorter(model);
+JTable table = new JTable(sorter);
+sorter.setTableHeader(table.getTableHeader());
+}}
+
+* 解説 [#h8a583cb]
+`The Java™ Tutorial`版の`TableSorter`を使用して、[[JTableのソート>Swing/SortableTable]]で使用しているものと同じ`TableModel`でソートしています。
+
+`TableSorter`には、KBD{Ctrl}キーを押しながらヘッダをクリックすると、そのカラムを第二キーとしてソートする機能もあります。
+
+`JDK 1.4.x`と`Windows XP`の環境で、ヘッダにカーソルを置いてもロールオーバーしない場合があるようです。上記のスクリーンショットは`JDK 1.5.0_01`で撮っています。
+
+----
+`JDK 1.5.0`で`Generics`の警告を出さないようにするには、`TableSorter.java`に、以下のような修正を加えれば良いようです。
+
+#code{{
+private static class ComparableComparator implements Comparator {
+  @SuppressWarnings("unchecked")
+  public int compare(Object o1, Object o2) {
+    return ((Comparable)o1).compareTo(o2);
+  }
+}
+public static final ComparableComparator COMPARABLE_COMAPRATOR
+    = new ComparableComparator();
+public static final ComparableComparator LEXICAL_COMPARATOR
+    = new ComparableComparator() {
+  @SuppressWarnings("unchecked")
+  public int compare(Object o1, Object o2) {
+    return o1.toString().compareTo(o2.toString());
+  }
+};
+private TableModelListener tableModelListener;
+private Map<Class, Comparator> columnComparators = new HashMap<Class, Comparator>();
+private List<Directive> sortingColumns = new ArrayList<Directive>();
+
+protected ComparableComparator getComparator(int column) {
+  Class columnType = tableModel.getColumnClass(column);
+  ComparableComparator comparator
+      = (ComparableComparator) columnComparators.get(columnType);
+    if (comparator != null) {
+      return comparator;
+    }
+ private class Row implements Comparable<Row> {
+  private int modelIndex;
+  public Row(int index) {
+    this.modelIndex = index;
+  }
+  public int compareTo(Row o) {
+    int row1 = modelIndex;
+    int row2 = o.modelIndex;
+//......
+}}
+
+----
+- `JDK 1.6.0`から`JTable`には標準でソート機能が追加されています。
+//-- [http://java.sun.com/developer/JDCTechTips/2005/tt1115.html#2 SORTING AND FILTERING TABLES]
+-- [http://www.oracle.com/technetwork/articles/javase/index-135205.html#1 Table Sorting and Filtering - New and Updated Desktop Features in Java SE 6, Part 2]
+-- [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
+
+* 参考リンク [#f1d425ba]
+- [http://docs.oracle.com/javase/tutorial/uiswing/components/table.html#sorting Sorting and Otherwise Manipulating Data - How to Use Tables (The Java™ Tutorials > Creating a GUI with JFC/Swing > Using Swing Components)]
+- [http://docs.oracle.com/javase/tutorial/uiswing/components/table.html How to Use Tables]
+- [https://forums.oracle.com/thread/1185784 Generics - Simple method but hard with generics: compareTo()]
+- [http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSorterDemoProject/src/components/TableSorter.java TableSorter.java]
+
+* コメント [#n7689273]
+- いつもお世話になっております。 `jtable`を下記のように初期化します。
+
+#code{{
+//DefaultTableModel model = new DefaultTableModel();
+TestModel model = new TestModel();
+TableSorter sorter = new TableSorter(model);
+JTable table = new JTable(sorter);
+sorter.setTableHeader(table.getTableHeader());
+}}
+
+- その後、ソートした状態で、一行ずつのデータを取り出した場合、 どうすればよろしいでしょうか？例えば、`No.`欄をソートして、下り順で`No.`欄と`Name`欄のデータを`System.out.println(model.getValueAt(row, 1))`したい場合、その`row`は`sorter`に関連していると思います。 `row=?`かが分かりません。説明下手で、大変申し訳ございません。ご教示をください。よろしくお願い致します。 -- [[Tiger]] &new{2010-08-05 (木) 06:07:47};
+-- こんにちは。多分、`sorter.modelIndex(viewIndex);`でいいと思います。 -- [[aterai]] &new{2010-08-05 (木) 13:17:51};
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.table.*;
+public class SorterModelIndex {
+  public JComponent makeUI() {
+    String[] columnNames = {"String", "Integer", "Boolean"};
+    Object[][] data = {
+      {"aaa", 12, true}, {"bbb", 5, false},
+      {"CCC", 92, true}, {"DDD", 0, false}
+    };
+    final DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+      @Override public Class<?> getColumnClass(int column) {
+        return getValueAt(0, column).getClass();
+      }
+    };
+    final TableSorter sorter = new TableSorter(model);
+    final JTable table = new JTable(sorter);
+    sorter.setTableHeader(table.getTableHeader());
+    table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+      public void valueChanged(ListSelectionEvent e) {
+        int viewIndex = table.getSelectedRow();
+        if (!e.getValueIsAdjusting() && viewIndex>=0) {
+          Object o = model.getValueAt(sorter.modelIndex(viewIndex), 0);
+          System.out.println(o);
+        }
+      }
+    });
+
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(new JScrollPane(table));
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new SorterModelIndex().makeUI());
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
+- 早速のご回答、ありがとうございました。 選択された行の値を取り出すことができますが、今回表(`jTable`)の内容を`CSV`に書き出そうとしております。即ち選択した行がない場合、ソートをして(上り順`CCC`、`DDD`, `aaa`、`bbb`), `jTable.getValueAt(sorter.modelIndex(i),j);`（ `i`:行　`j`：列）、書き出した結果は（`aaa`, `bbb`, `CCC`, `DDD`）。即ち`sorter`していなかったの状態で書き出されました。読みにくいかもしれませんが、ご教示ください。 宜しくお願い致します -- [[Tiger]] &new{2010-08-05 (木) 15:42:51};
+-- `JTable`に表示されている見たまま(全選択、KBD{Ctrl+C}でコピーして`TSV`)の状態でということでしょうか。それなら`sorter`は関係なく、以下のように`JTable#getValueAt`メソッドを普通に使えばいいかもしれません(`TableModel#getValueAt`と`JTable#getValueAt`の違いに注意)。 -- [[aterai]] &new{2010-08-05 (木) 17:54:10};
+
+#code{{
+p.add(new JButton(new AbstractAction("test") {
+  @Override public void actionPerformed(ActionEvent e) {
+    for (int i=0; i<table.getRowCount(); i++) {
+      for (int j=0; j<table.getColumnCount(); j++) {
+        //Object o = table.getValueAt(i, table.convertColumnIndexToView(j));
+        Object o = table.getValueAt(i, j);
+        System.out.print(o+",");
+      }
+      System.out.print("\n");
+    }
+    System.out.println("----");
+  }
+}), BorderLayout.SOUTH);
+}}
+
+- ありがとうございました。ご指摘の通り、できました。 -- [[Tiger]] &new{2010-08-05 (木) 18:08:42};
+- いつもお世話になっております。`JDK1.5`を使っています。`Name`と`Comment`欄をソートするとき、`No.`欄はソートさせないで、固定のままできますか？ご教示をよろしくお願いいたします。 -- [[Tiger]] &new{2010-09-10 (金) 12:41:32};
+-- こんにちは。以下のようなレンダラーを使って、表示を`row(View)`にしてしまうのが簡単な気がします(KBD{Ctrl+C}などでコピーすると`Model`の値がコピーされたりしますが…)。 -- [[aterai]] &new{2010-09-10 (金) 14:45:58};
+
+#code{{
+TableColumn col = table.getColumnModel().getColumn(0);
+col.setCellRenderer(new DefaultTableCellRenderer() {
+  @Override public Component getTableCellRendererComponent(
+      JTable table, Object v, boolean isS, boolean hasF, int row, int col) {
+    Component c = super.getTableCellRendererComponent(table, v, isS, hasF, row, col);
+    if(c instanceof JLabel) ((JLabel)c).setText(""+row);
+    return c;
+  }
+});
+}}
+- ご教示、ありがとうございました。思ったとおりの動きです。 -- [[Tiger]] &new{2010-09-10 (金) 16:32:27};
+
+#comment

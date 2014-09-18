@@ -1,0 +1,34 @@
+TITLE:JSplitPaneを等分割する
+#tags(JSplitPane)
+#author(aterai)
+#pubdate(2010-06-28T22:43:18+09:00)
+* 概要 [#mabfea1e]
+`JSplitPane`のディバイダが中央にくるように設定します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLR0Z5M_I/AAAAAAAAAXU/R6r6dvVJa9M/s800/DividerLocation.png)
+
+* サンプルコード [#mdde9cfa]
+#code(link){{
+EventQueue.invokeLater(new Runnable() {
+  @Override public void run() {
+    sp.setDividerLocation(0.5);
+    //sp.setResizeWeight(0.5);
+  }
+});
+}}
+
+* 解説 [#p41e1a6c]
+上記のサンプルでは、`JSplitPane`のサイズが決まった後(例えば`JFrame#pack()`や、`JFrame#setSize(int,int)`などした後)で、`JSplitPane#setDividerLocation(0.5);`を使用し、ディバイダを中央に配置しています。
+
+- `JSplitPane#setDividerLocation(double)`
+-- ディバイダ自身の幅(`JSplitPane#getDividerSize()`)は含まれない
+-- 内部では、切り捨てで`JSplitPane#setDividerLocation(int)`を使用: [[JSplitPaneのDividerの位置を最大化後に変更する>Swing/DividerSplitRatio]]
+
+----
+`JSplitPane#setResizeWeight(double)`を使用し、`JSplitPane`内に配置したコンポーネント(`JScrollPane`)の余ったスペースの配分が同じになるようにして、ディバイダを中央に配置する方法もあります。
+
+* 参考リンク [#we34ef80]
+- [[JSplitPaneのDividerの位置を最大化後に変更する>Swing/DividerSplitRatio]]
+
+* コメント [#k7e6f9ad]
+#comment

@@ -1,0 +1,61 @@
+TITLE:JProgressBarの文字列をJLayerを使って表示する
+#tags(JProgressBar, JLayer)
+#author(aterai)
+#pubdate(2013-06-10T03:42:45+09:00)
+* 概要 [#tc3d669f]
+垂直`JProgressBar`の文字列を`JLayer`を使って横組で表示します。
+
+#download(https://lh4.googleusercontent.com/-ATDPf7XMEzg/UbTLqsulmsI/AAAAAAAABt0/_0ZOg11jmXk/s800/ProgressStringLayer.png)
+
+* サンプルコード [#x82529fa]
+#code(link){{
+final JLabel label = new JLabel("000/100");
+label.setBorder(BorderFactory.createEmptyBorder(4,4,4,4));
+LayerUI<JProgressBar> layerUI = new LayerUI<JProgressBar>() {
+  private final JPanel rubberStamp = new JPanel();
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    Dimension d = label.getPreferredSize();
+    int x = (c.getWidth()  - d.width)  / 2;
+    int y = (c.getHeight() - d.height) / 2;
+    JLayer jlayer = (JLayer)c;
+    JProgressBar progress = (JProgressBar)jlayer.getView();
+    int iv = (int)(100 * progress.getPercentComplete());
+    label.setText(String.format("%03d/100", iv));
+    //label.setText(progress.getString());
+    SwingUtilities.paintComponent(
+      g, label, rubberStamp, x, y, d.width, d.height);
+  }
+};
+JProgressBar progressBar = new JProgressBar(model) {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    Insets i = label.getInsets();
+    d.width = label.getPreferredSize().width + i.left + i.right;
+    return d;
+  }
+};
+progressBar.setOrientation(SwingConstants.VERTICAL);
+progressBar.setStringPainted(false);
+JComponent c = new JLayer<JProgressBar>(progressBar, layerUI);
+}}
+
+* 解説 [#d822a63a]
+- 一番左
+-- デフォルトの垂直`JProgressBar`
+- 左から二番目
+-- 文字列表示有りの垂直`JProgressBar`
+- 右から二番目
+-- 垂直`JProgressBar`に`BorderLayout`を設定して、`JLabel`を配置
+-- [[JProgressBarの進捗文字列の字揃えを変更する>Swing/ProgressStringAlignment]]
+-- `JLabel`の幅と任意の余白から、垂直`JProgressBar`の幅を決定するよう、`JProgressBar#getPreferredSize()`をオーバーライド
+- 一番右
+-- `JLayer`を使って、垂直`JProgressBar`上に文字列を描画
+-- `JLabel`の幅と任意の余白から、垂直`JProgressBar`の幅を決定するよう、`JProgressBar#getPreferredSize()`をオーバーライド
+
+* 参考リンク [#n24d08a9]
+- [http://stackoverflow.com/questions/16934009/is-it-possible-to-save-text-horizontal-in-vertical-jprogressbar java - Is it possible to save text horizontal in vertical JProgressbar - Stack Overflow]
+- [[JProgressBarの進捗文字列の字揃えを変更する>Swing/ProgressStringAlignment]]
+
+* コメント [#aa1e41ab]
+#comment

@@ -1,0 +1,72 @@
+TITLE:TrayIconのダブルクリック
+#tags(TrayIcon, SystemTray, MouseListener, JFrame)
+#author(aterai)
+#pubdate(2009-04-13T14:23:01+09:00)
+* 概要 [#r2d65c3b]
+`TrayIcon`をダブルクリックした場合フレームを表示、シングルクリックした場合はフレームを前面に表示します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJK3dhHYI/AAAAAAAAAT8/1MUtk0Z-NQU/s800/ClickTrayIcon.png)
+
+* サンプルコード [#u2cc7663]
+#code(link){{
+Image image = new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB);
+new StarIcon().paintIcon(null, image.getGraphics(), 0, 0);
+final SystemTray tray = SystemTray.getSystemTray();
+PopupMenu popup       = new PopupMenu();
+MenuItem open         = new MenuItem("Option");
+MenuItem exit         = new MenuItem("Exit");
+final TrayIcon icon   = new TrayIcon(image, "Click Test", popup);
+popup.add(open);
+popup.add(exit);
+icon.addMouseListener(new MouseAdapter() {
+  @Override public void mouseClicked(MouseEvent e) {
+    if(e.getButton()==MouseEvent.BUTTON1 && e.getClickCount()==2) {
+      frame.setVisible(true);
+    }else if(frame.isVisible()) {
+      frame.setExtendedState(JFrame.NORMAL);
+      frame.toFront();
+    }
+  }
+});
+open.addActionListener(new ActionListener() {
+  @Override public void actionPerformed(ActionEvent e) {
+    frame.setVisible(true);
+  }
+});
+exit.addActionListener(new ActionListener() {
+  @Override public void actionPerformed(ActionEvent e) {
+    tray.remove(icon);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    //frame.dispose();
+    frame.getToolkit().getSystemEventQueue().postEvent(
+      new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+  }
+});
+try{
+  tray.add(icon);
+}catch(AWTException e) {
+  e.printStackTrace();
+}
+}}
+
+* 解説 [#v89daafe]
+`TrayIcon`にマウスリスナーを追加してマウスでダブルクリックした場合の動作を変更します。
+
+- 左ボタンをダブルクリック
+-- フレームが非表示の場合は、再表示
+- 左ボタンをシングルクリック
+-- フレームが表示、または最小化されている場合、元のサイズに戻して最前面に表示
+-- フレームが非表示の場合は、なにもしない
+
+- 中ボタンのクリック
+-- なにもしない
+
+- 右ボタンのクリック
+-- ポップアップメニューを表示
+
+* 参考リンク [#q74e6754]
+- [[SystemTrayにアイコンを表示>Swing/SystemTray]]
+- [[TrayIconのアニメーション>Swing/AnimatedTrayIcon]]
+
+* コメント [#i6057375]
+#comment

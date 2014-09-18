@@ -1,0 +1,62 @@
+TITLE:JListの選択を解除
+#tags(JList, Focus, MouseListener)
+#author(aterai)
+#pubdate(2011-04-18T14:47:37+09:00)
+* 概要 [#y7eeee60]
+`JList`のセル選択状態を解除します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TavH8_fQKAI/AAAAAAAAA5s/MyUXQnSHPUA/s800/ClearSelection.png)
+
+* サンプルコード [#w9ea8a72]
+#code(link){{
+class ClearSelectionListener extends MouseAdapter {
+  private static void clearSelectionAndFocus(JList list) {
+    list.clearSelection();
+    list.getSelectionModel().setAnchorSelectionIndex(-1);
+    list.getSelectionModel().setLeadSelectionIndex(-1);
+  }
+  private static boolean contains(JList list, Point pt) {
+    for(int i=0;i<list.getModel().getSize();i++) {
+      Rectangle r = list.getCellBounds(i, i);
+      if(r.contains(pt)) return true;
+    }
+    return false;
+  }
+  private boolean startOutside = false;
+  @Override public void mousePressed(MouseEvent e) {
+    JList list = (JList)e.getSource();
+    startOutside = !contains(list, e.getPoint());
+    if(startOutside) {
+      clearSelectionAndFocus(list);
+    }
+  }
+  @Override public void mouseReleased(MouseEvent e) {
+    startOutside = false;
+  }
+  @Override public void mouseDragged(MouseEvent e) {
+    JList list = (JList)e.getSource();
+    if(contains(list, e.getPoint())) {
+      startOutside = false;
+    }else if(startOutside) {
+      clearSelectionAndFocus(list);
+    }
+  }
+}
+}}
+
+* 解説 [#f030e228]
+上記のサンプルでは、`JList`のセル以外の領域をクリックすると、選択とフォーカスを解除するようにマウスリスナーなどを設定しています。
+
+- 選択解除
+-- `JList#clearSelection();`
+-- `ListSelectionModel#clearSelection()`のラッパー
+- フォーカス解除
+-- `list.getSelectionModel().setAnchorSelectionIndex(-1);`
+-- `list.getSelectionModel().setLeadSelectionIndex(-1);`
+-- アンカー(アイテムのハイライト)、リード(アイテムのフォーカス)の順番で解除する必要がある
+
+* 参考リンク [#b276e015]
+- [http://docs.oracle.com/javase/tutorial/uiswing/events/listselectionlistener.html How to Write a List Selection Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]
+
+* コメント [#c5b93fc8]
+#comment

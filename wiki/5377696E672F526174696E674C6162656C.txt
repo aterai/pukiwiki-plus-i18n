@@ -1,0 +1,48 @@
+TITLE:RGBImageFilterでアイコンの色調を変更
+#tags(ImageIcon, RGBImageFilter, JLabel)
+#author(aterai)
+#pubdate(2006-08-21T11:55:27+09:00)
+* 概要 [#w9fce2db]
+`RGBImageFilter`で色調を変更したアイコンの用意し、評価用コンポーネントを作成します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRfRNaARI/AAAAAAAAAhQ/8Rj6Rw8bkwU/s800/RatingLabel.png)
+
+* サンプルコード [#a85a2963]
+#code(link){{
+private final ImageProducer ip = orgIcon.getImage().getSource();
+private ImageIcon makeStarImageIcon(float[] filter) {
+  SelectedImageFilter sif = new SelectedImageFilter(filter);
+  return new ImageIcon(
+    createImage(new FilteredImageSource(ip, sif)));
+}
+private class SelectedImageFilter extends RGBImageFilter {
+  private final float[] filter;
+  public SelectedImageFilter(float[] arrays) {
+    filter = new float[arrays.length];
+    System.arraycopy(arrays, 0, filter, 0, arrays.length);
+    canFilterIndexColorModel = false;
+  }
+  @Override public int filterRGB(int x, int y, int argb) {
+    int r = (int)(((argb >> 16) & 0xff) * filter[0]);
+    int g = (int)(((argb >>  8) & 0xff) * filter[1]);
+    int b = (int)(((argb      ) & 0xff) * filter[2]);
+    return (argb & 0xff000000) | (r<<16) | (g<<8) | (b);
+  }
+}
+}}
+
+* 解説 [#s11c2ccf]
+上記のサンプルは、`RGBImageFilter`を使用して、一つのアイコンから複数の色の異なるアイコンを生成し、`5`段階の評価を行うコンポーネントを作成しています。クリックしたアイコンの位置が評価レベルになります。
+
+* 参考リンク [#s1cec87d]
+- [http://www.freeiconsdownload.com/Free_Downloads.asp?id=60 PI Diagona Icons Pack 1.0 - Download Royalty Free Icons and Stock Images For Web & Graphics Design]
+-- アイコンを利用しています。
+
+* コメント [#afaf0ed0]
+- 素晴しい！：）--  &new{2006-08-23 (水) 17:34:40};
+-- どうもです。 -- [[aterai]]
+- メモ: 一般的？には`Rating Bar`と言うみたいです。[http://www.masugadesign.com/the-lab/scripts/unobtrusive-ajax-star-rating-bar/ Masuga Design » Unobtrusive AJAX Star Rating Bar] -- [[aterai]] &new{2006-11-07 (火) 12:38:34};
+- アイコンを変更、アイコンの間隔を設定 -- [[aterai]] &new{2008-10-20 (月) 18:20:50};
+- スクリーンショットを更新 -- [[aterai]] &new{2008-11-25 (火) 11:19:25};
+
+#comment

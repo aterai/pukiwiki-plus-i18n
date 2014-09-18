@@ -1,0 +1,184 @@
+#keywords(Subversion)
+#description(バージョン管理システムのSubversionをWindows環境で使用する場合の手順などをサンプルを用いて解説しています。)
+
+#author(aterai)
+#pubdate(2003-09-25)
+#contents(big)
+
+* 概要 [#o9181e49]
+このページは、バージョン管理システムの`Subversion`を`Windows`環境で使用する場合の手順などをサンプルを用いて解説しています。
+
+** Subversionとは [#tfff6757]
+`Subversion`は`CVS`の利用形態を引き継ぎつつ、問題点を克服した新しいバージョン管理システムです。
+
+- リポジトリにリビジョンがつく
+- コミットがアトミック
+- ファイルの移動
+- ディレクトリの作成・削除
+- ネットワーク対応
+- 言語バインディング
+
+RIGHT:[http://ukai.jp/Articles/2003/uu-svn/index.html UNIX USER 2003 8: Subversionで管理せよ (draft)]より引用
+
+上記の項目の''用語''や意味は、[http://ukai.jp/Articles/2003/uu-svn/index.html 引用元のコラム]や、[http://sonic64.com/2006-03-28.html トランクやブランチなどのバージョン管理用語の意味]が参考になります。
+
+* このメモでの注意点 [#td16e613]
+- プロジェクトの名前を表すものとして、`hoge`などを使用しています。ただし、`xyzzy`はエディタ(([http://xyzzy.s53.xrea.com/wiki/?%BC%C1%CC%E4%C8%A2%2F16 xyzzyの名前の由来は何ですか？]))です。
+
+- `Apache2`など導入しない場合、コマンドラインで`http://localhost/`となっている部分を`file://localhost/c:/`などに置き換えて実行してください。`file:`で始まる`URI`のドライブ名の指定方法は以下を参考にしてください。
+-- [http://www.dpawson.co.uk/xsl/sect4/uriIncl.html Test on file access]
+-- [http://svnbook.red-bean.com/en/1.1/ch02s03.html#svn-ch-2-sidebar-1 Repository URLs]
+//--http://www2.xml.gr.jp/log.html?MLID=xmlusers&N=8415&FORMAT=MIN
+
+ file:///c:/svn/hoge
+ file://localhost/c:/svn/hoge
+ file://c:/svn/hoge
+ file:/c:/svn/hoge
+ file:///C|/svn/hoge
+
+- 標準的な`Windows`環境の場合、`Subversion`の`config`ファイルは`C:\Documents and Settings\ユーザ名\Application Data\Subversion`以下にあります。
+-- この`Subversion`フォルダが存在しない場合、なにかコマンドを実行すれば新規生成されるようです。例えば、`Subversion`をインストールした後で、コマンドプロンプトなどから`svn help`を実行すれば、`Subversion`フォルダが生成され、その下に、`config`、`servers`、`README.txt`などのファイルも作成されます。
+
+* 使い方 [#f461b7fb]
+コマンドプロンプトなどから使う場合は、`CVS`とほとんど同じ感覚で使用することができます。
+
+ mkdir c:\svn
+ svnadmin create c:\svn\hoge
+ svn mkdir file://localhost/c:/svn/hoge/trunk -m "trunk作成"
+ svn import e:\hogehoge file://localhost/c:/svn/hoge/trunk -m "コメント"
+
+以下のように入力すると、簡単なヘルプが表示されます。
+
+ svnのサブコマンド一覧など
+ > svn help
+ 
+ コミット(サブコマンド)のヘルプ
+ > svn help commit
+ 
+ svnadminのサブコマンド一覧など
+ > svnadmin help
+
+* リポジトリ [#ue233480]
+どのようなディレクトリ構造のリポジトリにするかは、[http://svn.apache.org/repos/asf/subversion/ Subversion自身のリポジトリ]が参考になります。通常は以下のような`3`つのディレクトリを作っておくのがお勧めのようです。
+
+- `trunk`
+- `tags`
+- `branches`
+
+** リポジトリの作成 [#hf3d2040]
+以下、例としてプロジェクト名が`Hoge`のリポジトリを作ってみます。
+
+まず、`SVNParentPath`として`c:\svn`(これはただのディレクトリ)を作成し、この下に`hoge`プロジェクトなどのリポジトリを作成、初期化します。
+
+ mkdir c:\svn
+ svnadmin create c:\svn\hoge
+
+`hoge`リポジトリの下に、`trunk`、`tags`などのディレクトリを作成します。
+
+ svn mkdir file://localhost/c:/svn/hoge/trunk    -m "trunkの作成"
+ svn mkdir file://localhost/c:/svn/hoge/tags     -m "tagsの作成"
+ svn mkdir file://localhost/c:/svn/hoge/branches -m "branchesの作成"
+
+例えば''e:\hoge'' 以下に置かれていたソースディレクトリなどを、リポジトリにインポートします。
+
+ mkdir e:\hoge\src
+ svn import e:\hoge file://localhost/c:/svn/hoge/trunk -m "srcをimport"
+
+生成したリポジトリの`trunk`以下の内容を、任意のディレクトリ(`c:\dev\hoge`)以下にチェックアウトします。ディレクトリは相対パスで指定可、存在しない場合は自動生成、省略した場合は指定したリポジトリの末尾(以下の場合`trunk`)のディレクトリが生成されます。
+
+ svn co file://localhost/c:/svn/hoge/trunk c:\dev\hoge
+
+チェックアウトしたディレクトリ以下のファイルを修正してコミット(チェックイン)するなどして、開発を進めていきます。
+
+** 各ディレクトリの役割 [#mb6fcf68]
+`Apache2`を導入して([[Apache2(Windows版)でネットワーク対応>Subversion/Apache2]])、作成したリポジトリをブラウザで見てみると、以下のようになります。
+
+#ref(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQr1r5__2GI/AAAAAAAAArQ/wsgt0c_izi0/s800/repos.png)
+
+赤線を引いたところは、`Apache`の`httpd.conf`ファイルで設定した`SVNParentPath`(`c:\svn`)のエイリアスです。なんでもいいのですが、`svn`、`repos`、`svnrepos`などが多いようです。
+
+青線の部分はプロジェクト名をディレクトリに、またその下に `trunk`、`tags`、`branches`を作っています。このサンプルプロジェクトでは、それぞれ以下のようになっています。
+
+|100|500|c
+|ディレクトリ| `Hoge`プロジェクトでの内容|h
+|`trunk`         | `src`ディレクトリ、`build.xml`、`bulid.properties`などが入っています。|
+|`tags`           | `hoge-0.1.0`、`hoge-0.5.1`といったディレクトリが入っています。これらは、リリースしたリビジョンでの`trunk`ディレクトリのコピーになっています。|
+|`branches`  | ブランチをいれますが、小さいプロジェクトなので今のところ空です。|
+
+** タグ付け [#jfa7af50]
+例えばバージョン`0.8.0`をリリースした場合、以下の要領でタグ付けをしておきます(コマンドプロンプトで入力する場合は、`^`は使用せず、一行で入力してください)。
+
+ svn copy http://localhost/svn/hoge/trunk ^
+          http://localhost/svn/hoge/tags/hoge-0.8.0 ^
+          -m "hoge-0.8.0としてリリース"
+
+`Subversion`での`copy`は、ファイルそのものをコピーしている訳ではないので、ディスク容量を浪費しません。
+
+** リポジトリのバックアップ [#mc46921f]
+`svnadmin dump`で、データベースにあるリポジトリをダンプファイルとしてバックアップすることができます。
+
+ svnadmin dump c:\svn\hoge > c:\temp\hoge.dump
+
+逆にダンプファイルをデータベースにロードするには、`svnadmin load`を使用します。
+
+ svnadmin create c:\svn\hoge2
+ svnadmin load c:\svn\hoge2 < c:\temp\hoge.dump
+
+----
+`Subversion`のバージョンアップでリポジトリスキーマが更新された場合、リポジトリのアップグレードが必要になる((http://svn.collab.net/repos/svn/trunk/notes/repos_upgrade_HOWTO を参照))ことがあります。これらの場合、まず古いバージョンの"svnadmin.exe"を使ってダンプファイルを作成し、新しい"svnadmin.exe"で、リポジトリの新規作成、ダンプファイルのロードを行います。古いバージョンのWindows用バイナリなどは、[http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=469 Windows Archive]にあります。
+ svnadmin dump c:\svn\hoge > c:\temp\hoge.dump
+ ren c:\svn\hoge hoge_old
+ (svnadminを新しいものに変更)
+ svnadmin create c:\svn\hoge
+ svnadmin load c:\svn\hoge < c:\temp\hoge.dump
+
+* ログエディタの設定 [#ha933a54]
+ログエディタの設定方法についてメモしています。
+
+- [[ログエディタの設定>Subversion/SVNEditor]]
+
+* 無視パターン [#rbe24835]
+`bak`ファイル(`*.bak`、`*.BAK`)などをステータス表示(`svn status`)などで無視するよう設定します。
+
+- [[無視パターン>Subversion/GlobalIgnores]]
+
+* ログの修正 [#u49cc281]
+コミットログの誤字脱字などを修正します。上書きされてしまうので十分注意して実行してください。
+
+-[[ログの修正>Subversion/SetLog]]
+
+* ネットワーク対応 [#r2d3f281]
+ネットワーク越しに`Subversion`を使えるようにします。
+
+- [[Apache2(Windows版)でネットワーク対応>Subversion/Apache2]]
+-- `Apache HTTP Server`を導入して`Subversion`をネットワーク越しで使用できるようにします。うまくいかない場合は、`C:\Program Files\Subversion\W32notes.txt`などを参照してください。
+
+//-svnserveを使用する
+//--テスト中
+
+* サードパーティー製ツール [#a950a673]
+- [[ViewVC>Subversion/ViewVC]](←[[ViewCVS>Subversion/ViewCVS]]から名前が変更されました)
+-- `ViewVC`を導入することで、`Subversion`のリポジトリをブラウザからより詳しく閲覧することができます。
+
+- [[WinMerge>Subversion/WinMerge]]
+-- コマンドライン版の`diff`の代わりに、`GUI`で差分を表示できる`WinMerge`を使用してみます。
+
+- [[eSvn>Subversion/eSvn]]
+-- `Subversion`用の`GUI`クライアントです。
+
+* 参考リンク [#iba90a3b]
+`Subversion`関係のリンクです。
+
+- [[Subversion関係リンク>Subversion/_Link]]
+
+*コメント [#p224c9e9]
+-Teraiさん、初めまして。このページにお世話になったものです。Subversion用のAntタスクを探していて見つけたので、参考までに[http://subclipse.tigris.org/ svnant]、導入までは自分のところにおいておきました。[http://inagi.himitsukichi.com/~aozora/blog/archives/000150.html#more SvnAntについて]。大して情報量はありませんが･･･ -- [[kent]] &new{2004-07-22 (木) 06:16:47};
+--とおもったら、subclipseへのリンクがありますね・・・ -- [[kent]] &new{2004-07-22 (木) 06:18:21};
+-いやリンクはしてますけど、SvnAntは全然使ったこと無かったです。参考にさせてもらいますね。 -- [[aterai]] &new{2004-07-22 (木) 10:19:42};
+-svnadmin setlog は、--bypass-hooks を指定すれば pre-revprop-change を用意しなくていいようです。 http://svnbook.red-bean.com/en/1.7/svn.ref.svnadmin.c.setlog.html -- [[rabbit]] &new{2005-02-19 22:06:56 (土)};
+-なるほど、週明け会社で試してみます。 -- [[aterai]] &new{2005-02-20 01:21:13 (日)};
+-svnadmin setlog をすこし変更し、rabbitさんの指摘もそのままコピーさせてもらいましたm(_ _)m。 -- [[aterai]] &new{2005-02-21 12:48:23 (月)};
+- 結城さんのところのSubversionの初心者用記事と合わせて、忘れたときなど参照させてもらっています。いつもありがとうございます。 -- [[s]] &new{2011-09-20 (火) 09:34:36};
+-- こんばんは。自分でもMercurialなどと併用することが多くなりましたが、Subversionにも相変わらずお世話になってます。1.7.0もそろそろ出るみたいですし、このページの内容もレストアしておきたいところです。 -- [[aterai]] &new{2011-09-20 (火) 21:42:26};
+
+#comment

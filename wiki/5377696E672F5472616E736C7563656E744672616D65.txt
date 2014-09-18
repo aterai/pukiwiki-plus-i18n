@@ -1,0 +1,175 @@
+TITLE:SynthでJInternalFrameを半透明にする
+#tags(JInternalFrame, Translucent, LookAndFeel, UIDefaults, Painter)
+#author(aterai)
+#pubdate(2008-12-01T15:04:38+09:00)
+* 概要 [#n658aabb]
+`Synth`を使った`LookAndFeel`で、`JInternalFrame`を半透明にします。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVvwg_IhI/AAAAAAAAAoI/wQpW8Msbo2Y/s800/TranslucentFrame.png)
+
+* サンプルコード [#m302be7e]
+#code(link){{
+try{
+  for(UIManager.LookAndFeelInfo laf: UIManager.getInstalledLookAndFeels())
+    if("Nimbus".equals(laf.getName())) {
+      UIManager.setLookAndFeel(laf.getClassName());
+      SynthLookAndFeel.setStyleFactory(
+        new MySynthStyleFactory(SynthLookAndFeel.getStyleFactory()));
+      break;
+    }
+  }
+}catch(Exception e) {
+  e.printStackTrace();
+}
+}}
+#code{{
+class MySynthStyleFactory extends SynthStyleFactory {
+  private SynthStyleFactory wrappedFactory;
+  public MySynthStyleFactory(SynthStyleFactory factory) {
+    this.wrappedFactory = factory;
+  }
+  @Override public SynthStyle getStyle(JComponent c, Region id) {
+    SynthStyle s = wrappedFactory.getStyle(c, id);
+    //if(id==Region.INTERNAL_FRAME_TITLE_PANE||id==Region.INTERNAL_FRAME) {
+    if(id==Region.INTERNAL_FRAME) {
+      s = new TranslucentSynthSytle(s);
+    }
+    return s;
+  }
+}
+class TranslucentSynthSytle extends SynthStyle {
+  private final SynthStyle style;
+  public TranslucentSynthSytle(SynthStyle s) {
+    style = s;
+  }
+  @Override public SynthPainter getPainter(final SynthContext context) {
+    return new SynthPainter() {
+      @Override public void paintInternalFrameBackground(SynthContext context,
+                           Graphics g, int x, int y, int w, int h) {
+        g.setColor(new Color(100,200,100,100));
+        g.fillRoundRect(x,y,w-1,h-1,15,15);
+      }
+    };
+  }
+  @Override public boolean isOpaque(SynthContext context) {
+    if(context.getRegion()==Region.INTERNAL_FRAME) {
+      return false;
+    }else{
+      return style.isOpaque(context);
+    }
+  }
+  @Override public Color getColorForState(SynthContext context, ColorType type) {
+    return null; //Color.RED;
+  }
+  @Override public Font getFontForState(SynthContext context) {
+    return null; //new Font(Font.MONOSPACED, Font.ITALIC, 24);
+  }
+  //...
+}}
+
+* 解説 [#p3984476]
+上記のサンプルでは、`SynthStyle#paintInternalFrameBackground`、`SynthStyle#isOpaque`などのメソッドをオーバーライドして`JInternalFrame`を半透明にします。
+
+----
+- `Synth`を使った`LookAndFeel`
+-- `JDK 1.6.0_10`で追加された`NimbusLookAndFeel`や、`GTKLookAndFeel`など
+
+#ref(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVyfycduI/AAAAAAAAAoM/r6DySDZjSGA/s800/TranslucentFrame1.png)
+
+----
+`警告:com.sun.java.swing.Painter は Sun が所有する API であり、今後のリリースで削除される可能性があります。`といった警告が出ても良いなら、以下のように`UIDefaults#put`で`Painter`を設定する方法もあります(`JDK 1.7.0`以上なら`javax.swing.Painter`になるので、警告なしで使用可能)。
+
+- 参考:
+-- [http://www.jasperpotts.com/blog/2009/01/nimbus-the-new-face-of-swing-javaone-2008/ Caffeine Induced Ramblings - Jasper Potts’s Blog  » Blog Archive   » Nimbus: The New Face of Swing - JavaOne 2008]
+-- `com.sun.java.swing.plaf.nimbus.NimbusDefaults.java`
+
+#code{{
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.plaf.synth.*;
+import com.sun.java.swing.Painter; // 1.6
+//import javax.swing.Painter; // 1.7.0 b57
+public class BackgroundPainterTest {
+  private final JDesktopPane desktop = new JDesktopPane();
+  public JComponent makeUI() {
+    JPanel p1 = new JPanel();
+    p1.setOpaque(false);
+    JPanel p2 = new JPanel() {
+      @Override public void paintComponent(Graphics g) {
+        g.setColor(new Color(100,50,50,100));
+        g.fillRect(0,0,getWidth(), getHeight());
+      }
+    };
+    p2.setOpaque(false);
+    UIDefaults d = new UIDefaults();
+    d.put("InternalFrame[Enabled].backgroundPainter", new Painter() {
+      @Override public void paint(Graphics2D g, Object o, int w, int h) {
+        g.setColor(new Color(100,200,100,100));
+        g.fillRoundRect(0,0,w-1,h-1,15,15);
+      }
+    });
+    d.put("InternalFrame[Enabled+WindowFocused].backgroundPainter", new Painter() {
+      @Override public void paint(Graphics2D g, Object o, int w, int h) {
+        g.setColor(new Color(100,250,120,100));
+        g.fillRoundRect(0,0,w-1,h-1,15,15);
+      }
+    });
+    createFrame(p1, d, 0); createFrame(p2, d, 1);
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(desktop);
+    p.setPreferredSize(new Dimension(320, 240));
+    return p;
+  }
+  protected JInternalFrame createFrame(JPanel panel, UIDefaults d, int idx) {
+    MyInternalFrame frame = new MyInternalFrame();
+    frame.putClientProperty("Nimbus.Overrides", d);
+    //frame.putClientProperty("Nimbus.Overrides.InheritDefaults", false);
+    frame.setOpaque(false);
+    if(panel!=null) {
+      frame.setContentPane(panel);
+      panel.add(new JLabel("label"));
+      panel.add(new JButton("button"));
+      frame.getRootPane().setOpaque(false);
+    }
+    desktop.add(frame);
+    frame.setVisible(true);
+    frame.setLocation(10+60*idx, 10+40*idx);
+    desktop.getDesktopManager().activateFrame(frame);
+    return frame;
+  }
+  static class MyInternalFrame extends JInternalFrame{
+    public MyInternalFrame() {
+      super("title", true, true, true, true);
+      setSize(160, 100);
+    }
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() { createAndShowGUI(); }
+    });
+  }
+  public static void createAndShowGUI() {
+    try{
+      for(UIManager.LookAndFeelInfo laf: UIManager.getInstalledLookAndFeels())
+        if("Nimbus".equals(laf.getName())) UIManager.setLookAndFeel(laf.getClassName());
+    }catch(Exception e) {
+      e.printStackTrace();
+    }
+    JFrame frame = new JFrame();
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.getContentPane().add(new BackgroundPainterTest().makeUI());
+    frame.pack();
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+  }
+}
+}}
+
+* 参考リンク [#cef3d81f]
+- [[JInternalFrameを半透明にする>Swing/TransparentFrame]]
+
+* コメント [#c0c35d4a]
+- メモ: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6919629 Bug ID: 6919629 Nimbus L&F Nimus.Overrides option leaks significant amounts of memory], [http://hg.openjdk.java.net/jdk7/jdk7/jdk/rev/042eb92f89ad jdk7/jdk7/jdk: changeset 2337:042eb92f89ad] -- [[aterai]] &new{2010-05-24 (月) 15:27:28};
+- [http://java-swing-tips.blogspot.com blogger]で、`JButton`の周りに変な矩形が描画される場合があるとの指摘を頂いたので、`p2.setOpaque(false);`を追加。 -- [[aterai]] &new{2011-02-08 (火) 04:05:50};
+
+#comment

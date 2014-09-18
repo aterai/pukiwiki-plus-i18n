@@ -1,0 +1,41 @@
+TITLE:JTableで行を選択
+#tags(JTable, ListSelectionListener)
+#author(aterai)
+#pubdate(2004-05-24)
+* 概要 [#jeb5f621]
+`JTable`で、行を選択した場合の動作をテストします。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTSWRoWNRI/AAAAAAAAAio/X-jqAVKs3Bw/s800/RowSelection.png)
+
+* サンプルコード [#f054e87d]
+#code(link){{
+table = new JTable(model);
+table.setAutoCreateRowSorter(true);
+table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+  @Override public void valueChanged(ListSelectionEvent e) {
+    if(e.getValueIsAdjusting()) return;
+    int sc = table.getSelectedRowCount();
+    changeInfoPanel((sc==1)?getInfo():" ");
+  }
+});
+//...
+private String getInfo() {
+  int index = table.convertRowIndexToModel(table.getSelectedRow());
+  String name = (String)model.getValueAt(index, 1);
+  String comment = (String)model.getValueAt(index, 2);
+  return name+"( "+comment+" )";
+}
+}}
+
+* 解説 [#b6b30ce9]
+マウス、カーソルキー、KBD{Tab}キーでの選択状態の変更に対応するために、`JTable`に`MouseListener`リスナーを設定するのではなく、`JTable#getSelectionModel`メソッドで`ListSelectionModel`を参照し、このモデルに`ListSelectionListener`リスナーを追加して利用します。
+
+`ListSelectionEvent#getValueIsAdjusting()`メソッドでイベントが重複処理を起こさないように制御しています。
+
+//**参考リンク
+* コメント [#r27a6181]
+- ありがとう。助かります。 -- [[ごん]] &new{2009-10-16 (金) 19:37:37};
+-- どうもです。 -- [[aterai]] &new{2009-10-17 (土) 00:09:01};
+- どうもです。  -- [[ごん?]] &new{2011-08-02 (火) 15:31:26};
+
+#comment

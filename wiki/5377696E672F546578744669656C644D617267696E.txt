@@ -1,0 +1,50 @@
+TITLE:JTextFieldのMarginを設定する
+#tags(JTextField, UIManager, Border)
+#author(aterai)
+#pubdate(2005-06-06T00:34:45+09:00)
+* 概要 [#m4b2abe7]
+`JTextField`内部の余白を設定します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVM2PvsXI/AAAAAAAAAnQ/3wxfaHXrEUk/s800/TextFieldMargin.png)
+
+* サンプルコード [#h76ab388]
+#code(link){{
+Insets m = UIManager.getInsets("TextField.margin");
+InsetsUIResource iur = new InsetsUIResource(m.top,m.left+5,m.bottom,m.right);
+UIManager.put("TextField.margin", iur);
+}}
+#code{{
+Insets m = field01.getMargin();
+Insets margin = new Insets(m.top,m.left+10,m.bottom,m.right);
+field01.setMargin(margin);
+}}
+#code{{
+Border b1 = BorderFactory.createEmptyBorder(0,20,0,0);
+Border b2 = BorderFactory.createCompoundBorder(field02.getBorder(), b1);
+field02.setBorder(b2);
+}}
+
+* 解説 [#q40dbf8e]
+以下のサンプルでは、それぞれ左余白のサイズのみを変更しています。
+
+ javax.swing.plaf.InsetsUIResource[top=2,left=7,bottom=2,right=2]
+
+- 上: `UIManager.put()`ですべての`JTextField`の余白を指定
+-- `getMargin().left`: `7`
+-- `getInsets().left`: `8`
+-- `getBorder().getBorderInsets(c).left`: `8`
+- 中: 一番上 + `setMargin()`で余白を指定
+-- `getMargin().left`: `17`
+-- `getInsets().left`: `18`
+-- `getBorder().getBorderInsets(c).left`: `18`
+- 下: 一番上 + `setBorder()`で余白を指定
+-- `getMargin().left`: `7`
+-- `getInsets().left`: `28`
+-- `getBorder().getBorderInsets(c).left`: `28`
+
+* 参考リンク [#l13dc690]
+- [[JTextField内にアイコンを追加>Swing/IconTextField]]
+- [[JComboBoxにアイコンを表示>Swing/IconComboBox]]
+
+* コメント [#z463c6ec]
+#comment

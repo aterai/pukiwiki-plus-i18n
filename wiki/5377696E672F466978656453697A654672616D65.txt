@@ -1,0 +1,37 @@
+TITLE:JFrameのサイズを固定
+#tags(JFrame, JDialog)
+#author(aterai)
+#pubdate(2004-05-17)
+* 概要 [#z96189b1]
+`JFrame`や`JDialog`のサイズを固定し、変更不可にします。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTM4ZlDyXI/AAAAAAAAAZ4/xXHwfOJP7p0/s800/FixedSizeFrame.png)
+
+* サンプルコード [#qeee79ae]
+#code(link){{
+frame.setResizable(false);
+}}
+
+* 解説 [#eff61b3d]
+`JFrame#setResizable`メソッドで、フレームのサイズを変更不可にしています。タイトルバーの最大化ボタンなども選択できなくなります。
+
+リサイズの可不可を切り替えると、`LookAndFeel`によっては装飾が変化して`JFrame`自体のサイズが変化する場合があります。
+
+* コメント [#zeef23a7]
+- アイコン化ボタンを無効化する方法はないようですね。`JInternalFrame`ならクローズも最大化もアイコン化も全部いじれるのに。 -- [[さく]] &new{2004-08-12 (木) 15:17:30};
+- なんだかなさそうですね。`JDialog`を使うか、以下みたいにして誤魔化すか…、`LookAndFeel`を自作すれば何とかなるのかな？ -- [[aterai]] &new{2004-08-12 (木) 17:01:45};
+
+#code{{
+//XPだと「画面のプロパティ」「デザイン」「次のアニメーション効果を…」
+//を無効にしないと、ちょっとかっこ悪い。
+frame.addWindowListener(new WindowAdapter() {
+  @Override public void windowIconified(WindowEvent e) {
+    frame.setState(frame.NORMAL);
+  }
+});
+}}
+
+- %%[http://www.ibm.com/developerworks/library/j-iframe/ Go state-of-the-art with IFrame] も面白そうです。IBMだから`SWT`使ってるのかなと思ったら`JFrame`を継承して作られています。%% -- [[aterai]] &new{2004-08-12 (木) 18:31:16};
+- レイアウト変更したときに`setAlwaysOnTop`が紛れ込んで、`Java Web Start`でサンプルが起動できなくなっていた不具合を修正。 -- [[aterai]] &new{2009-03-14 (土) 17:44:18};
+
+#comment

@@ -1,0 +1,54 @@
+TITLE:JButtonの描画
+#tags(JButton, Focus, Icon)
+#author(aterai)
+#pubdate(2009-08-24T12:58:07+09:00)
+* 概要 [#b1486d31]
+`JButton`の状態描画をテストします。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIWYXt9eI/AAAAAAAAASo/se2OKkQA83U/s800/ButtonPainted.png)
+
+* サンプルコード [#l599c4e7]
+#code(link){{
+java.util.List<JCheckBox> clist = Arrays.asList(
+  new JCheckBox(new AbstractAction("setFocusPainted") {
+    @Override public void actionPerformed(ActionEvent e) {
+      boolean flg = ((JCheckBox)e.getSource()).isSelected();
+      for(JButton b:list) b.setFocusPainted(flg);
+      p.revalidate();
+    }
+  }),
+  new JCheckBox(new AbstractAction("setBorderPainted") {
+    @Override public void actionPerformed(ActionEvent e) {
+      boolean flg = ((JCheckBox)e.getSource()).isSelected();
+      for(JButton b:list) b.setBorderPainted(flg);
+      p.revalidate();
+    }
+  }),
+  new JCheckBox(new AbstractAction("setContentAreaFilled") {
+    @Override public void actionPerformed(ActionEvent e) {
+      boolean flg = ((JCheckBox)e.getSource()).isSelected();
+      for(JButton b:list) b.setContentAreaFilled(flg);
+      p.revalidate();
+    }
+  }),
+  new JCheckBox(new AbstractAction("setRolloverEnabled") {
+    @Override public void actionPerformed(ActionEvent e) {
+      boolean flg = ((JCheckBox)e.getSource()).isSelected();
+      for(JButton b:list) b.setRolloverEnabled(flg);
+      p.revalidate();
+    }
+  })
+);
+}}
+
+* 解説 [#ua38e7ee]
+上記のサンプルでは、`JButton`の状態(例えばフォーカスの有無を描画するか？など)をテストします。これらは`Look & Feel`によって効果が異なる場合があるようです。
+
+- [http://docs.oracle.com/javase/jp/6/api/javax/swing/AbstractButton.html#setFocusPainted(boolean) setFocusPainted]
+- [http://docs.oracle.com/javase/jp/6/api/javax/swing/AbstractButton.html#setBorderPainted(boolean) setBorderPainted]
+- [http://docs.oracle.com/javase/jp/6/api/javax/swing/AbstractButton.html#setContentAreaFilled(boolean) setContentAreaFilled]
+- [http://docs.oracle.com/javase/jp/6/api/javax/swing/AbstractButton.html#setRolloverEnabled(boolean) setRolloverEnabled]
+
+//**参考リンク
+* コメント [#u75fef0a]
+#comment

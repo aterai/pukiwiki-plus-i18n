@@ -1,0 +1,34 @@
+TITLE:JTextPaneでタブサイズを設定
+#tags(JTextPane)
+#author(aterai)
+#pubdate(2005-04-25T00:01:26+09:00)
+* 概要 [#bc0a9823]
+`JTextPane`でタブサイズを設定します。[https://forums.oracle.com/thread/1507037 Swing (Archive) - tabsize in JTextPane]からの引用です。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTUxfmvVtI/AAAAAAAAAmk/hIXOEpGYKYw/s800/TabSize.png)
+
+* サンプルコード [#f20b0404]
+#code(link){{
+textpane.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+FontMetrics fm = textpane.getFontMetrics(textpane.getFont());
+int charWidth = fm.charWidth('m');
+int tabLength = charWidth * 4;
+TabStop[] tabs = new TabStop[10];
+for(int j=0;j<tabs.length;j++) {
+  tabs[j] = new TabStop((j+1)*tabLength);
+}
+TabSet tabSet = new TabSet(tabs);
+SimpleAttributeSet attrs = new SimpleAttributeSet();
+StyleConstants.setTabSet(attrs, tabSet);
+int l = textpane.getDocument().getLength();
+textpane.getStyledDocument().setParagraphAttributes(0, l, attrs, false);
+}}
+
+* 解説 [#w2ad23ff]
+`JTextArea`は`setTabSize`メソッドでタブサイズを指定することができますが、`JTextPane`では、上記のサンプルのような方法でタブサイズを指定します。
+
+* 参考リンク [#ha0226f7]
+- [https://forums.oracle.com/thread/1507037 Swing (Archive) - tabsize in JTextPane]
+
+* コメント [#h20d6278]
+#comment

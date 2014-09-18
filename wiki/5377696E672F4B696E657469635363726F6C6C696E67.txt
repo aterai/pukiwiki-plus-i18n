@@ -1,0 +1,107 @@
+TITLE:JScrollPaneでキネティックスクロール
+#tags(JScrollPane, Animation, MouseListener, JViewport)
+#author(aterai)
+#pubdate(2010-08-16T13:34:26+09:00)
+* 概要 [#dad5d28f]
+`JScrollPane`にキネティックスクロール(慣性スクロール)風の動作をするマウスリスナーを設定します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTO32D08pI/AAAAAAAAAdE/TpuoGrYo-Q0/s800/KineticScrolling.png)
+
+* サンプルコード [#dca6c47f]
+#code(link){{
+class KineticScrollingListener2 extends MouseAdapter {
+  private static final int SPEED = 6;
+  private static final double D = 0.7;
+  private final Cursor dc;
+  private final Cursor hc = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+  private final javax.swing.Timer inside;
+  private final javax.swing.Timer outside;
+  private final JComponent label;
+  private Point startPt = new Point();
+  private Point delta   = new Point();
+  private static boolean isInside(JViewport vport, JComponent comp) {
+    Point vp = vport.getViewPosition();
+    return (vp.x>=0 && vp.x+vport.getWidth()-comp.getWidth()<=0 &&
+            vp.y>=0 && vp.y+vport.getHeight()-comp.getHeight()<=0);
+  }
+  public KineticScrollingListener2(JComponent comp) {
+    this.label = comp;
+    this.dc = comp.getCursor();
+    this.inside = new javax.swing.Timer(20, new ActionListener() {
+      @Override public void actionPerformed(ActionEvent e) {
+        JViewport vport = (JViewport)label.getParent();
+        Point vp = vport.getViewPosition();
+        //System.out.format("s: %s, %s\n", delta, vp);
+        vp.translate(-delta.x, -delta.y);
+        vport.setViewPosition(vp);
+
+        if (Math.abs(delta.x)>0 || Math.abs(delta.y)>0) {
+          delta.setLocation((int)(delta.x*D), (int)(delta.y*D));
+          //Outside
+          if (vp.x<0 || vp.x+vport.getWidth()-label.getWidth()>0  ) delta.x = (int)(delta.x*D);
+          if (vp.y<0 || vp.y+vport.getHeight()-label.getHeight()>0) delta.y = (int)(delta.y*D);
+        } else {
+          inside.stop();
+          if (!isInside(vport, label)) outside.start();
+        }
+      }
+    });
+    this.outside = new javax.swing.Timer(20, new ActionListener() {
+      @Override public void actionPerformed(ActionEvent e) {
+        JViewport vport = (JViewport)label.getParent();
+        Point vp = vport.getViewPosition();
+        //System.out.format("r: %s\n", vp);
+        if (vp.x<0) vp.x = (int)(vp.x*D);
+        if (vp.y<0) vp.y = (int)(vp.y*D);
+        if (vp.x+vport.getWidth()-label.getWidth()>0)
+          vp.x = (int) (vp.x - (vp.x+vport.getWidth()-label.getWidth())*(1.0-D));
+        if (vp.y+vport.getHeight()>label.getHeight())
+          vp.y = (int) (vp.y - (vp.y+vport.getHeight()-label.getHeight())*(1.0-D));
+        vport.setViewPosition(vp);
+        if (isInside(vport, label)) outside.stop();
+      }
+    });
+  }
+  @Override public void mousePressed(MouseEvent e) {
+    label.setCursor(hc);
+    startPt.setLocation(e.getPoint());
+    inside.stop();
+    outside.stop();
+  }
+  @Override public void mouseDragged(MouseEvent e) {
+    Point pt = e.getPoint();
+    JViewport vport = (JViewport)label.getParent();
+    Point vp = vport.getViewPosition();
+    vp.translate(startPt.x-pt.x, startPt.y-pt.y);
+    vport.setViewPosition(vp);
+    delta.setLocation(SPEED*(pt.x-startPt.x), SPEED*(pt.y-startPt.y));
+    startPt.setLocation(pt);
+  }
+  @Override public void mouseReleased(MouseEvent e) {
+    label.setCursor(dc);
+    if (isInside((JViewport)label.getParent(), label)) {
+      inside.start();
+    } else {
+      outside.start();
+    }
+  }
+}
+}}
+
+* 解説 [#ne8d550b]
+- `scrollRectToVisible`
+-- マウスを放したあと、タイマーを起動し、`JComponent#scrollRectToVisible(Rectangle)`メソッドでスクロール
+- `setViewPosition`
+-- マウスを放したあと、タイマーを起動し、`JViewport#setViewPosition(Point)`メソッドでスクロール
+-- `View`である`JLabel`の外で、移動が止まった(またはマウスがリリースされた)場合は、別のタイマーで`JLabel`の縁まで戻る
+
+* 参考リンク [#edac2f7a]
+- [[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]
+- [[JScrollPaneのオートスクロール>Swing/AutoScroll]]
+- [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
+
+* コメント [#h5b61d84]
+- 慣性(モーメンタム)スクロール、フリックスクロール(フリック+慣性スクロール？)、・・・でもやっぱり猫の掌スクロールを最初に思い出してしまう。 -- [[aterai]] &new{2010-08-16 (月) 13:41:47};
+- `JDK 1.7.0`では、`JViewport#setViewPosition(Point)`を使って右下外部に移動できなくなっているので、[[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]と同じ対応をしてソースを更新。 -- [[aterai]] &new{2011-10-03 (月) 18:08:23};
+
+#comment

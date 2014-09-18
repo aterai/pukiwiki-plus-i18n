@@ -1,0 +1,41 @@
+TITLE:JToolTipの表示位置
+#tags(JToolTip, JWindow, MouseListener, MouseMotionListener)
+#author(aterai)
+#pubdate(2010-05-03T22:32:22+09:00)
+* 概要 [#e77cc7bb]
+`JToolTip`の表示位置がドラッグでマウスカーソルに追従するように設定します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTVoUwnbfI/AAAAAAAAAn8/lAHqv08RJKA/s800/ToolTipLocation.png)
+
+* サンプルコード [#p9c48ec0]
+#code(link){{
+@Override public void mouseDragged(MouseEvent me) {
+  JComponent c = (JComponent)me.getSource();
+  Point p = me.getPoint();
+  if(SwingUtilities.isLeftMouseButton(me)) {
+    tip.setTipText(String.format("Window(x,y)=(%4d,%4d)", p.x, p.y));
+    //tip.revalidate();
+    tip.repaint();
+    //window.pack();
+    window.setLocation(getToolTipLocation(me));
+  }else{
+    if(popup!=null) popup.hide();
+    tip.setTipText(String.format("Popup(x,y)=(%d,%d)", p.x, p.y));
+    p = getToolTipLocation(me);
+    popup = factory.getPopup(c, tip, p.x, p.y);
+    popup.show();
+  }
+}
+}}
+
+* 解説 [#w32ecab3]
+- 左クリックしてドラッグ
+-- `JWindow`に、`JToolTip`を追加して、`Window#setLocation()`で移動
+- 左クリック以外でドラッグ
+-- `PopupFactory#getPopup()`で座標を指定した、`Popup`を取得し表示
+
+* 参考リンク [#i0350c1f]
+- [[JSliderのノブをドラッグ中にToolTipで値を表示>Swing/SliderToolTips]]
+
+* コメント [#s6271bc0]
+#comment

@@ -1,0 +1,136 @@
+TITLE:AntでFindBugsを実行する
+#author(aterai)
+#pubdate(2012-01-19)
+#contents
+
+* 概要 [#g68b00f6]
+`Ant`から`FindBugs`を実行します。
+
+* サンプルターゲット [#h0deaf72]
+#code{{
+<property environment="env" />
+<condition property="have.findbugs">
+  <and>
+    <available classname="edu.umd.cs.findbugs.anttask.FindBugsTask" />
+    <available file="${env.FINDBUGS_HOME}" />
+  </and>
+</condition>
+<target name="findbugs" depends="compile" if="have.findbugs">
+  <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" />
+  <mkdir dir="${build.reports}" />
+  <findbugs home="${env.FINDBUGS_HOME}" effort="max"
+          output="xml" outputFile="${build.reports}/findbugs.xml" >
+    <auxClasspath refid="project.class.path" />
+    <sourcePath path="${src.dir}" />
+    <class location="${build.dest}" />
+  </findbugs>
+</target>
+}}
+
+* 解説 [#g9d082f0]
+** Windows 7 [#a1262f75]
++ [http://findbugs.sourceforge.net/downloads.html FindBugs Downloads]からダウンロードした`findbugs-x.x.x.zip`を適当な場所に展開し、環境変数`FINDBUGS_HOME`に設定
+-- 変数名: `FINDBUGS_HOME`
+-- 変数値: `C:\Applications\findbugs-2.0.2`
++ `%FINDBUGS_HOME%\lib\findbugs-ant.jar`を、`%ANT_HOME%\lib`にコピー(シンボリックリンクでも可)
++ `ant findbugs`で、`findbugs.xml`を生成し、`jenkins`の`FindBugs`プラグインや、`%FINDBUGS_HOME%\bin\findbugs.bat`で`GUI`に読み込む
+
+** Ubuntu 12.10 [#y35a4a7e]
++ [http://findbugs.sourceforge.net/downloads.html FindBugs Downloads]から、`findbugs-x.x.x.tar.gz`をダウンロード
++ 適当な場所に展開して、`$ANT_HOME/lib`以下に、`findbugs-ant.jar`をリンク
+ sudo tar zxvf findbugs-2.0.2.tar.gz -C /usr/share/
+ sudo ln -f -s /usr/share/findbugs-2.0.2/lib/findbugs-ant.jar /usr/share/ant/lib/
++ `.bashrc`などに、環境変数`FINDBUGS_HOME`を記述
+ export FINDBUGS_HOME=/usr/share/findbugs-2.0.2
+
+** FindBugs2.0でParseException: Unparseable date [#tf82fa0e]
+- `FindBugs2.0`で、以下のような`java.text.ParseException: Unparseable date: "12/20/2011 09:17 PM EST"`が発生する場合
+-- `Windows 7`の日本語環境？
+ [findbugs] Executing findbugs from ant task
+ [findbugs] Running FindBugs...
+ [findbugs] java.text.ParseException: Unparseable date: "12/20/2011 09:17 PM EST"
+ [findbugs]     at java.text.DateFormat.parse(DateFormat.java:357)
+ [findbugs]     at edu.umd.cs.findbugs.Version.<clinit>(Version.java:175)
+ [findbugs]     at edu.umd.cs.findbugs.PluginLoader.init(PluginLoader.java:595)
+ [findbugs]     at edu.umd.cs.findbugs.PluginLoader.<init>(PluginLoader.java:280)
+ ...
+
+- [http://findbugs.sourceforge.net/ FindBugs™ - Find Bugs in Java Programs]から`findbugs-2.0.0-source.zip`をダウンロードして展開
+- `findbugs-2.0.0\src\java\edu\umd\cs\findbugs\updates\UpdateChecker.java`を変更
+#code{{
+public class UpdateChecker {
+
+    //public static final String PLUGIN_RELEASE_DATE = "MM/dd/yyyy hh:mm aa z";
+    public static final String PLUGIN_RELEASE_DATE = "MM/dd/yyyy HH:mm z";
+}}
+
+- もしくは、`findbugs-2.0.0\src\java\edu\umd\cs\findbugs\Version.java`の`173`行目付近を以下のように変更
+#code{{
+//SimpleDateFormat releaseDateFormat = new SimpleDateFormat(UpdateChecker.PLUGIN_RELEASE_DATE);
+SimpleDateFormat releaseDateFormat = new SimpleDateFormat(UpdateChecker.PLUGIN_RELEASE_DATE, Locale.ENGLISH);
+}}
+
+- `JDK 1.6.0_30`などでコンパイル
+ > cd findbugs-2.0.0
+ > set JAVA_HOME=C:\Program Files\Java\jdk1.6.0_30
+ > ant.bat
+
+- `findbugs-2.0.0\lib`に生成された以下の`jar`ファイルを`%FINDBUGS_HOME%\lib\`に上書きコピー
+-- `annotations.jar`
+-- `findbugs.jar`
+-- `findbugs-ant.jar`
+
+----
+- 以下、再現テストコード
+#code{{
+import java.text.*;
+import java.util.*;
+public class UnparseableDateTest {
+  public static final String PLUGIN_RELEASE_DATE = "MM/dd/yyyy hh:mm aa z";
+  public static void main(String[] args) throws Exception {
+    SimpleDateFormat enDateFormat = new SimpleDateFormat(PLUGIN_RELEASE_DATE, Locale.ENGLISH);
+    System.out.println("1: "+enDateFormat.parse("12/20/2011 09:17 PM EST"));
+
+    SimpleDateFormat jaDateFormat = new SimpleDateFormat(PLUGIN_RELEASE_DATE, Locale.JAPANESE);
+    System.out.println("2: "+jaDateFormat.parse("12/20/2011 09:17 午後 EST"));
+
+    SimpleDateFormat releaseDateFormat = new SimpleDateFormat(PLUGIN_RELEASE_DATE);
+    System.out.println("3: "+releaseDateFormat.parse("12/20/2011 09:17 PM EST"));
+  }
+}
+}}
+
+- `Windows 7`, `cygwin`, `mintty`, `JDK 1.6.0_30`で実行
+ $ export JAVA_HOME="/cygdrive/c/Program Files/Java/jdk1.6.0_30"
+ 
+ $ echo $JAVA_HOME
+ /cygdrive/c/Program Files/Java/jdk1.6.0_30
+ 
+ $ "$JAVA_HOME/bin/javac.exe" UnparseableDateTest.java
+ 
+ $ "$JAVA_HOME/bin/java.exe" -Duser.language=ja UnparseableDateTest
+ 1: Wed Dec 21 11:17:00 JST 2011
+ 2: Wed Dec 21 11:17:00 JST 2011
+ Exception in thread "main" java.text.ParseException: Unparseable date: "12/20/2011 09:17 PM EST"
+     at java.text.DateFormat.parse(DateFormat.java:357)
+     at UnparseableDateTest.main(UnparseableDateTest.java:13)
+ 
+ $ "$JAVA_HOME/bin/java.exe" -Duser.language=en UnparseableDateTest
+ 1: Wed Dec 21 11:17:00 JST 2011
+ 2: Wed Dec 21 11:17:00 JST 2011
+ 3: Wed Dec 21 11:17:00 JST 2011
+
+//----
+//findbugs-noUpdateChecks-2.0.0.zip を使っても ParseException が発生する
+//> The following versions of FindBugs are pre-configured to disable checks for updated versions of FindBugs, and the plugin tha allows communication with the FindBugs community cloud is disabled by default. Such configurations are appropriate in situations where it is important that no information about the use of FindBugs be disclosed outside of the organization where it is used.
+
+* 参考リンク [#e3297a48]
+- [http://findbugs.sourceforge.net/ FindBugs™ - Find Bugs in Java Programs]
+
+* コメント [#sc369256]
+- `MacOSX`でも同じ症状が出ました（`MacOSX 10.6.8`, `Java 1.6.0_29`, `FindBugs 2.0.0`）。`UpdateChecker.java`の修正の方が楽かもです。 -- [[norachlo]] &new{2012-02-16 (木) 21:43:15};
+-- 情報ありがとうございます。特に実害はないようなのですが、気になるので早く修正されるといいですね。 -- [[aterai]] &new{2012-02-17 (金) 14:28:16};
+-- `Bug Tracker`ではすでに`Resolution: Fixed`になっているので、次版では`ParseException`は発生しなくなりそうです。 -- [[aterai]] &new{2012-03-23 (金) 18:35:56};
+-- 修正済みの`2.0.1`がダウンロード可能になっているようです。 -- [[aterai]] &new{2012-07-20 (金) 13:49:47};
+
+#comment

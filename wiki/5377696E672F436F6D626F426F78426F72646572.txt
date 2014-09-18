@@ -1,0 +1,217 @@
+TITLE:JComboBoxのBorderを変更する
+#tags(JComboBox, UIManager, Border, ArrowButton, MouseListener, BasicComboPopup)
+#author(aterai)
+#pubdate(2012-02-20T16:53:02+09:00)
+* 概要 [#t89b1437]
+`JComboBox`の表示部分、矢印ボタン、ドロップダウンリストの`Border`や色を変更します。
+
+#download(https://lh3.googleusercontent.com/-jHpgdiBwt6s/T0H3deyce_I/AAAAAAAABJY/_3k6-paq4lM/s800/ComboBoxBorder.png)
+
+* サンプルコード [#ie6afc63]
+#code(link){{
+//ComboBox.border
+UIManager.put("ComboBox.border", BorderFactory.createLineBorder(Color.WHITE));
+
+//ArrowButton
+combo.setUI(new BasicComboBoxUI() {
+  @Override protected JButton createArrowButton() {
+    JButton b = new JButton(new ArrowIcon()); //.createArrowButton();
+    b.setBackground(Color.BLACK);
+    b.setContentAreaFilled(false);
+    b.setFocusPainted(false);
+    b.setBorder(BorderFactory.createEmptyBorder());
+    return b;
+  }
+});
+
+//DropDownList
+Object o = combo.getAccessibleContext().getAccessibleChild(0);
+((JComponent)o).setBorder(BorderFactory.createMatteBorder(0,1,1,1,Color.WHITE));
+}}
+
+* 解説 [#t78fddd4]
+- 上: `MetalComboBoxUI`
+-- `UIManager.put("ComboBox.border", border)`などで、`Border`を変更しているが、これとは別に、`UI`で独自に余白？が描画される
+-- `MetalComboBoxUI`独自の余白を消す場合は、`MetalTheme`を変更して`MetalLookAndFeel.getControlShadow()`を同色にするか、`MetalComboBoxUI#paintCurrentValueBackground(...)`をオーバーライドする必要がある
+
+- 中: `BasicComboBoxUI`
+-- `MetalComboBoxUI`などにあった余白は消すことができるが、`ComboBox.buttonDarkShadow`が`ArrowButton`の三角とボタンの影に使用されているため、両方を一度に非表示にすることができない
+
+- 下: `BasicComboBoxUI#createArrowButton()`
+-- `BasicComboBoxUI#createArrowButton()`をオーバーライドして、独自のアイコンをもつ`JButton`を使用するように変更
+-- `JComboBox`に`MouseListener`を追加して、マウスカーソルが`JComboBox`内にある場合、`ArrowButton`が`Hover`表示されるように設定
+
+#code{{
+combo.addMouseListener(new MouseAdapter() {
+  private ButtonModel getButtonModel(MouseEvent e) {
+    JComboBox cb = (JComboBox)e.getSource();
+    JButton b = (JButton)cb.getComponent(0);
+    return b.getModel();
+  }
+  @Override public void mouseEntered(MouseEvent e) {
+    getButtonModel(e).setRollover(true);
+  }
+  @Override public void mouseExited(MouseEvent e) {
+    getButtonModel(e).setRollover(false);
+  }
+  @Override public void mousePressed(MouseEvent e) {
+    getButtonModel(e).setPressed(true);
+  }
+  @Override public void mouseReleased(MouseEvent e) {
+    getButtonModel(e).setPressed(false);
+  }
+});
+}}
+
+----
+[http://stackoverflow.com/questions/9322903/how-do-you-change-border-of-the-pop-up-section-of-a-jcombobox java - How do you change border of the pop up section of a JComboBox? - Stack Overflow] を参考にして、`JComboBox`から以下のように、`BasicComboPopup`を取得し、`MatteBorder`を設定
+
+#code{{
+Object o = combo.getAccessibleContext().getAccessibleChild(0);
+((JComponent)o).setBorder(BorderFactory.createMatteBorder(0,1,1,1,Color.WHITE));
+}}
+
+----
+`MetalComboBoxUI#paintCurrentValueBackground(...)`をオーバーライドして、`MetalComboBoxUI`独自の余白を描画しないようにするテスト
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.text.*;
+import javax.swing.plaf.*;
+import javax.swing.plaf.basic.*;
+import javax.swing.plaf.metal.*;
+
+public class ComboBoxUIDemo {
+  private static Color BORDER = Color.GRAY;
+  public JComponent makeUI() {
+    //UIManager.put("ComboBox.foreground", Color.WHITE);
+    //UIManager.put("ComboBox.background", Color.BLACK);
+    //UIManager.put("ComboBox.selectionForeground", Color.CYAN);
+    //UIManager.put("ComboBox.selectionBackground", Color.BLACK);
+
+    //UIManager.put("ComboBox.buttonDarkShadow", Color.WHITE);
+    //UIManager.put("ComboBox.buttonBackground", Color.GRAY);
+    //UIManager.put("ComboBox.buttonHighlight", Color.WHITE);
+    //UIManager.put("ComboBox.buttonShadow", Color.WHITE);
+    //UIManager.put("ComboBox.editorBorder", BorderFactory.createLineBorder(Color.RED));
+
+    Box box = Box.createVerticalBox();
+
+    UIManager.put("ComboBox.border", BorderFactory.createEmptyBorder());
+    for(int i=0; i<2; i++) { // Defalut
+      JComboBox<String> cb = new JComboBox<>(makeModel());
+      if(i%2==0) setEditable(cb);
+      setPopupBorder(cb);
+      box.add(cb);
+      box.add(Box.createVerticalStrut(10));
+    }
+
+    {
+      // Override MetalComboBoxUI#paintCurrentValueBackground(...)
+      JComboBox<String> cb = new JComboBox<>(makeModel());
+      cb.setUI(new MetalComboBoxUI() {
+        @Override public void paintCurrentValueBackground(
+        Graphics g, Rectangle bounds, boolean hasFocus) {
+          //if (MetalLookAndFeel.usingOcean()) {
+          if(MetalLookAndFeel.getCurrentTheme() instanceof OceanTheme) {
+            g.setColor(MetalLookAndFeel.getControlDarkShadow());
+            g.drawRect(bounds.x, bounds.y, bounds.width, bounds.height - 1);
+            //COMMENTOUT>>>
+            //g.setColor(MetalLookAndFeel.getControlShadow());
+            //g.drawRect(bounds.x + 1, bounds.y + 1, bounds.width - 2,
+            //           bounds.height - 3);
+            //<<<COMMENTOUT
+            if (hasFocus && !isPopupVisible(comboBox) && arrowButton != null) {
+              g.setColor(listBox.getSelectionBackground());
+              Insets buttonInsets = arrowButton.getInsets();
+              if (buttonInsets.top > 2) {
+                g.fillRect(bounds.x + 2, bounds.y + 2, bounds.width - 3,
+                           buttonInsets.top - 2);
+              }
+              if (buttonInsets.bottom > 2) {
+                g.fillRect(bounds.x + 2, bounds.y + bounds.height -
+                           buttonInsets.bottom, bounds.width - 3,
+                           buttonInsets.bottom - 2);
+              }
+            }
+          } else if (g == null || bounds == null) {
+            throw new NullPointerException(
+              "Must supply a non-null Graphics and Rectangle");
+          }
+        }
+      });
+      setPopupBorder(cb);
+
+      box.add(cb);
+      box.add(Box.createVerticalStrut(10));
+    }
+
+    UIManager.put("ComboBox.border", BorderFactory.createLineBorder(BORDER));
+    for(int i=0; i<2; i++) { // BasicComboBoxUI
+      JComboBox<String> cb = new JComboBox<>(makeModel());
+      if(i%2==0) setEditable(cb);
+      cb.setUI(new BasicComboBoxUI());
+      setPopupBorder(cb);
+      box.add(cb);
+      box.add(Box.createVerticalStrut(10));
+    }
+
+    JPanel p = new JPanel(new BorderLayout());
+    p.setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
+    p.add(box, BorderLayout.NORTH);
+    return p;
+  }
+  private static void setEditable(JComboBox cb) {
+    cb.setEditable(true);
+    ComboBoxEditor editor = cb.getEditor();
+    Component c = editor.getEditorComponent();
+    if(c instanceof JTextField) {
+      JTextField tf = (JTextField)c;
+      tf.setBorder(BorderFactory.createMatteBorder(1,1,1,0,BORDER));
+    }
+  }
+  private static void setPopupBorder(JComboBox cb) {
+    Object o = cb.getAccessibleContext().getAccessibleChild(0);
+    JComponent c = (JComponent)o;
+    c.setBorder(BorderFactory.createMatteBorder(0,1,1,1,BORDER));
+  }
+  private static DefaultComboBoxModel<String> makeModel() {
+    DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
+    m.addElement("1234");
+    m.addElement("5555555555555555555555");
+    m.addElement("6789000000000");
+    return m;
+  }
+  public static void main(String[] args) {
+//     OceanTheme theme = new OceanTheme() {
+//       @Override protected ColorUIResource getSecondary2() {
+//         return new ColorUIResource(Color.RED);
+//       }
+//     };
+//     MetalLookAndFeel.setCurrentTheme(theme);
+
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new ComboBoxUIDemo().makeUI());
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
+* 参考リンク [#n7bf6174]
+- [http://stackoverflow.com/questions/9322903/how-do-you-change-border-of-the-pop-up-section-of-a-jcombobox java - How do you change border of the pop up section of a JComboBox? - Stack Overflow]
+- [[JComboBoxの内余白>Swing/PaddingComboBox]]
+
+* コメント [#w7156ccd]
+#comment

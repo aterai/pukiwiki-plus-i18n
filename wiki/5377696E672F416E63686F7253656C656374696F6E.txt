@@ -1,0 +1,44 @@
+TITLE:JTableのセルにあるフォーカスを解除
+//#author(aterai)
+#pubdate(2005-04-04T03:22:43+09:00)
+
+* 概要 [#m4aa474a]
+以下のコメントにあるように、ソートや`clearSelection`すれば、選択状態やフォーカスは解除されます。このサンプルはすでに意味が無くなったと思われるので削除します。代替の`JTableHeader`をクリックした場合の例は、[[JTableHeaderをクリックしてそのColumnのセルを全選択>Swing/ColumnSelection]]に移動しました。
+
+// * 概要 [#a145f8ad]
+// JTableのセルにあるフォーカスをヘッダのクリックで解除します。
+//
+// * サンプルコード [#eb1622f1]
+// #code{{
+// table.getTableHeader().addMouseListener(new MouseAdapter() {
+//   public void mousePressed(MouseEvent e) {
+//     JTable table = ((JTableHeader)e.getSource()).getTable();
+//     if(table.isEditing()) {
+//       table.getCellEditor().stopCellEditing();
+//     }
+//     //table.getSelectionModel().clearSelection();
+//     //table.getSelectionModel().setAnchorSelectionIndex(-1);
+//     //table.getSelectionModel().setLeadSelectionIndex(-1);
+//     table.getColumnModel().getSelectionModel().setAnchorSelectionIndex(-1);
+//     table.getColumnModel().getSelectionModel().setLeadSelectionIndex(-1);
+//   }
+// });
+// }}
+//
+// * 解説 [#t5307cba]
+// ヘッダがマウスでクリックされた時に、列または行の`SelectionModel`を取得し、`AnchorSelectionIndex`に範囲外の値を設定します。
+//
+// 以下の方法でも、選択をクリアできます。
+// #code{{
+// table.changeSelection(table.getSelectedRow(),
+//                       table.getSelectedColumn(),
+//                       false, false);
+// }}
+
+* コメント [#m4d48b39]
+- `JDK 1.5.0_06`などにして試してみたところ、特別なことをしなくてもヘッダをクリックしてソートするとセルのフォーカスは外れるようです。 -- [[aterai]] &new{2006-01-13 (金) 16:07:44};
+-- もう修正されているようなので、この記事は削除するか、別の内容に変更するかもしれません。[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6195469 Bug ID: JDK-6195469 REGRESSION: Multiple interval selection is lost in JTable if mouse is dragged] -- [[aterai]] &new{2006-04-19 (水) 22:04:07};
+- 移動したときに、日本語入力するには、どうしたらいいんですかね？ -- [[zero]] &new{2006-03-09 (木) 20:19:17};
+- 多分エクセルみたいな入力のことですよね。アルファベットならマウスで入力状態にしなくてもフォーカスがあるセルに直接入力できますが、`IME`が`on`の日本語入力モードの場合はうまくいかないようです。いまのところこれを簡単に行う方法を僕は知らないです。 -- [[aterai]] &new{2006-03-09 (木) 23:09:26};
+
+#comment

@@ -1,0 +1,177 @@
+TITLE: JRubyでリソース(URL)のエントリを取得してSwingで使用する
+#author(aterai)
+#pubdate(2007-11-06) ((2012-08-02にこちらに移転))
+//[http://d.hatena.ne.jp/aterai/20071106 2007-11-06 - てんぷらメモ@はてな]から、こちらに移動
+#contents(big)
+
+* 概要 [#b0558335]
+以下、`JRuby`からリソース(`URL`)のエントリを取得して`Swing`で使う方法をテストしています。
+
+* サンプルコード [#da146249]
+- http://terai.xrea.jp/data/jruby/resources.rb
+-- 画像は適当に用意してください。
+
+#code{{
+# -*- mode:ruby; Encoding:UTF-8 -*-
+#module Example
+include Java
+import java.awt.BorderLayout
+class MainPanel < javax.swing.JPanel
+  def initialize
+    super BorderLayout.new
+
+    ####new javax.swing.ImageIcon("test.png");
+    #icon = javax.swing.ImageIcon.new "test.png"
+    #icon = javax.swing.ImageIcon.new "./test/test.png"
+    #icon = javax.swing.ImageIcon.new ".\\test\\test.png"
+    #icon = javax.swing.ImageIcon.new "c:/tmp/test.png"
+
+    #new java.net.URL("http://terai.xrea.jp/data/swing/screenshots.png");
+    #url = java.net.URL.new "http://terai.xrea.jp/data/swing/screenshots.png"
+    #url = java.net.URL.new "file:/c:/tmp/test.png"
+    #url = java.net.URL.new "file:///c:/tmp/test.png"
+    #url = java.net.URL.new "file://localhost/c:/tmp/test.png"
+
+    ####this.getClass().getResource("/test.png");
+    url = self.get_class.get_resource "/test.png"
+    #url = self.get_class.get_resource "/toolbarButtonGraphics/general/Copy24.gif"
+    #url = self.get_class.get_resource "/test.png"
+
+    ####file:/C:/tmp/org/jruby/javasupport/proxy/gen/test.png
+    #url = self.get_class.get_resource "test.png"
+
+    ####this.getClass().getClassLoader().getResource("test.png");
+    #url = self.get_class.class_loader.get_resource "test.png"
+    #url = self.get_class.class_loader.get_resource "toolbarButtonGraphics/general/Copy24.gif"
+    #url = self.get_class.class_loader.get_resource "./Example/test.png"
+
+    icon = javax.swing.ImageIcon.new url
+    self.add javax.swing.JLabel.new(icon), BorderLayout::CENTER
+    self.preferred_size = java.awt.Dimension.new 320, 240
+  end
+end
+#end #module
+
+import javax.swing.UIManager
+import javax.swing.WindowConstants
+def createAndShowGUI
+  begin
+    UIManager.look_and_feel = UIManager.system_look_and_feel_class_name
+  rescue Exception => e
+    proxied_e = JavaUtilities.wrap e.cause
+    proxied_e.print_stack_trace
+  end
+  frame = javax.swing.JFrame.new "jruby swing"
+  frame.default_close_operation = WindowConstants::EXIT_ON_CLOSE
+  #frame.content_pane.add Example::MainPanel.new
+  frame.content_pane.add MainPanel.new
+  frame.pack
+  frame.location_relative_to = nil
+  frame.visible = true
+end
+class << r = java.lang.Runnable.new
+  def run
+    createAndShowGUI
+  end
+end
+java.awt.EventQueue.invokeLater r
+}}
+
+** URLからImageIconを生成 [#m3e2dbf6]
+`JRuby`で、カレントディレクトリにあるリソース(`test.png`)を使用する場合は、以下のようにファイル名で、`Swing`の`ImageIcon`を生成することができます。
+
+#code{{
+#Javaの場合 icon = new javax.swing.ImageIcon("test.png");
+icon = javax.swing.ImageIcon.new "test.png"
+}}
+
+`ImageIcon`は、`URL`から生成することも可能です。
+
+#code{{
+url = java.net.URL.new "http://terai.xrea.jp/data/swing/screenshots.png"
+icon = javax.swing.ImageIcon.new url
+}}
+
+* 位置に依存しない方法でリソースにアクセスしてImageIconを生成 [#x3d74df5]
+次に、ローカルにあるリソースを使う方法を試してみます。
+
+このとき位置に依存しない方法でリソースへアクセスするため、クラスパスをルートとするエントリで`URL`を生成します。`jruby.bat`では、クラスパスに環境変数`CLASSPATH`を使用するようなので、カレントディレクトリにクラスパスを通し、そこに`test.png`を置いて実行します。
+
+ >set CLASSPATH=.
+ >jruby resources.rb
+
+`Class.getResource`メソッドを使う場合、`url = this.getClass().getResource("/test.png");`と、絶対パス風に先頭に`/`があればクラスパスをルートにするエントリとみなされます。
+
+#code{{
+#Javaの場合 url = this.getClass().getResource("/test.png");
+url = self.get_class.get_resource "/test.png"
+icon = javax.swing.ImageIcon.new url
+#=> file:/C:/tmp/test.png
+}}
+
+`JRuby`からでも、この方法でリソース(`URL`)を取得することができました。
+- 注: `self.get_class.get_resource`の`get`を省略不可
+
+* jar(zip)アーカイブ内にあるリソースからImageIconを生成 [#waa13e2c]
+同じ方法で、`jar`(`zip`)アーカイブ内にあるリソースを取得する方法を確認します。
+
+クラスパスを`jar`(`zip`)アーカイブに通せば、その中にあるリソースへのエントリを与えることで、ディレクトリなどにあるリソースと同様に`URL`を取得することができます。例えば、[http://java.sun.com/developer/techDocs/hi/repository/ Java look and feel Graphics Repository]にある、`jlfgr-1_0.jar`をダウンロードして、そのまま展開せずにカレントディレクトリに置き、`/toolbarButtonGraphics/general/Copy24.gif`を利用します。
+
+まず、`jar`にクラスパスを通し、
+ set CLASSPATH=.;jlfgr-1_0.jar
+
+`Jar`ファイルのルートからのエントリ`/toolbarButtonGraphics/general/Copy24.gif`を与えます。
+
+#code{{
+url = self.get_class.get_resource "/toolbarButtonGraphics/general/Copy24.gif"
+#=> jar:file:/C:/tmp/jlfgr-1_0.jar!/toolbarButtonGraphics/general/Copy24.gif
+}}
+
+これも特に問題はなさそうです。
+
+他にも、`require`で`jar`ファイルをクラスパスに追加する([http://www.oki-osk.jp/esc/ruby/tut-08.html Ruby チュートリアル - 8. JRuby から Java へのアクセス])？方法や
+
+#code{{
+require "jlfgr-1_0.jar"
+url = self.get_class.class_loader.get_resource "toolbarButtonGraphics/general/Copy24.gif"
+}}
+
+`JAR URL`構文を使ってエントリを取得する方法([http://docs.oracle.com/javase/jp/6/api/java/net/JarURLConnection.html JarURLConnection (Java Platform SE 6)])があるようです。
+
+#code{{
+url = java.net.URL.new "jar:file:jlfgr-1_0.jar!/toolbarButtonGraphics/general/Copy24.gif"
+}}
+
+* 位置に依存しない方法でリソースにアクセスしてImageIconを生成2 [#cbe0e109]
+最後に、`url = this.getClass().getResource("test.png");`と、相対パス風に先頭に`/`が無いエントリを与えた場合の方法を試します。
+
+頭に`/`が無い場合、クラスファイルと同じディレクトリ階層にリソースをおくと便利になるように、`getClass().getResource()メソッド`は、`.`を`/`に変換された、`modified_package_name`が名前(`test.png`)の前に補完されます。
+
+`JRuby`で`module`なしでクラスを作成し、`resources.rb`と同じ階層のディレクトリに`test.png`を置いて
+
+#code{{
+url = self.get_class.get_resource "test.png"
+}}
+
+としても`nil`になります。`Ruby`の`module`を使って別のディレクトリにソースやリソースを移動しても結果は同じです。
+
+どうも、`JRuby`で`Java`のクラスが生成される場合、`Ruby`の`module`は考慮せずに、`package`は`org.jruby.javasupport.proxy.gen`固定になっている？ようです。このため、このディレクトリを作成して、`/org/jruby/javasupport/proxy/gen/test.png`にリソースをコピーしてから、実行してみると
+
+#code{{
+p self.get_class.name
+#=> "org.jruby.javasupport.proxy.gen.JPanel$Proxy0"
+url = self.get_class.get_resource "test.png"
+#=> file:/C:/tmp/org/jruby/javasupport/proxy/gen/test.png
+}}
+
+と`URL`が取得できます。
+
+* まとめ [#h6359289]
+以上、`Java`の場合とほとんど同じ方法が使えますが、ローカルにあるシステムリソースを取得したい場合、`JRuby`では先頭に`/`が付いたClassPathからのエントリを使うほうが、すっきりうまくいきそうです。
+
+* 参考リンク [#x1f3d4a5]
+- [http://docs.oracle.com/javase/jp/6/technotes/guides/lang/resources.html 位置に依存しない方法でのリソースへのアクセス]
+- [http://www.oki-osk.jp/esc/ruby/tut-08.html Ruby チュートリアル - 8. JRuby から Java へのアクセス]
+
+* コメント [#z74eaa06]
+#comment

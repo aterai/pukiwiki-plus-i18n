@@ -1,0 +1,38 @@
+TITLE:JTextPaneで最終行に移動
+#tags(JTextPane, JTextComponent, Caret, Document)
+#author(aterai)
+#pubdate(2005-08-01T02:22:59+09:00)
+* 概要 [#rf478a7f]
+`CaretPosition`を指定して`JTextPane`の最終行に移動します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTId9wo-yI/AAAAAAAAAS0/GZbZiJfMOwI/s800/CaretPosition.png)
+
+* サンプルコード [#i47b5978]
+#code(link){{
+Document doc = jtp.getDocument();
+try{
+  doc.insertString(doc.getLength(), str+"\n", null);
+  jtp.setCaretPosition(doc.getLength());
+}catch(BadLocationException e) {}
+}}
+
+* 解説 [#mee5ef8f]
+上記のサンプルでは、`Document`に文字列と改行(`JTextComponent`内での改行は常に`\n`であり、`System.getProperties("line.separator")`としたり、`\r\n`を考慮する必要はない)を追加した後、その`Document`の一番最後に`JTextComponent#setCaretPosition(int)`メソッドでキャレットを移動しています。
+
+`Document`の最後ではなく、現在のキャレットの位置から、その行番号を取得したい場合は、以下のようにします。
+
+#code{{
+public static int getLineAtCaret(JTextComponent component) {
+  int caretPosition = component.getCaretPosition();
+  Element root = component.getDocument().getDefaultRootElement();
+  return root.getElementIndex(caretPosition)+1;
+}
+}}
+
+* 参考リンク [#tea24622]
+- [[JScrollPaneのオートスクロール>Swing/AutoScroll]]
+- [https://forums.oracle.com/thread/1393939 Swing - Line Number in JTextPane]
+- [http://stackoverflow.com/questions/1627028/how-to-set-auto-scrolling-of-jtextarea-in-java-gui How to set AUTO-SCROLLING of JTEXTAREA in Java GUI? - Stack Overflow]
+
+* コメント [#f7f203e1]
+#comment

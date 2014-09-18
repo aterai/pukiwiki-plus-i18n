@@ -1,0 +1,40 @@
+TITLE:JTabbedPaneのタブにMnemonicを追加
+#tags(JTabbedPane, Mnemonic, JLabel)
+#author(aterai)
+#pubdate(2008-09-01T13:22:20+09:00)
+* 概要 [#v5ca5302]
+`JTabbedPane`のタブに`Mnemonic`を追加します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUu2fjTpI/AAAAAAAAAmg/EST6gnFRH84/s800/TabMnemonic.png)
+
+* サンプルコード [#o82d41ae]
+#code(link){{
+tab.addTab("Button", new JButton("button"));
+tab.setMnemonicAt(3, KeyEvent.VK_B);
+tab.setDisplayedMnemonicIndexAt(3, 0);
+}}
+
+* 解説 [#h7d38d0a]
+上記のサンプルコードは、`3`番目のタブにKBD{Alt+B}でフォーカスが移動するように、`JTabbedPane#setMnemonicAt`メソッドを使用しています。
+また、タブタイトルの先頭文字(`B`)にアンダーラインが入るように`JTabbedPane#setDisplayedMnemonicIndexAt`メソッドで設定しています。
+
+----
+`JDK 6`以降でタブに`JComponent`を追加する場合、`JTabbedPane#setDisplayedMnemonicIndexAt`メソッドでは`Mnemonic`にアンダーラインは引かれないので、追加したコンポーネント自体にアンダーラインを引くよう設定します。
+
+#code{{
+int index = tab.getTabCount();
+String tabTitle = "label(0)";
+JPanel p = new JPanel(new BorderLayout());
+JLabel label = new JLabel(tabTitle);
+JButton button = new JButton("x");
+p.add(label,  BorderLayout.WEST);
+p.add(button, BorderLayout.EAST);
+tab.addTab(tabTitle, new JTree());
+tab.setTabComponentAt(index, p);
+tab.setMnemonicAt(index, KeyEvent.VK_0);
+label.setDisplayedMnemonic(KeyEvent.VK_0);
+}}
+
+//**参考リンク
+* コメント [#kb7f7635]
+#comment

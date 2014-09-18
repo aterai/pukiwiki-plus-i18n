@@ -1,0 +1,36 @@
+TITLE: AntのScriptタスクでJavaScriptを使用する
+#author(aterai)
+#pubdate(2011-02-15)
+#contents
+
+* 概要 [#t1eb858b]
+`Ant`の`Script`タスクで`JavaScript`を使用し、簡単なタスクを作成、実行します。
+
+* サンプルターゲット [#p50eeb64]
+#code{{
+<property name="test.Name" value="Example" />
+<target name="script-test">
+  <echo message="${test.Name}" />
+  <script language="javascript"><![CDATA[
+    project.setNewProperty("test.name", project.getProperty("test.Name").toLowerCase());
+  ]]></script>
+  <echo message="${test.name}" />
+</target>
+<target name="lower" depends="script-test">
+  <echo message="${test.name}" />
+</target>
+}}
+
+* 解説 [#wcb80b60]
+[[AntのTaskを自作>Ant/Task]]するまでもない程度の簡単なタスクは、`Script`タスクで`JavaScript`(`Rhino`)を使用すると便利です。上記のサンプルでは、`test.Name`プロパティの文字列をすべて小文字に変換して、`test.name`プロパティを作成しています。
+
+* 参考リンク [#t07379cf]
+- [http://ant.apache.org/manual/Tasks/script.html Script Task]
+- [http://api.dpml.net/org/apache/ant/1.7.0/org/apache/tools/ant/Project.html Project (Apache Ant API) - Project]
+-- [http://api.dpml.net/org/apache/ant/1.7.0/org/apache/tools/ant/Project.html#setNewProperty(java.lang.String,%20java.lang.String) Project#setNewProperty(...)]
+- [http://weblogs.java.net/blog/emcmanus/archive/2010/09/20/using-javascript-make-apache-ant-less-painful Using JavaScript to make Apache Ant less painful]
+- [[AntのScriptタスク中でif文を使った条件分岐を行う>Ant/Script]]
+- [[AntのTaskを自作>Ant/Task]]
+
+* コメント [#o6472921]
+#comment

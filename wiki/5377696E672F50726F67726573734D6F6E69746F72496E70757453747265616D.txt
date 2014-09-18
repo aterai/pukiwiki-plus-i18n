@@ -1,0 +1,128 @@
+TITLE:ProgressMonitorInputStreamを使用してテキストファイルのダウンロード状況を表示
+#tags(ProgressMonitorInputStream, ProgressMonitor, JProgressBar, SwingWorker, URLConnection, JTextArea)
+#author(aterai)
+#pubdate(2013-04-22T03:35:42+09:00)
+* 概要 [#e62dec86]
+`ProgressMonitorInputStream`を使用してテキストファイルのダウンロード状態を進捗表示します。
+
+#download(https://lh4.googleusercontent.com/-gXnU23f7iiw/UXQuzmKdfVI/AAAAAAAABp8/aPk0QR78NlY/s800/ProgressMonitorInputStream.png)
+
+* サンプルコード [#pabe4298]
+#code(link){{
+class RunAction extends AbstractAction {
+  public RunAction() {
+    super("Load");
+  }
+  @Override public void actionPerformed(ActionEvent e) {
+    runButton.setEnabled(false);
+    textArea.setText("");
+
+    URLConnection urlConnection = getURLConnection();
+    if(urlConnection==null) {
+      return;
+    }
+    Charset cs = getCharset(urlConnection, "EUC-JP");
+    int length = urlConnection.getContentLength();
+    JFrame frame = (JFrame)SwingUtilities.getWindowAncestor((Component)e.getSource());
+
+    try{
+      InputStream is = urlConnection.getInputStream();
+      ProgressMonitorInputStream pmis = new ProgressMonitorInputStream(frame, "Loading", is);
+      monitor = pmis.getProgressMonitor();
+      monitor.setNote(" "); //Need for JLabel#getPreferredSize
+      monitor.setMillisToDecideToPopup(0);
+      monitor.setMillisToPopup(0);
+      monitor.setMinimum(0);
+      monitor.setMaximum(length);
+
+      worker = new MonitorTask(pmis, cs, length);
+      worker.execute();
+    }catch(IOException ex) {
+      ex.printStackTrace();
+    }
+  }
+}
+
+private class MonitorTask extends Task {
+  public MonitorTask(ProgressMonitorInputStream pmis, Charset cs, int length) {
+    super(pmis, cs, length);
+  }
+  @Override protected void process(List<Chunk> chunks) {
+    for(Chunk c: chunks) {
+      textArea.append(c.line+"\n");
+      monitor.setNote(c.note);
+    }
+    textArea.setCaretPosition(textArea.getDocument().getLength());
+  }
+  @Override public void done() {
+    runButton.setEnabled(true);
+    String text = null;
+    try{
+      if(pmis!=null) {
+        pmis.close();
+      }
+      text = isCancelled() ? "Cancelled" : get();
+    }catch(IOException | InterruptedException | ExecutionException ex) {
+      ex.printStackTrace();
+      text = "Exception";
+    }
+    System.out.println(text);
+  }
+}
+
+private static class Task extends SwingWorker<String, Chunk> {
+  protected final ProgressMonitorInputStream pmis;
+  protected final Charset cs;
+  protected final int length;
+  public Task(ProgressMonitorInputStream pmis, Charset cs, int length) {
+    super();
+    this.pmis = pmis;
+    this.cs = cs;
+    this.length = length;
+  }
+  @Override public String doInBackground() {
+    String ret = "Done";
+    try(BufferedReader reader = new BufferedReader(new InputStreamReader(pmis, cs));
+      Scanner scanner = new Scanner(reader)) {
+      int i = 0;
+      int size = 0;
+      while(scanner.hasNextLine()) {
+        if(i%50==0) { //Wait
+          Thread.sleep(10);
+        }
+        i++;
+        String line = scanner.nextLine();
+        size += line.getBytes(cs).length + 1; //+1: \n
+        String note = String.format("%03d%% - %d/%d%n", 100*size/length, size, length);
+        //System.out.println(note);
+        publish(new Chunk(line, note));
+      }
+    }catch(InterruptedException | IOException ex) {
+      System.out.println("Exception");
+      ret = "Exception";
+      cancel(true);
+    }
+    return ret;
+  }
+}
+}}
+
+* 解説 [#xaf420db]
+上記のサンプルでは、`URLConnection`から開いた`InputStream`に`ProgressMonitorInputStream`をラップして、ファイルのダウンロード進捗状態を`ProgressMonitor`で表示しています。
+
+- `ProgressMonitorInputStream`の使用する`ProgressMonitor`の最大値は、ファイルサイズ(バイト)
+-- `ProgressMonitorInputStream`がデフォルトで設定する最大値は、`InputStream#available()`の値
+-- この値がダウンロード中のストリームの合計バイト数を返す訳ではないので、これを最大値のままにしておくと、`ProgressMonitor`が表示されない、またはすぐ閉じてしまう
+-- `URLConnection#getContentLength()`で取得したバイト数を`ProgressMonitor#setMaximum(...)`で設定
+- 一行ずつ`JTextArea`に文字列として読み込ませるために、`InputStreamReader`を使用しているので、エンコードを`URLConnection#getContentEncoding()`や`URLConnection#getContentType()`などで取得
+-- 何パーセント読み込んだかを`ProgressMonitor#setNote(...)`で表示する場合は、一行が何バイトかを`String#getBytes(Charset)`で取得して計算
+-- 注: 改行は`1`バイトで決め打ちしている
+-- 進捗を表示する前に`ProgressMonitor#setNote("dummy note");`としておかないと、`Note`に使用する`JLabel`が`null`のままで表示されない、またはレイアウトがおかしくなる
+
+* 参考リンク [#ie55372f]
+- [[ProgressMonitorがダイアログを表示するまでの待ち時間>Swing/MillisToDecideToPopup]]
+
+* コメント [#f8c160df]
+- EDT外で`ProgressMonitor`を変更する(`monitor.setMinimum(0);`など)のは駄目な気がするので、修正。 -- [[aterai]] &new{2014-02-04 (火) 15:05:59};
+
+#comment

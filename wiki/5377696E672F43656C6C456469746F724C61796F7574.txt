@@ -1,0 +1,162 @@
+TITLE:TableCellEditorのレイアウトを変更
+#tags(JTable, TableCellEditor, BorderLayout, JTextField, JButton, Focus, KeyboardFocusManager)
+#author(aterai)
+#pubdate(2009-02-02T14:08:34+09:00)
+* 概要 [#d64f644d]
+`TableCellEditor`のレイアウトを変更して、`CellEditor`の隣に`JButton`を配置します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTIlcF-6vI/AAAAAAAAATA/mS6Q_BfuY6c/s800/CellEditorLayout.png)
+
+* サンプルコード [#bcfb306a]
+#code(link){{
+class CustomComponentCellEditor extends DefaultCellEditor {
+  protected final JTextField field;
+  protected JButton button;
+  private final JPanel panel = new JPanel(new BorderLayout());
+  public CustomComponentCellEditor(JTextField field) {
+    super(field);
+    this.field = field;
+    button = new JButton();
+    button.setPreferredSize(new Dimension(25, 0));
+    field.setBorder(BorderFactory.createEmptyBorder(0,2,0,0));
+    panel.add(field);
+    panel.add(button, BorderLayout.EAST);
+    panel.setFocusable(false);
+  }
+  @Override public Component getTableCellEditorComponent(JTable table, Object value,
+                         boolean isSelected, int row, int column) {
+    //System.out.println("getTableCellEditorComponent");
+    field.setText(Objects.toString(value, ""));
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        field.requestFocusInWindow();
+      }
+    });
+    return panel;
+  }
+  @Override public boolean isCellEditable(final java.util.EventObject e) {
+    //System.out.println("isCellEditable");
+    if(e instanceof KeyEvent) {
+      //System.out.println("KeyEvent");
+      EventQueue.invokeLater(new Runnable() {
+        @Override public void run() {
+          char kc = ((KeyEvent)e).getKeyChar();
+          if(!Character.isIdentifierIgnorable(kc)) {
+            field.setText(field.getText()+kc);
+          }
+          field.setCaretPosition(field.getText().length());
+          //field.requestFocusInWindow();
+        }
+      });
+    }
+    return super.isCellEditable(e);
+  }
+  @Override public Component getComponent() {
+    return panel;
+  }
+}
+}}
+
+* 解説 [#k40bb169]
+- `0`列目
+-- `DefaultCellEditor`を継承する`CustomComponentCellEditor`を作成
+-- `JTextField`をコンストラクタの引数にしているが、ダミー
+-- 実体は`JPanel`で、これをセルエディタとして表示(`TableCellEditor#getTableCellEditorComponent`が`JPanel`を返す)
+-- この`JPanel`のレイアウトを`BorderLayout`にして、`JTextField`と`JButton`を配置
+-- `TableCellEditor#getCellEditorValue`は`JTextField`の値を返し、フォーカス、キー入力時の編集開始なども`JTextField`になるように変更
+--参考: [https://forums.oracle.com/thread/1354286 Swing - JTable editor issue]:Darryl.Burke さんの投稿(2009/01/27 20:12 (reply 6 of 8))
+
+- `1`列目
+-- `DefaultCellEditor`を継承する`CustomCellEditor`を作成
+-- `JTextField`をコンストラクタの引数(セルエディタの実体)として使用
+-- `JTextField`に`JButton`の幅の右余白を設定
+-- `JTextField`が表示されたときに、余白に`JButton`を`setBounds`で配置
+-- 参考:[[JTextField内にアイコンを追加>Swing/IconTextField]]
+
+#code{{
+class CustomCellEditor extends DefaultCellEditor {
+  private static final int BUTTON_WIDTH = 20;
+  protected final JButton button = new JButton();
+  public CustomCellEditor(final JTextField field) {
+    super(field);
+    field.setBorder(BorderFactory.createEmptyBorder(0,2,0,BUTTON_WIDTH));
+    field.addHierarchyListener(new HierarchyListener() {
+      @Override public void hierarchyChanged(HierarchyEvent e) {
+        if((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED)!=0
+            && field.isShowing()) {
+          field.removeAll();
+          field.add(button);
+          Rectangle r = field.getBounds();
+          button.setBounds(r.width-BUTTON_WIDTH, 0, BUTTON_WIDTH, r.height);
+        }
+      }
+    });
+  }
+  @Override public Component getComponent() {
+    //@see JTable#updateUI()
+    SwingUtilities.updateComponentTreeUI(button);
+    return super.getComponent();
+  }
+}
+}}
+
+- `2`列目
+-- `DefaultCellEditor`を継承する`CustomComponentCellEditor2`を作成
+-- `JTextField`をコンストラクタの引数にしているが、ダミー
+-- 実体は`JPanel`を継承する`CustomComponent`で、これをセルエディタとして表示
+-- `CustomComponent#processKeyBinding(...)`をオーバーライドして、キー入力開始時に`KeyboardFocusManager.getCurrentKeyboardFocusManager().redispatchEvent(field, e);`を呼び出している
+-- あとは、`0`列目の`CustomComponentCellEditor`と同様
+
+#code{{
+class CustomComponent extends JPanel {
+  public final JTextField field = new JTextField();
+  protected JButton button;
+  public CustomComponent() {
+    super(new BorderLayout(0,0));
+    button = new JButton();
+    this.add(field);
+    this.add(button, BorderLayout.EAST);
+  }
+  @Override protected boolean processKeyBinding(
+      final KeyStroke ks, final KeyEvent e, int condition, boolean pressed) {
+    if(!field.isFocusOwner() && !pressed) {
+      field.requestFocusInWindow();
+      SwingUtilities.invokeLater(new Runnable() {
+        @Override public void run() {
+          KeyboardFocusManager.getCurrentKeyboardFocusManager()
+            .redispatchEvent(field, e);
+        }
+      });
+    }
+    return super.processKeyBinding(ks, e, condition, pressed);
+  }
+}
+class CustomComponentCellEditor2 extends DefaultCellEditor {
+  private final CustomComponent component;
+  public CustomComponentCellEditor2(CustomComponent component) {
+    super(component.field);
+    this.component = component;
+  }
+  @Override public Component getTableCellEditorComponent(JTable table,
+        Object value, boolean isSelected, int row, int column) {
+    component.field.setText(value!=null?value.toString():"");
+    return component;
+  }
+  @Override public Component getComponent() {
+    return component;
+  }
+}
+}}
+
+- `3`列目
+-- デフォルト
+
+* 参考リンク [#i9a92ff6]
+- [https://forums.oracle.com/thread/1354286 Swing - JTable editor issue]
+- [[JTextField内にアイコンを追加>Swing/IconTextField]]
+
+* コメント [#k839423b]
+- KBD{F2}で編集開始した場合、フォーカスできない問題を修正。 -- [[aterai]] &new{2009-08-10 (月) 15:50:27};
+- ソースコードだけ変更して、こちらのページの修正を忘れていたorzので、新しく追加した`2`列目の解説と、最終列はデフォルトであることを追記。スクリーンショットは面倒なので更新しない。 -- [[aterai]] &new{2011-08-30 (火) 18:26:59};
+
+#comment

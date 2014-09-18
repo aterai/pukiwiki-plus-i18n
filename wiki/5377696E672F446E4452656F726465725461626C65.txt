@@ -1,0 +1,37 @@
+TITLE:TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え
+#tags(JTable, TransferHandler, DragAndDrop)
+#author(aterai)
+#pubdate(2009-09-07T15:58:48+09:00)
+* 概要 [#fbf1230b]
+`JTable`の行を複数選択し、ドラッグ＆ドロップで並べ替えを可能にする`TransferHandler`を作成します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTLg-5HyXI/AAAAAAAAAXs/Wda5rMSf-1c/s800/DnDReorderTable.png)
+
+* サンプルコード [#y7890e8f]
+#code(link){{
+JTable table = new JTable(model);
+table.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+table.setTransferHandler(new TableRowTransferHandler());
+table.setDropMode(DropMode.INSERT_ROWS);
+table.setDragEnabled(true);
+}}
+
+* 解説 [#z3172930]
+上記のサンプルの`TransferHandler`(`JDK 6`で導入された`TransferHandler#canImport`メソッドなどを使用)は、[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]のものとほぼ同じです。
+
+----
+[[JTableの行をドラッグ＆ドロップ>Swing/DnDTable]]とは異なり、複数行を選択して`Drag&Drop`による移動が可能になっています。
+
+* 参考リンク [#z9df5392]
+- [http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#BasicDnD Drag and Drop and Data Transfer: Examples (The Java™ Tutorials > Creating a GUI with JFC/Swing > Drag and Drop and Data Transfer)]
+-- [http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/DropDemoProject/src/dnd/ListTransferHandler.java ListTransferHandler.java]
+- [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]
+- [[JTableの行をドラッグ＆ドロップ>Swing/DnDTable]]
+- [[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]
+
+* コメント [#ldd8458d]
+- テスト -- [[aterai]] &new{2009-09-26 (土) 02:19:20};
+-- [[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]に移動。
+- このサンプルでは、ソートされた状態での並べ替えは想定していない。 -- [[aterai]] &new{2014-02-20 (木) 19:50:30};
+
+#comment

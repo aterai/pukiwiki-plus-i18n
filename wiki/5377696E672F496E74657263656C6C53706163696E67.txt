@@ -1,0 +1,51 @@
+TITLE:JTableの罫線の有無とセルの内余白を変更
+#tags(JTable)
+#author(aterai)
+#pubdate(2011-05-30T16:37:49+09:00)
+* 概要 [#mb66743f]
+`JTable`の罫線の表示非表示とセルの内余白を変更します。
+
+#download(https://lh3.googleusercontent.com/-zDg_KUxGwU4/TeNHkhhJYGI/AAAAAAAAA8M/G5R8rKLVzUg/s800/IntercellSpacing.png)
+
+* サンプルコード [#hf7ab7cd]
+#code(link){{
+add(new JCheckBox(new AbstractAction("setShowVerticalLines") {
+  @Override public void actionPerformed(ActionEvent e) {
+    Dimension d = table.getIntercellSpacing();
+    if(((JCheckBox)e.getSource()).isSelected()) {
+      table.setShowVerticalLines(true);
+      table.setIntercellSpacing(new Dimension(1, d.height));
+    }else{
+      table.setShowVerticalLines(false);
+      table.setIntercellSpacing(new Dimension(0, d.height));
+    }
+  }
+}));
+add(new JCheckBox(new AbstractAction("setShowHorizontalLines") {
+  @Override public void actionPerformed(ActionEvent e) {
+    Dimension d = table.getIntercellSpacing();
+    if(((JCheckBox)e.getSource()).isSelected()) {
+      table.setShowHorizontalLines(true);
+      table.setIntercellSpacing(new Dimension(d.width, 1));
+    }else{
+      table.setShowHorizontalLines(false);
+      table.setIntercellSpacing(new Dimension(d.width, 0));
+    }
+  }
+}));
+}}
+
+* 解説 [#y7260618]
+`JTable`の罫線を非表示にしてもセルの内余白が`0`でない場合、選択状態でその内余白が表示されるので、上記のサンプルでは、`JTable#setShowVerticalLines(boolean)`などと一緒に、`JTable#setIntercellSpacing(Dimension)`で余白を`0`に切り替えています。
+
+- 罫線
+-- `JTable#setShowVerticalLines(boolean);`
+-- `JTable#setShowHorizontalLines(boolean);`
+- セルの内余白
+-- `JTable#setIntercellSpacing(Dimension intercellSpacing);`
+--- `JTable#setRowMargin(intercellSpacing.height);`
+--- `JTable#getColumnModel().setColumnMargin(intercellSpacing.width);`
+
+//**参考リンク
+* コメント [#j8f013a4]
+#comment

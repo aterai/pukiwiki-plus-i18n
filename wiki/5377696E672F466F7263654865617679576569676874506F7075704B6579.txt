@@ -1,0 +1,82 @@
+TITLE:JToolTipをGlassPane上のコンポーネントで表示する
+#tags(JToolTip, GlassPane, ToolTipManager, PopupFactory)
+#author(aterai)
+#pubdate(2009-05-11T16:10:58+09:00)
+* 概要 [#d46a12cd]
+`JToolTip`を`GlassPane`上のコンポーネントに追加した場合でも、手前に表示されるように設定します。主に[https://forums.oracle.com/thread/1357949 Swing - ComboBox scroll and selected/highlight on glasspane]を参考にしています。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTNMeZI4ZI/AAAAAAAAAaY/8XHy9j6jQw0/s800/ForceHeavyWeightPopupKey.png)
+
+* サンプルコード [#f0477f43]
+#code(link){{
+//Swing - ComboBox scroll and selected/highlight on glasspane
+//https://forums.oracle.com/thread/1357949
+try {
+  Class clazz = Class.forName("javax.swing.PopupFactory");
+  Field field = clazz.getDeclaredField("forceHeavyWeightPopupKey");
+  field.setAccessible(true);
+  label2.putClientProperty(field.get(null), Boolean.TRUE);
+} catch (Exception ex) {
+  ex.printStackTrace();
+}
+}}
+
+* 解説 [#rec54369]
+上記のサンプルでは、ボタンをクリックすると、二つのラベルをもつ`GlassPane`が表示されます。
+
+- `111...`(左)
+-- `GlassPane`の下に`JToolTip`が表示される
+-- 親フレームの外に`JToolTip`がはみ出す場合は、正常に表示される
+-- %%`ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);`では効果なし？%%
+- `222...`(右)
+-- 正常に表示されるように、常に、`JToolTip`を重量コンポーネントとして表示している
+-- `PopupFactory`クラスの`forceHeavyWeightPopupKey`をリフレクションで取得して、`JComponent#putClientProperty`メソッドで設定
+-- [https://forums.oracle.com/thread/1357949 Swing - ComboBox scroll and selected/highlight on glasspane]の`GlassPane`で`JComboBox`のポップアップを正常に表示する方法を引用
+-- `ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);`としておかないと前面に表示されない環境がある？
+
+----
+`JDK 1.7.0`の場合は、`javax.swing.PopupFactory.forceHeavyWeightPopupKey`が無くなってしまったので、以下のように
+`javax.swing.ClientPropertyKey.PopupFactory_FORCE_HEAVYWEIGHT_POPUP`を使用します。
+
+#code{{
+Class clazz = Class.forName("javax.swing.ClientPropertyKey");
+Field field = clazz.getDeclaredField("PopupFactory_FORCE_HEAVYWEIGHT_POPUP");
+field.setAccessible(true);
+combo.putClientProperty(field.get(null), Boolean.TRUE);
+}}
+
+* 参考リンク [#webb6ab8]
+- [https://forums.oracle.com/thread/1357949 Swing - ComboBox scroll and selected/highlight on glasspane]
+- [http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?mode=viewtopic&topic=42615&forum=12 JComboBox の GlassPane 上でのレンダリング]
+- [https://forums.oracle.com/thread/1366094 Swing - Why glass pane requires setLightWeightPopupEnabled(false)?]
+- [http://terai.xrea.jp/Swing/ModalInternalFrame.html JInternalFrameをModalにする]
+
+* コメント [#n67c57a8]
+- `ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);`がバージョンによって効かない場合があるらしい。[http://stackoverflow.com/questions/17150483/force-heavyweight-tooltip-with-shaped-jpanel java - Force HeavyWeight Tooltip with shaped JPanel - Stack Overflow]　 -- [[aterai]] &new{2013-06-18 (火) 08:34:11};
+-- 上記のリンクのサンプルコードだと、`Windows 7` + `JDK 1.7.0_05`: `OK`, `JDK 1.7.0_06`: `NG`。 -- [[aterai]] &new{2013-06-18 (火) 08:42:24};
+-- [http://hg.openjdk.java.net/jdk8/jdk8/jdk/rev/4acd0211f48b jdk8/jdk8/jdk: changeset 5453:4acd0211f48b]
+
+#code{{
+*** src7u5/javax/swing/PopupFactory.java	Wed May 16 07:54:10 2012
+--- src7u6/javax/swing/PopupFactory.java	Fri Aug 10 10:01:16 2012
+************** *
+*** 203,214 ****
+                      popupType = HEAVY_WEIGHT_POPUP;
+                      break;
+                  }
+- } else if (c instanceof Window) {
+- Window w = (Window) c;
+- if (!w.isOpaque() || w.getOpacity() < 1 || w.getShape() != null) {
+- popupType = HEAVY_WEIGHT_POPUP;
+- break;
+- }
+              }
+              c = c.getParent();
+          }
+--- 203,208 ----
+}}
+
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=2224554 Bug ID: 2224554 Version 7 doesn't support translucent popup menus against a translucent window]の修正が関係しているようだ。半透明の`Window`を使わないで、変わった形の`Window`を使う場合は、丁度この記事などのようにリフレクションを使って常に`PopupFactory_FORCE_HEAVYWEIGHT_POPUP`にした方が良さそう。 -- [[aterai]] &new{2013-06-18 (火) 14:11:40};
+-- 去年`Swing Dev ML`で議論されている。[http://mail.openjdk.java.net/pipermail/swing-dev/2012-June/002096.html <Swing Dev> (8) Review request for 7156657 Version 7 doesn't support translucent popup menus against a translucent window] -- [[aterai]] &new{2013-06-18 (火) 14:19:21};
+
+#comment

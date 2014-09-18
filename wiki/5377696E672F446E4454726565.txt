@@ -1,0 +1,86 @@
+TITLE:JTreeのノードをドラッグ＆ドロップ
+#tags(JTree, DragAndDrop, TreeNode)
+#author(aterai)
+#pubdate(2007-02-26T16:17:41+09:00)
+* 概要 [#uec75d42]
+`JTree`のノードをドラッグ＆ドロップで移動します。[http://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks #26: DnD JTree]のソースコードをベースにしています。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTLofRhAtI/AAAAAAAAAX4/d1C6sFO5s4g/s800/DnDTree.png)
+
+* サンプルコード [#le4b53da]
+#code(link){{
+@Override public void dragOver(DropTargetDragEvent dtde) {
+  DataFlavor[] f = dtde.getCurrentDataFlavors();
+  boolean isDataFlavorSupported = f[0].getHumanPresentableName().equals(NAME);
+  if(!isDataFlavorSupported) {
+    //サポートされていないDataFlavor(例えばデスクトップからファイルなど)
+    rejectDrag(dtde);
+    return;
+  }
+  // figure out which cell it's over, no drag to self
+  Point pt = dtde.getLocation();
+  TreePath path = getPathForLocation(pt.x, pt.y);
+  if(path==null) {
+    //ノード以外の場所(例えばJTreeの余白など)
+    rejectDrag(dtde);
+    return;
+  }
+  //Object draggingObject;
+  //try {
+  //  draggingObject = dtde.getTransferable().getTransferData(localObjectFlavor);
+  //}catch(Exception ex) {
+  //  rejectDrag(dtde);
+  //  return;
+  //}
+  Object draggingObject = getSelectionPath().getLastPathComponent();
+  MutableTreeNode draggingNode
+    = (MutableTreeNode) draggingObject;
+  DefaultMutableTreeNode targetNode
+    = (DefaultMutableTreeNode) path.getLastPathComponent();
+  DefaultMutableTreeNode parentNode
+    = (DefaultMutableTreeNode) targetNode.getParent();
+  while(parentNode!=null) {
+    if(draggingNode.equals(parentNode)) {
+      //親ノードを子ノードにドロップしようとしている
+      rejectDrag(dtde);
+      return;
+    }
+    parentNode = (DefaultMutableTreeNode)parentNode.getParent();
+  }
+  //dropTargetNode は、描画用(Rectangle2D、Line)のflag
+  dropTargetNode = targetNode;
+  dtde.acceptDrag(dtde.getDropAction());
+  repaint();
+}
+private void rejectDrag(DropTargetDragEvent dtde) {
+  dtde.rejectDrag();
+  dropTargetNode = null; // dropTargetNode(flag)をnullにして
+  repaint();             // Rectangle2D、Lineを消すためJTreeを再描画
+}
+}}
+
+* 解説 [#lc4f6171]
+[http://www.oreilly.co.jp/books/4873112788/ HACK #26: DnD JTree]から以下の動作を変更しています。
+
+- ルートノードのドラッグを禁止
+- 自ノードから自ノードへのドラッグ＆ドロップを禁止
+-- ノードを自分と一つ上のノードとの間にドロップするとノードが消える
+- 親ノードを子ノードにドロップすることを禁止
+-- フォルダノードを自分自身にドロップするとフォルダノードが消えてしまう
+- サポートされていない`DataFlavor`のドロップを禁止
+-- エクスプローラなどからファイルをドロップすると、描画が乱れる
+
+----
+制限事項:兄弟ノードの末尾に直接ドラッグ＆ドロップすることは出来ません。それらの親ノードにドロップすると兄弟ノードの一番最後に追加されます。
+
+* 参考リンク [#c25ab43d]
+- [http://www.oreilly.co.jp/books/4873112788/ HACK #26: DnD JTree]
+- [http://www.javaworld.com/javaworld/javatips/jw-javatip114.html Java Tip 114: Add ghosted drag images to your JTrees - Java World]
+- [http://www.java2s.com/Code/Java/Swing-JFC/DnDdraganddropJTreecode.htm DnD (drag and drop)JTree code : Tree : Swing JFC : Java examples (example source code) Organized by topic]
+
+* コメント [#of354fb4]
+- `JWS`による起動の場合、`AccessControlException`が発生します。解決する方法はあるのでしょうか。 -- [[hiraoka]] &new{2010-09-21 (火) 18:24:44};
+-- ご指摘ありがとうございます。たしか`Java 1.6.0_20`あたりから`droppedObject = dtde.getTransferable().getTransferData(localObjectFlavor);`が`Web Start`で駄目だったような気がします。`JTable`とか`JTabbedPane`のサンプル([[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]])は修正したけど、`JTree`はすっかり忘れていました。このサンプルの場合はひとつの`JTree`の中で並べ替えるだけなので、`Object droppedObject = getSelectionPath().getLastPathComponent();`のように修正すればいいようです。%%あとでもう少し調べてサンプルコードも修正しようと思います。%% 修正しました。 -- [[aterai]] &new{2010-09-21 (火) 21:15:43};
+- 情報ありがとうございました。 -- [[hiraoka]] &new{2010-09-22 (水) 15:08:46};
+
+#comment

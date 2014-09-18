@@ -1,0 +1,87 @@
+TITLE:JSplitPaneの収納状態を維持する
+#tags(JSplitPane, ActionMap, JButton)
+#author(aterai)
+#pubdate(2010-07-26T06:35:29+09:00)
+* 概要 [#uaf1fd86]
+`JSplitPane`のサイズが変更されても、ディバイダの収納状態を維持するように設定します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOy71x7HI/AAAAAAAAAc8/gLDHiIJS_Yw/s800/KeepHiddenDivider.png)
+
+* サンプルコード [#uf26d930]
+#code(link){{
+final Container divider = ((BasicSplitPaneUI)splitPane.getUI()).getDivider();
+ButtonModel selectMinModel = null;
+ButtonModel selectMaxModel = null;
+for(Component c: divider.getComponents()) {
+  if(c instanceof JButton) {
+    ButtonModel m = ((JButton)c).getModel();
+    if(selectMinModel==null && selectMaxModel==null) {
+      selectMinModel = m;
+    }else if(selectMaxModel==null) {
+      selectMaxModel = m;
+    }
+  }
+}
+JButton smin = new JButton("Min:keepHidden");
+smin.setModel(selectMinModel);
+JButton smax = new JButton("Max:keepHidden");
+smax.setModel(selectMaxModel);
+}}
+
+* 解説 [#s4ccc36a]
+- `Min:DividerLocation, Max:DividerLocation`
+-- `JSplitPane#setDividerLocation`メソッドで`Divider`の位置を設定
+-- `JSplitPane`のリサイズで収納状態が解除される
+#code{{
+panel.add(new JButton(new AbstractAction("Min:DividerLocation") {
+  @Override public void actionPerformed(ActionEvent e) {
+    splitPane.setDividerLocation(0);
+  }
+}));
+}}
+
+- `Min:Action, Max:Action`
+-- `JSplitPane`の`ActionMap`から`selectMax`アクションなどを取得し実行
+-- `JSplitPane`のリサイズで収納状態が解除される
+#code{{
+panel.add(new JButton(new AbstractAction("Max:Action") {
+  @Override public void actionPerformed(final ActionEvent e) {
+    splitPane.requestFocusInWindow();
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        Action selectMaxAction = splitPane.getActionMap().get("selectMax");
+        e.setSource(splitPane);
+        selectMaxAction.actionPerformed(e);
+      }
+    });
+  }
+}));
+}}
+
+- `Min:keepHidden, Max:keepHidden`
+-- `Divider`に表示されている`JButton`を取得し実行
+-- `JSplitPane`がリサイズされても収納状態は維持される
+
+----
+[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5006095 Bug ID: 5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5]のようにリフレクションを使って、`BasicSplitPaneUI#setKeepHidden(true)`メソッドを実行して、収納状態を維持する方法もあります。
+
+#code{{
+try {
+  splitPane.setDividerLocation(0);
+  Method setKeepHidden = BasicSplitPaneUI.class.getDeclaredMethod(
+      "setKeepHidden", new Class[] { Boolean.class });
+  setKeepHidden.setAccessible(true);
+  setKeepHidden.invoke(splitPane.getUI(), new Object[] { Boolean.TRUE });
+}catch(Exception e) {
+  e.printStackTrace();
+}
+}}
+
+* 参考リンク [#p81df09a]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5006095 Bug ID: 5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5]
+- [[JSplitPaneのディバイダを展開、収納する>Swing/OneTouchExpandable]]
+
+* コメント [#z926bfc1]
+- `JSplitPane.setOneTouchExpandable(true);`を使用せず、`JSplitPane`からコンポーネントを削除(`null`に置き換える)追加することで、収納展開する方法(`setVisible(...)`だと収納はうまくいくけど、正常に展開ができない):  [http://stackoverflow.com/questions/14644362/hide-left-right-component-of-a-jsplitpane-or-different-layout java - Hide left/right component of a JSplitPane (or different layout) - Stack Overflow] -- [[aterai]] &new{2013-02-01 (金) 20:14:58};
+
+#comment

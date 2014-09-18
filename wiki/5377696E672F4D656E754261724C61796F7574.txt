@@ -1,0 +1,99 @@
+TITLE:JMenuBarのJMenuを折り返し
+#tags(JMenuBar, JMenu, LayoutManager, FlowLayout)
+#author(aterai)
+#pubdate(2010-12-27T11:25:50+09:00)
+* 概要 [#m66c5025]
+`JMenuBar`のレイアウトマネージャーを変更して、`JMenu`を折り返して表示します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TRf4-liTfjI/AAAAAAAAAwk/CURxxE6iDqk/s800/MenuBarLayout.png)
+
+* サンプルコード [#m99a755d]
+#code(link){{
+JMenuBar menuBar = new JMenuBar();
+menuBar.setLayout(new FlowLayout(FlowLayout.LEFT,2,2) {
+  @Override public Dimension preferredLayoutSize(Container target) {
+    synchronized (target.getTreeLock()) {
+      int targetWidth = target.getSize().width;
+      if (targetWidth == 0) targetWidth = Integer.MAX_VALUE;
+      Insets insets = target.getInsets();
+      int hgap = getHgap();
+      int vgap = getVgap();
+      int maxWidth = targetWidth - (insets.left + insets.right);
+      int height   = vgap;
+      int rowWidth = hgap, rowHeight = 0;
+      int nmembers = target.getComponentCount();
+      for(int i = 0; i < nmembers; i++) {
+        Component m = target.getComponent(i);
+        if(m.isVisible()) {
+          Dimension d = m.getPreferredSize();
+          if(rowWidth + d.width > maxWidth) {
+            height += rowHeight;
+            rowWidth = hgap;
+            rowHeight = 0;
+          }
+          rowWidth += d.width + hgap;
+          rowHeight = Math.max(rowHeight, d.height + vgap);
+        }
+      }
+      height += rowHeight + insets.top  + insets.bottom;
+      return new Dimension(targetWidth, height);
+    }
+  }
+};
+}}
+
+* 解説 [#t7474543]
+上記のサンプルでは、`JMenuBar`(デフォルトの`LayoutManager`は`BoxLayout`)に、`FlowLayout`を継承して折り返しを行う`LayoutManager`を設定して、`JMenu`がフレームの幅に収まらない場合は折り返して表示するようにしています。
+
+----
+上記のサンプルでは、`BorderLayout`を設定した`JPanel#add(menubar, BorderLayout.NORTH)`として`JMenuBar`を追加していますが、`JFrame#setJMenuBar`メソッドを使用した場合、以下のような不具合？があります。
+
+- `JFrame`の最大化、最小化で折り返しが更新されない
+-- 以下のような、`WindowStateListener`を`JFrame`に追加し、`ContentPane`を`revalidate()`して回避
+#code{{
+frame.addWindowStateListener(new WindowAdapter() {
+  @Override public void windowStateChanged(final WindowEvent e) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        System.out.println("windowStateChanged");
+        JFrame f = (JFrame)e.getWindow();
+        ((JComponent)f.getContentPane()).revalidate();
+      }
+    });
+  }
+});
+//frame.getContentPane().addComponentListener(new ComponentAdapter() {
+//  @Override public void componentResized(ComponentEvent e) {
+//    ((JComponent)e.getSource()).revalidate();
+//  }
+//});
+}}
+
+-- または、以下のように、`FlowLayout#layoutContainer`をオーバーライドすることで回避
+#code{{
+//http://tips4java.wordpress.com/2008/11/06/wrap-layout/
+//WrapLayout.java
+//Rob Camick on November 6, 2008
+private Dimension preferredLayoutSize;
+@Override public void layoutContainer(Container target) {
+  Dimension size = preferredLayoutSize(target);
+  if(size.equals(preferredLayoutSize)) {
+    super.layoutContainer(target);
+  }else{
+    preferredLayoutSize = size;
+    Container top = target;
+    while(!(top instanceof Window) && top.getParent() != null) {
+      top = top.getParent();
+    }
+    top.validate();
+  }
+}
+}}
+- `JFrame#pack()`しても、`JFrame`のサイズが変更されない
+-- `JFrame#setSize(...)`に変更することで回避
+
+* 参考リンク [#xf11d561]
+- [http://tips4java.wordpress.com/2008/11/06/wrap-layout/ Wrap Layout « Java Tips Weblog]
+
+* コメント [#ib9f1571]
+#comment

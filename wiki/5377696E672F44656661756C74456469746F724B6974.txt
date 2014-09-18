@@ -1,0 +1,77 @@
+TITLE:DefaultEditorKitでポップアップメニューからコピー
+#tags(DefaultEditorKit, JTextField, JTextComponent, JPopupMenu)
+#author(aterai)
+#pubdate(2005-07-25)
+* 概要 [#d4309d1c]
+`DefaultEditorKit`を使って、`JTextField`などでポップアップメニューを使ったコピー、貼り付け、切り取りを行います。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKk8KGiNI/AAAAAAAAAWM/dJouzZuxv6g/s800/DefaultEditorKit.png)
+
+* サンプルコード [#mcf85a7d]
+#code(link){{
+//textField.setComponentPopupMenu(new TextFieldPopupMenu());
+class TextFieldPopupMenu extends JPopupMenu {
+  private final Action cutAction = new DefaultEditorKit.CutAction();
+  private final Action copyAction = new DefaultEditorKit.CopyAction();
+  private final Action pasteAction = new DefaultEditorKit.PasteAction();
+  private final Action deleteAction = new AbstractAction("delete") {
+    @Override public void actionPerformed(ActionEvent e) {
+      Component c = getInvoker();
+      if(c instanceof JTextComponent) {
+        ((JTextComponent)c).replaceSelection(null);
+      }
+    }
+  };
+  private final Action cut2Action = new AbstractAction("cut2") {
+    @Override public void actionPerformed(ActionEvent e) {
+      Component c = getInvoker();
+      if(c instanceof JTextComponent) {
+        ((JTextComponent)c).cut();
+      }
+    }
+  };
+  public TextFieldPopupMenu() {
+    super();
+    add(cutAction);
+    add(copyAction);
+    add(pasteAction);
+    add(deleteAction);
+    addSeparator();
+    add(cut2Action);
+  }
+  @Override public void show(Component c, int x, int y) {
+    boolean flg;
+    if(c instanceof JTextComponent) {
+      JTextComponent field = (JTextComponent)c;
+      flg = field.getSelectedText()!=null;
+    }else{
+      flg = false;
+    }
+    cutAction.setEnabled(flg);
+    copyAction.setEnabled(flg);
+    deleteAction.setEnabled(flg);
+    cut2Action.setEnabled(flg);
+    super.show(c, x, y);
+  }
+}
+}}
+
+* 解説 [#n6767e6a]
+`DefaultEditorKit`には、エディタとして必要な最小限度の機能がデフォルトで実装されています。上記のサンプルでは、`DefaultEditorKit.CopyAction`で、システムクリップボードを使ったコピーをポップアップメニューで行っています。
+
+サンプルの「切り取り`2`」のように、`JTextComponent#cut()`などを使っても同様のことが行えます。
+
+----
+サンプルを`Java Web Start`で起動した場合は、システム全体の共有クリップボードにはアクセス不可能で、アプリケーション内部のみでのコピー、貼り付けとなるようです。
+
+- [[ClipboardServiceでシステム全体の共有クリップボードにアクセスする>Swing/ClipboardService]]
+
+#ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKnUb6nqI/AAAAAAAAAWQ/L3ylLdA-GIw/s800/DefaultEditorKit1.png)
+
+* 参考リンク [#q0a22893]
+- [[JTextFieldでコピー、貼り付けなどを禁止>Swing/ActionMap]]
+
+* コメント [#wef3f011]
+- 「今後この警告を表示しない」をやめて、セキュリティの警告を表示したいけど、やり方が分からないorz。 -- [[aterai]] &new{2008-02-06 (水) 13:00:48};
+
+#comment

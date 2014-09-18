@@ -1,0 +1,86 @@
+TITLE:JSpinnerのテキストフィールド内に選択不可の文字を追加する
+#tags(JSpinner, Border)
+#author(aterai)
+#pubdate(2010-01-04T15:04:02+09:00)
+* 概要 [#v579ca6f]
+`JSpinner`のテキストフィールド内に選択や編集ができない文字列を追加します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQ5w9QfII/AAAAAAAAAgU/iBrVcxeaFS4/s800/ParticularyNonEditableSpinner.png)
+
+* サンプルコード [#nba8a3cf]
+#code(link){{
+class StringBorder implements Border {
+  private final JComponent parent;
+  private final Insets insets;
+  private final Rectangle rect;
+  private final String str;
+  public StringBorder(JComponent parent, String str) {
+    this.parent = parent;
+    this.str = str;
+    FontRenderContext frc = new FontRenderContext(null, true, true);
+    rect = parent.getFont().getStringBounds(str, frc).getBounds();
+    insets = new Insets(0,0,0,rect.width);
+  }
+  @Override public Insets getBorderInsets(Component c) {
+    return insets;
+  }
+  @Override public boolean isBorderOpaque() {
+    return false;
+  }
+  @Override public void paintBorder(
+      Component c, Graphics g, int x, int y, int width, int height) {
+    Graphics2D g2 = (Graphics2D)g;
+    float tx = x + width - rect.width;
+    float ty = y - rect.y + (height - rect.height)/2;
+    //g2.setPaint(Color.RED);
+    g2.drawString(str, tx, ty);
+  }
+}
+}}
+
+* 解説 [#n6f5d102]
+- 上: `JSpinner.NumberEditor` + `DecimalFormat`
+-- [[JSpinnerの値をパーセントで指定>Swing/NumberEditor]]
+
+#code{{
+JSpinner spinner1 = new JSpinner(new SpinnerNumberModel(0, 0, 1, 0.01));
+JSpinner.NumberEditor editor1 = new JSpinner.NumberEditor(spinner1, "0%");
+spinner1.setEditor(editor1);
+}}
+
+- 下: `JSpinner` + `StringBorder`
+-- `JSpinner`のエディタに余白を設定し、そこに文字列を描画しています。
+
+#code{{
+JSpinner spinner2 = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
+JSpinner.NumberEditor editor2 = new JSpinner.NumberEditor(spinner2);
+spinner2.setEditor(editor2);
+editor2.setOpaque(true);
+editor2.setBackground(Color.WHITE);
+//Border b = new StringBorder(editor2, "percent");
+Border b = new StringBorder(editor2, "%");
+Border c = editor2.getBorder();
+editor2.setBorder((c==null)?b:BorderFactory.createCompoundBorder(c,b));
+}}
+
+----
+以下のように、[http://tips4java.wordpress.com/2009/09/27/component-border/ Component Border ≪ Java Tips Weblog]を利用して、`JLabel`を余白に描画する方法もあります。
+
+#code{{
+JLabel label = new JLabel("%");
+label.setBorder(BorderFactory.createEmptyBorder());
+label.setOpaque(true);
+label.setBackground(Color.WHITE);
+ComponentBorder cb = new ComponentBorder(label);
+cb.setGap(0);
+cb.install(editor2);
+}}
+
+* 参考リンク [#aba4e6cd]
+- [[JSpinnerの値をパーセントで指定>Swing/NumberEditor]]
+- [http://tips4java.wordpress.com/2009/09/27/component-border/ Component Border ≪ Java Tips Weblog]
+
+* コメント [#xb7115a9]
+- `1.7.0`以上でないとコンパイルできなかったのを修正。 -- [[aterai]] &new{2012-10-15 (月) 18:30:23};
+
+#comment

@@ -1,0 +1,58 @@
+TITLE:JTabbedPaneの選択文字色を変更
+#tags(JTabbedPane, ChangeListener)
+#author(aterai)
+#pubdate(2004-02-09)
+* 概要 [#q40bd72b]
+`JTabbedPane`で、選択されたタブの文字色を変更します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJo7nZnbI/AAAAAAAAAUs/6SU2JG2B0t0/s800/ColorTab.png)
+
+* サンプルコード [#g98608e3]
+#code(link){{
+tab.addChangeListener(new ChangeListener() {
+  @Override public void stateChanged(ChangeEvent e) {
+    JTabbedPane jtab = (JTabbedPane)e.getSource();
+    int sindex = jtab.getSelectedIndex();
+    String str = jtab.getTitleAt(sindex);
+    for(int i=0;i<jtab.getTabCount();i++) {
+      if(i==sindex && jtab.getTitleAt(sindex).endsWith("1")) {
+        jtab.setForegroundAt(i, Color.GREEN);
+      }else if(i==sindex) {
+        Color sc = (sindex%2==0)?Color.RED:Color.BLUE;
+        jtab.setForegroundAt(i, sc);
+      }else{
+        jtab.setForegroundAt(i, Color.BLACK);
+      }
+    }
+  }
+});
+}}
+
+* 解説 [#a0f82c36]
+`JTabbedPane`に`ChangeListener`を追加し、条件によってタブの文字色を変更しています。
+
+背景色も変更したかったのですが、`Look and Feel`などによってはうまくいかないようです。`Windows XP`でタブの背景色を変更したい場合は、以下のように`System.setProperty("swing.noxp", "true")`とする必要があります。
+
+#code{{
+public static void createAndShowGUI() {
+  System.setProperty("swing.noxp", "true");
+  try{
+    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+  }catch (Exception e) {
+    throw new InternalError(e.toString());
+  }
+  JFrame frame = new JFrame("@title@");
+//......
+}}
+
+----
+文字色も`Synth(Nimbus)LookAndFeel`などでは、`JTabbedPane#setForegroundAt(...)`で変更することができないようです。
+
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6939001 Bug ID: 6939001 Nimbus: JTabbedPane setBackgroundAt and setForegroundAt have no effect]
+
+* 参考リンク [#l67a03ff]
+- [http://www.crionics.com/products/opensource/faq/swing_ex/JTabbedPaneExamples1.html TabColorExample]
+- [[JTabbedPaneのタブ文字列をハイライト>Swing/TabTitleHighlight]]
+
+* コメント [#y2155bad]
+#comment

@@ -1,0 +1,172 @@
+TITLE:JTableのCellにJCheckBoxを複数配置する
+#tags(JTable, JCheckBox, TableCellRenderer, TableCellEditor, JPanel, InputMap, ActionMap)
+#author(aterai)
+#pubdate(2011-02-28T15:07:56+09:00)
+* 概要 [#v80be979]
+`JTable`のセル中に`JCheckBox`を複数個配置します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TWs6JY73P8I/AAAAAAAAA2M/wwrwT7R5K4k/s800/CheckBoxesInTableCell.png)
+
+* サンプルコード [#p4dd25d7]
+#code(link){{
+class CheckBoxesPanel extends JPanel {
+  protected final String[] title = {"r", "w", "x"};
+  public JCheckBox[] buttons;
+  public CheckBoxesPanel() {
+    super();
+    setOpaque(false);
+    setBackground(new Color(0,0,0,0));
+    setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+    initButtons();
+  }
+  protected void initButtons() {
+    buttons = new JCheckBox[title.length];
+    for(int i=0; i<buttons.length; i++) {
+      JCheckBox b = new JCheckBox(title[i]);
+      b.setOpaque(false);
+      b.setFocusable(false);
+      b.setRolloverEnabled(false);
+      b.setBackground(new Color(0,0,0,0));
+      buttons[i] = b;
+      add(b);
+      add(Box.createHorizontalStrut(5));
+    }
+  }
+  private static final String OSNAME = System.getProperty("os.name");
+  protected void updateButtons(Object v) {
+    if("Windows 7".equals(OSNAME)) { //Windows aero?
+      removeAll();
+      initButtons();
+    }
+    Integer i = (Integer)(v==null?0:v);
+    buttons[0].setSelected((i&(1<<2))!=0);
+    buttons[1].setSelected((i&(1<<1))!=0);
+    buttons[2].setSelected((i&(1<<0))!=0);
+  }
+}
+}}
+
+#code{{
+class CheckBoxesRenderer extends CheckBoxesPanel
+                         implements TableCellRenderer, Serializable {
+  public CheckBoxesRenderer() {
+    super();
+    setName("Table.cellRenderer");
+  }
+  @Override public Component getTableCellRendererComponent(JTable table,
+      Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    updateButtons(value);
+    return this;
+  }
+  public static class UIResource extends CheckBoxesRenderer
+                                 implements UIResource{}
+}
+}}
+
+#code{{
+class CheckBoxesEditor extends CheckBoxesPanel
+                       implements TableCellEditor, Serializable {
+  public CheckBoxesEditor() {
+    ActionListener al = new ActionListener() {
+      @Override public void actionPerformed(ActionEvent e) {
+        fireEditingStopped();
+      }
+    };
+    ActionMap am = getActionMap();
+    for(int i=0; i<buttons.length; i++) {
+      final JCheckBox b = buttons[i];
+      b.addActionListener(al);
+      am.put(title[i], new AbstractAction(title[i]) {
+        @Override public void actionPerformed(ActionEvent e) {
+          b.setSelected(!b.isSelected());
+          fireEditingStopped();
+        }
+      });
+    }
+    InputMap im = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    im.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0), title[0]);
+    im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), title[1]);
+    im.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, 0), title[2]);
+  }
+  @Override public Component getTableCellEditorComponent(JTable table,
+        Object value, boolean isSelected, int row, int column) {
+    updateButtons(value);
+    return this;
+  }
+  @Override public Object getCellEditorValue() {
+    int i = 0;
+    if(buttons[0].isSelected()) i|=1<<2;
+    if(buttons[1].isSelected()) i|=1<<1;
+    if(buttons[2].isSelected()) i|=1<<0;
+    return i;
+  }
+
+  //Copied from AbstractCellEditor
+  protected EventListenerList listenerList = new EventListenerList();
+  transient protected ChangeEvent changeEvent = null;
+  //......
+}}
+
+* 解説 [#mb2dc2f3]
+上記のサンプルでは、`JTable`のセル内に`3`つの`JCheckBox`を配置した`JPanel`を作成し、これを`CellRenderer`と`CellEditor`として別々に使用しています。`JCheckBox`をマウスでクリックすると、その`JCheckBox`の選択状態だけが変化します。
+
+----
+ヘッダカラムの移動、リサイズ(`JFrame`などのリサイズ)で、チェックした内容が消えてしまわないように、`CellEditor`のチェックボックスがクリックされたら`fireEditingStopped()`メソッドを呼び出して編集を終了し更新を確定するようにしています。
+
+%%`JTable`自体に以下の様な`MouseListener`を追加してチェックボックスがクリックされるたびに`table.getCellEditor(row, col).stopCellEditing();`を呼び出しています。%%
+
+//#code{{
+//table.addMouseListener(new MouseAdapter() {
+//  @Override public void mouseReleased(MouseEvent e) {
+//    JTable t = (JTable)e.getComponent();
+//    Point p  = e.getPoint();
+//    int row  = t.rowAtPoint(p);
+//    int col  = t.columnAtPoint(p);
+//    if(t.convertColumnIndexToModel(col)==1) {
+//      t.getCellEditor(row, col).stopCellEditing();
+//    }
+//  }
+//});
+//}}
+
+//JTableにではなく、CellEditor自体にMouseListenerを追加する方法もあります。
+//#code{{
+//class CheckBoxEditorRenderer2 extends CheckBoxEditorRenderer
+//                              implements MouseListener {
+//  private final JTable table;
+//  public CheckBoxEditorRenderer2(JTable table) {
+//    super();
+//    this.table = table;
+//    editor.addMouseListener(this);
+//  }
+//  //Copied form http://tips4java.wordpress.com/2009/07/12/table-button-column/
+//  private boolean isButtonColumnEditor;
+//  @Override public void mousePressed(MouseEvent e) {
+//    if(table.isEditing() &&  table.getCellEditor() == this) {
+//      isButtonColumnEditor = true;
+//    }
+//  }
+//  @Override public void mouseReleased(MouseEvent e) {
+//    if(isButtonColumnEditor &&  table.isEditing()) {
+//      table.getCellEditor().stopCellEditing();
+//    }
+//    isButtonColumnEditor = false;
+//  }
+//  @Override public void mouseClicked(MouseEvent e) {}
+//  @Override public void mouseEntered(MouseEvent e) {}
+//  @Override public void mouseExited(MouseEvent e) {}
+//}
+//}}
+
+* 参考リンク [#wc856fe8]
+- [[JTableのセル中にJRadioButtonを配置>Swing/RadioButtonsInTableCell]]
+- [[JTableのセルに複数のJButtonを配置する>Swing/MultipleButtonsInTableCell]]
+- [[JCheckBoxのセルをロールオーバーする>Swing/RolloverBooleanRenderer]]
+
+* コメント [#xf4aaa77]
+- ビットフラグを`EnumSet`に変更するテスト -- [[aterai]] &new{2011-03-01 (火) 14:22:06};
+-- [[JTableの列にEnumSetを使用する>Swing/EnumSet]]に移動
+- `rwx`セルを選択中にKBD{R}, KBD{W}, KBD{X}キーを入力するとチェックが切り替わるように`InputMap, ActionMap`を追加。 -- [[aterai]] &new{2011-03-09 (水) 22:33:39};
+- `Windows`環境で`Aero`効果を有効にしていると？、残像が表示される場合がある？のを修正。 -- [[aterai]] &new{2011-11-01 (火) 18:12:50};
+
+#comment

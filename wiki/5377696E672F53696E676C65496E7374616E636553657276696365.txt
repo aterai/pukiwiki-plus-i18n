@@ -1,0 +1,66 @@
+TITLE:SingleInstanceServiceを使って Web Start アプリケーションの重複起動を禁止
+#tags(SingleInstanceService, ServiceManager, SingleInstance)
+#author(aterai)
+#pubdate(2008-02-25T02:06:56+09:00)
+* 概要 [#md640f9c]
+`SingleInstanceService`を使って、`Web Start`アプリケーションの重複起動を禁止したり、引数の取得を行います。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTIU5TktI/AAAAAAAAAj4/muKNMFrhEcE/s800/SingleInstanceService.png)
+
+* サンプルコード [#zf8b6235]
+#code(link){{
+final JFrame frame = new JFrame("@title@");
+try {
+  SingleInstanceService sis =
+      (SingleInstanceService)ServiceManager.lookup("javax.jnlp.SingleInstanceService");
+  sis.addSingleInstanceListener(new SingleInstanceListener() {
+    private int count = 0;
+    @Override public void newActivation(String[] args) {
+      //System.out.println(EventQueue.isDispatchThread());
+      EventQueue.invokeLater(new Runnable() {
+        @Override public void run() {
+          JOptionPane.showMessageDialog(frame, "");
+          frame.setTitle("title:"+count);
+          count++;
+        }
+      });
+    }
+  });
+} catch(UnavailableServiceException use) {
+  use.printStackTrace();
+  return;
+}
+}}
+
+* 解説 [#kf8f5501]
+`Web Start`アプリケーションの場合、`javax.jnlp.SingleInstanceService`に、`SingleInstanceListener`を追加することで、新しい次のインスタンスの起動やその時の引数を取得することが簡単に出来ます。
+
+- %%メモ: `JDK 1.6.0_03`では、`SingleInstanceService`は正常に動作しない%%
+-- `JDK 1.6.0_10`で修正済み
+
+----
+コンパイルに、`javaws.jar`が必要なので、以下のようなクラスパスを設定します。
+
+ set CLASSPATH=%JAVA_HOME%/jre/lib/javaws.jar
+
+または、`build.xml`などに記入してください。
+
+#code{{
+<path id="project.class.path">
+  <pathelement location="${build.dest}" />
+  <pathelement location="${java.home}/lib/javaws.jar" />
+  <pathelement path="${java.class.path}" />
+</path>
+}}
+
+- [http://javahowto.blogspot.com/2006/05/javahome-vs-javahome.html Java How To ...: JAVA_HOME vs java.home]
+
+* 参考リンク [#aa4383a9]
+- [http://docs.oracle.com/javase/jp/6/jre/api/javaws/jnlp/javax/jnlp/SingleInstanceService.html SingleInstanceService (JNLP API Reference 1.5)]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6631056 Bug ID: 6631056 SingleInstanceService does not work on JRE 1.6.0_03]
+-- via:[https://forums.oracle.com/thread/1307009 Java Web Start & JNLP - How to use singleinstance service with a JWS application]
+- [https://appframework.dev.java.net/servlets/ReadMsg?listName=users&msgNo=396 Java Web Start SingleInstanceService - appframework(JSR-296)]
+- [[ServerSocketを使ってアプリケーションの複数起動を禁止>Swing/SingleInstanceApplication]]
+
+* コメント [#rd58f835]
+#comment

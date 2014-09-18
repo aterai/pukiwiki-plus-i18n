@@ -1,0 +1,42 @@
+TITLE:TableRowSorterのソートをヘッダクリックで昇順、降順、初期状態に変更
+#tags(JTable, TableRowSorter)
+#author(aterai)
+#pubdate(2008-09-15T17:36:51+09:00)
+* 概要 [#qcd17147]
+`JDK 6`で導入された`TableRowSorter`のソートを、`TableSorter.java`のようにヘッダクリックで昇順、降順、初期状態に切り替わるように設定します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWVWrGvdI/AAAAAAAAApE/-DL1kAZzGsM/s800/TriStateSorting.png)
+
+* サンプルコード [#l29c9a20]
+#code(link){{
+TableModel model = makeTestTableModel();
+JTable table = new JTable(model);
+TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
+  @Override public void toggleSortOrder(int column) {
+    if(column>=0 && column<getModelWrapper().getColumnCount() && isSortable(column)) {
+      List<SortKey> keys = new ArrayList<>(getSortKeys());
+      if(!keys.isEmpty()) {
+        SortKey sortKey = keys.get(0);
+        if(sortKey.getColumn()==column && sortKey.getSortOrder()==SortOrder.DESCENDING) {
+          setSortKeys(null);
+          return;
+        }
+      }
+    }
+    super.toggleSortOrder(column);
+  }
+};
+table.setRowSorter(sorter);
+}}
+
+* 解説 [#lc89320d]
+上記のサンプルでは、`TableRowSorter#toggleSortOrder(int)`をオーバーライドして、クリックした列がソートの第一キーで、ソート順序が`DESCENDING`の場合、ソートキーをクリアしています。このため、同じヘッダを三回クリックすると、昇順(`ASCENDING`)、降順(`DESCENDING`)、初期状態(`UNSORTED`)と遷移して元に戻るようになっています。
+
+* 参考リンク [#qf7f31ba]
+- [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
+- [[TableRowSorterのSortKeysをクリアする>Swing/ClearSortingState]]
+
+* コメント [#s4c0fcaa]
+- スクリーンショットを更新 -- [[aterai]] &new{2008-09-25 (木) 14:23:27};
+
+#comment

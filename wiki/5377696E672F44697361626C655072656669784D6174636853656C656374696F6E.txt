@@ -1,0 +1,35 @@
+TITLE:JListの先頭文字キー入力による検索選択を無効にする
+#tags(JList, JTree)
+#author(aterai)
+#pubdate(2011-09-12T16:36:34+09:00)
+* 概要 [#v9cc8d26]
+`JList`にフォーカスがある状態で英数字キー入力をしたときに先頭文字が一致するアイテムを検索して選択する機能を無効にします。
+
+#download(https://lh6.googleusercontent.com/-_wtzuIN_MvU/Tm2wga2X4hI/AAAAAAAABBs/dUuDS1gj9mM/s800/DisablePrefixMatchSelection.png)
+
+* サンプルコード [#u37e69cc]
+#code(link){{
+JList list = new JList() {
+  @Override public int getNextMatch(String prefix, int startIndex, Position.Bias bias) {
+    return -1;
+  }
+};
+}}
+
+* 解説 [#uef15a1d]
+上記のサンプルでは、`JList#getNextMatch(...)`メソッドをオーバーライドして、戻り値の次にマッチする要素のインデックスが常に`-1`を返すようにすることで、キー入力による先頭文字検索選択を無効にしています。
+
+----
+`JTree`にも`JTree#getNextMatch(...)`メソッドが存在し、同様のキー入力による選択機能がありますが、こちらはインデックスではなく、`TreePath`が戻り値なので、`null`を返すことで無効にすることができます。
+
+#code{{
+JTree tree = new JTree() {
+  @Override public TreePath getNextMatch(String prefix, int startingRow, Position.Bias bias) {
+    return null;
+  }
+};
+}}
+
+//**参考リンク
+* コメント [#yd9ebab2]
+#comment

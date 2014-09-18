@@ -1,0 +1,64 @@
+TITLE:JLayerで子コンポーネントへの入力を制限する
+#tags(JLayer, GlassPane, JScrollPane, JComponent)
+#author(aterai)
+#pubdate(2011-11-28T15:32:54+09:00)
+* 概要 [#p53eaa44]
+`JLayer`を使って、子コンポーネントへのすべての入力を制限します。
+
+#download(https://lh5.googleusercontent.com/-Svne2X0djJ8/TtJGGlPU-OI/AAAAAAAABFM/xjZfqHHbkJ0/s800/PopupMenuBlockLayer.png)
+
+* サンプルコード [#p31bbd51]
+#code(link){{
+class DisableInputLayerUI extends LayerUI<JComponent> {
+  private static final MouseAdapter dummyMouseListener = new MouseAdapter() {};
+  private boolean isBlocking = false;
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    JLayer jlayer = (JLayer)c;
+    jlayer.getGlassPane().addMouseListener(dummyMouseListener);
+    jlayer.setLayerEventMask(
+      AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK |
+      AWTEvent.MOUSE_WHEEL_EVENT_MASK | AWTEvent.KEY_EVENT_MASK);
+  }
+  @Override public void uninstallUI(JComponent c) {
+    JLayer jlayer = (JLayer)c;
+    jlayer.setLayerEventMask(0);
+    jlayer.getGlassPane().removeMouseListener(dummyMouseListener);
+    super.uninstallUI(c);
+  }
+  @Override public void eventDispatched(AWTEvent e, JLayer l) {
+    if(isBlocking && e instanceof InputEvent) {
+      ((InputEvent)e).consume();
+    }
+  }
+  private static final String CMD_REPAINT = "lock";
+  public void setLocked(boolean flag) {
+    firePropertyChange(CMD_REPAINT,isBlocking,flag);
+    isBlocking = flag;
+  }
+  @Override public void applyPropertyChange(PropertyChangeEvent pce, JLayer l) {
+    String cmd = pce.getPropertyName();
+    if(CMD_REPAINT.equals(cmd)) {
+      l.getGlassPane().setVisible((Boolean)pce.getNewValue());
+    }
+  }
+}
+}}
+
+* 解説 [#qb9093db]
+上記のサンプルでは、`JLayer`を使って、`JScrollPane(JScrollBar)`のスクロール、`JTable`のセル選択、`JToolTip`、`JTableHeader`の移動など、子コンポーネントへのすべての入力をまとめて制限しています。
+
+- [[JScrollPaneのスクロールを禁止>Swing/DisableScrolling]]のように、`JScrollPane`、`JTable`などを個別に入力禁止にする必要がない
+- [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]と、ほとんど同じだが、その場合、`setComponentPopupMenu(...)`で設定した`JPopupMenu`が制限できない
+-- `JLayer#setLayerEventMask(...)`でポップアップメニュー表示の入力イベントが取得できない？(`Windows7`, `JDK 1.7.0_01`)
+-- [[Cursorを砂時計に変更>Swing/WaitCursor]]のように、`GlassPane`にダミーのマウスリスナーを追加してポップアップメニューの表示トリガーを無視する
+
+* 参考リンク [#r3e1e146]
+- [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]
+- [[JScrollPaneのスクロールを禁止>Swing/DisableScrolling]]
+- [[Cursorを砂時計に変更>Swing/WaitCursor]]
+
+* コメント [#u010a713]
+- また`src.zip`などを上げ忘れていたので修正。 -- [[aterai]] &new{2011-11-29 (火) 17:16:11};
+
+#comment

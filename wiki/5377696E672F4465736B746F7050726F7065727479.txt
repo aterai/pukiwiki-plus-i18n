@@ -1,0 +1,45 @@
+TITLE:DesktopPropertyの変更を監視する
+#tags(Toolkit, PropertyChangeListener)
+#author(aterai)
+#pubdate(2010-03-29T15:07:50+09:00)
+* 概要 [#c48a40cd]
+`Toolkit`に`PropertyChangeListener`を追加して、ダブルクリックの速度などの変更を監視します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKxXuJ4EI/AAAAAAAAAWg/utfOkK69KBk/s800/DesktopProperty.png)
+
+* サンプルコード [#g949818a]
+#code(link){{
+Toolkit.getDefaultToolkit().addPropertyChangeListener(
+    "awt.multiClickInterval", new PropertyChangeListener() {
+  @Override public void propertyChange(PropertyChangeEvent e) {
+    System.out.println("----\n"+e.getPropertyName());
+    System.out.println(Toolkit.getDefaultToolkit().getDesktopProperty(e.getPropertyName()));
+  }
+});
+}}
+
+* 解説 [#fc286297]
+上記のサンプルでは、`Toolkit`に`PropertyChangeListener`を追加して、ダブルクリックの速度と、`Windows`環境での画面の配色(画面のプロパティ、デザイン、配色の規定(青)、オーブ グリーン、シルバー)の変更を監視しています。
+
+その他、サポートされている`Windows`デスクトップ関連のプロパティー一覧は、以下のようにして取得することができます。
+
+- [http://docs.oracle.com/javase/jp/6/technotes/guides/swing/1.4/w2k_props.html Windows デスクトップ関連のプロパティーのサポート]のサンプルより
+
+#code{{
+import java.awt.*;
+public class DesktopPropertyList {
+  public static void main(String[] args) {
+    for(String s:(String[])Toolkit.getDefaultToolkit().getDesktopProperty("win.propNames"))
+      System.out.println(s);
+  }
+}
+}}
+
+* 参考リンク [#r4ad71c4]
+- [http://docs.oracle.com/javase/jp/6/technotes/guides/swing/1.4/w2k_props.html Windows デスクトップ関連のプロパティーのサポート]
+- [https://forums.oracle.com/thread/1352133 Swing - Should UIManager fire propertyChangeEvents here?]
+
+* コメント [#yb7ef312]
+- メモ: [http://docs.oracle.com/javase/jp/6/technotes/guides/swing/1.4/w2k_props.html Windows デスクトップ関連のプロパティーのサポート]の、(`TBI`)の意味を調べる。「メッセージボックスのフォントカラー」のプロパティー名は文字化け？、重複？。同じく、アイコンのサイズとアイコンの横の間隔など。 -- [[aterai]] &new{2010-03-29 (月) 15:07:50};
+
+#comment

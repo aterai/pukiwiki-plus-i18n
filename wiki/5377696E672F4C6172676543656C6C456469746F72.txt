@@ -1,0 +1,103 @@
+TITLE:JTableの編集にセルより大きなセルエディタを使用
+#tags(JTable, JList, GlassPane)
+#author(aterai)
+#pubdate(2006-08-28T00:57:26+09:00)
+* 概要 [#u7405edd]
+通常のセルエディタではなく、セルより大きなアイコンを選択する為のセルエディタを使用して`JTable`を編集します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTO6b-zTJI/AAAAAAAAAdI/UAROdzzun4k/s800/LargeCellEditor.png)
+
+* サンプルコード [#p6d316e9]
+#code(link){{
+class IconTable extends JTable {
+  private final MyGlassPane panel = new MyGlassPane();
+  private final EditorFromList editor;
+  private final JFrame frame;
+  private Rectangle rect;
+
+  public IconTable(JFrame _frame, TableModel model, Vector list) {
+    super(model);
+    setDefaultRenderer(Object.class, new TestRenderer());
+    setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    initCellSize(50);
+    frame = _frame;
+    addMouseListener(new MouseAdapter() {
+      @Override public void mouseClicked(MouseEvent me) {
+        startEditing();
+      }
+    });
+    editor = new EditorFromList(list);
+    editor.addKeyListener(new KeyAdapter() {
+      @Override public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode()==KeyEvent.VK_ESCAPE) {
+          cancelEditing();
+        }
+      }
+    });
+    editor.addMouseListener(new MouseAdapter() {
+      @Override public void mouseClicked(MouseEvent me) {
+        changeValue(me.getPoint());
+      }
+    });
+    panel.add(editor);
+    frame.setGlassPane(panel);
+    panel.setVisible(false);
+  }
+  private void initCellSize(int size) {
+    setRowHeight(size);
+    JTableHeader tableHeader = getTableHeader();
+    tableHeader.setResizingAllowed(false);
+    tableHeader.setReorderingAllowed(false);
+    TableColumnModel m = getColumnModel();
+    for(int i=0;i<m.getColumnCount();i++) {
+      TableColumn col = m.getColumn(i);
+      col.setMinWidth(size);
+      col.setMaxWidth(size);
+    }
+    setBorder(BorderFactory.createLineBorder(Color.BLACK));
+  }
+  private void initEditor() {
+    Dimension dim = editor.getPreferredSize();
+    rect = getCellRect(getSelectedRow(), getSelectedColumn(), true);
+    int iv = (dim.width-rect.width)/2;
+    Point p = SwingUtilities.convertPoint(this,
+                rect.getLocation(), panel);
+    rect.setRect(p.x-iv, p.y-iv, dim.width, dim.height);
+    editor.setBounds(rect);
+    Object o = getValueAt(getSelectedRow(), getSelectedColumn());
+    editor.setSelectedValue(o, true);
+  }
+  public void startEditing() {
+    initEditor();
+    panel.setVisible(true);
+    editor.requestFocusInWindow();
+  }
+  private void cancelEditing() {
+    panel.setVisible(false);
+  }
+  private void changeValue(Point p) {
+    int index = editor.locationToIndex(p);
+    Object o = editor.getModel().getElementAt(index);
+    if(o != null) {
+      setValueAt(o, getSelectedRow(), getSelectedColumn());
+    }
+    panel.setVisible(false);
+  }
+}
+}}
+
+* 解説 [#t6dfc826]
+上記のサンプルでは、`JTable`のセルをクリックするとそのセル上にセルエディタが表示されて編集できるようになっています。
+
+通常のセルエディタは使用しないため、すべてのセルを編集不可にしています。かわりにセルをクリックしたときに、フレームの`GlassPane`を有効にして、そこに`JList`で作成したアイコン選択エディタや、その影などを描画しています。
+
+このように`GlassPane`を使用しているため、フレームの外にセルエディタを描画することができません。このためサンプルでは`JTable`の周りに余白をかなり多めにとっています。`JTable`からはみ出す場合(端の方のセルを編集する場合)は、セルエディタの表示位置を内部にずらすように変更するようにしたほうがいいかもしれません。
+
+* 参考リンク [#yc6dd5bb]
+- [http://www.icongalore.com/ XP Style Icons - Windows Application Icon, Software XP Icons]
+-- アイコンを利用しています。
+
+* コメント [#n6dadda3]
+- 表示をアニメーションさせたり、音を出したりしても面白そうです。 -- [[aterai]] &new{2006-10-29 (日) 02:03:44};
+
+#comment

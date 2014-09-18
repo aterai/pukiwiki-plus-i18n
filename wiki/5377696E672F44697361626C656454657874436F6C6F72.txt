@@ -1,0 +1,41 @@
+TITLE:JCheckBoxなどが無効な状態での文字色を変更
+#tags(JCheckBox, JComboBox, UIManager, Html, JLabel, JButton)
+#author(aterai)
+#pubdate(2008-10-06T14:59:33+09:00)
+* 概要 [#r5ed5917]
+`JCheckBox`や`JComboBox`などのコンポーネントが無効な状態になった場合の文字色を変更します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLDPDIq4I/AAAAAAAAAW8/jt2A5D74G04/s800/DisabledTextColor.png)
+
+* サンプルコード [#q9537f41]
+#code(link){{
+UIManager.put("CheckBox.disabledText", Color.RED);
+JCheckBox cbx1 = new JCheckBox("default", true);
+JCheckBox cbx2 = new JCheckBox("<html>html tag</html>", true);
+}}
+
+* 解説 [#l33eb0b4]
+- `JCheckBox`
+-- `UIManager.put("CheckBox.disabledText", Color.RED)`
+--- `MetalLookAndFeel`でのみ？、反映される
+- `JCheckBox` + `html`
+-- `<html>`タグを使った場合、`setEnable`にかかわらず、文字色は変更不可([http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4740519 Bug ID: 4740519 HTML JLabel not greyed out on setEnabled(false)])を利用
+---参考:[https://forums.oracle.com/thread/1359798 Swing - How to disable a JCheckBox and leave the text the original color?]のMichael_Dunn さんの投稿
+--- [[Htmlを使ったJLabelとJEditorPaneの無効化>Swing/DisabledHtmlLabel]]
+- `JComboBox`
+-- `UIManager.put("ComboBox.disabledForeground", Color.GREEN);`
+- `JComboBox` + `html`
+-- レンダラーで文字色を変更
+- `JComboBox`(`Editable`)
+-- `EditorComponent`を取得して、`editor.setDisabledTextColor(Color.PINK);`を設定
+- `JLabel`
+-- `UIManager.put("Label.disabledForeground", Color.ORANGE);`
+- `JButton`
+-- `UIManager.put("Button.disabledText", Color.YELLOW)`
+--- `MetalLookAndFeel`でのみ？、反映される
+
+#ref(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLFT1HGFI/AAAAAAAAAXA/W5L-yIFc61E/s800/DisabledTextColor1.png)
+
+//**参考リンク
+* コメント [#w6daf1af]
+#comment

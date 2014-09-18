@@ -1,0 +1,40 @@
+TITLE:JComboBoxのItemを左右に配置
+#tags(JComboBox, Html)
+#author(aterai)
+#pubdate(2005-01-17)
+* 概要 [#v60ec86f]
+`JComboBox`の`Item`にテキストを左右に分けて配置します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTPk2QD9aI/AAAAAAAAAeM/xrl0d1ms74g/s800/LRComboBox.png)
+
+* サンプルコード [#oace48f1]
+#code(link){{
+class LRItem{
+  private final String leftText;
+  private final String rightText;
+  public LRItem(String strLeft, String strRight) {
+    leftText  = strLeft;
+    rightText = strRight;
+  }
+  public String getHtmlText() {
+    return "<html><table width='240'><tr><td align='left'>"+leftText+
+    "</td><td align='right'>"+rightText+"</td></tr></table></html>";
+  }
+  public String getLeftText()  { return leftText; }
+  public String getRightText() { return rightText; }
+  public String toString()     { return getHtmlText(); }
+}
+}}
+
+* 解説 [#h9d560bf]
+`JComboBox`に`html`の`table`タグを使うことで、`Item`に設定した文字列を左右に振り分けています。
+
+この方法では、`JComboBox`のリストにカラムを簡単に増やすことが出来ます。
+
+上記のサンプルでは、`JComboBox`のサイズ変更に対応していません。
+
+* 参考リンク [#k039e984]
+- [[JComboBoxのItemを左右にクリップして配置>Swing/ClippedLRComboBox]]
+
+* コメント [#fe8212eb]
+#comment

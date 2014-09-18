@@ -1,0 +1,59 @@
+TITLE:Fontをファイルから取得
+#tags(Font, JTextArea)
+#author(aterai)
+#pubdate(2005-03-07T02:07:13+09:00)
+* 概要 [#o126bcf5]
+独自フォント(`mona.ttf`)をファイルから読み込み、`ASCII art`を表示します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKOUJYB7I/AAAAAAAAAVo/K2rl3dXD4ic/s800/CreateFont.png)
+
+* サンプルコード [#ibfdaff0]
+#code(link){{
+Font makeFont(URL url) {
+    Font font = null;
+    try(InputStream is = url.openStream()) {
+        font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(12.0f);
+    }catch(IOException | FontFormatException ex) {
+        ex.printStackTrace();
+    }
+    return font;
+}
+//Font makeFont(URL url) {
+//  Font font = null;
+//  InputStream is = null;
+//  try {
+//    is = url.openStream();
+//    font = (Font.createFont(Font.TRUETYPE_FONT, is)).deriveFont(12.0f);
+//    is.close();
+//  }catch(IOException ioe) {
+//    ioe.printStackTrace();
+//  }catch(FontFormatException ffe) {
+//    ffe.printStackTrace();
+//  }finally{
+//    if(is!=null) {
+//      try{
+//        is.close();
+//      }catch(IOException ioex) {
+//        ioex.printStackTrace();
+//      }
+//    }
+//  }
+//  return font;
+//}
+}}
+
+* 解説 [#v308e626]
+`Font.createFont`メソッドでフォントを作成しています。
+
+上記のサンプルでは、[http://monafont.sourceforge.net/index.html モナーフォント]を使用しています。
+
+* 参考リンク [#cbcb57f0]
+- [http://monafont.sourceforge.net/index.html モナーフォント]
+- [https://forums.oracle.com/thread/1483177 Swing (Archive) - Loading TYPE1 fonts with JRE 1.5.0]
+
+* コメント [#d9deff49]
+- `JDK 1.5.0_01`でずれる？ -- [[aterai]] &new{2005-03-07 11:19:11 (月)};
+- 応急処置済み -- [[aterai]] &new{2005-03-07 11:32:44 (月)};
+- メモ:[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6313541 Bug ID: 6313541 Fonts loaded with createFont cannot be converted into FontUIResource] -- [[aterai]] &new{2006-05-25 (木) 23:34:18};
+
+#comment

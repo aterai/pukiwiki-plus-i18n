@@ -1,0 +1,165 @@
+TITLE:AntでPMDを実行する
+#author(aterai)
+#pubdate(2012-01-24)
+#contents
+
+* 概要 [#s4081d7a]
+`Ant`から`PMD`を実行します。
+
+* サンプルターゲット [#h0deaf72]
+#code{{
+<target name="pmd">
+  <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" />
+  <mkdir dir="${build.reports}" />
+  <pmd rulesetfiles="java-basic,java-imports,java-strings" encoding="${compile.encoding}">
+    <classpath refid="project.class.path" />
+    <formatter type="xml" toFile="${build.reports}/pmd.xml" />
+    <formatter type="text" toConsole="true" />
+    <fileset dir="${src.dir}">
+      <include name="**/*.java" />
+    </fileset>
+  </pmd>
+</target>
+}}
+
+* 解説 [#i9aab092]
++ [http://pmd.sourceforge.net/ PMD]からダウンロードした`pmd-bin-x.x.zip`の`lib`以下にある`pmd-x.x.jar`などの`jar`ファイルを`%ANT_HOME%\lib`にコピー
++ `ant pmd`で、`pmd.xml`を生成し、`jenkins`の`PMD`プラグインなどで読み込む
+
+*** toFile or toConsole [#w61eb2ba]
+`FindBugs`のように、`xml`ファイルとコンソールの両方に結果を表示したい場合が多いのですが、
+
+ ant -v pmd
+
+では、情報が多すぎるので`formatter`要素の`toConsole`属性を使用します。
+
+- [http://pmd.sourceforge.net/snapshot/ant-task.html PMD - Ant Task] にあるように、`<formatter type="html" toFile="pmd_report.html" toConsole="true"/>`や、`<formatter type="xml" toFile="${build.reports}/pmd.xml" toConsole="true" />`と`toFile`と`toConsole`を指定しても、ファイルにのみ結果が書き出されて、コンソールには何も出力されない
+- `<formatter type="text" toConsole="true" />`と、`toFile`属性なしで`toConsole="true"`とする必要がある？
+-- `<formatter type="text" toConsole="false" />`は、`toFile or toConsole needs to be specified in Formatter`となって、`BUILD FAILED`
+- ファイルとコンソールの両方に出力する場合は、`formatter`を複数指定しなくてはならない？
+
+** PMD 5.0.0 [#wf0618ac]
+- `RuleSet short names now require a language prefix, 'basic' is now 'java-basic', and 'rulesets/basic.xml' is now 'rulesets/java/basic.xml'`
+-- 上記のサンプルで、`rulesetfiles`属性の`basic`などを、`java-basic`に変更
+- `Removed -targetjdk use -version {name} {version} instead`
+-- 上記のサンプルから、`targetjdk="${compile.source}"`を削除
+
+** PMD 5.1.2 [#xfc6bb0b]
+- `PMD 5.1.2`で以下のようなコードが、`Avoid unused private methods such as 'makePanel(String,JComponent)'.`と警告されてしまう？
+-- [https://sourceforge.net/p/pmd/bugs/1228/ PMD / Issues / #1228 UnusedPrivateMethod returns false positives]
+-- `C:\pmd-bin-5.1.2\bin\pmd.bat -dir /root/directory/for/sources -rulesets java-unusedcode`
+
+#code{{
+import java.awt.*;
+import javax.swing.*;
+
+public class Foo {
+    public JComponent makeUI() {
+        Box box = Box.createVerticalBox();
+        JTextField field = new JTextField();
+        box.add(makePanel("aaa", field));
+        return box;
+    }
+    private static JPanel makePanel(String title, JComponent c) {
+        JPanel p = new JPanel(new BorderLayout());
+        p.setBorder(BorderFactory.createTitledBorder(title));
+        p.add(c);
+        return p;
+    }
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            @Override public void run() {
+                createAndShowGUI();
+            }
+        });
+    }
+    public static void createAndShowGUI() {
+        JFrame f = new JFrame();
+        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        f.getContentPane().add(new Foo().makeUI());
+        f.setSize(320, 240);
+        f.setLocationRelativeTo(null);
+        f.setVisible(true);
+    }
+}
+}}
+
+** PMD 5.1.3-SNAPSHOT [#se3b451a]
+- `上記の誤検出はpmd-bin-5.1.3-SNAPSHOT.zip`ですべて無くなったけど、新規で今まで問題なかった?以下のようなコードの`makeButton(Action action, String title)`が`UnusedPrivateMethod`となってしまう。
+
+ C:\temp>C:\pmd-bin-5.1.3-SNAPSHOT\bin\pmd.bat -dir . -rulesets java-unusedcode
+ C:\temp\MenuBarFactoryTest.java:44: Avoid unused private methods such as 'makeButton(Action,String)'.
+
+#code{{
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.*;
+import javax.swing.text.DefaultEditorKit;
+
+public final class MenuBarFactoryTest {
+  public static JMenuBar makeManuBar() {
+    JMenuBar mb = new JMenuBar();
+    mb.add(makeFileMenu());
+    return mb;
+  }
+  private static JMenu makeFileMenu() {
+    JMenu menu = new JMenu("File");
+    menu.add(makeEditMenuItem(makeEditButtonBar(Arrays.asList(
+        makeButton(new DefaultEditorKit.CutAction(),   "Cut"),
+        makeButton(new DefaultEditorKit.CopyAction(),  "Copy"),
+        makeButton(new DefaultEditorKit.PasteAction(), "Paste")))));
+    return menu;
+  }
+  private static JMenuItem makeEditMenuItem(final JComponent edit) {
+    JMenuItem item = new JMenuItem("Edit") {
+      @Override public Dimension getPreferredSize() {
+        Dimension d = super.getPreferredSize();
+        d.width += edit.getPreferredSize().width;
+        d.height = Math.max(edit.getPreferredSize().height, d.height);
+        return d;
+      }
+    };
+    item.setEnabled(false);
+    item.setLayout(new GridBagLayout());
+    item.add(edit);
+    return item;
+  }
+  private static JComponent makeEditButtonBar(List<AbstractButton> list) {
+    JPanel p = new JPanel(new GridLayout(1, list.size(), 0, 0));
+    for (AbstractButton b : list) {
+      p.add(b);
+    }
+    p.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 10));
+    p.setOpaque(false);
+    return p;
+  }
+  private static AbstractButton makeButton(Action action, String title) {
+    JButton b = new JButton(action);
+    b.setText(title);
+    return b;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.setJMenuBar(makeManuBar());
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
+* 参考リンク [#c56145b8]
+- [http://pmd.sourceforge.net/ PMD]
+- [http://d.hatena.ne.jp/guess880/20121014/1350200644 PMD5.0.0のルールを和訳しながら読む - 1 - Design Ruleset - 開発メモ]
+
+* コメント [#sc369256]
+#comment

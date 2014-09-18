@@ -1,0 +1,53 @@
+TITLE:JTreeの展開状態を記憶・復元する
+#tags(JTree, TreePath)
+#author(aterai)
+#pubdate(2013-11-18T00:04:12+09:00)
+* 概要 [#fbc1880a]
+`JTree`でノードの展開状態を記憶、復元します。
+
+#download(https://lh4.googleusercontent.com/-FcYsZkFYSxE/UojBcoMtHwI/AAAAAAAAB6k/A7D221doy2w/s800/ExpandedDescendants.png)
+
+* サンプルコード [#ed1c3655]
+#code(link){{
+visitAll(tree, rootPath, false); //Collapse all
+if(expandedState == null) { return; }
+while(expandedState.hasMoreElements()) {
+  tree.expandPath(expandedState.nextElement());
+}
+expandedState = tree.getExpandedDescendants(rootPath);
+}}
+
+* 解説 [#aef5bae1]
+上記のサンプルでは、`JTree#getExpandedDescendants(TreePath)`メソッドで展開されているノードの`TreePath`を`Enumeration`で保存しています。復元は一旦すべてのノードを折り畳んでから、`JTree#expandPath(TreePath)`で`Enumeration<TreePath>`から取得したノードを展開しています。
+
+- 注:
+-- 親ノードが閉じている場合、その子ノードの展開状態は記憶していない
+--- このサンプルでの例を挙げると、`Set 004`を展開して、親の`Set 001`を折り畳んだ状態で、`JTree#getExpandedDescendants(TreePaht)`を使用した場合、戻り値の`Enumeration<TreePath>`に`Set 004`へのパスは含まれない
+-- [http://docs.oracle.com/javase/jp/7/api/javax/swing/JTree.html#getExpandedDescendants%28javax.swing.tree.TreePath%29 JTree#getExpandedDescendants(TreePath) (Java Platform SE 7)]に書かれている説明がよく分からない(特に前半)が、もしかしたら上記のことを言っているのかもしれない…。
+
+ If you expand/collapse nodes while iterating over the returned Enumeration this may not return all the expanded paths, or may return paths that are no longer expanded.
+ 返された Enumeration で繰り返している間ノードを展開するか、折りたたむと、このメソッドは展開されたすべてのパスを返すのではなく、それ以上展開されていないパスを返します。
+
+----
+- `JTree`のシリアライズに関するのメモ
+
+#code{{
+//XMLEncoderではデフォルトのJTreeの場合、展開状態などは保存されない
+//??? 1.7.0_45では、整形式のXMLにならない場合がある ???
+XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(xmlFile)));
+xe.writeObject(tree);
+xe.flush();
+
+//ObjectOutputStreamの場合は、選択状態、展開状態なども保存、復元可能
+ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+oos.writeObject(tree);
+oos.flush();
+}}
+
+* 参考リンク [#v305a865]
+- [[JTreeのノードを展開・折り畳み>Swing/ExpandAllNodes]]
+- [http://www.javalobby.org/java/forums/t19857.html Swing: Retaining JTree Expansion State]
+- [http://orinanobworld.blogspot.jp/2013/03/auto-collapsing-tree-in-java.html OR in an OB World: Auto-collapsing Tree in Java]
+
+* コメント [#c8627c0b]
+#comment

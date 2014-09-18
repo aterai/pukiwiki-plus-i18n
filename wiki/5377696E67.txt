@@ -1,0 +1,138 @@
+TITLE: Java Swing Tips
+#keywords(Java, Swing)
+#description(ソースコード付きの小さな Java Swing アプリケーションを例にして、GUI プログラム作成のコツなどを解説)
+#author(aterai)
+#pubdate(2003-09-25)
+#contents(big)
+
+* 概要 [#qb9561c8]
+このページ以下では、ソースコード付きの小さな`Java Swing`アプリケーションを例にして、`GUI`プログラム作成のコツなどを解説しています。
+
+[https://picasaweb.google.com/at.terai/JavaSwingTips02 &ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQslJy3MxYI/AAAAAAAAAts/xrxOCvbp-0A/s800/screenshots.png);]
+
+- 上記の画像をクリックすると`Picasa`の画像一覧に移動します。
+-- 以前の[[スクリーンショット一覧>Swing/_ScreenShots]]は、スライドショーに変更しました。
+
+** Swingとは [#p0b76fde]
+`Swing`は、`GUI`(グラフィカル・ユーザ・インタフェース)を作成するための、`Java`標準のコンポーネントセット(ライブラリ、`UI`ツールキット)です。
+
+RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the JFC and Swing (The Java™ Tutorials)]
+
+* Tips一覧 [#e739db5d]
+
+#twocolumn
+
+** `javax.swing.JComponent` [#j7ba4ac7]
+- [[JTable(36)>Swing/_JTable]]
+-- [[CellEditor CellRenderer(33)>Swing/_CellEditor]]
+-- [[JTableHeader TableColumn(22)>Swing/_JTableHeader]]
+-- [[TableRowSorter RowFilter(18)>Swing/_TableRowSorter]]
+-- [[JDK1.5.0(6)>Swing/_JTable1.5.0]]
+- [[JTextPane JEditorPane JTextArea(47)>Swing/_JTextPane]]
+- [[JButton JCheckBox JToggleButton JRadioButton(45)>Swing/_JButton]]
+- [[JTree(41)>Swing/_JTree]]
+- [[JComboBox(37)>Swing/_JComboBox]]
+- [[JTabbedPane(33)>Swing/_JTabbedPane]]
+- [[JFrame JDialog JWindow(32)>Swing/_JFrame]]
+- [[JScrollPane JViewport JScrollBar(26)>Swing/_JScrollPane]]
+- [[JTextField JPasswordField(25)>Swing/_JTextField]]
+- [[JProgressBar ProgressMonitor(24)>Swing/_JProgressBar]]
+- [[JMenuBar JToolBar JSeparator(22)>Swing/_JMenuBar]]
+- [[JPopupMenu(20)>Swing/_JPopupMenu]]
+- [[JLabel(20)>Swing/_JLabel]]
+- [[JList(19)>Swing/_JList]]
+- [[JPanel JSplitPane(18)>Swing/_JPanel]]
+- [[JSpinner(17)>Swing/_JSpinner]]
+- [[JToolTip(16)>Swing/_JToolTip]]
+- [[JInternalFrame JLayeredPane JDesktopPane(15)>Swing/_JInternalFrame]]
+- [[JLayer(13)>Swing/_JLayer]]
+- [[JFileChooser(12)>Swing/_JFileChooser]]
+- [[JSlider(12)>Swing/_JSlider]]
+
+#twocolumn
+
+** `Others` [#hef7f318]
+- [[Graphics(34)>Swing/_Graphics]]
+- [[Animation(30)>Swing/_Animation]]
+- [[Layout(23)>Swing/_Layout]]
+- [[Drag&Drop(21)>Swing/_DnD]]
+- [[SwingWorker(21)>Swing/_SwingWorker]]
+- [[Hyperlink Html(21)>Swing/_Hyperlink]]
+- [[Font(16)>Swing/_Font]]
+- [[Focus(16)>Swing/_Focus]]
+- [[LookAndFeel(16)>Swing/_LookAndFeel]]
+- [[Border(15)>Swing/_Border]]
+- [[File(9)>Swing/_File]]
+- [[Cursor(7)>Swing/_Cursor]]
+- [[TrayIcon(5)>Swing/_TrayIcon]]
+- [[Sound(4)>Swing/_Sound]]
+- [[Others(17)>Swing/_Others]]
+
+** `JDK 6`, `JDK 7` [#fd388b18]
+- [[JDK 6, 7 での Swing 新機能(31)>Swing/_JDK6]]
+
+** `Screenshot` [#b76d5b88]
+- [[スクリーンショット一覧(553)>Swing/_ScreenShots]]
+
+#twocolumn
+
+* 編集方針 [#ja35f484]
+- ''最も欲しいものはサンプルである'' ([http://dodgson.org/omo/t/?date=20070706#p02 steps to phantasien t(2007-07-06)]から引用)
+-- 各ページからダブルクリックなどで実行可能な`JAR`ファイルがダウンロードできます。
+- ''SSCCE'' ([http://sscce.org/ Short, Self Contained, Correct Example])
+- ''MCVE'' ([http://stackoverflow.com/help/mcve How to create a Minimal, Complete, and Verifiable example - Help Center - Stack Overflow])
+-- すべての記事毎にソースコードや画像などのリソース、これらを[[Ant]]で簡単にコンパイル、実行するための`build.xml`をまとめた`zip`ファイルを添付しています。
+-- `Git`リポジトリを取得する場合: 
+ git clone https://github.com/aterai/java-swing-tips.git
+-- [[Subversion]]リポジトリを取得する場合:
+ svn checkout http://java-swing-tips.googlecode.com/svn/trunk/ java-swing-tips-read-only
+
+- `JNLP`ファイルについて
+-- [http://www.java.com/ja/download/faq/signed_code.xml ブラウザのJavaセキュリティ・メッセージの変更]
+-- `7u51`から、署名が無い場合や、自己署名の場合は`JavaWebStart`で実行不可になったので、&ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TRD2KGq73BI/AAAAAAAAAwA/N8-6EXongNk/s800/webstart.png);ボタンをすべてのページから削除
+--- `JavaWebStart`の記事も修正、または削除する予定
+
+* 更新履歴 [#v6d4524e]
+
+#twocolumn
+
+** 新着記事(一ヶ月以内) [#q2ce5bc3]
+- 2014-09-15
+-- [[JSplitPaneでドラッグ中のDividerの背景色を設定する>Swing/DividerDraggingColor]]を追加
+
+- 2014-09-08
+-- [[JSplitPaneのDividerを展開収納するOneTouchButtonのサイズ、色などを変更>Swing/OneTouchButton]]を追加
+
+- 2014-09-01
+-- [[JTableのHTML形式コピーをカスタマイズする>Swing/HtmlTableTransferHandler]]を追加
+
+- 2014-08-25
+-- [[JProgressBarの進捗状況と進捗文字列色を変更する>Swing/ProgressBarSelectionColor]]を追加
+
+#twocolumn
+** 記事一覧(追加順) [#rbffcf6e]
+- [http://terai.xrea.jp/archive.html Archive]
+- [[以前の更新履歴>Swing/_ChangeLog]]
+
+#twocolumn
+
+#twocolumn
+
+* 動作環境 [#dcae6b30]
+このサイトにあるサンプルの、動作・テスト環境や、`JDK`のダウンロード、利用方法、質問、不具合報告についてお願いなどを記述しています。
+
+- [[動作環境、サンプルの実行方法などについて>Swing/_TestedEnvironments]]
+
+#twocolumn
+
+* 参考リンク [#v0bd3645]
+参考にしたサイトなどのリンクをまとめています。
+- [[Java Swing 参考リンク>Swing/_Link]]
+
+#twocolumn
+
+* コメント [#w04556af]
+Swing関係のコメントや、ネタのリクエストなどがあれば書き込んでみてください。
+- [http://terai.xrea.jp/Comments/Swing.html 以前のコメントログ]
+
+#comment

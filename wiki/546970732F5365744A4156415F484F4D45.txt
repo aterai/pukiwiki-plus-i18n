@@ -1,0 +1,112 @@
+TITLE:環境変数JAVA_HOMEを変更して使用するJDKを切り替える
+#author(aterai)
+#pubdate(2008-08-26)
+#contents
+
+#ref(https://lh6.googleusercontent.com/_9Z4BYR88imo/TUKZTxK0pwI/AAAAAAAAAz4/qohiEl4CJss/s800/JAVA_HOME.png)
+
+* 概要 [#c5e672d8]
+環境変数`JAVA_HOME`を変更するバッチファイルを作成し、コマンドプロンプト(`Windows`)で使用する`JDK`を切り替えます。
+
+* バッチファイル [#w35a17ec]
+#gist(5441010)
+
+- `gist`からだと改行が`crlf`にならない場合は、こちらから: [http://terai.xrea.jp/data/java/jdk.bat jdk.bat] 
+
+* シェルスクリプト [#q2846991]
+#gist(5441080)
+
+- `Ubuntu`などの場合、`/usr/lib/jvm`以下に`jdk-7uXX-linux-x64.tar.gz`を展開していると想定
+
+ cd /var/cache/oracle-jdk7-installer
+ sudo tar zxvf jdk-7u40-linux-x64.tar.gz -C /usr/lib/jvm 
+
+- ドットをシェルスクリプトの前に付けて実行すると、スクリプトを起動したシェルで起動されるのでその環境変数を更新することができる
+-- [http://togetter.com/li/72996 シェルスクリプトで環境変数を適用させるには IS01 Linux - Togetter]
+-- [http://www.ne.jp/asahi/hishidama/home/tech/unix/sh.html UNIXシェルスクリプトメモ(Hishidama's UNIX shell script Memo)]
+
+ $ . jdk.sh 1.7.0_09
+
+* 解説 [#ad3fd963]
+`ant.bat`や`jruby.bat`などは、`JAVA_HOME`環境変数を使って、利用する`JDK`のパスを取得しているので、これらのコマンドを実行する前に、`set JAVA_HOME`すれば、そのコマンドプロンプト内で使用する`JDK`を簡単に切り替えることができます。
+
+上記のバッチファイルは、その際、`set JAVA_HOME=C:\Program Files\...`と一々入力しなくてすむようにするためのものです。
+
+- `JDK`はデフォルトのディレクトリにインストールされていることを想定
+
+* 使用方法 [#u56fafa2]
+- 引数なしで、現在の`JAVA_HOME`と、`C:\Program Files\Java`以下にインストールされている`jdk`を一覧表示
+
+#code{{
+C:\tmp>jdk
+ ドライブ C のボリューム ラベルは WINDOWS です
+ ボリューム シリアル番号は xxxxxxxxx です
+
+ C:\Program Files\Java のディレクトリ
+
+2008/09/03  16:25    <DIR>          jdk1.4.2_17
+2007/10/03  18:34    <DIR>          jdk1.5.0_13
+2008/02/06  17:17    <DIR>          jdk1.5.0_14
+2008/03/17  13:48    <DIR>          jdk1.5.0_15
+2008/07/18  11:28    <DIR>          jdk1.5.0_16
+2008/12/03  19:55    <DIR>          jdk1.5.0_17
+2007/10/31  21:24    <DIR>          jdk1.6.0_03
+2008/02/28  15:38    <DIR>          jdk1.6.0_04
+2008/04/17  19:41    <DIR>          jdk1.6.0_05
+2008/04/17  19:43    <DIR>          jdk1.6.0_06
+2008/07/23  17:37    <DIR>          jdk1.6.0_07
+2008/10/16  12:55    <DIR>          jdk1.6.0_10
+2008/12/12  14:58    <DIR>          jdk1.6.0_11
+2008/12/12  14:56    <DIR>          jdk1.6.0_12
+2008/12/10  20:56    <DIR>          jdk1.7.0
+               0 個のファイル                   0 バイト
+              15 個のディレクトリ  11,321,315,328 バイトの空き領域
+----
+JAVA_HOME=C:\Program Files\Java\jdk1.6.0_10
+java version "1.6.0_10"
+Java(TM) SE Runtime Environment (build 1.6.0_10-b33)
+Java HotSpot(TM) Client VM (build 11.0-b15, mixed mode, sharing)
+}}
+
+- 引数ありで、`JAVA_HOME`の切り替え
+-- 指定したディレクトリが存在しない場合は、なにもしない
+
+#code{{
+C:\tmp>jdk 1.7.0_
+----
+Not exist C:\Program Files\Java\jdk1.7.0_
+----
+JAVA_HOME=C:\Program Files\Java\jdk1.6.0_10
+
+C:\tmp>jruby -J-version
+java version "1.6.0_10"
+Java(TM) SE Runtime Environment (build 1.6.0_10-b33)
+Java HotSpot(TM) Client VM (build 11.0-b15, mixed mode, sharing)
+
+C:\tmp>jdk 1.7.0
+----
+JAVA_HOME=C:\Program Files\Java\jdk1.7.0
+
+C:\tmp>jruby -J-version
+java version "1.7.0-ea"
+Java(TM) SE Runtime Environment (build 1.7.0-ea-b31)
+Java HotSpot(TM) Client VM (build 14.0-b01, mixed mode, sharing)
+}}
+
+//---JREのインストールはキャンセル(これをキャンセルしても、JDKのインストールまでキャンセルされる訳ではないので無視する)
+//--環境変数JAVA_HOME の設定
+//---正式にリリースされた最新版をデフォルトとしてユーザー環境変数(またはシステム環境変数)に設定する
+//Linux なら、JPackage で？
+//それらの冒頭に直接JAVA_HOME は書き込まず、コマンドプロンプトで "set JAVA_HOME" して古いバージョンや、ベータ版などのJDKへ切り替えるようにしています。
+//その際、一々 "set JAVA_HOME=C:\Program Files\..." とか打ち込むのは面倒なので、以下のようなバッチファイル((Linux なら、JPackage で？))を作成して使っています。
+
+* 参考リンク [#ad73888e]
+- [http://d.hatena.ne.jp/masanobuimai/20070221#1172050845 ローカルのJava環境の管理について - marsのメモ]
+-- 参考にした管理方法
+- [http://www.02.246.ne.jp/~torutk/java/install/jdk7onwindows7.html#SEC18 Windows 7へJDK 7をインストール - Object-Oriented & Java maneuver 別室]
+-- `32bit`版と`64bit`版を切り替える必要があるなら「環境設定バッチファイル（`setjdk.bat`）」が便利そう。
+- [https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/java_home.1.html java_home(1) Mac OS X Developer Tools Manual Page]
+- [http://www.markhneedham.com/blog/2013/06/15/java-findingsetting-jdkjava_home-on-mac-os-x/ Java: Finding/Setting JDK/$JAVA_HOME on Mac OS X at Mark Needham]
+
+* コメント [#n9687ed4]
+#comment

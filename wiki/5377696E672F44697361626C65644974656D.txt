@@ -1,0 +1,54 @@
+TITLE:JListの任意のItemを選択不可にする
+#tags(JList, ListCellRenderer, ActionMap)
+#author(aterai)
+#pubdate(2005-05-30)
+* 概要 [#n20fb52b]
+`JList`の任意の`Item`を選択不可にするようなレンダラーを設定します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLAYVmo3I/AAAAAAAAAW4/3MUtTm4ixyo/s800/DisabledItem.png)
+
+* サンプルコード [#we6e9a24]
+#code(link){{
+final JList = new JList();
+final ListCellRenderer r = list.getCellRenderer();
+final Vector disableIndexSet = new Vector();
+initDisableIndex(disableIndexSet);
+list.setCellRenderer(new ListCellRenderer() {
+  @Override public Component getListCellRendererComponent(JList list, Object value,
+                   int index, boolean isSelected, boolean cellHasFocus) {
+    Component c;
+    if(disableIndexSet.contains(Integer.valueOf(index))) {
+      c = r.getListCellRendererComponent(list,value,index,false,false);
+      c.setEnabled(false);
+    }else{
+      c = r.getListCellRendererComponent(list,value,index,isSelected,cellHasFocus);
+    }
+    return c;
+  }
+});
+ActionMap am = list.getActionMap();
+am.put("selectNextRow", new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent ae) {
+    int index = list.getSelectedIndex()+1;
+    for(int i=index;i<list.getModel().getSize();i++) {
+      if(!disableIndexSet.contains(Integer.valueOf(i))) {
+        list.setSelectedIndex(i);
+        break;
+      }
+    }
+  }
+});
+}}
+
+* 解説 [#w70ba780]
+上記のサンプルでは、カンマ区切りで入力したインデックスのアイテムを選択不可にすることができます。
+
+選択可か不可かはセルレンダラー中で判断しています。このセルレンダラーでは、インデックスが選択不可の場合、オリジナルのセルレンダラーから選択無し、フォーカス無しのコンポーネントを取得し、さらに`setEnabled(false)`として返しています。
+
+また、KBD{Up}KBD{Down}キーでアイテムの選択を移動する場合、選択不可にしたアイテムを飛ばすように、`selectNextRow`などのアクションを変更しています。
+
+* 参考リンク [#k46e3fd2]
+- [[JComboBoxのアイテムを選択不可にする>Swing/DisableItemComboBox]]
+
+* コメント [#b2e67b98]
+#comment

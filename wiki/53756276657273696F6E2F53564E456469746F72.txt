@@ -1,0 +1,53 @@
+TITLE:Subversionで使用するログエディタを設定
+#author(aterai)
+#pubdate(2003-09-25)
+#contents(big)
+
+* 概要 [#p692cf5f]
+ログメッセージを書くためのエディタを指定します。以下の3つの方法があります。
+- `Config`ファイルで設定する方法
+- レジストリで設定する方法
+- 環境変数で設定する方法
+
+* 設定方法 [#me6f18e8]
+** configファイルでeditor-cmdオプションを設定する [#n961950d]
+`config`ファイルの`editor-cmd`オプションでログメッセージを書くためのエディタを指定することができます(参照:[[Config>http://svnbook.red-bean.com/en/1.1/ch07.html#svn-ch-7-sect-1.3.2]])。
+
+- メモ帳を指定する場合
+
+`C:\Documents and Settings\ユーザ名\Application Data\Subversion\config`ファイルに以下を追加します。
+ #[helpers]のコメントを外す(無ければ作る)
+ [helpers]
+ editor-cmd = %SystemRoot%\system32\notepad.exe
+
+- `xyzzy`を指定する場合
+
+同様に`C:\Documents and Settings\ユーザ名\Application Data\Subversion\config`ファイルを編集します。
+ #[helpers]のコメントを外す
+ [helpers]
+ editor-cmd = (xyzzyをインストールした場所)\xyzzycli.exe -wait
+
+`-m`でコメントを指定せずに`svn ci`などを実行すると、`xyzzy`が起動してバッファが作成((すでに起動していれば、バッファのみ作成される))されます。このバッファにコメントを書き込み保存したあと、KBD{C-x k}などで削除するとsvnに戻って処理が継続されます。
+[[xyzzy]]で、KBD{C-x &}し、`svn`をサブプロセスとして起動したり、KBD{M-x shell}から起動し、なにも編集せずにバッファを削除した場合、以下のように尋ねられます。ただし、ここで普通にバッファでKBD{a}を入力しただけでは駄目みたいなので、KBD{a}のあとに、KBD{C-q C-m}、もしくは、KBD{M-x control-code-dialog-box}で、`CR`を入力してから、リターンします。
+ Log message unchanged or not specified
+ a)bort, c)ontinue, e)dit
+ a^M
+
+** レジストリでeditor-cmdオプションを設定する [#ofab7930]
+上記の`config`ファイルで、`editor-cmd`オプションが設定されていない場合、レジストリの`editor-cmd`オプションが参照されます。
+//-[[設定と、Windowsのレジストリ>http://subversion.bluegate.org/doc/ch07.html#svn.advanced.confarea.windows-registry]]
+
+`regedit.exe`を起動して編集する、または以下のような内容の`hoge.reg`ファイルを作成して、エクスプローラから実行、マージします。
+ Windows Registry Editor Version 5.00
+ 
+ [HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\helpers]
+ "editor-cmd"="c:\\xyzzy\\xyzzycli.exe -wait"
+
+** 環境変数SVN_EDITORを設定する [#cf9875ab]
+上記の`editor-cmd`オプションが指定されていない場合は、環境変数`SVN_EDITOR`、`VISUAL`、`EDITOR`がこの順で検索されます。
+
+- 変数名: `SVN_EDITOR`
+- 変数値: `(xyzzyをインストールした場所)\xyzzycli.exe -wait`
+
+* コメント [#e37e0e1e]
+#comment

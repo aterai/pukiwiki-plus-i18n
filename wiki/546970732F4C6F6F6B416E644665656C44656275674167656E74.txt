@@ -1,0 +1,106 @@
+TITLE:SwingアプリケーションのLookAndFeelを外部から切り替える
+#author(aterai)
+#pubdate(2008-11-28)
+#contents
+
+- [http://terai.xrea.jp/data/swing/lnfagent.jar lnfagent.jar]
+- [http://terai.xrea.jp/data/swing/LookAndFeel_Debug_Agent_src.zip src.zip]
+
+#ref(https://lh5.googleusercontent.com/_9Z4BYR88imo/TT_f_Hrp06I/AAAAAAAAAzQ/zeH8FoIfM4A/s800/LookAndFeelDebugAgent.png)
+
+* 概要 [#u5a5b58a]
+`Swing`アプリケーションの`LookAndFeel`を`agent`を使って外部から切り替えてデバッグします。
+
+* ソースコード [#n6f61d1b]
+#code{{
+package swinghelper;
+import java.awt.*;
+import java.awt.event.*;
+import java.lang.instrument.*;
+import javax.swing.*;
+
+public class LookAndFeelDebugAgent {
+  public static void premain(String args) throws Exception {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    ButtonGroup group = new ButtonGroup();
+    Box box = Box.createVerticalBox();
+    for(LookAndFeelEnum lnf : LookAndFeelEnum.values()) {
+      JRadioButton rb = new JRadioButton(new ChangeLookAndFeelAction(lnf));
+      group.add(rb); box.add(rb);
+    }
+    box.add(Box.createVerticalGlue());
+    box.setBorder(BorderFactory.createEmptyBorder(5,25,5,25));
+
+    JFrame frame = new JFrame("LnF");
+    frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    frame.getContentPane().add(box);
+    frame.pack();
+    frame.setVisible(true);
+  }
+  private static enum LookAndFeelEnum {
+    Metal  ("javax.swing.plaf.metal.MetalLookAndFeel"),
+    Mac  ("com.sun.java.swing.plaf.mac.MacLookAndFeel"),
+    Motif  ("com.sun.java.swing.plaf.motif.MotifLookAndFeel"),
+    Windows("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"),
+    GTK  ("com.sun.java.swing.plaf.gtk.GTKLookAndFeel"),
+    Nimbus ("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+    private final String clazz;
+    private LookAndFeelEnum(String clazz) {
+      this.clazz = clazz;
+    }
+    public String getClassName() {
+      return clazz;
+    }
+  }
+  private static class ChangeLookAndFeelAction extends AbstractAction{
+    private final String lnf;
+    protected ChangeLookAndFeelAction(LookAndFeelEnum lnfe) {
+      super(lnfe.toString());
+      this.lnf = lnfe.getClassName();
+      this.setEnabled(isAvailableLookAndFeel(lnf));
+    }
+    private static boolean isAvailableLookAndFeel(String lnf) {
+      try{
+        Class lnfClass = Class.forName(lnf);
+        LookAndFeel newLnF = (LookAndFeel)(lnfClass.newInstance());
+        return newLnF.isSupportedLookAndFeel();
+      }catch(Exception e) {
+        return false;
+      }
+    }
+    @Override public void actionPerformed(ActionEvent e) {
+      try{
+        UIManager.setLookAndFeel(lnf);
+      }catch(Exception ex) {
+        ex.printStackTrace();
+        System.out.println("Failed loading L&F: " + lnf);
+      }
+      for(Frame f:Frame.getFrames()) {
+        if(f instanceof JFrame) {
+          SwingUtilities.updateComponentTreeUI(f);
+          f.pack();
+        }
+      }
+    }
+  }
+}
+}}
+
+* 解説 [#rcf0b33c]
+`Look And Feel`を切り替えるためのパネルが一緒に起動し、対象アプリケーションのソースコードを変更することなく、`LookAndFeel`の変更をテストすることが出来ます。
+
+`javaagent`を使うので、`JDK 1.6`以上で以下のように起動します。
+
+#code{{
+java -javaagent:lnfagent.jar -jar example.jar
+}}
+
+//**参考リンク
+* コメント [#ff4ef8a7]
+#comment

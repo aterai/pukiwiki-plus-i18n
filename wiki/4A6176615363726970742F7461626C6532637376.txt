@@ -1,0 +1,81 @@
+TITLE:JavaScriptでHtmlのtable要素をCSVに変換する
+#keywords(JavaScript bookmarklet Html table CSV TSV)
+#description(Htmlのtable要素をCSVに変換するBookmarklet)
+#author(aterai)
+#pubdate(2012-07-25)
+#contents(big)
+
+* 概要 [#k7558714]
+`Html`の`<table>`要素を`CSV`(`character-separated values`)に変換する`Bookmarklet`です。`colspan`、`rowspan`で結合するセルがある場合は、同文字列を挿入しています。
+
+- 区切り文字はタブ(`TSV`)
+- ブックマークレットなどに登録して表(`<table>`要素)のあるページで実行
+- `<table>`要素をダブルクリックすると、その内容を`CSV`に変換して`<textarea>`に文字列として挿入
+-- 子要素に`<table>`が存在する場合は、ダブルクリックに反応しない
+- `<textarea>`をダブルクリックすると、元の`<table>`に戻る
+- `<thead>`や`<tfoot>`の扱いは適当(例えば、`<tbody>`の前にある`<tfoot>`が、そのまま先の行として`CSV`になる)
+- `<capthion>`は無視
+- `<colgroup>`の`span`属性には未対応
+
+* ソースコード [#sc8e81f4]
+#gist(5441202)
+
+* Bookmarklet [#ab91c304]
+- 名前(任意)
+-- `table2csv`
+- アドレス(`YUI Compressor`で圧縮)
+ javascript:(function(){function f(t){var q=t.getElementsByTagName("tr"),n,m,s,r,u,h,p=[],o=q.length,g;for(n=0;n<o;n++){if(p[n]==null){p[n]=[]}u=q.item(n).cells;g=u.length;for(m=0;m<g;m++){h=u.item(m);r=h.innerHTML.replace(/<.*?>/mg,"").replace(/\t/g," ").replace(/(^\s+)|(\s+$)/g,"").replace(/\"/,'""');s=0;while(p[n][m+s]!=null){s++}p[n][m+s]=r;for(k=1;k<h.colSpan;k++){p[n][m+s+k]=r}for(l=1;l<h.rowSpan;l++){if(p[n+l]==null){p[n+l]=[]}for(k=0;k<h.colSpan;k++){p[n+l][m+s+k]=r}}}}return e(p)}function e(o){var m=o.length,n=o[0].length,h="",j,i,g;for(i=0;i<m;i++){j="";for(g=0;g<n;g++){j+='\t"'+o[i][g]+'"'}if(j!=""){j=j.substring(1,j.length)}h+=j+"\n"}return h}var d=function(h){var g=document.createElement("textarea");g.value=f(this);g.style.width="80%";g.style.height="240px";g.originalTable=this;this.tx=g;this.parentNode.replaceChild(this.tx,this);g.addEventListener("dblclick",function(i){this.parentNode.replaceChild(this.originalTable,this)},false)},c=document.getElementsByTagName("table"),b=0,a=c.length;for(;b<a;b++){if(c[b].getElementsByTagName("table").length>0){continue}if(c[b].getAttribute("role")==="presentation"||(c[b].getAttribute("border")==0)){continue}c[b].addEventListener("dblclick",d,false)}}());
+
+- アドレス(テスト用に[http://terai.xrea.jp/data/javascript/table2csv.user.js table2csv.user.js]を読み込む)
+ javascript:(function(){var s=document.createElement('script');s.charset='UTF-8';s.src='http://terai.xrea.jp/data/javascript/table2csv.user.js?'+(new Date()).getTime();document.body.appendChild(s)}());
+
+- アドレス(テスト用に[http://terai.xrea.jp/data/javascript/table2csv.min.js table2csv.min.js]を読み込む)
+ javascript:(function(){var s=document.createElement('script');s.charset='UTF-8';s.src='http://terai.xrea.jp/data/javascript/table2csv.min.js?'+(new Date()).getTime();document.body.appendChild(s)}());
+
+* ユーザースクリプト、拡張機能 [#oa746aa1]
+- `FireFox`
+-- `Greasmonkey`などのユーザースクリプトとして`table2csv.user.js`をドロップして追加
+- `Chorme`など
+-- `dev`版などで拡張機能タブに`table2csv.user.js`をドロップして追加
+
+* テスト用table [#tab5af2e]
+- `rowspan`, `colspan`
+-- `Bookmarklet`を実行、または拡張機能として追加した後、以下の表をダブルクリックすると`CSV`文字列に変換
+ 
+|CENTER:100|CENTER:100|CENTER:100|CENTER:100|c
+|A|B|C|D|h
+|1|2|>|3|
+|4|>|5|6|
+|7|~|~|~|
+
+ "A"	"B"	"C"	"D"
+ "1"	"2"	"3"	"3"
+ "4"	"5"	"5"	"6"
+ "7"	"5"	"5"	"6"
+
+- footer
+||ファイル数|サイズ|総行数|コメント行|実行数|空行数|コメント率|h
+|~合計|169|5291916|174370|77045|84804|12521||
+|~平均||31313|1031|455|501|74|44.13%|
+||||||||BGCOLOR(white):|c
+|>|>|>|>|>|>|>|CENTER:footer|f
+
+* 参考リンク [#dc357958]
+- [http://marklets.com/CSV+from+HTML+tables.aspx CSV from HTML tables Bookmarklet | Bookmarklet Search Engine]
+- [http://www.codekeep.net/snippets/ec9f4704-b88a-486a-98f9-896de6afb021.aspx CodeKeep Snippet : Convert html table to csv (JavaScript)]
+
+* コメント [#pfe243fb]
+- 表計算ソフトなどの場合は、`<table>`タグをコピペするだけで`span`を考慮した表の取込みが出来るので、このスクリプトを使って`CSV`,`TSV`に変換して読み込む意味はあまりないかも。ただ、自分の使いたいソフトには、`Html`での`<table>`取り込み機能がないが、`csv`を読み込んで表にする機能があり、また連続する同文字列セルの結合が可能なので作成してみました。取り込み作業は終わったのでもう必要ないけど、せっかくなので公開しておきます。 -- [[aterai]] &new{2012-07-24 (火) 17:59:18};
+- `innerText`ではなく`innerHTML.replace(/<.*?>/mg, "")`を使用して、`FireFox`でも動作するように修正。 -- [[aterai]] &new{2012-07-27 (金) 14:49:37};
+- `@version 1.0.3`: セル中改行などに対応。 -- [[aterai]] &new{2013-04-01 (月) 22:23:12};
+- 非常に有用そうなものを公開していただき有難う御座います。`Firefox20`で本ブックマークレットの実行を試みた所、「アドレス(`YUI Compressor`で圧縮) 」のコードをコピーしてブックマークに登録しようとしたら、登録自体ができませんでした。「アドレス(テスト用に`table2csv.js`を読み込む) 」はブックマークに登録出来ましたが、本ページで実行しても何も起こりませんでした。使用方法が間違っているでしょうか？ -- [[ななしさん]] &new{2013-06-09 (日) 14:43:51};
+-- 報告どうもありがとうございます。「アドレス(`YUI Compressor`で圧縮) 」は、先頭に`javascript:`が必要なのに書き忘れていました(修正しました)。「アドレス(テスト用に`table2csv.js`を読み込む) 」は`FireFox21.0`などでは正常に動作しているようです。ブックマークレットを実行したあとで、表をダブルクリックしても何も起こらないのでしょうか？ -- [[aterai]] &new{2013-06-09 (日) 15:37:06};
+- すみません、間違って二重投稿してしまいました。表をダブルクリックしなければ動かない、ということが理解出来ていませんでした。。。今動作確認しました所、どちらも動作しました。このブックマークレットを使い、銀行の使用履歴を簡単にコピペ出来ればと思っていましたが、実現出来そうです。ありがとうございました。 -- [[ななしさん]] &new{2013-06-09 (日) 23:10:57};
+- 何度も再送信してしまい、大変失礼しました。失礼を承知でもう1つご教示頂きたいのですが、現在のスクリプトではブラウザ画面に""で括られたCSV形式で出力になっていますが、表に貼り付ける様にクリップボードへデータをコピーするようにカスタマイズするには、どのような変更を加えればよいでしょうか？もしよろしければご教示頂けると幸いです。 -- [[ななしさん]] &new{2013-06-09 (日) 23:26:55};
+-- 重複と思われるコメントを削除しました。カスタマイズですが、""で括らない形式にしたいということでしょうか？大抵の表計算ソフトならテキストの区切り記号を自動認識して除去してくれると思います。「アドレス(YUI Compressor で圧縮) 」を変更するなら、`'\t"'+o[i][g]+'"'`を`'\t'+o[i][g]`に変更すればとりあえずは動作するような気がします。 -- [[aterai]] &new{2013-06-10 (月) 04:05:51};
+- 説明が悪くて申し訳ありません。表をダブルクリックするだけで、表示されている表の中のデータをクリップボードへコピーするようにしたいのです。もしよろしければご教示お願いします。 -- [[ななしさん]] &new{2013-06-10 (月) 07:35:48};
+-- おはようございます。セキュリティの問題で、最近のブラウザではスクリプトからのクリップボードアクセスは許可されていないようです。ブラウザの設定で変更できるのかもしれませんが(未調査)、あまりオススメできません。 -- [[aterai]] &new{2013-06-10 (月) 07:58:15};
+- そうだったのですか。。。承知しました。素晴らしいスクリプトを公開していただいた上、ご説明まで頂きありがとうございました。 -- [[ななしさん]] &new{2013-06-10 (月) 20:53:30};
+- `<table role="presentation">`や`<table border="0">`のようなレイアウト目的の`<table>`要素の場合は、クリックしても無視するように変更。 -- [[aterai]] &new{2014-09-04 (木) 20:20:51};
+
+#comment

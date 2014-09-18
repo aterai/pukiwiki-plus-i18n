@@ -1,0 +1,62 @@
+TITLE:JFileChooserでの隠しファイルの非表示設定を変更する
+#tags(JFileChooser, JPopupMenu)
+#author(aterai)
+#pubdate(2014-03-17T00:01:02+09:00)
+* 概要 [#e14ba059]
+`JFileChooser`で隠しファイルを表示するかどうかをポップアップメニューから切り替えます。
+
+#download(https://lh4.googleusercontent.com/-TSMPljQ02Ao/UyWixahVFzI/AAAAAAAACBw/n_Ctee0FJGQ/s800/FileHidingEnabled.png)
+
+* サンプルコード [#r752d0ad]
+#code(link){{
+chooser = new JFileChooser();
+JPopupMenu pop = searchPopupMenu(chooser);
+pop.addSeparator();
+JCheckBoxMenuItem mi = new JCheckBoxMenuItem(
+    new AbstractAction("isFileHidingEnabled") {
+  @Override public void actionPerformed(ActionEvent e) {
+    chooser.setFileHidingEnabled(
+        ((JCheckBoxMenuItem) e.getSource()).isSelected());
+  }
+});
+mi.setSelected(chooser.isFileHidingEnabled());
+pop.add(mi);
+}}
+
+* 解説 [#r0e5cfae]
+上記のサンプルでは、`JFileChooser#setFileHidingEnabled(boolean)`メソッドを使用して、隠しファイル、隠しフォルダーなどを表示するかどうかを設定しています。
+
+----
+- 初期値は、`OS`の設定(`Windows`なら「コントロールパネル、フォルダーオプション、表示、ファイルとフォルダーの表示」)に従う
+-- 参考: [[DesktopPropertyの変更を監視する>Swing/DesktopProperty]]
+
+#code{{
+Object showHiddenProperty = Toolkit.getDefaultToolkit().getDesktopProperty("awt.file.showHiddenFiles");
+System.out.println("awt.file.showHiddenFiles: " + showHiddenProperty);
+}}
+
+----
+`JFileChooser`から`JPopupMenu`を直接取得することが出来ないので、以下のように子コンポーネントを検索しています。
+
+#code{{
+private static JPopupMenu searchPopupMenu(Container parent) {
+  for (Component c: parent.getComponents()) {
+    if (c instanceof JComponent && ((JComponent) c).getComponentPopupMenu() != null) {
+      return ((JComponent) c).getComponentPopupMenu();
+    } else {
+      JPopupMenu pop = searchPopupMenu((Container) c);
+      if (pop != null) {
+        return pop;
+      }
+    }
+  }
+  return null;
+}
+}}
+
+* 参考リンク [#kbe049b7]
+- [http://crocro.com/news/20110706140746.html クロノス・クラウン - 「JFileChooser」のコンテキストメニューに独自メニューを追加する方法]
+- [[DesktopPropertyの変更を監視する>Swing/DesktopProperty]]
+
+* コメント [#j48e4f8e]
+#comment

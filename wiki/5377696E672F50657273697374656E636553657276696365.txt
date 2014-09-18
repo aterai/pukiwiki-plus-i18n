@@ -1,0 +1,189 @@
+TITLE:PersistenceServiceを使ってJFrameの位置・サイズを記憶
+#tags(ServiceManager, PersistenceService, JFrame, SwingWorker, XMLEncoder, XMLDecoder)
+#author(aterai)
+#pubdate(2012-03-26T15:45:39+09:00)
+* 概要 [#da09cfeb]
+`ServiceManager`から`PersistenceService`を取得し、`JFrame`などの位置・サイズの保存、呼び出しを行います。
+
+#download(https://lh6.googleusercontent.com/-PyOW5DW5kHU/T3APD_Cq_bI/AAAAAAAABKk/i9eivMuQZ0Y/s800/PersistenceService.png)
+
+* サンプルコード [#xdef909f]
+#code(link){{
+final WindowState ws = new WindowState();
+SwingWorker<WindowAdapter,Void> worker = new SwingWorker<WindowAdapter,Void>() {
+  @Override public WindowAdapter doInBackground() {
+    PersistenceService ps;
+    BasicService bs;
+    try{
+      bs = (BasicService)ServiceManager.lookup("javax.jnlp.BasicService");
+      ps = (PersistenceService)ServiceManager.lookup("javax.jnlp.PersistenceService");
+    }catch(UnavailableServiceException use) {
+      use.printStackTrace();
+      ps = null;
+      bs = null;
+    }
+    if(ps != null && bs != null) {
+      final PersistenceService persistenceService = ps;
+      final URL codebase = bs.getCodeBase();
+      loadWindowState(persistenceService, codebase, ws);
+      return new WindowAdapter() {
+        @Override public void windowClosing(WindowEvent e) {
+          JFrame f = (JFrame)e.getComponent();
+          if(f.getExtendedState()==JFrame.NORMAL) {
+            ws.setSize(f.getSize());
+            ws.setLocation(f.getLocationOnScreen());
+          }
+          saveWindowState(persistenceService, codebase, ws);
+        }
+      };
+    }else{
+      return null;
+    }
+  }
+  @Override public void done() {
+    WindowAdapter wa = null;
+    try{
+      wa = get();
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    }catch(Exception e) {
+      e.printStackTrace();
+    }
+    JFrame frame = new JFrame();
+    if(wa!=null) frame.addWindowListener(wa);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.getContentPane().add(new MainPanel());
+    frame.setSize(ws.getSize());
+    frame.setLocation(ws.getLocation());
+    frame.setVisible(true);
+  }
+};
+worker.execute();
+}}
+
+* 解説 [#p124cd93]
+上記のサンプルでは、`PersistenceService`で確保したファイルに、`HashMap<String, Serializable>`に格納した`JFrame`の位置、サイズを`XMLEncoder`、`XMLDecoder`を使って読み書きしています。
+
+----
+- `Windows 7`、`JDK 1.7.0_03`では、`C:\Users\(user)\AppData\LocalLow\Sun\Java\Deployment\cache\6.0\muffin`以下に`muf`ファイルなどが作成されるようです。
+
+#code{{
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_03" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>location</string>
+   <object idref="Point0"/>
+  </void>
+  <void method="put">
+   <string>size</string>
+   <object idref="Dimension0"/>
+  </void>
+ </object>
+</java>
+}}
+
+----
+`XMLEncoder`で直接上記の`JFrame`を書きだす場合、以下のような`IllegalAccessException`が発生する
+
+ java.lang.IllegalAccessException: Class sun.reflect.misc.Trampoline can not access a member of class MainPanel$2 with modifiers ""
+ Continuing ...
+
+回避するには、`WindowListener`を実装する匿名内部クラスを`public class`(`Java Beans`)に変更するか、`removeWindowListener`で取り除く必要がある
+
+#code{{
+//package example;
+//-*- mode:java; encoding:utf-8 -*-
+// vim:set fileencoding=utf-8:
+//@homepage@
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.*;
+import java.io.*;
+import javax.swing.*;
+
+public class MainPanel extends JPanel {
+  private static final String PROPERTIES_XML = "properties.xml";
+  public MainPanel() {
+    super(new BorderLayout());
+    JTextArea textArea = new JTextArea();
+    try(Reader fr = new InputStreamReader(
+        new FileInputStream(PROPERTIES_XML), "UTF-8")) {
+      textArea.read(fr, "File");
+    } catch(Exception ex) {
+      ex.printStackTrace();
+    }
+    add(new JScrollPane(textArea));
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    try {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+    JFrame frame = loadFrame();
+    frame.setVisible(true);
+  }
+  private static JFrame loadFrame() {
+    JFrame frame = null;
+    try(XMLDecoder d = new XMLDecoder(new BufferedInputStream(
+        //MainPanel.class.getResourceAsStream(PROPERTIES_XML)))) {
+        new FileInputStream(PROPERTIES_XML)))) {
+
+      frame = (JFrame)d.readObject();
+      //d.close();
+    } catch(Exception ex) {
+      ex.printStackTrace();
+    }
+    if(frame==null) {
+      frame = new JFrame("title");
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      frame.getContentPane().add(new MainPanel());
+      frame.setSize(320, 240);
+      frame.setLocationRelativeTo(null);
+    }
+    frame.addWindowListener(new WindowAdapter() {
+      @Override public void windowClosing(WindowEvent e) {
+        JFrame frame = (JFrame)e.getComponent();
+        frame.removeWindowListener(this);
+        File file = new File(PROPERTIES_XML);
+        try(XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(
+            new FileOutputStream(file)))) {
+          xe.writeObject(frame);
+          xe.flush();
+          //xe.close();
+        } catch(Exception ex) {
+          ex.printStackTrace();
+        }
+      }
+    });
+    return frame;
+  }
+}
+}}
+
+* 参考リンク [#m74e8dfc]
+- [http://pscode.org/jws/api.html JWS javax.jnlp.* API demos]
+- [http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/examples.html#PersistenceService PersistenceService]
+- [http://www.finnw.me.uk/persistencetest.html PersistenceService Demo]
+- [[JFrameの位置・サイズを記憶する>Swing/Preferences]]
+
+* コメント [#x92d06e4]
+- `JScrollPane` + `JTable` + `DefalutTableModel`を`XMLEncoder`で`XML`書出しする場合のエラーなどについて: [http://wiki.byte-welt.net/wiki/JTable_speichern JTable speichern – Byte-Welt Wiki] -- [[aterai]] &new{2013-11-14 (木) 19:06:49};
+
+ java.lang.InstantiationException: javax.swing.plaf.basic.BasicTableHeaderUI$MouseInputHandler
+ Continuing ...
+ java.lang.Exception: XMLEncoder: discarding statement JTableHeader.removeMouseMotionListener(BasicTableHeaderUI$MouseInputHandler);
+ Continuing ...
+ java.lang.InstantiationException: javax.swing.plaf.basic.BasicTableUI$Handler
+ Continuing ...
+ java.lang.Exception: XMLEncoder: discarding statement JTable.removeMouseMotionListener(BasicTableUI$Handler);
+ Continuing ...
+
+#comment

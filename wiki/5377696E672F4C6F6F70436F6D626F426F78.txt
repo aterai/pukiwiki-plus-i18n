@@ -1,0 +1,37 @@
+TITLE:JComboBoxのItem選択をループ
+#tags(JComboBox, ActionMap, InputMap)
+#author(aterai)
+#pubdate(2005-10-24)
+* 概要 [#t1a92582]
+`JComboBox`の`Item`の選択が、上下のカーソルキーでループするように設定します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPicRK7pI/AAAAAAAAAeI/ApRsPHlRWe0/s800/LoopComboBox.png)
+
+* サンプルコード [#b3f4d4b8]
+#code(link){{
+Action up = new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    int index = combo.getSelectedIndex();
+    combo.setSelectedIndex((index==0)?combo.getItemCount()-1:index-1);
+  }
+};
+Action down = new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    int index = combo.getSelectedIndex();
+    combo.setSelectedIndex((index==combo.getItemCount()-1)?0:index+1);
+  }
+};
+ActionMap amc = combo.getActionMap();
+amc.put("myUp",   up);
+amc.put("myDown", down);
+InputMap imc = combo.getInputMap();
+imc.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0),   "myUp");
+imc.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "myDown");
+}}
+
+* 解説 [#d842f217]
+上記のサンプルでは、下のコンボボックスの`ActionMap`と`InputMap`を使って、上下キーに対応する新しいアクションを設定しています。
+
+//**参考リンク
+* コメント [#fd90efef]
+#comment

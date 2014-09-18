@@ -1,0 +1,59 @@
+TITLE:JMenuに最近使ったファイルを追加
+#tags(JMenu, File)
+#author(aterai)
+#pubdate(2003-11-10)
+* 概要 [#a3e2a135]
+`JMenu`に、「最近使ったファイル(`F`)」を履歴として追加していきます。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMffElRbI/AAAAAAAAAZQ/1d47Mop5D-0/s800/FileHistory.png)
+
+* サンプルコード [#u0f87931]
+#code(link){{
+private int MAXHISTORY = 3;
+private void updateHistory(String str) {
+  fileHistory.removeAll();
+  fh.removeElement(str);
+  fh.insertElementAt(str, 0);
+  if(fh.size()>MAXHISTORY) fh.remove(fh.size()-1);
+  for(int i=0;i<fh.size();i++) {
+    String name = (String)fh.elementAt(i);
+    String num  = Integer.toString(i+1);
+    JMenuItem mi = new JMenuItem(new HistoryAction(new File(name)));
+    mi.setText(num + ": "+ name);
+    byte[] bt = num.getBytes();
+    mi.setMnemonic((int) bt[0]);
+    fileHistory.add(mi, i);
+  }
+}
+class HistoryAction extends AbstractAction{
+  final private File file;
+  public HistoryAction(File file) {
+    super();
+    this.file = file;
+  }
+  @Override public void actionPerformed(ActionEvent e) {
+    historyActionPerformed(file);
+  }
+}
+private void historyActionPerformed(File file) {
+  Object[] obj = {"本来はファイルを開いたりする。\n",
+                  "このサンプルではなにもせずに\n",
+                  "履歴の先頭にファイルを移動する。"};
+  JOptionPane.showMessageDialog(this, obj, APP_NAME,
+                  JOptionPane.INFORMATION_MESSAGE);
+  repaint();
+  updateHistory(file.getAbsolutePath());
+}
+}}
+
+* 解説 [#p7efb749]
+上記のサンプルでは、「ファイル->開く」で、ダミーファイルの履歴が残ります。履歴は`3`件まで残り、履歴をメニューから選択すると、そのファイルが履歴の先頭に移動します。
+
+実際に使用する場合は、ダミーファイルを使用している箇所を修正したり、アプリケーションを終了する際に履歴を保存したりするコードを追加する必要があります。
+
+* 参考リンク [#k3eb0d01]
+- [[Resourceファイルからメニューバーを生成>Swing/ResourceMenuBar]]
+- [[JFrameの位置・サイズを記憶する>Swing/Preferences]]
+
+* コメント [#j906ef87]
+#comment

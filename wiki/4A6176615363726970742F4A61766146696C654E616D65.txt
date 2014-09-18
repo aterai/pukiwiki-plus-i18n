@@ -1,0 +1,186 @@
+TITLE:JavaScriptでソースコードからJavaのファイル名を取得する
+#author(aterai)
+#pubdate(2012-09-11)
+#contents(big)
+
+* 概要 [#ve7c744d]
+- `pre`タグで囲まれたソースコードなどから、`public class`などを検索して、`Java`のファイル名を取得するテスト。
+-- [[JavaScriptでpreタグで囲まれたソースコードをtextareaにコピーする>JavaScript/pre2textarea]] で`pre`内のコードを`textarea`に変換する代わりに、直接名前付きで保存できるようにするために使用することを想定
+-- [http://terai.xrea.jp/JavaScript/pre2textarea.html#ua1c0148 ローカルにドロップして保存(ファイル名付き)]
+- 使用方法
+-- ユーザー`JavaScript`フォルダにコピー [http://terai.xrea.jp/data/javascript/java_file_name.user.js java_file_name.user.js]
+-- `pre`要素をダブルクリックすると、検索した`Java`のファイル名を表示
+
+* ソースコード [#d2ebc1c2]
+#code{{
+(function() {
+  function getFileName(code) {
+    var r = code.match(/public(?:\s|final)+(?:class|interface|enum)\s+([^<{\s]+)/m);
+    return (r ? r[1] : 'Unknown') + '.java';
+  }
+  function pre2text(pre) {
+    var div = document.createElement('div'); //dummy div
+    div.innerHTML = pre.innerHTML.replace(/<br[ \/]*>/ig, '\n').replace(/<.*?>/mg, '');
+    return div.childNodes[0].nodeValue.replace(/\xA0/g, ' '); //replace &nbsp;
+  }
+  var listener = function(e) {
+    alert(getFileName(pre2text(this)));
+  },
+  pre = document.getElementsByTagName('pre'),
+  i = 0, len = pre.length;
+  for(; i<len; i++) {
+    pre[i].addEventListener('dblclick', listener, false);
+  }
+}());
+}}
+
+* Bookmarklet版 [#g50b36cd]
+- 名前
+-- `java_file_name`
+- アドレス(`YUI Compressor`で圧縮)
+ javascript:(function(){function c(h){var g=h.match(/public(?:\s|final)+(?:class|interface|enum)\s+([^<{\s]+)/m);return(g?g[1]:"Unknown")+".java"}function d(g){var h=document.createElement("div");h.innerHTML=g.innerHTML.replace(/<br[ \/]*>/ig,"\n").replace(/<.*?>/mg,"");return h.childNodes[0].nodeValue.replace(/\xA0/g," ")}var e=function(g){alert(c(d(this)))},f=document.getElementsByTagName("pre"),b=0,a=f.length;for(;b<a;b++){f[b].addEventListener("dblclick",e,false)}}());
+
+* 制限 [#db6ab432]
+- 対象は`Java`のファイル名のみ
+- まともに字句解析はしない
+- `public`なクラスなどが存在しない場合には未対応
+- 以下の様なコメントを考慮していない
+-- `public /* comment */ class Main {...}`
+
+#code{{
+function getFileName(code) {
+  var ext = '.java', f = false, name = 'Unknown',
+     array = code.split(/[{\s\r\n]+/),
+     i, len = array.length;
+  for(i=0;i<len;i++) {
+    switch(array[i]) {
+      case 'public':
+        f = true;
+        continue;
+      case 'class':
+      case 'interface':
+      case 'enum':
+        name = array[i+1];
+        if(f) break;
+        f = false;
+        continue;
+      case 'final':
+        continue;
+      default:
+        f = false;
+    }
+  }
+  return name+ext;
+}
+}}
+
+* テスト用のサンプルソースコード [#oa0a9909]
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.text.Position;
+import javax.swing.tree.*;
+
+	public
+ class         
+ 		JTreeNextMatchTest
+{
+  public JComponent makeUI() {
+    JTree tree = new JTree() {
+      @Override public TreePath getNextMatch(
+          String prefix, int startingRow, Position.Bias bias) {
+        return null;
+      }
+    };
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(new JScrollPane(tree));
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new JTreeNextMatchTest().makeUI());
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
+#code{{
+public interface CloseableTabbedPaneListener extends EventListener {
+    /**
+     * Informs all CloseableTabbedPaneListeners when a tab should be
+     * closed
+     * @param tabIndexToClose the index of the tab which should be closed
+     * @return true if the tab can be closed, false otherwise
+     */
+    boolean closeTab(int tabIndexToClose);
+}
+}}
+
+#code{{
+//aaaaaaaaaaa
+//bbbbbbb
+public enum Flip {
+    NONE, VERTICAL, HORIZONTAL
+}
+}}
+
+#code{{
+public final enum Flip {
+    NONE, VERTICAL, HORIZONTAL
+}
+}}
+
+#code{{
+public /* comment aaa bbb ccc */ enum Flip {
+    NONE, VERTICAL, HORIZONTAL
+}
+}}
+
+#code{{
+public enum /* comment aaa bbb ccc */ Flip {
+    NONE, VERTICAL, HORIZONTAL
+}
+}}
+
+#code{{
+public enum テスト {
+    NONE, VERTICAL, HORIZONTAL
+}
+}}
+
+#code{{
+enum Flip {
+    NONE, VERTICAL, HORIZONTAL
+}
+public interface CloseableTabbedPaneListener extends EventListener {
+    /**
+     * Informs all CloseableTabbedPaneListeners when a tab should be&nbsp;&nbsp;&nbsp;&nbsp;aaa
+     * closed &lt; &gt; &amp; &copyright; <>&©
+     * @param tabIndexToClose the index of the tab which should be closed
+     * @return true if the tab can be closed, false otherwise
+     */
+    boolean closeTab(int tabIndexToClose);
+}
+}}
+
+#code{{
+public class HashMapComboBoxModel<K, V> extends AbstractListModel<K> implements MutableComboBoxModel<K>, 
+Serializable {
+  //@Override ...
+}
+}}
+
+// * 参考リンク
+* コメント [#af6e4bf0]
+#comment

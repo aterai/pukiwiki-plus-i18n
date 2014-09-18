@@ -1,0 +1,56 @@
+TITLE:JTreeのToolTipsを表示
+#tags(JTree, JToolTip, ToolTipManager, TreeCellRenderer)
+#author(aterai)
+#pubdate(2007-06-04)
+* 概要 [#nf00970d]
+`JTree`のノードの`ToolTips`を表示します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWQe1RL2I/AAAAAAAAAo8/6HFqbUb3UZ8/s800/TreeToolTips.png)
+
+* サンプルコード [#nff3084c]
+#code(link){{
+//tree = new JTree();
+tree = new JTree() {
+  @Override public String getToolTipText(MouseEvent e) {
+    Object o = null;
+    TreePath path = getPathForLocation(e.getX(), e.getY());
+    if(path!=null) {
+      o = path.getLastPathComponent();
+    }
+    return (o==null)?null:o.toString();
+  }
+};
+//tree.setCellRenderer(new MyTreeCellRenderer(tree.getCellRenderer()));
+ToolTipManager.sharedInstance().registerComponent(tree);
+}}
+
+* 解説 [#b86117ab]
+上記のサンプルでは、`JTree#getToolTipText(MouseEvent)`をオーバーライドして`JToolTip`を表示しています。以下のようなセルレンダラーを使用する方法もあります。
+
+#code{{
+class MyTreeCellRenderer implements TreeCellRenderer {
+  private final TreeCellRenderer renderer;
+  public MyTreeCellRenderer(TreeCellRenderer renderer) {
+    this.renderer = renderer;
+  }
+  @Override public Component getTreeCellRendererComponent(
+        JTree tree, Object value, boolean isSelected,
+        boolean expanded, boolean leaf, int row, boolean hasFocus) {
+    JComponent c = (JComponent)renderer.getTreeCellRendererComponent(
+      tree, value, isSelected, expanded, leaf, row, hasFocus);
+    c.setToolTipText((value==null)?null:value.toString());
+    return c;
+  }
+}
+}}
+
+どちらの方法を使う場合でも、`JTree`オブジェクトを`ToolTipManager`に登録する(もしくは、`JTree#setToolTipText`メソッドで`null`以外を指定しておく)必要があります。
+
+#code{{
+ToolTipManager.sharedInstance().registerComponent(tree);
+//tree.setToolTipText("dummy");
+}}
+
+//**参考リンク
+* コメント [#g65ced14]
+#comment

@@ -1,0 +1,22 @@
+TITLE:JFileChooserのPlacesBarを非表示にする
+#tags(JFileChooser, PlacesBar)
+#author(aterai)
+#pubdate(2009-11-16T19:20:02+09:00)
+* 概要 [#z6ed858a]
+`JFileChooser`(`WindowsLookAndFeel`)の`PlacesBar`を非表示にします。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTQZdQnWAI/AAAAAAAAAfg/Cne_bKrk8BU/s800/NoPlacesBarFileChooser.png)
+
+* サンプルコード [#wc0ca9c7]
+#code(link){{
+UIManager.put("FileChooser.noPlacesBar", Boolean.TRUE);
+}}
+
+* 解説 [#l3ee4c2c]
+上記のサンプルでは、`WindowsLookAndFeel`で、`JFileChooser`の左に表示される`PlacesBar`を非表示にしています。
+
+* 参考リンク [#x2c016b4]
+- [https://forums.oracle.com/thread/1354867 Swing - Disable something -- JFileChooser]
+
+* コメント [#sfb8a948]
+#comment

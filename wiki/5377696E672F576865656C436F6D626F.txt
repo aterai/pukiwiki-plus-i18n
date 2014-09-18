@@ -1,0 +1,29 @@
+TITLE:JComboBoxの値をMouseWheelで変更
+#tags(JComboBox, MouseWheelListener)
+#author(aterai)
+#pubdate(2004-11-15T02:34:50+09:00)
+* 概要 [#i7ef2fc7]
+`JComboBox`にフォーカスがある場合、その値を`MouseWheel`の上下で変更します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWm95sa5I/AAAAAAAAApg/1tiQsmg5QKw/s800/WheelCombo.png)
+
+* サンプルコード [#ef581a0a]
+#code(link){{
+combo.addMouseWheelListener(new MouseWheelListener() {
+  @Override public void mouseWheelMoved(MouseWheelEvent e) {
+    JComboBox source = (JComboBox) e.getSource();
+    if(!source.hasFocus()) return;
+    int ni = source.getSelectedIndex() + e.getWheelRotation();
+    if(ni>=0 && ni<source.getItemCount()) {
+      source.setSelectedIndex(ni);
+    }
+  }
+});
+}}
+
+* 解説 [#r2f99b4c]
+上記のサンプルでは、一番上のコンボボックスに`MouseWheelListener`が設定され、マウスホイールの上下回転に反応して、表示される内容が順次変更されるようになっています。
+
+//**参考リンク
+* コメント [#ebca23c2]
+#comment

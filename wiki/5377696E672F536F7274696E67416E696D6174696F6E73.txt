@@ -1,0 +1,65 @@
+TITLE:JComboBoxのモデルとしてenumを使用する
+#tags(JComboBox, Enum, Animation, SwingWorker)
+#author(aterai)
+#pubdate(2007-07-09T14:59:22+09:00)
+* 概要 [#y688293a]
+`JComboBox`のモデルとして`enum`を使用します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTcZXYeSI/AAAAAAAAAkY/_frjM9wSJsc/s800/SortingAnimations.png)
+
+* サンプルコード [#i89c933e]
+#code(link){{
+private static enum SortAlgorithms {
+  Isort    ("Insertion Sort"),
+  Selsort  ("Selection Sort"),
+  Shellsort("Shell Sort"),
+  Hsort    ("Heap Sort"),
+  Qsort    ("Quicksort"),
+  Qsort2   ("2-way Quicksort");
+  private final String description;
+  private SortAlgorithms(String description) {
+    this.description = description;
+  }
+  @Override public String toString() {
+    return description;
+  }
+}
+private final JComboBox algorithmsChoices = new JComboBox(SortAlgorithms.values());
+//JDK 1.7.0
+//private final JComboBox<Enum> algorithmsChoices = new JComboBox<Enum>(SortAlgorithms.values());
+//private final JComboBox<? extends Enum> algorithmsChoices = new JComboBox<>(SortAlgorithms.values());
+//private final JComboBox<SortAlgorithms> algorithmsChoices = new JComboBox<>(SortAlgorithms.values());
+}}
+
+* 解説 [#q914d563]
+`enum`型で`JComboBox`のモデルを作成しています。上記のコードでは、`Enum#toString()`メソッドをオーバーライドして、`JComboBox`の表示はユーザーに分かりやすい名前になるようにしています。
+
+コード中で、どのアイテムが選択されているかなどを調べる場合などは、例えば以下のようにして使用します。
+
+#code{{
+switch((SortAlgorithms)algorithmsChoices.getSelectedItem()) {
+  case Isort:     isort(number);       break;
+  case Selsort:   ssort(number);       break;
+  case Shellsort: shellsort(number);   break;
+  case Hsort:     heapsort(number);    break;
+  case Qsort:     qsort(0, number-1);  break;
+  case Qsort2:    qsort2(0, number-1); break;
+}
+}}
+
+----
+ソートアニメーション自体は、[http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]から基本部分はそのままコピーして、`Swing`に移植しています。
+
+- `SwingWorker`でキャンセル可能にしたため、実行するには、`JDK 6`以上が必要
+//-%%ゴミが残らないよう全部の点を書き換えている%%
+//--%%点が増えるとオリジナルに比べてかなり遅い(速すぎず、見やすいような気もするので…)%%
+- 全部書き換えるのを止めて、移動する点のみウェイトを入れてゆっくり描画するように修正
+//-%%アニメーション中は、paintComponentを使わず、自前のダブルバッファリングを使用%%
+//--JPanelのダブルバッファリングを使用
+
+* 参考リンク [#z405b484]
+- [http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]
+- [http://docs.oracle.com/javase/tutorial/uiswing/painting/ Lesson: Performing Custom Painting (The Java™ Tutorials > Creating a GUI With JFC/Swing)]
+
+* コメント [#bedcfd09]
+#comment

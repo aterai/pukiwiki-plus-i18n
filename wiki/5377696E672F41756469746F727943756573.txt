@@ -1,0 +1,50 @@
+TITLE:AuditoryCuesでイベント音を設定する
+#tags(UIManager, AuditoryCues, Sound, JOptionPane)
+#author(aterai)
+#pubdate(2008-05-26T17:13:17+09:00)
+* 概要 [#v95f25a7]
+`UIManager`に`AuditoryCues.playList`を設定して、ダイアログが開いた時の警告音などを鳴らします。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHzQ8XbXI/AAAAAAAAARw/-TGnQ_tvnnM/s800/AuditoryCues.png)
+
+* サンプルコード [#b4933fee]
+#code(link){{
+Object[] optionPaneAuditoryCues = {
+  "OptionPane.errorSound", "OptionPane.informationSound",
+  "OptionPane.questionSound", "OptionPane.warningSound"
+};
+//UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.allAuditoryCues"));
+//UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.defaultCueList"));
+//UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.noAuditoryCues"));
+UIManager.put("AuditoryCues.playList", optionPaneAuditoryCues);
+}}
+
+* 解説 [#nb3f1b60]
+上記のサンプルでは、デフォルトではすべて再生しないように設定されている聴覚フィードバックを、`JOptionPane`でダイアログを開いた時には有効になるように変更しています。
+
+- `showMessageDialog1`
+-- `LookAndFeel`デフォルトの音が鳴る(`LookAndFeel`にデフォルトの音が無い場合は鳴らない)
+-- `WindowsLookAndFeel`では、「コントロールパネル」「サウンドとオーディオデバイスのプロパティ」で、プログラムイベントが設定されている場合は鳴る
+
+- `showMessageDialog2`
+-- `wav`ファイルで音を鳴らす
+-- `UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.noAuditoryCues"))`として、二重に鳴らないようにしている
+
+----
+`MetalLookAndFeel`や`MotifLookAndFeel`では、以下のようにすることで、`MessageDialog`のイベント音を変更することも出来ます。
+
+#code{{
+UIManager.put("OptionPane.informationSound", "/example/notice2.wav");
+}}
+
+* 参考リンク [#t9700925]
+- [http://docs.oracle.com/javase/jp/6/technotes/guides/swing/SwingChanges.html#Miscellaneous Swing コンポーネントの音声フィードバック]
+- [http://www.ibm.com/developerworks/jp/java/library/j-mer0730/ Merlinの魔術: Swingのオーディオ]
+- [http://www.taitaistudio.com/wav/ "taitai studio" フリーWav素材集]
+-- wavファイルを拝借しています。
+- [[Beep音を鳴らす>Swing/Beep]]
+- [[MIDIファイルの演奏>Swing/MidiSystem]]
+- [[Wavファイルの演奏>Swing/Sound]]
+
+* コメント [#k5553b1c]
+#comment

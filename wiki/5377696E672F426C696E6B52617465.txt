@@ -1,0 +1,22 @@
+TITLE:Caretの点滅を停止する
+#tags(JTextComponent, Caret, JTextField)
+#author(aterai)
+#pubdate(2011-02-21T14:49:17+09:00)
+* 概要 [#p7a9b11c]
+`JTextComponent`の`Caret`が点滅する速さを変更します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TWH8aAgoyiI/AAAAAAAAA1o/J-ljyl_h_i8/s800/BlinkRate.png)
+
+* サンプルコード [#jf8c9ec5]
+#code(link){{
+((DefaultCaret)textField.getCaret()).setBlinkRate(0);
+}}
+
+* 解説 [#uc56397a]
+上記のサンプルでは、`JTextField#getCaret()`で取得した`CaretにsetBlinkRate(0)`で点滅間隔を`0`と設定し、キャレットが点滅しないように設定しています。
+
+* 参考リンク [#v32001a8]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6289635 Bug ID: 6289635 getDesktopProperty("awt.cursorBlinkRate") returns null]
+
+* コメント [#zc8a7c87]
+#comment

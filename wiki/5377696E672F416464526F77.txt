@@ -1,0 +1,48 @@
+TITLE:JTableの行を追加、削除
+#tags(JTable, JPopupMenu)
+#author(aterai)
+#pubdate(2004-05-03)
+* 概要 [#o1339781]
+`JTable`で行の追加と削除を行います。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHaSWCCMI/AAAAAAAAARI/UM476TJWRdM/s800/AddRow.png)
+
+* サンプルコード [#a48c4459]
+#code(link){{
+private final DefaultTableModel model = new DefaultTableModel();
+private final JTable table;
+
+private void createActionPerformed(ActionEvent e) {
+  int rc = model.getRowCount();
+  model.addRow(new Object[] {rc, "New name", ""});
+  //追加された最終行までスクロール
+  table.scrollRectToVisible(table.getCellRect(rc, 0, true));
+}
+
+private void deleteActionPerformed(ActionEvent e) {
+  int[] selection = table.getSelectedRows();
+  if(selection==null || selection.length<=0) return;
+  for(int i=selection.length-1;i>=0;i--) {
+    model.removeRow(table.convertRowIndexToModel(selection[i]));
+  }
+}
+}}
+
+* 解説 [#y17790fd]
+上記のサンプルでは、ポップアップメニューを使って、行の追加と削除を行っています。
+
+- 追加
+-- `DefaultTableModel`の`addRow`メソッドを使用し、オブジェクトの配列を行として追加
+-- 追加された行が表示されるように、`JTable#getCellRect(...)`で行の領域を取得し、`JTable#scrollRectToVisible(...)`でスクロール
+
+- 削除
+-- 複数行の削除に対応するために、`index`の大きい方から削除する
+-- 行のソートを行っている可能性があるので、`JTable#convertRowIndexToModel(int)`で、`viewIndex`を`modelIndex`に変換してから`DefaultTableModel#removeRow(int modelIndex)`を使って削除
+
+* 参考リンク [#ic4670f1]
+- [[JTableのセルにJButtonを追加して行削除>Swing/DeleteButtonInCell]]
+- [[JTableの行を全削除>Swing/ClearTable]]
+- [[JTableで行の追加、削除アニメーション>Swing/SlideTableRows]]
+
+* コメント [#nce8b0f0]
+#comment

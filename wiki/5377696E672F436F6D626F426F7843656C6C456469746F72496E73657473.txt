@@ -1,0 +1,86 @@
+TITLE:JTableのCellEditorに設定したJComboBoxに余白を追加する
+#tags(JTable, TableCellEditor, TableCellRenderer, JComboBox, LayoutManager)
+#author(aterai)
+#pubdate(2012-05-07T12:28:04+09:00)
+* 概要 [#kc1c586e]
+`JTable`の`CellEditor`に設定した`JComboBox`に余白を追加します。
+
+#download(https://lh4.googleusercontent.com/-dIea13PoJ70/T6c7YezP1BI/AAAAAAAABMQ/e0IqDjxhjpw/s800/ComboBoxCellEditorInsets.png)
+
+* サンプルコード [#z0adf2e6]
+#code(link){{
+class ComboBoxPanel extends JPanel {
+  public final JComboBox<String> comboBox = new JComboBox<>(
+      new String[] {"aaaaaa", "bbb", "c"});
+  public ComboBoxPanel() {
+    super(new GridBagLayout());
+    GridBagConstraints c = new GridBagConstraints();
+
+    c.weightx = 1.0;
+    c.insets = new Insets(0, 10, 0, 10);
+    c.fill = GridBagConstraints.HORIZONTAL;
+
+    comboBox.setEditable(true);
+    setOpaque(true);
+    add(comboBox, c);
+    comboBox.setSelectedIndex(0);
+  }
+}
+class ComboBoxCellRenderer extends ComboBoxPanel implements TableCellRenderer {
+  public ComboBoxCellRenderer() {
+    super();
+    setName("Table.cellRenderer");
+  }
+  @Override public Component getTableCellRendererComponent(
+      JTable table, Object value,
+      boolean isSelected, boolean hasFocus, int row, int column) {
+    this.setBackground(isSelected ? table.getSelectionBackground()
+                                  : table.getBackground());
+    if (value != null) {
+      comboBox.setSelectedItem(value);
+    }
+    return this;
+  }
+}
+}}
+
+* 解説 [#w805be00]
+- `Border`(左)
+-- `JComboBox`自身に余白を設定し、これを`CellRenderer`, `CellEditor`に使用
+-- ドロップダウンリストの位置、サイズが余白を含んだ幅になる
+
+#code{{
+combo.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(8,10,8,10), combo.getBorder()));
+}}
+
+- `JPanel` + `JComboBox`(右)
+-- `GridBagLayout`を使用する`JPanel`に`JComboBox`を追加
+-- `fill`フィールドを`GridBagConstraints.HORIZONTAL`として、垂直には`JComboBox`のサイズを変更しない
+-- `insets`フィールドを設定して、`JComboBox`の外側に別途(ドロップダウンリストの位置、サイズに影響しないように)余白を追加
+
+----
+セルの中にある`JComboBox`の幅を可変ではなく固定にする場合は、以下のような`FlowLayout`のパネルに`getPreferredSize()`をオーバーライドして幅を固定した`JComboBox`を使用する方法がある。
+
+#code{{
+class ComboBoxPanel extends JPanel {
+  private String[] m = new String[] {"a", "b", "c"};
+  protected JComboBox<String> comboBox = new JComboBox<String>(m) {
+    @Override public Dimension getPreferredSize() {
+      Dimension d = super.getPreferredSize();
+      return new Dimension(40, d.height);
+    }
+  };
+  public ComboBoxPanel() {
+    super();
+    setOpaque(true);
+    comboBox.setEditable(true);
+    add(comboBox);
+  }
+}
+}}
+
+* 参考リンク [#j76de487]
+- [[JTableのCellRendererにJComboBoxを設定>Swing/ComboCellRenderer]]
+
+* コメント [#l9db47e7]
+#comment

@@ -1,0 +1,106 @@
+TITLE:JEditorPaneにリンクを追加
+#tags(JEditorPane, Html, HTMLEditorKit, HyperlinkListener, JButton)
+#author(aterai)
+#pubdate(2010-05-10T16:07:06+09:00)
+* 概要 [#yfa0ae51]
+`JEditorPane`にリンクを追加します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOK8UtUUI/AAAAAAAAAb8/yiME-hTTlWA/s800/HyperlinkListener.png)
+
+* サンプルコード [#p6936087]
+#code(link){{
+final JEditorPane editorPane = new JEditorPane();
+editorPane.setEditable(false);
+editorPane.setContentType("text/html"); //javax.swing.text.html.HTMLEditorKit
+editorPane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+editorPane.setText(htmlText);
+editorPane.addHyperlinkListener(new HyperlinkListener() {
+  private String tooltip;
+  @Override public void hyperlinkUpdate(HyperlinkEvent e) {
+    if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+      JOptionPane.showMessageDialog(editorPane, "You click the link with the URL " + e.getURL());
+    }else if(e.getEventType() == HyperlinkEvent.EventType.ENTERED) {
+      tooltip = editorPane.getToolTipText();
+      URL url = e.getURL();
+      editorPane.setToolTipText((url!=null)?url.toExternalForm():null);
+    }else if(e.getEventType() == HyperlinkEvent.EventType.EXITED) {
+      editorPane.setToolTipText(tooltip);
+    }
+  }
+});
+}}
+
+* 解説 [#l1011ba2]
+上記のサンプルでは、`JEditorPane`(`HTMLEditorKit`,編集不可)に挿入したタグ`<a href='...'>...</a>`のクリックなどを受信する`HyperlinkListener`を追加しています。
+
+----
+以下のように、`JButton`などのコンポーネントを使用する方法もあります。
+- 編集可
+- 部分選択できない
+- %%ベースラインがうまく揃わない？%% [[JTextPaneに追加するコンポーネントのベースラインを揃える>Swing/InsertComponentBaseline]] のように、`JComponent#setAlignmentY(...)`でテキストベースラインに揃えることが可能
+
+#code{{
+HTMLDocument doc = (HTMLDocument)editorPane.getDocument();
+Style s = doc.addStyle("button", null);
+StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER);
+HyperlinkButton button = new HyperlinkButton(new AbstractAction(LINK) {
+  @Override public void actionPerformed(ActionEvent e) {
+    AbstractButton b = (AbstractButton)e.getSource();
+    editorPane.setBackground(b.isSelected()?Color.RED:Color.WHITE);
+    JOptionPane.showMessageDialog(editorPane, "You click the link with the URL " + LINK);
+  }
+});
+button.setToolTipText("button: "+LINK);
+button.setOpaque(false);
+StyleConstants.setComponent(s, button);
+try {
+  doc.insertString(doc.getLength(), "\n----\nJButton:\n", null);
+  doc.insertString(doc.getLength(), LINK +"\n", doc.getStyle("button"));
+  //doc.insertString(doc.getLength(), "\n", null);
+} catch (BadLocationException ble) {
+  ble.printStackTrace();
+}
+}}
+
+* 参考リンク [#zc3bd74d]
+- [[Hyperlinkを、JLabel、JButton、JEditorPaneで表示>Swing/HyperlinkLabel]]
+
+* コメント [#aba69bd8]
+- いつもお世話になっております。`JEditorPane`に画像ファイルを表示したいですが、画像サイズが揃えていないため、一部表示したり、全部表示したりなどの現状です。そこで、サイズに関係なく、各画像ファイルを全体表示したいです。可能でしょうか？もしかしたら、`JEditorPane`ではなく、別の`Swing`コンポを使う必要があるかなと思います。画像全体表示の方法を教えてください。よろしくお願いいたします。 -- [[panda]] &new{2011-07-27 (水) 08:57:42};
+-- こんばんは。「サイズに関係なく、各画像ファイルを全体表示したい」とは、画像を縮小してすべて同じサイズのサムネイルを表示したいということでしょうか？ 画質にこだわらないなら、以下のように`img`タグの属性で幅と高さを指定する方法があります。 -- [[aterai]] &new{2011-07-27 (水) 18:21:59};
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+public class ThumbnailTest {
+  public JComponent makeUI() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<html><body>aaaaaaaaaaaaaaaaaaaaaa<br />");
+    sb.append("<img width='144' height='120' src='https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOK8UtUUI/AAAAAAAAAb8/yiME-hTTlWA/s800/HyperlinkListener.png' />");
+    sb.append("</body></html>");
+    JEditorPane editorPane = new JEditorPane();
+    editorPane.setEditable(false);
+    editorPane.setContentType("text/html");
+    editorPane.setText(sb.toString());
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(new JScrollPane(editorPane));
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() { createAndShowGUI(); }
+    });
+  }
+  public static void createAndShowGUI() {
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new ThumbnailTest().makeUI());
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
+#comment

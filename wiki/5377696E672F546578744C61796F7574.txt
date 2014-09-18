@@ -1,0 +1,61 @@
+TITLE:TextLayoutでFontのメトリック情報を取得する
+#tags(Font, TextLayout, GlyphVector, LineMetrics, Graphics)
+#author(aterai)
+#pubdate(2012-01-09T13:16:40+09:00)
+* 概要 [#he53e271]
+`TextLayout`から`Font`の`Ascent`、`Descent`、`Leading`などのメトリック情報を取得して描画します。
+
+#download(https://lh4.googleusercontent.com/--iErOVV0RYk/TwpnJGdl4OI/AAAAAAAABHs/pHLpQWbpTWg/s800/TextLayout.png)
+
+* サンプルコード [#n8d2211d]
+#code(link){{
+String text = "abcdefthijklmnopqrstuvwxyz";
+Font font = new Font(Font.SERIF, Font.ITALIC, 64);
+FontRenderContext frc = new FontRenderContext(null,true,true);
+TextLayout tl = new TextLayout(text, font, frc);
+@Override public void paintComponent(Graphics g) {
+  Graphics2D g2 = (Graphics2D)g;
+  int w = getWidth();
+  float baseline = getHeight()/2f;
+
+  g2.setPaint(Color.RED);
+  g2.draw(new Line2D.Float(0, baseline, w, baseline));
+
+  g2.setPaint(Color.GREEN);
+  float ascent = baseline - tl.getAscent();
+  g2.draw(new Line2D.Float(0, ascent, w, ascent));
+
+  g2.setPaint(Color.BLUE);
+  float descent = baseline + tl.getDescent();
+  g2.draw(new Line2D.Float(0, descent, w, descent));
+
+  g2.setPaint(Color.ORANGE);
+  float leading = baseline + tl.getDescent() + tl.getLeading();
+  g2.draw(new Line2D.Float(0, leading, w, leading));
+
+  g2.setPaint(Color.CYAN);
+  float xheight = baseline - (float)tl.getBlackBoxBounds(23, 24).getBounds().getHeight();
+  g2.draw(new Line2D.Float(0, xheight, w, xheight));
+
+  g2.setPaint(Color.BLACK);
+  tl.draw(g2, 0f, baseline);
+}
+}}
+
+* 解説 [#lb24c19b]
+上記のサンプルでは、上の文字列は`TextLayout`を使用して、下は`GlyphVector` + `LineMetrics`で`Font`のメトリック情報を取得して描画しています。
+
+- `Color.RED`
+-- ベースライン
+- `Color.GREEN`: `Ascent`
+-- ベースライン - `Ascent`
+- `Color.BLUE`: `Descent`
+-- ベースライン + `Descent`
+- `Color.ORANGE`: `Leading`
+-- ベースライン + `Descent` + `Leading`
+- `Color.CYAN`: `x-height`
+-- ベースライン - 文字"x"の高さ;
+
+//**参考リンク
+* コメント [#x5a22ca9]
+#comment

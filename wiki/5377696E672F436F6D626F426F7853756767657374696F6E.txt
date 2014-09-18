@@ -1,0 +1,163 @@
+TITLE:JComboBoxで候補一覧を表示
+#tags(JComboBox, KeyListener, JPopupMenu)
+#author(aterai)
+#pubdate(2004-12-06)
+* 概要 [#jc5d9269]
+`JComboBox`に入力候補の一覧表示機能(補完機能、コードアシスト、コンテンツアシスト)を追加します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJwW_1EoI/AAAAAAAAAU4/ENqthfUJCsc/s800/ComboBoxSuggestion.png)
+
+* サンプルコード [#c1c19fbc]
+#code(link){{
+String[] array = {
+    "aaaa", "aaaabbb", "aaaabbbcc", "aaaabbbccddd",
+    "abcde", "abefg", "bbb1", "bbb12"};
+JComboBox combo = new JComboBox(array);
+combo.setEditable(true);
+combo.setSelectedIndex(-1);
+JTextField field = (JTextField)combo.getEditor().getEditorComponent();
+field.setText("");
+field.addKeyListener(new ComboKeyHandler(combo));
+}}
+
+#code{{
+class ComboKeyHandler extends KeyAdapter {
+  private final JComboBox<String> comboBox;
+  private final List<String> list = new ArrayList<>();
+  private boolean shouldHide;
+
+  public ComboKeyHandler(JComboBox<String> combo) {
+    super();
+    this.comboBox = combo;
+    for (int i = 0; i < comboBox.getModel().getSize(); i++) {
+      list.add((String) comboBox.getItemAt(i));
+    }
+  }
+  @Override public void keyTyped(final KeyEvent e) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        String text = ((JTextField) e.getComponent()).getText();
+        ComboBoxModel<String> m;
+        if (text.isEmpty()) {
+          String[] array = list.toArray(new String[list.size()]);
+          m = new DefaultComboBoxModel<String>(array);
+          setSuggestionModel(comboBox, m, "");
+          comboBox.hidePopup();
+        } else {
+          m = getSuggestedModel(list, text);
+          if (m.getSize() == 0 || shouldHide) {
+            comboBox.hidePopup();
+          } else {
+            setSuggestionModel(comboBox, m, text);
+            comboBox.showPopup();
+          }
+        }
+      }
+    });
+  }
+  @Override public void keyPressed(KeyEvent e) {
+    JTextField textField = (JTextField) e.getComponent();
+    String text = textField.getText();
+    shouldHide = false;
+    switch (e.getKeyCode()) {
+    case KeyEvent.VK_RIGHT:
+      for (String s : list) {
+        if (s.startsWith(text)) {
+          textField.setText(s);
+          return;
+        }
+      }
+      break;
+    case KeyEvent.VK_ENTER:
+      if (!list.contains(text)) {
+        list.add(text);
+        Collections.sort(list);
+        //setSuggestionModel(comboBox, new DefaultComboBoxModel(list), text);
+        setSuggestionModel(comboBox, getSuggestedModel(list, text), text);
+      }
+      shouldHide = true;
+      break;
+    case KeyEvent.VK_ESCAPE:
+      shouldHide = true;
+      break;
+    default:
+      break;
+    }
+  }
+  private static void setSuggestionModel(JComboBox<String> comboBox, ComboBoxModel<String> mdl, String str) {
+    comboBox.setModel(mdl);
+    comboBox.setSelectedIndex(-1);
+    ((JTextField) comboBox.getEditor().getEditorComponent()).setText(str);
+  }
+  private static ComboBoxModel<String> getSuggestedModel(List<String> list, String text) {
+    DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
+    for (String s : list) {
+      if (s.startsWith(text)) {
+        m.addElement(s);
+      }
+    }
+    return m;
+  }
+}
+}}
+
+* 解説 [#se4084d9]
+上記のサンプルでは、次のキー操作に対応しています。
+
+- KBD{Up}KBD{Down}キー
+-- ポップアップ表示
+- KBD{Esc}キー
+-- ポップアップ非表示
+- KBD{Right}キー
+-- 補完
+- KBD{Enter}キー
+-- 選択、または追加
+- 文字入力
+-- 候補をポップアップ
+
+`JComboBox#showPopup()`と`JComboBox#hidePopup()`(それぞれ、`JComboBox#setPopupVisible`メソッドをラップしているだけ)を使って、候補のポップアップメニュー表示を制御します。
+
+`JComboBox#setSelectedIndex(-1)`で、項目の選択をクリアしないと動作がおかしくなる場合があります。
+
+----
+`JComboBox`ではなく、`SwingSet3`の[http://java.net/projects/swingset3/sources/svn/content/trunk/SwingSet3/src/com/sun/swingset3/demos/textfield/JHistoryTextField.java JHistoryTextField.java] のように、`JTextField`+`JPopupMenu`を使用することもできますが、画面の下側で候補数が変更された場合の`JPopupMenu`の位置更新(気にしなければ問題無し)が面倒です。`JTextField`風に見せかけたいだけなら、以下のような`ArrowButton`を非表示にする方法もあります。
+
+#code{{
+//UIManager.put("ComboBox.squareButton", Boolean.FALSE);
+JComboBox = new JComboBox(model) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
+      @Override protected JButton createArrowButton() {
+        JButton button = new JButton() {
+          @Override public int getWidth() {
+            return 0;
+          }
+        };
+        button.setBorder(BorderFactory.createEmptyBorder());
+        button.setVisible(false);
+        return button;
+      }
+      @Override public void configureArrowButton() {}
+    });
+    for(MouseListener ml:getMouseListeners()) {
+      removeMouseListener(ml);
+    }
+  }
+};
+}}
+
+//**参考リンク
+* コメント [#k1139ae6]
+- 変換途中の日本語も、問題がないともっといいですね。 -- [[toshi]] &new{2006-04-24 (月) 13:45:06};
+-- あー、日本語のこと全然考えてなかったです…。 -- [[aterai]] &new{2006-04-24 (月) 15:54:00};
+- タイトルなどを変更するとしたら`AutoCompletion`に？ -- [[aterai]] &new{2007-05-09 (水) 20:14:40};
+- 日本語を考えると`KeyReleased`より`KeyTyped`のほうがよさそうです -- [[foggi]] &new{2008-05-06 (火) 17:15:39};
+-- ご指摘ありがとうございます。`keyTyped`に変更してみました(ついでにスクリーンショットなども更新)。 -- [[aterai]] &new{2008-05-07 (水) 12:23:19};
+- KBD{Enter}キーでの追加が出来なくなっていたのを修正しました。 -- [[aterai]] &new{2009-01-22 (木) 16:26:11};
+- 下下と入力したとき、下上と入力したときの動きがおかしいです。 -- [[magi]] &new{2011-02-19 (Sat) 22:03:02};
+-- 自分の環境では再現できてません。カーソルキーを、「下、下、下、上」と入力するのでしょうか？ -- [[aterai]] &new{2011-02-21 (月) 15:06:15};
+- このページでVectorで宣言されているところが　view plain　で表示されるコードだとListで宣言されてますね --  &new{2014-04-14 (月) 11:04:20};
+-- こんばんは。ご指摘ありがとうございます。ソースコードは出来るだけ`Vector`は使用しないようにまとめて変更したのですが、`wiki`は面倒なので結構残っているかもしれません。気がつけば徐々に置き換えていこうと思っています :-) -- [[aterai]] &new{2014-04-14 (月) 17:51:02};
+
+#comment

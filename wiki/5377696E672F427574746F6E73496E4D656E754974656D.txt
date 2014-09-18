@@ -1,0 +1,108 @@
+TITLE:JMenuItemの内部にJButtonを配置する
+#tags(JMenuItem, JButton, GridBagLayout, JLayer)
+#author(aterai)
+#pubdate(2013-11-25T00:04:55+09:00)
+* 概要 [#w145f630]
+`JMenuItem`の内部に切り取り、コピー、貼り付けを行う`JButton`を配置します。
+
+#download(https://lh6.googleusercontent.com/-aY1o9VhHFWI/UpHzycRD8gI/AAAAAAAAB64/jaFbU_zn7hI/s800/ButtonsInMenuItem.png)
+
+* サンプルコード [#a9a546ac]
+#code(link){{
+private static JMenuItem makeEditMenuItem(final JPanel edit) {
+  JMenuItem item = new JMenuItem("Edit") {
+    @Override public Dimension getPreferredSize() {
+      Dimension d = super.getPreferredSize();
+      d.width += edit.getPreferredSize().width;
+      d.height = Math.max(edit.getPreferredSize().height, d.height);
+      return d;
+    }
+    @Override protected void fireStateChanged() {
+      setForeground(Color.BLACK);
+      super.fireStateChanged();
+    }
+  };
+  item.setEnabled(false);
+
+  GridBagConstraints c = new GridBagConstraints();
+  item.setLayout(new GridBagLayout());
+  c.gridheight = 1;
+  c.gridwidth  = 1;
+  c.gridy = 0;
+  c.gridx = 0;
+
+  c.weightx = 1.0;
+  c.fill = GridBagConstraints.HORIZONTAL;
+  item.add(Box.createHorizontalGlue(), c);
+  c.gridx = 1;
+  c.fill = GridBagConstraints.NONE;
+  c.weightx = 0.0;
+  c.anchor = GridBagConstraints.EAST;
+  item.add(edit, c);
+
+  return item;
+}
+private static JPanel makeEditButtonBar(List<AbstractButton> list) {
+  int size = list.size();
+  JPanel p = new JPanel(new GridLayout(1, size, 0, 0)) {
+    @Override public Dimension getMaximumSize() {
+      return super.getPreferredSize();
+    }
+  };
+  for(AbstractButton b: list) {
+    b.setIcon(new ToggleButtonBarCellIcon());
+    p.add(b);
+  }
+  p.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 10));
+  p.setOpaque(false);
+  return p;
+}
+private static AbstractButton makeButton(String title, Action action) {
+  JButton b = new JButton(action);
+  b.addActionListener(new ActionListener() {
+    @Override public void actionPerformed(ActionEvent e) {
+      JButton b = (JButton)e.getSource();
+      Container c = SwingUtilities.getAncestorOfClass(JPopupMenu.class, b);
+      if(c instanceof JPopupMenu) {
+        ((JPopupMenu)c).setVisible(false);
+      }
+    }
+  });
+  b.setText(title);
+  b.setVerticalAlignment(SwingConstants.CENTER);
+  b.setVerticalTextPosition(SwingConstants.CENTER);
+  b.setHorizontalAlignment(SwingConstants.CENTER);
+  b.setHorizontalTextPosition(SwingConstants.CENTER);
+  b.setBorder(BorderFactory.createEmptyBorder());
+  b.setContentAreaFilled(false);
+  b.setFocusPainted(false);
+  b.setOpaque(false);
+  b.setBorder(BorderFactory.createEmptyBorder());
+  return b;
+}
+}}
+
+* 解説 [#yc1c0267]
+- `JMenuItem`
+-- `JMenuItem#getPreferredSize()`をオーバーライドして、挿入する`JButton`を考慮したサイズを返すように変更
+-- `JMenuItem`自体は、選択不可になるように`JMenuItem#setEnabled(false)`を設定
+--- `JMenuItem#setEnabled(false)`の状態でも文字色は常に黒になるように、`JMenuItem#fireStateChanged`をオーバーライドして`setForeground(Color.BLACK);`を設定
+--- [[JRadioButtonの文字色を変更>Swing/RadioButtonTextColor]]
+-- `JMenuItem`にレイアウトを設定し、`JMenuItem#add(...)`で`JButton`を配置した`JPanel`を追加
+--- [[OverlayLayoutの使用>Swing/OverlayLayout]]
+--- レイアウトマネージャーは、`GridBagLayout`を使用し、追加する`JButtun`は左右は右端、上下は中央に来るように設定
+--- [[GridBagLayoutの使用>Swing/GridBagLayout]]
+- `JPanel`
+-- レイアウトを`GridLayout`に変更して同じサイズの`JButton`を複数配置
+-- `JPanel#getMaximumSize()`をオーバーライドして、`JPanel#getPreferredSize()`と同じサイズを返すよう変更
+-- [[JButtonの高さを変更せずに幅を指定>Swing/ButtonWidth]]
+- `JButton`
+-- `DefaultEditorKit.CopyAction()`などで、`Action`を設定
+-- 左右両端に配置された`JButton`のフチのラウンドなどは、`Icon`を生成して描画
+--- [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]
+
+* 参考リンク [#n99d51b8]
+- [http://stackoverflow.com/questions/5972368/custom-jmenuitems-in-java Custom JMenuItems in Java]
+
+* コメント [#p3e6478e]
+#comment

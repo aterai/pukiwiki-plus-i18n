@@ -1,0 +1,41 @@
+TITLE:JLabelに表示したAnimated Gifのアニメーションを停止する
+#tags(JLabel, Animation, ImageIcon)
+#author(aterai)
+#pubdate(2013-02-25T00:50:43+09:00)
+* 概要 [#g1d82430]
+`JLabel`に表示した`Animated Gif`のアニメーションを停止します。
+
+#download(https://lh6.googleusercontent.com/-pYT15pLG7KY/USoyuJzLxUI/AAAAAAAABfo/JgO7-MbsL5U/s800/DisableAnimatedGif.png)
+
+* サンプルコード [#fde5e06a]
+#code(link){{
+JLabel label2 = new JLabel() {
+  @Override public boolean imageUpdate(Image img, int infoflags, int x, int y, int w, int h) {
+    if(!isEnabled()) {
+      infoflags &= ~FRAMEBITS;
+    }
+    return super.imageUpdate(img, infoflags, x, y, w, h);
+  }
+};
+}}
+
+* 解説 [#g5035119]
+上記のサンプルでは、`JLabel`が`Enabled`でない場合にアニメーションを停止するよう設定しています。
+
+- `Default`
+-- デフォルトの`JLabel`では、`JLabel#setEnabled(false);`としてもアニメーションは停止しない
+- `Override imageUpdate(...)`
+-- `JLabel#imageUpdate(...)`の`infoflags`から`FRAMEBITS`フラグを落とすことでアニメーションを停止
+-- `JLabel`がリサイズされると？、コマが進んでしまう
+- `setDisabledIcon`
+-- 別途用意した静止画像を使って、`JLabel#setDisabledIcon(...)`を設定
+-- `GrayFilter.createDisabledImage(Image)`でアイコンをグレースケール化
+
+* 参考リンク [#i19d53cf]
+- [http://duke.kenai.com/iconSized/index.html Duke Images: iconSized]
+- [http://docs.oracle.com/javase/jp/6/api/java/awt/image/ImageObserver.html ImageObserver (Java Platform SE 6)]
+- [[ColorConvertOpで画像をグレースケールに変換>Swing/ColorConvertOp]]
+- [[Animated Gifからフレーム画像を抽出する>Swing/ExtractFramesFromAnimatedGif]]
+
+* コメント [#k10a32fd]
+#comment

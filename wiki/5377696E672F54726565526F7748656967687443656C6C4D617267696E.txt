@@ -1,0 +1,81 @@
+TITLE:JTreeのノードアイコンサイズとテキストの選択状態
+#tags(JTree, TreeCellRenderer, Margin, Icon, JLabel)
+#author(aterai)
+#pubdate(2012-07-16T23:28:29+09:00)
+* 概要 [#b9e22b7f]
+`JTree`のノードアイコンによって行の高さが変更された場合のテキストの選択状態を修正します。
+
+#download(https://lh3.googleusercontent.com/-W4SPLnW3RVY/UAQjez2fI3I/AAAAAAAABPY/c4v9ljR2k40/s800/TreeRowHeightCellMargin.png)
+
+* サンプルコード [#na730931]
+#code(link){{
+class CompoundTreeCellRenderer extends DefaultTreeCellRenderer {
+  private final JPanel p = new JPanel(new BorderLayout());
+  private final JLabel icon = new JLabel();
+  private final JLabel text = new JLabel();
+  private final Border innerBorder = BorderFactory.createEmptyBorder(1,2,1,2);
+  private final Border emptyBorder = BorderFactory.createCompoundBorder(
+                     BorderFactory.createEmptyBorder(1,1,1,1), innerBorder);
+  private final Border hasFocusBorder;
+
+  public CompoundTreeCellRenderer() {
+    super();
+    Color bsColor = getBorderSelectionColor();
+    Color focusBGColor = new Color(~getBackgroundSelectionColor().getRGB());
+    hasFocusBorder = BorderFactory.createCompoundBorder(
+        new DotBorder(focusBGColor, bsColor), innerBorder);
+
+    icon.setBorder(BorderFactory.createEmptyBorder(0,0,0,2));
+    text.setBorder(emptyBorder);
+    text.setOpaque(true);
+    p.setOpaque(false);
+    p.add(icon, BorderLayout.WEST);
+
+    JPanel wrap = new JPanel(new GridBagLayout());
+    wrap.setOpaque(false);
+    wrap.add(text);
+    p.add(wrap);
+  }
+  @Override public Component getTreeCellRendererComponent(
+      JTree tree, Object value, boolean selected, boolean expanded,
+      boolean leaf, int row, boolean hasFocus) {
+    JLabel l = (JLabel)super.getTreeCellRendererComponent(
+        tree, value, selected, expanded, leaf, row, hasFocus);
+    Color bColor, fColor;
+    if(selected) {
+      bColor = getBackgroundSelectionColor();
+      fColor = getTextSelectionColor();
+    }else{
+      bColor = getBackgroundNonSelectionColor();
+      fColor = getTextNonSelectionColor();
+      if(bColor == null) bColor = getBackground();
+      if(fColor == null) fColor = getForeground();
+    }
+    text.setForeground(fColor);
+    text.setBackground(bColor);
+    text.setBorder(hasFocus?hasFocusBorder:emptyBorder);
+    text.setText(l.getText());
+    icon.setIcon(l.getIcon());
+
+    return p;
+  }
+  @Override public void paint(Graphics g) {}
+}
+}}
+
+* 解説 [#h15f9f7f]
+- 左: `Default`
+-- `UIManager.put("Tree.closedIcon", icon)`などで、`JTree`のノードアイコンを変更
+-- ノードを選択した場合、アイコン(行)の高さまで選択色で塗られる
+- 右: `Label`
+-- `Default`と同じノードアイコンを設定
+-- `JTree#setRowHeight(0)`として`TreeCellRenderer`が各行の高さを決定
+-- アイコン用とテキスト用の`JLabel`を配置した`JPanel`を用意し、これを使用する`TreeCellRenderer`を設定
+--- ノードが選択された場合、アイコン(行)の高さではなく、テキスト用の`JLabel`のみ背景を選択色で塗る
+--- このためノードを連続選択すると隙間ができる場合がある
+
+* 参考リンク [#w6196fa1]
+- [[JTreeのノードの文字列に余白を追加>Swing/TreeCellMargin]]
+
+* コメント [#ze58be3c]
+#comment

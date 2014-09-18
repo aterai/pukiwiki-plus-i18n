@@ -1,0 +1,78 @@
+TITLE:JEditorPaneで改行を表示
+#tags(JEditorPane, StyledEditorKit)
+#author(aterai)
+#pubdate(2007-06-11)
+* 概要 [#l76cb974]
+`JEditorPane`で改行記号を表示します。[https://forums.oracle.com/thread/1374478 Swing - JTextPane View Problem]から、ソースコードの大部分を引用しています。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTQ3cf9HLI/AAAAAAAAAgQ/gIbt2d-Hz7k/s800/ParagraphMark.png)
+
+* サンプルコード [#r8bfcb2e]
+#code(link){{
+class MyEditorKit extends StyledEditorKit {
+  @Override public ViewFactory getViewFactory() {
+    return new MyViewFactory();
+  }
+}
+
+class MyViewFactory implements ViewFactory {
+  @Override public View create(Element elem) {
+    String kind = elem.getName();
+    if(kind!=null) {
+      if(kind.equals(AbstractDocument.ContentElementName)) {
+        return new LabelView(elem);
+      }else if(kind.equals(AbstractDocument.ParagraphElementName)) {
+        return new MyParagraphView(elem);
+      }else if(kind.equals(AbstractDocument.SectionElementName)) {
+        return new BoxView(elem, View.Y_AXIS);
+      }else if(kind.equals(StyleConstants.ComponentElementName)) {
+        return new ComponentView(elem);
+      }else if(kind.equals(StyleConstants.IconElementName)) {
+        return new IconView(elem);
+      }
+    }
+    return new LabelView(elem);
+  }
+}
+
+class MyParagraphView extends ParagraphView {
+  private static final Color pc = new Color(120, 130, 110);
+  public MyParagraphView(Element elem) {
+    super(elem);
+  }
+  @Override public void paint(Graphics g, Shape allocation) {
+    super.paint(g, allocation);
+    paintCustomParagraph(g, allocation);
+  }
+  private void paintCustomParagraph(Graphics g, Shape a) {
+    try {
+      Shape paragraph = modelToView(getEndOffset(), a, Position.Bias.Backward);
+      Rectangle r = (paragraph==null)?a.getBounds():paragraph.getBounds();
+      int x = r.x;
+      int y = r.y;
+      int h = r.height;
+      Color old = g.getColor();
+      g.setColor(pc);
+      //paragraph mark
+      g.drawLine(x+1, y+h/2, x+1, y+h-4);
+      g.drawLine(x+2, y+h/2, x+2, y+h-5);
+      g.drawLine(x+3, y+h-6, x+3, y+h-6);
+      g.setColor(old);
+    }catch(Exception e) { e.printStackTrace(); }
+  }
+}
+}}
+
+* 解説 [#y0783bd1]
+`StyledEditorKit`を継承する`EditorKit`を作成し、これを`JEditorPane#setEditorKit`メソッドで、`JEditorPane`に設定しています。
+
+この`EditorKit`は、`Element`が段落(`AbstractDocument.ParagraphElementName`)の場合、独自の改行記号を追加で描画する`View`を返す`ViewFactory`を生成しています。
+
+* 参考リンク [#vccc314a]
+- [https://forums.oracle.com/thread/1374478 Swing - JTextPane View Problem]
+- [[JTextPaneで全角スペースやタブを可視化>Swing/WhitespaceMark]]
+
+* コメント [#tb94cc8f]
+- 行の折り返しが発生すると、改行記号が縦長になるバグを修正しました。 -- [[aterai]] &new{2007-09-21 (金) 17:05:03};
+
+#comment

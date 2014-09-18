@@ -1,0 +1,133 @@
+TITLE:GridBagLayoutを使ってレンガ状に配置
+#tags(GridBagLayout, LayoutManager)
+#author(aterai)
+#pubdate(2009-03-09T14:08:29+09:00)
+* 概要 [#h2da3fd7]
+`GridBagLayout`を使ってコンポーネントをレンガ状に配置します。[https://forums.oracle.com/thread/1357310 Swing - GridBagLayout to create a board]を参考にしています。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIOzg1doI/AAAAAAAAASc/V_SwABvAldE/s800/BrickLayout.png)
+
+* サンプルコード [#s089dab7]
+#code(link){{
+JPanel panel = new JPanel(new GridBagLayout());
+panel.setBorder(BorderFactory.createTitledBorder("Brick Layout"));
+GridBagConstraints c = new GridBagConstraints();
+c.fill = GridBagConstraints.HORIZONTAL;
+//c.weightx = 1.0; c.weighty = 0.0;
+for(int i=0;i<SIZE;i++) {
+  int x = i & 1; //= (i%2==0)?0:1;
+  for(int j=0;j<SIZE;j++) {
+    c.gridy = i;
+    c.gridx = 2*j+x;
+    c.gridwidth = 2;
+    panel.add(new JButton(" "),c);
+  }
+}
+//<blockquote cite="https://forums.oracle.com/thread/1357310">
+//<dummy-row>
+c.gridwidth = 1;
+c.gridy = 10;
+for(c.gridx=0; c.gridx<=2*SIZE; c.gridx++)
+  panel.add(Box.createHorizontalStrut(24), c);
+//</dummy-row>
+//</blockquote>
+}}
+
+* 解説 [#lba85e7c]
+上記のサンプルでは、`GridBagLayout`を使って、`JButton`をレンガ状に配置します。互い違いに二列ずつ占めるようにボタンを配置していますが、`<dummy-row>`が無い場合、うまくレンガ状にはなりません。
+
+以下、[https://forums.oracle.com/thread/1357310 Swing - GridBagLayout to create a board]のDarryl.Burkeさんの投稿を引用
+
+ A column (or row) in a GridBagLayout is not well defined unless there is at least one component which occupies only that column (or row). All your rows have components spanning 2 columns.
+
+列の基準となる行は、どこでも(先頭でも最後でも)構わないようです。
+
+----
+- 同様に、ダミーの幅を持つ行を作成して、キーボード風に配列
+-- [http://stackoverflow.com/questions/24622279/laying-out-a-keyboard-in-swing java - Laying out a keyboard in Swing - Stack Overflow]
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class KeyboardTest {
+  private static final String[][] keys = {
+    {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"},
+    {"Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\", ""},
+    {"Caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "Enter", ""},
+    {"Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "", "\u2191"},
+    {" ", " ", " ", "", "                         ", " ", "\u2190", "\u2193", "\u2192"}
+  };
+  public JComponent makeUI() {
+    JPanel keyboard = new JPanel(new GridBagLayout());
+    keyboard.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+    GridBagConstraints c = new GridBagConstraints();
+    c.weightx = 1d;
+    c.weighty = 1d;
+    c.fill = GridBagConstraints.BOTH;
+    c.gridheight = 1;
+    c.gridx = 0;
+
+    c.gridy = 50;
+    for (int i = 0; i < keys[0].length * 2; i++) {
+      c.gridx = i;
+      keyboard.add(Box.createHorizontalStrut(24));
+    }
+
+    for (int row = 0; row < keys.length; row++) {
+      c.gridx = 0;
+      c.gridy = row;
+      for (int col = 0; col < keys[row].length; col++) {
+        String key = keys[row][col];
+        int l = key.length();
+        c.gridwidth = l > 10 ? 14 :
+                      l > 4  ?  4 :
+                      l > 1  ?  3 :
+                      l == 1 ?  2 : 1;
+        if (l > 2) {
+          keyboard.add(new JButton(key), c);
+        } else if (key.trim().length() == 0) {
+          keyboard.add(Box.createHorizontalStrut(24), c);
+        } else {
+          keyboard.add(new KeyButton(key), c);
+        }
+        c.gridx += c.gridwidth;
+      }
+    }
+    return keyboard;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    JFrame f = new JFrame("Keyboard");
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new KeyboardTest().makeUI());
+    f.setResizable(false);
+    f.pack();
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+
+class KeyButton extends JButton {
+  public KeyButton(String str) {
+    super(str);
+  }
+  @Override public Dimension getPreferredSize() {
+    return new Dimension(48, 48);
+  }
+}
+}}
+
+* 参考リンク [#u6f8dce4]
+- [https://forums.oracle.com/thread/1357310 Swing - GridBagLayout to create a board]
+
+* コメント [#te0e3d58]
+#comment

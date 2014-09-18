@@ -1,0 +1,140 @@
+TITLE:Java Tips
+#author(aterai)
+#pubdate(2011-01-25)
+#contents(big)
+
+* 概要 [#y77453b1]
+`Java`のデバッグ(`Swing`)、`Java`用のバッチファイル、`API-doc`翻訳などに関するメモをまとめています。
+
+* Ubuntu に、oracle-java7 をインストール [#o7e2c25c]
+- `apt-get install`でインストール
+-- [http://www.webupd8.org/2012/01/install-oracle-java-jdk-7-in-ubuntu-via.html Install Oracle Java 7 in Ubuntu via PPA Repository ~ Web Upd8: Ubuntu / Linux blog]
+
+ sudo add-apt-repository ppa:webupd8team/java
+ sudo apt-get update
+ sudo apt-get install oracle-java7-installer
+ sudo update-alternatives --config javac
+
+- `tar.gz`をダウンロードしてインストール
+-- [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java SE Downloads]から、`jdk-7uxx-linux-xxxx.tar.gz` をダウンロード
+
+ sudo tar zxvf jdk-7u11-linux-i586.tar.gz -C /usr/lib/jvm
+
+ export JAVA_HOME=/usr/lib/jvm/jdk1.7.0_11
+ export PATH=$PATH:$JAVA_HOME/bin
+
+* Swing debug agent[#l59af361]
+- [[Swingコンポーネントの再描画をJXLayerのDebugPainterを使ってデバッグ>Tips/DebugPainterAgent]]
+-- `JXLayer`の`DebugPainter`を使ってコンポーネントの再描画を可視化する`javaagent`を作成してデバッグを行います。
+
+- [[SwingアプリケーションのLookAndFeelを外部から切り替える>Tips/LookAndFeelDebugAgent]]
+-- `Swing`アプリケーションの`LookAndFeel`を`agent`を使って外部から切り替えてデバッグします。
+
+* Javadoc 翻訳 [#h4010d75]
+[[Javadoc]]に移動
+
+* JRuby [#rd5be1f5]
+[[JRuby]]に移動
+
+* 「Java Swing Hacks」本のレビュー [#ef1cba4d]
+- [http://d.hatena.ne.jp/aterai/20060502 「Java Swing Hacks」本のレビュー - てんぷらメモ@はてな]
+-- [http://d.hatena.ne.jp/aterai/searchdiary?word=%2a%5bSwing%20Hacks%5d 記事一覧]
+-- [http://d.hatena.ne.jp/aterai/archive?word=%2a%5bSwing%20Hacks%5d タイトル一覧]
+
+* Java その他 [#i6c38ca4]
+- [[環境変数JAVA_HOMEを変更して使用するJDKを切り替える>Tips/SetJAVA_HOME]]
+-- 環境変数`JAVA_HOME`を変更するバッチファイルを作成して、コマンドプロンプトで使用する`JDK`を切り替えます。
+
+- [[Rhinoでgoogle-prettify.jsを実行する>Tips/GooglePrettifyRhino]]
+-- `Rhino`で`google-prettify.js`を実行し、ソースコードをハイライトされた`Html`(`google sites`用)に変換します。
+
+- [[JNIでJFrameのHWNDを取得>Tips/JNI_HWND]]
+-- `JNI`(`Java Native Interface`)で`JFrame`(`SunAwtFrame`)の`HWND`(ウィンドウハンドル)を取得します。
+
+- Java API Doc の「日本語、英語」をブックマークレットで切り替える
+-- [[Java API Doc の「日本語、英語」をブックマークレットで切り替える>JavaScript/APIDocEnJa]]に移動
+
+* Java メモ [#afdfdb63]
+
+** 環境変数 [#n357d6c7]
+- http://cr.openjdk.java.net/~gbenson/zero-08/raw_files/new/hotspot/src/share/vm/utilities/vmError.cpp
+#code{{
+// List of environment variables that should be reported in error log file.
+const char *env_list[] = {
+  // All platforms
+  "JAVA_HOME", "JRE_HOME", "JAVA_TOOL_OPTIONS", "_JAVA_OPTIONS", "CLASSPATH",
+  "JAVA_COMPILER", "PATH", "USERNAME",
+
+  // Env variables that are defined on Solaris/Linux
+  "LD_LIBRARY_PATH", "LD_PRELOAD", "SHELL", "DISPLAY",
+  "HOSTTYPE", "OSTYPE", "ARCH", "MACHTYPE",
+
+  // defined on Linux
+  "LD_ASSUME_KERNEL", "_JAVA_SR_SIGNUM",
+
+  // defined on Windows
+  "OS", "PROCESSOR_IDENTIFIER", "_ALT_JAVA_HOME_DIR",
+
+  (const char *)0
+};
+}}
+
+** コマンドプロンプトからデフォルトのロケールを変更 [#p9b18e96]
+ > javac -J-Duser.language=en Test.java
+
+ > java -Duser.language=en Test
+
+- [http://java.sun.com/javase/technologies/core/basic/intl/faq_ja.jsp#set-default-locale Java 国際化 FAQ]
+ アプリケーションの外部からデフォルトのロケールを設定できますか。
+ 
+ 使用している Java プラットフォームの実装によって異なります。通常、初期のデフォルトロケールは、ホストオペレーティングシステムのロケールによって決まります。Sun の JRE のバージョン 1.4 以降では、コマンド行から user.language、user.country、および user.variant の各システムプロパティを設定することで、初期のデフォルトロケールを変更できます。たとえば、初期のデフォルトロケールとして Locale("th", "TH", "TH") を選択するには、次のコマンドを使用します。
+ java -Duser.language=th -Duser.country=TH -Duser.variant=TH MainClass
+ 
+ この機能を使用できない実行環境もあるため、この機能はテスト目的だけに使用してください。
+
+** コード整形 [#k1323c34]
+個人的に、`Java`のソースコードのインデントは、エディタでは`4space`、`Web`サイトにソースコードを表示する場合は`2space`にしているので、`xyzzy`の`filter-buffer`(`C-x #`)で`astyle`を呼び出して以下のように整形。
+
+ astyle --style=java --mode=java --indent=spaces=2
+
+コマンドラインなどから、ファイルを指定する場合も同様。
+
+ > astyle --style=java --mode=java --indent=spaces=4 MainPanel.java
+
+`Markdown`形式の`Stack Overflow`などにソースコードを貼り付ける場合は、以下のようにして、行頭にタブ(またはスペース`4`つ)を追加。
+
+ astyle --style=java --mode=java --indent=spaces=2 < Hoge.java | sed -e "s/^\(.*\)$/\t\1/" > /dev/clipboard
+ astyle --style=java --mode=java --indent=spaces=2 | sed -e "s/^\(.*\)$/\t\1/"
+ astyle --style=java --mode=java --indent=spaces=2 | sed -e "s/\A\(.*\)\z/    \1/"
+
+*** Checkstyle(sun_checks.xml) [#dd78623b]
+ astyle --style=java --mode=java --indent=spaces=4 --pad-oper --pad-header --unpad-paren
+
+キャストの後にスペースを入れる方法は？
+ int h = (int)(.5 + baseline / height);
+ //(int)の後に空白を入れたい...
+ int h = (int) (.5 + baseline / height);
+
+*** asyle 2.04 [#xbabc1fe]
+ $ astyle --version
+ Artistic Style Version 2.04
+
+- 以下の様なソースコード(最後の`}`の直後に`EOF`)を`astyle`で変換すると、余計な`}`が追加される？
+
+#code{{
+class Hoge
+{
+    public static void main(String[] args)
+    {
+        System.out.println("aaaaaaa");
+    }
+}
+}}
+
+** ブラウザで表示されているソースコードのコピー [#c8b1879b]
+[[JavaScriptでpreタグで囲まれたソースコードをtextareaにコピーする>JavaScript/pre2textarea]]に移動
+
+* コメント [#k546af30]
+- [[Nitpick]]を[[Javadoc]]以下に分割して移動。 -- [[aterai]] &new{2011-11-11 (金) 16:57:12};
+
+#comment

@@ -1,0 +1,29 @@
+TITLE:JTableHeaderを非表示にする
+#tags(JTable, JTableHeader, JScrollPane)
+#author(aterai)
+#pubdate(2010-11-01T15:50:29+09:00)
+* 概要 [#d81b4828]
+`JTableHeader`の表示、非表示を切り替えます。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRpYOxz3I/AAAAAAAAAhg/7HdNawHaulI/s800/RemoveTableHeader.png)
+
+* サンプルコード [#o8668648]
+#code(link){{
+final JScrollPane scrollPane = new JScrollPane(table);
+JCheckBox check = new JCheckBox("JTableHeader visible: ", true);
+check.addActionListener(new ActionListener() {
+  @Override public void actionPerformed(ActionEvent e) {
+    JCheckBox cb = (JCheckBox)e.getSource();
+    //table.getTableHeader().setVisible(cb.isSelected());
+    scrollPane.getColumnHeader().setVisible(cb.isSelected());
+    scrollPane.revalidate();
+  }
+});
+}}
+
+* 解説 [#jff0c12d]
+上記のサンプルでは、`table.setTableHeader(null)`や、`table.setTableHeader(new JTableHeader(table.getColumnModel()))`は使用せず、`JTable`を配置した`JScrollPane`の`JScrollPane#getColumnHeader().setVisible(boolean)`メソッドを使って、`JTableHeader`の表示、非表示を変更しています。
+
+//**参考リンク
+* コメント [#a5ee340b]
+#comment

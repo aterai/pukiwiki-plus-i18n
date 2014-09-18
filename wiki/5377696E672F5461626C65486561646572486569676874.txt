@@ -1,0 +1,48 @@
+TITLE:JTableHeaderの高さを変更
+#tags(JTableHeader, JTable, JScrollPane, JViewport)
+#author(aterai)
+#pubdate(2012-05-28T14:51:47+09:00)
+* 概要 [#i0975169]
+`JTableHeader`の高さを変更します。
+
+#download(https://lh4.googleusercontent.com/-l20IOO5wKSo/T8MIf7FVUwI/AAAAAAAABNM/9BNN63T96Fo/s800/TableHeaderHeight.png)
+
+* サンプルコード [#zb516453]
+#code(link){{
+JScrollPane scroll = new JScrollPane(table);
+scroll.setColumnHeader(new JViewport() {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.height = 32;
+    return d;
+  }
+});
+}}
+
+* 解説 [#aacfefbf]
+- 上
+-- `JTableHeader`に`null`(デフォルト)以外のサイズを`setPreferredSize(...)`で設定
+-- `JTable.AUTO_RESIZE_OFF`の場合、設定されたこのサイズが列の追加や列幅の変更で更新されない(仕様？)ため、ヘッダの描画が不正になる
+--- [http://d.hatena.ne.jp/kensir0u/20090416/1239898154 JTableのJTalbeHeaderの高さを変更して列幅の合計が１２００ピクセルを超えて横スクロールするとバグった。 - kensir0uのしくみ]
+-- `JTable.AUTO_RESIZE_OFF`以外の場合は、`setPreferredSize(...)`で設定された幅は無視されて、`JTable`の幅が使用される
+
+- 下
+-- `JViewport#getPreferredSize()`もしくは、`JTableHeader#getPreferredSize()`をオーバーライドして、`JTableHeader`の高さを変更
+#code{{
+table.setTableHeader(new JTableHeader(table.getColumnModel()) {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.height = 32;
+    return d;
+  }
+});
+}}
+-- `viewport.setPreferredSize(...)`と設定しても可…?
+-- `JTableHeader#getHeight()`をオーバーライドすると、ヘッダ文字列などの描画だけ(`getHeight()`は`JTableHeader#getHeaderRect()`で使用されている)変更される
+
+* 参考リンク [#we49e437]
+- [http://d.hatena.ne.jp/kensir0u/20090416/1239898154 JTableのJTalbeHeaderの高さを変更して列幅の合計が１２００ピクセルを超えて横スクロールするとバグった。 - kensir0uのしくみ]
+-- このバグ？の状態を適切に示す良いサンプルコードがあります。
+
+* コメント [#ib91d24e]
+#comment

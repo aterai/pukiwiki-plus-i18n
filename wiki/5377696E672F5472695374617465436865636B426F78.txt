@@ -1,0 +1,85 @@
+TITLE:JCheckBoxに不定状態のアイコンを追加する
+#tags(JCheckBox, Icon, UIManager, JTableHeader)
+#author(aterai)
+#pubdate(2011-12-12T15:00:11+09:00)
+* 概要 [#ncf1e508]
+`JCheckBox`の選択状態、非選択状態に加えて、不定状態を表すアイコンを追加します。
+
+#download(https://lh6.googleusercontent.com/-Rs-vnlD35Cg/TuTNCuEvU_I/AAAAAAAABF4/IzDezx4Rq8M/s800/TriStateCheckBox.png)
+
+* サンプルコード [#a11c010e]
+#code(link){{
+JCheckBox checkBox = new JCheckBox("TriState JCheckBox") {
+  protected TriStateActionListener listener = null;
+  class TriStateActionListener implements ActionListener{
+    protected Icon icon;
+    public void setIcon(Icon icon) {
+      this.icon = icon;
+    }
+    @Override public void actionPerformed(ActionEvent e) {
+      JCheckBox cb = (JCheckBox)e.getSource();
+      if(!cb.isSelected()) {
+        cb.setIcon(icon);
+      }else if(cb.getIcon()!=null){
+        cb.setIcon(null);
+        cb.setSelected(false);
+      }
+    }
+  }
+  @Override public void updateUI() {
+    final Icon oi = getIcon();
+    removeActionListener(listener);
+    setIcon(null);
+    super.updateUI();
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        if(listener==null) {
+          listener = new TriStateActionListener();
+        }
+        Icon icon = new IndeterminateIcon();
+        listener.setIcon(icon);
+        addActionListener(listener);
+        if(oi!=null) {
+          setIcon(icon);
+        }
+      }
+    });
+  }
+};
+}}
+
+#code{{
+class IndeterminateIcon implements Icon {
+    private final Color color = UIManager.getColor("CheckBox.foreground");
+    private final Icon icon = UIManager.getIcon("CheckBox.icon");
+    @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+        icon.paintIcon(c, g, x, y);
+        int w = getIconWidth(), h = getIconHeight();
+        int a = 4, b = 2;
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setPaint(Color.BLACK);
+        g2.translate(x, y);
+        g2.fillRect(a, (h-b)/2, w-a-a, b);
+        g2.translate(-x, -y);
+    }
+    @Override public int getIconWidth()  { return icon.getIconWidth();  }
+    @Override public int getIconHeight() { return icon.getIconHeight(); }
+}
+}}
+
+* 解説 [#c45805ea]
+上記のサンプルでは、`UIManager.getIcon("CheckBox.icon");`で取得した非選択状態のチェックボックスアイコンの上に横棒を引いて不定状態のアイコンを作成しています。
+
+- 不定状態かどうかは、`JCheckBox#getIcon()`が`null`かどうかで判断する手抜き版
+- 横棒の色は`UIManager.getColor("CheckBox.foreground");`を使用しているが、`LookAndFeel`によっては無意味
+- [[JTableHeaderにJCheckBoxを追加してセルの値を切り替える>Swing/TableHeaderCheckBox]]で使用すると、`NimbusLookAndFeel`の場合だけ、アイコンと文字列のベースラインがずれる？
+-- 文字列も`ImageIcon`にして回避
+- `NimbusLookAndFeel`で、不定状態アイコンのフォーカスやロールオーバーが表示されない
+
+* 参考リンク [#p3a9fded]
+- [http://www.javaspecialists.eu/archive/Issue145.html JavaSpecialists 145 - TristateCheckBox Revisited]
+-- %%[http://www.javaspecialists.eu/archive/Issue082.html JavaSpecialists 082 - TristateCheckBox based on the Swing JCheckBox]%%
+- [http://stackoverflow.com/questions/1263323/tristate-checkboxes-in-java swing - Tristate Checkboxes in Java - Stack Overflow]
+
+* コメント [#r7e5cdec]
+#comment

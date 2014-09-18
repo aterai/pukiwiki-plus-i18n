@@ -1,0 +1,97 @@
+TITLE:Fileのドラッグ＆ドロップ
+#tags(DragAndDrop, JTable, DropTargetListener, TransferHandler)
+#author(aterai)
+#pubdate(2005-06-20)
+* 概要 [#f37e5330]
+`Windows`などからファイルを`JTable`にドラッグ＆ドロップします。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTMhxsIIsI/AAAAAAAAAZU/iZ6Pn8yTFFM/s800/FileListFlavor.png)
+
+* サンプルコード [#t647511e]
+#code(link){{
+final FileModel model = new FileModel();
+final JTable table = new JTable(model);
+DropTargetListener dtl = new DropTargetAdapter() {
+  @Override public void dragOver(DropTargetDragEvent dtde) {
+    if (dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+      dtde.acceptDrag(DnDConstants.ACTION_COPY);
+      return;
+    }
+    dtde.rejectDrag();
+  }
+  @Override public void drop(DropTargetDropEvent dtde) {
+    try {
+      if (dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+        dtde.acceptDrop(DnDConstants.ACTION_COPY);
+        Transferable transferable = dtde.getTransferable();
+        List list = (List) transferable.getTransferData(
+            DataFlavor.javaFileListFlavor);
+        for (Object o : list) {
+          if (o instanceof File) {
+            File file = (File) o;
+            model.addFileName(
+                new FileName(file.getName(), file.getAbsolutePath()));
+          }
+        }
+        dtde.dropComplete(true);
+        return;
+      }
+    } catch (UnsupportedFlavorException | IOException ex) {
+      ex.printStackTrace();
+    }
+    dtde.rejectDrop();
+  }
+};
+new DropTarget(table, DnDConstants.ACTION_COPY, dtl, true);
+}}
+
+* 解説 [#p8d48bbf]
+`Windows`のエクスプローラなどからファイルを選択(複数可)し、上記のサンプルアプリ上にドラッグ＆ドロップするとファイル名などを`JTable`に表示しています。
+
+ドロップされた`DataFlavor`が、`DataFlavor.javaFileListFlavor`の場合だけ、これをファイルとして処理する`DropTargetListener`を作成しています。
+
+----
+`JDK 1.6.0`以降なら、以下のような`TransferHandler`を作成して使用する方法もあります。
+
+- [[JTableでファイルとディレクトリを別々にソート>Swing/FileDirectoryComparator]]
+
+#code{{
+table.setDropMode(DropMode.INSERT_ROWS);
+table.setTransferHandler(new FileTransferHandler());
+}}
+
+#code{{
+class FileTransferHandler extends TransferHandler {
+  @Override public boolean importData(TransferSupport support) {
+    try{
+      if(canImport(support)) {
+        JTable table = (JTable)support.getComponent();
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+        for(Object o: (List)support.getTransferable().getTransferData(
+            DataFlavor.javaFileListFlavor)) {
+          if(o instanceof File) {
+            File file = (File)o;
+            model.addRow(new Object[] {
+                file, file.length(), file.getAbsolutePath()});
+          }
+        }
+        return true;
+      }
+    }catch(Exception ex) {
+      ex.printStackTrace();
+    }
+    return false;
+  }
+  @Override public boolean canImport(TransferSupport support) {
+    return support.isDataFlavorSupported(DataFlavor.javaFileListFlavor);
+  }
+}
+}}
+
+* 参考リンク [#tf100a65]
+- [http://www5.big.or.jp/~tera/Labo/Java2/j2dnd.html Java2: WindowsからのDrag and Drop]
+- [http://www.ne.jp/asahi/j.nihei/personal/linuxDragDrop.html java drag and drop]
+- [[JTable自体の高さを拡張>Swing/FillsViewportHeight]]
+
+* コメント [#i79a7ae9]
+#comment

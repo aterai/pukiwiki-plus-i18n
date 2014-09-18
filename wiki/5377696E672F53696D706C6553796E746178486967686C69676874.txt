@@ -1,0 +1,106 @@
+TITLE:JTextPaneでキーワードのSyntaxHighlight
+#tags(JTextPane, StyledDocument, Element, Highlight)
+#author(aterai)
+#pubdate(2009-09-21T02:07:00+09:00)
+* 概要 [#ta3c8a38]
+`JTextPane`で`Syntax Highlight`を行います。このサンプルは、[http://www.discoverteenergy.com/Files/SyntaxDocument.java SyntaxDocument.java]からキーワードのハイライト部分を抜き出して作成しています。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTAw3RBeI/AAAAAAAAAjs/LtUs6l9UpZo/s800/SimpleSyntaxHighlight.png)
+
+* サンプルコード [#p84c741c]
+#code(link){{
+//This code is taken from:
+//http://www.discoverteenergy.com/Files/SyntaxDocument.java SyntaxDocument.java
+class SimpleSyntaxDocument extends DefaultStyledDocument {
+  HashMap<String,AttributeSet> keywords = new HashMap<>();
+  MutableAttributeSet normal = new SimpleAttributeSet();
+  public SimpleSyntaxDocument() {
+    super();
+    StyleConstants.setForeground(normal, Color.BLACK);
+    MutableAttributeSet color;
+    StyleConstants.setForeground(color = new SimpleAttributeSet(), Color.RED);
+    keywords.put("red", color);
+    StyleConstants.setForeground(color = new SimpleAttributeSet(), Color.GREEN);
+    keywords.put("green", color);
+    StyleConstants.setForeground(color = new SimpleAttributeSet(), Color.BLUE);
+    keywords.put("blue", color);
+  }
+  @Override public void insertString(int offset, String str, AttributeSet a)
+                                               throws BadLocationException {
+    super.insertString(offset, str, a);
+    processChangedLines(offset, str.length());
+  }
+  @Override public void remove(int offset, int length)
+                                               throws BadLocationException {
+    super.remove(offset, length);
+    processChangedLines(offset, 0);
+  }
+  private void processChangedLines(int offset, int length)
+                                               throws BadLocationException {
+    Element root   = getDefaultRootElement();
+    String content = getText(0, getLength());
+    int startLine  = root.getElementIndex( offset );
+    int endLine    = root.getElementIndex( offset + length );
+    for (int i = startLine; i <= endLine; i++) {
+      applyHighlighting(content, i);
+    }
+  }
+  private void applyHighlighting(String content, int line)
+                                               throws BadLocationException {
+    Element root = getDefaultRootElement();
+    int startOffset   = root.getElement( line ).getStartOffset();
+    int endOffset   = root.getElement( line ).getEndOffset() - 1;
+    int lineLength  = endOffset - startOffset;
+    int contentLength = content.length();
+    if (endOffset >= contentLength) endOffset = contentLength - 1;
+    setCharacterAttributes(startOffset, lineLength, normal, true);
+    checkForTokens(content, startOffset, endOffset);
+  }
+  private void checkForTokens(String content, int startOffset, int endOffset) {
+    while (startOffset <= endOffset) {
+      while (isDelimiter(content.substring(startOffset, startOffset+1))) {
+        if (startOffset < endOffset) {
+          startOffset++;
+        } else {
+          return;
+        }
+      }
+      startOffset = getOtherToken(content, startOffset, endOffset);
+    }
+  }
+  private int getOtherToken(String content, int startOffset, int endOffset) {
+    int endOfToken = startOffset + 1;
+    while ( endOfToken <= endOffset ) {
+      if ( isDelimiter( content.substring(endOfToken, endOfToken + 1) ) ) {
+        break;
+      }
+      endOfToken++;
+    }
+    String token = content.substring(startOffset, endOfToken);
+    if ( keywords.containsKey( token ) ) {
+      setCharacterAttributes(
+        startOffset, endOfToken - startOffset, keywords.get(token), false);
+    }
+    return endOfToken + 1;
+  }
+  String operands = ".,";
+  protected boolean isDelimiter(String character) {
+    return Character.isWhitespace(character.charAt(0)) ||
+           operands.indexOf(character)!=-1;
+  }
+}
+}}
+
+* 解説 [#t2ef148a]
+上記のサンプルでは、`red`, `green`, `blue`といったキーワードを入力すると、その色で文字列をハイライトするようになっています。区切り文字は、空白、`.`(ドット)、`,`(カンマ)の`3`つです。
+
+`Java`のシンタックスハイライトを行うサンプルコード([http://www.discoverteenergy.com/Files/SyntaxDocument.java SyntaxDocument.java])からキーワードのハイライト部分を抜き出して作成しています。
+
+* 参考リンク [#q149fcae]
+- [http://www.discoverteenergy.com/Files/SyntaxDocument.java SyntaxDocument.java]
+-- 作者、ライセンス、参照元のページが何処だったかなどが不明…。
+- [http://web.archive.org/web/20120802021725/http://java.sun.com/products/jfc/tsc/articles/text/editor_kit/index.html Customizing a Text Editor]
+- [http://ostermiller.org/syntax/editor.html Text Editor Tutorial]
+
+* コメント [#x982351a]
+#comment

@@ -1,0 +1,70 @@
+TITLE:JTextAreaから一行ずつ文字列を取得
+#tags(JTextArea, StringTokenizer, LineNumberReader)
+#author(aterai)
+#pubdate(2006-10-09)
+* 概要 [#sce4576b]
+`JTextArea`などのテキストコンポーネントから一行ずつ文字列を取り出してそれを処理します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTNWn74dWI/AAAAAAAAAao/pNdeF8CSOfM/s800/GetLineText.png)
+
+* サンプルコード [#cba0b2ee]
+#code(link){{
+int count = 0;
+StringTokenizer st = new StringTokenizer(textArea.getText(), "\n") ;
+while(st.hasMoreTokens()) {
+  if(st.nextToken().startsWith("#")) {
+    count++;
+  }
+}
+}}
+
+* 解説 [#v1446cab]
+上記のサンプルでは、`JTextArea#getText()`ですべてのテキストを取得し、`StringTokenizer`を使って行毎に分解しています。
+
+----
+- `String#split`を使用する場合
+
+#code{{
+for(String line: textArea.getText().split("\\n")) {
+  if(line.startsWith("#")) {
+    count++;
+  }
+}
+}}
+
+- `LineNumberReader`を使用する場合
+
+#code{{
+try(LineNumberReader lnr = new LineNumberReader(new StringReader(textArea.getText()))) {
+  String line = null;
+  while((line = lnr.readLine()) != null) {
+    if(line.startsWith("#")) {
+      count++;
+    }
+  }
+}catch(IOException ioe) {
+  ioe.printStackTrace();
+}
+}}
+
+- `Element#getElementCount`を使用する場合
+
+#code{{
+Document doc = textArea.getDocument();
+Element root = doc.getDefaultRootElement();
+try{
+  for(int i=0;i<root.getElementCount();i++) {
+    Element elem = root.getElement(i);
+    String line = doc.getText(elem.getStartOffset(), elem.getEndOffset()-elem.getStartOffset());
+    if(line.startsWith("#")) {
+      count++;
+    }
+  }
+}catch(BadLocationException ble) {
+  ble.printStackTrace();
+}
+}}
+
+//**参考リンク
+* コメント [#ee4fa454]
+#comment

@@ -1,0 +1,65 @@
+TITLE:JTableのセル内に二行だけ表示
+#tags(JTable, TableCellRenderer, JLabel, JPanel)
+#author(aterai)
+#pubdate(2010-12-20T15:44:39+09:00)
+* 概要 [#fde22d74]
+`JTable`のセル内に文字列を二行分だけ表示し、あふれる場合は`...`で省略します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQ77KlEsZJI/AAAAAAAAAuE/mc9fcp-ZmBU/s800/TwoRowsCellRenderer.png)
+
+* サンプルコード [#z0aafd98]
+#code(link){{
+JTable table = new JTable(model);
+table.setAutoCreateRowSorter(true);
+table.setRowHeight(table.getRowHeight() * 2);
+table.setDefaultRenderer(String.class, new TwoRowsCellRenderer());
+}}
+
+#code{{
+class TwoRowsCellRenderer extends JPanel implements TableCellRenderer {
+  JLabel top = new JLabel();
+  JLabel bottom = new JLabel();
+  public TwoRowsCellRenderer() {
+    super(new GridLayout(2,1,0,0));
+    add(top);
+    add(bottom);
+  }
+  @Override public Component getTableCellRendererComponent(JTable table,
+      Object value,boolean isSelected,boolean hasFocus,int row,int column) {
+    if (isSelected) {
+      setForeground(table.getSelectionForeground());
+      setBackground(table.getSelectionBackground());
+    } else {
+      setForeground(table.getForeground());
+      setBackground(table.getBackground());
+    }
+    setFont(table.getFont());
+    FontMetrics fm  = table.getFontMetrics(table.getFont());
+    String text   = (value==null) ? "" : value.toString();
+    String first  = text;
+    String second   = "";
+    int columnWidth = table.getColumnModel().getColumn(column).getWidth();
+    int textWidth   = 0;
+    for(int i=0; i<text.length(); i++) {
+      textWidth += fm.charWidth(text.charAt(i));
+      if(textWidth>columnWidth) {
+        first  = text.substring(0,i-1);
+        second = text.substring(i-1);
+        break;
+      }
+    }
+    top.setText(first);
+    bottom.setText(second);
+    return this;
+  }
+}
+}}
+
+* 解説 [#g15d8b79]
+`JLabel`を上下に配置した`JPanel`を使って、`TableCellRenderer`を作成しています。`...`での省略は、二行目の`JLabel`のデフォルト動作です。
+
+* 参考リンク [#c9d954f9]
+- [[JLabelの文字列を折り返し>Swing/GlyphVector]]
+
+* コメント [#l2f449cc]
+#comment

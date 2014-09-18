@@ -1,0 +1,24 @@
+TITLE:JTextField内のテキストをすべて選択
+#tags(JTextField, FocusListener)
+#author(aterai)
+#pubdate(2005-05-02T06:05:25+09:00)
+* 概要 [#x1e329b7]
+フォーカスが`JTextField`に移動したとき、そのテキストがすべて選択された状態にします。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSvQx8j-I/AAAAAAAAAjQ/iXgBbTGTGuw/s800/SelectAll.png)
+
+* サンプルコード [#me24e781]
+#code(link){{
+textfield.addFocusListener(new FocusAdapter() {
+  @Override public void focusGained(FocusEvent e) {
+    ((JTextComponent)e.getComponent()).selectAll();
+  }
+});
+}}
+
+* 解説 [#w28e432a]
+上記のサンプルでは、上の`JTextField`にフォーカスが移動したとき、`JTextComponent#selectAll()`メソッドを使って内部のテキストがすべて選択された状態になるようにしています。
+
+//**参考リンク
+* コメント [#p2ff41b9]
+#comment

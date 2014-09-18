@@ -1,0 +1,82 @@
+TITLE:JToolTipにアイコンを表示
+#tags(JToolTip, Icon, JLabel, Html, MatteBorder)
+#author(aterai)
+#pubdate(2006-02-13T14:40:55+09:00)
+* 概要 [#i911af83]
+`JToolTip`にアイコンを表示します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVl25jXSI/AAAAAAAAAn4/-g0LJzeMmbc/s800/ToolTipIcon.png)
+
+* サンプルコード [#fe5cdb35]
+#code(link){{
+JLabel l1 = new JLabel("JLabelを使ってツールチップにアイコン") {
+  @Override public JToolTip createToolTip() {
+    final JLabel iconlabel = new JLabel(icon);
+    iconlabel.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+    LookAndFeel.installColorsAndFont(
+        iconlabel, "ToolTip.background", "ToolTip.foreground", "ToolTip.font");
+    JToolTip tip = new JToolTip() {
+      @Override public Dimension getPreferredSize() {
+        //https://forums.oracle.com/thread/2199222
+        return getLayout().preferredLayoutSize(this);
+      }
+      @Override public void setTipText(final String tipText) {
+        String oldValue = iconlabel.getText();
+        iconlabel.setText(tipText);
+        firePropertyChange("tiptext", oldValue, tipText);
+      }
+    };
+    tip.setComponent(this);
+    tip.setLayout(new BorderLayout());
+    tip.add(iconlabel);
+    return tip;
+  }
+};
+l1.setToolTipText("Test1");
+}}
+#code{{
+JLabel l2 = new JLabel("MatteBorderでツールチップにアイコン") {
+  @Override public JToolTip createToolTip() {
+    JToolTip tip = new JToolTip() {
+      @Override public Dimension getPreferredSize() {
+        Dimension d = super.getPreferredSize();
+        Insets i = getInsets();
+        d.height = Math.max(d.height, icon.getIconHeight()+i.top+i.bottom);
+        return d;
+      }
+    };
+    tip.setComponent(this);
+    Border b1 = tip.getBorder();
+    Border b2 = BorderFactory.createMatteBorder(0, icon.getIconWidth(), 0, 0, icon);
+    Border b3 = BorderFactory.createEmptyBorder(1,1,1,1);
+    Border b4 = BorderFactory.createCompoundBorder(b3, b2);
+    tip.setBorder(BorderFactory.createCompoundBorder(b1, b4));
+    return tip;
+  }
+};
+l2.setToolTipText("Test2");
+}}
+#code{{
+JLabel l3 = new JLabel("htmlタグでツールチップにアイコン");
+l3.setToolTipText("<html><img src='"+url+"'>テスト</img></html>");
+}}
+
+* 解説 [#j592553f]
+- 上ラベル
+-- `JToolTip`に`JLabel`を追加しています。
+- 中ラベル
+-- `MatteBorder`を使ってアイコンを表示するように、`createToolTip`メソッドをオーバーライドしています。
+- 下ラベル
+-- `html`の`img`タグを`setToolTipText`メソッドに使ってアイコンを表示しています。
+
+* 参考リンク [#rbfe7317]
+- [http://www.icongalore.com/ XP Style Icons - Windows Application Icon, Software XP Icons]
+-- アイコンを利用しています。
+- [https://forums.oracle.com/thread/2199222 Swing - Using text and a progress bar inside of a tooltip.]
+
+* コメント [#w823ef7d]
+- `MatteBorder`を使うと`Java 1.4`と`1.5`で表示が微妙に異なるようです。 -- [[aterai]] &new{2006-02-13 (月) 14:57:57};
+- `JLabel`を`JToolTip`に貼る方法を追加しました。 -- [[aterai]] &new{2006-07-05 (水) 18:40:54};
+- 「`MatteBorder`でツールチップにアイコン」で、`MatteBorder`と`EmptyBorder`の内外が反対になっていたのを修正しました。 -- [[aterai]] &new{2006-07-05 (水) 19:15:11};
+
+#comment

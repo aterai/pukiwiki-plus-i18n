@@ -1,0 +1,32 @@
+TITLE:InputVerifierを設定したJTextFieldの値が不正な場合のフォーカス移動
+#tags(JTextField, InputVerifier, Focus)
+#author(aterai)
+#pubdate(2014-03-10T10:15:22+09:00)
+* 概要 [#ba666899]
+`InputVerifier`を設定した`JTextField`の値が適切な形式でない場合のフォーカス移動動作をテストします。
+
+#download(https://lh4.googleusercontent.com/-0s6ChUywZz8/Ux0P0IVi99I/AAAAAAAACBY/8hZOhY0SCI4/s800/VerifyInputWhenFocusTarget.png)
+
+* サンプルコード [#nc92d353]
+#code(link){{
+button2.setVerifyInputWhenFocusTarget(false);
+}}
+
+* 解説 [#fe80953b]
+上記のサンプルでは、フォーカスが別のコンポーネントに移動する時に、現在フォーカスを持つコンポーネントの`InputVerifier`で値を検証するかを
+
+- `Default`:
+-- `JBUtton`のデフォルトで、`getVerifyInputWhenFocusTarget()`が`true`、`isFocusable()`も`true`
+-- すべての`JTextField`の値をクリアし、自身にフォーカスが移動するが、フォーカスのあった`JTextField`に入力されている値が`Integer`でない場合、警告音が鳴る
+- `setFocusable(false)`:
+-- `setFocusable(false)`を設定
+-- すべての`JTextField`の値をクリアするが、フォーカスは移動しないため、フォーカスのあった`JTextField`に入力されている値が`Integer`でない場合でも、警告音は鳴らない(設定されている`InputVerifier#verify(...)`は呼ばれない)
+- `setVerifyInputWhenFocusTarget(false)`:
+-- `setVerifyInputWhenFocusTarget(false)`を設定
+-- すべての`JTextField`の値をクリアし、自身にフォーカスが移動するが、フォーカスのあった`JTextField`に入力されている値が`Integer`でない場合でも、警告音は鳴らない(設定されている`InputVerifier#verify(...)`は呼ばれない)
+
+* 参考リンク [#q7f85429]
+- [http://docs.oracle.com/javase/jp/1.4/guide/swing/1.3/InputChanges.html 入力の検証]
+
+* コメント [#v1ea1018]
+#comment

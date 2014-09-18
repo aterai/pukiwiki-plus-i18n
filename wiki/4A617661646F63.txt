@@ -1,0 +1,64 @@
+TITLE:Javadoc 日本語翻訳
+#author(aterai)
+#pubdate(2010-10-05)
+#contents(big)
+
+* 概要 [#v1a01202]
+「Java  Platform Standard Edition の API 仕様」の日本語翻訳に関するメモです。
+- 編集制限していないので、追記、ツッコミがあれば、適当にどうぞ
+- 主に自分用メモなのでSwing関係が中心
+- 既出、修正済みなどのチェックはいい加減
+-- 検索するのが面倒なの%%と、bugs.sun.com は遅いし、ログイン出来ないし、最近はメンテナンス？で繋がらないことが多いの%%で。
+- [http://java.net/projects/jdk-api-ja Jdk-api-ja — Java.net] の Users Mailing List に報告したら順次消していく予定…ですが Jdk-api-ja はもう活動していないのかも？
+
+* 翻訳メモの一覧 [#f8fd3e5d]
+
+** 日本語訳 [#s103255f]
+- [[Javadoc/Japanese]]
+-- 日本語訳で修正した方が良さそうなもの。
+
+** 翻訳元から [#xdf8ce86]
+- [[Javadoc/Nitpick]]
+-- 翻訳元から修正した方が良さそうなもの。
+
+** Typo [#s349bb74]
+- [[Javadoc/Typo]]
+-- Typo、変換ミスなど。
+
+** JDK 7 [#r0f439ff]
+- [[Javadoc/JDK7]]
+-- Java SE 7 で追加されたSwing関係のクラスドキュメントを翻訳。
+
+* リンク [#k7f2489a]
+** bugs.sun.com [#z3771fc9]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6496912 Bug ID: 6496912 Swing Text API JavaDoc has incorrect links]
+-- http://java.sun.com/javase/6/docs/api/javax/swing/text/JTextComponent.html#addInputMethodListener(java.awt.event.InputMethodListener)
+-- http://docs.oracle.com/javase/jp/6/api/javax/swing/text/JTextComponent.html#addInputMethodListener(java.awt.event.InputMethodListener)
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6603635 Bug ID: 6603635 links to tutorials broken in JTable API doc]
+- Choosing the Look and Feel
+-- http://docs.oracle.com/javase/jp/6/api/javax/swing/plaf/multi/doc-files/multi_tsc.html
+-- ついでに、サンプルコードが文字化け？
+
+** 修正済み [#o47e719a]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6255121 Bug ID: 6255121 Doc: Comments in some files include duplicate "the"s. (i.e. "the the ")]
+- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5087703 Bug ID: 5087703 Typo in the comments for JSpinner.AccessibleJSpinner]
+- [http://mail.openjdk.java.net/pipermail/core-libs-dev/2009-April/001390.html core lib typo fixes]
+
+* コメント [#rc2fa0b7]
+- 「コロンのあとに例(数値)が重複して現れる」を追加。 -- [[aterai]] &new{2010-10-26 (火) 18:52:22};
+- renderer の訳が、「レンダリング」。レンダラでいいような気がするけど、これは一箇所しかない？ -- [[aterai]] &new{2010-10-28 (木) 15:07:41};
+- WindowsComboBoxUI#paintCurrentValue(Graphics g, Rectangle bounds, boolean hasFocus) メソッド中のコメントに、 Typo。 // On vista for READNLY ComboBox -- [[aterai]] &new{2011-02-10 (木) 14:18:59};
+- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JTable.html#doLayout() デルタの分散]、Distributing the delta、分散、分配・・・。 -- [[aterai]] &new{2011-03-07 (月) 16:17:00};
+- [http://docs.oracle.com/javase/6/docs/api/java/awt/geom/Rectangle2D.html The Rectangle2D class describes a rectangle defined by a location (x, y) and dimension (w x h).]と、[http://docs.oracle.com/javase/6/docs/api/java/awt/geom/Rectangle2D.Double.html Constructs a new Rectangle2D, initialized to location (0, 0) and size (0, 0).]。個人的には、(w x h)より、(w, h)の方が…。   -- [[aterai]] &new{2011-12-07 (水) 18:33:19};
+- メモ: [http://togetter.com/li/278455 rip-sun.com - Togetter] -- [[aterai]] &new{2012-03-26 (月) 01:48:27};
+-- メモ: [http://d.hatena.ne.jp/chiheisen/20120326/1332715371 Java SE API(JavaDoc)日本語訳は、オンラインで読めます。 - 地平線に行く] -- [[aterai]] &new{2012-03-26 (月) 17:59:32};
+-- URLの変更はそのうちヤル予定。 -- [[aterai]] &new{2012-04-03 (火) 18:33:03};
+- java.sun.com の日本語版が参照できるようになっている？けど、dlc.sun.com.edgesuite.net と比べると微妙に異なるみたい。どちらが新しいのだろう？ -- [[aterai]] &new{2012-04-09 (月) 21:17:16};
+-- そもそも両方共結構古いバージョンなのかもしれない。http://java.net/projects/jdk-api-ja に報告、修正された箇所が多数？巻戻っているみたいなので。 -- [[aterai]] &new{2012-04-10 (火) 19:36:34};
+- download.java.net が落ちてるので、dlc.sun.com.edgesuite.netのドキュメント にも繋がらない。 -- [[aterai]] &new{2012-04-11 (水) 14:23:29};
+-- bugs.sun.com にも繋がらない(ログインしてたら激遅になるバグのせいでもなさそうだし)のは、困る…。 -- [[aterai]] &new{2012-04-11 (水) 14:29:45};
+-- bugs.sun.com をoracleのどこかに移転するとかの予告か何かありましたっけ？(あれ使いにくかったので作りなおすのは歓迎ですが、いきなり繋がらなくなるのは…) -- [[aterai]] &new{2012-04-11 (水) 16:01:26};
+-- XXから戻ったら復帰してた。 -- [[aterai]] &new{2012-04-11 (水) 18:57:20};
+- サイト全体で、java.sun.com/javase/6/docs/ を docs.oracle.com/javase/jp/6/ に置換。ついでに download.oracle.com/javase/jp/6/ を docs.oracle.com/javase/jp/6/ に置換。 -- [[aterai]] &new{2012-04-11 (水) 19:30:06};
+
+#comment

@@ -1,0 +1,53 @@
+TITLE:FocusTraversalKeysに矢印キーを追加してフォーカス移動
+#tags(KeyboardFocusManager, Focus, Container)
+#author(aterai)
+#pubdate(2008-06-02T13:10:23+09:00)
+* 概要 [#tcf9885b]
+デフォルトのKBD{Tab}キーに加えて、矢印キーでもフォーカス移動できるように設定します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTNHR5gShI/AAAAAAAAAaQ/KUE3fbR0bXo/s800/FocusTraversalKeys.png)
+
+* サンプルコード [#c3444b6b]
+#code(link){{
+KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+
+Set<AWTKeyStroke> forwardKeys = new HashSet<>(
+    focusManager.getDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
+forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,  0));
+focusManager.setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardKeys);
+
+Set<AWTKeyStroke> backwardKeys = new HashSet<>(
+    focusManager.getDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));
+backwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
+backwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_UP,   0));
+focusManager.setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, backwardKeys);
+}}
+
+* 解説 [#f1452eb0]
+上記のサンプルでは、デフォルトのトラバーサルキー(KBD{Tab}, KBD{Shift+Tab})に加えて、上下左右の矢印キーでもフォーカス移動できるようになっています。
+
+- `KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS`
+-- `KeyEvent.VK_RIGHT`, `KeyEvent.VK_DOWN`
+- `KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS`
+-- `KeyEvent.VK_LEFT`, `KeyEvent.VK_UP`
+
+----
+各`JFrame`や`JDialog`に別々の`FocusTraversalKeys`を設定したい場合は、`Container#setFocusTraversalKeys`を使用します。
+
+#code{{
+Set<AWTKeyStroke> forwardKeys = new HashSet<>(
+    frame.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
+forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,  0));
+frame.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardKeys);
+}}
+
+* 参考リンク [#qecb6a95]
+- [http://docs.oracle.com/javase/jp/6/api/java/awt/KeyboardFocusManager.html KeyboardFocusManager#setDefaultFocusTraversalKeys]
+- [http://docs.oracle.com/javase/jp/6/api/java/awt/Container.html Container#setFocusTraversalKeys]
+- [http://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html How to Use the Focus Subsystem]
+- [[Focusの移動>Swing/FocusTraversal]]
+
+* コメント [#yf942508]
+#comment

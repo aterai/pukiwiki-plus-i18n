@@ -1,0 +1,32 @@
+TITLE:JTableのセルをシングルクリックで編集する
+#tags(JTable, TableCellEditor)
+#author(aterai)
+#pubdate(2007-11-19T13:45:37+09:00)
+* 概要 [#x6bd18c2]
+`JTable`のセルをマウスでシングルクリックすると編集状態になるように設定します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTDScXHaI/AAAAAAAAAjw/VQhi8npFmCM/s800/SingleClickCellEdit.png)
+
+* サンプルコード [#p4abbff1]
+#code(link){{
+DefaultCellEditor ce = (DefaultCellEditor)table.getDefaultEditor(Object.class);
+ce.setClickCountToStart(1);
+//ce.setClickCountToStart(2); //default
+}}
+
+* 解説 [#zb99314d]
+`DefaultCellEditor#setClickCountToStart`メソッドを使用すれば、編集開始に必要なマウスクリックの回数を設定することができます。
+
+----
+`edit the cell on single click`にチェックがある場合は、セルレンダラーも変更して、文字列の下に下線を引いていますが、環境やバージョンによって動作が異なる場合があるようです。
+
+- `WindowsLookAndFeel`の場合、第`0`列目のセルをクリック、選択された行直下の第`1`列目セル上にカーソルを置くと、その文字色が`JDK 1.6.0`と`JDK 1.5.0`で異なる
+-- `JDK 1.5.0`で、選択されたときの文字色になる？
+- `Ubuntu 7.10`, `GNOME 2.20.1`, `JDK 1.6.0_03`の場合、`MetalLookAndFeel`と`GTKLookAndFeel`で、`0`行目(`Number.class`)に使われるセルレンダラーが異なる
+-- `GTKLookAndFeel`で、`Number.class`なのに左寄せになってしまう？
+
+* 参考リンク [#i428619f]
+- [https://forums.oracle.com/thread/1367289 Swing - JTable - enable cursor blink at cell with single click]
+
+* コメント [#mce62f2e]
+#comment

@@ -1,0 +1,75 @@
+TITLE:JEditorPaneやJTextPaneに行間を設定する
+#tags(JEditorPane, JTextPane, StyledEditorKit)
+#author(aterai)
+#pubdate(2009-11-02T12:51:40+09:00)
+* 概要 [#u308ecd7]
+`JEditorPane`や`JTextPane`に行間を設定します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPYZn_u9I/AAAAAAAAAd4/5-1ThpWwM5U/s800/LineSpacing.png)
+
+* サンプルコード [#x743f159]
+#code(link){{
+class BottomInsetEditorKit extends StyledEditorKit {
+  @Override public ViewFactory getViewFactory() {
+    return new ViewFactory() {
+      @Override public View create(Element elem) {
+        String kind = elem.getName();
+        if (kind!=null) {
+          if (kind.equals(AbstractDocument.ContentElementName)) {
+            return new LabelView(elem);
+          } else if (kind.equals(AbstractDocument.ParagraphElementName)) {
+            return new javax.swing.text.ParagraphView(elem) {
+              @Override protected short getBottomInset() { return 5; }
+            };
+          } else if (kind.equals(AbstractDocument.SectionElementName)) {
+            return new BoxView(elem, View.Y_AXIS);
+          } else if (kind.equals(StyleConstants.ComponentElementName)) {
+            return new ComponentView(elem);
+          } else if (kind.equals(StyleConstants.IconElementName)) {
+            return new IconView(elem);
+          }
+        }
+        return new LabelView(elem);
+      }
+    };
+  }
+}
+}}
+
+* 解説 [#oa458f2f]
+- 上: `StyleConstants.setLineSpacing`で、行間を指定した`AttributeSet`を作成し、`JTextPane#setParagraphAttributes`で設定しています。
+-- フォントサイズ相対の行間になる
+
+#code{{
+SimpleAttributeSet a = new SimpleAttributeSet();
+StyleConstants.setLineSpacing(a, .5f);
+//StyleConstants.setSpaceAbove(a, 5.0f);
+//StyleConstants.setSpaceBelow(a, 5.0f);
+//StyleConstants.setLeftIndent(a, 5.0f);
+//StyleConstants.setRightIndent(a, 5.0f);
+editor1.setParagraphAttributes(a, true);
+setDummyText(editor1);
+}}
+
+- 下: `ParagraphView#getBottomInset`をオーバーライドして、固定の行間をピクセルで指定しています。
+-- フォントサイズに関係なく、アキ`5px`
+
+----
+- スタイルシートで`line-height`を指定しても反映されない(`line-height`は、モデル化されているが、現在は描画されない)
+-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/text/html/CSS.html 対応しているCSSプロパティ一覧 - CSS (Java Platform SE 6)]
+- ブロックレベルで一行だけ固定の行間が指定したい場合は、`margin-bottom`が使用可能
+
+#code{{
+StyleSheet styleSheet = new StyleSheet();
+styleSheet.addRule("body {font-size: 24pt; line-height: 2.0}");
+styleSheet.addRule(".test {margin-bottom: 2pt; padding-bottom: 1px; }");
+//XXX: styleSheet.addRule("span {color: white; display:inline-block; margin-bottom: 10pt;}");
+HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+htmlEditorKit.setStyleSheet(styleSheet);
+editor1.setEditorKit(htmlEditorKit);
+editor1.setText("<html><body><div class='test'>12<br />a<br />n<font size='32'>123<br />sd</font></div></body></html>");
+}}
+
+//**参考リンク
+* コメント [#q7d6c5ab]
+#comment

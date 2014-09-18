@@ -1,0 +1,21 @@
+TITLE:JTableのヘッダ入れ替えを禁止
+#tags(JTable, JTableHeader)
+#author(aterai)
+#pubdate(2004-05-31T04:43:10+09:00)
+* 概要 [#lad9982c]
+ドラッグ＆ドロップでのカラムヘッダ入れ替えを禁止します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRr3AzfQI/AAAAAAAAAhk/mfgsIhuaEz0/s800/Reordering.png)
+
+* サンプルコード [#k3b2f517]
+#code(link){{
+//列の入れ替えを禁止
+table.getTableHeader().setReorderingAllowed(false);
+}}
+
+* 解説 [#x3990303]
+`JTableHeader`を取得し、これに`setReorderingAllowed(false)`を指定して、列の入れ替えを禁止します。`JTable#setDragEnabled(...)`は自動ドラッグ処理用のメソッドなので、列の入れ替えには関係ありません。
+
+//**参考リンク
+* コメント [#bc75a990]
+#comment

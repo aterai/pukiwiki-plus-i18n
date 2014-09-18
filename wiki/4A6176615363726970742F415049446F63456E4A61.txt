@@ -1,0 +1,57 @@
+TITLE:Java API Doc の「日本語、英語」をブックマークレットで切り替える
+#author(aterai)
+#pubdate(2011-03-02)
+#contents(big)
+
+* 概要 [#j3d7e5b3]
+`Java`の`API`ドキュメントをブックマークレットを使って、日本語と英語で切り替えます。
+
+* サンプルコード [#ufcab025]
+- `Java API JP<>EN`
+
+#code{{
+javascript:(function(){var l=location,m=l.href.match('^(https?://)(.+)((?:api|technotes)[^+]+)'),n=m[2].match('/([6-8])/');if(m)l.href=m[1]+'docs.oracle.com/javase/'+(/\/jp\//.test(m[2])?n[1]+'/docs':'jp/'+n[1])+'/'+m[3];}());
+}}
+
+* 解説 [#j41ed46f]
+適当に(`Java API Doc JP<->EN`とか)を名前を設定し、アドレスに上記の一行を貼り込んだブックマークを作成して使用します。例えば英語版の`Javadoc`を表示中にこのブックマークをクリックすると日本語版の`Javadoc`に移動することができます(逆も可能)。
+
+- `/ja/6/`と`/6/docs/`を切り替えているだけなので、フレーム有りでは`URL`が以下のような形式の場合のみ有効
+-- http://docs.oracle.com/javase/6/docs/api/index.html?javax/swing/JTable.html
+
+よく分からない翻訳がある場合に、日本語版と英語版を切り替えながら見比べると結構便利です。
+
+- 個人的には[[Javadoc 日本語翻訳>Javadoc]]のメモを作成する場合によく使用中
+-- %%JavaDoc の翻訳などに関する修正提案などは http://java.net/projects/jdk-api-ja/ にメールするのが良さそう%% もう活動していないかも？
+--- via: [https://blogs.oracle.com/katakai/entry/jdk_japanese_docs_project_on JDK 日本語ドキュメントプロジェクト on java.net (Masaki Katakai's Weblog)])
+
+* 変更履歴 [#yd6fdea5]
+- `http`から`https?`に修正
+- `technotes`に対応
+- %%webnotes対応%% あまり使用しないので削除
+- `docs.oracle.com`に対応
+- %%日本語版は dlc.sun.com.edgesuite.net/jdk/jdk-api-localizations/jdk-api-ja/builds/latest/html/ja/ を見るように変更%%
+
+* メモ [#b2b13194]
+- `URL`が`Java`の`API doc`風？なら、`Java 8`英語版(`Oracle`)に移動
+#gist(9755681)
+// javascript:(function(){var l=location,m=l.href.match("^(https?://)(.+)(api[^+]+|technotes[^+]+)");if(m)l.href=m[1]+'docs.oracle.com/javase/8/docs/'+decodeURIComponent(m[3]).replace(/\+.*$/,'').replace(/\[\]/g,':A').replace(/, |\(|\)/g,'-');}());
+
+* 参考リンク [#x4ed11a1]
+- http://java.net/projects/jdk-api-ja
+-- %%via: [http://blogs.sun.com/katakai/entry/jdk_japanese_docs_project_on JDK 日本語ドキュメントプロジェクト on java.net]%%
+-- %%java.net に繋がらないけど、まだ今はメンテナンス中？ それとも遅いだけ？%%
+- [http://d.hatena.ne.jp/ymorimo/20070719/1184847240 ymorimoの日記 - Googleの日本語と英語を切り替え]
+
+* コメント [#pcd07d68]
+- 日本語版は docs.oracle.com/javase/jp/6/ を見るように変更 -- [[aterai]] &new{2012-04-11 (水) 19:15:42};
+- %%googleなどの検索エンジンのキャッシュから移動できるように変更（検索結果に表示された java.sun.com のドキュメントが、http://www.oracle.com/technetwork/java/index.html に転送されてしまうようになったので） -- [[aterai]] &new{2012-09-18 (火) 22:59:31};%%
+- `Java 8`のドキュメントは、まだ英語版のみなので未対応。ただ、`7`に比べると無駄？な装飾も減って、文字サイズも`6`並の大きさに戻っているので見やすくなっている。 -- [[aterai]] &new{2014-03-24 (月) 19:05:08};
+-- `Java 8`のドキュメントでは、各メソッドなどへのアンカーにある空白や`(,)`などが`-`に置き換わっている？　空白を`%20`などと`URL`エンコードしなくても良いのは便利そう(メモ: 詳しい変更内容を探すこと)。 -- [[aterai]] &new{2014-03-24 (月) 19:37:54};
+-- 配列は、`[]` [http://docs.oracle.com/javase/7/docs/api/java/awt/geom/AffineTransform.html#transform(double%5B%5D,%20int,%20double%5B%5D,%20int,%20int) %5B%5D]から[http://docs.oracle.com/javase/8/docs/api/java/awt/geom/AffineTransform.html#transform-double:A-int-double:A-int-int- :A]。 -- [[aterai]] &new{2014-03-24 (月) 20:00:03};
+-- メモ: [http://en.wikipedia.org/wiki/Template_talk:Javadoc:SE Need help in converting this template to Java 8] 仕様が見つからない・・・。 -- [[aterai]] &new{2014-03-24 (月) 21:04:40};
+
+ //Java 8 用に、(、)、, 、[]だけ？対応
+ javascript:(function(){var l=location,m=l.href.match("^(https?://)(.+)(api[^+]+|technotes[^+]+)");if(m)l.href=m[1]+'docs.oracle.com/javase/8/docs/'+decodeURIComponent(m[3]).replace(/\+.*$/,'').replace(/\[\]/g,':A').replace(/, |\(|\)/g,'-');}());
+
+#comment

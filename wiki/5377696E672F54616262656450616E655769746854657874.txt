@@ -1,0 +1,82 @@
+TITLE:JTabbedPaneの余白に文字列を表示
+#tags(JTabbedPane, FontMetrics, JLayer)
+#author(aterai)
+#pubdate(2005-12-26T12:36:53+09:00)
+* 概要 [#d14a047c]
+`JTabbedPane`の右側の余白に文字列を表示します。[https://forums.oracle.com/thread/1392495 Swing - JTabbedPane with non-tabbed text]の投稿からソースコードを引用しています。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUTbAqf_I/AAAAAAAAAl0/APOrWdnvDko/s800/TabbedPaneWithText.png)
+
+* サンプルコード [#f6205526]
+#code(link){{
+tab = new JTabbedPane() {
+  @Override protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    String text = "←ちょっとしたタブの説明など";
+    FontMetrics fm = getFontMetrics(getFont());
+    int stringWidth = fm.stringWidth(text)+10;
+    int x = getSize().width-stringWidth;
+    Rectangle lastTab = getUI().getTabBounds(this, getTabCount()-1);
+    int tabEnd = lastTab.x + lastTab.width;
+    if(x<tabEnd) x = tabEnd;
+    g.drawString(text, x+5, 18);
+  }
+};
+}}
+
+* 解説 [#t35e18f2]
+`JTabbedPane#paintComponent`メソッドをオーバーライドして、タブコンポーネントの右側の余白に文字列を描画しています。
+
+右端に十分な余白が無く、文字列を描画するとタブ上に重なってしまう場合は、最後のタブの横から文字列を描画するようになっています。
+
+----
+`JDK 1.7.0`の`JLayer`を使用する場合は、以下のような方法があります。
+
+#code{{
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.plaf.*;
+
+public class TopRightCornerLabelLayerUITest {
+  public static JComponent makeUI() {
+    JTabbedPane tab = new JTabbedPane();
+    tab.addTab("New tab1", new JLabel("1"));
+    tab.addTab("New Tab2", new JLabel("2"));
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(new JLayer<JComponent>(tab, new TopRightCornerLabelLayerUI()));
+    return p;
+  }
+  private static void createAndShowUI() {
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    f.getContentPane().add(makeUI());
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowUI();
+      }
+    });
+  }
+}
+class TopRightCornerLabelLayerUI extends LayerUI<JComponent> {
+  private JLabel l = new JLabel("A Label at right corner");
+  private JPanel rubberStamp = new JPanel();
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    Dimension d = l.getPreferredSize();
+    int x = c.getWidth() - d.width - 5;
+    SwingUtilities.paintComponent(g, l, rubberStamp, x, 2, d.width, d.height);
+  }
+}
+}}
+
+* 参考リンク [#w33aebb6]
+- [https://forums.oracle.com/thread/1392495 Swing - JTabbedPane with non-tabbed text]
+- [[JTabbedPaneの余白にJCheckBoxを配置>Swing/TabbedPaneWithCheckBox]]
+
+* コメント [#q1e57b08]
+#comment

@@ -1,0 +1,53 @@
+TITLE:JTableのセルに複数配置したコンポーネントのJToolTip
+#tags(JTable, JToolTip, ImageIcon)
+#author(aterai)
+#pubdate(2012-12-03T02:37:08+09:00)
+* 概要 [#u3c535f5]
+`JTable`のセル中に複数個配置したコンポーネントにそれぞれ`JToolTip`が表示されるように設定します。
+
+#download(https://lh4.googleusercontent.com/-OhwzDU_Mys4/ULuQJmYCRiI/AAAAAAAABYQ/Y3Q5mVlliHs/s800/TooltipInTableCell.png)
+
+* サンプルコード [#d6f37acd]
+#code(link){{
+JTable table = new JTable(model) {
+  @Override public String getToolTipText(MouseEvent e) {
+    Point pt = e.getPoint();
+    int vrow = rowAtPoint(pt);
+    int vcol = columnAtPoint(pt);
+    int mcol = convertColumnIndexToModel(vcol);
+    if(mcol==1) {
+      TableCellRenderer tcr = getCellRenderer(vrow, vcol);
+      Component c = prepareRenderer(tcr, vrow, vcol);
+      if(c instanceof JPanel) {
+        Rectangle r = getCellRect(vrow, vcol, true);
+        c.setBounds(r);
+        c.doLayout();
+        pt.translate(-r.x, -r.y);
+        Component l = SwingUtilities.getDeepestComponentAt(c, pt.x, pt.y);
+        if(l instanceof JLabel) {
+          ImageIcon icon = (ImageIcon)((JLabel)l).getIcon();
+          return icon.getDescription();
+        }
+      }
+    }
+    return super.getToolTipText(e);
+  }
+};
+}}
+
+* 解説 [#ec1ec814]
+上記のサンプルでは、`JTable#getToolTipText(MouseEvent)`をオーバーライドして、`JTable`のセルに複数配置したコンポーネントの情報を`ToolTipText`として返すように設定しています。
+
+- `JTable#getCellRect(...)`で、カーソル下のセル描画に使用されるコンポーネントを取得
+- 取得したコンポーネントの位置、サイズ、レイアウトを更新
+-- 参考: [http://stackoverflow.com/questions/10854831/tool-tip-in-jpanel-in-jtable-not-working java - Tool tip in JPanel in JTable not working - Stack Overflow]
+- 更新したコンポーネント内から、`SwingUtilities.getDeepestComponentAt()`で、カーソル下のアイコン(`JLabel`)を取得
+- `ImageIcon#getDescription()`で取得した文字列を`ToolTipText`として返す
+
+* 参考リンク [#g3230fef]
+- [http://stackoverflow.com/questions/10854831/tool-tip-in-jpanel-in-jtable-not-working java - Tool tip in JPanel in JTable not working - Stack Overflow]
+- [[JTableのTooltipsを行ごとに変更>Swing/RowTooltips]]
+- [[JListのセル中に配置したコンポーネント毎にカーソルを変更する>Swing/CursorOfCellComponent]]
+
+* コメント [#l9b52767]
+#comment

@@ -1,0 +1,93 @@
+TITLE:JTableのセル内でリンクだけHover可能にする
+#tags(JTable, TableCellRenderer, MouseListener, URL)
+#author(aterai)
+#pubdate(2011-08-29T14:18:50+09:00)
+* 概要 [#e6636e70]
+`JTable`のセル内ではなく、内部のリンク上にカーソルがきた場合だけ`Hover`するように設定します。
+
+#download(https://lh3.googleusercontent.com/-OQfktkzVBD4/Tlsepf4ePZI/AAAAAAAABBQ/bikhWupFHEk/s800/PointInsidePrefSize.png)
+
+* サンプルコード [#g63a443d]
+#code(link){{
+//@see SwingUtilities2.pointOutsidePrefSize(...)
+private static boolean pointInsidePrefSize(JTable table, Point p) {
+  int row = table.rowAtPoint(p);
+  int col = table.columnAtPoint(p);
+  TableCellRenderer tcr = table.getCellRenderer(row, col);
+  Object value = table.getValueAt(row, col);
+  Component cell = tcr.getTableCellRendererComponent(table, value, false, false, row, col);
+  Dimension itemSize = cell.getPreferredSize();
+  Insets i = ((JComponent)cell).getInsets();
+  Rectangle cellBounds = table.getCellRect(row, col, false);
+  cellBounds.width = itemSize.width-i.right-i.left;
+  cellBounds.translate(i.left, i.top);
+  return cellBounds.contains(p);
+}
+private boolean isRollover = false;
+private static boolean isURLColumn(JTable table, int column) {
+  return column>=0 && table.getColumnClass(column).equals(URL.class);
+}
+@Override public void mouseMoved(MouseEvent e) {
+  JTable table = (JTable)e.getSource();
+  Point pt = e.getPoint();
+  int prev_row = row;
+  int prev_col = col;
+  boolean prev_ro = isRollover;
+  row = table.rowAtPoint(pt);
+  col = table.columnAtPoint(pt);
+  isRollover = isURLColumn(table, col) && pointInsidePrefSize(table, pt);
+  if((row==prev_row&&col==prev_col&&isRollover==prev_ro) || (!isRollover&&!prev_ro)) {
+    return;
+  }
+  // >>>> HyperlinkCellRenderer.java
+  Rectangle repaintRect;
+  if(isRollover) {
+    Rectangle r = table.getCellRect(row, col, false);
+    repaintRect = prev_ro ?
+      r.union(table.getCellRect(prev_row, prev_col, false)) : r;
+  }else{ //if(prev_ro) {
+    repaintRect = table.getCellRect(prev_row, prev_col, false);
+  }
+  table.repaint(repaintRect);
+  // <<<<
+  //table.repaint();
+}
+@Override public void mouseExited(MouseEvent e)  {
+  JTable table = (JTable)e.getSource();
+  if(isURLColumn(table, col)) {
+    table.repaint(table.getCellRect(row, col, false));
+    row = -1;
+    col = -1;
+    isRollover = false;
+  }
+}
+@Override public void mouseClicked(MouseEvent e) {
+  JTable table = (JTable)e.getSource();
+  Point pt = e.getPoint();
+  int ccol = table.columnAtPoint(pt);
+  if(isURLColumn(table, ccol) && pointInsidePrefSize(table, pt)) {
+    int crow = table.rowAtPoint(pt);
+    URL url = (URL)table.getValueAt(crow, ccol);
+    System.out.println(url);
+    try{
+      Desktop.getDesktop().browse(url.toURI());
+    }catch(Exception ex) {
+      ex.printStackTrace();
+    }
+  }
+}
+}}
+
+* 解説 [#c629ee2d]
+`SwingUtilities2.pointOutsidePrefSize(...)`を参考にして、セルの表示に使用するコンポーネント(`JLabel`)の標準サイズ(幅)内にカーソルがあるかどうかを比較するメソッドを作成しています。`JTable`に追加した`MouseListener`でこれを使用し、`URL`の文字列を`Hover`するか、それがクリックされたかを判断しています。
+
+* 参考リンク [#h06368d9]
+- [[JTableのセルにHyperlinkを表示>Swing/HyperlinkInTableCell]]
+- [[Htmlで修飾した文字列のクリップ>Swing/ClippedHtmlLabel]]
+- [[JTableで文字列をクリックした場合だけセルを選択状態にする>Swing/TableFileList]]
+- [http://java.net/projects/swingset3/sources/svn/content/trunk/SwingSet3/src/com/sun/swingset3/demos/table/HyperlinkCellRenderer.java SwingSet3: HyperlinkCellRenderer.java]
+
+* コメント [#r6f7ffe9]
+- `SwingSet3`の"HyperlinkCellRenderer.java"を参考にして、再描画するセルの範囲を最適化、ついでに`HyperlinkCellRenderer#checkIfPointInsideHyperlink(Point)`ではセルコンポーネントの内余白(`Insets`)が考慮されていないので修正。 -- [[aterai]] &new{2011-09-16 (金) 18:45:29};
+
+#comment

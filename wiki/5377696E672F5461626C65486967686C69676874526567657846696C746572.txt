@@ -1,0 +1,74 @@
+TITLE:JTableの検索結果をRowFilterとHighlighterで強調表示する
+#tags(JTable, RowFilter, TableRowSorter, Highlighter, TableCellRenderer, JTextField, Pattern, Matcher)
+#author(aterai)
+#pubdate(2013-07-29T00:24:19+09:00)
+* 概要 [#g00b23a1]
+`JTable`で正規表現による検索結果を`RowFilter`と`Highlighter`を使用して表現します。
+
+#download(https://lh3.googleusercontent.com/-9b6L1m5fhBk/UfUzbWaYGtI/AAAAAAAABw8/xhrIa_pJXls/s800/TableHighlightRegexFilter.png)
+
+* サンプルコード [#la836955]
+#code(link){{
+class HighlightTableCellRenderer extends JTextField implements TableCellRenderer {
+  private static final Color backgroundSelectionColor = new Color(220, 240, 255);
+  private static final Highlighter.HighlightPainter highlightPainter
+    = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+  private String pattern = "";
+  private String prev = null;
+
+  public boolean setPattern(String str) {
+    if(str==null || str.equals(pattern)) {
+      return false;
+    }else{
+      prev = pattern;
+      pattern = str;
+      return true;
+    }
+  }
+  public HighlightTableCellRenderer() {
+    super();
+    setOpaque(true);
+    setBorder(BorderFactory.createEmptyBorder());
+    setForeground(Color.BLACK);
+    setBackground(Color.WHITE);
+    setEditable(false);
+  }
+  @Override public Component getTableCellRendererComponent(
+        JTable table, Object value, boolean isSelected,
+        boolean hasFocus, int row, int column) {
+    String txt = value!=null ? value.toString() : "";
+    Highlighter highlighter = getHighlighter();
+    highlighter.removeAllHighlights();
+    setText(txt);
+    setBackground(isSelected ? backgroundSelectionColor : Color.WHITE);
+    if(pattern!=null && !pattern.isEmpty() && !pattern.equals(prev)) {
+      Matcher matcher = Pattern.compile(pattern).matcher(txt);
+      if(matcher.find()) {
+        int start = matcher.start();
+        int end   = matcher.end();
+        try{
+          highlighter.addHighlight(start, end, highlightPainter);
+        }catch(BadLocationException | PatternSyntaxException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    return this;
+  }
+}
+}}
+
+* 解説 [#i99ab544]
+- セル中文字列のハイライト
+-- [[JTreeのノード中の文字列をハイライトする>Swing/HighlightWordInNode]]
+-- `JTextField`を継承する`TableCellRenderer`を作成し、`JTextField#getHighlighter()#addHighlight(...)`で検索結果の文字列をハイライト表示
+- 行のフィルタリング
+-- [[RowFilterでJTableの行をフィルタリング>Swing/RowFilter]]
+-- `RowFilter.regexFilter(pattern)`で正規表現を使用するフィルタを作成し、その検索にマッチする行以外は非表示
+
+* 参考リンク [#dd781691]
+- [[JTreeのノード中の文字列をハイライトする>Swing/HighlightWordInNode]]
+- [[RowFilterでJTableの行をフィルタリング>Swing/RowFilter]]
+
+* コメント [#v712db1e]
+#comment

@@ -1,0 +1,58 @@
+TITLE:JRadioButtonMenuItemのチェックアイコンを変更する
+#tags(JRadioButtonMenuItem, Icon, UIManager)
+#author(aterai)
+#pubdate(2010-11-08T16:26:30+09:00)
+* 概要 [#i1788d15]
+`JRadioButtonMenuItem`のチェックアイコンを変更します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRVf_tDmI/AAAAAAAAAhA/1F6GcDuJmcg/s800/RadioButtonMenuItemIcon.png)
+
+* サンプルコード [#a5678c05]
+#code(link){{
+//com.sun.java.swing.plaf.windows.WindowsIconFactory.java
+class RadioButtonMenuItemIcon1 implements Icon, UIResource, Serializable {
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    AbstractButton b = (AbstractButton) c;
+    ButtonModel model = b.getModel();
+    if(b.isSelected()) {
+      Graphics2D g2 = (Graphics2D)g;
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.fillRoundRect(x+3,y+3, getIconWidth()-6, getIconHeight()-6, 4, 4);
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+    }
+  }
+  @Override public int getIconWidth()  { return 12; }
+  @Override public int getIconHeight() { return 12; }
+}
+class RadioButtonMenuItemIcon2 implements Icon, UIResource, Serializable {
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    AbstractButton b = (AbstractButton) c;
+    ButtonModel model = b.getModel();
+    if(b.isSelected()) {
+      //g.fillRoundRect(x+3,y+3, getIconWidth()-6, getIconHeight()-6, 4, 4);
+      g.fillOval(x+2,y+2, getIconWidth()-5, getIconHeight()-5);
+      //g.fillArc(x+2,y+2,getIconWidth()-5, getIconHeight()-5, 0, 360);
+    }
+  }
+  @Override public int getIconWidth()  { return 12; }
+  @Override public int getIconHeight() { return 12; }
+}
+}}
+
+* 解説 [#s98aef9d]
+上記のサンプルでは、`WindowsLookAndFeel`(`Java1.6.0`)で、`JRadioButtonMenuItem`のチェックアイコンがすこし歪？なので以下のように修正しています。
+
+- `default`
+-- デフォルト
+- `ANTIALIASING`
+-- `com.sun.java.swing.plaf.windows.WindowsIconFactory`のアイコンを`g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)`でアンチエイリアス
+- `fillOval`
+-- `fillRoundRect`ではなく、`fillOval`を使用
+
+* 参考リンク [#cb51cade]
+- [[JCheckBoxMenuItemのチェックアイコンを変更する>Swing/CheckBoxMenuItemIcon]]
+
+* コメント [#xa0be7a9]
+- `Windows 7`でテストするとアイコンの歪みはないようです。修正されてたのかも？ -- [[aterai]] &new{2012-08-08 (水) 19:51:09};
+
+#comment

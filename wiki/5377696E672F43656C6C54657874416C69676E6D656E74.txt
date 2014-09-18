@@ -1,0 +1,85 @@
+TITLE:JTableのセル文字揃え
+#tags(JTable, TableCellRenderer, Alignment)
+#author(aterai)
+#pubdate(2008-08-25T14:45:47+09:00)
+* 概要 [#y99ee441]
+`JTable`のセルに表示されている文字列の揃えを変更します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTIs6qWcBI/AAAAAAAAATM/AnH_ZWdWA5o/s800/CellTextAlignment.png)
+
+* サンプルコード [#ocb54d34]
+#code(link){{
+TableColumn col = table.getColumnModel().getColumn(1);
+col.setCellRenderer(new HorizontalAlignmentTableRenderer());
+//...
+class HorizontalAlignmentTableRenderer extends DefaultTableCellRenderer {
+  @Override public Component getTableCellRendererComponent(JTable table,
+        Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    Component c = super.getTableCellRendererComponent(
+        table, value, isSelected, hasFocus, row, column);
+    if(c instanceof JLabel) initLabel((JLabel)c, row);
+    return c;
+  }
+  private void initLabel(JLabel l, int row) {
+    if(leftRadio.isSelected()) {
+      l.setHorizontalAlignment(JLabel.LEFT);
+    }else if(centerRadio.isSelected()) {
+      l.setHorizontalAlignment(JLabel.CENTER);
+    }else if(rightRadio.isSelected()) {
+      l.setHorizontalAlignment(JLabel.RIGHT);
+    }else if(customRadio.isSelected()) {
+      l.setHorizontalAlignment(row%3==0?JLabel.LEFT:
+                               row%3==1?JLabel.CENTER:
+                                        JLabel.RIGHT);
+    }
+  }
+}
+}}
+
+* 解説 [#b5da87a2]
+- ラジオボタンで、`JTable`の第一列のセル文字列の揃えを変更
+-- `left`: 左揃え
+-- `center`: 中央揃え
+-- `right`: 右揃え
+-- `custom`: 行ごとに左、中央、右揃えを変更
+- メモ
+-- セルエディタなどにラジオボタンを配置する場合は、[[JTableのセル中にJRadioButtonを配置>Swing/RadioButtonsInTableCell]]
+
+----
+- `JTable`は、`Object`、`Number`、`Boolean`クラスのデフォルトセルレンダラーを持っているため、モデルが各列のクラスを正しく返すように、`TableModel#getColumnClass(int)`をオーバーライドすることで、そのクラスのデフォルトセルレンダラーが使用される
+-- `Object`: `JLabel.LEFT`(文字列などは左揃え)
+-- `Number`: `JLabel.RIGHT`(数字は右揃え)
+-- `Boolean`: `JCheckBox`, `CENTER`(チェックボックスは中央揃え)
+- `DefaultTableModel#TableModel#getColumnClass(int)`のデフォルトは、すべての列のクラスとして、`Object.class`を返す
+- 各クラスのデフォルトセルレンダラーが使用されるのは、列にセルレンダラーが割り当てられていない場合に限られる
+
+#code{{
+//JTableの手抜きサンプルなら、以下のようにオーバーライドするのが簡単？(モデルが空になる場合、例外が発生する可能性がある)
+String[] columnNames = {"String", "Integer", "Boolean"};
+Object[][] data = {
+  {"AAA", 1, true},
+  {"BBB", 2, false},
+};
+DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+  @Override public Class<?> getColumnClass(int column) {
+    return getValueAt(0, column).getClass();
+  }
+};
+JTable table = new JTable(model);
+}}
+
+クラスのデフォルトセルレンダラーではなく、任意の列にセルレンダラーを割り当てて、例えば中央揃えにしたい場合は、以下のように設定します。
+// -- [[aterai]] &new{2007-06-14 (木) 13:19:36};
+
+#code{{
+DefaultTableCellRenderer r = new DefaultTableCellRenderer();
+r.setHorizontalAlignment(JLabel.CENTER);
+table.getColumnModel().getColumn(2).setCellRenderer(r);
+}}
+
+* 参考リンク [#l336b861]
+- [[JTableHeaderの字揃え>Swing/HorizontalAlignmentHeaderRenderer]]
+-- ヘッダの文字揃えに関するテストは、上記の場所に移動
+
+* コメント [#x640db8a]
+#comment

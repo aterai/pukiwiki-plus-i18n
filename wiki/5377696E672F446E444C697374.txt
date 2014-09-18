@@ -1,0 +1,110 @@
+TITLE:JListの項目をドラッグ＆ドロップ
+#tags(JList, DragAndDrop)
+#author(aterai)
+#pubdate(2004-02-16)
+* 概要 [#vdb92e79]
+`JList`をドラッグ＆ドロップして、項目を入れ替えます。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLb3DW2ZI/AAAAAAAAAXk/8VfeirUfaoo/s800/DnDList.png)
+
+* サンプルコード [#kadf6356]
+#code(link){{
+@Override protected void paintComponent(Graphics g) {
+  super.paintComponent(g);
+  if(targetIndex>=0) {
+    Graphics2D g2 = (Graphics2D)g;
+    g2.setPaint(lineColor);
+    g2.fill(targetLine);
+  }
+}
+private void initTargetLine(Point p) {
+  Rectangle2D testArea = new Rectangle2D.Float();
+  int cellHeight = (int) getCellBounds(0,0).getHeight();
+  int lineWidht  = (int) getCellBounds(0,0).getWidth();
+  int lineHeight = 2;
+  int modelSize  = getModel().getSize();
+  targetIndex = -1;
+  for(int i=0;i<modelSize;i++) {
+    testArea.setRect(0, cellHeight*i-(cellHeight/2), lineWidht, cellHeight);
+    if(testArea.contains(p)) {
+      targetIndex = i;
+      targetLine.setRect(0, i*cellHeight, lineWidht, lineHeight);
+      break;
+    }
+  }
+  if(targetIndex<0) {
+    targetIndex = modelSize;
+    targetLine.setRect(0, targetIndex*cellHeight-lineHeight, lineWidht, lineHeight);
+  }
+}
+@Override public void dragOver(final DropTargetDragEvent e) {
+  if(isDragAcceptable(e)) {
+    e.acceptDrag(e.getDropAction());
+  }else{
+    e.rejectDrag();
+    return;
+  }
+  initTargetLine(e.getLocation());
+  repaint();
+}
+@Override public void drop(DropTargetDropEvent e) {
+  DefaultListModel model = (DefaultListModel)getModel();
+  Transferable t = e.getTransferable();
+  DataFlavor[] f = t.getTransferDataFlavors();
+  try {
+    if(isDropAcceptable(e)) {
+      Component comp = (Component) t.getTransferData(f[0]);
+      Object str = model.getElementAt(draggedIndex);
+      if(targetIndex==draggedIndex) {
+        setSelectedIndex(targetIndex);
+      }else if(targetIndex<draggedIndex) {
+        model.removeElementAt(draggedIndex);
+        model.insertElementAt(str, targetIndex);
+        setSelectedIndex(targetIndex);
+      }else{
+        model.insertElementAt(str, targetIndex);
+        model.removeElementAt(draggedIndex);
+        setSelectedIndex(targetIndex-1);
+      }
+      e.dropComplete(true);
+    }else{
+      e.dropComplete(false);
+    }
+  }catch(UnsupportedFlavorException ex) {
+    e.dropComplete(false);
+  }catch(IOException ie) {
+    e.dropComplete(false);
+  }
+  e.dropComplete(false);
+  targetIndex = -1;
+  repaint();
+}
+}}
+
+* 解説 [#na78421d]
+上記のサンプルでは、ドラッグソースとドラッグターゲットの両方を`JList`自身に設定して、項目をドラッグ＆ドロップしているように見せかけています。
+
+- メモ:
+-- 複数アイテムを選択して移動する場合は、[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]のサンプルなどを参照
+
+* 参考リンク [#qca3b1e2]
+- [http://docs.oracle.com/javase/tutorial/uiswing/dnd/intro.html Introduction to Drag and Drop and Data Transfer]
+- [https://forums.oracle.com/thread/1487942 Swing (Archive) - DND from a JList with a single gesture]
+- [https://forums.oracle.com/thread/1487416 Swing (Archive) - Smoother Drag Drop JList JTable]
+- [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]
+- [[JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え>Swing/DragSelectDropReordering]]
+
+* コメント [#m0be05ec]
+- 以下を修正しました。 -- [[aterai]] &new{2006-04-24 (月) 22:47:06};
+-- ドラッグで選択されたアイテムがずれにくいように修正
+-- ドロップしたあとアイテムが選択状態になるように修正
+-- アイテムの無い場所にドラッグすると一番最後の項目の下にラインを引くように修正(以前は一番下のアイテムの下半分にドラッグした場合のみ、そこに線を引いていた)
+- アイテムを複数選択した状態でドラッグすると`Exception`が発生する不具合を修正しました。 -- [[aterai]] &new{2006-06-27 (火) 16:34:22};
+- ドラッグ中マウスが`JList`の外に出た場合、カーソルを変更するように変更しました。 -- [[aterai]] &new{2007-04-02 (月) 16:26:22};
+- `JTabbedPane`に`JList`を追加し、タブを２つ作りました。`JList`の項目を他のタブへ`D&D`すると、`mouseReleased`メソッドが反応しないのですが、どうすれば回避できますでしょうヵ。 -- [[sao]] &new{2007-09-22 (土) 14:57:27};
+-- %%削除しました `src2.zip`%% を作って`XP`+`JDK 1.6.0_02`で試してみたのですが、`JList`の項目を他のタブへ`D&D`出来ないようです。環境が違うのかな？ -- [[aterai]] &new{2007-09-22 (土) 16:16:29};
+- ぉー！ファイル、わざわざありがとうございます！自分なりに頑張ってます。私がやりたのは`JList`の項目をタブへ`D&D`して項目に書かれている内容を他のタブ(の持ってる`JList`)へ渡したいんです。現状は、２つ以上の項目なら渡せて、`１`つだとエラーがでてしまいます。よくわかっていないまま進めてるので、全然わからないです（汗） -- [[sao]] &new{2007-09-27 (木) 20:03:38};
+-- あ、`src2.zip`は的外れでしたね。このページの`DnDList`を`JTabbedPane`に入れて、項目をタブタイトルにドロップすると`Exception`の発生するバグがあるのかも？と勘違いしていました。このページのサンプルを改造するなら、`src2.zip`ではなく、[http://terai.xrea.jp/swing/dropontabtitle/src.zip こちらのソース(名前を変更しました)]、チュートリアルなら[http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#DragListDemo DragListDemo] が参考になるかも。 -- [[aterai]] &new{2007-09-28 (金) 02:24:23};
+- `src3`ありがとうございます☆軽快に動きますね！すごく！`src3`ですが、`DnDList`に`setEnabled(true);`を追加しました。が、まったくわからず…思いのほか、`2`項目以上の`D&D`って難しいですネ(汗 -- [[sao]] &new{2007-09-28 (金) 17:50:42};
+
+#comment

@@ -1,0 +1,38 @@
+TITLE:JTabbedPaneのタブエリア背景色などをテスト
+#tags(JTabbedPane, UIManager, MetalLookAndFeel)
+#author(aterai)
+#pubdate(2011-01-03T14:25:13+09:00)
+* 概要 [#g60a9b96]
+`MetalLookAndFeel`の`JTabbedPane`で、タブエリアの背景色などを変更するテストをしています。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TSFbcaeJLEI/AAAAAAAAAw0/zQFscoerEGk/s800/TabAreaBackground.png)
+
+* サンプルコード [#ec1711da]
+#code(link){{
+UIManager.put("TabbedPane.shadow",                Color.GRAY);
+UIManager.put("TabbedPane.darkShadow",            Color.GRAY);
+UIManager.put("TabbedPane.light",                 Color.GRAY);
+UIManager.put("TabbedPane.highlight",             Color.GRAY);
+UIManager.put("TabbedPane.tabAreaBackground",     Color.GRAY);
+UIManager.put("TabbedPane.unselectedBackground",  Color.GRAY);
+UIManager.put("TabbedPane.background",            Color.GRAY);
+UIManager.put("TabbedPane.foreground",            Color.WHITE);
+UIManager.put("TabbedPane.focus",                 Color.WHITE);
+UIManager.put("TabbedPane.contentAreaColor",      Color.WHITE);
+UIManager.put("TabbedPane.selected",              Color.WHITE);
+UIManager.put("TabbedPane.selectHighlight",       Color.WHITE);
+UIManager.put("TabbedPane.borderHightlightColor", Color.WHITE);
+}}
+
+* 解説 [#x4421498]
+上記のサンプルでは、`JPanel`タブの`JCheckBox`で`JTabbedPane`を不透明にしたり、`JComboBox`でキーを指定し、`UIManager.put("TabbedPane.unselectedBackground",  Color.GREEN);`などとして色を変更することができます。
+
+----
+タブ文字色は、`JTabbedPane#setForegroundAt(...)`メソッドを使用して切り替えています。
+
+- [[JTabbedPaneの選択文字色を変更>Swing/ColorTab]]
+- [[JTabbedPaneのタブ文字列をハイライト>Swing/TabTitleHighlight]]
+
+//**参考リンク
+* コメント [#f0162397]
+#comment

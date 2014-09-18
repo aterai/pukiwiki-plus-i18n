@@ -1,0 +1,52 @@
+TITLE:BoxLayoutでリスト状に並べる
+#tags(BoxLayout, LayoutManager)
+#author(aterai)
+#pubdate(2006-06-15)
+* 概要 [#n63d4aaf]
+高さの異なるコンポーネントをスクロールできるようにリスト状に並べます。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJ_UDZVaI/AAAAAAAAAVQ/BbW1hLhenS8/s800/ComponentList.png)
+
+* サンプルコード [#gefca96e]
+#code(link){{
+private final Box box = Box.createVerticalBox();
+private final Component glue = Box.createVerticalGlue();
+public void addComp(final JComponent comp) {
+  comp.setMaximumSize(new Dimension(
+      Short.MAX_VALUE, comp.getPreferredSize().height));
+  box.remove(glue);
+  box.add(Box.createVerticalStrut(5));
+  box.add(comp);
+  box.add(glue);
+  box.revalidate();
+  EventQueue.invokeLater(new Runnable() {
+    @Override public void run() {
+      comp.scrollRectToVisible(comp.getBounds());
+    }
+  });
+}
+}}
+
+* 解説 [#b910d821]
+上記のサンプルでは、`Box.createVerticalBox`を使ってリスト状に並べています。この際、各コンポーネントの高さは変化せず、幅だけフレームサイズに追従するように、`JComponent#setMaximumSize`を設定しています。
+
+コンポーネントの高さの合計がフレームの高さより小さい場合は、下部に余白が出来るように、最後に`Box.createVerticalGlue`を追加しています。
+
+// チュートリアルの[http://docs.oracle.com/javase/tutorial/uiswing/layout/spring.html How to Use SpringLayout (The Java™ Tutorials > Creating a GUI with JFC/Swing > Laying Out Components Within a Container)]にある[http://docs.oracle.com/javase/tutorial/uiswing/layout/examples/SpringUtilities.java SpringUtilities.java]を使用すると、サンプルのaddCompメソッドは以下のように書くこともできます。
+//#code{{
+//public void addComp2(JComponent cmp) {
+//  pnl.add(cmp);
+//  Component[] list = pnl.getComponents();
+//  SpringUtilities.makeCompactGrid(pnl,
+//                                  list.length, 1, //rows, cols
+//                                  6, 6,           //initX, initY
+//                                  6, 6);          //xPad, yPad
+//  initComps();
+//}
+
+//**参考リンク
+* コメント [#eec7c049]
+- `SpringLayout`ではなく、`BoxLayout`を使うようにサンプルを変更しました。 -- [[aterai]] &new{2006-06-26 (月) 15:34:41};
+- 解説がソースと異なり、`setMinimumSize`となっていたのを`setMaximumSize`に修正。 -- [[aterai]] &new{2009-05-15 (金) 22:58:16};
+
+#comment

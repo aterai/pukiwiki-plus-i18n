@@ -1,0 +1,91 @@
+TITLE:livedoor Readerでフィードを既読にする
+#author(aterai)
+#pubdate(2012-08-02)
+#contents(big)
+
+* 概要 [#s357cff9]
+`livedoor Reader`で使っていた`UserScript`のメモです。
+
+- `livedoor Reader`で既読にするタイミングを「手動」にしている場合、「既読にする」のリンクが上部にあるため、記事が長かったり、複数ある場合((複数記事の場合は、下から読んでいけばいいのかも))に下までスクロールしていると戻ってクリックするのが面倒
+
+- [http://knowledge.livedoor.com/tb/10925 「既読にする」ボタンは、記事の表示欄より下にもつけるとより便利では？,「既読にする」,livedoorReader - livedoor ナレッジ 知識、知恵のカタマリ]
+
+- 以下、各記事に「全部既読にする」を追加する方法と、ショートカットキー入力で記事を全部既読にする方法のメモ
+
+* 各記事に「全部既読にする」を追加する [#cb91fd45]
+- 参考: [http://la.ma.la/blog/diary_200610182325.htm livedoor Readerに何かくっつけるGreasemonkeyの書き方]
+-- http://terai.xrea.jp/data/greasemonkey/ldr_with_mark_all_as_read.user.js
+
+#code{{
+// ==UserScript==
+// @name        LDR with Mark all as read
+// @namespace   http://terai.xrea.jp/
+// @include     http://reader.livedoor.com/reader/*
+// @include     http://fastladder.com/reader/*
+// @version     0.1
+// ==/UserScript==
+
+(function(){
+    var w = (typeof unsafeWindow == 'undefined') ? window : unsafeWindow;
+    var description = "\u5168\u90e8\u65e2\u8aad\u306b\u3057\u307e\u3059";
+    var label       = "\u5168\u90e8\u65e2\u8aad\u306b\u3059\u308b";
+    w.entry_widgets.add('test_touch_all', function(feed) {
+        //if(Config.touch_when != "manual") return;
+        return [
+            '<span class="button" onclick=\'touch_all("',
+            feed.subscribe_id,
+            '")\'>',
+            label,
+            '</span>'
+        ].join('');
+    }, description);
+})();
+}}
+
+-- 全部のアイテム(記事)に「既読にする」がついてしまう…。
+-- `Opera`でも、ユーザー`JavaScript`として動作する
+
+* ショートカットキーで記事を全部既読にする [#ne43bc90]
+- 参考: [http://la.ma.la/blog/diary_200604261407.htm livedoor ReaderのショートカットキーをカスタマイズするGreasemonkeyスクリプト]
+-- http://terai.xrea.jp/data/greasemonkey/ldr_keyhack_mark_all_as_read.user.js
+
+#code{{
+// ==UserScript==
+// @name        LDR KeyHackkey Mark all as read
+// @namespace   http://terai.xrea.jp/
+// @include     http://reader.livedoor.com/reader/*
+// @include     http://fastladder.com/reader/*
+// @version     0.1
+// ==/UserScript==
+(function() {
+    var w = (typeof unsafeWindow == 'undefined') ? window : unsafeWindow;
+    var _onload = w.onload;
+    var onload = function() {
+      with(w) {
+        Keybind.add("x", function() {
+            var feed = get_active_feed(true);
+            if(feed) {
+                touch_all(feed.subscribe_id);
+            }
+        });
+      }
+    }
+    w.onload = function() {
+        _onload();
+        onload();
+    }
+}) ();
+}}
+
+-- 上記の例では、KBD{x}キーで全て既読になる
+--- `google reader`風にするなら、KBD{Shift+A}だけど、複数キーの設定方法が分からない…
+--- KBD{a}, KBD{s}のとなりのKBD{d}でもよかったかも…
+-- `Opera`でも動作確認
+
+* 参考リンク [#ja87a132]
+- [http://la.ma.la/blog/diary_200610182325.htm livedoor Readerに何かくっつけるGreasemonkeyの書き方]
+- [http://knowledge.livedoor.com/tb/10925 「既読にする」ボタンは、記事の表示欄より下にもつけるとより便利では？,「既読にする」,livedoorReader - livedoor ナレッジ 知識、知恵のカタマリ]
+- [http://la.ma.la/blog/diary_200604261407.htm livedoor ReaderのショートカットキーをカスタマイズするGreasemonkeyスクリプト]
+
+* コメント [#g517502a]
+#comment

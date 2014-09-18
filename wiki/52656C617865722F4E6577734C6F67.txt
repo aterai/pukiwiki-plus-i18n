@@ -1,0 +1,356 @@
+*Relaxer関係のニュースログ [#o17b42dc]
+
+#contents
+
+*2006年分 [#off4accf]
+**11月 [#qd158a23]
+-2006-11-29 &relaxml(Re: SAX使用時のエラー, 03341);
+-- 浅海氏、[ Relaxer Version 1.1b (20061129) ]をリリース
+-- objectVerifyオプションを指定して"group"タグを使用した場合にエラー
+-- SAX使用時に生成されるJavaソースで情報の欠落
+
+-2006-11-08 &relaxml(Re: objectVerifyオプション指定時のエラーについて, 03336);
+-- 浅海氏、[ Relaxer Version 1.1b (20061108) ]をリリース
+-- objectVerifyオプションを指定して生成したJavaソースでコンパイルエラーが発生する
+-- Relax NGスキーマからW3C XML Schemaに変換する場合にemptyStringが生成される
+
+**08月 [#e1b90307]
+-2006-08-01 &relaxml(Re: relaxerで変換したW3C XML Schemaのuse属性, 03309);
+-- 浅海氏、[ Relaxer Version 1.1b (20060724) ]をリリース
+-- 必須属性を含むRelax NGスキーマをW3C XML Schemaに変換すると、誤ったuse属性値がセットされる
+
+*2005年分 [#y7f7689a]
+**11月 [#b920a59b]
+-2005-11-25
+--[[Java-XMLバインディングフレームワークのベンチマーク&使いやすさ比較>https://bindmark.dev.java.net/]](via:[[オレンジニュース>http://secure.ddo.jp/~kaku/tdiary/20051124.html]])
+
+**08月 [#hb3080a4]
+-2005-08-11 &relaxml(Re: interleaveとSAXのHandler, 03300);
+-- 浅海氏、[ Relaxer Version 1.1b (20050810) ]をリリース
+-- %% http://www.relaxer.org/download/beta20050810.zip %%
+-- "-sax -useJAXP" オプションで <interleave> を使用すると NullPointerException の発生する不具合が修正された
+
+**05月 [#ua417eeb]
+-2005-05-09 &relaxml(Re: -xsd オプションでruntime error, 03296);
+- 浅海氏、[ Relaxer Version 1.1b (20050504) ]をリリース
+-- -xsd オプションで runtime error の発生する変換が修正された
+
+**03月 [#ub230f74]
+-2005-03-11 &relaxml(Re: Relaxer 1.0 に独自拡張を実装しました, 03292);
+-- 浅海氏、[ Relaxer Version 1.1b (20050311) ]をリリース
+-- ジャスミンソフトの村田氏から報告のあった独自拡張をRelaxerに反映
+-- (1) Relaxer テーブルクラス内にて、文字列を大量の + オペレータで繋げているとコンパイルできないことがあるバグの修正
+-- (2) -jdbc.unique.tableConstraint オプションの追加
+-- (3) -jdbc.unique.notNull, -jdbc.primaryKey.notNull オプションの追加
+-- (4) -jdbc.datatype.explicitTimestamp オプションの追加
+-- (5) jdbc.configおよびjdbc.profileに上記オプション情報を追加
+-- http://www.jasminesoft.co.jp/harvest/customized_relaxer/Relaxer-1.0_JasmineSoft-0.21/index.html
+
+-2005-03-01 &relaxml(Re: 名前空間をもつ属性の扱い, 03288);
+-- 浅海氏、[ Relaxer Version 1.1b (20050301) ]をリリース
+-- 名前空間をもつ属性の扱いを修正
+
+**02月 [#ma32445c]
+-2005-02-09 &relaxml(Relaxer 1.0 に独自拡張を実装しました, 03285);
+-- ジャスミンソフト、RelaxerをHypersonicSQLやIBM DB2で動作させる際に修正したコードなどを公開
+-- [[Relaxer JasmineSoft カスタマイズ版>http://www.jasminesoft.co.jp/harvest/customized_relaxer/]]
+
+**01月 [#o6a5dbbc]
+-2005-01-25 &relaxml(Re: Relaxer 1.1b 12/21 版 jdbc=true でコンパイルエラー, 03281);
+-- 浅海氏、[ Relaxer Version 1.1b (20050124) ]をリリース
+-- jdbc=true でのコンパイルエラー発生を修正
+
+*2004年分 [#d1551427]
+**12月 [#u9ad06ca]
+-2004-12-22 &relaxml(Re: Relaxer 1.1b 12/8版, 03274);
+-- 浅海氏、[ Relaxer Version 1.1b (20041221) ]をリリース
+-- 子ノードの属性を親ノードから直接参照する機能の実装ミスを修正
+-- 子ノードの属性を親ノードから直接参照する新機能が追加
+
+-2004-12-09 &relaxml(Re: Relaxer 1.1b 12/8版, 03271);
+-- JavaのバージョンとRelaxerのポリシー
+-- JDK 1.2 - できる範囲で対応
+-- JDK 1.3 - できる範囲で対応
+-- JDK 1.4 - 動作可とする
+-- JDK 5.0 - 動作可とする
+
+-2004-12-08 &relaxml(Relaxer 1.1b 12/8版, 03265);
+-- 浅海氏、[ Relaxer Version 1.1b (20041208) ]をリリース
+-- useJAXPValidationオプションが動かないのを修正
+-- mapを直接参照するメソッドが生成されるようになった
+
+**08月 [#s86ed467]
+-2004-08-09 &relaxml(Re: Relaxer 不具合報告, 03232);
+-- 浅海氏、[ Relaxer Version 1.1b (20040808) ]をリリース
+-- optional、interleaveで不具合が発生する場合があったのを修正
+
+**07月 [#u4ae1221]
+-2004-07-16 &relaxml(Re: Relaxer: attribute の choice でエラー?, 03222);
+-- 浅海氏、[ Relaxer Version 1.1b (20040713-2) ]をリリース
+-- javadoc コメントが途中で閉じてコンパイルエラーが発生する場合があったのを修正
+
+-2004-07-13 &relaxml(Re: Relaxer: attribute の choice でエラー?, 03217);
+-- 浅海氏、[ Relaxer Version 1.1b (20040713) ]をリリース
+-- URelaxer に渡す Element が null になる場合があったのを修正
+-- READMEに残っていた古いライセンス記述の修正(「BSDに準ずる」を「MITライセンス」に)
+
+**05月 [#ra4b6f92]
+-2004-05-20 &relaxml(Re: 属性値の有無とCDATA値へのアクセスメソッド, 03193);
+-- 浅海氏、[ Relaxer Version 1.1b (20040519) ]をリリース
+-- XML ImporterでCDATAがうまく扱えない場合があったのを修正
+
+-2004-05-17 ジャスミンソフト、Relaxerなどを活用したWebアプリケーション自動生成サービスをASP提供
+-- [[Enterprise Watchの記事>http://enterprise.watch.impress.co.jp/cda/software/2004/05/17/2287.html]]
+-- [[JasmineSoft Harvest>http://www.jasminesoft.co.jp/harvest/index.html]]
+
+-2004-05-14 (@IT)[[RelaxerでオブジェクトをRDBにマッピング>http://www.atmarkit.co.jp/fxml/rensai2/xmltool07/01.html]]
+-- O／RマッピングツールとしてのRelaxer
+-- Relaxer JDBCとは
+-- Relaxerの入手とサンプル実行環境のセットアップ	
+-- サンプルアプリケーションの設計	
+-- サンプルアプリケーションの実装
+-- まとめ＆サンプルダウンロード
+
+-2004-05-10 &relaxml(Re: Relaxer 1.1b で -factory と interleave の併用について, 03181);
+-- 浅海氏、[ Relaxer Version 1.1b (20040510) ]をリリース
+-- factory オプションと interleave を併用している場合の不具合を修正
+-- その他
+ ファクトリでinterleaveを動作させるために、MyFactoryはクラスを通知する
+ メソッドをオーバーライドする必要がある。
+
+**04月 [#zb80bc90]
+-2004-04-12 &relaxml(Re: Relaxer java.robustオプションとjava.default拡張構文の併用について, 03176);
+-- 浅海氏、[ Relaxer Version 1.1b (20040411) ]をリリース
+-- java.robustオプション使用時に、java.default拡張構文指定が効かないのを修正
+-- java.robust
+ stableは参照でおかしな指定があっても例外を出さない
+ robustは参照に加えて、値でおかしな指定があっても例外を出さない
+-- おまけ
+ この版で、-java.facadeオプションが導入された
+
+-2004-04-05 &relaxml(Re: Relaxer不具合報告、java:roleと-java.package.libraryでのimport抜け, 03167);
+-- 浅海氏、[ Relaxer Version 1.1b (20040405) ]をリリース
+-- 仕様変更について(以下メールから引用)
+ 以下の問題が発生したので修正版を作りました。
+ 「具体的にはcombine="choice"を使っている場合」以外のかなり広範
+ 囲のパターンで、最適化が深く行われない
+-- &relaxml(Relaxerでのxsd:dateTime型の扱い, 3144); についてのフォロー
+ xsd:dateTimeの値を取り出すときに、文字の最後が".0"の場合のみ、".0"の
+ 部分を切り落とす
+
+**03月 [#nabc4643]
+-2004-03-25 &relaxml(Re: Relaxer不具合報告、java:roleと-java.package.libraryでのimport抜け, 03155);
+-- 浅海氏、[ Relaxer Version 1.1b (20040325) ]をリリース
+-- java.package.libraryでのimport抜けが修正された
+-- 仕様変更(以下メールから引用)
+  この版で別件の、モジュール化関連の障害修正を行いました。その結果、
+ 自動生成されるインタフェース(IXHAddressMixedChoiceなど)の名前と
+ 数が以前とは異なったものが生成されるようになりました。
+  これは(James Clarkの)xhtml.rng級のスキーマをコンパイルすると
+ 発生します。(具体的にはcombine="choice"を使っている場合)
+  障害修正のため元の振舞いを残すことは困難であり、仕様を変えること
+ にしました。ご了承ください。> Relaxer利用者の皆さん
+
+-2004-03-24 &relaxml(Re: Relaxer不具合報告、java:roleと-java.package.libraryでのimport抜け, 03153);
+-- 浅海氏、[ Relaxer Version 1.1b (20040324) ]をリリース
+-- java.package.libraryでのimport抜けが修正された
+
+-2004-03-10 &relaxml(Re: -jdbcと-java.package.library併用時の不具合報告, 03143);
+-- Relaxer 1.1beta 03/10版がリリース
+-- jdbcオプション併用時の不具合が修正された
+-- J2EE向け機能拡張
+--- (1) jdbc.eeオプションの時にjavax.sql.DataSourceもコンストラクタに指定できるようにした
+--- (2) 使用するデータベースのデータ型を、実行時にカスタマイズできるようにした
+
+**02月 [#u0fdb928]
+-2004-02-24 &relaxml(Relaxer Sturts自動生成デモ, 3128);
+-- Relaxer 1.1beta 02/24版がリリース
+-- 浅海氏、Relaxer Struts自動生成デモを公開
+--- %% http://www.relaxer.org/tmp/struts-demo.zip %%
+
+-2004-02-03 &relaxml(Relaxer関連イベント, 3122);
+-- 2/15(日) IPA未踏15シンポジウム (国際フォーラム)
+-- 2/19(木) Java Technology Conference (ホテル・ニューオータニ)
+
+-2004-02-04 [[Relaxerでデータバインディングに挑戦しよう>http://www.atmarkit.co.jp/fxml/rensai2/xmltool04/01.html]]
+-- Relaxerの概要
+-- Relaxerの入手とセットアップ
+-- 開発手順
+-- スキーマの作成
+-- など
+
+-2004-02-03 &relaxml(Re: type付きvalue制約のあるchoiceで型不一致(Re: JAXBオプション), 3103);
+-- Relaxer 1.1beta 02/03版がリリース
+-- type付きvalue制約のあるchoiceで型不一致が修正された
+
+**01月 [#mf0537e9]
+-2004-01-23 &relaxml(Re: JAXBオプション(Re: Relaxer Eclipse  Plugin 0.1.0), 3099);
+-- Relaxer 1.1beta 1/22版がリリース
+-- RelaxerOrg.jarに、org.relaxer.jaxb.*のクラスが欠落していたのが修正された
+
+-2004-01-22 &relaxml(Relaxer Eclipse Plugin 0.1.0 (was Re: Re: Relaxer 1.1b (20040114), 3091);
+-- Relaxer Eclipse Plugin 0.1.0がリリース
+--- 自動更新機能を使う場合 %% http://www.relaxer.org/eclipse-site- %%
+--- プラグインを直接インストールする場合 %% http://www.relaxer.org/eclipse/site-plugins-org.relaxer.eclipse_0.1.0.jar %%
+
+-2004-01-14 &relaxml(Relaxer 1.1b (20040114) ,3075);
+-- Relaxer 1.1beta 1/14版がリリース
+-- 以下の障害が修正される
+--- [3064] dtd生成でエラー - 渡邉さん
+--- [3070] value制約付きの混合内容でNPE - 原田さん
+--- [3072] optional指定時のコンパイル・エラーについて - 武田さん
+
+-- Relaxer Eclipse Pluginが1.1bに対応(Version 0.0.3)
+
+-2004-01-06 &relaxml((依頼) RELAX/Relaxer活用事例, 3066);
+-- 浅海氏、RELAX/Relaxer活用事例を募集
+
+*2003年分 [#d3b2653c]
+**12月 [#u457cbdd]
+-2003-12-26 (@IT)[[第3回 オープンソースとエンジニアの決意>http://www.atmarkit.co.jp/fjava/devs/roundtable03/roundtable03.html]]
+-- 既存の開発プロセスが持つ矛盾を解消する
+-- 境界線をどこに引くか
+-- オープンソースとの関係
+-- 企業の決意、エンジニアの決意
+
+-2003-12-24 &relaxml(ANN Relaxer 1.0, 3062);
+-- ''Relaxer 1.0、正式リリース''
+--- %% http://www.relaxer.org/download/index_ja.html %%
+--- %% http://www.relaxer.org/download/relaxer-1.0.zip %%
+
+-2003-12-22 &relaxml(Re: Relaxer 不具合? java.swing.treeオプションでimport java.util.Enumerationが脱落, 3056);
+-- 修正版
+-- java.swing.treeオプションについて
+ > Relaxerのjava.swing.treeオプションはすでにリリースでしたでしょうか、
+ > yet under constructionだったでしょうか？
+ この機能は1.0の段階ではベータ版となります。
+ 1.0の次の版では、正式機能にしたいと思います。
+
+-2003-12-17 &relaxml(Re: Relaxerライセンスの改良, 3043);
+-- 新しいライセンス案を実装したRelaxer
+
+-2003-12-13 &relaxml(Relaxerライセンスの改良, 3042);
+-- [新しいライセンス(案)]
+ (1) Relaxerが生成するJavaソースコードはRelaxer artifactライセンス(*1)
+     にする。ソースコードをコンパイルした結果は、ライセンスによる制約の
+     対象外であり、利用者の責任において自由に利用できる。
+ (2) Relaxerが生成するJavaソースコード以外の成果物(例えばDTD)はライセン
+     スによる制約の対象外とする。利用者の責任において自由に利用できる。
+-- [Relaxer新仕様]
+ (1)に伴って、Relaxerが生成するJavaソースコードにRelaxer artifactライ
+ センス(*1)を自動的に埋め込むようにする。
+ 上記のライセンスおよびRelaxer新仕様の結果、開発者側で特別な作業(配布
+ 物のCopyright表示やマニュアルでの記述の作成)をしなくてもRelaxerが生成
+ するプログラムを製品にそのまま利用できるようになる。
+
+-2003-12-09 (@IT)[[第2回 日本発の独自技術を開発する>http://www.atmarkit.co.jp/fjava/devs/roundtable02/roundtable02.html]]
+-- プロジェクト参加者各人の思惑
+-- リーダーシップ・コラボレーション型のプロジェクト
+-- なぜ、RELAXなのか？
+-- そして、なぜ、Relaxerなのか？
+-- アプリケーションの“性能”問題
+-- 国際の場に日本から技術を出そう
+
+-2003-12-08 &relaxml(Re: <choice><value></value></choice>の候補値, 3039);
+ > 下のようなスキーマをコンパイルしたとき、生成されるjavaソースに
+ > public class Root implements java.io.Serializable, Cloneable {
+ >     public static final String VALUE_X = "X";
+ >     public static final String VALUE_Y = "Y";
+ >     public static final String VALUE_Z = "Z";
+ > というように値の候補を埋め込んでいただきたいのですが、如何でしょうか？
+ > （setterに渡すStringを直書きする際のスペルミスを予防するため。）
+-- 新規実装
+
+-2003-12-04 &relaxml(Re: Relaxerの-jdbcオプション有効時の不具合について, 3032);
+-- jdbcオプション有効時の不具合を修正
+
+-2003-12-03 &relaxml(Re: Relaxer 拡張構文 dataClassとdefaultの併用時のバグ, 3029);
+-- Relaxer 拡張構文 dataClassとdefaultの併用時の動作にバグがあるのを修正
+
+**11月 [#ueba9b1c]
+-2003-11-22 (@IT) [[第1回 オブジェクト指向の弱点>http://www.atmarkit.co.jp/fjava/devs/roundtable01/roundtable01.html]]
+-- スキーマ・コンパイラがソフトウェア開発に及ぼす影響
+-- オブジェクト指向の弱点をXMLで埋める
+-- ツリー構造の重要性
+
+-2003-11-18 &relaxml(Re: setupでNullPointerException, 3020);
+-- setupメソッドで、NullPointerExceptionが出る場合があるのを修正
+
+-2003-11-05 &relaxml(Re: -jdbc 使用時の column 名について, 3015);
+> 提案： -jdbcオプションを付けてコンパイルした際に作成されるIXXXTableView インタフェースに "Row名を定数として付け加える"
+
+-- 新規実装
+
+-2003-11-05 (@IT) [[XMLをJavaにマップするデータバインディング>http://www.atmarkit.co.jp/fxml/rensai2/xmltool01/01.html]]
+-- XMLとJavaの関係を整理しよう
+-- XMLで表現するってどういうこと？
+-- Javaを持ち込めると何がウレシイ？
+-- データバインディングで何ができる？
+-- データバインディングとは
+
+**10月 [#kdc3887c]
+-2003-10-30 &relaxml(Re: Relaxer 1.0ベータ10/28版, 3012);
+-- SQLを作成するときに使う変数でコンパイルエラーが出るのを修正
+
+-2003-10-28 &relaxml(Relaxer 1.0ベータ10/28版, 3008);
+-- 以下の2つの障害を修正
+--- [3002] relaxerの-saxと-factoryオプション併用時に不具合について - 坪井さん
+--- [3004] JDBCでカラム名がプロパティ名となってしまう - 小宮山さん
+
+-2003-10-24 &relaxml(Re: base64Binaryを含むrngで-java.verify.assertion指定時にコンパイルエラー, 2999);
+-- base64Binaryを含むrngで-java.verify.assertion指定時にコンパイルエラーがでるのを修正
+-- この版から、start要素を複数使う場合はcombine属性がないと仕様にあるようにコンパイルエラーが出るようになった。
+  <start combine="choice">
+    <ref name="root"/>
+  </start>
+
+-2003-10-21 &relaxml(Re: <interleave>使用時にコンパイルエラー, 2996);
+-- <interleave>使用時にコンパイルエラーがでるのを修正
+
+-2003-10-20 &relaxml(Re: -java.verify オプションと <list>要素, 2992);
+-- java.verifyで作成されたverifyメソッドが -java.jarvで行うverifyと違う結果を出力するのを修正
+
+-2003-10-17 &relaxml(Relaxer 1.0ベータ10/17版, 2985);
+-- Relaxer 1.0 β10/17版
+-- 以下の4つの障害を修正
+--- [2979] primitive型と-java.verifyオプション - 小宮山さん
+--- [2981] string typeへの min/maxLength指定について - 贄さん
+--- [2983] choice指定を含むスキーマからDTDを生成した場合 - 贄さん
+--- [2984] -jdbc.dataConfig:postgresqlでdoubleを使った場合 - 村田さん
+
+-2003-10-15 &relaxml(Relaxer 1.0ベータ10/15版, 2974);
+-- Relaxer 1.0 β10/15版
+-- 以下の3つの障害を修正
+--- [0970] -jdbc.eeでimportがおかしい - 贄さん
+--- [0971,0972] rxm->rng変換ができない - 贄さん
+--- [2973] -java.sax.inputでchoiceに対応するコードが出力されない - 小宮山さん
+
+-2003-10-07 &relaxml(ANN Relaxer 1.0 beta 10/7版, 2962);
+-- コンパイルエラーが出る場合があったのが修正
+-- classPrefixesオプションの働き方について
+>なお、classPrefixesの現在での正確な書き方は以下のようになります。(途
+中で仕様が変わりました。)
+ classPrefixes=http://www.quick.co.jp/xmlns/ant/directorylist:X;:Y
+
+**09月 [#n5adc7db]
+-2003-09-29 [[Relaxerプロセスによる設計>http://www.atmarkit.co.jp/fjava/devs/relaxer04/relaxer04.html]]
+-- %% [[RelaxerStudio>http://www.relaxer.org/studio/index_ja.html]] %%プロジェクト（4）
+-- 最終回の今回は、システム分析工程までに作成した成果物を材料に、実際にRelaxerを活用して設計を行う場面を解説する。
+
+-&relaxml(, 02956);
+-- java.verify.assersionの不具合が修正
+-- RELAX Coreジェネレータの不具合が修正
+
+-&relaxml(Re: XXXTableクラスについて, 02953);
+-- &relaxml(,02949);のjdbcオプションで作成されるXXXTableクラスについての提案を仮実装
+
+-&relaxml([ANN] Relaxer RC3, 02946);
+-- Relaxer 1.0 Release Candidate 3の正式版(プレ版と同じもの)
+-- %% http://www.relaxer.org/ %%
+-- %% http://www.relaxer.org/download/relaxer-rc3.zip %%
+
+-&relaxml(Relaxer Version 1.0rc3 (20030917), 02940);
+-- java.pattern.contextで生成するクラスの構造を変更
+
+-&relaxml(Relaxer Version 1.0rc3b (20030911), 02929);
+-- namespace付きのXML(text.xml)をrngに変換する際の処理の修正

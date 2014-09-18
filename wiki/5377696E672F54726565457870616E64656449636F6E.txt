@@ -1,0 +1,25 @@
+TITLE:JTreeの展開、折畳みアイコンを非表示にする
+#tags(JTree, Icon, UIManager)
+#author(aterai)
+#pubdate(2010-05-31T15:21:37+09:00)
+* 概要 [#j8acc5d0]
+`JTree`の展開、折畳みアイコンを変更して非表示にします。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWHHSFZMI/AAAAAAAAAos/aymKObZa7WQ/s800/TreeExpandedIcon.png)
+
+* サンプルコード [#h4c75a6a]
+#code(link){{
+Icon emptyIcon = new EmptyIcon();
+UIManager.put("Tree.expandedIcon",  new IconUIResource(emptyIcon));
+UIManager.put("Tree.collapsedIcon", new IconUIResource(emptyIcon));
+}}
+
+* 解説 [#k9aa6922]
+上記のサンプルでは、サイズ`0`の`Icon`を`Tree.expandedIcon`, `Tree.collapsedIcon`として使用することで、それぞれ非表示になるように設定しています。
+
+* 参考リンク [#g8ef9fe5]
+- [[JTableのソートアイコンを変更>Swing/TableSortIcon]]
+- [[JTreeのOpenIcon、ClosedIcon、LeafIconを変更>Swing/TreeLeafIcon]]
+
+* コメント [#o066ff04]
+#comment

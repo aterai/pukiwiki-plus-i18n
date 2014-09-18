@@ -1,0 +1,37 @@
+TITLE:Wavファイルの演奏
+#tags(AudioSystem, Sound)
+#author(aterai)
+#pubdate(2004-08-16)
+* 概要 [#ue05d866]
+`AudioSystem`を使って、`AudioInputStream`、`Clip`(`Line`)などを作成取得し、`wav`ファイルを演奏します。
+
+#download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTj2hYTjI/AAAAAAAAAko/8dQ-XleMZBc/s800/Sound.png)
+
+* サンプルコード [#xc5680fe]
+#code(link){{
+URL url = getClass().getResource("notice1.wav");
+AudioInputStream sound = AudioSystem.getAudioInputStream(url);
+AudioFormat format = sound.getFormat();
+DataLine.Info di = new DataLine.Info(Clip.class, format);
+Clip clip = (Clip) AudioSystem.getLine(di);
+clip.open(sound);
+clip.start();
+}}
+
+* 解説 [#ndfc6e01]
+`WAVE`、`AU`、`AIFF`、`SND`形式のサウンドファイルが演奏できるようです。
+
+* 参考リンク [#i44becfe]
+- [http://www.taitaistudio.com/wav/ "taitai studio" フリーWav素材集]
+-- 上記のサイトの`wav`ファイルをサンプルとして利用しています。
+- [[MIDIファイルの演奏>Swing/MidiSystem]]
+- [[Beep音を鳴らす>Swing/Beep]]
+- [[AuditoryCuesでイベント音を設定する>Swing/AuditoryCues]]
+
+* コメント [#le6b4d7b]
+- こんなところからすみません。こちらのシステムの応用(というほどすごいものでもありませんが)を作ってもよろしいでしょうか。 -- [[学生S]] &new{2012-10-15 (月) 17:29:22};
+- 使用したい箇所は、ソースプログラムの`loadAndPlayAudio`というところになります。 -- [[学生S]] &new{2012-10-15 (月) 17:34:40};
+- 使用目的は、文化祭での展示です。配布なども希望があればする予定ですが、たぶんないかと。 -- [[学生S]] &new{2012-10-15 (月) 17:53:04};
+-- こんばんは。`wav`ファイルは参考リンク先の利用規約を参照してください。ソースコードは全く使用制限や許可を求める必要もないので(保証もないですし)、自由にどうぞ。 -- [[aterai]] &new{2012-10-15 (月) 18:53:34};
+
+#comment

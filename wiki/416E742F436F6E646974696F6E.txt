@@ -1,0 +1,83 @@
+TITLE:AntでConditionタスクを使った条件分岐を行う
+#author(aterai)
+#pubdate(2007-03-13)
+#contents
+
+* 概要 [#a5d11f1d]
+`Condition`タスクを使って、例えばディレクトリの有無などによる条件で、`Target`タスクを実行するかどうかを振り分けます。
+
+`Script`タスクを使用する方法は、[[AntのScriptタスク中でif文を使った条件分岐を行う>Ant/Script]]に移動しました。
+
+* サンプルターゲット [#vb50fe42]
+#code{{
+<!-- リソースディレクトリが存在すれば、プロパティ:have.resourcesは真 -->
+<condition property="have.resources">
+  <available file="${res.dir}" />
+</condition>
+<!-- ターゲット:prepare-resourceは、プロパティ:have.resourcesが
+真の場合実行される -->
+<target name="prepare-resource" depends="prepare" if="have.resources">
+  <!-- 以下、ビルド用のリソースディレクトリを作って、リソースをコピー -->
+  <mkdir dir="${build.res}" />
+  <native2ascii encoding="UTF-8" src="${res.dir}" dest="${build.res}"
+                includes="**/*.properties.utf8" ext="" />
+  <copy todir="${build.res}">
+    <fileset dir="${res.dir}" excludes="**/*.properties.*, **/*.bak" />
+  </copy>
+</target>
+...省略...
+<!-- ターゲット:compileで、ターゲット:prepare-resourceは呼び出されるが、
+  実行されるされるかどうかはプロパティ:have.resourcesの値による -->
+<target name="compile" depends="prepare-src, prepare-resource">
+  <javac srcdir="${build.src}"
+         destdir="${build.dest}"
+         encoding="${compile.encoding}"
+         debug="${compile.debug}"
+         optimize="${compile.optimize}"
+         source="${compile.source}"
+         deprecation="${compile.deprecation}"
+         classpathref="project.class.path"
+  />
+</target>
+}}
+
+-[[Resourceファイルからメニューバーを生成>Swing/ResourceMenuBar]]
+--http://terai.xrea.jp/swing/resourcemenubar/src.zip
+
+* 解説 [#l19609ea]
+上記のサンプルでは、`Condition`タスクを使って、`have.resources`プロパティに真偽を代入しています。
+
+`prepare-resource`ターゲットは、`properties`ファイルをユニコードエスケープしますが、これは、`have.resources`プロパティが真(`if="have.resources"`)の場合だけ実行されます。このため、リソースディレクトリが無い(エスケープする`properties`ファイルが無い)場合、あとで`compile`ターゲットで、`prepare-resource`ターゲットは呼び出されていますが、何もしないというサンプルになっています。
+
+----
+以下は、同様に`Condition`タスクを使って、`lib`ディレクトリが存在する場合、その下にある`jar`ファイルをパスに含めるように上書きするためのサンプルです。
+
+#code{{
+<path id="project.class.path">
+  <pathelement location="${build.dest}" />
+  <pathelement path="${java.class.path}" />
+</path>
+<condition property="have.library">
+  <available file="${lib.dir}" />
+</condition>
+<target name="init" if="have.library">
+  <path id="project.class.path">
+    <pathelement location="${build.dest}" />
+    <fileset dir="${lib.dir}">
+      <include name="*.jar" />
+    </fileset>
+    <pathelement path="${java.class.path}" />
+  </path>
+</target>
+}}
+
+-[[JToolBarでアイコンボタンを右寄せ>Swing/ToolBarLayout]]
+--http://terai.xrea.jp/swing/toolbarlayout/src.zip
+
+* 参考リンク [#k20fd095]
+-- [http://www.jajakarta.org/ant/ant-1.5/docs/ant-1.5/j/docs/manual/CoreTasks/condition.html Conditionタスク]
+
+* コメント [#q2481444]
+- `Script`タスクを使用する方法は、[[AntのScriptタスク中でif文を使った条件分岐を行う>Ant/Script]]に移動しました。 -- [[aterai]] &new{2011-01-18 (火) 22:46:59};
+
+#comment

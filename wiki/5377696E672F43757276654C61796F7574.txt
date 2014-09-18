@@ -1,0 +1,47 @@
+TITLE:LayoutManagerを拡張して曲線上にコンポーネントを配置
+#tags(LayoutManager, FlowLayout, JPanel)
+#author(aterai)
+#pubdate(2011-06-27T14:12:48+09:00)
+* 概要 [#jba0ffbd]
+`LayoutManager`を拡張して曲線上にコンポーネントを配置します。
+
+#download(https://lh4.googleusercontent.com/-Rww2mulIVEI/TggO-rFh_2I/AAAAAAAAA98/R3ZVsfyu3IU/s800/CurveLayout.png)
+
+* サンプルコード [#d3bf9d05]
+#code(link){{
+final double A2 = 4.0;
+panel2.setLayout(new FlowLayout() {
+  @Override public void layoutContainer(Container target) {
+    synchronized(target.getTreeLock()) {
+      Insets insets = target.getInsets();
+      int nmembers  = target.getComponentCount();
+      if(nmembers<=0) return;
+      int vgap = getVgap();
+      int hgap = getHgap();
+      int rowh = (target.getHeight()-(insets.top+insets.bottom+vgap*2))/nmembers;
+      int x = insets.left + hgap;
+      int y = insets.top  + vgap;
+      for(int i=0;i<nmembers;i++) {
+        Component m = target.getComponent(i);
+        if(m.isVisible()) {
+          Dimension d = m.getPreferredSize();
+          m.setSize(d.width, d.height);
+          m.setLocation(x, y);
+          y += (vgap + Math.min(rowh, d.height));
+          x = (int)(A2 * Math.sqrt(y));
+        }
+      }
+    }
+  }
+});
+}}
+
+* 解説 [#cf9f86b7]
+- 左
+-- `panel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));`
+- 右
+-- `FlowLayout#layoutContainer(...)`をオーバーライドして、二次曲線の上にコンポーネントを並べる
+
+//**参考リンク
+* コメント [#a7a05756]
+#comment

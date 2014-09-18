@@ -1,0 +1,48 @@
+TITLE:Antで子フォルダのbuild.xmlを全部実行
+#author(aterai)
+#pubdate(2007-02-16)
+#contents
+
+* 概要 [#s9662e80]
+`Subant`タスクを使って、一度に全部同じターゲットで子フォルダの`build.xml`を実行します。
+
+* サンプルbuild.xml [#eb647956]
+#code{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="swingall" default="clean" basedir=".">
+  <target name="clean">
+    <subant target="clean">
+      <fileset dir="." includes="*/build.xml" />
+    </subant>
+  </target>
+  <target name="dist">
+    <subant target="dist">
+      <fileset dir="." includes="*/build.xml" />
+    </subant>
+  </target>
+</project>
+}}
+
+* 解説 [#n229e4de]
+このサイトの[[Java Swing Tips>Swing]]では、各`Tips`ごとにフォルダを作成してソースコードや`build.xml`を管理しています。このため、ソースを`xyzzy`の`gresreg`で一気に置換した場合(例えば`Logger.global.info`を`System.out.println`に全部変換など)、一度に全部同じターゲットを実行できるように、サンプルのような`build.xml`を作成しています。
+
+----
+各`target`をコピーするのが面倒な場合、以下のように`build.xml`を変更して、`subant`タスクに渡すターゲット名をプロパティにし`-D`オプションで渡す方法もあります。
+
+#code{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="swingall" default="all" basedir=".">
+  <target name="all">
+    <subant target="${st}">
+      <fileset dir="." includes="*/build.xml" />
+    </subant>
+  </target>
+</project>
+}}
+
+子ディレクトリにある`build.xml`の`compile`ターゲットをすべて実行することができます。
+
+ ant -Dst=compile
+
+* コメント [#p654e4a0]
+#comment

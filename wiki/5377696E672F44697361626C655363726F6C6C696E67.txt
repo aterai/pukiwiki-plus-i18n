@@ -1,0 +1,47 @@
+TITLE:JScrollPaneのスクロールを禁止
+#tags(JScrollPane, JScrollBar)
+#author(aterai)
+#pubdate(2005-10-03)
+* 概要 [#idbca416]
+`JScrollPane`のスクロールを一時的に禁止します。
+
+#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLM6S99OI/AAAAAAAAAXM/9r2e_2JRA5g/s800/DisableScrolling.png)
+
+* サンプルコード [#id62505b]
+#code(link){{
+JCheckBox b = new JCheckBox("スクロールを禁止する");
+b.addItemListener(new ItemListener() {
+  @Override public void itemStateChanged(ItemEvent ie) {
+    JCheckBox box = (JCheckBox)ie.getItemSelectable();
+    boolean flag = !box.isSelected();
+    JScrollBar bar = scrollPane.getVerticalScrollBar();
+    bar.setEnabled(flag);
+    scrollPane.setWheelScrollingEnabled(flag);
+    table.setEnabled(flag);
+  }
+});
+}}
+
+* 解説 [#m5e6b6de]
+- このサンプルでは、`Disable Scrolling`をチェックして無効状態にすると
+-- スクロールバーを取得し、`JScrollBar#setEnabled(boolean)`メソッドを使って、これを無効にします。
+-- `JScrollPane#setWheelScrollingEnabled(boolean)`メソッドで、マウスホイールによるスクロールを無効にします。
+-- `JScrollPane`に配置したコンポーネントを`setEnabled(false)`とし、フォーカスの移動などによるスクロールを無効にします。
+
+----
+- このサンプルでは、`Disable Scrolling`をチェックして無効状態にしても
+-- `JTableHeader`は無効にしていないので、クリックしてソートや、カラムの移動を行うことができます。
+-- `JScrollPane`に設定した`JPopupMenu`を表示することができます。
+-- `JTable`に設定した`JToolTip`を表示することができます。
+
+----
+`JDK 1.7.0`で追加された`JLayer`を使用して、以下のように入力を禁止する方法もあります。
+
+- [[JLayerで子コンポーネントへの入力を制限する>Swing/PopupMenuBlockLayer]]
+
+* 参考リンク [#f2cc6ec4]
+- [[JLayerで子コンポーネントへの入力を制限する>Swing/PopupMenuBlockLayer]]
+- [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]
+
+* コメント [#v37d76ac]
+#comment

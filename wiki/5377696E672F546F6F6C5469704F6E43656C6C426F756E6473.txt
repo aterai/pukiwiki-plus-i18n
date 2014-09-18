@@ -1,0 +1,73 @@
+TITLE:JListのセル上にToolTipを表示する
+#tags(JList, JToolTip, ListCellRenderer)
+#author(aterai)
+#pubdate(2014-05-05T01:10:29+09:00)
+* 概要 [#c325d61c]
+`JList`のセル内に文字列が収まらない場合のみ、その上に`ToolTip`を重ねて表示します。
+
+#download(https://lh3.googleusercontent.com/-KLOWyeZG-zU/U2Zif591XkI/AAAAAAAACE0/JDZZwAWkY50/s800/ToolTipOnCellBounds.png)
+
+* サンプルコード [#q860bd54]
+#code(link){{
+class TooltipList<E> extends JList<E> {
+  public TooltipList(ListModel<E> m) {
+    super(m);
+  }
+  @Override public Point getToolTipLocation(MouseEvent event) {
+    Point pt = null;
+    if (event != null) {
+      Point p = event.getPoint();
+      ListCellRenderer<? super E> r = getCellRenderer();
+      int i = locationToIndex(p);
+      Rectangle cb = getCellBounds(i, i);
+      if (i != -1 && r != null && cb != null && cb.contains(p.x, p.y)) {
+        ListSelectionModel lsm = getSelectionModel();
+        Component rc = r.getListCellRendererComponent(
+            this, getModel().getElementAt(i), i, lsm.isSelectedIndex(i),
+            hasFocus() && lsm.getLeadSelectionIndex() == i);
+        if (rc instanceof JComponent && ((JComponent) rc).getToolTipText() != null) {
+          pt = cb.getLocation();
+        }
+      }
+    }
+    return pt;
+  }
+}
+}}
+
+* 解説 [#gd16eabf]
+- 左: `CellBounds`
+-- `JList#getToolTipLocation()`をオーバーライドして、表示する`JToolTip`の原点を`JList#getCellBounds(int, int)`で取得したセル領域の左上に変更
+- 中: `ListCellRenderer`
+-- `JList#getToolTipLocation()`をオーバーライドして、表示する`JToolTip`の原点を`JList#getCellBounds(int, int)`で取得したセル領域の左上に変更
+-- `JList#createToolTip()`をオーバーライドして、セルの描画に使用するセルレンダラー自体を`JToolTip`に追加
+--- このため、対象の選択状態なら、`JToolTip`の背景色なども選択状態の色になる
+- 右: `Default`
+-- `JToolTip`の表示位置はデフォルトで、マウスカーソルの右下
+
+----
+セル内に文字列が収まっているかどうかは、以下のようなセルレンダラーで判定しています。
+
+#code{{
+class TooltipListCellRenderer extends DefaultListCellRenderer {
+  @Override public Component getListCellRendererComponent(
+      JList list, Object value, int index, boolean isSelected, boolean hasFocus) {
+    JLabel l = (JLabel) super.getListCellRendererComponent(
+        list, value, index, isSelected, hasFocus);
+    Insets i = l.getInsets();
+    Container c = SwingUtilities.getAncestorOfClass(JViewport.class, list);
+    Rectangle rect = c.getBounds();
+    rect.width -= i.left + i.right;
+    FontMetrics fm = l.getFontMetrics(l.getFont());
+    String str = Objects.toString(value, "");
+    l.setToolTipText(fm.stringWidth(str) > rect.width ? str : null);
+    return l;
+  }
+}
+}}
+
+* 参考リンク [#ze6fa593]
+- [[JToolTipの表示位置>Swing/ToolTipLocation]]
+
+* コメント [#z5ec3274]
+#comment

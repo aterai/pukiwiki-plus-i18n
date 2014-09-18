@@ -1,0 +1,62 @@
+TITLE:JTableで行の追加、削除アニメーション
+#tags(JTable, Animation)
+#author(aterai)
+#pubdate(2009-04-06T14:03:11+09:00)
+* 概要 [#l06043c1]
+`JTable`の行追加や削除をスライドアニメーションで強調します。
+
+#download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTP0i2yxI/AAAAAAAAAkE/DQKpmn3BIQo/s800/SlideTableRows.png)
+
+* サンプルコード [#qda416f4]
+#code(link){{
+private void testCreateActionPerformed(ActionEvent e) {
+  model.addTest(new Test("New name", ""));
+  (new javax.swing.Timer(DELAY, new ActionListener() {
+    int i = table.convertRowIndexToView(model.getRowCount()-1);
+    int h = START_HEIGHT;
+    @Override public void actionPerformed(ActionEvent e) {
+      if(h<END_HEIGHT) {
+        table.setRowHeight(i, h++);
+      }else{
+        ((javax.swing.Timer)e.getSource()).stop();
+      }
+    }
+  })).start();
+}
+
+private void deleteActionPerformed(ActionEvent evt) {
+  final int[] selection = table.getSelectedRows();
+  if(selection==null || selection.length<=0) return;
+  (new javax.swing.Timer(DELAY, new ActionListener() {
+    int h = END_HEIGHT;
+    @Override public void actionPerformed(ActionEvent e) {
+      h--;
+      if(h>START_HEIGHT) {
+        for(int i=selection.length-1;i>=0;i--)
+          table.setRowHeight(selection[i], h);
+      }else{
+        ((javax.swing.Timer)e.getSource()).stop();
+        for(int i=selection.length-1;i>=0;i--)
+          model.removeRow(table.convertRowIndexToModel(selection[i]));
+      }
+    }
+  })).start();
+}
+}}
+
+* 解説 [#g2277059]
+上記のサンプルでは、`javax.swing.Timer`を使用して、徐々に行の高さを変更することで、アニメーションを行っています。
+
+- 追加
+-- 行を追加したあとで、`JTable#setRowHeight(int, int)`メソッドを使用して追加された行の高さを変更
+
+- 削除
+-- 選択された行の高さを、`JTable#setRowHeight(int, int)`メソッドを使用して変更
+-- 高さが一定以下になったら、選択されていた行を削除
+
+* 参考リンク [#za2c21bb]
+- [[JTableの行を追加、削除>Swing/AddRow]]
+- [[JTableの行の高さを変更する>Swing/FishEyeTable]]
+
+* コメント [#u064865d]
+#comment

@@ -1,0 +1,28 @@
+TITLE:ToolTip表示の切り替え
+#tags(ToolTipManager, JToolTip)
+#author(aterai)
+#pubdate(2004-05-10T06:09:52+09:00)
+* 概要 [#m215229a]
+ツールチップ(ツールヒント)表示の有無を`ToolTipManager`で切り替えます。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVq857V2I/AAAAAAAAAoA/yRQeWtxd-78/s800/ToolTipManager.png)
+
+* サンプルコード [#p87749d9]
+#code(link){{
+ActionListener al = new ActionListener() {
+  @Override public void actionPerformed(ActionEvent e) {
+    ToolTipManager.sharedInstance().setEnabled(onRadio.isSelected());
+  }
+};
+onRadio.addActionListener(al);
+offRadio.addActionListener(al);
+}}
+
+* 解説 [#k939631f]
+上記のサンプルでは、ボタンにツールチップを設定してあり、表示するかどうかを`ToolTipManager`を使って切り替えています。
+
+`ToolTipManager`は、アプリケーション全体でのツールチップの表示時間、表示までの遅延時間などを設定することができます。
+
+//**参考リンク
+* コメント [#v0898907]
+#comment

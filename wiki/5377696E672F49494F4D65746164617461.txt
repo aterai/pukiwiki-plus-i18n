@@ -1,0 +1,62 @@
+TITLE:JPEGファイルのコメントを取り出す
+#tags(JTree, ImageIO, ImageReader, IIOMetadata)
+#author(aterai)
+#pubdate(2007-11-12T12:24:17+09:00)
+* 概要 [#l27bc29f]
+`JPEG`ファイルからコメントなどのメタデータ(`XML`)を取り出して`JTree`で表示します。
+
+#download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOUrdw9GI/AAAAAAAAAcM/4rakKDY0jI0/s800/IIOMetadata.png)
+
+* サンプルコード [#le67a42a]
+#code(link){{
+InputStream source = getClass().getResourceAsStream("test.jpg");
+Iterator readers = ImageIO.getImageReadersByFormatName("jpeg");
+ImageReader reader = (ImageReader)readers.next();
+//FileInputStream source = new FileInputStream(new File("c:/tmp/test.jpg"));
+ImageInputStream iis = ImageIO.createImageInputStream(source);
+reader.setInput(iis, true);
+
+//[[MediaTrackerで画像のサイズを取得>Swing/MediaTracker]]
+//ImageReadParam param = reader.getDefaultReadParam();
+//buf.append(String.format("Width: %d%n", reader.getWidth(0)));
+//buf.append(String.format("Height: %d%n", reader.getHeight(0)));
+
+IIOMetadata meta = reader.getImageMetadata(0);
+//for(String s:meta.getMetadataFormatNames())
+//  buf.append(String.format("MetadataFormatName: %s%n",s));
+
+IIOMetadataNode root = (IIOMetadataNode)meta.getAsTree("javax_imageio_jpeg_image_1.0");
+//root = (IIOMetadataNode) meta.getAsTree("javax_imageio_1.0");
+
+NodeList com = root.getElementsByTagName("com");
+if(com!=null && com.getLength()>0) {
+  String comment = ((IIOMetadataNode)com.item(0)).getAttribute("comment");
+  buf.append(String.format("Comment: %s%n", comment));
+}
+}}
+
+* 解説 [#d0a956e1]
+上記のサンプルは、`GIMP`を使って作成したコメント(このサンプルでは、文字コードが何かなどを考慮していないので日本語が化ける可能性がある)付きの`JPEG`画像から以下の手順でコメントを抽出しています。
+
++ `ImageReader`から、`IIOMetadata`を取得
++ `IIOMetadata`から`XML`の`DOM`(`org.w3c.dom.Node`)形式でデータを取得
++ `com`タグの`comment`属性からコメントを取得
+
+タグやマーカなどの形式は、[http://docs.oracle.com/javase/jp/7/api/javax/imageio/metadata/doc-files/jpeg_metadata.html JPEG メタデータ形式の仕様および使用上の注意]や、以下の`XML`一覧表示を参考にしてください。
+
+- `JTextArea`
+-- 属性は頭に`#`をつけて表示
+- `JTree`
+-- 参考:[https://forums.oracle.com/thread/1373824 Swing - XMLViewer]
+
+* 参考リンク [#m2489718]
+- [http://docs.oracle.com/javase/jp/7/api/javax/imageio/metadata/doc-files/jpeg_metadata.html JPEG メタデータ形式の仕様および使用上の注意]
+-- via: [http://docs.oracle.com/javase/jp/7/api/javax/imageio/metadata/package-summary.html javax.imageio.metadata (Java Platform SE 7)]
+-- 標準の (プラグインに依存しない) 形式やその他のメタデータ(`PNG`、`GIF`、`BMP`)もこちらから
+- [https://forums.oracle.com/thread/1373824 Swing - XMLViewer]
+- [[MediaTrackerで画像のサイズを取得>Swing/MediaTracker]]
+- [http://www.utilz.jp/wiki/ExifGps Utilz: 画像の位置情報]
+-- via: [http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=42083&forum=12&4 Jpegのexif形式ファイルからの画像解像度（幅高）取得について - Java Solution]
+
+* コメント [#m0319061]
+#comment
