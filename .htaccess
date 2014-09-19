@@ -144,7 +144,7 @@ RewriteRule ^List\.html$ index.php?cmd=list [L]
 RewriteRule ^sitemap\.xml$ index.php?cmd=sitemaps [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.+)\.html(#.*)?$ index.php?cmd=read&page=$1$2 [L]
+RewriteRule ^(.+)\.html$ index.php?cmd=read&page=$1 [QSA,PT,L]
 
 <FilesMatch "\.(js|css|xml|gz)$">
 Header append Vary Accept-Encoding
