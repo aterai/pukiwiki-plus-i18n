@@ -141,6 +141,14 @@ java.awt.EventQueue.invoke_later self
 
 - 参考: [http://jp.rubyist.net/magazine/?0025-Ruby19_m17n Rubyist Magazine - Ruby M17N の設計と実装]
 
+** Unixtimeをiso8601形式の文字列に変換 [#x2a16868]
+ > jruby -pe "gsub(/^[0-9]+/) {|x| Time.at(x.to_i)}" cache/recent.dat
+ 2014-09-08 14:31:51 +0900       JRuby/PukiWiki2Markdown
+ ...
+ > jruby -r time -pe "gsub(/^[0-9]+/) {|x| Time.at(x.to_i).iso8601}" cache/recent.dat
+ 2014-09-08T14:31:51+09:00       JRuby/PukiWiki2Markdown
+ ...
+
 ** JRuby 1.7.0.preview1 でArgumentErrorが発生する場合 [#n2494e41]
 - JRuby 1.7.0.preview1 で以下のようなArgumentErrorが発生する場合、-J-Dfile.encoding=UTF-8 でOK？
 -- set LANG=ja_JP.UTF-8 は、JRubyでは効果がない？
@@ -200,6 +208,9 @@ end
  > ls *.txt | jruby decode.rb
  > ls *.txt | jruby -pe "$_.gsub!(/[A-F\d]{2}/) {|x| [x.hex].pack('C*')}"
 
+** JRuby で PukiWiki のファイル名にエンコード [#h1c5ccdd]
+ > jruby -pe 'gsub(/^([0-9]+)\t(.+)$/){[$1,$2.gsub(/./){|x|x.ord.to_s(16).upcase}].join("\t")}' cache/recent.dat
+
 ** PukiWiki形式のテキストをMarkdown形式のファイルに変換する [#ce127298]
 [[PukiWiki形式のテキストをMarkdown形式のファイルに変換する>JRuby/PukiWiki2Markdown]]に移動
 
@@ -213,6 +224,32 @@ end
 -- [http://code.google.com/p/support/wiki/WikiSyntax WikiSyntax - support - The reference to the wiki syntax for Google Code projects - User support for Google Project Hosting - Google Project Hosting]
 -- どちらも`Wiki`なので、変換はとても簡単
 -- `ArrowButton`, `BorderFactory`などが自動リンクになってしまう
+
+** PukiWikiのbackupファイルから、公開日時を取得する [#h6552595]
+- `PukiWiki`の`backup`フォルダ以下にある`.gz`ファイルから、そのファイルの公開日時を取得する
+-- 一行目から`Unixtime`を取得しているだけなので、履歴が`$maxage`を超えている場合は不正確になる
+
+#code{{
+#!/usr/bin/env ruby
+require 'fileutils'
+require 'zlib'
+require 'time'
+
+#h = Hash.new
+path = "/tmp/pukiwiki/backup"
+Dir::foreach(path) do |f|
+  next if f == "." or f == ".." or !f.end_with?(".gz")
+  ap = "#{path}/#{f}"
+  Zlib::GzipReader.open(ap) do |gz|
+    n = f.sub(/\.gz$/, "").gsub(/[A-F\d]{2}/){|x|[x.hex].pack('C*')}
+    t = gz.gets.sub(/^[>]+ ?[0-9]* /, "") #一行目から日時を取得
+    x = Time.at(t.to_i).iso8601
+    puts "#{n}\t#{x}"
+    #h.store(n, x)
+    gz.close
+  end
+end
+}}
 
 * リンク [#f74d094d]
 - [http://www.rubyinside.com/jruby-swt-future-cross-platform-ruby-desktop-app-development-298.html JRuby + SWT = Future Cross Platform Ruby Desktop App Development?]
