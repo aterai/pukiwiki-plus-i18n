@@ -75,10 +75,10 @@ class PukiWikiParser
         buf.push lines.shift
       when /\ATITLE:/
         @title = lines.shift.sub(/\ATITLE:/, '')
-      when /\ARIGHT:/
-        #/at &time\((\w{4}-\w{2}-\w{2})\);/ =~ lines.first
-        #@timestamp = $1
-        buf.push parse_inline(lines.shift.sub(/\ARIGHT:/, '').concat("\n"))
+#       when /\ARIGHT:/
+#         #/at &time\((\w{4}-\w{2}-\w{2})\);/ =~ lines.first
+#         #@timestamp = $1
+#         buf.push parse_inline(lines.shift.sub(/\ARIGHT:/, '').concat("\n"))
       when /\A----/
         lines.shift
         buf.push '- - - -' #hr
@@ -335,9 +335,9 @@ class PukiWikiParser
     when 'author'
       @author = para.strip #.delete("()")
       %Q|[#{@author}](#{@base_uri}#{@author}.html)|
-    when 'time'
-      @timestamp = DateTime.parse(para).strftime('%Y-%m-%d')
-      para
+#     when 'time'
+#       @timestamp = DateTime.parse(para).strftime('%Y-%m-%d')
+#       para
     when 'new'
       inline.strip #.delete("{}")
     else
@@ -362,6 +362,8 @@ class PukiWikiParser
       buf.push %Q<![screenshot](#{args[1]})>
     when 'tags'
       @tags = args[1]
+    when 'pubdate'
+      @timestamp = DateTime.parse(args[1]).strftime('%Y-%m-%d')
     else
       buf.push ''
     end
