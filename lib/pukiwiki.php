@@ -41,6 +41,8 @@ if (! defined('DATA_HOME')) define('DATA_HOME', '');
 
 if (! defined('LIB_DIR')) define('LIB_DIR', '');
 
+require(LIB_DIR . 'Spyc.php'); //https://github.com/mustangostang/spyc/
+
 require(LIB_DIR . 'func.php');
 require(LIB_DIR . 'file.php');
 require(LIB_DIR . 'funcplus.php');
@@ -278,7 +280,11 @@ if (isset($retvars['body']) && $retvars['body'] != '') {
 		}
 	}
 
-	$body = convert_html($source);
+    global $frontmatter;
+    $source2;
+    list($source2, $frontmatter) = extract_yaml_frontmatter($source);
+    
+	$body = convert_html($source2);
 
 	if ($trackback) $body .= tb_get_rdf($base); // Add TrackBack-Ping URI
 	if ($referer) ref_save($base);
