@@ -118,9 +118,8 @@ if(a instanceof BasicComboPopup) {
 }
 }}
 
-----
-- メモ: 削除ボタンがクリックされてもドロップダウンリストは表示されたままになるように、`MutableComboBoxModel#removeElementAt(index);`のあとで`comboBox.showPopup();`
--- `BasicComboPopup`が、フレーム外に表示されている場合(`Heavy weight`)、一旦閉じたあとで再度開かれるように見える
+- 削除ボタンがクリックされてもドロップダウンリストは表示状態のまま残るように、`MutableComboBoxModel#removeElementAt(index);`のあとで`comboBox.showPopup();`を実行
+- `BasicComboPopup`が、フレーム外に表示されている場合(`Heavy weight`)、一旦閉じたあとで再度開かれるように見える
 
 * 参考リンク [#df35f1fa]
 - [[JListのセル内にJButtonを配置する>Swing/ButtonsInListCell]]
