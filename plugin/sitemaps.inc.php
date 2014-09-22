@@ -9,7 +9,35 @@ function plugin_sitemaps_action() {
     if(!file_exists($recent)) die('recent.dat is not found');
     $self = get_script_uri();
     $date = $items = '';
-    $non_list_pattern = '/' . $non_list . '|.*ChangeLog.*|.*SandBox$|^SwingTips$|^ST.*|^terai$|^xyzzy$|^RSS$|^Nitpick$|.*Questionnaire.*|^Comments.*|^JavaFX.*|^Popular$|^PukiWiki.*/S';
+    $array = array();
+    $array[] = '.*ChangeLog.*';
+    $array[] = '.*Questionnaire.*';
+    $array[] = '.*Comments.*';
+
+    $array[] = '^ST.*';
+    $array[] = '^JavaFX.*';
+    $array[] = '^PukiWiki.*';
+
+    $array[] = '^SwingTips$';
+    $array[] = '^terai$';
+    $array[] = '^xyzzy$';
+    $array[] = '^RSS$';
+    $array[] = '^Nitpick$';
+    $array[] = '^Popular$';
+
+    $array[] = '^Swing%2FAnchorSelection$';
+    $array[] = '^Swing%2FCellAtPoint$';
+    $array[] = '^Swing%2FIncremental$';
+    $array[] = '^Swing%2FJarFile$';
+    $array[] = '^Swing%2FNonSelectableList$';
+    $array[] = '^Swing%2F_SandBox$';
+
+    $array[] = '^Subversion%2FSubclipse$';
+    $array[] = '^Subversion%2FeSvn$';
+
+    $array[] = '^Tips%2FAPIDocEnJa$';
+
+    $non_list_pattern = '/' . $non_list . '|' . implode('|', $array) . '/S';
 
     foreach(array_splice(file($recent), 0, $sitemaps_max) as $line) {
         list($time, $page) = explode("\t", rtrim($line));

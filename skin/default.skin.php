@@ -45,7 +45,7 @@ article{margin-bottom:1em}
 .wrap{min-height:100%;height:auto !important;height:100%;margin:0 auto -2em}
 .push{height:2em}
 .footer{background-color:#fdcd60;height:2em}
-.footer div{height:2em}
+.footer div{height:2em;text-align:center}
 .commentform>input{margin:0 0 1em 0}
 .summary{color:#666;background-color:inherit;border-left:solid 4px #999;padding-left:5px;clear:both;margin:45px 0 0}
 .note{border-bottom:solid 1px #999}
