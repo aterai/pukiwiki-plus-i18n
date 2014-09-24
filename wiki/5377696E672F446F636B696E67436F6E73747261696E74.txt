@@ -1,7 +1,9 @@
-TITLE:JToolBarのドッキングを上下のみに制限
-#tags(JToolBar, BorderLayout)
-#author(aterai)
-#pubdate(2006-09-18T18:01:15+09:00)
+---
+title: JToolBarのドッキングを上下のみに制限
+tags: [JToolBar, BorderLayout]
+author: aterai
+pubdate: 2006-09-18T18:01:15+09:00
+---
 * 概要 [#sa3c56e1]
 `JToolBar`のドッキングを上下のみに制限して、左右を無視するように設定します。
 
@@ -34,10 +36,10 @@ toolbar.setUI(new BasicToolBarUI() {
 
 `ToolBarUI#canDock(Component, Point)`メソッドをオーバーライドして、左右の場合は`false`を返すようにしています。
 
-ドッキングできるかどうかを判定している`BasicToolBarUIのgetDockingConstraint`メソッドが`private`のため、サンプルコードでは、これコピーしてすこしだけ条件を変更した`isHorizontalDockingConstraint`メソッドを作成しています。
+ドッキングできるかどうかを判定している`BasicToolBarUIのgetDockingConstraint`メソッドが`private`のため、サンプルコードでは、これをコピーしてすこしだけ条件を変更した`isHorizontalDockingConstraint`メソッドを作成しています。
 
 ----
-`BorderLayout`の`WEST`と`EAST`に、適当にダミーコンポーネントを配置するだけでも、同様にドッキングをブロック出来るようです。こちらの方が、`LookAndFeel`に影響もなく簡単です。
+`BorderLayout`の`WEST`と`EAST`に、適当なダミーコンポーネント(例えばサイズ`0`の`Box`)を配置するだけで、同様にドッキングをブロック出来るようです。こちらの方が、`LookAndFeel`への影響もなく簡単です。
 
 #code{{
 JPanel panel = new JPanel(new BorderLayout());

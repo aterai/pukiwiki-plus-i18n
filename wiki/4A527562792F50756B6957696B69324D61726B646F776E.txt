@@ -1,8 +1,10 @@
-TITLE:PukiWiki形式のテキストをMarkdown形式のファイルに変換する
-#keywords(Ruby Swing)
-#author(aterai)
-#pubdate(2012-09-27)
-#contents(big)
+---
+title: PukiWiki形式のテキストをMarkdown形式のファイルに変換する
+keywords: [Ruby, JRuby, Markdown, PukiWiki]
+author: aterai
+pubdate: 2012-09-27
+---
+#contents
 
 * 概要 [#h1b34392]
 このサイトで使用している`PukiWiki`形式のテキストを`Markdown`形式のファイルに変換するテスト。
@@ -94,10 +96,10 @@ class PukiWikiParser
         buf.push lines.shift
       when /\ATITLE:/
         @title = lines.shift.sub(/\ATITLE:/, '')
-      when /\ARIGHT:/
-        #/at &time\((\w{4}-\w{2}-\w{2})\);/ =~ lines.first
-        #@timestamp = $1
-        buf.push parse_inline(lines.shift.sub(/\ARIGHT:/, '').concat("\n"))
+#       when /\ARIGHT:/
+#         #/at &time\((\w{4}-\w{2}-\w{2})\);/ =~ lines.first
+#         #@timestamp = $1
+#         buf.push parse_inline(lines.shift.sub(/\ARIGHT:/, '').concat("\n"))
       when /\A----/
         lines.shift
         buf.push '- - - -' #hr
@@ -354,9 +356,9 @@ class PukiWikiParser
     when 'author'
       @author = para.strip #.delete("()")
       %Q|[#{@author}](#{@base_uri}#{@author}.html)|
-    when 'time'
-      @timestamp = DateTime.parse(para).strftime('%Y-%m-%d')
-      para
+#     when 'time'
+#       @timestamp = DateTime.parse(para).strftime('%Y-%m-%d')
+#       para
     when 'new'
       inline.strip #.delete("{}")
     else
@@ -381,6 +383,8 @@ class PukiWikiParser
       buf.push %Q<![screenshot](#{args[1]})>
     when 'tags'
       @tags = args[1]
+    when 'pubdate'
+      @timestamp = DateTime.parse(args[1]).strftime('%Y-%m-%d')
     else
       buf.push ''
     end

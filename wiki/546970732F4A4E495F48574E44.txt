@@ -1,14 +1,17 @@
-TITLE:JNIでJFrameのHWNDを取得
-#author(aterai)
-#pubdate(2008-09-04) (([[コメント欄>Comments/Swing]]から移動))
+---
+title: JNIでJFrameのHWNDを取得
+author: aterai
+pubdate: 2008-09-04
+---
+//[[コメント欄>Comments/Swing]]から移動
 #contents
+
+* 概要 [#d54756f6]
+[http://www.telejapan.com/af/master/memo/memo_Java.html JNI Windowsでウィンドウハンドルを取得する - Memo of Master]の方法２を参考にして、`JNI`(`Java Native Interface`) で`JFrame`(`SunAwtFrame`)の`HWND`(ウィンドウハンドル)を取得します。
 
 - [http://terai.xrea.jp/data/swing/hwndTest.zip hwndTest.zip(サンプル)]
 
 #ref(https://lh3.googleusercontent.com/-NNjiMJe_o94/TeSO493_q3I/AAAAAAAAA8k/KU8B7ms4SQE/s800/JNI_HWND.png)
-
-* 概要 [#d54756f6]
-[http://www.telejapan.com/af/master/memo/memo_Java.html JNI Windowsでウィンドウハンドルを取得する - Memo of Master]の方法２を参考にして、`JNI`(`Java Native Interface`) で`JFrame`(`SunAwtFrame`)の`HWND`(ウィンドウハンドル)を取得します。
 
 * 環境 [#q9fd6c07]
 - `Microsoft Windows XP [Version 5.1.2600]`
