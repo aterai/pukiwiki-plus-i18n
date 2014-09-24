@@ -26,7 +26,6 @@ header('ETag: ' . md5(MUTIME));
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="google-site-verification" content="EMsBqvy875QIaZuUka2-HZrmVXmKT1hAkInD6Q46QRA" />
 <?php echo $head_tag ?>
-<?php include_once(PLUGIN_DIR.'canonical.inc.php'); echo plugin_canonical_convert($is_read)."\n"; ?>
 <title><?php include_once(PLUGIN_DIR.'title.inc.php'); echo plugin_title_inline(); ?></title>
 <style>
 html,body{height:100%;margin:0}

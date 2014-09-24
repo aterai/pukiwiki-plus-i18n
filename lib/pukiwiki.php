@@ -281,10 +281,9 @@ if (isset($retvars['body']) && $retvars['body'] != '') {
 	}
 
     global $frontmatter;
-    $source2;
-    list($source2, $frontmatter) = extract_yaml_frontmatter($source);
-    
-	$body = convert_html($source2);
+    list($source, $frontmatter) = extract_yaml_frontmatter($source);
+
+	$body = convert_html($source);
 
 	if ($trackback) $body .= tb_get_rdf($base); // Add TrackBack-Ping URI
 	if ($referer) ref_save($base);

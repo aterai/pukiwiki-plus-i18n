@@ -7,10 +7,9 @@ include_once(PLUGIN_DIR.'counter.inc.php');
 function plugin_header_convert() {
     global $title, $newtitle, $whatsnew;
     global $vars;
-    global $page_title;
-    global $page_tags;
-    global $page_author;
-    global $page_pubdate;
+    global $frontmatter;
+
+    $dump = Spyc::YAMLDump($frontmatter);
 
     $_page   = isset($vars['page']) ? $vars['page'] : '';
     $is_page = (is_pagename($_page) && ! arg_check('backup') && $_page != $whatsnew);
@@ -23,19 +22,19 @@ function plugin_header_convert() {
         $navi = plugin_navi_convert($path[0]);
     }
 
-    if ($newtitle != '') {
-        $h1 = $newtitle; // . ' <small>' . str_replace('/', ' / ', $title) . '</small>';
-    } else {
-        $h1 = $title;
-    }
+    $h1 = isset($frontmatter['title']) ? $frontmatter['title'] : $title;
 
     $tags_buf = '';
-    foreach ( $page_tags as $tag ) {
-        $tag = trim($tag);
-        $tags_buf = $tags_buf . '<li><a href="/tags.html#' . $tag . '-ref"><span itemprop="keywords">' . $tag . '</span></a></li>';
-    }
-    if ($tags_buf != '') {
-        $tags_buf = '<ul class="tag_box inline"><li><i class="glyphicon-tags"></i></li>' . $tags_buf . '</ul>';
+    if ( isset($frontmatter['tags']) ) {
+        $tags = $frontmatter['tags'];
+        $contents = array_map("htmlspecialchars", $tags);
+        foreach ( $contents as $tag ) {
+            $tag = trim($tag);
+            $tags_buf = $tags_buf . '<li><a href="/tags.html#' . $tag . '-ref"><span itemprop="keywords">' . $tag . '</span></a></li>';
+        }
+        if ($tags_buf != '') {
+            $tags_buf = '<ul class="tag_box inline"><li><i class="glyphicon-tags"></i></li>' . $tags_buf . '</ul>';
+        }
     }
 
     $time  = $is_read ? get_filetime($_page) : 0;
@@ -57,12 +56,15 @@ function plugin_header_convert() {
     }
 
     $posted_by_str = '';
-    if ($page_pubdate) {
-        $iso_pubdate_str = date('c', $page_pubdate);
-        $pubdate_str = date('Y-m-d', $page_pubdate);
-        $url = get_script_uri() . $page_author . '.html';
-        //$posted_by_str = '<br />Posted by <a rel="author" href="' . $url . '"><span itemprop="nickname">' . $page_author . '</span></a> at <a href="' . get_script_uri() . '?cmd=backup&page=' . $_page . '"><time pubdate="' . $iso_pubdate_str . '">' . $pubdate_str . '</time></a>';
-        $posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $page_author . '</span></a></span> at <time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time>';
+    if (isset($frontmatter['pubdate'])) {
+        $pubdate = $frontmatter['pubdate'];
+        $utime = strtotime($pubdate);
+        $iso_pubdate_str = $pubdate; //date('c', $utime);
+        $pubdate_str = date('Y-m-d', $utime);
+
+        $author = isset($frontmatter['author']) ? $frontmatter['author'] : "aterai";
+        $url = get_script_uri() . $author . '.html';
+        $posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time>';
     }
 
     return <<<EOD
