@@ -26,7 +26,6 @@ header('ETag: ' . md5(MUTIME));
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="google-site-verification" content="EMsBqvy875QIaZuUka2-HZrmVXmKT1hAkInD6Q46QRA" />
 <?php echo $head_tag ?>
-<?php include_once(PLUGIN_DIR.'canonical.inc.php'); echo plugin_canonical_convert($is_read)."\n"; ?>
 <title><?php include_once(PLUGIN_DIR.'title.inc.php'); echo plugin_title_inline(); ?></title>
 <style>
 html,body{height:100%;margin:0}
@@ -45,7 +44,7 @@ article{margin-bottom:1em}
 .wrap{min-height:100%;height:auto !important;height:100%;margin:0 auto -2em}
 .push{height:2em}
 .footer{background-color:#fdcd60;height:2em}
-.footer div{height:2em}
+.footer div{height:2em;text-align:center}
 .commentform>input{margin:0 0 1em 0}
 .summary{color:#666;background-color:inherit;border-left:solid 4px #999;padding-left:5px;clear:both;margin:45px 0 0}
 .note{border-bottom:solid 1px #999}

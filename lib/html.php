@@ -168,6 +168,40 @@ function catbody($title, $page, $body)
 	ksort($foot_explain, SORT_NUMERIC);
 	$notes = ! empty($foot_explain) ? $note_hr . join("\n", $foot_explain) : '';
 
+    global $frontmatter;
+    if ( isset($frontmatter['title']) ) {
+        $newtitle = $frontmatter['title'];
+    }
+
+    $has_keywords = FALSE;
+    if ( isset($frontmatter['keywords']) ) {
+        $contents = array_map("htmlspecialchars", $frontmatter['keywords']);
+        $head_tags[] = '<meta name="keywords" content="'.join(', ', $contents).'" />';
+        $has_keywords = TRUE;
+    }
+    if ( ! $has_keywords && isset($frontmatter['tags']) ) {
+        $contents = array_map("htmlspecialchars", $frontmatter['tags']);
+        $head_tags[] = '<meta name="keywords" content="'.join(', ', $contents).'" />';
+    }
+
+    if ( isset($frontmatter['description']) ) {
+        $contents = htmlspecialchars($frontmatter['description']);
+        $head_tags[] = '<meta name="description" content="' . $contents . '" />';
+    }
+
+    if ( isset($frontmatter['nofollow']) ) {
+        $nofollow = $frontmatter['nofollow'] == 'true' ? 1 : 0;
+    }
+    if ($nofollow || ! $is_read || $title==$whatsnew || $title==$whatsdeleted || $title==$interwiki || $title==$menubar) {
+        $head_tags[] = '<meta name="robots" content="NOINDEX,FOLLOW" />';
+    } else {
+        if ($title == $defaultpage) {
+            $head_tags[] = '<link rel="canonical" href="'.$script.' " />';
+        } else {
+            $head_tags[] = '<link rel="canonical" href="'.$script.$title.'.html" />';
+        }
+    }
+
 	// Tags will be inserted into <head></head>
 	$head_tag = ! empty($head_tags) ? join("\n", $head_tags) ."\n" : '';
 	$foot_tag = ! empty($foot_tags) ? join("\n", $foot_tags) ."\n" : '';

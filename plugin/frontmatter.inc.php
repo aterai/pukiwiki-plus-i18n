@@ -1,10 +1,10 @@
 <?php
 //-*- mode:java; Encoding:utf8n -*-
-// $Id: header.inc.php $
+// $Id: frontmatter.inc.php $
 
 include_once(PLUGIN_DIR.'counter.inc.php');
 
-function plugin_header_convert() {
+function plugin_frontmatter_convert() {
     global $title, $newtitle, $whatsnew;
     global $vars;
     global $frontmatter;
@@ -27,8 +27,7 @@ function plugin_header_convert() {
     $tags_buf = '';
     if ( isset($frontmatter['tags']) ) {
         $tags = $frontmatter['tags'];
-        $contents = array_map("htmlspecialchars", $tags);
-        foreach ( $contents as $tag ) {
+        foreach ( $tags as $tag ) {
             $tag = trim($tag);
             $tags_buf = $tags_buf . '<li><a href="/tags.html#' . $tag . '-ref"><span itemprop="keywords">' . $tag . '</span></a></li>';
         }
@@ -56,13 +55,12 @@ function plugin_header_convert() {
     }
 
     $posted_by_str = '';
-    if (isset($frontmatter['pubdate'])) {
+    if (isset($frontmatter['pubdate']) ) {
         $pubdate = $frontmatter['pubdate'];
-        $utime = strtotime($pubdate);
-        $iso_pubdate_str = $pubdate; //date('c', $utime);
-        $pubdate_str = date('Y-m-d', $utime);
+        $iso_pubdate_str = date('c', $pubdate);
+        $pubdate_str = date('Y-m-d', $pubdate);
 
-        $author = isset($frontmatter['author']) ? $frontmatter['author'] : "aterai";
+        $author = isset($frontmatter['pubdate']) ? $frontmatter['pubdate'] : "aterai";
         $url = get_script_uri() . $author . '.html';
         $posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time>';
     }
@@ -84,6 +82,10 @@ $last_modified_str
 </div><!-- col-md-4 -->
 </div><!-- /row -->
 </div><!-- /page-header -->
+
+<pre>YAML Data dumped back:<br/>
+$dump
+</pre>
 EOD;
 }
 ?>

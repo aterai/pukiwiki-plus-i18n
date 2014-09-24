@@ -41,6 +41,8 @@ if (! defined('DATA_HOME')) define('DATA_HOME', '');
 
 if (! defined('LIB_DIR')) define('LIB_DIR', '');
 
+require(LIB_DIR . 'Spyc.php'); //https://github.com/mustangostang/spyc/
+
 require(LIB_DIR . 'func.php');
 require(LIB_DIR . 'file.php');
 require(LIB_DIR . 'funcplus.php');
@@ -277,6 +279,9 @@ if (isset($retvars['body']) && $retvars['body'] != '') {
 			}
 		}
 	}
+
+    global $frontmatter;
+    list($source, $frontmatter) = extract_yaml_frontmatter($source);
 
 	$body = convert_html($source);
 

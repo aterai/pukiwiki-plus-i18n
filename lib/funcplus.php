@@ -801,4 +801,38 @@ function is_webdav()
 
 	return false;
 }
+
+function extract_yaml_frontmatter($source) {
+    //static $front_matter_regex = "/^;;;[\r\n](.*)[\r\n];;;[\r\n](.*)/s";
+    $meta_data = array();
+    if (preg_match("/^---$/s", $source[0]) === 0) {
+        return array($source, $meta_data);
+    }
+    //$source    = ltrim($source);
+    $max = count($source);
+    $idx = 1;
+    while ($idx < $max) {
+        $meta_data[] = $source[$idx];
+        if ( preg_match("/^---$/s", $source[$idx]) ) {
+            break;
+        }
+        $idx++;
+    }
+    if ($idx === 1 || $idx === $max - 1) {
+        return array($source, array());
+    }
+
+    $yaml = trim(implode("\n", $meta_data));
+
+    // Decode & validate the JSON payload:
+    $meta_data2 = Spyc::YAMLLoadString($yaml);
+
+    // Check for errors:
+    if ($meta_data2 === null) {
+        $message = 'There was an error parsing the YAML Front Matter for this page';
+        throw new RuntimeException($message);
+    }
+    $ret = array_slice($source, $idx + 1);
+    return array($ret, $meta_data2);
+}
 ?>

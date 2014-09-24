@@ -42,6 +42,7 @@ $related      = array();	// Related pages
 $head_tags    = array();	// XHTML tags in <head></head>
 $foot_tags    = array();
 $page_tags    = array();
+$frontmatter  = array();	// YAML Frontmatter
 
 /////////////////////////////////////////////////
 // Require INI_FILE
