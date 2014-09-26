@@ -20,21 +20,23 @@ if (!defined('DATA_HOME')) { exit; }
 //
 /////////////////////////////////////////////////
 // フィルタルール(直接ソースを置換)
-$filter_rules = array(
-	"^(TITLE):(.*)$" => "",
-	"#tboff(.*)$" => "",
-	"#skin(.*)$" => "",
-);
+// $filter_rules = array(
+// 	"^(TITLE):(.*)$" => "",
+// 	"#tboff(.*)$" => "",
+// 	"#skin(.*)$" => "",
+// );
+$filter_rules = array();
 
 /////////////////////////////////////////////////
 // 日時置換ルール (閲覧時に置換)
 // $usedatetime = 1なら日時置換ルールが適用されます
 // 必要のない方は $usedatetimeを0にしてください。
-$datetime_rules = array(
-	'&amp;_now;'	=> format_date(UTIME),
-	'&amp;_date;'	=> get_date($date_format),
-	'&amp;_time;'	=> get_date($time_format),
-);
+// $datetime_rules = array(
+// 	'&amp;_now;'	=> format_date(UTIME),
+// 	'&amp;_date;'	=> get_date($date_format),
+// 	'&amp;_time;'	=> get_date($time_format),
+// );
+$datetime_rules = array();
 
 /////////////////////////////////////////////////
 // ユーザ定義ルール(保存時に置換)
@@ -56,5 +58,4 @@ $str_rules = array(
 	'&fpage;'	=> $vars['page'],
 	'&t;'   	=> "\t",
 );
-
 ?>

@@ -762,42 +762,42 @@ class Pre extends Element
 	}
 }
 
-// ' 'Space-beginning sentence with color(started with '# ')
-// ' 'Space-beginning sentence with color
-// ' 'Space-beginning sentence with color
-class CPre extends Element
-{
-	function CPre(&$root,$text)
-	{
-		global $preformat_ltrim;
-
-		parent::Element();
-		if (substr($text, 0, 2) === '# ') $text=substr($text,1);
-		$this->elements[] = (!$preformat_ltrim or $text == '' or substr($text, 0, 1) !== ' ') ? $text : substr($text,1);
-	}
-	function canContain(& $obj)
-	{
-		return is_a($obj, 'CPre');
-	}
-	function &insert(&$obj)
-	{
-		$this->elements[] = $obj->elements[0];
-		return $this;
-	}
-	function toString()
-	{
-		static $saved_glossary, $saved_autolink, $make_link;
-		global $glossary, $autolink;
-		$saved_glossary=$glossary;
-		$saved_autolink=$autolink;
-		$glossary=FALSE;
-		$autolink=FALSE;
-		$made_link=make_link(join("\n",$this->elements));
-		$autolink=$saved_autolink;
-		$glossary=$saved_glossary;
-		return $this->wrap($made_link,'pre');
-	}
-}
+// // ' 'Space-beginning sentence with color(started with '# ')
+// // ' 'Space-beginning sentence with color
+// // ' 'Space-beginning sentence with color
+// class CPre extends Element
+// {
+// 	function CPre(&$root,$text)
+// 	{
+// 		global $preformat_ltrim;
+//
+// 		parent::Element();
+// 		if (substr($text, 0, 2) === '# ') $text=substr($text,1);
+// 		$this->elements[] = (!$preformat_ltrim or $text == '' or substr($text, 0, 1) !== ' ') ? $text : substr($text,1);
+// 	}
+// 	function canContain(& $obj)
+// 	{
+// 		return is_a($obj, 'CPre');
+// 	}
+// 	function &insert(&$obj)
+// 	{
+// 		$this->elements[] = $obj->elements[0];
+// 		return $this;
+// 	}
+// 	function toString()
+// 	{
+// 		static $saved_glossary, $saved_autolink, $make_link;
+// 		global $glossary, $autolink;
+// 		$saved_glossary=$glossary;
+// 		$saved_autolink=$autolink;
+// 		$glossary=FALSE;
+// 		$autolink=FALSE;
+// 		$made_link=make_link(join("\n",$this->elements));
+// 		$autolink=$saved_autolink;
+// 		$glossary=$saved_glossary;
+// 		return $this->wrap($made_link,'pre');
+// 	}
+// }
 
 // #something (started with '#')
 class Div extends Element
@@ -882,22 +882,22 @@ class Body extends Element
 			// Escape comments
 			if (substr($line, 0, 2) == '//') continue;
 
-			// Extend TITLE by miko
-			if (preg_match('/^(TITLE):(.*)$/',$line,$matches))
-			{
-				global $newtitle, $newbase;
-				if ($newbase == '') {
-					// $newbase = trim($matches[2]);
-					$newbase = convert_html($matches[2]);
-					$newbase = strip_htmltag($newbase);
-					//$newbase = trim($newbase);
-					$newtitle = trim($newbase);
-					// For BugTrack/132.
-					// $newtitle = htmlspecialchars($newbase);
-					//$newtitle = str_replace('&amp;','&',htmlspecialchars($newbase));
-				}
-				continue;
-			}
+// 			// Extend TITLE by miko
+// 			if (preg_match('/^(TITLE):(.*)$/',$line,$matches))
+// 			{
+// 				global $newtitle, $newbase;
+// 				if ($newbase == '') {
+// 					// $newbase = trim($matches[2]);
+// 					$newbase = convert_html($matches[2]);
+// 					$newbase = strip_htmltag($newbase);
+// 					//$newbase = trim($newbase);
+// 					$newtitle = trim($newbase);
+// 					// For BugTrack/132.
+// 					// $newtitle = htmlspecialchars($newbase);
+// 					//$newtitle = str_replace('&amp;','&',htmlspecialchars($newbase));
+// 				}
+// 				continue;
+// 			}
 
 			if (preg_match('/^(LEFT|CENTER|RIGHT):(.*)$/', $line, $matches)) {
 				// <div style="text-align:...">
@@ -951,11 +951,11 @@ class Body extends Element
 				continue;
 			}
 
-			// CPre
-			if (substr($line,0,2) == '# ' or substr($line,0,2) == "#\t") {
-				$this->last = &$this->last->add(new CPre($this,$line));
-				continue;
-			}
+// 			// CPre
+// 			if (substr($line,0,2) == '# ' or substr($line,0,2) == "#\t") {
+// 				$this->last = &$this->last->add(new CPre($this,$line));
+// 				continue;
+// 			}
 
 			// Line Break
 			if (substr($line, -1) == '~')
