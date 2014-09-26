@@ -51,34 +51,69 @@ class PukiWikiParser
       return "#{@timestamp}-#{name}"
     end
   end
-#   def timestamp()
-#     @timestamp
-#   end
+  def has_pubdate
+    @timestamp != ''
+  end
   def to_md(src, page_names, page, base_uri = 'http://terai.xrea.jp/', suffix= '/')
     @page_names = page_names
     @base_uri = base_uri
-    #@page = page.sub!(/\.txt$/, '')
     @page = page.sub(/\ASwing\/(.+)\.txt$/) { $1 }
     @pagelist_suffix = suffix
-    @inline_re = nil # invalidate cache
+    @inline_re = nil
 
     @timestamp = ''
     @title  = ''
     @author = ''
     @tags = ''
 
+
+    head = []
     buf = []
-    lines = src.rstrip.split(/\r?\n/).map {|line| line.chomp }
+
+    @FRONT_MATTER_REGEX ||= %r<
+      \A---[\r\n](.*)[\r\n]---[\r\n](.*)
+    >mx
+    if @FRONT_MATTER_REGEX =~ src.lstrip then
+      frontmatter = $1
+      body = $2
+
+      head.push("---")
+      head.push("layout: post")
+      head.push("category: swing")
+      head.push("folder: #{@page}")
+
+      heads = frontmatter.rstrip.split(/\r?\n/).map {|line| line.chomp }
+      while heads.first
+        case heads.first
+        when /\Apubdate: /
+          pubdate = heads.shift
+          head.push pubdate
+          @timestamp = DateTime.parse(pubdate.sub(/\Apubdate: /, '')).strftime('%Y-%m-%d')
+        when /\Aauthor: /
+          line = heads.shift
+          head.push line
+          @author = line.sub(/\Aauthor: /, '')
+        else
+          head.push heads.shift
+        end
+      end
+      head.push("comments: true")
+      head.push("---\n")
+    else
+      body = src
+    end
+
+    buf.push ""
+    buf.push "Posted by [#{@author}](http://terai.xrea.jp/#{@author}.html) at "+@timestamp
+    buf.push ""
+
+    lines = body.rstrip.split(/\r?\n/).map {|line| line.chomp }
     while lines.first
       case lines.first
       when ''
         buf.push lines.shift
-      when /\ATITLE:/
-        @title = lines.shift.sub(/\ATITLE:/, '')
-#       when /\ARIGHT:/
-#         #/at &time\((\w{4}-\w{2}-\w{2})\);/ =~ lines.first
-#         #@timestamp = $1
-#         buf.push parse_inline(lines.shift.sub(/\ARIGHT:/, '').concat("\n"))
+#       when /\ATITLE:/
+#         @title = lines.shift.sub(/\ATITLE:/, '')
       when /\A----/
         lines.shift
         buf.push '- - - -' #hr
@@ -107,18 +142,7 @@ class PukiWikiParser
     end
     buf.join("\n")
 
-    head = []
-    head.push("---")
-    head.push("layout: post")
-    head.push("title: #{@title}")
-    head.push("category: swing")
-    head.push("folder: #{@page}")
-    head.push("tags: [#{@tags}]")
-    head.push("author: #{@author}")
-    head.push("comments: true")
-    head.push("---")
-
-    head.join("\n").strip.concat(buf.join("\n"))
+    head.join("\n").concat(buf.join("\n"))
   end
 
   private
@@ -300,31 +324,37 @@ class PukiWikiParser
   end
 
   def parse_inline(str)
-    str = str.gsub(/%%(?!%)((?:(?!%%).)*)%%/) { ['~~', $1, '~~'].join() } #<del>, <strike>
-    str = str.gsub(/``(?!`)((?:(?!``).)*)``/) { ['`', $1, '`'].join() }   #<code>
-    str = str.gsub(/\'\'(?!\')((?:(?!\'\').)*)\'\'/) { ['**', $1, '**'].join() } #<strong>
-    str = str.gsub(/KBD{([^}]*)}/) { ['<kbd>', $1, '</kbd>'].join() } #<kbd>
-    @inline_re ||= %r!
-        &([A-Za-z]+)(?:\(([^\)]+)\))?(?:{([^}]+)})?; # $1: plugin, $2: parameter, $3: inline
-      | \[\[([^>]+)>?([^\]]*)\]\]     # $4: label,  $5: URI
-      | \[(https?://\S+)\s+([^\]]+)\] # $6: label,  $7: URI
-      | (#{autolink_re()})            # $8: Page name autolink
-      | (#{URI.regexp('http')})       # $9: URI autolink
-    !x
+    str = str.gsub(/%%(?!%)((?:(?!%%).)*)%%/) { ['~~', $1, '~~'].join() } #nest: <del>[http://example.com/ example]</del>, <strike>
+    @inline_re ||= %r~
+    &(?<plugin>[0-9A-Za-z_]+)(?:\((?<parameter>[^\)]*)\))?(?:{(?<inline>[^}]+)})?; # inline plugin ex. &new(...){...};
+      | \[\[(?<bracket>[^>]+)>?(?<uri>[^\]]*)\]\]   # bracket, URI
+      | \[(?<uri>https?://\S+)\s+(?<label>[^\]]+)\] # URI, label
+      | (?<uri>#{URI.regexp('http')})               # URI autolink
+      | KBD\{(?<kbd>[^\}]+)\}                       # <kbd>
+      | ``(?!`)(?<code>(?:(?!``).)*)``              # <code>
+      | \'\'(?!\')(?<strong>(?:(?!\'\').)*)\'\'     # <strong>
+      #| %%(?!%)(?<del>(?:(?!%%).)*)%%               # <del>, <strike>
+    ~x
     str.gsub(@inline_re) {
       case
-      when plugin   = $1 then parse_inline_plugin(plugin.strip, $2, $3)
-      when bracket  = $4 then a_href($5.strip, bracket, 'pagelink')
-      when bracket  = $7 then a_href($6.strip, bracket, 'outlink')
-      when pagename = $8 then a_href(page_uri(pagename), pagename, 'pagelink')
-      when uri      = $9 then a_href(uri, uri, 'outlink')
+      when $~[:plugin]  then parse_inline_plugin($~)
+      when $~[:bracket] then a_href($~[:uri].strip, $~[:bracket], 'pagelink')
+      when $~[:label]   then a_href($~[:uri].strip, $~[:label], '')
+      when $~[:uri]     then a_href($~[:uri].strip, $~[:uri], '')
+      when $~[:kbd]     then ['<kbd>', $~[:kbd], '</kbd>'].join()
+      when $~[:code]    then ['<code>', $~[:code], '</code>'].join()
+      when $~[:strong]  then ['**', $~[:strong], '**'].join()
+      #when $~[:del]     then ['~~', $~[:del], '~~'].join()
       else
         raise 'must not happen'
       end
     }
   end
 
-  def parse_inline_plugin(plugin, para, inline)
+  def parse_inline_plugin(mtch) #plugin, para, inline)
+    plugin = mtch[:plugin].strip
+    parameter = mtch[:parameter]
+    inline = mtch[:inline]
     case plugin
     when 'jnlp'
       %Q|{% jnlp %}|
@@ -332,14 +362,10 @@ class PukiWikiParser
       %Q|{% jar %}|
     when 'zip'
       %Q|{% src %}\n- {% svn %}|
-    when 'author'
-      @author = para.strip #.delete("()")
-      %Q|[#{@author}](#{@base_uri}#{@author}.html)|
-#     when 'time'
-#       @timestamp = DateTime.parse(para).strftime('%Y-%m-%d')
-#       para
+    when 'ref'
+      parameter
     when 'new'
-      inline.strip #.delete("{}")
+      inline.strip
     else
       plugin
     end
@@ -360,10 +386,10 @@ class PukiWikiParser
       buf.push %Q<{% download #{args[1]} %}>
     when 'ref'
       buf.push %Q<![screenshot](#{args[1]})>
-    when 'tags'
-      @tags = args[1]
-    when 'pubdate'
-      @timestamp = DateTime.parse(args[1]).strftime('%Y-%m-%d')
+#     when 'tags'
+#       @tags = args[1]
+#     when 'pubdate'
+#       @timestamp = DateTime.parse(args[1]).strftime('%Y-%m-%d')
     else
       buf.push ''
     end
@@ -397,25 +423,23 @@ def main
   include HTMLUtils
   srcpath = ARGV[0]
   tgtpath = ARGV[1]
+  srcmask = ARGV[2] ? ARGV[2] : "*.txt"
 
   if File.exist?(srcpath)
-    Dir::glob("#{srcpath}/5377696E672F*.txt").each {|f|
-    #Dir::glob("#{srcpath}/*.txt").each {|f|
+    Dir::glob("#{srcpath}/#{srcmask}").each {|f|
       fname = File.basename(f)
       tbody = File.read(f)
       page_names = []
       parser = PukiWikiParser.new()
       buf    = parser.to_md(tbody, page_names, HTMLUtils.urldecode(fname))
-      tmp = parser.filename(fname)
+      tmp    = parser.filename(fname)
 
-      unless /^_/ =~ tmp
-        if /-/ =~ tmp
-          nname  = [tgtpath, tmp].join('/')
-          puts tmp
-          outf   = open(nname, "wb")
-          outf.puts(buf)
-          outf.close()
-        end
+      if parser.has_pubdate then
+        nname  = [tgtpath, tmp].join('/')
+        puts tmp
+        outf   = open(nname, "wb")
+        outf.puts(buf)
+        outf.close()
       end
     }
   else
