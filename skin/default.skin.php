@@ -41,10 +41,11 @@ pre{background-color:#f0fff8}
 li{line-height:1.8em}
 li ul{margin:0 0 0 1em;padding:0}
 article{margin-bottom:1em}
-.wrap{min-height:100%;height:auto !important;height:100%;margin:0 auto -2em}
-.push{height:2em}
-.footer{background-color:#fdcd60;height:2em}
-.footer div{height:2em;text-align:center}
+.wrap{min-height:100%;height:auto !important;height:100%;margin:0 auto -2.6em}
+.push{height:2.6em}
+.footer{background-color:#fdcd60;height:2.6em}
+.footer div{height:2.6em;text-align:center}
+.footer p{line-height:1.8em;margin:.2em 0 0 0}
 .commentform>input{margin:0 0 1em 0}
 .summary{color:#666;background-color:inherit;border-left:solid 4px #999;padding-left:5px;clear:both;margin:45px 0 0}
 .note{border-bottom:solid 1px #999}
@@ -126,17 +127,6 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 </div>
 </nav>
 <div class="container"> <!-- div class="content" -->
-<div style="overflow:auto;word-wrap:break-word;margin-bottom:1em">
-<!-- xrea, link, 728x15, 09/01/04 -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:15px"
-     data-ad-client="ca-pub-6939179021013694"
-     data-ad-slot="7445672071"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
-<hr />
 <div class="row">
 <div class="col-md-9 col-xs-12 blog-main">
 <!-- google_ad_section_start -->
@@ -164,7 +154,7 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 </div><!-- /.wrap -->
 <footer class="footer" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
 <div class="container">
-<p>© 2014 <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="http://terai.xrea.jp/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a> and <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">pukiwiki-plus-i18n</a></p>
+<p>© 2014 <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="http://terai.xrea.jp/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a></p>
 </div>
 </footer>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
