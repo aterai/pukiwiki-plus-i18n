@@ -98,7 +98,7 @@ class CellTextArea2 extends JTextArea {
 }}
 
 * 解説 [#i6e35614]
-上記のサンプルでは、`JTree#setRowHeight(0)`として、セルレンダラーが高さを決めるように設定し、以下の`2`つの方法で改行を行っています(`JTree#getRowHeight()`の初期値(`LookAndFeel`で異なる)は、`WindowsLookAndFeel`などの場合`0`以下ではない)。
+上記のサンプルでは、`JTree#setRowHeight(0)`として、セルレンダラーが高さを決めるように設定し、以下の`2`つの方法で改行を行っています(`JTree#getRowHeight()`の初期値は`LookAndFeel`で異なり、例えば`WindowsLookAndFeel`の場合`0`以下ではない)。
 
 - `Html`
 -- `Html`タグを使用し、`<br>`で改行

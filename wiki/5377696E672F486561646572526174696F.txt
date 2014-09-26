@@ -52,31 +52,14 @@ private void setRaito() {
 - `ComponentListener#componentResized(...)`がチェックされている場合
 -- `JScrollPane`に追加した`ComponentListener`で、リサイズされる毎に全ての列幅を設定し直すので、フレームのサイズを変更してもカラムの比率は保持される
 - `ComponentListener#componentResized(...)`がチェックされていない場合
--- 列幅調整が`AUTO_RESIZE_SUBSEQUENT_COLUMNS`(デフォルト)なので、フレームをリサイズすると、その幅の変更([http://docs.oracle.com/javase/jp/6/api/javax/swing/JTable.html#doLayout() デルタ])が、リサイズ可能なすべての列に分散して加算減算される
+-- 列幅調整が`AUTO_RESIZE_SUBSEQUENT_COLUMNS`(デフォルト)なので、フレームをリサイズすると、その幅の変更([http://docs.oracle.com/javase/jp/8/api/javax/swing/JTable.html#doLayout-- デルタ])が、リサイズ可能なすべての列に分散して加算減算される
 --- このため、入力されている比率とは異なる列幅になる
 
 ----
 `TableColumn#setMaxWidth`メソッドでカラムの幅を指定する場合は、マウスのドラッグによるサイズの変更はできません。
 
-//起動時だけ比率を設定したい場合は、以下のようにTableColumn#setPreferredWidthメソッドを使用することで、マウスのドラッグによるサイズが可能になります。またComponentListenerを追加して初期化しなくても、フレームサイズ変更時には現在のカラム幅の比率などから適当に((詳しくはJTable#doLayout()のデルタの分散を参照してください))リサイズしてくれます((逆にTableColumn#setPreferredWidthメソッドを使用している場合にComponentListenerを追加して初期化してしまうと、比率が微妙に食い違って奇妙な動きになってしまう))。
-//#code{{
-//int[] list = getWidthRaitoArray();
-//int total = table.getColumnModel().getTotalColumnWidth();
-//int raito = total/getRaitoTotal(table, list);
-//for(int i=0;i<table.getColumnModel().getColumnCount()-1;i++) {
-//  TableColumn col = table.getColumnModel().getColumn(i);
-//  int colwidth = list[i]*raito;
-//  // - table.getColumnModel().getColumnMargin();
-//  col.setPreferredWidth(colwidth);
-//  total = total - colwidth;
-//}
-//table.getColumnModel().getColumn(
-//  table.getColumnModel().getColumnCount()-1).setPreferredWidth(total);
-//table.revalidate();
-//}}
-
 * 参考リンク [#h308024b]
-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JTable.html#doLayout() デルタの分散 - JTable#doLayout()]
+- [http://docs.oracle.com/javase/jp/8/api/javax/swing/JTable.html#doLayout-- デルタの分散 - JTable#doLayout() (Java Platform SE 8)]
 
 * コメント [#f4b5dfe7]
 #comment
