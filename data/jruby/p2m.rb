@@ -62,10 +62,6 @@ class PukiWikiParser
     @inline_re = nil
 
     @timestamp = ''
-    @title  = ''
-    @author = ''
-    @tags = ''
-
 
     head = []
     buf = []
@@ -89,10 +85,6 @@ class PukiWikiParser
           pubdate = heads.shift
           head.push pubdate
           @timestamp = DateTime.parse(pubdate.sub(/\Apubdate: /, '')).strftime('%Y-%m-%d')
-        when /\Aauthor: /
-          line = heads.shift
-          head.push line
-          @author = line.sub(/\Aauthor: /, '')
         else
           head.push heads.shift
         end
@@ -103,17 +95,11 @@ class PukiWikiParser
       body = src
     end
 
-    buf.push ""
-    buf.push "Posted by [#{@author}](http://terai.xrea.jp/#{@author}.html) at "+@timestamp
-    buf.push ""
-
     lines = body.rstrip.split(/\r?\n/).map {|line| line.chomp }
     while lines.first
       case lines.first
       when ''
         buf.push lines.shift
-#       when /\ATITLE:/
-#         @title = lines.shift.sub(/\ATITLE:/, '')
       when /\A----/
         lines.shift
         buf.push '- - - -' #hr
@@ -386,10 +372,6 @@ class PukiWikiParser
       buf.push %Q<{% download #{args[1]} %}>
     when 'ref'
       buf.push %Q<![screenshot](#{args[1]})>
-#     when 'tags'
-#       @tags = args[1]
-#     when 'pubdate'
-#       @timestamp = DateTime.parse(args[1]).strftime('%Y-%m-%d')
     else
       buf.push ''
     end
