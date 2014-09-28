@@ -10,6 +10,8 @@ function plugin_sitemaps_action() {
     $self = get_script_uri();
     $date = $items = '';
     $array = array();
+    $array[] = '^.+%2F_.+$';
+
     $array[] = '.*ChangeLog.*';
     $array[] = '.*Questionnaire.*';
     $array[] = '.*Comments.*';
@@ -30,7 +32,6 @@ function plugin_sitemaps_action() {
     $array[] = '^Swing%2FIncremental$';
     $array[] = '^Swing%2FJarFile$';
     $array[] = '^Swing%2FNonSelectableList$';
-    $array[] = '^Swing%2F_SandBox$';
 
     $array[] = '^Subversion%2FSubclipse$';
     $array[] = '^Subversion%2FeSvn$';
