@@ -20,7 +20,7 @@ function catbody($title, $page, $body)
 	global $search_word_color, $foot_explain, $note_hr, $head_tags, $foot_tags;
 	global $trackback, $referer, $javascript;
 	global $newtitle, $newbase, $language, $use_local_time; // Plus! skin extension
-	global $nofollow;
+	global $nofollow, $noindex;
 	global $page_author;
 	global $page_pubdate;
 	global $_LANG, $_LINK, $_IMAGE;
@@ -192,7 +192,12 @@ function catbody($title, $page, $body)
     if ( isset($frontmatter['nofollow']) ) {
         $nofollow = $frontmatter['nofollow'] == 'true' ? 1 : 0;
     }
+    if ( isset($frontmatter['noindex']) ) {
+        $noindex = $frontmatter['noindex'] == 'true' ? 1 : 0;
+    }
     if ($nofollow || ! $is_read || $title==$whatsnew || $title==$whatsdeleted || $title==$interwiki || $title==$menubar) {
+        $head_tags[] = '<meta name="robots" content="NOINDEX,NOFOLLOW" />';
+    } else if ($noindex) {
         $head_tags[] = '<meta name="robots" content="NOINDEX,FOLLOW" />';
     } else {
         if ($title == $defaultpage) {
