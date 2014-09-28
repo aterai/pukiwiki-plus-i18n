@@ -493,13 +493,6 @@ main
 -- 上記のようにリスト中にコードブロックがある場合、`- `で始まる行の後に、空行(もしくは空白文字のみのインデント)が必要だが、`p2m.rb`では生成できていない
 --- コードブロックも、(リスト階層+1)*4スペース(もしくはタブ)のインデントが必要だが、`p2m.rb`では生成できていない
 
-- `markdown`のパーサーを`redcarpet`に変更
--- [https://github.com/mojombo/jekyll/wiki/Configuration Configuration ・ mojombo/jekyll Wiki ・ GitHub]
--- [https://github.com/mrcaron/jekyll/commit/cf8fde495d1689c40b016c4155f4d48fe8377347 updated jekyll to latest RedCarpet version ・ cf8fde4 ・ mrcaron/jekyll ・ GitHub]
-
- #_config.yml に追加
- markdown: redcarpet
-
 ** Liquid [#cc063cb0]
 `PukiWiki`のプラグインを`Liquid`タグに移植
 
@@ -524,43 +517,6 @@ end
 }}
 
  PukiWikiプラグインの&zip(swing/surrogatepair); などを {% src swing/surrogatepair %} に置き換える
-
-* Jekyll で google-code-prettify [#o7f107ec]
-- 参考: [http://fnordig.de/2011/09/02/kramdown-test/ fnordig.de]
-
-パーサーを`kramdown`にして、行頭タブ(`4`スペース)ブロックの直後に`{:class="prettyprint"}`、または`{:.prettyprint}`を追加
-  def parse_pre(lines)
-    [%Q|#{lines.map {|line| "\t".concat(line) }.join("\n")}|, %Q|{:class="prettyprint"}|]
-  end
-
- ### サンプルコード
- 	trayIcon.displayMessage("caption", "text", TrayIcon.MessageType.ERROR);
- {:class="prettyprint"}
-
-結果
-#code{{
-<h3 id="section">サンプルコード</h3>
-<pre class="prettyprint"><code>trayIcon.displayMessage("caption", "text", TrayIcon.MessageType.ERROR);
-</code></pre>
-}}
-
-`default.html`に`.js`, `.css`を追加
- <link href="{{ ASSET_PATH }}/css/prettify.css" type="text/css" rel="stylesheet" />
- </head>
- <body onload="prettyPrint()">
- ...
- <script src="{{ ASSET_PATH }}/js/prettify.js"></script>
- </body>
-
-* redcarpet [#e5920334]
- # _config.yml
- markdown: redcarpet
- redcarpet:
-    renderer: Redcarpet::Render::XHTML
-    extensions: ["xhtml", "fenced_code_blocks", "strikethrough", "no_intra_emphasis", "lax_spacing"]
-
-- `no_intra_emphasis`
--- `<pre><code>`の中でも、アンダーライン(例: `InputMap im = combobox.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);`)が、`<em>...</em>`に変換されるので、`no_intra_emphasis`で回避
 
 * テスト [#id32e40e]
 - 変換結果のテスト

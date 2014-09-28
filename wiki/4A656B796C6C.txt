@@ -1,0 +1,113 @@
+---
+keywords: [Jekyll, Ruby, Cygwin]
+description: Jekyllのインストール、設定などのメモ
+author: aterai
+pubdate: 2014-09-28T01:50:02+09:00
+---
+#contents
+* 概要 [#l2fe13c2]
+`Windows 7` + `Cygwin64` + `ruby 2.0.0`の環境で、`Jekyll`をインストールし`Markdown`記法のテキストから静的サイトを生成します。
+
+* インストール [#t4eb21f1]
+- `setup-x86_64.exe`などから、`ruby`、`rubygems`などをインストール
+- `~/.gemrc`を作成
+#code{{
+---
+gem: "--no-ri --no-rdoc --user-install"
+:benchmark: false
+:verbose: true
+:backtrace: true
+:update_sources: true
+:bulk_threshold: 1000
+:sources:
+- http://gemcutter.org
+- http://gems.rubyforge.org/
+- http://gems.github.com
+}}
+
+- `gem`でインストール
+ gem install jekyll
+
+-- `tr: invalid byte sequence in UTF-8 (ArgumentError)`とエラーになる場合
+--- [http://seesaawiki.jp/w/kou1okada/d/Cygwin%20-%20Ruby-1.9.3p327%20-%20win32/registry Cygwin - Ruby-1.9.3p327 - win32/registry - PIB]を参考にして、`C:/cygwin64/usr/share/ruby/2.0.0/win32/registry.rb`を修正
+#code{{
+    #
+    # Error
+    #
+    class Error < ::StandardError
+      module Kernel32
+        extend Fiddle::Importer
+        dlload "kernel32.dll"
+      end
+#     FormatMessageA = Kernel32.extern "int FormatMessageA(int, void *, int, int, void *, int, void *)", :stdcall
+#     def initialize(code)
+#       @code = code
+#       msg = "\0".force_encoding(Encoding::ASCII_8BIT) * 1024
+#       len = FormatMessageA.call(0x1200, 0, code, 0, msg, 1024, 0)
+#       msg = msg[0, len].force_encoding(Encoding.find(Encoding.locale_charmap))
+#       super msg.tr("\r", '').chomp
+#     end
+      FormatMessageW = Kernel32.extern "int FormatMessageW(int, void *, int, int, void *, int, void *)", :stdcall
+      def initialize(code)
+        @code = code
+        msg = "\0\0".force_encoding(Encoding::UTF_16LE) * 1024
+        len = FormatMessageW.call(0x1200, 0, code, 0, msg, msg.size, 0)
+        msg = msg[0, len].encode(Encoding.find(Encoding.locale_charmap))
+        super msg.tr("\r".encode(msg.encoding), '').chomp
+      end
+      attr_reader :code
+    end
+}}
+
+-- `/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../x86_64-pc-cygwin/bin/ld: -lcrypt が見つかりません`とエラーになる場合
+--- `libcrypt-devel`を`setup-x86_64.exe`からインストールして`gem　install jekyll`を再実行
+
+-- `Makefile:232: recipe for target 'ffi_c.so' failed`とエラーになる場合
+--- [https://github.com/ffi/ffi/issues/284#issuecomment-33752957 Problems compiling ffi 1.9.0 on cygwin 64bit ・ Issue #284 ・ ffi/ffi]　(via: [https://github.com/ffi/ffi/issues/317 make fails on Cygwin64bit ・ Issue #317 ・ ffi/ffi])などを参考に、`cygwin32-libffi`や、`pkg-config`を`setup-x86_64.exe`からインストールして`gem　install jekyll`を再実行
+ export PKG_CONFIG_PATH="/lib/pkgconfig"
+ gem install jekyll
+
+* Jekyll で google-code-prettify [#dd21a813]
+- 参考: [http://fnordig.de/2011/09/02/kramdown-test/ fnordig.de]
+
+パーサーを`kramdown`にして、行頭タブ(`4`スペース)ブロックの直後に`{:class="prettyprint"}`、または`{:.prettyprint}`を追加
+  def parse_pre(lines)
+    [%Q|#{lines.map {|line| "\t".concat(line) }.join("\n")}|, %Q|{:class="prettyprint"}|]
+  end
+
+ ### サンプルコード
+ 	trayIcon.displayMessage("caption", "text", TrayIcon.MessageType.ERROR);
+ {:class="prettyprint"}
+
+結果
+#code{{
+<h3 id="section">サンプルコード</h3>
+<pre class="prettyprint"><code>trayIcon.displayMessage("caption", "text", TrayIcon.MessageType.ERROR);
+</code></pre>
+}}
+
+`default.html`に`prettify.js`, `prettify.css`を追加
+ <link href="{{ ASSET_PATH }}/css/prettify.css" type="text/css" rel="stylesheet" />
+ </head>
+ <body onload="prettyPrint()">
+ ...
+ <script src="{{ ASSET_PATH }}/js/prettify.js"></script>
+ </body>
+
+* redcarpet [#u119a163]
+- `markdown`のパーサーを`redcarpet`に変更
+-- [https://github.com/mojombo/jekyll/wiki/Configuration Configuration ・ mojombo/jekyll Wiki ・ GitHub]
+-- [https://github.com/mrcaron/jekyll/commit/cf8fde495d1689c40b016c4155f4d48fe8377347 updated jekyll to latest RedCarpet version ・ cf8fde4 ・ mrcaron/jekyll ・ GitHub]
+
+ # _config.yml
+ markdown: redcarpet
+ redcarpet:
+    renderer: Redcarpet::Render::XHTML
+    extensions: ["xhtml", "fenced_code_blocks", "strikethrough", "no_intra_emphasis", "lax_spacing"]
+
+- `no_intra_emphasis`
+-- `<pre><code>`の中でも、アンダーライン(例: `InputMap im = combobox.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);`)が、`<em>...</em>`に変換されるので、`no_intra_emphasis`で回避
+
+//* 参考リンク
+* コメント [#f75d3823]
+#comment

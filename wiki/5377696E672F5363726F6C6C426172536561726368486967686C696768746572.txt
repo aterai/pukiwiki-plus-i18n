@@ -39,8 +39,8 @@ scrollbar.setUI(new WindowsScrollBarUI() {
 上記のサンプルでは、`ScrollBarUI#paintTrack(...)`メソッドをオーバーライドして、`JTextArea`内の文字列の検索結果を縦の`JScrollBar`内部に描画しています。
 
 - 注:
--- 一行分のハイライトの高さは`2px`で固定
--- 検索結果の位置は`JTextComponent#modelToView(Matcher#start());`を利用しているため、ハイライト対象の文字列が折り返しで二行になっても、ハイライトされるのは開始位置のある一行目のみ
+-- `1`行分のハイライトの高さは`2px`で固定
+-- 検索結果の位置は`JTextComponent#modelToView(Matcher#start());`を利用しているため、ハイライト対象の文字列が折り返しで`2`行になっても、ハイライトされるのは開始位置のある`1`行目のみ
 
 ----
 以下のような`Icon`を設定した`JLabel`を`JScrollPane#setRowHeaderView(...)`で追加する方法もあります。こちらは、縦`JScrollBar`に直接ハイライトを描画しないので、上下の増減ボタンは考慮せず、またノブの代わりに現在表示位置を示す領域を半透明で描画しています。
