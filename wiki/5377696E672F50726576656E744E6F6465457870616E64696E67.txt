@@ -34,7 +34,7 @@ class DirectoryExpandVetoListener implements TreeWillExpandListener {
 * 解説 [#kffe6e96]
 - `TreeWillExpandListener`を実装し、`treeWillExpand(...)`メソッド内で、ノード(`File`)の名前がドットで始まる場合、`ExpandVetoException`を投げて展開をキャンセル
 -- これらのノードは展開は不可だが、選択自体は可能
-- `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`内で、名前がドットで始まる場合、ノードを`setEnabled(false)`で無効状態にして描画
+- `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`内で、名前がドットで始まる場合、そのノードを`setEnabled(false)`で無効状態にして描画
 
 * 参考リンク [#uf2330a5]
 - [http://docs.oracle.com/javase/tutorial/uiswing/events/treewillexpandlistener.html How to Write a Tree-Will-Expand Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]

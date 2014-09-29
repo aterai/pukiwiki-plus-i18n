@@ -30,7 +30,7 @@ tree2.scrollPathToVisible(new TreePath(child2.getPath()));
 
 - 左: `p.add(c) & m.reload(p)`
 -- `DefaultMutableTreeNode#add(...)`メソッドを使用して、親ノードの末尾に子ノードを追加
---- 追加する子ノードが親ノードを持つ場合は、そこから削除される
+--- 追加する子ノードが親ノードを持つ場合、その親子関係は削除される(子ノードが持つ親ノードはひとつのみ)
 -- `DefaultTreeModel#reload(...)`、または`DefaultTreeModel#nodeStructureChanged(DefaultMutableTreeNode)`でモデルに更新を通知
 --- 兄弟ノードの展開状態などがすべて閉じた状態にリセットされてしまう
 - 右: `m.insertNodeInto(c, p, p.size)`

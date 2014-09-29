@@ -18,8 +18,8 @@ UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32));
 上記のサンプルでは、右の`JScrollPane`で、`JScrollBar`の`Knob`(`Thumb`)が短くなりすぎないように、最小サイズ(`Horizontal`の場合は幅、`Vertical`の場合は高さ)を設定します。
 
 - 注: `LookAndFeel`によって、`UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32));`が有効かどうかは異なる
--- `BasicLookAndFeel`、`WindowsLookAndFeel`: 有効
--- `MetalLookAndFeel`、`NimbusLookAndFeel`: 無効
+-- 有効: `BasicLookAndFeel`、`WindowsLookAndFeel`
+-- 無効: `MetalLookAndFeel`、`NimbusLookAndFeel`
 --- 以下のように、縦スクロールバーならその幅が最小サイズになるよう上書きされているため
 
 #code{{

@@ -37,7 +37,7 @@ pubdate: 2013-11-11T00:01:29+09:00
   int rw = r.width;
   int rh = r.height;
 
-  AffineTransform at2 = AffineTransform.getTranslateInstance(x0, y0+rh);
+  AffineTransform at2 = AffineTransform.getTranslateInstance(x0, y0 + rh);
   Shape s2 = at2.createTransformedShape(s1);
   g2.setPaint(getForeground());
   g2.fill(s2);
@@ -51,7 +51,7 @@ pubdate: 2013-11-11T00:01:29+09:00
     TextLayout tl = lbm.nextLayout(w);
     tl.draw(g2, x, y + tl.getAscent());
     y += tl.getDescent() + tl.getLeading() + tl.getAscent();
-    if(y0+rh < y) {
+    if(y0 + rh < y) {
       x = x0;
       w = w0;
     }
