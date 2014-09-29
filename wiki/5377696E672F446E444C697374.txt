@@ -13,30 +13,30 @@ pubdate: 2004-02-16
 #code(link){{
 @Override protected void paintComponent(Graphics g) {
   super.paintComponent(g);
-  if(targetIndex>=0) {
-    Graphics2D g2 = (Graphics2D)g;
+  if(targetIndex >= 0) {
+    Graphics2D g2 = (Graphics2D) g;
     g2.setPaint(lineColor);
     g2.fill(targetLine);
   }
 }
 private void initTargetLine(Point p) {
   Rectangle2D testArea = new Rectangle2D.Float();
-  int cellHeight = (int) getCellBounds(0,0).getHeight();
-  int lineWidht  = (int) getCellBounds(0,0).getWidth();
+  int cellHeight = (int) getCellBounds(0, 0).getHeight();
+  int lineWidht  = (int) getCellBounds(0, 0).getWidth();
   int lineHeight = 2;
   int modelSize  = getModel().getSize();
   targetIndex = -1;
-  for(int i=0;i<modelSize;i++) {
-    testArea.setRect(0, cellHeight*i-(cellHeight/2), lineWidht, cellHeight);
+  for(int i = 0; i < modelSize; i++) {
+    testArea.setRect(0, cellHeight * i - (cellHeight / 2), lineWidht, cellHeight);
     if(testArea.contains(p)) {
       targetIndex = i;
-      targetLine.setRect(0, i*cellHeight, lineWidht, lineHeight);
+      targetLine.setRect(0, i * cellHeight, lineWidht, lineHeight);
       break;
     }
   }
-  if(targetIndex<0) {
+  if(targetIndex < 0) {
     targetIndex = modelSize;
-    targetLine.setRect(0, targetIndex*cellHeight-lineHeight, lineWidht, lineHeight);
+    targetLine.setRect(0, targetIndex * cellHeight - lineHeight, lineWidht, lineHeight);
   }
 }
 @Override public void dragOver(final DropTargetDragEvent e) {
@@ -50,7 +50,7 @@ private void initTargetLine(Point p) {
   repaint();
 }
 @Override public void drop(DropTargetDropEvent e) {
-  DefaultListModel model = (DefaultListModel)getModel();
+  DefaultListModel model = (DefaultListModel) getModel();
   Transferable t = e.getTransferable();
   DataFlavor[] f = t.getTransferDataFlavors();
   try {
@@ -59,14 +59,14 @@ private void initTargetLine(Point p) {
       Object str = model.getElementAt(draggedIndex);
       if(targetIndex==draggedIndex) {
         setSelectedIndex(targetIndex);
-      }else if(targetIndex<draggedIndex) {
+      }else if(targetIndex < draggedIndex) {
         model.removeElementAt(draggedIndex);
         model.insertElementAt(str, targetIndex);
         setSelectedIndex(targetIndex);
       }else{
         model.insertElementAt(str, targetIndex);
         model.removeElementAt(draggedIndex);
-        setSelectedIndex(targetIndex-1);
+        setSelectedIndex(targetIndex - 1);
       }
       e.dropComplete(true);
     }else{
@@ -105,7 +105,7 @@ private void initTargetLine(Point p) {
 - ドラッグ中マウスが`JList`の外に出た場合、カーソルを変更するように変更しました。 -- [[aterai]] &new{2007-04-02 (月) 16:26:22};
 - `JTabbedPane`に`JList`を追加し、タブを２つ作りました。`JList`の項目を他のタブへ`D&D`すると、`mouseReleased`メソッドが反応しないのですが、どうすれば回避できますでしょうヵ。 -- [[sao]] &new{2007-09-22 (土) 14:57:27};
 -- %%削除しました `src2.zip`%% を作って`XP`+`JDK 1.6.0_02`で試してみたのですが、`JList`の項目を他のタブへ`D&D`出来ないようです。環境が違うのかな？ -- [[aterai]] &new{2007-09-22 (土) 16:16:29};
-- ぉー！ファイル、わざわざありがとうございます！自分なりに頑張ってます。私がやりたのは`JList`の項目をタブへ`D&D`して項目に書かれている内容を他のタブ(の持ってる`JList`)へ渡したいんです。現状は、２つ以上の項目なら渡せて、`１`つだとエラーがでてしまいます。よくわかっていないまま進めてるので、全然わからないです（汗） -- [[sao]] &new{2007-09-27 (木) 20:03:38};
+- ぉー！ファイル、わざわざありがとうございます！自分なりに頑張ってます。私がやりたのは`JList`の項目をタブへ`D&D`して項目に書かれている内容を他のタブ(の持ってる`JList`)へ渡したいんです。現状は、`2`つ以上の項目なら渡せて、`1`つだとエラーがでてしまいます。よくわかっていないまま進めてるので、全然わからないです（汗） -- [[sao]] &new{2007-09-27 (木) 20:03:38};
 -- あ、`src2.zip`は的外れでしたね。このページの`DnDList`を`JTabbedPane`に入れて、項目をタブタイトルにドロップすると`Exception`の発生するバグがあるのかも？と勘違いしていました。このページのサンプルを改造するなら、`src2.zip`ではなく、[http://terai.xrea.jp/swing/dropontabtitle/src.zip こちらのソース(名前を変更しました)]、チュートリアルなら[http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#DragListDemo DragListDemo] が参考になるかも。 -- [[aterai]] &new{2007-09-28 (金) 02:24:23};
 - `src3`ありがとうございます☆軽快に動きますね！すごく！`src3`ですが、`DnDList`に`setEnabled(true);`を追加しました。が、まったくわからず…思いのほか、`2`項目以上の`D&D`って難しいですネ(汗 -- [[sao]] &new{2007-09-28 (金) 17:50:42};
 

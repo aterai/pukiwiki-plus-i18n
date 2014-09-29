@@ -105,14 +105,12 @@ list.setDragEnabled(true);
 
 - `importData`
 -- 使用されていない？`importString(...)`の内容をこちらに移動
-
 - `cleanup`
--- 例えば、項目`0`,`1`,`2`を複数選択して、`1`と`2`の間にドロップすると、`1`,`2`,`2`になる
-
+-- 例えば、項目`0`,`1`,`2`を複数選択して、`1`と`2`の間にドロップすると、`1`,`2`,`2`になるので、以下のように変更
 #code{{
-for(int i=0;i<indices.length;i++) {
-  //if(indices[i]>addIndex) {
-  if(indices[i]>=addIndex) {
+for(int i = 0; i < indices.length; i++) {
+  //if(indices[i] > addIndex) {
+  if(indices[i] >= addIndex) {
 //...
 }}
 
