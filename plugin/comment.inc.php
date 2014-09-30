@@ -150,59 +150,65 @@ function plugin_comment_honeypot()
 
 function plugin_comment_convert()
 {
-	global $vars, $digest, $script;	//, $_btn_comment, $_btn_name, $_msg_comment;
-	static $numbers = array();
-	static $all_numbers = 0;
-	static $comment_cols = PLUGIN_COMMENT_SIZE_MSG;
+// 	global $vars, $digest, $script;	//, $_btn_comment, $_btn_name, $_msg_comment;
+// 	static $numbers = array();
+// 	static $all_numbers = 0;
+// 	static $comment_cols = PLUGIN_COMMENT_SIZE_MSG;
+//
+// 	$_btn_name    = _("Name: ");
+// 	$_btn_comment = _("Post Comment");
+// 	$_msg_comment = _("Comment: ");
+//
+// 	$auth_guide = '';
+// 	if (PKWK_READONLY == ROLE_AUTH) {
+// 		exist_plugin('login');
+// 		$auth_guide = do_plugin_inline('login');
+// 	}
+//
+// 	// if (PKWK_READONLY) return ''; // Show nothing
+// 	if (auth::check_role('readonly')) return $auth_guide;
+// 	if (! isset($numbers[$vars['page']])) $numbers[$vars['page']] = 0;
+// 	$comment_no = $numbers[$vars['page']]++;
+// 	$comment_all_no = $all_numbers++;
+//
+// 	$options = func_num_args() ? func_get_args() : array();
+//
+// 	list($user, $link, $disabled) = plugin_comment_get_nick();
+//
+// 	if (in_array('noname', $options)) {
+// 		$nametags = '<label for="_p_comment_comment_' . $comment_all_no . '">' .
+// 			$_msg_comment . '</label>';
+// 	} else {
+// 		$nametags = '<label for="_p_comment_name_' . $comment_all_no . '">' .
+// 			$_btn_name . '</label>' .
+// 			'<input type="text" name="name" id="_p_comment_name_' .
+// 			$comment_all_no .  '" size="' . PLUGIN_COMMENT_SIZE_NAME .
+// 			'" value="'.htmlspecialchars($user).'"'.$disabled.' />' . "\n";
+// 	}
+//
+// 	$helptags = edit_form_assistant();
+// 	$nodate = in_array('nodate', $options) ? '1' : '0';
+// 	$above  = in_array('above',  $options) ? '1' :
+// 		(in_array('below', $options) ? '0' : PLUGIN_COMMENT_DIRECTION_DEFAULT);
+// 	$refpage = '';
+//
+// 	$s_page = htmlspecialchars($vars['page']);
+//
+// 	$ticket = md5(MUTIME);
+// 	if (function_exists('pkwk_session_start') && pkwk_session_start() != 0) {
+// 		$keyword = $ticket;
+// 		$_SESSION[$keyword] = md5(get_ticket() . $digest);
+// 	}
 
-	$_btn_name    = _("Name: ");
-	$_btn_comment = _("Post Comment");
-	$_msg_comment = _("Comment: ");
-
-	$auth_guide = '';
-	if (PKWK_READONLY == ROLE_AUTH) {
-		exist_plugin('login');
-		$auth_guide = do_plugin_inline('login');
-	}
-
-	// if (PKWK_READONLY) return ''; // Show nothing
-	if (auth::check_role('readonly')) return $auth_guide;
-	if (! isset($numbers[$vars['page']])) $numbers[$vars['page']] = 0;
-	$comment_no = $numbers[$vars['page']]++;
-	$comment_all_no = $all_numbers++;
-
-	$options = func_num_args() ? func_get_args() : array();
-
-	list($user, $link, $disabled) = plugin_comment_get_nick();
-
-	if (in_array('noname', $options)) {
-		$nametags = '<label for="_p_comment_comment_' . $comment_all_no . '">' .
-			$_msg_comment . '</label>';
-	} else {
-		$nametags = '<label for="_p_comment_name_' . $comment_all_no . '">' .
-			$_btn_name . '</label>' .
-			'<input type="text" name="name" id="_p_comment_name_' .
-			$comment_all_no .  '" size="' . PLUGIN_COMMENT_SIZE_NAME .
-			'" value="'.htmlspecialchars($user).'"'.$disabled.' />' . "\n";
-	}
-
-	$helptags = edit_form_assistant();
-	$nodate = in_array('nodate', $options) ? '1' : '0';
-	$above  = in_array('above',  $options) ? '1' :
-		(in_array('below', $options) ? '0' : PLUGIN_COMMENT_DIRECTION_DEFAULT);
-	$refpage = '';
-
-	$s_page = htmlspecialchars($vars['page']);
-
-	$ticket = md5(MUTIME);
-	if (function_exists('pkwk_session_start') && pkwk_session_start() != 0) {
-		$keyword = $ticket;
-		$_SESSION[$keyword] = md5(get_ticket() . $digest);
-	}
-
-	return <<<EOD
+    static $times = 0;
+    $times++;
+    if ($times == 1) {
+        return '<article itemprop="comment" itemscope="itemscope" itemtype="http://schema.org/UserComments">';
+    }
+    $times = 0;
+    return <<<EOD
 <br />
-<div id="disqus_thread" itemprop="comment" itemscope="itemscope" itemtype="http://schema.org/UserComments"></div>
+<div id="disqus_thread"></div>
 <script>
 var disqus_shortname = 'javaswingtips';
 (function() {
@@ -213,6 +219,8 @@ dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</article>
+
 <br />
 <div class="ad_bar">
 <!-- responsive -->

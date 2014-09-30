@@ -88,7 +88,12 @@ function plugin_new_inline()
 
 	if($date !== '') {
 		// Show a date string
-		return sprintf(PLUGIN_NEW_DATE_FORMAT, $retval);
+		//return sprintf(PLUGIN_NEW_DATE_FORMAT, $retval);
+        $isotime = date('c', $timestamp);
+        $strtime = <<<EOD
+<time itemprop="commentTime" datetime="$isotime">$retval</time>
+EOD;
+        return sprintf(PLUGIN_NEW_DATE_FORMAT, $strtime);
 	} else {
 		// Show a page name
 		return $retval;
