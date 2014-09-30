@@ -99,7 +99,8 @@ public class MaximumSizeTest{
 - [[DynamicLayoutでレイアウトの動的評価>Swing/DynamicLayout]]
 
 * コメント [#b1623254]
-- 最大サイズも同じ要領で・・・とありますが`JFrame#setMaximumSize`はうまくいかないですね（`JDK1.6.0_u1`）色々調べているのですが、いい方法あるんでしょうか？ -- [[sawshun]] &new{2009-07-27 (月) 11:51:11};
--- 同じ要領なのは、`ComponentListener`を使う場合…のつもりです。 %%わかりづらいのであとで修正しますm(_ _)m。%% すこし修正しました。`setMaximumSize`は、ちょっと難しいのかも([http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6200438 Bug ID: 6200438 Frame's size must be validated against maximized bounds when resizing, win32])。 -- [[aterai]] &new{2009-07-27 (月) 12:05:33};
+#comment
+- 最大サイズも同じ要領で・・・とありますが`JFrame#setMaximumSize`はうまくいかないですね（`JDK1.6.0_u1`）色々調べているのですが、いい方法あるんでしょうか？ -- &user(sawshun); &new{2009-07-27 (月) 11:51:11};
+-- 同じ要領なのは、`ComponentListener`を使う場合…のつもりです。 %%わかりづらいのであとで修正しますm(_ _)m。%% すこし修正しました。`setMaximumSize`は、ちょっと難しいのかも([http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6200438 Bug ID: 6200438 Frame's size must be validated against maximized bounds when resizing, win32])。 -- &user(aterai); &new{2009-07-27 (月) 12:05:33};
 
 #comment

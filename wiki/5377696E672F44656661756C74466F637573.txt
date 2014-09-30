@@ -81,13 +81,14 @@ kfm.addPropertyChangeListener(new PropertyChangeListener() {
 - [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]
 
 * コメント [#x1950fff]
+#comment
 - `JFrame#getRootPane()#setDefaultButton()`は使用方法がよくわからない… -- [[aterai]]
 - `setDefaultButton`って、KBD{Enter}したときに押されたとみなすボタンだったかな…… --  &new{2004-10-14 (木) 23:21:53};
--- ありがとうございます。おかげでようやく理解できました。`JTextField`などにフォーカスがある状態でKBD{Enter}キーを入力すると`setDefaultButton`したボタンが押されるのですね。 -- [[aterai]] &new{2004-10-18 (月) 12:14:15};
--- というわけで、`frame.getRootPane().setDefaultButton(eb);`を追加してみました。上記のサンプルでは、中央の`JTextField`にフォーカスがある状態で、KBD{Enter}キーを押すと、`EAST`ボタンが押されたことになります。 -- [[aterai]] &new{2004-10-18 (月) 12:20:58};
--- %%いつか、`DefaultButton`のページを別に作成すること。 -- [[aterai]] &new{2008-05-07 (水) 19:19:44};%%
--- [[DefaultButtonの設定>Swing/DefaultButton]]に移動。 -- [[aterai]] &new{2008-05-12 (月) 14:40:15};
-- `HierarchyListener`を使用する場合のテスト -- [[aterai]] &new{2009-03-19 (木) 14:51:30};
+-- ありがとうございます。おかげでようやく理解できました。`JTextField`などにフォーカスがある状態でKBD{Enter}キーを入力すると`setDefaultButton`したボタンが押されるのですね。 -- &user(aterai); &new{2004-10-18 (月) 12:14:15};
+-- というわけで、`frame.getRootPane().setDefaultButton(eb);`を追加してみました。上記のサンプルでは、中央の`JTextField`にフォーカスがある状態で、KBD{Enter}キーを押すと、`EAST`ボタンが押されたことになります。 -- &user(aterai); &new{2004-10-18 (月) 12:20:58};
+-- %%いつか、`DefaultButton`のページを別に作成すること。 -- &user(aterai); &new{2008-05-07 (水) 19:19:44};%%
+-- [[DefaultButtonの設定>Swing/DefaultButton]]に移動。 -- &user(aterai); &new{2008-05-12 (月) 14:40:15};
+- `HierarchyListener`を使用する場合のテスト -- &user(aterai); &new{2009-03-19 (木) 14:51:30};
 -- [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]に移動
 
 #comment

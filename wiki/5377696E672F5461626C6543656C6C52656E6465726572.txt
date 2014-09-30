@@ -89,9 +89,10 @@ class MyJLabel extends JLabel {
 - [[JTableのセルの高さを自動調整>Swing/AutoWrapTableCell]]
 
 * コメント [#v61c967e]
-- メモ: `TextAreaCellRenderer`を、`NimbusLookAndFeel`で使ったとき、うまく余白を消す方法が分からない。 -- [[aterai]] &new{2008-05-08 (木) 18:25:18};
-- ここの方法だと行の高さも自動変更してくれます。[http://www.roseindia.net/javatutorials/JTable_in_JDK.shtml This JDK Tutorial shows you how to wrap text inside cells of a JTable] -- [[とおりすがり]] &new{2010-12-10 (金) 10:12:40};
-- ご指摘ありがとうございます。この方法なら、[[JTableのセルの高さを自動調整>Swing/AutoWrapTableCell]]で発生しているバグも修正できそうです。 -- [[aterai]] &new{2010-12-10 (金) 13:50:58};
--- スクロールバーの表示・非表示が繰り返されるバグは修正できそうだけど、高さが更新されない場合がある(上記の`www.roseindia.net`にある例だと、列幅をすこしずつ調整すると、`fox`が表示されなくなる)方は難しそう？ -- [[aterai]] &new{2010-12-10 (金) 17:43:28};
+#comment
+- メモ: `TextAreaCellRenderer`を、`NimbusLookAndFeel`で使ったとき、うまく余白を消す方法が分からない。 -- &user(aterai); &new{2008-05-08 (木) 18:25:18};
+- ここの方法だと行の高さも自動変更してくれます。[http://www.roseindia.net/javatutorials/JTable_in_JDK.shtml This JDK Tutorial shows you how to wrap text inside cells of a JTable] -- &user(とおりすがり); &new{2010-12-10 (金) 10:12:40};
+- ご指摘ありがとうございます。この方法なら、[[JTableのセルの高さを自動調整>Swing/AutoWrapTableCell]]で発生しているバグも修正できそうです。 -- &user(aterai); &new{2010-12-10 (金) 13:50:58};
+-- スクロールバーの表示・非表示が繰り返されるバグは修正できそうだけど、高さが更新されない場合がある(上記の`www.roseindia.net`にある例だと、列幅をすこしずつ調整すると、`fox`が表示されなくなる)方は難しそう？ -- &user(aterai); &new{2010-12-10 (金) 17:43:28};
 
 #comment

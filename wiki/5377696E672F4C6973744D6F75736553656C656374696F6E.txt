@@ -86,11 +86,12 @@ JList list = new JList(model) {
 - [[JListのセルにJCheckBoxを使用する>Swing/CheckBoxCellList]]
 
 * コメント [#tdd44287]
-- `OSX(snow leopard)`では、`MouseEvent`は複数選択が出来ません。キーボードを使っても(KBD{command}+クリック)無理でした。 -- [[nsby]] &new{2011-07-20 (水) 13:15:30};
--- ご指摘ありがとうございます。`OSX`では「KBD{command}+クリック」で複数選択でしたっけ？ `InputEvent.CTRL_MASK`決め打ちではなく、`Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()`に修正した方がいいのかもしれません(ソースなどを更新しましたが、正常に動作するかは確認していません…)。 -- [[aterai]] &new{2011-07-20 (水) 19:33:29};
-- `Web Start`でもう一度実行してみましたが、やはり出来ませんでした。`MouseEvent`で複数選択ha -- [[nsby]] &new{2011-07-22 (金) 15:59:14};
-- あ、変な所で切れてしまいました。すみません。あらためて、`MouseEvent`で複数選択出来るのは、KBD{Shift}+クリックで選択した場合のみです。それ意外はダメでした。(KBD{Ctrl}+クリックとかでもダメ) -- [[nsby]] &new{2011-07-22 (金) 16:02:20};
--- `Web Start`のキャッシュは、…関係なさそうですね。`src.zip`をダウンロードして`JList#processMouseEvent(...)`内で、`System.out.println(e);`したり`super.processMouseEvent(convertMouseEvent(e));`だけにしてみるとどうなるでしょうか？ -- [[aterai]] &new{2011-07-24 (日) 07:58:36};
+#comment
+- `OSX(snow leopard)`では、`MouseEvent`は複数選択が出来ません。キーボードを使っても(KBD{command}+クリック)無理でした。 -- &user(nsby); &new{2011-07-20 (水) 13:15:30};
+-- ご指摘ありがとうございます。`OSX`では「KBD{command}+クリック」で複数選択でしたっけ？ `InputEvent.CTRL_MASK`決め打ちではなく、`Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()`に修正した方がいいのかもしれません(ソースなどを更新しましたが、正常に動作するかは確認していません…)。 -- &user(aterai); &new{2011-07-20 (水) 19:33:29};
+- `Web Start`でもう一度実行してみましたが、やはり出来ませんでした。`MouseEvent`で複数選択ha -- &user(nsby); &new{2011-07-22 (金) 15:59:14};
+- あ、変な所で切れてしまいました。すみません。あらためて、`MouseEvent`で複数選択出来るのは、KBD{Shift}+クリックで選択した場合のみです。それ意外はダメでした。(KBD{Ctrl}+クリックとかでもダメ) -- &user(nsby); &new{2011-07-22 (金) 16:02:20};
+-- `Web Start`のキャッシュは、…関係なさそうですね。`src.zip`をダウンロードして`JList#processMouseEvent(...)`内で、`System.out.println(e);`したり`super.processMouseEvent(convertMouseEvent(e));`だけにしてみるとどうなるでしょうか？ -- &user(aterai); &new{2011-07-24 (日) 07:58:36};
 - `MouseEvent e`を出力してみました。ちゃんと処理してるように見えるんですが・・・
 
 #code{{
@@ -135,12 +136,12 @@ mentY=0.0,border=,flags=50332008,maximumSize=,minimumSize=,preferredSize=,fixedC
 ry$SystemColorProxy[r=39,g=118,b=218],selectionForeground=com.apple.laf.AquaImageFactory$SystemColorProxy[r=255,g=255,b=255],visibleRowCount=8,layoutOrientation=0] e.getModifiers() : 0x14
 }}
 
-- ちなみに `e.getModifiers() | Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(),`を`e.getModifiers() | 0x01`, `#0x01`は KBD{Shift}とかに無理矢理するとクリックだけでKBD{Shift}と同じ動作になるんですけどね・・・。もう意味が分かりません。 -- [[nsby]] &new{2011-07-27 (水) 10:52:51};
-- あら見づらくなりすみません。 -- [[nsby]] &new{2011-07-27 (水) 10:54:02};
-- ようするに、`convertMouseEvent`内の`e.getModifiers()`に`0x02/0x04`を`or`しても`OSX`では無視されてるようです。なぜなんでしょう？ -- [[nsby]] &new{2011-07-27 (水) 10:58:53};
--- ログ(勝手にすこし整形しました)どうもです。たしかにうまくいっているっぽいのに、不思議な感じですね。 %%`InputEvent.CTRL_DOWN_MASK`と`InputEvent.CTRL_MASK`の違い？%% もうすこし調べてみます。 -- [[aterai]] &new{2011-07-27 (水) 15:04:05};
--- `Java 8`で修正されているかも？ [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=7170657 Bug ID: JDK-7170657 macosx - There seems to be no keyboard/mouse action to select non-contiguous items in List] -- [[aterai]] &new{2014-08-12 (火) 02:10:09};
-- メモ: [http://developer.apple.com/jp/technotes/tn2042.html Tailoring Java Applications for Mac OS X] -- [[aterai]] &new{2011-07-27 (水) 15:18:46};
-- ドラッグによる`JList`の複数選択は、[[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]を使用する方法もあります。 -- [[aterai]] &new{2012-05-30 (水) 15:18:25};
+- ちなみに `e.getModifiers() | Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(),`を`e.getModifiers() | 0x01`, `#0x01`は KBD{Shift}とかに無理矢理するとクリックだけでKBD{Shift}と同じ動作になるんですけどね・・・。もう意味が分かりません。 -- &user(nsby); &new{2011-07-27 (水) 10:52:51};
+- あら見づらくなりすみません。 -- &user(nsby); &new{2011-07-27 (水) 10:54:02};
+- ようするに、`convertMouseEvent`内の`e.getModifiers()`に`0x02/0x04`を`or`しても`OSX`では無視されてるようです。なぜなんでしょう？ -- &user(nsby); &new{2011-07-27 (水) 10:58:53};
+-- ログ(勝手にすこし整形しました)どうもです。たしかにうまくいっているっぽいのに、不思議な感じですね。 %%`InputEvent.CTRL_DOWN_MASK`と`InputEvent.CTRL_MASK`の違い？%% もうすこし調べてみます。 -- &user(aterai); &new{2011-07-27 (水) 15:04:05};
+-- `Java 8`で修正されているかも？ [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=7170657 Bug ID: JDK-7170657 macosx - There seems to be no keyboard/mouse action to select non-contiguous items in List] -- &user(aterai); &new{2014-08-12 (火) 02:10:09};
+- メモ: [http://developer.apple.com/jp/technotes/tn2042.html Tailoring Java Applications for Mac OS X] -- &user(aterai); &new{2011-07-27 (水) 15:18:46};
+- ドラッグによる`JList`の複数選択は、[[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]を使用する方法もあります。 -- &user(aterai); &new{2012-05-30 (水) 15:18:25};
 
 #comment

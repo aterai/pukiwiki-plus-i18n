@@ -98,8 +98,9 @@ class AlternateRowColorComboBox<E> extends JComboBox<E> {
 - [[JComboBoxの文字色を変更する>Swing/ComboBoxForegroundColor]]
 
 * コメント [#i79a7ae9]
-- `JComboBox#setEditable(true)`は必須のようです。編集不可にするには`Editor`部分の`JTextField`に対して`setEditable(false)` -- [[Y]] &new{2006-10-10 (火) 18:51:38};
--- ご指摘ありがとうございます。せっかく`JComboBox`を上下に並べているのだから、編集可の場合と不可の場合のサンプルにすればよかったですね。編集不可の場合(`JComboBox#setEditable(false)`)に色を着けるには、上記の方法と、以下のように`JComboBox#setBackground(Color)`メソッドを使う方法があるようです。 %%編集不可の場合は、この部分の色もレンダラーが勝手にやってくれてたような気がするのですが、勘違いだったのかも。%% バージョンや`LookAndFeel`で異なる？ようです。 -- [[aterai]] &new{2006-10-10 (火) 19:58:51};
+#comment
+- `JComboBox#setEditable(true)`は必須のようです。編集不可にするには`Editor`部分の`JTextField`に対して`setEditable(false)` -- &user(Y); &new{2006-10-10 (火) 18:51:38};
+-- ご指摘ありがとうございます。せっかく`JComboBox`を上下に並べているのだから、編集可の場合と不可の場合のサンプルにすればよかったですね。編集不可の場合(`JComboBox#setEditable(false)`)に色を着けるには、上記の方法と、以下のように`JComboBox#setBackground(Color)`メソッドを使う方法があるようです。 %%編集不可の場合は、この部分の色もレンダラーが勝手にやってくれてたような気がするのですが、勘違いだったのかも。%% バージョンや`LookAndFeel`で異なる？ようです。 -- &user(aterai); &new{2006-10-10 (火) 19:58:51};
 
 #code{{
 final JComboBox c = new JComboBox();
@@ -111,10 +112,10 @@ c.addItemListener(new ItemListener() {
 });
 }}
 
--- せっかくなので、上の`JComboBox`は編集不可、下は編集可の場合で、色を着けるサンプルに変更しました。 -- [[aterai]] &new{2006-10-10 (火) 20:31:03};
-- メモ:[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6367601 Windows/Motif L&F: Changing the JComboBox background does not change the popup of the JCombobox] -- [[aterai]] &new{2007-12-13 (木) 15:43:50};
-- サンプルソースの`LookAndFeel`を設定しないようにすると、編集不可コンボはボタン部分も背景色になってしまう・・ -- [[han]] &new{2008-10-21 (火) 10:41:38};
--- `MetalLookAndFeel`などは、コンボボックスの背景色を変更すると矢印ボタンの色まで変更してしまう仕様？みたいですね。回避するなら、以下のように`UI`で使っている`PropertyChangeListener`をオーバーライドしてしまうのはどうでしょう。 -- [[aterai]] &new{2008-10-21 (火) 15:41:21};
+-- せっかくなので、上の`JComboBox`は編集不可、下は編集可の場合で、色を着けるサンプルに変更しました。 -- &user(aterai); &new{2006-10-10 (火) 20:31:03};
+- メモ:[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6367601 Windows/Motif L&F: Changing the JComboBox background does not change the popup of the JCombobox] -- &user(aterai); &new{2007-12-13 (木) 15:43:50};
+- サンプルソースの`LookAndFeel`を設定しないようにすると、編集不可コンボはボタン部分も背景色になってしまう・・ -- &user(han); &new{2008-10-21 (火) 10:41:38};
+-- `MetalLookAndFeel`などは、コンボボックスの背景色を変更すると矢印ボタンの色まで変更してしまう仕様？みたいですね。回避するなら、以下のように`UI`で使っている`PropertyChangeListener`をオーバーライドしてしまうのはどうでしょう。 -- &user(aterai); &new{2008-10-21 (火) 15:41:21};
 
 #code{{
 combo01.setUI(new MetalComboBoxUI() {
@@ -145,6 +146,6 @@ combo01.setSelectedIndex(0);
 combo01.setBackground(evenBGColor);
 }}
 
-- ありがとうございます。動作確認してませんが`UI`をさわればいろんなことができそうですね。で`UIManager`でなんとかできないか気になったので試すと、`UIManager.put("ComboBox.background", new ColorUIResource(Color.white));`で全てのコンボボックスの背景色を設定できました（リストの色分けはできないですが） -- [[han]] &new{2008-10-24 (金) 11:28:10};
+- ありがとうございます。動作確認してませんが`UI`をさわればいろんなことができそうですね。で`UIManager`でなんとかできないか気になったので試すと、`UIManager.put("ComboBox.background", new ColorUIResource(Color.white));`で全てのコンボボックスの背景色を設定できました（リストの色分けはできないですが） -- &user(han); &new{2008-10-24 (金) 11:28:10};
 
 #comment

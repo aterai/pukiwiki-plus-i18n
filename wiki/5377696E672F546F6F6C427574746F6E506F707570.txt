@@ -79,8 +79,9 @@ class MenuToggleButton extends JToggleButton {
 - [https://forums.oracle.com/thread/1375327 Swing - Swing bug? cannot set width of JToggleButton]
 
 * コメント [#h4a49a4d]
-- いつもお世話になっております。`JToggleButton`を`On/Off`時、背景色を変える方法はありますか？`jToggleButton.setBackground(Color.RED);`で試してみましたが、色変化はありませんでした。ご教示、よろしくお願いいたします -- [[Panda]] &new{2011-04-04 (月) 14:23:21};
-- こんばんは。`JToggleButton#setBackground(Color)`は、`LookAndFeel`によっては適用されない場合があります。このため、独自の`ToggleButtonUI`を用意したり、例えば以下のような方法を使用する必要があります。 -- [[aterai]] &new{2011-04-04 (月) 17:15:55};
+#comment
+- いつもお世話になっております。`JToggleButton`を`On/Off`時、背景色を変える方法はありますか？`jToggleButton.setBackground(Color.RED);`で試してみましたが、色変化はありませんでした。ご教示、よろしくお願いいたします -- &user(Panda); &new{2011-04-04 (月) 14:23:21};
+- こんばんは。`JToggleButton#setBackground(Color)`は、`LookAndFeel`によっては適用されない場合があります。このため、独自の`ToggleButtonUI`を用意したり、例えば以下のような方法を使用する必要があります。 -- &user(aterai); &new{2011-04-04 (月) 17:15:55};
 -- 例`1`: 文字列から背景色、縁などのすべてを含めたアイコンを用意して`setSelectedIcon`で設定する
 -- 例`2`: `setContentAreaFilled(false);`として、自前で選択時の背景を描画する
 

@@ -148,16 +148,17 @@ class LockingGlassPane extends JComponent {
 - [http://tips4java.wordpress.com/2008/11/07/disabled-glass-pane/ Disabled Glass Pane « Java Tips Weblog]
 
 * コメント [#h83774c4]
-- KBD{Tab}キーで状態遷移しないようにするため、なにもしない`FocusTraversalPolicy`を追加しました。 -- [[aterai]] &new{2005-04-18 (月) 10:51:25};
-- 相当悩みました。`JDialog`だと同じことができないのは何でなんでしょうねぇ。。。 -- [[おれ]] &new{2006-05-17 (水) 16:33:12};
--- カーソルが変わらないのでしょうか? それともコンパイルエラーが出るとかでしょうか? -- [[aterai]] &new{2006-05-17 (水) 17:59:14};
-- 申し訳ない。カーソルが変わらないのだけれど、`1.5`系でコンパイルするとだめみたい。同じソースでも`1.4`系でコンパイルするとちゃんと変わる。`1.5`でのバグかな。。。 -- [[おれ]] &new{2006-05-18 (木) 12:58:11};
+#comment
+- KBD{Tab}キーで状態遷移しないようにするため、なにもしない`FocusTraversalPolicy`を追加しました。 -- &user(aterai); &new{2005-04-18 (月) 10:51:25};
+- 相当悩みました。`JDialog`だと同じことができないのは何でなんでしょうねぇ。。。 -- &user(おれ); &new{2006-05-17 (水) 16:33:12};
+-- カーソルが変わらないのでしょうか? それともコンパイルエラーが出るとかでしょうか? -- &user(aterai); &new{2006-05-17 (水) 17:59:14};
+- 申し訳ない。カーソルが変わらないのだけれど、`1.5`系でコンパイルするとだめみたい。同じソースでも`1.4`系でコンパイルするとちゃんと変わる。`1.5`でのバグかな。。。 -- &user(おれ); &new{2006-05-18 (木) 12:58:11};
 -- 追記。`JDialog`のコンストラクタに`null`を指定しているとこうなるようです。オーナフレームを指定してあげたら、`1.5`でもきちんと出ました。お騒がせしました。 -- [[おれ]]
--- なるほど、`new JDialog((Frame)null);`で試してみるとカーソルが変わらないですね。情報どうもでした。 -- [[aterai]] &new{2006-05-18 (木) 21:45:15};
-- `DefaultFocusTraversalPolicy`を使うように変更しました。 -- [[aterai]] &new{2007-07-03 (火) 16:39:12};
-- `GlassPane`で、`FocusTraversalPolicy`を使わず、`print`を使って`Mnemonic`などをブロックするように変更しました。 -- [[aterai]] &new{2008-04-15 (火) 17:14:09};
-- `SwingWorker`を使うように変更。 -- [[aterai]] &new{2011-03-26 (土) 23:21:11};
-- 入力抑制であればAWTEventListenerを追加してInputEventをconsumeしちゃえば良いのでは・・・？ -- [[sawshun]] &new{2014-01-14 (火) 08:32:09};
--- `AWTEventListener`を使うのは便利な方法だと思いますが、セキュリティマネージャの設定によっては`SecurityException`が発生したり、ドキュメントには「[http://docs.oracle.com/javase/jp/7/api/java/awt/Toolkit.html#addAWTEventListener%28java.awt.event.AWTEventListener,%20long%29 アクセシビリティー、イベントの記録と再生、および診断トレースなどの特別な機能をサポートすることを主な目的としているので、アプリケーションの使用では推奨されません。]」的な注意事項があるので、使い所を考慮する必要がありそうです。このサンプルのような場合で`InputEvent#consume()`を使うなら`1.7`以上で`JLayer`を使用する方が無難かもしれません。 -- [[aterai]] &new{2014-01-14 (火) 14:13:39};
+-- なるほど、`new JDialog((Frame)null);`で試してみるとカーソルが変わらないですね。情報どうもでした。 -- &user(aterai); &new{2006-05-18 (木) 21:45:15};
+- `DefaultFocusTraversalPolicy`を使うように変更しました。 -- &user(aterai); &new{2007-07-03 (火) 16:39:12};
+- `GlassPane`で、`FocusTraversalPolicy`を使わず、`print`を使って`Mnemonic`などをブロックするように変更しました。 -- &user(aterai); &new{2008-04-15 (火) 17:14:09};
+- `SwingWorker`を使うように変更。 -- &user(aterai); &new{2011-03-26 (土) 23:21:11};
+- 入力抑制であればAWTEventListenerを追加してInputEventをconsumeしちゃえば良いのでは・・・？ -- &user(sawshun); &new{2014-01-14 (火) 08:32:09};
+-- `AWTEventListener`を使うのは便利な方法だと思いますが、セキュリティマネージャの設定によっては`SecurityException`が発生したり、ドキュメントには「[http://docs.oracle.com/javase/jp/7/api/java/awt/Toolkit.html#addAWTEventListener%28java.awt.event.AWTEventListener,%20long%29 アクセシビリティー、イベントの記録と再生、および診断トレースなどの特別な機能をサポートすることを主な目的としているので、アプリケーションの使用では推奨されません。]」的な注意事項があるので、使い所を考慮する必要がありそうです。このサンプルのような場合で`InputEvent#consume()`を使うなら`1.7`以上で`JLayer`を使用する方が無難かもしれません。 -- &user(aterai); &new{2014-01-14 (火) 14:13:39};
 
 #comment

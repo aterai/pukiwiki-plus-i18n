@@ -157,9 +157,10 @@ public class WComponentPeerTest {
 - [http://docs.oracle.com/javase/jp/6/technotes/guides/jni/ JDK 6 Java Native Interface 関連 API & 開発者ガイド -- Sun Microsystems]
 
 * コメント [#h2768609]
-- `Win32`の`MS Visual C++`の`WndProc()`にコールバックされるメッセージを`JNI`で検出する掲載もあると助かります。 -- [[Java, C, JNI どれも超初心者]] &new{2011-07-29 (金) 22:06:11};
--- `JNI`関係勉強しないとと思いながら最近はさっぱりです。どこかにサンプルがないか適当に検索してみたら、`JNA`に`WndProcCallbackListener`([http://stackoverflow.com/questions/4041174/create-a-native-windows-window-in-jna-and-some-getwindowlong-with-gwl-wndproc Create a native Windows window in JNA and some GetWindowLong with GWL_WNDPROC])というそれっぽいのがあるみたいです。 -- [[aterai]] &new{2011-08-01 (月) 15:30:50};
-- ありがとうござます。一応リンク拝見しましたがもう少し自力で調査してみます。もし分かったら簡単に報告を書き込みます。 -- [[Java, C, JNI どれも超初心者]] &new{2011-08-02 (火) 13:06:26};
-- 結論：あきらめました。リスナー各所にコールバックで処理したい内容をベタに記述しました。 -- [[Java, C, JNI どれも超初心者?]] &new{2011-08-20 (土) 21:37:18};
+#comment
+- `Win32`の`MS Visual C++`の`WndProc()`にコールバックされるメッセージを`JNI`で検出する掲載もあると助かります。 -- &user(Java, C, JNI どれも超初心者); &new{2011-07-29 (金) 22:06:11};
+-- `JNI`関係勉強しないとと思いながら最近はさっぱりです。どこかにサンプルがないか適当に検索してみたら、`JNA`に`WndProcCallbackListener`([http://stackoverflow.com/questions/4041174/create-a-native-windows-window-in-jna-and-some-getwindowlong-with-gwl-wndproc Create a native Windows window in JNA and some GetWindowLong with GWL_WNDPROC])というそれっぽいのがあるみたいです。 -- &user(aterai); &new{2011-08-01 (月) 15:30:50};
+- ありがとうござます。一応リンク拝見しましたがもう少し自力で調査してみます。もし分かったら簡単に報告を書き込みます。 -- &user(Java, C, JNI どれも超初心者); &new{2011-08-02 (火) 13:06:26};
+- 結論：あきらめました。リスナー各所にコールバックで処理したい内容をベタに記述しました。 -- &user(Java, C, JNI どれも超初心者?); &new{2011-08-20 (土) 21:37:18};
 
 #comment

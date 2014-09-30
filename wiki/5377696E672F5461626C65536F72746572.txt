@@ -79,6 +79,7 @@ protected ComparableComparator getComparator(int column) {
 - [http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSorterDemoProject/src/components/TableSorter.java TableSorter.java]
 
 * コメント [#n7689273]
+#comment
 - いつもお世話になっております。 `jtable`を下記のように初期化します。
 
 #code{{
@@ -89,8 +90,8 @@ JTable table = new JTable(sorter);
 sorter.setTableHeader(table.getTableHeader());
 }}
 
-- その後、ソートした状態で、一行ずつのデータを取り出した場合、 どうすればよろしいでしょうか？例えば、`No.`欄をソートして、下り順で`No.`欄と`Name`欄のデータを`System.out.println(model.getValueAt(row, 1))`したい場合、その`row`は`sorter`に関連していると思います。 `row=?`かが分かりません。説明下手で、大変申し訳ございません。ご教示をください。よろしくお願い致します。 -- [[Tiger]] &new{2010-08-05 (木) 06:07:47};
--- こんにちは。多分、`sorter.modelIndex(viewIndex);`でいいと思います。 -- [[aterai]] &new{2010-08-05 (木) 13:17:51};
+- その後、ソートした状態で、一行ずつのデータを取り出した場合、 どうすればよろしいでしょうか？例えば、`No.`欄をソートして、下り順で`No.`欄と`Name`欄のデータを`System.out.println(model.getValueAt(row, 1))`したい場合、その`row`は`sorter`に関連していると思います。 `row=?`かが分かりません。説明下手で、大変申し訳ございません。ご教示をください。よろしくお願い致します。 -- &user(Tiger); &new{2010-08-05 (木) 06:07:47};
+-- こんにちは。多分、`sorter.modelIndex(viewIndex);`でいいと思います。 -- &user(aterai); &new{2010-08-05 (木) 13:17:51};
 
 #code{{
 import java.awt.*;
@@ -145,8 +146,8 @@ public class SorterModelIndex {
 }
 }}
 
-- 早速のご回答、ありがとうございました。 選択された行の値を取り出すことができますが、今回表(`jTable`)の内容を`CSV`に書き出そうとしております。即ち選択した行がない場合、ソートをして(上り順`CCC`、`DDD`, `aaa`、`bbb`), `jTable.getValueAt(sorter.modelIndex(i),j);`（ `i`:行　`j`：列）、書き出した結果は（`aaa`, `bbb`, `CCC`, `DDD`）。即ち`sorter`していなかったの状態で書き出されました。読みにくいかもしれませんが、ご教示ください。 宜しくお願い致します -- [[Tiger]] &new{2010-08-05 (木) 15:42:51};
--- `JTable`に表示されている見たまま(全選択、KBD{Ctrl+C}でコピーして`TSV`)の状態でということでしょうか。それなら`sorter`は関係なく、以下のように`JTable#getValueAt`メソッドを普通に使えばいいかもしれません(`TableModel#getValueAt`と`JTable#getValueAt`の違いに注意)。 -- [[aterai]] &new{2010-08-05 (木) 17:54:10};
+- 早速のご回答、ありがとうございました。 選択された行の値を取り出すことができますが、今回表(`jTable`)の内容を`CSV`に書き出そうとしております。即ち選択した行がない場合、ソートをして(上り順`CCC`、`DDD`, `aaa`、`bbb`), `jTable.getValueAt(sorter.modelIndex(i),j);`（ `i`:行　`j`：列）、書き出した結果は（`aaa`, `bbb`, `CCC`, `DDD`）。即ち`sorter`していなかったの状態で書き出されました。読みにくいかもしれませんが、ご教示ください。 宜しくお願い致します -- &user(Tiger); &new{2010-08-05 (木) 15:42:51};
+-- `JTable`に表示されている見たまま(全選択、KBD{Ctrl+C}でコピーして`TSV`)の状態でということでしょうか。それなら`sorter`は関係なく、以下のように`JTable#getValueAt`メソッドを普通に使えばいいかもしれません(`TableModel#getValueAt`と`JTable#getValueAt`の違いに注意)。 -- &user(aterai); &new{2010-08-05 (木) 17:54:10};
 
 #code{{
 p.add(new JButton(new AbstractAction("test") {
@@ -164,9 +165,9 @@ p.add(new JButton(new AbstractAction("test") {
 }), BorderLayout.SOUTH);
 }}
 
-- ありがとうございました。ご指摘の通り、できました。 -- [[Tiger]] &new{2010-08-05 (木) 18:08:42};
-- いつもお世話になっております。`JDK1.5`を使っています。`Name`と`Comment`欄をソートするとき、`No.`欄はソートさせないで、固定のままできますか？ご教示をよろしくお願いいたします。 -- [[Tiger]] &new{2010-09-10 (金) 12:41:32};
--- こんにちは。以下のようなレンダラーを使って、表示を`row(View)`にしてしまうのが簡単な気がします(KBD{Ctrl+C}などでコピーすると`Model`の値がコピーされたりしますが…)。 -- [[aterai]] &new{2010-09-10 (金) 14:45:58};
+- ありがとうございました。ご指摘の通り、できました。 -- &user(Tiger); &new{2010-08-05 (木) 18:08:42};
+- いつもお世話になっております。`JDK1.5`を使っています。`Name`と`Comment`欄をソートするとき、`No.`欄はソートさせないで、固定のままできますか？ご教示をよろしくお願いいたします。 -- &user(Tiger); &new{2010-09-10 (金) 12:41:32};
+-- こんにちは。以下のようなレンダラーを使って、表示を`row(View)`にしてしまうのが簡単な気がします(KBD{Ctrl+C}などでコピーすると`Model`の値がコピーされたりしますが…)。 -- &user(aterai); &new{2010-09-10 (金) 14:45:58};
 
 #code{{
 TableColumn col = table.getColumnModel().getColumn(0);
@@ -179,6 +180,6 @@ col.setCellRenderer(new DefaultTableCellRenderer() {
   }
 });
 }}
-- ご教示、ありがとうございました。思ったとおりの動きです。 -- [[Tiger]] &new{2010-09-10 (金) 16:32:27};
+- ご教示、ありがとうございました。思ったとおりの動きです。 -- &user(Tiger); &new{2010-09-10 (金) 16:32:27};
 
 #comment

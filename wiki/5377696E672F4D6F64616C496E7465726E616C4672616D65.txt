@@ -188,11 +188,12 @@ class PrintGlassPane extends JPanel {
 -- [[Cursorを砂時計に変更>Swing/WaitCursor]]
 
 * コメント [#h8218ae6]
-- %%[[JInternalFrameを半透明にする>Swing/TransparentFrame]]と、同様に`GlassPane`が`Ubuntu`(`GNOME`)などで半透明にならない場合があります。%% -- [[aterai]] &new{2007-10-15 (月) 13:16:07};
--- KBD{Alt+2}で開いた場合、`JInternalFrame`に`GlassPane`を乗せるのではなく、直接`JDesktopPane`の`JLayeredPane.MODAL_LAYER`に追加するように変更しました。 -- [[aterai]] &new{2007-10-16 (火) 17:31:50};
-- メモ: [http://weblogs.java.net/blog/alexfromsun/archive/2008/01/ Alexander Potochkin's Blog: Disabling Swing Containers, the final solution?]のサンプルでは、`Mnemonic`もちゃんとブロックできているようなので、「あとで調べる & 参考にする」こと。 -- [[aterai]] &new{2008-01-25 (金) 17:28:21};
-- `Mnemonic`を数字キー(KBD{1}, KBD{2}, KBD{3})に変更 -- [[aterai]] &new{2008-04-25 (金) 20:51:49};
-- すべての`Mnemonic`を一時的に無効化したい場合に、`UIManager.java`の`private static final String disableMnemonicKey = "swing.disablenavaids";`は使えない？ 以下のように、`KeyboardFocusManager.setCurrentKeyboardFocusManager(...)`で、KBD{Alt}キーなどを無視する方法もあるが…、もっと簡単な方法を調査中。 -- [[aterai]] &new{2013-05-09 (木) 11:46:38};
+#comment
+- %%[[JInternalFrameを半透明にする>Swing/TransparentFrame]]と、同様に`GlassPane`が`Ubuntu`(`GNOME`)などで半透明にならない場合があります。%% -- &user(aterai); &new{2007-10-15 (月) 13:16:07};
+-- KBD{Alt+2}で開いた場合、`JInternalFrame`に`GlassPane`を乗せるのではなく、直接`JDesktopPane`の`JLayeredPane.MODAL_LAYER`に追加するように変更しました。 -- &user(aterai); &new{2007-10-16 (火) 17:31:50};
+- メモ: [http://weblogs.java.net/blog/alexfromsun/archive/2008/01/ Alexander Potochkin's Blog: Disabling Swing Containers, the final solution?]のサンプルでは、`Mnemonic`もちゃんとブロックできているようなので、「あとで調べる & 参考にする」こと。 -- &user(aterai); &new{2008-01-25 (金) 17:28:21};
+- `Mnemonic`を数字キー(KBD{1}, KBD{2}, KBD{3})に変更 -- &user(aterai); &new{2008-04-25 (金) 20:51:49};
+- すべての`Mnemonic`を一時的に無効化したい場合に、`UIManager.java`の`private static final String disableMnemonicKey = "swing.disablenavaids";`は使えない？ 以下のように、`KeyboardFocusManager.setCurrentKeyboardFocusManager(...)`で、KBD{Alt}キーなどを無視する方法もあるが…、もっと簡単な方法を調査中。 -- &user(aterai); &new{2013-05-09 (木) 11:46:38};
 
 #code{{
 KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();

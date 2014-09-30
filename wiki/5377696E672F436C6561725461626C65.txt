@@ -47,10 +47,11 @@ table.setModel(new DefaultTableModel());
 - [[JTableのセルにJButtonを追加して行削除>Swing/DeleteButtonInCell]]
 
 * コメント [#h696ae90]
-- ソートした状態で「remove all rows」を押すと例外が発生しますよ -- [[tohrisugari]] &new{2013-07-23 (火) 08:51:30};
--- ご指摘ありがとうございます。確かに`ArrayIndexOutOfBoundsException: 0 >= 0`が発生していますね。以前は正常だったはず？と思って調べてみたら、[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6967479 Bug ID: JDK-6967479 JTable sorter fires even if the model is empty]が原因？で、`6u10,6u20`以降で発生しているようです。 %%`8`で修正される予定？みたいなので、しばらくは別の方法を使用するように修正し%% %%何時修正されるか分からないので回避方法を考えてみようと思います。%% -- [[aterai]] &new{2013-07-23 (火) 10:47:23};
--- %%`model.setRowCount(0);`の前に、`table.setRowSorter(null);`とソートを不可にする修正などを追加しました。%% [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6967479 Bug ID: JDK-6967479 JTable sorter fires even if the model is empty]にあるように`DefaultTableModel#getColumnClass`をオーバーライドする方法が簡単なので、そのように修正しました。 -- [[aterai]] &new{2013-07-23 (火) 14:44:15};
-- Javaのバグだったのですね。ちなみに私はDefaultTableModel#getColumnClassのオーバーライドでは解決しなかったので、table.setRowSorter(null)の対応案を参考にさせていただきました。 -- [[tohrisugari]] &new{2013-07-26 (金) 12:08:04};
--- 行の追加削除があるサンプルなのに、`model`が空の場合でも`TableModel#getValueAt(0, column).getClass()` %%を呼ぶような%% が呼ばれる可能性がある手抜きをしているのが悪いので、`Java`のバグというのはかわいそうな気も(面倒なので出来れば修正して欲しいですが)します(^^;。 -- [[aterai]] &new{2013-07-26 (金) 18:46:28};
+#comment
+- ソートした状態で「remove all rows」を押すと例外が発生しますよ -- &user(tohrisugari); &new{2013-07-23 (火) 08:51:30};
+-- ご指摘ありがとうございます。確かに`ArrayIndexOutOfBoundsException: 0 >= 0`が発生していますね。以前は正常だったはず？と思って調べてみたら、[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6967479 Bug ID: JDK-6967479 JTable sorter fires even if the model is empty]が原因？で、`6u10,6u20`以降で発生しているようです。 %%`8`で修正される予定？みたいなので、しばらくは別の方法を使用するように修正し%% %%何時修正されるか分からないので回避方法を考えてみようと思います。%% -- &user(aterai); &new{2013-07-23 (火) 10:47:23};
+-- %%`model.setRowCount(0);`の前に、`table.setRowSorter(null);`とソートを不可にする修正などを追加しました。%% [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6967479 Bug ID: JDK-6967479 JTable sorter fires even if the model is empty]にあるように`DefaultTableModel#getColumnClass`をオーバーライドする方法が簡単なので、そのように修正しました。 -- &user(aterai); &new{2013-07-23 (火) 14:44:15};
+- Javaのバグだったのですね。ちなみに私はDefaultTableModel#getColumnClassのオーバーライドでは解決しなかったので、table.setRowSorter(null)の対応案を参考にさせていただきました。 -- &user(tohrisugari); &new{2013-07-26 (金) 12:08:04};
+-- 行の追加削除があるサンプルなのに、`model`が空の場合でも`TableModel#getValueAt(0, column).getClass()` %%を呼ぶような%% が呼ばれる可能性がある手抜きをしているのが悪いので、`Java`のバグというのはかわいそうな気も(面倒なので出来れば修正して欲しいですが)します(^^;。 -- &user(aterai); &new{2013-07-26 (金) 18:46:28};
 
 #comment

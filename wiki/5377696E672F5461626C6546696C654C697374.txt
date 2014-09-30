@@ -42,10 +42,11 @@ private static Rectangle getCellRect2(JTable table, int row, int col) {
 - [[JTableのセルをエクスプローラ風に表示する>Swing/ExplorerLikeTable]]
 
 * コメント [#sf7f8963]
-- `JTable#columnAtPoint(Point)`メソッドをオーバーライドする方法では、`CPU`が`100%`になってしまうので、クリック、ドラッグした場合だけ、評価するように修正しました。 -- [[aterai]] &new{2007-04-16 (月) 18:46:39};
-- `JTable#getToolTipText(MouseEvent)`メソッドをオーバーライドして、`Name`カラムのセルの余白では、ツールチップも表示しないように変更しました。 -- [[aterai]] &new{2007-04-16 (月) 18:49:02};
-- `table.putClientProperty("Table.isFileList", Boolean.TRUE);`を使えば、`MouseListener`などもすべて必要なさそう…。 -- [[aterai]] &new{2010-01-01 (金) 02:02:50};
--- `putClientProperty("Table.isFileList", Boolean.TRUE)`を使用するように変更、[[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]での範囲選択機能を追加。 -- [[aterai]] &new{2010-01-05 (火) 16:07:48};
-- KBD{Ctrl+A}などの`JTable#selectAll()`で、`Comment`カラムが選択できるのを修正。 -- [[aterai]] &new{2010-08-25 (水) 18:41:45};
+#comment
+- `JTable#columnAtPoint(Point)`メソッドをオーバーライドする方法では、`CPU`が`100%`になってしまうので、クリック、ドラッグした場合だけ、評価するように修正しました。 -- &user(aterai); &new{2007-04-16 (月) 18:46:39};
+- `JTable#getToolTipText(MouseEvent)`メソッドをオーバーライドして、`Name`カラムのセルの余白では、ツールチップも表示しないように変更しました。 -- &user(aterai); &new{2007-04-16 (月) 18:49:02};
+- `table.putClientProperty("Table.isFileList", Boolean.TRUE);`を使えば、`MouseListener`などもすべて必要なさそう…。 -- &user(aterai); &new{2010-01-01 (金) 02:02:50};
+-- `putClientProperty("Table.isFileList", Boolean.TRUE)`を使用するように変更、[[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]での範囲選択機能を追加。 -- &user(aterai); &new{2010-01-05 (火) 16:07:48};
+- KBD{Ctrl+A}などの`JTable#selectAll()`で、`Comment`カラムが選択できるのを修正。 -- &user(aterai); &new{2010-08-25 (水) 18:41:45};
 
 #comment

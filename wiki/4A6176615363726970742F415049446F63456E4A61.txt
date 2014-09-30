@@ -46,12 +46,13 @@ javascript:(function(){var l=location,m=l.href.match('^(https?://)(.+)((?:api|te
 - [http://d.hatena.ne.jp/ymorimo/20070719/1184847240 ymorimoの日記 - Googleの日本語と英語を切り替え]
 
 * コメント [#pcd07d68]
-- 日本語版は docs.oracle.com/javase/jp/6/ を見るように変更 -- [[aterai]] &new{2012-04-11 (水) 19:15:42};
-- %%googleなどの検索エンジンのキャッシュから移動できるように変更（検索結果に表示された java.sun.com のドキュメントが、http://www.oracle.com/technetwork/java/index.html に転送されてしまうようになったので） -- [[aterai]] &new{2012-09-18 (火) 22:59:31};%%
-- `Java 8`のドキュメントは、まだ英語版のみなので未対応。ただ、`7`に比べると無駄？な装飾も減って、文字サイズも`6`並の大きさに戻っているので見やすくなっている。 -- [[aterai]] &new{2014-03-24 (月) 19:05:08};
--- `Java 8`のドキュメントでは、各メソッドなどへのアンカーにある空白や`(,)`などが`-`に置き換わっている？　空白を`%20`などと`URL`エンコードしなくても良いのは便利そう(メモ: 詳しい変更内容を探すこと)。 -- [[aterai]] &new{2014-03-24 (月) 19:37:54};
--- 配列は、`[]` [http://docs.oracle.com/javase/7/docs/api/java/awt/geom/AffineTransform.html#transform(double%5B%5D,%20int,%20double%5B%5D,%20int,%20int) %5B%5D]から[http://docs.oracle.com/javase/8/docs/api/java/awt/geom/AffineTransform.html#transform-double:A-int-double:A-int-int- :A]。 -- [[aterai]] &new{2014-03-24 (月) 20:00:03};
--- メモ: [http://en.wikipedia.org/wiki/Template_talk:Javadoc:SE Need help in converting this template to Java 8] 仕様が見つからない・・・。 -- [[aterai]] &new{2014-03-24 (月) 21:04:40};
+#comment
+- 日本語版は docs.oracle.com/javase/jp/6/ を見るように変更 -- &user(aterai); &new{2012-04-11 (水) 19:15:42};
+- %%googleなどの検索エンジンのキャッシュから移動できるように変更（検索結果に表示された java.sun.com のドキュメントが、http://www.oracle.com/technetwork/java/index.html に転送されてしまうようになったので） -- &user(aterai); &new{2012-09-18 (火) 22:59:31};%%
+- `Java 8`のドキュメントは、まだ英語版のみなので未対応。ただ、`7`に比べると無駄？な装飾も減って、文字サイズも`6`並の大きさに戻っているので見やすくなっている。 -- &user(aterai); &new{2014-03-24 (月) 19:05:08};
+-- `Java 8`のドキュメントでは、各メソッドなどへのアンカーにある空白や`(,)`などが`-`に置き換わっている？　空白を`%20`などと`URL`エンコードしなくても良いのは便利そう(メモ: 詳しい変更内容を探すこと)。 -- &user(aterai); &new{2014-03-24 (月) 19:37:54};
+-- 配列は、`[]` [http://docs.oracle.com/javase/7/docs/api/java/awt/geom/AffineTransform.html#transform(double%5B%5D,%20int,%20double%5B%5D,%20int,%20int) %5B%5D]から[http://docs.oracle.com/javase/8/docs/api/java/awt/geom/AffineTransform.html#transform-double:A-int-double:A-int-int- :A]。 -- &user(aterai); &new{2014-03-24 (月) 20:00:03};
+-- メモ: [http://en.wikipedia.org/wiki/Template_talk:Javadoc:SE Need help in converting this template to Java 8] 仕様が見つからない・・・。 -- &user(aterai); &new{2014-03-24 (月) 21:04:40};
 
  //Java 8 用に、(、)、, 、[]だけ？対応
  javascript:(function(){var l=location,m=l.href.match("^(https?://)(.+)(api[^+]+|technotes[^+]+)");if(m)l.href=m[1]+'docs.oracle.com/javase/8/docs/'+decodeURIComponent(m[3]).replace(/\+.*$/,'').replace(/\[\]/g,':A').replace(/, |\(|\)/g,'-');}());

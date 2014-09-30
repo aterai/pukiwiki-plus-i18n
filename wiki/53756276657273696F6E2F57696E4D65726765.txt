@@ -91,12 +91,13 @@ diff-cmd = winmerge.bat
 -- [http://winmerge.org/2.6/manual/CommandLine.html 16. Command Line]
 
 * コメント [#s74a5720]
-- [http://flimflan.com/blog/UsingWinMergeWithSubversion.aspx Joshua Flanagan - Using WinMerge with Subversion]を参考にしてバッチファイルを変更(比較を一つのWinMergeで開くように)しました。 -- [[aterai]] &new{2008-07-01 (火) 17:46:39};
-- winmerge.bat のコメントに日本語があると、このページでうまく表示できていなかったのを修正。 -- [[aterai]] &new{2008-12-15 (月) 20:36:03};
-- Subversion 1.6.11にて、WinMergeをSTARTコマンドで実行すると比較用の一時ファイルが消えてしまい、WinMergeでの比較が出来ませんでした。バッチファイルの『START "WinMerge" /B 』の部分を削除することで正常に起動されるようになりました。 -- [[anis774]] &new{2010-05-04 (火) 06:00:00};
--- 報告ありがとうございます。この場合、WinMergeのオプション(編集、設定、バックアップファイル、作成するバックアップ:で、フォルダ比較のチェック)を外すと、STARTコマンドを使ってもうまくいくかもしれません。 -- [[aterai]] &new{2010-05-04 (火) 15:56:11};
-- 上記の設定項目を変更してもSTARTコマンドを使った比較は出来ませんでした。比較用に生成された一時ファイルを観察してみたのですが、SVN側で起動したプロセスの終了を検知して比較用の一時ファイルを消しているようです。STARTコマンドを使用すると、STARTコマンドのプロセスがすぐに終了してしまう為、WinMerge起動時には既にファイルが削除された状態になります。 -- [[anis774]] &new{2010-05-23 (日) 03:06:12};
--- どうも何かanis774さんと自分の設定か環境が違うのかもしれないですね。なんとなくですが、「STARTコマンドのプロセスがすぐに終了してしまう」ということなら、参照元の[http://flimflan.com/blog/UsingWinMergeWithSubversion.aspx Joshua Flanagan - Using WinMerge with Subversion]みたいに、STARTコマンドに/WAITを付けるとよさげ？な感じがします。 -- [[aterai]] &new{2010-05-24 (月) 15:08:22};
-- /WAITオプションを付加して試してみたのですが、これだとSTARTコマンド無しのときと同じ動作になります。一時ファイルが消える前にどこかにコピーして、コピーしたファイルでWinMergeを開き、終了後に削除する処理を書く必要がありそうです。 -- [[anis774]] &new{2010-05-26 (水) 08:37:49};
+#comment
+- [http://flimflan.com/blog/UsingWinMergeWithSubversion.aspx Joshua Flanagan - Using WinMerge with Subversion]を参考にしてバッチファイルを変更(比較を一つのWinMergeで開くように)しました。 -- &user(aterai); &new{2008-07-01 (火) 17:46:39};
+- winmerge.bat のコメントに日本語があると、このページでうまく表示できていなかったのを修正。 -- &user(aterai); &new{2008-12-15 (月) 20:36:03};
+- Subversion 1.6.11にて、WinMergeをSTARTコマンドで実行すると比較用の一時ファイルが消えてしまい、WinMergeでの比較が出来ませんでした。バッチファイルの『START "WinMerge" /B 』の部分を削除することで正常に起動されるようになりました。 -- &user(anis774); &new{2010-05-04 (火) 06:00:00};
+-- 報告ありがとうございます。この場合、WinMergeのオプション(編集、設定、バックアップファイル、作成するバックアップ:で、フォルダ比較のチェック)を外すと、STARTコマンドを使ってもうまくいくかもしれません。 -- &user(aterai); &new{2010-05-04 (火) 15:56:11};
+- 上記の設定項目を変更してもSTARTコマンドを使った比較は出来ませんでした。比較用に生成された一時ファイルを観察してみたのですが、SVN側で起動したプロセスの終了を検知して比較用の一時ファイルを消しているようです。STARTコマンドを使用すると、STARTコマンドのプロセスがすぐに終了してしまう為、WinMerge起動時には既にファイルが削除された状態になります。 -- &user(anis774); &new{2010-05-23 (日) 03:06:12};
+-- どうも何かanis774さんと自分の設定か環境が違うのかもしれないですね。なんとなくですが、「STARTコマンドのプロセスがすぐに終了してしまう」ということなら、参照元の[http://flimflan.com/blog/UsingWinMergeWithSubversion.aspx Joshua Flanagan - Using WinMerge with Subversion]みたいに、STARTコマンドに/WAITを付けるとよさげ？な感じがします。 -- &user(aterai); &new{2010-05-24 (月) 15:08:22};
+- /WAITオプションを付加して試してみたのですが、これだとSTARTコマンド無しのときと同じ動作になります。一時ファイルが消える前にどこかにコピーして、コピーしたファイルでWinMergeを開き、終了後に削除する処理を書く必要がありそうです。 -- &user(anis774); &new{2010-05-26 (水) 08:37:49};
 
 #comment

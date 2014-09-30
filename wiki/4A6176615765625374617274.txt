@@ -241,20 +241,21 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 //-- jnlp.packEnabled, jnlp.versionEnabled: &jnlp2(Swing/zJumpToClickedPositionSlider);
 
 * コメント [#t8d59970]
-- メモ: [http://sqs2.net/tdiary/20071202.html#p01 bug JNLP:JavaWebStartでデスクトップ上に作成したショートカット<アイコンにファイルをドロップすると、そのアプリケーションの起動に失敗し、「このアプリケーションは起動できません」と出る - 日々是開発:SQS Development(2007-12-02)] -- [[aterai]] &new{2007-12-03 (月) 16:29:46};
--- メモ:[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6646617 Bug ID: 6646617 Dropping a file on a Java Web Start desktop symbol DELETES the file] -- [[aterai]] &new{2008-02-22 (金) 19:12:26};
-- メモ:[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6943522 Bug ID: 6943522 Failed to launch any signed application on 6u19 when cache is disabled] -- [[aterai]] &new{2010-07-20 (火) 18:37:19};
-- リンク切れを修正。 -- [[aterai]] &new{2010-10-06 (水) 12:54:15};
-- いつもお世話になっております。単体SWINGでは-Djava.net.preferIPv4Stack=trueを付けると、PGMはうまく動きましたが、jnlpにどのように書けばいいかが判らなく、ご教示ください。<resources><property name="java.net.preferIPv4Stack" value="true"/>はだめみたいです。</resources>。いつもご教示、感謝しております。 -- [[panda]] &new{2011-12-05 (月) 16:02:29};
--- こんばんは。[http://docs.oracle.com/javase/7/docs/technotes/guides/javaws/developersguide/syntax.html#resources The following properties, as well as properties beginning with either "javaws." or "jnlp.", are considered "secure" and will be passed to the VM in this way:]、[http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/syntax.html 次のプロパティーは「安全」とみなされ、この方法で VM に渡されます。] …にある安全とみなされるプロパティに、java.net.preferIPv4Stack はないので、<security><all-permissions/></security>として、セキュリティ証明書でjarに署名する必要があるのかもしれません(試していないのでうまくいくか不明ですが)。   -- [[aterai]] &new{2011-12-05 (月) 17:27:46};
--- あと、jnlpに記述する必要がないなら、コマンドラインから、javaws -verbose -J-Djava.net.preferIPv4Stack=true http://terai.xrea.jp/swing/wipe/example.jnlp などとしてテストしてみるのもいいかもしれません。 -- [[aterai]] &new{2011-12-05 (月) 17:43:01};
-- ご教示、感謝します。方法１は実施しましたが、だめでした。方法２について、まだ理解していません。JWSにおいて、jnlpに書かない方法はありますか？また方法3として、JAVA　PGMに直接System.setProperty("java.net.preferIPv4Stack", "true");しましたが、IPv6を取ってきます。方法２について、もう少しご教示ください。 -- [[panda]] &new{2011-12-06 (火) 09:10:19};
+#comment
+- メモ: [http://sqs2.net/tdiary/20071202.html#p01 bug JNLP:JavaWebStartでデスクトップ上に作成したショートカット<アイコンにファイルをドロップすると、そのアプリケーションの起動に失敗し、「このアプリケーションは起動できません」と出る - 日々是開発:SQS Development(2007-12-02)] -- &user(aterai); &new{2007-12-03 (月) 16:29:46};
+-- メモ:[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6646617 Bug ID: 6646617 Dropping a file on a Java Web Start desktop symbol DELETES the file] -- &user(aterai); &new{2008-02-22 (金) 19:12:26};
+- メモ:[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6943522 Bug ID: 6943522 Failed to launch any signed application on 6u19 when cache is disabled] -- &user(aterai); &new{2010-07-20 (火) 18:37:19};
+- リンク切れを修正。 -- &user(aterai); &new{2010-10-06 (水) 12:54:15};
+- いつもお世話になっております。単体SWINGでは-Djava.net.preferIPv4Stack=trueを付けると、PGMはうまく動きましたが、jnlpにどのように書けばいいかが判らなく、ご教示ください。<resources><property name="java.net.preferIPv4Stack" value="true"/>はだめみたいです。</resources>。いつもご教示、感謝しております。 -- &user(panda); &new{2011-12-05 (月) 16:02:29};
+-- こんばんは。[http://docs.oracle.com/javase/7/docs/technotes/guides/javaws/developersguide/syntax.html#resources The following properties, as well as properties beginning with either "javaws." or "jnlp.", are considered "secure" and will be passed to the VM in this way:]、[http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/syntax.html 次のプロパティーは「安全」とみなされ、この方法で VM に渡されます。] …にある安全とみなされるプロパティに、java.net.preferIPv4Stack はないので、<security><all-permissions/></security>として、セキュリティ証明書でjarに署名する必要があるのかもしれません(試していないのでうまくいくか不明ですが)。   -- &user(aterai); &new{2011-12-05 (月) 17:27:46};
+-- あと、jnlpに記述する必要がないなら、コマンドラインから、javaws -verbose -J-Djava.net.preferIPv4Stack=true http://terai.xrea.jp/swing/wipe/example.jnlp などとしてテストしてみるのもいいかもしれません。 -- &user(aterai); &new{2011-12-05 (月) 17:43:01};
+- ご教示、感謝します。方法１は実施しましたが、だめでした。方法２について、まだ理解していません。JWSにおいて、jnlpに書かない方法はありますか？また方法3として、JAVA　PGMに直接System.setProperty("java.net.preferIPv4Stack", "true");しましたが、IPv6を取ってきます。方法２について、もう少しご教示ください。 -- &user(panda); &new{2011-12-06 (火) 09:10:19};
 -- 方法１の補足ですが、例えば、C:\Users\%USERNAME%\AppData\LocalLow\Sun\Java\Deployment\deployment.properties ファイルなどに deployment.javaws.secure.properties=java.net.preferIPv4Stack を追加して、<property name="java.net.preferIPv4Stack" value="true"/>を安全であると許可してみるのはどうでしょうか？
 --- [http://docs.oracle.com/javase/jp/6/technotes/guides/deployment/deployment-guide/jcp.html Java コントロールパネル]
 --- [https://forums.oracle.com/thread/1309656 How to enable IPV4 in JNLP file]
 
--- 方法２がうまく動作するのなら、クライアントの環境変数 _JAVA_OPTIONS か、JAVA_TOOL_OPTIONS に、-Djava.net.preferIPv4Stack=true を追加するといいかもしれません。 -- [[aterai]] &new{2011-12-06 (火) 16:07:29};
+-- 方法２がうまく動作するのなら、クライアントの環境変数 _JAVA_OPTIONS か、JAVA_TOOL_OPTIONS に、-Djava.net.preferIPv4Stack=true を追加するといいかもしれません。 -- &user(aterai); &new{2011-12-06 (火) 16:07:29};
 ---[https://forums.oracle.com/thread/2292359 How to configure JRE?]
-- メモ: [http://d.hatena.ne.jp/kaito834/20120308/1331218436 Java Web Startの脆弱性（CVE-2012-0500）を調べてみる - 思い立ったら書く日記] -- [[aterai]] &new{2012-03-09 (金) 14:23:11};
+- メモ: [http://d.hatena.ne.jp/kaito834/20120308/1331218436 Java Web Startの脆弱性（CVE-2012-0500）を調べてみる - 思い立ったら書く日記] -- &user(aterai); &new{2012-03-09 (金) 14:23:11};
 
 #comment

@@ -36,8 +36,9 @@ try{
 - [https://forums.oracle.com/thread/1387954 Swing - Searching text in files & highlighting that text]
 
 * コメント [#z9e32e25]
-- こんにちは。はじめまして。Keithと言います。このプログラムだと、テキスト中の複数の異なる文字に、それぞれハイライトを割り当てることが出来ないのですが、解決策はあるでしょうか。 -- [[Keith]] &new{2007-11-28 (水) 19:12:19};
--- こんばんは。`Highlighter#addHighlight`メソッドは、複数のハイライトを追加できるので、パターン毎に色を変えたいだけなら(効率とか、同じ文字列が含まれる場合とか、エラー処理などの面倒なことは考えない)、以下のようにパターンを配列にして繰り返すだけでもいいかもしれません。 -- [[aterai]] &new{2007-11-28 (水) 20:25:31};
+#comment
+- こんにちは。はじめまして。Keithと言います。このプログラムだと、テキスト中の複数の異なる文字に、それぞれハイライトを割り当てることが出来ないのですが、解決策はあるでしょうか。 -- &user(Keith); &new{2007-11-28 (水) 19:12:19};
+-- こんばんは。`Highlighter#addHighlight`メソッドは、複数のハイライトを追加できるので、パターン毎に色を変えたいだけなら(効率とか、同じ文字列が含まれる場合とか、エラー処理などの面倒なことは考えない)、以下のようにパターンを配列にして繰り返すだけでもいいかもしれません。 -- &user(aterai); &new{2007-11-28 (水) 20:25:31};
 
 #code{{
 private final Highlighter.HighlightPainter[] highlightPainter = {
@@ -62,10 +63,10 @@ public void setHighlight(JTextComponent jtc, String[] pattern) {
 }
 }}
 
-- こんな簡単にハイライトできるとは！。正規表現で実装すると開始位置と終了位置がより簡単で、しかも複雑にできるかも。 -- [[eternalharvest]] &new{2008-08-28 (木) 02:20:11};
--- ちょっと夏休みで帰省してました。正規表現 > そうですね。基本的には同じような要領で大丈夫だと思います。メモ:[https://forums.oracle.com/thread/1382907 Swing - Content-Overlay in JTextPane]、追記: [[DefaultHighlighterの描画方法を変更する>Swing/DrawsLayeredHighlights]]に、`Matcher matcher = Pattern.compile(pattern).matcher(text);`と正規表現でハイライトするサンプルを追加。 -- [[aterai]] &new{2008-09-01 (月) 13:47:05};
-- こんにちは。Cakaiと申します。ハイライトされているテキストのカラーを設定することがありますか？ -- [[Caokai]] &new{2009-10-15 (Thu) 23:12:47};
--- こんにちは。はじめまして。`Highlighter.HighlightPainter`で、文字色は変更できないかもしれません。以下のように`AttributeSet`を使うのはどうでしょう。[[JTextPaneでキーワードのSyntaxHighlight>Swing/SimpleSyntaxHighlight]] -- [[aterai]] &new{2009-10-16 (金) 13:04:32};
+- こんな簡単にハイライトできるとは！。正規表現で実装すると開始位置と終了位置がより簡単で、しかも複雑にできるかも。 -- &user(eternalharvest); &new{2008-08-28 (木) 02:20:11};
+-- ちょっと夏休みで帰省してました。正規表現 > そうですね。基本的には同じような要領で大丈夫だと思います。メモ:[https://forums.oracle.com/thread/1382907 Swing - Content-Overlay in JTextPane]、追記: [[DefaultHighlighterの描画方法を変更する>Swing/DrawsLayeredHighlights]]に、`Matcher matcher = Pattern.compile(pattern).matcher(text);`と正規表現でハイライトするサンプルを追加。 -- &user(aterai); &new{2008-09-01 (月) 13:47:05};
+- こんにちは。Cakaiと申します。ハイライトされているテキストのカラーを設定することがありますか？ -- &user(Caokai); &new{2009-10-15 (Thu) 23:12:47};
+-- こんにちは。はじめまして。`Highlighter.HighlightPainter`で、文字色は変更できないかもしれません。以下のように`AttributeSet`を使うのはどうでしょう。[[JTextPaneでキーワードのSyntaxHighlight>Swing/SimpleSyntaxHighlight]] -- &user(aterai); &new{2009-10-16 (金) 13:04:32};
 --- 用途によっては、[[JEditorPaneのHTMLEditorKitにCSSを適用>Swing/StyleSheet]]なども使えるかもしれません。
 
 #code{{
@@ -146,6 +147,6 @@ public class HighlightTest{
   }
 }
 }}
-- わかりました。ほんとにありがとうございました。 -- [[Caokai]] &new{2009-10-16 (Fri) 16:42:07};
+- わかりました。ほんとにありがとうございました。 -- &user(Caokai); &new{2009-10-16 (Fri) 16:42:07};
 
 #comment

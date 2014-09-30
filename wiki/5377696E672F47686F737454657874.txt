@@ -93,7 +93,8 @@ class PlaceholderLayerUI extends LayerUI<JTextComponent> {
 -- `JPasswordField`の場合は、`setText`などが使えないので、透かし画像と同じ要領で`paintComponent`をオーバーライドして文字列を描画する方法を使います。
 
 * コメント [#h0951933]
-- タイトルを変更?: `Input Hint`、`Placeholder`、`Watermark` ... -- [[aterai]] &new{2009-11-17 (火) 15:48:18};
-- `LayerUI#paint(...)`中で、子コンポーネントの`repaint()`を呼び出して再描画が無限ループしていたバグを修正。 -- [[aterai]] &new{2014-07-26 (土) 04:51:11};
+#comment
+- タイトルを変更?: `Input Hint`、`Placeholder`、`Watermark` ... -- &user(aterai); &new{2009-11-17 (火) 15:48:18};
+- `LayerUI#paint(...)`中で、子コンポーネントの`repaint()`を呼び出して再描画が無限ループしていたバグを修正。 -- &user(aterai); &new{2014-07-26 (土) 04:51:11};
 
 #comment

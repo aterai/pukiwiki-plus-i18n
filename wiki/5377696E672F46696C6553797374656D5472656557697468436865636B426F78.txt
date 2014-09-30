@@ -101,13 +101,14 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
 - [[JTreeの葉ノードをJCheckBoxにする>Swing/CheckBoxNodeTree]]
 
 * コメント [#b9b92412]
-- [[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]] で使用している`TreeModelListener`を追加して`JCheckBox`の状態を変更するように修正。 -- [[aterai]] &new{2012-04-13 (金) 20:12:08};
-- チェックされたノード(最上位となる)の一覧をコンソールに表示する`JButton`を追加(スクリーンショットなどは面倒なので更新しない)。 -- [[aterai]] &new{2012-04-19 (木) 19:50:07};
-- ノードをチェックしてから、そのディレクトリを開いても子ディレクトリにチェックが反映されない。 -- [[aterai]] &new{2012-07-31 (火) 18:15:44};
-- いつも勉強させていただいております。サンプルではrootはデスクトップとなっていますが、もし例えばZ:\またはZ:\aaaとTOPにしたい場合、どこを修正すれば宜しいでしょうか？ご教示をお願いいたします。 -- [[Tiger]] &new{2013-12-25 (水) 14:11:08};
--- こんばんは。このサンプルでは、`fileSystemView.getRoots()`で`Desktop`フォルダ(`Windows`の場合)を取得しているので、この箇所を、例えば`File fileSystemRoot = new File("Z:/"); /* for(File fileSystemRoot: fileSystemView.getRoots()) */ {`のように変更するのはどうでしょうか。 -- [[aterai]] &new{2013-12-25 (水) 16:34:38};
-- ご教示、ありがとうございました。ご指摘のところを見落としました。やり方は理解できました。ついでに、もしrootはデスクトップにしておいて、C:\を表示させないで(または展開させないで)、X:\,Y:\のみ操作させるには、どこを弄れば宜しいでしょうか？ありがとうございました。来年もよろしくお願いします。 -- [[Tiger]] &new{2013-12-26 (木) 13:36:28};
--- `fileSystemView.getRoots()`で`Desktop`フォルダを取得すると、 マイコンピュータとか、`Desktop`フォルダが`C:\`にある場合はマイドキュメントなどを選択不可にするのが、面倒な気がします。以下のように`new File(System.getProperty("user.home")+"/Desktop")`とデスクトップを決め打ちにしてノードを作ってしまうのが簡単かもしれません。 -- [[aterai]] &new{2013-12-26 (木) 21:55:24};
+#comment
+- [[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]] で使用している`TreeModelListener`を追加して`JCheckBox`の状態を変更するように修正。 -- &user(aterai); &new{2012-04-13 (金) 20:12:08};
+- チェックされたノード(最上位となる)の一覧をコンソールに表示する`JButton`を追加(スクリーンショットなどは面倒なので更新しない)。 -- &user(aterai); &new{2012-04-19 (木) 19:50:07};
+- ノードをチェックしてから、そのディレクトリを開いても子ディレクトリにチェックが反映されない。 -- &user(aterai); &new{2012-07-31 (火) 18:15:44};
+- いつも勉強させていただいております。サンプルではrootはデスクトップとなっていますが、もし例えばZ:\またはZ:\aaaとTOPにしたい場合、どこを修正すれば宜しいでしょうか？ご教示をお願いいたします。 -- &user(Tiger); &new{2013-12-25 (水) 14:11:08};
+-- こんばんは。このサンプルでは、`fileSystemView.getRoots()`で`Desktop`フォルダ(`Windows`の場合)を取得しているので、この箇所を、例えば`File fileSystemRoot = new File("Z:/"); /* for(File fileSystemRoot: fileSystemView.getRoots()) */ {`のように変更するのはどうでしょうか。 -- &user(aterai); &new{2013-12-25 (水) 16:34:38};
+- ご教示、ありがとうございました。ご指摘のところを見落としました。やり方は理解できました。ついでに、もしrootはデスクトップにしておいて、C:\を表示させないで(または展開させないで)、X:\,Y:\のみ操作させるには、どこを弄れば宜しいでしょうか？ありがとうございました。来年もよろしくお願いします。 -- &user(Tiger); &new{2013-12-26 (木) 13:36:28};
+-- `fileSystemView.getRoots()`で`Desktop`フォルダを取得すると、 マイコンピュータとか、`Desktop`フォルダが`C:\`にある場合はマイドキュメントなどを選択不可にするのが、面倒な気がします。以下のように`new File(System.getProperty("user.home")+"/Desktop")`とデスクトップを決め打ちにしてノードを作ってしまうのが簡単かもしれません。 -- &user(aterai); &new{2013-12-26 (木) 21:55:24};
 
 #code{{
 final FileSystemView fileSystemView = FileSystemView.getFileSystemView();
@@ -133,8 +134,8 @@ for(File fileSystemRoot: Arrays.asList(new File("X:/"), new File("Y:/"))) {
 }
 treeModel.addTreeModelListener(new CheckBoxStatusUpdateListener());
 }}
-- いつも勉強させていただいております。チェックしたファイルまたはフォルダーのチェックマークの外し方を教えていただけませんか？ -- [[Tiger]] &new{2014-03-04 (火) 13:55:30};
--- こんばんは。マウスを使わずにチェックを外したいということですよね。このサンプルの場合、`MutableTreeNode#setUserObject(...)`でチェックを外した`new CheckBoxNode(node.file, Status.DESELECTED)`を設定し、そのあと[http://docs.oracle.com/javase/jp/7/api/javax/swing/tree/DefaultTreeModel.html#nodeChanged(javax.swing.tree.TreeNode) DefaultTreeModel#nodeChanged(...) (Java Platform SE 7)]を呼べばいいと思います。 -- [[aterai]] &new{2014-03-05 (水) 18:23:39};
+- いつも勉強させていただいております。チェックしたファイルまたはフォルダーのチェックマークの外し方を教えていただけませんか？ -- &user(Tiger); &new{2014-03-04 (火) 13:55:30};
+-- こんばんは。マウスを使わずにチェックを外したいということですよね。このサンプルの場合、`MutableTreeNode#setUserObject(...)`でチェックを外した`new CheckBoxNode(node.file, Status.DESELECTED)`を設定し、そのあと[http://docs.oracle.com/javase/jp/7/api/javax/swing/tree/DefaultTreeModel.html#nodeChanged(javax.swing.tree.TreeNode) DefaultTreeModel#nodeChanged(...) (Java Platform SE 7)]を呼べばいいと思います。 -- &user(aterai); &new{2014-03-05 (水) 18:23:39};
 
 #code{{
 //例えば、すべてのチェックを外す場合...

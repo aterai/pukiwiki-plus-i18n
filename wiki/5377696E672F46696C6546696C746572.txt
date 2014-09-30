@@ -48,8 +48,9 @@ fileChooser.addChoosableFileFilter(filter);
 - [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6400960 Bug ID: 6400960 Swing File*Filters should extend java.io.File*Filters]
 
 * コメント [#o0017e45]
--`jpg` → `.jpg` -- [[MT]] &new{2003-12-24 (水) 12:15:54};
--- 直しておきました。どもです。 -- [[aterai]] &new{2003-12-24 (水) 12:41:13};
-- `addChoosableFileFilter`を何度も呼ぶと最後に追加されたものがデフォルトになるが、例えば`2`番目に追加した`filter`を最後に再び追加すると`2`番目がデフォルトになる。 -- [[Y]] &new{2006-11-27 (月) 15:21:26};
--- `addChoosableFileFilter(FileFilter)`は、その`FileFilter`がすでに含まれている場合は、`setFileFilter(FileFilter)`だけ実行するみたいですね。 -- [[aterai]] &new{2006-11-28 (火) 16:44:40};
+#comment
+-`jpg` → `.jpg` -- &user(MT); &new{2003-12-24 (水) 12:15:54};
+-- 直しておきました。どもです。 -- &user(aterai); &new{2003-12-24 (水) 12:41:13};
+- `addChoosableFileFilter`を何度も呼ぶと最後に追加されたものがデフォルトになるが、例えば`2`番目に追加した`filter`を最後に再び追加すると`2`番目がデフォルトになる。 -- &user(Y); &new{2006-11-27 (月) 15:21:26};
+-- `addChoosableFileFilter(FileFilter)`は、その`FileFilter`がすでに含まれている場合は、`setFileFilter(FileFilter)`だけ実行するみたいですね。 -- &user(aterai); &new{2006-11-28 (火) 16:44:40};
 #comment
