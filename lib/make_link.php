@@ -391,7 +391,7 @@ EOD;
 
 	function toString()
 	{
-		if (FALSE) {
+		if (TRUE) {
 			$rel = '';
 		} else {
 			$rel = ' rel="nofollow"';
@@ -437,7 +437,7 @@ EOD;
 
 	function toString()
 	{
-		$rel = ( FALSE ? '': ' rel="nofollow"');
+		$rel = ( TRUE ? '': ' rel="nofollow"');
 //		return '<a href="' . $this->name . '" rel="nofollow">' . $this->alias . '</a>';
 		$target = (empty($this->redirect)) ? $this->name : $this->redirect.rawurlencode($this->name);
 		return open_uri_in_new_window('<a href="' . $target . '"' . $rel . '>' . $this->alias . '</a>', get_class($this));
@@ -548,7 +548,7 @@ EOD;
 
 	function toString()
 	{
-		$rel = ( FALSE ? '': ' rel="nofollow"');
+		$rel = ( TRUE ? '': ' rel="nofollow"');
 //		return '<a href="' . $this->url . $this->anchor . '" title="' .
 //			$this->name . '" rel="nofollow">' . $this->alias . '</a>';
 		$target = (empty($this->redirect)) ? $this->url : $this->redirect.rawurlencode($this->url);
