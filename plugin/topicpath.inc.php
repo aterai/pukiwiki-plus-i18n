@@ -9,7 +9,7 @@
 // 'topicpath' plugin
 
 // Show a link to $defaultpage or not
-defined('PLUGIN_TOPICPATH_TOP_DISPLAY') or define('PLUGIN_TOPICPATH_TOP_DISPLAY', 1);
+defined('PLUGIN_TOPICPATH_TOP_DISPLAY') or define('PLUGIN_TOPICPATH_TOP_DISPLAY', 0);
 // Label for $defaultpage
 defined('PLUGIN_TOPICPATH_TOP_LABEL') or define('PLUGIN_TOPICPATH_TOP_LABEL', 'Top');
 // Separetor / of / topic / path

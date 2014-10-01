@@ -14,10 +14,10 @@
 
 # Prohibit direct access to .htaccess, .htpasswd or others
 # (If it's not set by default)
-#<FilesMatch "^\.ht">
-#	Order allow,deny
-#	Deny from all
-#</FilesMatch>
+<FilesMatch "^\.ht">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
 
 ErrorDocument 404 /error/404.html
 # SetEnv TZ JST-9
