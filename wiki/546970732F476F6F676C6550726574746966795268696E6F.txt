@@ -292,6 +292,7 @@ __extend__(HTMLPreElement.prototype, {
 
 * コメント [#q5757df6]
 #comment
+#comment
 - 新しい`prettify.js`(`prettify-1-Jun-2011.tar.bz2`)では、`prettyPrintOne`の内部で`Document`型のオブジェクトが使用されるようになっているので`Rhino`だけ(`Envjs`とか使えば良さそうなんだけど…)では実行できない。このため上記のサンプルでは古い`prettify.js`(http://google-code-prettify.googlecode.com/svn-history/r120/trunk/src/prettify.js)を参照するように変更。 -- &user(aterai); &new{2012-03-09 (金) 16:58:03};
 - `JEditorPane`でのプレビューを追加。 -- &user(aterai); &new{2012-05-28 (月) 17:45:14};
 - `1.8.0`の`Nashorn`を使うとなぜか文字のハイライトがずれる？ -- &user(aterai); &new{2013-07-21 (日) 00:21:18};

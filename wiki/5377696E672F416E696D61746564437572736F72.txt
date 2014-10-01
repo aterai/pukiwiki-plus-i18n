@@ -49,6 +49,7 @@ JButton button = new JButton(new AbstractAction("スタート") {
 
 * コメント [#q9ef944e]
 #comment
+#comment
 - `Cursor`に用いる`png`ファイルは、フルカラー(`24`ビット)ではなく`256`色にしておかないと、うまく透過できないようです。もしかしたら自分の`PC`の画面の色が`16`ビットになっているせいかもしれません。 -- &user(aterai); &new{2006-07-11 (火) 12:41:59};
 -- `32`ビットにしてもだめみたいです。 -- &user(aterai); &new{2006-07-25 (火) 16:53:29};
 -- 追記: `JDK 6`なら、フルカラーでも問題なく透過できるようです。[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6388546 Bug ID: 6388546 PNG with transparent background doesn't render correctly] -- &user(aterai); &new{2008-07-28 (月) 16:27:56};

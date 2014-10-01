@@ -189,6 +189,7 @@ class PrintGlassPane extends JPanel {
 
 * コメント [#h8218ae6]
 #comment
+#comment
 - %%[[JInternalFrameを半透明にする>Swing/TransparentFrame]]と、同様に`GlassPane`が`Ubuntu`(`GNOME`)などで半透明にならない場合があります。%% -- &user(aterai); &new{2007-10-15 (月) 13:16:07};
 -- KBD{Alt+2}で開いた場合、`JInternalFrame`に`GlassPane`を乗せるのではなく、直接`JDesktopPane`の`JLayeredPane.MODAL_LAYER`に追加するように変更しました。 -- &user(aterai); &new{2007-10-16 (火) 17:31:50};
 - メモ: [http://weblogs.java.net/blog/alexfromsun/archive/2008/01/ Alexander Potochkin's Blog: Disabling Swing Containers, the final solution?]のサンプルでは、`Mnemonic`もちゃんとブロックできているようなので、「あとで調べる & 参考にする」こと。 -- &user(aterai); &new{2008-01-25 (金) 17:28:21};

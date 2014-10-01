@@ -82,6 +82,7 @@ private void rejectDrag(DropTargetDragEvent dtde) {
 
 * コメント [#of354fb4]
 #comment
+#comment
 - `JWS`による起動の場合、`AccessControlException`が発生します。解決する方法はあるのでしょうか。 -- &user(hiraoka); &new{2010-09-21 (火) 18:24:44};
 -- ご指摘ありがとうございます。たしか`Java 1.6.0_20`あたりから`droppedObject = dtde.getTransferable().getTransferData(localObjectFlavor);`が`Web Start`で駄目だったような気がします。`JTable`とか`JTabbedPane`のサンプル([[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]])は修正したけど、`JTree`はすっかり忘れていました。このサンプルの場合はひとつの`JTree`の中で並べ替えるだけなので、`Object droppedObject = getSelectionPath().getLastPathComponent();`のように修正すればいいようです。%%あとでもう少し調べてサンプルコードも修正しようと思います。%% 修正しました。 -- &user(aterai); &new{2010-09-21 (火) 21:15:43};
 - 情報ありがとうございました。 -- &user(hiraoka); &new{2010-09-22 (水) 15:08:46};

@@ -65,6 +65,7 @@ class DragWindowListener extends MouseAdapter {
 
 * コメント [#hfe1ff82]
 #comment
+#comment
 - `JLabel`無しで`JFrame`を直接つかんで移動させようと，ソース中の`DragWindowListener`を`Frame`の引数に指定して`addMouseListener()`，`addMouseMotionListener()`に追加してみたのですが，うまく動きませんでした。ラベルではなくフレームを直接つかんで移動させるにはどうすればよいのでしょうか？ -- &user(hshs); &new{2013-03-14 (木) 08:00:42};
 -- `frame.getContentPane().addMouseListener(dwl);...`と、`ContentPane`か`RootPane`に`DragWindowListener`を追加するか、以下のように`DragWindowListener`を変更するのはどうでしょうか？ -- &user(aterai); &new{2013-03-14 (木) 13:53:25};
 

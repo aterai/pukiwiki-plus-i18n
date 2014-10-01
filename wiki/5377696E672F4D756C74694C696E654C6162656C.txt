@@ -75,6 +75,7 @@ private static Box setLeftIcon(JTextComponent label, ImageIcon icon) {
 
 * コメント [#h1e6b5a0]
 #comment
+#comment
 - `JDK 6`で、`html`タグを使った`JLabel`での複数行表示がすこし変更(それとも自分の環境のフォントなどが変わっただけ？)されている？ようです(`Windows`環境)。行間が詰まって見易くなっているようで、わざわざ`JTextPane`+`SimpleAttributeSet`で行間を調節する必要もなさそうです。 -- &user(aterai); &new{2007-01-10 (水) 12:44:53};
 - `label.setBackground(UIManager.getColor("Label.background"));`(いつの間にか白になっていた)を`label.setOpaque(false);`に変更しました。 -- &user(aterai); &new{2007-10-01 (月) 12:12:55};
 - はじめまして。`Java`初心者なのですが、`JLabel`で英字フォントを指定するとギザギザで表示されるのですが、ギザギザをなくすにはどうしたらよいでしょうか？ネットで探すと`setRenderingHint`を使うとできると出てはくるのですが、`JLabel`を使った場合の例が出てこなくて。。。ご教授よろしくお願いします。 -- &user(ばしばし); &new{2007-10-17 (水) 20:16:10};

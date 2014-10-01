@@ -36,6 +36,7 @@ DragSource.getDefaultDragSource().addDragSourceMotionListener(new DragSourceMoti
 
 * コメント [#y921464d]
 #comment
+#comment
 - `OSX`などの場合はどうなるか不明(テストしていない)。 -- &user(aterai); &new{2012-08-06 (月) 15:50:35};
 - `OSX`でも表示しましたよ。ただクリックした時にアイコン周りに枠が表示されるのですが、その位置がアイコンとずれてます -- &user(nsby); &new{2012-08-07 (火) 11:04:46};
 -- ありがとうございます。[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4874070 Bug ID: 4874070 invoking DragSource's startDrag with an Image renders no image on drag]あたりの修正の詳しい内容がよく分かっていないので、逆に`Mac OS X`では競合する(二重になる)のでは？と思っていました。「アイコン周りの枠」はオフセットを変更するか、クリックした時点で`JPanel`からは削除してしまえば、何とかなるかもしれません。 -- &user(aterai); &new{2012-08-07 (火) 14:19:12};
