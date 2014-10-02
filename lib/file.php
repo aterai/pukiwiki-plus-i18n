@@ -119,9 +119,9 @@ function page_write($page, $postdata, $notimestamp = FALSE)
 		if ($use_spam_check['page_remote_addr'] && SpamCheck($_SERVER['REMOTE_ADDR'],'ip')) {
 			die_message('Writing was limited by IPBL (Blocking SPAM).');
 		}
-		if ($use_spam_check['page_contents'] && SpamCheck($links)) {
-			die_message('Writing was limited by DNSBL (Blocking SPAM).');
-		}
+		//if ($use_spam_check['page_contents'] && SpamCheck($links)) {
+		//	die_message('Writing was limited by DNSBL (Blocking SPAM).');
+		//}
 		if ($use_spam_check['page_write_proxy'] && is_proxy()) {
 			die_message('Writing was limited by PROXY (Blocking SPAM).');
 		}

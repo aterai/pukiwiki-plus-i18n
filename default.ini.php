@@ -8,7 +8,7 @@
 // License: GPL v2 or (at your option) any later version
 //
 // PukiWiki setting file (user agent:default)
-@include(add_homedir('default.usr.ini.php'));
+//@include(add_homedir('default.usr.ini.php'));
 /////////////////////////////////////////////////
 // Skin file
 // if (isset($_COOKIE['tdiary_theme'])) {
@@ -153,7 +153,6 @@ $line_rules = array(
 	'%%(?!%)((?:(?!%%).)*)%%'	=> '<del>$1</del>',
 	"'''(?!')((?:(?!''').)*)'''"	=> '<em>$1</em>',
 	"''(?!')((?:(?!'').)*)''"	=> '<strong>$1</strong>',
-	"``(?!`)((?:(?!``).)*)``"	=> '<code>$1</code>',
 	"`(?!`)((?:(?!`).)*)`"	=> '<code>$1</code>',
 );
 
@@ -235,5 +234,5 @@ $use_trans_sid_address = array(
 );
 
 /////////////////////////////////////////////////
-@include(add_homedir('default.usr.ini.php'));
+//@include(add_homedir('default.usr.ini.php'));
 ?>

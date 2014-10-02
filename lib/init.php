@@ -98,38 +98,39 @@ if (isset($script)) {
 	$script = init_script_uri(); // Init automatically
 }
 
-/////////////////////////////////////////////////
-// INI_FILE: $agents:  UserAgentの識別
-
-$ua = 'HTTP_USER_AGENT';
-$user_agent = $matches = array();
-
-$user_agent['agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-// unset(${$ua}, $_SERVER[$ua], $HTTP_SERVER_VARS[$ua], $ua);	// safety
-
-foreach ($agents as $agent) {
-	if (preg_match($agent['pattern'], $user_agent['agent'], $matches)) {
-		$user_agent['profile'] = isset($agent['profile']) ? $agent['profile'] : '';
-		$user_agent['name']    = isset($matches[1]) ? $matches[1] : '';	// device or browser name
-		$user_agent['vers']    = isset($matches[2]) ? $matches[2] : ''; // 's version
-		break;
-	}
-}
-unset($agents, $matches);
-
-// Profile-related init and setting
-define('UA_PROFILE', isset($user_agent['profile']) ? $user_agent['profile'] : '');
-
-define('UA_INI_FILE', add_homedir(UA_PROFILE . '.ini.php'));
+// /////////////////////////////////////////////////
+// // INI_FILE: $agents:  UserAgentの識別
+//
+// $ua = 'HTTP_USER_AGENT';
+// $user_agent = $matches = array();
+//
+// $user_agent['agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+// // unset(${$ua}, $_SERVER[$ua], $HTTP_SERVER_VARS[$ua], $ua);	// safety
+//
+// foreach ($agents as $agent) {
+// 	if (preg_match($agent['pattern'], $user_agent['agent'], $matches)) {
+// 		$user_agent['profile'] = isset($agent['profile']) ? $agent['profile'] : '';
+// 		$user_agent['name']    = isset($matches[1]) ? $matches[1] : '';	// device or browser name
+// 		$user_agent['vers']    = isset($matches[2]) ? $matches[2] : ''; // 's version
+// 		break;
+// 	}
+// }
+// unset($agents, $matches);
+//
+// // Profile-related init and setting
+// define('UA_PROFILE', isset($user_agent['profile']) ? $user_agent['profile'] : '');
+//
+// define('UA_INI_FILE', add_homedir(UA_PROFILE . '.ini.php'));
+define('UA_INI_FILE', add_homedir('default.ini.php'));
 if (! file_exists(UA_INI_FILE) || ! is_readable(UA_INI_FILE)) {
 	die_message('UA_INI_FILE for "' . UA_PROFILE . '" not found.');
 } else {
 	require(UA_INI_FILE); // Also manually
 }
 
-define('UA_NAME', isset($user_agent['name']) ? $user_agent['name'] : '');
-define('UA_VERS', isset($user_agent['vers']) ? $user_agent['vers'] : '');
-unset($user_agent);	// Unset after reading UA_INI_FILE
+// define('UA_NAME', isset($user_agent['name']) ? $user_agent['name'] : '');
+// define('UA_VERS', isset($user_agent['vers']) ? $user_agent['vers'] : '');
+// unset($user_agent);	// Unset after reading UA_INI_FILE
 
 /////////////////////////////////////////////////
 // ディレクトリのチェック
