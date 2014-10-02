@@ -622,6 +622,6 @@ $open_uri_in_new_window_oposi = '_blank';     // pukiwikiの外で外部サー�
 // (注意：あえて拡張しやすいようにしていますが、'_blank'以外は指定しないでください)
 
 // User-Agent settings
-require_once(add_homedir('profile.ini.php'));
+//require_once(add_homedir('profile.ini.php'));
 
 ?>
