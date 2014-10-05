@@ -114,18 +114,18 @@ function page_write($page, $postdata, $notimestamp = FALSE)
 		$links = get_this_time_links($postdata, $diffdata);
 	}
 
-	// Blocking SPAM
-	if ($role_adm_contents) {
-		if ($use_spam_check['page_remote_addr'] && SpamCheck($_SERVER['REMOTE_ADDR'],'ip')) {
-			die_message('Writing was limited by IPBL (Blocking SPAM).');
-		}
-		//if ($use_spam_check['page_contents'] && SpamCheck($links)) {
-		//	die_message('Writing was limited by DNSBL (Blocking SPAM).');
-		//}
-		if ($use_spam_check['page_write_proxy'] && is_proxy()) {
-			die_message('Writing was limited by PROXY (Blocking SPAM).');
-		}
-	}
+// 	// Blocking SPAM
+// 	if ($role_adm_contents) {
+// 		if ($use_spam_check['page_remote_addr'] && SpamCheck($_SERVER['REMOTE_ADDR'],'ip')) {
+// 			die_message('Writing was limited by IPBL (Blocking SPAM).');
+// 		}
+// 		if ($use_spam_check['page_contents'] && SpamCheck($links)) {
+// 			die_message('Writing was limited by DNSBL (Blocking SPAM).');
+// 		}
+// 		if ($use_spam_check['page_write_proxy'] && is_proxy()) {
+// 			die_message('Writing was limited by PROXY (Blocking SPAM).');
+// 		}
+// 	}
 
 	// Logging postdata
 	postdata_write();

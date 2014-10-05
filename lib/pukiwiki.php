@@ -285,7 +285,7 @@ if (isset($retvars['body']) && $retvars['body'] != '') {
 
 	$body = convert_html($source);
 
-	if ($trackback) $body .= tb_get_rdf($base); // Add TrackBack-Ping URI
+	//if ($trackback) $body .= tb_get_rdf($base); // Add TrackBack-Ping URI
 	if ($referer) ref_save($base);
 	log_write('check',$vars['page']);
 	log_write('browse',$vars['page']);

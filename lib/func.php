@@ -546,22 +546,24 @@ function get_date($format, $timestamp = NULL)
 	 * $format で指定される T を ZONE で置換したいが、
 	 * date 関数での書式指定文字となってしまう可能性を回避するための事前処理
 	 */
-	$l = strlen(ZONE);
-	$zone = '';
-	for($i=0;$i<$l;$i++) {
-		$zone .= '\\'.substr(ZONE,$i,1);
-	}
+// 	$l = strlen(ZONE);
+// 	$zone = '';
+// 	for($i=0;$i<$l;$i++) {
+// 		$zone .= '\\'.substr(ZONE,$i,1);
+// 	}
+//
+// 	$format = str_replace('\T','$$$',$format); // \T の置換は除く
+// 	$format = str_replace('T',$zone,$format);
+// 	$format = str_replace('$$$','\T',$format); // \T に戻す
 
-	$format = str_replace('\T','$$$',$format); // \T の置換は除く
-	$format = str_replace('T',$zone,$format);
-	$format = str_replace('$$$','\T',$format); // \T に戻す
-
-	$time = ZONETIME + (($timestamp !== NULL) ? $timestamp : UTIME);
-	$str = gmdate($format, $time);
-	if (ZONETIME == 0) return $str;
-
-	$zonetime = get_zonetime_offset(ZONETIME);
-	return str_replace('+0000', $zonetime, $str);
+	//$time = ZONETIME + (($timestamp !== NULL) ? $timestamp : UTIME);
+	$time = ($timestamp !== NULL) ? $timestamp : UTIME;
+	$str = date($format, $time);
+    return $str;
+// 	if (ZONETIME == 0) return $str;
+//
+// 	$zonetime = get_zonetime_offset(ZONETIME);
+// 	return str_replace('+0000', $zonetime, $str);
 }
 
 function get_zonetime_offset($zonetime)

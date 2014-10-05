@@ -27,4 +27,6 @@ $rss_max = 50;
 $rss_description = $page_title . ' RecentChanges';
 
 $auto_template_func = 0;
+
+define('PLUGIN_REF_URL_GET_IMAGE_SIZE', FALSE);
 ?>
