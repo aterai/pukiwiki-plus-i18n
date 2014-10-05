@@ -114,7 +114,6 @@ JLabel label = new JLabel() {
 
 * コメント [#g0e08b07]
 #comment
-#comment
 - `JFileChooser`インスタンス化前に上記ソースを実行すると `ConcurrentModificationException`がスローされるのですが... 「`JDK1.4.2_02`」プロパティーが動的に変化するとしたらあまり有効な方法でないのでは? -- &user(MT); &new{2003-12-24 (水) 14:22:15};
 -割と手軽なので重宝するのですが、ちゃんとスレッド処理考えたほうがいいのかもしれませんね。 -- &user(aterai); &new{2003-12-25 (木) 20:06:15};
 -レスありがとうございます _ _)m とりあえず `Container` を辿りながら含まれている `Component` 毎に `setFont` 呼ぶようなユーティリティ用意してしのいでいます＾＾； -- &user(MT); &new{2003-12-26 (金) 16:20:14};

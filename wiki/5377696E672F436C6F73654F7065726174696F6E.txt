@@ -43,7 +43,6 @@ public static JFrame createFrame(String title) {
 
 * コメント [#if26eeb6]
 #comment
-#comment
 - `1`代目の`jframe`から複数の`2`代目の`jframe`を作り出す。また`2`代目の`jframe`から`3`代目の`jframe`を作り出す。適当に選んだ`1`つの`2`代目`jframe`を閉じると、その`2`代目から作り出した`3`代目`jframe`も同時に`dispose`したい。即ち別の`2`代目とそこから生成した`3`代目には影響（`dispose`）を及ぼさないするにはどうすれば宜しいでしょうか？宜しくご教示ください。 -- &user(Panda); &new{2011-03-07 (月) 15:12:52};
 -- ルートになる`JFrame`は`EXIT_ON_CLOSE`、残りは`DISPOSE_ON_CLOSE`とし、各`JFrame`の親子関係をどこかに保持するなどしておけば、あとは閉じる時に自分(`JFrame`)の子も深さ優先で検索して同様に閉じていくだけで特に問題ない？と思います。   -- &user(aterai); &new{2011-03-07 (月) 18:58:49};
 

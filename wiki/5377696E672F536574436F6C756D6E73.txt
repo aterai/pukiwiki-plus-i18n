@@ -11,13 +11,15 @@ pubdate: 2006-12-18T16:11:14+09:00
 
 * サンプルコード [#ib603a1f]
 #code(link){{
-JTextField field      = new JTextField(20);
+JTextField field = new JTextField(20);
 JPasswordField passwd = new JPasswordField(20);
-JSpinner.DefaultEditor e = (JSpinner.DefaultEditor)spinner.getEditor();
+JSpinner.DefaultEditor e = (JSpinner.DefaultEditor) spinner.getEditor();
 e.getTextField().setColumns(20);
 combo1.setEditable(true);
 Component c = combo1.getEditor().getEditorComponent();
-if(c instanceof JTextField) ((JTextField)c).setColumns(20);
+if (c instanceof JTextField) {
+  ((JTextField) c).setColumns(20);
+}
 }}
 
 * 解説 [#fd934c68]

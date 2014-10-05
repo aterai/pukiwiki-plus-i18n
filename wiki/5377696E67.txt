@@ -12,7 +12,7 @@ pubdate: 2003-09-25
 
 [https://picasaweb.google.com/at.terai/JavaSwingTips02 &ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQslJy3MxYI/AAAAAAAAAts/xrxOCvbp-0A/s800/screenshots.png);]
 
-- 上記の画像をクリックすると`Picasa`の画像一覧に移動します。
+- 上記の画像をクリックすると画像一覧(`Picasa`)に移動します。
 -- 以前の[[スクリーンショット一覧>Swing/_ScreenShots]]は、スライドショーに変更しました。
 
 ** Swingとは [#p0b76fde]
@@ -20,10 +20,14 @@ pubdate: 2003-09-25
 
 RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the JFC and Swing (The Java™ Tutorials)]
 
+* 新着記事 [#u85d24d8]
+- 2014-10-06 » [[JListのTransferHandlerにドラッグイメージを設定する>Swing/GhostDragImage]]
+- 2014-09-29 » [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
+- 2014-09-22 » [[JTreeで葉ノードが存在しない親ノードの描画を変更する>Swing/AsksAllowsChildren]]
+- 2014-09-15 » [[JSplitPaneでドラッグ中のDividerの背景色を設定する>Swing/DividerDraggingColor]]
+
 * Tips一覧 [#e739db5d]
-
 #twocolumn
-
 ** `javax.swing.JComponent` [#j7ba4ac7]
 - [[JTable(36)>Swing/_JTable]]
 -- [[CellEditor CellRenderer(33)>Swing/_CellEditor]]
@@ -42,7 +46,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[JMenuBar JToolBar JSeparator(22)>Swing/_JMenuBar]]
 - [[JPopupMenu(21)>Swing/_JPopupMenu]]
 - [[JLabel(20)>Swing/_JLabel]]
-- [[JList(19)>Swing/_JList]]
+- [[JList(20)>Swing/_JList]]
 - [[JPanel JSplitPane(18)>Swing/_JPanel]]
 - [[JSpinner(17)>Swing/_JSpinner]]
 - [[JToolTip(16)>Swing/_JToolTip]]
@@ -52,12 +56,11 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[JSlider(12)>Swing/_JSlider]]
 
 #twocolumn
-
 ** `Others` [#hef7f318]
 - [[Graphics(34)>Swing/_Graphics]]
 - [[Animation(30)>Swing/_Animation]]
 - [[Layout(24)>Swing/_Layout]]
-- [[Drag&Drop(21)>Swing/_DnD]]
+- [[Drag&Drop(22)>Swing/_DnD]]
 - [[SwingWorker(21)>Swing/_SwingWorker]]
 - [[Hyperlink Html(21)>Swing/_Hyperlink]]
 - [[Font(16)>Swing/_Font]]
@@ -75,7 +78,6 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 
 ** `Screenshot` [#b76d5b88]
 - [[スクリーンショット一覧(554)>Swing/_ScreenShots]]
-
 #twocolumn
 
 * 編集方針 [#ja35f484]
@@ -86,56 +88,27 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 -- すべての記事毎に、ソースコードや画像などのリソース、それらを[[Ant]]でコンパイル、実行するための`build.xml`をまとめた`zip`ファイルを添付しています。
 -- `Git`リポジトリを取得する場合: 
  git clone https://github.com/aterai/java-swing-tips.git
--- [[Subversion]]リポジトリを取得する場合:
- svn checkout http://java-swing-tips.googlecode.com/svn/trunk/ java-swing-tips-read-only
+//-- [[Subversion]]リポジトリを取得する場合:
+// svn checkout http://java-swing-tips.googlecode.com/svn/trunk/ java-swing-tips-read-only
 
 - `JNLP`ファイルについて
 -- [http://www.java.com/ja/download/faq/signed_code.xml ブラウザのJavaセキュリティ・メッセージの変更]
 -- `7u51`から、署名が無い場合や、自己署名の場合は`JavaWebStart`で実行不可になったので、&ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TRD2KGq73BI/AAAAAAAAAwA/N8-6EXongNk/s800/webstart.png);ボタンをすべてのページから削除
 --- `JavaWebStart`の記事も修正、または削除する予定
 
-* 更新履歴 [#v6d4524e]
-
-#twocolumn
-
-** 新着記事(一ヶ月以内) [#q2ce5bc3]
-- 2014-09-29
--- [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]を追加
-
-- 2014-09-22
--- [[JTreeで葉ノードが存在しない親ノードの描画を変更する>Swing/AsksAllowsChildren]]を追加
-
-- 2014-09-15
--- [[JSplitPaneでドラッグ中のDividerの背景色を設定する>Swing/DividerDraggingColor]]を追加
-
-- 2014-09-08
--- [[JSplitPaneのDividerを展開収納するOneTouchButtonのサイズ、色などを変更>Swing/OneTouchButton]]を追加
-
-#twocolumn
-** 記事一覧(追加順) [#rbffcf6e]
+* 更新履歴 [#kde2d7e6]
 - [http://terai.xrea.jp/archive.html Archive]
 - [[以前の更新履歴>Swing/_ChangeLog]]
 
-#twocolumn
-
-#twocolumn
-
 * 動作環境 [#dcae6b30]
 このサイトにあるサンプルの、動作・テスト環境や、`JDK`のダウンロード、利用方法、質問、不具合報告についてお願いなどを記述しています。
-
 - [[動作環境、サンプルの実行方法などについて>Swing/_TestedEnvironments]]
-
-#twocolumn
 
 * 参考リンク [#v0bd3645]
 参考にしたサイトなどのリンクをまとめています。
 - [[Java Swing 参考リンク>Swing/_Link]]
 
-#twocolumn
-
 * コメント [#w04556af]
 #comment
-#comment
 - [http://terai.xrea.jp/Comments/Swing.html 以前のコメントログ(SPAM対策で閉鎖)]
-
 #comment

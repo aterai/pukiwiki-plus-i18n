@@ -43,7 +43,6 @@ private static Rectangle getCellRect2(JTable table, int row, int col) {
 
 * コメント [#sf7f8963]
 #comment
-#comment
 - `JTable#columnAtPoint(Point)`メソッドをオーバーライドする方法では、`CPU`が`100%`になってしまうので、クリック、ドラッグした場合だけ、評価するように修正しました。 -- &user(aterai); &new{2007-04-16 (月) 18:46:39};
 - `JTable#getToolTipText(MouseEvent)`メソッドをオーバーライドして、`Name`カラムのセルの余白では、ツールチップも表示しないように変更しました。 -- &user(aterai); &new{2007-04-16 (月) 18:49:02};
 - `table.putClientProperty("Table.isFileList", Boolean.TRUE);`を使えば、`MouseListener`などもすべて必要なさそう…。 -- &user(aterai); &new{2010-01-01 (金) 02:02:50};

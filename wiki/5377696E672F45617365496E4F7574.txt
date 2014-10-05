@@ -14,15 +14,15 @@ pubdate: 2011-05-09T15:30:53+09:00
 private int delay = 4;
 private int count = 0;
 @Override public void mouseEntered(MouseEvent e) {
-  if(animator!=null && animator.isRunning() ||
-     yy==textArea.getPreferredSize().height) return;
-  final double h = (double)textArea.getPreferredSize().height;
-  animator = new javax.swing.Timer(delay, new ActionListener() {
+  if (animator!=null && animator.isRunning() ||
+     yy == textArea.getPreferredSize().height) return;
+  final double h = (double) textArea.getPreferredSize().height;
+  animator = new Timer(delay, new ActionListener() {
     @Override public void actionPerformed(ActionEvent e) {
-      double a = easeInOut(++count/h);
-      yy = (int)(.5d+a*h);
-      textArea.setBackground(new Color(0f,0f,0f,(float)(0.6*a)));
-      if(yy>=textArea.getPreferredSize().height) {
+      double a = easeInOut(++count / h);
+      yy = (int) (.5d + a * h);
+      textArea.setBackground(new Color(0f, 0f, 0f, (float) (.6 * a)));
+      if (yy >= textArea.getPreferredSize().height) {
         yy = textArea.getPreferredSize().height;
         animator.stop();
       }
@@ -33,15 +33,15 @@ private int count = 0;
   animator.start();
 }
 @Override public void mouseExited(MouseEvent e) {
-  if(animator!=null && animator.isRunning() ||
-     contains(e.getPoint()) && yy==textArea.getPreferredSize().height) return;
-  final double h = (double)textArea.getPreferredSize().height;
-  animator = new javax.swing.Timer(delay, new ActionListener() {
+  if (animator!=null && animator.isRunning() ||
+     contains(e.getPoint()) && yy == textArea.getPreferredSize().height) return;
+  final double h = (double) textArea.getPreferredSize().height;
+  animator = new Timer(delay, new ActionListener() {
     @Override public void actionPerformed(ActionEvent e) {
-      double a = easeInOut(--count/h);
-      yy = (int)(.5d+a*h);
-      textArea.setBackground(new Color(0f,0f,0f,(float)(0.6*a)));
-      if(yy<=0) {
+      double a = easeInOut(--count / h);
+      yy = (int) (.5d + a * h);
+      textArea.setBackground(new Color(0f, 0f, 0f, (float) (.6 * a)));
+      if (yy <= 0) {
         yy = 0;
         animator.stop();
       }
@@ -55,10 +55,10 @@ private int count = 0;
 //http://www.anima-entertainment.de/math-easein-easeout-easeinout-and-bezier-curves
 public double easeInOut(double t) {
   //range: 0.0<=t<=1.0
-  if(t<0.5d) {
-    return 0.5d*Math.pow(t*2d, 3d);
-  }else{
-    return 0.5d*(Math.pow(t*2d-2d, 3d) + 2d);
+  if (t < .5d) {
+    return 0.5d*Math.pow(t * 2d, 3d);
+  } else {
+    return .5d * (Math.pow(t * 2d - 2d, 3d) + 2d);
   }
 }
 }}
@@ -83,11 +83,11 @@ public double easeInOut(double t) {
 #code{{
 public static double intpow(double x, int n) {
   double aux = 1.0;
-  if(n < 0) {
+  if (n < 0) {
     throw new IllegalArgumentException("n must be a positive integer");
   }
-  for(; n > 0; x *= x, n >>>= 1) {
-    if((n & 1) != 0) {
+  for (; n > 0; x *= x, n >>>= 1) {
+    if ((n & 1) != 0) {
       aux *= x;
     }
   }

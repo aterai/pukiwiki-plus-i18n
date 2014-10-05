@@ -39,7 +39,6 @@ KBD{HOME}キーやKBD{END}キー(KBD{F8}キーなどで`Divider`にフォーカ�
 
 * コメント [#m26676c6]
 #comment
-#comment
 - ソースファイルをダウンロードして`eclipse`でプロジェクト作成しそこにコピーしたのですが、「インポートされた `javax.jnlp` は見つかりません」と出てきて実行出来ないのですが、 `javax.jnlp`はどこに置けば良いのでしょうか？ -- &user(ニートン); &new{2012-02-21 (火) 08:06:33};
 -- `eclipse`はほとんど使ったことがないのでインポートの詳細(もしかして`Ant`の`build.xml`を取り込む機能がある？)が分からないのですが、`javax.jnlp`パッケージは、`${java.home}/lib/javaws.jar`にあるので、ここにクラスパスが通っていないのかもしれません。このサンプルでは、`javax.jnlp.*`は使用しないので、`build.xml`から`<pathelement location="${java.home}/lib/javaws.jar" />`を削除するか、または、`eclipse`で新規プロジェクトを作成し、ソースコードだけ貼り付けるのが簡単だと思います。 -- &user(aterai); &new{2012-02-21 (火) 17:15:21};
 - ＞`eclipse`で新規プロジェクトを作成し、ソースコードだけ貼り付けるのが簡単だと思います。

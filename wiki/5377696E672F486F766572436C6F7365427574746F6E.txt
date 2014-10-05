@@ -17,12 +17,12 @@ public MyJTabbedPane() {
   addMouseMotionListener(new MouseMotionAdapter() {
     private int prev = -1;
     @Override public void mouseMoved(MouseEvent e) {
-      JTabbedPane source = (JTabbedPane)e.getSource();
+      JTabbedPane source = (JTabbedPane) e.getSource();
       int focussed = source.indexAtLocation(e.getX(), e.getY());
-      if(focussed==prev) return;
-      for(int i=0;i<source.getTabCount();i++) {
-        TabPanel tab = (TabPanel)source.getTabComponentAt(i);
-        tab.setButtonVisible(i==focussed);
+      if(focussed == prev) return;
+      for(int i = 0; i < source.getTabCount(); i++) {
+        TabPanel tab = (TabPanel) source.getTabComponentAt(i);
+        tab.setButtonVisible(i == focussed);
       }
       prev = focussed;
     }
@@ -40,7 +40,6 @@ public MyJTabbedPane() {
 - [[JTabbedPaneのタブ文字列をハイライト>Swing/TabTitleHighlight]]
 
 * コメント [#e680e90e]
-#comment
 #comment
 - タブが選択されている場合にも`JButton`を表示していましたが、これを変更してタブ上にマウスカーソルがある場合だけ`JButton`を表示するようにしました。 -- &user(aterai); &new{2008-03-19 (水) 21:09:18};
 

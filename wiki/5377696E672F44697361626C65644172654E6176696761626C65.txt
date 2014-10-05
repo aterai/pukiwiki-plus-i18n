@@ -15,8 +15,8 @@ UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE);
 }}
 
 * 解説 [#r3aefc5b]
-- `WindowsLookAndFeel`の場合、`UIManager.getBoolean("MenuItem.disabledAreNavigable");`のデフォルトは`true`で、`Disabled`な`JMenuItem`でもハイライトが可能
-- `MetalLookAndFeel`の場合、`UIManager.getBoolean("MenuItem.disabledAreNavigable");`のデフォルトは`false`だが、`UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE);`とすれば、`Disabled`な`JMenuItem`でもハイライトが可能になる
+- `WindowsLookAndFeel`の場合、`UIManager.getBoolean("MenuItem.disabledAreNavigable")`のデフォルトは`true`で、`Disabled`な`JMenuItem`でもハイライトが可能
+- `MetalLookAndFeel`の場合、`UIManager.getBoolean("MenuItem.disabledAreNavigable")`のデフォルトは`false`だが、`UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE)`とすれば、`Disabled`な`JMenuItem`でもハイライトが可能になる
 
 * 参考リンク [#a1678889]
 - [http://weblogs.java.net/blog/joshy/archive/2006/08/windows_lf_bugs.html Windows L&F Bugs: Part 2 | Java.net]

@@ -70,7 +70,6 @@ protected JInternalFrame createFrame(JPanel panel) {
 
 * コメント [#vc94b782]
 #comment
-#comment
 - `JRE6.0`だと、半透明にならずチェック模様が描画されるだけですね。仕様変わったのかな… --  &new{2007-05-25 (金) 11:05:17};
 -- 御指摘ありがとうございます。`Windows XP`で、`Java 1.6.0_01`、`1.5.0_11`は、半透明になったのですが、`Ubuntu 7.04`で、`Java 1.6.0`では駄目みたいです。`Mac`は環境がないので試せてません。 -- &user(aterai); &new{2007-05-25 (金) 13:02:13};
 -- すこし調べてみたのですが、`Ubuntu`(`GNOME`) でも半透明にするには`JInternalFrame#setOpaque(false)`も必要みたいです。修正しておきます。 -- &user(aterai); &new{2007-05-25 (金) 13:07:50};

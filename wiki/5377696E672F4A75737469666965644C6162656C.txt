@@ -89,13 +89,13 @@ public class JustifiedLabelDemo {
     JTextPane textPane = new JTextPane();
     textPane.insertComponent(new JustifiedLabel(s));
     textPane.replaceSelection(": 111\n");
-    textPane.insertComponent(new JustifiedLabel(s+s));
+    textPane.insertComponent(new JustifiedLabel(s + s));
     textPane.replaceSelection(": 2222222\n");
-    textPane.insertComponent(new JustifiedLabel(s+s+s));
+    textPane.insertComponent(new JustifiedLabel(s + s + s));
     textPane.replaceSelection(": 3333\n");
-    textPane.insertComponent(new JustifiedLabel(s+s+s+s));
+    textPane.insertComponent(new JustifiedLabel(s + s + s + s));
     textPane.replaceSelection(": 4444444\n");
-    textPane.insertComponent(new JustifiedLabel(s+s+s+s+s));
+    textPane.insertComponent(new JustifiedLabel(s + s + s + s + s));
     textPane.replaceSelection(": 555\n");
     return new JScrollPane(textPane);
   }
@@ -126,7 +126,7 @@ class JustifiedLabel extends JLabel {
     super(str);
     Dimension d = getPreferredSize();
     int baseline = getBaseline(d.width, d.height);
-    setAlignmentY(baseline/(float)d.height);
+    setAlignmentY(baseline / (float)d.height);
   }
   @Override public Dimension getMinimumSize() {
     return getPreferredSize();
@@ -143,11 +143,11 @@ class JustifiedLabel extends JLabel {
     Graphics2D g2 = (Graphics2D)g;
     Insets i = getInsets();
     int w = getWidth() - i.left - i.right;
-    if(w!=prev_width) {
+    if (w != prev_width) {
       gvtext = getJustifiedGlyphVector(getText(), getFont(), g2.getFontRenderContext());
       prev_width = w;
     }
-    if(gvtext!=null) {
+    if (gvtext != null) {
       g2.drawGlyphVector(gvtext, i.left, i.top + getFont().getSize());
     } else {
       super.paintComponent(g);
@@ -158,13 +158,13 @@ class JustifiedLabel extends JLabel {
     Rectangle2D r = gv.getVisualBounds();
     float jwidth = (float)getWidth();
     float vwidth = (float)r.getWidth();
-    if(jwidth<vwidth) return null;
+    if (jwidth < vwidth) return null;
     int num = gv.getNumGlyphs();
-    float xx = (jwidth-vwidth) / (float)(num-1);
-    float xpos = num==1?(jwidth-vwidth)*.5f:0f;
+    float xx = (jwidth - vwidth) / (float)(num - 1);
+    float xpos = num == 1 ? (jwidth - vwidth) * .5f : 0f;
     Point2D gmPos = new Point2D.Double(0.0d, 0.0d);
-    if(num==1) System.out.println(gmPos);
-    for(int i=0; i<num; i++) {
+    if (num == 1) System.out.println(gmPos);
+    for (int i = 0; i < num; i++) {
       GlyphMetrics gm = gv.getGlyphMetrics(i);
       gmPos.setLocation(xpos, 0);
       gv.setGlyphPosition(i, gmPos);

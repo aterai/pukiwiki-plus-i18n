@@ -53,7 +53,6 @@ class ComboCellRenderer extends JComboBox implements TableCellRenderer {
 
 * コメント [#u7323d9c]
 #comment
-#comment
 - セルの幅を大きくするとセルの表示が消えますが・・・これは一体なんでしょうか？ -- &user(ichikawa); &new{2010-11-01 (月) 23:09:02};
 -- ご指摘ありがとうございます。リサイズなどでセルの表示がおかしくなるのは、バグです。`DefaultTableCellRenderer#invalidate()`などと同じ(パフォーマンス上の理由)にするため、何もしないようにオーバーライドした、テスト中のコードとサンプルを誤ってアップロードしていました。 -- &user(aterai); &new{2010-11-02 (火) 14:23:32};
 

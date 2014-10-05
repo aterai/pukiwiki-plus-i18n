@@ -165,7 +165,6 @@ class TabTransferHandler extends TransferHandler {
 
 * コメント [#gcad5394]
 #comment
-#comment
 - タブのドラッグ中、`JTable`上などで`Cursor`が点滅するのを修正。 -- &user(aterai); &new{2009-05-19 (火) 17:32:38};
 - 点滅の原因は？ -- &user(Dad); &new{2010-01-16 (土) 01:48:13};
 -- おそらく、[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6700748 Cursor flickering during D&D when using CellRendererPane with validation]が原因。現在は、`canImport`メソッド内で、一々`GlassPane#setCursor(isDropable?DragSource.DefaultMoveDrop:DragSource.DefaultMoveNoDrop);`として回避中。 -- &user(aterai); &new{2010-01-16 (土) 12:25:38};

@@ -457,7 +457,6 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
 
 * コメント [#le0df76f]
 #comment
-#comment
 - 第`0`列目が編集状態でボタンをクリックした場合、パネルが二度表示されるバグを修正。 -- &user(aterai); &new{2009-10-06 (火) 11:56:21};
 - [http://tips4java.wordpress.com/2009/07/12/table-button-column/ Table Button Column « Java Tips Weblog]を参考にして、`JTable#editCellAt`ではなく、逆に`TableCellEditor#stopCellEditing()`を使用してクリック直後に編集終了するように変更。 -- &user(aterai); &new{2009-11-03 (火) 04:36:55};
 - KBD{Ctrl}キーを押しながら、`edit`ボタンをクリックすると異なる行(`table.getSelectedRow()`)の内容が表示されるバグを修正。 -- &user(aterai); &new{2011-03-10 (木) 02:35:35};

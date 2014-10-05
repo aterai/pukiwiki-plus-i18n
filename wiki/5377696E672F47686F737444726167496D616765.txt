@@ -1,0 +1,97 @@
+---
+title: JListのTransferHandlerにドラッグイメージを設定する
+tags: [JList, TransferHandler, DragAndDrop, BufferedImage]
+author: aterai
+pubdate: 2014-10-06T00:03:35+09:00
+---
+* 概要 [#mfd9baf3]
+`JList`のアイテムをドラッグ中に表示するイメージをカスタマイズして`TransferHandler`に設定します。
+
+#download(https://lh4.googleusercontent.com/-lGkFK-bJoYE/VDEztZsJyOI/AAAAAAAACOg/Hs7B-dcJAkk/s800/GhostDragImage.png)
+
+* サンプルコード [#x36176a4]
+#code(link){{
+class ListItemTransferHandler extends TransferHandler {
+  @Override public int getSourceActions(JComponent c) {
+    System.out.println("getSourceActions");
+    if (!(c instanceof JList)) {
+      return NONE;
+    }
+    JList source = (JList) c;
+    Point pt;
+    if (compact) {
+      int w = source.getFixedCellWidth();
+      int h = source.getFixedCellHeight() - 20; //TODO
+      setDragImage(createCompactDragImage(source, w, h));
+      pt = new Point(w / 2, h);
+    } else {
+      setDragImage(createDragImage(source));
+      pt = c.getMousePosition();
+    }
+    if (pt != null) {
+      setDragImageOffset(pt);
+    }
+    return MOVE; //TransferHandler.COPY_OR_MOVE;
+  }
+  private static BufferedImage createDragImage(JList source) {
+    int w = source.getWidth();
+    int h = source.getHeight();
+    BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+    Graphics g = bi.getGraphics();
+    DefaultListCellRenderer renderer =
+      (DefaultListCellRenderer) source.getCellRenderer();
+    for (int i : source.getSelectedIndices()) {
+      Component c = renderer.getListCellRendererComponent(
+          source, source.getModel().getElementAt(i), i, false, false);
+      Rectangle rect = source.getCellBounds(i, i);
+      SwingUtilities.paintComponent(g, c, source, rect);
+    }
+    g.dispose();
+    return bi;
+  }
+  private BufferedImage createCompactDragImage(JList source, int w, int h) {
+    BufferedImage br = null;
+    if (w > 0 && h > 0) {
+      br = source.getGraphicsConfiguration().createCompatibleImage(
+          w, h, Transparency.TRANSLUCENT);
+    } else {
+      return null;
+    }
+    int[] selectedIndices = source.getSelectedIndices();
+    int length = selectedIndices.length;
+    Graphics g = br.getGraphics();
+    DefaultListCellRenderer renderer =
+      (DefaultListCellRenderer) source.getCellRenderer();
+    int idx = selectedIndices[0];
+    Object valueAt = source.getModel().getElementAt(idx);
+    Component c = renderer.getListCellRendererComponent(
+        source, valueAt, idx, false, false);
+    Rectangle rect = source.getCellBounds(idx, idx);
+    SwingUtilities.paintComponent(g, c, source, 0, 0, rect.width, rect.height);
+    if (length > 1) {
+      LABEL.setText(String.valueOf(length));
+      Dimension d = LABEL.getPreferredSize();
+      SwingUtilities.paintComponent(
+          g, LABEL, source, (w - d.width) / 2, (h - d.height) / 2, d.width, d.height);
+    }
+    g.dispose();
+    br.coerceData(true);
+    return br;
+  }
+//...
+}}
+
+* 解説 [#v88d2c21]
+- `CompactDragImageMode`: `false`
+-- `JList`のサイズで`BufferedImage`を作成し、これに選択したリストアイテムのみドラッグイメージとして位置を変更せずに描画
+-- オフセットは、`JList#getMousePosition()`で取得したドラッグ開始位置を設定
+- `CompactDragImageMode`: `true`
+-- `JList`のリストアイテムの固定サイズ(リストアイテム一個分)で`BufferedImage`を作成し、これに選択されたリストアイテムの最初のイメージと選択数を設定した`JLabel`を描画
+-- オフセットは、作成したドラッグイメージの底辺中央付近を設定
+
+* 参考リンク [#jeb316be]
+- [[JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え>Swing/DragSelectDropReordering]]
+
+* コメント [#c7552975]
+#comment
+#comment

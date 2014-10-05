@@ -75,7 +75,6 @@ scrollPane.getViewport().setBackground(Color.GREEN);
 
 * コメント [#t32c2230]
 #comment
-#comment
 - 不正なセルレンダラーを設定していたので修正しました。 -- &user(aterai); &new{2006-11-16 (木) 20:22:33};
 - `excel`のように、行ヘッダをクリックしてその行が選択されたり、テーブルの本体にてセルをクリックしてそのセルだけが選択されたりすることはできますか？いろいろ試しましたが、なかなかできませんでした。 -- &user(javalover); &new{2008-03-11 (火) 09:52:12};
 -- セル選択は、`table.setCellSelectionEnabled(true);`で可能です。行ヘッダをクリックしてその行を選択することは、現在でも出来るような。もし、列のことなら、%%`JTableHeader`に以下のようなコードを書けばよさそうです。%% [[JTableHeaderをクリックしてそのColumnのセルを全選択>Swing/ColumnSelection]]を参考にしてください。 -- &user(aterai); &new{2008-03-11 (火) 13:45:47};

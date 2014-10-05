@@ -5,9 +5,6 @@ noindex: true
 ---
 #contents
 * サンプル利用方法 [#wdd24dcc]
-//** JavaWebStart で起動する場合 [#s924777b]
-//各ページにあるアイコン &ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TRD2KGq73BI/AAAAAAAAAwA/N8-6EXongNk/s800/webstart.png); (`example.jnlp`へのリンク)をクリックすると、サンプルプログラムが起動します。
-
 ** Jarファイルで起動する場合 [#s5311996]
 `example.jar`をダウンロードしてサンプルプログラムを起動する場合は、コマンドプロンプトで、以下のように入力します。
 
@@ -16,10 +13,9 @@ noindex: true
 `Jar`ファイルが`Java`に関連付けされている場合は、マウスでダブルクリックでも起動します。
 
 ** ソースをコンパイルして起動する場合 [#d9b0bcd0]
-`src.zip`をダウンロード、展開したり、[[Subversion]]で`checkout`や`export`することでソースコード一式を取得することができます。
+`src.zip`をダウンロードしたり、[https://github.com/aterai/java-swing-tips GitHub]からソースコード一式を取得することができます。
 
-- [[Subversion]]で`export`する場合の例:
- svn export http://java-swing-tips.googlecode.com/svn/trunk/AccordionPanel
+ git clone https://github.com/aterai/java-swing-tips.git
 
 各サンプルには、[[Ant]]を利用できるように`build.xml`が用意されているので、環境変数`JAVA_HOME`、`ANT_HOME`を設定し、その`build.xml`があるディレクトリに移動して、コマンドプロンプトから`ant`と入力するとソースコードがコンパイルされます。コンパイルからサンプルの起動をまとめて実行する場合は、`run`ターゲットを使用します。
 

@@ -14,53 +14,67 @@ pubdate: 2009-02-16T20:29:54+09:00
 enum Status { SELECTED, DESELECTED, INDETERMINATE }
 class HeaderRenderer extends JCheckBox implements TableCellRenderer {
   private final JLabel label = new JLabel("Check All");
-  private int targetColumnIndex;
+  private final int targetColumnIndex;
   public HeaderRenderer(JTableHeader header, int index) {
-    super((String)null);
+    super((String) null);
     this.targetColumnIndex = index;
     setOpaque(false);
     setFont(header.getFont());
     header.addMouseListener(new MouseAdapter() {
       @Override public void mouseClicked(MouseEvent e) {
-        JTableHeader header = (JTableHeader)e.getSource();
+        JTableHeader header = (JTableHeader) e.getComponent();
         JTable table = header.getTable();
         TableColumnModel columnModel = table.getColumnModel();
         int vci = columnModel.getColumnIndexAtX(e.getX());
         int mci = table.convertColumnIndexToModel(vci);
-        if(mci == targetColumnIndex) {
+        if (mci == targetColumnIndex) {
           TableColumn column = columnModel.getColumn(vci);
           Object v = column.getHeaderValue();
-          boolean b = Status.DESELECTED.equals(v)?true:false;
+          boolean b = Status.DESELECTED.equals(v);
           TableModel m = table.getModel();
-          for(int i=0; i<m.getRowCount(); i++) m.setValueAt(b, i, mci);
-          column.setHeaderValue(b?Status.SELECTED:Status.DESELECTED);
+          for (int i = 0; i < m.getRowCount(); i++) {
+            m.setValueAt(b, i, mci);
+          }
+          column.setHeaderValue(b ? Status.SELECTED : Status.DESELECTED);
           //header.repaint();
         }
       }
     });
   }
   @Override public Component getTableCellRendererComponent(
-      JTable tbl, Object val, boolean isS, boolean hasF, int row, int col) {
+        JTable tbl, Object val, boolean isS, boolean hasF, int row, int col) {
     TableCellRenderer r = tbl.getTableHeader().getDefaultRenderer();
-    JLabel l = (JLabel)r.getTableCellRendererComponent(tbl,val,isS,hasF,row,col);
-    if(targetColumnIndex==tbl.convertColumnIndexToModel(col)) {
-      if(val instanceof Status) {
-        switch((Status)val) {
-          case SELECTED:    setSelected(true);  setEnabled(true);  break;
-          case DESELECTED:  setSelected(false); setEnabled(true);  break;
-          case INDETERMINATE: setSelected(true);  setEnabled(false); break;
+    JLabel l = (JLabel) r.getTableCellRendererComponent(tbl, val, isS, hasF, row, col);
+    if (targetColumnIndex == tbl.convertColumnIndexToModel(col)) {
+      if (val instanceof Status) {
+        switch ((Status) val) {
+        case SELECTED:
+          setSelected(true);
+          setEnabled(true);
+          break;
+        case DESELECTED:
+          setSelected(false);
+          setEnabled(true);
+          break;
+        case INDETERMINATE:
+          setSelected(true);
+          setEnabled(false);
+          break;
+        default:
+          throw new AssertionError("Unknown Status");
         }
-      }else{
-        setSelected(true); setEnabled(false);
+      } else {
+        setSelected(true);
+        setEnabled(false);
       }
       label.setIcon(new ComponentIcon(this));
       l.setIcon(new ComponentIcon(label));
-      l.setText(null); //XXX: Nimbus???
+      l.setText(null);
     }
     return l;
   }
 }
-class ComponentIcon implements Icon{
+class ComponentIcon implements Icon {
   private final JComponent cmp;
   public ComponentIcon(JComponent cmp) {
     this.cmp = cmp;
@@ -72,8 +86,7 @@ class ComponentIcon implements Icon{
     return cmp.getPreferredSize().height;
   }
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
-    SwingUtilities.paintComponent(
-        g, cmp, (Container)c, x, y, getIconWidth(), getIconHeight());
+    SwingUtilities.paintComponent(g, cmp, c.getParent(), x, y, getIconWidth(), getIconHeight());
   }
 }
 }}
@@ -90,34 +103,46 @@ class ComponentIcon implements Icon{
 --- [[JTableのモデルが変更されたことをイベントで受け取る>Swing/TableModelEvent]]は、行の追加、削除を考慮したバージョン
 
 #code{{
-model.addTableModelListener(new TableModelListener() {
+class HeaderCheckBoxHandler implements TableModelListener {
+  private final JTable table;
+  private final int targetColumnIndex;
+  public HeaderCheckBoxHandler(JTable table, int index) {
+    this.table = table;
+    this.targetColumnIndex = index;
+  }
   @Override public void tableChanged(TableModelEvent e) {
-    if(e.getType()==TableModelEvent.UPDATE && e.getColumn()==targetColumnIndex) {
-      int vci = table.convertColumnIndexToView(targetColumnIndex);
-      TableColumn column = table.getColumnModel().getColumn(vci);
-      if(!Status.INDETERMINATE.equals(column.getHeaderValue())) {
-        column.setHeaderValue(Status.INDETERMINATE);
-      }else{
-        boolean selected = true, deselected = true;
-        TableModel m = table.getModel();
-        for(int i=0; i<m.getRowCount(); i++) {
-          Boolean b = (Boolean)m.getValueAt(i, targetColumnIndex);
-          selected &= b; deselected &= !b;
-          if(selected==deselected) return;
+    int vci = table.convertColumnIndexToView(targetColumnIndex);
+    TableColumn column = table.getColumnModel().getColumn(vci);
+    Object status = column.getHeaderValue();
+    TableModel m = table.getModel();
+    if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == targetColumnIndex) {
+      //System.out.println("UPDATE");
+      if (Status.INDETERMINATE.equals(status)) {
+        boolean selected = true;
+        boolean deselected = true;
+        for (int i = 0; i < m.getRowCount(); i++) {
+          Boolean b = (Boolean) m.getValueAt(i, targetColumnIndex);
+          selected &= b;
+          deselected &= !b;
+          if (selected == deselected) {
+            return;
+          }
         }
-        if(selected) {
-          column.setHeaderValue(Status.SELECTED);
-        }else if(deselected) {
+        if (deselected) {
           column.setHeaderValue(Status.DESELECTED);
-        }else{
+        } else if (selected) {
+          column.setHeaderValue(Status.SELECTED);
+        } else {
           return;
         }
+      } else {
+        column.setHeaderValue(Status.INDETERMINATE);
       }
-      JTableHeader h = table.getTableHeader();
-      h.repaint(h.getHeaderRect(vci));
     }
+    JTableHeader h = table.getTableHeader();
+    h.repaint(h.getHeaderRect(vci));
   }
-});
+}
 }}
 
 * 参考リンク [#icecdcd6]
@@ -126,7 +151,6 @@ model.addTableModelListener(new TableModelListener() {
 - [[JTableのモデルが変更されたことをイベントで受け取る>Swing/TableModelEvent]]
 
 * コメント [#zfb599ad]
-#comment
 #comment
 - `LookAndFeel`を`Nimbus`に変更したとき、`JTableHeader`の高さがおかしい？ -- &user(aterai); &new{2011-05-30 (月) 22:13:05};
 -- レンダラー中で`label.setText(null);`や、`JLabel`を挟んで二重に`ImageIcon`を作成するなどして回避中。 -- &user(aterai); &new{2012-03-02 (金) 16:01:51};

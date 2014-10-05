@@ -30,9 +30,8 @@ JTable table = new JTable(model) {
 - 下:`JTable#getSelectionBackground()`
 -- `BooleanCellEditor`として使用する`JCheckBox`の背景色が常に`JTable#getSelectionBackground()`になるように`JTable#prepareEditor(...)`をオーバーライド
 
-//**参考リンク
+//* 参考リンク
 * コメント [#d9435978]
-#comment
 #comment
 - KBD{Ctrl}キーを押しながら選択されている行にある`JCheckBox`をマウスで選択すると、リリースするまで`JCheckBox`の背景色が残っている、`NimbusLookAndFeel`から別の`LookAndFeel`に変更すると選択色が残ってしまうなどの問題に対応しました。 -- &user(aterai); &new{2012-02-23 (木) 15:05:20};
 

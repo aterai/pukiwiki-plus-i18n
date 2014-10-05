@@ -12,10 +12,10 @@ pubdate: 2009-07-27T11:47:16+09:00
 * サンプルコード [#o79573fb]
 #code(link){{
 slider.setUI(new MetalSliderUI() {
-  protected TrackListener createTrackListener(JSlider slider) {
+  @Override protected TrackListener createTrackListener(JSlider slider) {
     return new TrackListener() {
       @Override public void mousePressed(MouseEvent e) {
-        JSlider slider = (JSlider)e.getSource();
+        JSlider slider = (JSlider) e.getSource();
         switch (slider.getOrientation()) {
           case JSlider.VERTICAL:
             slider.setValue(valueForYPosition(e.getY()));
