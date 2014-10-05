@@ -197,7 +197,7 @@ function plugin_edit_write()
 	$_title_deleted = _(' $1 was deleted');
 	$_msg_invalidpass = _('Invalid password.');
 
-	$page   = isset($vars['page']) ? $vars['page']     : '';
+	$page   = isset($vars['page'])   ? $vars['page']   : '';
 	$add    = isset($vars['add'])    ? $vars['add']    : '';
 	$digest = isset($vars['digest']) ? $vars['digest'] : '';
 	$partid = isset($vars['id'])     ? $vars['id']     : '';

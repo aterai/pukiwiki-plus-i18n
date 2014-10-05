@@ -366,7 +366,7 @@ function plugin_ref_body($args)
 			$width  = (int)($width  * $params['_%'] / 100);
 			$height = (int)($height * $params['_%'] / 100);
 		}
-		if ($width && $height) $info = 'class="img-responsive" itemprop="image" width="' . $width . '" height="' . $height .'" ';
+		if ($width && $height) $info = 'width="' . $width . '" height="' . $height .'" ';
 	}
 
 	// Check alignment
@@ -379,19 +379,19 @@ function plugin_ref_body($args)
 	}
 
 	if ($is_image) {
-		// DoCoMo recommended picture size is 128x128
-		// http://www.nttdocomo.co.jp/p_s/imode/xhtml/s1.html#1_4_2
-		if (defined('UA_MOBILE') && UA_MOBILE != 0) {
-			if ($rawwidth > 0 && $rawheight > 0 && $rawwidth <= 128 && $rawheight <= 128 && PLUGIN_REF_SHOW_IMAGE_TO_MOBILEPHONE) {
-				$params['_body'] = '<img src="' . $url . '" alt="' . $title . '" title="keitai" ' . $info . '/>';
-			} else {
-				$params['_body'] = '<a href="' . $url . '" title="keitai">[PHOTO:' . $title . ']</a>';
-			}
-		} else {
-			$params['_body'] = '<img src="' . $url . '" alt="' . $title . '" title="' . $title . '" ' . $info . '/>';
+// 		// DoCoMo recommended picture size is 128x128
+// 		// http://www.nttdocomo.co.jp/p_s/imode/xhtml/s1.html#1_4_2
+// 		if (defined('UA_MOBILE') && UA_MOBILE != 0) {
+// 			if ($rawwidth > 0 && $rawheight > 0 && $rawwidth <= 128 && $rawheight <= 128 && PLUGIN_REF_SHOW_IMAGE_TO_MOBILEPHONE) {
+// 				$params['_body'] = '<img src="' . $url . '" alt="' . $title . '" title="keitai" ' . $info . '/>';
+// 			} else {
+// 				$params['_body'] = '<a href="' . $url . '" title="keitai">[PHOTO:' . $title . ']</a>';
+// 			}
+// 		} else {
+			$params['_body'] = '<img src="' . $url . '" class="img-responsive" itemprop="image" alt="' . $title . '" title="' . $title . '" ' . $info . '/>';
 			if (! $params['nolink'] && $url2)
 				$params['_body'] = '<a href="' . $url2 . '" title="' . $title . '">' . $params['_body'] . '</a>';
-		}
+// 		}
 	} else {
 		$icon = $params['noicon'] ? '' : FILE_ICON;
 		if (defined('PLUGIN_REF_DOWNLOAD_OTHER_WINDOW') && PLUGIN_REF_DOWNLOAD_OTHER_WINDOW) {
