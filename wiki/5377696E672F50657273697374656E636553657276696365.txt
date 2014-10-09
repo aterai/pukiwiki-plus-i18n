@@ -3,6 +3,7 @@ title: PersistenceServiceを使ってJFrameの位置・サイズを記憶
 tags: [ServiceManager, PersistenceService, JFrame, SwingWorker, XMLEncoder, XMLDecoder]
 author: aterai
 pubdate: 2012-03-26T15:45:39+09:00
+description: ServiceManagerからPersistenceServiceを取得し、JFrameなどの位置・サイズの保存、呼び出しを行います。
 ---
 * 概要 [#da09cfeb]
 `ServiceManager`から`PersistenceService`を取得し、`JFrame`などの位置・サイズの保存、呼び出しを行います。
@@ -85,12 +86,15 @@ worker.execute();
 }}
 
 ----
-`XMLEncoder`で直接上記の`JFrame`を書きだす場合、以下のような`IllegalAccessException`が発生する
+- `XMLEncoder`で直接上記の`JFrame`を書きだす場合、以下のような`IllegalAccessException`が発生する
 
  java.lang.IllegalAccessException: Class sun.reflect.misc.Trampoline can not access a member of class MainPanel$2 with modifiers ""
  Continuing ...
 
-回避するには、`WindowListener`を実装する匿名内部クラスを`public class`(`Java Beans`)に変更するか、`removeWindowListener`で取り除く必要がある
+- 回避方法
+-- `WindowListener`を実装する匿名内部クラスを`public class`(`Java Beans`)に変更する
+-- または、`removeWindowListener`で取り除く
+-- または、`XMLEncoder#setExceptionListener(...)`で、何もしない`ExceptionListener`を設定し、警告を捨ててしまう
 
 #code{{
 //package example;
@@ -111,7 +115,7 @@ public class MainPanel extends JPanel {
     try(Reader fr = new InputStreamReader(
         new FileInputStream(PROPERTIES_XML), "UTF-8")) {
       textArea.read(fr, "File");
-    } catch(Exception ex) {
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
     add(new JScrollPane(textArea));
@@ -126,7 +130,7 @@ public class MainPanel extends JPanel {
   public static void createAndShowGUI() {
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    } catch(Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     JFrame frame = loadFrame();
@@ -140,10 +144,10 @@ public class MainPanel extends JPanel {
 
       frame = (JFrame)d.readObject();
       //d.close();
-    } catch(Exception ex) {
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
-    if(frame==null) {
+    if (frame == null) {
       frame = new JFrame("title");
       frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       frame.getContentPane().add(new MainPanel());
@@ -156,11 +160,16 @@ public class MainPanel extends JPanel {
         frame.removeWindowListener(this);
         File file = new File(PROPERTIES_XML);
         try(XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(
-            new FileOutputStream(file)))) {
+                                               new FileOutputStream(file)))) {
+          xe.setExceptionListener(new ExceptionListener() {
+            @Override public void exceptionThrown(Exception exception) {
+              //XXX:
+              exception.printStackTrace();
+            }
+          });
           xe.writeObject(frame);
           xe.flush();
-          //xe.close();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
           ex.printStackTrace();
         }
       }

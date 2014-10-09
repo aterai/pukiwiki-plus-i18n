@@ -3,6 +3,7 @@ title: JTableの行を全削除
 tags: [JTable, DefaultTableModel]
 author: aterai
 pubdate: 2005-04-11
+description: JTableの行を一括で全削除します。
 ---
 * 概要 [#j3b5fd74]
 `JTable`の行を一括で全削除します。
@@ -13,7 +14,7 @@ pubdate: 2005-04-11
 #code(link){{
 button.addActionListener(new AbstractAction("clear") {
   @Override public void actionPerformed(ActionEvent e) {
-    DefaultTableModel model = (DefaultTableModel)table.getModel();
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
     model.setRowCount(0);
   }
 });
@@ -29,7 +30,7 @@ public void clear() {
   //以下のdataVectorは実装に合わせて変更する
   int size = dataVector.size();
   dataVector.clear();
-  fireTableRowsDeleted(0, size-1);
+  fireTableRowsDeleted(0, size - 1);
   //fireTableDataChanged();
 }
 }}

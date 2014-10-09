@@ -3,6 +3,7 @@ title: MouseWheelで画像のズームイン・アウト表示
 tags: [MouseWheelListener, ImageIcon, JComponent]
 author: aterai
 pubdate: 2006-10-16
+description: マウスホイールなどで画像をズームイン、ズームアウトします。
 ---
 * 概要 [#g39f1afa]
 マウスホイールなどで画像をズームイン、ズームアウトします。
@@ -12,11 +13,11 @@ pubdate: 2006-10-16
 * サンプルコード [#n33b6ada]
 #code(link){{
 class ZoomImage extends JComponent implements MouseWheelListener {
-  private final ImageIcon icon;
+  private final transient ImageIcon icon;
   private final int iw;
   private final int ih;
-  private double scale = 1.0d;
-  public ZoomImage(final ImageIcon icon) {
+  private double scale = 1d;
+  public ZoomImage(ImageIcon icon) {
     super();
     this.icon = icon;
     iw = icon.getIconWidth();
@@ -24,19 +25,20 @@ class ZoomImage extends JComponent implements MouseWheelListener {
     addMouseWheelListener(this);
   }
   @Override public void paintComponent(Graphics g) {
-    Graphics2D g2 = (Graphics2D) g;
+    Graphics2D g2 = (Graphics2D) g.create();
     g2.scale(scale, scale);
     g2.drawImage(icon.getImage(), 0, 0, iw, ih, this);
+    g2.dispose();
   }
   @Override public void mouseWheelMoved(MouseWheelEvent e) {
     changeScale(e.getWheelRotation());
   }
   public void initScale() {
-    scale = 1.0d;
+    scale = 1d;
     repaint();
   }
-  @Override public void changeScale(int iv) {
-    scale = Math.max(0.05d, Math.min(5.0d, scale-iv*0.05d));
+  public void changeScale(int iv) {
+    scale = Math.max(.05, Math.min(5d, scale - iv * .05));
     repaint();
   }
 }
@@ -47,7 +49,7 @@ class ZoomImage extends JComponent implements MouseWheelListener {
 
 * 参考リンク [#ud24b7c5]
 - [[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]
--- `JScrollPane`を使用せずに、画像のズーム、スクロール
+-- こちらは、`JScrollPane`を使用せずに、画像のズームとスクロールを行うサンプルです。
 
 * コメント [#g84ab533]
 #comment
