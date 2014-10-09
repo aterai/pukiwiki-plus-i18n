@@ -108,7 +108,8 @@ class PukiWikiParser
       when /\A\#code.*\{\{/
         buf.concat parse_pre2(take_multi_block(lines))
       when /\A\#.+/
-        buf.push parse_block_plugin(lines.shift)
+        bp = parse_block_plugin(lines.shift)
+        buf.push bp unless bp.nil?
       when /\A\s/
         buf.concat parse_pre(take_block(lines, /\A\s/))
       when /\A\/\//
@@ -352,6 +353,8 @@ class PukiWikiParser
       parameter
     when 'new'
       inline.strip
+    when 'user'
+      %Q|*#{parameter}*|
     else
       plugin
     end
@@ -366,16 +369,17 @@ class PukiWikiParser
       args.push $1
       args.push $2 #.slice(",")
     }
-    buf = []
+    #buf = []
     case args.first
     when 'download'
-      buf.push %Q<{% download #{args[1]} %}>
+      %Q<{% download #{args[1]} %}>
     when 'ref'
-      buf.push %Q<![screenshot](#{args[1]})>
+      %Q<![screenshot](#{args[1]})>
+    when 'comment'
+      nil
     else
-      buf.push ''
+      ''
     end
-    buf
   end
 
   def a_href(uri, label, cssclass)
