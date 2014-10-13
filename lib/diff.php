@@ -73,7 +73,7 @@ EOD;
 			$table[] = ' <tr>';
 			$params = array($_obj->get('left'), $_obj->get('right'), $_obj->text());
 			foreach ($params as $key => $text) {
-				$text = htmlspecialchars(rtrim($text));
+				$text = htmlspecialchars(rtrim($text), ENT_QUOTES, 'UTF-8');
 				if (empty($text)) $text = '&nbsp;';
 				$table[] = 
 					'  <' . $tags[$key] . ' class="style_' . $tags[$key] . '">' .

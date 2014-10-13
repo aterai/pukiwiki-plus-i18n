@@ -69,14 +69,14 @@ function do_search_fuzzy($word, $type = 'AND', $non_format = FALSE, $non_fuzzy =
 	if ($non_format) return array_keys($pages);
 
 	$r_word = rawurlencode($word);
-	$s_word = htmlspecialchars($word);
+	$s_word = htmlspecialchars($word, ENT_QUOTES, 'UTF-8');
 	if (empty($pages))
 		return str_replace('$1', $s_word, $_string['notfoundresult']);
 
 	ksort($pages);
 	$retval = '<ul>' . "\n";
 	foreach ($pages as $page=>$time) {
-		$s_page  = htmlspecialchars($page);
+		$s_page  = htmlspecialchars($page, ENT_QUOTES, 'UTF-8');
 		$passage = get_passage($time);
 		$retval .= ' <li><a href="' .
 			get_page_uri($page, '', 'word=' . $r_word) . '">' . $s_page .

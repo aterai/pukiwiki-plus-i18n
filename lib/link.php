@@ -98,7 +98,7 @@ function links_update($page)
 		// ページが存在している
 		if (! empty($rel_new)) {
     			$fp = fopen($rel_file, 'w')
-    				or die_message('cannot write ' . htmlspecialchars($rel_file));
+    				or die_message('cannot write ' . htmlspecialchars($rel_file, ENT_QUOTES, 'UTF-8'));
 			fputs($fp, join("\t", $rel_new));
 			fclose($fp);
 		}
@@ -181,7 +181,7 @@ function links_init()
 		}
 		if (! empty($rel)) {
 			$fp = fopen(CACHE_DIR . encode($page) . '.rel', 'w')
-				or die_message('cannot write ' . htmlspecialchars(CACHE_DIR . encode($page) . '.rel'));
+				or die_message('cannot write ' . htmlspecialchars(CACHE_DIR . encode($page) . '.rel', ENT_QUOTES, 'UTF-8'));
 			fputs($fp, join("\t", $rel));
 			fclose($fp);
 		}
@@ -189,7 +189,7 @@ function links_init()
 
 	foreach ($ref as $page=>$arr) {
 		$fp  = fopen(CACHE_DIR . encode($page) . '.ref', 'w')
-			or die_message('cannot write ' . htmlspecialchars(CACHE_DIR . encode($page) . '.ref'));
+			or die_message('cannot write ' . htmlspecialchars(CACHE_DIR . encode($page) . '.ref', ENT_QUOTES, 'UTF-8'));
 		foreach ($arr as $ref_page=>$ref_auto)
 			fputs($fp, $ref_page . "\t" . $ref_auto . "\n");
 		fclose($fp);
@@ -219,7 +219,7 @@ function links_add($page, $add, $rel_auto)
 		}
 		if ($is_page || ! $all_auto) {
 			$fp = fopen($ref_file, 'w')
-				 or die_message('cannot write ' . htmlspecialchars($ref_file));
+				 or die_message('cannot write ' . htmlspecialchars($ref_file, ENT_QUOTES, 'UTF-8'));
 			fputs($fp, $ref);
 			fclose($fp);
 		}
@@ -249,7 +249,7 @@ function links_delete($page, $del)
 		unlink($ref_file);
 		if (($is_page || ! $all_auto) && $ref != '') {
 			$fp = fopen($ref_file, 'w')
-				or die_message('cannot write ' . htmlspecialchars($ref_file));
+				or die_message('cannot write ' . htmlspecialchars($ref_file, ENT_QUOTES, 'UTF-8'));
 			fputs($fp, $ref);
 			fclose($fp);
 		}
