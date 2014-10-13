@@ -27,20 +27,20 @@ public JComponent makeUI() {
         Transferable t = (cs==null)
           ?Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null)
           :cs.getContents();
-        if(t==null) {
+        if (t==null) {
           java.awt.Toolkit.getDefaultToolkit().beep();
           return;
         }
         String str = "";
         ImageIcon image = null;
-        if(t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
-          image = new ImageIcon((Image)t.getTransferData(DataFlavor.imageFlavor));
-        }else if(t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-          str = (String)t.getTransferData(DataFlavor.stringFlavor);
+        if (t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
+          image = new ImageIcon((Image) t.getTransferData(DataFlavor.imageFlavor));
+        } else if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+          str = (String) t.getTransferData(DataFlavor.stringFlavor);
         }
         label.setText(str);
         label.setIcon(image);
-      }catch(Exception ex) {
+      } catch (Exception ex) {
         ex.printStackTrace();
       }
     }

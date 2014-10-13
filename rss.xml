@@ -5,10 +5,139 @@
         <description>Java Swing Tips - TERAI Atsuhiro</description>
         <link>http://terai.xrea.jp</link>
         <link>http://terai.xrea.jp</link>
-        <lastBuildDate>2014-10-06T03:35:21+09:00</lastBuildDate>
-        <pubDate>2014-10-06T03:35:21+09:00</pubDate>
+        <lastBuildDate>2014-10-13T03:41:56+09:00</lastBuildDate>
+        <pubDate>2014-10-13T03:41:56+09:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>JTableのモデルをXMLファイルで保存、復元する</title>
+                <description>&lt;h2&gt;概要&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;JTable&lt;/code&gt;のモデルを&lt;code&gt;XMLEncoder&lt;/code&gt;と&lt;code&gt;XMLDecoder&lt;/code&gt;を使って、&lt;code&gt;XML&lt;/code&gt;ファイルで保存、復元します。&lt;/p&gt;
+
+&lt;div class=&quot;row&quot;&gt;
+&lt;div class=&quot;col-md-5 col-xs-12&quot;&gt;
+&lt;div itemscope=&quot;itemscope&quot; itemtype=&quot;http://schema.org/Code&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;example.jar&quot; class=&quot;btn btn-block btn-danger&quot;  download=&quot;example.jar&quot; onclick=&quot;ga(&#39;send&#39;, &#39;event&#39;, &#39;button&#39;, &#39;download&#39;, &#39;example.jar&#39;);&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-save icon-white&quot;&gt;&lt;/span&gt; Runnable JARファイル &lt;small&gt;example.jar&lt;/small&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;src.zip&quot; class=&quot;btn btn-block btn-success&quot; download=&quot;src.zip&quot;     onclick=&quot;ga(&#39;send&#39;, &#39;event&#39;, &#39;button&#39;, &#39;download&#39;, &#39;src.zip&#39;);&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-cloud-download icon-white&quot;&gt;&lt;/span&gt; ソースコード &lt;small&gt;src.zip&lt;/small&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;//github.com/aterai/java-swing-tips/tree/master/PersistenceDelegate&quot; class=&quot;btn btn-block btn-info&quot; itemprop=&quot;codeRepository&quot; onclick=&quot;ga(&#39;send&#39;, &#39;event&#39;, &#39;button&#39;, &#39;view&#39;, &#39;repository&#39;);&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-import icon-white&quot;&gt;&lt;/span&gt; リポジトリ &lt;small&gt;repository&lt;/small&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://lh4.googleusercontent.com/-QHfYzslScHI/VDq8gaSQpBI/AAAAAAAACO4/AI-q_jZ-qpA/s800/PersistenceDelegate.png &quot; class=&quot;img-responsive&quot; itemprop=&quot;image&quot; alt=&quot;screenshot&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/div&gt;&lt;/p&gt;
+
+&lt;div class=&quot;col-md-6 col-md-offset-1 col-xs-12&quot; itemscope=&quot;itemscope&quot; itemtype=&quot;http://schema.org/WPAdBlock&quot;&gt;
+&lt;!-- responsive --&gt;
+&lt;ins class=&quot;adsbygoogle&quot;
+     style=&quot;display:block&quot;
+     data-ad-client=&quot;ca-pub-6939179021013694&quot;
+     data-ad-slot=&quot;1067574330&quot;
+     data-ad-format=&quot;auto&quot;&gt;&lt;/ins&gt;
+&lt;script&gt;
+(adsbygoogle = window.adsbygoogle || []).push({});
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;/div&gt;&lt;/p&gt;
+
+&lt;h2&gt;サンプルコード&lt;/h2&gt;
+
+&lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;class DefaultTableModelPersistenceDelegate extends DefaultPersistenceDelegate {
+  @Override protected void initialize(
+        Class&amp;lt;?&amp;gt; type, Object oldInstance, Object newInstance, Encoder encoder) {
+    super.initialize(type, oldInstance,  newInstance, encoder);
+    DefaultTableModel m = (DefaultTableModel) oldInstance;
+    for (int row = 0; row &amp;lt; m.getRowCount(); row++) {
+      for (int col = 0; col &amp;lt; m.getColumnCount(); col++) {
+        Object[] o = new Object[] {m.getValueAt(row, col), row, col};
+        encoder.writeStatement(new Statement(oldInstance, &quot;setValueAt&quot;, o));
+      }
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;解説&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;XMLEncoder&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;XMLEncoder#setPersistenceDelegate(...)&lt;/code&gt;で、&lt;code&gt;DefaultTableModel&lt;/code&gt;の書き出しを自作の&lt;code&gt;DefaultTableModelPersistenceDelegate&lt;/code&gt;に設定&lt;/li&gt;
+&lt;li&gt;テンポラリディレクトリに&lt;code&gt;XML&lt;/code&gt;ファイルの書き出しと、&lt;code&gt;JTextArea&lt;/code&gt;にその&lt;code&gt;XML&lt;/code&gt;ファイルの読み込み&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- dummy comment line for breaking list --&gt;
+
+&lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;try {
+  File file = File.createTempFile(&quot;output&quot;, &quot;.xml&quot;);
+  try (OutputStream os = new BufferedOutputStream(new FileOutputStream(file))) {
+    XMLEncoder xe = new XMLEncoder(os);
+    xe.setPersistenceDelegate(DefaultTableModel.class, new DefaultTableModelPersistenceDelegate());
+    xe.writeObject(model);
+    //xe.flush();
+    xe.close();
+  }
+  try (Reader r = new BufferedReader(new InputStreamReader(new FileInputStream(file), &quot;UTF-8&quot;))) {
+    textArea.read(r, &quot;temp&quot;);
+  }
+} catch (IOException ex) {
+  ex.printStackTrace();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;XMLDecoder&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;JTextArea&lt;/code&gt;に読み込まれている&lt;code&gt;XML&lt;/code&gt;ファイルを&lt;code&gt;XMLDecoder&lt;/code&gt;で&lt;code&gt;DefaultTableModel&lt;/code&gt;に復元、&lt;code&gt;JTable#setModel(...)&lt;/code&gt;で設定&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- dummy comment line for breaking list --&gt;
+
+&lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;try (InputStream is = new BufferedInputStream(
+        new ByteArrayInputStream(textArea.getText().getBytes(&quot;UTF-8&quot;)))) {
+  XMLDecoder xd = new XMLDecoder(is);
+  model = (DefaultTableModel) xd.readObject();
+  table.setModel(model);
+} catch (IOException ex) {
+  ex.printStackTrace();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;clear&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;初期状態の&lt;code&gt;DefaultTableModel&lt;/code&gt;を&lt;code&gt;JTable&lt;/code&gt;に設定&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- dummy comment line for breaking list --&gt;
+
+&lt;h2&gt;参考リンク&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://web.archive.org/web/20090806075316/http://java.sun.com/products/jfc/tsc/articles/persistence4/&quot;&gt;Using XMLEncoder (web.archive.org)&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.oracle.com/technetwork/java/persistence4-140124.html&quot;&gt;Using XMLEncoder&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://terai.xrea.jp/http://wiki.byte-welt.net/wiki/JTable_speichern.html&quot;&gt;JTable Inhalte speichern – Byte-Welt Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- dummy comment line for breaking list --&gt;
+
+&lt;h2&gt;コメント&lt;/h2&gt;
+</description>
+                <link>http://terai.xrea.jp/swing/persistencedelegate</link>
+                <guid>http://terai.xrea.jp/swing/persistencedelegate</guid>
+                <pubDate>2014-10-13T00:00:00+09:00</pubDate>
+        </item>
 
         <item>
                 <title>JListのTransferHandlerにドラッグイメージを設定する</title>
@@ -10111,10 +10240,10 @@ check.addActionListener(new ActionListener() {
 
 &lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;class TransparentTreeCellRenderer extends DefaultTreeCellRenderer {
   @Override public Component getTreeCellRendererComponent(
-      JTree tree, Object value, boolean isSelected, boolean expanded,
-      boolean leaf, int row, boolean hasFocus) {
-    JComponent c = (JComponent)super.getTreeCellRendererComponent(
-        tree, value, isSelected, expanded, leaf, row, hasFocus);
+          JTree tree, Object value, boolean isSelected, boolean expanded,
+          boolean leaf, int row, boolean hasFocus) {
+    JComponent c = (JComponent) super.getTreeCellRendererComponent(
+          tree, value, isSelected, expanded, leaf, row, hasFocus);
     c.setOpaque(false);
     return c;
   }
@@ -15426,11 +15555,25 @@ worker.execute();
 
 &lt;hr/&gt;
 
-&lt;p&gt;&lt;code&gt;XMLEncoder&lt;/code&gt;で直接上記の&lt;code&gt;JFrame&lt;/code&gt;を書きだす場合、以下のような&lt;code&gt;IllegalAccessException&lt;/code&gt;が発生する&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;XMLEncoder&lt;/code&gt;で直接上記の&lt;code&gt;JFrame&lt;/code&gt;を書きだす場合、以下のような&lt;code&gt;IllegalAccessException&lt;/code&gt;が発生する&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- dummy comment line for breaking list --&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;java.lang.IllegalAccessException: Class sun.reflect.misc.Trampoline can not access a member of class MainPanel$2 with modifiers &amp;quot;&amp;quot;
 Continuing ...
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;回避するには、&lt;code&gt;WindowListener&lt;/code&gt;を実装する匿名内部クラスを&lt;code&gt;public class&lt;/code&gt;(&lt;code&gt;Java Beans&lt;/code&gt;)に変更するか、&lt;code&gt;removeWindowListener&lt;/code&gt;で取り除く必要がある&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;回避方法
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;WindowListener&lt;/code&gt;を実装する匿名内部クラスを&lt;code&gt;public class&lt;/code&gt;(&lt;code&gt;Java Beans&lt;/code&gt;)に変更する&lt;/li&gt;
+&lt;li&gt;または、&lt;code&gt;removeWindowListener&lt;/code&gt;で取り除く&lt;/li&gt;
+&lt;li&gt;または、&lt;code&gt;XMLEncoder#setExceptionListener(...)&lt;/code&gt;で、何もしない&lt;code&gt;ExceptionListener&lt;/code&gt;を設定し、警告を捨ててしまう&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- dummy comment line for breaking list --&gt;
 
 &lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;//package example;
 //-*- mode:java; encoding:utf-8 -*-
@@ -15450,7 +15593,7 @@ public class MainPanel extends JPanel {
     try(Reader fr = new InputStreamReader(
         new FileInputStream(PROPERTIES_XML), &quot;UTF-8&quot;)) {
       textArea.read(fr, &quot;File&quot;);
-    } catch(Exception ex) {
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
     add(new JScrollPane(textArea));
@@ -15465,7 +15608,7 @@ public class MainPanel extends JPanel {
   public static void createAndShowGUI() {
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    } catch(Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     JFrame frame = loadFrame();
@@ -15479,10 +15622,10 @@ public class MainPanel extends JPanel {
 
       frame = (JFrame)d.readObject();
       //d.close();
-    } catch(Exception ex) {
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
-    if(frame==null) {
+    if (frame == null) {
       frame = new JFrame(&quot;title&quot;);
       frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       frame.getContentPane().add(new MainPanel());
@@ -15495,11 +15638,16 @@ public class MainPanel extends JPanel {
         frame.removeWindowListener(this);
         File file = new File(PROPERTIES_XML);
         try(XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(
-            new FileOutputStream(file)))) {
+                                               new FileOutputStream(file)))) {
+          xe.setExceptionListener(new ExceptionListener() {
+            @Override public void exceptionThrown(Exception exception) {
+              //XXX:
+              exception.printStackTrace();
+            }
+          });
           xe.writeObject(frame);
           xe.flush();
-          //xe.close();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
           ex.printStackTrace();
         }
       }
@@ -18008,11 +18156,11 @@ frame.setVisible(true);
 
 &lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;private final Font font = new Font(Font.MONOSPACED, Font.PLAIN, 12);
 private final JTextPane editor = new JTextPane() {
-  float font_size = 0.0f;
+  float font_size = 0f;
   @Override public void doLayout() {
     Insets i = getInsets();
     float f = .08f * (getWidth() - i.left - i.right);
-    if(Math.abs(font_size-f) &amp;gt; 1.0e-1) {
+    if(Math.abs(font_size - f) &amp;gt; 1.0e-1) {
       setFont(font.deriveFont(f));
       font_size = f;
     }
@@ -21308,10 +21456,10 @@ public double easeInOut(double t) {
     super();
     add(new AbstractAction(&quot;add&quot;) {
       @Override public void actionPerformed(ActionEvent e) {
-        JTree tree = (JTree)getInvoker();
-        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        JTree tree = (JTree) getInvoker();
+        DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
         DefaultMutableTreeNode parent =
-          (DefaultMutableTreeNode)path.getLastPathComponent();
+          (DefaultMutableTreeNode) path.getLastPathComponent();
         DefaultMutableTreeNode child  = new DefaultMutableTreeNode(&quot;New&quot;);
         model.insertNodeInto(child, parent, parent.getChildCount());
         //parent.add(child);
@@ -21321,23 +21469,23 @@ public double easeInOut(double t) {
     });
     add(new AbstractAction(&quot;remove&quot;) {
       @Override public void actionPerformed(ActionEvent e) {
-        JTree tree = (JTree)getInvoker();
-        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        JTree tree = (JTree) getInvoker();
+        DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
         DefaultMutableTreeNode node =
-          (DefaultMutableTreeNode)path.getLastPathComponent();
-        //if(path.getParentPath()!=null) {
-        if(!node.isRoot()) {
+          (DefaultMutableTreeNode) path.getLastPathComponent();
+        //if (path.getParentPath() != null) {
+        if (!node.isRoot()) {
           model.removeNodeFromParent(node);
         }
       }
     });
   }
   @Override public void show(Component c, int x, int y) {
-    JTree tree = (JTree)c;
+    JTree tree = (JTree) c;
     TreePath[] tsp = tree.getSelectionPaths();
-    if(tsp!=null) {
+    if (tsp != null) {
       path = tree.getPathForLocation(x, y);
-      if(path!=null &amp;amp;&amp;amp; Arrays.asList(tsp).contains(path)) {
+      if (path != null &amp;amp;&amp;amp; Arrays.asList(tsp).contains(path)) {
         super.show(c, x, y);
       }
     }
@@ -21886,36 +22034,36 @@ public double easeInOut(double t) {
 &lt;h2&gt;サンプルコード&lt;/h2&gt;
 
 &lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;class CheckBoxCellRenderer&amp;lt;E extends CheckBoxNode&amp;gt; extends JCheckBox
-          implements ListCellRenderer&amp;lt;E&amp;gt;, MouseListener, MouseMotionListener {
+  implements ListCellRenderer&amp;lt;E&amp;gt;, MouseListener, MouseMotionListener {
   private int rollOverRowIndex = -1;
   @Override public Component getListCellRendererComponent(
-      JList&amp;lt;? extends E&amp;gt; list, E value, int index, boolean isSelected, boolean cellHasFocus) {
+    JList&amp;lt;? extends E&amp;gt; list, E value, int index, boolean isSelected, boolean cellHasFocus) {
     this.setOpaque(true);
-    if(isSelected) {
+    if (isSelected) {
       this.setBackground(list.getSelectionBackground());
       this.setForeground(list.getSelectionForeground());
-    }else{
+    } else {
       this.setBackground(list.getBackground());
       this.setForeground(list.getForeground());
     }
     this.setSelected(value.selected);
-    this.getModel().setRollover(index==rollOverRowIndex);
+    this.getModel().setRollover(index == rollOverRowIndex);
     this.setText(value.text);
     return this;
   }
   @Override public void mouseExited(MouseEvent e) {
-    if(rollOverRowIndex&amp;gt;=0) {
+    if (rollOverRowIndex &amp;gt;= 0) {
       JList l = (JList)e.getComponent();
       l.repaint(l.getCellBounds(rollOverRowIndex, rollOverRowIndex));
       rollOverRowIndex = -1;
     }
   }
   @Override public void mouseClicked(MouseEvent e) {
-    if(e.getButton()==MouseEvent.BUTTON1) {
+    if (e.getButton() == MouseEvent.BUTTON1) {
       JList l = (JList)e.getComponent();
       Point p = e.getPoint();
       int index  = l.locationToIndex(p);
-      if(index&amp;gt;=0) {
+      if (index &amp;gt;= 0) {
         @SuppressWarnings(&quot;unchecked&quot;)
         DefaultListModel&amp;lt;CheckBoxNode&amp;gt; m = (DefaultListModel&amp;lt;CheckBoxNode&amp;gt;)l.getModel();
         CheckBoxNode n = m.get(index);
@@ -21927,15 +22075,23 @@ public double easeInOut(double t) {
   @Override public void mouseMoved(MouseEvent e) {
     JList l = (JList)e.getComponent();
     int index = l.locationToIndex(e.getPoint());
-    if(index != rollOverRowIndex) {
+    if (index != rollOverRowIndex) {
       rollOverRowIndex = index;
       l.repaint();
     }
   }
-  @Override public void mouseEntered(MouseEvent e)  { /* not needed */ }
-  @Override public void mousePressed(MouseEvent e)  { /* not needed */ }
-  @Override public void mouseReleased(MouseEvent e) { /* not needed */ }
-  @Override public void mouseDragged(MouseEvent e)  { /* not needed */ }
+  @Override public void mouseEntered(MouseEvent e)  {
+    /* not needed */
+  }
+  @Override public void mousePressed(MouseEvent e)  {
+    /* not needed */
+  }
+  @Override public void mouseReleased(MouseEvent e) {
+    /* not needed */
+  }
+  @Override public void mouseDragged(MouseEvent e)  {
+    /* not needed */
+  }
 }
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -21971,7 +22127,7 @@ public double easeInOut(double t) {
     setBackground(null);
     setSelectionForeground(null);
     setSelectionBackground(null);
-    if(renderer!=null) {
+    if (renderer != null) {
       removeMouseListener(renderer);
       removeMouseMotionListener(renderer);
     }
@@ -21987,7 +22143,7 @@ public double easeInOut(double t) {
     DefaultListModel m = (DefaultListModel)getModel();
     CheckBoxNode n = (CheckBoxNode)m.get(index);
     Component c = getCellRenderer().getListCellRendererComponent(
-        this, n, index, false, false);
+                    this, n, index, false, false);
     //c.doLayout();
     Dimension d = c.getPreferredSize();
     Rectangle rect = getCellBounds(index, index);
@@ -21995,19 +22151,19 @@ public double easeInOut(double t) {
     return index &amp;lt; 0 || !rect.contains(p);
   }
   @Override protected void processMouseEvent(MouseEvent e) {
-    if(!pointOutsidePrefSize(e.getPoint())) {
+    if (!pointOutsidePrefSize(e.getPoint())) {
       super.processMouseEvent(e);
     }
   }
   @Override protected void processMouseMotionEvent(MouseEvent e) {
-    if(!pointOutsidePrefSize(e.getPoint())) {
+    if (!pointOutsidePrefSize(e.getPoint())) {
       super.processMouseMotionEvent(e);
-    }else{
+    } else {
       e = new MouseEvent(
-          (Component)e.getSource(), MouseEvent.MOUSE_EXITED, e.getWhen(),
-          e.getModifiers(), e.getX(), e.getY(),
-          e.getXOnScreen(), e.getYOnScreen(),
-          e.getClickCount(), e.isPopupTrigger(), MouseEvent.NOBUTTON);
+        (Component)e.getSource(), MouseEvent.MOUSE_EXITED, e.getWhen(),
+        e.getModifiers(), e.getX(), e.getY(),
+        e.getXOnScreen(), e.getYOnScreen(),
+        e.getClickCount(), e.isPopupTrigger(), MouseEvent.NOBUTTON);
       super.processMouseEvent(e);
     }
   }
@@ -22032,12 +22188,12 @@ public double easeInOut(double t) {
 &lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;class CheckBoxNodeRenderer extends JCheckBox implements TreeCellRenderer {
   private TreeCellRenderer renderer = new DefaultTreeCellRenderer();
   @Override public Component getTreeCellRendererComponent(
-      JTree tree, Object value, boolean selected, boolean expanded,
-      boolean leaf, int row, boolean hasFocus) {
-    if(leaf &amp;amp;&amp;amp; value instanceof DefaultMutableTreeNode) {
+    JTree tree, Object value, boolean selected, boolean expanded,
+    boolean leaf, int row, boolean hasFocus) {
+    if (leaf &amp;amp;&amp;amp; value instanceof DefaultMutableTreeNode) {
       this.setOpaque(false);
       Object userObject = ((DefaultMutableTreeNode)value).getUserObject();
-      if(userObject instanceof CheckBoxNode) {
+      if (userObject instanceof CheckBoxNode) {
         CheckBoxNode node = (CheckBoxNode)userObject;
         this.setText(node.text);
         this.setSelected(node.selected);
@@ -22045,7 +22201,7 @@ public double easeInOut(double t) {
       return this;
     }
     return renderer.getTreeCellRendererComponent(
-        tree, value, selected, expanded, leaf, row, hasFocus);
+             tree, value, selected, expanded, leaf, row, hasFocus);
   }
 }
 
@@ -22063,11 +22219,11 @@ class CheckBoxNodeEditor extends JCheckBox implements TreeCellEditor {
     });
   }
   @Override public Component getTreeCellEditorComponent(
-      JTree tree, Object value, boolean isSelected, boolean expanded,
-      boolean leaf, int row) {
-    if(leaf &amp;amp;&amp;amp; value instanceof DefaultMutableTreeNode) {
+    JTree tree, Object value, boolean isSelected, boolean expanded,
+    boolean leaf, int row) {
+    if (leaf &amp;amp;&amp;amp; value instanceof DefaultMutableTreeNode) {
       Object userObject = ((DefaultMutableTreeNode)value).getUserObject();
-      if(userObject instanceof CheckBoxNode) {
+      if (userObject instanceof CheckBoxNode) {
         this.setSelected(((CheckBoxNode)userObject).selected);
       } else {
         this.setSelected(false);
@@ -22514,18 +22670,18 @@ class CheckBoxNodeEditor extends JCheckBox implements TreeCellEditor {
   public CheckBoxesPanel() {
     super();
     setOpaque(false);
-    setBackground(new Color(0,0,0,0));
+    setBackground(new Color(0, 0, 0, 0));
     setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     initButtons();
   }
   protected void initButtons() {
     buttons = new JCheckBox[title.length];
-    for(int i=0; i&amp;lt;buttons.length; i++) {
+    for (int i = 0; i &amp;lt; buttons.length; i++) {
       JCheckBox b = new JCheckBox(title[i]);
       b.setOpaque(false);
       b.setFocusable(false);
       b.setRolloverEnabled(false);
-      b.setBackground(new Color(0,0,0,0));
+      b.setBackground(new Color(0, 0, 0, 0));
       buttons[i] = b;
       add(b);
       add(Box.createHorizontalStrut(5));
@@ -22533,7 +22689,7 @@ class CheckBoxNodeEditor extends JCheckBox implements TreeCellEditor {
   }
   private static final String OSNAME = System.getProperty(&quot;os.name&quot;);
   protected void updateButtons(Object v) {
-    if(&quot;Windows 7&quot;.equals(OSNAME)) { //Windows aero?
+    if (&quot;Windows 7&quot;.equals(OSNAME)) { //Windows aero?
       removeAll();
       initButtons();
     }
@@ -22570,7 +22726,7 @@ class CheckBoxNodeEditor extends JCheckBox implements TreeCellEditor {
       }
     };
     ActionMap am = getActionMap();
-    for(int i=0; i&amp;lt;buttons.length; i++) {
+    for (int i = 0; i &amp;lt; buttons.length; i++) {
       final JCheckBox b = buttons[i];
       b.addActionListener(al);
       am.put(title[i], new AbstractAction(title[i]) {
@@ -22592,9 +22748,9 @@ class CheckBoxNodeEditor extends JCheckBox implements TreeCellEditor {
   }
   @Override public Object getCellEditorValue() {
     int i = 0;
-    if(buttons[0].isSelected()) i|=1&amp;lt;&amp;lt;2;
-    if(buttons[1].isSelected()) i|=1&amp;lt;&amp;lt;1;
-    if(buttons[2].isSelected()) i|=1&amp;lt;&amp;lt;0;
+    if (buttons[0].isSelected()) i |= 1 &amp;lt;&amp;lt; 2;
+    if (buttons[1].isSelected()) i |= 1 &amp;lt;&amp;lt; 1;
+    if (buttons[2].isSelected()) i |= 1 &amp;lt;&amp;lt; 0;
     return i;
   }
 
@@ -24879,20 +25035,20 @@ public JComponent makeUI() {
         Transferable t = (cs==null)
           ?Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null)
           :cs.getContents();
-        if(t==null) {
+        if (t==null) {
           java.awt.Toolkit.getDefaultToolkit().beep();
           return;
         }
         String str = &quot;&quot;;
         ImageIcon image = null;
-        if(t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
-          image = new ImageIcon((Image)t.getTransferData(DataFlavor.imageFlavor));
-        }else if(t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-          str = (String)t.getTransferData(DataFlavor.stringFlavor);
+        if (t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
+          image = new ImageIcon((Image) t.getTransferData(DataFlavor.imageFlavor));
+        } else if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+          str = (String) t.getTransferData(DataFlavor.stringFlavor);
         }
         label.setText(str);
         label.setIcon(image);
-      }catch(Exception ex) {
+      } catch (Exception ex) {
         ex.printStackTrace();
       }
     }
@@ -25148,8 +25304,8 @@ table.add(hint);
 
 model.addTableModelListener(new TableModelListener() {
   @Override public void tableChanged(TableModelEvent e) {
-    DefaultTableModel model = (DefaultTableModel)e.getSource();
-    hint.setVisible(model.getRowCount()==0);
+    DefaultTableModel model = (DefaultTableModel) e.getSource();
+    hint.setVisible(model.getRowCount() == 0);
   }
 });
 &lt;/code&gt;&lt;/pre&gt;
@@ -28396,8 +28552,8 @@ worker.execute();
   }
   @Override public Component getTableCellRendererComponent(JTable table,
       Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    Integer i = (Integer)value;
-    setBackground(isSelected?table.getSelectionBackground():table.getBackground());
+    Integer i = (Integer) value;
+    setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
     setValue(i.intValue());
     return this;
   }
@@ -28424,7 +28580,7 @@ worker.execute();
   }
   @Override public Component getTableCellEditorComponent(JTable table,
       Object value, boolean isSelected, int row, int column) {
-    Integer i = (Integer)value;
+    Integer i = (Integer) value;
     this.setBackground(table.getSelectionBackground());
     this.setValue(i.intValue());
     return this;
@@ -33398,9 +33554,9 @@ combo.putClientProperty(field.get(null), Boolean.TRUE);
 
 &lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;public static void sortTree(DefaultMutableTreeNode root) {
   Enumeration e = root.depthFirstEnumeration();
-  while(e.hasMoreElements()) {
-    DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.nextElement();
-    if(!node.isLeaf()) {
+  while (e.hasMoreElements()) {
+    DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.nextElement();
+    if (!node.isLeaf()) {
       sort2(node);   //selection sort
       //sort3(node); //iterative merge sort
     }
@@ -33408,15 +33564,7 @@ combo.putClientProperty(field.get(null), Boolean.TRUE);
 }
 public static Comparator&amp;lt;DefaultMutableTreeNode&amp;gt; tnc = new Comparator&amp;lt;DefaultMutableTreeNode&amp;gt;() {
   @Override public int compare(DefaultMutableTreeNode a, DefaultMutableTreeNode b) {
-    if(a.isLeaf() &amp;amp;&amp;amp; !b.isLeaf()) {
-      return 1;
-    }else if(!a.isLeaf() &amp;amp;&amp;amp; b.isLeaf()) {
-      return -1;
-    }else{
-      String sa = a.getUserObject().toString();
-      String sb = b.getUserObject().toString();
-      return sa.compareToIgnoreCase(sb);
-    }
+    //...
   }
 };
 &lt;/code&gt;&lt;/pre&gt;
@@ -33424,17 +33572,17 @@ public static Comparator&amp;lt;DefaultMutableTreeNode&amp;gt; tnc = new Compara
 &lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;//selection sort
 public static void sort2(DefaultMutableTreeNode parent) {
   int n = parent.getChildCount();
-  for(int i=0; i&amp;lt;n-1; i++) {
+  for (int i = 0; i &amp;lt; n - 1; i++) {
     int min = i;
-    for(int j=i+1; j&amp;lt;n; j++) {
-      if(tnc.compare((DefaultMutableTreeNode)parent.getChildAt(min),
-                     (DefaultMutableTreeNode)parent.getChildAt(j))&amp;gt;0) {
+    for (int j = i + 1; j &amp;lt; n; j++) {
+      if (tnc.compare((DefaultMutableTreeNode) parent.getChildAt(min),
+                      (DefaultMutableTreeNode) parent.getChildAt(j)) &amp;gt; 0) {
         min = j;
       }
     }
-    if(i!=min) {
-      MutableTreeNode a = (MutableTreeNode)parent.getChildAt(i);
-      MutableTreeNode b = (MutableTreeNode)parent.getChildAt(min);
+    if (i != min) {
+      MutableTreeNode a = (MutableTreeNode) parent.getChildAt(i);
+      MutableTreeNode b = (MutableTreeNode) parent.getChildAt(min);
       parent.insert(b, i);
       parent.insert(a, min);
     }
@@ -33448,12 +33596,12 @@ public static void sort2(DefaultMutableTreeNode parent) {
   //Enumeration&amp;lt;DefaultMutableTreeNode&amp;gt; e = parent.children();
   //ArrayList&amp;lt;DefaultMutableTreeNode&amp;gt; children = Collections.list(e);
   List&amp;lt;DefaultMutableTreeNode&amp;gt; children = new ArrayList&amp;lt;&amp;gt;(n);
-  for(int i=0; i&amp;lt;n; i++) {
+  for (int i = 0; i &amp;lt; n; i++) {
     children.add((DefaultMutableTreeNode)parent.getChildAt(i));
   }
   Collections.sort(children, tnc); //iterative merge sort
   parent.removeAllChildren();
-  for(MutableTreeNode node: children) {
+  for (MutableTreeNode node: children) {
     parent.add(node);
   }
 }
@@ -33465,7 +33613,46 @@ public static void sort2(DefaultMutableTreeNode parent) {
 
 &lt;p&gt;元のソート無しの状態に戻す場合は、&lt;code&gt;DefaultTreeModel&lt;/code&gt;を作成し直しています。&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;DefaultMutableTreeNode&lt;/code&gt;の比較は、&lt;code&gt;Comparator&amp;lt;DefaultMutableTreeNode&amp;gt;#compare&lt;/code&gt;をオーバーライドし、節ノードが葉ノードより上、かつ&lt;code&gt;getUserObject().toString()&lt;/code&gt;で生成した文字列の大文字小文字を無視して行なっています。&lt;/p&gt;
+&lt;hr/&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;DefaultMutableTreeNode&lt;/code&gt;の比較は、&lt;code&gt;Comparator&amp;lt;DefaultMutableTreeNode&amp;gt;#compare&lt;/code&gt;をオーバーライドし、節ノードが葉ノードより上、かつ&lt;code&gt;getUserObject().toString()&lt;/code&gt;で生成した文字列の大文字小文字を無視している&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- dummy comment line for breaking list --&gt;
+
+&lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;public static Comparator&amp;lt;DefaultMutableTreeNode&amp;gt; tnc = new Comparator&amp;lt;DefaultMutableTreeNode&amp;gt;() {
+  @Override public int compare(DefaultMutableTreeNode a, DefaultMutableTreeNode b) {
+    if (a.isLeaf() &amp;amp;&amp;amp; !b.isLeaf()) {
+      return 1;
+    } else if (!a.isLeaf() &amp;amp;&amp;amp; b.isLeaf()) {
+      return -1;
+    } else {
+      String sa = a.getUserObject().toString();
+      String sb = b.getUserObject().toString();
+      return sa.compareToIgnoreCase(sb);
+    }
+  }
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;JDK 1.8.0&lt;/code&gt;以降の場合、この&lt;code&gt;Comparator&lt;/code&gt;を以下のように簡単に作成することが可能
+
+&lt;ul&gt;
+&lt;li&gt;参考: &lt;a href=&quot;http://d.hatena.ne.jp/yohhoy/20141007/p1&quot;&gt;Comparator with ラムダ式 - yohhoyの日記&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;参考: &lt;a href=&quot;http://docs.oracle.com/javase/jp/8/api/java/util/Comparator.html#thenComparing-java.util.Comparator-&quot;&gt;Comparator#thenComparing(...) (Java Platform SE 8)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- dummy comment line for breaking list --&gt;
+
+&lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;Comparator&amp;lt;String&amp;gt; sci = Comparator.comparingInt(String::length)
+                                   .thenComparing(String.CASE_INSENSITIVE_ORDER);
+Comparator&amp;lt;DefaultMutableTreeNode&amp;gt; tnc = Comparator.comparing(DefaultMutableTreeNode::isLeaf)
+                                   .thenComparing(n -&amp;gt; n.getUserObject().toString(), sci);
+//                                   .thenComparing(n -&amp;gt; n.getUserObject().toString().toLowerCase());
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;参考リンク&lt;/h2&gt;
 
@@ -35612,15 +35799,22 @@ private void updateLookAndFeel() {
 
 &lt;h2&gt;サンプルコード&lt;/h2&gt;
 
-&lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;private static void searchTree(JTree tree, TreePath path, String q) {
-  TreeNode node = (TreeNode)path.getLastPathComponent();
-  if(node==null) return;
-  if(node.toString().equals(q))
-    tree.addSelectionPath(path);
-  if(!node.isLeaf() &amp;amp;&amp;amp; node.getChildCount()&amp;gt;=0) {
+&lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;private static void searchTree(
+    JTree tree, TreePath path, String q, List&amp;lt;TreePath&amp;gt; rollOverPathLists) {
+  TreeNode node = (TreeNode) path.getLastPathComponent();
+  if (node == null) {
+    return;
+  }
+  if (node.toString().startsWith(q)) {
+    rollOverPathLists.add(path);
+    tree.expandPath(path.getParentPath());
+  }
+  if (!node.isLeaf() &amp;amp;&amp;amp; node.getChildCount() &amp;gt;= 0) {
     Enumeration e = node.children();
-    while(e.hasMoreElements())
-      searchTree(tree, path.pathByAddingChild(e.nextElement()), q);
+    while (e.hasMoreElements()) {
+      searchTree(
+          tree, path.pathByAddingChild(e.nextElement()), q, rollOverPathLists);
+    }
   }
 }
 &lt;/code&gt;&lt;/pre&gt;
@@ -35637,20 +35831,20 @@ private void updateLookAndFeel() {
 public void traverse(JTree tree) {
   TreeModel model = tree.getModel();
   Object root;
-  if(model != null) {
+  if (model != null) {
     root = model.getRoot();
-    walk(model,root);
-  }else{
+    walk(model, root);
+  } else {
     System.out.println(&quot;Tree is empty.&quot;);
   }
 }
 protected void walk(TreeModel model, Object o) {
   int cc = model.getChildCount(o);
-  for(int i=0; i &amp;lt; cc; i++) {
+  for (int i = 0; i &amp;lt; cc; i++) {
     DefaultMutableTreeNode child = (DefaultMutableTreeNode) model.getChild(o, i);
-    if(model.isLeaf(child)) {
+    if (model.isLeaf(child)) {
       System.out.println(child);
-    }else{
+    } else {
       System.out.println(child);
       walk(model, child);
     }
@@ -35670,11 +35864,11 @@ protected void walk(TreeModel model, Object o) {
 &lt;!-- dummy comment line for breaking list --&gt;
 
 &lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;TreeModel model = tree.getModel();
-DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
 Enumeration depth = root.depthFirstEnumeration();
-while(depth.hasMoreElements()) {
-  DefaultMutableTreeNode node = (DefaultMutableTreeNode)depth.nextElement();
-  if(node!=null &amp;amp;&amp;amp; &quot;bananas&quot;.equals(node.toString())) {
+while (depth.hasMoreElements()) {
+  DefaultMutableTreeNode node = (DefaultMutableTreeNode) depth.nextElement();
+  if (node != null &amp;amp;&amp;amp; &quot;bananas&quot;.equals(node.toString())) {
     TreePath path = new TreePath(node.getPath());
     tree.setSelectionPath(path);
     tree.scrollPathToVisible(path);
@@ -42525,16 +42719,17 @@ if(com!=null &amp;amp;&amp;amp; com.getLength()&amp;gt;0) {
 private final String[] columnNames = {&quot;Year&quot;, &quot;String&quot;, &quot;Comment&quot;};
 private final DefaultTableModel model = new DefaultTableModel(null, columnNames) {
   @Override public Class&amp;lt;?&amp;gt; getColumnClass(int column) {
-    return (column==0)?Integer.class:Object.class;
+    return (column == 0) ? Integer.class : Object.class;
   }
 };
-private final TableRowSorter&amp;lt;TableModel&amp;gt; sorter = new TableRowSorter&amp;lt;TableModel&amp;gt;(model);
-private final Box box = Box.createHorizontalBox();
+private TableRowSorter&amp;lt;TableModel&amp;gt; sorter = new TableRowSorter&amp;lt;TableModel&amp;gt;(model);
+private Box box = Box.createHorizontalBox();
 
 private void initLinkBox(final int itemsPerPage, final int currentPageIndex) {
   //assert currentPageIndex &amp;gt; 0;
   sorter.setRowFilter(new RowFilter&amp;lt;TableModel, Integer&amp;gt;() {
-    @Override public boolean include(Entry&amp;lt;? extends TableModel, ? extends Integer&amp;gt; entry) {
+    @Override
+    public boolean include(Entry&amp;lt;? extends TableModel, ? extends Integer&amp;gt; entry) {
       int ti = currentPageIndex - 1;
       int ei = entry.getIdentifier();
       return ti * itemsPerPage &amp;lt;= ei &amp;amp;&amp;amp; ei &amp;lt; ti * itemsPerPage + itemsPerPage;
@@ -42570,19 +42765,29 @@ private void initLinkBox(final int itemsPerPage, final int currentPageIndex) {
   }
 
   ButtonGroup bg = new ButtonGroup();
-  JRadioButton f = makePrevNextRadioButton(itemsPerPage, 1, &quot;|&amp;lt;&quot;, currentPageIndex &amp;gt; 1);
-  box.add(f); bg.add(f);
-  JRadioButton p = makePrevNextRadioButton(itemsPerPage, currentPageIndex - 1, &quot;&amp;lt;&quot;, currentPageIndex &amp;gt; 1);
-  box.add(p); bg.add(p);
+  JRadioButton f = makePrevNextRadioButton(
+      itemsPerPage, 1, &quot;|&amp;lt;&quot;, currentPageIndex &amp;gt; 1);
+  box.add(f);
+  bg.add(f);
+  JRadioButton p = makePrevNextRadioButton(
+      itemsPerPage, currentPageIndex - 1, &quot;&amp;lt;&quot;, currentPageIndex &amp;gt; 1);
+  box.add(p);
+  bg.add(p);
   box.add(Box.createHorizontalGlue());
   for (int i = startPageIndex; i &amp;lt;= endPageIndex; i++) {
-    JRadioButton c = makeRadioButton(itemsPerPage, currentPageIndex, i); box.add(c); bg.add(c);
+    JRadioButton c = makeRadioButton(itemsPerPage, currentPageIndex, i);
+    box.add(c);
+    bg.add(c);
   }
   box.add(Box.createHorizontalGlue());
-  JRadioButton n = makePrevNextRadioButton(itemsPerPage, currentPageIndex + 1, &quot;&amp;gt;&quot;, currentPageIndex &amp;lt; maxPageIndex);
-  box.add(n); bg.add(n);
-  JRadioButton l = makePrevNextRadioButton(itemsPerPage, maxPageIndex, &quot;&amp;gt;|&quot;, currentPageIndex &amp;lt; maxPageIndex);
-  box.add(l); bg.add(l);
+  JRadioButton n = makePrevNextRadioButton(
+      itemsPerPage, currentPageIndex + 1, &quot;&amp;gt;&quot;, currentPageIndex &amp;lt; maxPageIndex);
+  box.add(n);
+  bg.add(n);
+  JRadioButton l = makePrevNextRadioButton(
+      itemsPerPage, maxPageIndex, &quot;&amp;gt;|&quot;, currentPageIndex &amp;lt; maxPageIndex);
+  box.add(l);
+  bg.add(l);
   box.revalidate();
   box.repaint();
 }
@@ -45092,16 +45297,16 @@ combo02.setRenderer(new DefaultListCellRenderer() {
 class MyViewFactory implements ViewFactory {
   @Override public View create(Element elem) {
     String kind = elem.getName();
-    if(kind!=null) {
-      if(kind.equals(AbstractDocument.ContentElementName)) {
+    if (kind != null) {
+      if (kind.equals(AbstractDocument.ContentElementName)) {
         return new LabelView(elem);
-      }else if(kind.equals(AbstractDocument.ParagraphElementName)) {
+      } else if (kind.equals(AbstractDocument.ParagraphElementName)) {
         return new MyParagraphView(elem);
-      }else if(kind.equals(AbstractDocument.SectionElementName)) {
+      } else if (kind.equals(AbstractDocument.SectionElementName)) {
         return new BoxView(elem, View.Y_AXIS);
-      }else if(kind.equals(StyleConstants.ComponentElementName)) {
+      } else if (kind.equals(StyleConstants.ComponentElementName)) {
         return new ComponentView(elem);
-      }else if(kind.equals(StyleConstants.IconElementName)) {
+      } else if (kind.equals(StyleConstants.IconElementName)) {
         return new IconView(elem);
       }
     }
@@ -45121,18 +45326,20 @@ class MyParagraphView extends ParagraphView {
   private void paintCustomParagraph(Graphics g, Shape a) {
     try {
       Shape paragraph = modelToView(getEndOffset(), a, Position.Bias.Backward);
-      Rectangle r = (paragraph==null)?a.getBounds():paragraph.getBounds();
+      Rectangle r = (paragraph == null) ? a.getBounds() : paragraph.getBounds();
       int x = r.x;
       int y = r.y;
       int h = r.height;
       Color old = g.getColor();
       g.setColor(pc);
       //paragraph mark
-      g.drawLine(x+1, y+h/2, x+1, y+h-4);
-      g.drawLine(x+2, y+h/2, x+2, y+h-5);
-      g.drawLine(x+3, y+h-6, x+3, y+h-6);
+      g.drawLine(x + 1, y + h / 2, x + 1, y + h - 4);
+      g.drawLine(x + 2, y + h / 2, x + 2, y + h - 5);
+      g.drawLine(x + 3, y + h - 6, x + 3, y + h - 6);
       g.setColor(old);
-    }catch(Exception e) { e.printStackTrace(); }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
 &lt;/code&gt;&lt;/pre&gt;
@@ -48880,11 +49087,11 @@ contrib.com.jgoodies.looks.common.ShadowPopupFactory.install();
 &lt;h2&gt;サンプルコード&lt;/h2&gt;
 
 &lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;class ZoomImage extends JComponent implements MouseWheelListener {
-  private final ImageIcon icon;
+  private final transient ImageIcon icon;
   private final int iw;
   private final int ih;
-  private double scale = 1.0d;
-  public ZoomImage(final ImageIcon icon) {
+  private double scale = 1d;
+  public ZoomImage(ImageIcon icon) {
     super();
     this.icon = icon;
     iw = icon.getIconWidth();
@@ -48892,19 +49099,20 @@ contrib.com.jgoodies.looks.common.ShadowPopupFactory.install();
     addMouseWheelListener(this);
   }
   @Override public void paintComponent(Graphics g) {
-    Graphics2D g2 = (Graphics2D) g;
+    Graphics2D g2 = (Graphics2D) g.create();
     g2.scale(scale, scale);
     g2.drawImage(icon.getImage(), 0, 0, iw, ih, this);
+    g2.dispose();
   }
   @Override public void mouseWheelMoved(MouseWheelEvent e) {
     changeScale(e.getWheelRotation());
   }
   public void initScale() {
-    scale = 1.0d;
+    scale = 1d;
     repaint();
   }
-  @Override public void changeScale(int iv) {
-    scale = Math.max(0.05d, Math.min(5.0d, scale-iv*0.05d));
+  public void changeScale(int iv) {
+    scale = Math.max(.05, Math.min(5d, scale - iv * .05));
     repaint();
   }
 }
@@ -48920,7 +49128,7 @@ contrib.com.jgoodies.looks.common.ShadowPopupFactory.install();
 &lt;li&gt;&lt;a href=&quot;http://terai.xrea.jp/Swing/ZoomingAndPanning.html&quot;&gt;JPanelに表示した画像のズームとスクロール&lt;/a&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;JScrollPane&lt;/code&gt;を使用せずに、画像のズーム、スクロール&lt;/li&gt;
+&lt;li&gt;こちらは、&lt;code&gt;JScrollPane&lt;/code&gt;を使用せずに、画像のズームとスクロールを行うサンプルです。&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -49263,9 +49471,9 @@ frame.getRootPane().setDefaultButton(button);
                   : toolBar.getSize().width;
     if (p.x &amp;gt;= c.getWidth() - iv) {
       return false;
-    }else if (p.x &amp;lt; iv) {
+    } else if (p.x &amp;lt; iv) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
@@ -57755,7 +57963,7 @@ im.put(tab, im.get(enter));
 
 &lt;pre class=&quot;prettyprint&quot;&gt;&lt;code&gt;button.addActionListener(new AbstractAction(&quot;clear&quot;) {
   @Override public void actionPerformed(ActionEvent e) {
-    DefaultTableModel model = (DefaultTableModel)table.getModel();
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
     model.setRowCount(0);
   }
 });
@@ -57771,7 +57979,7 @@ im.put(tab, im.get(enter));
   //以下のdataVectorは実装に合わせて変更する
   int size = dataVector.size();
   dataVector.clear();
-  fireTableRowsDeleted(0, size-1);
+  fireTableRowsDeleted(0, size - 1);
   //fireTableDataChanged();
 }
 &lt;/code&gt;&lt;/pre&gt;
@@ -57914,6 +58122,8 @@ header.addMouseListener(new MouseAdapter() {
 &lt;li&gt;移動したときに、日本語入力するには、どうしたらいいんですかね？ -- &lt;em&gt;zero&lt;/em&gt; 2006-03-09 (木) 20:19:17&lt;/li&gt;
 &lt;li&gt;多分エクセルみたいな入力のことですよね。アルファベットならマウスで入力状態にしなくてもフォーカスがあるセルに直接入力できますが、&lt;code&gt;IME&lt;/code&gt;が&lt;code&gt;on&lt;/code&gt;の日本語入力モードの場合はうまくいかないようです。いまのところこれを簡単に行う方法を僕は知らないです。 -- &lt;em&gt;aterai&lt;/em&gt; 2006-03-09 (木) 23:09:26&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;!-- dummy comment line for breaking list --&gt;
 </description>
                 <link>http://terai.xrea.jp/swing/anchorselection</link>
                 <guid>http://terai.xrea.jp/swing/anchorselection</guid>
@@ -64328,7 +64538,7 @@ private void initTargetLine(Point p) {
 &lt;li&gt;ぉー！ファイル、わざわざありがとうございます！自分なりに頑張ってます。私がやりたのは&lt;code&gt;JList&lt;/code&gt;の項目をタブへ&lt;code&gt;D&amp;amp;D&lt;/code&gt;して項目に書かれている内容を他のタブ(の持ってる&lt;code&gt;JList&lt;/code&gt;)へ渡したいんです。現状は、&lt;code&gt;2&lt;/code&gt;つ以上の項目なら渡せて、&lt;code&gt;1&lt;/code&gt;つだとエラーがでてしまいます。よくわかっていないまま進めてるので、全然わからないです（汗） -- &lt;em&gt;sao&lt;/em&gt; 2007-09-27 (木) 20:03:38
 
 &lt;ul&gt;
-&lt;li&gt;あ、&lt;code&gt;src2.zip&lt;/code&gt;は的外れでしたね。このページの&lt;code&gt;DnDList&lt;/code&gt;を&lt;code&gt;JTabbedPane&lt;/code&gt;に入れて、項目をタブタイトルにドロップすると&lt;code&gt;Exception&lt;/code&gt;の発生するバグがあるのかも？と勘違いしていました。このページのサンプルを改造するなら、&lt;code&gt;src2.zip&lt;/code&gt;ではなく、&lt;a href=&quot;http://terai.xrea.jp/swing/dropontabtitle/src.zip&quot;&gt;こちらのソース(名前を変更しました)&lt;/a&gt;、チュートリアルなら&lt;a href=&quot;http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#DragListDemo&quot;&gt;DragListDemo&lt;/a&gt; が参考になるかも。 -- &lt;em&gt;aterai&lt;/em&gt; 2007-09-28 (金) 02:24:23&lt;/li&gt;
+&lt;li&gt;あ、&lt;code&gt;src2.zip&lt;/code&gt;は的外れでしたね。このページの&lt;code&gt;DnDList&lt;/code&gt;を&lt;code&gt;JTabbedPane&lt;/code&gt;に入れて、項目をタブタイトルにドロップすると&lt;code&gt;Exception&lt;/code&gt;の発生するバグがあるのかも？と勘違いしていました。このページのサンプルを改造するなら、&lt;code&gt;src2.zip&lt;/code&gt;ではなく、&lt;a href=&quot;http://terai.xrea.jp/swing/dropontabtitle/src.zip&quot;&gt;こちらのソース(名前を変更しました)&lt;/a&gt;、チュートリアルなら&lt;a href=&quot;http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#DragListDemo&quot;&gt;Drag and Drop and Data Transfer: Examples (The Java™ Tutorials &amp;gt; Creating a GUI with Swing &amp;gt; Drag and Drop and Data Transfer)&lt;/a&gt;が参考になるかも。 -- &lt;em&gt;aterai&lt;/em&gt; 2007-09-28 (金) 02:24:23&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;src3&lt;/code&gt;ありがとうございます☆軽快に動きますね！すごく！&lt;code&gt;src3&lt;/code&gt;ですが、&lt;code&gt;DnDList&lt;/code&gt;に&lt;code&gt;setEnabled(true);&lt;/code&gt;を追加しました。が、まったくわからず…思いのほか、&lt;code&gt;2&lt;/code&gt;項目以上の&lt;code&gt;D&amp;amp;D&lt;/code&gt;って難しいですネ(汗 -- &lt;em&gt;sao&lt;/em&gt; 2007-09-28 (金) 17:50:42&lt;/li&gt;
 &lt;/ul&gt;

@@ -136,18 +136,18 @@ allow from all
 RewriteEngine on
 RewriteBase /
 
-RewriteCond %{REQUEST_URI} ^/(en|PukiWiki|swing/swing).*$
-RewriteRule .* - [G]
+# RewriteCond %{REQUEST_URI} ^/(en|PukiWiki|swing/swing[^a-z]).*$
+# RewriteRule .* - [G]
 
 # RewriteRule ^Recent\.html$ index.php?cmd=recent [L]
 # RewriteRule ^List\.html$ index.php?cmd=list [L]
-# RewriteRule ^sitemap\.xml$ index.php?cmd=sitemaps [L]
+RewriteRule ^sitemap\.xml$ index.php?cmd=sitemaps [QSA,PT,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.+)\.html$ index.php?cmd=read&page=$1 [QSA,PT,L]
 
 <FilesMatch "\.(js|css|xml|gz)$">
-Header append Vary Accept-Encoding
+Header append Vary: Accept-Encoding
 </FilesMatch>
 
 <FilesMatch "\.(js|css)$">
