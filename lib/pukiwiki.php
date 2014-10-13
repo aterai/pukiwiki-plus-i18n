@@ -215,7 +215,7 @@ if ($plugin != '') {
 		*/
 		$base = (!empty($page)) ? $page : $refer;
 	} else {
-		$msg = 'plugin=' . htmlspecialchars($plugin) . ' is not implemented.';
+		$msg = 'plugin=' . htmlspecialchars($plugin, ENT_QUOTES, 'UTF-8') . ' is not implemented.';
 		$retvars = array('msg'=>$msg,'body'=>$msg);
 		$base    = & $defaultpage;
 	}
@@ -242,7 +242,7 @@ if (!empty($auth_key['home'])) {
 }
 
 // Page output
-$title = htmlspecialchars(strip_bracket($base));
+$title = htmlspecialchars(strip_bracket($base), ENT_QUOTES, 'UTF-8');
 $page  = make_search($base);
 if (isset($retvars['msg']) && $retvars['msg'] != '') {
 	$title = str_replace('$1', $title, $retvars['msg']);
@@ -254,7 +254,7 @@ if (isset($retvars['body']) && $retvars['body'] != '') {
 } else {
 	if ($base == '' || ! is_page($base)) {
 		$base  = & $defaultpage;
-		$title = htmlspecialchars(strip_bracket($base));
+		$title = htmlspecialchars(strip_bracket($base), ENT_QUOTES, 'UTF-8');
 		$page  = make_search($base);
 	}
 

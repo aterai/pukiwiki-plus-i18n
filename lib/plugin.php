@@ -70,7 +70,7 @@ function limit_plugin($name)
 		$count[$name] = 1;
 	}
 	if (++$count[$name] > PKWK_PLUGIN_CALL_TIME_LIMIT) {
-		die('Alert: plugin "' . htmlspecialchars($name) .
+		die('Alert: plugin "' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') .
 		'" was called over ' . PKWK_PLUGIN_CALL_TIME_LIMIT .
 		' times. SPAM or someting?<br />' . "\n" .
 		'<a href="' . get_cmd_uri('edit',$vars['page']) .
@@ -218,7 +218,7 @@ function do_plugin_convert($name, $args = '')
 
 	if ($retvar === FALSE) {
 		return htmlspecialchars('#' . $name .
-			($args != '' ? '(' . $args . ')' : ''));
+			($args != '' ? '(' . $args . ')' : ''), ENT_QUOTES, 'UTF-8');
 	} else if (PKWK_ENCODING_HINT != '') {
 		// Insert a hidden field, supports idenrtifying text enconding
 		return preg_replace('/(<form[^>]*>)(?!\n<div><input type="hidden" name="encode_hint")/', '$1' . "\n" .
@@ -254,7 +254,7 @@ function do_plugin_inline($name, $args, & $body)
 
 	if($retvar === FALSE) {
 		// Do nothing
-		return htmlspecialchars('&' . $name . ($args ? '(' . $args . ')' : '') . ';');
+		return htmlspecialchars('&' . $name . ($args ? '(' . $args . ')' : '') . ';', ENT_QUOTES, 'UTF-8');
 	} else {
 		return $retvar;
 	}

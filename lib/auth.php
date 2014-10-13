@@ -264,7 +264,7 @@ function basic_auth($page, $auth_flag, $exit_flag, $auth_pages, $title_cannot)
 		}
 		if ($exit_flag) {
 			$body = $title = str_replace('$1',
-				htmlspecialchars(strip_bracket($page)), $title_cannot);
+				htmlspecialchars(strip_bracket($page), ENT_QUOTES, 'UTF-8'), $title_cannot);
 			$page = str_replace('$1', make_search($page), $title_cannot);
 			catbody($title, $page, $body);
 			exit;
@@ -299,7 +299,7 @@ function digest_auth($page, $auth_flag, $exit_flag, $auth_pages, $title_cannot)
 	}
 	if ($exit_flag) {
 		$body = $title = str_replace('$1',
-			htmlspecialchars(strip_bracket($page)), $title_cannot);
+			htmlspecialchars(strip_bracket($page), ENT_QUOTES, 'UTF-8'), $title_cannot);
 		$page = str_replace('$1', make_search($page), $title_cannot);
 		catbody($title, $page, $body);
 		exit;

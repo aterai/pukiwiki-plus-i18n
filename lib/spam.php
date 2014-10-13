@@ -954,7 +954,7 @@ function spam_exit($mode = '', $data = array())
 			break;
 		case 'dump':
 			echo('<pre>' . "\n");
-			echo htmlspecialchars(var_export($data, TRUE));
+			echo htmlspecialchars(var_export($data, TRUE), ENT_QUOTES, 'UTF-8');
 			echo('</pre>' . "\n");
 			break;
 	};

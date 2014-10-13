@@ -185,7 +185,7 @@ function catbody($title, $page, $body)
     }
 
     if ( isset($frontmatter['description']) ) {
-        $contents = htmlspecialchars($frontmatter['description']);
+        $contents = htmlspecialchars($frontmatter['description'], ENT_QUOTES, 'UTF-8');
         $head_tags[] = '<meta name="description" content="' . $contents . '" />';
     }
 
@@ -217,7 +217,7 @@ function catbody($title, $page, $body)
 
 	// Search words
 	if ($search_word_color && isset($vars['word'])) {
-		$body = '<div class="small">' . $_string['word'] . htmlspecialchars($vars['word']) .
+		$body = '<div class="small">' . $_string['word'] . htmlspecialchars($vars['word'], ENT_QUOTES, 'UTF-8') .
 			'</div>' . $hr . "\n" . $body;
 
 		// BugTrack2/106: Only variables can be passed by reference from PHP 5.0.5
@@ -231,7 +231,7 @@ function catbody($title, $page, $body)
 		$keys = get_search_words(array_keys($keys), TRUE);
 		$id = 0;
 		foreach ($keys as $key=>$pattern) {
-			$s_key    = htmlspecialchars($key);
+			$s_key    = htmlspecialchars($key, ENT_QUOTES, 'UTF-8');
 			$pattern  = '/' .
 				'<textarea[^>]*>.*?<\/textarea>' .	// Ignore textareas
 				'|' . '<[^>]*>' .			// Ignore tags
@@ -287,7 +287,7 @@ function edit_form($page, $postdata, $digest = FALSE, $b_template = TRUE)
 		foreach(auth::get_existpages() as $_page) {
 			if (is_cantedit($_page) || check_non_list($_page))
 				continue;
-			$s_page = htmlspecialchars($_page);
+			$s_page = htmlspecialchars($_page, ENT_QUOTES, 'UTF-8');
 			$pages[$_page] = '   <option value="' . $s_page . '">' .
 				$s_page . '</option>';
 		}
@@ -308,11 +308,11 @@ EOD;
 	}
 
 	$r_page      = rawurlencode($page);
-	$s_page      = htmlspecialchars($page);
-	$s_digest    = htmlspecialchars($digest);
-	$s_postdata  = htmlspecialchars($refer . $postdata);
-	$s_original  = isset($vars['original']) ? htmlspecialchars($vars['original']) : $s_postdata;
-	$s_id        = isset($vars['id']) ? htmlspecialchars($vars['id']) : '';
+	$s_page      = htmlspecialchars($page, ENT_QUOTES, 'UTF-8');
+	$s_digest    = htmlspecialchars($digest, ENT_QUOTES, 'UTF-8');
+	$s_postdata  = htmlspecialchars($refer . $postdata, ENT_QUOTES, 'UTF-8');
+	$s_original  = isset($vars['original']) ? htmlspecialchars($vars['original'], ENT_QUOTES, 'UTF-8') : $s_postdata;
+	$s_id        = isset($vars['id']) ? htmlspecialchars($vars['id'], ENT_QUOTES, 'UTF-8') : '';
 	$b_preview   = isset($vars['preview']); // TRUE when preview
 	$btn_preview = $b_preview ? $_button['repreview'] : $_button['preview'];
 
@@ -345,7 +345,7 @@ EOD;
 		}
 		$add_notimestamp .= '&nbsp;';
 	}
-	$refpage = isset($vars['refpage']) ? htmlspecialchars($vars['refpage']) : '';
+	$refpage = isset($vars['refpage']) ? htmlspecialchars($vars['refpage'], ENT_QUOTES, 'UTF-8') : '';
 	$add_assistant = ''; //edit_form_assistant();
 
 	$body = <<<EOD
@@ -453,7 +453,7 @@ function make_related($page, $tag = '')
 	foreach ($links as $page=>$lastmod) {
 		if (check_non_list($page)) continue;
 
-		$s_page   = htmlspecialchars($page);
+		$s_page   = htmlspecialchars($page, ENT_QUOTES, 'UTF-8');
 		$passage  = get_passage($lastmod);
 		$_links[] = $tag ?
 			'<a href="' . get_page_uri($page) . '" title="' .
@@ -525,7 +525,7 @@ function strip_autolink($str)
 // Make a backlink. searching-link of the page name, by the page name, for the page name
 function make_search($page)
 {
-	return '<a href="' . get_cmd_uri('related',$page) . '">' . htmlspecialchars($page) . '</a> ';
+	return '<a href="' . get_cmd_uri('related',$page) . '">' . htmlspecialchars($page, ENT_QUOTES, 'UTF-8') . '</a> ';
 }
 
 // Make heading string (remove heading-related decorations from Wiki text)
@@ -589,7 +589,7 @@ function pkwk_headers_sent()
 	if (version_compare(PHP_VERSION, '4.3.0', '>=')) {
 		if (headers_sent($file, $line))
 		    die('Headers already sent at ' .
-		    	htmlspecialchars($file) .
+		    	htmlspecialchars($file, ENT_QUOTES, 'UTF-8') .
 			' line ' . $line . '.');
 	} else {
 		if (headers_sent())
@@ -683,7 +683,7 @@ function pkwk_output_dtd($pkwk_dtd = PKWK_DTD_XHTML_1_1, $charset = CONTENT_CHAR
 		break;
 	}
 
-	$charset = htmlspecialchars($charset);
+	$charset = htmlspecialchars($charset, ENT_QUOTES, 'UTF-8');
 
 	// Output XML or not
 	if ($type == PKWK_DTD_TYPE_XHTML) {

@@ -72,10 +72,12 @@ function set_language()
  */
 function set_mbstring($lang)
 {
-       	// Internal content encoding = Output content charset (for skin)
-	define('CONTENT_CHARSET', get_content_charset($lang) ); // 'UTF-8', 'iso-8859-1', 'EUC-JP' or ...
-	// Internal content encoding (for mbstring extension)
-	define('SOURCE_ENCODING', get_source_encoding($lang) );  // 'UTF-8', 'ASCII', or 'EUC-JP'
+//        	// Internal content encoding = Output content charset (for skin)
+// 	define('CONTENT_CHARSET', get_content_charset($lang) ); // 'UTF-8', 'iso-8859-1', 'EUC-JP' or ...
+// 	// Internal content encoding (for mbstring extension)
+// 	define('SOURCE_ENCODING', get_source_encoding($lang) );  // 'UTF-8', 'ASCII', or 'EUC-JP'
+	define('CONTENT_CHARSET', 'UTF-8');
+	define('SOURCE_ENCODING', 'UTF-8');
 
 	mb_language( get_mb_language($lang) );
 

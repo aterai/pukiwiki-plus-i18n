@@ -95,14 +95,14 @@ function is_freeze($page, $clearcache = FALSE)
 		return FALSE;
 	} else {
 		$fp = fopen(get_filename($page), 'rb') or
-			die('is_freeze(): fopen() failed: ' . htmlspecialchars($page));
+			die('is_freeze(): fopen() failed: ' . htmlspecialchars($page, ENT_QUOTES, 'UTF-8'));
 		// flock($fp, LOCK_SH) or die('is_freeze(): flock() failed');
 		@flock($fp, LOCK_SH);
 		rewind($fp);
 		$buffer = fgets($fp, 9);
 		// flock($fp, LOCK_UN) or die('is_freeze(): flock() failed');
 		@flock($fp, LOCK_UN);
-		fclose($fp) or die('is_freeze(): fclose() failed: ' . htmlspecialchars($page));
+		fclose($fp) or die('is_freeze(): fclose() failed: ' . htmlspecialchars($page, ENT_QUOTES, 'UTF-8'));
 
 		$is_freeze[$page] = ($buffer != FALSE && rtrim($buffer, "\r\n") == '#freeze');
 		return $is_freeze[$page];
@@ -199,7 +199,7 @@ function get_search_words($words, $do_escape = FALSE)
 			$char = mb_substr($word_nm, $pos, 1, SOURCE_ENCODING);
 
 			// Just normalized one? (ASCII char or Zenkaku-Katakana?)
-			$or = array(preg_quote($do_escape ? htmlspecialchars($char) : $char, $quote));
+			$or = array(preg_quote($do_escape ? htmlspecialchars($char, ENT_QUOTES, 'UTF-8') : $char, $quote));
 			if (strlen($char) == 1) {
 				// An ASCII (single-byte) character
 				foreach (array(strtoupper($char), strtolower($char)) as $_char) {
@@ -294,7 +294,7 @@ function do_search($word, $type = 'AND', $non_format = FALSE, $base = '')
 	if ($non_format) return array_keys($pages);
 
 	$r_word = rawurlencode($word);
-	$s_word = htmlspecialchars($word);
+	$s_word = htmlspecialchars($word, ENT_QUOTES, 'UTF-8');
 	if (empty($pages))
 		return str_replace('$1', $s_word, $_string['notfoundresult']);
 
@@ -303,7 +303,7 @@ function do_search($word, $type = 'AND', $non_format = FALSE, $base = '')
 	$retval = '<ul>' . "\n";
 	foreach (array_keys($pages) as $page) {
 		$r_page  = rawurlencode($page);
-		$s_page  = htmlspecialchars($page);
+		$s_page  = htmlspecialchars($page, ENT_QUOTES, 'UTF-8');
 		$passage = $show_passage ? ' ' . get_passage(get_filetime($page)) : '';
 		if ($search_word_color) {
 			$uri = get_page_uri($page, '', 'word='.$r_word);
@@ -394,7 +394,7 @@ function page_list($pages, $cmd = 'read', $withfilename = FALSE)
 	$list = $matches = array();
 
 	foreach($pages as $file=>$page) {
-		$s_page  = htmlspecialchars($page, ENT_QUOTES);
+		$s_page  = htmlspecialchars($page, ENT_QUOTES, 'UTF-8');
 		$passage = get_pg_passage($page);
 
 		// Shrink URI for read
@@ -408,7 +408,7 @@ function page_list($pages, $cmd = 'read', $withfilename = FALSE)
 			$s_page . '</a>' . $passage;
 
 		if ($withfilename) {
-			$s_file = htmlspecialchars($file);
+			$s_file = htmlspecialchars($file, ENT_QUOTES, 'UTF-8');
 			$str .= "\n" . '    <ul><li>' . $s_file . '</li></ul>' .
 				"\n" . '   ';
 		}
@@ -476,7 +476,7 @@ function catrule()
 	global $rule_page;
 
 	if (! is_page($rule_page)) {
-		return '<p>Sorry, page \'' . htmlspecialchars($rule_page) .
+		return '<p>Sorry, page \'' . htmlspecialchars($rule_page, ENT_QUOTES, 'UTF-8') .
 			'\' unavailable.</p>';
 	} else {
 		return convert_html(get_source($rule_page));
@@ -505,17 +505,16 @@ EOD;
 		define('SKIN_FILE', $skin_file);
 		catbody($title, $page, $body);
 	} else {
-		header('Content-Type: text/html; charset=euc-jp');
+		header('Content-Type: text/html; charset=utf-8');
 		print <<<EOD
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
- <head>
-  <title>$title</title>
-  <meta http-equiv="content-type" content="text/html; charset=euc-jp">
- </head>
- <body>
- $body
- </body>
+<head>
+<title>$title</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+<body>
+$body
+</body>
 </html>
 EOD;
 	}
@@ -885,7 +884,7 @@ function init_script_uri($init_uri = '',$get_init_value=0)
 	if (isset($script_directory_index)) {
 		if (! file_exists($script_directory_index))
 			die_message('Directory index file not found: ' .
-				htmlspecialchars($script_directory_index));
+				htmlspecialchars($script_directory_index, ENT_QUOTES, 'UTF-8'));
 		$matches = array();
 		if (preg_match('#^(.+/)' . preg_quote($script_directory_index, '#') . '$#',
 			$script, $matches)) $script = $matches[1];
@@ -957,7 +956,7 @@ function get_script_absuri()
 	if (isset($script_directory_index)) {
 		if (! file_exists($script_directory_index))
 			die_message('Directory index file not found: ' .
-			htmlspecialchars($script_directory_index));
+			htmlspecialchars($script_directory_index, ENT_QUOTES, 'UTF-8'));
 		$matches = array();
 		if (preg_match('#^(.+/)' . preg_quote($script_directory_index, '#') . '$#',
 			$uri, $matches)) $uri = $matches[1];
@@ -1024,8 +1023,8 @@ function get_resolve_uri($cmd='', $page='', $path_reference='rel', $query='', $f
 		$ret .= '#'.$fragment;
 	}
 	unset($flag, $page_pref);
-	// return ($location) ? $ret : htmlspecialchars( str_replace('&amp;','&',$ret) );
-	return ($location) ? $ret : htmlspecialchars( $ret );
+	// return ($location) ? $ret : htmlspecialchars( str_replace('&amp;','&',$ret), ENT_QUOTES, 'UTF-8' );
+	return ($location) ? $ret : htmlspecialchars( $ret, ENT_QUOTES, 'UTF-8' );
 }
 
 // Obsolete (明示指定用)

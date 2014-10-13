@@ -73,7 +73,7 @@ function make_backup($page, $delete = FALSE)
 		$body = preg_replace("/\n*$/", "\n", $body);
 
 		$fp = _backup_fopen($page, 'wb')
-			or die_message('Cannot open ' . htmlspecialchars(_backup_get_filename($page)) .
+			or die_message('Cannot open ' . htmlspecialchars(_backup_get_filename($page), ENT_QUOTES, 'UTF-8') .
 			'<br />Maybe permission is not writable or filename is too long');
 		_backup_fputs($fp, $strout);
 		_backup_fputs($fp, $body);
