@@ -12,17 +12,20 @@ description: ファイルを再帰的に検索します。
 
 * サンプルコード [#n78bba98]
 #code(link){{
-public void recursiveSearch(File dir, final Vector list)
-    throws InterruptedException {
-  String[] contents = dir.list();
-  for(int i=0;i<contents.length;i++) {
-    if(Thread.interrupted()) {
+private void recursiveSearch(File dir, final List<File> list)
+        throws InterruptedException {
+  for (String fname : dir.list()) {
+    if (Thread.interrupted()) {
       throw new InterruptedException();
     }
-    File sdir = new File(dir, contents[i]);
-    if(sdir.isDirectory()) {
+    File sdir = new File(dir, fname);
+    if (sdir.isDirectory()) {
       recursiveSearch(sdir, list);
-    }else if(isGraphicsFile(sdir.getName())) {
+    } else {
+      scount++;
+      if (scount % 100 == 0) {
+        publish(new Message("Results:" + scount + "\n", false));
+      }
       list.add(sdir);
     }
   }

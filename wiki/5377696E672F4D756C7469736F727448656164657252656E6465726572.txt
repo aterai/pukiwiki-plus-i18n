@@ -14,23 +14,24 @@ description: JTableの複数キーを使ったソートの状態をヘッダ上�
 #code(link){{
 class MultisortHeaderRenderer implements TableCellRenderer {
   @Override public Component getTableCellRendererComponent(
-      JTable table, Object value, boolean isSelected,
-      boolean hasFocus, int row, int column) {
-    if(table.getRowSorter()!=null) {
+      JTable table, Object value, boolean isSelected, boolean hasFocus,
+      int row, int column) {
+    String str = Objects.toString(value, "");
+    if (table.getRowSorter() != null) {
       List<?> keys = table.getRowSorter().getSortKeys();
       int max = keys.size();
-      for(int i=0; i<max; i++) {
-        TableRowSorter.SortKey sortKey = (TableRowSorter.SortKey)keys.get(i);
-        if(column==sortKey.getColumn()) {
-          String k = sortKey.getSortOrder()==SortOrder.ASCENDING
-            ? "\u25B4 " : "\u25BE ";
-          value = "<html>"+value.toString()+" <small color='gray'>"+k+(i+1);
+      for (int i = 0; i < max; i++) {
+        TableRowSorter.SortKey sortKey = (TableRowSorter.SortKey) keys.get(i);
+        if (column == sortKey.getColumn()) {
+          String k = sortKey.getSortOrder() == SortOrder.ASCENDING ? "\u25B4 "
+                                                                   : "\u25BE ";
+          str = String.format("<html>%s<small color='gray'>%s%d", str, k, i + 1);
         }
       }
     }
     TableCellRenderer r = table.getTableHeader().getDefaultRenderer();
     return r.getTableCellRendererComponent(
-        table, value, isSelected, hasFocus, row, column);
+        table, str, isSelected, hasFocus, row, column);
   }
 }
 }}
