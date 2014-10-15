@@ -100,7 +100,7 @@ class InlineConverter
 		$string = preg_replace_callback('/' . $this->pattern . '/x',
 			array(& $this, 'replace'), $string);
 
-		$arr = explode("\x08", make_line_rules(htmlspecialchars($string, ENT_QUOTES, 'UTF-8')));
+		$arr = explode("\x08", make_line_rules(htmlspecialchars($string, ENT_NOQUOTES, 'UTF-8')));
 		$retval = '';
 		while (! empty($arr)) {
 			$retval .= array_shift($arr) . array_shift($this->result);
@@ -113,7 +113,7 @@ class InlineConverter
 		$obj = $this->get_converter($arr);
 
 		$this->result[] = ($obj !== NULL && $obj->set($arr, $this->page) !== FALSE) ?
-			$obj->toString() : make_line_rules(htmlspecialchars($arr[0], ENT_QUOTES, 'UTF-8'));
+			$obj->toString() : make_line_rules(htmlspecialchars($arr[0], ENT_NOQUOTES, 'UTF-8'));
 
 		return "\x08"; // Add a mark into latest processed part
 	}
