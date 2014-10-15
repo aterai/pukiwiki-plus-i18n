@@ -742,7 +742,7 @@ class Pre extends Element
 		global $preformat_ltrim;
 		parent::Element();
 		$this->elements[] = htmlspecialchars(
-			(! $preformat_ltrim || $text == '' || $text{0} != ' ') ? $text : substr($text, 1), ENT_QUOTES, 'UTF-8');
+			(! $preformat_ltrim || $text == '' || $text{0} != ' ') ? $text : substr($text, 1), ENT_NOQUOTES, 'UTF-8');
 	}
 
 	function canContain(& $obj)
