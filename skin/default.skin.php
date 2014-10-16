@@ -49,9 +49,9 @@ article{margin-bottom:1em}
 .commentform>input{margin:0 0 1em 0}
 .summary{color:#666;background-color:inherit;border-left:solid 4px #999;padding-left:5px;clear:both;margin:45px 0 0}
 .note{border-bottom:solid 1px #999}
-.blog-sidebar{padding-left:4em}
-.sidebar ul{padding:.5em 1em}
-.sidebar li{list-style-type:none}
+.blog-sidebar{padding-left:2em}
+.sidebar ul{padding:0 0 .5em .5em}
+.sidebar li{list-style-type:none;overflow:auto;white-space:pre-wrap;word-wrap:break-word}
 .popular_list{padding:0;margin:0;list-style-type:none}
 .aa{font-size:12pt;line-height:17px;text-indent:0;letter-spacing:0;speak:none}
 .download_box{margin:32px}
@@ -123,6 +123,18 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 <?php include_once(PLUGIN_DIR.'search_form.inc.php'); echo plugin_search_form_convert(); ?>
 </div>
 </nav>
+
+<div class="text-center hidden-xs" itemscope="itemscope" itemtype="http://schema.org/WPAdBlock">
+<!-- xrea, link, 728x15, 09/01/04 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:15px"
+     data-ad-client="ca-pub-6939179021013694"
+     data-ad-slot="7445672071"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
 <div class="container"> <!-- div class="content" -->
 <div class="row">
 <div class="col-md-9 col-xs-12 blog-main">
@@ -149,10 +161,8 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 </div><!-- /.container -->
 <div class="push"></div>
 </div><!-- /.wrap -->
-<footer class="footer" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
-<div class="container">
+<footer class="footer text-center" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
 <p>© 2014 <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="http://terai.xrea.jp/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a></p>
-</div>
 </footer>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//terai.xrea.jp/assets/themes/bootstrap-3/bootstrap/js/bootstrap.min.js"></script>

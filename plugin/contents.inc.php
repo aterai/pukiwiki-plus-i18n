@@ -37,7 +37,7 @@ EOD;
   <#_contents_>
 </div>
 <div class="col-md-5 col-xs-12">
-  <div class="ad_box">$ad</div>
+  <div class="ad_box" itemscope="itemscope" itemtype="http://schema.org/WPAdBlock">$ad</div>
 </div>
 <div class="clearfix"></div>
 </div>

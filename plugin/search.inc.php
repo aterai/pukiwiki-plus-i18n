@@ -145,7 +145,9 @@ function plugin_search_display_format($highlight, $id = '', $start = 0, $len = 1
 	global $_msg_andresult, $_msg_orresult, $_msg_notfoundresult;
 	global $_title_result, $_msg_foundnavigator;
 	global $_msg_result_title;
-	global $_navi_prev, $_navi_next;
+
+    $_navi_prev = '«';
+    $_navi_next = '»';
 
 	$session = & $_SESSION;
 	$session_value = & $session['search'];
@@ -217,12 +219,12 @@ function plugin_search_display_format($highlight, $id = '', $start = 0, $len = 1
 
 		if ($found_pages>$len) {
 			$_total = ceil($found_pages / $len);
-			$retval .= '<p>' . $_msg_result_title;
+			$retval .= '<nav role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement"><ul class="pagination">';
 			
 			if($start>0) {
 				// Add Prev link
 				$pos_start = ($start>$len)? $start - $len : 0;
-				$retval .= plugin_search_makelink($id, $word, $pos_start, $len, $_navi_prev, $_navi_prev);
+				$retval .= plugin_search_makelink($id, $word, $pos_start, $len, $_navi_prev, 'prev');
 			}
 			
 			for ($i=0; $i<$_total; $i++) {
@@ -238,10 +240,10 @@ function plugin_search_display_format($highlight, $id = '', $start = 0, $len = 1
 			if($start + $len < $found_pages) {
 				// Add Next link
 				$pos_start = $start + $len;
-				$retval .= plugin_search_makelink($id, $word, $pos_start, $len, $_navi_next, $_navi_next);
+				$retval .= plugin_search_makelink($id, $word, $pos_start, $len, $_navi_next, 'next');
 			}
 
-			$retval .= '</p>';
+			$retval .= '</ul></nav>';
 		}
 	}
 	$retval .= '</p>' . "\n";
@@ -270,7 +272,8 @@ function plugin_search_makelink($id, $word, $start, $len, $label, $title, $now =
 				'&word=' . $r_word . '&start=' . $r_start . '&len=' . $r_len .
 				'" title="' . $title . '">' . $s_label . '</a>';
 	}
-	$body .= "\n";
+	//$body .= "\n";
+	$body = '<li>'.$body."</li>\n";
 
 	return $body;
 }

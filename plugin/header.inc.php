@@ -44,6 +44,14 @@ function plugin_header_convert() {
 
     $counter = '';
     if ($is_read) {
+// $counter =  <<<EOD
+// <ul class="list-inline">
+// <li>Total<span class="badge">$total</span></li>
+// <li>Today<span class="badge">$today</span></li>
+// <li>Yesterday<span class="badge">$yesterday</span></li>
+// </ul>
+// EOD;
+        //$counter = 'Total:<span class="badge">' . $total . '</span>, Today:<span class="badge">' . $today . '</span>, Yesterday:<span class="badge">' . $yesterday . '</span>';
         $counter = 'Total: <code>' . $total . '</code>, Today: <code>' . $today . '</code>, Yesterday: <code>' . $yesterday . '</code>';
     }
 
@@ -52,7 +60,7 @@ function plugin_header_convert() {
         $isotime = date('c', $time);
         $lastmod = date('Y-m-d H:i', $time);
         //$last_modified_str = '<br />Last-modified: <a href="' . get_script_uri() . '?cmd=diff&page=' . $_page . '"><time datetime="' . $isotime . '">' . $lastmod . '</time></a>';
-        $last_modified_str = '<br />Last-modified: <time itemprop="dateModified" datetime="' . $isotime . '">' . $lastmod . '</time>';
+        $last_modified_str = '<br />Last-modified: <code><time itemprop="dateModified" datetime="' . $isotime . '">' . $lastmod . '</time></code>';
     }
 
     $posted_by_str = '';
@@ -64,7 +72,7 @@ function plugin_header_convert() {
 
         $author = isset($frontmatter['author']) ? $frontmatter['author'] : "aterai";
         $url = get_script_uri() . $author . '.html';
-        $posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time>';
+        $posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <code><time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time></code>';
     }
 
     return <<<EOD
@@ -76,7 +84,7 @@ $navi
 $tags_buf
 </div><!-- col-md-8 -->
 <div class="col-md-4 col-xs-12">
-<p class="text-right">
+<p class="text-right" style="line-height:1.6em">
 $counter
 $posted_by_str
 $last_modified_str
