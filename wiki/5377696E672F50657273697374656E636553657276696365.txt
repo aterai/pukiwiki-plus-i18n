@@ -168,7 +168,7 @@ public class MainPanel extends JPanel {
             }
           });
           xe.writeObject(frame);
-          xe.flush();
+          //xe.flush(); xe.close();
         } catch (Exception ex) {
           ex.printStackTrace();
         }
