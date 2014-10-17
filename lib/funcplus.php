@@ -55,15 +55,22 @@ function mb_basename($str)
 function is_spampost($array, $count=0)
 {
 	global $vars;
-
+    $encount = 0;
 	if ($count <= 0) {
 		$count = intval(FUNC_SPAMCOUNT);
 	}
 	$matches = array();
 	foreach($array as $idx) {
+        if(preg_match("/^[!-~\n\t ]+$/", $vars[$idx])) {
+            $encount++;
+        }
 		if (preg_match_all(FUNC_SPAMREGEX, $vars[$idx], $matches) >= $count)
 			return TRUE;
 	}
+    if (count($array) === $encount) {
+        //die_message('英数のみのコメントは書き込みできません。');
+        return TRUE;
+    }
 	return FALSE;
 }
 // POST logging

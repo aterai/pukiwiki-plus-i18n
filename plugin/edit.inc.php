@@ -218,15 +218,15 @@ function plugin_edit_write()
 	if (is_spampost(array('msg')))
 		return plugin_edit_honeypot();
 
-	// Paragraph edit mode
-	if ($partid) {
-		$source = preg_split('/([^\n]*\n)/', $vars['original'], -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
-		if (plugin_edit_parts($partid, $source, $vars['msg']) !== FALSE) {
-			$vars['msg'] = join('', $source);
-		} else {
-			$vars['msg'] = rtrim($vars['original']) . "\n\n" . $vars['msg'];
-		}
-	}
+// 	// Paragraph edit mode
+// 	if ($partid) {
+// 		$source = preg_split('/([^\n]*\n)/', $vars['original'], -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
+// 		if (plugin_edit_parts($partid, $source, $vars['msg']) !== FALSE) {
+// 			$vars['msg'] = join('', $source);
+// 		} else {
+// 			$vars['msg'] = rtrim($vars['original']) . "\n\n" . $vars['msg'];
+// 		}
+// 	}
 
 	// Delete "#freeze" command for form edit.
 	$vars['msg'] = preg_replace('/^#freeze\s*$/im', '', $vars['msg']);
