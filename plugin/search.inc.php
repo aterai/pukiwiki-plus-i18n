@@ -266,15 +266,13 @@ function plugin_search_makelink($id, $word, $start, $len, $label, $title, $now =
 	$s_label = htmlspecialchars($label);
 
 	if( $now!=='' && $start == $now ) {
-		$body = '<span " title="' . $title . '"><strong>' . $s_label . '</strong></span>';
+		$body = '<li class="active"><span " title="' . $title . '"><strong>' . $s_label . '</strong></span></li>';
 	} else {
-		$body = '<a href="' . get_script_uri() . '?cmd=search&id=' . $r_id .
+		$body = '<li><a href="' . get_script_uri() . '?cmd=search&id=' . $r_id .
 				'&word=' . $r_word . '&start=' . $r_start . '&len=' . $r_len .
-				'" title="' . $title . '">' . $s_label . '</a>';
+				'" title="' . $title . '">' . $s_label . '</a></li>';
 	}
-	//$body .= "\n";
-	$body = '<li>'.$body."</li>\n";
-
+	$body .= "\n";
 	return $body;
 }
 
