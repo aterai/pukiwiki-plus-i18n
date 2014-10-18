@@ -25,7 +25,7 @@ scroll.setColumnHeader(new JViewport() {
 * 解説 [#aacfefbf]
 - 上
 -- `JTableHeader`に`null`(デフォルト)以外のサイズを`setPreferredSize(...)`で設定
--- `JTable.AUTO_RESIZE_OFF`の場合、設定されたこのサイズが列の追加や列幅の変更で更新されない(仕様？)ため、ヘッダの描画が不正になる
+-- `JTable.AUTO_RESIZE_OFF`の場合、設定されたこのサイズが列の追加や列幅の変更で更新されないため、ヘッダの描画が不正になる
 --- [http://d.hatena.ne.jp/kensir0u/20090416/1239898154 JTableのJTalbeHeaderの高さを変更して列幅の合計が１２００ピクセルを超えて横スクロールするとバグった。 - kensir0uのしくみ]
 -- `JTable.AUTO_RESIZE_OFF`以外の場合は、`setPreferredSize(...)`で設定された幅は無視されて、`JTable`の幅が使用される
 

@@ -115,13 +115,13 @@ class LockingGlassPane extends JComponent {
     boolean oldVisible = isVisible();
     super.setVisible(isVisible);
     JRootPane rootPane = SwingUtilities.getRootPane(this);
-    if(rootPane!=null && isVisible()!=oldVisible) {
+    if (rootPane != null && isVisible() != oldVisible) {
       rootPane.getLayeredPane().setVisible(!isVisible);
     }
   }
   @Override public void paintComponent(Graphics g) {
     JRootPane rootPane = SwingUtilities.getRootPane(this);
-    if(rootPane!=null) {
+    if (rootPane != null) {
       // http://weblogs.java.net/blog/alexfromsun/archive/2008/01/
       // it is important to call print() instead of paint() here
       // because print() doesn't affect the frame's double buffer
