@@ -201,7 +201,7 @@ function catbody($title, $page, $body)
         $head_tags[] = '<meta name="robots" content="NOINDEX,FOLLOW" />';
     } else {
         if ($title == $defaultpage) {
-            $head_tags[] = '<link rel="canonical" href="'.$script.' " />';
+            $head_tags[] = '<link rel="canonical" href="'.$script.'" />';
         } else {
             $head_tags[] = '<link rel="canonical" href="'.$script.$title.'.html" />';
         }
