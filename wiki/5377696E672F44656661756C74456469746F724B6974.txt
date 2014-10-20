@@ -20,16 +20,16 @@ class TextFieldPopupMenu extends JPopupMenu {
   private final Action deleteAction = new AbstractAction("delete") {
     @Override public void actionPerformed(ActionEvent e) {
       Component c = getInvoker();
-      if(c instanceof JTextComponent) {
-        ((JTextComponent)c).replaceSelection(null);
+      if (c instanceof JTextComponent) {
+        ((JTextComponent) c).replaceSelection(null);
       }
     }
   };
   private final Action cut2Action = new AbstractAction("cut2") {
     @Override public void actionPerformed(ActionEvent e) {
       Component c = getInvoker();
-      if(c instanceof JTextComponent) {
-        ((JTextComponent)c).cut();
+      if (c instanceof JTextComponent) {
+        ((JTextComponent) c).cut();
       }
     }
   };
@@ -44,10 +44,10 @@ class TextFieldPopupMenu extends JPopupMenu {
   }
   @Override public void show(Component c, int x, int y) {
     boolean flg;
-    if(c instanceof JTextComponent) {
-      JTextComponent field = (JTextComponent)c;
-      flg = field.getSelectedText()!=null;
-    }else{
+    if (c instanceof JTextComponent) {
+      JTextComponent field = (JTextComponent) c;
+      flg = field.getSelectedText() != null;
+    } else {
       flg = false;
     }
     cutAction.setEnabled(flg);

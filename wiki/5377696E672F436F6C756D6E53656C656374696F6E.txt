@@ -17,13 +17,15 @@ table.setCellSelectionEnabled(true);
 final JTableHeader header = table.getTableHeader();
 header.addMouseListener(new MouseAdapter() {
   @Override public void mousePressed(MouseEvent e) {
-    if(!check.isSelected()) return;
-    if(table.isEditing()) {
+    if (!check.isSelected()) {
+      return;
+    }
+    if (table.isEditing()) {
       table.getCellEditor().stopCellEditing();
     }
     int col = header.columnAtPoint(e.getPoint());
     table.changeSelection(0, col, false, false);
-    table.changeSelection(table.getRowCount()-1, col, false, true);
+    table.changeSelection(table.getRowCount() - 1, col, false, true);
   }
 });
 }}
