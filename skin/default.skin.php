@@ -45,7 +45,7 @@ article{margin-bottom:1em}
 .push{height:2.6em}
 .footer{background-color:#fdcd60;height:2.6em}
 .footer div{height:2.6em;text-align:center}
-.footer p{line-height:1.8em;margin:.2em 0 0 0}
+.footer p{background-color:#fdcd60;line-height:1.8em;margin:.4em 0 0 0}
 .commentform>input{margin:0 0 1em 0}
 .summary{color:#666;background-color:inherit;border-left:solid 4px #999;padding-left:5px;clear:both;margin:45px 0 0}
 .note{border-bottom:solid 1px #999}
@@ -88,17 +88,9 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 </style>
 <link rel="alternate" href="//terai.xrea.jp/?cmd=rssdiff" type="application/rss+xml" title="RSS" />
 <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAFVBMVEX///+ZmZmCuGKZmZn///+q+Xzd+stVi+GoAAAAAnRSTlMAAHaTzTgAAABKSURBVHheZY5BCsBACAOzifr/JxcXi9WOpwxRhBaQDVJ49JgwTYpTS28jzcXc3XRQyII3t/hnmr45mIV1AbOxjZPLcJj6V2iUAA+UgAJpJuyTrAAAAABJRU5ErkJggg==" type="image/png" />
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-188493-1', 'auto');
-  ga('send', 'pageview');
-</script>
-<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
-<body onload="prettyPrint()" itemscope="itemscope" itemtype="http://schema.org/WebPage">
+<body itemscope="itemscope" itemtype="http://schema.org/WebPage">
+<script async="" src="//terai.xrea.jp/skin/google_tm.js"></script>
 <div class="wrap">
 <nav class="navbar navbar-default" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 <div class="navbar-header">
@@ -162,10 +154,7 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 <div class="push"></div>
 </div><!-- /.wrap -->
 <footer class="footer text-center" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
-<p>© 2014 <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="http://terai.xrea.jp/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a></p>
+<p>© 2014 <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="http://terai.xrea.jp/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//twitter.github.com/bootstrap/" target="_blank">Bootstrap</a></p>
 </footer>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="//terai.xrea.jp/assets/themes/bootstrap-3/bootstrap/js/bootstrap.min.js"></script>
-<script async="" defer="" src="<?php echo SKIN_URI ?>prettify.js"></script>
 </body>
 </html>
