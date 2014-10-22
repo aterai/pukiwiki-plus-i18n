@@ -33,7 +33,7 @@ description: Subversionのコミットログから、誤字脱字などを修正
  誤字を修正
  ------------------------------------------------------------------------
 
-- `svnadmin setlog`は、`--bypass-hooks`を指定すれば`pre-revprop-change`を用意しなくていいようです。 -- [[rabbit]]
+- `svnadmin setlog`は、`--bypass-hooks`を指定すれば`pre-revprop-change`を用意しなくていいようです(親ページの&user(rabbit);さんのコメントから引用)。
 - `--bypass-hooks`スイッチを指定しない場合は、コミット前後にフックが実行されるため、リポジトリの`hooks`ディレクトリに`pre-revprop-change.bat`を作成しておく必要があります。テキストエディタなどで作成し、何もしないなら中身は空でもかまいません。
  c:\tmp> echo exit 0 > c:\svn\hoge\hooks\pre-revprop-change.bat
 

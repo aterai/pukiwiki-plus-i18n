@@ -14,9 +14,9 @@ description: FlatteningPathIteratorを使って平坦化されたShape上の座�
 #code(link){{
 PathIterator i = new FlatteningPathIterator(shape.getPathIterator(null), 1.0);
 float[] coords = new float[6];
-while(!i.isDone()) {
+while (!i.isDone()) {
   i.currentSegment(coords);
-  g2.fillRect((int)(coords[0]-.5), (int)(coords[1]-.5), 2, 2);
+  g2.fillRect((int) (coords[0] - .5), (int) (coords[1] - .5), 2, 2);
   i.next();
 }
 }}
@@ -30,14 +30,14 @@ while(!i.isDone()) {
 #code{{
 private static Polygon convertEllipse2Polygon(Ellipse2D e) {
   Rectangle b = e.getBounds();
-  int r1 = b.width/2, r2 = b.height/2;
+  int r1 = b.width / 2, r2 = b.height / 2;
   int x0 = b.x + r1,  y0 = b.y + r2;
   int v  = 60;
-  double a = 0.0, d = 2*Math.PI/v;
+  double a = 0.0, d = 2 * Math.PI / v;
   Polygon polygon = new Polygon();
-  for(int i=0; i<v; i++) {
-    polygon.addPoint((int)(r1*Math.cos(a)+x0), (int)(r2*Math.sin(a)+y0));
-    a+=d;
+  for (int i = 0; i < v; i++) {
+    polygon.addPoint((int) (r1 * Math.cos(a) + x0), (int) (r2 * Math.sin(a) + y0));
+    a += d;
   }
   return polygon;
 }

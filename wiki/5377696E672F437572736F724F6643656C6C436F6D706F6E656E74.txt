@@ -12,39 +12,41 @@ description: JListのセルに配置されているコンポーネントをマ�
 
 * サンプルコード [#bbc6a488]
 #code(link){{
-JList<String> list = new JList<String>(model) {
-  private LinkCellRenderer renderer;
+class LinkCellList<E> extends JList<E> {
+  private int prevIndex = -1;
+  public LinkCellList(ListModel<E> model) {
+    super(model);
+  }
   @Override public void updateUI() {
     setForeground(null);
     setBackground(null);
     setSelectionForeground(null);
     setSelectionBackground(null);
     super.updateUI();
-    renderer = new LinkCellRenderer();
-    setCellRenderer(renderer);
+    setFixedCellHeight(32);
+    setCellRenderer(new LinkCellRenderer<E>());
   }
-  private int prevIndex = -1;
   @Override protected void processMouseMotionEvent(MouseEvent e) {
     Point pt = e.getPoint();
     int i = locationToIndex(pt);
-    String s = ((ListModel<String>)getModel()).getElementAt(i);
+    E s = ((ListModel<E>) getModel()).getElementAt(i);
     Component c = getCellRenderer().getListCellRendererComponent(
         this, s, i, false, false);
     Rectangle r = getCellBounds(i, i);
     c.setBounds(r);
-    if(prevIndex!=i) {
+    if (prevIndex != i) {
       c.doLayout();
     }
     prevIndex = i;
     pt.translate(-r.x, -r.y);
     Component cmp = SwingUtilities.getDeepestComponentAt(c, pt.x, pt.y);
-    if(cmp != null) {
-      setCursor(cmp.getCursor());
-    }else{
+    if (cmp == null) {
       setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    } else {
+      setCursor(cmp.getCursor());
     }
   }
-};
+}
 }}
 
 * 解説 [#eef2a91f]

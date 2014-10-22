@@ -52,17 +52,15 @@ class TranslucentTreeCellRenderer extends TransparentTreeCellRenderer {
 --- 参考: [[JTreeを行クリックで選択し、行全体を選択状態の背景色で描画>Swing/TreeRowSelection]]
 
 ----
-`SynthLookAndFeel`系の`NimbusLookAndFeel`や`GTKLookAndFeel`などの場合、以下のような何も描画しない`Painter`をノード選択に使用することで、選択色を半透明にすることができます。
+- `SynthLookAndFeel`系の`NimbusLookAndFeel`の場合、以下のような何も描画しない`Painter`をノード選択に使用することで、選択色を半透明にすることができる
+-- ただし、同じ`SynthLookAndFeel`系でも、`GTKLookAndFeel`の場合は、[[SynthでJInternalFrameを半透明にする>Swing/TranslucentFrame]]のように、`SynthStyle#isOpaque(...)`が`Region.TREE_CELL`の時は`false`になるように設定する必要がある
 
 #code{{
 //NimbusLookAndFeel(SynthLookAndFeel) JDK 1.7.0
 UIDefaults d = new UIDefaults();
-d.put("Tree:TreeCell[Enabled+Selected].backgroundPainter", new AbstractRegionPainter() {
-  @Override protected void doPaint(Graphics2D g, JComponent c, int width, int height, Object[] extendedCacheKeys) {
+d.put("Tree:TreeCell[Enabled+Selected].backgroundPainter", new Painter<JComponent>() {
+  @Override public void paint(Graphics2D g, JComponent c, int width, int height) {
     //Do nothing
-  }
-  @Override protected final PaintContext getPaintContext() {
-    return null;
   }
 });
 tree2.putClientProperty("Nimbus.Overrides", d);

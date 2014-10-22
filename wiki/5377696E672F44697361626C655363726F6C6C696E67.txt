@@ -12,15 +12,20 @@ description: JScrollPaneのスクロールを一時的に禁止します。
 
 * サンプルコード [#id62505b]
 #code(link){{
-JCheckBox b = new JCheckBox("スクロールを禁止する");
-b.addItemListener(new ItemListener() {
+JCheckBox check = new JCheckBox("Disable Scrolling");
+check.addItemListener(new ItemListener() {
   @Override public void itemStateChanged(ItemEvent ie) {
-    JCheckBox box = (JCheckBox)ie.getItemSelectable();
-    boolean flag = !box.isSelected();
-    JScrollBar bar = scrollPane.getVerticalScrollBar();
-    bar.setEnabled(flag);
-    scrollPane.setWheelScrollingEnabled(flag);
-    table.setEnabled(flag);
+    table.clearSelection();
+    JScrollBar bar = scroll.getVerticalScrollBar();
+    if (ie.getStateChange() == ItemEvent.SELECTED) {
+      bar.setEnabled(false);
+      scroll.setWheelScrollingEnabled(false);
+      table.setEnabled(false);
+    } else if (ie.getStateChange() == ItemEvent.DESELECTED) {
+      bar.setEnabled(true);
+      scroll.setWheelScrollingEnabled(true);
+      table.setEnabled(true);
+    }
   }
 });
 }}

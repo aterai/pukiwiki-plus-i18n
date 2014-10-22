@@ -13,7 +13,8 @@ description: JSpinnerで浮動小数点型のモデルを使用する場合、�
 * サンプルコード [#daf48439]
 #code(link){{
 class BigDecimalSpinnerModel extends SpinnerNumberModel {
-  public BigDecimalSpinnerModel(double value, double minimum, double maximum, double stepSize) {
+  public BigDecimalSpinnerModel(
+      double value, double minimum, double maximum, double stepSize) {
     super(value, minimum, maximum, stepSize);
   }
   @Override public Object getPreviousValue() {
@@ -24,21 +25,23 @@ class BigDecimalSpinnerModel extends SpinnerNumberModel {
   }
   private Number incrValue(int dir) {
     Number v = getNumber();
-    BigDecimal value  = new BigDecimal(v.toString());
+    BigDecimal value    = new BigDecimal(v.toString());
     BigDecimal stepSize = new BigDecimal(getStepSize().toString());
-    BigDecimal maximum  = new BigDecimal(getMaximum().toString());
-    BigDecimal minimum  = new BigDecimal(getMinimum().toString());
-    BigDecimal newValue;
 
-    if(dir>0) {
+    BigDecimal newValue;
+    if (dir > 0) {
       newValue = value.add(stepSize);
-    }else{
+    } else {
       newValue = value.subtract(stepSize);
     }
-    if(maximum != null && maximum.compareTo(newValue) < 0) {
+
+    BigDecimal maximum  = new BigDecimal(getMaximum().toString());
+    if (maximum.compareTo(newValue) < 0) {
       return null;
     }
-    if(minimum != null && minimum.compareTo(newValue) > 0) {
+
+    BigDecimal minimum  = new BigDecimal(getMinimum().toString());
+    if (minimum.compareTo(newValue) > 0) {
       return null;
     }
     return newValue;
@@ -48,9 +51,9 @@ class BigDecimalSpinnerModel extends SpinnerNumberModel {
 
 * 解説 [#qc1f5b7e]
 - 上: `SpinnerNumberModel`
--- `Double`型の`SpinnerNumberModel`では、最大最小値の比較に、`Double#compare(...)`が使用されている
+-- `Double`型の`SpinnerNumberModel`では、最大・最小値の比較に、`Double#compare(...)`が使用される
 -- `stepSize`の`0.1`などが持つ浮動小数点の誤差のせいで、このサンプルの`JSpinner`の場合、下限(`2.0`や`29.6`)にダウンボタンで移動できない
---- 例えば、`29.7 - 29.6 - 0.1 >= 0`は`false`
+--- 例えば、`29.7 - 29.6 - 0.1 >= 0`は`false`なので、ダウンボタンで、`29.7`から`29.6`に遷移できない
 - 下: `BigDecimalSpinnerModel`
 -- `SpinnerNumberModel#getPreviousValue()`などをオーバーライドして、`Double#compareTo(Double)`ではなく、`BigDecimal#compareTo(BigDecimal)`で最小値との比較を行う
 
