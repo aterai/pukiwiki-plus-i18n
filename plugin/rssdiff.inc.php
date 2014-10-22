@@ -22,7 +22,7 @@ define( 'PLUGIN_RSSDIFF_TZ', preg_replace( '/([0-9]{2})([0-9]{2})/', '\1:\2', da
 define( 'RSS_VER', 2 );
 
 //DESCRIPTION追加
-define( 'PLUGIN_RSSDIFF_DESCRIPTION', 'ソフトウェア開発関連(Swing,Relaxer,Subversionなど)のメモ' );
+define( 'PLUGIN_RSSDIFF_DESCRIPTION', 'ソフトウェア開発関連(Java,Swing,Ant,Subversionなど)のメモ' );
 
 /**
  * 呼び出されるプラグイン本体
