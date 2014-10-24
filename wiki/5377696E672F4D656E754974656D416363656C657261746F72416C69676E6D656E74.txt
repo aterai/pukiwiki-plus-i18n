@@ -13,47 +13,47 @@ description: JMenuItemのAccelerator表示を右揃えに変更します。
 * サンプルコード [#m5608a05]
 #code(link){{
 public static void paintAccText(
-    Graphics g, MenuItemLayoutHelper lh, MenuItemLayoutHelper.LayoutResult lr,
-    Color disabledForeground, Color acceleratorForeground,
-    Color acceleratorSelectionForeground) {
-  if(!lh.getAccText().equals("")) {
+  Graphics g, MenuItemLayoutHelper lh, MenuItemLayoutHelper.LayoutResult lr,
+  Color disabledForeground, Color acceleratorForeground,
+  Color acceleratorSelectionForeground) {
+  if (!lh.getAccText().equals("")) {
     ButtonModel model = lh.getMenuItem().getModel();
     g.setFont(lh.getAccFontMetrics().getFont());
-    if(!model.isEnabled()) {
+    if (!model.isEnabled()) {
       // *** paint the accText disabled
-      if(disabledForeground != null) {
+      if (disabledForeground != null) {
         g.setColor(disabledForeground);
         SwingUtilities2.drawString(
-            lh.getMenuItem(), g, lh.getAccText(),
-            lr.getAccRect().x,
-            lr.getAccRect().y + lh.getAccFontMetrics().getAscent());
-      }else{
+          lh.getMenuItem(), g, lh.getAccText(),
+          lr.getAccRect().x,
+          lr.getAccRect().y + lh.getAccFontMetrics().getAscent());
+      } else {
         g.setColor(lh.getMenuItem().getBackground().brighter());
         SwingUtilities2.drawString(
-            lh.getMenuItem(), g, lh.getAccText(),
-            lr.getAccRect().x,
-            lr.getAccRect().y + lh.getAccFontMetrics().getAscent());
+          lh.getMenuItem(), g, lh.getAccText(),
+          lr.getAccRect().x,
+          lr.getAccRect().y + lh.getAccFontMetrics().getAscent());
         g.setColor(lh.getMenuItem().getBackground().darker());
         SwingUtilities2.drawString(
-            lh.getMenuItem(), g, lh.getAccText(),
-            lr.getAccRect().x - 1,
-            lr.getAccRect().y + lh.getFontMetrics().getAscent() - 1);
+          lh.getMenuItem(), g, lh.getAccText(),
+          lr.getAccRect().x - 1,
+          lr.getAccRect().y + lh.getFontMetrics().getAscent() - 1);
       }
-    }else{
+    } else {
       // *** paint the accText normally
-      if(model.isArmed() ||
-         (lh.getMenuItem() instanceof JMenu && model.isSelected())) {
+      if (model.isArmed() ||
+          (lh.getMenuItem() instanceof JMenu && model.isSelected())) {
         g.setColor(acceleratorSelectionForeground);
-      }else{
+      } else {
         g.setColor(acceleratorForeground);
       }
       SwingUtilities2.drawString(
-          lh.getMenuItem(), g, lh.getAccText(),
-          //lr.getAccRect().x, >>>
-          lh.getViewRect().x + lh.getViewRect().width
-          - lh.getMenuItem().getIconTextGap() - lr.getAccRect().width,
-          //<<<
-          lr.getAccRect().y + lh.getAccFontMetrics().getAscent());
+        lh.getMenuItem(), g, lh.getAccText(),
+        //lr.getAccRect().x, >>>
+        lh.getViewRect().x + lh.getViewRect().width
+        - lh.getMenuItem().getIconTextGap() - lr.getAccRect().width,
+        //<<<
+        lr.getAccRect().y + lh.getAccFontMetrics().getAscent());
     }
   }
 }

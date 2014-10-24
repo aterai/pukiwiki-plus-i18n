@@ -12,13 +12,13 @@ description: JProgressBarの進捗状況の色や、それで塗り潰された�
 
 * サンプルコード [#w91da1eb]
 #code(link){{
+//progressBar1
 UIManager.put("ProgressBar.foreground", Color.RED);
 UIManager.put("ProgressBar.selectionForeground", Color.ORANGE);
 UIManager.put("ProgressBar.background", Color.WHITE);
 UIManager.put("ProgressBar.selectionBackground", Color.RED);
-}}
 
-#code{{
+//progressBar2
 progressBar2.setForeground(Color.BLUE);
 progressBar2.setBackground(Color.CYAN.brighter());
 progressBar2.setUI(new BasicProgressBarUI() {
@@ -30,7 +30,6 @@ progressBar2.setUI(new BasicProgressBarUI() {
   }
 });
 }}
-
 
 * 解説 [#r7e49ee2]
 - 上: `Default`
@@ -50,6 +49,6 @@ progressBar2.setUI(new BasicProgressBarUI() {
 * 参考リンク [#w59e0975]
 - [[JLayerを使ってJProgressBarの色相を変更する>Swing/ColorChannelSwapFilter]]
 
-* コメント [#x26f2761]
+* コメント [#add0a165]
 #comment
 #comment

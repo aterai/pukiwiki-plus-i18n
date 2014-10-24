@@ -22,17 +22,25 @@ b1.setAction(new AbstractAction("OverlayLayoutButton") {
     Toolkit.getDefaultToolkit().beep();
   }
 });
+JButton b2 = new JButton() {
+  private final Dimension dim = new Dimension(120, 24);
+  @Override public Dimension getPreferredSize() {
+    return dim;
+  }
+  @Override public Dimension getMaximumSize() {
+    return getPreferredSize();
+  }
+  @Override public Dimension getMinimumSize() {
+    return getPreferredSize();
+  }
+};
 b2.setAction(new AbstractAction("▼") {
   @Override public void actionPerformed(ActionEvent e) {
     System.out.println("sub");
   }
 });
-Dimension dim = new Dimension(64, 24);
-b2.setMaximumSize(dim);
-b2.setPreferredSize(dim);
-b2.setMinimumSize(dim);
-b2.setAlignmentX(1.0f);
-b2.setAlignmentY(1.0f);
+b2.setAlignmentX(Component.RIGHT_ALIGNMENT);
+b2.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 b1.add(b2);
 }}
 
