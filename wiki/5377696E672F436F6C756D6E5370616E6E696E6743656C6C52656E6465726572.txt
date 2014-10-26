@@ -12,7 +12,7 @@ description: JTableのセルを横方向に連結するセルレンダラーを�
 
 * サンプルコード [#j27fd87a]
 #code(link){{
-class ColumnSpanningCellRenderer extends JPanel implements TableCellRenderer{
+class ColumnSpanningCellRenderer extends JPanel implements TableCellRenderer {
   private final JTextArea textArea = new JTextArea(2, 999999);
   private final JLabel label = new JLabel();
   private final JLabel iconLabel = new JLabel();
@@ -52,15 +52,15 @@ class ColumnSpanningCellRenderer extends JPanel implements TableCellRenderer{
       JTable table, Object value, boolean isSelected,
       boolean hasFocus, int row, int column) {
     Test test;
-    if(value instanceof Test) {
+    if (value instanceof Test) {
       test = (Test)value;
       add(iconLabel, BorderLayout.WEST);
-    }else{
+    } else {
       int mrow = table.convertRowIndexToModel(row);
-      String title = value!=null ? value.toString() : "";
+      String title = value != null ? value.toString() : "";
       Test t = (Test)table.getModel().getValueAt(mrow, 0);
-      String text = t!=null ? t.text : "";
-      Icon icon = t!=null ? t.icon : null;
+      String text = t != null ? t.text : "";
+      Icon icon = t != null ? t.icon : null;
       test = new Test(title, icon, text);
       remove(iconLabel);
     }
@@ -69,21 +69,13 @@ class ColumnSpanningCellRenderer extends JPanel implements TableCellRenderer{
     iconLabel.setIcon(test.icon);
 
     Rectangle cr = table.getCellRect(row, column, false);
-/*/ //Flickering on first visible row ?
-    if(column==0) {
-      cr.x = 0;
-      cr.width -= iconLabel.getPreferredSize().width;
-    }else{
+    if (column != 0) {
       cr.x -= iconLabel.getPreferredSize().width;
     }
-    textArea.scrollRectToVisible(cr);
-/*/
-    if(column!=0) cr.x -= iconLabel.getPreferredSize().width;
     scroll.getViewport().setViewPosition(cr.getLocation());
-//*/
-    if(isSelected) {
+    if (isSelected) {
       setBackground(Color.ORANGE);
-    }else{
+    } else {
       setBackground(Color.WHITE);
     }
     return this;

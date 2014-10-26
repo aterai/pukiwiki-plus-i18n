@@ -12,10 +12,9 @@ description: JTabbedPaneのタブ幅をできるだけ一定のサイズに固�
 
 * サンプルコード [#gf9ffe1b]
 #code(link){{
-tab1.setUI(new javax.swing.plaf.basic.BasicTabbedPaneUI() {
+tabbedPane.setUI(new BasicTabbedPaneUI() {
   @Override protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
-    int i = super.calculateTabWidth(tabPlacement, tabIndex, metrics);
-    return i<100 ? 100 : i;
+    return Math.max(MIN_TAB_WIDTH, super.calculateTabWidth(tabPlacement, tabIndex, metrics));
   }
 });
 }}
