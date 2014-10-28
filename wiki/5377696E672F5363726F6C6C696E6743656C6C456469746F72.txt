@@ -31,7 +31,7 @@ class TextAreaCellEditor extends JTextArea implements TableCellEditor {
   @Override public Component getTableCellEditorComponent(
       JTable table, Object value, boolean isSelected, int row, int column) {
     setFont(table.getFont());
-    setText((value!=null)?value.toString():"");
+    setText(Objects.toString(value, ""));
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
         setCaretPosition(getText().length());
@@ -41,23 +41,23 @@ class TextAreaCellEditor extends JTextArea implements TableCellEditor {
     return scroll;
   }
   @Override public boolean isCellEditable(final EventObject e) {
-    if(e instanceof MouseEvent) {
-      return ((MouseEvent)e).getClickCount() >= 2;
+    if (e instanceof MouseEvent) {
+      return ((MouseEvent) e).getClickCount() >= 2;
     }
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
-        if(e instanceof KeyEvent) {
-          KeyEvent ke = (KeyEvent)e;
+        if (e instanceof KeyEvent) {
+          KeyEvent ke = (KeyEvent) e;
           char kc = ke.getKeyChar();
-          if(Character.isUnicodeIdentifierStart(kc)) {
-            setText(getText()+kc);
+          if (Character.isUnicodeIdentifierStart(kc)) {
+            setText(getText() + kc);
           }
         }
       }
     });
     return true;
   }
-//......
+//...
 }}
 
 * 解説 [#nc5d399e]

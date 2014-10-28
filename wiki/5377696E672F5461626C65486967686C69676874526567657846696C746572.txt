@@ -13,16 +13,16 @@ description: JTableで正規表現による検索結果をRowFilterとHighlighte
 * サンプルコード [#la836955]
 #code(link){{
 class HighlightTableCellRenderer extends JTextField implements TableCellRenderer {
-  private static final Color backgroundSelectionColor = new Color(220, 240, 255);
-  private static final Highlighter.HighlightPainter highlightPainter
+  private static final Color BACKGROUND_SELECTION_COLOR = new Color(220, 240, 255);
+  private final transient Highlighter.HighlightPainter highlightPainter
     = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
   private String pattern = "";
-  private String prev = null;
+  private String prev;
 
   public boolean setPattern(String str) {
-    if(str==null || str.equals(pattern)) {
+    if (str == null || str.equals(pattern)) {
       return false;
-    }else{
+    } else {
       prev = pattern;
       pattern = str;
       return true;
@@ -37,23 +37,25 @@ class HighlightTableCellRenderer extends JTextField implements TableCellRenderer
     setEditable(false);
   }
   @Override public Component getTableCellRendererComponent(
-        JTable table, Object value, boolean isSelected,
-        boolean hasFocus, int row, int column) {
-    String txt = value!=null ? value.toString() : "";
+      JTable table, Object value, boolean isSelected,
+      boolean hasFocus, int row, int column) {
+    String txt = Objects.toString(value, "");
     Highlighter highlighter = getHighlighter();
     highlighter.removeAllHighlights();
     setText(txt);
-    setBackground(isSelected ? backgroundSelectionColor : Color.WHITE);
-    if(pattern!=null && !pattern.isEmpty() && !pattern.equals(prev)) {
+    setBackground(isSelected ? BACKGROUND_SELECTION_COLOR : Color.WHITE);
+    if (pattern != null && !pattern.isEmpty() && !pattern.equals(prev)) {
       Matcher matcher = Pattern.compile(pattern).matcher(txt);
-      if(matcher.find()) {
+      int pos = 0;
+      while (matcher.find(pos)) {
         int start = matcher.start();
         int end   = matcher.end();
-        try{
+        try {
           highlighter.addHighlight(start, end, highlightPainter);
-        }catch(BadLocationException | PatternSyntaxException e) {
+        } catch (BadLocationException | PatternSyntaxException e) {
           e.printStackTrace();
         }
+        pos = end;
       }
     }
     return this;

@@ -16,7 +16,7 @@ final ImageIcon animatedIcon = new ImageIcon(url);
 JButton button = new JButton(icon9) {
   @Override protected void fireStateChanged() {
     ButtonModel m = getModel();
-    if(isRolloverEnabled() && m.isRollover()) {
+    if (isRolloverEnabled() && m.isRollover()) {
       animatedIcon.getImage().flush();
     }
     super.fireStateChanged();

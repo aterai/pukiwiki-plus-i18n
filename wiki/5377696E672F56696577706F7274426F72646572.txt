@@ -12,8 +12,12 @@ description: JViewportにBorderを設定して余白を作成します。
 
 * サンプルコード [#q2fb173c]
 #code(link){{
-JTextArea textArea2 = new JTextArea("JScrollPane#setViewportBorder(...)\n\n" + initTxt);
-textArea2.setMargin(new Insets(0,0,0,0));
+JTextArea textArea1 = new JTextArea("JTextArea#setMargin(Insets)\n\n" + INIT_TXT);
+textArea1.setMargin(new Insets(5, 5, 5, 5));
+JScrollPane scroll1 = new JScrollPane(textArea1);
+
+JTextArea textArea2 = new JTextArea("JScrollPane#setViewportBorder(...)\n\n" + INIT_TXT);
+textArea2.setMargin(new Insets(0, 0, 0, 1));
 JScrollPane scroll2 = new JScrollPane(textArea2);
 scroll2.setViewportBorder(BorderFactory.createLineBorder(textArea2.getBackground(), 5));
 }}
@@ -23,7 +27,7 @@ scroll2.setViewportBorder(BorderFactory.createLineBorder(textArea2.getBackground
 -- `JTextArea`に`setMargin(Insets)`で余白を設定
 -- 行変更などのカーソル移動で先頭や末尾の余白分まではスクロールされない
 - 右: `JScrollPane#setViewportBorder(...)`
--- `JTextArea#setMargin(new Insets(0,0,0,1))`で`JTextArea`自体の余白を変更
+-- `JTextArea#setMargin(new Insets(0, 0, 0, 1))`で`JTextArea`自体の余白を変更
 --- すべて`0`の場合、一番長い行の末尾でキャレットが表示されない
 -- `JScrollPane#setViewportBorder(...)`で`JViewport`の周囲に余白を設定
 --- スクロールバーなどの有無によらず、この余白は常に表示されている

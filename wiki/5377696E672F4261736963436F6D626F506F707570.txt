@@ -24,15 +24,15 @@ BasicComboPopup popup = new BasicComboPopup(combo) {
       @Override public void mouseClicked(MouseEvent e) {
         hide();
         System.out.println(comboBox.getSelectedItem());
-        append((String)combo.getSelectedItem());
+        append((String) combo.getSelectedItem());
       }
     };
-    if(listener!=null) {
+    if (listener != null) {
       list.addMouseListener(listener);
     }
   }
   @Override public void uninstallingUI() {
-    if(listener != null) {
+    if (listener != null) {
       list.removeMouseListener(listener);
       listener = null;
     }

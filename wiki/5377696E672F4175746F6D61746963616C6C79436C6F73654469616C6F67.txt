@@ -17,8 +17,8 @@ label.addHierarchyListener(new HierarchyListener() {
   private AtomicInteger atomicDown = new AtomicInteger(SECONDS);
   @Override public void hierarchyChanged(HierarchyEvent e) {
     final JLabel l = (JLabel)e.getComponent();
-    if((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED)!=0) {
-      if(l.isShowing()) {
+    if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0) {
+      if (l.isShowing()) {
         textArea.append("isShowing=true\n");
         atomicDown.set(SECONDS);
         l.setText(String.format("Closing in %d seconds", SECONDS));
@@ -28,9 +28,9 @@ label.addHierarchyListener(new HierarchyListener() {
             //int i = --countdown;
             int i = atomicDown.decrementAndGet();
             l.setText(String.format("Closing in %d seconds", i));
-            if(i<=0) {
+            if (i <= 0) {
               Window w = SwingUtilities.getWindowAncestor(l);
-              if(w!=null && timer!=null && timer.isRunning()) {
+              if (w != null && timer != null && timer.isRunning()) {
                 textArea.append("Timer: timer.stop()\n");
                 timer.stop();
                 textArea.append("window.dispose()\n");
@@ -40,9 +40,9 @@ label.addHierarchyListener(new HierarchyListener() {
           }
         });
         timer.start();
-      }else{
+      } else {
         textArea.append("isShowing=false\n");
-        if(timer!=null && timer.isRunning()) {
+        if (timer != null && timer.isRunning()) {
           textArea.append("timer.stop()\n");
           timer.stop();
           timer = null;
