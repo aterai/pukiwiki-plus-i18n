@@ -206,6 +206,9 @@ function catbody($title, $page, $body)
             $head_tags[] = '<link rel="canonical" href="'.$script.$title.'.html" />';
         }
     }
+    if ( isset($frontmatter['hreflang']) ) {
+        $head_tags[] = '<link rel="alternate" href="' . $frontmatter['hreflang']['href'] . '" hreflang="' . $frontmatter['hreflang']['lang'] . '" />';
+    }
 
 	// Tags will be inserted into <head></head>
 	$head_tag = ! empty($head_tags) ? join("\n", $head_tags) ."\n" : '';

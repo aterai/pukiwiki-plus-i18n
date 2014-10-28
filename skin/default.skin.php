@@ -8,16 +8,17 @@ $image = & $_IMAGE['skin'];
 
 // Output HTTP headers
 //$is_404page  = ! is_page($_page);
-//$is_page  = is_page($_page);
-if($is_page && ! file_exists(get_filename($_page))) {
-    header("HTTP/1.0 404 Not Found");
+//$is_page  = is_page($_page) && ! arg_check('backup') && ! arg_check('edit');
+//if($is_page && ! file_exists(get_filename($_page))) {
+if(! file_exists(get_filename($_page))) {
+header("HTTP/1.0 404 Not Found");
 }else{
-    pkwk_common_headers();
-}
+pkwk_common_headers();
 header('Cache-Control: private, max-age=0'); //: no-cache');
 header('Pragma: no-cache');
 header('Content-Type: text/html; charset=' . CONTENT_CHARSET);
 header('ETag: ' . md5(MUTIME));
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -62,7 +63,7 @@ article{margin-bottom:1em}
 .page_action{margin:7px 0}
 .note_super{color:#D33;background-color:inherit}
 .note_super{vertical-align:30%}
-.edit_form textarea{width:95%;min-width:95%}
+.edit_form textarea{width:95%;min-width:95%;font-family:monospace}
 .edit_form,.clear{clear:both}
 .contents{border-top:solid 1px #999;border-left:solid 1px #999;border-right:0;border-bottom:0;margin:1em .5em}
 .contents:before{content:"Contents";color:#fff;background-color:#999;font-weight:700;line-height:1.0;display:block;width:6em;text-align:center;padding:.2em}
