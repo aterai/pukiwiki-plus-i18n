@@ -40,7 +40,7 @@ frame.addComponentListener(new ComponentAdapter() {
   @Override public void componentResized(ComponentEvent e) {
     int fw = frame.getSize().width;
     int fh = frame.getSize().height;
-    frame.setSize((mw>fw)?mw:fw, (mh>fh)?mh:fh);
+    frame.setSize((mw > fw) ? mw : fw, (mh > fh) ? mh : fh);
   }
 });
 }}
@@ -48,30 +48,30 @@ frame.addComponentListener(new ComponentAdapter() {
 `JFrame#setMaximumSize`が無効な環境でも、上記のように`ComponentListener`を使えば最大サイズを制限する(リサイズした後で最大サイズに戻しているだけ)ことができます。
 
 ----
-`Robot`を使う方法もあるようです。
-
-- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6464548 Bug ID: 6464548 Reopen 6383434: Frame.setMaximumSize() doesn't work]
+- 以下、`Robot`を使用する方法
+-- 参考: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6464548 Bug ID: 6464548 Reopen 6383434: Frame.setMaximumSize() doesn't work]
 
 #code{{
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-public class MaximumSizeTest{
+public class MaximumSizeTest {
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
-      @Override public void run() { createAndShowGUI(); }
+      @Override public void run() {
+        createAndShowGUI();
+      }
     });
   }
   private static final int MAX = 500;
   public static void createAndShowGUI() {
     final JFrame frame = new JFrame();
-    frame.setMinimumSize(new Dimension(240,120));
-    //frame.setMaximumSize(new Dimension(400,400));
+    frame.setMinimumSize(new Dimension(240, 120));
     Robot r;
     final Robot r2;
-    try{
+    try {
       r = new Robot();
-    }catch(AWTException ex) {
+    } catch (AWTException ex) {
       r = null;
     }
     r2 = r;
@@ -79,8 +79,8 @@ public class MaximumSizeTest{
       @Override public void componentResized(ComponentEvent e) {
         Point loc   = frame.getLocationOnScreen();
         Point mouse = MouseInfo.getPointerInfo().getLocation();
-        if(r2!=null && (mouse.getX()>loc.getX()+MAX ||
-                        mouse.getY()>loc.getY()+MAX)) {
+        if (r2 != null && (mouse.getX() > loc.getX() + MAX ||
+                           mouse.getY() > loc.getY() + MAX)) {
           r2.mouseRelease(InputEvent.BUTTON1_MASK);
           frame.setSize(Math.min(MAX, frame.getWidth()),
                         Math.min(MAX, frame.getHeight()));

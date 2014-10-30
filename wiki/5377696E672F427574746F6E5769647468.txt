@@ -13,21 +13,21 @@ description: 高さはデフォルトのまま幅だけを指定して、JButton
 * サンプルコード [#xbca7694]
 #code(link){{
 private static JComponent createRightAlignButtonBox2(
-    final List<JButton> list, final int buttonWidth, int gap) {
+  final List<JButton> list, final int buttonWidth, int gap) {
   JComponent box = new JPanel() {
     @Override public void updateUI() {
-      for(JButton b: list) {
+      for (JButton b : list) {
         b.setPreferredSize(null);
       }
       super.updateUI();
       EventQueue.invokeLater(new Runnable() {
         @Override public void run() {
           int maxHeight = 0;
-          for(JButton b: list) {
+          for (JButton b : list) {
             maxHeight = Math.max(maxHeight, b.getPreferredSize().height);
           }
           Dimension d = new Dimension(buttonWidth, maxHeight);
-          for(JButton b: list) {
+          for (JButton b : list) {
             b.setPreferredSize(d);
           }
           revalidate();
@@ -37,7 +37,7 @@ private static JComponent createRightAlignButtonBox2(
   };
   box.setLayout(new BoxLayout(box, BoxLayout.X_AXIS));
   box.add(Box.createHorizontalGlue());
-  for(JButton b: list) {
+  for (JButton b : list) {
     box.add(b);
     box.add(Box.createHorizontalStrut(gap));
   }
@@ -93,19 +93,19 @@ private static JComponent createRightAlignButtonBox2(
 #code{{
 JLabel l = new JLabel();
 l.setText("a"); //preferredSizeがnullの場合、UIがサイズを計算
-//l.getPreferredSize() -> Dimension[width=6,height=13]
+//l.getPreferredSize() -> Dimension[width=6, height=13]
 
 l.setText("aaaa"); //JLabelの場合、Fontサイズと文字列の長さなどで決まる
-//l.getPreferredSize() -> Dimension[width=24,height=13]
+//l.getPreferredSize() -> Dimension[width=24, height=13]
 
 l.setText("<html>aa<br>aa");
-//l.getPreferredSize() -> Dimension[width=12,height=26]
+//l.getPreferredSize() -> Dimension[width=12, height=26]
 
-l.setPreferredSize(new Dimension(10,10)); //preferredSizeを設定した場合
-//l.getPreferredSize() -> Dimension[width=10,height=10]
+l.setPreferredSize(new Dimension(10, 10)); //preferredSizeを設定した場合
+//l.getPreferredSize() -> Dimension[width=10, height=10]
 
 l.setPreferredSize(null); //preferredSizeをnullに戻した場合
-//l.getPreferredSize() -> Dimension[width=12,height=26]
+//l.getPreferredSize() -> Dimension[width=12, height=26]
 }}
 
 * 参考リンク [#gf6df44a]

@@ -12,25 +12,24 @@ description: マウスカーソルをアニメーションさせます。
 
 * サンプルコード [#h16203df]
 #code(link){{
-list[0] = tk.createCustomCursor(tk.createImage(url00), p, "00");
-list[1] = tk.createCustomCursor(tk.createImage(url01), p, "01");
-list[2] = tk.createCustomCursor(tk.createImage(url02), p, "02");
-setCursor(list[0]);
-animator = new javax.swing.Timer(100, new ActionListener() {
-  private int count = 0;
+list[0] = tk.createCustomCursor(tk.createImage(url00), pt, "00");
+list[1] = tk.createCustomCursor(tk.createImage(url01), pt, "01");
+list[2] = tk.createCustomCursor(tk.createImage(url02), pt, "02");
+animator = new Timer(100, new ActionListener() {
+  private int counter;
   @Override public void actionPerformed(ActionEvent e) {
-    setCursor(list[count]);
-    count = (count + 1+ list.length) % list.length;
+    button.setCursor(list[counter]);
+    counter = (counter + 1) % list.length;
   }
 });
-JButton button = new JButton(new AbstractAction("スタート") {
+button = new JButton(new AbstractAction("Start") {
   @Override public void actionPerformed(ActionEvent e) {
-    JButton button = (JButton)e.getSource();
-    if(animator.isRunning()) {
-      button.setText("スタート");
+    JButton b = (JButton) e.getSource();
+    if (animator.isRunning()) {
+      b.setText("Start");
       animator.stop();
-    }else{
-      button.setText("ストップ");
+    } else {
+      b.setText("Stop");
       animator.start();
     }
   }

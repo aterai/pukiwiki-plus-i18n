@@ -1,6 +1,6 @@
 ---
 title: JMenuItemのAccelerator表示を右揃えにする
-tags: [JMenuItem, Locale, KeyEvent, ResourceBundle, Alignment]
+tags: [JMenuItem, Locale, KeyEvent, ResourceBundle, Alignment, GridBagLayout]
 author: aterai
 pubdate: 2013-09-30T05:06:53+09:00
 description: JMenuItemのAccelerator表示を右揃えに変更します。
@@ -60,13 +60,61 @@ public static void paintAccText(
 }}
 
 * 解説 [#b2174b74]
-上記のサンプルでは、`BasicMenuItemUI#paintMenuItem(...)`メソッドをオーバーライドして、`JMenuItem`の`Accelerator`を左寄せではなく、右寄せで表示するように変更しています。
-
-- 注
+- `Defalut`
+-- デフォルト、`WindowsLoolAndFeel`の場合でも、`Accelerator`は左寄せで表示される
+- `RightAcc`
+-- `BasicMenuItemUI#paintMenuItem(...)`メソッドをオーバーライドして、`JMenuItem`の`Accelerator`を左寄せではなく、右寄せで表示
 -- `Web Start`で実行すると`java.security.AccessControlException: access denied ("java.lang.RuntimePermission" "accessClassInPackage.sun.swing")`と例外が発生してメニューが表示されない
 -- `sun.swing.MenuItemLayoutHelper`や、`sun.swing.MenuItemLayoutHelper.LayoutResult`などの内部所有の`API`を使用しているので、今後も使用できるか不明
 -- `paintText(...)`、`paintCheckIcon(...)`、`paintIcon(...)`、`paintArrowIcon(...)`などの`BasicMenuItemUI`のプライベートなメソッドをほぼそのままコピーして使用している
 -- `ComponentOrientation.RIGHT_TO_LEFT`が設定されて、文字列が右から左に配置される場合は考慮していない
+- `EastAcc`
+-- `JMenuItem`に`GridBagLayout`を設定し、`c.anchor = GridBagConstraints.EAST;`で、`Accelerator`文字列を設定した`JLabel`を配置
+-- 本来の`Accelerator`文字列は、`UIManager.put("MenuItem.acceleratorForeground", background);`などで非表示に設定
+--- このラベルは透明で、`WindowsLoolAndFeel`以外の場合は想定していない
+-- 参考: [[JMenuItemの内部にJButtonを配置する>Swing/ButtonsInMenuItem]]
+
+#code{{
+private static JMenuItem makeMenuItem2(JMenuItem mi) {
+  final JLabel label = new JLabel(MenuItemUIHelper.getAccText(mi, "+"));
+  label.setOpaque(true);
+  JMenuItem item = new JMenuItem(mi.getText()) {
+    @Override public void updateUI() {
+      super.updateUI();
+      if (getUI() instanceof WindowsMenuItemUI) {
+        setUI(new WindowsMenuItemUI() {
+          @Override protected void installDefaults() {
+            super.installDefaults();
+            acceleratorForeground = UIManager.getColor("MenuItem.background");
+            acceleratorSelectionForeground = acceleratorForeground;
+          }
+        });
+      }
+    }
+  };
+
+  GridBagConstraints c = new GridBagConstraints();
+  item.setLayout(new GridBagLayout());
+  c.gridheight = 1;
+  c.gridwidth  = 1;
+  c.gridy = 0;
+  c.gridx = 0;
+  c.insets = new Insets(0, 0, 0, 4);
+
+  c.weightx = 1d;
+  c.fill = GridBagConstraints.HORIZONTAL;
+  item.add(Box.createHorizontalGlue(), c);
+  c.gridx = 1;
+  c.fill = GridBagConstraints.NONE;
+  c.weightx = 0d;
+  c.anchor = GridBagConstraints.EAST;
+  item.add(label, c);
+
+  item.setMnemonic(mi.getMnemonic());
+  item.setAccelerator(mi.getAccelerator());
+  return item;
+}
+}}
 
 ----
 - `JMenuItem`の`Accelerator`が、`JMenuItem#setLocale(Locale.ENGLISH)`としても変化しない
@@ -92,6 +140,7 @@ public class awt_ja extends ListResourceBundle {
 
 * 参考リンク [#z75987ce]
 - [https://forums.oracle.com/thread/1364746 Swing - Localized Accelorator Keys]
+- [[JMenuItemの内部にJButtonを配置する>Swing/ButtonsInMenuItem]]
 
 * コメント [#m25240d4]
 #comment
