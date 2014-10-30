@@ -129,6 +129,8 @@ function plugin_edit_preview()
 	if ($postdata) {
 		$postdata = make_str_rules($postdata);
 		$postdata = explode("\n", $postdata);
+        global $frontmatter;
+        list($postdata, $frontmatter) = extract_yaml_frontmatter($postdata);
 		$postdata = drop_submit(convert_html($postdata));
 		$body .= '<div id="preview">' . $postdata . '</div>' . "\n";
 	}
