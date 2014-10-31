@@ -39,21 +39,21 @@ class ViewportDragScrollListener extends MouseAdapter
     });
   }
   @Override public void hierarchyChanged(HierarchyEvent e) {
-    JComponent c = (JComponent)e.getSource();
-    if((e.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED)!=0
-       && !c.isDisplayable()) {
+    JComponent c = (JComponent) e.getSource();
+    if((e.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED) != 0
+        && !c.isDisplayable()) {
       scroller.stop();
     }
   }
   @Override public void mouseDragged(MouseEvent e) {
-    JViewport vport = (JViewport)e.getSource();
+    JViewport vport = (JViewport) e.getSource();
     Point pt = e.getPoint();
     int dx = startPt.x - pt.x;
     int dy = startPt.y - pt.y;
     Point vp = vport.getViewPosition();
     vp.translate(dx, dy);
     label.scrollRectToVisible(new Rectangle(vp, vport.getSize()));
-    move.setLocation(SPEED*dx, SPEED*dy);
+    move.setLocation(SPEED * dx, SPEED * dy);
     startPt.setLocation(pt);
   }
   @Override public void mousePressed(MouseEvent e) {
