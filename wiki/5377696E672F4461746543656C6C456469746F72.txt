@@ -42,17 +42,17 @@ class SpinnerCellEditor extends JSpinner implements TableCellEditor {
         });
       }
     });
-    setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+    setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
   }
   private void setArrowButtonEnabled(boolean flag) {
-    for(Component c: getComponents()) {
-      if(c instanceof JButton) {
-        ((JButton)c).setEnabled(flag);
+    for (Component c : getComponents()) {
+      if (c instanceof JButton) {
+        ((JButton) c).setEnabled(flag);
       }
     }
   }
   @Override public Component getTableCellEditorComponent(JTable table,
-        Object value, boolean isSelected, int row, int column) {
+      Object value, boolean isSelected, int row, int column) {
     setValue(value);
     return this;
   }
@@ -65,17 +65,16 @@ class SpinnerCellEditor extends JSpinner implements TableCellEditor {
   transient protected ChangeEvent changeEvent = null;
 
   @Override public boolean stopCellEditing() {
-    try{
+    try {
       commitEdit();
-    }catch(Exception pe) {
+    } catch (Exception pe) {
       Toolkit.getDefaultToolkit().beep();
       return false;
     }
     fireEditingStopped();
     return true;
   }
-
-//......
+//...
 }}
 
 * 解説 [#s39b6483]

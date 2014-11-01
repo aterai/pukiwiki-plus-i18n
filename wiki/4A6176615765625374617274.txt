@@ -216,7 +216,7 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 
 %%Java7をインストールしてから？、deployJava.jsを使うと、Java のダウンロードページに飛ばされるようになってしまった…。%%
 - [https://forums.oracle.com/thread/2311585 Java Web Start & JNLP - Problems using deployJava.js with Java 7]
-- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7111793 Bug ID: 7111793 deployJava.js installs 1.6 when asked for 1.7 on clean machine]
+- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=7111793 Bug ID: 7111793 deployJava.js installs 1.6 when asked for 1.7 on clean machine]
 -- 7u4 で修正されている(が、また元に戻すのは面倒なのでdeployJava.jsは使用しない…)
 
 * 参考リンク [#g131e2b0]
@@ -243,8 +243,8 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 * コメント [#t8d59970]
 #comment
 - メモ: [http://sqs2.net/tdiary/20071202.html#p01 bug JNLP:JavaWebStartでデスクトップ上に作成したショートカット<アイコンにファイルをドロップすると、そのアプリケーションの起動に失敗し、「このアプリケーションは起動できません」と出る - 日々是開発:SQS Development(2007-12-02)] -- &user(aterai); &new{2007-12-03 (月) 16:29:46};
--- メモ:[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6646617 Bug ID: 6646617 Dropping a file on a Java Web Start desktop symbol DELETES the file] -- &user(aterai); &new{2008-02-22 (金) 19:12:26};
-- メモ:[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6943522 Bug ID: 6943522 Failed to launch any signed application on 6u19 when cache is disabled] -- &user(aterai); &new{2010-07-20 (火) 18:37:19};
+-- メモ:[http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6646617 Bug ID: 6646617 Dropping a file on a Java Web Start desktop symbol DELETES the file] -- &user(aterai); &new{2008-02-22 (金) 19:12:26};
+- メモ:[http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6943522 Bug ID: 6943522 Failed to launch any signed application on 6u19 when cache is disabled] -- &user(aterai); &new{2010-07-20 (火) 18:37:19};
 - リンク切れを修正。 -- &user(aterai); &new{2010-10-06 (水) 12:54:15};
 - いつもお世話になっております。単体SWINGでは-Djava.net.preferIPv4Stack=trueを付けると、PGMはうまく動きましたが、jnlpにどのように書けばいいかが判らなく、ご教示ください。<resources><property name="java.net.preferIPv4Stack" value="true"/>はだめみたいです。</resources>。いつもご教示、感謝しております。 -- &user(panda); &new{2011-12-05 (月) 16:02:29};
 -- こんばんは。[http://docs.oracle.com/javase/7/docs/technotes/guides/javaws/developersguide/syntax.html#resources The following properties, as well as properties beginning with either "javaws." or "jnlp.", are considered "secure" and will be passed to the VM in this way:]、[http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/syntax.html 次のプロパティーは「安全」とみなされ、この方法で VM に渡されます。] …にある安全とみなされるプロパティに、java.net.preferIPv4Stack はないので、<security><all-permissions/></security>として、セキュリティ証明書でjarに署名する必要があるのかもしれません(試していないのでうまくいくか不明ですが)。   -- &user(aterai); &new{2011-12-05 (月) 17:27:46};

@@ -108,7 +108,7 @@ scroll.setVerticalScrollBar(scrollbar);
 scroll.setRowHeaderView(label);
 /*/
 // 6826074 JScrollPane does not revalidate the component hierarchy after scrolling
-// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6826074
+// http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6826074
 // Affected Versions: 6u12,6u16,7
 JViewport vp = new JViewport() {
   @Override public void setViewPosition(Point p) {
@@ -153,8 +153,8 @@ scroll.setVerticalScrollBar(scrollBar);
 #comment
 - 行ヘッダーを使用したハイライトはJava7以降でのみ有効に機能するようです。 -- &user(読者); &new{2013-08-18 (日) 23:10:11};
 -- ご指摘ありがとうございます。仰るとおり、`1.6.0_45`で行ヘッダ版が正常に動作しないことを確認しました。回避方法がないか、`Bug Database`あたりを調べてみようと思います。 -- &user(aterai); &new{2013-08-19 (月) 00:04:59};
--- 修正された時期などから、[http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6910490 Bug ID: JDK-6910490 MatteBorder JScrollpane interaction]が原因かもと`MatteBorder`は使用せずに直接`Icon`を`JLabel`に追加するよう変更したけど、改善しない…。 -- &user(aterai); &new{2013-08-19 (月) 11:24:23};
--- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6826074 Bug ID: JDK-6826074 JScrollPane does not revalidate the component hierarchy after scrolling]が原因(`HeavyWeight`, `LightWeight`だけじゃなくレイアウトがうまく更新されていない？)のようです。`JViewport#setViewPosition(...)`をオーバーライドして`revalidate()`すれば、`1.7.0`と同様の動作をするようになりました。 -- &user(aterai); &new{2013-08-19 (月) 14:43:11};
+-- 修正された時期などから、[http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6910490 Bug ID: JDK-6910490 MatteBorder JScrollpane interaction]が原因かもと`MatteBorder`は使用せずに直接`Icon`を`JLabel`に追加するよう変更したけど、改善しない…。 -- &user(aterai); &new{2013-08-19 (月) 11:24:23};
+-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6826074 Bug ID: JDK-6826074 JScrollPane does not revalidate the component hierarchy after scrolling]が原因(`HeavyWeight`, `LightWeight`だけじゃなくレイアウトがうまく更新されていない？)のようです。`JViewport#setViewPosition(...)`をオーバーライドして`revalidate()`すれば、`1.7.0`と同様の動作をするようになりました。 -- &user(aterai); &new{2013-08-19 (月) 14:43:11};
 - `Highlighter.Highlight#getStartOffset()`を使用するように変更。 -- &user(aterai); &new{2013-08-23 (金) 16:14:35};
 
 #comment

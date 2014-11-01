@@ -64,7 +64,7 @@ editor2.setText("(\uD85B\uDE40) (\u26E40)\n(\uD842\uDF9F) (\u20B9F)");
 
 ----
 - `Windows 7`、`JDK 1.7.0_21`、`小塚明朝 Pr6N R`(`KozMinPr6N-Regular.otf`)で、`Font.createFont(...)`を使って`Font`を作成すると`IllegalArgumentException`が発生する場合がある
--- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5092191 Bug ID: 5092191 RFE: CFF/Type2 embedded fonts not supported with Font.createFont()]
+-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=5092191 Bug ID: 5092191 RFE: CFF/Type2 embedded fonts not supported with Font.createFont()]
 
  Exception in thread "AWT-EventQueue-0" java.lang.IllegalArgumentException: Length must be >= 0.
     at javax.swing.text.GlyphPainter2.getBoundedPosition(GlyphPainter2.java: 205)
@@ -119,7 +119,7 @@ public class OTFTest {
 #comment
 - 結合文字(`A&#x0300;`、`か&#x3099;`)も`JTextComponent`は未対応。%%ブラウザだと`Chrome`は対応されているが、他は部分的な対応になっている？%% -- &user(aterai); &new{2012-05-15 (火) 11:17:30};
 - `Windows 7` + `JDK 1.7.0`で`OTF`フォントは使えない？？？ -- &user(aterai); &new{2012-06-06 (水) 19:07:01};
-- メモ: [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6836089 Bug ID: 6836089 Swing HTML parser can't properly decode codepoints outside the Unicode Plane 0 into a surrogate pair] -- &user(aterai); &new{2012-06-25 (月) 18:37:16};
+- メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6836089 Bug ID: 6836089 Swing HTML parser can't properly decode codepoints outside the Unicode Plane 0 into a surrogate pair] -- &user(aterai); &new{2012-06-25 (月) 18:37:16};
 -- via: [http://mail.openjdk.java.net/pipermail/swing-dev/2012-June/002145.html <Swing Dev> <Swind Dev> <7u6> Review request for 6836089: Swing HTML parser can't properly decode codepoints outside the Unicode Plane 0 into a surrogate pair]
 -- 確かに`JDK 1.6.0_33`では、`&#x26E40;`などの数値文字参照が`JEditorPane`で正常に表示されている。 -- &user(aterai); &new{2012-06-25 (月) 20:42:16};
 

@@ -16,7 +16,7 @@ class TransparentMenu extends JMenu {
   public TransparentMenu(String title) {
     super(title);
   }
-  //http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4688783
+  //http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4688783
   private JPopupMenu popupMenu;
   private void ensurePopupMenuCreated() {
     if(popupMenu == null) {
@@ -93,7 +93,7 @@ class TranslucentPopupFactory extends PopupFactory {
 
 ----
 - [[JPopupMenuを半透明にする>Swing/TranslucentPopupMenu]]では、`JPopupMenu#show(...)`メソッドをオーバーライドし、ポップアップが親フレームからはみ出して `Heavy weight`の`JWindow`が`JPopupMenu`の親となる場合のみ、`JWindow#setBackground(ALPHA_ZERO)`などで透明化(`JPopupMenu`は半透明)
--- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7156657 Bug ID: 7156657 Version 7 doesn't support translucent popup menus against a translucent window] が原因？で、`1.7.0_06`以前では、サブメニューが半透明化されない場合がある
+-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=7156657 Bug ID: 7156657 Version 7 doesn't support translucent popup menus against a translucent window] が原因？で、`1.7.0_06`以前では、サブメニューが半透明化されない場合がある
 -- `PopupFactory.setSharedInstance(new TranslucentPopupFactory())`を使用する場合はバグの影響を受けない
 -- 上記のバグ？以外にも、[[JPopupMenuを半透明にする>Swing/TranslucentPopupMenu]]でサブメニューを半透明にする場合、`Heavy weight`の`JPopupMenu`に使用する`JWindow`の`ContentPane`と`JRootPane`の不透明設定(`isOpaque()`)に注意する必要がある
 
@@ -140,11 +140,11 @@ class TranslucentPopupMenu extends JPopupMenu {
 
 * 参考リンク [#s17a0f91]
 - [http://today.java.net/pub/a/today/2008/03/18/translucent-and-shaped-swing-windows.html Translucent and Shaped Swing Windows | Java.net]
-- [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7156657 Bug ID: 7156657 Version 7 doesn't support translucent popup menus against a translucent window]
+- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=7156657 Bug ID: 7156657 Version 7 doesn't support translucent popup menus against a translucent window]
 - [[JPopupMenuを半透明にする>Swing/TranslucentPopupMenu]]
 
 * コメント [#iea685f4]
 #comment
-- [http://bugs.sun.com/bugdatabase/ Java Bug Database]の見た目が新しくなっている？ `Fixed Versions`の表示がシンプルになりすぎているような…。 -- &user(aterai); &new{2012-10-22 (月) 20:22:51};
+- [http://bugs.java.com/bugdatabase/ Java Bug Database]の見た目が新しくなっている？ `Fixed Versions`の表示がシンプルになりすぎているような…。 -- &user(aterai); &new{2012-10-22 (月) 20:22:51};
 
 #comment

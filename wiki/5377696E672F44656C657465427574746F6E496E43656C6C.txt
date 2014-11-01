@@ -40,7 +40,7 @@ class DeleteButtonEditor extends DeleteButton implements TableCellEditor {
       @Override public void actionPerformed(ActionEvent e) {
         int row = table.convertRowIndexToModel(table.getEditingRow());
         fireEditingStopped();
-        ((DefaultTableModel)table.getModel()).removeRow(row);
+        ((DefaultTableModel) table.getModel()).removeRow(row);
       }
     });
   }
@@ -76,13 +76,13 @@ class DeleteButtonEditor extends DeleteButton implements TableCellEditor {
 * コメント [#t2516d67]
 #comment
 - ボタンのセル内でマウスを移動しても削除するように変更。 -- &user(aterai); &new{2008-03-28 (金) 16:59:11};
--- メモ: `0`行目のボタンをクリックし、真上のヘッダ上でリリースしても削除できる -> [http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6291631 Bug ID: 6291631 JTable: rowAtPoint returns 0 for negative y] (追記: このバグは未修正になっているけど、`JDK 1.6, 1.7`などのソースではコメントにある修正が追加されている) -- &user(aterai); &new{2008-03-28 (金) 17:21:10};
+-- メモ: `0`行目のボタンをクリックし、真上のヘッダ上でリリースしても削除できる -> [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6291631 Bug ID: 6291631 JTable: rowAtPoint returns 0 for negative y] (追記: このバグは未修正になっているけど、`JDK 1.6, 1.7`などのソースではコメントにある修正が追加されている) -- &user(aterai); &new{2008-03-28 (金) 17:21:10};
 
 #code{{
 //上記のBug Databaseにある回避方法
 JTable table = new JTable(model) {
   @Override public int rowAtPoint(Point pt) {
-    return (pt.y<0)?-1:super.rowAtPoint(pt);
+    return (pt.y < 0) ? -1 : super.rowAtPoint(pt);
   }
 };
 }}

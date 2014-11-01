@@ -13,7 +13,7 @@ description: NimbusLookAndFeelのカラーパレットを変更します。
 * サンプルコード [#kb6eef2f]
 #code(link){{
 UIDefaults def = UIManager.getLookAndFeelDefaults();
-def.put("nimbusOrange", new Color(255,220,35,200));
+def.put("nimbusOrange", new Color(255, 220, 35, 200));
 }}
 
 * 解説 [#j922dab2]
@@ -43,12 +43,12 @@ def.put("nimbusOrange", new Color(255,220,35,200));
 
 #code{{
 UIDefaults d = new UIDefaults();
-d.put("ProgressBar[Enabled].foregroundPainter", new Painter<JProgressBar>() { //JDK 1.6.0 new com.sun.java.swing.Painter() {
+d.put("ProgressBar[Enabled].foregroundPainter", new Painter<JProgressBar>() {
   @Override public void paint(Graphics2D g, JProgressBar c, int w, int h) {
-    g.setColor(new Color(100,250,120,50));
-    g.fillRect(0,0,w-1,h-1);
-    g.setColor(new Color(100,250,120,150));
-    g.fillRect(3,h/2,w-5,h/2-2);
+    g.setColor(new Color(100, 250, 120, 50));
+    g.fillRect(0, 0, w - 1, h - 1);
+    g.setColor(new Color(100, 250, 120, 150));
+    g.fillRect(3, h / 2, w - 5, h / 2 - 2);
   }
 });
 progressbar.putClientProperty("Nimbus.Overrides", d);
