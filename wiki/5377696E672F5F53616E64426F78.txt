@@ -2,14 +2,14 @@
 title: 来週のネタとか(ﾟεﾟ)
 noindex: true
 nofollow: true
+#pubdate: 2006-01-29
 ---
-//pubdate: 2006-01-29
 #contents
-* 概要 [#qd04dac9]
+* 概要 [#a5760ded]
 [[Swing]]関係の自分用のメモとかネタ帳みたいなものです。
 
-* 不具合 [#tcd765fb]
-- gistプラグインでの行番号がズレてしまう
+* 不具合 [#v1557d55]
+- `gist`プラグインでの行番号がズレてしまう
 
 * google八分メモ [#k1042248]
 - 状況
@@ -24,8 +24,6 @@ nofollow: true
 --- コメントユーザーページへの`404`ページを作成しない
 -- `schema.org`でマークアップ
 
-独自ドメインに移行しないと駄目かも。
-
 //- あとは、googleへの依存を極力減らす方向で(下の方は難航しそうだけど)
 //-- google codeから、GitHubへリポジトリを移行
 //-- google サイト内検索を削除
@@ -38,6 +36,12 @@ nofollow: true
 //-- 未実行: google Analytics から移行
 //-- 未実行: google AdSenseから移行
 //-- 未実行: bloggerから移行
+
+* さくらレンタルサーバ(独自ドメイン)に移行 [#gc4ed6c9]
+- PHP設定の編集
+
+ date.timezone = Asia/Tokyo
+ zlib.output_compression=On
 
 * 移動: ネタのリクエスト、Swingのサンプルに関するメモ [#l7de666d]
 - 以前ここで頂いたコメントは、[[Comments/Swing]]に移動しました。

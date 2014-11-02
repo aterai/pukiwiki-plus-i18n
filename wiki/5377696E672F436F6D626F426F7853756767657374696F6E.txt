@@ -18,7 +18,7 @@ String[] array = {
 JComboBox combo = new JComboBox(array);
 combo.setEditable(true);
 combo.setSelectedIndex(-1);
-JTextField field = (JTextField)combo.getEditor().getEditorComponent();
+JTextField field = (JTextField) combo.getEditor().getEditorComponent();
 field.setText("");
 field.addKeyListener(new ComboKeyHandler(combo));
 }}
@@ -87,7 +87,8 @@ class ComboKeyHandler extends KeyAdapter {
       break;
     }
   }
-  private static void setSuggestionModel(JComboBox<String> comboBox, ComboBoxModel<String> mdl, String str) {
+  private static void setSuggestionModel(
+      JComboBox<String> comboBox, ComboBoxModel<String> mdl, String str) {
     comboBox.setModel(mdl);
     comboBox.setSelectedIndex(-1);
     ((JTextField) comboBox.getEditor().getEditorComponent()).setText(str);

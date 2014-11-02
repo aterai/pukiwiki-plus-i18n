@@ -12,19 +12,20 @@ description: JLayerを使ってJProgressBarの色相を緑から赤に変更し�
 
 * サンプルコード [#x5a13e52]
 #code(link){{
-class BlockedColorLayerUI extends LayerUI<JProgressBar>{
-  public boolean isPreventing = false;
-  private BufferedImage bi;
+class BlockedColorLayerUI extends LayerUI<JProgressBar> {
+  public boolean isPreventing;
+  private transient BufferedImage bi;
   private int prevw = -1;
   private int prevh = -1;
+
   @Override public void paint(Graphics g, JComponent c) {
-    if(isPreventing) {
-      JLayer jlayer = (JLayer)c;
-      JProgressBar progress = (JProgressBar)jlayer.getView();
+    if (isPreventing && c instanceof JLayer) {
+      JLayer jlayer = (JLayer) c;
+      JProgressBar progress = (JProgressBar) jlayer.getView();
       int w = progress.getSize().width;
       int h = progress.getSize().height;
 
-      if(bi==null || w!=prevw || h!=prevh) {
+      if (bi == null || w != prevw || h != prevh) {
         bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
       }
       prevw = w;
@@ -35,21 +36,20 @@ class BlockedColorLayerUI extends LayerUI<JProgressBar>{
       g2.dispose();
 
       Image image = c.createImage(
-          new FilteredImageSource(
-              bi.getSource(), new RedGreenChannelSwapFilter()));
+        new FilteredImageSource(bi.getSource(), new RedGreenChannelSwapFilter()));
       g.drawImage(image, 0, 0, c);
-    }else{
+    } else {
       super.paint(g, c);
     }
   }
 }
 
-class RedGreenChannelSwapFilter extends RGBImageFilter{
+class RedGreenChannelSwapFilter extends RGBImageFilter {
   @Override public int filterRGB(int x, int y, int argb) {
-    int r = (int)((argb >> 16) & 0xff);
-    int g = (int)((argb >>  8) & 0xff);
-    int b = (int)((argb    ) & 0xff);
-    return (argb & 0xff000000) | (g<<16) | (r<<8) | (b);
+    int r = (int) ((argb >> 16) & 0xff);
+    int g = (int) ((argb >>  8) & 0xff);
+    int b = (int) ((argb)       & 0xff);
+    return (argb & 0xff000000) | (g << 16) | (r << 8) | (b);
   }
 }
 }}

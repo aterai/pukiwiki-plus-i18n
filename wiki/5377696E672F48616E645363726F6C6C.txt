@@ -19,7 +19,8 @@ class HandScrollListener extends MouseAdapter {
   @Override public void mouseDragged(MouseEvent e) {
     JViewport vport = (JViewport) e.getComponent();
     Point cp = e.getPoint();
-    Point vp = vport.getViewPosition(); //= SwingUtilities.convertPoint(vport, 0, 0, label);
+    Point vp = vport.getViewPosition();
+           //= SwingUtilities.convertPoint(vport, 0, 0, label);
     vp.translate(pp.x - cp.x, pp.y - cp.y);
     //if (r1.isSelected()) {
     label.scrollRectToVisible(new Rectangle(vp, vport.getSize()));

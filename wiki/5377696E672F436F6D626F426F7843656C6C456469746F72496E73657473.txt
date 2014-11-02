@@ -53,7 +53,8 @@ class ComboBoxCellRenderer extends ComboBoxPanel implements TableCellRenderer {
 -- ドロップダウンリストの位置、サイズが余白を含んだ幅になる
 
 #code{{
-combo.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(8,10,8,10), combo.getBorder()));
+combo.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(8, 10, 8, 10), combo.getBorder()));
 }}
 
 - `JPanel` + `JComboBox`(右)
