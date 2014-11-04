@@ -1,9 +1,9 @@
 <?php
 $language_considering_setting_level = 1;
 $page_title = 'てんぷらメモ';
-$script = 'http://terai.xrea.jp/';
+$script = 'http:'.ROOT_URI;
 $modifier = 'aterai';
-$modifierlink = '//terai.xrea.jp/aterai.html';
+$modifierlink = ROOT_URI.'aterai.html';
 
 $whatsdeleted = ':RecentDeleted'; // Removeed page list
 $interwiki    = ':InterWikiName'; // Set InterWiki definition here
