@@ -30,7 +30,7 @@ AddType application/x-java-archive-diff .jardiff
 AddType application/java-archive .jar
 # Addtype application/pdf .pdf
 
-Options All -Indexes
+#Options All -Indexes
 #IndexOptions Charset=UTF-8
 DirectoryIndex index.php FrontPage.html index.html
 
@@ -135,6 +135,9 @@ allow from all
 
 RewriteEngine on
 RewriteBase /
+
+RewriteCond %{http_host} ^terai.xrea.jp
+RewriteRule ^(.*) http://ateraimemo.com/$1 [R=301,L]
 
 # RewriteCond %{REQUEST_URI} ^/(en|PukiWiki|swing/swing[^a-z]).*$
 # RewriteRule .* - [G]

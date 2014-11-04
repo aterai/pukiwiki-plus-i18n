@@ -161,7 +161,7 @@ $page_title = 'てんぷらメモ';
 // 省略時は、絶対URIが自動で設定されます。
 //$script = 'http://example.com/pukiwiki/';
 //$script = './';
-$script = 'http://terai.xrea.jp/';
+$script = 'http://ateraimemo.com/';
 
 // Shorten $script: Cut its file name (default: not cut)
 //$script_directory_index = 'index.php';
@@ -185,7 +185,7 @@ $modifier = 'aterai';
 // Site admin's Web page (CHANGE THIS)
 //$modifierlink = get_script_absuri();
 //$modifierlink = dirname($_SCRIPT_NAME);
-$modifierlink = '//terai.xrea.jp/aterai.html';
+$modifierlink = '//ateraimemo.com/aterai.html';
 
 // Default page name
 $defaultpage  = 'FrontPage';     // Top / Default page
