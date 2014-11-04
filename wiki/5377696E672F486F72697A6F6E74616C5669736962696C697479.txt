@@ -29,7 +29,8 @@ scroller.setModel(textField.getHorizontalVisibility());
 
 #code{{
 class EmptyThumbHandler extends ComponentAdapter implements DocumentListener {
-  private final BoundedRangeModel emptyThumbModel = new DefaultBoundedRangeModel(0, 1, 0, 1);
+  private final BoundedRangeModel emptyThumbModel
+    = new DefaultBoundedRangeModel(0, 1, 0, 1);
   private final JTextField textField;
   private final JScrollBar scroller;
   public EmptyThumbHandler(JTextField textField, JScrollBar scroller) {
@@ -41,7 +42,7 @@ class EmptyThumbHandler extends ComponentAdapter implements DocumentListener {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
         BoundedRangeModel m = textField.getHorizontalVisibility();
-        int iv = m.getMaximum() - m.getMinimum() - m.getExtent() - 1; // -1: bug?
+        int iv = m.getMaximum() - m.getMinimum() - m.getExtent() - 1; //-1:bug?
         if (iv <= 0) {
           scroller.setModel(emptyThumbModel);
         } else {
@@ -91,10 +92,11 @@ class ArrowButtonlessScrollBarUI extends BasicScrollBarUI {
       return;
     }
     BoundedRangeModel m = sb.getModel();
-    int iv = m.getMaximum() - m.getMinimum() - m.getExtent() - 1; // -1: bug?
+    int iv = m.getMaximum() - m.getMinimum() - m.getExtent() - 1; //-1:bug?
     if (iv > 0) {
       Graphics2D g2 = (Graphics2D) g.create();
-      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
       Color color;
       if (isDragging) {
         color = DRAGGING_COLOR;

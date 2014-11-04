@@ -14,19 +14,21 @@ description: JEditorPaneにリンクを追加します。
 #code(link){{
 final JEditorPane editorPane = new JEditorPane();
 editorPane.setEditable(false);
-editorPane.setContentType("text/html"); //javax.swing.text.html.HTMLEditorKit
-editorPane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+editorPane.setContentType("text/html");
+editorPane.putClientProperty(
+    JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 editorPane.setText(htmlText);
 editorPane.addHyperlinkListener(new HyperlinkListener() {
   private String tooltip;
   @Override public void hyperlinkUpdate(HyperlinkEvent e) {
-    if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-      JOptionPane.showMessageDialog(editorPane, "You click the link with the URL " + e.getURL());
-    }else if(e.getEventType() == HyperlinkEvent.EventType.ENTERED) {
+    if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+      JOptionPane.showMessageDialog(
+          editorPane, "You click the link with the URL " + e.getURL());
+    } else if (e.getEventType() == HyperlinkEvent.EventType.ENTERED) {
       tooltip = editorPane.getToolTipText();
       URL url = e.getURL();
-      editorPane.setToolTipText((url!=null)?url.toExternalForm():null);
-    }else if(e.getEventType() == HyperlinkEvent.EventType.EXITED) {
+      editorPane.setToolTipText((url != null) ? url.toExternalForm() : null);
+    } else if (e.getEventType() == HyperlinkEvent.EventType.EXITED) {
       editorPane.setToolTipText(tooltip);
     }
   }
@@ -43,22 +45,23 @@ editorPane.addHyperlinkListener(new HyperlinkListener() {
 - %%ベースラインがうまく揃わない？%% [[JTextPaneに追加するコンポーネントのベースラインを揃える>Swing/InsertComponentBaseline]] のように、`JComponent#setAlignmentY(...)`でテキストベースラインに揃えることが可能
 
 #code{{
-HTMLDocument doc = (HTMLDocument)editorPane.getDocument();
+HTMLDocument doc = (HTMLDocument) editorPane.getDocument();
 Style s = doc.addStyle("button", null);
 StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER);
 HyperlinkButton button = new HyperlinkButton(new AbstractAction(LINK) {
   @Override public void actionPerformed(ActionEvent e) {
-    AbstractButton b = (AbstractButton)e.getSource();
-    editorPane.setBackground(b.isSelected()?Color.RED:Color.WHITE);
-    JOptionPane.showMessageDialog(editorPane, "You click the link with the URL " + LINK);
+    AbstractButton b = (AbstractButton) e.getSource();
+    editorPane.setBackground(b.isSelected() ? Color.RED : Color.WHITE);
+    JOptionPane.showMessageDialog(
+        editorPane, "You click the link with the URL " + LINK);
   }
 });
-button.setToolTipText("button: "+LINK);
+button.setToolTipText("button: " + LINK);
 button.setOpaque(false);
 StyleConstants.setComponent(s, button);
 try {
   doc.insertString(doc.getLength(), "\n----\nJButton:\n", null);
-  doc.insertString(doc.getLength(), LINK +"\n", doc.getStyle("button"));
+  doc.insertString(doc.getLength(), LINK + "\n", doc.getStyle("button"));
   //doc.insertString(doc.getLength(), "\n", null);
 } catch (BadLocationException ble) {
   ble.printStackTrace();
@@ -93,7 +96,9 @@ public class ThumbnailTest {
   }
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
-      @Override public void run() { createAndShowGUI(); }
+      @Override public void run() {
+        createAndShowGUI();
+      }
     });
   }
   public static void createAndShowGUI() {
