@@ -39,70 +39,6 @@ order deny,allow
 allow from all
 </Files>
 
-# SetEnvIfNoCase User-Agent "(Baidu|Sogou)" bad_bot
-#
-# ## spam
-# order allow,deny
-# allow from all
-# deny from env=bad_bot
-# deny from www.style-7.com
-# deny from .ovh.net
-# deny from 192.69.88.0/21
-# deny from 173.44.32.0/19
-# deny from 173.44.37.0/28
-# deny from 96.47.224.0/20
-# deny from 46.161.41.34
-# deny from 91.232.96.8
-# deny from 95.215.0.27
-# deny from 183.60.244.46
-# deny from 188.143.232.
-# deny from 188.143.234.
-# deny from 190.7.109.158
-# deny from 193.105.210.226
-# deny from 195.2.240.106
-# deny from 213.238.175.57
-# deny from 61.135.
-
-## naver.co.jp/naver.com
-# deny from 202.234.172.0/25
-# deny from 219.163.205.160/27
-# deny from 218.145.25.0/24
-# deny from 220.73.165.0/22
-# deny from 202.179.180.0/24
-# deny from 222.122.194.97
-
-## naver?
-# deny from 61.78.59.0/21
-# deny from 61.247.192
-
-## KORNET
-# deny from 218.144.0.0/12
-# deny from 220.72.0.0/11
-
-## Baiduspider
-# deny from 60.28.17
-
-## spam
-# deny from 59.10.239.128/25
-# deny from reversedns.resolve.ru
-# deny from unknown.sagonet.net
-# deny from CUSTOMER.VPLS.NET
-# deny from pc2m.net
-# deny from 219.94.168.216
-# deny from rfcrawler.com
-# deny from 118.13.83.120
-# deny from 67.70.32.0/67.70.35.255
-
-# BrowserMatch "^Opera/9\.0 \(Windows NT 5\.1; U; en\)$" spam
-# BrowserMatch ".*RFCrawler.*" spam
-# BrowserMatch "^WWW\-Mechanize/" spam
-# BrowserMatch "^$" spam
-#
-# <Directory /path/to/ptetex/>
-# AllowOverride Limit
-# </Directory>
-#
-
 # Prohibit direct access
 <FilesMatch "\.(ini\.php|lng\.php)$">
 	Order allow,deny
@@ -155,11 +91,19 @@ RewriteEngine on
 RewriteBase /
 RewriteCond %{HTTP:Accept-Encoding} gzip
 RewriteCond %{REQUEST_FILENAME} !\.gz$
-RewriteCond %{REQUEST_FILENAME}\.gz -f
+RewriteCond %{REQUEST_FILENAME}\.gz -s
 RewriteRule ^.+$ %{REQUEST_URI}.gz
 </FilesMatch>
 
-<FilesMatch "\.(ico|jpg|jpeg|png|gif|js|css|gz)$">
+<files *.js.gz>
+AddType "text/javascript; charset=UTF-8" .gz
+</files>
+<files *.css.gz>
+AddType "text/css" .gz
+</files>
+AddEncoding x-gzip .gz
+
+<FilesMatch "\.(ico|jpg|jpeg|png|gif|js|css|gz|woff)$">
 FileETag none
 Header set Cache-Control "max-age=2419200, public"
 </FilesMatch>
