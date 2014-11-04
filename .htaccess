@@ -136,8 +136,11 @@ allow from all
 RewriteEngine on
 RewriteBase /
 
-RewriteCond %{REQUEST_URI} ^/(en|PukiWiki|swing/swing).*$
-RewriteRule .* - [G]
+RewriteCond %{http_host} ^terai.xrea.jp
+RewriteRule ^(.*) http://ateraimemo.com/$1 [R=301,L]
+
+# RewriteCond %{REQUEST_URI} ^/(en|PukiWiki|swing/swing[^a-z]).*$
+# RewriteRule .* - [G]
 
 # RewriteRule ^Recent\.html$ index.php?cmd=recent [L]
 # RewriteRule ^List\.html$ index.php?cmd=list [L]
