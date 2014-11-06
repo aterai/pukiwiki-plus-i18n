@@ -12,49 +12,58 @@ description: JTableに行ヘッダを追加を追加します。
 
 * サンプルコード [#kfa64240]
 #code(link){{
-class RowHeaderList extends JList {
+class RowHeaderList<E> extends JList<E> {
   private final JTable table;
   private final ListSelectionModel tableSelection;
   private final ListSelectionModel rListSelection;
-  public RowHeaderList(ListModel model, JTable table) {
+  private int rollOverRowIndex = -1;
+  private int pressedRowIndex  = -1;
+
+  public RowHeaderList(ListModel<E> model, JTable table) {
     super(model);
     this.table = table;
     setFixedCellHeight(table.getRowHeight());
-    setCellRenderer(new RowHeaderRenderer(table.getTableHeader()));
+    setCellRenderer(new RowHeaderRenderer<E>(table.getTableHeader()));
     RollOverListener rol = new RollOverListener();
     addMouseListener(rol);
     addMouseMotionListener(rol);
+
     tableSelection = table.getSelectionModel();
     rListSelection = getSelectionModel();
   }
-  class RowHeaderRenderer extends JLabel implements ListCellRenderer {
-    private final JTableHeader header;
+  class RowHeaderRenderer<E> extends JLabel
+                             implements ListCellRenderer<E> {
+    private final JTableHeader header; // = table.getTableHeader();
     public RowHeaderRenderer(JTableHeader header) {
+      super();
       this.header = header;
       this.setOpaque(true);
       //this.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
-      this.setBorder(BorderFactory.createMatteBorder(0,0,1,2,Color.GRAY));
+      this.setBorder(BorderFactory.createMatteBorder(
+          0, 0, 1, 2, Color.GRAY.brighter()));
       this.setHorizontalAlignment(CENTER);
       this.setForeground(header.getForeground());
       this.setBackground(header.getBackground());
       this.setFont(header.getFont());
     }
-    @Override public Component getListCellRendererComponent(JList list, Object value,
-               int index, boolean isSelected, boolean cellHasFocus) {
-      if(index==pressedRowIndex) {
+    @Override public Component getListCellRendererComponent(
+        JList<? extends E> list, E value, int index,
+        boolean isSelected, boolean cellHasFocus) {
+      if (index == pressedRowIndex) {
         setBackground(Color.GRAY);
-      }else if(index==rollOverRowIndex) {
+      } else if (index == rollOverRowIndex) {
         setBackground(Color.WHITE);
-      }else if(isSelected) {
+      } else if (isSelected) {
         setBackground(Color.GRAY.brighter());
-      }else{
+      } else {
         setForeground(header.getForeground());
         setBackground(header.getBackground());
       }
-      setText((value==null)?"":value.toString());
+      setText(Objects.toString(value, ""));
       return this;
     }
   }
+//...
 }
 }}
 
@@ -156,8 +165,8 @@ class HeaderRenderer implements TableCellRenderer {
     JTable tbl, Object val, boolean isS,
     boolean hasF, int row, int col) {
     JLabel l;
-    boolean flg = (row==rollOverRowIndex);
-    l = (JLabel)tcr.getTableCellRendererComponent(
+    boolean flg = row == rollOverRowIndex;
+    l = (JLabel) tcr.getTableCellRendererComponent(
       tbl, val, isS, flg?flg:hasF, row, col);
     l.setOpaque(!flg);
     return l;
@@ -166,14 +175,14 @@ class HeaderRenderer implements TableCellRenderer {
   private class RollOverListener extends MouseInputAdapter {
     @Override public void mouseExited(MouseEvent e) {
       rollOverRowIndex = -1;
-      JTable table = (JTable)e.getSource();
+      JTable table = (JTable) e.getSource();
       table.repaint();
     }
     @Override public void mouseMoved(MouseEvent e) {
-      JTable table = (JTable)e.getSource();
+      JTable table = (JTable) e.getSource();
       Point pt = e.getPoint();
       int column = table.columnAtPoint(pt);
-      rollOverRowIndex = (column==0)?table.rowAtPoint(pt):-1;
+      rollOverRowIndex = (column == 0) ? table.rowAtPoint(pt) : -1;
       table.repaint();
     }
     @Override public void mouseDragged(MouseEvent e) {}

@@ -12,9 +12,10 @@ description: マウスをドラッグしてパネル上に自由曲線を描画�
 
 * サンプルコード [#jb2b9b9e]
 #code(link){{
-class PaintPanel extends JPanel implements MouseMotionListener, MouseListener {
-  private Point startPoint = new Point(-1,-1);
-  private Point endPoint   = new Point(-1,-1);
+class PaintPanel extends JPanel
+                 implements MouseMotionListener, MouseListener {
+  private Point startPoint = new Point(-10, -10);
+  private Point p = new Point(-10, -10);
   public PaintPanel() {
     super();
     addMouseMotionListener(this);
@@ -22,25 +23,22 @@ class PaintPanel extends JPanel implements MouseMotionListener, MouseListener {
   }
   @Override public void paintComponent(Graphics g) {
     //super.paintComponent(g);
-    Graphics2D g2d = (Graphics2D)g;
-    g2d.setStroke(new BasicStroke(3.0F));
+    Graphics2D g2d = (Graphics2D) g.create();
+    g2d.setStroke(new BasicStroke(3f));
     g2d.setPaint(Color.BLACK);
-    g2d.drawLine(startPoint.x, startPoint.y,
-                 endPoint.x,   endPoint.y);
-    startPoint = endPoint;
+    g2d.drawLine(startPoint.x, startPoint.y, p.x, p.y);
+    g2d.dispose();
+    startPoint = p;
   }
   @Override public void mouseDragged(MouseEvent e) {
-    endPoint = e.getPoint();
+    p = e.getPoint();
     repaint();
   }
-  @Override public void mousePressed(MouseEvent e) {
-    startPoint = e.getPoint();
-  }
-  @Override public void mouseMoved(MouseEvent e) {}
-  @Override public void mouseExited(MouseEvent e) {}
-  @Override public void mouseEntered(MouseEvent e) {}
+  @Override public void mouseMoved(MouseEvent e)    {}
+  @Override public void mouseExited(MouseEvent e)   {}
+  @Override public void mouseEntered(MouseEvent e)  {}
   @Override public void mouseReleased(MouseEvent e) {}
-  @Override public void mouseClicked(MouseEvent e) {}
+  @Override public void mouseClicked(MouseEvent e)  {}
 }
 }}
 

@@ -21,7 +21,9 @@ class CustomUndoPlainDocument extends PlainDocument {
       compoundEdit.addEdit(e.getEdit());
     }
   }
-  @Override public void replace(int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+  @Override public void replace(
+      int offset, int length, String text, AttributeSet attrs)
+      throws BadLocationException {
     if (length == 0) { //insert
       System.out.println("insert");
       super.replace(offset, length, text, attrs);
@@ -47,6 +49,37 @@ class CustomUndoPlainDocument extends PlainDocument {
 -- メモ: このサンプルでは選択状態を復元していない
 - 下: `DocumentFilter#replace()+UndoableEditListener#undoableEditHappened()`
 -- `DocumentFilter#replace(...)`をオーバーライドし、文字列の置換で発生する削除と追加の`UndoableEdit`を別途用意した`CompoundEdit`にまとめてから`UndoManager#addEdit(...)`で追加
+
+#code{{
+class DocumentFilterUndoManager extends UndoManager {
+  private CompoundEdit compoundEdit;
+  private final transient DocumentFilter undoFilter = new DocumentFilter() {
+    @Override public void replace(
+        DocumentFilter.FilterBypass fb, int offset, int length,
+        String text, AttributeSet attrs) throws BadLocationException {
+      if (length == 0) {
+        fb.insertString(offset, text, attrs);
+      } else {
+        compoundEdit = new CompoundEdit();
+        fb.replace(offset, length, text, attrs);
+        compoundEdit.end();
+        addEdit(compoundEdit);
+        compoundEdit = null;
+      }
+    }
+  };
+  public DocumentFilter getDocumentFilter() {
+    return undoFilter;
+  }
+  @Override public void undoableEditHappened(UndoableEditEvent e) {
+    if (compoundEdit == null) {
+      addEdit(e.getEdit());
+    } else {
+      compoundEdit.addEdit(e.getEdit());
+    }
+  }
+}
+}}
 
 * 参考リンク [#z0683651]
 - [https://community.oracle.com/thread/1509622 Undo two or more actions at once | Oracle Community]

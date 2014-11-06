@@ -19,7 +19,7 @@ com.sun.awt.AWTUtilities.setWindowOpaque(frame, false);
 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 JPanel p = new JPanel();
 p.add(new JButton("JButton"));
-p.setBackground(new Color(.5f,.8f,.5f,.5f));
+p.setBackground(new Color(.5f, .8f, .5f, .5f));
 frame.getContentPane().add(p);
 frame.setSize(320, 240);
 frame.setLocationRelativeTo(null);
@@ -53,10 +53,10 @@ combo.addPopupMenuListener(new PopupMenuListener() {
   @Override public void popupMenuWillBecomeVisible(final PopupMenuEvent e) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
-        JComboBox c = (JComboBox)e.getSource();
+        JComboBox c = (JComboBox) e.getSource();
         Object o = c.getAccessibleContext().getAccessibleChild(0);
-        if(o instanceof JComponent) { //BasicComboPopup
-          ((JComponent)o).repaint();
+        if (o instanceof JComponent) { //BasicComboPopup
+          ((JComponent) o).repaint();
         }
       }
     });

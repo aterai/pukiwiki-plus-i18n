@@ -13,7 +13,7 @@ description: JScrollPaneのJViewport内にあるJTable、JList、JTreeで、そ�
 * サンプルコード [#kcb0b4e6]
 #code(link){{
 model.addRow(new Object[] {date.toString(), model.getRowCount(), false});
-int i = table.convertRowIndexToView(model.getRowCount()-1);
+int i = table.convertRowIndexToView(model.getRowCount() - 1);
 Rectangle r = table.getCellRect(i, 0, true);
 table.scrollRectToVisible(r);
 }}
@@ -28,7 +28,7 @@ table.scrollRectToVisible(r);
 
 #code{{
 Rectangle cellBounds = list.getCellBounds(index, index);
-if(cellBounds != null) {
+if (cellBounds != null) {
   list.scrollRectToVisible(cellBounds);
 }
 }}
@@ -39,12 +39,12 @@ if(cellBounds != null) {
 -- `JTree#scrollPathToVisible(TreePath)`は内部で、`tree.scrollRectToVisible(tree.getPathBounds(path))`を使用
 
 #code{{
-DefaultTreeModel treeModel = (DefaultTreeModel)tree.getModel();
-DefaultMutableTreeNode parent   = (DefaultMutableTreeNode)treeModel.getRoot();
+DefaultTreeModel treeModel = (DefaultTreeModel) tree.getModel();
+DefaultMutableTreeNode parent = (DefaultMutableTreeNode) treeModel.getRoot();
 DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(date);
 treeModel.insertNodeInto(newChild, parent, parent.getChildCount());
 /* //tree.scrollRowToVisible(row) == tree.scrollPathToVisible(tree.getPathForRow(row))
-tree.scrollRowToVisible(tree.getRowCount()-1);
+tree.scrollRowToVisible(tree.getRowCount() - 1);
 /*/
 tree.scrollPathToVisible(new TreePath(newChild.getPath()));
 //*/

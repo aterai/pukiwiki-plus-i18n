@@ -33,7 +33,7 @@ sorter.setTableHeader(table.getTableHeader());
 private static class ComparableComparator implements Comparator {
   @SuppressWarnings("unchecked")
   public int compare(Object o1, Object o2) {
-    return ((Comparable)o1).compareTo(o2);
+    return ((Comparable) o1).compareTo(o2);
   }
 }
 public static final ComparableComparator COMPARABLE_COMAPRATOR
@@ -46,8 +46,8 @@ public static final ComparableComparator LEXICAL_COMPARATOR
   }
 };
 private TableModelListener tableModelListener;
-private Map<Class, Comparator> columnComparators = new HashMap<Class, Comparator>();
-private List<Directive> sortingColumns = new ArrayList<Directive>();
+private Map<Class, Comparator> columnComparators = new HashMap<>();
+private List<Directive> sortingColumns = new ArrayList<>();
 
 protected ComparableComparator getComparator(int column) {
   Class columnType = tableModel.getColumnClass(column);
@@ -118,7 +118,7 @@ public class SorterModelIndex {
     table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
       public void valueChanged(ListSelectionEvent e) {
         int viewIndex = table.getSelectedRow();
-        if (!e.getValueIsAdjusting() && viewIndex>=0) {
+        if (!e.getValueIsAdjusting() && viewIndex >= 0) {
           Object o = model.getValueAt(sorter.modelIndex(viewIndex), 0);
           System.out.println(o);
         }
@@ -153,8 +153,8 @@ public class SorterModelIndex {
 #code{{
 p.add(new JButton(new AbstractAction("test") {
   @Override public void actionPerformed(ActionEvent e) {
-    for (int i=0; i<table.getRowCount(); i++) {
-      for (int j=0; j<table.getColumnCount(); j++) {
+    for (int i = 0; i < table.getRowCount(); i++) {
+      for (int j = 0; j < table.getColumnCount(); j++) {
         //Object o = table.getValueAt(i, table.convertColumnIndexToView(j));
         Object o = table.getValueAt(i, j);
         System.out.print(o+",");
@@ -176,7 +176,7 @@ col.setCellRenderer(new DefaultTableCellRenderer() {
   @Override public Component getTableCellRendererComponent(
       JTable table, Object v, boolean isS, boolean hasF, int row, int col) {
     Component c = super.getTableCellRendererComponent(table, v, isS, hasF, row, col);
-    if(c instanceof JLabel) ((JLabel)c).setText(""+row);
+    if (c instanceof JLabel) ((JLabel) c).setText("" + row);
     return c;
   }
 });

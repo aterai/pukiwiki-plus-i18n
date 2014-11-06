@@ -29,7 +29,7 @@ FocusTraversalPolicy policy = new FocusTraversalPolicy() {
     return order.get(0);
   }
   @Override public Component getLastComponent(Container focusCycleRoot) {
-    return order.get(order.size()-1);
+    return order.get(order.size() - 1);
   }
   @Override public Component getComponentAfter(
       Container focusCycleRoot, Component aComponent) {
@@ -68,12 +68,12 @@ frame.setFocusTraversalPolicy(policy);
 #code{{
 frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
   @Override protected boolean accept(Component c) {
-    if(c instanceof JTextComponent && !((JTextComponent)c).isEditable()) {
+    if (c instanceof JTextComponent && !((JTextComponent) c).isEditable()) {
       return false;
-    }else{
+    } else {
       return super.accept(c);
     }
-    //return (c==textarea)?false:super.accept(c);
+    //return (c == textarea) ? false : super.accept(c);
   }
 });
 }}
