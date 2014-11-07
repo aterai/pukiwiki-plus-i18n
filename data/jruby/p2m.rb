@@ -1,6 +1,7 @@
 # -*- mode: ruby; encoding: utf-8 -*-
 require 'uri'
 require 'date'
+require 'yaml'
 
 module HTMLUtils
   ESC = {
@@ -52,9 +53,12 @@ class PukiWikiParser
     end
   end
   def has_pubdate
+    if @timestamp == '' then
+      puts " xxxxxxxxx\n"
+    end
     @timestamp != ''
   end
-  def to_md(src, page_names, page, base_uri = 'http://terai.xrea.jp/', suffix= '/')
+  def to_md(src, page_names, page, base_uri = 'http://ateraimemo.com/', suffix= '/')
     @page_names = page_names
     @base_uri = base_uri
     @page = page.sub(/\ASwing\/(.+)\.txt$/) { $1 }
@@ -73,6 +77,17 @@ class PukiWikiParser
       frontmatter = $1
       body = $2
 
+#       yaml = YAML.load(frontmatter)
+#       yaml['layout']   = 'post'
+#       yaml['category'] = 'swing'
+#       yaml['folder']   = @page
+#       yaml['comments'] = true
+#       if yaml.key?('noindex') then
+#         return ''
+#       end
+#       @timestamp = yaml['pubdate'].strftime('%Y-%m-%d')
+#       head.push(yaml.to_yaml.rstrip)
+
       head.push("---")
       head.push("layout: post")
       head.push("category: swing")
@@ -85,6 +100,9 @@ class PukiWikiParser
           pubdate = heads.shift
           head.push pubdate
           @timestamp = DateTime.parse(pubdate.sub(/\Apubdate: /, '')).strftime('%Y-%m-%d')
+        when /\Anoindex: /
+          @timestamp = ''
+          return ''
         else
           head.push heads.shift
         end
@@ -423,7 +441,7 @@ def main
       if parser.has_pubdate then
         nname  = [tgtpath, tmp].join('/')
         puts tmp
-        outf   = open(nname, "wb")
+        outf = open(nname, "wb")
         outf.puts(buf)
         outf.close()
       end
