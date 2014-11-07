@@ -23,6 +23,7 @@ description: PukiWiki形式のテキストをMarkdown形式のファイルに変
 # -*- mode: ruby; encoding: utf-8 -*-
 require 'uri'
 require 'date'
+require 'yaml'
 
 module HTMLUtils
   ESC = {
@@ -76,7 +77,7 @@ class PukiWikiParser
   def has_pubdate
     @timestamp != ''
   end
-  def to_md(src, page_names, page, base_uri = 'http://terai.xrea.jp/', suffix= '/')
+  def to_md(src, page_names, page, base_uri = 'http://ateraimemo.com/', suffix= '/')
     @page_names = page_names
     @base_uri = base_uri
     @page = page.sub(/\ASwing\/(.+)\.txt$/) { $1 }
@@ -84,10 +85,6 @@ class PukiWikiParser
     @inline_re = nil
 
     @timestamp = ''
-    @title  = ''
-    @author = ''
-    @tags = ''
-
 
     head = []
     buf = []
@@ -99,11 +96,21 @@ class PukiWikiParser
       frontmatter = $1
       body = $2
 
+#       yaml = YAML.load(frontmatter)
+#       yaml['layout']   = 'post'
+#       yaml['category'] = 'swing'
+#       yaml['folder']   = @page
+#       yaml['comments'] = true
+#       if yaml.key?('noindex') then
+#         return ''
+#       end
+#       @timestamp = yaml['pubdate'].strftime('%Y-%m-%d')
+#       head.push(yaml.to_yaml.rstrip)
+
       head.push("---")
       head.push("layout: post")
       head.push("category: swing")
       head.push("folder: #{@page}")
-
       heads = frontmatter.rstrip.split(/\r?\n/).map {|line| line.chomp }
       while heads.first
         case heads.first
@@ -111,10 +118,9 @@ class PukiWikiParser
           pubdate = heads.shift
           head.push pubdate
           @timestamp = DateTime.parse(pubdate.sub(/\Apubdate: /, '')).strftime('%Y-%m-%d')
-        when /\Aauthor: /
-          line = heads.shift
-          head.push line
-          @author = line.sub(/\Aauthor: /, '')
+        when /\Anoindex: /
+          @timestamp = ''
+          return ''
         else
           head.push heads.shift
         end
@@ -125,17 +131,11 @@ class PukiWikiParser
       body = src
     end
 
-    buf.push ""
-    buf.push "Posted by [#{@author}](http://terai.xrea.jp/#{@author}.html) at "+@timestamp
-    buf.push ""
-
     lines = body.rstrip.split(/\r?\n/).map {|line| line.chomp }
     while lines.first
       case lines.first
       when ''
         buf.push lines.shift
-#       when /\ATITLE:/
-#         @title = lines.shift.sub(/\ATITLE:/, '')
       when /\A----/
         lines.shift
         buf.push '- - - -' #hr
@@ -144,7 +144,8 @@ class PukiWikiParser
       when /\A\#code.*\{\{/
         buf.concat parse_pre2(take_multi_block(lines))
       when /\A\#.+/
-        buf.push parse_block_plugin(lines.shift)
+        bp = parse_block_plugin(lines.shift)
+        buf.push bp unless bp.nil?
       when /\A\s/
         buf.concat parse_pre(take_block(lines, /\A\s/))
       when /\A\/\//
@@ -388,6 +389,8 @@ class PukiWikiParser
       parameter
     when 'new'
       inline.strip
+    when 'user'
+      %Q|*#{parameter}*|
     else
       plugin
     end
@@ -402,20 +405,17 @@ class PukiWikiParser
       args.push $1
       args.push $2 #.slice(",")
     }
-    buf = []
+    #buf = []
     case args.first
     when 'download'
-      buf.push %Q<{% download #{args[1]} %}>
+      %Q<{% download #{args[1]} %}>
     when 'ref'
-      buf.push %Q<![screenshot](#{args[1]})>
-#     when 'tags'
-#       @tags = args[1]
-#     when 'pubdate'
-#       @timestamp = DateTime.parse(args[1]).strftime('%Y-%m-%d')
+      %Q<![screenshot](#{args[1]})>
+    when 'comment'
+      nil
     else
-      buf.push ''
+      ''
     end
-    buf
   end
 
   def a_href(uri, label, cssclass)
@@ -459,7 +459,7 @@ def main
       if parser.has_pubdate then
         nname  = [tgtpath, tmp].join('/')
         puts tmp
-        outf   = open(nname, "wb")
+        outf = open(nname, "wb")
         outf.puts(buf)
         outf.close()
       end
