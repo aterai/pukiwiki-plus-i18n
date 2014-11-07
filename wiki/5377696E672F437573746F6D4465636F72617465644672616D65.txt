@@ -22,32 +22,32 @@ class ResizeWindowListener extends MouseAdapter {
     startSide = frame.getBounds();
   }
   @Override public void mouseDragged(MouseEvent e) {
-    if(startSide==null) return;
+    if (startSide == null) return;
     Component c = e.getComponent();
-    if(c==topleft) {
+    if (c == topleft) {
       startSide.y += e.getY();
       startSide.height -= e.getY();
       startSide.x += e.getX();
       startSide.width -= e.getX();
-    }else if(c==top) {
+    } else if (c == top) {
       startSide.y += e.getY();
       startSide.height -= e.getY();
-    }else if(c==topright) {
+    } else if (c == topright) {
       startSide.y += e.getY();
       startSide.height -= e.getY();
       startSide.width += e.getX();
-    }else if(c==left) {
+    } else if (c == left) {
       startSide.x += e.getX();
       startSide.width -= e.getX();
-    }else if(c==right) {
+    } else if (c == right) {
       startSide.width += e.getX();
-    }else if(c==bottomleft) {
+    } else if (c == bottomleft) {
       startSide.height += e.getY();
       startSide.x += e.getX();
       startSide.width -= e.getX();
-    }else if(c==bottom) {
+    } else if (c == bottom) {
       startSide.height += e.getY();
-    }else if(c==bottomright) {
+    } else if (c == bottomright) {
       startSide.height += e.getY();
       startSide.width += e.getX();
     }

@@ -15,17 +15,17 @@ description: JTableのRowFilterを一旦解除してソートし、再びフィ�
 final RowFilter<TableModel, Integer> filter = new RowFilter<TableModel, Integer>() {
   @Override public boolean include(Entry<? extends TableModel, ? extends Integer> entry) {
     int vidx = table.convertRowIndexToView(entry.getIdentifier());
-    return vidx<USER_SPECIFIED_NUMBER_OF_ROWS;
+    return vidx < USER_SPECIFIED_NUMBER_OF_ROWS;
   }
 };
 final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
   @Override public void toggleSortOrder(int column) {
-    if(check.isSelected()) {
+    if (check.isSelected()) {
       RowFilter<? super TableModel, ? super Integer> f = getRowFilter();
       setRowFilter(null);
       super.toggleSortOrder(column);
       setRowFilter(f);
-    }else{
+    } else {
       super.toggleSortOrder(column);
     }
   }
@@ -51,7 +51,7 @@ sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.DESCENDING))
 final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
   @Override public void toggleSortOrder(int column) {
     super.toggleSortOrder(column);
-    if(check.isSelected()) {
+    if (check.isSelected()) {
       model.fireTableDataChanged();
       //??? allRowsChanged();
       //modelRowCount = getModelWrapper().getRowCount();

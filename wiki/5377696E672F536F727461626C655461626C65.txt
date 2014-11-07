@@ -12,7 +12,7 @@ description: JTableのヘッダカラムをクリックすることで、行表�
 
 * サンプルコード [#y7f29510]
 #code(link){{
-class SortableTableModel extends DefaultTableModel{
+class SortableTableModel extends DefaultTableModel {
   public SortableTableModel(String[] str, int row) {
     super(str, row);
   }
@@ -21,7 +21,7 @@ class SortableTableModel extends DefaultTableModel{
     fireTableDataChanged();
   }
 }
-class ColumnComparator implements Comparator{
+class ColumnComparator implements Comparator {
   final protected int index;
   final protected boolean ascending;
   public ColumnComparator(int index, boolean ascending) {
@@ -29,18 +29,18 @@ class ColumnComparator implements Comparator{
     this.ascending = ascending;
   }
   public int compare(Object one, Object two) {
-    if(one instanceof Vector && two instanceof Vector) {
-      Object oOne = ((Vector)one).elementAt(index);
-      Object oTwo = ((Vector)two).elementAt(index);
-      if(oOne==null && oTwo==null) {
+    if (one instanceof Vector && two instanceof Vector) {
+      Object oOne = ((Vector) one).elementAt(index);
+      Object oTwo = ((Vector) two).elementAt(index);
+      if (oOne == null && oTwo == null) {
         return 0;
-      }else if(oOne==null) {
+      } else if (oOne == null) {
         return ascending ? -1 :  1;
-      }else if(oTwo==null) {
+      } else if (oTwo == null) {
         return ascending ?  1 : -1;
-      }else if(oOne instanceof Comparable && oTwo instanceof Comparable) {
-        Comparable cOne = (Comparable)oOne;
-        Comparable cTwo = (Comparable)oTwo;
+      } else if (oOne instanceof Comparable && oTwo instanceof Comparable) {
+        Comparable cOne = (Comparable) oOne;
+        Comparable cTwo = (Comparable) oTwo;
         return ascending ? cOne.compareTo(cTwo) : cTwo.compareTo(cOne);
       }
     }
@@ -49,11 +49,11 @@ class ColumnComparator implements Comparator{
   public int compare(Number o1, Number o2) {
     double n1 = o1.doubleValue();
     double n2 = o2.doubleValue();
-    if(n1 < n2) {
+    if (n1 < n2) {
       return -1;
-    }else if(n1 > n2) {
+    } else if (n1 > n2) {
       return 1;
-    }else{
+    } else {
       return 0;
     }
   }
@@ -82,8 +82,8 @@ class ColumnComparator implements Comparator{
 
 #code{{
 public void removeRow(int index) {
-  Integer num = (Integer)getValueAt(index, 0);
-  Test test = (Test)list.elementAt(num.intValue()-1);
+  Integer num = (Integer) getValueAt(index, 0);
+  Test test = (Test) list.elementAt(num.intValue() - 1);
   list.removeElement(test);
   super.removeRow(index);
 }
