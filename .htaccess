@@ -80,6 +80,8 @@ RewriteRule .* - [G]
 # RewriteRule ^sitemap\.xml$ index.php?cmd=sitemaps [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !/\.html$
 RewriteRule ^(.+)\.html$ index.php?cmd=read&page=$1 [QSA,PT,L]
 
 <FilesMatch "\.(js|css|xml|gz)$">
