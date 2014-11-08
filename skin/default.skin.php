@@ -41,6 +41,7 @@ pre{background-color:#f0fff8}
 li{line-height:1.8em}
 li ul{margin:0 0 0 1em;padding:0}
 article{margin-bottom:1em}
+.line-pre{font-size:12px}
 .wrap{min-height:100%;height:auto !important;height:100%;margin:0 auto -2.6em}
 .push{height:2.6em}
 .footer{background-color:#fdcd60;height:2.6em}

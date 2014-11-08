@@ -89,7 +89,6 @@ class PukiWikiParser
       head.push("layout: post")
       head.push("category: swing")
       head.push("folder: #{@page}")
-
       heads = frontmatter.rstrip.split(/\r?\n/).map {|line| line.chomp }
       while heads.first
         case heads.first

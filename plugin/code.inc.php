@@ -23,7 +23,7 @@ function plugin_code_convert() {
 
     $buf = '';
     $flag = false;
-    for ($i = 0; $i < $arg_num; $i++) {
+    for ($i = 0; $i < $arg_num; $i++) { // 引数の数分ループ
         $tmp = $args[$i];
         if ($tmp == '') continue;
         if ($tmp == 'link' && $page != '' && $page != $defaultpage && strpos($page, 'Swing') >= 0) {
