@@ -85,11 +85,11 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>
-<jnlp spec="1.0+" codebase="http://terai.xrea.jp/data/jws/" href="example.jnlp">
+<jnlp spec="1.0+" codebase="http://ateraimemo.com/data/jws/" href="example.jnlp">
   <information>
     <title>JWS all-permissions</title>
-    <vendor>Java Swing Tips - at.terai@gmail.com</vendor>
-    <homepage href="http://terai.xrea.jp/JavaWebStart.html" />
+    <vendor>Java Swing Tips - aterai@outlook.com</vendor>
+    <homepage href="http://ateraimemo.com/JavaWebStart.html" />
     <description>Swing Example</description>
     <description kind="short">example</description>
     <offline-allowed />
@@ -109,9 +109,9 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 もし`<security><all-permissions/></security>`要素が無い場合、ローカルリソースにアクセスするようなアプリケーションは起動できません。`jar`などに署名し、`<security>`要素を指定すれば、起動はできるようになりますが、上記サンプルで作成したのが自己証明書なのでセキュリティ警告ダイアログが出ます。
 
 ** サンプルアプリケーション [#w4e496aa]
-- [http://terai.xrea.jp/data/jws/example.jnlp サンプルを Web Start で起動]
--- [http://terai.xrea.jp/data/jws/example.jar example.jar]
--- [http://terai.xrea.jp/data/jws/src.zip src.zip] (キーストア(この例では`myKeyStore`)は含まれていません)
+- [http://ateraimemo.com/data/jws/example.jnlp サンプルを Web Start で起動]
+-- [http://ateraimemo.com/data/jws/example.jar example.jar]
+-- [http://ateraimemo.com/data/jws/src.zip src.zip] (キーストア(この例では`myKeyStore`)は含まれていません)
 
 上記のサンプルを起動すると、以下のようなセキュリティ警告パネルが表示されます。
 
@@ -134,14 +134,14 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 
 `"%JAVA_HOME%\bin\javaws.exe"`を起動し、「編集→設定→セキュリティ→証明書」で、上記の証明書ファイル`example.cer`をインポートします。%%"alias"とパスワードを聞かれるので、これを入力し、最初から実行すれば、セキュリティ警告が以下のように変わっていることが確認できます。%%これで、先のサンプルのような署名をしたアプリケーションが確認なしで実行できるようになります。
 
-%%http:// terai.xrea.jp/data/jws/security2.png%%
+%%http:// ateraimemo.com/data/jws/security2.png%%
 
 * 「JarファイルをPack200で圧縮」「不必要なアップデートのチェックをしない」で起動を速くする [#ze974b4e]
 //- default(JumpToClickedPositionSlider): &jnlp2(Swing/JumpToClickedPositionSlider);
 //-- [[JSliderでクリックした位置にノブをスライド>Swing/JumpToClickedPositionSlider]]のまま
 //- jnlp.packEnabled, jnlp.versionEnabled: &jnlp2(Swing/Pack200);
--- %% http://terai.xrea.jp/swing/pack200/src.zip %%
--- %% http://terai.xrea.jp/swing/pack200/example__V1.0.4.jar.pack.gz %%
+-- %% http://ateraimemo.com/swing/pack200/src.zip %%
+-- %% http://ateraimemo.com/swing/pack200/example__V1.0.4.jar.pack.gz %%
 -- 同じJarファイルをPack200で圧縮して(jnlp.packEnabled)、ダウンロードするファイルのサイズを圧縮
 -- ファイル名にバージョンを付加して(jnlp.versionEnabled)、不必要なアップデートのチェックをしない
 - 参考:
@@ -175,11 +175,11 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>
-<jnlp spec="1.0+" codebase="http://terai.xrea.jp/swing/pack200/" href="example.jnlp">
+<jnlp spec="1.0+" codebase="http://ateraimemo.com/swing/pack200/" href="example.jnlp">
   <information>
     <title>JST Pack200 Test</title>
-    <vendor>Java Swing Tips - at.terai@gmail.com</vendor>
-    <homepage href="http://terai.xrea.jp/JavaWebStart.html" />
+    <vendor>Java Swing Tips - aterai@outlook.com</vendor>
+    <homepage href="http://ateraimemo.com/JavaWebStart.html" />
     <description>Swing Example</description>
     <description kind="short">example</description>
     <offline-allowed />
@@ -198,10 +198,10 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 * Web Start のデバッグ [#m7950a4d]
 -[http://icoloma.blogspot.com/2005/06/how-to-debug-jwsjnlp.html The 90th percentile: How to debug JWS/JNLP]
  set JAVAWS_VM_ARGS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8989,server=y,suspend=n
- javaws http://terai.xrea.jp/swing/zoom/example.jnlp
+ javaws http://ateraimemo.com/swing/zoom/example.jnlp
 -[http://www.smg.co.jp/JavaTroubleshooting/column_003Main.html コラム: Java Web Startのリモートデバッグ - SMG]
 -[http://d.hatena.ne.jp/Kazzz/20080408/p2 Java web startアプリケーションをデバッグする(Java6) - Kazzzの日記]
- "%JAVA_HOME%\bin\java.exe" "-Xbootclasspath/a:%JAVA_HOME%\jre\lib\javaws.jar;%JAVA_HOME%\jre\lib\deploy.jar" -Djnlpx.home="%JAVA_HOME%\jre\bin" -Djnlp.jvm="%JAVA_HOME%\jre\bin\java.exe" -Djava.security.policy="file:%JAVA_HOME%\lib\security\javaws.policy" -DtrustProxy=true -Xverify:remote -Djnlpx.heapsize=NULL,NULL -Djnlpx.vmargs="-classic -Xdebug -Dnoagent -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8918" com.sun.javaws.Main "http://terai.xrea.jp/swing/zoom/example.jnlp"
+ "%JAVA_HOME%\bin\java.exe" "-Xbootclasspath/a:%JAVA_HOME%\jre\lib\javaws.jar;%JAVA_HOME%\jre\lib\deploy.jar" -Djnlpx.home="%JAVA_HOME%\jre\bin" -Djnlp.jvm="%JAVA_HOME%\jre\bin\java.exe" -Djava.security.policy="file:%JAVA_HOME%\lib\security\javaws.policy" -DtrustProxy=true -Xverify:remote -Djnlpx.heapsize=NULL,NULL -Djnlpx.vmargs="-classic -Xdebug -Dnoagent -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8918" com.sun.javaws.Main "http://ateraimemo.com/swing/zoom/example.jnlp"
 -- `"%JAVA_HOME%\bin\javaws" -verbose example.jnlp`と、`verbose`オプションをつけて起動すると、`JAVAWS_VM_ARGS`の設定や、上記の内容などがダイアログ表示される
 - [http://pscode.org/janela/ JaNeLA - The Java Network Launch Anaylzer]
 
@@ -248,7 +248,7 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 - リンク切れを修正。 -- &user(aterai); &new{2010-10-06 (水) 12:54:15};
 - いつもお世話になっております。単体SWINGでは-Djava.net.preferIPv4Stack=trueを付けると、PGMはうまく動きましたが、jnlpにどのように書けばいいかが判らなく、ご教示ください。<resources><property name="java.net.preferIPv4Stack" value="true"/>はだめみたいです。</resources>。いつもご教示、感謝しております。 -- &user(panda); &new{2011-12-05 (月) 16:02:29};
 -- こんばんは。[http://docs.oracle.com/javase/7/docs/technotes/guides/javaws/developersguide/syntax.html#resources The following properties, as well as properties beginning with either "javaws." or "jnlp.", are considered "secure" and will be passed to the VM in this way:]、[http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/syntax.html 次のプロパティーは「安全」とみなされ、この方法で VM に渡されます。] …にある安全とみなされるプロパティに、java.net.preferIPv4Stack はないので、<security><all-permissions/></security>として、セキュリティ証明書でjarに署名する必要があるのかもしれません(試していないのでうまくいくか不明ですが)。   -- &user(aterai); &new{2011-12-05 (月) 17:27:46};
--- あと、jnlpに記述する必要がないなら、コマンドラインから、javaws -verbose -J-Djava.net.preferIPv4Stack=true http://terai.xrea.jp/swing/wipe/example.jnlp などとしてテストしてみるのもいいかもしれません。 -- &user(aterai); &new{2011-12-05 (月) 17:43:01};
+-- あと、jnlpに記述する必要がないなら、コマンドラインから、javaws -verbose -J-Djava.net.preferIPv4Stack=true http://ateraimemo.com/swing/wipe/example.jnlp などとしてテストしてみるのもいいかもしれません。 -- &user(aterai); &new{2011-12-05 (月) 17:43:01};
 - ご教示、感謝します。方法１は実施しましたが、だめでした。方法２について、まだ理解していません。JWSにおいて、jnlpに書かない方法はありますか？また方法3として、JAVA　PGMに直接System.setProperty("java.net.preferIPv4Stack", "true");しましたが、IPv6を取ってきます。方法２について、もう少しご教示ください。 -- &user(panda); &new{2011-12-06 (火) 09:10:19};
 -- 方法１の補足ですが、例えば、C:\Users\%USERNAME%\AppData\LocalLow\Sun\Java\Deployment\deployment.properties ファイルなどに deployment.javaws.secure.properties=java.net.preferIPv4Stack を追加して、<property name="java.net.preferIPv4Stack" value="true"/>を安全であると許可してみるのはどうでしょうか？
 --- [http://docs.oracle.com/javase/jp/6/technotes/guides/deployment/deployment-guide/jcp.html Java コントロールパネル]

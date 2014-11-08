@@ -18,29 +18,23 @@ p1.setOpaque(false);
 JPanel p2 = new JPanel() {
   @Override protected void paintComponent(Graphics g) {
     //super.paintComponent(g);
-    g.setColor(new Color(100,50,50,100));
-    g.fillRect(0,0,getWidth(), getHeight());
+    g.setColor(new Color(100, 50, 50, 100));
+    g.fillRect(0, 0, getWidth(), getHeight());
   }
 };
 
 JPanel p3 = new JPanel() {
   @Override protected void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
-    //g2.setPaint(new Color(100,120,100,100));
+    //g2.setPaint(new Color(100, 120, 100, 100));
     g2.setPaint(texture);
-    g2.fillRect(0,0,getWidth(),getHeight());
-    //int cs = 4;
-    //for(int i=0;i*cs<getWidth();i++) {
-    //  for(int j=0;j*cs<getHeight();j++) {
-    //    if((i+j)%2==0) g2.fillRect(i*cs, j*cs, cs, cs);
-    //  }
-    //}
+    g2.fillRect(0, 0, getWidth(), getHeight());
   }
 };
 
 protected JInternalFrame createFrame(JPanel panel) {
   MyInternalFrame frame = new MyInternalFrame();
-  if(panel!=null) {
+  if (panel != null) {
     frame.setContentPane(panel);
     //JButton button = new JButton("button");
     //button.setOpaque(false);
@@ -50,7 +44,7 @@ protected JInternalFrame createFrame(JPanel panel) {
   desktop.add(frame);
   frame.setOpaque(false);
   frame.setVisible(true);
-  //......
+  //...
 }}
 
 * 解説 [#z8b1a843]

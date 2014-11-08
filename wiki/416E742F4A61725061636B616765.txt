@@ -12,26 +12,26 @@ description: Antを使って、Windows環境などでダブルクリックする
 * サンプルターゲット [#f0c358aa]
 #code{{
 <target name="package" depends="compile">
- <echo message="Creating the jar file ${build.dir}/${name}.jar"/>
- <tstamp>
-  <format property="ts" pattern="yyyyMMdd-HHmmss-z"/>
- </tstamp>
- <jar jarfile="${build.dir}/${name}.jar" basedir="${build.dest}">
-  <manifest>
-   <attribute name="Main-Class" value="${main.class}"/>
-   <attribute name="Class-Path" value="${runtime.classpath}"/>
-   <attribute name="Implementation-Title"   value="${Name}"/>
-   <attribute name="Implementation-Version" value="${version}"/>
-   <attribute name="Implementation-Vendor"  value="${vendor}"/>
-   <attribute name="Build-Id"
-    value="${ts} (${user.name} [${os.name} ${os.version} ${os.arch}])"/>
-  </manifest>
- </jar>
+  <echo message="Creating the jar file ${build.dir}/${name}.jar"/>
+  <tstamp>
+    <format property="ts" pattern="yyyyMMdd-HHmmss-z"/>
+  </tstamp>
+  <jar jarfile="${build.dir}/${name}.jar" basedir="${build.dest}">
+    <manifest>
+      <attribute name="Main-Class" value="${main.class}"/>
+      <attribute name="Class-Path" value="${runtime.classpath}"/>
+      <attribute name="Implementation-Title"   value="${Name}"/>
+      <attribute name="Implementation-Version" value="${version}"/>
+      <attribute name="Implementation-Vendor"  value="${vendor}"/>
+      <attribute name="Build-Id"
+        value="${ts} (${user.name} [${os.name} ${os.version} ${os.arch}])"/>
+    </manifest>
+  </jar>
 </target>
 }}
 
 - [[JToolBarでアイコンボタンを右寄せ>Swing/ToolBarLayout]]
--- http://terai.xrea.jp/swing/toolbarlayout/src.zip
+-- http://ateraimemo.com/swing/toolbarlayout/src.zip
 
 * 解説 [#n5babbd3]
 [[Swing]]以下の`src.zip`などで、サンプルをダウンロードすることができます。

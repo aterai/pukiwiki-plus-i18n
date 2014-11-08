@@ -13,8 +13,9 @@ description: JLayeredPaneに、マウスで移動、リサイズ可能なコン�
 * サンプルコード [#n84bb09d]
 #code(link){{
 @Override public void mouseDragged(MouseEvent e) {
-  if(startPos==null || startingBounds==null) return;
-  Point p = SwingUtilities.convertPoint((Component)e.getSource(), e.getX(), e.getY(), null);
+  if (startPos == null || startingBounds == null) return;
+  Point p = SwingUtilities.convertPoint(
+      (Component) e.getSource(), e.getX(), e.getY(), null);
   int deltaX = startPos.x - p.x;
   int deltaY = startPos.y - p.y;
   int newX = getX();
@@ -24,17 +25,19 @@ description: JLayeredPaneに、マウスで移動、リサイズ可能なコン�
 
   JComponent parent = (JComponent)getParent();
   Rectangle parentBounds = parent.getBounds();
-  Dimension min = new Dimension(50,50);
-  Dimension max = new Dimension(500,500);
+  Dimension min = new Dimension(50, 50);
+  Dimension max = new Dimension(500, 500);
 
-  switch(cursor) {
+  switch (cursor) {
     case Cursor.N_RESIZE_CURSOR: {
-      if(startingBounds.height + deltaY < min.height) {
+      if (startingBounds.height + deltaY < min.height) {
         deltaY = -(startingBounds.height - min.height);
-      }else if(startingBounds.height + deltaY > max.height) {
+      } else if (startingBounds.height + deltaY > max.height) {
         deltaY = max.height - startingBounds.height;
       }
-      if(startingBounds.y - deltaY < 0) { deltaY = startingBounds.y; }
+      if (startingBounds.y - deltaY < 0) {
+        deltaY = startingBounds.y;
+      }
       newX = startingBounds.x;
       newY = startingBounds.y - deltaY;
       newW = startingBounds.width;
@@ -42,9 +45,9 @@ description: JLayeredPaneに、マウスで移動、リサイズ可能なコン�
       break;
     }
     case Cursor.NE_RESIZE_CURSOR: {
-      if(startingBounds.height + deltaY < min.height) {
+      if (startingBounds.height + deltaY < min.height) {
         deltaY = -(startingBounds.height - min.height);
-//......
+//...
 }}
 
 * 解説 [#sc16de97]
