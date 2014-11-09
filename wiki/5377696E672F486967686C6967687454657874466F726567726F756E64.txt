@@ -1,0 +1,46 @@
+---
+title: JTextPaneで検索結果のハイライト表示と文字色変更を同時に行う
+tags: [JTextPane, StyledDocument, Style, Highlighter, Matcher, Pattern]
+author: aterai
+pubdate: 2014-11-10T00:02:14+09:00
+description: Highlighter.HighlightPainterを使用したハイライト表示では文字色を変更することが出来ないので、JTextPaneにStyleを適用してこれを同時に行います。
+---
+* 概要 [#rced477f]
+`Highlighter.HighlightPainter`を使用したハイライト表示では文字色を変更することが出来ないので、`JTextPane`に`Style`を適用してこれを同時に行います。
+
+#download(https://lh6.googleusercontent.com/-fNEZKm4idgc/VF96YuCU_UI/AAAAAAAANpM/7YVQ1GL5sjw/s800/HighlightTextForeground.png)
+
+* サンプルコード [#x94ec9b3]
+#code(link){{
+StyledDocument doc = textPane.getStyledDocument();
+Style def = StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE);
+Style regular = doc.addStyle("regular", def);
+Style htf = doc.addStyle("highlight-text-foreground", regular);
+StyleConstants.setForeground(htf, new Color(0xFFDDFF));
+//...
+Highlighter.Highlight hh = highlighter.getHighlights()[current];
+highlighter.removeHighlight(hh);
+highlighter.addHighlight(
+    hh.getStartOffset(), hh.getEndOffset(), currentPainter);
+doc.setCharacterAttributes(
+    hh.getStartOffset(), hh.getEndOffset() - hh.getStartOffset(), s, true);
+scrollToCenter(textPane, hh.getStartOffset());
+}}
+
+* 解説 [#wee724cf]
+上記のサンプルでは、[[JTextAreaでハイライト付き検索を行う>Swing/HighlightSearch]]に、以下のような変更を追加することで、検索結果のハイライト表示と文字色変更を同時に行っています。
+
+- `StyledDocument`に名称`"regular"`で`Style`を追加
+- `StyledDocument`に親`Style`が`"regular"`で、名称`"highlight-text-foreground"`、文字色のみ変更した`Style`を追加
+- 検索結果のハイライト(背景)と同時に、`StyledDocument#getStyle("highlight-text-foreground")`で取得した`Style`を`StyledDocument#setCharacterAttributes(...)`で、上書き追加
+-- 現在の対象になっている検索結果以外は、`StyledDocument#getStyle("highlight-text-foreground")`の`Style`で文字色を元に元に戻す
+
+* 参考リンク [#u9fdb04f]
+- [[JTextAreaでハイライト付き検索を行う>Swing/HighlightSearch]]
+- [[JTextPaneでキーワードのSyntaxHighlight>Swing/SimpleSyntaxHighlight]]
+- [[Highlighterで文字列をハイライト>Swing/Highlighter]]
+-- こちらのコメントからソースコードを移動。
+
+* コメント [#uc599023]
+#comment
+#comment
