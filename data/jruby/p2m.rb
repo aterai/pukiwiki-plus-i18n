@@ -53,9 +53,6 @@ class PukiWikiParser
     end
   end
   def has_pubdate
-    if @timestamp == '' then
-      puts " xxxxxxxxx\n"
-    end
     @timestamp != ''
   end
   def to_md(src, page_names, page, base_uri = 'http://ateraimemo.com/', suffix= '/')
