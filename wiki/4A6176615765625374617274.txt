@@ -140,20 +140,22 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 //- default(JumpToClickedPositionSlider): &jnlp2(Swing/JumpToClickedPositionSlider);
 //-- [[JSliderでクリックした位置にノブをスライド>Swing/JumpToClickedPositionSlider]]のまま
 //- jnlp.packEnabled, jnlp.versionEnabled: &jnlp2(Swing/Pack200);
--- %% http://ateraimemo.com/swing/pack200/src.zip %%
--- %% http://ateraimemo.com/swing/pack200/example__V1.0.4.jar.pack.gz %%
--- 同じJarファイルをPack200で圧縮して(jnlp.packEnabled)、ダウンロードするファイルのサイズを圧縮
--- ファイル名にバージョンを付加して(jnlp.versionEnabled)、不必要なアップデートのチェックをしない
+-- http://ateraimemo.com/swing/pack200/src.zip
+-- http://ateraimemo.com/swing/pack200/example__V1.0.10.jar.pack.gz
+-- 同じJarファイルを`Pack200`で圧縮して(`jnlp.packEnabled`)、ダウンロードするファイルのサイズを圧縮
+-- ファイル名にバージョンを付加して(`jnlp.versionEnabled`)、不必要なアップデートのチェックをしない
 - 参考:
 -- [http://docs.oracle.com/javase/tutorial/deployment/deploymentInDepth/avoidingUnnecessaryUpdateChecks.html Avoiding Unnecessary Update Checks (The Java™ Tutorials > Deployment > Deployment In-Depth)]
 -- [http://docs.oracle.com/javase/jp/6/technotes/tools/share/pack200.html pack200 - JAR パックツール]
 
 ----
-以下、antでPack200Taskを使用する場合のメモ
+以下、[[Ant]]で`Pack200Task`を使用する場合のメモ
 
 - [http://java.net/projects/deployment Deployment — Java.net]
 -- via: [http://stackoverflow.com/questions/3312401/how-to-make-an-ant-task-to-sign-and-pack200-all-my-jar-files java - How to make an Ant task to sign and pack200 all my JAR files? - Stack Overflow]
--- https://java-pack200-ant-task.dev.java.net/ が無くなってしまったので、[http://java.net/projects/deployment Deployment — Java.net]のSubversionからソースコードを取得してPack200Task.jarを作成し、パスを通す(%ANT_HOME%\lib以下にコピーするなど)必要がある
+-- https://java-pack200-ant-task.dev.java.net/ が無くなってしまったので、[http://java.net/projects/deployment Deployment — Java.net]の[[Subversion]]リポジトリからソースコードを取得して`deployment-ant-pack200-1.0.jar`を作成し、パスを通す(`%ANT_HOME%\lib`以下にコピーするなど)必要がある
+
+ mvn package -Dmaven.test.skip=true
 
 #code{{
 <target name="dist" depends="package, dist-libcopy, prepare-web">
@@ -171,7 +173,7 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 }}
 
 - 上記のサンプルだとファイルサイズは、三分の一程度に圧縮される
-- ファイル名にバージョンを追加し、jnlp.versionEnabled として、バージョンが上がった場合のみダウンロードするようにしても、ファイルサイズが元々小さいせいかあまり差が感じられない
+- ファイル名にバージョンを追加し、`jnlp.versionEnabled`として、バージョンが上がった場合のみダウンロードするようにしても、ファイルサイズが元々小さいせいかあまり差が感じられない
 
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>

@@ -18,6 +18,17 @@ Style regular = doc.addStyle("regular", def);
 Style htf = doc.addStyle("highlight-text-foreground", regular);
 StyleConstants.setForeground(htf, new Color(0xFFDDFF));
 //...
+
+//clear the previous highlight:
+Highlighter highlighter = textPane.getHighlighter();
+for (Highlighter.Highlight h: highlighter.getHighlights()) {
+  doc.setCharacterAttributes(
+      h.getStartOffset(), h.getEndOffset() - h.getStartOffset(), def, true);
+}
+highlighter.removeAllHighlights();
+//...
+
+//match highlighting:
 Highlighter.Highlight hh = highlighter.getHighlights()[current];
 highlighter.removeHighlight(hh);
 highlighter.addHighlight(

@@ -3,24 +3,29 @@ title: BasicStrokeで点線を作成
 tags: [BasicStroke, Graphics2D]
 author: aterai
 pubdate: 2004-10-04T03:54:35+09:00
-description: 点線・破線を描画します。
+description: 破線パターンの配列からBasicStrokeを作成し、これを描画します。
 ---
 * 概要 [#w2f78e6a]
-点線・破線を描画します。
+破線パターンの配列から`BasicStroke`を作成し、これを描画します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKaxPM12I/AAAAAAAAAV8/ZQON-woHuIg/s800/DashedLine.png)
 
 * サンプルコード [#r8083614]
 #code(link){{
 JLabel label = new JLabel() {
-  BasicStroke dashed2;
+  BasicStroke dashedStroke;
   @Override protected void paintComponent(Graphics g) {
-    Graphics2D g2 = (Graphics2D)g;
+    Graphics2D g2 = (Graphics2D) g.create();
     super.paintComponent(g2);
-    if(dashed2==null) dashed2 = new BasicStroke(5.0f, BasicStroke.CAP_BUTT,
-                  BasicStroke.JOIN_MITER, 10.0f, getDashArray(), 0.0f);
-    g2.setStroke(dashed2);
-    g2.drawLine(5, getHeight()/2, getWidth()-10, getHeight()/2);
+    if (dashedStroke == null) {
+      dashedStroke = new BasicStroke(
+          5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f,
+          getDashArray(), 0f);
+    }
+    g2.setStroke(dashedStroke);
+    g2.drawLine(5, label.getHeight() / 2,
+                label.getWidth() - 10, label.getHeight() / 2);
+    g2.dispose();
   }
 };
 }}
