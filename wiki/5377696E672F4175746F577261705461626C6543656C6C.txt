@@ -12,31 +12,30 @@ description: JTableのセルの高さを、文字列の折り返しに応じて�
 
 * サンプルコード [#f1f7d94f]
 #code(link){{
-private List<List<Integer>> rowColHeight = new ArrayList<>();
+private List<List<Integer>> rowAndCellHeightList= new ArrayList<>();
 private void adjustRowHeight(JTable table, int row, int column) {
   //int cWidth = table.getTableHeader().getColumnModel().getColumn(column).getWidth();
-  int cWidth = table.getCellRect(row, column, false).width; //セルの内余白は含めない
+  //int cWidth = table.getCellRect(row, column, false).width; //セルの内余白は含めない
   //setSize(new Dimension(cWidth, 1000)); //注目
-  setBounds(table.getCellRect(row, column, false)); //もしくは？
-  //doLayout();
+  setBounds(table.getCellRect(row, column, false)); //もしくはsetBoundsを使用する
+  //doLayout(); //必要なさそう
 
-  int prefH = getPreferredSize().height;
-  while (rowColHeight.size() <= row) {
-    rowColHeight.add(new ArrayList<Integer>(column));
+  int preferredHeight = getPreferredSize().height;
+  while (rowAndCellHeightList.size() <= row) {
+    rowAndCellHeightList.add(new ArrayList<Integer>(column));
   }
-  List<Integer> colHeights = rowColHeight.get(row);
-  while (colHeights.size() <= column) {
-    colHeights.add(0);
+  List<Integer> cellHeightList = rowAndCellHeightList.get(row);
+  while (cellHeightList.size() <= column) {
+    cellHeightList.add(0);
   }
-  colHeights.set(column, prefH);
-  int maxH = prefH;
-  for (Integer colHeight : colHeights) {
-    if (colHeight > maxH) {
-      maxH = colHeight;
-    }
+  cellHeightList.set(column, preferredHeight);
+  //JDK 1.8.0: int max = cellHeightList.stream().max(Integer::compare).get();
+  int max = preferredHeight;
+  for (int h: cellHeightList) {
+    max = Math.max(h, max);
   }
-  if (table.getRowHeight(row) != maxH) {
-    table.setRowHeight(row, maxH);
+  if (table.getRowHeight(row) != max) {
+    table.setRowHeight(row, max);
   }
 }
 }}
