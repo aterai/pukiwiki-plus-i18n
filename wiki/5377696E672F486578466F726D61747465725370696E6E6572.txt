@@ -12,24 +12,19 @@ description: JSpinnerの表記を16進数にして、そのUnicodeコードポ�
 
 * サンプルコード [#t5f5a11f]
 #code(link){{
-DefaultFormatter hexformatter = new DefaultFormatter() {
-  @Override public Object stringToValue(String text) throws ParseException {
-    try{
+private static DefaultFormatterFactory makeFFactory() {
+  DefaultFormatter formatter = new DefaultFormatter() {
+    @Override public Object stringToValue(String text) throws ParseException {
       return Integer.valueOf(text, 16);
-    }catch(NumberFormatException nfe) {
-      throw new ParseException(text, 0);
     }
-  }
-  private final String MASK = "000000";
-  @Override public String valueToString(Object value) throws ParseException {
-    String str = MASK + Integer.toHexString((Integer)value).toUpperCase();
-    int i = str.length() - MASK.length();
-    return str.substring(i);
-  }
-};
-hexformatter.setValueClass(Integer.class);
-hexformatter.setOverwriteMode(true);
-
+    @Override public String valueToString(Object value) throws ParseException {
+      return String.format("%06X", (Integer) value);
+    }
+  };
+  formatter.setValueClass(Integer.class);
+  formatter.setOverwriteMode(true);
+  return new DefaultFormatterFactory(formatter);
+}
 }}
 
 * 解説 [#vce45de0]
@@ -40,7 +35,7 @@ hexformatter.setOverwriteMode(true);
 -- 参考: [http://docs.oracle.com/javase/tutorial/i18n/text/usage.html Sample Usage (The Java™ Tutorials > Internationalization > Working with Text)]
 
 #code{{
-int code = ((Integer)spinner.getValue()).intValue();
+int code = ((Integer) spinner.getValue()).intValue();
 //char[] ca = Character.toChars(code);
 String str = new String(Character.toChars(code));
 }}
