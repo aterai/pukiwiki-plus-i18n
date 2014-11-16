@@ -16,9 +16,9 @@ JTable table = new JTable(model) {
   @Override public Component prepareEditor(
         TableCellEditor editor, int row, int column) {
     Component cmp = super.prepareEditor(editor, row, column);
-    if(convertColumnIndexToModel(column) == BOOLEAN_COLUMN) {
-      JCheckBox c = (JCheckBox)cmp;
-      c.setBackground(c.isSelected()? Color.ORANGE:getBackground());
+    if (convertColumnIndexToModel(column) == BOOLEAN_COLUMN) {
+      JCheckBox c = (JCheckBox) cmp;
+      c.setBackground(c.isSelected() ? Color.ORANGE : getBackground());
     }
     return cmp;
   }
@@ -28,7 +28,7 @@ JTable table = new JTable(model) {
     Boolean isChecked = (Boolean) model.getValueAt(
       convertRowIndexToModel(row), BOOLEAN_COLUMN);
     c.setForeground(getForeground());
-    c.setBackground(isChecked? Color.ORANGE:getBackground());
+    c.setBackground(isChecked ? Color.ORANGE : getBackground());
     return c;
   }
 };
@@ -43,7 +43,7 @@ JTable table = new JTable(model) {
 #code{{
 model.addTableModelListener(new TableModelListener() {
   @Override public void tableChanged(TableModelEvent e) {
-    if(e.getType()==TableModelEvent.UPDATE) {
+    if (e.getType() == TableModelEvent.UPDATE) {
       //rowRepaint(table, table.convertRowIndexToView(e.getFirstRow()));
       Rectangle r = table.getCellRect(table.convertRowIndexToView(e.getFirstRow()), 0, true);
       r.width  = table.getWidth();

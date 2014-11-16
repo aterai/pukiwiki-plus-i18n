@@ -12,34 +12,34 @@ description: FileSystemViewを使ってディレクトリ構造をJTree上に表
 
 * サンプルコード [#kd226fda]
 #code(link){{
-class FolderSelectionListener implements TreeSelectionListener{
+class FolderSelectionListener implements TreeSelectionListener {
   private final FileSystemView fileSystemView;
   public FolderSelectionListener(FileSystemView fileSystemView) {
     this.fileSystemView = fileSystemView;
   }
   @Override public void valueChanged(TreeSelectionEvent e) {
-    final JTree tree = (JTree)e.getSource();
+    final JTree tree = (JTree) e.getSource();
     final DefaultMutableTreeNode node =
-      (DefaultMutableTreeNode)e.getPath().getLastPathComponent();
-    final DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+      (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
+    final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
     //final TreePath path = e.getPath();
 
-    if(!node.isLeaf()) return;
-    final File parent = (File)node.getUserObject();
-    if(!parent.isDirectory()) return;
+    if (!node.isLeaf()) return;
+    final File parent = (File) node.getUserObject();
+    if (!parent.isDirectory()) return;
 
     SwingWorker<String, File> worker = new SwingWorker<String, File>() {
       @Override public String doInBackground() {
         File[] children = fileSystemView.getFiles(parent, true);
-        for(File child: children) {
-          if(child.isDirectory()) {
+        for (File child: children) {
+          if (child.isDirectory()) {
             publish(child);
           }
         }
         return "done";
       }
-      @Override protected void process(java.util.List<File> chunks) {
-        for(File file: chunks) {
+      @Override protected void process(List<File> chunks) {
+        for (File file: chunks) {
           node.add(new DefaultMutableTreeNode(file));
         }
         model.nodeStructureChanged(node);
