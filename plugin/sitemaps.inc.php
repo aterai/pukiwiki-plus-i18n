@@ -23,10 +23,12 @@ function plugin_sitemaps_action() {
     $array[] = '.*ChangeLog.*';
     $array[] = '.*Questionnaire.*';
     $array[] = '.*Comments.*';
+    $array[] = '.*RecentChanges.*';
 
     $array[] = '^ST.*';
     $array[] = '^JavaFX.*';
     $array[] = '^PukiWiki.*';
+    $array[] = '^Relaxer.*';
 
     $array[] = '^SwingTips$';
     $array[] = '^terai$';
