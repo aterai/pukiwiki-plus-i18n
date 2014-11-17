@@ -3,10 +3,10 @@ title: JFrameを常に前面に表示する
 tags: [JFrame, Window, Toolkit]
 author: aterai
 pubdate: 2007-12-17T14:31:41+09:00
-description: JFrameなどを常に前面に表示します。
+description: JFrameが常に他のウィンドウよりも前面に表示されるように設定します。
 ---
 * 概要 [#g058b4ba]
-`JFrame`などを常に前面に表示します。
+`JFrame`が常に他のウィンドウよりも前面に表示されるように設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTHh-ILwOI/AAAAAAAAARU/SYnOw7As81Y/s800/AlwaysOnTop.png)
 
@@ -21,7 +21,7 @@ frame.setAlwaysOnTop(true);
 プラットフォームで、最前面がサポートされていない場合は、何も起こらないようです。サポートされているかどうかは、`JDK 1.6.0`で導入された、`Window#isAlwaysOnTopSupported()`か、`Toolkit.isAlwaysOnTopSupported()`で調べることができます。
 
 * 参考リンク [#ydeb541a]
-- [http://docs.oracle.com/javase/jp/6/api/java/awt/Window.html#setAlwaysOnTop(boolean) Window.html#setAlwaysOnTop(boolean)]
+- [https://docs.oracle.com/javase/jp/8/api/java/awt/Window.html#setAlwaysOnTop-boolean- Window.html#setAlwaysOnTop(boolean)]
 
 * コメント [#i5ea5fc6]
 #comment
