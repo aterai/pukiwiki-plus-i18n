@@ -29,6 +29,7 @@ function plugin_sitemaps_action() {
     $array[] = '^JavaFX.*';
     $array[] = '^PukiWiki.*';
     $array[] = '^Relaxer.*';
+    $array[] = '^English.*';
 
     $array[] = '^SwingTips$';
     $array[] = '^terai$';
@@ -36,6 +37,7 @@ function plugin_sitemaps_action() {
     $array[] = '^RSS$';
     $array[] = '^Nitpick$';
     $array[] = '^Popular$';
+    $array[] = '^Earphones$';
 
     $array[] = '^Swing%2FAnchorSelection$';
     $array[] = '^Swing%2FCellAtPoint$';
