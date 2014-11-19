@@ -2,7 +2,7 @@
 title: AntでFindBugsを実行する
 author: aterai
 pubdate: 2012-01-19T18:51:01+09:00
-description: AntからFindBugsを実行します。
+description: 静的解析で潜在的なエラーを検査するFindBugsを`Ant`から実行するためのサンプルターゲットなど。
 ---
 #contents
 
@@ -45,6 +45,25 @@ description: AntからFindBugsを実行します。
  sudo ln -f -s /usr/share/findbugs-2.0.2/lib/findbugs-ant.jar /usr/share/ant/lib/
 + `.bashrc`などに、環境変数`FINDBUGS_HOME`を記述
  export FINDBUGS_HOME=/usr/share/findbugs-2.0.2
+
+** 除外フィルタ [#i04274cf]
+検査したくないエラーパターンを作成して、`excludeFilter`で指定することもできます。
+
+- `excludefilter.xml`
+#code{{
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <Match>
+    <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+  </Match>
+</FindBugsFilter>
+}}
+
+#code{{
+<findbugs home="${env.FINDBUGS_HOME}" effort="max" reportLevel="low"
+        excludeFilter="${user.dir}/excludefilter.xml"
+        output="xml:withMessages" outputFile="${build.reports}/findbugs.xml" >
+}}
 
 ** FindBugs2.0でParseException: Unparseable date [#tf82fa0e]
 - `FindBugs2.0`で、以下のような`java.text.ParseException: Unparseable date: "12/20/2011 09:17 PM EST"`が発生する場合

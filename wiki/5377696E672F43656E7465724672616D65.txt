@@ -3,10 +3,10 @@ title: JFrameをスクリーン中央に表示
 tags: [JFrame]
 author: aterai
 pubdate: 2003-12-29
-description: フレームやダイアログなどをスクリーンの中央に表示します。
+description: JFrameやJDialogなどのWindowがスクリーンの中央に配置されるように設定します。
 ---
 * 概要 [#b05e1eeb]
-フレームやダイアログなどをスクリーンの中央に表示します。
+`JFrame`や`JDialog`などの`Window`がスクリーンの中央に配置されるように設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIvEn-69I/AAAAAAAAATQ/Fw4dLY4C0EE/s800/CenterFrame.png)
 
@@ -19,17 +19,17 @@ frame.pack();
 frame.setLocationRelativeTo(null);
 //以下は自前で位置を計算する場合
 //Rectangle screen = frame.getGraphicsConfiguration().getBounds();
-//frame.setLocation(screen.x + screen.width/2  - frame.getSize().width/2,
-//                  screen.y + screen.height/2 - frame.getSize().height/2);
+//frame.setLocation(screen.x + screen.width  / 2 - frame.getSize().width  / 2,
+//                  screen.y + screen.height / 2 - frame.getSize().height / 2);
 frame.setVisible(true);
 }}
 
 * 解説 [#v308e626]
-`JFrame#setLocationRelativeTo`メソッドで、基準となる親ウィンドウを`null`にすると、そのフレームは画面中央に表示されます。
+`Window#setLocationRelativeTo(Component)`メソッドで、引数で指定した基準となるコンポーネントが`null`の場合、フレームは画面中央に表示されます。
 
-`JFrame#setLocation`メソッドで任意の位置を指定する場合は、フレームの左上隅座標を計算します。
+`JFrame#setLocation`メソッドなどで任意の位置を指定する場合は、フレームの左上隅座標を計算します。
 
-どちらも、フレームを`pack()`、もしくは`setSize(int,int)`した後で実行するようにしてください。
+どちらも、フレームを`pack()`、もしくは`setSize(int, int)`した後で実行するようにしてください。
 
 * コメント [#b68bf302]
 #comment

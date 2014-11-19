@@ -3,31 +3,33 @@ title: JPanelの展開と折り畳み
 tags: [JPanel, BorderLayout]
 author: aterai
 pubdate: 2004-11-01T01:05:24+09:00
-description: JPanelの展開と折り畳みを行います。
+description: JPanelにBorderLayoutを設定し、JButtonのクリックで子コンポーネントの配置を入れ替えることで、それらの展開と折り畳みを行います。
 ---
 * 概要 [#f49f27f2]
-`JPanel`の展開と折り畳みを行います。
+`JPanel`に`BorderLayout`を設定し、`JButton`のクリックで子コンポーネントの配置を入れ替えることで、それらの展開と折り畳みを行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMQbS7ipI/AAAAAAAAAY4/xXDc9VVk87A/s800/ExpandablePanel.png)
 
 * サンプルコード [#l8c5ce79]
 #code(link){{
-public void initComps(java.util.List<ExpansionPanel> list, ExpansionEvent e) {
+private void initComps(
+    List<? extends AbstractExpansionPanel> list,
+    JComponent source) {
   setVisible(false);
   centerBox.removeAll();
   northBox.removeAll();
   southBox.removeAll();
-  ExpansionPanel es = (ExpansionPanel) e.getSource();
-  boolean flag = false;
-  for(ExpansionPanel exp: list) {
-    if(exp==es && exp.isSelected()) {
+  boolean insertSouth = false;
+  for (AbstractExpansionPanel exp : list) {
+    if (source.equals(exp) && exp.isSelected()) {
       centerBox.add(exp);
-      flag = true;
-    }else if(flag) {
-      exp.setSelected(false);
+      insertSouth = true;
+      continue;
+    }
+    exp.setSelected(false);
+    if (insertSouth) {
       southBox.add(exp);
-    }else{
-      exp.setSelected(false);
+    } else {
       northBox.add(exp);
     }
   }

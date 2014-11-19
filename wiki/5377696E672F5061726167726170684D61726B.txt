@@ -3,10 +3,10 @@ title: JEditorPaneで改行を表示
 tags: [JEditorPane, StyledEditorKit]
 author: aterai
 pubdate: 2007-06-11
-description: JEditorPaneで改行記号を表示します。
+description: JEditorPaneのパラグラフ終了位置に改行を意味する図形を追加表示します。
 ---
 * 概要 [#l76cb974]
-`JEditorPane`で改行記号を表示します。[https://forums.oracle.com/thread/1374478 Swing - JTextPane View Problem]から、ソースコードの大部分を引用しています。
+`JEditorPane`のパラグラフ終了位置に改行を意味する図形を追加表示します。[https://forums.oracle.com/thread/1374478 Swing - JTextPane View Problem]から、ソースコードの大部分を引用しています。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTQ3cf9HLI/AAAAAAAAAgQ/gIbt2d-Hz7k/s800/ParagraphMark.png)
 
@@ -54,13 +54,13 @@ class MyParagraphView extends ParagraphView {
       int x = r.x;
       int y = r.y;
       int h = r.height;
-      Color old = g.getColor();
-      g.setColor(pc);
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setColor(MARK_COLOR);
       //paragraph mark
-      g.drawLine(x + 1, y + h / 2, x + 1, y + h - 4);
-      g.drawLine(x + 2, y + h / 2, x + 2, y + h - 5);
-      g.drawLine(x + 3, y + h - 6, x + 3, y + h - 6);
-      g.setColor(old);
+      g2.drawLine(x + 1, y + h / 2, x + 1, y + h - 4);
+      g2.drawLine(x + 2, y + h / 2, x + 2, y + h - 5);
+      g2.drawLine(x + 3, y + h - 6, x + 3, y + h - 6);
+      g2.dispose();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -71,7 +71,7 @@ class MyParagraphView extends ParagraphView {
 * 解説 [#y0783bd1]
 `StyledEditorKit`を継承する`EditorKit`を作成し、これを`JEditorPane#setEditorKit`メソッドで、`JEditorPane`に設定しています。
 
-この`EditorKit`は、`Element`が段落(`AbstractDocument.ParagraphElementName`)の場合、独自の改行記号を追加で描画する`View`を返す`ViewFactory`を生成しています。
+この`EditorKit`は、`Element`がパラグラフ(`AbstractDocument.ParagraphElementName`)の場合、独自の改行記号を追加で描画する`View`を返す`ViewFactory`を生成しています。
 
 * 参考リンク [#vccc314a]
 - [https://forums.oracle.com/thread/1374478 Swing - JTextPane View Problem]

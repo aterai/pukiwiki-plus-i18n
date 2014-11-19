@@ -3,10 +3,10 @@ title: Cursorを砂時計に変更
 tags: [Cursor, GlassPane, FocusTraversalPolicy, SwingWorker]
 author: aterai
 pubdate: 2004-06-07
-description: 処理中、マウスカーソルを砂時計に変更します。
+description: バックグラウンドで処理が実行されている間は、Cursorに砂時計が設定されたGlassPaneを有効にします。
 ---
 * 概要 [#w760af9f]
-処理中、マウスカーソルを砂時計に変更します。
+バックグラウンドで処理が実行されている間は、`Cursor`に砂時計が設定された`GlassPane`を有効にします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTWfYWDbsI/AAAAAAAAApU/rldJwQuVm-8/s800/WaitCursor.png)
 
@@ -61,7 +61,9 @@ class LockingGlassPane extends JComponent {
   public LockingGlassPane() {
     setOpaque(false);
     setFocusTraversalPolicy(new DefaultFocusTraversalPolicy() {
-      @Override public boolean accept(Component c) {return false;}
+      @Override public boolean accept(Component c) {
+        return false;
+      }
     });
     addKeyListener(new KeyAdapter() {});
     addMouseListener(new MouseAdapter() {});
@@ -89,7 +91,9 @@ KBD{Tab}キーなどによるフォーカス移動を禁止する場合は、`Gl
 
 #code{{
 setFocusTraversalPolicy(new DefaultFocusTraversalPolicy() {
-  @Override public boolean accept(Component c) {return false;}
+  @Override public boolean accept(Component c) {
+    return false;
+  }
 });
 }}
 

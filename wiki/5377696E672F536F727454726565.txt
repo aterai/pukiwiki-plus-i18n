@@ -18,7 +18,8 @@ public static void sortTree(DefaultMutableTreeNode root) {
     DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.nextElement();
     if (!node.isLeaf()) {
       sort2(node);   //selection sort
-      //sort3(node); //iterative merge sort
+      //sort3(node); //JDK 1.6.0: iterative merge sort
+      //sort3(node); //JDK 1.7.0: TimSort
     }
   }
 }
@@ -61,7 +62,7 @@ public static void sort3(DefaultMutableTreeNode parent) {
   for (int i = 0; i < n; i++) {
     children.add((DefaultMutableTreeNode)parent.getChildAt(i));
   }
-  Collections.sort(children, tnc); //iterative merge sort
+  Collections.sort(children, tnc); //using Arrays.sort(...)
   parent.removeAllChildren();
   for (MutableTreeNode node: children) {
     parent.add(node);
@@ -103,6 +104,38 @@ Comparator<String> sci = Comparator.comparingInt(String::length)
 Comparator<DefaultMutableTreeNode> tnc = Comparator.comparing(DefaultMutableTreeNode::isLeaf)
                                    .thenComparing(n -> n.getUserObject().toString(), sci);
 //                                   .thenComparing(n -> n.getUserObject().toString().toLowerCase());
+}}
+
+----
+`sort3`で使用している`Collections.sort(...)`は、内部で`Arrays.sort(T[], Comparator<? super T>)`を使用しているので、`JDK 1.6.0`と、`JDK 1.7.0`以降でソートアルゴリズムが異なるようです(参考: [http://stackoverflow.com/questions/4018332/is-java-7-using-tim-sort-for-the-method-arrays-sort Is Java 7 using Tim Sort for the Method Arrays.Sort? - Stack Overflow])。
+
+- `JDK 1.6.0`
+#code{{
+//Arrays.sort(T[] a, Comparator<? super T> c)
+public static <T> void sort(T[] a, Comparator<? super T> c) {
+  T[] aux = (T[])a.clone();
+  if (c==null) {
+    mergeSort(aux, a, 0, a.length, 0);
+  } else {
+    mergeSort(aux, a, 0, a.length, 0, c);
+  }
+}
+}}
+
+- `JDK 1.7.0`
+#code{{
+//Arrays.sort(T[] a, Comparator<? super T> c)
+public static <T> void sort(T[] a, Comparator<? super T> c) {
+  if (c == null) {
+    sort(a);
+  } else {
+    if (LegacyMergeSort.userRequested) {
+      legacyMergeSort(a, c);
+    } else {
+      TimSort.sort(a, 0, a.length, c, null, 0, 0);
+    }
+  }
+}
 }}
 
 * 参考リンク [#g127d784]
