@@ -3,32 +3,32 @@ title: JTextFieldのMarginを設定する
 tags: [JTextField, UIManager, Border]
 author: aterai
 pubdate: 2005-06-06T00:34:45+09:00
-description: JTextField内部の余白を設定します。
+description: JTextFieldにMargin、または二重のBorderを設定して、内余白の変化をテストします。
 ---
 * 概要 [#m4b2abe7]
-`JTextField`内部の余白を設定します。
+`JTextField`に`Margin`、または二重の`Border`を設定して、内余白の変化をテストします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVM2PvsXI/AAAAAAAAAnQ/3wxfaHXrEUk/s800/TextFieldMargin.png)
 
 * サンプルコード [#h76ab388]
 #code(link){{
 Insets m = UIManager.getInsets("TextField.margin");
-InsetsUIResource iur = new InsetsUIResource(m.top,m.left+5,m.bottom,m.right);
+InsetsUIResource iur = new InsetsUIResource(m.top, m.left + 5, m.bottom, m.right);
 UIManager.put("TextField.margin", iur);
 }}
 #code{{
 Insets m = field01.getMargin();
-Insets margin = new Insets(m.top,m.left+10,m.bottom,m.right);
+Insets margin = new Insets(m.top, m.left + 10, m.bottom, m.right);
 field01.setMargin(margin);
 }}
 #code{{
-Border b1 = BorderFactory.createEmptyBorder(0,20,0,0);
+Border b1 = BorderFactory.createEmptyBorder(0, 20, 0, 0);
 Border b2 = BorderFactory.createCompoundBorder(field02.getBorder(), b1);
 field02.setBorder(b2);
 }}
 
 * 解説 [#q40dbf8e]
-以下のサンプルでは、それぞれ左余白のサイズのみを変更しています。
+以下のサンプルでは、それぞれ左側の内余白のサイズのみを変更しています。
 
  javax.swing.plaf.InsetsUIResource[top=2,left=7,bottom=2,right=2]
 

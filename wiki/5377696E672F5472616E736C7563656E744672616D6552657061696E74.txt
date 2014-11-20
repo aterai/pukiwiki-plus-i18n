@@ -3,10 +3,13 @@ title: JFrameの透明化と再描画
 tags: [JFrame, JRootPane, Translucent, JPanel, JLabel, TexturePaint]
 author: aterai
 pubdate: 2011-10-24T15:53:52+09:00
-description: 半透明にしたJFrameの再描画を行います。
+description: 透明にしたJFrameに半透明のデジタル時計を配置し、文字更新による背景色の再描画をテストします。
+hreflang:
+    href: http://java-swing-tips.blogspot.jp/2014/02/translucent-jframe-repaint.html
+    lang: en
 ---
 * 概要 [#vb5228db]
-半透明にした`JFrame`の再描画を行います。
+透明にした`JFrame`に半透明のデジタル時計を配置し、文字更新による背景色の再描画をテストします。
 
 #download(https://lh4.googleusercontent.com/-ujoDf8eD4vE/TqLcC0f2CHI/AAAAAAAABD4/LHaXXW6HW1k/s800/TranslucentFrameRepaint.png)
 
@@ -18,14 +21,14 @@ private final Timer timer = new Timer(1000, new ActionListener() {
   @Override public void actionPerformed(ActionEvent e) {
     label.setText(df.format(new Date()));
     Container parent = SwingUtilities.getUnwrappedParent(label);
-    if(parent!=null && parent.isOpaque()) {
+    if (parent != null && parent.isOpaque()) {
       repaintWindowAncestor(label);
     }
   }
 });
 private void repaintWindowAncestor(JComponent c) {
   JRootPane root = c.getRootPane();
-  if(root==null) {
+  if (root == null) {
     return;
   }
   Rectangle r = SwingUtilities.convertRectangle(c, c.getBounds(), root);
@@ -40,7 +43,7 @@ private void repaintWindowAncestor(JComponent c) {
 -- 透明
 #code{{
 com.sun.awt.AWTUtilities.setWindowOpaque(frame, false); //JDK 1.6.0
-frame.setBackground(new Color(0,0,0,0)); //1.7.0
+frame.setBackground(new Color(0, 0, 0, 0)); //1.7.0
 }}
 -- `Window#setOpacity(...)`(または`JDK 1.6.0`で`AWTUtilities.setWindowOpacity(...)`)は、子コンポーネントを含めてすべて半透明になるので、このサンプルでは使用していない
 

@@ -3,10 +3,10 @@ title: JTabbedPaneのタブをソート
 tags: [JTabbedPane]
 author: aterai
 pubdate: 2006-04-24T15:47:22+09:00
-description: JTabbedPaneのタブをソートします。
+description: JTabbedPaneのタブタイトルでその並び順をソートします。
 ---
 * 概要 [#bb32089f]
-`JTabbedPane`のタブをソートします。
+`JTabbedPane`のタブタイトルでその並び順をソートします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTe98QmaI/AAAAAAAAAkc/w7tzozy5FqM/s800/SortTabs.png)
 
@@ -14,14 +14,14 @@ description: JTabbedPaneのタブをソートします。
 #code(link){{
 class SortAction extends AbstractAction {
   public SortAction(String label, Icon icon) {
-    super(label,icon);
+    super(label, icon);
   }
-  @Override public void actionPerformed(ActionEvent evt) {
+  @Override public void actionPerformed(ActionEvent e) {
     setSortedTab(tab, makeSortedVector(tab));
   }
   private Vector makeSortedVector(JTabbedPane t) {
     Vector l = new Vector();
-    for(int i=0;i<t.getTabCount();i++) {
+    for (int i = 0; i < t.getTabCount(); i++) {
       l.addElement(new ComparableTab(t.getTitleAt(i), t.getComponentAt(i)));
     }
     Collections.sort(l);
@@ -30,13 +30,13 @@ class SortAction extends AbstractAction {
   private void setSortedTab(final JTabbedPane t, final Vector l) {
     t.setVisible(false);
     t.removeAll();
-    for(int i=0;i<l.size();i++) {
+    for (int i = 0; i < l.size(); i++) {
       ComparableTab c = (ComparableTab)l.get(i);
       t.addTab(c.title, c.comp);
     }
     t.setVisible(true);
   }
-  class ComparableTab implements Comparable{
+  class ComparableTab implements Comparable {
     final public String title;
     final public Component comp;
     public ComparableTab(String title, Component comp) {
@@ -44,7 +44,7 @@ class SortAction extends AbstractAction {
       this.comp  = comp;
     }
     @Override public int compareTo(Object o) {
-      return this.title.compareTo(((ComparableTab)o).title);
+      return this.title.compareTo(((ComparableTab) o).title);
     }
   }
 }
