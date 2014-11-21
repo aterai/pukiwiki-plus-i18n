@@ -4,6 +4,9 @@ tags: [FlowLayout, JRadioButton, JPanel, Shape, Icon]
 author: aterai
 pubdate: 2013-12-02T00:03:12+09:00
 description: FlowLayoutの水平間隔をマイナスにして、JRadioButtonを重ねて表示し、パンくずリスト風のコンポーネントを作成します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2013/12/breadcrumb-navigation-with-jradiobutton.html
+    lang: en
 ---
 * 概要 [#bdc42ffd]
 `FlowLayout`の水平間隔をマイナスにして、`JRadioButton`を重ねて表示し、パンくずリスト風のコンポーネントを作成します。
@@ -14,7 +17,7 @@ description: FlowLayoutの水平間隔をマイナスにして、JRadioButtonを
 #code(link){{
 private static JComponent makeBreadcrumbList(int overlap, List<String> list) {
   JPanel p = new JPanel(new FlowLayout(FlowLayout.LEADING, -overlap, 0));
-  p.setBorder(BorderFactory.createEmptyBorder(4, overlap+4, 4, 4));
+  p.setBorder(BorderFactory.createEmptyBorder(4, overlap + 4, 4, 4));
   p.setOpaque(false);
   ButtonGroup bg = new ButtonGroup();
   for(String title: list) {

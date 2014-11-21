@@ -4,6 +4,9 @@ tags: [JMenuItem, JButton, GridBagLayout, JLayer]
 author: aterai
 pubdate: 2013-11-25T00:04:55+09:00
 description: JMenuItemの内部に切り取り、コピー、貼り付けを行うJButtonを配置します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2013/11/cut-copy-paste-buttuns-in-jmenuitem.html
+    lang: en
 ---
 * 概要 [#w145f630]
 `JMenuItem`の内部に切り取り、コピー、貼り付けを行う`JButton`を配置します。
@@ -52,7 +55,7 @@ private static JPanel makeEditButtonBar(List<AbstractButton> list) {
       return super.getPreferredSize();
     }
   };
-  for(AbstractButton b: list) {
+  for (AbstractButton b: list) {
     b.setIcon(new ToggleButtonBarCellIcon());
     p.add(b);
   }
@@ -64,10 +67,10 @@ private static AbstractButton makeButton(String title, Action action) {
   JButton b = new JButton(action);
   b.addActionListener(new ActionListener() {
     @Override public void actionPerformed(ActionEvent e) {
-      JButton b = (JButton)e.getSource();
+      JButton b = (JButton) e.getSource();
       Container c = SwingUtilities.getAncestorOfClass(JPopupMenu.class, b);
-      if(c instanceof JPopupMenu) {
-        ((JPopupMenu)c).setVisible(false);
+      if (c instanceof JPopupMenu) {
+        ((JPopupMenu) c).setVisible(false);
       }
     }
   });
