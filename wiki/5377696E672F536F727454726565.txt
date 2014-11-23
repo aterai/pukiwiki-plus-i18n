@@ -63,7 +63,7 @@ public static void sort3(DefaultMutableTreeNode parent) {
   //ArrayList<DefaultMutableTreeNode> children = Collections.list(e);
   List<DefaultMutableTreeNode> children = new ArrayList<>(n);
   for (int i = 0; i < n; i++) {
-    children.add((DefaultMutableTreeNode)parent.getChildAt(i));
+    children.add((DefaultMutableTreeNode) parent.getChildAt(i));
   }
   Collections.sort(children, tnc); //using Arrays.sort(...)
   parent.removeAllChildren();

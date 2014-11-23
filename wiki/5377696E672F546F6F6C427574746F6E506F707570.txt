@@ -14,7 +14,7 @@ description: クリックするとポップアップメニューを表示するJ
 #code(link){{
 class MenuArrowIcon implements Icon {
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
-    Graphics2D g2 = (Graphics2D)g;
+    Graphics2D g2 = (Graphics2D) g;
     g2.setPaint(Color.BLACK);
     g2.translate(x,y);
     g2.drawLine( 2, 3, 6, 3 );
@@ -90,7 +90,7 @@ class MenuToggleButton extends JToggleButton {
 JToggleButton button = new JToggleButton("text", icon) {
   @Override public void paintComponent(Graphics g) {
     if(getModel().isSelected()) {
-      Graphics2D g2 = (Graphics2D)g.create();
+      Graphics2D g2 = (Graphics2D) g.create();
       g2.setColor(getBackground());
       g2.fillRoundRect(0,0,getWidth(),getHeight(),4,4);
       g2.dispose();

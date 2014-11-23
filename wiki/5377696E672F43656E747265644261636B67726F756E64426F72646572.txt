@@ -21,7 +21,7 @@ class CentredBackgroundBorder implements Border {
       int x, int y, int width, int height) {
     x += (width-image.getWidth())/2;
     y += (height-image.getHeight())/2;
-    ((Graphics2D)g).drawRenderedImage(
+    ((Graphics2D) g).drawRenderedImage(
         image, AffineTransform.getTranslateInstance(x,y));
   }
   @Override public Insets getBorderInsets(Component c) {

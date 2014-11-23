@@ -17,7 +17,7 @@ Font font = new Font(Font.SERIF, Font.ITALIC, 64);
 FontRenderContext frc = new FontRenderContext(null,true,true);
 TextLayout tl = new TextLayout(text, font, frc);
 @Override public void paintComponent(Graphics g) {
-  Graphics2D g2 = (Graphics2D)g;
+  Graphics2D g2 = (Graphics2D) g;
   int w = getWidth();
   float baseline = getHeight()/2f;
 

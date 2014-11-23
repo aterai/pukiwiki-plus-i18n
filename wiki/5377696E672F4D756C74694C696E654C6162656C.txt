@@ -91,7 +91,7 @@ private static Box setLeftIcon(JTextComponent label, ImageIcon icon) {
 #code{{
 JLabel label = new JLabel("asdfasdfasdf") {
   @Override protected void paintComponent(Graphics g) {
-    Graphics2D g2d = (Graphics2D)g;
+    Graphics2D g2d = (Graphics2D) g;
     g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                          RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     g2d.setRenderingHint(RenderingHints.KEY_RENDERING,

@@ -18,7 +18,7 @@ int penc = 0x0;
 @Override public void paintComponent(Graphics g) {
   super.paintComponent(g);
   if(backImage!=null) {
-    ((Graphics2D)g).drawImage(backImage, 0, 0, this);
+    ((Graphics2D) g).drawImage(backImage, 0, 0, this);
   }
   if(source!=null) {
     g.drawImage(createImage(source), 0, 0, null);

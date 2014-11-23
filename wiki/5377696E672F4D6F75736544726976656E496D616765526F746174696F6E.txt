@@ -37,7 +37,7 @@ class DraggableImageMouseListener extends MouseAdapter{
     outer.y = (y+centerY-or/2);
   }
   public void paint(Graphics g, ImageObserver ior) {
-    Graphics2D g2d = (Graphics2D)g;
+    Graphics2D g2d = (Graphics2D) g;
     AffineTransform at = AffineTransform.getTranslateInstance(x, y);
     at.rotate(rotate, centerX, centerY);
     g2d.drawImage(image, at, ior);

@@ -34,7 +34,7 @@ class WrappedLabel extends JLabel {
     super.doLayout();
   }
   @Override protected void paintComponent(Graphics g) {
-    Graphics2D g2 = (Graphics2D)g;
+    Graphics2D g2 = (Graphics2D) g;
     if(gvtext!=null) {
       Insets i = getInsets();
       g2.setPaint(Color.RED);
@@ -93,7 +93,7 @@ class WrappingLabel extends JLabel {
     super(text);
   }
   @Override protected void paintComponent(Graphics g) {
-    Graphics2D g2 = (Graphics2D)g.create();
+    Graphics2D g2 = (Graphics2D) g.create();
     g2.setPaint(getForeground());
     Insets i = getInsets();
     float x = i.left;

@@ -172,7 +172,7 @@ public class ProgressSplashScreenTest {
 }
 class SplashScreenIcon implements Icon {
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
-    Graphics2D g2 = (Graphics2D)g.create();
+    Graphics2D g2 = (Graphics2D) g.create();
     g2.translate(x, y);
     g2.setPaint(Color.GREEN);
     g2.fillRect(10,10,180,80);

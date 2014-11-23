@@ -23,7 +23,7 @@ abstract class ExpansionPanel extends JPanel{
     this.title = title;
     label = new JLabel("↓ "+title) {
       @Override protected void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
         //Insets ins = getInsets();
         g2.setPaint(new GradientPaint(50, 0, Color.WHITE,
             getWidth(), getHeight(), new Color(200,200,255)));

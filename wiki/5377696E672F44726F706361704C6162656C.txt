@@ -4,6 +4,9 @@ tags: [JLabel, Shape, TextLayout, LineBreakMeasurer, Font]
 author: aterai
 pubdate: 2013-11-11T00:01:29+09:00
 description: JLabelの先頭文字を拡大、残りの文字列をTextLayoutで回り込むよう配置し、ドロップキャップで描画します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2013/11/using-drop-caps-on-jlabel.html
+    lang: en
 ---
 * 概要 [#l5abfb9b]
 `JLabel`の先頭文字を拡大、残りの文字列を`TextLayout`で回り込むよう配置し、ドロップキャップで描画します。
@@ -13,7 +16,7 @@ description: JLabelの先頭文字を拡大、残りの文字列をTextLayoutで
 * サンプルコード [#h6119f73]
 #code(link){{
 @Override protected void paintComponent(Graphics g) {
-  Graphics2D g2 = (Graphics2D)g.create();
+  Graphics2D g2 = (Graphics2D) g.create();
   g2.setPaint(getBackground());
   g2.fillRect(0, 0, getWidth(), getHeight());
 

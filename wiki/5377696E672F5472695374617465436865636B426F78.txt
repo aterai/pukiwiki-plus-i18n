@@ -59,7 +59,7 @@ class IndeterminateIcon implements Icon {
         icon.paintIcon(c, g, x, y);
         int w = getIconWidth(), h = getIconHeight();
         int a = 4, b = 2;
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
         g2.setPaint(Color.BLACK);
         g2.translate(x, y);
         g2.fillRect(a, (h-b)/2, w-a-a, b);

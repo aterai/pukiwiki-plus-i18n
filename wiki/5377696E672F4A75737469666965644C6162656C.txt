@@ -141,7 +141,7 @@ class JustifiedLabel extends JLabel {
     return 120;
   }
   @Override protected void paintComponent(Graphics g) {
-    Graphics2D g2 = (Graphics2D)g;
+    Graphics2D g2 = (Graphics2D) g;
     Insets i = getInsets();
     int w = getWidth() - i.left - i.right;
     if (w != prev_width) {

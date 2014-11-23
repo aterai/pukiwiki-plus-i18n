@@ -34,7 +34,7 @@ class LineCursorTextArea extends JTextArea {
   }
   @Override protected void paintComponent(Graphics g) {
     super.paintComponent(g);
-    Graphics2D g2 = (Graphics2D)g;
+    Graphics2D g2 = (Graphics2D) g;
     Insets i = getInsets();
     //int y = g2.getFontMetrics().getHeight()*getLineAtCaret(this)+i.top;
     int y = caret.y+caret.height-1;

@@ -15,7 +15,7 @@ description: JComboBoxの左上、右上の角を丸めるBorderを設定しま�
 class RoundedCornerBorder extends AbstractBorder {
   @Override public void paintBorder(
       Component c, Graphics g, int x, int y, int width, int height) {
-    Graphics2D g2 = (Graphics2D)g.create();
+    Graphics2D g2 = (Graphics2D) g.create();
     g2.setRenderingHint(
         RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     int r = 12;
@@ -46,7 +46,7 @@ class RoundedCornerBorder extends AbstractBorder {
 class KamabokoBorder extends RoundedCornerBorder {
   @Override public void paintBorder(
       Component c, Graphics g, int x, int y, int width, int height) {
-    Graphics2D g2 = (Graphics2D)g.create();
+    Graphics2D g2 = (Graphics2D) g.create();
     g2.setRenderingHint(
         RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     int r = 12;
