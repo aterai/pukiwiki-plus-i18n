@@ -6,26 +6,28 @@ pubdate: 2006-03-06T19:15:08+09:00
 description: JTextAreaの背景に画像を表示しています。
 ---
 * 概要 [#s334455a]
-`JTextArea`の背景に画像を表示しています。[https://forums.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]のコードを引用しています。
+`JTextArea`の背景に画像を表示しています。[https://community.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]のコードを引用しています。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIyAIY_mI/AAAAAAAAATU/GovGMBqjzRo/s800/CentredBackgroundBorder.png)
 
 * サンプルコード [#c5694631]
 #code(link){{
 class CentredBackgroundBorder implements Border {
+  private final Insets insets = new Insets(0, 0, 0, 0);
   private final BufferedImage image;
   public CentredBackgroundBorder(BufferedImage image) {
     this.image = image;
   }
-  @Override public void paintBorder(Component c, Graphics g,
-      int x, int y, int width, int height) {
-    x += (width-image.getWidth())/2;
-    y += (height-image.getHeight())/2;
-    ((Graphics2D) g).drawRenderedImage(
-        image, AffineTransform.getTranslateInstance(x,y));
+  @Override public void paintBorder(
+      Component c, Graphics g, int x, int y, int width, int height) {
+    int cx = x + (width - image.getWidth()) / 2;
+    int cy = y + (height - image.getHeight()) / 2;
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.drawRenderedImage(image, AffineTransform.getTranslateInstance(cx, cy));
+    g2.dispose();
   }
   @Override public Insets getBorderInsets(Component c) {
-    return new Insets(0,0,0,0);
+    return insets;
   }
   @Override public boolean isBorderOpaque() {
     return true;
@@ -45,7 +47,7 @@ class CentredBackgroundBorder implements Border {
 `Border`を使って背景に画像を表示する方法は、`JDesktopPane`(参考:[[JInternalFrameを半透明にする>Swing/TransparentFrame]])や、その他の`JComponent`でも使用することが出来ます。
 
 * 参考リンク [#k26904ee]
-- [https://forums.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]
+- [https://community.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]
 - [[JInternalFrameを半透明にする>Swing/TransparentFrame]]
 - [http://www.bekkoame.ne.jp/~bootan/free2.html デジタル出力工房　絵写楽]
 

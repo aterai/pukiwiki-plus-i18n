@@ -6,7 +6,7 @@ pubdate: 2004-03-15
 description: KBD{Esc}キーを押すと閉じるJDialogを作成します。
 ---
 * 概要 [#v1b20b60]
-KBD{Esc}キーを押すと閉じる`JDialog`を作成します。大部分を[https://forums.oracle.com/thread/1488562 Swing (Archive) - JDialog says ESC key is already registered--where?]から、そのまま引用しています。
+KBD{Esc}キーを押すと閉じる`JDialog`を作成します。大部分を[https://community.oracle.com/thread/1488562 Swing (Archive) - JDialog says ESC key is already registered--where?]から、そのまま引用しています。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOj22ObUI/AAAAAAAAAck/b5izKCmGkHk/s800/InputMap.png)
 
@@ -28,8 +28,8 @@ dialog.getRootPane().getActionMap().put("close-it", act);
 `JOptionPane.showMessageDialog()`メソッドで作成したダイアログは、KBD{Esc}キーを押すと閉じますが、`JDialog`の場合は閉じてくれません。そこで`JDialog`でもKBD{Esc}キーを押すと閉じるように`InputMap`などを使って設定します。
 
 * 参考リンク [#x13c393a]
-- [https://forums.oracle.com/thread/1488562 Swing (Archive) - JDialog says ESC key is already registered--where?]
-- [https://forums.oracle.com/thread/1490398 Swing (Archive) - ESC Key to Close a JFrame]
+- [https://community.oracle.com/thread/1488562 Swing (Archive) - JDialog says ESC key is already registered--where?]
+- [https://community.oracle.com/thread/1490398 Swing (Archive) - ESC Key to Close a JFrame]
 - [[JComponentのKeyBinding一覧を取得する>Swing/KeyBinding]]
 
 * コメント [#u5283c56]

@@ -14,28 +14,29 @@ description: JTableでファイルとディレクトリを別々にソートし�
 #code(link){{
 // > dir /O:GN
 // > ls --group-directories-first
-class FileGroupComparator extends DefaultFileComparator{
+class FileGroupComparator extends DefaultFileComparator {
+  private static final long serialVersionUID = 1L;
   private final JTable table;
   public FileGroupComparator(JTable table, int column) {
     super(column);
     this.table = table;
   }
-  @Override public int compare((File a, File b) {
+  @Override public int compare(File a, File b) {
     int flag = 1;
-    java.util.List<? extends TableRowSorter.SortKey> keys
-        = table.getRowSorter().getSortKeys();
-    if(!keys.isEmpty()) {
+    List<? extends TableRowSorter.SortKey> keys
+      = table.getRowSorter().getSortKeys();
+    if (!keys.isEmpty()) {
       TableRowSorter.SortKey sortKey = keys.get(0);
-      if(sortKey.getColumn()==column &&
-         sortKey.getSortOrder()==SortOrder.DESCENDING) {
+      if (sortKey.getColumn() == column &&
+          sortKey.getSortOrder() == SortOrder.DESCENDING) {
         flag = -1;
       }
     }
-    if(a.isDirectory() && !b.isDirectory()) {
-      return -1*flag;
-    }else if(!a.isDirectory() && b.isDirectory()) {
-      return  1*flag;
-    }else{
+    if (a.isDirectory() && !b.isDirectory()) {
+      return -1 * flag;
+    } else if (!a.isDirectory() && b.isDirectory()) {
+      return 1 * flag;
+    } else {
       return super.compare(a, b);
     }
   }
@@ -52,7 +53,9 @@ class FileGroupComparator extends DefaultFileComparator{
 - `Group Sorting`
 -- 昇順の場合は「ディレクトリ < ファイル」、降順の場合は、「ディレクトリ > ファイル」として、ディレクトリが常に先頭になる`Comparator`を設定
 
-//* 参考リンク
+* 参考リンク [#adc4bfca]
+- [[JTreeのソート>Swing/SortTree]]
+
 * コメント [#y38a27bb]
 #comment
 - `WindowsLookAndFeel`, `JDK 1.7.0`で`UIManager.getIcon("FileView.directoryIcon")`が取得できない？ので、`FileSystemView.getSystemIcon(...)`で`Icon`を取得するように変更。 -- &user(aterai); &new{2012-05-14 (月) 16:33:14};

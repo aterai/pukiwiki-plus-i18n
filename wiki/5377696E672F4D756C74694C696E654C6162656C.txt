@@ -103,7 +103,7 @@ JLabel label = new JLabel("asdfasdfasdf") {
 
 - お返事遅くなりましたm(__)m。試してみます！ありがとうございます！ -- &user(ばしばし); &new{2007-10-22 (月) 09:57:29};
 - `JLabel`で`html`を使用すると`setEnabled(false)`でグレーアウトしてくれないです。どうしたものでしょう。 -- &user(ApplePedlar); &new{2007-12-11 (火) 17:34:00};
--- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4740519 Bug ID: 4740519 HTML JLabel not greyed out on setEnabled(false)]ですね。今のところ、[https://forums.oracle.com/thread/1377943 Swing - JLabel with html tag can not be disabled or setForegroud?!]みたいに %%逃げるしかない？みたいです。%% する方法があります。 -- &user(aterai); &new{2007-12-11 (火) 18:27:05};
+-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4740519 Bug ID: 4740519 HTML JLabel not greyed out on setEnabled(false)]ですね。今のところ、[https://community.oracle.com/thread/1377943 Swing - JLabel with html tag can not be disabled or setForegroud?!]みたいに %%逃げるしかない？みたいです。%% する方法があります。 -- &user(aterai); &new{2007-12-11 (火) 18:27:05};
 -- コードが長くなってしまったので、別ページを作成しました。`JEditorPane`を使用する方法も追加しています。[[Htmlを使ったJLabelとJEditorPaneの無効化>Swing/DisabledHtmlLabel]] -- &user(aterai); &new{2007-12-24 (月) 23:24:50};
 - こんにちは。ココのおかげでとても助かっています。ところで、`1`行の高さ（文字の高さを含めた高さ）を指定したい、というときには、`setLineSpacing`ではダメってことですよね？「指定したい高さ－フォントの大きさ」を`setLineSpacing`で指定してあげなきゃいけないんですよね？（文字サイズによって`1`行の高さが揃わなくなるのはイヤで揃えたいなと思うのですが、フォントによってそれだと、そうすると、フォントの大きさを変えるたびに指定しなおさなきゃいけないってことですよね。面倒…） -- &user(びびあず); &new{2008-10-31 (金) 10:42:47};
 -- こんにちは。どういたしまして。`LineSpacing`はフォントサイズに依存するみたいですね。固定の間隔を指定するのなら、例えば以下のように、`ParagraphView#getBottomInset`メソッドなどをオーバーライドするのが簡単かも。 -- &user(aterai); &new{2008-10-31 (金) 14:36:51};

@@ -58,7 +58,7 @@ class ResizeWindowListener extends MouseAdapter {
 
 * 解説 [#dd2ca04c]
 上記のサンプルではタイトルバーを、`setUndecorated(true)`で非表示にし、移動可能にした`JPanel`を追加してタイトルバーにしています。
-リサイズは、[https://forums.oracle.com/thread/1365156 Swing - Undecorated and resizable dialog]や`BasicInternalFrameUI.java`、`MetalRootPaneUI#MouseInputHandler`などを参考にして、周辺にそれぞれ対応するリサイズカーソルを設定した`JLabel`を配置しています。
+リサイズは、[https://community.oracle.com/thread/1365156 Swing - Undecorated and resizable dialog]や`BasicInternalFrameUI.java`、`MetalRootPaneUI#MouseInputHandler`などを参考にして、周辺にそれぞれ対応するリサイズカーソルを設定した`JLabel`を配置しています。
 
 ----
 `JDK 1.7.0`の場合、`JFrame`の背景色を透明(`frame.setBackground(new Color(0,0,0,0));`)にし、`ContentPane`の左右上の角をクリアして透明にしています。
@@ -154,7 +154,7 @@ class DragWindowListener extends MouseAdapter {
 }}
 
 * 参考リンク [#p98cd47e]
-- [https://forums.oracle.com/thread/1365156 Swing - Undecorated and resizable dialog]
+- [https://community.oracle.com/thread/1365156 Swing - Undecorated and resizable dialog]
 - [[JWindowをマウスで移動>Swing/DragWindow]]
 - [[JInternalFrameをJFrameとして表示する>Swing/InternalFrameTitleBar]]
 - [[JRootPaneにリサイズのための装飾を設定する>Swing/WindowDecorationStyle]]
