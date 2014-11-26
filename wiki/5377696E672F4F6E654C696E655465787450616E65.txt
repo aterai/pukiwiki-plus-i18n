@@ -41,7 +41,7 @@ textPane.getActionMap().put(KEY, new AbstractAction() {
 Set<AWTKeyStroke> forwardKeys = new HashSet<AWTKeyStroke>(
     textPane.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
 forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0));
-forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, KeyEvent.SHIFT_MASK));
+forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, InputEvent.SHIFT_DOWN_MASK));
 textPane.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardKeys);
 
 JScrollPane scrollPane = new JScrollPane(

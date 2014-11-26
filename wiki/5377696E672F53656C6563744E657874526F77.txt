@@ -21,12 +21,11 @@ im.put(tab, im.get(enter));
 * 解説 [#l156a485]
 上記のサンプルでは、チェックボックスでKBD{Tab}キーでのフォーカスの移動(セル毎に移動)が、KBD{Enter}キーと同じ(行毎に移動)になるように切り替えています。
 
-逆遷移のKBD{Shift+Tab}なども対応する場合は、修飾子を`0`の代わりに`InputEvent.SHIFT_MASK`にして、同様に変更しています。
-
-[https://community.oracle.com/thread/1484284 Swing (Archive) - JTable skiping the cells disableds]に、編集できないセルを飛ばして、KBD{Tab}キーでフォーカス移動することができるサンプルがあるので参考にしてください。
+逆遷移のKBD{Shift+Tab}などに対応する場合は、修飾子を`0`ではなく、`InputEvent.SHIFT_DOWN_MASK`にした`KeyStroke`を`InputMap`に設定します。
 
 * 参考リンク [#ub9a007e]
 - [https://community.oracle.com/thread/1484284 Swing (Archive) - JTable skiping the cells disableds]
+-- 編集できないセルを飛ばして、KBD{Tab}キーでフォーカス移動を行うサンプル
 
 * コメント [#h20d6278]
 #comment

@@ -4,6 +4,9 @@ tags: [JFileChooser, JOptionPane]
 author: aterai
 pubdate: 2012-07-02T17:20:50+09:00
 description: JFileChooserで名前を付けて保存する場合、すでに存在するファイルを選択してセーブボタンを押すと上書き警告ダイアログを表示するように設定します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2012/08/jfilechooser-with-file-already-exists.html
+    lang: en
 ---
 * 概要 [#udf34b34]
 `JFileChooser`で名前を付けて保存する場合、すでに存在するファイルを選択してセーブボタンを押すと上書き警告ダイアログを表示するように設定します。
@@ -15,13 +18,13 @@ description: JFileChooserで名前を付けて保存する場合、すでに存�
 JFileChooser fileChooser = new JFileChooser() {
   @Override public void approveSelection() {
     File f = getSelectedFile();
-    if(f.exists() && getDialogType() == SAVE_DIALOG) {
+    if (f.exists() && getDialogType() == SAVE_DIALOG) {
       String m = String.format(
           "<html>%s already exists.<br>Do you want to replace it?",
           f.getAbsolutePath());
       int rv = JOptionPane.showConfirmDialog(
           this, m, "Save As", JOptionPane.YES_NO_OPTION);
-      if(rv!=JOptionPane.YES_OPTION) {
+      if (rv != JOptionPane.YES_OPTION) {
         return;
       }
     }

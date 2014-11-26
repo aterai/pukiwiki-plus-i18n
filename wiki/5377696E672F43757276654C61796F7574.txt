@@ -4,6 +4,9 @@ tags: [LayoutManager, FlowLayout, JPanel]
 author: aterai
 pubdate: 2011-06-27T14:12:48+09:00
 description: LayoutManagerを拡張して曲線上にコンポーネントを配置します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2012/05/creating-custom-layout-manager.html
+    lang: en
 ---
 * 概要 [#jba0ffbd]
 `LayoutManager`を拡張して曲線上にコンポーネントを配置します。
@@ -18,20 +21,22 @@ panel2.setLayout(new FlowLayout() {
     synchronized(target.getTreeLock()) {
       Insets insets = target.getInsets();
       int nmembers  = target.getComponentCount();
-      if(nmembers<=0) return;
+      if (nmembers <= 0) {
+        return;
+      }
       int vgap = getVgap();
       int hgap = getHgap();
-      int rowh = (target.getHeight()-(insets.top+insets.bottom+vgap*2))/nmembers;
+      int rowh = (target.getHeight() - (insets.top + insets.bottom + vgap * 2)) / nmembers;
       int x = insets.left + hgap;
       int y = insets.top  + vgap;
-      for(int i=0;i<nmembers;i++) {
+      for (int i = 0; i < nmembers; i++) {
         Component m = target.getComponent(i);
-        if(m.isVisible()) {
+        if (m.isVisible()) {
           Dimension d = m.getPreferredSize();
           m.setSize(d.width, d.height);
           m.setLocation(x, y);
           y += (vgap + Math.min(rowh, d.height));
-          x = (int)(A2 * Math.sqrt(y));
+          x = (int) (A2 * Math.sqrt(y));
         }
       }
     }

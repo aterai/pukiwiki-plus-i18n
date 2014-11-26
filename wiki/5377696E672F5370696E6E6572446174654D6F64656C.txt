@@ -3,10 +3,10 @@ title: JSpinnerで日付を設定
 tags: [JSpinner, SpinnerDateModel, FocusListener, Calendar]
 author: aterai
 pubdate: 2011-08-22T15:46:11+09:00
-description: JSpinnerを使って日付を設定します。
+description: JSpinnerに、下限値を設定したSpinnerDateModelを設定して、日付の変更をテストします。
 ---
 * 概要 [#e79d682c]
-`JSpinner`を使って日付を設定します。
+`JSpinner`に、下限値を設定した`SpinnerDateModel`を設定して、日付の変更をテストします。
 
 #download(https://lh5.googleusercontent.com/-llHXaOVDQbQ/TlH5yRAODSI/AAAAAAAABBE/XsSUtm7J_U0/s800/SpinnerDateModel.png)
 
@@ -22,7 +22,7 @@ editor.getTextField().addFocusListener(new FocusAdapter() {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
         int i = dateFormatPattern.lastIndexOf("dd");
-        editor.getTextField().select(i, i+2);
+        editor.getTextField().select(i, i + 2);
       }
     });
   }
