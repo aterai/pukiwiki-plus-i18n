@@ -1,21 +1,19 @@
 ---
 title: Beep音を鳴らす
-tags: [Toolkit, UIManager, Sound]
+tags: [Toolkit, Sound]
 author: aterai
 pubdate: 2003-12-08
-description: Toolkitを使ってビープ音を鳴らします。
+description: デフォルトのToolkitを取得し、これを使用してビープ音を鳴らします。
 ---
 * 概要 [#obbcac28]
-`Toolkit`を使ってビープ音を鳴らします。
+デフォルトの`Toolkit`を取得し、これを使用してビープ音を鳴らします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIE6ivySI/AAAAAAAAASM/H5qY8r_auGc/s800/Beep.png)
 
 * サンプルコード [#c10a0766]
 #code(link){{
-//UIManager.put("AuditoryCues.playList",
-//              UIManager.get("AuditoryCues.noAuditoryCues"));
-java.awt.Toolkit.getDefaultToolkit().beep();
-JOptionPane.showMessageDialog(this,"error","title",JOptionPane.ERROR_MESSAGE);
+Toolkit.getDefaultToolkit().beep();
+JOptionPane.showMessageDialog(this, "error", "title", JOptionPane.ERROR_MESSAGE);
 }}
 
 * 解説 [#g4e528ae]

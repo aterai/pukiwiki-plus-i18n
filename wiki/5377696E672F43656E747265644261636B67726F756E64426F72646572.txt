@@ -3,10 +3,10 @@ title: JTextAreaの背景に画像を表示
 tags: [JTextArea, BufferedImage, Border, JViewport]
 author: aterai
 pubdate: 2006-03-06T19:15:08+09:00
-description: JTextAreaの背景に画像を表示しています。
+description: JTextAreaなどのコンポーネントの背景に、Borderを使って中心揃えした画像を表示します。
 ---
 * 概要 [#s334455a]
-`JTextArea`の背景に画像を表示しています。[https://community.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]のコードを引用しています。
+`JTextArea`などのコンポーネントの背景に、`Border`を使って中心揃えした画像を表示します。[https://community.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]のコードを引用しています。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIyAIY_mI/AAAAAAAAATU/GovGMBqjzRo/s800/CentredBackgroundBorder.png)
 
@@ -41,7 +41,7 @@ class CentredBackgroundBorder implements Border {
 - 画像を中央に表示するようにした`Border`を作成し、これを`Viewport`の`Border`として設定
 - `Viewport`に追加した`JTextArea`の背景を透明化
 -- `textarea.setOpaque(false);`
--- `textarea.setBackground(new Color(0,0,0,0)));`
+-- `textarea.setBackground(new Color(0, 0, 0, 0)));`
 
 ----
 `Border`を使って背景に画像を表示する方法は、`JDesktopPane`(参考:[[JInternalFrameを半透明にする>Swing/TransparentFrame]])や、その他の`JComponent`でも使用することが出来ます。

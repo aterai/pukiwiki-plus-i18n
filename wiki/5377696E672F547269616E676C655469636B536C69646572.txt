@@ -3,35 +3,35 @@ title: JSliderの目盛りをアイコンに変更する
 tags: [JSlider, Icon, JLabel]
 author: aterai
 pubdate: 2010-05-24T15:00:41+09:00
-description: JSliderの目盛りをアイコンで描画します。
+description: JSliderの目盛りに使用するJLabelを取得し、アイコンを追加したり文字色を変更するなどの変更を行います。
 ---
 * 概要 [#xbb1ae7a]
-`JSlider`の目盛りをアイコンで描画します。
+`JSlider`の目盛りに使用する`JLabel`を取得し、アイコンを追加したり文字色を変更するなどの変更を行います。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWS_t-t1I/AAAAAAAAApA/78UrJyqx8og/s800/TriangleTickSlider.png)
 
 * サンプルコード [#rf8f8227]
 #code(link){{
-JSlider slider = new JSlider(0,100);
+JSlider slider = new JSlider(0, 100);
 slider.setMajorTickSpacing(10);
 slider.setMinorTickSpacing(5);
 slider.setPaintLabels(true);
 slider.setSnapToTicks(true);
 Dictionary dictionary = slider.getLabelTable();
-if(dictionary != null) {
-    Enumeration elements = dictionary.elements();
-    Icon tick = new TickIcon();
-    while(elements.hasMoreElements()) {
-        JLabel label = (JLabel) elements.nextElement();
-        label.setBorder(BorderFactory.createEmptyBorder(1,0,0,0));
-        label.setIcon(tick);
-        label.setIconTextGap(0);
-        label.setVerticalAlignment(SwingConstants.TOP);
-        label.setVerticalTextPosition(SwingConstants.BOTTOM);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setHorizontalTextPosition(SwingConstants.CENTER);
-        label.setForeground(Color.RED);
-    }
+if (dictionary != null) {
+  Enumeration elements = dictionary.elements();
+  Icon tick = new TickIcon();
+  while (elements.hasMoreElements()) {
+    JLabel label = (JLabel) elements.nextElement();
+    label.setBorder(BorderFactory.createEmptyBorder(1, 0, 0, 0));
+    label.setIcon(tick);
+    label.setIconTextGap(0);
+    label.setVerticalAlignment(SwingConstants.TOP);
+    label.setVerticalTextPosition(SwingConstants.BOTTOM);
+    label.setHorizontalAlignment(SwingConstants.CENTER);
+    label.setHorizontalTextPosition(SwingConstants.CENTER);
+    label.setForeground(Color.RED);
+  }
 }
 }}
 

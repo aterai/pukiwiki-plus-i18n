@@ -3,10 +3,10 @@ title: JTableに行ヘッダを追加
 tags: [JTable, JList, JScrollPane]
 author: aterai
 pubdate: 2006-09-04
-description: JTableに行ヘッダを追加を追加します。
+description: JTableを設定したJScrollPaneのRowHeaderViewに、JListで作成した行ヘッダを追加します。
 ---
 * 概要 [#le4e858f]
-`JTable`に行ヘッダを追加を追加します。
+`JTable`を設定した`JScrollPane`の`RowHeaderView`に、`JList`で作成した行ヘッダを追加します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUk9YzW7I/AAAAAAAAAmQ/wjin9CuyfBg/s800/TableRowHeader.png)
 
@@ -63,7 +63,7 @@ class RowHeaderList<E> extends JList<E> {
       return this;
     }
   }
-//...
+  //...
 }
 }}
 
@@ -104,7 +104,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
-public class HeaderRendererTest{
+public class HeaderRendererTest {
   public JComponent makeUI() {
     String[] columnNames = {"", "String", "Boolean"};
     Object[][] data = {
@@ -128,7 +128,7 @@ public class HeaderRendererTest{
 
     JPanel p = new JPanel(new BorderLayout());
     p.add(new JScrollPane(table));
-    p.setPreferredSize(new Dimension(320, 160));
+    p.setPreferredSize(new Dimension(320, 240));
     return p;
   }
   public static void main(String[] args) {
@@ -139,10 +139,10 @@ public class HeaderRendererTest{
     });
   }
   public static void createAndShowGUI() {
-    try{
+    try {
       UIManager.setLookAndFeel(
         UIManager.getSystemLookAndFeelClassName());
-    }catch(Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     JFrame frame = new JFrame();
@@ -167,7 +167,7 @@ class HeaderRenderer implements TableCellRenderer {
     JLabel l;
     boolean flg = row == rollOverRowIndex;
     l = (JLabel) tcr.getTableCellRendererComponent(
-      tbl, val, isS, flg?flg:hasF, row, col);
+          tbl, val, isS, flg ? flg : hasF, row, col);
     l.setOpaque(!flg);
     return l;
   }

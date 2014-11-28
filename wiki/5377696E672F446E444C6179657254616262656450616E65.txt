@@ -4,6 +4,9 @@ tags: [JLayer, JTabbedPane, DragAndDrop, TransferHandler, JWindow, JLabel]
 author: aterai
 pubdate: 2012-01-23T18:01:31+09:00
 description: JLayerを使って、タブのドラッグ＆ドロップでの移動先をJTabbedPane上に描画します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2012/01/sharing-tabs-between-2-jframes.html
+    lang: en
 ---
 * 概要 [#t75e37f6]
 `JLayer`を使って、タブのドラッグ＆ドロップでの移動先を`JTabbedPane`上に描画します。
@@ -83,7 +86,7 @@ public TabTransferHandler() {
   dialog.add(label);
   //dialog.setAlwaysOnTop(true); // Web Start
   dialog.setOpacity(0.5f);
-  //com.sun.awt.AWTUtilities.setWindowOpacity(dialog, 0.5f); // JDK 1.6.0
+  //com.sun.awt.AWTUtilities.setWindowOpacity(dialog, .5f); // JDK 1.6.0
   DragSource.getDefaultDragSource().addDragSourceMotionListener(
       new DragSourceMotionListener() {
     @Override public void dragMouseMoved(DragSourceDragEvent dsde) {
