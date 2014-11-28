@@ -4,6 +4,9 @@ tags: [JTabbedPane, GlassPane, JTextField]
 author: aterai
 pubdate: 2006-03-27
 description: JTabbedPaneのタブタイトルを直接編集します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2008/09/double-click-on-each-tab-and-change-its.html
+    lang: en
 ---
 * 概要 [#l3a0e3fa]
 `JTabbedPane`のタブタイトルを直接編集します。
@@ -27,7 +30,7 @@ class EditableTabbedPane extends JTabbedPane {
   }
   class MyGlassPane extends JPanel{
     public MyGlassPane() {
-      super((LayoutManager)null);
+      super((LayoutManager) null);
       setOpaque(false);
       addMouseListener(new MouseAdapter() {
         @Override public void mouseClicked(MouseEvent me) {
@@ -39,7 +42,7 @@ class EditableTabbedPane extends JTabbedPane {
   }
   private void initEditor() {
     rect = getUI().getTabBounds(this, getSelectedIndex());
-    rect.setRect(rect.x+2, rect.y+2, rect.width-2, rect.height-2);
+    rect.setRect(rect.x + 2, rect.y + 2, rect.width - 2, rect.height - 2);
     editor.setBounds(rect);
     editor.setText(getTitleAt(getSelectedIndex()));
   }
@@ -52,7 +55,7 @@ class EditableTabbedPane extends JTabbedPane {
     panel.setVisible(false);
   }
   private void renameTab() {
-    if(editor.getText().trim().length()>0) {
+    if (editor.getText().trim().length() > 0) {
       setTitleAt(getSelectedIndex(), editor.getText());
     }
     panel.setVisible(false);

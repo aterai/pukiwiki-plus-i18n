@@ -8,9 +8,6 @@ nofollow: true
 * 概要 [#a5760ded]
 [[Swing]]関係の自分用のメモとかネタ帳みたいなものです。
 
-* 不具合 [#v1557d55]
-- `gist`プラグインでの行番号がズレてしまう
-
 * google八分メモ [#k1042248]
 - 状況
 -- `2014/08`中頃からハブられている模様
@@ -23,25 +20,36 @@ nofollow: true
 -- コメントをDISQUSに移行
 --- コメントユーザーページへの`404`ページを作成しない
 -- `schema.org`でマークアップ
+-- `xrea.jp`自体がペナルティを受けていると考えたほうが良さそう
+--- 他のサイト(`*.xrea.jp`)でも、同じ症状(タイトルで検索しても上位に表示されない)が確認できる？
 
 //- あとは、googleへの依存を極力減らす方向で(下の方は難航しそうだけど)
 //-- google codeから、GitHubへリポジトリを移行
 //-- google サイト内検索を削除
-//-- google 検索を使用しない(Opera developers のspeed dial で検索エンジンが変更できない？？？)
+//-- google 検索を使用しない(Opera developers の speed dial で検索エンジンが変更できない？？？)
 //-- 実行中: gmail から移行
+//--- outlook にほぼ移行完了
 //-- 未実行: google ドライブから移行
 //-- 未実行: picasa から移行
 //-- 未実行: Chrome アンインストール
-//-- 未実行: google 日本語入力アンインストール
+//--- FireFox、Opera 12、Opera developers にほぼ移行完了
+//-- google 日本語入力アンインストール(まれによくフリーズするようになったので)
 //-- 未実行: google Analytics から移行
 //-- 未実行: google AdSenseから移行
 //-- 未実行: bloggerから移行
 
-* さくらレンタルサーバ(独自ドメイン)に移行 [#gc4ed6c9]
+** さくらレンタルサーバ(+独自ドメイン)に移行(2014/11/01) [#gc4ed6c9]
 - PHP設定の編集
-
  date.timezone = Asia/Tokyo
  zlib.output_compression=On
+
+- .htaccess で301リダイレクト
+ RewriteEngine on
+ RewriteBase /
+ RewriteCond %{http_host} ^terai\.xrea\.jp
+ RewriteRule ^(.*)$ http://ateraimemo.com/$1 [R=301,L]
+
+- 2014/11末現在、アクセス数などは以前の水準に戻っている
 
 * 移動: ネタのリクエスト、Swingのサンプルに関するメモ [#l7de666d]
 - 以前ここで頂いたコメントは、[[Comments/Swing]]に移動しました。
@@ -251,6 +259,7 @@ Posted by: ewin on September 28, 2007 at 02:58 PM
 -- `Wiki`中のサンプルコードでクラスなどを`javadoc`に自動リンク
 -- 日本語、文字コード
 --- [http://www.javalobby.org/java/forums/t103377.html Awesome Translator API!]
+- %%`gist`プラグインでの行番号がズレてしまう%% 修正済み
 
 //-Swing、Java2D、javaFXなどDesktop関係専用の質問掲示板(日本語)
 //--いい掲示板を探すor作ってもらう
@@ -287,6 +296,7 @@ Posted by: ewin on September 28, 2007 at 02:58 PM
 
 - バージョンの表記
 -- JDK 6 と JDK 1.6 どちらかに揃える
+-- Java 7 と Java 1.7.0 どちらかに揃える
 
 * 変更済み [#q15744bf]
 //-%%ソースコードだけ検索%%
@@ -294,7 +304,7 @@ Posted by: ewin on September 28, 2007 at 02:58 PM
 //--- http://www.google.com/codesearch?hl=ja&q=show:PrTRJvkJHHU:pBaDj-hkq2c&ct=rdp&cs_p=http://ateraimemo.com&cs_f=swing
 
 - ライセンス
--- google code においたソースコードは、[http://www.opensource.org/licenses/mit-license.php MIT License]
+-- %%google code においた%%ソースコードは、[http://www.opensource.org/licenses/mit-license.php MIT License]
 -- [http://stackoverflow.com/questions/259384/what-license-should-i-use-for-code-snippets-released-on-my-blog What license should I use for code snippets released on my blog? - Stack Overflow]
 -- http://hobbylinux.info/download/rtl8181/src/GPL/wireless_tools.25-broken!!!/sample_pm.c
 -- This particular snipset of code is available under the Apache license, BSD license, CC0, ..., WTFPL (at your choice).

@@ -4,6 +4,9 @@ tags: [JScrollBar, JSlider, JSpinner]
 author: aterai
 pubdate: 2008-12-15T13:23:29+09:00
 description: JScrollBarをJSliderの代わりとして使用します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2009/02/use-jscrollbar-as-jslider.html
+    lang: en
 ---
 * 概要 [#mb679a0c]
 `JScrollBar`を`JSlider`の代わりとして使用します。
@@ -15,19 +18,19 @@ description: JScrollBarをJSliderの代わりとして使用します。
 int step   = 5;
 int extent = 20;
 int min    = 0;
-int max    = extent*10; //200
+int max    = extent * 10; //200
 int value  = 50;
 final JScrollBar scrollbar = new JScrollBar(
-            JScrollBar.HORIZONTAL, value, extent, min, max+extent);
+  JScrollBar.HORIZONTAL, value, extent, min, max + extent);
 scrollbar.setUnitIncrement(step);
 scrollbar.getModel().addChangeListener(new ChangeListener(){
-  @Override public void stateChanged(javax.swing.event.ChangeEvent e) {
-    BoundedRangeModel m = (BoundedRangeModel)e.getSource();
+  @Override public void stateChanged(ChangeEvent e) {
+    BoundedRangeModel m = (BoundedRangeModel) e.getSource();
     spinner.setValue(m.getValue());
   }
 });
 final JSpinner spinner = new JSpinner(
-            new SpinnerNumberModel(value, min, max, step));
+  new SpinnerNumberModel(value, min, max, step));
 //...
 }}
 

@@ -40,6 +40,14 @@ aaaaaaaaaaaaaaaaa
 - [[最近の更新ページ>cmd:recent]]
 
 * メモ [#d2e4fbad]
+** git merge でエディタを開かない [#s16c7e04]
+- [http://stackoverflow.com/questions/12752288/git-merge-doesnt-use-default-merge-message-opens-editor-with-default-message Git merge doesn't use default merge message, opens editor with default message - Stack Overflow]
+- `export GIT_MERGE_AUTOEDIT=no`
+- .gitconfig
+    [core]
+        mergeoptions = --no-edit
+- `git merge --no-edit`
+
 ** VirtualBoxでのKBD{半角/全角}キーリピートバグ [#cb906997]
 `VirtualBox` + `Ubuntu`や、`Linux mint 14`で日本語入力の切り替えにKBD{半角/全角}キーを使うと、システムトレイのアイコンが点滅する(うまく切り替えられない)。
 
