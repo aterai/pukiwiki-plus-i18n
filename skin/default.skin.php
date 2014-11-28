@@ -87,7 +87,7 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 .pln{color:#000}.str{color:#080}.kwd{color:#008}.com{color:#800}.typ{color:#606}.lit{color:#066}.pun,.opn,.clo{color:#660}.tag{color:#008}.atn{color:#606}.atv{color:#080}.dec,.var{color:#606}.fun{color:red}
 @media print{h1,h2,h3,h4,h5,h6{color:#000;background-color:#FFF}td,th,tr{border:1px solid;color:#000;background-color:#FFF;border-collapse:collapse}.content{width:100%}a:link,a:visited{text-decoration:underline}.sidebar,.navigator,.header,.footer,.menubar,.attach,.toolbar,.related,.logo,.ad_box,.jumpmenu,.paraedit,.anchor_super{display:none}.str{color:#060}.kwd{color:#006;font-weight:bold}.com{color:#600;font-style:italic}.typ{color:#404;font-weight:bold}.lit{color:#044}.pun,.opn,.clo{color:#440}.tag{color:#006;font-weight:bold}.atn{color:#404}.atv{color:#060}}
 </style>
-<link rel="alternate" href="//ateraimemo.com/?cmd=rssdiff" type="application/rss+xml" title="RSS" />
+<link rel="alternate" href="//ateraimemo.com/?cmd=rssdiff" type="application/rss+xml" title="‚Ä‚ñ‚Õ‚çƒƒ‚" />
 <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAFVBMVEX///+ZmZmCuGKZmZn///+q+Xzd+stVi+GoAAAAAnRSTlMAAHaTzTgAAABKSURBVHheZY5BCsBACAOzifr/JxcXi9WOpwxRhBaQDVJ49JgwTYpTS28jzcXc3XRQyII3t/hnmr45mIV1AbOxjZPLcJj6V2iUAA+UgAJpJuyTrAAAAABJRU5ErkJggg==" type="image/png" />
 </head>
 <body itemscope="itemscope" itemtype="http://schema.org/WebPage">
