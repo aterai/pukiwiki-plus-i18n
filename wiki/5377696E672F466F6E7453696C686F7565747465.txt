@@ -12,34 +12,35 @@ description: Fontから取得した字形の輪郭を抽出し、縁取りや内
 
 * サンプルコード [#u80cc8b3]
 #code(link){{
-public static Area getOuterShape(Shape shape) {
+private static Area getOuterShape(Shape shape) {
   Area area = new Area();
-  double[] coords = new double[6];
+  Path2D.Double path = new Path2D.Double();
   PathIterator pi = shape.getPathIterator(null);
-  Path2D.Double path = null;
-  while(!pi.isDone()) {
+  double[] coords = new double[6];
+  while (!pi.isDone()) {
     int pathSegmentType = pi.currentSegment(coords);
-    if(pathSegmentType == PathIterator.SEG_MOVETO) {
-      if(area.isEmpty() || !area.contains(coords[0], coords[1])) {
-        path = new Path2D.Double();
-        path.moveTo(coords[0], coords[1]);
-      }
-    }else if(path==null) {
-      pi.next();
-      continue;
-    }else if(pathSegmentType == PathIterator.SEG_LINETO) {
+    switch (pathSegmentType) {
+    case PathIterator.SEG_MOVETO:
+      path.moveTo(coords[0], coords[1]);
+      break;
+    case PathIterator.SEG_LINETO:
       path.lineTo(coords[0], coords[1]);
-    }else if(pathSegmentType == PathIterator.SEG_QUADTO) {
+      break;
+    case PathIterator.SEG_QUADTO:
       path.quadTo(coords[0], coords[1], coords[2], coords[3]);
-    }else if(pathSegmentType == PathIterator.SEG_CUBICTO) {
+      break;
+    case PathIterator.SEG_CUBICTO:
       path.curveTo(coords[0], coords[1], coords[2],
                    coords[3], coords[4], coords[5]);
-    }else if(pathSegmentType == PathIterator.SEG_CLOSE) {
+      break;
+    case PathIterator.SEG_CLOSE:
       path.closePath();
       area.add(new Area(path));
-      path = null;
-    }else{
+      path.reset();
+      break;
+    default:
       System.err.println("Unexpected value! " + pathSegmentType);
+      break;
     }
     pi.next();
   }
@@ -50,7 +51,7 @@ public static Area getOuterShape(Shape shape) {
 * 解説 [#k5b39527]
 上記のサンプルの下二行は、チェスの駒の字形から輪郭を取得し、それを使って縁取り、内部の塗り潰しを行う`Icon`を`JLabel`に配置して表示しています。
 
-字形(`Shape`)の輪郭は、`Shape#getPathIterator(...)`で字形からパスを取得し、開始点が一番外側にあるパスの集合を`Path2D`に変換、`Area`に追加することで作成しています。
+字形(`Shape`)の輪郭は、`Shape#getPathIterator(...)`で`PathIterator`を取得し、%%開始点が一番外側にある%%パスの集合を`Path2D`に変換、`Area`に追加することで作成しています。
 
 * 参考リンク [#l4dba66c]
 - [http://stackoverflow.com/questions/18686199/fill-unicode-characters-in-labels java - 'Fill' Unicode characters in labels - Stack Overflow]

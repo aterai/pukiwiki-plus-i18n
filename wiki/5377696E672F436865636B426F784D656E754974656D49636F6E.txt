@@ -4,6 +4,9 @@ tags: [JCheckBoxMenuItem, Icon, UIManager]
 author: aterai
 pubdate: 2009-09-14T14:19:06+09:00
 description: JCheckBoxMenuItemのチェックアイコンを変更します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2009/10/jcheckboxmenuitem-icon.html
+    lang: en
 ---
 * 概要 [#k2a3724f]
 `JCheckBoxMenuItem`のチェックアイコンを変更します。
@@ -15,16 +18,20 @@ description: JCheckBoxMenuItemのチェックアイコンを変更します。
 UIManager.put("CheckBoxMenuItem.checkIcon", new Icon() {
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
     Graphics2D g2 = (Graphics2D) g;
-    g2.translate(x,y);
-    ButtonModel m = ((AbstractButton)c).getModel();
-    g2.setPaint(m.isSelected()?Color.ORANGE:Color.GRAY);
+    g2.translate(x, y);
+    ButtonModel m = ((AbstractButton) c).getModel();
+    g2.setPaint(m.isSelected() ? Color.ORANGE : Color.GRAY);
     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
-    g2.fillOval( 0, 2, 10, 10 );
-    g2.translate(-x,-y);
+    g2.fillOval(0, 2, 10, 10);
+    g2.translate(-x, -y);
   }
-  @Override public int getIconWidth()  { return 14; }
-  @Override public int getIconHeight() { return 14; }
+  @Override public int getIconWidth()  {
+    return 14;
+  }
+  @Override public int getIconHeight() {
+    return 14;
+  }
 });
 menu.add(new JCheckBoxMenuItem("checkIcon test"));
 }}
@@ -100,7 +107,9 @@ class NimbusCheckIconTest {
   }
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
-      @Override public void run() { createAndShowGUI(); }
+      @Override public void run() {
+        createAndShowGUI();
+      }
     });
   }
 }
@@ -136,19 +145,19 @@ class MyCheckBoxMenuItemPainter extends AbstractRegionPainter {
   }
   private void paintcheckIconEnabled(Graphics2D g) {
       g.setPaint(Color.GREEN);
-      g.drawOval( 0, 0, 10, 10 );
+      g.drawOval(0, 0, 10, 10);
   }
   private void paintcheckIconMouseOver(Graphics2D g) {
       g.setPaint(Color.PINK);
-      g.drawOval( 0, 0, 10, 10 );
+      g.drawOval(0, 0, 10, 10);
   }
   private void paintcheckIconEnabledAndSelected(Graphics2D g) {
     g.setPaint(Color.ORANGE);
-    g.fillOval( 0, 0, 10, 10 );
+    g.fillOval(0, 0, 10, 10);
   }
   private void paintcheckIconSelectedAndMouseOver(Graphics2D g) {
     g.setPaint(Color.CYAN);
-    g.fillOval( 0, 0, 10, 10 );
+    g.fillOval(0, 0, 10, 10);
   }
 }
 }}
