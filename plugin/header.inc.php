@@ -33,8 +33,13 @@ function plugin_header_convert() {
             $tags_buf = $tags_buf . '<li><a href="/tags.html#' . $tag . '-ref"><span itemprop="keywords">' . $tag . '</span></a></li>';
         }
         if ($tags_buf != '') {
-            $tags_buf = '<ul class="tag_box inline"><li><i class="glyphicon-tags"></i></li>' . $tags_buf . '</ul>';
+            $tags_buf = '<ul class="tag_box inline"><li><span class="glyphicon-tags"></span></li>' . $tags_buf . '</ul>';
         }
+    }
+
+    $hreflang = '';
+    if ( isset($frontmatter['hreflang']) ) {
+        $hreflang = '<ul class="tag_box inline"><li><span class="glyphicon-list-alt"></span></li><li><a href="' . $frontmatter['hreflang']['href'] . '">' . $frontmatter['hreflang']['lang'] . '</a>';
     }
 
     $time  = $is_read ? get_filetime($_page) : 0;
@@ -82,6 +87,7 @@ $navi
 <div class="row">
 <div class="col-md-8 col-xs-12">
 $tags_buf
+$hreflang
 </div><!-- col-md-8 -->
 <div class="col-md-4 col-xs-12">
 <p class="text-right" style="line-height:1.6em">
