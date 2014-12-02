@@ -210,6 +210,8 @@ function catbody($title, $page, $body)
         $head_tags[] = '<link rel="alternate" href="' . $frontmatter['hreflang']['href'] . '" hreflang="' . $frontmatter['hreflang']['lang'] . '" />';
     }
 
+    $head_tags[] = '<link rel="alternate" href="' . $script . '?cmd=rssdiff" type="application/rss+xml" title="' . $page_title . '" />';
+
 	// Tags will be inserted into <head></head>
 	$head_tag = ! empty($head_tags) ? join("\n", $head_tags) ."\n" : '';
 	$foot_tag = ! empty($foot_tags) ? join("\n", $foot_tags) ."\n" : '';
