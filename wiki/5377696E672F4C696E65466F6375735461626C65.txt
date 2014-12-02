@@ -4,6 +4,9 @@ tags: [JTable, Focus, Border]
 author: aterai
 pubdate: 2006-06-05T12:54:07+09:00
 description: JTableのフォーカスをセルではなく、一行全体に掛かっているように表示します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2011/05/change-border-of-focused-row-in-jtable.html
+    lang: en
 ---
 * 概要 [#n5213a17]
 `JTable`のフォーカスをセルではなく、一行全体に掛かっているように表示します。
@@ -28,23 +31,23 @@ class DotBorder extends EmptyBorder {
   @Override public void paintBorder(
         Component c, Graphics g, int x, int y, int w, int h) {
     Graphics2D g2 = (Graphics2D) g;
-    g2.translate(x,y);
+    g2.translate(x, y);
     g2.setPaint(dotColor);
     g2.setStroke(dashed);
-    if(type.contains(Type.START)) {
-      g2.drawLine(0,0,0,h);
+    if (type.contains(Type.START)) {
+      g2.drawLine(0, 0, 0, h);
     }
-    if(type.contains(Type.END)) {
-      g2.drawLine(w-1,0,w-1,h);
+    if (type.contains(Type.END)) {
+      g2.drawLine(w - 1, 0, w - 1, h);
     }
-    if(c.getBounds().x%2==0) {
-      g2.drawLine(0,0,w,0);
-      g2.drawLine(0,h-1,w,h-1);
-    }else{
-      g2.drawLine(1,0,w,0);
-      g2.drawLine(1,h-1,w,h-1);
+    if (c.getBounds().x % 2 == 0) {
+      g2.drawLine(0, 0, w, 0);
+      g2.drawLine(0, h - 1, w, h - 1);
+    } else {
+      g2.drawLine(1, 0, w, 0);
+      g2.drawLine(1, h - 1, w, h - 1);
     }
-    g2.translate(-x,-y);
+    g2.translate(-x, -y);
   }
 }
 }}

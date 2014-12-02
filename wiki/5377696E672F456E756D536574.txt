@@ -4,6 +4,9 @@ tags: [JTable, EnumSet, JCheckBox, TableCellRenderer, TableCellEditor]
 author: aterai
 pubdate: 2012-05-21T14:20:44+09:00
 description: JTableの列にEnumSetを設定し、その状態をJCheckBoxを使ったレンダラーで表示します。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2011/03/checkboxes-in-jtable-cell.html
+    lang: en
 ---
 * 概要 [#fd986dd9]
 `JTable`の列に`EnumSet`を設定し、その状態を`JCheckBox`を使ったレンダラーで表示します。
@@ -26,9 +29,9 @@ private final Object[][] data = {
 #code{{
 @Override public Object getCellEditorValue() {
   EnumSet<Permissions> f = EnumSet.noneOf(Permissions.class);
-  if(buttons[0].isSelected()) f.add(Permissions.READ);
-  if(buttons[1].isSelected()) f.add(Permissions.WRITE);
-  if(buttons[2].isSelected()) f.add(Permissions.EXECUTE);
+  if (buttons[0].isSelected()) f.add(Permissions.READ);
+  if (buttons[1].isSelected()) f.add(Permissions.WRITE);
+  if (buttons[2].isSelected()) f.add(Permissions.EXECUTE);
   return f;
 }
 }}

@@ -4,6 +4,9 @@ tags: [JInternalFrame, Translucent, LookAndFeel, UIDefaults, Painter]
 author: aterai
 pubdate: 2008-12-01T15:04:38+09:00
 description: Synthを使ったLookAndFeelで、JInternalFrameを半透明にします。
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2011/02/translucent-jinternalframe-nimbus.html
+    lang: en
 ---
 * 概要 [#n658aabb]
 `Synth`を使った`LookAndFeel`で、`JInternalFrame`を半透明にします。
@@ -12,16 +15,16 @@ description: Synthを使ったLookAndFeelで、JInternalFrameを半透明にし�
 
 * サンプルコード [#m302be7e]
 #code(link){{
-try{
-  for(UIManager.LookAndFeelInfo laf: UIManager.getInstalledLookAndFeels())
-    if("Nimbus".equals(laf.getName())) {
+try {
+  for (UIManager.LookAndFeelInfo laf: UIManager.getInstalledLookAndFeels())
+    if ("Nimbus".equals(laf.getName())) {
       UIManager.setLookAndFeel(laf.getClassName());
       SynthLookAndFeel.setStyleFactory(
         new MySynthStyleFactory(SynthLookAndFeel.getStyleFactory()));
       break;
     }
   }
-}catch(Exception e) {
+} catch (Exception e) {
   e.printStackTrace();
 }
 }}
@@ -33,8 +36,8 @@ class MySynthStyleFactory extends SynthStyleFactory {
   }
   @Override public SynthStyle getStyle(JComponent c, Region id) {
     SynthStyle s = wrappedFactory.getStyle(c, id);
-    //if(id==Region.INTERNAL_FRAME_TITLE_PANE||id==Region.INTERNAL_FRAME) {
-    if(id==Region.INTERNAL_FRAME) {
+    //if (id == Region.INTERNAL_FRAME_TITLE_PANE||id == Region.INTERNAL_FRAME) {
+    if (id == Region.INTERNAL_FRAME) {
       s = new TranslucentSynthSytle(s);
     }
     return s;
@@ -49,15 +52,15 @@ class TranslucentSynthSytle extends SynthStyle {
     return new SynthPainter() {
       @Override public void paintInternalFrameBackground(SynthContext context,
                            Graphics g, int x, int y, int w, int h) {
-        g.setColor(new Color(100,200,100,100));
-        g.fillRoundRect(x,y,w-1,h-1,15,15);
+        g.setColor(new Color(100, 200, 100, 100));
+        g.fillRoundRect(x, y, w - 1, h - 1, 15, 15);
       }
     };
   }
   @Override public boolean isOpaque(SynthContext context) {
-    if(context.getRegion()==Region.INTERNAL_FRAME) {
+    if (context.getRegion() == Region.INTERNAL_FRAME) {
       return false;
-    }else{
+    } else {
       return style.isOpaque(context);
     }
   }

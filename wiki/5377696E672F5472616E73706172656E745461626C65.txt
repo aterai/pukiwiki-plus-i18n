@@ -3,10 +3,14 @@ title: JTableを半透明にする
 tags: [JTable, Transparent, Translucent, TableCellEditor, JViewport, JCheckBox]
 author: aterai
 pubdate: 2010-08-02T19:24:12+09:00
-description: JTableに透明、半透明の背景色を設定します。
+description: JTable自体をsetOpaque(false)で透明に、またセル描画に使用されるJTableの背景色を半透明にするなどの設定で、半透明のJTableを作成します。
+
+hreflang:
+    href: http://java-swing-tips.blogspot.com/2010/08/transparent-translucent-jtable.html
+    lang: en
 ---
 * 概要 [#n1e3aa38]
-`JTable`に透明、半透明の背景色を設定します。
+`JTable`自体を`setOpaque(false)`で透明に、またセル描画に使用される`JTable`の背景色を半透明にするなどの設定で、半透明の`JTable`を作成します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTV-0biw5I/AAAAAAAAAog/GI9-wLqeOK8/s800/TransparentTable.png)
 
@@ -17,10 +21,10 @@ JScrollPane scroll = new JScrollPane(table) {
   @Override protected JViewport createViewport() {
     return new JViewport() {
       @Override public void paintComponent(Graphics g) {
-        if(texture!=null) {
+        if (texture != null) {
           Graphics2D g2 = (Graphics2D) g;
           g2.setPaint(texture);
-          g2.fillRect(0,0,getWidth(),getHeight());
+          g2.fillRect(0, 0, getWidth(), getHeight());
         }
         super.paintComponent(g);
       }
@@ -58,27 +62,27 @@ class TranslucentBooleanRenderer extends JCheckBox implements TableCellRenderer 
   }
   @Override public Component getTableCellRendererComponent(
       JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    if(isSelected) {
+    if (isSelected) {
       setOpaque(true);
       setForeground(table.getSelectionForeground());
       super.setBackground(table.getSelectionBackground());
-    }else{
+    } else {
       setOpaque(false);
       setForeground(table.getForeground());
       setBackground(table.getBackground());
     }
-    setSelected((value != null && ((Boolean)value).booleanValue()));
-    if(hasFocus) {
+    setSelected((value != null && ((Boolean) value).booleanValue()));
+    if (hasFocus) {
       setBorder(UIManager.getBorder("Table.focusCellHighlightBorder"));
-    }else{
+    } else {
       setBorder(noFocusBorder);
     }
     return this;
   }
   @Override protected void paintComponent(Graphics g) {
-    if(!isOpaque()) {
+    if (!isOpaque()) {
       g.setColor(getBackground());
-      g.fillRect(0,0,getWidth(),getHeight());
+      g.fillRect(0, 0, getWidth(), getHeight());
     }
     super.paintComponent(g);
   }
