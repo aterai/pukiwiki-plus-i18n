@@ -12,7 +12,7 @@ description: JEditorPaneのHTMLEditorKitからStyleSheetを取得し、list-styl
 
 * サンプルコード [#pb688939]
 #code(link){{
-HTMLEditorKit htmlEditorKit = (HTMLEditorKit)pane.getEditorKit();
+HTMLEditorKit htmlEditorKit = (HTMLEditorKit) pane.getEditorKit();
 StyleSheet styleSheet = htmlEditorKit.getStyleSheet();
 String u = getClass().getResource(bullet).toString();
 styleSheet.addRule(String.format("ul{list-style-image:url(%s);margin:0px 20px;}", u));
@@ -40,7 +40,7 @@ styleSheet.addRule("ul{list-style-type:circle;margin:0px 20px;}");
 
 #code{{
 styleSheet.addRule("ul{list-style-type:none;margin:0px 20px;}");
-styleSheet.addRule("ul li:before{content: "\u00BB";}");
+styleSheet.addRule("ul li:before{content:'\u00BB';}");
 }}
 
 ----

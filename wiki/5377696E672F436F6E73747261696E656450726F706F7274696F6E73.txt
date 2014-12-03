@@ -12,13 +12,14 @@ description: JFrameの幅と高さの比率が一定になるように制限し�
 
 * サンプルコード [#ff7d99b8]
 #code(link){{
-final int mw = 320;
-final int mh = 200;
+private static final int MW = 320;
+private static final int MH = 200;
+//...
 frame.addComponentListener(new ComponentAdapter() {
   @Override public void componentResized(ComponentEvent e) {
     int fw = frame.getSize().width;
-    int fh = mh*fw/mw;
-    frame.setSize((mw>fw)?mw:fw, (mh>fh)?mh:fh);
+    int fh = MH * fw / MW;
+    frame.setSize(MW > fw ? MW : fw, MH > fh ? MH : fh);
   }
 });
 }}
