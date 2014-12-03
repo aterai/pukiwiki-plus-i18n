@@ -3,10 +3,10 @@ title: JTreeの葉ノードだけ編集可能にする
 tags: [JTree, TreeCellEditor, TreeNode]
 author: aterai
 pubdate: 2010-04-12T18:23:41+09:00
-description: JTreeの葉ノードだけ編集可能にします。
+description: JTreeのノードラベル編集が、葉ノードの場合だけ可能になるよう設定します。
 ---
 * 概要 [#ja3545ca]
-`JTree`の葉ノードだけ編集可能にします。
+`JTree`のノードラベル編集が、葉ノードの場合だけ可能になるよう設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPB-TVk9I/AAAAAAAAAdU/Aq5YDSMvqaY/s800/LeafTreeCellEditor.png)
 
@@ -19,9 +19,9 @@ class LeafTreeCellEditor extends DefaultTreeCellEditor {
   @Override public boolean isCellEditable(java.util.EventObject e) {
     boolean b = super.isCellEditable(e);
     Object o = tree.getLastSelectedPathComponent();
-    if(b && o instanceof TreeNode) {
-      return ((TreeNode)o).isLeaf();
-    }else{
+    if (b && o instanceof TreeNode) {
+      return ((TreeNode) o).isLeaf();
+    } else {
       return b;
     }
   }
@@ -32,7 +32,7 @@ class LeafTreeCellEditor extends DefaultTreeCellEditor {
 上記のサンプルでは、`CellEditor#isCellEditable`メソッドを葉ノードの場合だけ、編集を開始できるようにオーバーライドしたセルエディタを作成、設定しています。
 
 #code{{
-tree.setCellEditor(new LeafTreeCellEditor(tree, (DefaultTreeCellRenderer)tree.getCellRenderer()));
+tree.setCellEditor(new LeafTreeCellEditor(tree, (DefaultTreeCellRenderer) tree.getCellRenderer()));
 }}
 
 ルートノードなどの枝ノードは、トリプルクリックしても編集不可になっています。

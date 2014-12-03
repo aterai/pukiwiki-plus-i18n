@@ -3,10 +3,10 @@ title: Look and Feelの変更
 tags: [LookAndFeel, JMenuBar]
 author: aterai
 pubdate: 2003-11-24
-description: アプリケーションのLook and Feelを変更します。
+description: メニューバーから選択したLook and Feelを起動中のアプリケーションに適用します。
 ---
 * 概要 [#a86ced2d]
-アプリケーションの`Look and Feel`を変更します。以下のサンプルコードは、`%JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java`から引用改変したものです。
+メニューバーから選択した`Look and Feel`を起動中のアプリケーションに適用します。以下のサンプルコードは、`%JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java`から引用改変したものです。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPf78s81I/AAAAAAAAAeE/DIOTnqtAOnY/s800/LookAndFeel.png)
 
@@ -14,15 +14,16 @@ description: アプリケーションのLook and Feelを変更します。
 #code(link){{
 //%JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java
 // Possible Look & Feels
-private static final String mac     = "com.sun.java.swing.plaf.mac.MacLookAndFeel";
-private static final String metal   = "javax.swing.plaf.metal.MetalLookAndFeel";
-private static final String motif   = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
-private static final String windows = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
-private static final String gtk     = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
-private static final String nimbus  = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+private static final String MAC     = "com.sun.java.swing.plaf.mac.MacLookAndFeel";
+private static final String METAL   = "javax.swing.plaf.metal.MetalLookAndFeel";
+private static final String MOTIF   = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+private static final String WINDOWS = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+private static final String GTK     = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+//private static final String NIMBUS  = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"; // JDK 1.6.0_10
+private static final String NIMBUS  = "javax.swing.plaf.nimbus.NimbusLookAndFeel"; // JDK 1.7.0
 
 // The current Look & Feel
-private static String currentLookAndFeel = metal;
+private static String currentLookAndFeel = METAL;
 private final ButtonGroup lafMenuGroup = new ButtonGroup();
 public JMenuItem createLafMenuItem(JMenu menu, String label, String laf) {
   JMenuItem mi = menu.add(new JRadioButtonMenuItem(label));
@@ -32,16 +33,16 @@ public JMenuItem createLafMenuItem(JMenu menu, String label, String laf) {
   return mi;
 }
 protected static boolean isAvailableLookAndFeel(String laf) {
-  try{
+  try {
     Class lnfClass = Class.forName(laf);
-    LookAndFeel newLAF = (LookAndFeel)(lnfClass.newInstance());
+    LookAndFeel newLAF = (LookAndFeel) lnfClass.newInstance();
     return newLAF.isSupportedLookAndFeel();
-  }catch(Exception e) {
+  } catch (Exception e) {
     return false;
   }
 }
 //...
-private class ChangeLookAndFeelAction extends AbstractAction{
+private class ChangeLookAndFeelAction extends AbstractAction {
   private final String laf;
   protected ChangeLookAndFeelAction(String laf) {
     super("ChangeTheme");
@@ -52,12 +53,12 @@ private class ChangeLookAndFeelAction extends AbstractAction{
   }
 }
 private void setLookAndFeel(String laf) {
-  if(currentLookAndFeel.equals(laf)) return;
+  if (currentLookAndFeel.equals(laf)) return;
   currentLookAndFeel = laf;
-  try{
+  try {
     UIManager.setLookAndFeel(currentLookAndFeel);
     SwingUtilities.updateComponentTreeUI(frame);
-  }catch(Exception ex) {
+  } catch (Exception ex) {
     ex.printStackTrace();
     System.out.println("Failed loading L&F: " + currentLookAndFeel);
   }
