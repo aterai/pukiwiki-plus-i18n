@@ -30,7 +30,7 @@ function plugin_header_convert() {
         $contents = array_map("htmlspecialchars", $tags);
         foreach ( $contents as $tag ) {
             $tag = trim($tag);
-            $tags_buf = $tags_buf . '<li><a href="/tags.html#' . $tag . '-ref"><span itemprop="keywords">' . $tag . '</span></a></li>';
+            $tags_buf = $tags_buf . '<li><a href="/tags.html#' . $tag . '-ref" rel="tag"><span itemprop="keywords">' . $tag . '</span></a></li>';
         }
         if ($tags_buf != '') {
             $tags_buf = '<ul class="tag_box inline"><li><span class="glyphicon-tags"></span></li>' . $tags_buf . '</ul>';
@@ -39,7 +39,9 @@ function plugin_header_convert() {
 
     $hreflang = '';
     if ( isset($frontmatter['hreflang']) ) {
-        $hreflang = '<ul class="tag_box inline"><li><span class="glyphicon-list-alt"></span></li><li><a href="' . $frontmatter['hreflang']['href'] . '">' . $frontmatter['hreflang']['lang'] . '</a>';
+        $lng = $frontmatter['hreflang']['lang'];
+        $hrf = $frontmatter['hreflang']['href'];
+        $hreflang = '<ul class="tag_box inline"><li><span class="glyphicon-list-alt"></span></li><li><a rel="alternate" hreflang="' . $lng . '" href="' . $hrf . '">' . $lng . '</a>';
     }
 
     $time  = $is_read ? get_filetime($_page) : 0;
