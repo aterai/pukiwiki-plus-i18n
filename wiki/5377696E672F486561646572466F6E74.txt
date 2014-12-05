@@ -17,7 +17,7 @@ class HeaderRenderer implements TableCellRenderer {
   @Override public Component getTableCellRendererComponent(JTable t,
       Object val, boolean isS, boolean hasF, int row, int col) {
     TableCellRenderer r = t.getTableHeader().getDefaultRenderer();
-    JLabel l = (JLabel)r.getTableCellRendererComponent(t, val, isS, hasF, row, col);
+    JLabel l = (JLabel) r.getTableCellRendererComponent(t, val, isS, hasF, row, col);
     l.setFont(font);
     return l;
   }
@@ -34,7 +34,7 @@ class HeaderRenderer implements TableCellRenderer {
 - 字揃えを変更する場合の注意点: [[JTableHeaderの字揃えを変更>Swing/HorizontalAlignmentHeaderRenderer]]
 
 ----
-コメントで[[いつも見てます]]さんが指摘しているように、以下の様に`JTableHeader#setFont()`メソッドを使用すると、全ヘッダカラムのフォントを指定することができます。
+コメントで&user(いつも見てます);さんが指摘しているように、以下の様に`JTableHeader#setFont()`メソッドを使用すると、全ヘッダカラムのフォントを指定することができます。
 
 #code{{
 table.getTableHeader().setFont(font);
