@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        <pre> to <textarea>
-// @namespace   http://terai.xrea.jp/
+// @namespace   http://ateraimemo.com/
 // @include     http://*
 // @exclude     http://*.google.*
 // @description pre <-> textarea
-// @version     1.0.6
+// @version     1.0.9
 // ==/UserScript==
 // Double Click <PRE>, open <TEXTAREA>
 // Test: Clipboard API and events
@@ -21,6 +21,7 @@
 // ESC or Ctrl+[ or Ctrl+Shift+Click in <TEXTAREA>, restore <PRE>
 
 (function() {
+  window.URL = window.URL || window.webkitURL;
   function makeDragDownloadLink(text, mimeType, fileName) {
     var blob = new Blob([text], {type: mimeType+';charset=UTF-8'}),
         a = document.createElement('a'),
@@ -30,6 +31,7 @@
           e.dataTransfer.setData("DownloadURL", [mimeType,fileName,this.href].join(':'));
           break;
       case 'dragend':
+          window.URL.revokeObjectURL(this.href);
           this.parentNode.removeChild(this);
       }
     };
@@ -41,7 +43,6 @@
 //     a.href = "javascript:void(0)";
 //     a.setAttribute("onclick", "window.saveAs(blob, 'tempfile.java');");
 
-    window.URL = window.URL || window.webkitURL;
     a.href = window.URL.createObjectURL(blob);
 
 //     if(window.createObjectURL) {
@@ -56,7 +57,7 @@
     return a;
   }
   function getFileName(code) {
-    var r = code.match(/public(?:\s|final)+(?:class|interface|enum)\s+([^{\s]+)/m);
+    var r = code.match(/public(?:\s|final)+(?:class|interface|enum)\s+([^<{\s]+)/m);
     return (r ? r[1] : 'Unknown') + '.java';
   }
   function pre2text(pre) {
@@ -68,14 +69,12 @@
     var a = tx.downloadLink;
     tx.parentNode.replaceChild(tx.originalPre, tx);
     if(a!=null && a.parentNode) {
+      window.URL.revokeObjectURL(a.href);
       a.parentNode.removeChild(a);
     }
   }
   var listener = function(e) {
-    var tx = document.createElement("textarea"),
-      rect = this.getBoundingClientRect(),
-      name, ret,
-    closeListener = function(e) {
+    var closeListener = function(e) {
       switch(e.type) {
       case 'copy':
       case 'cut':
@@ -92,7 +91,9 @@
       case 'dblclick':
         cleanup(this);
       }
-    };
+    },
+    rect = this.getBoundingClientRect(),
+    tx = document.createElement("textarea");
     tx.addEventListener('copy',     closeListener, false);
     tx.addEventListener('cut',      closeListener, false);
     tx.addEventListener("keydown",  closeListener, false);
@@ -111,11 +112,11 @@
     //chrome ext???
     //alert(document.execCommand("copy", false, null));
 
-    name = getFileName(tx.value),
-    name = ((ret = prompt("FileName", name))!=null) ? ret : name;
-
-    tx.downloadLink = makeDragDownloadLink(tx.value, 'text/plain', name);
+    //name = getFileName(tx.value),
+    //name = ((ret = prompt("FileName", name))!=null) ? ret : name;
+    tx.downloadLink = makeDragDownloadLink(tx.value, 'text/plain', getFileName(tx.value));
     tx.parentNode.insertBefore(tx.downloadLink, tx.nextSibling);
+    tx.downloadLink.click();
   },
   pre = document.getElementsByTagName("pre"),
   i = 0, len = pre.length;
