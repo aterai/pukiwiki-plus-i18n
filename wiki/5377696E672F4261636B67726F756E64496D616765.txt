@@ -16,9 +16,9 @@ description: JPanelの背景に画像をタイル状に並べて表示します�
   Dimension d = getSize();
   int w = bgimage.getIconWidth();
   int h = bgimage.getIconHeight();
-  for(int i=0;i*w<d.width;i++) {
-    for(int j=0;j*h<d.height;j++) {
-      g.drawImage(bgimage.getImage(), i*w, j*h, w, h, this);
+  for (int i = 0; i * w < d.width; i++) {
+    for (int j = 0; j * h < d.height; j++) {
+      g.drawImage(bgimage.getImage(), i * w, j * h, w, h, this);
     }
   }
   super.paintComponent(g);
