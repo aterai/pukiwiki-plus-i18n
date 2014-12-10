@@ -210,7 +210,7 @@ function catbody($title, $page, $body)
         $head_tags[] = '<link rel="alternate" href="' . $frontmatter['hreflang']['href'] . '" hreflang="' . $frontmatter['hreflang']['lang'] . '" />';
     }
 
-    $head_tags[] = '<link rel="alternate" href="' . $script . '?cmd=rssdiff" type="application/rss+xml" title="' . $page_title . '" />';
+    $head_tags[] = '<link rel="alternate" href="' . $script . '?cmd=rssdiff" type="application/rss+xml" title="' . $page_title . ' - RSS" />';
 
 	// Tags will be inserted into <head></head>
 	$head_tag = ! empty($head_tags) ? join("\n", $head_tags) ."\n" : '';
@@ -407,6 +407,7 @@ function edit_form_assistant()
 	if ($assist_loaded === FALSE) {
 		$assist_loaded = TRUE;
 		$map = <<<EOD
+$head_tags
 <map id="map_button" name="map_button">
 <area shape="rect" coords="0,0,22,16" title="URL" alt="URL" href="#" onclick="javascript:pukiwiki_linkPrompt('url'); return false;" />
 <area shape="rect" coords="24,0,40,16" title="B" alt="B" href="#" onclick="javascript:pukiwiki_tag('b'); return false;" />
