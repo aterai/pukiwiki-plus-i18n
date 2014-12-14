@@ -19,7 +19,7 @@ class TransparentMenu extends JMenu {
   //http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4688783
   private JPopupMenu popupMenu;
   private void ensurePopupMenuCreated() {
-    if(popupMenu == null) {
+    if (popupMenu == null) {
       this.popupMenu = new TranslucentPopupMenu();
       popupMenu.setInvoker(this);
       popupListener = createWinListener(popupMenu);
@@ -36,7 +36,7 @@ class TransparentMenu extends JMenu {
   }
   @Override public Component add(Component c) {
     ensurePopupMenuCreated();
-    if(c instanceof JComponent) {
+    if (c instanceof JComponent) {
       ((JComponent)c).setOpaque(false);
     }
     popupMenu.add(c);
@@ -47,14 +47,14 @@ class TransparentMenu extends JMenu {
     popupMenu.addSeparator();
   }
   @Override public void insert(String s, int pos) {
-    if(pos < 0) {
+    if (pos < 0) {
       throw new IllegalArgumentException("index less than zero.");
     }
     ensurePopupMenuCreated();
     popupMenu.insert(new JMenuItem(s), pos);
   }
   @Override public JMenuItem insert(JMenuItem mi, int pos) {
-    if(pos < 0) {
+    if (pos < 0) {
       throw new IllegalArgumentException("index less than zero.");
     }
     ensurePopupMenuCreated();
@@ -62,11 +62,11 @@ class TransparentMenu extends JMenu {
     return mi;
   }
   @Override public void insertSeparator(int index) {
-    if(index < 0) {
+    if (index < 0) {
       throw new IllegalArgumentException("index less than zero.");
     }
     ensurePopupMenuCreated();
-    popupMenu.insert( new JPopupMenu.Separator(), index );
+    popupMenu.insert(new JPopupMenu.Separator(), index);
   }
   @Override public boolean isPopupMenuVisible() {
     ensurePopupMenuCreated();
@@ -114,20 +114,20 @@ class TranslucentPopupMenu extends JPopupMenu {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
         Window p = SwingUtilities.getWindowAncestor(TranslucentPopupMenu.this);
-        if(p!=null && p instanceof JWindow) {
-          JWindow w = (JWindow)p;
+        if (p != null && p instanceof JWindow) {
+          JWindow w = (JWindow) p;
           w.setBackground(ALPHA_ZERO);
           System.out.format("HeavyWeightWindow: %s, JPopupMenu: %s\n", w.getName(), getName());
-          Container c = (Container)w.getContentPane();
-          while(c!=null && c instanceof JComponent) {
-            JComponent jc = (JComponent)c;
+          Container c = (Container) w.getContentPane();
+          while (c != null && c instanceof JComponent) {
+            JComponent jc = (JComponent) c;
             System.out.format("%s: %s\n", c.getClass().getName(), jc.isOpaque());
-            if(jc.isOpaque()) {
+            if (jc.isOpaque()) {
               jc.setOpaque(false);
             }
             c = c.getParent();
           }
-        }else{
+        } else {
           System.out.println("Light weight");
         }
       }

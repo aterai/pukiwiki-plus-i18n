@@ -16,35 +16,35 @@ private ClipboardService cs;
 }}
 
 #code{{
-try{
-  cs = (ClipboardService)ServiceManager.lookup("javax.jnlp.ClipboardService");
-}catch(Throwable t) {
+try {
+  cs = (ClipboardService) ServiceManager.lookup("javax.jnlp.ClipboardService");
+} catch (Throwable t) {
   cs = null;
 }
 JTextArea textArea = new JTextArea() {
   @Override public void copy() {
-    if(cs != null) {
+    if (cs != null) {
       cs.setContents(new StringSelection(getSelectedText()));
     }
     super.copy();
   }
   @Override public void cut() {
-    if(cs != null) {
+    if (cs != null) {
       cs.setContents(new StringSelection(getSelectedText()));
     }
     super.cut();
   }
   @Override public void paste() {
-    if(cs != null) {
+    if (cs != null) {
       Transferable tr = cs.getContents();
-      if(tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-        try{
+      if (tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+        try {
           getTransferHandler().importData(this, tr);
-        }catch(Exception e) {
+        } catch (Exception e) {
           e.printStackTrace();
         }
       }
-    }else{
+    } else {
       super.paste();
     }
   }

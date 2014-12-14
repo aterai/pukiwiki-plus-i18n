@@ -14,52 +14,53 @@ description: GlyphVectorを使って、ラベルの文字列を折り返して�
 #code(link){{
 class WrappedLabel extends JLabel {
   private GlyphVector gvtext;
+  private int width = -1;
   public WrappedLabel() {
     this(null);
   }
   public WrappedLabel(String str) {
     super(str);
   }
-  private int prevwidth = -1;
   @Override public void doLayout() {
     Insets i = getInsets();
-    int w = getWidth()-i.left-i.right;
-    if(w!=prevwidth) {
+    int w = getWidth() - i.left - i.right;
+    if (w != width) {
       Font font = getFont();
       FontMetrics fm = getFontMetrics(font);
       FontRenderContext frc = fm.getFontRenderContext();
       gvtext = getWrappedGlyphVector(getText(), w, font, frc);
-      prevwidth = w;
+      width = w;
     }
     super.doLayout();
   }
   @Override protected void paintComponent(Graphics g) {
-    Graphics2D g2 = (Graphics2D) g;
-    if(gvtext!=null) {
-      Insets i = getInsets();
-      g2.setPaint(Color.RED);
-      g2.drawGlyphVector(gvtext, i.left, getFont().getSize()+i.top);
-    }else{
+    if (gvtext == null) {
       super.paintComponent(g);
+    } else {
+      Insets i = getInsets();
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setPaint(Color.RED);
+      g2.drawGlyphVector(gvtext, i.left, getFont().getSize() + i.top);
+      g2.dispose();
     }
   }
   private GlyphVector getWrappedGlyphVector(
       String str, float width, Font font, FontRenderContext frc) {
-    Point2D gmPos  = new Point2D.Double(0.0d, 0.0d);
-    GlyphVector gv   = font.createGlyphVector(frc, str);
-    float lineheight = (float) (gv.getLogicalBounds().getHeight());
-    float xpos     = 0.0f;
-    float advance  = 0.0f;
-    int   lineCount  = 0;
+    Point2D gmPos = new Point2D.Double(0d, 0d);
+    GlyphVector gv = font.createGlyphVector(frc, str);
+    float lineheight = (float)(gv.getLogicalBounds().getHeight());
+    float xpos = 0f;
+    float advance = 0f;
+    int lineCount = 0;
     GlyphMetrics gm;
-    for(int i=0;i<gv.getNumGlyphs();i++) {
+    for (int i = 0; i < gv.getNumGlyphs(); i++) {
       gm = gv.getGlyphMetrics(i);
       advance = gm.getAdvance();
-      if(xpos<width && width<=xpos+advance) {
+      if (xpos < width && width <= xpos + advance) {
         lineCount++;
-        xpos = 0.0f;
+        xpos = 0f;
       }
-      gmPos.setLocation(xpos, lineheight*lineCount);
+      gmPos.setLocation(xpos, lineheight * lineCount);
       gv.setGlyphPosition(i, gmPos);
       xpos = xpos + advance;
     }
@@ -104,7 +105,7 @@ class WrappingLabel extends JLabel {
     AttributedCharacterIterator aci = as.getIterator();
     FontRenderContext frc = g2.getFontRenderContext();
     LineBreakMeasurer lbm = new LineBreakMeasurer(aci, frc);
-    while(lbm.getPosition() < aci.getEndIndex()) {
+    while (lbm.getPosition() < aci.getEndIndex()) {
       TextLayout tl = lbm.nextLayout(w);
       tl.draw(g2, x, y + tl.getAscent());
       y += tl.getDescent() + tl.getLeading() + tl.getAscent();

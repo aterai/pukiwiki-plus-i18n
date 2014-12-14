@@ -12,11 +12,11 @@ description: AuxiliaryLookAndFeelを追加して、WindowsLookAndFeelの場合�
 
 * サンプルコード [#lc13bf97]
 #code(link){{
-JCheckBox check = (JCheckBox)e.getSource();
+JCheckBox check = (JCheckBox) e.getSource();
 String lnf = UIManager.getLookAndFeel().getName();
-if(check.isSelected() && lnf.contains("Windows")) {
+if (check.isSelected() && lnf.contains("Windows")) {
   UIManager.addAuxiliaryLookAndFeel(auxLookAndFeel);
-}else{
+} else {
   UIManager.removeAuxiliaryLookAndFeel(auxLookAndFeel);
 }
 SwingUtilities.updateComponentTreeUI(MainPanel.this);
@@ -38,12 +38,12 @@ public class AuxiliaryWindowsComboBoxUI extends WindowsComboBoxUI {
   @Override public void addEditor() {
     removeEditor();
     ComboBoxEditor cbe = comboBox.getEditor();
-    if(cbe != null) {
+    if (cbe != null) {
       editor = cbe.getEditorComponent();
-      if(editor != null) {
+      if (editor != null) {
         configureEditor();
         comboBox.add(editor);
-        if(comboBox.isFocusOwner()) {
+        if (comboBox.isFocusOwner()) {
           editor.requestFocusInWindow();
         }
       }

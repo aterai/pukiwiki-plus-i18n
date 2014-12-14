@@ -22,15 +22,15 @@ class WatermarkPasswordField extends JPasswordField
   }
   @Override public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    if(showWatermark) {
+    if (showWatermark) {
       Graphics2D g2 = (Graphics2D) g.create();
       Insets i = getInsets();
       Font font = getFont();
       FontRenderContext frc = g2.getFontRenderContext();
       TextLayout tl = new TextLayout("Password", font, frc);
-      g2.setPaint(hasFocus()?Color.GRAY:Color.BLACK);
+      g2.setPaint(hasFocus() ? Color.GRAY : Color.BLACK);
       int baseline = getBaseline(getWidth(), getHeight());
-      tl.draw(g2, i.left+1, baseline);
+      tl.draw(g2, i.left + 1, baseline);
       g2.dispose();
     }
   }
@@ -38,15 +38,15 @@ class WatermarkPasswordField extends JPasswordField
     repaint();
   }
   @Override public void focusLost(FocusEvent e) {
-    showWatermark = getPassword().length==0;
+    showWatermark = getPassword().length == 0;
     repaint();
   }
   @Override public void insertUpdate(DocumentEvent e) {
-    showWatermark = e.getDocument().getLength()==0;
+    showWatermark = e.getDocument().getLength() == 0;
     repaint();
   }
   @Override public void removeUpdate(DocumentEvent e) {
-    showWatermark = e.getDocument().getLength()==0;
+    showWatermark = e.getDocument().getLength() == 0;
     repaint();
   }
   @Override public void changedUpdate(DocumentEvent e) {}
