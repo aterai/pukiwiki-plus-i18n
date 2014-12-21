@@ -14,7 +14,7 @@ description: JTableにフォーカスがある状態でキー入力をした場�
 #code(link){{
 //@see javax/swing/plaf/basic/BasicListUI.Handler
 //@see javax/swing/plaf/basic/BasicTreeUI.Handler
-class TableNextMatchKeyHandler extends KeyAdapter{
+class TableNextMatchKeyHandler extends KeyAdapter {
   private static final int TARGET_COLUMN = 0;
   private String prefix = "";
   private String typedString = "";
@@ -28,13 +28,13 @@ class TableNextMatchKeyHandler extends KeyAdapter{
     JTable t = (JTable)e.getSource();
     InputMap im = t.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     KeyStroke key = KeyStroke.getKeyStrokeForEvent(e);
-    if(im != null && im.get(key) != null) {
+    if (im != null && im.get(key) != null) {
       return true;
     }
     return false;
   }
   @Override public void keyPressed(KeyEvent e) {
-    if(isNavigationKey(e)) {
+    if (isNavigationKey(e)) {
       prefix = "";
       typedString = "";
       lastTime = 0L;
@@ -43,7 +43,7 @@ class TableNextMatchKeyHandler extends KeyAdapter{
   @Override public void keyTyped(KeyEvent e) {
     JTable src = (JTable)e.getSource();
     int max = src.getRowCount();
-    if(max == 0 || e.isAltDown() || isNavigationKey(e)) {
+    if (max == 0 || e.isAltDown() || isNavigationKey(e)) {
       // Nothing to select
       return;
     }
@@ -52,39 +52,39 @@ class TableNextMatchKeyHandler extends KeyAdapter{
     int increment = e.isShiftDown() ? -1 : 1;
     long time = e.getWhen();
     int startIndex = src.getSelectedRow();
-    if(time - lastTime < timeFactor) {
+    if (time - lastTime < timeFactor) {
       typedString += c;
-      if((prefix.length() == 1) && (c == prefix.charAt(0))) {
+      if ((prefix.length() == 1) && (c == prefix.charAt(0))) {
         // Subsequent same key presses move the keyboard focus to the next
         // object that starts with the same letter.
         startIndex += increment;
-      }else{
+      } else {
         prefix = typedString;
       }
-    }else{
+    } else {
       startIndex += increment;
       typedString = "" + c;
       prefix = typedString;
     }
     lastTime = time;
 
-    if(startIndex < 0 || startIndex >= max) {
-      if(e.isShiftDown()) {
-        startIndex = max-1;
-      }else{
+    if (startIndex < 0 || startIndex >= max) {
+      if (e.isShiftDown()) {
+        startIndex = max - 1;
+      } else {
         startingFromSelection = false;
         startIndex = 0;
       }
     }
-    Position.Bias bias = e.isShiftDown()?Position.Bias.Backward
-                                        :Position.Bias.Forward;
+    Position.Bias bias = e.isShiftDown() ? Position.Bias.Backward
+                         : Position.Bias.Forward;
     int index = getNextMatch(src, prefix, startIndex, bias);
-    if(index >= 0) {
+    if (index >= 0) {
       src.getSelectionModel().setSelectionInterval(index, index);
       src.scrollRectToVisible(src.getCellRect(index, TARGET_COLUMN, true));
-    }else if(startingFromSelection) { // wrap
+    } else if (startingFromSelection) { // wrap
       index = getNextMatch(src, prefix, 0, bias);
-      if(index >= 0) {
+      if (index >= 0) {
         src.getSelectionModel().setSelectionInterval(index, index);
         src.scrollRectToVisible(src.getCellRect(index, TARGET_COLUMN, true));
       }
@@ -93,12 +93,12 @@ class TableNextMatchKeyHandler extends KeyAdapter{
   //@see JList#getNextMatch(String prefix, int startIndex, Position.Bias bias)
   //@see JTree#getNextMatch(String prefix, int startIndex, Position.Bias bias)
   public static int getNextMatch(
-      JTable table, String prefix, int startingRow, Position.Bias bias) {
+    JTable table, String prefix, int startingRow, Position.Bias bias) {
     int max = table.getRowCount();
-    if(prefix == null) {
+    if (prefix == null) {
       throw new IllegalArgumentException();
     }
-    if(startingRow < 0 || startingRow >= max) {
+    if (startingRow < 0 || startingRow >= max) {
       throw new IllegalArgumentException();
     }
     String uprefix = prefix.toUpperCase(Locale.ENGLISH);
@@ -106,14 +106,14 @@ class TableNextMatchKeyHandler extends KeyAdapter{
     // selected element
     int increment = (bias == Position.Bias.Forward) ? 1 : -1;
     int row = startingRow;
-    do{
+    do {
       Object value = table.getValueAt(row, TARGET_COLUMN);
       String text = Objects.toString(value, "");
       if (text.toUpperCase(Locale.ENGLISH).startsWith(uprefix)) {
         return row;
       }
       row = (row + increment + max) % max;
-    }while(row != startingRow);
+    } while (row != startingRow);
     return -1;
   }
 }

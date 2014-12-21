@@ -1,0 +1,40 @@
+---
+title: JInternalFrameのタイトルバーに表示されるアイコンを変更する
+tags: [JInternalFrame, JDesktopPane, Icon]
+author: aterai
+pubdate: 2014-12-22T00:07:25+09:00
+description: JInternalFrameのタイトルバー左上隅に表示されるアイコンを各JInternalFrame毎に設定します。
+---
+* 概要 [#h32f2162]
+`JInternalFrame`のタイトルバー左上隅に表示されるアイコンを各`JInternalFrame`毎に設定します。
+
+#download(https://lh3.googleusercontent.com/-rFS_L31nMfg/VJbgMqwW0UI/AAAAAAAANtY/z1JvoM0odco/s800/InternalFrameTitleIcon.png)
+
+* サンプルコード [#o5611239]
+#code(link){{
+int idx = 0;
+for (Color c: Arrays.asList(Color.RED, Color.GREEN, Color.BLUE)) {
+  String s = String.format("Document #%s", ++idx);
+  JInternalFrame f = new JInternalFrame(s, true, true, true, true);
+  desktop.add(f);
+  f.setFrameIcon(new ColorIcon(c));
+  f.setSize(240, 120);
+  f.setLocation(10 + 20 * idx, 20 * idx);
+  f.setVisible(true);
+}
+}}
+
+* 解説 [#ge1c3343]
+上記のサンプルでは、`JInternalFrame#setFrameIcon(Icon)`を使用して、それぞれ違う色をもつサイズ`16x16`のアイコンを設定しています。
+
+- `WindowsLookAndFeel`
+-- 縮小化(アイコン化)したとき、`JInternalFrame#setFrameIcon(Icon)`で設定したアイコンのサイズが拡大される
+- `MotifLookAndFeel`
+-- `JInternalFrame#setFrameIcon(Icon)`で設定したアイコンは表示されない(デフォルトアイコンも表示しない)
+
+* 参考リンク [#o893a0ea]
+- [http://docs.oracle.com/javase/jp/8/api/javax/swing/JInternalFrame.html#setFrameIcon-javax.swing.Icon- JInternalFrame#setFrameIcon(Icon) (Java Platform SE 8)]
+
+* コメント [#xa441f33]
+#comment
+#comment

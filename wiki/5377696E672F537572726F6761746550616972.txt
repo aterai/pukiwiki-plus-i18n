@@ -82,11 +82,11 @@ public class OTFTest {
     //String str = "file:///C:/Windows/Fonts/meiryo.ttc";
     //String str = "file:///C:/Windows/Fonts/ipaexg.ttf";
     //String str = "file:///C:/Windows/Fonts/A-OTF-ShinGoPro-Regular.otf";
-    try(InputStream is = (new URL(str)).openStream()) {
-      Font font = (Font.createFont(Font.TRUETYPE_FONT, is)).deriveFont(32.0f);
+    try (InputStream is = (new URL(str)).openStream()) {
+      Font font = (Font.createFont(Font.TRUETYPE_FONT, is)).deriveFont(32f);
       textArea.setFont(font);
       is.close();
-    }catch(IOException|FontFormatException ex) {
+    } catch (IOException | FontFormatException ex) {
       ex.printStackTrace();
     }
     JPanel p = new JPanel(new BorderLayout());

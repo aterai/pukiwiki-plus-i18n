@@ -12,55 +12,77 @@ description: ServiceManagerからPersistenceServiceを取得し、JFrameなど�
 
 * サンプルコード [#xdef909f]
 #code(link){{
-final WindowState ws = new WindowState();
-SwingWorker<WindowAdapter,Void> worker = new SwingWorker<WindowAdapter,Void>() {
+class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
+  private final WindowState windowState;
+  public LoadSaveTask(WindowState windowState) {
+    super();
+    this.windowState = windowState;
+  }
   @Override public WindowAdapter doInBackground() {
     PersistenceService ps;
     BasicService bs;
-    try{
-      bs = (BasicService)ServiceManager.lookup("javax.jnlp.BasicService");
-      ps = (PersistenceService)ServiceManager.lookup("javax.jnlp.PersistenceService");
-    }catch(UnavailableServiceException use) {
-      use.printStackTrace();
+    try {
+      bs = (BasicService) ServiceManager.lookup("javax.jnlp.BasicService");
+      ps = (PersistenceService) ServiceManager.lookup("javax.jnlp.PersistenceService");
+    } catch (UnavailableServiceException use) {
       ps = null;
       bs = null;
     }
-    if(ps != null && bs != null) {
+    if (ps == null || bs == null) {
+      return null;
+    } else {
       final PersistenceService persistenceService = ps;
       final URL codebase = bs.getCodeBase();
-      loadWindowState(persistenceService, codebase, ws);
+      loadWindowState(persistenceService, codebase, windowState);
       return new WindowAdapter() {
         @Override public void windowClosing(WindowEvent e) {
-          JFrame f = (JFrame)e.getComponent();
-          if(f.getExtendedState()==JFrame.NORMAL) {
-            ws.setSize(f.getSize());
-            ws.setLocation(f.getLocationOnScreen());
+          JFrame f = (JFrame) e.getComponent();
+          if (f.getExtendedState() == JFrame.NORMAL) {
+            windowState.setSize(f.getSize());
+            windowState.setLocation(f.getLocationOnScreen());
           }
-          saveWindowState(persistenceService, codebase, ws);
+          saveWindowState(persistenceService, codebase, windowState);
         }
       };
-    }else{
-      return null;
     }
   }
-  @Override public void done() {
-    WindowAdapter wa = null;
-    try{
-      wa = get();
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    }catch(Exception e) {
-      e.printStackTrace();
+  private static void loadWindowState(
+      PersistenceService ps, URL codebase, WindowState windowState) {
+    try {
+      FileContents fc = ps.get(codebase);
+      try (XMLDecoder d = new XMLDecoder(
+          new BufferedInputStream(fc.getInputStream()))) {
+        @SuppressWarnings("unchecked")
+        Map<String, Serializable> map = (Map<String, Serializable>) d.readObject();
+        windowState.setSize((Dimension) map.get("size"));
+        windowState.setLocation((Point) map.get("location"));
+      }
+    } catch (IOException ex) {
+      try {
+        long size = ps.create(codebase, 64000);
+        System.out.println("Cache created - size: " + size);
+      } catch (IOException ioe) {
+        ioe.printStackTrace();
+      }
     }
-    JFrame frame = new JFrame();
-    if(wa!=null) frame.addWindowListener(wa);
-    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    frame.getContentPane().add(new MainPanel());
-    frame.setSize(ws.getSize());
-    frame.setLocation(ws.getLocation());
-    frame.setVisible(true);
   }
-};
-worker.execute();
+  private static void saveWindowState(
+      PersistenceService ps, URL codebase, WindowState windowState) {
+    try {
+      FileContents fc = ps.get(codebase);
+      try (XMLEncoder e = new XMLEncoder(
+          new BufferedOutputStream(fc.getOutputStream(true)))) {
+        HashMap<String, Serializable> map = new HashMap<>();
+        map.put("size", (Serializable) windowState.getSize());
+        map.put("location", (Serializable) windowState.getLocation());
+        e.writeObject(map);
+        e.flush();
+      }
+    } catch (IOException ioe) {
+      ioe.printStackTrace();
+    }
+  }
+}
 }}
 
 * 解説 [#p124cd93]
@@ -112,7 +134,7 @@ public class MainPanel extends JPanel {
   public MainPanel() {
     super(new BorderLayout());
     JTextArea textArea = new JTextArea();
-    try(Reader fr = new InputStreamReader(
+    try (Reader fr = new InputStreamReader(
         new FileInputStream(PROPERTIES_XML), "UTF-8")) {
       textArea.read(fr, "File");
     } catch (Exception ex) {
@@ -120,7 +142,7 @@ public class MainPanel extends JPanel {
     }
     add(new JScrollPane(textArea));
   }
-  public static void main(String[] args) {
+  public static void main(String... args) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
         createAndShowGUI();
@@ -138,10 +160,8 @@ public class MainPanel extends JPanel {
   }
   private static JFrame loadFrame() {
     JFrame frame = null;
-    try(XMLDecoder d = new XMLDecoder(new BufferedInputStream(
-        //MainPanel.class.getResourceAsStream(PROPERTIES_XML)))) {
+    try (XMLDecoder d = new XMLDecoder(new BufferedInputStream(
         new FileInputStream(PROPERTIES_XML)))) {
-
       frame = (JFrame)d.readObject();
       //d.close();
     } catch (Exception ex) {
@@ -156,11 +176,11 @@ public class MainPanel extends JPanel {
     }
     frame.addWindowListener(new WindowAdapter() {
       @Override public void windowClosing(WindowEvent e) {
-        JFrame frame = (JFrame)e.getComponent();
+        JFrame frame = (JFrame) e.getComponent();
         frame.removeWindowListener(this);
         File file = new File(PROPERTIES_XML);
-        try(XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(
-                                               new FileOutputStream(file)))) {
+        try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(
+            new FileOutputStream(file)))) {
           xe.setExceptionListener(new ExceptionListener() {
             @Override public void exceptionThrown(Exception exception) {
               //XXX:

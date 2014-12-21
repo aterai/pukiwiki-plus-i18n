@@ -15,15 +15,15 @@ description: JTreeのノードをドラッグ＆ドロップで移動します�
 @Override public void dragOver(DropTargetDragEvent dtde) {
   DataFlavor[] f = dtde.getCurrentDataFlavors();
   boolean isDataFlavorSupported = f[0].getHumanPresentableName().equals(NAME);
-  if(!isDataFlavorSupported) {
-    //サポートされていないDataFlavor(例えばデスクトップからファイルなど)
+  if (!isDataFlavorSupported) {
+    //サポートしないDataFlavor(例えばデスクトップからファイルなど)
     rejectDrag(dtde);
     return;
   }
   // figure out which cell it's over, no drag to self
   Point pt = dtde.getLocation();
   TreePath path = getPathForLocation(pt.x, pt.y);
-  if(path==null) {
+  if (path == null) {
     //ノード以外の場所(例えばJTreeの余白など)
     rejectDrag(dtde);
     return;
@@ -31,19 +31,16 @@ description: JTreeのノードをドラッグ＆ドロップで移動します�
   //Object draggingObject;
   //try {
   //  draggingObject = dtde.getTransferable().getTransferData(localObjectFlavor);
-  //}catch(Exception ex) {
+  //} catch (Exception ex) {
   //  rejectDrag(dtde);
   //  return;
   //}
   Object draggingObject = getSelectionPath().getLastPathComponent();
-  MutableTreeNode draggingNode
-    = (MutableTreeNode) draggingObject;
-  DefaultMutableTreeNode targetNode
-    = (DefaultMutableTreeNode) path.getLastPathComponent();
-  DefaultMutableTreeNode parentNode
-    = (DefaultMutableTreeNode) targetNode.getParent();
-  while(parentNode!=null) {
-    if(draggingNode.equals(parentNode)) {
+  MutableTreeNode draggingNode = (MutableTreeNode) draggingObject;
+  DefaultMutableTreeNode targetNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+  DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) targetNode.getParent();
+  while (parentNode != null) {
+    if (draggingNode.equals(parentNode)) {
       //親ノードを子ノードにドロップしようとしている
       rejectDrag(dtde);
       return;

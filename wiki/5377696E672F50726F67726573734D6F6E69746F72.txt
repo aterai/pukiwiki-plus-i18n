@@ -12,17 +12,17 @@ description: ProgressMonitorで処理の進捗を表示します。
 
 * サンプルコード [#fd3db85b]
 #code(link){{
-final ProgressMonitor monitor = new ProgressMonitor(this, "message", "note", 0, 100);
+final ProgressMonitor monitor = new ProgressMonitor(
+    this, "message", "note", 0, 100);
 monitor.setProgress(0);
 worker = new SwingWorker<String, String>() {
   @Override public String doInBackground() {
     int current = 0;
     int lengthOfTask = 120; //list.size();
-    while(current<lengthOfTask && !isCancelled()) {
-    //while(current<lengthOfTask && !monitor.isCanceled()) {
+    while (current < lengthOfTask && !isCancelled()) {
       try {
         Thread.sleep(50);
-      }catch(InterruptedException ie) {
+      } catch (InterruptedException ie) {
         return "Interrupted";
       }
       setProgress(100 * current / lengthOfTask);
@@ -32,7 +32,7 @@ worker = new SwingWorker<String, String>() {
     return "Done";
   }
   @Override protected void process(java.util.List<String> chunks) {
-    for(String message : chunks) {
+    for (String message : chunks) {
       monitor.setNote(message);
     }
   }
@@ -40,18 +40,18 @@ worker = new SwingWorker<String, String>() {
     runButton.setEnabled(true);
     monitor.close();
     String text = null;
-    if(isCancelled()) {
+    if (isCancelled()) {
       text = "Cancelled";
-    }else{
+    } else {
       try {
         text = get();
-      }catch(Exception ex) {
+      } catch (Exception ex) {
         ex.printStackTrace();
         text = "Exception";
       }
     }
     //System.out.println(text);
-    area.append(text+"\n");
+    area.append(text + "\n");
     area.setCaretPosition(area.getDocument().getLength());
     //appendLine(text);
   }
@@ -75,10 +75,10 @@ class ProgressListener implements PropertyChangeListener {
   }
   @Override public void propertyChange(PropertyChangeEvent e) {
     String strPropertyName = e.getPropertyName();
-    if("progress".equals(strPropertyName)) {
-      monitor.setProgress((Integer)e.getNewValue());
-      if(monitor.isCanceled()) {
-        ((SwingWorker)e.getSource()).cancel(true);
+    if ("progress".equals(strPropertyName)) {
+      monitor.setProgress((Integer) e.getNewValue());
+      if (monitor.isCanceled()) {
+        ((SwingWorker) e.getSource()).cancel(true);
       }
     }
   }

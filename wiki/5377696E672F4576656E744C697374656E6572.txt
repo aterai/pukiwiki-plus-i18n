@@ -34,17 +34,19 @@ class FontChangeEvent extends EventObject{
 #code{{
 private final Vector listenerList = new Vector();
 public void addFontChangeListener(FontChangeListener l) {
-  if(!listenerList.contains(l)) listenerList.add(l);
+  if (!listenerList.contains(l)) {
+    listenerList.add(l);
+  }
 }
 public void removeFontChangeListener(FontChangeListener l) {
   listenerList.remove(l);
 }
 public void fireFontChangeEvent(String cmd, Font font) {
-  Vector list = (Vector)listenerList.clone();
+  Vector list = (Vector) listenerList.clone();
   Enumeration e = list.elements();
   FontChangeEvent evt = new FontChangeEvent(this, cmd, font);
-  while(e.hasMoreElements()) {
-    FontChangeListener listener = (FontChangeListener)e.nextElement();
+  while (e.hasMoreElements()) {
+    FontChangeListener listener = (FontChangeListener) e.nextElement();
     listener.fontStateChanged(evt);
   }
   revalidate();
@@ -79,12 +81,12 @@ protected void fireFontChangeEvent(String cmd, Font font) {
   FontChangeEvent evt = new FontChangeEvent(this, cmd, font);
   // Process the listeners last to first, notifying
   // those that are interested in this event
-  for(int i = listeners.length-2; i>=0; i-=2) {
-    if(listeners[i]==FontChangeListener.class) {
+  for (int i = listeners.length - 2; i >= 0; i -= 2) {
+    if (listeners[i] == FontChangeListener.class) {
       // Lazily create the event:
-      // if(fontChangeEvent == null)
+      // if (fontChangeEvent == null)
       //   fontChangeEvent = new FontChangeEvent(this);
-      ((FontChangeListener)listeners[i+1]).fontStateChanged(evt);
+      ((FontChangeListener) listeners[i + 1]).fontStateChanged(evt);
     }
   }
 }

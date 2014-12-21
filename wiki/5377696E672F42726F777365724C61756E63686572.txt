@@ -13,13 +13,13 @@ description: ラベル上のURLがクリックされるとBrowserを起動しま
 * サンプルコード [#j9f3739f]
 #code(link){{
 JEditorPane editor = new JEditorPane("text/html",
-  "<html><a href='"+MYSITE+"'>"+MYSITE+"</a>");
+  "<html><a href='" + MYSITE + "'>" + MYSITE + "</a>");
 editor.setOpaque(false);
 editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 editor.setEditable(false);
 editor.addHyperlinkListener(new HyperlinkListener() {
   @Override public void hyperlinkUpdate(HyperlinkEvent e) {
-    if(e.getEventType()==HyperlinkEvent.EventType.ACTIVATED) {
+    if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
       BrowserLauncher.openURL(MYSITE);
     }
   }
@@ -30,10 +30,9 @@ editor.addHyperlinkListener(new HyperlinkListener() {
 ブラウザの起動には、[http://www.centerkey.com/java/browser/ Bare Bones Browser Launch]を使用しています。`Mac OS X`, `GNU/Linux`, `Unix`, `Windows XP`に対応しているようです。
 
 ----
-- `Java SE 6`の新機能である、`java.awt.Desktop`を使用すると、同じようにブラウザやメーラーを起動することができるようになっています。
-//-- [http://java.sun.com/developer/technicalArticles/J2SE/Desktop/javase6/desktop_api/ Using the Desktop API in Java SE 6]
+- `Java SE 6`の新機能である`java.awt.Desktop`を使用すると、同じようにブラウザやメーラーを起動することが可能
 -- [http://www.oracle.com/technetwork/articles/javase/index-135182.html Using the Desktop API in Java SE 6]
--- [[Desktopでブラウザを起動(JDK 6)>Swing/Desktop]])。
+-- [[Desktopでブラウザを起動(JDK 6)>Swing/Desktop]]
 
 * 参考リンク [#we362808]
 - [http://www.centerkey.com/ Bare Bones Browser Launch for Java • • • Use Default Browser to Open a Web Page from a Swing Application]

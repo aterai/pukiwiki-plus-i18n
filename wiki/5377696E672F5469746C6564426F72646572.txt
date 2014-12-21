@@ -12,8 +12,8 @@ description: TitledBorderのタイトル位置や揃えを切り替えてテス�
 
 * サンプルコード [#ae811e62]
 #code(link){{
-VerticalOrientation vo = (VerticalOrientation)verticalOrientationChoices.getSelectedItem();
-switch(vo) {
+VerticalOrientation vo = (VerticalOrientation) verticalOrientationChoices.getSelectedItem();
+switch (vo) {
   case DEFAULT_POSITION: border.setTitlePosition(TitledBorder.DEFAULT_POSITION); break;
   case ABOVE_TOP:        border.setTitlePosition(TitledBorder.ABOVE_TOP);        break;
   case TOP:              border.setTitlePosition(TitledBorder.TOP);              break;
@@ -22,8 +22,8 @@ switch(vo) {
   case BOTTOM:           border.setTitlePosition(TitledBorder.BOTTOM);           break;
   case BELOW_BOTTOM:     border.setTitlePosition(TitledBorder.BELOW_BOTTOM);     break;
 }
-Justification jc = (Justification)justificationChoices.getSelectedItem();
-switch(jc) {
+Justification jc = (Justification) justificationChoices.getSelectedItem();
+switch (jc) {
   case DEFAULT_JUSTIFICATION: border.setTitleJustification(
                                               TitledBorder.DEFAULT_JUSTIFICATION); break;
   case LEFT:     border.setTitleJustification(TitledBorder.LEFT);     break;

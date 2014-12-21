@@ -21,7 +21,7 @@ class HorizontalAlignmentHeaderRenderer implements TableCellRenderer{
       JTable table, Object value, boolean isSelected,
       boolean hasFocus, int row, int column) {
     TableCellRenderer r = table.getTableHeader().getDefaultRenderer();
-    JLabel l = (JLabel)r.getTableCellRendererComponent(
+    JLabel l = (JLabel) r.getTableCellRendererComponent(
         table,value,isSelected,hasFocus,row,column);
     l.setHorizontalAlignment(horizontalAlignment);
     return l;
@@ -35,7 +35,7 @@ class HorizontalAlignmentHeaderRenderer implements TableCellRenderer{
 -- すべての列の字揃えが変更される
 
 #code{{
-((JLabel)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+((JLabel) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 }}
 
 - `Test2`:
@@ -48,10 +48,10 @@ table.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
       JTable table, Object value, boolean isSelected,
       boolean hasFocus, int row, int column) {
     super.getTableCellRendererComponent(
-        table,value,isSelected,hasFocus,row,column);
+        table, value, isSelected, hasFocus, row, column);
     setHorizontalAlignment(SwingConstants.CENTER);
     return this;
-    }
+  }
 });
 }}
 
@@ -83,11 +83,11 @@ final TableCellRenderer renderer = table.getTableHeader().getDefaultRenderer();
 table.getTableHeader().setDefaultRenderer(new TableCellRenderer() {
   @Override public Component getTableCellRendererComponent(JTable table, Object value,
           boolean isSelected, boolean hasFocus, int row, int column) {
-    JLabel l = (JLabel)renderer.getTableCellRendererComponent(
-          table,value,isSelected,hasFocus,row,column);
-    if(table.convertColumnIndexToModel(column)==0) {
+    JLabel l = (JLabel) renderer.getTableCellRendererComponent(
+          table, value, isSelected, hasFocus, row, column);
+    if (table.convertColumnIndexToModel(column) == 0) {
       l.setHorizontalAlignment(SwingConstants.CENTER);
-    }else{
+    } else {
       l.setHorizontalAlignment(SwingConstants.LEFT);
     }
     return l;

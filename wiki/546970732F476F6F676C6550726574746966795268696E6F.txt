@@ -56,7 +56,7 @@ public class GooglePrettifyRhinoTest {
         String txt = src.getText();
         txt = txt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
         String str = prettify(engine, txt);
-        editor.setText(pre+str+"\n</pre>");
+        editor.setText(pre + str + "\n</pre>");
         str = str.replace("class=\"str\"", "style=\"color:#080\"");
         str = str.replace("class=\"kwd\"", "style=\"color:#008\"");
         str = str.replace("class=\"com\"", "style=\"color:#800\"");
@@ -68,7 +68,7 @@ public class GooglePrettifyRhinoTest {
         str = str.replace("class=\"atn\"", "style=\"color:#606\"");
         str = str.replace("class=\"atv\"", "style=\"color:#080\"");
         str = str.replace("class=\"dec\"", "style=\"color:#606\"");
-        dst.setText(pre+str+"\n</pre>");
+        dst.setText(pre + str + "\n</pre>");
       }
     }));
 
@@ -107,7 +107,7 @@ public class GooglePrettifyRhinoTest {
   public static String prettify(ScriptEngine engine, String src) {
     try {
       Object w = engine.get("window");
-      return (String)((Invocable)engine).invokeMethod(w, "prettyPrintOne", src);
+      return (String) ((Invocable) engine).invokeMethod(w, "prettyPrintOne", src);
     } catch (Exception e) {
       e.printStackTrace();
       return "";
@@ -155,10 +155,10 @@ public static String prettifyOne(String txt) {
 
   //String p = "http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js";
   //String q = "http://www.envjs.com/dist/env.rhino.1.2.js";
-  //try(Reader reader1 = new BufferedReader(new InputStreamReader(new URL(p).openStream()));
-  //    Reader reader2 = new BufferedReader(new InputStreamReader(new URL(q).openStream()))) {
-  try(Reader reader1 = new BufferedReader(new FileReader("env.rhino.1.2.js"));
-      Reader reader2 = new BufferedReader(new FileReader("prettify.js"))) {
+  //try (Reader reader1 = new BufferedReader(new InputStreamReader(new URL(p).openStream()));
+  //     Reader reader2 = new BufferedReader(new InputStreamReader(new URL(q).openStream()))) {
+  try (Reader reader1 = new BufferedReader(new FileReader("env.rhino.1.2.js"));
+       Reader reader2 = new BufferedReader(new FileReader("prettify.js"))) {
 
     ContextFactory contextFactory = new ContextFactory();
     Context cx = contextFactory.enterContext();
@@ -200,7 +200,7 @@ public static String prettifyOne(String txt) {
     //result = cx.evaluateReader(scope, reader1, "", 1, null);
     //result = cx.evaluateReader(scope, reader2, "prettify.js", 1, null);
 
-    Function fct = (Function)scope.get("prettyPrintOne", scope);
+    Function fct = (Function) scope.get("prettyPrintOne", scope);
     Object result = fct.call(cx, scope, scope, new Object[] {txt, "java", false});
     str = Context.toString(result);
 

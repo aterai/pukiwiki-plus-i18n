@@ -28,11 +28,13 @@ table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 -- ヘッダをクリック、入れ替え、サイズ変更すると、編集はキャンセルされます。
 
 #code{{
-DefaultCellEditor dce = (DefaultCellEditor)table.getDefaultEditor(Object.class);
+DefaultCellEditor dce = (DefaultCellEditor) table.getDefaultEditor(Object.class);
 dce.getComponent().addFocusListener(new FocusAdapter() {
   @Override public void focusLost(FocusEvent e) {
-    if(!focusCheck.isSelected()) return;
-    if(table.isEditing()) {
+    if (!focusCheck.isSelected()) {
+      return;
+    }
+    if (table.isEditing()) {
       table.getCellEditor().stopCellEditing();
     }
   }
@@ -47,8 +49,10 @@ dce.getComponent().addFocusListener(new FocusAdapter() {
 #code{{
 table.getTableHeader().addMouseListener(new MouseAdapter() {
   @Override public void mousePressed(MouseEvent e) {
-    if(!headerCheck.isSelected()) return;
-    if(table.isEditing()) {
+    if (!headerCheck.isSelected()) {
+      return;
+    }
+    if (table.isEditing()) {
       table.getCellEditor().stopCellEditing();
     }
   }
@@ -73,7 +77,7 @@ table.getTableHeader().addMouseListener(new MouseAdapter() {
 #code{{
 table = new JTable(sorter) {
   @Override public void columnMarginChanged(ChangeEvent e) {
-    if(table.isEditing()) {
+    if (table.isEditing()) {
       table.getCellEditor().stopCellEditing();
     }
     super.columnMarginChanged(e);
@@ -82,7 +86,7 @@ table = new JTable(sorter) {
 
 frame.addWindowListener(new WindowAdapter() {
   @Override public void windowClosing(WindowEvent e) {
-    if(table.isEditing()) {
+    if (table.isEditing()) {
       table.getCellEditor().stopCellEditing();
     }
   }
@@ -90,8 +94,7 @@ frame.addWindowListener(new WindowAdapter() {
 
 frame.addWindowStateListener(new WindowStateListener() {
   @Override public void windowStateChanged(WindowEvent e) {
-    if(frame.getExtendedState()==JFrame.MAXIMIZED_BOTH
-       && table.isEditing()) {
+    if (frame.getExtendedState() == JFrame.MAXIMIZED_BOTH && table.isEditing()) {
       table.getCellEditor().stopCellEditing();
     }
   }
