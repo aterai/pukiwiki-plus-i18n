@@ -30,17 +30,18 @@ editor2.setText("(\uD85B\uDE40) (\u26E40)\n(\uD842\uDF9F) (\u20B9F)");
 以下、サロゲートペア対応フォントを使えるようにしてテストしています。`Java Web Start`で起動した場合、このサンプルの`browse`ボタンで`jar`ファイル内の`SurrogatePair.html`を表示することはできません。
 
 - 上: 数値文字参照(`Numeric character reference`)
+-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6836089 Bug ID: 6836089 Swing HTML parser can't properly decode codepoints outside the Unicode Plane 0 into a surrogate pair]で修正されたので、`&#x26E40;`などでも正常に文字が表示される(上記のスクリーンショットのように文字化けしない)
 -- `JEditorPane(HTMLEditorKit)`の場合
- JEditorPane OK: &#xD85B;&#xDE40;
- JEditorPane NG: &#x26E40;
+--- `JEditorPane OK`: `&#xD85B;&#xDE40;`
+--- `JEditorPane %%NG%% OK`: `&#x26E40;`
 
 -- ブラウザ(試したのは`IE`, `FireFox`, `Chrome`, `Opera`)の場合
- Browser NG: &#xD85B;&#xDE40;
- Browser OK: &#x26E40;
+--- `Browser NG`: `&#xD85B;&#xDE40;`
+--- `Browser OK`: `&#x26E40;`
 
 - 下: `Unicode`エスケープ(`Unicode escapes`)
- JEditorPane OK: \uD85B\uDE40
- JEditorPane NG: \u26E40
+--- `JEditorPane OK`: `\uD85B\uDE40`
+--- `JEditorPane NG`: `\u26E40`
 
 ----
 `JTextComponent`とブラウザでサロゲートペアの表現が異なるようなので、これらの文字をどちらの環境でも正しく表示したい場合は、数値文字参照や`Unicode`エスケープは使用せず、ソースコードなどを`UTF-8`にしてそのまま𦹀や𠮟と書く(メモ帳などの対応済みエディタで)のがよさそうです。

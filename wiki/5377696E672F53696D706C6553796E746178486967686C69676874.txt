@@ -15,81 +15,81 @@ description: JTextPaneでキーワードのSyntax Highlightを行います。
 //This code is taken from:
 //http://www.discoverteenergy.com/Files/SyntaxDocument.java SyntaxDocument.java
 class SimpleSyntaxDocument extends DefaultStyledDocument {
-  HashMap<String,AttributeSet> keywords = new HashMap<>();
-  MutableAttributeSet normal = new SimpleAttributeSet();
+  private final Style normal; //MutableAttributeSet normal = new SimpleAttributeSet();
+  private static final String OPERANDS = ".,";
   public SimpleSyntaxDocument() {
     super();
+    Style def = StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE);
+    normal = addStyle("normal", def);
     StyleConstants.setForeground(normal, Color.BLACK);
-    MutableAttributeSet color;
-    StyleConstants.setForeground(color = new SimpleAttributeSet(), Color.RED);
-    keywords.put("red", color);
-    StyleConstants.setForeground(color = new SimpleAttributeSet(), Color.GREEN);
-    keywords.put("green", color);
-    StyleConstants.setForeground(color = new SimpleAttributeSet(), Color.BLUE);
-    keywords.put("blue", color);
+    StyleConstants.setForeground(addStyle("red", normal), Color.RED);
+    StyleConstants.setForeground(addStyle("green", normal), Color.GREEN);
+    StyleConstants.setForeground(addStyle("blue", normal), Color.BLUE);
   }
   @Override public void insertString(int offset, String str, AttributeSet a)
-                                               throws BadLocationException {
+        throws BadLocationException {
     super.insertString(offset, str, a);
     processChangedLines(offset, str.length());
   }
   @Override public void remove(int offset, int length)
-                                               throws BadLocationException {
+        throws BadLocationException {
     super.remove(offset, length);
     processChangedLines(offset, 0);
   }
   private void processChangedLines(int offset, int length)
-                                               throws BadLocationException {
-    Element root   = getDefaultRootElement();
+        throws BadLocationException {
+    Element root = getDefaultRootElement();
     String content = getText(0, getLength());
-    int startLine  = root.getElementIndex( offset );
-    int endLine    = root.getElementIndex( offset + length );
+    int startLine = root.getElementIndex(offset);
+    int endLine = root.getElementIndex(offset + length);
     for (int i = startLine; i <= endLine; i++) {
       applyHighlighting(content, i);
     }
   }
   private void applyHighlighting(String content, int line)
-                                               throws BadLocationException {
+        throws BadLocationException {
     Element root = getDefaultRootElement();
-    int startOffset   = root.getElement( line ).getStartOffset();
-    int endOffset   = root.getElement( line ).getEndOffset() - 1;
-    int lineLength  = endOffset - startOffset;
+    int startOffset = root.getElement(line).getStartOffset();
+    int endOffset = root.getElement(line).getEndOffset() - 1;
+    int lineLength = endOffset - startOffset;
     int contentLength = content.length();
-    if (endOffset >= contentLength) endOffset = contentLength - 1;
+    if (endOffset >= contentLength) {
+      endOffset = contentLength - 1;
+    }
     setCharacterAttributes(startOffset, lineLength, normal, true);
     checkForTokens(content, startOffset, endOffset);
   }
   private void checkForTokens(String content, int startOffset, int endOffset) {
-    while (startOffset <= endOffset) {
-      while (isDelimiter(content.substring(startOffset, startOffset+1))) {
-        if (startOffset < endOffset) {
-          startOffset++;
+    int index = startOffset;
+    while (index <= endOffset) {
+      while (isDelimiter(content.substring(index, index + 1))) {
+        if (index < endOffset) {
+          index++;
         } else {
           return;
         }
       }
-      startOffset = getOtherToken(content, startOffset, endOffset);
+      index = getOtherToken(content, index, endOffset);
     }
   }
   private int getOtherToken(String content, int startOffset, int endOffset) {
     int endOfToken = startOffset + 1;
-    while ( endOfToken <= endOffset ) {
-      if ( isDelimiter( content.substring(endOfToken, endOfToken + 1) ) ) {
+    while (endOfToken <= endOffset) {
+      if (isDelimiter(content.substring(endOfToken, endOfToken + 1))) {
         break;
       }
       endOfToken++;
     }
     String token = content.substring(startOffset, endOfToken);
-    if ( keywords.containsKey( token ) ) {
-      setCharacterAttributes(
-        startOffset, endOfToken - startOffset, keywords.get(token), false);
+    Style s = getStyle(token);
+    if (s != null) {
+      setCharacterAttributes(startOffset, endOfToken - startOffset, s, false);
     }
     return endOfToken + 1;
   }
-  String operands = ".,";
   protected boolean isDelimiter(String character) {
-    return Character.isWhitespace(character.charAt(0)) ||
-           operands.indexOf(character)!=-1;
+    return Character.isWhitespace(character.charAt(0))
+            || OPERANDS.indexOf(character) != -1;
   }
 }
 }}
