@@ -54,7 +54,7 @@ menuBar.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2) {
 - `JFrame`の最大化、最小化で折り返しが更新されない
 -- 以下のような、`WindowStateListener`を`JFrame`に追加し、`ContentPane`を`revalidate()`して回避
 #code{{
-frame.addWindowStateListener(new WindowAdapter() {
+frame.addWindowStateListener(new WindowStateListener() {
   @Override public void windowStateChanged(final WindowEvent e) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {

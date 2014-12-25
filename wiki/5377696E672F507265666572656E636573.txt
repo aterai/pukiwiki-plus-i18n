@@ -12,72 +12,65 @@ description: Preferences(レジストリなど)にフレーム(パネル)の位�
 
 * サンプルコード [#o43d0c70]
 #code(link){{
-public MainPanel(final JFrame frame) {
+public MainPanel(JFrame frame) {
   super(new BorderLayout());
-  this.frame = frame;
+  this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
   this.prefs = Preferences.userNodeForPackage(getClass());
-  frame.addWindowListener(new java.awt.event.WindowAdapter() {
+  frame.addWindowListener(new WindowAdapter() {
     @Override public void windowClosing(WindowEvent e) {
       saveLocation();
-      frame.dispose();
+      e.getWindow().dispose();
     }
   });
   frame.addComponentListener(new ComponentAdapter() {
     @Override public void componentMoved(ComponentEvent e) {
-      if(frame.getExtendedState()==JFrame.NORMAL) {
+      JFrame frame = (JFrame) e.getComponent();
+      if (frame.getExtendedState() == JFrame.NORMAL) {
         Point pt = frame.getLocationOnScreen();
-        if(pt.x<0 || pt.y<0) return;
-        try{
+        if (pt.x < 0 || pt.y < 0) {
+          return;
+        }
+        try {
           pos.setLocation(pt);
-        }catch(IllegalComponentStateException icse) {}
+        } catch (IllegalComponentStateException icse) {
+          icse.printStackTrace();
+        }
       }
     }
     @Override public void componentResized(ComponentEvent e) {
-      if(frame.getExtendedState()==JFrame.NORMAL) {
+      JFrame frame = (JFrame) e.getComponent();
+      if (frame.getExtendedState() == JFrame.NORMAL) {
         dim.setSize(getSize());
       }
     }
   });
-  exitButton.setAction(new AbstractAction("終了") {
-    @Override public void actionPerformed(ActionEvent evt) {
-      saveLocation();
-      frame.dispose();
-    }
-  });
-  clearButton.setAction(
-       new AbstractAction("レジストリなどに保存した値をクリアして終了") {
-    @Override public void actionPerformed(ActionEvent evt) {
-      try{
-        prefs.clear();
-        prefs.flush();
-      }catch(java.util.prefs.BackingStoreException e) {
-        e.printStackTrace();
-      }
-      frame.dispose();
-    }
-  });
-  int wdim = prefs.getInt(PREFIX+"dimw", dim.width);
-  int hdim = prefs.getInt(PREFIX+"dimh", dim.height);
+  Box box = Box.createHorizontalBox();
+  box.add(Box.createHorizontalGlue());
+  box.add(clearButton);
+  box.add(Box.createHorizontalStrut(2));
+  box.add(exitButton);
+  add(new JLabel("TEST"));
+  add(box, BorderLayout.SOUTH);
+  int wdim = prefs.getInt(PREFIX + "dimw", dim.width);
+  int hdim = prefs.getInt(PREFIX + "dimh", dim.height);
   dim.setSize(wdim, hdim);
   setPreferredSize(dim);
-
   Rectangle screen = frame.getGraphicsConfiguration().getBounds();
-  pos.setLocation(screen.x + screen.width/2  - dim.width/2,
-          screen.y + screen.height/2 - dim.height/2);
-  int xpos = prefs.getInt(PREFIX+"locx", pos.x);
-  int ypos = prefs.getInt(PREFIX+"locy", pos.y);
-  pos.setLocation(xpos,ypos);
+  pos.setLocation(screen.x + screen.width / 2 - dim.width / 2,
+                  screen.y + screen.height / 2 - dim.height / 2);
+  int xpos = prefs.getInt(PREFIX + "locx", pos.x);
+  int ypos = prefs.getInt(PREFIX + "locy", pos.y);
+  pos.setLocation(xpos, ypos);
   frame.setLocation(pos.x, pos.y);
-  //......
 }
 private void saveLocation() {
-  prefs.putInt(PREFIX+"locx", pos.x);
-  prefs.putInt(PREFIX+"locy", pos.y);
-  prefs.putInt(PREFIX+"dimw", dim.width);
-  prefs.putInt(PREFIX+"dimh", dim.height);
-  try{
+  prefs.putInt(PREFIX + "locx", pos.x);
+  prefs.putInt(PREFIX + "locy", pos.y);
+  prefs.putInt(PREFIX + "dimw", dim.width);
+  prefs.putInt(PREFIX + "dimh", dim.height);
+  try {
     prefs.flush();
-  }catch(java.util.prefs.BackingStoreException e) {
+  } catch (BackingStoreException e) {
     e.printStackTrace();
   }
 }

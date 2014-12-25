@@ -14,18 +14,18 @@ description: JDK 6で追加された機能を使って、SystemTrayにアイコ�
 #code(link){{
 public MainPanel(final JFrame frame) {
   super();
-  if(!SystemTray.isSupported()) {
+  if (!SystemTray.isSupported()) {
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     return;
   }
-  frame.addWindowStateListener(new WindowAdapter() {
+  frame.addWindowListener(new WindowAdapter() {
     @Override public void windowIconified(WindowEvent e) {
-      frame.dispose();
+      e.getWindow().dispose();
     }
   });
   final SystemTray tray = SystemTray.getSystemTray();
   final Image image     = new ImageIcon(
-                            getClass().getResource("16x16.png")).getImage();
+    getClass().getResource("16x16.png")).getImage();
   final PopupMenu popup = new PopupMenu();
   final TrayIcon icon   = new TrayIcon(image, "TRAY", popup);
 
@@ -47,9 +47,9 @@ public MainPanel(final JFrame frame) {
   popup.add(item1);
   popup.add(item2);
 
-  try{
+  try {
     tray.add(icon);
-  }catch(AWTException e) {
+  } catch (AWTException e) {
     e.printStackTrace();
   }
 }
@@ -75,10 +75,10 @@ public MainPanel(final JFrame frame) {
 SystemTray tray = SystemTray.getSystemTray();
 Dimension d = tray.getTrayIconSize();
 //Image image = new ImageIcon(getClass().getResource("16x16.png")).getImage();
-BufferedImage image = new BufferedImage(d.width,d.height,BufferedImage.TYPE_INT_ARGB);
+BufferedImage image = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
 ImageIcon i = new ImageIcon(getClass().getResource("16x16.png"));
 Graphics g = image.createGraphics();
-i.paintIcon(null,g,(d.width-i.getIconWidth())/2,(d.height-i.getIconWidth())/2);
+i.paintIcon(null, g, (d.width - i.getIconWidth()) / 2, (d.height - i.getIconWidth()) / 2);
 g.dispose();
 PopupMenu popup = new PopupMenu();
 TrayIcon icon   = new TrayIcon(image, "TRAY", popup);
@@ -92,5 +92,14 @@ TrayIcon icon   = new TrayIcon(image, "TRAY", popup);
 - スクリーンショットで`JST`システムトレイとタスクバーにあるやつです --  &new{2010-03-08 (月) 17:30:21};
 -- `JFrame`の代わりに、`JWindow`を使うのはどうでしょうか。 -- &user(aterai); &new{2010-03-09 (火) 16:26:47};
 -- もしくは、[[JFrameのアイコンを非表示>Swing/DisableDefaultIcon]]のように透明なアイコンを設定する(クリックすると反応してしまいますが…)とか。 -- [[aterai]]
+-- `4`年以上前で、いまさら過ぎるのですが、やっと理解しました。自分の回答は的外れすぎですね。アイコン化したときにタスクバーボタンを非表示にするには、`Window#dispose()`を実行するとよさそうです。このサンプルを修正して非表示にするよう変更しました。 -- &user(aterai); &new{2014-12-25 (火) 16:35:38};
+
+#code{{
+frame.addWindowListener(new WindowAdapter() {
+  @Override public void windowIconified(WindowEvent e) {
+    e.getWindow().dispose();
+  }
+});
+}}
 
 #comment

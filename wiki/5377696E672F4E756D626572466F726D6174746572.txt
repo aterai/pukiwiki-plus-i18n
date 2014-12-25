@@ -12,7 +12,7 @@ description: JSpinnerからJFormattedTextFieldを取得し、これに無効な�
 
 * サンプルコード [#d07eefaa]
 #code(link){{
-JSpinner.NumberEditor editor = (JSpinner.NumberEditor)spinner.getEditor();
+JSpinner.NumberEditor editor = (JSpinner.NumberEditor) spinner.getEditor();
 DefaultFormatter formatter = (DefaultFormatter) editor.getTextField().getFormatter();
 formatter.setAllowsInvalid(false);
 }}
@@ -33,8 +33,8 @@ formatter.setAllowsInvalid(false);
 #code{{
 private static JSpinner makeSpinner2(SpinnerNumberModel m) {
   JSpinner s = new JSpinner(m);
-  JSpinner.NumberEditor editor = (JSpinner.NumberEditor)s.getEditor();
-  final JFormattedTextField ftf = (JFormattedTextField)editor.getTextField();
+  JSpinner.NumberEditor editor = (JSpinner.NumberEditor) s.getEditor();
+  final JFormattedTextField ftf = (JFormattedTextField) editor.getTextField();
   ftf.setFormatterFactory(makeFFactory(m));
   ftf.getDocument().addDocumentListener(new DocumentListener() {
     private final Color color = new Color(255,200,200);
@@ -50,7 +50,7 @@ private static JSpinner makeSpinner2(SpinnerNumberModel m) {
     private void updateEditValid() {
       EventQueue.invokeLater(new Runnable() {
         @Override public void run() {
-          ftf.setBackground(ftf.isEditValid()?Color.WHITE:color);
+          ftf.setBackground(ftf.isEditValid() ? Color.WHITE : color);
         }
       });
     }
@@ -62,17 +62,17 @@ private static DefaultFormatterFactory makeFFactory(final SpinnerNumberModel m) 
   NumberFormatter displayFormatter = new NumberFormatter(format);
   NumberFormatter editFormatter = new NumberFormatter(format) {
     @Override public Object stringToValue(String text) throws ParseException {
-      try{
+      try {
         Long.parseLong(text);
-      }catch(NumberFormatException e) {
+      } catch (NumberFormatException e) {
         throw new ParseException("xxx", 0);
       }
       Object o = format.parse(text);
-      if(o instanceof Long) {
-        Long val = (Long)format.parse(text);
-        Long max = (Long)m.getMaximum();
-        Long min = (Long)m.getMinimum();
-        if(max.compareTo(val)<0 || min.compareTo(val)>0) {
+      if (o instanceof Long) {
+        Long val = (Long) format.parse(text);
+        Long max = (Long) m.getMaximum();
+        Long min = (Long) m.getMinimum();
+        if (max.compareTo(val) < 0 || min.compareTo(val) > 0) {
           throw new ParseException("xxx", 0);
         }
         return val;

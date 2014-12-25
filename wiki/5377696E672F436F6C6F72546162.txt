@@ -14,16 +14,16 @@ description: JTabbedPaneで、選択されたタブの文字色を変更しま�
 #code(link){{
 tab.addChangeListener(new ChangeListener() {
   @Override public void stateChanged(ChangeEvent e) {
-    JTabbedPane jtab = (JTabbedPane)e.getSource();
+    JTabbedPane jtab = (JTabbedPane) e.getSource();
     int sindex = jtab.getSelectedIndex();
     String str = jtab.getTitleAt(sindex);
-    for(int i=0;i<jtab.getTabCount();i++) {
-      if(i==sindex && jtab.getTitleAt(sindex).endsWith("1")) {
+    for (int i = 0; i < jtab.getTabCount(); i++) {
+      if (i == sindex && jtab.getTitleAt(sindex).endsWith("1")) {
         jtab.setForegroundAt(i, Color.GREEN);
-      }else if(i==sindex) {
-        Color sc = (sindex%2==0)?Color.RED:Color.BLUE;
+      } else if (i == sindex) {
+        Color sc = (sindex % 2 == 0) ? Color.RED : Color.BLUE;
         jtab.setForegroundAt(i, sc);
-      }else{
+      } else {
         jtab.setForegroundAt(i, Color.BLACK);
       }
     }
@@ -39,9 +39,9 @@ tab.addChangeListener(new ChangeListener() {
 #code{{
 public static void createAndShowGUI() {
   System.setProperty("swing.noxp", "true");
-  try{
+  try {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-  }catch (Exception e) {
+  } catch (Exception e) {
     throw new InternalError(e.toString());
   }
   JFrame frame = new JFrame("@title@");
