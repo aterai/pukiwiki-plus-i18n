@@ -36,18 +36,13 @@ scroll.getVerticalScrollBar().setUnitIncrement(25);
 -- マウスのプロパティで「`1`画面ずつスクロールする」にすると、`e.getScrollType()`が`WHEEL_UNIT_SCROLL`から`WHEEL_BLOCK_SCROLL`になり、上記の`3`行×スクロール量(`BasicScrollBarUI.scrollByUnits(...)`)ではなく、`BasicScrollBarUI.scrollByBlock(...)`が使用される
 
 #code{{
-//package example;
-//-*- mode:java; encoding:utf8n; coding:utf-8 -*-
-// vim:set fileencoding=utf-8:
-//@homepage@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-public class Bbb extends JPanel{
-  public Bbb() {
-    super(new BorderLayout());
+public class WheelScrollTest {
+  public JComponent makeUI() {
     JList list = makeList();
     final JScrollPane scrollPane = new JScrollPane(list) {
       @Override protected void processMouseWheelEvent(MouseWheelEvent e) {
@@ -59,39 +54,39 @@ public class Bbb extends JPanel{
           e.getX(), e.getY(),
           e.getXOnScreen(),
           e.getYOnScreen(),
-          e.getClickCount(), //???Nimbusを追加???
+          e.getClickCount(),
           e.isPopupTrigger(),
           e.getScrollType(),
           100, //e.getScrollAmount(),
           e.getWheelRotation());
+        System.out.println("ScrollAmount: " + e.getScrollAmount());
         super.processMouseWheelEvent(mwe);
       }
     };
 
     scrollPane.addMouseWheelListener(new MouseWheelListener() {
       @Override public void mouseWheelMoved(MouseWheelEvent e) {
-        //System.out.println(e);
         if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
           System.out.println("WHEEL_UNIT_SCROLL");
-        }else if (e.getScrollType() == MouseWheelEvent.WHEEL_BLOCK_SCROLL) {
+        } else if (e.getScrollType() == MouseWheelEvent.WHEEL_BLOCK_SCROLL) {
           System.out.println("WHEEL_BLOCK_SCROLL");
         }
       }
     });
 
     list.setFixedCellHeight(64);
-    //System.out.println(list.getFixedCellHeight());
     scrollPane.getVerticalScrollBar().setUnitIncrement(32);
-    scrollPane.getVerticalScrollBar().setBlockIncrement(64*6);
+    scrollPane.getVerticalScrollBar().setBlockIncrement(64 * 6);
 
     JViewport vp = scrollPane.getViewport();
-    Scrollable view = (Scrollable)(vp.getView());
+    Scrollable view = (Scrollable) vp.getView();
     Rectangle vr = vp.getViewRect();
 
-    System.out.println("getUnitIncrement: "+scrollPane.getVerticalScrollBar().getUnitIncrement(1));
-    System.out.println("getBlockIncrement: "+scrollPane.getVerticalScrollBar().getBlockIncrement(1));
-    System.out.println("getScrollableUnitIncrement: "+view.getScrollableUnitIncrement(vr, scrollPane.getVerticalScrollBar().getOrientation(), 1));
-    System.out.println("getScrollableBlockIncrement: "+view.getScrollableBlockIncrement(vr, scrollPane.getVerticalScrollBar().getOrientation(), 1));
+    System.out.println("FixedCellHeight: " + list.getFixedCellHeight());
+    System.out.println("getUnitIncrement: " + scrollPane.getVerticalScrollBar().getUnitIncrement(1));
+    System.out.println("getBlockIncrement: " + scrollPane.getVerticalScrollBar().getBlockIncrement(1));
+    System.out.println("getScrollableUnitIncrement: " + view.getScrollableUnitIncrement(vr, scrollPane.getVerticalScrollBar().getOrientation(), 1));
+    System.out.println("getScrollableBlockIncrement: " + view.getScrollableBlockIncrement(vr, scrollPane.getVerticalScrollBar().getOrientation(), 1));
 
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     final JSpinner spinner = new JSpinner(new SpinnerNumberModel(scrollPane.getVerticalScrollBar().getBlockIncrement(1), 0, 100000, 1));
@@ -100,7 +95,7 @@ public class Bbb extends JPanel{
       @Override public void stateChanged(ChangeEvent e) {
         JSpinner s = (JSpinner)e.getSource();
         Integer iv = (Integer)s.getValue();
-        System.out.println(iv);
+        //System.out.println(iv);
         scrollPane.getVerticalScrollBar().setBlockIncrement(iv);
       }
     });
@@ -108,17 +103,18 @@ public class Bbb extends JPanel{
     box.add(new JLabel("Block Increment:"));
     box.add(Box.createHorizontalStrut(2));
     box.add(spinner);
-    box.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-    add(box, BorderLayout.NORTH);
+    box.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-    add(scrollPane);
-    setPreferredSize(new Dimension(320, 200));
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(box, BorderLayout.NORTH);
+    p.add(scrollPane);
+    return p;
   }
   @SuppressWarnings("unchecked")
   private static JList makeList() {
     DefaultListModel model = new DefaultListModel();
-    for(int i=0;i<100;i++) {
-      model.addElement("Item: "+i);
+    for (int i = 0; i < 100; i++) {
+      model.addElement("Item: " + i);
     }
     JList list = new JList(model) {
 //       @Override public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
@@ -177,13 +173,13 @@ public class Bbb extends JPanel{
     list.setCellRenderer(new DefaultListCellRenderer() {
       private final Color ec = new Color(240, 240, 240);
       @Override public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        super.getListCellRendererComponent(list,value,index,isSelected,cellHasFocus);
-        if(isSelected) {
+        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        if (isSelected) {
           setForeground(list.getSelectionForeground());
           setBackground(list.getSelectionBackground());
-        }else{
+        } else {
           setForeground(list.getForeground());
-          setBackground(((index%2==0))?ec:list.getBackground());
+          setBackground(((index % 2 == 0)) ? ec : list.getBackground());
         }
         return this;
       }
@@ -198,17 +194,12 @@ public class Bbb extends JPanel{
     });
   }
   public static void createAndShowGUI() {
-//     try{
-//       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//     }catch(Exception e) {
-//       e.printStackTrace();
-//     }
-    JFrame frame = new JFrame("@title@");
-    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    frame.getContentPane().add(new Bbb());
-    frame.pack();
-    frame.setLocationRelativeTo(null);
-    frame.setVisible(true);
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new WheelScrollTest().makeUI());
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
   }
 }
 }}

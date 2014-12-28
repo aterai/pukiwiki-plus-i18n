@@ -12,14 +12,14 @@ description: LookAndFeel一覧からNimbusLookAndFeelを名前で検索取得し
 
 * サンプルコード [#ub4d63c2]
 #code(link){{
-try{
-  for(UIManager.LookAndFeelInfo laf: UIManager.getInstalledLookAndFeels()) {
-    if("Nimbus".equals(laf.getName())) {
+try {
+  for (UIManager.LookAndFeelInfo laf: UIManager.getInstalledLookAndFeels()) {
+    if ("Nimbus".equals(laf.getName())) {
       UIManager.setLookAndFeel(laf.getClassName());
     }
   }
-}catch(Exception e) {
-  //e.printStackTrace();
+} catch (Exception e) {
+  e.printStackTrace();
 }
 }}
 

@@ -14,12 +14,12 @@ description: MidiSystemからSequencerを作成取得し、MIDIファイルを�
 #code(link){{
 URL url = getClass().getResource("Mozart_toruko_k.mid");
 final Sequencer sequencer;
-try{
+try {
   Sequence s = MidiSystem.getSequence(url);
   sequencer  = MidiSystem.getSequencer();
   sequencer.open();
   sequencer.setSequence(s);
-}catch(Exception ex) {
+} catch (Exception ex) {
   ex.printStackTrace();
   return;
 }

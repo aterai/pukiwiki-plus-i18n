@@ -17,14 +17,14 @@ JButton button = new JButton(new AbstractAction("Goto Line") {
     Document doc = textArea.getDocument();
     Element root = doc.getDefaultRootElement();
     int i = 1;
-    try{
+    try {
       i = Integer.parseInt(textField.getText().trim());
       i = Math.max(1, Math.min(root.getElementCount(), i));
-    }catch(NumberFormatException nfe) {
-      java.awt.Toolkit.getDefaultToolkit().beep();
+    } catch (NumberFormatException nfe) {
+      Toolkit.getDefaultToolkit().beep();
       return;
     }
-    try{
+    try {
       Element elem = root.getElement(i-1);
       Rectangle rect = textArea.modelToView(elem.getStartOffset());
       Rectangle vr = scroll.getViewport().getViewRect();
@@ -32,8 +32,8 @@ JButton button = new JButton(new AbstractAction("Goto Line") {
       textArea.scrollRectToVisible(rect);
       textArea.setCaretPosition(elem.getStartOffset());
       //textArea.requestFocus();
-    }catch(BadLocationException ble) {
-      java.awt.Toolkit.getDefaultToolkit().beep();
+    } catch (BadLocationException ble) {
+      Toolkit.getDefaultToolkit().beep();
     }
   }
 });

@@ -72,9 +72,9 @@ table.getColumnModel().getColumn(2).setHeaderRenderer(
 以下の方法でも `0`列目だけ中央揃えにすることが可能だが、初回が`WindowsLookAndFeel`などの`SystemLookAndFeel`の場合、`LookAndFeel`を変更すると`NullPointerException`が発生する(それ以外の場合でもヘッダの`LookAndFeel`が切り替わらない)。
 
 #code{{
-try{
+try {
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-}catch(Exception e) {
+} catch (Exception e) {
   e.printStackTrace();
 }
 //...
