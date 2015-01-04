@@ -44,42 +44,44 @@ class ListItemTransferHandler extends TransferHandler {
     int index = dl.getIndex();
     //boolean insert = dl.isInsert();
     int max = listModel.getSize();
-    if(index<0 || index>max) {
+    if (index < 0 || index > max) {
       index = max;
     }
     addIndex = index;
 
     try {
-      Object[] values = (Object[])info.getTransferable().getTransferData(localObjectFlavor);
+      Object[] values =
+        (Object[]) info.getTransferable().getTransferData(localObjectFlavor);
       addCount = values.length;
-      for(int i=0;i<values.length;i++) {
+      for (int i = 0; i < values.length; i++) {
         int idx = index++;
         listModel.add(idx, values[i]);
         target.addSelectionInterval(idx, idx);
       }
       return true;
-    }catch(UnsupportedFlavorException ufe) {
+    } catch (UnsupportedFlavorException ufe) {
       ufe.printStackTrace();
-    }catch(java.io.IOException ioe) {
+    } catch (java.io.IOException ioe) {
       ioe.printStackTrace();
     }
     return false;
   }
-  @Override protected void exportDone(JComponent c, Transferable data, int action) {
+  @Override protected void exportDone(
+      JComponent c, Transferable data, int action) {
     cleanup(c, action == TransferHandler.MOVE);
   }
   private void cleanup(JComponent c, boolean remove) {
-    if(remove && indices != null) {
+    if (remove && indices != null) {
       JList source = (JList)c;
       DefaultListModel model  = (DefaultListModel)source.getModel();
-      if(addCount > 0) {
-        for(int i=0;i<indices.length;i++) {
-          if(indices[i]>=addIndex) {
+      if (addCount > 0) {
+        for (int i = 0; i < indices.length; i++) {
+          if (indices[i] >= addIndex) {
             indices[i] += addCount;
           }
         }
       }
-      for(int i=indices.length-1;i>=0;i--) {
+      for (int i = indices.length - 1; i >= 0; i--) {
         model.remove(indices[i]);
       }
     }
@@ -109,9 +111,9 @@ list.setDragEnabled(true);
 - `cleanup`
 -- 例えば、項目`0`,`1`,`2`を複数選択して、`1`と`2`の間にドロップすると、`1`,`2`,`2`になるので、以下のように変更
 #code{{
-for(int i = 0; i < indices.length; i++) {
-  //if(indices[i] > addIndex) {
-  if(indices[i] >= addIndex) {
+for (int i = 0; i < indices.length; i++) {
+  //if (indices[i] > addIndex) {
+  if (indices[i] >= addIndex) {
 //...
 }}
 

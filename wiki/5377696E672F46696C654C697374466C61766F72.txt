@@ -29,7 +29,7 @@ DropTargetListener dtl = new DropTargetAdapter() {
         Transferable transferable = dtde.getTransferable();
         List list = (List) transferable.getTransferData(
             DataFlavor.javaFileListFlavor);
-        for (Object o : list) {
+        for (Object o: list) {
           if (o instanceof File) {
             File file = (File) o;
             model.addFileName(
@@ -66,21 +66,22 @@ table.setTransferHandler(new FileTransferHandler());
 #code{{
 class FileTransferHandler extends TransferHandler {
   @Override public boolean importData(TransferSupport support) {
-    try{
-      if(canImport(support)) {
-        JTable table = (JTable)support.getComponent();
-        DefaultTableModel model = (DefaultTableModel)table.getModel();
-        for(Object o: (List)support.getTransferable().getTransferData(
+    try {
+      if (canImport(support)) {
+        JTable table = (JTable) support.getComponent();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        for(Object o: (List) support.getTransferable().getTransferData(
             DataFlavor.javaFileListFlavor)) {
-          if(o instanceof File) {
-            File file = (File)o;
+          if (o instanceof File) {
+            File file = (File) o;
             model.addRow(new Object[] {
-                file, file.length(), file.getAbsolutePath()});
+                file, file.length(), file.getAbsolutePath()
+            });
           }
         }
         return true;
       }
-    }catch(Exception ex) {
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
     return false;

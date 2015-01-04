@@ -61,16 +61,16 @@ class NimbusCheckIconTest {
     JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem("checkIcon test");
     UIDefaults d = new UIDefaults();
     d.put("CheckBoxMenuItem[Enabled].checkIconPainter",
-        new MyCheckBoxMenuItemPainter(
+          new MyCheckBoxMenuItemPainter(
             MyCheckBoxMenuItemPainter.CHECKICON_ENABLED));
     d.put("CheckBoxMenuItem[MouseOver].checkIconPainter",
-        new MyCheckBoxMenuItemPainter(
+          new MyCheckBoxMenuItemPainter(
             MyCheckBoxMenuItemPainter.CHECKICON_MOUSEOVER));
     d.put("CheckBoxMenuItem[Enabled+Selected].checkIconPainter",
-        new MyCheckBoxMenuItemPainter(
+          new MyCheckBoxMenuItemPainter(
             MyCheckBoxMenuItemPainter.CHECKICON_ENABLED_SELECTED));
     d.put("CheckBoxMenuItem[MouseOver+Selected].checkIconPainter",
-        new MyCheckBoxMenuItemPainter(
+          new MyCheckBoxMenuItemPainter(
             MyCheckBoxMenuItemPainter.CHECKICON_SELECTED_MOUSEOVER));
     cbmi.putClientProperty("Nimbus.Overrides", d);
     cbmi.putClientProperty("Nimbus.Overrides.InheritDefaults", false);
@@ -89,11 +89,11 @@ class NimbusCheckIconTest {
     return contentPane;
   }
   private static void createAndShowGUI() {
-    try{
-      for(UIManager.LookAndFeelInfo laf: UIManager.getInstalledLookAndFeels())
-        if("Nimbus".equals(laf.getName()))
+    try {
+      for (UIManager.LookAndFeelInfo laf: UIManager.getInstalledLookAndFeels())
+        if ("Nimbus".equals(laf.getName()))
           UIManager.setLookAndFeel(laf.getClassName());
-    }catch(Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     NimbusCheckIconTest demo = new NimbusCheckIconTest();
@@ -128,28 +128,32 @@ class MyCheckBoxMenuItemPainter extends AbstractRegionPainter {
       new Insets(5, 5, 5, 5), new Dimension(9, 10), false, null, 1.0, 1.0);
   }
   @Override protected void doPaint(Graphics2D g, JComponent c,
-               int width, int height, Object[] eckey) {
+                                   int width, int height, Object[] eckey) {
     switch (state) {
-      case CHECKICON_ENABLED:
-        paintcheckIconEnabled(g);              break;
-      case CHECKICON_MOUSEOVER:
-        paintcheckIconMouseOver(g);            break;
-      case CHECKICON_ENABLED_SELECTED:
-        paintcheckIconEnabledAndSelected(g);   break;
-      case CHECKICON_SELECTED_MOUSEOVER:
-        paintcheckIconSelectedAndMouseOver(g); break;
+    case CHECKICON_ENABLED:
+      paintcheckIconEnabled(g);
+      break;
+    case CHECKICON_MOUSEOVER:
+      paintcheckIconMouseOver(g);
+      break;
+    case CHECKICON_ENABLED_SELECTED:
+      paintcheckIconEnabledAndSelected(g);
+      break;
+    case CHECKICON_SELECTED_MOUSEOVER:
+      paintcheckIconSelectedAndMouseOver(g);
+      break;
     }
   }
   @Override protected final PaintContext getPaintContext() {
     return ctx;
   }
   private void paintcheckIconEnabled(Graphics2D g) {
-      g.setPaint(Color.GREEN);
-      g.drawOval(0, 0, 10, 10);
+    g.setPaint(Color.GREEN);
+    g.drawOval(0, 0, 10, 10);
   }
   private void paintcheckIconMouseOver(Graphics2D g) {
-      g.setPaint(Color.PINK);
-      g.drawOval(0, 0, 10, 10);
+    g.setPaint(Color.PINK);
+    g.drawOval(0, 0, 10, 10);
   }
   private void paintcheckIconEnabledAndSelected(Graphics2D g) {
     g.setPaint(Color.ORANGE);

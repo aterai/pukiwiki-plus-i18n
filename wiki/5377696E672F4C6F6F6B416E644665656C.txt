@@ -89,9 +89,9 @@ private void setLookAndFeel(String laf) {
 `SystemLookAndFeel`を使用する場合は、`UIManager.getSystemLookAndFeelClassName()`でその実装クラス名を取得して設定します。
 
 #code{{
-try{
+try {
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-}catch(Exception e) {
+} catch (Exception e) {
   e.printStackTrace();
 }
 }}

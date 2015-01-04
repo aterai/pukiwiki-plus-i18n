@@ -15,7 +15,7 @@ description: TexturePaintを使用して背景にタイル状に画像を貼り�
 BufferedImage bi = null;
 try {
   bi = ImageIO.read(getClass().getResource("16x16.png"));
-}catch(IOException ioe) {
+} catch (IOException ioe) {
   ioe.printStackTrace();
 }
 texture = new TexturePaint(bi, new Rectangle(bi.getWidth(), bi.getHeight()));

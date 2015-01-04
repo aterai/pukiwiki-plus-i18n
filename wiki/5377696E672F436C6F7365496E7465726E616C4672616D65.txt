@@ -15,7 +15,7 @@ description: 選択中のJInternalFrameをDesktopManagerなどを使用して外
 closeSelectedFrameAction1 = new AbstractAction() {
   @Override public void actionPerformed(ActionEvent e) {
     JInternalFrame f = desktop.getSelectedFrame();
-    if(f!=null) {
+    if (f != null) {
       desktop.getDesktopManager().closeFrame(f);
     }
   }
@@ -26,7 +26,7 @@ closeSelectedFrameAction1 = new AbstractAction() {
 closeSelectedFrameAction2 = new AbstractAction() {
   @Override public void actionPerformed(ActionEvent e) {
     JInternalFrame f = desktop.getSelectedFrame();
-    if(f!=null) {
+    if (f != null) {
       f.doDefaultCloseAction();
     }
   }
@@ -36,12 +36,12 @@ closeSelectedFrameAction2 = new AbstractAction() {
 #code{{
 closeSelectedFrameAction3 = new AbstractAction() {
   @Override public void actionPerformed(ActionEvent e) {
-    try{
+    try {
       JInternalFrame f = desktop.getSelectedFrame();
-      if(f!=null) {
+      if (f != null) {
         f.setClosed(true);
       }
-    }catch(java.beans.PropertyVetoException ex) {
+    } catch (PropertyVetoException ex) {
       ex.printStackTrace();
     }
   }
@@ -52,7 +52,7 @@ closeSelectedFrameAction3 = new AbstractAction() {
 disposeSelectedFrameAction = new AbstractAction() {
   @Override public void actionPerformed(ActionEvent e) {
     JInternalFrame f = desktop.getSelectedFrame();
-    if(f!=null) {
+    if (f != null) {
       f.dispose();
     }
   }

@@ -14,6 +14,7 @@ description: Htmlのtable要素をCSV、TSVに変換するBookmarklet
 - ブックマークレットなどに登録して表(`<table>`要素)のあるページで実行
 - `<table>`要素をダブルクリックすると、その内容を`CSV`に変換して`<textarea>`に文字列として挿入
 -- 子要素に`<table>`が存在する場合は、ダブルクリックに反応しない
+-- `<table role="presentation">`や`<table border="0">`のような、レイアウト目的の`<table>`は無視する
 - `<textarea>`をダブルクリックすると、元の`<table>`に戻る
 - `<thead>`や`<tfoot>`の扱いは適当(例えば、`<tbody>`の前にある`<tfoot>`が、そのまま先の行として`CSV`になる)
 - `<capthion>`は無視

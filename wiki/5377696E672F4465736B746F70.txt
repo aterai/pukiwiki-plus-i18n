@@ -12,13 +12,13 @@ description: JDK 6で導入されたDesktopを使ってブラウザを起動し�
 
 * サンプルコード [#ndf80e33]
 #code(link){{
-if(!Desktop.isDesktopSupported()) return;
-try{
+if (!Desktop.isDesktopSupported()) {
+  return;
+}
+try {
   Desktop.getDesktop().browse(new URI(href));
-}catch(IOException ioe) {
-  ioe.printStackTrace();
-}catch(URISyntaxException use) {
-  use.printStackTrace();
+} catch (IOException | URISyntaxException ex) {
+  ex.printStackTrace();
 }
 }}
 

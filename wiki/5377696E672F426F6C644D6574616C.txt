@@ -34,9 +34,9 @@ check.addActionListener(new ActionListener() {
     JCheckBox c = (JCheckBox) e.getSource();
     UIManager.put("swing.boldMetal", c.isSelected());
     // re-install the Metal Look and Feel
-    try{
+    try {
       UIManager.setLookAndFeel(new MetalLookAndFeel());
-    }catch(Exception ex) {
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
     // Update the ComponentUIs for all Components. This

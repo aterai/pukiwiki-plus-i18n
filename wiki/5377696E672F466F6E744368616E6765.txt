@@ -14,8 +14,8 @@ description: Swingの各種コンポーネントで使用する全てのフォ�
 #code(link){{
 private void updateFont(final Font font) {
   FontUIResource fontUIResource = new FontUIResource(font);
-  for(java.util.Map.Entry<?,?> entry: UIManager.getDefaults().entrySet()) {
-    if(entry.getKey().toString().toLowerCase().endsWith("font")) {
+  for (Map.Entry<?, ?> entry: UIManager.getDefaults().entrySet()) {
+    if (entry.getKey().toString().toLowerCase().endsWith("font")) {
       UIManager.put(entry.getKey(), fontUIResource);
     }
   }
@@ -24,13 +24,15 @@ private void updateFont(final Font font) {
   frame.pack();
 }
 private void recursiveUpdateUI(JComponent p) {
-  for(Component c: p.getComponents()) {
-    if(c instanceof JToolBar) {
+  for (Component c: p.getComponents()) {
+    if (c instanceof JToolBar) {
       continue;
-    }else if(c instanceof JComponent) {
-      JComponent jc = (JComponent)c;
+    } else if (c instanceof JComponent) {
+      JComponent jc = (JComponent) c;
       jc.updateUI();
-      if(jc.getComponentCount()>0) recursiveUpdateUI(jc);
+      if (jc.getComponentCount() > 0) {
+        recursiveUpdateUI(jc);
+      }
     }
   }
 }
@@ -53,19 +55,13 @@ import java.util.Map;
 import javax.swing.UIManager;
 class Test {
   public static void main(String[] args) {
-    //for(Object o:UIManager.getDefaults().keySet()) //は、うまくいかない？
-    //for(Object o:UIManager.getLookAndFeelDefaults().keySet())
-    for(Map.Entry<?,?> entry: UIManager.getDefaults().entrySet())
+    //for (Object o:UIManager.getDefaults().keySet()) //は、うまくいかない？
+    //for (Object o:UIManager.getLookAndFeelDefaults().keySet())
+    for(Map.Entry<?, ?> entry: UIManager.getDefaults().entrySet())
       System.out.println(entry.getKey());
   }
 }
 }}
-
-//この方法は、一々[http://java.sun.com/products/jlf/ed2/book/HIG.Glossary.html#51529 LookAndFeel]を作成してフォントを変更するのが面倒なときには便利です。[http://java.sun.com/products/jlf/ed2/book/HIG.Glossary.html#51529 LookAndFeel]を自作する場合は、以下などを参考にしてみてください。
-//
-//- [http://www.sun.com/access/developers/developing-accessible-apps/ Developing Accessible JFC Applications]
-//-- [http://www.sun.com/access/developers/developing-accessible-apps/appendix.html Appendix A - LowVisionMetalLookAndFeel]
-//- [http://www2u.biglobe.ne.jp/~kaduhiko/java_09.html 自分だけのカッコ良いアプリを作りたい，の巻]
 
 ----
 `Metal`で使用されているフォントが気に入らないだけなら、システム`LookAndFeel`を使用するか、`Metal`でボールドフォントを無効にするなどの方法があります。
@@ -73,9 +69,9 @@ class Test {
 - `MetalLookAndFeel`ではなく、`SystemLookAndFeel`を使用する
 
 #code{{
-try{
+try {
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-}catch(Exception e) {
+} catch(Exception e) {
   e.printStackTrace();
 }
 }}

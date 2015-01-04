@@ -14,7 +14,7 @@ description: JListをドラッグ＆ドロップして、項目を入れ替え�
 #code(link){{
 @Override protected void paintComponent(Graphics g) {
   super.paintComponent(g);
-  if(targetIndex >= 0) {
+  if (targetIndex >= 0) {
     Graphics2D g2 = (Graphics2D) g;
     g2.setPaint(lineColor);
     g2.fill(targetLine);
@@ -27,23 +27,23 @@ private void initTargetLine(Point p) {
   int lineHeight = 2;
   int modelSize  = getModel().getSize();
   targetIndex = -1;
-  for(int i = 0; i < modelSize; i++) {
+  for (int i = 0; i < modelSize; i++) {
     testArea.setRect(0, cellHeight * i - (cellHeight / 2), lineWidht, cellHeight);
-    if(testArea.contains(p)) {
+    if (testArea.contains(p)) {
       targetIndex = i;
       targetLine.setRect(0, i * cellHeight, lineWidht, lineHeight);
       break;
     }
   }
-  if(targetIndex < 0) {
+  if (targetIndex < 0) {
     targetIndex = modelSize;
     targetLine.setRect(0, targetIndex * cellHeight - lineHeight, lineWidht, lineHeight);
   }
 }
 @Override public void dragOver(final DropTargetDragEvent e) {
-  if(isDragAcceptable(e)) {
+  if (isDragAcceptable(e)) {
     e.acceptDrag(e.getDropAction());
-  }else{
+  } else {
     e.rejectDrag();
     return;
   }
@@ -55,27 +55,25 @@ private void initTargetLine(Point p) {
   Transferable t = e.getTransferable();
   DataFlavor[] f = t.getTransferDataFlavors();
   try {
-    if(isDropAcceptable(e)) {
+    if (isDropAcceptable(e)) {
       Component comp = (Component) t.getTransferData(f[0]);
       Object str = model.getElementAt(draggedIndex);
-      if(targetIndex==draggedIndex) {
+      if (targetIndex == draggedIndex) {
         setSelectedIndex(targetIndex);
-      }else if(targetIndex < draggedIndex) {
+      } else if (targetIndex < draggedIndex) {
         model.removeElementAt(draggedIndex);
         model.insertElementAt(str, targetIndex);
         setSelectedIndex(targetIndex);
-      }else{
+      } else {
         model.insertElementAt(str, targetIndex);
         model.removeElementAt(draggedIndex);
         setSelectedIndex(targetIndex - 1);
       }
       e.dropComplete(true);
-    }else{
+    } else {
       e.dropComplete(false);
     }
-  }catch(UnsupportedFlavorException ex) {
-    e.dropComplete(false);
-  }catch(IOException ie) {
+  } catch (UnsupportedFlavorException | IOException ex) {
     e.dropComplete(false);
   }
   e.dropComplete(false);
