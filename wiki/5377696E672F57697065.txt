@@ -20,17 +20,23 @@ class WipeImage extends JComponent implements ActionListener {
   }
   @Override public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    int iw = (int)icon.getIconWidth();
-    int ih = (int)icon.getIconHeight();
-    if(direction) {
-      if(ww<iw) ww=ww+10;
-      else animator.stop();
-    }else{
-      if(ww>0) ww=ww-10;
-      else animator.stop();
+    int iw = (int) icon.getIconWidth();
+    int ih = (int) icon.getIconHeight();
+    if (direction) {
+      if (ww < iw) {
+        ww += 10;
+      } else {
+        animator.stop();
+      }
+    } else {
+      if (ww > 0) {
+        ww -= 10;
+      } else {
+        animator.stop();
+      }
     }
     g.drawImage(icon.getImage(), 0, 0, iw, ih, this);
-    g.fillRect(ww, 0, iw-ww, ih);
+    g.fillRect(ww, 0, iw - ww, ih);
   }
   @Override public void actionPerformed(ActionEvent e) {
     repaint();

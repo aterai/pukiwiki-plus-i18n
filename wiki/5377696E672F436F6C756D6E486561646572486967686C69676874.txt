@@ -27,7 +27,8 @@ class ColumnHeaderRenderer implements TableCellRenderer {
 * 解説 [#n0ed0326]
 上記のサンプルでは、リードインデックスがある場合はフォーカスありで自身を描画するヘッダセルレンダラーを作成し、これを`TableColumn#setHeaderRenderer(...)`ですべてのカラムに設定しています。
 
-通常セル選択の変更で`JTableHeader`は再描画されないため、`TableColumnModel`から取得した`SelectionModel`に、`ListSelectionListener`を追加して、リードインデックスのフォーカス変更を描画し直しています。
+- `JTable`内にあるセルの選択状態が変更されても、`JTableHeader`の描画には影響しない
+-- このため、`TableColumnModel`から取得した`SelectionModel`に`ListSelectionListener`を追加して、リードインデックスの移動イベントが発生するたび、`JTableHeader#repaint()`を呼び出して`JTableHeader`のフォーカス変更を描画し直すように設定
 
 #code{{
 TableColumnModel cm = table.getColumnModel();

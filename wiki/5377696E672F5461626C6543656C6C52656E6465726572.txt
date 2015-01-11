@@ -25,10 +25,10 @@ class TextAreaCellRenderer extends JTextArea implements TableCellRenderer {
   @Override public Component getTableCellRendererComponent(
         JTable table, Object value, boolean isSelected, boolean hasFocus,
         int row, int column) {
-    if(isSelected) {
+    if (isSelected) {
       setForeground(table.getSelectionForeground());
       setBackground(table.getSelectionBackground());
-    }else{
+    } else {
       setForeground(table.getForeground());
       setBackground(table.getBackground());
     }
@@ -42,19 +42,19 @@ class TestRenderer extends MyJLabel implements TableCellRenderer {
   public TestRenderer() {
     super();
     setOpaque(true);
-    setBorder(BorderFactory.createEmptyBorder(0,5,0,5));
+    setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
   }
   @Override public Component getTableCellRendererComponent(
         JTable table, Object value, boolean isSelected, boolean hasFocus,
         int row, int column) {
-    if(isSelected) {
+    if (isSelected) {
       setForeground(table.getSelectionForeground());
       setBackground(table.getSelectionBackground());
-    }else{
+    } else {
       setForeground(table.getForeground());
       setBackground(table.getBackground());
     }
-    //setHorizontalAlignment((value instanceof Number)?RIGHT:LEFT);
+    //setHorizontalAlignment((value instanceof Number) ? RIGHT : LEFT);
     setFont(table.getFont());
     setText((value == null) ? "" : value.toString());
     return this;

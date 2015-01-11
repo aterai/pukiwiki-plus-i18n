@@ -147,6 +147,117 @@ Arrays.stream(menuBar.getSubElements())
   .forEach(mi -> ((JRadioButtonMenuItem) mi).addActionListener(al));
 }}
 
+----
+- [http://stackoverflow.com/questions/27790417/alignment-of-single-characters-in-java-boxlayout-on-y-axis-is-off-center swing - Alignment of Single Characters in Java BoxLayout on Y-Axis Is Off-Center - Stack Overflow]で、`BoxLayout.Y_AXIS`が面白い挙動をする
+-- 最小サイズが奇数の場合、`BoxLayout.Y_AXIS`で`x`軸、`BoxLayout.X_AXIS`で`y`軸の揃え位置がおかしくなるようだ...
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
+
+public class AlignmentTest5 extends JPanel {
+  private static boolean FLAG = false;
+  private static int V = 9;
+  @Override public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    g.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight());
+  }
+  @Override public Dimension getPreferredSize() {
+    return new Dimension(300, 80);
+  }
+  public static JLabel makeLabel(String label, int style) {
+    JLabel l = new JLabel(label) {
+      @Override public Dimension getPreferredSize() {
+        return new Dimension(101, 31);
+      }
+      @Override public Dimension getMinimumSize() {
+        Dimension d = super.getMinimumSize();
+        //System.out.println(d);
+        d.width = V;
+        d.height = V;
+        return d;
+      }
+    };
+    l.setOpaque(true);
+    l.setBackground(Color.ORANGE);
+    l.setFont(l.getFont().deriveFont(style));
+    l.setAlignmentX(Component.CENTER_ALIGNMENT);
+    l.setAlignmentY(Component.CENTER_ALIGNMENT);
+    l.setVerticalAlignment(SwingConstants.CENTER);
+    l.setVerticalTextPosition(SwingConstants.CENTER);
+    l.setHorizontalAlignment(SwingConstants.CENTER);
+    l.setHorizontalTextPosition(SwingConstants.CENTER);
+    return l;
+  }
+  public static JComponent makePanel() {
+    JPanel p = new JPanel(new GridLayout(0, 1, 5, 5));
+
+    JPanel p1 = new AlignmentTest5();
+    p1.setBorder(BorderFactory.createTitledBorder("BoxLayout.X_AXIS"));
+    p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+    p1.add(Box.createHorizontalGlue());
+    p1.add(makeLabel("a", Font.PLAIN));
+    p1.add(Box.createHorizontalGlue());
+
+    JPanel p2 = new AlignmentTest5();
+    p2.setBorder(BorderFactory.createTitledBorder("BoxLayout.Y_AXIS"));
+    p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
+    p2.add(Box.createVerticalGlue());
+    p2.add(makeLabel("a", Font.PLAIN));
+    p2.add(Box.createVerticalGlue());
+
+    for (JPanel c : Arrays.asList(p1, p2)) {
+      c.setBackground(Color.WHITE);
+      p.add(c);
+    }
+    return p;
+  }
+  public static JComponent makeUI() {
+    final JPanel p = new JPanel(new BorderLayout());
+    p.add(makePanel());
+
+
+    JSpinner spinner = new JSpinner(new SpinnerNumberModel(9, 0, 16, 1));
+    spinner.addChangeListener(new javax.swing.event.ChangeListener() {
+      @Override public void stateChanged(javax.swing.event.ChangeEvent e) {
+        //repaint();
+
+        JSpinner s = (JSpinner) e.getSource();
+        V = (Integer) s.getValue();
+        SwingUtilities.updateComponentTreeUI(p);
+      }
+    });
+    p.add(spinner, BorderLayout.SOUTH);
+//     p.add(new JCheckBox(new AbstractAction("minimum width: selected: odd(101px) / default: even(100px)") {
+//       @Override public void actionPerformed(ActionEvent e) {
+//         FLAG = ((JCheckBox) e.getSource()).isSelected();
+//         SwingUtilities.updateComponentTreeUI(p);
+//       }
+//     }), BorderLayout.SOUTH);
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    System.out.println("aaa" + new JLabel("a").getPreferredSize());
+
+    JFrame f = new JFrame("Alignment Test");
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(makeUI());
+    f.pack();
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
 ** 検討中で未実装 [#xa28093f]
 こっそり消えても(ﾟεﾟ)ｷﾆｼﾅｲ!!
 - [[Swing/FileChooserWithOptionPane]]

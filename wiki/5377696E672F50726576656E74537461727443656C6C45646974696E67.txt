@@ -15,25 +15,21 @@ description: キー入力やマウスクリックによるJTableのセル編集�
 table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);
 }}
 #code{{
-DefaultCellEditor ce = (DefaultCellEditor)table.getDefaultEditor(Object.class);
+DefaultCellEditor ce = (DefaultCellEditor) table.getDefaultEditor(Object.class);
 ce.setClickCountToStart(Integer.MAX_VALUE);
 }}
 
 * 解説 [#qf178f64]
-- `default`
--- `0`列目だけ、編集禁止です。
-
+- `default`(上記のサンプルでのデフォルト)
+-- `0`列目だけ`TableModel#isCellEditable`が`false`を返すように設定
 - `prevent KeyStroke autoStartsEdit`
--- `table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`で、キー入力(KBD{F2}は除く)によるセルの編集開始を禁止します。
-
+-- `table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`で、キー入力(KBD{F2}は除く)によるセルの編集開始を禁止
 - `prevent mouse from starting edit`
--- `DefaultCellEditor#setClickCountToStart`に大きな値を設定して、事実上マウスクリックによる編集開始が不可能になっています。
-
+-- `DefaultCellEditor#setClickCountToStart`に大きな値を設定して、事実上マウスクリックによる編集開始を禁止
 - `start cell editing only F2`
--- 上二つを設定して、セルの編集開始は、KBD{F2}キーのみ可能になっています。
-
+-- 上二つを設定して、セルの編集開始はKBD{F2}キーのみ可能に設定
 - `isCellEditable retrun false`
--- `TableModel#isCellEditable`が常に`false`を返し、セルエディタは起動されません。
+-- `TableModel#isCellEditable`が常に`false`を返すように設定し、すべてのカラムでセルエディタの起動を禁止
 
 * 参考リンク [#md0c00c5]
 - [http://0xc000013a.blog96.fc2.com/blog-entry-19.html 片っ端から忘れていけばいいじゃない。  JTableで、セル上でキータイプされただけでは編集を開始しないようにする。JTable.autoStartsEdit]

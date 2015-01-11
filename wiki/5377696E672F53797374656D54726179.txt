@@ -18,11 +18,6 @@ public MainPanel(final JFrame frame) {
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     return;
   }
-  frame.addWindowListener(new WindowAdapter() {
-    @Override public void windowIconified(WindowEvent e) {
-      e.getWindow().dispose();
-    }
-  });
   final SystemTray tray = SystemTray.getSystemTray();
   final Image image     = new ImageIcon(
     getClass().getResource("16x16.png")).getImage();
@@ -93,13 +88,6 @@ TrayIcon icon   = new TrayIcon(image, "TRAY", popup);
 -- `JFrame`の代わりに、`JWindow`を使うのはどうでしょうか。 -- &user(aterai); &new{2010-03-09 (火) 16:26:47};
 -- もしくは、[[JFrameのアイコンを非表示>Swing/DisableDefaultIcon]]のように透明なアイコンを設定する(クリックすると反応してしまいますが…)とか。 -- [[aterai]]
 -- `4`年以上前で、いまさら過ぎるのですが、やっと理解しました。自分の回答は的外れすぎですね。アイコン化したときにタスクバーボタンを非表示にするには、`Window#dispose()`を実行するとよさそうです。このサンプルを修正して非表示にするよう変更しました。 -- &user(aterai); &new{2014-12-25 (火) 16:35:38};
-
-#code{{
-frame.addWindowListener(new WindowAdapter() {
-  @Override public void windowIconified(WindowEvent e) {
-    e.getWindow().dispose();
-  }
-});
-}}
+-- [[TrayIconの使用中にJFrameを最小化したとき、タスクバーボタンを非表示にする>Swing/HideTaskbarButton]]に移動
 
 #comment

@@ -20,11 +20,11 @@ list.setCellRenderer(new ListCellRenderer() {
   @Override public Component getListCellRendererComponent(JList list, Object value,
                    int index, boolean isSelected, boolean cellHasFocus) {
     Component c;
-    if(disableIndexSet.contains(Integer.valueOf(index))) {
-      c = r.getListCellRendererComponent(list,value,index,false,false);
+    if (disableIndexSet.contains(Integer.valueOf(index))) {
+      c = r.getListCellRendererComponent(list, value, index, false, false);
       c.setEnabled(false);
-    }else{
-      c = r.getListCellRendererComponent(list,value,index,isSelected,cellHasFocus);
+    } else {
+      c = r.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
     }
     return c;
   }
@@ -33,8 +33,8 @@ ActionMap am = list.getActionMap();
 am.put("selectNextRow", new AbstractAction() {
   @Override public void actionPerformed(ActionEvent ae) {
     int index = list.getSelectedIndex()+1;
-    for(int i=index;i<list.getModel().getSize();i++) {
-      if(!disableIndexSet.contains(Integer.valueOf(i))) {
+    for (int i = index; i < list.getModel().getSize(); i++) {
+      if (!disableIndexSet.contains(Integer.valueOf(i))) {
         list.setSelectedIndex(i);
         break;
       }
