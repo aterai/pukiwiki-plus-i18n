@@ -13,27 +13,31 @@ description: RandomDissolve効果で表示する画像を切り替えます。
 * サンプルコード [#y4f21e02]
 #code(link){{
 class RandomDissolve extends JComponent implements ActionListener {
-  private final javax.swing.Timer animator;
-  private final BufferedImage image1;
-  private final BufferedImage image2;
-  private BufferedImage srcimg, dstimg;
+  private static final int STAGES = 16;
+  private final Timer animator;
+  private final transient BufferedImage image1;
+  private final transient BufferedImage image2;
+  private transient BufferedImage srcimg;
   private boolean mode = true;
   private int currentStage;
   private int[] src, dst, step;
   public RandomDissolve(BufferedImage i1, BufferedImage i2) {
+    super();
     this.image1 = i1;
     this.image2 = i2;
-    this.srcimg = copyImage(mode?image2:image1);
-    animator = new javax.swing.Timer(10, this);
+    this.srcimg = copyImage(mode ? image2 : image1);
+    animator = new Timer(10, this);
   }
   public boolean nextStage() {
-    if(currentStage > 0) {
+    if (currentStage > 0) {
       currentStage = currentStage - 1;
-      for(int i=0; i<step.length; i++) {
-        if(step[i]==currentStage) src[i] = dst[i];
+      for (int i = 0; i < step.length; i++) {
+        if (step[i] == currentStage) {
+          src[i] = dst[i];
+        }
       }
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -48,36 +52,34 @@ class RandomDissolve extends JComponent implements ActionListener {
   }
   private int[] getData(BufferedImage image) {
     WritableRaster wr = image.getRaster();
-    DataBufferInt dbi = (DataBufferInt)wr.getDataBuffer();
+    DataBufferInt dbi = (DataBufferInt) wr.getDataBuffer();
     return dbi.getData();
-    //return ((DataBufferInt)(image.getRaster().getDataBuffer())).getData();
   }
-  private static final int STAGES = 16;
   public void animationStart() {
     currentStage = STAGES;
-    dstimg = copyImage(mode?image1:image2);
-    srcimg = copyImage(mode?image2:image1);
-    src  = getData(srcimg);
-    dst  = getData(dstimg);
-    step   = new int[src.length];
-    mode   = !mode;
+    srcimg = copyImage(mode ? image2 : image1);
+    src = getData(srcimg);
+    dst = getData(copyImage(mode ? image1 : image2));
+    step = new int[src.length];
+    mode ^= true;
     Random rnd = new Random();
-    for(int i=0;i<step.length;i++) {
+    for (int i = 0; i < step.length; i++) {
       step[i] = rnd.nextInt(currentStage);
     }
     animator.start();
   }
   @Override public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    Graphics2D g2d = (Graphics2D) g;
+    Graphics2D g2d = (Graphics2D) g.create();
     g2d.setPaint(getBackground());
     g2d.fillRect(0, 0, getWidth(), getHeight());
     g2d.drawImage(srcimg, 0, 0, srcimg.getWidth(), srcimg.getHeight(), this);
+    g2d.dispose();
   }
   @Override public void actionPerformed(ActionEvent e) {
-    if(nextStage()) {
+    if (nextStage()) {
       repaint();
-    }else{
+    } else {
       animator.stop();
     }
   }

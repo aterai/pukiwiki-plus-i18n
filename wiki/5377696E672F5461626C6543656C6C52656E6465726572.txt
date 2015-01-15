@@ -77,22 +77,21 @@ class MyJLabel extends JLabel {
 
 * 解説 [#od38b372]
 - `0`列目
--- デフォルト
-
+-- デフォルトの`DefaultTableCellRenderer`(`JLabel`を継承)
 - `1`列目
--- [[文字列の折り返し>Swing/GlyphVector]]で作成した`JLabel`を継承するレンダラーを使って、セル幅に合わせて折り返しています。
-
+-- [[文字列の折り返し>Swing/GlyphVector]]で作成した`JLabel`を継承するレンダラーを使って、セル幅に合わせて折り返し
 - `2`列目
--- `JTextArea`を継承する`TableCellRenderer`を作成し、このレンダラーを`JTextArea#setLineWrap(boolean)`メソッドを使って折り返しを有効にしています。
+-- `JTextArea`を継承する`TableCellRenderer`を作成し、`JTextArea#setLineWrap(boolean)`メソッドを使用して折り返しを有効化
 
 * 参考リンク [#k6d1f8d5]
 - [[TableCellRendererでセルの背景色を変更>Swing/StripeTable]]
 - [[JTableのセルの高さを自動調整>Swing/AutoWrapTableCell]]
+-- セル幅だけでなく、高さも調整する方法のサンプル
 
 * コメント [#v61c967e]
 #comment
 - メモ: `TextAreaCellRenderer`を、`NimbusLookAndFeel`で使ったとき、うまく余白を消す方法が分からない。 -- &user(aterai); &new{2008-05-08 (木) 18:25:18};
-- ここの方法だと行の高さも自動変更してくれます。[http://www.roseindia.net/javatutorials/JTable_in_JDK.shtml This JDK Tutorial shows you how to wrap text inside cells of a JTable] -- &user(とおりすがり); &new{2010-12-10 (金) 10:12:40};
+- ここの方法だと行の高さも自動変更してくれます。%%This JDK Tutorial shows you how to wrap text inside cells of a JTable%% (リンク切れ) -- &user(とおりすがり); &new{2010-12-10 (金) 10:12:40};
 - ご指摘ありがとうございます。この方法なら、[[JTableのセルの高さを自動調整>Swing/AutoWrapTableCell]]で発生しているバグも修正できそうです。 -- &user(aterai); &new{2010-12-10 (金) 13:50:58};
 -- スクロールバーの表示・非表示が繰り返されるバグは修正できそうだけど、高さが更新されない場合がある(上記の`www.roseindia.net`にある例だと、列幅をすこしずつ調整すると、`fox`が表示されなくなる)方は難しそう？ -- &user(aterai); &new{2010-12-10 (金) 17:43:28};
 

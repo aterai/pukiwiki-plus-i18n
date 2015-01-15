@@ -19,9 +19,9 @@ class DragHereIcon implements Icon {
   private static int ARC_SIZE = 16;
   private static int SLIT_NUM = 3;
   private static Shape BORDER = new RoundRectangle2D.Float(
-    BORDER_WIDTH,BORDER_WIDTH,
-    ICON_SIZE-2*BORDER_WIDTH-1,ICON_SIZE-2*BORDER_WIDTH-1,
-    ARC_SIZE,ARC_SIZE);
+    BORDER_WIDTH, BORDER_WIDTH,
+    ICON_SIZE - 2 * BORDER_WIDTH - 1, ICON_SIZE-2*BORDER_WIDTH - 1,
+    ARC_SIZE, ARC_SIZE);
   private static Font font = new Font(Font.MONOSPACED, Font.BOLD, ICON_SIZE);
   private static FontRenderContext frc = new FontRenderContext(null, true, true);
   //DOWNWARDS WHITE ARROW
@@ -42,29 +42,28 @@ class DragHereIcon implements Icon {
     g2.setStroke(new BasicStroke(SLIT_WIDTH));
     g2.setColor(UIManager.getColor("Panel.background"));
 
-    int n = SLIT_NUM+1;
-    int v = ICON_SIZE/n;
-    int m = n*v;
-    for(int i=1;i<n;i++) {
-      int a = i*v;
-      g2.drawLine(a,0,a,m);
-      g2.drawLine(0,a,m,a);
+    int n = SLIT_NUM + 1;
+    int v = ICON_SIZE / n;
+    int m = n * v;
+    for (int i = 1; i < n; i++) {
+      int a = i * v;
+      g2.drawLine(a, 0, a, m);
+      g2.drawLine(0, a, m, a);
     }
 
-    //g2.drawLine(1*v,0*v,1*v,4*v);
-    //g2.drawLine(2*v,0*v,2*v,4*v);
-    //g2.drawLine(3*v,0*v,3*v,4*v);
-    //g2.drawLine(0*v,1*v,4*v,1*v);
-    //g2.drawLine(0*v,2*v,4*v,2*v);
-    //g2.drawLine(0*v,3*v,4*v,3*v);
+    //g2.drawLine(1 * v, 0 * v, 1 * v, 4 * v);
+    //g2.drawLine(2 * v, 0 * v, 2 * v, 4 * v);
+    //g2.drawLine(3 * v, 0 * v, 3 * v, 4 * v);
+    //g2.drawLine(0 * v, 1 * v, 4 * v, 1 * v);
+    //g2.drawLine(0 * v, 2 * v, 4 * v, 2 * v);
+    //g2.drawLine(0 * v, 3 * v, 4 * v, 3 * v);
 
     g2.setPaint(LINE_COLOR);
     Rectangle2D b = ARROW.getBounds();
-    Point2D p = new Point2D.Double(b.getX() + b.getWidth()/2d, b.getY() + b.getHeight()/2d);
+    Point2D p = new Point2D.Double(b.getX() + b.getWidth() / 2d, b.getY() + b.getHeight() / 2d);
     AffineTransform toCenterAT = AffineTransform.getTranslateInstance(
-        ICON_SIZE/2d - p.getX(), ICON_SIZE/2d - p.getY());
+        ICON_SIZE / 2d - p.getX(), ICON_SIZE / 2d - p.getY());
     g2.fill(toCenterAT.createTransformedShape(ARROW));
-    g2.translate(-x,-y);
     g2.dispose();
   }
   @Override public int getIconWidth()  {

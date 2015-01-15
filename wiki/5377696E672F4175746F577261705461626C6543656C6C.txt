@@ -17,7 +17,7 @@ private void adjustRowHeight(JTable table, int row, int column) {
   //int cWidth = table.getTableHeader().getColumnModel().getColumn(column).getWidth();
   //int cWidth = table.getCellRect(row, column, false).width; //セルの内余白は含めない
   //setSize(new Dimension(cWidth, 1000)); //注目
-  setBounds(table.getCellRect(row, column, false)); //もしくはsetBoundsを使用する
+  setBounds(table.getCellRect(row, column, false)); //setSizeの代わりに、setBoundsでも可
   //doLayout(); //必要なさそう
 
   int preferredHeight = getPreferredSize().height;

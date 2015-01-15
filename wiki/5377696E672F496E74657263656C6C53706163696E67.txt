@@ -15,10 +15,10 @@ description: JTableの罫線の表示非表示とセルの内余白を変更し�
 add(new JCheckBox(new AbstractAction("setShowVerticalLines") {
   @Override public void actionPerformed(ActionEvent e) {
     Dimension d = table.getIntercellSpacing();
-    if(((JCheckBox)e.getSource()).isSelected()) {
+    if (((JCheckBox) e.getSource()).isSelected()) {
       table.setShowVerticalLines(true);
       table.setIntercellSpacing(new Dimension(1, d.height));
-    }else{
+    } else {
       table.setShowVerticalLines(false);
       table.setIntercellSpacing(new Dimension(0, d.height));
     }
@@ -27,10 +27,10 @@ add(new JCheckBox(new AbstractAction("setShowVerticalLines") {
 add(new JCheckBox(new AbstractAction("setShowHorizontalLines") {
   @Override public void actionPerformed(ActionEvent e) {
     Dimension d = table.getIntercellSpacing();
-    if(((JCheckBox)e.getSource()).isSelected()) {
+    if (((JCheckBox) e.getSource()).isSelected()) {
       table.setShowHorizontalLines(true);
       table.setIntercellSpacing(new Dimension(d.width, 1));
-    }else{
+    } else {
       table.setShowHorizontalLines(false);
       table.setIntercellSpacing(new Dimension(d.width, 0));
     }

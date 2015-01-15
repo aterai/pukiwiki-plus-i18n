@@ -26,14 +26,14 @@ class ButtonsRenderer extends JPanel implements ListCellRenderer {
   });
   public ButtonsRenderer() {
     super(new BorderLayout());
-    setBorder(BorderFactory.createEmptyBorder(5,5,5,0));
+    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
     setOpaque(true);
     label.setLineWrap(true);
     label.setOpaque(false);
     add(label);
 
     Box box = Box.createHorizontalBox();
-    for(JButton b: java.util.Arrays.asList(viewButton, editButton)) {
+    for (JButton b: Arrays.asList(viewButton, editButton)) {
       b.setFocusable(false);
       b.setRolloverEnabled(false);
       box.add(b);
@@ -41,29 +41,30 @@ class ButtonsRenderer extends JPanel implements ListCellRenderer {
     }
     add(box, BorderLayout.EAST);
   }
-  private final Color evenColor = new Color(230,255,230);
+  private final Color evenColor = new Color(230, 255, 230);
   @Override public Component getListCellRendererComponent(
-      JList list, Object value, int index, boolean isSelected, boolean hasFocus) {
-    label.setText((value==null)?"":value.toString());
-    if(isSelected) {
+      JList list, Object value, int index,
+      boolean isSelected, boolean hasFocus) {
+    label.setText((value == null) ? "" : value.toString());
+    if (isSelected) {
       setBackground(list.getSelectionBackground());
       label.setForeground(list.getSelectionForeground());
-    }else{
-      setBackground(index%2==0 ? evenColor : list.getBackground());
+    } else {
+      setBackground(index % 2 == 0 ? evenColor : list.getBackground());
       label.setForeground(list.getForeground());
     }
-    for(JButton b: java.util.Arrays.asList(viewButton, editButton)) {
+    for (JButton b : java.util.Arrays.asList(viewButton, editButton)) {
       b.getModel().setRollover(false);
       b.getModel().setArmed(false);
       b.getModel().setPressed(false);
       b.getModel().setSelected(false);
     }
-    if(button!=null) {
-      if(index==pressedIndex) {
+    if (button != null) {
+      if (index == pressedIndex) {
         button.getModel().setSelected(true);
         button.getModel().setArmed(true);
         button.getModel().setPressed(true);
-      }else if(index==rolloverIndex) {
+      } else if (index == rolloverIndex) {
         button.getModel().setRollover(true);
       }
     }

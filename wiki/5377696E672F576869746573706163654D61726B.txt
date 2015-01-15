@@ -14,42 +14,43 @@ description: JTextPaneに表示した文字列中の全角スペースやタブ�
 #code(link){{
 class WhitespaceLabelView extends LabelView {
   private static final Color pc = new Color(130, 140, 120);
-  private static final BasicStroke dashed = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
-       BasicStroke.JOIN_MITER, 10.0f, new float[] {1.0f}, 0.0f);
+  private static final BasicStroke dashed = new BasicStroke(1f, BasicStroke.CAP_BUTT,
+       BasicStroke.JOIN_MITER, 10f, new float[] {1f}, 0f);
   public WhitespaceLabelView(Element elem) {
     super(elem);
   }
   @Override public void paint(Graphics g, Shape a) {
-    super.paint(g,a);
-    Graphics2D g2 = (Graphics2D) g;
+    super.paint(g, a);
+    Graphics2D g2 = (Graphics2D) g.create();
     Stroke stroke = g2.getStroke();
-    Rectangle alloc = (a instanceof Rectangle) ? (Rectangle)a : a.getBounds();
+    Rectangle alloc = (a instanceof Rectangle) ? (Rectangle) a : a.getBounds();
     FontMetrics fontMetrics = g.getFontMetrics();
     int spaceWidth = fontMetrics.stringWidth("　");
     int sumOfTabs  = 0;
-    String text = getText(getStartOffset(),getEndOffset()).toString();
-    for(int i=0;i<text.length();i++) {
-      String s = text.substring(i,i+1);
-      int previousStringWidth = fontMetrics.stringWidth(text.substring(0,i)) + sumOfTabs;
-      int sx = alloc.x+previousStringWidth;
-      int sy = alloc.y+alloc.height-fontMetrics.getDescent();
-      if("　".equals(s)) {
+    String text = getText(getStartOffset(), getEndOffset()).toString();
+    for (int i = 0; i < text.length(); i++) {
+      String s = text.substring(i, i + 1);
+      int previousStringWidth = fontMetrics.stringWidth(text.substring(0, i)) + sumOfTabs;
+      int sx = alloc.x + previousStringWidth;
+      int sy = alloc.y + alloc.height - fontMetrics.getDescent();
+      if ("　".equals(s)) {
         g2.setStroke(dashed);
         g2.setPaint(pc);
-        g2.drawLine(sx+1, sy-1, sx+spaceWidth-2, sy-1);
-        g2.drawLine(sx+2,   sy, sx+spaceWidth-2, sy);
-      }else if("\t".equals(s)) {
-        int tabWidth = (int)getTabExpander().nextTabStop((float)sx, i)-sx;
+        g2.drawLine(sx + 1, sy - 1, sx + spaceWidth - 2, sy - 1);
+        g2.drawLine(sx + 2, sy,     sx + spaceWidth - 2, sy);
+      } else if ("\t".equals(s)) {
+        int tabWidth = (int) getTabExpander().nextTabStop((float) sx, i) - sx;
         g2.setColor(pc);
-        g2.drawLine(sx+2, sy-0, sx+2+2, sy-0);
-        g2.drawLine(sx+2, sy-1, sx+2+1, sy-1);
-        g2.drawLine(sx+2, sy-2, sx+2+0, sy-2);
+        g2.drawLine(sx + 2, sy - 0, sx + 2 + 2, sy - 0);
+        g2.drawLine(sx + 2, sy - 1, sx + 2 + 1, sy - 1);
+        g2.drawLine(sx + 2, sy - 2, sx + 2 + 0, sy - 2);
         g2.setStroke(dashed);
-        g2.drawLine(sx+2, sy, sx+tabWidth-2, sy);
-        sumOfTabs+=tabWidth;
+        g2.drawLine(sx + 2, sy, sx + tabWidth - 2, sy);
+        sumOfTabs += tabWidth;
       }
       g2.setStroke(stroke);
     }
+    g2.dispose();
   }
 }
 }}

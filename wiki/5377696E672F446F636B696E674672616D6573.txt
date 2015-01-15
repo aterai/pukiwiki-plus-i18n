@@ -13,13 +13,13 @@ description: JFrameを2つ並べて作成し、その位置関係を保ったま
 * サンプルコード [#f580c5f3]
 #code(link){{
 private void positionFrames(ComponentEvent e) {
-  if(e.getSource().equals(frame1)) {
+  if (e.getComponent().equals(frame1)) {
     int x = frame1.getBounds().x;
     int y = frame1.getBounds().y + frame1.getBounds().height;
     frame2.removeComponentListener(this);
     frame2.setLocation(x, y);
     frame2.addComponentListener(this);
-  }else{
+  } else {
     int x = frame2.getBounds().x;
     int y = frame2.getBounds().y - frame1.getBounds().height;
     frame1.removeComponentListener(this);

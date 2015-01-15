@@ -6,14 +6,14 @@ pubdate: 2009-09-21T02:07:00+09:00
 description: JTextPaneでキーワードのSyntax Highlightを行います。
 ---
 * 概要 [#ta3c8a38]
-`JTextPane`でキーワードの`Syntax Highlight`を行います。このサンプルは、[http://www.discoverteenergy.com/Files/SyntaxDocument.java SyntaxDocument.java]からキーワードのハイライト部分を抜き出して作成しています。
+`JTextPane`でキーワードの`Syntax Highlight`を行います。このサンプルは、[https://community.oracle.com/thread/2105230 Fast styled JTextPane editor | Oracle Community]などのサンプルコードからキーワードのハイライト部分を参考にして作成しています。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTAw3RBeI/AAAAAAAAAjs/LtUs6l9UpZo/s800/SimpleSyntaxHighlight.png)
 
 * サンプルコード [#p84c741c]
 #code(link){{
-//This code is taken from:
-//http://www.discoverteenergy.com/Files/SyntaxDocument.java SyntaxDocument.java
+//This code is taken from: SyntaxDocument.java
+//[https://community.oracle.com/thread/2105230 Fast styled JTextPane editor | Oracle Community]
 class SimpleSyntaxDocument extends DefaultStyledDocument {
   private final Style normal; //MutableAttributeSet normal = new SimpleAttributeSet();
   private static final String OPERANDS = ".,";
@@ -97,11 +97,12 @@ class SimpleSyntaxDocument extends DefaultStyledDocument {
 * 解説 [#t2ef148a]
 上記のサンプルでは、`red`, `green`, `blue`といったキーワードを入力すると、その色で文字列をハイライトするようになっています。区切り文字は、空白、`.`(ドット)、`,`(カンマ)の`3`つです。
 
-`Java`のシンタックスハイライトを行うサンプルコード([http://www.discoverteenergy.com/Files/SyntaxDocument.java SyntaxDocument.java])からキーワードのハイライト部分を抜き出して作成しています。
+`Java`のシンタックスハイライトを行うサンプルコード(参考リンクの`SyntaxDocument.java`など)からキーワードのハイライト部分を抜き出して作成しています。
 
 * 参考リンク [#q149fcae]
-- [http://www.discoverteenergy.com/Files/SyntaxDocument.java SyntaxDocument.java]
--- 作者、ライセンス、参照元のページが何処だったかなどが不明…。
+- [https://community.oracle.com/thread/2105230 Fast styled JTextPane editor | Oracle Community]
+-- %%オリジナルの作者、ライセンス、参照元のページが何処だったかなどが不明…%%
+-- [http://www.programcreek.com/java-api-examples/index.php?example_code_path=weka-weka.gui.scripting-SyntaxDocument.java Java Code Example for]によると、元は[https://community.oracle.com/thread/2105230 Fast styled JTextPane editor | Oracle Community]の投稿で、作者は camickr さん、David Underhill さん。そう言われるとなんとなくそんな記憶があるような…、あのフォーラムはもういろいろ変更されすぎててどうにも…
 - [http://web.archive.org/web/20120802021725/http://java.sun.com/products/jfc/tsc/articles/text/editor_kit/index.html Customizing a Text Editor]
 - [http://ostermiller.org/syntax/editor.html Text Editor Tutorial]
 

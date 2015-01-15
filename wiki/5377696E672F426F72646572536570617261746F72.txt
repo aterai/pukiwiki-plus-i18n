@@ -19,13 +19,13 @@ combobox.setRenderer(new ListCellRenderer() {
   @Override public Component getListCellRendererComponent(
                JList list, Object value, int index,
                boolean isSelected, boolean cellHasFocus) {
-    MyItem item = (MyItem)value;
-    JLabel label = (JLabel)lcr.getListCellRendererComponent(
+    MyItem item = (MyItem) value;
+    JLabel label = (JLabel) lcr.getListCellRendererComponent(
                     list,item,index,isSelected,cellHasFocus);
-    if(item.hasSeparator()) {
+    if (item.hasSeparator()) {
       label.setBorder(
-             BorderFactory.createMatteBorder(1,0,0,0,Color.GRAY));
-    }else{
+             BorderFactory.createMatteBorder(1, 0, 0, 0, Color.GRAY));
+    } else {
       label.setBorder(BorderFactory.createEmptyBorder());
     }
     return label;
@@ -73,13 +73,13 @@ combobox.setRenderer(new ListCellRenderer() {
   @Override public Component getListCellRendererComponent(
                JList list, Object value, int index,
                boolean isSelected, boolean cellHasFocus) {
-    MyItem item = (MyItem)value;
-    JLabel label = (JLabel)lcr.getListCellRendererComponent(
+    MyItem item = (MyItem) value;
+    JLabel label = (JLabel) lcr.getListCellRendererComponent(
                     list,item,index,isSelected,cellHasFocus);
-    if(index!=-1 && item.hasSeparator()) {
+    if (index != -1 && item.hasSeparator()) {
       label.setBorder(
-             BorderFactory.createMatteBorder(1,0,0,0,Color.GRAY));
-    }else{
+             BorderFactory.createMatteBorder(1, 0, 0, 0, Color.GRAY));
+    } else {
       label.setBorder(BorderFactory.createEmptyBorder());
     }
     return label;

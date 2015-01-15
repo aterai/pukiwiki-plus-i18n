@@ -13,7 +13,7 @@ description: セルの中にアイコンと文字列を配置し、エクスプ�
 * サンプルコード [#f06fb511]
 #code(link){{
 class TestRenderer extends Box implements TableCellRenderer {
-  private final Border emptyBorder = BorderFactory.createEmptyBorder(1,1,1,1);
+  private final Border emptyBorder = BorderFactory.createEmptyBorder(1, 1, 1, 1);
   private final ImageIcon nicon;
   private final ImageIcon sicon;
   private final JLabel textLabel;
@@ -39,21 +39,21 @@ class TestRenderer extends Box implements TableCellRenderer {
       Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     textLabel.setText(Objects.toString(value, ""));
     FontMetrics fm = table.getFontMetrics(table.getFont());
-    int swidth = fm.stringWidth(textLabel.getText())+textLabel.getInsets().left
-                                +textLabel.getInsets().right;
+    int swidth = fm.stringWidth(textLabel.getText()) + textLabel.getInsets().left
+                              + textLabel.getInsets().right;
     int cwidth = table.getColumnModel().getColumn(column).getWidth()
                    -iconLabel.getPreferredSize().width;
-    textLabel.setPreferredSize(new Dimension(swidth>cwidth?cwidth:swidth,0));
-    if(isSelected) {
+    textLabel.setPreferredSize(new Dimension(swidth > cwidth ? cwidth : swidth, 0));
+    if (isSelected) {
       textLabel.setForeground(table.getSelectionForeground());
       textLabel.setBackground(table.getSelectionBackground());
-    }else{
+    } else {
       textLabel.setForeground(table.getForeground());
       textLabel.setBackground(table.getBackground());
     }
-    if(hasFocus) {
+    if (hasFocus) {
       textLabel.setBorder(UIManager.getBorder("Table.focusCellHighlightBorder"));
-    }else{
+    } else {
       textLabel.setBorder(emptyBorder);
     }
     textLabel.setFont(table.getFont());
@@ -68,7 +68,7 @@ class TestRenderer extends Box implements TableCellRenderer {
       //Color color = new Color(argb,true);
       //float[] array = new float[4];
       //color.getComponents(array);
-      //return new Color(array[0]*0.5f, array[1]*0.5f, array[2], array[3]).getRGB();
+      //return new Color(array[0] * .5f, array[1] * .5f, array[2], array[3]).getRGB();
       int r = (argb >> 16) & 0xff;
       int g = (argb >>  8) & 0xff;
       return (argb & 0xff0000ff) | ((r >> 1) << 16) | ((g >> 1) << 8);
