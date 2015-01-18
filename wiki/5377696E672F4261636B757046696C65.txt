@@ -15,44 +15,44 @@ description: 番号付きバックアップファイルを作成します。
 private File makeBackupFile(File file, int intold, int intnew) {
   File testFile = null;
   String newfilename = file.getAbsolutePath();
-  if(intold==0 && intnew==0) {
+  if (intold == 0 && intnew == 0) {
     file.delete();
     return new File(newfilename);
   }
   boolean testFileFlag = false;
-  for(int i=1;i<=intold;i++) {
-    testFile = new File(file.getParentFile(), file.getName()+"."+i+"~");
-    if(!testFile.exists()) {
+  for (int i = 1; i <= intold; i++) {
+    testFile = new File(file.getParentFile(), file.getName() + "." + i + "~");
+    if (!testFile.exists()) {
       testFileFlag = true;
       break;
     }
   }
-  if(!testFileFlag) {
-    for(int i=intold+1;i<=intold+intnew;i++) {
-      testFile = new File(file.getParentFile(), file.getName()+"."+i+"~");
-      if(!testFile.exists()) {
+  if (!testFileFlag) {
+    for (int i = intold + 1; i <= intold + intnew; i++) {
+      testFile = new File(file.getParentFile(), file.getName() + "." + i + "~");
+      if (!testFile.exists()) {
         testFileFlag = true;
         break;
       }
     }
   }
-  if(testFileFlag) {
-    System.out.println("createBKUP1"+testFile.getAbsolutePath());
+  if (testFileFlag) {
+    System.out.println("createBKUP1" + testFile.getAbsolutePath());
     file.renameTo(testFile);
-  }else{
+  } else {
     File tmpFile3 = new File(file.getParentFile(),
-                             file.getName()+"."+(intold+1)+"~");
+                             file.getName() + "." + (intold + 1) + "~");
     tmpFile3.delete();
-    for(int i=intold+2;i<=intold+intnew;i++) {
+    for (int i = intold + 2; i <= intold + intnew; i++) {
       File tmpFile1 = new File(file.getParentFile(),
-                               file.getName()+"."+i+"~");
+                               file.getName() + "." + i + "~");
       File tmpFile2 = new File(file.getParentFile(),
-                               file.getName()+"."+(i-1)+"~");
+                               file.getName() + "." + (i - 1) + "~");
       tmpFile1.renameTo(tmpFile2);
     }
     File tmpFile = new File(file.getParentFile(),
-                            file.getName()+"."+(intold+intnew)+"~");
-    System.out.println("changeBKUP2"+tmpFile.getAbsolutePath());
+                            file.getName() + "." + (intold + intnew) + "~");
+    System.out.println("changeBKUP2" + tmpFile.getAbsolutePath());
     file.renameTo(tmpFile);
   }
   //System.out.println(newfilename);
