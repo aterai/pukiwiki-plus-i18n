@@ -25,7 +25,9 @@ private class TablePopupMenu extends JPopupMenu {
     JTableHeader h = (JTableHeader)c;
     int i = h.columnAtPoint(new Point(x, y));
     i = h.getTable().convertColumnIndexToModel(i);
-    for(SortAction a:actions) a.setIndex(i);
+    for (SortAction a: actions) {
+      a.setIndex(i);
+    }
     super.show(c, x, y);
   }
 }

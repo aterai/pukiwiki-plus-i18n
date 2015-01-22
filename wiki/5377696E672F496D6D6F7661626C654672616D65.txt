@@ -12,9 +12,9 @@ description: JInternalFrameをマウスなどで移動できないように固�
 
 * サンプルコード [#a83e5c01]
 #code(link){{
-BasicInternalFrameUI ui = (BasicInternalFrameUI)immovableFrame.getUI();
+BasicInternalFrameUI ui = (BasicInternalFrameUI) immovableFrame.getUI();
 Component titleBar = ui.getNorthPane();
-for(MouseMotionListener l:titleBar.getListeners(MouseMotionListener.class)) {
+for (MouseMotionListener l: titleBar.getListeners(MouseMotionListener.class)) {
   titleBar.removeMouseMotionListener(l);
 }
 }}

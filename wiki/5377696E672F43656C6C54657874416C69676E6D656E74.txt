@@ -20,20 +20,22 @@ class HorizontalAlignmentTableRenderer extends DefaultTableCellRenderer {
         Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     Component c = super.getTableCellRendererComponent(
         table, value, isSelected, hasFocus, row, column);
-    if(c instanceof JLabel) initLabel((JLabel)c, row);
+    if (c instanceof JLabel) {
+      initLabel((JLabel) c, row);
+    }
     return c;
   }
   private void initLabel(JLabel l, int row) {
-    if(leftRadio.isSelected()) {
+    if (leftRadio.isSelected()) {
       l.setHorizontalAlignment(JLabel.LEFT);
-    }else if(centerRadio.isSelected()) {
+    } else if (centerRadio.isSelected()) {
       l.setHorizontalAlignment(JLabel.CENTER);
-    }else if(rightRadio.isSelected()) {
+    } else if (rightRadio.isSelected()) {
       l.setHorizontalAlignment(JLabel.RIGHT);
-    }else if(customRadio.isSelected()) {
-      l.setHorizontalAlignment(row%3==0?JLabel.LEFT:
-                               row%3==1?JLabel.CENTER:
-                                        JLabel.RIGHT);
+    } else if (customRadio.isSelected()) {
+      l.setHorizontalAlignment(row % 3 == 0 ? JLabel.LEFT:
+                               row % 3 == 1 ? JLabel.CENTER:
+                                              JLabel.RIGHT);
     }
   }
 }

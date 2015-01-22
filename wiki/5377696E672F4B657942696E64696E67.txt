@@ -16,14 +16,14 @@ final List<Integer> focusType = Arrays.asList(
         JComponent.WHEN_FOCUSED, JComponent.WHEN_IN_FOCUSED_WINDOW,
         JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 table.setAutoCreateRowSorter(true);
-JPanel p = new JPanel(new GridLayout(2,1,5,5));
-p.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+JPanel p = new JPanel(new GridLayout(2, 1, 5, 5));
+p.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 p.add(componentChoices);
 p.add(new JButton(new AbstractAction("show") {
   @Override public void actionPerformed(ActionEvent e) {
     model.setRowCount(0);
-    JComponent c = ((JComponentType)componentChoices.getSelectedItem()).component;
-    for(Integer f:focusType) {
+    JComponent c = ((JComponentType) componentChoices.getSelectedItem()).component;
+    for (Integer f: focusType) {
       loadBindingMap(f, c.getInputMap(f), c.getActionMap());
     }
   }
