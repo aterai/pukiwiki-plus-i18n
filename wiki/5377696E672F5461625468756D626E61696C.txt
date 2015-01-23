@@ -21,11 +21,10 @@ class TabThumbnailTabbedPane extends JTabbedPane {
     if (c instanceof JScrollPane) {
       c = ((JScrollPane) c).getViewport().getView();
       Dimension d = c.getPreferredSize();
-      int newW = (int) (d.width * SCALE);
-      int newH = (int) (d.height * SCALE);
-      BufferedImage image = new BufferedImage(
-          newW, newH, BufferedImage.TYPE_INT_ARGB);
-      Graphics2D g2 = (Graphics2D) image.getGraphics();
+      int newW = (int)(d.width  * SCALE);
+      int newH = (int)(d.height * SCALE);
+      BufferedImage image = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+      Graphics2D g2 = image.createGraphics();
       g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                           RenderingHints.VALUE_INTERPOLATION_BILINEAR);
       g2.scale(SCALE, SCALE);
@@ -42,21 +41,21 @@ class TabThumbnailTabbedPane extends JTabbedPane {
     if (index < 0) {
       return null;
     }
+
     final JPanel p = new JPanel(new BorderLayout());
     p.setBorder(BorderFactory.createEmptyBorder());
     p.add(new JLabel(getTitleAt(index)), BorderLayout.NORTH);
     p.add(getTabThumbnail(index));
+
     JToolTip tip = new JToolTip() {
       @Override public Dimension getPreferredSize() {
         Insets i = getInsets();
         Dimension d = p.getPreferredSize();
-        return new Dimension(
-            d.width + i.left + i.right, d.height + i.top + i.bottom);
+        return new Dimension(d.width  + i.left + i.right, d.height + i.top  + i.bottom);
       }
     };
     tip.setComponent(this);
-    LookAndFeel.installColorsAndFont(
-        p, "ToolTip.background", "ToolTip.foreground", "ToolTip.font");
+    LookAndFeel.installColorsAndFont(p, "ToolTip.background", "ToolTip.foreground", "ToolTip.font");
     tip.setLayout(new BorderLayout());
     tip.add(p);
     return tip;

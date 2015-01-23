@@ -13,7 +13,9 @@ description: TrayIconをダブルクリックした場合フレームを表示�
 * サンプルコード [#u2cc7663]
 #code(link){{
 Image image = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-new StarIcon().paintIcon(null, image.getGraphics(), 0, 0);
+Graphics g = image.getGraphics();
+new StarIcon().paintIcon(null, g, 0, 0);
+g.dispose();
 final SystemTray tray = SystemTray.getSystemTray();
 PopupMenu popup       = new PopupMenu();
 MenuItem open         = new MenuItem("Option");
