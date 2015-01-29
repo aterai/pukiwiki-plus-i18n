@@ -68,14 +68,14 @@ scrollbar.setUI(new WindowsScrollBarUI() {
     float value = sb.getValue(); //ins
 
     int thumbH = (range <= 0) ? getMaximumThumbSize().height
-                              : (int)(trackH * (extent / range));
+                              : (int) (trackH * (extent / range));
     thumbH = Math.max(thumbH, getMinimumThumbSize().height);
     thumbH = Math.min(thumbH, getMaximumThumbSize().height);
 
     int thumbY = incrButtonY - incrGap - thumbH;
-    if(value < (sb.getMaximum() - sb.getVisibleAmount())) {
+    if (value < (sb.getMaximum() - sb.getVisibleAmount())) {
       float thumbRange = trackH - thumbH;
-      thumbY = (int)(0.5f + (thumbRange * ((value - min) / (range - extent))));
+      thumbY = (int) (.5f + (thumbRange * ((value - min) / (range - extent))));
       //thumbY +=  decrButtonY + decrButtonH + decrGap; //del
     }
 
@@ -83,7 +83,7 @@ scrollbar.setUI(new WindowsScrollBarUI() {
      * space to each and move the lower one (incrButton) down.
      */
     int sbAvailButtonH = (sbSize.height - sbInsetsH);
-    if(sbAvailButtonH < sbButtonsH) {
+    if (sbAvailButtonH < sbButtonsH) {
       incrButtonH = decrButtonH = sbAvailButtonH / 2;
       incrButtonY = sbSize.height - (sbInsets.bottom + incrButtonH);
     }
@@ -102,19 +102,19 @@ scrollbar.setUI(new WindowsScrollBarUI() {
      * make sure it fits between the buttons.  Note that setting the
      * thumbs bounds will cause a repaint.
      */
-    if(thumbH >= (int) trackH) {
+    if (thumbH >= (int) trackH) {
       setThumbBounds(0, 0, 0, 0);
-    }else{
-      //if((thumbY + thumbH) > incrButtonY - incrGap) {
+    } else {
+      //if ((thumbY + thumbH) > incrButtonY - incrGap) {
       //  thumbY = incrButtonY - incrGap - thumbH;
       //}
-      //if(thumbY < (decrButtonY + decrButtonH + decrGap)) {
+      //if (thumbY < (decrButtonY + decrButtonH + decrGap)) {
       //  thumbY = decrButtonY + decrButtonH + decrGap + 1;
       //}
-      if((thumbY + thumbH) > decrButtonY - decrGap) {
+      if ((thumbY + thumbH) > decrButtonY - decrGap) {
         thumbY = decrButtonY - decrGap - thumbH;
       }
-      if(thumbY < 0) { //(decrButtonY + decrButtonH + decrGap)) {
+      if (thumbY < 0) { //(decrButtonY + decrButtonH + decrGap)) {
         thumbY = 1; //decrButtonY + decrButtonH + decrGap + 1;
       }
       setThumbBounds(itemX, thumbY, itemW, thumbH);

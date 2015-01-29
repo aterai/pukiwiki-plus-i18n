@@ -14,7 +14,7 @@ description: JLabelに表示したAnimated Gifのアニメーションを停止�
 #code(link){{
 JLabel label2 = new JLabel() {
   @Override public boolean imageUpdate(Image img, int infoflags, int x, int y, int w, int h) {
-    if(!isEnabled()) {
+    if (!isEnabled()) {
       infoflags &= ~FRAMEBITS;
     }
     return super.imageUpdate(img, infoflags, x, y, w, h);

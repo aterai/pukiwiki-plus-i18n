@@ -15,8 +15,8 @@ description: JTableがデフォルトで使用するBooleanCellEditorの背景�
 JTable table = new JTable(model) {
   @Override public Component prepareEditor(TableCellEditor editor, int row, int column) {
     Component c = super.prepareEditor(editor, row, column);
-    if(c instanceof JCheckBox) {
-      JCheckBox b = (JCheckBox)c;
+    if (c instanceof JCheckBox) {
+      JCheckBox b = (JCheckBox) c;
       b.setBackground(getSelectionBackground());
       b.setBorderPainted(true);
     }

@@ -1,18 +1,18 @@
 // ==UserScript==
 // @name        <table> to CSV
-// @namespace   http://terai.xrea.jp/
+// @namespace   http://ateraimemo.com/
 // @include     http://*
 // @description Html table -> CSV(textarea)
 // @grant       none
 // @version     1.0.6
 // ==/UserScript==
-//- [JavaScriptでHtmlのtable要素をCSVに変換する](http://terai.xrea.jp/JavaScript/table2csv.html)
+//- [JavaScriptでHtmlのtable要素をCSVに変換する](http://ateraimemo.com/JavaScript/table2csv.html)
 (function() {
   function table2csv(table) {
     var tr = table.getElementsByTagName('tr'), i, j, xoff, text, cells, td, array = [], lenr = tr.length, lenc;
     for(i=0; i<lenr; i++) {
       //前行のセルのcolspanで、すでにこの行は初期化されている場合がある
-      if(array[i] == null) array[i] = [];
+      array[i] = array[i] || [];
       cells = tr.item(i).cells;
       lenc = cells.length;
       for(j=0; j<lenc; j++) {
@@ -29,7 +29,7 @@
           array[i][j+xoff+k] = text;
         }
         for(l=1; l<td.rowSpan; l++) {
-          if(array[i+l] == null) array[i+l] = [];
+          array[i+l] = array[i+l] || [];
           for(k=0; k<td.colSpan; k++) {
             array[i+l][j+xoff+k] = text; //同文字列 '〃';
           }

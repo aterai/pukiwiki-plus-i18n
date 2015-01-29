@@ -17,21 +17,21 @@ hreflang:
 #code(link){{
 private int getTargetTabIndex(Point glassPt) {
   Point tabPt = SwingUtilities.convertPoint(glassPane, glassPt, DnDTabbedPane.this);
-  boolean isTB = getTabPlacement()==JTabbedPane.TOP || getTabPlacement()==JTabbedPane.BOTTOM;
-  for(int i=0;i<getTabCount();i++) {
+  boolean isTB = getTabPlacement() == JTabbedPane.TOP || getTabPlacement() == JTabbedPane.BOTTOM;
+  for (int i = 0; i < getTabCount(); i++) {
     Rectangle r = getBoundsAt(i);
-    if(isTB) r.setRect(r.x-r.width/2, r.y,  r.width, r.height);
-    else     r.setRect(r.x, r.y-r.height/2, r.width, r.height);
-    if(r.contains(tabPt)) return i;
+    if (isTB) r.setRect(r.x - r.width / 2, r.y, r.width, r.height);
+    else      r.setRect(r.x, r.y-r.height / 2, r.width, r.height);
+    if (r.contains(tabPt)) return i;
   }
-  Rectangle r = getBoundsAt(getTabCount()-1);
-  if(isTB) r.setRect(r.x+r.width/2, r.y,  r.width, r.height);
-  else     r.setRect(r.x, r.y+r.height/2, r.width, r.height);
-  return   r.contains(tabPt)?getTabCount():-1;
+  Rectangle r = getBoundsAt(getTabCount() - 1);
+  if (isTB) r.setRect(r.x + r.width / 2, r.y, r.width, r.height);
+  else      r.setRect(r.x, r.y + r.height / 2, r.width, r.height);
+  return    r.contains(tabPt) ? getTabCount() : -1;
 }
 
 private void convertTab(int prev, int next) {
-  if(next<0 || prev==next) {
+  if (next < 0 || prev == next) {
     return;
   }
   Component cmp = getComponentAt(prev);
@@ -40,14 +40,14 @@ private void convertTab(int prev, int next) {
   Icon icon     = getIconAt(prev);
   String tip    = getToolTipTextAt(prev);
   boolean flg   = isEnabledAt(prev);
-  int tgtindex  = prev>next ? next : next-1;
+  int tgtindex  = prev > next ? next : next - 1;
   remove(prev);
   insertTab(str, icon, cmp, tip, tgtindex);
   setEnabledAt(tgtindex, flg);
 
   //When you drag'n'drop a disabled tab, it finishes enabled and selected.
   //pointed out by dlorde
-  if(flg) setSelectedIndex(tgtindex);
+  if (flg) setSelectedIndex(tgtindex);
 
   // I have a component in all tabs (jlabel with an X to close the tab)
   // and when i move a tab the component disappear.

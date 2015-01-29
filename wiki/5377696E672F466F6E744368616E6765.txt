@@ -57,7 +57,7 @@ class Test {
   public static void main(String[] args) {
     //for (Object o:UIManager.getDefaults().keySet()) //は、うまくいかない？
     //for (Object o:UIManager.getLookAndFeelDefaults().keySet())
-    for(Map.Entry<?, ?> entry: UIManager.getDefaults().entrySet())
+    for (Map.Entry<?, ?> entry: UIManager.getDefaults().entrySet())
       System.out.println(entry.getKey());
   }
 }

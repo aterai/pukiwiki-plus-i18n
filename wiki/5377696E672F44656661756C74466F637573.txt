@@ -68,7 +68,7 @@ KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager()
 kfm.addPropertyChangeListener(new PropertyChangeListener() {
   @Override public void propertyChange(PropertyChangeEvent e) {
     String prop = e.getPropertyName();
-    if("activeWindow".equals(prop) && e.getNewValue()!=null) {
+    if ("activeWindow".equals(prop) && e.getNewValue() != null) {
       System.out.println("activeWindow");
       field.requestFocusInWindow();
     }

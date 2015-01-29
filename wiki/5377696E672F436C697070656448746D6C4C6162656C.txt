@@ -51,11 +51,11 @@ class URLRenderer extends DefaultTableCellRenderer
       trect, //text
       this.getIconTextGap());
 
-    if(!table.isEditing() && this.row==row && this.col==column) {
-      setText("<html><u><font color='blue'>"+str);
-    }else if(hasFocus) {
-      setText("<html><font color='blue'>"+str);
-    }else{
+    if (!table.isEditing() && this.row == row && this.col == column) {
+      setText("<html><u><font color='blue'>" + str);
+    } else if (hasFocus) {
+      setText("<html><font color='blue'>" + str);
+    } else {
       setText(str);
       //setText(value.toString());
     }

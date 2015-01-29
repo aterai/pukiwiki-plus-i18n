@@ -18,7 +18,7 @@ class NonEditableLineDocumentFilter extends DocumentFilter {
       String string, AttributeSet attr) throws BadLocationException {
     if (string == null) {
       return;
-    }else{
+    } else {
       replace(fb, offset, 0, string, attr);
     }
   }
