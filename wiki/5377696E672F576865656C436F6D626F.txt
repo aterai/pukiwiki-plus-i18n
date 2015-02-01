@@ -12,12 +12,15 @@ description: JComboBoxにフォーカスがある場合、その値をMouseWheel
 
 * サンプルコード [#ef581a0a]
 #code(link){{
+JComboBox<String> combo = makeComboBox();
 combo.addMouseWheelListener(new MouseWheelListener() {
   @Override public void mouseWheelMoved(MouseWheelEvent e) {
-    JComboBox source = (JComboBox) e.getSource();
-    if(!source.hasFocus()) return;
+    JComboBox source = (JComboBox) e.getComponent();
+    if (!source.hasFocus()) {
+      return;
+    }
     int ni = source.getSelectedIndex() + e.getWheelRotation();
-    if(ni>=0 && ni<source.getItemCount()) {
+    if (ni >= 0 && ni < source.getItemCount()) {
       source.setSelectedIndex(ni);
     }
   }

@@ -12,13 +12,15 @@ description: JComboBoxで入力した文字列などのアイテムを順に保�
 
 * サンプルコード [#b09ed436]
 #code(link){{
-public boolean addItem(JComboBox combo, String str, int max) {
-  if(str==null || str.length()==0) return false;
+public static boolean addItem(JComboBox<String> combo, String str, int max) {
+  if (str == null || str.length() == 0) {
+    return false;
+  }
   combo.setVisible(false);
-  DefaultComboBoxModel model = (DefaultComboBoxModel) combo.getModel();
+  DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) combo.getModel();
   model.removeElement(str);
   model.insertElementAt(str, 0);
-  if(model.getSize()>max) {
+  if (model.getSize() > max) {
     model.removeElementAt(max);
   }
   combo.setSelectedIndex(0);

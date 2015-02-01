@@ -16,8 +16,8 @@ JTable table = new JTable(model) {
   @Override public String getToolTipText(MouseEvent e) {
     int row = convertRowIndexToModel(rowAtPoint(e.getPoint()));
     TableModel m = getModel();
-    return "<html>"+m.getValueAt(row, 1)+"<br>"
-                   +m.getValueAt(row, 2)+"</html>";
+    return "<html>" + m.getValueAt(row, 1) + "<br>"
+                    + m.getValueAt(row, 2) + "</html>";
   }
 };
 }}
@@ -30,39 +30,20 @@ JTable table = new JTable(model) {
 
 //上記のサンプルでは、モデルにTableSorter.javaを使っているので、行のソートや列の移動があってもマウスの下の行の情報を一定のレイアウト((このサンプルの場合、Tooltipの上部に名前、下部にコメント))で表示するように、セルの値の取得には、Table#getValueAtメソッドではなく、TableModel#getValueAtメソッドを使っています。
 
-//----
-//JDK 1.6 で導入されたTableRowSorterを使用して、上記の同じ動作をするツールチップにする場合は、新しく追加された
-//逆にJTable#convertColumnIndexToViewメソッドを使って、modelColumnIndexからviewColumnIndexに変換してJTable#getValueAtメソッドを使う方法などがあります。
-//#code{{
-//JTable table = new JTable(model) {
-//  @Override public String getToolTipText(MouseEvent e) {
-//    int row = convertRowIndexToModel(rowAtPoint(e.getPoint()));
-//    TableModel m = getModel();
-//    return "<html>"+m.getValueAt(row, 1)+"<br>"+m.getValueAt(row, 2)+"</html>";
-//    //int row = rowAtPoint(e.getPoint());
-//    //int vc1 = convertColumnIndexToView(1);
-//    //int vc2 = convertColumnIndexToView(2);
-//    //return "<html>"+getValueAt(row, vc1)+"<br>"+getValueAt(row, vc2)+"</html>";
-//  }
-//};
-//TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-//table.setRowSorter(sorter);
-//}}
-
 ----
 以下のように、`JTable#prepareRenderer`メソッドや、`CellRenderer`などで`setToolTipText`を使用する方法でも、ツールチップを設定することができます。
 
 #code{{
 JTable table = new JTable() {
   @Override public Component prepareRenderer(
-        TableCellRenderer tcr, int row, int column) {
+      TableCellRenderer tcr, int row, int column) {
     Component c = super.prepareRenderer(tcr, row, column);
-    if(c instanceof JComponent) {
+    if (c instanceof JComponent) {
       int mr = convertRowIndexToModel(row);
       int mc = convertColumnIndexToModel(column);
       Object o = getModel().getValueAt(mr, mc);
-      String s = (o!=null)?o.toString():null;
-      ((JComponent)c).setToolTipText(s.isEmpty()?null:s);
+      String s = (o != null) ? o.toString() : null;
+      ((JComponent) c).setToolTipText(s.isEmpty() ? null : s);
     }
     return c;
   }

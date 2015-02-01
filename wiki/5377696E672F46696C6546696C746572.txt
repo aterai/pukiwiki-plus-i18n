@@ -15,7 +15,9 @@ description: JFileChooserにファイルフィルタを追加します。
 JFileChooser fileChooser = new JFileChooser();
 fileChooser.addChoosableFileFilter(new FileFilter() {
   @Override public boolean accept(File file) {
-    if(file.isDirectory()) return true;
+    if (file.isDirectory()) {
+      return true;
+    }
     return file.getName().toLowerCase().endsWith(".jpg");
   }
   @Override public String getDescription() {
