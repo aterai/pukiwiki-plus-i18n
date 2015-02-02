@@ -63,7 +63,7 @@ gem: "--no-ri --no-rdoc --user-install"
 --- `libcrypt-devel`を`setup-x86_64.exe`からインストールして`gem install jekyll`を再実行
 
 -- `Makefile:232: recipe for target 'ffi_c.so' failed`とエラーになる場合
---- [https://github.com/ffi/ffi/issues/284#issuecomment-33752957 Problems compiling ffi 1.9.0 on cygwin 64bit ・ Issue #284 ・ ffi/ffi]　(via: [https://github.com/ffi/ffi/issues/317 make fails on Cygwin64bit ・ Issue #317 ・ ffi/ffi])などを参考に、`cygwin32-libffi`や、`pkg-config`を`setup-x86_64.exe`からインストールして`gem　install jekyll`を再実行
+--- [https://github.com/ffi/ffi/issues/284#issuecomment-33752957 Problems compiling ffi 1.9.0 on cygwin 64bit ・ Issue #284 ・ ffi/ffi]　(via: [https://github.com/ffi/ffi/issues/317 make fails on Cygwin64bit ・ Issue #317 ・ ffi/ffi])などを参考に、`cygwin32-libffi`、`libffi-devel`、`pkg-config`などを`setup-x86_64.exe`からインストールして`gem install jekyll`を再実行
  export PKG_CONFIG_PATH="/lib/pkgconfig"
  gem install jekyll
 

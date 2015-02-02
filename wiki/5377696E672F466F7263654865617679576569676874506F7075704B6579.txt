@@ -56,7 +56,7 @@ combo.putClientProperty(field.get(null), Boolean.TRUE);
 
 * コメント [#n67c57a8]
 #comment
-- `ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);`がバージョンによって効かない場合があるらしい。[http://stackoverflow.com/questions/17150483/force-heavyweight-tooltip-with-shaped-jpanel java - Force HeavyWeight Tooltip with shaped JPanel - Stack Overflow]　 -- &user(aterai); &new{2013-06-18 (火) 08:34:11};
+- `ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);`がバージョンによって効かない場合があるらしい。[http://stackoverflow.com/questions/17150483/force-heavyweight-tooltip-with-shaped-jpanel java - Force HeavyWeight Tooltip with shaped JPanel - Stack Overflow] -- &user(aterai); &new{2013-06-18 (火) 08:34:11};
 -- 上記のリンクのサンプルコードだと、`Windows 7` + `JDK 1.7.0_05`: `OK`, `JDK 1.7.0_06`: `NG`。 -- &user(aterai); &new{2013-06-18 (火) 08:42:24};
 -- [http://hg.openjdk.java.net/jdk8/jdk8/jdk/rev/4acd0211f48b jdk8/jdk8/jdk: changeset 5453:4acd0211f48b]
 
