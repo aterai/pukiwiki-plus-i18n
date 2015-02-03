@@ -7,6 +7,29 @@ description: Java クラスドキュメントで修正した方が良さそう�
 #contents
 
 * 未修正 [#p3da7b50]
+** ノードハンドルを表示するかどうか [#sc591723]
+- http://docs.oracle.com/javase/jp/8/api/javax/swing/JTree.html#setShowsRootHandles-boolean-
+-- newValue - ルートハンドルを表示しない場合は true、そうでない場合はfalse
+
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setShowsRootHandles-boolean-
+-- newValue - true if root handles should be displayed; otherwise, false
+
+- 変更案
+-- newValue - ルートハンドルを表示する場合は true、そうでない場合はfalse
+
+ルートノードのノードハンドル(`WindowsLookAndFeel`の場合は`+`,`-`アイコン)を表示するかどうかが、逆の意味に誤翻訳されている。
+
+** すべての親を展開し常に非表示にする [#sb661101]
+- http://docs.oracle.com/javase/jp/7/api/javax/swing/JTree.html#setExpandsSelectedPaths(boolean)
+-- true の場合には、TreeSelectionModel または JTree が提供するカバーメソッドによりいつでも選択を変更でき、TreePath の親が展開され可視になります。 可視とは、JTree の可視矩形にかぎらず親パスが展開されている状態を意味します。
+-- false の場合、ノード選択を変更すると親はすべて展開されても可視にはなりません。選択モデルのパスを、すべての親を展開し常に非表示にする場合には便利です。
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setExpandsSelectedPaths-boolean-
+-- If true, any time the selection is changed, either via the TreeSelectionModel, or the cover methods provided by JTree, the TreePaths parents will be expanded to make them visible (visible meaning the parent path is expanded, not necessarily in the visible rectangle of the JTree).
+-- If false, when the selection changes the nodes parent is not made visible (all its parents expanded). This is useful if you wish to have your selection model maintain paths that are not always visible (all parents expanded).
+- 変更案
+-- true の場合、TreeSelectionModel または JTree が提供するカバーメソッドで選択が変更されると、その TreePath の親が展開されて選択ノードが可視状態になります。可視とは、JTree の可視矩形にかぎらず親パスが展開されている状態を意味します。
+-- false の場合、ノード選択を変更しても親は可視(すべての親が展開された状態)にはなりません。選択モデルでパスを常に非表示(すべての親が折りたたまれた状態)にしておきたい場合には便利です。
+
 ** 拡大縮小しているときに行う削除や追加 [#r1834970]
 - http://docs.oracle.com/javase/jp/8/api/javax/swing/text/Highlighter.html#changeHighlight-java.lang.Object-int-int-
 -- このメソッドは、変更対象だけを扱って選択範囲を拡大縮小しているとき (マウスのドラッグ操作など) に行う削除や追加よりも効率的です。
@@ -475,30 +498,6 @@ Year、Month、General time zone などは年、月、一般的なタイムゾ�
 -- The scaled sample values are clipped to the minimum/maximum representable in the destination image.
 - 変更案
 -- 計算で求められたサンプル値は、転送先イメージが表現可能な最小値、または最大値でクリップされます。
-
-** すべての親を展開し常に非表示にする [#sb661101]
-- http://docs.oracle.com/javase/jp/7/api/javax/swing/JTree.html#setExpandsSelectedPaths(boolean)
--- true の場合には、TreeSelectionModel または JTree が提供するカバーメソッドによりいつでも選択を変更でき、TreePath の親が展開され可視になります。 可視とは、JTree の可視矩形にかぎらず親パスが展開されている状態を意味します。
--- false の場合、ノード選択を変更すると親はすべて展開されても可視にはなりません。選択モデルのパスを、すべての親を展開し常に非表示にする場合には便利です。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setExpandsSelectedPaths-boolean-
--- If true, any time the selection is changed, either via the TreeSelectionModel, or the cover methods provided by JTree, the TreePaths parents will be expanded to make them visible (visible meaning the parent path is expanded, not necessarily in the visible rectangle of the JTree).
--- If false, when the selection changes the nodes parent is not made visible (all its parents expanded). This is useful if you wish to have your selection model maintain paths that are not always visible (all parents expanded).
-- 変更案
--- true の場合、TreeSelectionModel または JTree が提供するカバーメソッドで選択が変更されると、その TreePath の親が展開されて選択ノードが可視状態になります。可視とは、JTree の可視矩形にかぎらず親パスが展開されている状態を意味します。
--- false の場合、ノード選択を変更しても親は可視(すべての親が展開された状態)にはなりません。選択モデルでパスを常に非表示(すべての親が折りたたまれた状態)にしておきたい場合には便利です。
-
-** ノードハンドルを表示するかどうか [#sc591723]
-- http://docs.oracle.com/javase/jp/7/api/javax/swing/JTree.html#setShowsRootHandles(boolean)
--- newValue - ルートハンドルを表示しない場合は true、そうでない場合はfalse
-
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setShowsRootHandles-boolean-
--- newValue - true if root handles should be displayed; otherwise, false
-
-- 変更案
--- newValue - ルートハンドルを表示する場合は true、そうでない場合はfalse
-
-ルートノードのノードハンドル(WindowsLnFの場合+,-)を表示するかどうかが逆になっている？
-- 関係ないけどややこしい: ルートハンドル、ノードハンドル
 
 ** Attach API のAttach が添付 [#lf11bd88]
 - http://docs.oracle.com/javase/jp/6/technotes/guides/attach/index.html
