@@ -13,33 +13,33 @@ description: JTreeの余白などをマウスでドラッグしてスクロー�
 * サンプルコード [#g24696ef]
 #code(link){{
 class DragScrollListener extends MouseAdapter {
-  Cursor defCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
-  Cursor hndCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-  Point pp = new Point();
+  private Cursor defCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+  private Cursor hndCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+  private Point pp = new Point();
   @Override public void mouseDragged(MouseEvent e) {
-    JComponent jc = (JComponent)e.getSource();
-    Container c = jc.getParent();
-    if(c instanceof JViewport) {
-      JViewport vport = (JViewport)c;
-      Point cp = SwingUtilities.convertPoint(jc,e.getPoint(),vport);
+    Component c = e.getComponent();
+    Container p = SwingUtilities.getUnwrappedParent(c);
+    if (p instanceof JViewport) {
+      JViewport vport = (JViewport) p;
+      Point cp = SwingUtilities.convertPoint(c, e.getPoint(), vport);
       Point vp = vport.getViewPosition();
-      vp.translate(pp.x-cp.x, pp.y-cp.y);
-      jc.scrollRectToVisible(new Rectangle(vp, vport.getSize()));
+      vp.translate(pp.x - cp.x, pp.y - cp.y);
+      ((JComponent) c).scrollRectToVisible(new Rectangle(vp, vport.getSize()));
       pp.setLocation(cp);
     }
   }
   @Override public void mousePressed(MouseEvent e) {
-    JComponent jc = (JComponent)e.getSource();
-    Container c = jc.getParent();
-    if(c instanceof JViewport) {
-      jc.setCursor(hndCursor);
-      JViewport vport = (JViewport)c;
-      Point cp = SwingUtilities.convertPoint(jc,e.getPoint(),vport);
+    Component c = e.getComponent();
+    Container p = SwingUtilities.getUnwrappedParent(c);
+    if (p instanceof JViewport) {
+      c.setCursor(hndCursor);
+      JViewport vport = (JViewport) p;
+      Point cp = SwingUtilities.convertPoint(c, e.getPoint(), vport);
       pp.setLocation(cp);
     }
   }
   @Override public void mouseReleased(MouseEvent e) {
-    ((JComponent)e.getSource()).setCursor(defCursor);
+    e.getComponent().setCursor(defCursor);
   }
 }
 }}
@@ -64,9 +64,9 @@ vport.addMouseMotionListener(ma);
 vport.addMouseListener(ma);
 MouseAdapter dummy = new MouseAdapter() {
   private void dispatchEvent(MouseEvent e) {
-    JComponent c = (JComponent)e.getComponent();
-    JComponent p = (JComponent)e.getComponent().getParent();
-    p.dispatchEvent(SwingUtilities.convertMouseEvent(c,e,p));
+    JComponent c = (JComponent) e.getComponent();
+    JComponent p = (JComponent) e.getComponent().getParent();
+    p.dispatchEvent(SwingUtilities.convertMouseEvent(c, e, p));
   }
   @Override public void mouseDragged(MouseEvent e)  { dispatchEvent(e); }
   @Override public void mouseClicked(MouseEvent e)  { dispatchEvent(e); }
