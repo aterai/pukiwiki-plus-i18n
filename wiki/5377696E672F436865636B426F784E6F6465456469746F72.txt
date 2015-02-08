@@ -89,7 +89,7 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
       //panel.add(this, BorderLayout.WEST);
     }
     //???#1: JDK 1.6.0 bug??? @see 1.7.0 DefaultTreeCellRenderer#updateUI()
-    //if(System.getProperty("java.version").startsWith("1.6.0")) {
+    //if (System.getProperty("java.version").startsWith("1.6.0")) {
     //  renderer = new DefaultTreeCellRenderer();
     //}
   }
@@ -155,7 +155,7 @@ class CheckBoxNodeRenderer extends JPanel implements TreeCellRenderer {
     }
     setName("Tree.cellRenderer");
     //???#1: JDK 1.6.0 bug??? @see 1.7.0 DefaultTreeCellRenderer#updateUI()
-    //if(System.getProperty("java.version").startsWith("1.6.0")) {
+    //if (System.getProperty("java.version").startsWith("1.6.0")) {
     //  renderer = new DefaultTreeCellRenderer();
     //}
   }
@@ -208,6 +208,7 @@ if (isFirstTime && System.getProperty("java.version").startsWith("1.7.0")) {
 * 参考リンク [#ab7883bf]
 - [[JTreeの葉ノードをJCheckBoxにする>Swing/CheckBoxNodeTree]]
 - [[JCheckBoxに不定状態のアイコンを追加する>Swing/TriStateCheckBox]]
+- [[JCheckBox付きJTreeでディレクトリ構造を表示>Swing/FileSystemTreeWithCheckBox]]
 
 * コメント [#nbcaf27c]
 #comment

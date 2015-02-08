@@ -33,10 +33,10 @@ class HighlightTreeCellRenderer extends JTextField
     getHighlighter().removeAllHighlights();
     setText(txt);
     setBackground(isSelected ? backgroundSelectionColor : Color.WHITE);
-    if(q!=null && !q.isEmpty() && txt.startsWith(q)) {
+    if (q != null && !q.isEmpty() && txt.startsWith(q)) {
       try {
         getHighlighter().addHighlight(0, q.length(), highlightPainter);
-      } catch(BadLocationException e) {
+      } catch (BadLocationException e) {
         e.printStackTrace();
       }
     }

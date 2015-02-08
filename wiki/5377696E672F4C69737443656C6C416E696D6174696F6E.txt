@@ -13,7 +13,7 @@ description: JListの選択されたセルをアニメーションさせます�
 * サンプルコード [#dddb9e20]
 #code(link){{
 class AnimeListCellRenderer extends JPanel implements ListCellRenderer {
-  private static final Color selectedColor = new Color(230,230,255);
+  private static final Color selectedColor = new Color(230, 230, 255);
   private final AnimeIcon icon = new AnimeIcon();
   private final MarqueeLabel label = new MarqueeLabel();
   private final javax.swing.Timer animator;
@@ -25,7 +25,9 @@ class AnimeListCellRenderer extends JPanel implements ListCellRenderer {
     animator = new Timer(80, new ActionListener() {
       @Override public void actionPerformed(ActionEvent e) {
         int i = l.getSelectedIndex();
-        if(isRunning=(i>=0)) l.repaint(l.getCellBounds(i,i));
+        if (isRunning = (i >= 0)) {
+          l.repaint(l.getCellBounds(i, i));
+        }
       }
     });
     setOpaque(true);
@@ -34,14 +36,14 @@ class AnimeListCellRenderer extends JPanel implements ListCellRenderer {
     animator.start();
   }
   @Override public Component getListCellRendererComponent(JList list, Object object,
-            int index, boolean isSelected, boolean cellHasFocus) {
+      int index, boolean isSelected, boolean cellHasFocus) {
     setBackground(isSelected ? selectedColor : list.getBackground());
-    label.setText((object==null) ? "" : object.toString());
+    label.setText((object == null) ? "" : object.toString());
     animate_index = index;
     return this;
   }
   private boolean isAnimatingCell() {
-    return isRunning && animate_index==list.getSelectedIndex();
+    return isRunning && animate_index == list.getSelectedIndex();
   }
   int animate_index = -1;
   private class MarqueeLabel extends JLabel {

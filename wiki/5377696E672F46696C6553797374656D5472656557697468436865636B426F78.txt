@@ -44,7 +44,7 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
     if (value instanceof DefaultMutableTreeNode) {
       this.setEnabled(tree.isEnabled());
       this.setFont(tree.getFont());
-      Object userObject = ((DefaultMutableTreeNode)value).getUserObject();
+      Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
       if (userObject instanceof CheckBoxNode) {
         CheckBoxNode node = (CheckBoxNode) userObject;
         if (node.status == Status.INDETERMINATE) {

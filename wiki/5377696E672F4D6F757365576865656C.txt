@@ -14,15 +14,14 @@ description: JSpinnerやJSliderの値をマウスホイールを使って変更�
 #code(link){{
 spinner.addMouseWheelListener(new MouseWheelListener() {
   @Override public void mouseWheelMoved(MouseWheelEvent e) {
-    JSpinner source = (JSpinner)e.getSource();
-    SpinnerNumberModel model = (SpinnerNumberModel)source.getModel();
-    Integer oldValue = (Integer)source.getValue();
-    int newValue = oldValue.intValue()
-                  -e.getWheelRotation()*model.getStepSize().intValue();
-    int max = ((Integer)model.getMaximum()).intValue(); //1000
-    int min = ((Integer)model.getMinimum()).intValue(); //0
-    if(min<=newValue && newValue<=max) {
-      source.setValue(newValue);
+    JSpinner source = (JSpinner) e.getComponent();
+    SpinnerNumberModel model = (SpinnerNumberModel) source.getModel();
+    Integer oldValue = (Integer) source.getValue();
+    int intValue = oldValue.intValue() - e.getWheelRotation() * model.getStepSize().intValue();
+    int max = ((Integer) model.getMaximum()).intValue(); //1000
+    int min = ((Integer) model.getMinimum()).intValue(); //0
+    if (min <= intValue && intValue <= max) {
+      source.setValue(intValue);
     }
   }
 });
