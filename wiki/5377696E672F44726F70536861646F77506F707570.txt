@@ -169,7 +169,7 @@ label.setComponentPopupMenu(pop);
 //JDK 1.5 label.addMouseListener(new MouseAdapter() {});
 //addMouseListener(new MouseAdapter() {
 //  public void mouseReleased(MouseEvent e) {
-//    if(e.isPopupTrigger()) {
+//    if (e.isPopupTrigger()) {
 //      Point pt = e.getPoint();
 //      pop.show(e.getComponent(), pt.x, pt.y);
 //    }
@@ -185,11 +185,11 @@ label.setComponentPopupMenu(pop);
 #code{{
 JMenuItem mi = new JMenuItem(new AbstractAction("Exit") {
   @Override public void actionPerformed(ActionEvent e) {
-    JMenuItem m = (JMenuItem)e.getSource();
-    JPopupMenu popup = (JPopupMenu)m.getParent();
-    JComponent invoker = (JComponent)popup.getInvoker();
+    JMenuItem m = (JMenuItem) e.getSource();
+    JPopupMenu popup = (JPopupMenu) m.getParent();
+    JComponent invoker = (JComponent) popup.getInvoker();
     Window f = SwingUtilities.getWindowAncestor(invoker);
-    if(f!=null) f.dispose();
+    if (f != null) f.dispose();
   }
 });
 }}

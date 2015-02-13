@@ -15,11 +15,11 @@ description: JScrollBarが最後までスクロールしたかどうかを確認
 JScrollPane scroll = new JScrollPane(c);
 scroll.getVerticalScrollBar().getModel().addChangeListener(new ChangeListener() {
   @Override public void stateChanged(ChangeEvent e) {
-    BoundedRangeModel m = (BoundedRangeModel)e.getSource();
+    BoundedRangeModel m = (BoundedRangeModel) e.getSource();
     int extent  = m.getExtent();
     int maximum = m.getMaximum();
     int value   = m.getValue();
-    if(value + extent >= maximum) {
+    if (value + extent >= maximum) {
       check.setEnabled(true);
     }
   }

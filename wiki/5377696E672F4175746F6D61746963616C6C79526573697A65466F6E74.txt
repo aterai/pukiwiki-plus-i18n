@@ -18,7 +18,7 @@ private final JTextPane editor = new JTextPane() {
   @Override public void doLayout() {
     Insets i = getInsets();
     float f = .08f * (getWidth() - i.left - i.right);
-    if(Math.abs(font_size - f) > 1.0e-1) {
+    if (Math.abs(font_size - f) > 1.0e-1) {
       setFont(font.deriveFont(f));
       font_size = f;
     }

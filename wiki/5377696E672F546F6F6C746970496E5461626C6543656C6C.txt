@@ -18,17 +18,17 @@ JTable table = new JTable(model) {
     int vrow = rowAtPoint(pt);
     int vcol = columnAtPoint(pt);
     int mcol = convertColumnIndexToModel(vcol);
-    if(mcol==1) {
+    if (mcol == 1) {
       TableCellRenderer tcr = getCellRenderer(vrow, vcol);
       Component c = prepareRenderer(tcr, vrow, vcol);
-      if(c instanceof JPanel) {
+      if (c instanceof JPanel) {
         Rectangle r = getCellRect(vrow, vcol, true);
         c.setBounds(r);
         c.doLayout();
         pt.translate(-r.x, -r.y);
         Component l = SwingUtilities.getDeepestComponentAt(c, pt.x, pt.y);
-        if(l instanceof JLabel) {
-          ImageIcon icon = (ImageIcon)((JLabel)l).getIcon();
+        if (l instanceof JLabel) {
+          ImageIcon icon = (ImageIcon) ((JLabel) l).getIcon();
           return icon.getDescription();
         }
       }

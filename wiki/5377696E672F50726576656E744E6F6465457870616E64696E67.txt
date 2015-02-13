@@ -17,12 +17,12 @@ class DirectoryExpandVetoListener implements TreeWillExpandListener {
         throws ExpandVetoException {
     TreePath path = e.getPath();
     Object o = path.getLastPathComponent();
-    if(o instanceof DefaultMutableTreeNode) {
-      DefaultMutableTreeNode node = (DefaultMutableTreeNode)o;
-      File file = (File)node.getUserObject();
+    if (o instanceof DefaultMutableTreeNode) {
+      DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
+      File file = (File) node.getUserObject();
       String title = file.getName();
       System.out.println(title);
-      if(title.startsWith(".")) {
+      if (title.startsWith(".")) {
         throw new ExpandVetoException(e, "Tree expansion cancelled");
       }
     }
