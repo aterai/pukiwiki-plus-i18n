@@ -116,7 +116,7 @@ class CellButtonsMouseListener extends MouseAdapter {
 
 #code{{
 Accessible a = getAccessibleContext().getAccessibleChild(0);
-if(a instanceof BasicComboPopup) {
+if (a instanceof BasicComboPopup) {
   BasicComboPopup pop = (BasicComboPopup) a;
   JList list = pop.getList();
   CellButtonsMouseListener cbml = new CellButtonsMouseListener();
