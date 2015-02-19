@@ -21,11 +21,11 @@ class TableNextMatchKeyHandler extends KeyAdapter {
   private long lastTime = 0L;
   private long timeFactor;
   public TableNextMatchKeyHandler() {
-    //Long l = (Long)UIManager.get("List.timeFactor");
-    timeFactor = 500L; //(l!=null) ? l.longValue() : 1000L;
+    //Long l = (Long) UIManager.get("List.timeFactor");
+    timeFactor = 500L; //(l != null) ? l.longValue() : 1000L;
   }
   private boolean isNavigationKey(KeyEvent e) {
-    JTable t = (JTable)e.getSource();
+    JTable t = (JTable) e.getSource();
     InputMap im = t.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     KeyStroke key = KeyStroke.getKeyStrokeForEvent(e);
     if (im != null && im.get(key) != null) {
@@ -41,7 +41,7 @@ class TableNextMatchKeyHandler extends KeyAdapter {
     }
   }
   @Override public void keyTyped(KeyEvent e) {
-    JTable src = (JTable)e.getSource();
+    JTable src = (JTable) e.getSource();
     int max = src.getRowCount();
     if (max == 0 || e.isAltDown() || isNavigationKey(e)) {
       // Nothing to select

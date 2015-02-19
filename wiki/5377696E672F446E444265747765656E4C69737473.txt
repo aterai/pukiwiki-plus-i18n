@@ -30,7 +30,7 @@ class ListItemTransferHandler extends TransferHandler {
     DefaultListModel listModel = (DefaultListModel) target.getModel();
     int index = dl.getIndex();
     int max = listModel.getSize();
-    if(index < 0 || index > max) index = max;
+    if (index < 0 || index > max) index = max;
     addIndex = index;
     try {
       Object[] values = (Object[]) info.getTransferable().getTransferData(localObjectFlavor);

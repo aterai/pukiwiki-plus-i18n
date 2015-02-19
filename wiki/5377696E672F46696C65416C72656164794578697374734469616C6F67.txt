@@ -34,9 +34,13 @@ JFileChooser fileChooser = new JFileChooser() {
 }}
 
 * 解説 [#o77812ad]
-上記のサンプルでは、ユーザーが`Save`ボタンをクリックした時に呼び出される`JFileChooser#approveSelection()`をオーバーライドし、選択されているファイルがすでに存在する場合は、上書きしても良いかを確認する`ConfirmDialog`を`JFileChooser`を親にして呼び出しています。`Yes`の場合は、`super.approveSelection()`を実行して結果を返して`JFileChooser`を閉じる、`No`の場合は、なにもせずに`JFileChooser`に戻ります。
+上記のサンプルでは、ユーザーが`Save`ボタンをクリックした時に呼び出される`JFileChooser#approveSelection()`をオーバーライドし、選択されているファイルがすでに存在する場合は、上書きしても良いかを確認する`ConfirmDialog`を`JFileChooser`を親にして呼び出しています。
 
-- 注: このサンプルでは上書きするを選択した場合でも、選択したファイル名をコンソールに出力するだけで、実際にファイルを保存する機能は実装していません。
+- `ConfirmDialog`で`Yes`をクリック
+-- `super.approveSelection()`を実行して結果を返して`JFileChooser`を閉じる
+-- 上記のサンプルでは、このボタンをクリックしても選択しているファイル名をコンソールに出力するだけで、実際にそのファイルを保存したり、上書きする機能は実装していない
+- `ConfirmDialog`で`No`をクリック
+-- なにもせずに`JFileChooser`に戻る
 
 * 参考リンク [#ba0e826b]
 - [https://community.oracle.com/thread/1391852 Swing - How to react on events fired by a JFileChooser?]

@@ -116,8 +116,8 @@ Comparator<DefaultMutableTreeNode> tnc = Comparator.comparing(DefaultMutableTree
 #code{{
 //Arrays.sort(T[] a, Comparator<? super T> c)
 public static <T> void sort(T[] a, Comparator<? super T> c) {
-  T[] aux = (T[])a.clone();
-  if (c==null) {
+  T[] aux = (T[]) a.clone();
+  if (c == null) {
     mergeSort(aux, a, 0, a.length, 0);
   } else {
     mergeSort(aux, a, 0, a.length, 0, c);

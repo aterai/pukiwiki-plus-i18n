@@ -14,7 +14,7 @@ description: フォーカスがJTextFieldに移動したとき、そのテキス
 #code(link){{
 textfield.addFocusListener(new FocusAdapter() {
   @Override public void focusGained(FocusEvent e) {
-    ((JTextComponent)e.getComponent()).selectAll();
+    ((JTextComponent) e.getComponent()).selectAll();
   }
 });
 }}

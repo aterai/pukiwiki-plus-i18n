@@ -43,7 +43,7 @@ class ViewportDragScrollListener extends MouseAdapter
   }
   @Override public void hierarchyChanged(HierarchyEvent e) {
     JComponent c = (JComponent) e.getSource();
-    if((e.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED) != 0
+    if ((e.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED) != 0
         && !c.isDisplayable()) {
       scroller.stop();
     }

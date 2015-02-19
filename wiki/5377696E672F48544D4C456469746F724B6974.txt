@@ -22,7 +22,7 @@ tabbedPane.addTab("JTextPane", new JScrollPane(textPane));
 tabbedPane.addTab("JTextArea", new JScrollPane(textArea));
 tabbedPane.addChangeListener(new ChangeListener() {
   @Override public void stateChanged(ChangeEvent e) {
-    JTabbedPane t = (JTabbedPane)e.getSource();
+    JTabbedPane t = (JTabbedPane) e.getSource();
     int i = t.getSelectedIndex();
     try {
       if (i == 0) {
