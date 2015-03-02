@@ -55,7 +55,7 @@ class ScrollAction extends AbstractAction {
   }
   @Override public void actionPerformed(ActionEvent e) {
     final JViewport vport = scrollPane.getViewport();
-    final JComponent v = (JComponent)vport.getView();
+    final JComponent v = (JComponent) vport.getView();
     final int w   = vport.getWidth(),
               h   = vport.getHeight(),
               sx  = vport.getViewPosition().x,

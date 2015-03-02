@@ -24,12 +24,14 @@ class MyTreeCellRenderer extends DefaultTreeCellRenderer implements MouseMotionL
   @Override public Component getTreeCellRendererComponent(
           JTree tree, Object value, boolean isSelected,
           boolean expanded, boolean leaf, int row, boolean hasFocus) {
-    JComponent c = (JComponent)renderer.getTreeCellRendererComponent(
+    JComponent c = (JComponent) renderer.getTreeCellRendererComponent(
         tree, value, isSelected, expanded, leaf, row, hasFocus);
     if (row == rollOverRowIndex) {
       c.setOpaque(true);
       c.setBackground(rollOverRowColor);
-      if (isSelected) c.setForeground(getTextNonSelectionColor());
+      if (isSelected) {
+        c.setForeground(getTextNonSelectionColor());
+      }
     } else {
       c.setOpaque(false);
     }

@@ -51,7 +51,7 @@ final Timer timer = new Timer(100, new ActionListener() {
 
 ----
 - `DocumentListener`ではなく、以下のような`DocumentFilter`を設定する方法もある
--- `((AbstractDocument) jta.getDocument()).setDocumentFilter(new FIFODocumentFilter());`
+ ((AbstractDocument) jta.getDocument()).setDocumentFilter(new FIFODocumentFilter());
 
 #code{{
 class FIFODocumentFilter extends DocumentFilter {

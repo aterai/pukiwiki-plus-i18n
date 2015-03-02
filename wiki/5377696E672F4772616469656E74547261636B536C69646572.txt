@@ -60,7 +60,7 @@ slider.setUI(new MetalSliderUI() {
     if (slider.isEnabled()) {
       g.setColor(controlDarkShadow);
       g.drawRect(trackLeft, trackTop,
-                 (trackRight - trackLeft) - 1, (trackBottom - trackTop) - 1);
+                (trackRight - trackLeft) - 1, (trackBottom - trackTop) - 1);
 
       g.setColor(controlHighlight);
       g.drawLine(trackLeft + 1, trackBottom, trackRight, trackBottom);
@@ -178,7 +178,7 @@ private static Color getColorFromPallet(int[] pallet, float x) {
 - メモ: 例えば`WindowsLookAndFeel`では、`UIManager.get("Slider.trackWidth")`は`null`なので、`MetalSliderUI#installUI()`中にある以下のコードでエラーになる。
 
 #code{{
-trackWidth = ((Integer)UIManager.get("Slider.trackWidth")).intValue();
+trackWidth = ((Integer) UIManager.get("Slider.trackWidth")).intValue();
 }}
 
 - なぜ`UIManager.getInt(...)`ではないのか不明

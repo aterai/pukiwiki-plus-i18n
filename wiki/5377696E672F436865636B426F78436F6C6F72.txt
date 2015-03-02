@@ -16,7 +16,7 @@ class MyCheckBoxIcon2 implements Icon {
   private final Icon orgIcon = UIManager.getIcon("CheckBox.icon");
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
     orgIcon.paintIcon(c, g, x, y);
-    AbstractButton b = (AbstractButton)c;
+    AbstractButton b = (AbstractButton) c;
     ButtonModel model = b.getModel();
     g.setColor(new Color(255, 155, 155, 100));
     g.fillRect(x + 2, y + 2, getIconWidth() - 4, getIconHeight() - 4);

@@ -1,0 +1,55 @@
+---
+title: JTextPaneにTabSetを設定してTabStopの文字列揃えをテストする
+tags: [JTextPane, StyledDocument, TabSet, TabStop]
+author: aterai
+pubdate: 2015-03-02T00:15:36+09:00
+description: JTextPaneのパラグラフ属性にTabSetを設定し、TabStopによる文字列の揃えをテストします。
+---
+* 概要 [#o29e05f9]
+JTextPaneのパラグラフ属性にTabSetを設定し、TabStopによる文字列の揃えをテストします。
+
+#download(https://lh3.googleusercontent.com/-hvnKWYKZNQc/VPMhtSl-SSI/AAAAAAAANx4/QN9HbnXx4J0/s800/TabSet.png)
+
+* サンプルコード [#q3841cf3]
+#code(link){{
+textPane.setText(
+    "LEFT1\tCENTER\tRIGHT1\t3.14\n"
+  + "LEFT22\tCENTER22\tRIGHT22\t12.3\n"
+  + "LEFT333\tCENTER333\tRIGHT333\t1.23\n"
+  + "LEFT4444\tCENTER4444\tRIGHT4444\t0.9876\n");
+SimpleAttributeSet attr = new SimpleAttributeSet();
+StyleConstants.setTabSet(attr, new TabSet(new TabStop[] {
+  new TabStop(0f,   TabStop.ALIGN_LEFT,    TabStop.LEAD_NONE),
+  new TabStop(100f, TabStop.ALIGN_CENTER,  TabStop.LEAD_NONE),
+  new TabStop(200f, TabStop.ALIGN_RIGHT,   TabStop.LEAD_NONE),
+  new TabStop(250f, TabStop.ALIGN_DECIMAL, TabStop.LEAD_NONE),
+  //new TabStop(300f, TabStop.ALIGN_BAR,     TabStop.LEAD_NONE),
+}));
+textPane.getStyledDocument().setParagraphAttributes(
+  0, textPane.getDocument().getLength(), attr, false);
+}}
+
+* 解説 [#ibf22b36]
+- `TabStop.ALIGN_LEFT`
+-- タブに続く文字をタブ位置に左揃えで配置
+- `TabStop.ALIGN_CENTER`
+-- タブ以降の文字(次のタブ、または改行までのすべての文字)が、タブ位置を中心にして揃うように配置
+- `TabStop.ALIGN_RIGHT`
+-- タブ以降の文字(次のタブ、または改行までのすべての文字)が、タブ位置に対して右揃えになるよう配置
+- `TabStop.ALIGN_DECIMAL`
+-- タブ以降の文字を、タブ位置に対して小数点揃えになるよう配置
+- `TabStop.ALIGN_BAR`
+-- `JTextPane`では未実装で、罫線は描画されない
+
+----
+- メモ
+-- リーダーとして、`TabStop.LEAD_DOTS`、`TabStop.LEAD_EQUALS`、`TabStop.LEAD_HYPHENS`、`TabStop.LEAD_THICKLINE`、`TabStop.LEAD_UNDERLINE`が定義されているが、`JTextPane`ではこれらは描画されず、`TabStop.LEAD_NONE`と同じ扱い
+-- [http://docs.oracle.com/javase/jp/8/api/javax/swing/text/TabSet.html ドキュメント]の「タブ・セットは変更できません。」は、翻訳元は「It is also immutable.」なので、「`TabSet`、`TabStop`はどちらも不変(イミュータブル)です。」の意味？
+
+* 参考リンク [#f0d2d551]
+- [http://docs.oracle.com/javase/jp/8/api/javax/swing/text/TabSet.html TabSet (Java Platform SE 8 )]
+- [http://docs.oracle.com/javase/jp/8/api/javax/swing/text/TabStop.html TabStop (Java Platform SE 8)]
+
+* コメント [#f657225e]
+#comment
+#comment

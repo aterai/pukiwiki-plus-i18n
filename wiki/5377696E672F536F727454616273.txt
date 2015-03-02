@@ -31,7 +31,7 @@ class SortAction extends AbstractAction {
     t.setVisible(false);
     t.removeAll();
     for (int i = 0; i < l.size(); i++) {
-      ComparableTab c = (ComparableTab)l.get(i);
+      ComparableTab c = (ComparableTab) l.get(i);
       t.addTab(c.title, c.comp);
     }
     t.setVisible(true);

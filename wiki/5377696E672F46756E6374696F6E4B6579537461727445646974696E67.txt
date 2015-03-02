@@ -17,7 +17,7 @@ JTable table = new JTable(model) {
   //https://community.oracle.com/thread/1350192
   @Override public boolean editCellAt(int row, int column, EventObject e) {
     if (e instanceof KeyEvent) {
-      int c = ((KeyEvent)e).getKeyCode();
+      int c = ((KeyEvent) e).getKeyCode();
       if (KeyEvent.VK_F1 <= c && c <= KeyEvent.VK_F21) {
         return false;
       }
