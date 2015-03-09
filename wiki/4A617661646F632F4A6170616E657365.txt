@@ -8,7 +8,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 
 * 未修正 [#p3da7b50]
 ** ノードハンドルを表示するかどうか [#sc591723]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/JTree.html#setShowsRootHandles-boolean-
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/JTree.html#setShowsRootHandles-boolean-
 -- newValue - ルートハンドルを表示しない場合は true、そうでない場合はfalse
 
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setShowsRootHandles-boolean-
@@ -31,7 +31,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- false の場合、ノード選択を変更しても親は可視(すべての親が展開された状態)にはなりません。選択モデルでパスを常に非表示(すべての親が折りたたまれた状態)にしておきたい場合には便利です。
 
 ** 拡大縮小しているときに行う削除や追加 [#r1834970]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/text/Highlighter.html#changeHighlight-java.lang.Object-int-int-
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/text/Highlighter.html#changeHighlight-java.lang.Object-int-int-
 -- このメソッドは、変更対象だけを扱って選択範囲を拡大縮小しているとき (マウスのドラッグ操作など) に行う削除や追加よりも効率的です。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/text/Highlighter.html#changeHighlight-java.lang.Object-int-int-
 -- This may be more efficient than a remove/add when a selection is expanding/shrinking (such as a sweep with a mouse) by damaging only what changed.
@@ -39,7 +39,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- このメソッドは、変更対象が選択範囲の拡大縮小(マウスのドラッグ操作など)だけのとき、削除や追加を行うよりも効率的です。
 
 ** そうでない場合は [#t4f1d21f]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
 -- そうでない場合は、指定されたすべての値が評価される
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
 -- If not supplied all values are evaluated
@@ -47,7 +47,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- 指定しない場合、すべての値が評価される
 
 ** 追加することができます [#ua7619df]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/undo/UndoManager.html
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/undo/UndoManager.html
 -- 次のコード例では、UndoManager を作成し、UndoableEditListener として JTextField に追加することができます。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/undo/UndoManager.html
 -- The following examples creates an UndoManager and adds it as an UndoableEditListener to a JTextField:
@@ -55,7 +55,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- 次のコード例では、UndoManager を作成し、これを UndoableEditListener として JTextField に追加しています。
 
 // ** 「food」は一致とは見なされません。 [#w9cbecb1]
-// - http://docs.oracle.com/javase/jp/8/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
+// - http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
 // -- たとえば「^foo$」と指定した場合、「foo」と完全に一致する文字列のある行だけが含められます。「food」は一致とは見なされません。
 // - http://docs.oracle.com/javase/8/docs/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
 // -- For example, "^foo$" includes only rows whose string is exactly "foo" and not, for example, "food".
@@ -63,7 +63,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 // -- たとえば「^foo$」と指定した場合、「foo」と完全に一致する文字列の行だけが含まれ、「food」は含まれません。
 
 ** scrollRectToVisible と、指定されたセルの境界 [#y8118367]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/JList.html#ensureIndexIsVisible-int-
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/JList.html#ensureIndexIsVisible-int-
 -- この処理により、scrollRectToVisible と、指定されたセルの境界が呼び出されます。このメソッドを有効にするには、JList が JViewport 内に存在する必要があります。
 
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/JList.html#ensureIndexIsVisible-int-
@@ -73,7 +73,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- これは、指定されたセルの境界を引数にして、scrollRectToVisibleメソッドを呼びます。JList が JViewport 内に存在する場合のみ、このメソッドは有効です。
 
 ** 選択モードの設定 [#o36ae340]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/tree/TreeSelectionModel.html#setSelectionMode-int-
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/tree/TreeSelectionModel.html#setSelectionMode-int-
 -- 現在の選択範囲が新しいモードに対して有効でない場合は選択範囲を変更できます。
 -- たとえば、モードが SINGLE_TREE_SELECTION に変更したときに 3 つの TreePath が選択された場合、一つの TreePath だけを選択できます。
 -- どの TreePath を選択するかは使用する特定の実装によって決まります。
@@ -88,7 +88,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- どの TreePath が選択されたままになるかは使用する特定の実装によって決まります。
 
 ** DefaultTableCellRendererの「実装上の注意」 [#gb59ef4b]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/table/DefaultTableCellRenderer.html#override
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/table/DefaultTableCellRenderer.html#override
 -- そのため、このクラスでは、validate、invalidate、revalidate、repaint、およびfirePropertyChangeの各メソッドは無操作になるようにオーバーライドされ、isOpaqueメソッドのみがパフォーマンスを向上させるためにオーバーライドされます。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/table/DefaultTableCellRenderer.html#override
 -- So this class overrides the validate, invalidate, revalidate, repaint, and firePropertyChange methods to be no-ops and override the isOpaque method solely to improve performance.
@@ -98,7 +98,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は、何もしないようにオーバーライドされるけど、firePropertyChange(String propertyName, Object oldValue, Object newValue) は、完全に何もしないようにはならない？
 
 ** SwingUtilities.calculateInnerArea(...) [#b7a3a508]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/SwingUtilities.html#calculateInnerArea-javax.swing.JComponent-java.awt.Rectangle-
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/SwingUtilities.html#calculateInnerArea-javax.swing.JComponent-java.awt.Rectangle-
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html#calculateInnerArea-javax.swing.JComponent-java.awt.Rectangle-
 
 //修正済み
@@ -118,7 +118,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- c - 対象の JComponent。null の場合、このメソッドは null を返す
 
 ** JFormattedTextField により、 [#e5f1cea2]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/JFormattedTextField.html
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/JFormattedTextField.html
 -- JFormattedTextField により、フォーカスが失われた場合に実行するアクションの設定が可能になります。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/JFormattedTextField.html
 -- JFormattedTextField allows configuring what action should be taken when focus is lost.
@@ -126,7 +126,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- JFormattedTextField が、フォーカスを失ったときに実行するアクションを設定できます。
 
 ** JFormattedTextField により、その2 [#s3e659c5]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/JFormattedTextField.html
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/JFormattedTextField.html
 -- JFormattedTextField により、現在編集中の値が不正な場合でもフォーカスは移動が可能になります。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/JFormattedTextField.html
 -- JFormattedTextField allows the focus to leave, even if the currently edited value is invalid.
@@ -134,7 +134,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- JFormattedTextField は、現在編集中の値が不正な場合でも、フォーカスの移動が可能です。
 
 ** Desktop フォルダになります。 [#c1db2cf1]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/filechooser/FileSystemView.html#isParent-java.io.File-java.io.File-
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/filechooser/FileSystemView.html#isParent-java.io.File-java.io.File-
 -- たとえば、フォルダは file.getParentFile() とは異なる Desktop フォルダになります。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/filechooser/FileSystemView.html#isParent-java.io.File-java.io.File-
 -- Folder could for example be the "Desktop" folder which is not the same as file.getParentFile().
@@ -142,7 +142,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- たとえば、folder が「デスクトップ」フォルダで、file.getParentFile() とは同じにならない場合があります。
 
 ** 'g' (ラテン小文字のG)が文字の例としてあげられます。 [#g6de2419]
-- http://docs.oracle.com/javase/jp/8/api/java/awt/Font.html
+- http://docs.oracle.com/javase/jp/8/api/docs/java/awt/Font.html
 -- 'g' (ラテン小文字のG)が文字の例としてあげられます。
 - http://docs.oracle.com/javase/8/docs/api/java/awt/Font.html
 -- For example, 'g', LATIN SMALL LETTER G, is a character.
@@ -150,13 +150,13 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- 例えば、「g」 (ラテン小文字の G) は文字です。
 
 ** 実装可能な？ [#t6b126fd]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/CellEditor.html
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/CellEditor.html
 -- すべての汎用エディタが実装可能なメソッドを定義します。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/CellEditor.html
 -- This interface defines the methods any general editor should be able to implement.
 
 ** 通常の使い方では、 [#f9d10277]
-- http://docs.oracle.com/javase/jp/8/api/java/awt/GraphicsEnvironment.html#getAllFonts--
+- http://docs.oracle.com/javase/jp/8/api/docs/java/awt/GraphicsEnvironment.html#getAllFonts--
 -- 通常の使い方では、ユーザーは特定のフォントを選択できます。
 - http://docs.oracle.com/javase/8/docs/api/java/awt/GraphicsEnvironment.html#getAllFonts--
 -- Typical usage would be to allow a user to select a particular font.
@@ -164,7 +164,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- ユーザーに特定のフォントを選択させる場合に、よく使用されます。
 
 ** リスト選択の変更を待機する方法 [#l222135f]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/JList.html
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/JList.html
 -- リスト選択の変更を待機する方法としては、JList に直接 ListSelectionListener を追加することをお勧めします。すると、JList が選択モデルの変更を待機し、変更があった場合にリスナーに通知を送るようになります。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/JList.html
 -- The preferred way to listen for changes in list selection is to add ListSelectionListeners directly to the JList. JList then takes care of listening to the the selection model and notifying your listeners of change.
@@ -172,9 +172,9 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- リスト選択の変更を監視する方法としては、JListに直接 ListSelectionListener を追加することをお勧めします。すると、JList が選択モデルの変更を監視し、変更を各リスナーに通知するようになります。
 
 // ** ドット？ [#ycf6aaa4]
-// - http://docs.oracle.com/javase/jp/8/api/javax/swing/text/NavigationFilter.html#setDot-javax.swing.text.NavigationFilter.FilterBypass-int-javax.swing.text.Position.Bias-
+// - http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/text/NavigationFilter.html#setDot-javax.swing.text.NavigationFilter.FilterBypass-int-javax.swing.text.Position.Bias-
 // -- ドットを設定する Caret の前に呼び出されます。
-// - http://docs.oracle.com/javase/jp/8/api/javax/swing/text/NavigationFilter.html#moveDot-javax.swing.text.NavigationFilter.FilterBypass-int-javax.swing.text.Position.Bias-
+// - http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/text/NavigationFilter.html#moveDot-javax.swing.text.NavigationFilter.FilterBypass-int-javax.swing.text.Position.Bias-
 // -- ドットを移動する Caret の前に呼び出されます。
 // - http://docs.oracle.com/javase/8/docs/api/javax/swing/text/NavigationFilter.html#setDot-javax.swing.text.NavigationFilter.FilterBypass-int-javax.swing.text.Position.Bias-
 // -- Invoked prior to the Caret setting the dot.
@@ -188,7 +188,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 // //Caret のドット(位置)を設定する前に呼び出されます。
 
 ** were [#c5dbc9c1]
-- http://docs.oracle.com/javase/jp/8/api/java/awt/Component.html#transferFocus--
+- http://docs.oracle.com/javase/jp/8/api/docs/java/awt/Component.html#transferFocus--
 -- このコンポーネントがフォーカス所有者であるかのように、フォーカスを次のコンポーネントに転送します。
 - http://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#transferFocus--
 -- Transfers the focus to the next component, as though this Component were the focus owner.
@@ -196,7 +196,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- このコンポーネントがフォーカス所有者であったかのように、フォーカスを次のコンポーネントに転送します。
 
 ** 可能な場所であればどこでも、 [#q0170e61]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/BorderFactory.html
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/BorderFactory.html
 -- このファクトリは、可能な場所であればどこでも、共有された Border インスタンスへの参照を分配します。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/BorderFactory.html
 -- Wherever possible, this factory will hand out references to shared Border instances.
@@ -204,7 +204,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- 可能な限り、このファクトリは共有された Border インスタンスへの参照を渡します。
 
 ** 整列できます。 [#ee1172f3]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/JSplitPane.html
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/JSplitPane.html
 -- 2 つの Component は、JSplitPane.HORIZONTAL_SPLIT を使って左右に、JSplitPane.VERTICAL_SPLIT を使って上下に整列できます。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html
 -- The two Components in a split pane can be aligned left to right using JSplitPane.HORIZONTAL_SPLIT, or top to bottom using JSplitPane.VERTICAL_SPLIT.
@@ -220,7 +220,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- 指定されたコンテナ(...)の推奨サイズの寸法を計算します。
 
 ** あとで [#p593531c]
-- http://docs.oracle.com/javase/jp/8/api/java/awt/Window.html#setMinimumSize-java.awt.Dimension-
+- http://docs.oracle.com/javase/jp/8/api/docs/java/awt/Window.html#setMinimumSize-java.awt.Dimension-
 -- あとで setMinimumSize で指定された幅または高さよりも小さい状態で setSize メソッドまたは setBounds メソッドが呼び出されると、ウィンドウは minimumSize の値に合わせて自動的に大きくなります。
 - http://docs.oracle.com/javase/8/docs/api/java/awt/Window.html#setMinimumSize-java.awt.Dimension-
 -- If the setSize or setBounds methods are called afterwards with a width or height less than that specified by setMinimumSize the window is automatically enlarged to honor the minimumSize value.
@@ -230,7 +230,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 「あとで」は、無くても良さそう。
 
 ** point が存在する場合 [#f63aea30]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/JTable.html#rowAtPoint-java.awt.Point-
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/JTable.html#rowAtPoint-java.awt.Point-
 -- point が存在する場合はその行のインデックス、結果が [0, getRowCount()-1] の範囲内にない場合は -1 を返します。
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html#rowAtPoint-java.awt.Point-
 -- Returns the index of the row that point lies in, or -1 if the result is not in the range [0, getRowCount()-1].
@@ -238,7 +238,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- point がある行のインデックスを返します。もし、その結果が [0, getRowCount()-1] の範囲内にない場合は -1 を返します。
 
 ** performance、操作 [#hb7eea2c]
-- http://docs.oracle.com/javase/jp/8/api/java/util/EnumSet.html
+- http://docs.oracle.com/javase/jp/8/api/docs/java/util/EnumSet.html
 -- このクラスの操作に必要な領域や時間は、従来のintベースの「ビット・フラグ」に対する高品質かつ型保証された代替として十分に使用可能です。
 - http://docs.oracle.com/javase/8/docs/api/java/util/EnumSet.html
 -- The space and time performance of this class should be good enough to allow its use as a high-quality, typesafe alternative to traditional int-based "bit flags."
@@ -246,7 +246,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- このクラスの領域や時間性能(パフォーマンス)は、従来の int ベースの「ビット・フラグ」と比較しても十分に高品質で、型保証された代替として使用可能です。
 
 ** アクセラレータの正しい文字 [#w8a3335d]
-- http://docs.oracle.com/javase/jp/8/api/java/awt/Toolkit.html#getMenuShortcutKeyMask--
+- http://docs.oracle.com/javase/jp/8/api/docs/java/awt/Toolkit.html#getMenuShortcutKeyMask--
 -- Control キーがアクセラレータの正しい文字でない場合、ツールキットの実装はこのメソッドをオーバーライドします。
 - http://docs.oracle.com/javase/8/docs/api/java/awt/Toolkit.html#getMenuShortcutKeyMask--
 -- Toolkit implementations should override this method if the Control key isn't the correct key for accelerators.
@@ -254,7 +254,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- Control キーがアクセラレータキーでない場合、ツールキットの実装はこのメソッドをオーバーライドする必要があります。
 
 ** JEditorPane#scrollToReference(String) [#ub637410]
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/JEditorPane.html#scrollToReference-java.lang.String-
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/JEditorPane.html#scrollToReference-java.lang.String-
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/JEditorPane.html#scrollToReference-java.lang.String-
 
 -- デフォルトでは、このメソッドは HTMLDocument 内での参照位置を認識しているだけです。
@@ -277,7 +277,7 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 ** 括弧と読点 [#f274a1eb]
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-java.lang.String-
 -- When specifying a path, use the Internet-standard forward-slash ("/") as a separator. (The string is converted to an URL, so the forward-slash works on all systems.)
-- http://docs.oracle.com/javase/jp/8/api/javax/swing/ImageIcon.html#ImageIcon-java.lang.String-
+- http://docs.oracle.com/javase/jp/8/api/docs/javax/swing/ImageIcon.html#ImageIcon-java.lang.String-
 -- パスを指定するときは、区切り文字としてインターネット標準のスラッシュ (/) を使います。文字列は URL に変換され、スラッシュはすべてのシステムで使用されます。
 - 変更案
 -- パスを指定するときは、区切り文字としてインターネット標準のスラッシュ (/) を使います(文字列は URL に変換されるので、スラッシュはすべてのシステムで動作します)。
