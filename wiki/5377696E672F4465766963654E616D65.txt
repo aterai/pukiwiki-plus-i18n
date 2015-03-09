@@ -13,7 +13,7 @@ description: ファイルチューザーなどで入力されたファイル名�
 * サンプルコード [#i6a151e5]
 #code(link){{
 private boolean isCanonicalPath(File file) {
-  if (file==null) return false;
+  if (file == null) return false;
   try {
     if (file.getCanonicalPath() == null) {
       return false;

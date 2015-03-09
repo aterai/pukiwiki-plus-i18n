@@ -71,7 +71,7 @@ class Test {
 #code{{
 try {
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-} catch(Exception e) {
+} catch (Exception e) {
   e.printStackTrace();
 }
 }}
@@ -91,7 +91,7 @@ UIManager.put("swing.boldMetal", Boolean.FALSE);
 combo.setFont(font);
 //以下回避方法
 combo.setPrototypeDisplayValue(null); //null:default?
-//or combo.firePropertyChange("prototypeDisplayValue",0,1); //0,1:dummy
+//or combo.firePropertyChange("prototypeDisplayValue", 0, 1); //0, 1:dummy
 }}
 
 ----

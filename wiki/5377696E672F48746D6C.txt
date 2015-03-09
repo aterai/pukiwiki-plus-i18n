@@ -43,7 +43,7 @@ import javax.swing.*;
 public class bug6670274x {
   private static void createGui() {
     JFrame frame = new JFrame();
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     final JTabbedPane pane = new JTabbedPane();
     pane.add("one", new JLabel("1"));
     pane.add("<html>Title broken<BR>across 2 lines</html>", new JLabel("2"));

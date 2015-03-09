@@ -1,0 +1,71 @@
+---
+title: ToolkitからScreenResolutionを取得し、コンポーネントで使用するフォントの倍率を変更する
+tags: [Toolkit, UIManager, Font, JPanel, JTree, JTable]
+author: aterai
+pubdate: 2015-03-09T09:59:02+09:00
+description: ディスプレイの解像度の設定によってパネルの初期サイズ、フォントサイズ、行の高さなどを変更するテストを行います。
+---
+* 概要 [#nb1d5b27]
+ディスプレイの解像度の設定によってパネルの初期サイズ、フォントサイズ、行の高さなどを変更するテストを行います。
+
+#download(https://lh3.googleusercontent.com/-Ckc4ZMaD6-8/VPzorX2t8MI/AAAAAAAAN0A/XSE6tpiT92A/s800/ScreenResolution.png)
+
+* サンプルコード [#k0ad66c8]
+#code(link){{
+private Dimension defaultSize = new Dimension(320, 240);
+private Dimension preferredSize;
+public static float getSizeOfText() {
+  int sr = Toolkit.getDefaultToolkit().getScreenResolution();
+  float dpi = System.getProperty("os.name").startsWith("Windows") ? 96f : 72f;
+  return sr / dpi;
+}
+@Override public Dimension getPreferredSize() {
+  if (preferredSize == null) {
+    float sot = getSizeOfText();
+    preferredSize = new Dimension((int) (defaultSize.width * sot),
+                                  (int) (defaultSize.height * sot));
+  }
+  System.out.println(preferredSize);
+  return preferredSize;
+}
+}}
+
+* 解説 [#cc9aaec4]
+上記のサンプルでは、`Windows`環境で`Smaller-100%`、`Medium-125%`、`Larger-150%`とディスプレイの設定を切り替えて、`ContentPane`のサイズ、`JTable`、`JTree`のフォントサイズや行の高さを変更するテストしています。
+
+- 例: `Medium-125%`の場合
+-- `ContentPane`のサイズを`(320 * 1.25, 240 * 1.25)`の`(400, 300)`になるよう、`getPreferredSize()`をオーバーライド
+-- [[UIManagerで使用するFontを統一>Swing/FontChange]]で、すべてのコンポーネントのフォントサイズを元の`1.25`倍に変更
+-- `JTree`の行の高さは、`JTree#isFixedRowHeight()`の場合のみ、元の`1.25`倍に変更
+-- `JTable`の行の高さは、`LookAndFeel`依存で一定で、フォントサイズを変更しても追従しないので、`table.setRowHeight((int) (table.getRowHeight() * getSizeOfText()));`として、自前で`1.25`倍に変更
+#code{{
+JTable table = new JTable(model) {
+  @Override public void updateUI() {
+    super.updateUI();
+    // @see BasicTableUI#installDefaults()
+    // JTable's original row height is 16.  To correctly display the
+    // contents on Linux we should have set it to 18, Windows 19 and
+    // Solaris 20.  As these values vary so much it's too hard to
+    // be backward compatable and try to update the row height, we're
+    // therefor NOT going to adjust the row height based on font.  If the
+    // developer changes the font, it's there responsability to update
+    // the row height.
+    setRowHeight((int) (getRowHeight() * getSizeOfText()));
+  }
+};
+}}
+
+- 注:
+-- `Windows`環境以外ではテストしていない
+-- マルチディスプレイ環境で、解像度の異なる画面に移動する場合は考慮していない
+-- `Insets`などは変更していない
+-- `GraphicsConfiguration#getNormalizingTransform()`などは未調査
+
+* 参考リンク [#tcccad73]
+- [http://docs.oracle.com/javase/8/docs/api/java/awt/Toolkit.html#getScreenResolution-- Toolkit (Java Platform SE 8)]
+-- 日本語版がすべて参照できない？
+- [[UIManagerで使用するFontを統一>Swing/FontChange]]
+
+* コメント [#ee91226e]
+#comment
+#comment

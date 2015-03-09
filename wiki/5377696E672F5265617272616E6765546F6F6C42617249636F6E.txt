@@ -62,7 +62,7 @@ class DragHandler extends MouseAdapter{
 
       return;
     }
-    if (!window.isVisible() || draggingComonent==null) {
+    if (!window.isVisible() || draggingComonent == null) {
       return;
     }
 
@@ -104,7 +104,7 @@ class DragHandler extends MouseAdapter{
 
   @Override public void mouseReleased(MouseEvent e) {
     startPt = null;
-    if (!window.isVisible() || draggingComonent==null) {
+    if (!window.isVisible() || draggingComonent == null) {
       return;
     }
     Point pt = e.getPoint();

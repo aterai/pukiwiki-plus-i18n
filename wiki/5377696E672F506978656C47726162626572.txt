@@ -30,7 +30,7 @@ for (int y = 0; y < r.height; y++) {
     }
   }
 }
-AffineTransform at = AffineTransform.getScaleInstance(-1.0, 1.0);
+AffineTransform at = AffineTransform.getScaleInstance(-1d, 1d);
 at.translate(-width, 0);
 s = at.createTransformedShape(area); //NE
 for (int y = 0; y < r.height; y++) {
@@ -76,17 +76,17 @@ BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 Graphics2D g2d = bi.createGraphics();
 g2d.drawImage(image, 0, 0, null);
 g2d.setComposite(AlphaComposite.Clear);
-g2d.setPaint(new Color(0,0,0,0));
+g2d.setPaint(new Color(0, 0, 0, 0));
 //NW
-g2d.drawLine(0,0,4,0);
-g2d.drawLine(0,1,2,1);
-g2d.drawLine(0,2,1,2);
-g2d.drawLine(0,3,0,4);
+g2d.drawLine(0, 0, 4, 0);
+g2d.drawLine(0, 1, 2, 1);
+g2d.drawLine(0, 2, 1, 2);
+g2d.drawLine(0, 3, 0, 4);
 //NE
-g2d.drawLine(w-5,0,w-1,0);
-g2d.drawLine(w-3,1,w-1,1);
-g2d.drawLine(w-2,2,w-1,2);
-g2d.drawLine(w-1,3,w-1,4);
+g2d.drawLine(w - 5, 0, w - 1, 0);
+g2d.drawLine(w - 3, 1, w - 1, 1);
+g2d.drawLine(w - 2, 2, w - 1, 2);
+g2d.drawLine(w - 1, 3, w - 1, 4);
 g2d.dispose();
 }}
 

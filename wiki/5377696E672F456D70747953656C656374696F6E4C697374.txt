@@ -68,7 +68,9 @@ public class DisabledTextForegroundList {
   }
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
-      @Override public void run() { createAndShowGUI(); }
+      @Override public void run() {
+        createAndShowGUI();
+      }
     });
   }
   public static void createAndShowGUI() {
@@ -80,7 +82,7 @@ public class DisabledTextForegroundList {
       UIDefaults d = UIManager.getLookAndFeelDefaults();
       d.put("List:\"List.cellRenderer\"[Disabled].textForeground",
             new ColorUIResource(Color.RED));
-    } catch(Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     JFrame f = new JFrame();

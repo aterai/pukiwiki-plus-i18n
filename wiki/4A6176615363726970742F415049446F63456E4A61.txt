@@ -13,7 +13,7 @@ description: Javascriptで、Java API Docの「日本語、英語」を切り替
 - `Java API JP<>EN`
 
 #code{{
-javascript:(function(){var l=location,m=l.href.match('^(https?://)(.+)((?:api|technotes)[^+]+)'),n=m[2].match('/([6-8])/');if(m)l.href=m[1]+'docs.oracle.com/javase/'+(/\/jp\//.test(m[2])?n[1]+'/docs':'jp/'+n[1])+'/'+m[3];}());
+javascript:(function(){var l=location,m=l.href.match('^(https?://)(.+)((?:api|technotes)[^+]+)'),n=m[2].match('/([6-8])/');if(m)l.href=m[1]+'docs.oracle.com/javase/'+(/\/jp\//.test(m[2])?n[1]+'/docs':n[1]==8?'jp/'+n[1]+'/docs':'jp/'+n[1])+'/'+m[3];}());
 }}
 
 * 解説 [#j41ed46f]
@@ -21,6 +21,7 @@ javascript:(function(){var l=location,m=l.href.match('^(https?://)(.+)((?:api|te
 
 - `/ja/6/`と`/6/docs/`を切り替えているだけなので、フレーム有りでは`URL`が以下のような形式の場合のみ有効
 -- http://docs.oracle.com/javase/6/docs/api/index.html?javax/swing/JTable.html
+- `Java 8`の場合は、`javase/ja/8/docs/`と`javase/8/docs/`を切り替えているように変更
 
 よく分からない翻訳がある場合に、日本語版と英語版を切り替えながら見比べると結構便利です。
 

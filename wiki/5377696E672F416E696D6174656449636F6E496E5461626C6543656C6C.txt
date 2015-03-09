@@ -13,7 +13,7 @@ description: ImageIconにImageObserverを設定して、JTableのセル中でAni
 * サンプルコード [#b724b7aa]
 #code(link){{
 ImageIcon icon = new ImageIcon(url);
-//Wastefulness: icon.setImageObserver((ImageObserver)table);
+//Wastefulness: icon.setImageObserver((ImageObserver) table);
 icon.setImageObserver(new ImageObserver() {
   //@see http://www2.gol.com/users/tame/swing/examples/SwingExamples.html
   @Override public boolean imageUpdate(
@@ -28,7 +28,7 @@ icon.setImageObserver(new ImageObserver() {
       int vc = table.convertColumnIndexToView(col);
       table.repaint(table.getCellRect(vr, vc, false));
     }
-    return (infoflags & (ALLBITS|ABORT)) == 0;
+    return (infoflags & (ALLBITS | ABORT)) == 0;
   };
 });
 }}

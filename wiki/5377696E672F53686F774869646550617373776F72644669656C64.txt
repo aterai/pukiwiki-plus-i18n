@@ -1,68 +1,33 @@
 ---
 title: JPasswordFieldでパスワードを可視化する
-tags: [JPasswordField, JTextField, CardLayout, OverlayLayout]
+tags: [JPasswordField, JCheckBox, JToggleButton, OverlayLayout, CardLayout]
 author: aterai
 pubdate: 2015-01-05T00:29:05+09:00
-description: JPasswordFieldのパスワードを可視化するため、ドキュメントを共有するJTextFieldを作成して、これをCardLayoutで切り替えます。
+description: JPasswordFieldに入力したパスワードの表示・非表示を切り替えるためのボタンを作成し、これを入力欄などに配置します。
 hreflang:
     href: http://java-swing-tips.blogspot.com/2015/01/showhide-passwordfield-using-cardlayout.html
     lang: en
 ---
 * 概要 [#n9158cb5]
-`JPasswordField`のパスワードを可視化するため、ドキュメントを共有する`JTextField`を作成して、これを`CardLayout`で切り替えます。
+`JPasswordField`に入力したパスワードの表示・非表示を切り替えるためのボタンを作成し、これを入力欄などに配置します。
 
-#download(https://lh6.googleusercontent.com/-xn92BzP3qq4/VKkJzJGgYLI/AAAAAAAANuY/RnuIMAoCGzs/s800/ShowHidePasswordField.png)
+#download(https://lh4.googleusercontent.com/-zXk3TZfF_v4/VPXFdo3UBzI/AAAAAAAANzU/VfiEUdm-aUI/s800/ShowHidePasswordField.png)
 
 * サンプルコード [#h57d319a]
 #code(link){{
 JPasswordField pf = new JPasswordField(24);
 pf.setText("abcdefghijklmn");
+pf.setAlignmentX(Component.RIGHT_ALIGNMENT);
 AbstractDocument doc = (AbstractDocument) pf.getDocument();
 doc.setDocumentFilter(new ASCIIOnlyDocumentFilter());
-
-JTextField tf = new JTextField(24);
-tf.setFont(FONT);
-tf.enableInputMethods(false);
-tf.setDocument(doc);
-
-final CardLayout cardLayout = new CardLayout();
-final JPanel p = new JPanel(cardLayout);
-p.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-p.add(pf, PasswordField.HIDE.toString());
-p.add(tf, PasswordField.SHOW.toString());
 
 AbstractButton b = new JToggleButton(new AbstractAction() {
   @Override public void actionPerformed(ActionEvent e) {
     AbstractButton c = (AbstractButton) e.getSource();
-    PasswordField s = c.isSelected() ? PasswordField.SHOW : PasswordField.HIDE;
-    cardLayout.show(p, s.toString());
+    Character ec = c.isSelected() ? 0
+        : (Character) UIManager.get("PasswordField.echoChar");
+    pf.setEchoChar(ec);
   }
-});
-}}
-
-* 解説 [#c666192f]
-- 上: `CardLayout`
--- 同じ`Document`を使用する`JPasswordField`と`JTextField`を`CardLayout`を設定した`JPanel`に配置して`JCheckBox`で切り替え
--- `textField.enableInputMethods(false);`として、インプットメソッドを使用不可に設定
-- 中: `CardLayout` + `ASCII only filter`
--- 同じ`Document`を使用する`JPasswordField`と`JTextField`を`CardLayout`を設定した`JPanel`に配置して`JCheckBox`で切り替え
--- `textField.enableInputMethods(false);`として、インプットメソッドを使用不可に設定
--- `ASCII`以外の文字がコピー・ペーストなどできないようにする`DocumentFilter`を作成して`Document`に設定
-- 下: `CardLayout` + `OverlayLayout`
--- 同じ`Document`を使用する`JPasswordField`と`JTextField`を`CardLayout`を設定した`JPanel`を作成
--- `OverlayLayout`を設定した`JPanel`に、上記の`JPanel`と`JToggleButton`を配置し、`JPasswordField`などの内部右端にボタンが表示されるように設定
-
-#code{{
-final CardLayout cardLayout = new CardLayout();
-final JPanel p = new JPanel(cardLayout);
-p.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-p.add(pf, PasswordField.HIDE.toString());
-p.add(tf, PasswordField.SHOW.toString());
-
-AbstractButton b = new JToggleButton(new AbstractAction() {
-  //...
 });
 b.setFocusable(false);
 b.setOpaque(false);
@@ -82,9 +47,57 @@ JPanel panel = new JPanel() {
 };
 panel.setLayout(new OverlayLayout(panel));
 panel.add(b);
+panel.add(pf);
 }}
 
-//* 参考リンク
+* 解説 [#c666192f]
+上記のサンプルでは、`JPasswordField#setEchoChar(...)`メソッドの値に`0`を設定することで、パスワードを直接表示するように切り替えることのできるボタンを追加しています。
+
+- 上: 
+-- `BorderLayout`で、`JPasswordField`の下にパスワード表示非表示切り替え用の`JCheckBox`を配置
+- 中:
+--  `OverlayLayout`で、`JPasswordField`内の右端にパスワード表示非表示切り替え用の`JToggleButton`を配置
+-- `JPasswordField`と`JToggleButton`を配置する`JPanel`に、`OverlayLayout`を設定し、`z`軸が入れ替わらないように、`JPanel#isOptimizedDrawingEnabled()`が常に`false`を返すようオーバーライド
+- 下: ``
+- %%下: `CardLayout` + `OverlayLayout`%%
+-- 同じ`Document`を使用する`JPasswordField`と`JTextField`を`CardLayout`を設定した`JPanel`を作成
+-- `OverlayLayout`を設定した`JPanel`に、上記の`JPanel`と`JToggleButton`を配置し、`JPasswordField`などの内部右端にボタンが表示されるように設定
+-- `JTextField`をそのまま使用するので、表示中の文字列を選択してコピーすることが可能
+
+#code{{
+JPasswordField pf3 = new JPasswordField(24);
+pf3.setText("abcdefghijklmn");
+AbstractDocument doc = (AbstractDocument) pf3.getDocument();
+JTextField tf3 = new JTextField(24);
+tf3.setFont(FONT);
+tf3.enableInputMethods(false);
+tf3.setDocument(doc);
+
+final CardLayout cardLayout = new CardLayout();
+final JPanel p3 = new JPanel(cardLayout);
+p3.setAlignmentX(Component.RIGHT_ALIGNMENT);
+p3.add(pf3, PasswordField.HIDE.toString());
+p3.add(tf3, PasswordField.SHOW.toString());
+
+AbstractButton b3 = new JToggleButton(new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    AbstractButton c = (AbstractButton) e.getSource();
+    PasswordField s = c.isSelected() ? PasswordField.SHOW
+                                     : PasswordField.HIDE;
+    cardLayout.show(p3, s.toString());
+  }
+});
+}}
+
+----
+- メモ: `passwordField.setEchoChar((char) 0);`を使用するサンプルを追加
+-- [http://docs.oracle.com/javase/jp/8/api/javax/swing/JPasswordField.html#setEchoChar-char- JPasswordField#setEchoChar(...) (Java Platform SE 8)]に、「値0に設定すると、標準のJTextFieldの動作と同様に、テキストが入力したとおりに表示されます。」とあるように、`passwordField.setEchoChar((char) 0);`とすれば、パスワードを表示することが可能
+-- `CardLayout`を使って`JTextField`を表示する方法は一旦削除したが、表示のパスワードをコピーできるので、残しておくことにした
+
+* 参考リンク [#y8235689]
+- [http://docs.oracle.com/javase/jp/8/api/javax/swing/JPasswordField.html#setEchoChar-char- JPasswordField#setEchoChar(...) (Java Platform SE 8)]
+- [[JPasswordFieldのエコー文字を変更>Swing/PasswordView]]
+
 * コメント [#f8f3965d]
 #comment
 #comment

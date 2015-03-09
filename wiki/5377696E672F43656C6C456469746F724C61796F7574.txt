@@ -21,7 +21,7 @@ class CustomComponentCellEditor extends DefaultCellEditor {
     this.field = field;
     button = new JButton();
     button.setPreferredSize(new Dimension(25, 0));
-    field.setBorder(BorderFactory.createEmptyBorder(0,2,0,0));
+    field.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 0));
     panel.add(field);
     panel.add(button, BorderLayout.EAST);
     panel.setFocusable(false);
@@ -37,7 +37,7 @@ class CustomComponentCellEditor extends DefaultCellEditor {
     });
     return panel;
   }
-  @Override public boolean isCellEditable(final java.util.EventObject e) {
+  @Override public boolean isCellEditable(final EventObject e) {
     //System.out.println("isCellEditable");
     if (e instanceof KeyEvent) {
       //System.out.println("KeyEvent");
@@ -45,7 +45,7 @@ class CustomComponentCellEditor extends DefaultCellEditor {
         @Override public void run() {
           char kc = ((KeyEvent) e).getKeyChar();
           if (!Character.isIdentifierIgnorable(kc)) {
-            field.setText(field.getText()+kc);
+            field.setText(field.getText() + kc);
           }
           field.setCaretPosition(field.getText().length());
           //field.requestFocusInWindow();
@@ -82,7 +82,7 @@ class CustomCellEditor extends DefaultCellEditor {
   protected final JButton button = new JButton();
   public CustomCellEditor(final JTextField field) {
     super(field);
-    field.setBorder(BorderFactory.createEmptyBorder(0,2,0,BUTTON_WIDTH));
+    field.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, BUTTON_WIDTH));
     field.addHierarchyListener(new HierarchyListener() {
       @Override public void hierarchyChanged(HierarchyEvent e) {
         if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0
