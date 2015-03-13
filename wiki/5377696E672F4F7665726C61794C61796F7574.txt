@@ -16,7 +16,7 @@ JButton b1 = new JButton();
 JButton b2 = new JButton();
 b1.setLayout(new OverlayLayout(b1));
 Insets i = b1.getBorder().getBorderInsets(b1);
-b1.setBorder(BorderFactory.createEmptyBorder(i.top,i.left,i.bottom,4));
+b1.setBorder(BorderFactory.createEmptyBorder(i.top, i.left, i.bottom, 4));
 b1.setAction(new AbstractAction("OverlayLayoutButton") {
   @Override public void actionPerformed(ActionEvent e) {
     Toolkit.getDefaultToolkit().beep();

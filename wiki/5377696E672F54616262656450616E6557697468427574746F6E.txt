@@ -24,7 +24,7 @@ tabs = new ClippedTitleTabbedPane() {
     super.updateUI();
     setAlignmentX(Component.LEFT_ALIGNMENT);
     setAlignmentY(Component.TOP_ALIGNMENT);
-    b.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
+    b.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
     setAlignmentX(Component.LEFT_ALIGNMENT);
     setAlignmentY(Component.TOP_ALIGNMENT);
     tabAreaInsets = getTabAreaInsets();
@@ -45,7 +45,7 @@ p.add(tabs);
 //Insets ai = UIManager.getInsets("TabbedPane.tabAreaInsets");
 public Insets getButtonPaddingTabAreaInsets(JButton b, Insets ti, Insets ai) {
   FontMetrics fm = b.getFontMetrics(b.getFont());
-  int tih = b.getPreferredSize().height-fm.getHeight()-ti.top-ti.bottom-ai.bottom;
+  int tih = b.getPreferredSize().height - fm.getHeight() - ti.top - ti.bottom - ai.bottom;
   return new Insets(Math.max(ai.top, tih), b.getPreferredSize().width+ai.left, ai.bottom, ai.right);
 }
 }}
