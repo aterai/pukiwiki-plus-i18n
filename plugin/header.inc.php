@@ -41,7 +41,7 @@ function plugin_header_convert() {
     if ( isset($frontmatter['hreflang']) ) {
         $lng = $frontmatter['hreflang']['lang'];
         $hrf = $frontmatter['hreflang']['href'];
-        $hreflang = '<ul class="tag_box inline"><li><span class="glyphicon-list-alt"></span></li><li><a rel="alternate" hreflang="' . $lng . '" href="' . $hrf . '">' . $lng . '</a>';
+        $hreflang = '<ul class="tag_box inline"><li><span class="glyphicon-list-alt"></span></li><li><a rel="alternate" hreflang="' . $lng . '" href="' . $hrf . '">' . $lng . '</a></ul>';
     }
 
     $time  = $is_read ? get_filetime($_page) : 0;
