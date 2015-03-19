@@ -9,7 +9,7 @@ function plugin_user_inline() {
     $contents = array_map("htmlspecialchars", $args);
     $buf = join(' ', $contents);
 return <<<EOD
-<strong itemprop="creator" itemscope itemtype="http://schema.org/Person"><span itemprop="name">$buf</span></strong>
+<strong itemprop="creator" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">$buf</span></strong>
 EOD;
 }
 ?>
