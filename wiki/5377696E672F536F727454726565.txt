@@ -99,7 +99,7 @@ public static Comparator<DefaultMutableTreeNode> tnc = new Comparator<DefaultMut
 
 - `JDK 1.8.0`以降の場合、この`Comparator`を以下のように簡単に作成することが可能
 -- 参考: [http://d.hatena.ne.jp/yohhoy/20141007/p1 Comparator with ラムダ式 - yohhoyの日記]
--- 参考: [http://docs.oracle.com/javase/jp/8/api/docs/java/util/Comparator.html#thenComparing-java.util.Comparator- Comparator#thenComparing(...) (Java Platform SE 8)]
+-- 参考: [https://docs.oracle.com/javase/jp/8/docs/api/java/util/Comparator.html#thenComparing-java.util.Comparator- Comparator#thenComparing(...) (Java Platform SE 8)]
 
 #code{{
 Comparator<String> sci = Comparator.comparingInt(String::length)

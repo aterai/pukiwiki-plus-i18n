@@ -17,7 +17,7 @@ final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) 
     return false;
   }
 };
-sorter.setRowFilter(new RowFilter<TableModel,Integer>() {
+sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
   @Override public boolean include(Entry<? extends TableModel, ? extends Integer> entry) {
     return entry.getIdentifier() % 2 == 0;
   }

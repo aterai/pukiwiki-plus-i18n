@@ -15,9 +15,9 @@ description: ポップアップメニューを使って、JTabbedPaneにタブ�
 private final JPopupMenu pop = new JPopupMenu() {
   @Override public void show(Component c, int x, int y) {
     //JDK 1.3 tabindex = tab.getUI().tabForCoordinate(tab, x, y);
-    closePageAction.setEnabled(tab.indexAtLocation(x, y)>=0);
-    closeAllAction.setEnabled(tab.getTabCount()>0);
-    closeAllButActiveAction.setEnabled(tab.getTabCount()>0);
+    closePageAction.setEnabled(tab.indexAtLocation(x, y) >= 0);
+    closeAllAction.setEnabled(tab.getTabCount() > 0);
+    closeAllButActiveAction.setEnabled(tab.getTabCount() > 0);
     super.show(c, x, y);
   }
 };

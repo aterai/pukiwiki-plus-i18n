@@ -39,8 +39,8 @@ class ImagePreview extends JComponent implements PropertyChangeListener {
       //The Perils of Image.getScaledInstance() | Java.net
       //http://today.java.net/pub/a/today/2007/04/03/perils-of-image-getscaledinstance.html
       float scale = PREVIEW_WIDTH / (float) tmpIcon.getIconWidth();
-      int newW = (int)(tmpIcon.getIconWidth()  * scale);
-      int newH = (int)(tmpIcon.getIconHeight() * scale);
+      int newW = (int) (tmpIcon.getIconWidth()  * scale);
+      int newH = (int) (tmpIcon.getIconHeight() * scale);
       BufferedImage img = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
       Graphics2D g2 = img.createGraphics();
       g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,

@@ -9,7 +9,7 @@ hreflang:
     lang: en
 ---
 * 概要 [#d6e1d5a6]
-`JTable`の行を別の`JTable`に`Drag&Drop`で移動します。
+`JTable`の行を別の`JTable`に`Drag & Drop`で移動します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTL05H70DI/AAAAAAAAAYM/YtTZHzrA2HU/s800/DragRowsAnotherTable.png)
 
@@ -95,7 +95,7 @@ class TableRowTransferHandler extends TransferHandler {
   private void cleanup(JComponent c, boolean remove) {
     if (remove && indices != null) {
       c.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-      DefaultTableModel model = (DefaultTableModel)((JTable) c).getModel();
+      DefaultTableModel model = (DefaultTableModel) ((JTable) c).getModel();
       if (addCount > 0) {
         for (int i = 0; i < indices.length; i++) {
           if (indices[i] >= addIndex) {
