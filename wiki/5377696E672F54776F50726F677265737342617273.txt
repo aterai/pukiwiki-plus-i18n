@@ -47,7 +47,7 @@ worker = new SwingWorker<String, Progress>() {
   private final Random r = new Random();
   private void convertFileToSomething() throws InterruptedException{
     int current = 0;
-    int lengthOfTask = 10+r.nextInt(50); //long lengthOfTask = file.length();
+    int lengthOfTask = 10 + r.nextInt(50); //long lengthOfTask = file.length();
     while (current <= lengthOfTask && !isCancelled()) {
       int iv = 100 * current / lengthOfTask;
       Thread.sleep(20); // dummy

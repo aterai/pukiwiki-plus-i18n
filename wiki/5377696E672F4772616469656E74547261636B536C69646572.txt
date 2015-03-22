@@ -123,7 +123,7 @@ slider.setUI(new MetalSliderUI() {
       g.fillRect(fillLeft, fillTop, fillRight - fillLeft, trackBottom - trackTop);
     }
 
-    int yy = trackTop + (trackBottom - trackTop) /2;
+    int yy = trackTop + (trackBottom - trackTop) / 2;
     for (int i = 10; i >= 0; i--) {
       g.setColor(new Color(1f, 1f, 1f, i * 0.07f));
       g.drawLine(trackLeft + 2, yy, (trackRight - trackLeft), yy);

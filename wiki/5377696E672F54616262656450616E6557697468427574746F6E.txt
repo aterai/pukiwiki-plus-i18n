@@ -46,7 +46,7 @@ p.add(tabs);
 public Insets getButtonPaddingTabAreaInsets(JButton b, Insets ti, Insets ai) {
   FontMetrics fm = b.getFontMetrics(b.getFont());
   int tih = b.getPreferredSize().height - fm.getHeight() - ti.top - ti.bottom - ai.bottom;
-  return new Insets(Math.max(ai.top, tih), b.getPreferredSize().width+ai.left, ai.bottom, ai.right);
+  return new Insets(Math.max(ai.top, tih), b.getPreferredSize().width + ai.left, ai.bottom, ai.right);
 }
 }}
 
