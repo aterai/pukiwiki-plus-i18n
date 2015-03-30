@@ -12,9 +12,9 @@ description: GeneralPathなどを使って星型の図形をパネルに描画�
 
 * サンプルコード [#zd63173c]
 #code(link){{
-class StarPanel1 extends JPanel{
+class StarPanel1 extends JPanel {
   @Override public void paintComponent(Graphics g) {
-    Graphics2D g2 = (Graphics2D) g;
+    Graphics2D g2 = (Graphics2D) g.create();
     int w = getWidth();
     int h = getHeight();
     //<blockquote cite="%JAVA_HOME%/demo/jfc/Java2D/src/java2d/demos/Lines/Joins.java">
@@ -31,12 +31,13 @@ class StarPanel1 extends JPanel{
     g2.fill(p);
     g2.setColor(Color.BLACK);
     g2.draw(p);
+    g2.dispose();
   }
 }
 }}
 
 #code{{
-class StarIcon2 implements Icon{
+class StarIcon2 implements Icon {
   private static final int R1 = 20;
   private static final int R2 = 40;
   //double R1 = R2 * Math.sin(Math.PI / 10d) / Math.cos(Math.PI / 5d); //= 15d;

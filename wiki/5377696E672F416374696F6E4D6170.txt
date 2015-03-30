@@ -29,7 +29,7 @@ am.put(DefaultEditorKit.pasteAction, beep);
 JTextField field = new JTextField() {
   @Override public void copy() {
     UIManager.getLookAndFeel().provideErrorFeedback(this);
-    //java.awt.Toolkit.getDefaultToolkit().beep();
+    //Toolkit.getDefaultToolkit().beep();
   }
 };
 }}

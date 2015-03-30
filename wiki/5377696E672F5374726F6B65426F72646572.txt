@@ -12,10 +12,10 @@ description: Java 1.7.0で導入されたStrokeBorderをテストします。
 
 * サンプルコード [#p740b063]
 #code(link){{
-dashedStroke = new BasicStroke(5.0f,
+dashedStroke = new BasicStroke(5f,
     ((EndCapStyle) endcapCombo.getSelectedItem()).style,
     ((JoinStyle) joinCombo.getSelectedItem()).style,
-    5.0f, getDashArray(), 0.0f);
+    5f, getDashArray(), 0f);
 label.setBorder(BorderFactory.createStrokeBorder(dashedStroke, Color.RED));
 }}
 

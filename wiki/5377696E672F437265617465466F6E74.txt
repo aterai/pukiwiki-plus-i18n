@@ -15,7 +15,7 @@ description: 独自フォント(mona.ttf)をファイルから読み込み、ASC
 Font makeFont(URL url) {
     Font font = null;
     try (InputStream is = url.openStream()) {
-        font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(12.0f);
+        font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(12f);
     } catch (IOException | FontFormatException ex) {
         ex.printStackTrace();
     }
@@ -26,7 +26,7 @@ Font makeFont(URL url) {
 //  InputStream is = null;
 //  try {
 //    is = url.openStream();
-//    font = (Font.createFont(Font.TRUETYPE_FONT, is)).deriveFont(12.0f);
+//    font = (Font.createFont(Font.TRUETYPE_FONT, is)).deriveFont(12f);
 //    is.close();
 //  } catch (IOException ioe) {
 //    ioe.printStackTrace();

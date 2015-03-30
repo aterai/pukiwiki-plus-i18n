@@ -12,10 +12,10 @@ description: イベント(イベントオブジェクト、イベントリスナ
 
 * サンプルコード [#a2ffd4f4]
 #code(link){{
-interface FontChangeListener extends EventListener{
+interface FontChangeListener extends EventListener {
   public void fontStateChanged(FontChangeEvent e);
 }
-class FontChangeEvent extends EventObject{
+class FontChangeEvent extends EventObject {
   private final String command;
   private final Font font;
   public String getCommand() {

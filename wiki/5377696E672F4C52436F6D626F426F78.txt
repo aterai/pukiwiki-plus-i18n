@@ -12,7 +12,7 @@ description: JComboBoxのItemにテキストを左右に分けて配置します
 
 * サンプルコード [#oace48f1]
 #code(link){{
-class LRItem{
+class LRItem {
   private final String leftText;
   private final String rightText;
   public LRItem(String strLeft, String strRight) {
@@ -20,8 +20,8 @@ class LRItem{
     rightText = strRight;
   }
   public String getHtmlText() {
-    return "<html><table width='240'><tr><td align='left'>"+leftText+
-    "</td><td align='right'>"+rightText+"</td></tr></table></html>";
+    return "<html><table width='240'><tr><td align='left'>" + leftText +
+    "</td><td align='right'>" + rightText + "</td></tr></table></html>";
   }
   public String getLeftText()  { return leftText; }
   public String getRightText() { return rightText; }

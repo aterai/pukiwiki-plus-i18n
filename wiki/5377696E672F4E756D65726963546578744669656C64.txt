@@ -42,7 +42,7 @@ spinner.setValue(5000);
 -- 数値以外、または結果が範囲外となる場合、テキストは変化せず`beep`音が鳴り、フォーカス移動がキャンセルされます。
 
 #code{{
-class IntegerInputVerifier extends InputVerifier{
+class IntegerInputVerifier extends InputVerifier {
   @Override public boolean verify(JComponent c) {
     boolean verified = false;
     JTextField textField = (JTextField) c;
@@ -174,7 +174,7 @@ class IntegerDocumentFilter extends DocumentFilter {
 --- 注:[[SpinnerNumberModelに上限値を超える値を入力>Swing/SpinnerNumberModel]]
 
 #code{{
-class NumberFormatterFactory extends DefaultFormatterFactory{
+class NumberFormatterFactory extends DefaultFormatterFactory {
   private static NumberFormatter numberFormatter = new NumberFormatter();
   static {
     numberFormatter.setValueClass(Integer.class);

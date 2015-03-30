@@ -33,12 +33,12 @@ public class LookAndFeelDebugAgent {
   public static void createAndShowGUI() {
     ButtonGroup group = new ButtonGroup();
     Box box = Box.createVerticalBox();
-    for(LookAndFeelEnum lnf : LookAndFeelEnum.values()) {
+    for (LookAndFeelEnum lnf: LookAndFeelEnum.values()) {
       JRadioButton rb = new JRadioButton(new ChangeLookAndFeelAction(lnf));
       group.add(rb); box.add(rb);
     }
     box.add(Box.createVerticalGlue());
-    box.setBorder(BorderFactory.createEmptyBorder(5,25,5,25));
+    box.setBorder(BorderFactory.createEmptyBorder(5, 25, 5, 25));
 
     JFrame frame = new JFrame("LnF");
     frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -61,7 +61,7 @@ public class LookAndFeelDebugAgent {
       return clazz;
     }
   }
-  private static class ChangeLookAndFeelAction extends AbstractAction{
+  private static class ChangeLookAndFeelAction extends AbstractAction {
     private final String lnf;
     protected ChangeLookAndFeelAction(LookAndFeelEnum lnfe) {
       super(lnfe.toString());
@@ -69,23 +69,23 @@ public class LookAndFeelDebugAgent {
       this.setEnabled(isAvailableLookAndFeel(lnf));
     }
     private static boolean isAvailableLookAndFeel(String lnf) {
-      try{
+      try {
         Class lnfClass = Class.forName(lnf);
-        LookAndFeel newLnF = (LookAndFeel)(lnfClass.newInstance());
+        LookAndFeel newLnF = (LookAndFeel) lnfClass.newInstance();
         return newLnF.isSupportedLookAndFeel();
-      }catch(Exception e) {
+      } catch (Exception e) {
         return false;
       }
     }
     @Override public void actionPerformed(ActionEvent e) {
-      try{
+      try {
         UIManager.setLookAndFeel(lnf);
-      }catch(Exception ex) {
+      } catch (Exception ex) {
         ex.printStackTrace();
         System.out.println("Failed loading L&F: " + lnf);
       }
-      for(Frame f:Frame.getFrames()) {
-        if(f instanceof JFrame) {
+      for (Frame f: Frame.getFrames()) {
+        if (f instanceof JFrame) {
           SwingUtilities.updateComponentTreeUI(f);
           f.pack();
         }
