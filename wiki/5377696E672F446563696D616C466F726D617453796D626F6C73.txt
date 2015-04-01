@@ -34,10 +34,10 @@ private static JSpinner makeSpinner2(SpinnerNumberModel m) {
 }}
 
 * 解説 [#e7cbe202]
-+デフォルト
-+`JSpinner`から`JFormattedTextField`を取得し、この無効の場合の文字色を無効場合の背景色と同じにして、非表示になるようにしています。
-+`JSpinner`から`JFormattedTextField`を取得し、`DecimalFormatSymbols#setNaN`メソッドを使用して、値が`NaN`の場合、表示する文字列をスペースに変更しています。
-+`JSpinner`から`JFormattedTextField`を取得し、`DecimalFormatSymbols#setNaN`メソッドを使用して、値が`NaN`の場合、表示する文字列を`----`に変更しています。
++ デフォルト
++ `JSpinner`から`JFormattedTextField`を取得し、この無効の場合の文字色を無効場合の背景色と同じにして非表示化
++ `JSpinner`から`JFormattedTextField`を取得し、`DecimalFormatSymbols#setNaN`メソッドを使用して、値が`NaN`の場合、表示する文字列をスペースに変更
++ `JSpinner`から`JFormattedTextField`を取得し、`DecimalFormatSymbols#setNaN`メソッドを使用して、値が`NaN`の場合、表示する文字列を`----`に変更
 
 //* 参考リンク
 * コメント [#v85ff054]

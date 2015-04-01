@@ -85,7 +85,7 @@ private final JWindow dialog = new JWindow();
 public TabTransferHandler() {
   dialog.add(label);
   //dialog.setAlwaysOnTop(true); // Web Start
-  dialog.setOpacity(0.5f);
+  dialog.setOpacity(.5f);
   //com.sun.awt.AWTUtilities.setWindowOpacity(dialog, .5f); // JDK 1.6.0
   DragSource.getDefaultDragSource().addDragSourceMotionListener(
       new DragSourceMotionListener() {
