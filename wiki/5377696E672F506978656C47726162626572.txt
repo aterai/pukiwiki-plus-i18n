@@ -76,7 +76,7 @@ BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 Graphics2D g2d = bi.createGraphics();
 g2d.drawImage(image, 0, 0, null);
 g2d.setComposite(AlphaComposite.Clear);
-g2d.setPaint(new Color(0, 0, 0, 0));
+g2d.setPaint(new Color(0x0, true));
 //NW
 g2d.drawLine(0, 0, 4, 0);
 g2d.drawLine(0, 1, 2, 1);

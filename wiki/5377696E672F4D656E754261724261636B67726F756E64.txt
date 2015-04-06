@@ -53,7 +53,7 @@ private JMenu createMenu(String key) {
     };
   };
   if ("Windows XP".equals(System.getProperty("os.name"))) {
-    menu.setBackground(new Color(0, 0, 0, 0)); //XXX Windows XP lnf?
+    menu.setBackground(new Color(0x0, true)); //XXX Windows XP lnf?
   }
   menu.add("dummy1"); menu.add("dummy2"); menu.add("dummy3");
   return menu;
@@ -64,7 +64,7 @@ private JMenu createMenu(String key) {
 上記のサンプルでは、`JMenuBar`に画像を描画し、これに追加する`JMenu`を通常は透明、選択されたときなどは不透明となるように`setOpaque`メソッドで切り替えています。
 
 - 注意点
--- `WindowsLookAndFeel`の場合、`JMenu#setBackground(new Color(0, 0, 0, 0));`とする必要がある？
+-- `WindowsLookAndFeel`の場合、`JMenu#setBackground(new Color(0x0, true));`とする必要がある？
 -- %%`NimbusLookAndFeel`には対応していない%%
 -- `WindowsLookAndFeel`に切り替えた直後、メニューの文字色などがおかしい？
 
@@ -79,7 +79,7 @@ public class MenuBarRootPaneTest {
   private static JMenuBar createMenubar() {
     JMenuBar mb = new JMenuBar();
     mb.setOpaque(false);
-    mb.setBackground(new Color(0, 0, 0, 0));
+    mb.setBackground(new Color(0x0, true));
     String[] menuKeys = {"File", "Edit", "Help"};
     for (String key: menuKeys) {
       JMenu m = createMenu(key);
