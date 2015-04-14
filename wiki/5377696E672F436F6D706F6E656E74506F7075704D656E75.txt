@@ -80,8 +80,7 @@ final Action copyAction = new DefaultEditorKit.CopyAction();
 final Action pasteAction = new DefaultEditorKit.PasteAction();
 final Action deleteAction = new AbstractAction("delete") {
   @Override public void actionPerformed(ActionEvent e) {
-    JPopupMenu p = (JPopupMenu) e.getSource();
-    ((JTextComponent) p.getInvoker()).replaceSelection(null);
+    ((JTextComponent) getInvoker()).replaceSelection(null);
   }
 };
 final Action selectAllAction = new AbstractAction("select all") {
