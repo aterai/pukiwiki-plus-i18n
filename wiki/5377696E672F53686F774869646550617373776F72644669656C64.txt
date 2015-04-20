@@ -24,9 +24,9 @@ doc.setDocumentFilter(new ASCIIOnlyDocumentFilter());
 AbstractButton b = new JToggleButton(new AbstractAction() {
   @Override public void actionPerformed(ActionEvent e) {
     AbstractButton c = (AbstractButton) e.getSource();
-    Character ec = c.isSelected() ? 0
-        : (Character) UIManager.get("PasswordField.echoChar");
-    pf.setEchoChar(ec);
+    pf.setEchoChar(c.isSelected()
+      ? '\u0000'
+      : (Character) UIManager.get("PasswordField.echoChar"));
   }
 });
 b.setFocusable(false);
@@ -51,15 +51,14 @@ panel.add(pf);
 }}
 
 * 解説 [#c666192f]
-上記のサンプルでは、`JPasswordField#setEchoChar(...)`メソッドの値に`0`を設定することで、パスワードを直接表示するように切り替えることのできるボタンを追加しています。
+上記のサンプルでは、`JPasswordField#setEchoChar(...)`メソッドの値に`\u0000`(`0`)を設定することで、パスワードを直接表示するように切り替えることのできるボタンを追加しています。
 
 - 上: 
 -- `BorderLayout`で、`JPasswordField`の下にパスワード表示非表示切り替え用の`JCheckBox`を配置
 - 中:
 --  `OverlayLayout`で、`JPasswordField`内の右端にパスワード表示非表示切り替え用の`JToggleButton`を配置
 -- `JPasswordField`と`JToggleButton`を配置する`JPanel`に、`OverlayLayout`を設定し、`z`軸が入れ替わらないように、`JPanel#isOptimizedDrawingEnabled()`が常に`false`を返すようオーバーライド
-- 下: ``
-- %%下: `CardLayout` + `OverlayLayout`%%
+- 下:
 -- 同じ`Document`を使用する`JPasswordField`と`JTextField`を`CardLayout`を設定した`JPanel`を作成
 -- `OverlayLayout`を設定した`JPanel`に、上記の`JPanel`と`JToggleButton`を配置し、`JPasswordField`などの内部右端にボタンが表示されるように設定
 -- `JTextField`をそのまま使用するので、表示中の文字列を選択してコピーすることが可能

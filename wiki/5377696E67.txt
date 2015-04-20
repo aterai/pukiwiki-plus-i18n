@@ -8,22 +8,24 @@ description: ソースコード付きの小さな Java Swing アプリケーシ�
 author: aterai
 pubdate: 2003-09-25
 ---
-#contents
-
-* 概要 [#qb9561c8]
 このページ以下では、ソースコード付きの小さな`Java Swing`アプリケーションを例にして、`GUI`プログラム作成のコツなどを解説しています。
 
 [https://picasaweb.google.com/at.terai/JavaSwingTips02 &ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQslJy3MxYI/AAAAAAAAAts/xrxOCvbp-0A/s800/screenshots.png);]
 
-- 上記の画像をクリックすると画像一覧(`Picasa`)に移動します。
--- 以前の[[スクリーンショット一覧>Swing/_ScreenShots]]は、スライドショーに変更しました。
+//- 上記の画像をクリックすると画像一覧(`Picasa`)に移動します。
+//-- 以前の[[スクリーンショット一覧>Swing/_ScreenShots]]は、スライドショーに変更しました。
 
-** Swingとは [#p0b76fde]
+#contents
+
+* Swingとは [#p0b76fde]
 `Swing`は、`GUI`(グラフィカル・ユーザ・インタフェース)を作成するための、`Java`標準のコンポーネントセット(ライブラリ、`UI`ツールキット)です。
 
 RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the JFC and Swing (The Java™ Tutorials)]
 
 * 新着記事 [#u85d24d8]
+- 2015-04-20
+#swingdescription(Swing/SeparatorOnTextPane,JTextPaneにJSeparatorを追加する,JTextPaneにセパレータとして、hr要素やJSeparator、MatteBorderを設定したJLabelなどを追加します。,https://lh3.googleusercontent.com/-DttSBuXmfOs/VTOx9lKJR2I/AAAAAAAAN2s/3ZCvhgC8QDw/s144/SeparatorOnTextPane.png)
+
 - 2015-04-13
 #swingdescription(Swing/SwapInternalFramesWithTabs,JDesktopPane内のJInternalFrameをJTabbedPaneのタブと入れ替える,JDesktopPaneとJTabbedPaneをCardLayoutで切り替えるとき、その内部のJInternalFrameとタブもすべて入れ替えます。,https://lh4.googleusercontent.com/-mNR8hjjt8Ao/VSp_fRS8WZI/AAAAAAAAN2Y/rTsBE6-6Ekg/s144/SwapInternalFramesWithTabs.png)
 
@@ -33,9 +35,6 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - 2015-03-30
 #swingdescription(Swing/HorizontalMouseWheel,JScrollPaneでMouseWheelによる水平スクロールを行う,JScrollPaneで水平スクロールを行えるように、その内部のViewやHorizontalScrollBarにMouseWheelListenerを設定します。,https://lh4.googleusercontent.com/-4Kw_wS64XRE/VRgM0GXPtuI/AAAAAAAAN1Y/V-bAnSy4pFY/s144/HorizontalMouseWheel.png)
 
-- 2015-03-23
-#swingdescription(Swing/AnchorTextColor,JLabelで表示するHtmlアンカータグの文字色を変更する,JLabelやJEditorPaneで表示されるHtmlアンカータグのデフォルト文字色を変更するテストを行います。,https://lh4.googleusercontent.com/-tilzZhgELFk/VQ7ZWC4xblI/AAAAAAAAN1E/bR7KsSRQuRg/s144/AnchorTextColor.png)
-
 * Tips一覧 [#e739db5d]
 #twocolumn
 ** `javax.swing.JComponent` [#j7ba4ac7]
@@ -44,7 +43,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 -- [[JTableHeader TableColumn(23)>Swing/_JTableHeader]]
 -- [[TableRowSorter RowFilter(19)>Swing/_TableRowSorter]]
 -- [[JDK1.5.0(6)>Swing/_JTable1.5.0]]
-- [[JTextPane JEditorPane JTextArea(52)>Swing/_JTextPane]]
+- [[JTextPane JEditorPane JTextArea(53)>Swing/_JTextPane]]
 - [[JButton JCheckBox JToggleButton JRadioButton(45)>Swing/_JButton]]
 - [[JTree(44)>Swing/_JTree]]
 - [[JComboBox(37)>Swing/_JComboBox]]
@@ -53,7 +52,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[JScrollPane JViewport JScrollBar(26)>Swing/_JScrollPane]]
 - [[JTextField JPasswordField(26)>Swing/_JTextField]]
 - [[JProgressBar ProgressMonitor(25)>Swing/_JProgressBar]]
-- [[JMenuBar JToolBar JSeparator(22)>Swing/_JMenuBar]]
+- [[JMenuBar JToolBar JSeparator(23)>Swing/_JMenuBar]]
 - [[JPopupMenu(21)>Swing/_JPopupMenu]]
 - [[JList(21)>Swing/_JList]]
 - [[JLabel(21)>Swing/_JLabel]]
@@ -77,7 +76,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[Font(17)>Swing/_Font]]
 - [[Focus(17)>Swing/_Focus]]
 - [[LookAndFeel(16)>Swing/_LookAndFeel]]
-- [[Border(15)>Swing/_Border]]
+- [[Border(16)>Swing/_Border]]
 - [[File(10)>Swing/_File]]
 - [[Cursor(7)>Swing/_Cursor]]
 - [[TrayIcon(6)>Swing/_TrayIcon]]
@@ -88,7 +87,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[JDK 6, 7 での Swing 新機能(31)>Swing/_JDK6]]
 
 ** `Screenshot` [#b76d5b88]
-- [[スクリーンショット一覧(578)>Swing/_ScreenShots]]
+- [[スクリーンショット一覧(579)>Swing/_ScreenShots]]
 
 #twocolumn
 
@@ -119,6 +118,6 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 
 * コメント [#w04556af]
 #comment
-- [[以前のコメントログ(SPAM対策で閉鎖)>Comments/Swing]]
+- [[SPAM対策で閉鎖する前のコメントのログ>Comments/Swing]]
 
 #comment
