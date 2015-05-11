@@ -1,0 +1,103 @@
+---
+title: JToggleButtonをFlowLayoutで重ねて表示する
+tags: [JToggleButton, FlowLayout, Icon, EmptyBorder]
+author: aterai
+pubdate: 2015-05-04T00:58:14+09:00
+description: ボタンテキストが左揃えの非矩形JToggleButtonをFlowLayoutを使って任意の幅だけ重ねて配置します。
+---
+* 概要 [#jcac09b9]
+ボタンテキストが左揃えの非矩形`JToggleButton`を`FlowLayout`を使って任意の幅だけ重ねて配置します。
+
+#download(https://lh3.googleusercontent.com/-1OUh7yWnn3o/VUZELyRwR_I/AAAAAAAAN3s/ZgylrxCIOjQ/s800/BackgroundButtonIcon.png)
+
+* サンプルコード [#p33bed5e]
+#code(link){{
+private static AbstractButton makeButton(
+    String title, Color color, final int overlap, boolean first) {
+  final ToggleButtonBarCellIcon icon = new ToggleButtonBarCellIcon();
+  AbstractButton b = new JToggleButton(title) {
+    @Override public boolean contains(int x, int y) {
+      if (Objects.nonNull(icon) && Objects.nonNull(icon.area)) {
+        return icon.area.contains(x, y);
+      } else {
+        return super.contains(x, y);
+      }
+    }
+    @Override public Dimension getPreferredSize() {
+      return new Dimension(icon.getIconWidth(), icon.getIconHeight());
+    }
+    @Override protected void paintComponent(Graphics g) {
+      icon.paintIcon(this, g, 0, 0);
+      super.paintComponent(g);
+    }
+  };
+  b.setIcon(new Icon() {
+    @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+      g.setColor(Color.GRAY);
+      g.drawOval(x, y, 12, 12);
+    }
+    @Override public int getIconWidth() {
+      return 12;
+    }
+    @Override public int getIconHeight() {
+      return 12;
+    }
+  });
+  b.setContentAreaFilled(false);
+  int th = ToggleButtonBarCellIcon.TH;
+  if (first) {
+    b.setBorder(BorderFactory.createEmptyBorder(
+        0, LINE_WIDTH + BI_GAP, 0, th));
+  } else {
+    b.setBorder(BorderFactory.createEmptyBorder(
+        0, th + LINE_WIDTH + BI_GAP, 0, th));
+  }
+  b.setHorizontalAlignment(SwingConstants.LEFT);
+  b.setFocusPainted(false);
+  b.setOpaque(false);
+  b.setBackground(color);
+  return b;
+}
+
+private static JPanel makePanel(int overlap) {
+  JPanel p = new JPanel(new FlowLayout(FlowLayout.LEADING, -overlap, 0)) {
+    @Override public boolean isOptimizedDrawingEnabled() {
+      return false;
+    }
+  };
+  p.setBorder(BorderFactory.createEmptyBorder(0, overlap, 0, 0));
+  p.setOpaque(false);
+  return p;
+}
+
+private static JComponent makeBreadcrumbList(
+    int overlap, Color color, List<String> list) {
+  JPanel p = makePanel(overlap + LINE_WIDTH);
+  ButtonGroup bg = new ButtonGroup();
+  boolean f = true;
+  for (String title : list) {
+    AbstractButton b = makeButton(title, color, overlap, f);
+    p.add(b);
+    bg.add(b);
+    f = false;
+  }
+  return p;
+}
+}}
+
+* 解説 [#b7b12631]
+[[FlowLayoutでボタンを重ねてパンくずリストを作成する>Swing/BreadcrumbList]]と同じように、`FlowLayout`の配置間隔をマイナスにすることでボタンの重なりを実現していますが、こちらのサンプルではボタンテキストを左揃えにするために、`JRadioButton#setIcon(Icon)`と`JRadioButton#setHorizontalTextPosition(SwingConstants.CENTER)`は使用せず、以下の`3`つのメソッドをオーバーライドした`JToggleButton`を使用しています。
+
+- `JToggleButton#paintComponent(...)`をオーバーライドして非矩形アイコンを描画
+- `JToggleButton#getPreferredSize(...)`をオーバーライドして推奨サイズがアイコンと同じになるように設定
+- `JToggleButton#contains(...)`をオーバーライドして、非矩形アイコンの外側がマウスに反応しないように設定
+
+- 注:
+-- アイコンの三角形部分に左揃えした文字列や長い文字列などが被らないようにするため、`JToggleButton`には`EmptyBorder`で開始終了辺に余白を設定(最初の`JToggleButton`の開始辺だけは三角形の高さ分の余白は必要ない)している
+
+* 参考リンク [#y82d0821]
+- [[FlowLayoutでボタンを重ねてパンくずリストを作成する>Swing/BreadcrumbList]]
+
+* コメント [#e177094d]
+#comment
+#comment

@@ -71,6 +71,91 @@ nofollow: true
 - [[Swing/UninstallListeners]]
 - [[Swing/ScrollPaneCorner]]
 
+** 検討中で未実装 [#xa28093f]
+こっそり消えても(ﾟεﾟ)ｷﾆｼﾅｲ!!
+- [[Swing/FileChooserWithOptionPane]]
+-- %JAVA_HOME%\demo\jfc\FileChooserDemo\src\FileChooserDemo.java
+-- %JAVA_HOME%\demo\jfc\SwingSet2\src\FileChooserDemo.java
+- [[Swing/ClearComboBoxSelection]]
+- [[Swing/SecondaryLoop]]
+-- [http://stackoverflow.com/questions/10196809/secondaryloop-instead-of-swingworker java - SecondaryLoop instead of SwingWorker? - Stack Overflow]
+
+** メモ [#bb7c5eda]
+- JTree Table
+- JPopupMenu BlankIcon
+- UIDefaults ProxyLazyValue
+- JTable setSurrendersFocusOnKeystroke
+- File createTempFile
+- JTable Vertical Table Header
+- File getTotalSpace, getFreeSpace, getUsableSpace
+- JTabbedPane tab height animation
+- Formatter and password char
+- Cells with rouded corners in JTable
+- Tearaway tabs
+- Multi selection JComboBox
+- JSplitPane hide unhide tab
+- JScrollBar BlockIncrement
+- JScrollPane MapView subview
+- JDesktopPane JInternalFrame Tab Loop
+- JTabbedPane ScrollButton Layout
+- JTabbedPane Transparency
+- JTextField(search) in JButton(Tab, ButtonBar)
+- switch JInternalFrame to JTabbedPane
+- JTree JList(1.8.0) Nimbus Selection Rect
+- Highlighter#removeAllHighlights()
+- http://docs.oracle.com/javase/jp/7/api/javax/swing/text/html/HTMLDocument.html#getIterator(javax.swing.text.html.HTML.Tag)
+
+* Swing関係のバグやテスト中のコードなどのメモ [#hb22f5ad]
+- [http://stackoverflow.com/questions/30072883/java-swing-jwindow-application-crash Java Swing JWindow application crash - Stack Overflow]
+-- 親フレームのドラッグ中に？子`JWindow`が表示されると`JVM`が落ちる(`Windows 7 64bit JKD1.8.0_11`)。
+--[https://bugs.openjdk.java.net/browse/JDK-8079595?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel #JDK-8079595 Resizing dialog which is JWindow parent makes JVM crash - Java Bug System] 
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Main2 {
+  private static Robot robot;
+  public static void main(String... args) throws Exception {
+    robot = new Robot();
+    robot.setAutoDelay(100);
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+    EventQueue.invokeAndWait(new Runnable() {
+      @Override public void run() {
+        Point pt = new Point(50, 10);
+        robot.mouseMove(pt.x, pt.y);
+        robot.mousePress(InputEvent.BUTTON1_MASK);
+        pt.translate(50, 50);
+        robot.mouseMove(pt.x, pt.y);
+        //robot.mouseRelease(InputEvent.BUTTON1_MASK);
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    final JFrame f = new JFrame();
+    f.add(new JLabel("Try JFrame draging 2sec"));
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.setSize(320, 240);
+    f.setVisible(true);
+    final JWindow w = new JWindow(f);
+    w.add(new JButton("button"));
+    w.pack();
+    Timer t = new Timer(2000, new ActionListener() {
+      @Override public void actionPerformed(ActionEvent e) {
+        w.setVisible(true);
+      }
+    });
+    t.setRepeats(false);
+    t.start();
+  }
+}
+}}
+
 ----
 [http://stackoverflow.com/questions/16547365/swing-gui-flickering-white-error java - swing gui flickering white error - Stack Overflow]のサンプルを試していたら面白い挙動に遭遇。
 
@@ -148,40 +233,6 @@ Arrays.stream(menuBar.getSubElements())
   .filter(mi -> mi instanceof JRadioButtonMenuItem)
   .forEach(mi -> ((JRadioButtonMenuItem) mi).addActionListener(al));
 }}
-
-** 検討中で未実装 [#xa28093f]
-こっそり消えても(ﾟεﾟ)ｷﾆｼﾅｲ!!
-- [[Swing/FileChooserWithOptionPane]]
--- %JAVA_HOME%\demo\jfc\FileChooserDemo\src\FileChooserDemo.java
--- %JAVA_HOME%\demo\jfc\SwingSet2\src\FileChooserDemo.java
-- [[Swing/ClearComboBoxSelection]]
-- [[Swing/SecondaryLoop]]
--- [http://stackoverflow.com/questions/10196809/secondaryloop-instead-of-swingworker java - SecondaryLoop instead of SwingWorker? - Stack Overflow]
-
-** メモ [#bb7c5eda]
-- JTree Table
-- JPopupMenu BlankIcon
-- UIDefaults ProxyLazyValue
-- JTable setSurrendersFocusOnKeystroke
-- File createTempFile
-- JTable Vertical Table Header
-- File getTotalSpace, getFreeSpace, getUsableSpace
-- JTabbedPane tab height animation
-- Formatter and password char
-- Cells with rouded corners in JTable
-- Tearaway tabs
-- Multi selection JComboBox
-- JSplitPane hide unhide tab
-- JScrollBar BlockIncrement
-- JScrollPane MapView subview
-- JDesktopPane JInternalFrame Tab Loop
-- JTabbedPane ScrollButton Layout
-- JTabbedPane Transparency
-- JTextField(search) in JButton(Tab, ButtonBar)
-- switch JInternalFrame to JTabbedPane
-- JTree JList(1.8.0) Nimbus Selection Rect
-- Highlighter#removeAllHighlights()
-- http://docs.oracle.com/javase/jp/7/api/javax/swing/text/html/HTMLDocument.html#getIterator(javax.swing.text.html.HTML.Tag)
 
 //----
 //-`1.6.0_14`にすると、`web start`(`2`回目以降？) で`CPU 100%`になる？
