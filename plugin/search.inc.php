@@ -226,8 +226,12 @@ function plugin_search_display_format($highlight, $id = '', $start = 0, $len = 1
 				$pos_start = ($start>$len)? $start - $len : 0;
 				$retval .= plugin_search_makelink($id, $word, $pos_start, $len, $_navi_prev, 'prev');
 			}
-			
-			for ($i=0; $i<$_total; $i++) {
+			//for ($i=0; $i<$_total; $i++) {
+            $page_range = 9;
+            $page_now   = $pos_start / $len;
+            $page_start = $page_now - $page_range > 0       ? $page_now - $page_range : 0;
+            $page_end   = $page_now + $page_range < $_total ? $page_now + $page_range : $_total;
+			for ($i=$page_start; $i<$page_end; $i++) {
 				$pos_start = $i * $len;
 				$pos_end   = $pos_start + $len;
 				if ($pos_end>$found_pages) {
