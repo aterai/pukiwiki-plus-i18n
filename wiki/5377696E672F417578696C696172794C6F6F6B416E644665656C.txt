@@ -19,7 +19,7 @@ if (check.isSelected() && lnf.contains("Windows")) {
 } else {
   UIManager.removeAuxiliaryLookAndFeel(auxLookAndFeel);
 }
-SwingUtilities.updateComponentTreeUI(MainPanel.this);
+SwingUtilities.updateComponentTreeUI(getRootPane());
 }}
 
 * 解説 [#r33184aa]

@@ -57,35 +57,28 @@ class ModalInternalFrameAction2 extends AbstractAction {
 //Creating Modal Internal Frames -- Approach 1 and Approach 2
 //http://web.archive.org/web/20090803142839/http://java.sun.com/developer/JDCTechTips/2001/tt1220.html
 class ModalInternalFrameAction3 extends AbstractAction {
-  private final Component orgGlassPane;
   private final JPanel glass = new PrintGlassPane();
   public ModalInternalFrameAction3(String label) {
     super(label);
-    orgGlassPane = frame.getGlassPane();
     glass.setVisible(false);
   }
   @Override public void actionPerformed(ActionEvent e) {
     JOptionPane optionPane = new JOptionPane();
+    JInternalFrame modal = optionPane.createInternalFrame(desktop, "modal3");
     optionPane.setMessage("Hello, World");
     optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-    JInternalFrame modal = optionPane.createInternalFrame(desktop, "modal3");
     removeSystemMenuListener(modal);
     modal.addInternalFrameListener(new InternalFrameAdapter() {
       @Override public void internalFrameClosed(InternalFrameEvent e) {
+        glass.removeAll();
         glass.setVisible(false);
-        frame.setGlassPane(orgGlassPane);
       }
     });
     glass.add(modal);
-    //Rectangle screen = desktop.getBounds();
-    //modal.setLocation(screen.x + screen.width / 2  - modal.getSize().width / 2,
-    //                  screen.y + screen.height / 2 - modal.getSize().height / 2);
-    frame.setGlassPane(glass);
+    modal.pack();
+    getRootPane().setGlassPane(glass);
     glass.setVisible(true);
     modal.setVisible(true);
-    try {
-      modal.setSelected(true);
-    } catch (PropertyVetoException ex) {}
   }
 }
 }}

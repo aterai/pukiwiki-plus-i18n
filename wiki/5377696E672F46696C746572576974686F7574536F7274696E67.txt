@@ -12,7 +12,7 @@ description: フィルタありでソート不可のTableRowSorterを作成し�
 
 * サンプルコード [#cbb5da29]
 #code(link){{
-final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
+final TableRowSorter<TableModel> sorter = new TableRowSorter<>(model) {
   @Override public boolean isSortable(int column) {
     return false;
   }
