@@ -69,16 +69,40 @@ class RubberBandSelectionList<E extends ListItem> extends JList<E> {
 }}
 
 * 解説 [#e178a26c]
-上記のサンプルでは、`JList`にマウスリスナーを設定して、ドラッグに応じた矩形が描画されるようになっています。
+上記のサンプルでは、`JList`にマウスリスナーを設定して、ドラッグに応じた矩形を描画しています。
 
-この矩形の内部にアイテムアイコンが重なる場合は、それを選択状態に変更しています。選択範囲が矩形にならずに直線になっている場合は、別途その直線と交差するアイテムを選択するようにしています。
+`JList`内のアイテムの配置は、`JList#setLayoutOrientation(JList.HORIZONTAL_WRAP)`メソッドを使っているため、水平方向での整列になります。
 
-`JList`内のアイテムの配置は、`JList#setLayoutOrientation(JList.HORIZONTAL_WRAP)`メソッドを使っているため、水平方向に整列されます。
+----
+- ラバーバンド矩形内部に重なるアイテムアイコンを検索し、それを`JList#setSelectedIndices(int[])`で選択状態に変更
+-- %%選択範囲が矩形にならずに直線になっている場合は、別途その直線と交差するアイテムを選択%% `Polygon`の代わりに、`Path2D`を使用するように変更
+-- `JDK 1.8.0`以降なら、以下を`l.setSelectedIndices(IntStream.range(0, l.getModel().getSize()).filter(i -> p.intersects(l.getCellBounds(i, i))).toArray());`で置き換え可能
+
+#code{{
+private int[] getIntersectsIcons(JList l, Shape p) {
+  ListModel model = l.getModel();
+  List<Integer> list = new ArrayList<>(model.getSize());
+  for (int i = 0; i < model.getSize(); i++) {
+    Rectangle r = l.getCellBounds(i, i);
+    if (p.intersects(r)) {
+      list.add(i);
+    }
+  }
+  // JDK 1.8.0以降のstreamでList<Integer>をプリミティブなint配列に変換:
+  // return list.stream().mapToInt(i -> i).toArray();
+  int[] il = new int[list.size()];
+  for (int i = 0; i < list.size(); i++) {
+    il[i] = list.get(i);
+  }
+  return il;
+}
+}}
 
 * 参考リンク [#o8eb5cf2]
 - [https://community.oracle.com/thread/1378164 Swing - Can someone optimise the following code ?]
 - [http://www.icongalore.com/ XP Style Icons - Windows Application Icon, Software XP Icons]
 - [[JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え>Swing/DragSelectDropReordering]]
+-- このラバーバンドで選択したアイテムを実際にドラッグして並べ替えるサンプル
 
 * コメント [#re81cc47]
 #comment
