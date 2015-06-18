@@ -67,7 +67,7 @@ textField3.addHierarchyListener(new HierarchyListener() {
   @Override public void hierarchyChanged(HierarchyEvent e) {
     if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0
          && textField3.isShowing()) {
-      EventQueue.invokeLater(new Runnable(){
+      EventQueue.invokeLater(new Runnable() {
         @Override public void run() {
           textField3.requestFocusInWindow();
         }

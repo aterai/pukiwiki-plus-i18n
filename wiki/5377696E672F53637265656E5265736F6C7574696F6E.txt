@@ -37,7 +37,7 @@ public static float getSizeOfText() {
 -- `ContentPane`のサイズを`(320 * 1.25, 240 * 1.25)`の`(400, 300)`になるよう、`getPreferredSize()`をオーバーライド
 -- [[UIManagerで使用するFontを統一>Swing/FontChange]]で、すべてのコンポーネントのフォントサイズを元の`1.25`倍に変更
 -- `JTree`の行の高さは、`JTree#isFixedRowHeight()`の場合のみ、元の`1.25`倍に変更
--- `JTable`の行の高さは、`LookAndFeel`依存で一定で、フォントサイズを変更しても追従しないので、`table.setRowHeight((int) (table.getRowHeight() * getSizeOfText()));`として、自前で`1.25`倍に変更
+-- `JTable`の行の高さは、`LookAndFeel`依存で一定で、フォントサイズを変更しても追従しないので、`table.setRowHeight( (int) (table.getRowHeight() * getSizeOfText() ) );`として、自前で`1.25`倍に変更
 #code{{
 JTable table = new JTable(model) {
   @Override public void updateUI() {

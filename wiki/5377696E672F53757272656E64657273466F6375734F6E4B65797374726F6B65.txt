@@ -1,0 +1,33 @@
+---
+title: JTableのセルを編集開始したときにセルエディタがフォーカスを取得するよう設定する
+tags: [JTable, CellEditor, Focus]
+author: aterai
+pubdate: 2015-06-15T00:00:18+09:00
+description: JTableのセルを編集開始したときに、セルエディタがフォーカスを取得するかどうかを設定で切り替えます。
+---
+* 概要 [#g14f8838]
+`JTable`のセルを編集開始したときに、セルエディタがフォーカスを取得するかどうかを設定で切り替えます。
+
+#download(https://lh3.googleusercontent.com/-Kzqx4xhc2CM/VX2WWWF2AYI/AAAAAAAAN6o/MQEBYdlaDP4/s800/SurrendersFocusOnKeystroke.png)
+
+* サンプルコード [#m1e9e6bd]
+#code(link){{
+table.setSurrendersFocusOnKeystroke(true);
+}}
+
+* 解説 [#pa71122e]
+- `table.setSurrendersFocusOnKeystroke(false);`
+-- デフォルト
+--  マウスクリックでセル編集を開始した場合は、`JTable#setSurrendersFocusOnKeystroke(...)`の指定に依存せず、フォーカスはセルエディタに移動する
+-- キー入力でセル編集を開始した場合、フォーカスは`JTable`に残る
+--- このため、キー入力でセル編集を開始した直後にKBD{C-a}を入力すると`JTable`の行が全選択される
+- `table.setSurrendersFocusOnKeystroke(true);`
+-- キー入力でセル編集を開始した場合、フォーカスはセルエディタ(`JTextField`)に移動する
+--- このため、キー入力でセル編集を開始した直後にKBD{C-a}を入力するとセルエディタ内の文字列が全選択される
+
+* 参考リンク [#h167250d]
+- [http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#getSurrendersFocusOnKeystroke-- JTable (Java Platform SE 8 )]
+
+* コメント [#i2e167bf]
+#comment
+#comment

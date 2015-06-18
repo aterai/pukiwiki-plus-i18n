@@ -23,7 +23,7 @@ int value  = 50;
 final JScrollBar scrollbar = new JScrollBar(
   JScrollBar.HORIZONTAL, value, extent, min, max + extent);
 scrollbar.setUnitIncrement(step);
-scrollbar.getModel().addChangeListener(new ChangeListener(){
+scrollbar.getModel().addChangeListener(new ChangeListener() {
   @Override public void stateChanged(ChangeEvent e) {
     BoundedRangeModel m = (BoundedRangeModel) e.getSource();
     spinner.setValue(m.getValue());

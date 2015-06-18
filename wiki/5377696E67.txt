@@ -23,6 +23,9 @@ pubdate: 2003-09-25
 RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the JFC and Swing (The Java™ Tutorials)]
 
 * 新着記事 [#u85d24d8]
+- 2015-06-15
+#swingdescription(Swing/SurrendersFocusOnKeystroke,JTableのセルを編集開始したときにセルエディタがフォーカスを取得するよう設定する,JTableのセルを編集開始したときに、セルエディタがフォーカスを取得するかどうかを設定で切り替えます。,https://lh3.googleusercontent.com/-Kzqx4xhc2CM/VX2WWWF2AYI/AAAAAAAAN6o/MQEBYdlaDP4/s144/SurrendersFocusOnKeystroke.png)
+
 - 2015-06-08
 #swingdescription(Swing/AutoRepeatTimer,JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する,JButtonがマウスで押されている間は指定したアクションを繰り返し実行するTimerを設定します。,https://lh3.googleusercontent.com/-zp2-TOEE4JE/VXRXk25rFUI/AAAAAAAAN6I/_Kn4GsC9a1g/s144/AutoRepeatTimer.png)
 
@@ -32,13 +35,10 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - 2015-05-25
 #swingdescription(Swing/TableCellTransferHandler,JTableのセルを選択してJListにドラッグ＆ドロップでIconをコピーする,JTableのセルを選択可能にし、ドラッグ＆ドロップでそのセル内のIconをJListにコピーできるようにTransferHandlerを設定します。,https://lh3.googleusercontent.com/-TUrxk7yYqYM/VWHkR1mENvI/AAAAAAAAN4w/bEU29WIgjOE/s144/TableCellTransferHandler.png)
 
-- 2015-05-18
-#swingdescription(Swing/PrototypeDisplayValue,JComboBoxのセルサイズを決定するためのプロトタイプ値を設定する,JComboBoxがそのセルサイズを決定するために使用するプロトタイプ値を設定します。,https://lh3.googleusercontent.com/-DafUFitik9w/VVidadY7TNI/AAAAAAAAN4U/D40YKz8mMUY/s144/PrototypeDisplayValue.png)
-
 * Tips一覧 [#e739db5d]
 #twocolumn
 ** `javax.swing.JComponent` [#j7ba4ac7]
-- [[JTable(38)>Swing/_JTable]]
+- [[JTable(39)>Swing/_JTable]]
 -- [[CellEditor CellRenderer(34)>Swing/_CellEditor]]
 -- [[JTableHeader TableColumn(23)>Swing/_JTableHeader]]
 -- [[TableRowSorter RowFilter(19)>Swing/_TableRowSorter]]
@@ -73,8 +73,8 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[Drag&Drop(26)>Swing/_DnD]]
 - [[Hyperlink Html(22)>Swing/_Hyperlink]]
 - [[SwingWorker(21)>Swing/_SwingWorker]]
+- [[Focus(18)>Swing/_Focus]]
 - [[Font(17)>Swing/_Font]]
-- [[Focus(17)>Swing/_Focus]]
 - [[LookAndFeel(17)>Swing/_LookAndFeel]]
 - [[Border(16)>Swing/_Border]]
 - [[File(10)>Swing/_File]]
@@ -87,9 +87,14 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[JDK 6, 7 での Swing 新機能(31)>Swing/_JDK6]]
 
 ** `Screenshot` [#b76d5b88]
-- [[スクリーンショット一覧(586)>Swing/_ScreenShots]]
+- [[スクリーンショット一覧(587)>Swing/_ScreenShots]]
 
 #twocolumn
+
+* ライセンス [#p7b5d142]
+- このページ以下のソースコードは、[https://github.com/aterai/java-swing-tips github]で、`MIT`ライセンスのもと公開しています。
+-- `Git`リポジトリを取得する場合: 
+ git clone https://github.com/aterai/java-swing-tips.git
 
 * 編集方針 [#ja35f484]
 - ''最も欲しいものはサンプルである'' ([http://steps.dodgson.org/bn/2007/07/06/ あるチュートリアルの思い出 - Backnumbers: Steps to Phantasien])
@@ -97,8 +102,6 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - ''SSCCE'' ([http://sscce.org/ Short, Self Contained, Correct Example])
 - ''MCVE'' ([http://stackoverflow.com/help/mcve How to create a Minimal, Complete, and Verifiable example - Help Center - Stack Overflow])
 -- すべての記事毎に、ソースコードや画像などのリソース、それらを[[Ant]]でコンパイル、実行するための`build.xml`をまとめた`zip`ファイルを添付しています。
--- `Git`リポジトリを取得する場合: 
- git clone https://github.com/aterai/java-swing-tips.git
 - `JNLP`ファイルについて
 -- [http://www.java.com/ja/download/faq/signed_code.xml ブラウザのJavaセキュリティ・メッセージの変更]
 -- `7u51`から、署名が無い場合や、自己署名の場合は`JavaWebStart`で実行不可になったので、&ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TRD2KGq73BI/AAAAAAAAAwA/N8-6EXongNk/s800/webstart.png);ボタンをすべてのページから削除
