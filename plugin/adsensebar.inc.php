@@ -1,7 +1,7 @@
 <?php
 function plugin_adsensebar_convert() {
     return <<<EOD
-<div class="ad_bar">
+<aside class="ad_bar">
 <!-- xrea, banner, 728x90, 08/03/04 -->
 <ins class="adsbygoogle"
      style="display:inline-block;width:728px;height:90px"
@@ -10,6 +10,6 @@ function plugin_adsensebar_convert() {
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-</div>
+</aside>
 EOD;
 }

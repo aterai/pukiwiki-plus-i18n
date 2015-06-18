@@ -104,19 +104,19 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 </div>
 <div class="collapse navbar-collapse" id="jb-navbar-collapse">
 <ul class="nav navbar-nav">
-<li><a href="//ateraimemo.com/Swing.html">Java Swing</a></li>
-<li><a href="//ateraimemo.com/Tips.html">Java Tips</a></li>
-<li><a href="//ateraimemo.com/Javadoc.html">Javadoc</a></li>
-<li><a href="//ateraimemo.com/Ant.html">Ant</a></li>
-<li><a href="//ateraimemo.com/JRuby.html">JRuby</a></li>
-<li><a href="//ateraimemo.com/JavaScript.html">JavaScript</a></li>
-<li><a href="//ateraimemo.com/Subversion.html">Subversion</a></li>
+<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Swing.html">Java Swing</a></li>
+<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Tips.html">Java Tips</a></li>
+<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Javadoc.html">Javadoc</a></li>
+<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Ant.html">Ant</a></li>
+<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/JRuby.html">JRuby</a></li>
+<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/JavaScript.html">JavaScript</a></li>
+<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Subversion.html">Subversion</a></li>
 </ul>
 <?php include_once(PLUGIN_DIR.'search_form.inc.php'); echo plugin_search_form_convert(); ?>
 </div>
 </nav>
 
-<div class="text-center hidden-xs" itemscope="itemscope" itemtype="http://schema.org/WPAdBlock">
+<aside class="text-center hidden-xs">
 <!-- xrea, link, 728x15, 09/01/04 -->
 <ins class="adsbygoogle"
      style="display:inline-block;width:728px;height:15px"
@@ -125,7 +125,7 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-</div>
+</aside>
 
 <div class="container"> <!-- div class="content" -->
 <div class="row">

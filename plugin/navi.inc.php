@@ -122,13 +122,16 @@ function plugin_navi_convert()
 			$navi[$home]['up']    = make_pagelink($up, $_navi_up);
 		}
 		if (! $is_home) {
+            $navi[$home]['prevhref'] = get_page_uri($prev);
 			$navi[$home]['prev']  = make_pagelink($prev);
 			$navi[$home]['prev1'] = make_pagelink($prev, $_navi_prev);
 		}
 		if ($next != '') {
+            $navi[$home]['nexthref'] = get_page_uri($next);
 			$navi[$home]['next']  = make_pagelink($next);
 			$navi[$home]['next1'] = make_pagelink($next, $_navi_next);
 		}
+        $navi[$home]['homehref'] = get_page_uri($home);
 		$navi[$home]['home']  = plugin_topicpath_inline(); //make_pagelink($home);
 		$navi[$home]['home1'] = make_pagelink($home, $_navi_home);
 
@@ -173,9 +176,9 @@ function plugin_navi_convert()
 		$ret = <<<EOD
 <nav role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 <ul class="pager">
- <li class="previous">{$navi[$home]['prev1']}</li>
- <li class="hidden-xs">{$navi[$home]['home']}</li>
- <li class="next">{$navi[$home]['next1']}</li>
+ <li itemprop="name" class="previous"><a itemprop="url" href="{$navi[$home]['prevhref']}">Prev</a></li>
+ <li itemprop="name" class="hidden-xs">{$navi[$home]['home']}</li>
+ <li itemprop="name" class="next"><a itemprop="url" href="{$navi[$home]['nexthref']}">Next</a></li>
 </ul>
 </nav>
 <hr />
