@@ -21,7 +21,7 @@ function plugin_download_convert() {
     $ads = '';
     if (! strstr($page, 'JLayeredPane1')) {
         $ads = <<<EOD
-<div class="col-md-6 col-md-offset-1 col-xs-12" itemscope="itemscope" itemtype="http://schema.org/WPAdBlock">
+<aside class="col-md-6 col-md-offset-1 col-xs-12">
 <!-- responsive -->
 <ins class="adsbygoogle"
      style="display:block"
@@ -31,7 +31,7 @@ function plugin_download_convert() {
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-</div>
+</aside>
 EOD;
     }
 

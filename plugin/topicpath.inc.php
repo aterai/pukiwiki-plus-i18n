@@ -78,7 +78,7 @@ function plugin_topicpath_inline()
             }
             $topic_path[] = <<<EOD
 <span {$act}itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
-<a itemprop="url" href="{$url}"><span itemprop="title">{$element}</span></a>
+<a itemprop="item" href="{$url}"><span itemprop="name">{$element}</span></a>
 <meta itemprop="position" content="{$pos}" />
 </span>
 EOD;

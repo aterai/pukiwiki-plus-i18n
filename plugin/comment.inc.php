@@ -205,15 +205,13 @@ function plugin_comment_convert()
     if ($times == 1) {
         return '<article itemprop="comment" itemscope="itemscope" itemtype="http://schema.org/UserComments">';
     }
-    $times = 0;
+    //$times = 0;
     return <<<EOD
 <br />
-
 <div id="livefyre-comments"></div>
-
 </article>
 <br />
-<div class="ad_bar">
+<aside class="ad_bar">
 <!-- responsive -->
 <ins class="adsbygoogle"
      style="display:block"
@@ -223,7 +221,7 @@ function plugin_comment_convert()
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-</div>
+</aside>
 EOD;
 }
 // <!-- START: Livefyre Embed -->
