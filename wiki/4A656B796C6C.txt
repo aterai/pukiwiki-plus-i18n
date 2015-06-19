@@ -67,6 +67,16 @@ gem: "--no-ri --no-rdoc --user-install"
  export PKG_CONFIG_PATH="/lib/pkgconfig"
  gem install jekyll
 
+-- `-lgmp が見つかりません`とエラーになる場合
+--- `libgmp-devel`を`setup-x86_64.exe`からインストール
+#code{{
+gcc -shared -o stemmer.so porter.o porter_wrap.o -L. -L/usr/lib -L. -fstack-protector -Wl,--export-all-symbols -Wl,--enable-auto-image-base,--enable-auto-import    -lruby220  -lpthread -lgmp -ldl -lcrypt
+/usr/lib/gcc/x86_64-pc-cygwin/4.9.2/../../../../x86_64-pc-cygwin/bin/ld: -lgmp が見つかりません
+collect2: エラー: ld はステータス 1 で終了しました
+Makefile:254: ターゲット 'stemmer.so' のレシピで失敗しました
+make: *** [stemmer.so] エラー 1
+}}
+
 * Jekyll で google-code-prettify [#dd21a813]
 - 参考: [http://fnordig.de/2011/09/02/kramdown-test/ fnordig.de]
 
