@@ -1,0 +1,148 @@
+---
+title: JScrollPane内に配置したJPanelをマウスで拡大、縮小、移動する
+tags: [JScrollPane, JPanel, AffineTransform, Image, WheelListener]
+author: aterai
+pubdate: 2015-06-22T10:03:20+09:00
+description: JScrollPane内に配置したJPanelを、マウスホイールを使った拡大縮小と、スクロールバーを使った表示領域の移動が可能になるように設定します。
+---
+* 概要 [#yfd80c64]
+`JScrollPane`内に配置した`JPanel`を、マウスホイールを使った拡大縮小と、スクロールバーを使った表示領域の移動が可能になるように設定します。
+
+#download(https://lh3.googleusercontent.com/-Um9j8O0t3Kg/VYdMPIUOfwI/AAAAAAAAN7A/LAJ5KRiDdp0/s800/ZoomAndPanPanel.png)
+
+* サンプルコード [#cf006c68]
+#code(link){{
+class ZoomAndPanePanel extends JPanel {
+  private final AffineTransform coordTransform = new AffineTransform();
+  private final transient Image img;
+  private final Rectangle imgrect;
+  private transient ZoomAndPanHandler handler;
+
+  public ZoomAndPanePanel(Image img) {
+    super();
+    this.img = img;
+    this.imgrect = new Rectangle(img.getWidth(null), img.getHeight(null));
+  }
+  @Override public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setPaint(new Color(0x55FF0000, true));
+
+    //AffineTransform at = g2.getTransform();
+    //at.concatenate(coordTransform);
+    //g2.setTransform(at);
+    //g2.drawImage(img, 0, 0, this);
+    //g2.fill(new Rectangle(500, 140, 150, 150));
+
+    //g2.drawRenderedImage((java.awt.image.RenderedImage) img, coordTransform);
+    g2.drawImage(img, coordTransform, this);
+    g2.fill(coordTransform.createTransformedShape(new Rectangle(500, 140, 150, 150)));
+
+    g2.dispose();
+  }
+  @Override public Dimension getPreferredSize() {
+    Rectangle r = coordTransform.createTransformedShape(imgrect).getBounds();
+    return new Dimension(r.width, r.height);
+  }
+  @Override public void updateUI() {
+    removeMouseListener(handler);
+    removeMouseMotionListener(handler);
+    removeMouseWheelListener(handler);
+    super.updateUI();
+    handler = new ZoomAndPanHandler();
+    addMouseListener(handler);
+    addMouseMotionListener(handler);
+    addMouseWheelListener(handler);
+  }
+
+  protected class ZoomAndPanHandler extends MouseAdapter {
+    private static final int MIN_ZOOM = -9;
+    private static final int MAX_ZOOM = 16;
+    private static final int EXTENT = 1;
+    private final BoundedRangeModel zoomRange = new DefaultBoundedRangeModel(
+        0, EXTENT, MIN_ZOOM, MAX_ZOOM + EXTENT);
+    private final Point dragStartPoint = new Point();
+    @Override public void mousePressed(MouseEvent e) {
+      dragStartPoint.setLocation(e.getPoint());
+    }
+    @Override public void mouseDragged(MouseEvent e) {
+      Point dragEndPoint = e.getPoint();
+      Point dragStart = inversedPoint(dragStartPoint);
+      Point dragEnd   = inversedPoint(dragEndPoint);
+      coordTransform.translate(dragEnd.x - dragStart.x, dragEnd.y - dragStart.y);
+      dragStartPoint.setLocation(dragEndPoint);
+      e.getComponent().repaint();
+    }
+    @Override public void mouseWheelMoved(MouseWheelEvent e) {
+      int dir = e.getWheelRotation();
+      int z = zoomRange.getValue();
+      zoomRange.setValue(z + EXTENT * (dir > 0 ? -1 : 1));
+      if (z != zoomRange.getValue()) {
+        Container c = SwingUtilities.getAncestorOfClass(
+            JViewport.class, e.getComponent());
+        if (c instanceof JViewport) {
+          Rectangle r = ((JViewport) c).getBounds();
+          Point p = new Point(r.x + r.width / 2, r.y + r.height / 2);
+          Point p1 = inversedPoint(p);
+
+          double s = 1d + zoomRange.getValue() * .1;
+          coordTransform.setToScale(s, s);
+
+          Point p2 = inversedPoint(p);
+          coordTransform.translate(p2.getX() - p1.getX(), p2.getY() - p1.getY());
+
+          c.revalidate();
+          c.repaint();
+        }
+      }
+    }
+    //https://community.oracle.com/thread/1263955
+    //How to implement Zoom & Pan in Java using Graphics2D
+    private Point inversedPoint(Point p1) {
+      Point p2 = new Point();
+      try {
+        AffineTransform inverse = coordTransform.createInverse();
+        inverse.transform(p1, p2);
+      } catch (NoninvertibleTransformException ex) {
+        ex.printStackTrace();
+      }
+      return p2;
+    }
+    public AffineTransform getCoordTransform() {
+      return coordTransform;
+    }
+  }
+}
+}}
+
+* 解説 [#w2dd6ea8]
+上記のサンプルでは、`JPanel#getPreferredSize()`を拡大後の画像サイズを返すようにオーバーライドすることで、画像が`JViewport`より大きくなる場合は、スクロールバーが表示されるように設定しています。
+
+----
+ズーム自体は、[[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]で使用しているものとほぼ同じ`MouseWheelListener`を設定して実行していますが、画像を描画している`JPanel`を`JScrollPane`内に設定してスクロールバーでのスクロールを可能にしているため、`JPanel#paintComponent(...)`内での`AffineTransform`の使用方法を変更しています。
+
+- [[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]のようにズームや移動を行うための`AffineTransform`(このサンプルでは`coordTransform`)を直接`Graphics2D`に設定すると、元からある`Graphics2D`コンテキスト内の`AffineTransform`(`JScrollBar`による移動)と競合して描画が乱れてしまう
+#code{{
+g2.setTransform(coordTransform);
+g2.drawImage(img, 0, 0, this);
+}}
+
+- 2つの`AffineTransform`を`AffineTransform#concatenate(AffineTransform)`で連結してから、`Graphics2D#setTransform(AffineTransform)`で設定することで回避
+#code{{
+AffineTransform at = g2.getTransform();
+at.concatenate(coordTransform);
+g2.setTransform(at);
+g2.drawImage(img, 0, 0, this);
+}}
+
+- または、[http://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics2D.html#drawImage-java.awt.Image-java.awt.geom.AffineTransform-java.awt.image.ImageObserver- Graphics2D#drawImage(Image, AffineTransform, ImageObserver) (Java Platform SE 8)]を使用することで、`Graphics2D`コンテキスト内の`AffineTransform`が適用される前にイメージにズーム、移動変換を適用しておくことで回避
+#code{{
+g2.drawImage(img, coordTransform, this);
+}}
+
+* 参考リンク [#pd1ded23]
+- [[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]
+
+* コメント [#xd8ff1ff]
+#comment
+#comment
