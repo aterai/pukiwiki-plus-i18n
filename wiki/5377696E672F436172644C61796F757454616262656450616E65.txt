@@ -11,7 +11,7 @@ hreflang:
 * 概要 [#u2e4ee0a]
 `CardLayout`と`JRadioButton`や`JTableHeader`を組み合わせて`JTabbedPane`風のコンポーネントを作成します。
 
-#download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIbe7vt7I/AAAAAAAAASw/SGFMcgCN_r4/s800/CardLayoutTabbedPane.png)
+#download(https://lh3.googleusercontent.com/-i_zX5mZNCL0/VZBOp7c2kwI/AAAAAAAAN74/yEHMZL9l8xs/s800/CardLayoutTabbedPane.png)
 
 * サンプルコード [#wd961a26]
 #code(link){{
@@ -48,20 +48,17 @@ class CardLayoutTabbedPane extends JPanel {
 }}
 
 * 解説 [#w7802e67]
-`CardLayout`で`JTabbedPane`風のコンポーネントを作成すると、タブエリアのレイアウトをネストしてコンポーネントの追加したり、レイアウトマネージャーを変更することで、タブの配置を変更することが簡単になります。
+このサンプルでは、`CardLayout`で`JTabbedPane`風のコンポーネントを作成しています。`CardLayout`でパネルを切り替えるためのタブには`UI`を変更してチェックアイコンを非表示にした`JRadioButton`を使用し、これらのタブを配置するタブエリア(`JPanel`)のレイアウトマネージャーに`GridLayout`を適用して、すべてのタブサイズが均等になるように設定しています。
 
-- `CardLayout`+`JRadioButton`
--- 上記のサンプルでは、`JRadioButton`を`GridLayout`で、均等なサイズになるように並べています。
--- `UI`を変更して、チェックは非表示にしています。
--- マウスでタブを押した時ではなく、 %%(`Opera`風に)%% 放した時に切り替わります。
+//-- %%マウスでタブを押した時ではなく、リリースした時にパネルを切り替える%%
 
-- `CardLayout`+`JTableHeader`
--- 空の`JTable`を作成して`JTableHeader`を取り出して利用しています。
--- `JTableHeader`のドラッグ＆ドロップによる入れ替えや、ヘッダ(タブ)幅のリサイズが利用できます。
+----
+`CardLayout`+`JTableHeader`を使用したサンプルは、[[JTableHeaderで作成したタブエリアでCardLayoutのコンテナを切り替える>Swing/TableHeaderTabArea]]に移動しました。
 
 * 参考リンク [#w973281a]
 - [[JTabbedPaneのタブをドラッグ＆ドロップ>Swing/DnDTabbedPane]]
 - [[TabbedPane風のタブ配置をレイアウトマネージャーで変更>Swing/NewTabButton]]
+- [[JTableHeaderで作成したタブエリアでCardLayoutのコンテナを切り替える>Swing/TableHeaderTabArea]]
 
 * コメント [#i7cab3fd]
 #comment

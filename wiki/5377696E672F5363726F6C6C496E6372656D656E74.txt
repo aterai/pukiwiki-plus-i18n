@@ -94,7 +94,7 @@ public class WheelScrollTest {
     System.out.println("getScrollableBlockIncrement: " + view.getScrollableBlockIncrement(
         vr, scrollPane.getVerticalScrollBar().getOrientation(), 1));
 
-    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     final JSpinner spinner = new JSpinner(new SpinnerNumberModel(
         scrollPane.getVerticalScrollBar().getBlockIncrement(1), 0, 100000, 1));
     spinner.setEditor(new JSpinner.NumberEditor(spinner, "#####0"));

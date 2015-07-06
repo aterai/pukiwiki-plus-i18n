@@ -70,6 +70,7 @@ nofollow: true
 - [[Swing/NoArrowButtonCellEditor]]
 - [[Swing/UninstallListeners]]
 - [[Swing/ScrollPaneCorner]]
+- [[Swing/DashedMatteBorder]]
 
 ** 検討中で未実装 [#xa28093f]
 こっそり消えても(ﾟεﾟ)ｷﾆｼﾅｲ!!
@@ -104,7 +105,8 @@ nofollow: true
 - Highlighter#removeAllHighlights()
 - http://docs.oracle.com/javase/jp/7/api/javax/swing/text/html/HTMLDocument.html#getIterator(javax.swing.text.html.HTML.Tag)
 
-* Swing関係のバグやテスト中のコードなどのメモ [#hb22f5ad]
+* Swing関係のバグのメモ [#hb22f5ad]
+** 高解像度でJOptionPaneのアイコンが欠ける [#vfc496a6]
 - [http://stackoverflow.com/questions/30774828/bad-swing-ui-scaling-on-high-resolution-ms-surface java - Bad Swing UI scaling on high resolution (MS Surface) - Stack Overflow]
 -- `Surface Pro 3`でテキスト文字サイズを`150%`に設定し、`JOptionPane`を`WindowsLookAndFeel`で表示すると、アイコンが欠けるバグ？
 -- 以下のように`OptionPane.minimumSize`を設定しても解消しない
@@ -144,6 +146,7 @@ public class OptionPaneResolutionTest {
 }
 }}
 
+** 親フレームのドラッグ中にJWindowでクラッシュ [#hed7be2e]
 - [http://stackoverflow.com/questions/30072883/java-swing-jwindow-application-crash Java Swing JWindow application crash - Stack Overflow]
 -- 親フレームのドラッグ中に？子`JWindow`が表示されると`JVM`が落ちる(`Windows 7 64bit JKD1.8.0_11`)。
 --[https://bugs.openjdk.java.net/browse/JDK-8079595?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel #JDK-8079595 Resizing dialog which is JWindow parent makes JVM crash - Java Bug System] 
@@ -194,10 +197,9 @@ public class Main2 {
 }
 }}
 
-----
-[http://stackoverflow.com/questions/16547365/swing-gui-flickering-white-error java - swing gui flickering white error - Stack Overflow]のサンプルを試していたら面白い挙動に遭遇。
-
-- `JDK1.8.0_40`で修正された
+** TimSortでレイアウトをソート中に例外発生 [#decaf774]
+- [http://stackoverflow.com/questions/16547365/swing-gui-flickering-white-error java - swing gui flickering white error - Stack Overflow]のサンプルを試していたら面白い挙動に遭遇。
+-- `JDK1.8.0_40`で(以前のソートを仕様するように)修正された
 -- [http://bugs.java.com/view_bug.do?bug_id=8048887 Bug ID: JDK-8048887 SortingFocusTraversalPolicy throws IllegalArgumentException from the sort method]
 - `JDK1.7.0_21`
 -- IllegalArgumentException: Comparison method violates its general contract!
@@ -253,8 +255,24 @@ public class Gui {
 }
 }}
 
-----
-`JMenuBar`を検索して`JRadioButtonMenuItem`に、`ActionListener`を追加
+//** WebStartでCPU 100%
+//-`1.6.0_14`にすると、`web start`(`2`回目以降？) で`CPU 100%`になる？
+//--自宅のPCでは再現しない。
+//- [https://community.oracle.com/thread/1305835 Java Web Start & JNLP - BouncyCastle via Java Web Start 1.6.0_14]
+//- [https://community.oracle.com/thread/1306088 Java Web Start & JNLP - Upgrade to 1.6.0_14 causing Webstart launched application to fail]
+//-`JTableHeader` + `KeyEvent.VK_SPACE`
+//`Windows XP`(日本語?)+`JDK 1.6.0_17`では、KBD{F8}キーで`JTableHeader`にフォーカスを移動して、KBD{SPACE}キーを押してもソートされない？
+//以下のように設定しても、`KeyEvent.VK_SPACE`はうまくいかない。`KeyEvent.VK_F9`とかなら大丈夫。
+//#code{{
+//InputMap im = table.getTableHeader().getInputMap(
+//    JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+//im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "toggleSortOrder");
+//}}
+//キーボードが壊れたのかもと思ったけど、`JDK 1.7.0`では、問題なく動作している？。暇なときに、`Bug Database`を調べること。追記:`IME`を変更したら再現しなくなった…。関係ないけど、最近`Bug Database`に繋がらない。
+
+* テスト中のコードなど [#u71f964b]
+** JMenuBarの検索 [#gb196686]
+- `JMenuBar`を検索して`JRadioButtonMenuItem`に、`ActionListener`を追加
 
 #code{{
 Arrays.stream(menuBar.getSubElements())
@@ -271,21 +289,6 @@ Arrays.stream(menuBar.getSubElements())
   .filter(mi -> mi instanceof JRadioButtonMenuItem)
   .forEach(mi -> ((JRadioButtonMenuItem) mi).addActionListener(al));
 }}
-
-//----
-//-`1.6.0_14`にすると、`web start`(`2`回目以降？) で`CPU 100%`になる？
-//--自宅のPCでは再現しない。
-//- [https://community.oracle.com/thread/1305835 Java Web Start & JNLP - BouncyCastle via Java Web Start 1.6.0_14]
-//- [https://community.oracle.com/thread/1306088 Java Web Start & JNLP - Upgrade to 1.6.0_14 causing Webstart launched application to fail]
-//-`JTableHeader` + `KeyEvent.VK_SPACE`
-//`Windows XP`(日本語?)+`JDK 1.6.0_17`では、KBD{F8}キーで`JTableHeader`にフォーカスを移動して、KBD{SPACE}キーを押してもソートされない？
-//以下のように設定しても、`KeyEvent.VK_SPACE`はうまくいかない。`KeyEvent.VK_F9`とかなら大丈夫。
-//#code{{
-//InputMap im = table.getTableHeader().getInputMap(
-//    JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-//im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "toggleSortOrder");
-//}}
-//キーボードが壊れたのかもと思ったけど、`JDK 1.7.0`では、問題なく動作している？。暇なときに、`Bug Database`を調べること。追記:`IME`を変更したら再現しなくなった…。関係ないけど、最近`Bug Database`に繋がらない。
 
 * Swingのサンプルに関するメモ(引用) [#p449f4e0]
 目標にしようと思っているけど、なかなか難しそう…。

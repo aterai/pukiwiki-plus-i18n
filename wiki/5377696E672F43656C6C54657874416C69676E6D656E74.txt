@@ -27,15 +27,15 @@ class HorizontalAlignmentTableRenderer extends DefaultTableCellRenderer {
   }
   private void initLabel(JLabel l, int row) {
     if (leftRadio.isSelected()) {
-      l.setHorizontalAlignment(JLabel.LEFT);
+      l.setHorizontalAlignment(SwingConstants.LEFT);
     } else if (centerRadio.isSelected()) {
-      l.setHorizontalAlignment(JLabel.CENTER);
+      l.setHorizontalAlignment(SwingConstants.CENTER);
     } else if (rightRadio.isSelected()) {
-      l.setHorizontalAlignment(JLabel.RIGHT);
+      l.setHorizontalAlignment(SwingConstants.RIGHT);
     } else if (customRadio.isSelected()) {
-      l.setHorizontalAlignment(row % 3 == 0 ? JLabel.LEFT:
-                               row % 3 == 1 ? JLabel.CENTER:
-                                              JLabel.RIGHT);
+      l.setHorizontalAlignment(row % 3 == 0 ? SwingConstants.LEFT:
+                               row % 3 == 1 ? SwingConstants.CENTER:
+                                              SwingConstants.RIGHT);
     }
   }
 }
@@ -52,8 +52,8 @@ class HorizontalAlignmentTableRenderer extends DefaultTableCellRenderer {
 
 ----
 - `JTable`は、`Object`、`Number`、`Boolean`クラスのデフォルトセルレンダラーを持っているため、モデルが各列のクラスを正しく返すように、`TableModel#getColumnClass(int)`をオーバーライドすることで、そのクラスのデフォルトセルレンダラーが使用される
--- `Object`: `JLabel.LEFT`(文字列などは左揃え)
--- `Number`: `JLabel.RIGHT`(数字は右揃え)
+-- `Object`: `SwingConstants.LEFT`(文字列などは左揃え)
+-- `Number`: `SwingConstants.RIGHT`(数字は右揃え)
 -- `Boolean`: `JCheckBox`, `CENTER`(チェックボックスは中央揃え)
 - `DefaultTableModel#TableModel#getColumnClass(int)`のデフォルトは、すべての列のクラスとして、`Object.class`を返す
 - 各クラスのデフォルトセルレンダラーが使用されるのは、列にセルレンダラーが割り当てられていない場合に限られる
@@ -78,7 +78,7 @@ JTable table = new JTable(model);
 
 #code{{
 DefaultTableCellRenderer r = new DefaultTableCellRenderer();
-r.setHorizontalAlignment(JLabel.CENTER);
+r.setHorizontalAlignment(SwingConstants.CENTER);
 table.getColumnModel().getColumn(2).setCellRenderer(r);
 }}
 

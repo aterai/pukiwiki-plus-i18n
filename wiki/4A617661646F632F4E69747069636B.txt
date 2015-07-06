@@ -7,6 +7,13 @@ description: Java クラスドキュメントで翻訳元の英語版から修�
 #contents
 
 * 未修正 [#k5733681]
+** SwingConstants#VERTICAL [#i122ead5]
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingConstants.html#VERTICAL
+-- Vertical orientation. Used for scrollbars and sliders.
+- 修正案
+-- `JScrollBar`は`SwingConstants`を実装していない(`java.awt.Adjustable`を実装している)ので、`progressbars and sliders`のほうがよさそう
+-- `SwingConstants#HORIZONTAL`も同様
+
 ** getAlignmentY() [#ec1629bc]
 - http://docs.oracle.com/javase/8/docs/api/java/awt/Component.html
 -- Ease-of-use constant for getAlignmentX.
