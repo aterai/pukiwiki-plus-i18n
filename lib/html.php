@@ -206,9 +206,9 @@ function catbody($title, $page, $body)
             $head_tags[] = '<link rel="canonical" href="'.$script.$title.'.html" />';
         }
     }
-    if ( isset($frontmatter['hreflang']) ) {
-        $head_tags[] = '<link rel="alternate" href="' . $frontmatter['hreflang']['href'] . '" hreflang="' . $frontmatter['hreflang']['lang'] . '" />';
-    }
+    //if ( isset($frontmatter['hreflang']) ) {
+    //    $head_tags[] = '<link rel="alternate" href="' . $frontmatter['hreflang']['href'] . '" hreflang="' . $frontmatter['hreflang']['lang'] . '" />';
+    //}
 
     $head_tags[] = '<link rel="alternate" href="' . $script . '?cmd=rssdiff" type="application/rss+xml" title="' . $page_title . ' - RSS" />';
 
