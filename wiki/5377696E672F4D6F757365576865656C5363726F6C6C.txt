@@ -12,7 +12,7 @@ description: JScrollBarが非表示の場合のMouseWheelによるScrollをテ�
 
 * サンプルコード [#tac5ef1f]
 #code(link){{
-JScrollBar vsb = new JScrollBar(JScrollBar.VERTICAL) {
+JScrollBar vsb = new JScrollBar(Adjustable.VERTICAL) {
   @Override public Dimension getPreferredSize() {
     Dimension dim = super.getPreferredSize();
     return new Dimension(0, dim.height);

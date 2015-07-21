@@ -1,0 +1,50 @@
+---
+title: JTableの行高がJVeiwportの高さに合うまで調整する
+tags: [JTable, JVewport, JScrollPane]
+author: aterai
+pubdate: 2015-07-13T02:32:20+09:00
+description: JTableの各行の高さ変更することで行数などに変更があっても、JVeiwportに余白が発生しないように調整します。
+---
+* 概要 [#x7a24c00]
+`JTable`の各行の高さ変更することで行数などに変更があっても、`JVeiwport`に余白が発生しないように調整します。
+
+#download(https://lh3.googleusercontent.com/-Poa86QgNChU/VaKgwOMpRdI/AAAAAAAAN9E/2gQi6newmek/s800-Ic42/AdjustRowHeightFillsViewport.png)
+
+* サンプルコード [#h72d2e2d]
+#code(link){{
+JTable table = new JTable(model) {
+  int prevHeight = -1;
+  int prevCount = -1;
+  public void updateRowsHeigth(JViewport vport) {
+    int height = vport.getExtentSize().height;
+    int rowCount = getModel().getRowCount();
+    int defautlRowHeight = height / rowCount;
+    if ((height != prevHeight || rowCount != prevCount) && defautlRowHeight > 0) {
+      int over = height - rowCount * defautlRowHeight;
+      for (int i = 0; i < rowCount; i++) {
+        int a = over-- > 0 ? i == rowCount - 1 ? over : 1 : 0;
+        setRowHeight(i, defautlRowHeight + a);
+      }
+    }
+    prevHeight = height;
+    prevCount = rowCount;
+  }
+  @Override public void doLayout() {
+    super.doLayout();
+    Container p = SwingUtilities.getAncestorOfClass(JViewport.class, this);
+    if (p instanceof JViewport) {
+      updateRowsHeigth((JViewport) p);
+    }
+  }
+};
+}}
+
+* 解説 [#u3bc340a]
+上記のサンプルでは、`JTable#doLayout()`をオーバーライドし、`JViewport`の高さが変更されり、行数の増減があった場合、行の高さを`JTable#setRowHeight(...)`で設定し直すことで、`JViewport`に余白が発生しないように調整しています。
+
+* 参考リンク [#l889affc]
+- [[JTableの行の高さを変更する>Swing/FishEyeTable]]
+
+* コメント [#s65ddd45]
+#comment
+#comment

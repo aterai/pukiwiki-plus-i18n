@@ -20,8 +20,8 @@ slider.setInverted(true);
 
 ----
 - `JSlider#setInverted(true)`と`setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`で言語に依存する方向を同時に指定可能
--- `JSlider.HORIZONTAL`の場合、両方指定すると元に戻る
--- `JSlider.VERTICAL`の場合、`JSlider#setInverted(true)`で上最小、下最大に変化し、`setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`で目盛りの位置が右から左に変化する
+-- `SwingConstants.HORIZONTAL`の場合、両方指定すると元に戻る
+-- `SwingConstants.VERTICAL`の場合、`JSlider#setInverted(true)`で上最小、下最大に変化し、`setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`で目盛りの位置が右から左に変化する
 - 範囲の塗り潰しが可能な`MetalLookAndFeel`の場合、これも反転する
 - 縦の`JSlider`で`ComponentOrientation.RIGHT_TO_LEFT`、`WindowsLookAndFeel`を設定した場合、ノブのフォーカスが描画されない
 

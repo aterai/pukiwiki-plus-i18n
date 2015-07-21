@@ -36,8 +36,8 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- newValue - true if root handles should be displayed; otherwise, false
 - 変更案
 -- newValue - ルートハンドルを表示する場合は true、そうでない場合はfalse
-
-ルートノードのノードハンドル(`WindowsLookAndFeel`の場合は`+`,`-`アイコン)を表示するかどうかが、逆の意味に誤翻訳されている。
+- メモ
+-- ルートノードのノードハンドル(`WindowsLookAndFeel`の場合は`+`,`-`アイコン)を表示するかどうかが、逆の意味に誤翻訳されている
 
 ** すべての親を展開し常に非表示にする [#sb661101]
 - http://docs.oracle.com/javase/jp/7/api/javax/swing/JTree.html#setExpandsSelectedPaths(boolean)
@@ -85,10 +85,8 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** scrollRectToVisible と、指定されたセルの境界 [#y8118367]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#ensureIndexIsVisible-int-
 -- この処理により、scrollRectToVisible と、指定されたセルの境界が呼び出されます。このメソッドを有効にするには、JList が JViewport 内に存在する必要があります。
-
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/JList.html#ensureIndexIsVisible-int-
 -- This calls scrollRectToVisible with the bounds of the specified cell. For this method to work, the JList must be within a JViewport.
-
 - 変更案
 -- これは、指定されたセルの境界を引数にして、scrollRectToVisibleメソッドを呼びます。JList が JViewport 内に存在する場合のみ、このメソッドは有効です。
 
@@ -114,8 +112,8 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- So this class overrides the validate, invalidate, revalidate, repaint, and firePropertyChange methods to be no-ops and override the isOpaque method solely to improve performance.
 - 変更案
 -- そのため、このクラスは、 validate、invalidate、revalidate、repaint および firePropertyChange メソッドを何もしないようにオーバーライドし、単にパフォーマンスを向上させるために isOpaque メソッドをオーバーライドします。
-
-firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は、何もしないようにオーバーライドされるけど、firePropertyChange(String propertyName, Object oldValue, Object newValue) は、完全に何もしないようにはならない？
+- メモ
+-- `firePropertyChange(String propertyName, boolean oldValue, boolean newValue)`は、何もしないようにオーバーライドされるけど、`firePropertyChange(String propertyName, Object oldValue, Object newValue)`は、完全に何もしないようにはならない？
 
 ** SwingUtilities.calculateInnerArea(...) [#b7a3a508]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#calculateInnerArea-javax.swing.JComponent-java.awt.Rectangle-
@@ -246,8 +244,8 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- If the setSize or setBounds methods are called afterwards with a width or height less than that specified by setMinimumSize the window is automatically enlarged to honor the minimumSize value.
 - 変更案
 -- setMinimumSize で指定された幅、または高さよりも小さい状態で、 setSize メソッド、または setBounds メソッドが呼び出されると、ウィンドウは minimumSize の値に合わせて自動的に大きくなります。
-
-「あとで」は、無くても良さそう。
+- メモ
+-- 「あとで」は、無くても良さそう
 
 ** point が存在する場合 [#f63aea30]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#rowAtPoint-java.awt.Point-
@@ -336,20 +334,18 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- vertical-align (only sup and super)
 -- text-align (justify is treated as center)
 -- margin-top
-
-プロパティーを翻訳する必要はなさそう。
+- メモ
+-- プロパティーを翻訳する必要はなさそう
 
 ** ユーザーが入力した数値 [#bda2d0d2]
 - http://docs.oracle.com/javase/jp/6/api/javax/swing/JOptionPane.html#getInputValue()
 -- wantsInput が true の場合に、ユーザーが入力した数値を返します
-
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/JOptionPane.html#getInputValue--
 -- Returns the value the user has input, if wantsInput is true.
-
 - 変更案
 -- wantsInput が true の場合に、ユーザーが入力した値を返します。
-
-数値と読点。
+- メモ
+-- 数値と読点
 
 ** setUpdateSelectionOnSort [#bcd916b8]
 - http://docs.oracle.com/javase/jp/6/api/javax/swing/JTable.html#setUpdateSelectionOnSort(boolean)
@@ -358,19 +354,17 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 -- The default is true.
 - 変更案
 -- デフォルト値は true です。
-
-検索してみると、他でも大量に必要のない(英語版には存在しない)「policy.allowSystemProperty プロパティー」が出てくるので、自動変換時？のミスかも。
-- http://www.google.com/search?q=site:docs.oracle.com/javase/jp/6/+policy.allowSystemProperty
+- メモ
+-- 検索してみると、他でも大量に必要のない(英語版には存在しない)「policy.allowSystemProperty プロパティー」が出てくるので、自動変換時？のミスかも
+-- http://www.google.com/search?q=site:docs.oracle.com/javase/jp/6/+policy.allowSystemProperty
 
 ** 閉じ括弧と訳、具象実装 (たとえば、TableRowSorter を参照します。 [#vdd5abc8]
 - http://docs.oracle.com/javase/jp/6/api/javax/swing/DefaultRowSorter.html
 -- デフォルトの Comparator を検出するには、具象実装 (たとえば、TableRowSorter を参照します。
 -- デフォルトではソートは行われず (モデルと同様)、列はソート可能です。
-
 - http://docs.oracle.com/javase/8/docs/api/javax/swing/DefaultRowSorter.html
 -- To find the default Comparators, see the concrete implementation (for example, TableRowSorter).
 -- The default sort order is unsorted (the same as the model), and columns are sortable by default.
-
 - 変更案
 -- デフォルトの Comparator を見つける場合は、具象実装 (たとえば、TableRowSorter) を参照してください。
 -- デフォルトのソート順序は「ソートなし (モデルと同じ順序)」、また、各列は「ソート可能」がデフォルトです。
@@ -391,24 +385,23 @@ firePropertyChange(String propertyName, boolean oldValue, boolean newValue) は�
 - 変更案
 -- ウィンドウは、以下のウィンドウイベントを生成できます: WindowOpened、WindowClosed、WindowGainedFocus、WindowLostFocus
 -- ウィンドウは、WindowOpened、WindowClosed、WindowGainedFocus、および WindowLostFocus の WindowEvents を生成できます。
-
-java.awt.Dialog は、以下のようになっている。
-- http://docs.oracle.com/javase/jp/6/api/java/awt/Dialog.html
--- ダイアログは、WindowOpened、WindowClosing、WindowClosed、WindowActivated、WindowDeactivated、WindowGainedFocus、および WindowLostFocus の WindowEvents を生成できます。
--- Dialogs are capable of generating the following WindowEvents: WindowOpened, WindowClosing, WindowClosed, WindowActivated, WindowDeactivated, WindowGainedFocus, WindowLostFocus.
-
-java.awt.Frame は、以下のようになっている。
-- http://docs.oracle.com/javase/jp/6/api/java/awt/Frame.html
--- フレームは次の型の WindowEvent を生成できます。
--- Frames are capable of generating the following types of WindowEvents:
+- メモ
+-- `java.awt.Dialog`は、以下のようになっている
+-- http://docs.oracle.com/javase/jp/6/api/java/awt/Dialog.html
+--- ダイアログは、WindowOpened、WindowClosing、WindowClosed、WindowActivated、WindowDeactivated、WindowGainedFocus、および WindowLostFocus の WindowEvents を生成できます。
+--- Dialogs are capable of generating the following WindowEvents: WindowOpened, WindowClosing, WindowClosed, WindowActivated, WindowDeactivated, WindowGainedFocus, WindowLostFocus.
+-- `java.awt.Frame`は、以下のようになっている
+-- http://docs.oracle.com/javase/jp/6/api/java/awt/Frame.html
+--- フレームは次の型の WindowEvent を生成できます。
+--- Frames are capable of generating the following types of WindowEvents:
 
 ** コロンのあとに例(数値)が重複して現れる [#uf0f875c]
 - http://docs.oracle.com/javase/jp/6/api/javax/swing/JSlider.html#getMinorTickSpacing()
 -- 範囲が 0 ～ 50 のスライダで、小目盛りの間隔が 10 に設定されている場合は、0、10、20、30、40、50 の値の横に小目盛りが付けられます。0, 10, 20, 30, 40, 50.
 - http://docs.oracle.com/javase/6/docs/api/javax/swing/JSlider.html#getMinorTickSpacing()
 -- If you have a slider with a range from 0 to 50 and the minor tick spacing is set to 10, you will get minor ticks next to the following values: 0, 10, 20, 30, 40, 50.
-
-setMinorTickSpacing, setMajorTickSpacing, getMajorTickSpacing なども同様。
+- メモ
+-- `setMinorTickSpacing`, `setMajorTickSpacing`, `getMajorTickSpacing`なども同様。
 
 ** 最後のサイズ変更できない Cursor [#vc4ce4ee]
 - http://docs.oracle.com/javase/jp/6/api/javax/swing/JInternalFrame.html#getLastCursor()
@@ -420,8 +413,8 @@ setMinorTickSpacing, setMajorTickSpacing, getMajorTickSpacing なども同様。
 - 変更案
 -- setCursor メソッドによって設定された、最後の Cursor (サイズ変更用のCursorは除く)を返します。
 --最後の Cursor (サイズ変更用を除く)
-
-ソースをみると、タイプが Cursor.SW_RESIZE_CURSOR, ... などではないことが条件みたいなので。
+- メモ
+-- ソースをみると、タイプが`Cursor.SW_RESIZE_CURSOR`, ... などではないことが条件になっている
 
 #code{{
 public void setCursor(Cursor cursor) {
@@ -452,8 +445,8 @@ public void setCursor(Cursor cursor) {
 - http://docs.oracle.com/javase/6/docs/api/javax/swing/package-summary.html
 -- JPasswordField is a lightweight component that allows the editing of a single line of text where the view indicates something was typed, but does not show the original characters.
 -- JTextField is a lightweight component that allows the editing of a single line of text.
-
-JPasswordField の説明が途中で途切れて、JTextFieldの説明とほぼ同じになっている？
+- メモ
+-- `JPasswordField`の説明が途中で途切れて、`JTextField`の説明とほぼ同じになっている？
 
 ** 他は「copy」などのようにカギ括弧なのに、ここだけ、"link"？ [#n5f38393]
 - http://docs.oracle.com/javase/jp/6/api/javax/swing/TransferHandler.html#LINK
@@ -473,8 +466,6 @@ JPasswordField の説明が途中で途切れて、JTextFieldの説明とほぼ�
 ** インタフェース Comparable<T> [#ieb7aac0]
 - http://docs.oracle.com/javase/jp/6/api/java/lang/Comparable.html
 - http://docs.oracle.com/javase/jp/1.5.0/api/java/lang/Comparable.html
-
-変換漏れ？
 
 * 1.8.0で修正済み [#j5f1dec1]
 ** セキュリティーマネージャー、セキュリティマネージャ、セキュリティマネージャー [#q5d049c2]

@@ -23,7 +23,7 @@ slider.setUI(new MetalSliderUI() {
           super.mouseDragged(e);
           return;
         }
-        //case JSlider.HORIZONTAL:
+        //case SwingConstants.HORIZONTAL:
         int halfThumbWidth = thumbRect.width / 2;
         final int trackLength = trackRect.width;
         final int trackLeft   = trackRect.x - halfThumbWidth;
@@ -74,7 +74,7 @@ slider.setUI(new MetalSliderUI() {
 //* 参考リンク
 * コメント [#h246efdc]
 #comment
-- `JSlider.HORIZONTAL`にしか対応していません。 -- &user(aterai); &new{2009-12-21 (月) 11:01:51};
+- `SwingConstants.HORIZONTAL`にしか対応していません。 -- &user(aterai); &new{2009-12-21 (月) 11:01:51};
 - bobndrewさんからの指摘で、ミニマムにマイナスの値を入れるとおかしくなるバグ修正と、`MinorTickSpacing`に対応。 -- &user(aterai); &new{2010-10-26 (火) 15:32:11};
 
 #comment

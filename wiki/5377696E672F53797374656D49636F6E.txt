@@ -12,9 +12,9 @@ description: ファイル、ディレクトリなどのSystemIconを取得しま
 
 * サンプルコード [#b874c8ce]
 #code(link){{
+//16x16
 smallLabel.setIcon(FileSystemView.getFileSystemView().getSystemIcon(file));
-}}
-#code{{
+//32x32
 largeLabel.setIcon(new ImageIcon(ShellFolder.getShellFolder(file).getIcon(true)));
 }}
 
@@ -23,11 +23,10 @@ largeLabel.setIcon(new ImageIcon(ShellFolder.getShellFolder(file).getIcon(true))
 
 - `16x16`
 -- `FileSystemView#getSystemIcon(File f)`で小さいアイコンを取得
-
 - `32x32`
 -- `ShellFolder.getShellFolder(file).getIcon(true)`で大きいアイコンを取得
--- %%「`sun.awt.shell.ShellFolder` は Sun が所有する `API` であり、今後のリリースで削除される可能性があります。」と警告される%%
--- 「`ShellFolder`は内部所有の`API`であり、今後のリリースで削除される可能性があります」と警告される
+-- コンパイル時に「`ShellFolder`は内部所有の`API`であり、今後のリリースで削除される可能性があります」と警告が発生する
+//「`sun.awt.shell.ShellFolder` は Sun が所有する `API` であり、今後のリリースで削除される可能性があります。」
 
 * 参考リンク [#k6280a75]
 - [http://blog.codebeach.com/2008/02/get-file-type-icon-with-java.html Code Beach: Get the File Type Icon with Java]
