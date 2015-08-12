@@ -32,7 +32,7 @@ class ColorRadioButton extends JRadioButton {
       setForeground(defaultColor);
     }
     super.fireStateChanged();
-  };
+  }
 //...
 }}
 
@@ -45,8 +45,8 @@ class ColorRadioButton extends JRadioButton {
 以下のような、`ChangeListener`を使用する方法もあります。
 
 #code{{
-radioButton.addChangeListener(new javax.swing.event.ChangeListener() {
-  @Override public void stateChanged(javax.swing.event.ChangeEvent e) {
+radioButton.addChangeListener(new ChangeListener() {
+  @Override public void stateChanged(ChangeEvent e) {
     ButtonModel model = radioButton.getModel();
     if (!model.isEnabled()) {
       radioButton.setForeground(Color.GRAY);

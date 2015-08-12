@@ -29,8 +29,7 @@ private class TablePopupMenu extends JPopupMenu {
     add(deleteAction);
   }
   @Override public void show(Component c, int x, int y) {
-    int[] l = table.getSelectedRows();
-    deleteAction.setEnabled(l != null && l.length > 0);
+    deleteAction.setEnabled(table.getSelectedRowCount() > 0);
     super.show(c, x, y);
   }
 }

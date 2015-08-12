@@ -26,7 +26,7 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 }}
 
 * 解説 [#i9aab092]
-+ [http://pmd.sourceforge.net/ PMD]からダウンロードした`pmd-bin-x.x.zip`の`lib`以下にある`pmd-x.x.jar`などの`jar`ファイルを`%ANT_HOME%\lib`にコピー
++ [https://pmd.github.io/ PMD]からダウンロードした`pmd-bin-x.x.zip`の`lib`以下にある`pmd-x.x.jar`などの`jar`ファイルを`%ANT_HOME%\lib`にコピー
 + `ant pmd`で、`pmd.xml`を生成し、`jenkins`の`PMD`プラグインなどで読み込む
 
 *** toFile or toConsole [#w61eb2ba]
@@ -36,7 +36,7 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 
 では、情報が多すぎるので`formatter`要素の`toConsole`属性を使用します。
 
-- [http://pmd.sourceforge.net/snapshot/ant-task.html PMD - Ant Task] にあるように、`<formatter type="html" toFile="pmd_report.html" toConsole="true"/>`や、`<formatter type="xml" toFile="${build.reports}/pmd.xml" toConsole="true" />`と`toFile`と`toConsole`を指定しても、ファイルにのみ結果が書き出されて、コンソールには何も出力されない
+- [https://pmd.github.io/pmd-5.3.3/usage/ant-task.html PMD - Ant Task] にあるように、`<formatter type="html" toFile="pmd_report.html" toConsole="true"/>`や、`<formatter type="xml" toFile="${build.reports}/pmd.xml" toConsole="true" />`と`toFile`と`toConsole`を指定しても、ファイルにのみ結果が書き出されて、コンソールには何も出力されない
 - `<formatter type="text" toConsole="true" />`と、`toFile`属性なしで`toConsole="true"`とする必要がある？
 -- `<formatter type="text" toConsole="false" />`は、`toFile or toConsole needs to be specified in Formatter`となって、`BUILD FAILED`
 - ファイルとコンソールの両方に出力する場合は、`formatter`を複数指定しなくてはならない？
@@ -257,7 +257,7 @@ public final class MenuBarFactoryTest {
 }}
 
 * 参考リンク [#c56145b8]
-- [http://pmd.sourceforge.net/ PMD]
+- [https://pmd.github.io/ PMD]
 - [http://d.hatena.ne.jp/guess880/20121014/1350200644 PMD5.0.0のルールを和訳しながら読む - 1 - Design Ruleset - 開発メモ]
 
 * コメント [#sc369256]
