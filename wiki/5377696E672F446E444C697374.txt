@@ -15,9 +15,10 @@ description: JListをドラッグ＆ドロップして、項目を入れ替え�
 @Override protected void paintComponent(Graphics g) {
   super.paintComponent(g);
   if (targetIndex >= 0) {
-    Graphics2D g2 = (Graphics2D) g;
+    Graphics2D g2 = (Graphics2D) g.create();
     g2.setPaint(lineColor);
     g2.fill(targetLine);
+    g2.dispose();
   }
 }
 private void initTargetLine(Point p) {

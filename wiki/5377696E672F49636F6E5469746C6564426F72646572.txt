@@ -1,0 +1,39 @@
+---
+title: TitledBorderのタイトルにアイコンを表示する
+tags: [Border, TitledBorder, ImageIcon, Html]
+author: aterai
+pubdate: 2015-09-07T00:03:04+09:00
+description: TitledBorderのタイトルに文字列だけでなく、アイコンを表示するように設定します。
+---
+* 概要 [#d26f3d38]
+`TitledBorder`のタイトルに文字列だけでなく、アイコンを表示するように設定します。
+
+#download(https://lh3.googleusercontent.com/-CoxU1H7Z550/VexP9UAQdbI/AAAAAAAAOBI/QIVGOXu5MNE/s800-Ic42/IconTitledBorder.png)
+
+* サンプルコード [#s693618b]
+#code(link){{
+URL url = getClass().getResource("16x16.png");
+String path = url.toString();
+String title = String.format("<html><table cellpadding='0'><tr><td><img src='%s'></td><td>test</td></tr></table></html>", path);
+panel.setBorder(BorderFactory.createTitledBorder(title));
+}}
+
+* 解説 [#y55365dc]
+- `<img>`
+-- `TitledBorder#setTitle(...)`で`<img>`タグでアイコンを指定した`Html`テキストを設定
+-- `Class#getResource(...)`でアイコンの`URL`を取得し、`<img>`のソースに指定
+-- アイコンとテキストのベースラインが揃っていない
+- `<table>` + `<img>`
+-- `<table><tr>`タグを使用して、アイコンとテキストのベースラインを揃える
+- `TitledBorder#paintBorder(...)`
+-- `TitledBorder#paintBorder(...)`をオーバーライドしてアイコンを描画
+-- タイトル文字列に半角空白で余白を作成し、位置を決め打ちでアイコンを描画
+- `ComponentTitledBorder`
+-- [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]からマウスリスナーなどを削除し、アイコンを追加した`JLabel`を適用
+
+* 参考リンク [#h36c5891]
+- [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]
+
+* コメント [#l53b431b]
+#comment
+#comment

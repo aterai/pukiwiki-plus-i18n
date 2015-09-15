@@ -17,14 +17,14 @@ hreflang:
 #code(link){{
 UIManager.put("CheckBoxMenuItem.checkIcon", new Icon() {
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
-    Graphics2D g2 = (Graphics2D) g;
+    Graphics2D g2 = (Graphics2D) g.create();
     g2.translate(x, y);
     ButtonModel m = ((AbstractButton) c).getModel();
     g2.setPaint(m.isSelected() ? Color.ORANGE : Color.GRAY);
     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
     g2.fillOval(0, 2, 10, 10);
-    g2.translate(-x, -y);
+    g2.dispose();
   }
   @Override public int getIconWidth()  {
     return 14;
