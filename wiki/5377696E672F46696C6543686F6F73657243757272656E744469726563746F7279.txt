@@ -25,7 +25,7 @@ if (retvalue == JFileChooser.APPROVE_OPTION) {
 `JFileChooser.DIRECTORIES_ONLY`で、ディレクトリのみ表示する場合のカレントディレクトリの設定をテストします。
 
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/JFileChooser.html#setCurrentDirectory(java.io.File) setCurrentDirectory]: `JFileChooser#setCurrentDirectory(File)`で`CurrentDirectory`を設定
--- 参照:コンボボックスにディレクトリ名
+-- 参照: コンボボックスにディレクトリ名
 -- リストには、`CurrentDirectory`内のディレクトリ一覧
 -- フォルダ名: テキストフィールドは前回の文字列(`setCurrentDirectory`では変化しない)
 -- 存在しないファイルを`setCurrentDirectory`で設定すると、前回の`CurrentDirectory`(初回に存在しないファイルが設定された場合は`OS`のデフォルト)が表示される
@@ -47,7 +47,7 @@ JFileChooser fc2 = new JFileChooser() {
 --- `Metal`や`Nimbus LookAndFeel`では、選択ファイルとして設定したディレクトリが選択状態になる
 --- `Metal`などの`LookAndFeel`でも、ディレクトリが選択状態にならない場合がある
 --- 上記のサンプルで、`isParent reset?`にチェックをした場合、`!fileChooser.getFileSystemView().isParent(fileChooser.getCurrentDirectory(), dir)==false`になるように？`setSelectedFile`で選択ファイルをリセットする
--- フォルダ名:テキストフィールドは選択ファイルとして設定したディレクトリ
+-- フォルダ名: テキストフィールドは選択ファイルとして設定したディレクトリ
 -- 存在しないディレクトリを`setSelectedFile`で設定するとその親ディレクトリ、親ディレクトリも存在しない場合は、`OS`のデフォルトがカレントディレクトリとなる
 
 //* 参考リンク

@@ -29,7 +29,7 @@ description: AntのScriptタスク中でif文を使った条件分岐を行う�
 
 * 解説 [#sa8c81cb]
 上記のサンプルでは、`Script`タスクで`Javascript`(`Rhino`)の`if`文を使用しています。
-- `res.dir`プロパティで設定したディレクトリ(文字列)を、`project.getProperty("res.dir")`で取得
+- `res.dir`プロパティ(`build.xml`などで設定済み)で指定したディレクトリ(文字列)を、`project.getProperty("res.dir")`で取得
 - `importClass(java.io.File);`でインポートした`Java`の`File.class`を使って、存在するかどうかを判断
 -- `new File(project.getProperty("res.dir")).exists()`
 - 存在する場合は、`project.executeTarget("copy-resource");`で、`copy-resource`ターゲットを取得し、実行

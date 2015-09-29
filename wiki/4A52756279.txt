@@ -87,8 +87,8 @@ pubdate: 2012-07-19
 - [[JRubyでリソース(URL)のエントリを取得してSwingで使用する>JRuby/Resource]]
 
 ** ソースコードの文字コード(エンコーディング) [#k09b3d13]
-- 1.7.0以前？は、*.rbの文字コードはUTF-8固定だった？
-- 1.7.0から？は、ソースコードの先頭にマジックコメント
+- `1.7.0`以前？は、`*.rb`の文字コードは`UTF-8`固定だった？
+- `1.7.0`から？は、ソースコードの先頭にマジックコメント
 -- [http://d.hatena.ne.jp/Artisan/20110409/1302326813 Ruby1.9にしたら invalid multibyte char (US-ASCII) - 屑プログラマの憂鬱]
 
 #code{{
@@ -151,9 +151,9 @@ java.awt.EventQueue.invoke_later self
  ...
 
 ** JRuby 1.7.0.preview1 でArgumentErrorが発生する場合 [#n2494e41]
-- JRuby 1.7.0.preview1 で以下のようなArgumentErrorが発生する場合、-J-Dfile.encoding=UTF-8 でOK？
--- set LANG=ja_JP.UTF-8 は、JRubyでは効果がない？
--- %%「-J-Dfile.encoding=UTF-8」は「-E UTF-8」と同じ？%%
+- `JRuby 1.7.0.preview1`で以下のような`ArgumentError`が発生する場合、`-J-Dfile.encoding=UTF-8`を指定？
+-- `set LANG=ja_JP.UTF-8`は、`JRuby`では効果がない？
+-- %% `-J-Dfile.encoding=UTF-8`は`-E UTF-8`と同じ？%%
 
  >jruby -v
  jruby 1.7.0 (1.9.3p203) 2012-10-22 ff1ebbe on Java HotSpot(TM) 64-Bit Server VM
@@ -168,7 +168,7 @@ java.awt.EventQueue.invoke_later self
  >jruby -E UTF-8 -ruri -e "puts URI.encode('日本語')"
  %93%FA%96%7B%8C%EA
 
-- JRuby 1.7.0.preview2 では、「-E UTF-8」の方が良さそう
+- `JRuby 1.7.0.preview2`では、`-E UTF-8`の方が良さそう
 
 #code{{
 lines = src.rstrip.split(/\r?\n/).map {|line| line.chomp }

@@ -7,28 +7,31 @@ description: Java SE 7 で追加されたSwing関係のクラスドキュメン�
 #contents
 
 * 概要 [#z7536f0d]
-- Java SE 7 API のドキュメント翻訳プロジェクトについて
--- [http://yoshio3.com/2012/04/11/new-link-of-javase-api-reference/ 続：旧 Java SE API リファレンスへの新しいリンク先変更について « 寺田 佳央 – Yoshio Terada]から引用
- また、Java SE 7 API のドキュメント翻訳プロジェクトにつきましては、諸事情がございまして、５月中旬位まで御待ち頂けませんでしょうか。５月中旬移行に本件についてのアップデートをさせて頂きたいと考えております。
+- Java SE 7 API の日本語ドキュメントがない時期に作成したSwing関係のAPIの翻訳メモ
+-- Java SE 8 の日本語ドキュメントも存在するので、すでに不要
+-- `SwingUtilities.getUnwrappedView(JViewport)`の誤訳の件は、[[日本語への翻訳>Javadoc/Japanese]]に移動
 
--- 重箱の隅:「５月中旬%%移行%%以降」
+//- Java SE 7 API のドキュメント翻訳プロジェクトについて
+//-- [http://yoshio3.com/2012/04/11/new-link-of-javase-api-reference/ 続：旧 Java SE API リファレンスへの新しいリンク先変更について « 寺田 佳央 – Yoshio Terada]から引用
+// また、Java SE 7 API のドキュメント翻訳プロジェクトにつきましては、諸事情がございまして、５月中旬位まで御待ち頂けませんでしょうか。５月中旬移行に本件についてのアップデートをさせて頂きたいと考えております。
 
-上の翻訳プロジェクトはどうなるのか不明だし、個人的に興味があるというか必要なのは Swing 関係だけなので、「諸事情」などは無視して勝手(自分用だし)に翻訳することにしました。誤訳や、用語の一貫性などはあまり気にしていません。%%おかしな訳が気になる場合は、右上の「このページを編集する」から自由(適当)に修正してください。%% スパムが鬱陶しいので編集禁止にしました(2014-05-16)。
+//-- 重箱の隅:「５月中旬%%移行%%以降」
+//上の翻訳プロジェクトはどうなるのか不明だし、個人的に興味があるというか必要なのは Swing 関係だけなので、「諸事情」などは無視して勝手(自分用だし)に翻訳することにしました。誤訳や、用語の一貫性などはあまり気にしていません。%%おかしな訳が気になる場合は、右上の「このページを編集する」から自由(適当)に修正してください。%% スパムが鬱陶しいので編集禁止にしました(2014-05-16)。
 
-- Java SE 7 API 日本語版提供開始
--- [http://yoshio3.com/2013/05/14/ Ｊａｖａ ＳＥ７ＡＰＩ日本語版提供開始 | 寺田　佳央 - Yoshio Terada]から引用
- 2013 年 5 月 14 日、日本オラクルより新しい発表を行います。本日 5 月 14 日に日本語版 Java SE API ドキュメントを正式公開しました。
+//- Java SE 7 API 日本語版提供開始
+//-- [http://yoshio3.com/2013/05/14/ Ｊａｖａ ＳＥ７ＡＰＩ日本語版提供開始 | 寺田　佳央 - Yoshio Terada]から引用
+// 2013 年 5 月 14 日、日本オラクルより新しい発表を行います。本日 5 月 14 日に日本語版 Java SE API ドキュメントを正式公開しました。
 
--- 「５月中旬移行」の5月とは、一年後のことだったのか…。
--- %%翻訳されているクラスと英語のままのクラスの違いが分からない。javax.swing などは全て？未翻訳なので、パッケージによるのかと思ってたけど、以下みたいな例もあるので意味不明。%%
---- 翻訳済み http://docs.oracle.com/javase/jp/7/api/java/lang/Short.html
---- %%英語のまま http://docs.oracle.com/javase/jp/7/api/java/lang/Integer.html %% 翻訳済みになった
+//-- 「５月中旬移行」の5月とは、一年後のことだったのか…。
+//-- %%翻訳されているクラスと英語のままのクラスの違いが分からない。javax.swing などは全て？未翻訳なので、パッケージによるのかと思ってたけど、以下みたいな例もあるので意味不明。%%
+//--- 翻訳済み http://docs.oracle.com/javase/jp/7/api/java/lang/Short.html
+//--- %%英語のまま http://docs.oracle.com/javase/jp/7/api/java/lang/Integer.html %% 翻訳済みになった
 
-- %%徐々に更新していく方針らしいとのこと(ソースは見つからず)。%%残りも更新された。
--- [https://blogs.oracle.com/otnjp/entry/%e7%b6%9a_java_se_7%e3%81%ae%e6%97%a5%e6%9c%ac%e8%aa%9e%e3%83%89%e3%82%ad%e3%83%a5%e3%83%a1%e3%83%b3%e3%83%88%e3%81%8c%e5%85%ac%e9%96%8b%e3%81%95%e3%82%8c%e3%81%be%e3%81%97%e3%81%9f 続・Java SE 7の日本語ドキュメントが公開されました！ (Oracle Technology Network Japan Blog)]
+//- %%徐々に更新していく方針らしいとのこと(ソースは見つからず)。%%残りも更新された。
+//-- [https://blogs.oracle.com/otnjp/entry/%e7%b6%9a_java_se_7%e3%81%ae%e6%97%a5%e6%9c%ac%e8%aa%9e%e3%83%89%e3%82%ad%e3%83%a5%e3%83%a1%e3%83%b3%e3%83%88%e3%81%8c%e5%85%ac%e9%96%8b%e3%81%95%e3%82%8c%e3%81%be%e3%81%97%e3%81%9f 続・Java SE 7の日本語ドキュメントが公開されました！ (Oracle Technology Network Japan Blog)]
 //このサイトのリンクをjavase/jp/6/apiからjavase/jp/7/apiに一括変更するのは、当面は行なわない予定。
--- Swing関係の API ドキュメントも翻訳されたようなので、Java SE API 6 の日本語版ではなく、英語版へのリンクになっている`JLayer`とか、`NimbusLookAndFeel`などから順次Java SE API 7 の日本語版の方に変更していく予定(2013-05-28)。
--- [http://docs.oracle.com/javase/tutorial/ The Java™ Tutorials]も全部翻訳([http://docs.oracle.com/cd/E26537_01/tutorial/index.html Javaチュートリアル])されたらリンクを変更する予定。
+//-- Swing関係の API ドキュメントも翻訳されたようなので、Java SE API 6 の日本語版ではなく、英語版へのリンクになっている`JLayer`とか、`NimbusLookAndFeel`などから順次Java SE API 7 の日本語版の方に変更していく予定(2013-05-28)。
+//-- [http://docs.oracle.com/javase/tutorial/ The Java™ Tutorials]も全部翻訳([http://docs.oracle.com/cd/E26537_01/tutorial/index.html Javaチュートリアル])されたらリンクを変更する予定。
 
 * クラス [#w1bf0b2c]
 ** JLayer [#gce3ad95]

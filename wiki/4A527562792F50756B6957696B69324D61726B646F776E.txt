@@ -8,7 +8,7 @@ description: PukiWiki形式のテキストをMarkdown形式のファイルに変
 #contents
 
 * 概要 [#h1b34392]
-このサイトで使用している`PukiWiki`形式のテキストを`Markdown`形式のファイルに変換するテスト。
+このサイトで使用している`PukiWiki`形式のテキストを`Markdown`形式のファイルに変換するサンプルプログラムを紹介しています。
 
 - 以下のソースコードは、[http://jp.rubyist.net/magazine/?0010-CodeReview Rubyist Magazine - あなたの Ruby コードを添削します 【第 1 回】 pukipa.rb] より引用、改変
 - 注: このサイトを変換することだけが目的なので、テストしていない、適当、制限多数
@@ -492,12 +492,12 @@ main
  JEditorPane OK: &#xD85B;&#xDE40;
  JEditorPane NG: &#x26E40;
 -- 上記のようにリスト中にコードブロックがある場合、`- `で始まる行の後に、空行(もしくは空白文字のみのインデント)が必要だが、`p2m.rb`では生成できていない
---- コードブロックも、(リスト階層+1)*4スペース(もしくはタブ)のインデントが必要だが、`p2m.rb`では生成できていない
+--- コードブロックも、`(リスト階層+1)*4`スペース(もしくはタブ)のインデントが必要だが、`p2m.rb`では生成できていない
 
 ** Liquid [#cc063cb0]
 `PukiWiki`のプラグインを`Liquid`タグに移植
 
-- C:\jekyll-bootstrap\_plugins\src.rb
+- `C:\jekyll-bootstrap\_plugins\src.rb`
 #code{{
 # -*- encoding: utf-8 -*-
 class Src < Liquid::Tag

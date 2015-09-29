@@ -114,6 +114,7 @@ SETLOCAL
 "%JAVA_HOME%\bin\javah" -jni windowHandler
 
 set SDK=C:\Program Files\Microsoft Visual Studio .NET 2003\vc7
+rem set SDK=C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC
 "%SDK%\bin\cl.exe" /c -I"%SDK%\include" -I"%SDK%\PlatformSDK\include" -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -IhwndTest.h hwndTest.c
 
 set LIB=%SDK%\lib;%SDK%\PlatformSDK\lib

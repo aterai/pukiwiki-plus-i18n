@@ -14,7 +14,8 @@ description: 環境変数JAVA_HOMEを変更するバッチファイルやシェ�
 * バッチファイル [#w35a17ec]
 #gist(5441010)
 
-- `gist`からだと改行が`crlf`にならない場合は、こちらから: [http://ateraimemo.com/data/java/jdk.bat jdk.bat] 
+- `gist`からダウンロードすると、改行が`crlf`にならない場合: 
+-- [http://ateraimemo.com/data/java/jdk.bat jdk.bat] 
 
 * シェルスクリプト [#q2846991]
 #gist(5441080)
@@ -24,14 +25,14 @@ description: 環境変数JAVA_HOMEを変更するバッチファイルやシェ�
  cd /var/cache/oracle-jdk7-installer
  sudo tar zxvf jdk-7u40-linux-x64.tar.gz -C /usr/lib/jvm 
 
-- ドットをシェルスクリプトの前に付けて実行すると、スクリプトを起動したシェルで起動されるのでその環境変数を更新することができる
+- ドットをシェルスクリプトの前に付けて実行すると、スクリプトを起動したシェルで起動されるので、その環境変数を更新することが可能
 -- [http://togetter.com/li/72996 シェルスクリプトで環境変数を適用させるには IS01 Linux - Togetter]
 -- [http://www.ne.jp/asahi/hishidama/home/tech/unix/sh.html UNIXシェルスクリプトメモ(Hishidama's UNIX shell script Memo)]
 
  $ . jdk.sh 1.7.0_09
 
 * 解説 [#ad3fd963]
-`ant.bat`や`jruby.bat`などは、`JAVA_HOME`環境変数を使って、利用する`JDK`のパスを取得しているので、これらのコマンドを実行する前に、`set JAVA_HOME`すれば、そのコマンドプロンプト内で使用する`JDK`を簡単に切り替えることができます。
+`ant.bat`や`jruby.bat`などは、`JAVA_HOME`環境変数を使って使用する`JDK`のパスを取得しているので、これらのコマンドを実行する前に、`set JAVA_HOME`すれば、そのコマンドプロンプト内で使用する`JDK`を簡単に切り替えることができます。
 
 上記のバッチファイルは、その際、`set JAVA_HOME=C:\Program Files\...`と一々入力しなくてすむようにするためのものです。
 
@@ -95,13 +96,6 @@ java version "1.7.0-ea"
 Java(TM) SE Runtime Environment (build 1.7.0-ea-b31)
 Java HotSpot(TM) Client VM (build 14.0-b01, mixed mode, sharing)
 }}
-
-//---JREのインストールはキャンセル(これをキャンセルしても、JDKのインストールまでキャンセルされる訳ではないので無視する)
-//--環境変数JAVA_HOME の設定
-//---正式にリリースされた最新版をデフォルトとしてユーザー環境変数(またはシステム環境変数)に設定する
-//Linux なら、JPackage で？
-//それらの冒頭に直接JAVA_HOME は書き込まず、コマンドプロンプトで "set JAVA_HOME" して古いバージョンや、ベータ版などのJDKへ切り替えるようにしています。
-//その際、一々 "set JAVA_HOME=C:\Program Files\..." とか打ち込むのは面倒なので、以下のようなバッチファイル((Linux なら、JPackage で？))を作成して使っています。
 
 * 参考リンク [#ad73888e]
 - [http://d.hatena.ne.jp/masanobuimai/20070221#1172050845 ローカルのJava環境の管理について - marsのメモ]

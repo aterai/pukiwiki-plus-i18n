@@ -22,7 +22,7 @@ l1.setBorder(new ComponentTitledBorder(c, l1, eb));
 * 解説 [#q5789869]
 上記のサンプルは、[http://www.jroller.com/page/santhosh Santhosh Kumar's Weblog]の[http://www.jroller.com/page/santhosh?entry=component_titled_border ComponentTitledBorder]を参考にして作成しています。
 
-`SwingUtilities.paintComponent`で`Border`にコンポーネントを描画しているため、`JComboBox`などが選択されてもイベントが伝わりません。このため`ComponentTitledBorder`では、マウスリスナーを設定して`Component#dispatchEvent`メソッドで描画しているコンポーネントにイベントを飛ばしています。
+`SwingUtilities.paintComponent`で`Border`にコンポーネントを描画しているため、`JComboBox`などが選択されてもイベントが伝わりません。このため`ComponentTitledBorder`では、マウスリスナーを設定して`Component#dispatchEvent`メソッドで描画しているコンポーネントにイベントを転送しています。
 
 #code{{
 @Override public void mouseClicked(MouseEvent me) {
