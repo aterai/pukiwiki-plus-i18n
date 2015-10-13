@@ -45,6 +45,19 @@ class TransparentHeader extends JLabel implements TableCellRenderer {
 - `Boolean.class`の`DefaultRenderer`
 -- 透明化した`BooleanCellRenderer`や`BooleanCellEditor`を設定
 
+- メモ
+-- `ColumnHeader`には、`scroll.setColumnHeader(new JViewport());`とダミーの`JViewport`を設定しておかないと、`NullPointerException`が発生する
+
+#code{{
+scroll.setOpaque(false);
+scroll.setBackground(alphaZero);
+scroll.getViewport().setOpaque(false);
+scroll.getViewport().setBackground(alphaZero);
+scroll.setColumnHeader(new JViewport()); // Dummy JViewport
+scroll.getColumnHeader().setOpaque(false);
+scroll.getColumnHeader().setBackground(alphaZero);
+}}
+
 * 参考リンク [#ef89274d]
 - [[JTableを半透明にする>Swing/TransparentTable]]
 - [[JTableHeaderを非表示にする>Swing/RemoveTableHeader]]

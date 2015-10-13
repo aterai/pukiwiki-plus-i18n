@@ -12,7 +12,7 @@ description: JSpinnerの値をパーセントで指定するように設定し�
 
 * サンプルコード [#k32fce56]
 #code(link){{
-JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, 1, 0.01));
+JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, 1, .01));
 JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner, "0%");
 editor.getTextField().setEditable(false);
 spinner.setEditor(editor);

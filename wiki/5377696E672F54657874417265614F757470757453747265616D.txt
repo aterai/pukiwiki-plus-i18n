@@ -23,28 +23,10 @@ class TextAreaOutputStream extends OutputStream {
     this.textArea = textArea;
   }
   @Override public void flush() throws IOException {
-    super.flush();
-    buf.flush();
-  }
-  @Override public void close() throws IOException {
-    super.close();
-    buf.close();
+    textArea.append(buf.toString("UTF-8"));
+    buf.reset();
   }
   @Override public void write(int b) throws IOException {
-    if (b == '\r') {
-      return;
-    }
-    if (b == '\n') {
-      final String text = buf.toString("UTF-8");
-      buf.reset();
-      EventQueue.invokeLater(new Runnable() {
-        @Override public void run() {
-          textArea.append(text + '\n');
-          textArea.setCaretPosition(textArea.getDocument().getLength());
-        }
-      });
-      return;
-    }
     buf.write(b);
   }
 }
@@ -53,7 +35,7 @@ class TextAreaOutputStream extends OutputStream {
 * 解説 [#if8895dc]
 - `TextAreaOutputStream`
 -- `ByteArrayOutputStream`を使用して、`JTextArea`に一行ずつ書き込みを行う
--- `System.setOut(new PrintStream(new TextAreaOutputStream(textArea), true, "UTF-8"));`のように標準出力ストリームに割り当てると、`System.out.printlen("xxxxx")`などが`JTextArea`に出力されるようになる
+-- これを`System.setOut(new PrintStream(new TextAreaOutputStream(textArea), true, "UTF-8"));`のように標準出力ストリームに割り当てると、`System.out.printlen("xxxxx")`などで改行文字が書き込まれたときに、バッファーの`flush()`が呼び出され、`textArea.append(buf.toString("UTF-8"));`で`JTextArea`に文字列が追記される
 - `TextAreaHandler`
 -- ログ出力を上記の`TextAreaOutputStream`などに割り当てるため、`StreamHandler`を継承する`TextAreaHandler`を作成し、`Logger#addHandler(...)`で設定
 -- `StreamHandler#setEncoding(...)`でエンコーディングを`UTF-8`に設定
