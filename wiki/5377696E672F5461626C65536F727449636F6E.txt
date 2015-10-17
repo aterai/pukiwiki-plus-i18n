@@ -12,20 +12,17 @@ description: JTableのソートアイコンを非表示にしたり、別の画�
 
 * サンプルコード [#i75d0d59]
 #code(link){{
+Icon emptyIcon = new Icon() {
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {}
+  @Override public int getIconWidth()  { return 0; }
+  @Override public int getIconHeight() { return 0; }
+};
 UIManager.put("Table.ascendingSortIcon",  new IconUIResource(emptyIcon));
 UIManager.put("Table.descendingSortIcon", new IconUIResource(emptyIcon));
 }}
 
 * 解説 [#x0397842]
 上記のサンプルでは、`UIManager`を使用して、以下のようなサイズ`0`の`Icon`や、透過`png`画像などを`JTable`のヘッダに表示されるソートアイコンを変更しています。
-
-#code{{
-private static final Icon emptyIcon = new Icon() {
-  @Override public void paintIcon(Component c, Graphics g, int x, int y) {}
-  @Override public int getIconWidth()  { return 0; }
-  @Override public int getIconHeight() { return 0; }
-};
-}}
 
 //* 参考リンク
 * コメント [#v8f4a771]
