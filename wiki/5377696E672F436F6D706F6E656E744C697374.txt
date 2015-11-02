@@ -31,9 +31,9 @@ public void addComp(final JComponent comp) {
 }}
 
 * 解説 [#b910d821]
-上記のサンプルでは、`Box.createVerticalBox`を使ってリスト状に並べています。この際、各コンポーネントの高さは変化せず、幅だけフレームサイズに追従するように、`JComponent#setMaximumSize`を設定しています。
+上記のサンプルでは、`Box.createVerticalBox()`で作成した`Box`にコンポーネントを追加してリスト状に並べています。この際、各コンポーネントの高さは変化せず、幅だけフレームサイズに追従するように、`JComponent#setMaximumSize`を設定しています。
 
-コンポーネントの高さの合計がフレームの高さより小さい場合は、下部に余白が出来るように、最後に`Box.createVerticalGlue`を追加しています。
+コンポーネントの高さの合計がフレームの高さより小さい場合は、下部に余白が出来るように、最後に`Box.createVerticalGlue()`を追加しています。
 
 // チュートリアルの[http://docs.oracle.com/javase/tutorial/uiswing/layout/spring.html How to Use SpringLayout (The Java™ Tutorials > Creating a GUI with JFC/Swing > Laying Out Components Within a Container)]にある[http://docs.oracle.com/javase/tutorial/uiswing/layout/examples/SpringUtilities.java SpringUtilities.java]を使用すると、サンプルのaddCompメソッドは以下のように書くこともできます。
 //#code{{

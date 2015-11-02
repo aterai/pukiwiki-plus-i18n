@@ -1,0 +1,65 @@
+---
+title: ComboBoxEditorにJLayerを設定し入力の妥当性を表示する
+tags: [JComboBox, ComboBoxEditor, JLayer, InputVerifier]
+author: aterai
+pubdate: 2015-11-02T00:47:14+09:00
+description: JComboBoxのComboBoxEditorにJLayerを設定し、その入力が妥当でない場合はアイコンを表示します。
+---
+* 概要 [#ie986195]
+`JComboBox`の`ComboBoxEditor`に`JLayer`を設定し、その入力が妥当でない場合はアイコンを表示します。
+
+#download(https://lh3.googleusercontent.com/-4gsRLzrKTE0/VjYu_qwZ8pI/AAAAAAAAOFk/t0JvVmjMcjI/s800-Ic42/ComboBoxEditorVerifier.png)
+
+* サンプルコード [#n4068000]
+#code(link){{
+comboBox.setEditable(true);
+comboBox.setInputVerifier(new LengthInputVerifier());
+comboBox.setEditor(new BasicComboBoxEditor() {
+  private Component editorComponent;
+  @Override public Component getEditorComponent() {
+    if (editorComponent == null) {
+      JTextComponent tc = (JTextComponent) super.getEditorComponent();
+      editorComponent = new JLayer<JTextComponent>(tc, new ValidationLayerUI());
+    }
+    return editorComponent;
+  }
+});
+}}
+
+* 解説 [#h682ed61]
+- `6`文字以上入力すると×アイコンを表示する`LayerUI`を作成
+-- アイコンは[http://www.oracle.com/technetwork/jp/articles/java/jlayer-439461-ja.html JLayerを使用したコンポーネントのデコレート方法]から引用
+-- 入力の妥当性の検証自体は、`JComboBox`に設定した`InputVerifier`を使用
+- `JComboBox`に`BasicComboBoxEditor#getEditorComponent()`をオーバーライドしてエディターコンポーネントを`JLayer`(上記の`LayerUI`を使用する)に変更した`ComboBoxEditor`を設定
+-- `BasicComboBoxEditor#createEditorComponent()`をオーバーライドすることでエディタの`JTextField`に`JLayer`をする場合は、`BasicComboBoxEditor#getItem()`などのメソッドも修正する
+-- `f.setName("ComboBox.textField");`とエディターに名前を設定しておくと、`NimbusLookAndFeel`などでフォーカス時の`Border`が正しく描画される
+- KBD{Enter}キーで`JComboBox`に編集中の文字列をアイテム追加する場合も`InputVerifier`で検証するように設定
+
+#code{{
+JComboBox<String> comboBox = new JComboBox<String>(model) {
+  @Override public void updateUI() {
+    super.updateUI();
+    final JComboBox<String> cb = this;
+    getActionMap().put("enterPressed", new AbstractAction() {
+      @Override public void actionPerformed(ActionEvent e) {
+        if (getInputVerifier().verify(cb)) {
+          String str = Objects.toString(getEditor().getItem(), "");
+          DefaultComboBoxModel<String> m =
+            (DefaultComboBoxModel<String>) getModel();
+          m.removeElement(str);
+          m.insertElementAt(str, 0);
+          if (m.getSize() > 10) {
+            m.removeElementAt(10);
+          }
+          setSelectedIndex(0);
+        }
+      }
+    });
+  }
+};
+}}
+
+//* 参考リンク
+* コメント [#kf8565bc]
+#comment
+#comment

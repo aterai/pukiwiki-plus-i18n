@@ -25,7 +25,7 @@ dialog.getRootPane().getActionMap().put("close-it", act);
 }}
 
 * 解説 [#f3c1a4c6]
-`JOptionPane.showMessageDialog()`メソッドで作成したダイアログは、KBD{Esc}キーを押すと閉じますが、`JDialog`の場合は閉じてくれません。そこで`JDialog`でもKBD{Esc}キーを押すと閉じるように`InputMap`などを使って設定します。
+`JOptionPane.showMessageDialog()`メソッドなどで作成したダイアログは、KBD{Esc}キーを押すと閉じますが、デフォルトの`JDialog`の場合はそのような設定はされていません。`JDialog`でKBD{Esc}キーを押すと閉じるようにするには、`InputMap`などを使ってアクションを設定する必要があります。
 
 * 参考リンク [#x13c393a]
 - [https://community.oracle.com/thread/1488562 Swing (Archive) - JDialog says ESC key is already registered--where?]

@@ -235,6 +235,27 @@ public class EvenOddTest {
 }
 }}
 
+* 正の数と負の数を反転 [#t6341d2a]
+- [https://community.oracle.com/thread/1253898 How do you Invert signed numbers? | Oracle Community]
+
+#code{{
+public class InvertSignedNumbersTest {
+  private static void print(int i) {
+    System.out.println(i);
+    System.out.format(" :%d\n", ~i + 1);
+    System.out.format(" :%d\n", (i > 0 ? -1 : 1) * Math.abs(i));
+    System.out.format(" :%d\n", ~--i);
+  }
+  public static void main(String... args) {
+    print(256);
+    print(-256);
+    print(Integer.MAX_VALUE);
+    print(Integer.MIN_VALUE + 1);
+    print(Integer.MIN_VALUE);
+  }
+}
+}}
+
 * コメント [#k546af30]
 #comment
 - [[Nitpick]]を[[Javadoc]]以下に分割して移動。 -- &user(aterai); &new{2011-11-11 (金) 16:57:12};

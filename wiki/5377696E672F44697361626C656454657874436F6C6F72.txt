@@ -22,8 +22,9 @@ JCheckBox cbx2 = new JCheckBox("<html>html tag</html>", true);
 -- `UIManager.put("CheckBox.disabledText", Color.RED)`
 --- `MetalLookAndFeel`でのみ？、反映される
 - `JCheckBox` + `html`
--- `<html>`タグを使った場合、`setEnable`にかかわらず、文字色は変更不可([http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4740519 Bug ID: 4740519 HTML JLabel not greyed out on setEnabled(false)])を利用
----参考:[https://community.oracle.com/thread/1359798 Swing - How to disable a JCheckBox and leave the text the original color?]のMichael_Dunn さんの投稿
+-- `JDK 1.7.0`で以下の動作は修正され、無効化で`HTML`文字列もグレーになる([http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4783068 Bug ID: 4783068 Components with HTML text should gray out the text when disabled])
+-- %%`<html>`タグを使った場合、`setEnable`にかかわらず、文字色は変更不可([http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4740519 Bug ID: 4740519 HTML JLabel not greyed out on setEnabled(false)])を利用%%
+--- 参考: [https://community.oracle.com/thread/1359798 Swing - How to disable a JCheckBox and leave the text the original color?]のMichael_Dunn さんの投稿
 --- [[Htmlを使ったJLabelとJEditorPaneの無効化>Swing/DisabledHtmlLabel]]
 - `JComboBox`
 -- `UIManager.put("ComboBox.disabledForeground", Color.GREEN);`
@@ -39,7 +40,12 @@ JCheckBox cbx2 = new JCheckBox("<html>html tag</html>", true);
 
 #ref(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLFT1HGFI/AAAAAAAAAXA/W5L-yIFc61E/s800/DisabledTextColor1.png)
 
-//* 参考リンク
+* 参考リンク [#p061dc63]
+- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4740519 Bug ID: 4740519 HTML JLabel not greyed out on setEnabled(false)]
+- [https://community.oracle.com/thread/1359798 Swing - How to disable a JCheckBox and leave the text the original color?]
+-[http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4783068 Bug ID: 4783068 Components with HTML text should gray out the text when disabled]
+- [[Htmlを使ったJLabelとJEditorPaneの無効化>Swing/DisabledHtmlLabel]]
+
 * コメント [#w6daf1af]
 #comment
 #comment

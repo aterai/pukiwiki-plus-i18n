@@ -30,9 +30,9 @@ private static JButton createToolbarButton(URL url) {
 }}
 
 * 解説 [#u7eef7af]
-`JToolBar`や`JMenuBar`のデフォルトレイアウトは`BoxLayout`なので、`Box.createGlue`を間に挟むことでボタンやメニューの右寄せが可能です。
+`JToolBar`や`JMenuBar`のデフォルトレイアウトは`BoxLayout`なので、`Box.createGlue()`を間に挟むことでボタンやメニューの右寄せが可能です。
 
-ボタンとボタンの間隔を固定値で空けたい場合は、`Box.createRigidArea`を使用します。`Box.createHorizontalStrut`や`Box.createVerticalStrut`を使うとツールバーが水平垂直に切り替わった時に、余計な余白が出来てしまうことがあります。
+ボタンとボタンの間隔を固定値で空けたい場合は、`Box.createRigidArea`を使用します。`Box.createHorizontalStrut(...)`や`Box.createVerticalStrut(...)`を使うとツールバーが水平垂直に切り替わった時に、余計な余白が出来てしまうことがあります。
 
 %%ツールバーが垂直になった場合のことも考えて、`VerticalGlue`も一緒に挿入していますが、特に問題ないようです。%%
 
