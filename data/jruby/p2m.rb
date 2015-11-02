@@ -68,7 +68,7 @@ class PukiWikiParser
     buf = []
 
     @FRONT_MATTER_REGEX ||= %r<
-      \A---[\r\n](.*)[\r\n]---[\r\n](.*)
+      \A---[\r\n](.*?)[\r\n]---[\r\n](.*)
     >mx
     if @FRONT_MATTER_REGEX =~ src.lstrip then
       frontmatter = $1
