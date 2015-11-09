@@ -40,7 +40,6 @@ class HtmlTableTransferHandler extends TransferHandler {
         cols = table.getSelectedColumns();
       } else {
         int colCount = table.getColumnCount();
-
         cols = new int[colCount];
         for (int counter = 0; counter < colCount; counter++) {
           cols[counter] = counter;
@@ -70,7 +69,7 @@ class HtmlTableTransferHandler extends TransferHandler {
             htmlBuf.append("  <td><time>" + v + "</time></td>\n");
           } else  if (obj instanceof Color) {
             htmlBuf.append(String.format(
-                "  <td style='background-color:#%06x'>&nbsp;</td>%n",
+                "  <td style='background-color:#%06X'>&nbsp;</td>%n",
                 ((Color) obj).getRGB() & 0xffffff));
           } else {
             htmlBuf.append("  <td>" + Objects.toString(obj, "") + "</td>\n");

@@ -112,7 +112,7 @@ class SaveHandler extends WindowAdapter implements DocumentListener, ActionListe
 -- システムメニューでウィンドウを閉じようとしたときに呼び出されるリスナーのメソッド
 --- `OS`が`Windows`なら、KBD{Alt+F4}キーを押す
 --- タイトルバー左上にあるアイコンをクリックし、ポップアップメニューで閉じるを選択
---- タイトルバー右上の×ボタンをクリック
+--- タイトルバー右上の`×`ボタンをクリック
 --- `JButton`や`JMenu`などをクリックした時に、対象となる`frame`の`windowClosing`を呼び出したい場合は、`frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));`
 -- `frame.dispose();`では、このメソッドは呼び出されない
 - `WindowAdapter#windowClosed(WindowEvent e)`

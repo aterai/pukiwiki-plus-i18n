@@ -18,7 +18,8 @@ tree.setInvokesStopCellEditing(true);
 * 解説 [#sef9f0f4]
 `JTree`のノード編集に割り込みが発生した場合の動作を変更します。
 
-- `tree.setInvokesStopCellEditing(false);` デフォルト
+- `tree.setInvokesStopCellEditing(false);`
+-- デフォルト
 -- 編集に割り込みが発生したとき、`JTree#cancelCellEditing()`が呼び出され、変更は破棄される
 - `tree.setInvokesStopCellEditing(true);`
 -- 編集に割り込みが発生したとき、`JTree#stopCellEditing()`が呼び出され、データが保存される
