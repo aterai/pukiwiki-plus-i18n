@@ -2,22 +2,22 @@
 javascript:(function() {
   var listener = function(e) {
     var info = document.createElement('div'),
-        animator,
-        style = info.style,
+        //animator,
+        style = info.style;
         //body = document.getElementsByTagName('body')[0],
         //body = document.body,
-        h    = 0;
+        //h    = 0;
     style.position = 'absolute';
     style.top = '0px';
-    style.left = "50%";
+    style.left = '50%';
     //style.left = '0px';
     style.width = '50%';
     style.height = '200px';
 
 
 
-      var numY = 0,
-          numX = 0;
+      var numY = 0;
+          //numX = 0;
       var obj = this;
       while( obj = obj.offsetParent ) {
           numY += obj.offsetTop;
@@ -27,17 +27,16 @@ javascript:(function() {
               break;
           }
       }
-      style.top = "" + numY + "px";
+      style.top = '' + numY + 'px';
 
       //alert(style.top);
-
       
     style.background = '#000';
     style.opacity = '0.6';
     style.color = '#FCFCFC';
     style.textAlign = 'left';
-    style.zIndex = 999;
-    info.addEventListener("click", function(e) {
+    style.zIndex = '999';
+    info.addEventListener('click', function(e) {
         this.parentNode.removeChild(info);
     }, false);
     //aaaaaaa
@@ -45,7 +44,7 @@ javascript:(function() {
       info.innerHTML = '<div style="margin:1em 0 0 2em">' + document.title + '<br />' + location.href + '</div>';
 
 
-      body.appendChild(info);
+      //body.appendChild(info);
       //this.parentNode.insertBefore(info, this);
       
 //     animator = setInterval(function() {
@@ -57,9 +56,9 @@ javascript:(function() {
 //         }
 //     }, 10);
   },
-  pre = document.getElementsByTagName("pre"),
+  pre = document.getElementsByTagName('pre'),
   i = 0, len = pre.length;
   for(; i<len; i++) {
-    pre[i].addEventListener("dblclick", listener, false);
+    pre[i].addEventListener('dblclick', listener, false);
   }
 }());

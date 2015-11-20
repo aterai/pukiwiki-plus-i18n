@@ -9,7 +9,7 @@
 //- [JavaScriptでHtmlのtable要素をCSVに変換する](http://ateraimemo.com/JavaScript/table2csv.html)
 (function() {
   function table2csv(table) {
-    var tr = table.getElementsByTagName('tr'), i, j, xoff, text, cells, td, array = [], lenr = tr.length, lenc;
+    var tr = table.getElementsByTagName('tr'), i, j, k, l, xoff, text, cells, td, array = [], lenr = tr.length, lenc;
     for(i=0; i<lenr; i++) {
       //前行のセルのcolspanで、すでにこの行は初期化されている場合がある
       array[i] = array[i] || [];
@@ -75,7 +75,7 @@
     //レイアウト目的の<table>は、無視する(例: <table role="presentation">, <table border="0">
     //console.log("== : " + (table[i].getAttribute('border')==0));
     //console.log("===: " + (table[i].getAttribute('border')===0));
-    if(table[i].getAttribute('role')==='presentation' || (table[i].getAttribute('border')==0)) continue;
+    if(table[i].getAttribute('role')==='presentation' || (table[i].getAttribute('border')==='0')) continue;
     table[i].addEventListener('dblclick', listener, false);
   }
 }());
