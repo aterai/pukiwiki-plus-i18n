@@ -115,12 +115,13 @@ class CancelAction extends AbstractAction {
 }}
 
 * 解説 [#k7f99d1c]
-以前の`SwingWorker.java`から一部メソッド名が変更されていますが、基本的な使い方は一緒のようです。
+`JDK 6`以前の`SwingWorker.java`から一部メソッド名が変更されていますが、基本的な使い方は一緒のようです。
 
-- `SwingWorker#execute()`メソッドで処理が開始され、`SwingWorker#doInBackground()`メソッドが、バックグラウンドのワーカースレッドで実行されます。
-- `EDT`で実行する必要のある処理(上記の例では処理中に`JTextArea`へのメッセージの書き出し)は、`SwingWorker#process()`メソッドをオーバーライドして`SwingWorker#publish()`メソッドで呼び出したり、`SwingWorker#firePropertyChange()`を使えば良いようです。
-- プログレスバーの処理には、`SwingWorker#setProgress(int)`が予め用意されているので、`SwingWorker#addPropertyChangeListener(ProgressListener)`を設定するだけで使用することが出来ます。
-- 実行中の処理のキャンセルは、`SwingWorker#cancel(boolean)`メソッドで行います。キャンセルされたかどうかは、`SwingWorker#isCancelled()`メソッドで知ることが出来ます。
+- `SwingWorker#execute()`メソッドで処理が開始され、`SwingWorker#doInBackground()`メソッドが、バックグラウンドのワーカースレッドで実行される
+- `EDT`で実行する必要のある処理(上記の例では処理中に`JTextArea`へのメッセージの書き出し)は、`SwingWorker#process()`メソッドをオーバーライドして`SwingWorker#publish()`メソッドで呼び出したり、`SwingWorker#firePropertyChange()`を使用する
+- プログレスバーの処理には、`SwingWorker#setProgress(int)`が予め用意されているので、`SwingWorker#addPropertyChangeListener(ProgressListener)`を設定するだけで使用することが可能
+- `SwingWorker#setProgress(int)`で設定できるのは`0`から`100`で固定
+- 実行中の処理のキャンセルは、`SwingWorker#cancel(boolean)`メソッドで行います。キャンセルされたかどうかは、`SwingWorker#isCancelled()`メソッドで判定可能
 
 ----
 現在のスレッドがイベントディスパッチスレッド(以下`EDT`)かどうかを調べる`EventQueue.isDispatchThread()`を、このサンプルで使用すると以下のようになります。

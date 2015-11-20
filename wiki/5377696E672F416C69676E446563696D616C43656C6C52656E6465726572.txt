@@ -1,0 +1,63 @@
+---
+title: JTableのセル内で小数点揃え
+tags: [JTable, JTextPane, TabSet]
+author: aterai
+pubdate: 2015-11-16T00:43:30+09:00
+description: JTableのセルレンダーとしてTabSetを設定したJTextPaneを使用し、数値の小数点揃えを行います。
+---
+* 概要 [#o738da9f]
+`JTable`のセルレンダーとして`TabSet`を設定した`JTextPane`を使用し、数値の小数点揃えを行います。
+
+#download(https://lh3.googleusercontent.com/-IFQyVmxHhh0/VkilPqJfutI/AAAAAAAAOGk/ZzzXd8SaK_g/s800-Ic42/AlignDecimalCellRenderer.png)
+
+* サンプルコード [#k9ba09c7]
+#code(link){{
+class AlignDecimalCellRenderer implements TableCellRenderer {
+  private final JPanel p = new JPanel(new BorderLayout());
+  private final JTextPane textPane = new JTextPane() {
+    @Override public Dimension getPreferredSize() {
+      Dimension d = super.getPreferredSize();
+      d.width = 60;
+      return d;
+    }
+  };
+  protected AlignDecimalCellRenderer() {
+    textPane.setOpaque(false);
+    SimpleAttributeSet attr = new SimpleAttributeSet();
+    StyleConstants.setTabSet(attr, new TabSet(new TabStop[] {
+        new TabStop(25f, TabStop.ALIGN_DECIMAL, TabStop.LEAD_NONE)
+    }));
+    textPane.setParagraphAttributes(attr, false);
+    p.add(textPane, BorderLayout.EAST);
+  }
+  @Override public Component getTableCellRendererComponent(
+      JTable table, Object value, boolean isSelected, boolean hasFocus,
+      int row, int column) {
+    textPane.setFont(table.getFont());
+    textPane.setText("\t" + Objects.toString(value, ""));
+    if (isSelected) {
+      textPane.setForeground(table.getSelectionForeground());
+      p.setBackground(table.getSelectionBackground());
+    } else {
+      textPane.setForeground(table.getForeground());
+      p.setBackground(table.getBackground());
+    }
+    return p;
+  }
+}
+}}
+
+* 解説 [#ub010f86]
+このサンプルでは、以下のようなセルレンダラーを作成して、少数点揃えを行っています。
+
+- 小数点揃えを行う`TabStop.ALIGN_DECIMAL`を設定した`TabSet`を作成し、これを`JTextPane`に適用
+- `BorderLayout`を使用する`JPanel`の右側に、推奨幅を固定した`JTextPane`を配置
+- この`JPanel`をセルコンポーネントとして使用するセルレンダラーを作成
+- `TableCellRenderer#getTableCellRendererComponent(...)`メソッドでセルコンポーネントを返す際、`JTextPane`には実際の数値の前にタブ`\t`を挿入することで、指定した列の数値を小数点揃えで表示
+
+* 参考リンク [#w912fcae]
+- [[JTextPaneにTabSetを設定してTabStopの文字列揃えをテストする>Swing/TabSet]]
+
+* コメント [#n5e0c03b]
+#comment
+#comment
