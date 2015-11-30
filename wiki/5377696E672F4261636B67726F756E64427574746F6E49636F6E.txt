@@ -93,7 +93,8 @@ private static JComponent makeBreadcrumbList(
 - `JToggleButton#contains(...)`をオーバーライドして、非矩形アイコンの外側がマウスに反応しないように設定
 
 - 注:
--- アイコンの三角形部分に左揃えした文字列や長い文字列などが被らないようにするため、`JToggleButton`には`EmptyBorder`で開始終了辺に余白を設定(最初の`JToggleButton`の開始辺だけは三角形の高さ分の余白は必要ない)している
+-- アイコンの三角形部分に左揃えした文字列や長い文字列などが被らないようにするため、`JToggleButton`には`EmptyBorder`で開始辺と終了辺に余白を設定している
+-- 最初の`JToggleButton`の開始辺だけは三角形の高さ分の余白は必要ない
 
 * 参考リンク [#y82d0821]
 - [[FlowLayoutでボタンを重ねてパンくずリストを作成する>Swing/BreadcrumbList]]

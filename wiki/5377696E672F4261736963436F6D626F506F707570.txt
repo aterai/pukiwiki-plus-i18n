@@ -12,33 +12,42 @@ description: JComboBoxを使ってスクロール可能なポップアップメ�
 
 * サンプルコード [#q28e6ef6]
 #code(link){{
-JComboBox combo = new JComboBox(strArray);
-BasicComboPopup popup = new BasicComboPopup(combo) {
-  @Override public boolean isFocusable() {
-    return true;
+class EditorComboPopup extends BasicComboPopup {
+  private final JTextComponent textArea;
+  private transient MouseAdapter listener;
+  protected EditorComboPopup(JTextComponent textArea, JComboBox cb) {
+    super(cb);
+    this.textArea = textArea;
   }
-  private MouseAdapter listener = null;
   @Override protected void installListListeners() {
     super.installListListeners();
     listener = new MouseAdapter() {
       @Override public void mouseClicked(MouseEvent e) {
         hide();
-        System.out.println(comboBox.getSelectedItem());
-        append((String) combo.getSelectedItem());
+        String str = (String) comboBox.getSelectedItem();
+        try {
+          Document doc = textArea.getDocument();
+          doc.insertString(textArea.getCaretPosition(), str, null);
+        } catch (BadLocationException ex) {
+          ex.printStackTrace();
+        }
       }
     };
-    if (listener != null) {
+    if (Objects.nonNull(list)) {
       list.addMouseListener(listener);
     }
   }
   @Override public void uninstallingUI() {
-    if (listener != null) {
+    if (Objects.nonNull(listener)) {
       list.removeMouseListener(listener);
       listener = null;
     }
     super.uninstallingUI();
   }
-};
+  @Override public boolean isFocusable() {
+    return true;
+  }
+}
 }}
 
 * 解説 [#z7e217c3]

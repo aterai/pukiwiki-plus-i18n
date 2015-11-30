@@ -95,7 +95,7 @@ class CloseableTabbedPaneLayerUI extends LayerUI<JTabbedPane> {
 --- [[JTabbedPaneにタブを閉じるアイコンを追加>Swing/TabWithCloseIcon]]では、`BasicTabbedPaneUI#createLayoutManager()`をオーバーライドして、独自の`TabbedPaneLayout`で右端に☓アイコンを描画
 -- タブの余白は`UIManager.put("TabbedPane.tabInsets", new Insets(2, 18, 2, 18));`で設定
 --- この余白は、`NimbusLookAndFeel`などでは無効
---- 余白が取れないほどタブが短くなったら、ボタンがタイトルに重なってしまう
+--- 左右の余白の合計よりタブが短くなる場合、ボタンがタイトルに重なってしまう
 
 * 参考リンク [#rc9a4279]
 - [http://stackoverflow.com/questions/24634047/closeable-jtabbedpane-alignment-of-the-close-button java - Closeable JTabbedPane - alignment of the close button - Stack Overflow]

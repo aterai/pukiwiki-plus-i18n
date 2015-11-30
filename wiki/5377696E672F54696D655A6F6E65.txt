@@ -15,21 +15,27 @@ description: TimeZoneなどを使って、日付の表示を変換します。
 final SimpleDateFormat format =
   new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.US);
 final DateFormat df = DateFormat.getDateTimeInstance();
-//field.setText("Mon, 19 Apr 2004 16:31:41 +0900");
-outf.setEditable(false);
 df.setTimeZone(TimeZone.getTimeZone("JST"));
-JButton button = new JButton(new AbstractAction("Convert") {
+//field.setText("Mon, 19 Apr 2004 16:31:41 +0900");
+JPanel bp = new JPanel(new GridLayout(1, 0, 2, 2));
+bp.add(new JButton(new AbstractAction("format") {
+  @Override public void actionPerformed(ActionEvent e) {
+    field.setText(format.format(new Date()));
+  }
+}));
+bp.add(new JButton(new AbstractAction("parse") {
   @Override public void actionPerformed(ActionEvent e) {
     String str = field.getText().trim();
     ParsePosition pp = new ParsePosition(0);
     Date date = format.parse(str, pp);
-    outf.setText((date != null) ? df.format(date) : "error");
+    String o = Objects.nonNull(date) ? df.format(date) : "error";
+    textArea.append(o + "\n");
   }
-});
+}));
 }}
 
 * 解説 [#j9b9048c]
-上記のサンプルは、メールなどの日付文字列を、一旦`Date`に変換し、デフォルトロケールのフォーマットスタイルに変換しています。
+上記のサンプルは、`Locale.US`(メールなど)の日付文字列を、`SimpleDateFormat#parse(...)`メソッドを使用して一旦`Date`に変換し、`DateFormat#format(...)`メソッドでデフォルトロケール`TimeZone`のフォーマットスタイルに変換しています。
 
 ----
 - `Java 1.7.0`から、タイムゾーンに`X`で`ISO 8601`形式が使用できるようになった

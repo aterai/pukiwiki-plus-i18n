@@ -61,7 +61,7 @@ class DeleteButtonEditor extends DeleteButton implements TableCellEditor {
 %%上記のサンプルでは、ボタンがクリックされたときの削除自体は、`JTable`に追加したマウスリスナーで行っており、セルエディタやセルレンダラーに使っている`JButton`は表示のためのダミーです。%%
 
 - セルレンダラーに使っている`JButton`は表示のためのダミー
-- セルエディタとして使用する`JButton`に`ActionListener`を追加し、クリックされたら`AbstractCellEditor`からコピーした`fireEditingStopped()`メソッドで編集を終了し、`TableModel`から行を削除
+- セルエディタとして使用する`JButton`に`ActionListener`を追加し、この`JButton`がクリックされたら`AbstractCellEditor`からコピーした`fireEditingStopped()`メソッドでセルの編集を終了し、`TableModel`から行を削除
 -- セルレンダラ、セルエディタがコンポーネント(もしくは`DefaultCellEditor`)を継承していないと、`JTable`の`LookAndFeel`を変更てもセルレンダラ、セルエディタの`updateUI()`が呼ばれない
 --- `JTable#updateUI()`、`Java 1.6.0`の`JTable#updateSubComponentUI(...)`、`Java 1.7.0`の`SwingUtilities#updateRendererOrEditorUI(Object)`を参照
 -- `AbstractCellEditor`を継承していても`updateUI()`は呼ばれない、`DefaultCellEditor`は継承しづらい…

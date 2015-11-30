@@ -23,8 +23,8 @@ description: JListをドラッグ＆ドロップして、項目を入れ替え�
 }
 private void initTargetLine(Point p) {
   Rectangle2D testArea = new Rectangle2D.Float();
-  int cellHeight = (int) getCellBounds(0, 0).getHeight();
-  int lineWidht  = (int) getCellBounds(0, 0).getWidth();
+  int cellHeight = getCellBounds(0, 0).height;
+  int lineWidht  = getCellBounds(0, 0).width;
   int lineHeight = 2;
   int modelSize  = getModel().getSize();
   targetIndex = -1;

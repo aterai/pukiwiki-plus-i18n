@@ -12,13 +12,15 @@ description: JComboBoxのドロップダウンリストが表示されたとき�
 
 * サンプルコード [#v4b8bfc8]
 #code(link){{
-class MinWidthPopupMenuListener implements PopupMenuListener {
-  private static final int POPUP_MIN_WIDTH = 320;
-  private boolean adjusting = false;
+class WidePopupMenuListener implements PopupMenuListener {
+  private static final int POPUP_MIN_WIDTH = 300;
+  private boolean adjusting;
   @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
     JComboBox combo = (JComboBox) e.getSource();
-    Dimension size  = combo.getSize();
-    if (size.width >= POPUP_MIN_WIDTH) return;
+    Dimension size = combo.getSize();
+    if (size.width >= POPUP_MIN_WIDTH) {
+      return;
+    }
     if (!adjusting) {
       adjusting = true;
       combo.setSize(POPUP_MIN_WIDTH, size.height);

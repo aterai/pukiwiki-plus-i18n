@@ -45,7 +45,7 @@ private boolean isDropableTableIntersection(TransferSupport info) {
 }}
 
 * 解説 [#e84166f0]
-上記のサンプルでは、異なる`JInternalFrame`に配置した`JTable`の行をドラッグ＆ドロップで入れ替えています。使用する`TransferHandler`は[[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]のものとほぼ同じですが、前面の`JInternalFrame`内にある`JTable`からドラッグした場合、その`JTableHeader`や`JInternalFrame`のタイトルバー上でも、背面にある`JInternalFrame`に反応してドロップ可能になってしまうため、`TransferHandler#canImport(...)`をオーバーライドして、ドラッグ元とドロップ先の`JInternalFrame`の共通部分では背面にドロップ出来ないように変更しています。
+上記のサンプルでは、異なる`JInternalFrame`に配置した`JTable`の行をドラッグ＆ドロップで入れ替えています。使用する`TransferHandler`は[[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]のものとほぼ同じですが、前面の`JInternalFrame`内にある`JTable`からドラッグを開始した場合、その`JTableHeader`や`JInternalFrame`のタイトルバー上でも、背面にある`JInternalFrame`に反応してドロップ可能になってしまうため、`TransferHandler#canImport(...)`をオーバーライドして、ドラッグ元とドロップ先の`JInternalFrame`の共通部分では背面にドロップ出来ないように変更しています。
 
 * 参考リンク [#yecd2047]
 - [[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]

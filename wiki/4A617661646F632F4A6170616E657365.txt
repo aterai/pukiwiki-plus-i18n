@@ -28,6 +28,20 @@ description: Java クラスドキュメントで修正した方が良さそう�
 - メモ
 -- `clipped to the minimum/maximum`は、`int clip(int num, int min, int max) { return Math.max(min, Math.min(num, max)); }`の意味で、クリップボード転送は無関係のはず
 
+** [#h58f8eee]
+- http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/HyperlinkEvent.EventType.html
+-- ENTERED 入力されたことを示すタイプです。
+-- EXITED 終了したことを示すタイプです。
+-- ACTIVATED アクティブになっていることを示すタイプです。
+- http://docs.oracle.com/javase/8/docs/api/javax/swing/event/HyperlinkEvent.EventType.html
+-- ENTERED Entered type.
+-- EXITED Exited type.
+-- ACTIVATED Activated type.
+- 変更案
+-- ENTERED (リンクに)入ったことを示すタイプです。
+-- EXITED (リンクから)出たことを示すタイプです。
+-- ACTIVATED (リンクが)起動したことを示すタイプです。
+
 ** このメソッドは推奨されません。 [#g401f3aa]
 - http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultListModel.html#getElementAt-int-
 -- 注: このメソッドは推奨されません。推奨されるメソッドはget(int)です。これは1.2のCollections Frameworkで定義されたListインタフェースを実装します。
