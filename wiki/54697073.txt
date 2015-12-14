@@ -10,21 +10,21 @@ pubdate: 2011-01-25
 * 概要 [#y77453b1]
 `JDK`のインストール、`Java Swing`のデバッグ方法、環境変数で実行する`java.exe`を切り替えるバッチファイルなどのメモの一覧です。
 
-* Ubuntu に、oracle-java7 をインストール [#o7e2c25c]
+* Ubuntu に、oracle-java8 をインストール [#o7e2c25c]
 - `apt-get install`でインストール
 -- [http://www.webupd8.org/2012/01/install-oracle-java-jdk-7-in-ubuntu-via.html Install Oracle Java 7 in Ubuntu via PPA Repository ~ Web Upd8: Ubuntu / Linux blog]
 
  sudo add-apt-repository ppa:webupd8team/java
  sudo apt-get update
- sudo apt-get install oracle-java7-installer
+ sudo apt-get install oracle-java8-installer
  sudo update-alternatives --config javac
 
 - `tar.gz`をダウンロードしてインストール
--- [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java SE Downloads]から、`jdk-7uxx-linux-xxxx.tar.gz` をダウンロード
+-- [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java SE Downloads]から、`jdk-8uxx-linux-xxxx.tar.gz` をダウンロード
 
- sudo tar zxvf jdk-7u11-linux-i586.tar.gz -C /usr/lib/jvm
+ sudo tar zxvf jdk-8u66-linux-i586.tar.gz -C /usr/lib/jvm
 
- export JAVA_HOME=/usr/lib/jvm/jdk1.7.0_11
+ export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_66
  export PATH=$PATH:$JAVA_HOME/bin
 
 * Swing debug agent[#l59af361]

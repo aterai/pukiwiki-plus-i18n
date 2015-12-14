@@ -90,14 +90,14 @@ class HeaderCheckBoxHandler implements TableModelListener {
 * 解説 [#z0c8a08b]
 上記のサンプルでは、`0`行目の値(`boolean`)の変更、行の追加、削除を受け取って`JTableHeader`のチェック状態を更新する`TableModelListener`を作成して、これを`TableModel#addTableModelListener(...)`で設定しています。
 
-- `e.getType() == TableModelEvent.DELETE`: 行の削除
+- 行の削除: `e.getType() == TableModelEvent.DELETE`
 -- 削除によって行数が`0`になった場合は、`JTableHeader`は未選択状態
 -- `JTableHeader`が選択状態、または未選択状態の場合、削除によってその状態は変化しない
 -- `JTableHeader`が不定状態の場合は、全行を検索して選択状態を変更するかどうかを調査する
-- `e.getType() == TableModelEvent.INSERT`: 行の追加
+- 行の追加: `e.getType() == TableModelEvent.INSERT`
 -- `JTableHeader`がすでに不定状態の場合は、追加される行の選択状態にかかわらず、その状態は変化しない
 -- `JTableHeader`が不定状態でない場合は、追加される行と`JTableHeader`の選択状態を合わせて調査する
-- `e.getType() == TableModelEvent.UPDATE`: `0`列目の更新
+- 行(`0`列目)の更新: `e.getType() == TableModelEvent.UPDATE`
 -- `JTableHeader`が不定状態の場合は、全行を検索して選択状態を変更するかどうかを調査する
 -- `JTableHeader`が不定状態でない場合は、この更新によって`JTableHeader`は不定状態になる
 

@@ -16,15 +16,13 @@ button1.getRootPane().setDefaultButton(button1);
 }}
 
 * 解説 [#uc51d08d]
-上記のサンプルでは、`JRootPane#setDefaultButton`メソッドを使用して、デフォルトボタンを切り替えています。
+上記のサンプルでは、`JRootPane#setDefaultButton()`メソッドを使用して、デフォルトボタンを切り替えています。
 
 - フォーカスが設定したデフォルトボタンにない場合でも、KBD{Enter}キーを押したときに起動
 -- ただし、ルート区画内に`JTextPane`やフォーカスのある`JButton`などの起動イベントを消費する別のコンポーネントがある場合は除く
 --- `JTextField`内にフォーカスがある場合は、KBD{Enter}キーを押したときに起動される
 --- `JTextArea`内にフォーカスがある場合は、KBD{Enter}キーを押しても起動されない(改行が入力される)
-
-----
-デフォルトボタンの設定を削除する場合は、`JRootPane#setDefaultButton`に`null`を設定します。
+- デフォルトボタンの設定を削除する場合は、`JRootPane#setDefaultButton(null)`を使用する
 
 * 参考リンク [#u64aef30]
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/JRootPane.html#setDefaultButton(javax.swing.JButton) JRootPane#setDefaultButton(javax.swing.JButton)]

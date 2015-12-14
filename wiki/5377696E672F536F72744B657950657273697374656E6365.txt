@@ -29,25 +29,13 @@ try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStrea
 
 - 注:
 -- `TableModel`は、別途、[[JTableのモデルをXMLファイルで保存、復元する>Swing/PersistenceDelegate]]を使用
--- ヘッダカラムの幅や順序には対応していない
+-- このサンプルでは、ヘッダカラムの幅や順序には対応していない
 --- メモ: [http://wiki.byte-welt.net/wiki/JTable_Inhalte_speichern JTable Inhalte speichern – Byte-Welt Wiki]
---- または、以下のような`DefaultPersistenceDelegate`を使ってヘッダカラムの幅や順序を保存する方法がある
-
-#code{{
-class DefaultTableColumnModelPersistenceDelegate extends DefaultPersistenceDelegate {
-  @Override protected void initialize(Class<?> type, Object oldInstance, Object newInstance, Encoder encoder) {
-    super.initialize(type, oldInstance, newInstance, encoder);
-    DefaultTableColumnModel m = (DefaultTableColumnModel) oldInstance;
-    for (int col = 0; col < m.getColumnCount(); col++) {
-      Object[] o = {m.getColumn(col)};
-      encoder.writeStatement(new Statement(oldInstance, "addColumn", o));
-    }
-  }
-}
-}}
+--- または、[[TableColumnModelをXMLファイルで保存、復元する>Swing/ColumnModelPersistence]]のような`DefaultPersistenceDelegate`を使ってヘッダカラムの幅や順序を保存する方法がある
 
 * 参考リンク [#bd8de50f]
 - [[JTableのモデルをXMLファイルで保存、復元する>Swing/PersistenceDelegate]]
+- [[TableColumnModelをXMLファイルで保存、復元する>Swing/ColumnModelPersistence]]
 
 * コメント [#m7e19549]
 #comment

@@ -35,7 +35,7 @@ JTable table = new JTable(model) {
 }}
 
 * 解説 [#hd518363]
-上記のサンプルでは、`JTable`の`prepareEditor`、`prepareRenderer`をオーバーライドしてセルエディタや行の背景色を変更しています。
+上記のサンプルでは、`JTable`の`prepareEditor`、`prepareRenderer`をオーバーライドして編集中のセルエディタ(`JCheckBox`)や同じ行の背景色を変更しています。
 
 ----
 チェックボックスがクリックされてモデルが更新されると、デフォルトでは対応するセルのみ再描画されます。このサンプルでは対象セルだけではなく、そのセルが存在する行全体の背景色を変更しているので、`TableModelListener`でモデルの更新を検出し、以下のように`JTable#repaint(...)`を使って行を再描画しています。

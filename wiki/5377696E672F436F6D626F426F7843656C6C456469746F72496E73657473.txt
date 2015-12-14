@@ -18,15 +18,14 @@ class ComboBoxPanel extends JPanel {
   public ComboBoxPanel() {
     super(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
-
     c.weightx = 1.0;
-    c.insets = new Insets(0, 10, 0, 10);
-    c.fill = GridBagConstraints.HORIZONTAL;
+    c.insets  = new Insets(0, 10, 0, 10);
+    c.fill    = GridBagConstraints.HORIZONTAL;
+    add(comboBox, c);
 
     comboBox.setEditable(true);
-    setOpaque(true);
-    add(comboBox, c);
     comboBox.setSelectedIndex(0);
+    setOpaque(true);
   }
 }
 class ComboBoxCellRenderer extends ComboBoxPanel implements TableCellRenderer {
