@@ -37,15 +37,15 @@ field2.setBackground(BG_COLOR);
 * 解説 [#p23f641d]
 上記のサンプルでは、それぞれアルファ値を使った半透明の背景色を`JTextField`に設定しています。
 
-- 上: `field0`
+- `0`: `setOpaque(true)`
 -- 文字列を選択すると、再描画がおかしくなる(残像が表示される)
--- `NimbusLookAndFeel`では、再現しない
-- 中: `field1`
+-- `NimbusLookAndFeel`では、発生しない
+- `1`: `setOpaque(false)`
 -- `setOpaque(false)`とすると、背景色は描画されない
 -- `NimbusLookAndFeel`では、背景色が描画される
 --- 参考: [http://weblogs.java.net/blog/ljnelson/archive/2008/07/nimbus_and_opac.html Laird Nelson's Blog: Nimbus and Opacity]
-- 下: `field2`
--- `setOpaque(false)`とし、`paintComponent`をオーバーライドして背景色を描画
+- `2`: `1 + paintComponent`
+-- `setOpaque(false)`を設定、かつ`paintComponent`をオーバーライドして背景色を描画
 
 ----
 - `NimbusLookAndFeel`でのスクリーンショット
