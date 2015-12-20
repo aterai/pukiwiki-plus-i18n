@@ -92,8 +92,9 @@ public class GooglePrettifyRhinoTest {
 //     String version = factory.getEngineVersion();
 //     System.out.printf("\tScript Engine: %s (%s)\n", name, version);
 
-    //String p = "http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js";
-    String p = "http://google-code-prettify.googlecode.com/svn-history/r120/trunk/src/prettify.js";
+    //String p = "https://raw.githubusercontent.com/google/code-prettify/master/src/prettify.js";
+    //String p = "http://google-code-prettify.googlecode.com/svn-history/r120/trunk/src/prettify.js";
+    String p = "https://raw.githubusercontent.com/google/code-prettify/f5ad44e3253f1bc8e288477a36b2ce5972e8e161/src/prettify.js";
 
     try (Reader reader = new BufferedReader(new InputStreamReader(new URL(p).openStream()))) {
       engine.eval("var window={}, navigator=null;");
@@ -153,7 +154,7 @@ public static String prettifyOne(String txt) {
   txt = txt.replace("\n", "<br />"); //???
   String str = "";
 
-  //String p = "http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js";
+  //String p = "https://raw.githubusercontent.com/google/code-prettify/master/src/prettify.js";
   //String q = "http://www.envjs.com/dist/env.rhino.1.2.js";
   //try (Reader reader1 = new BufferedReader(new InputStreamReader(new URL(p).openStream()));
   //     Reader reader2 = new BufferedReader(new InputStreamReader(new URL(q).openStream()))) {
@@ -249,7 +250,7 @@ cx.evaluateString(scope, printFunction, "print", 1, null);
 }}
 
 ** HTMLPreElement [#l0271013]
-[http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js prettify.js(最新)]では、`prettyPrintOne`が、以下のように`DOM`を使用するのでエラーになる。
+[https://github.com/google/code-prettify/blob/master/src/prettify.js prettify.js(最新)]では、`prettyPrintOne`が、以下のように`DOM`を使用するのでエラーになる。
 
  var container = document.createElement('pre');
  // This could cause images to load and onload listeners to fire.
@@ -293,7 +294,7 @@ __extend__(HTMLPreElement.prototype, {
 
 * コメント [#q5757df6]
 #comment
-- 新しい`prettify.js`(`prettify-1-Jun-2011.tar.bz2`)では、`prettyPrintOne`の内部で`Document`型のオブジェクトが使用されるようになっているので`Rhino`だけ(`Envjs`とか使えば良さそうなんだけど…)では実行できない。このため上記のサンプルでは古い`prettify.js`(http://google-code-prettify.googlecode.com/svn-history/r120/trunk/src/prettify.js)を参照するように変更。 -- &user(aterai); &new{2012-03-09 (金) 16:58:03};
+- 新しい`prettify.js`(`prettify-1-Jun-2011.tar.bz2`、[https://github.com/google/code-prettify/blob/0b3341b3e9105ddaecf93cc632284f8db7994faf/src/prettify.js First pass at a way to dodge newline issues in IE.]の修正が入っているバージョン)では、`prettyPrintOne`の内部で`Document`型のオブジェクトが使用されるようになっているので`Rhino`だけ(`Envjs`とか使えば良さそうなんだけど…)では実行できない。このため上記のサンプルでは古い`prettify.js`([https://github.com/google/code-prettify/blob/f5ad44e3253f1bc8e288477a36b2ce5972e8e161/src/prettify.js Fixed prettyPrintOne by removing requirement that a job have a source node. Fixes issues 133 and 134.])を参照するように変更。 -- &user(aterai); &new{2012-03-09 (金) 16:58:03};
 - `JEditorPane`でのプレビューを追加。 -- &user(aterai); &new{2012-05-28 (月) 17:45:14};
 - `1.8.0`の`Nashorn`を使うとなぜか文字のハイライトがずれる？ -- &user(aterai); &new{2013-07-21 (日) 00:21:18};
 -- 何が原因(`regex`あたりかも？)だったのかがよく分からないけど、[http://download.java.net/jdk8/changes/jdk8-b100.html jdk8-b100]では正常に動作している。 -- &user(aterai); &new{2013-08-01 (木) 19:20:09};

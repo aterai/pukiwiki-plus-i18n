@@ -44,7 +44,7 @@ class CustomUndoPlainDocument extends PlainDocument {
 
 * 解説 [#c90ce0a6]
 - 上: `Default`
--- `JTextComponent#setText(String)`や、文字列を選択してペーストした場合、`Document#replace(...)`で実行される`Document#remove(...)`と`Document#insertString(...)`が別々に`UndoManager`に登録される仕様?なので、二回`Undo`しないとペースト前の状態に戻らない
+-- `JTextComponent#setText(String)`や、文字列を選択してペーストした場合、`Document#replace(...)`で実行される`Document#remove(...)`と`Document#insertString(...)`が別々に`UndoManager`に登録される仕様なので、二回`Undo`しないとペースト前の状態まで戻らない
 - 中: `Document#replace()+AbstractDocument#fireUndoableEditUpdate()`
 -- `Document#replace(...)`をオーバーライドし、%%直接`UndoManager#undoableEditHappened(...)`を使って取り消し可能な編集を登録%% `setText(...)`での文字列の削除と追加を`CompoundEdit`にまとめる
 -- %%実際の置換は、`removeUndoableEditListener(...)`で`UndoManager`を一時的に削除した後に行う(直後に`addUndoableEditListener()`で再登録)%%
