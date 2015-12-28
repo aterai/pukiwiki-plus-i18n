@@ -66,7 +66,7 @@ class HighlightRenderer extends DefaultTableCellRenderer {
 セルレンダラーに`MouseListener`、`MouseMotionListener`を追加し、マウスカーソルが乗っているセルの色を変更しています。
 
 ----
-`JTable#prepareRenderer`をオーバーライドする場合も、同様の方法が使用できます。
+`JTable#prepareRenderer(...)`メソッドをオーバーライドする方法もあります。
 
 #code{{
 class HighlightableTable extends JTable {

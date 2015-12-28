@@ -12,15 +12,14 @@ description: ノード毎に内容の異なるJToolTipを表示するJTreeを作
 
 * サンプルコード [#nff3084c]
 #code(link){{
-//tree = new JTree();
 tree = new JTree() {
   @Override public String getToolTipText(MouseEvent e) {
     Object o = null;
     TreePath path = getPathForLocation(e.getX(), e.getY());
-    if (path != null) {
+    if (Objects.nonNull(path)) {
       o = path.getLastPathComponent();
     }
-    return (o == null) ? null : o.toString();
+    return Objects.toString(o, "getToolTipText");
   }
 };
 //tree.setCellRenderer(new MyTreeCellRenderer(tree.getCellRenderer()));
@@ -41,7 +40,7 @@ class MyTreeCellRenderer implements TreeCellRenderer {
         boolean expanded, boolean leaf, int row, boolean hasFocus) {
     JComponent c = (JComponent) renderer.getTreeCellRendererComponent(
       tree, value, isSelected, expanded, leaf, row, hasFocus);
-    c.setToolTipText((value == null) ? null : value.toString());
+    c.setToolTipText(Objects.nonNull(value) ? value.toString() : null);
     return c;
   }
 }

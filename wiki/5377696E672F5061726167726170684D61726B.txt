@@ -71,7 +71,7 @@ class MyParagraphView extends ParagraphView {
 * 解説 [#y0783bd1]
 `StyledEditorKit`を継承する`EditorKit`を作成し、これを`JEditorPane#setEditorKit`メソッドで、`JEditorPane`に設定しています。
 
-この`EditorKit`は、`Element`がパラグラフ(`AbstractDocument.ParagraphElementName`)の場合、独自の改行記号を追加で描画する`View`を返す`ViewFactory`を生成しています。
+この`EditorKit`は、`Element`がパラグラフ(`AbstractDocument.ParagraphElementName`)の場合、改行記号を末尾に追加で描画する`View`を返す`ViewFactory`を生成します。
 
 * 参考リンク [#vccc314a]
 - [https://community.oracle.com/thread/1374478 Swing - JTextPane View Problem]

@@ -43,6 +43,7 @@ JButton button = new JButton(new AbstractAction("フレームのタイトルを�
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/JComponent.html#getTopLevelAncestor() JComponent#getTopLevelAncestor()]
 -- 自身の親コンテナ(`java.awt.Window`または`java.awt.Applet`)が返る
 -- 親コンテナが無い場合は、`null`
+-- `java.awt.Window`または`java.awt.Applet`から呼ばれた場合は、そのまま自身が返る
 -- 下のコメント参照
 
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/JOptionPane.html#getFrameForComponent(java.awt.Component) JOptionPane.getFrameForComponent(Component parentComponent)]

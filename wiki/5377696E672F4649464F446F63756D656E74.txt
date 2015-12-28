@@ -51,9 +51,9 @@ final Timer timer = new Timer(100, new ActionListener() {
 
 ----
 - `DocumentListener`ではなく、以下のような`DocumentFilter`を設定する方法もある
- ((AbstractDocument) jta.getDocument()).setDocumentFilter(new FIFODocumentFilter());
 
 #code{{
+//((AbstractDocument) jta.getDocument()).setDocumentFilter(new FIFODocumentFilter());
 class FIFODocumentFilter extends DocumentFilter {
   private static final int MAX_LINES = 10;
   @Override public void insertString(

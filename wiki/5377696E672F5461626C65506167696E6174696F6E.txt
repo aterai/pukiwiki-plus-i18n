@@ -97,9 +97,7 @@ private void initLinkBox(final int itemsPerPage, final int currentPageIndex) {
 * 解説 [#uc3887af]
 上記のサンプルは、検索サイトなどでよく使われている、`Pagination`を`JTable`で行っています。
 
-%%ただし、ページ数が大量にある場合の処理や、前へ、次へなどの実装は無視して、%%
-
-ある位置から一定の行数だけ表示するフィルタを予め作成し、これを上部の`JRadioButton`(`BasicRadioButtonUI`を継承して見た目だけリンク風になるよう変更している)で切り替えています。
+ある位置から一定の行数だけ表示するフィルタを予め作成し、これを上部の`JRadioButton`(`BasicRadioButtonUI`を継承して見た目だけリンク風に変更)で切り替えています。
 
 また、モデルのインデックス順でフィルタリングしているため、ソートを行っても表示される行の範囲内で変化します。
 
