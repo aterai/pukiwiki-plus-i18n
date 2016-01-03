@@ -33,10 +33,7 @@ private void recursiveSearch(File dir, final List<File> list)
 }}
 
 * 解説 [#l9b71aa9]
-上記のサンプルでは、選択したフォルダ以下のファイルを再帰的にすべて検索して表示するようになっています。
-
-----
-`JProgressBar`を使った進捗状況の表示とキャンセルには、`SwingWorker`を利用しています。
+上記のサンプルでは、選択したフォルダ以下のファイルを再帰的にすべて検索して表示しています。`JProgressBar`を使った進捗状況の表示とキャンセルには、`SwingWorker`を利用しています。
 
 ----
 `JDK 1.7.0`以上の場合は、`Files.walkFileTree(...)`などを使用する方法もあります。

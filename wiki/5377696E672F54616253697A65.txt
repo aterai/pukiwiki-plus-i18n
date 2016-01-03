@@ -1,6 +1,6 @@
 ---
 title: JTextPaneでタブサイズを設定
-tags: [JTextPane, StyledDocument, SimpleAttributeSet]
+tags: [JTextPane, StyledDocument, SimpleAttributeSet, TabSet, TabStop]
 author: aterai
 pubdate: 2005-04-25T00:01:26+09:00
 description: JTextPaneのStyledDocumentが使用するパラグラフ属性として、タブストップが展開する文字数を設定します。
@@ -28,10 +28,11 @@ textpane.getStyledDocument().setParagraphAttributes(0, l, attrs, false);
 }}
 
 * 解説 [#w2ad23ff]
-`JTextArea`は`setTabSize`メソッドでタブサイズを指定することができますが、`JTextPane`では、上記のサンプルのような方法でタブサイズを指定します。
+`JTextArea`は`setTabSize`メソッドでタブサイズを指定することができますが、`JTextPane`では、左揃えの`TabStop`で`TabSet`を作成しタブサイズを指定します。
 
 * 参考リンク [#ha0226f7]
 - [https://community.oracle.com/thread/1507037 Swing (Archive) - tabsize in JTextPane]
+- [[JTextPaneにTabSetを設定してTabStopの文字列揃えをテストする>Swing/TabSet]]
 
 * コメント [#h20d6278]
 #comment

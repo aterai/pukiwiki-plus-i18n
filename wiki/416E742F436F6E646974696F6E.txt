@@ -30,7 +30,7 @@ description: Conditionタスクを使って、Targetタスクを実行するか�
 </target>
 ...省略...
 <!-- ターゲット:compileで、ターゲット:prepare-resourceは呼び出されるが、
-  実行されるされるかどうかはプロパティ:have.resourcesの値による -->
+  実行されるかどうかはプロパティ:have.resourcesの値による -->
 <target name="compile" depends="prepare-src, prepare-resource">
   <javac srcdir="${build.src}"
          destdir="${build.dest}"
