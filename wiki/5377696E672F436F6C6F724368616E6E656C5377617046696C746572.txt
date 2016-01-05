@@ -60,14 +60,14 @@ class RedGreenChannelSwapFilter extends RGBImageFilter {
 
 * 解説 [#u70c6460]
 - `setStringPainted(true)`: 上
--- `JProgressBar#setStringPainted(true)`を設定
+-- デフォルト色の`JProgressBar`に、`JProgressBar#setStringPainted(true)`を設定
 - `setStringPainted(true)`: 下
 -- `JProgressBar#setStringPainted(true)`を設定
--- チェックボックスがチェックされると、`JProgressBar#setForeground(Color)`で色が変更
+-- チェックボックスが選択された場合、`JProgressBar#setForeground(Color)`で色を変更
 - `setStringPainted(false)`: 上
 -- デフォルトの`JProgressBar`
-- `setStringPainted(false)`: 上
--- チェックボックスがチェックされると、`JLayer`を使って色を変更
+- `setStringPainted(false)`: 下
+-- チェックボックスが選択された場合、`JLayer`を使って色を変更
 --- `Windows 7`での中断状態風に、緑を赤に入れ替えるため、`RGBImageFilter#filterRGB(...)`をオーバーライド
 
 * 参考リンク [#wfd4e65e]
