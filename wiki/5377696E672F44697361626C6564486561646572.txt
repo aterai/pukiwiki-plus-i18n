@@ -37,7 +37,7 @@ public boolean isEnabledAt(int col) {
 }}
 
 * 解説 [#hf18f35b]
-サンプルでは、`0`列目のヘッダカラムを常に選択不可に、`3`列目はチェックボックスで選択できるかどうかを切り替えるようにしています。
+サンプルでは、`0`列目のカラムヘッダを常に選択不可に、`3`列目はチェックボックスで選択できるかどうかを切り替えるようにしています。
 
 `HashMap`に選択不可にするカラムヘッダを設定し、レンダラーがヘッダを描画するときにそれを`setEnabled(false)`しています。
 
@@ -50,7 +50,7 @@ private class MouseHandler extends MouseAdapter {
     TableColumnModel columnModel = h.getColumnModel();
     int viewColumn = columnModel.getColumnIndexAtX(e.getX());
     int column = columnModel.getColumn(viewColumn).getModelIndex();
-    // ここをちょっと変更
+    // ここを変更
     if (isSortableIndex(column)) { //column != -1 ) {
       int status = getSortingStatus(column);
       if (!e.isControlDown()) {

@@ -116,7 +116,7 @@ class CheckBoxesEditor extends CheckBoxesPanel
 上記のサンプルでは、`JTable`のセル内に`3`つの`JCheckBox`を配置した`JPanel`を作成し、これを`CellRenderer`と`CellEditor`として別々に使用しています。`JCheckBox`をマウスでクリックすると、その`JCheckBox`の選択状態だけが変化します。
 
 ----
-ヘッダカラムの移動、リサイズ(`JFrame`などのリサイズ)で、チェックした内容が消えてしまわないように、`CellEditor`のチェックボックスがクリックされたら`fireEditingStopped()`メソッドを呼び出して編集を終了し更新を確定するようにしています。
+カラムヘッダの移動、リサイズ(`JFrame`などのリサイズ)で、チェックした内容が消えてしまわないように、`CellEditor`のチェックボックスがクリックされたら`fireEditingStopped()`メソッドを呼び出して編集を終了し更新を確定するようにしています。
 
 %%`JTable`自体に以下の様な`MouseListener`を追加してチェックボックスがクリックされるたびに`table.getCellEditor(row, col).stopCellEditing();`を呼び出しています。%%
 

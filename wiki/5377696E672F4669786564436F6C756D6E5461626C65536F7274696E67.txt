@@ -106,6 +106,6 @@ scroll.getRowHeader().addChangeListener(new ChangeListener() {
 - 固定列は、数字でソートするように変更。 -- &user(aterai); &new{2008-11-10 (月) 15:27:19};
 - どちらか片方の`JTable`を `setUpdateSelectionOnSort(false);`としてソート後、選択状態がおかしくならないように修正。 -- &user(aterai); &new{2010-10-23 (土) 03:13:02};
 - 下記サイトは別の手法で列を固定しています。ご参考まで。[http://weblogs.java.net/blog/elevy/archive/2009/01/freezable_jtabl.html Freezable JTables (are they extreme?) | Java.net] -- &user(panda); &new{2010-12-22 (水) 15:30:06};
--- 情報どうもです。ポップアップで固定する列を決めると、固定列の右が水平スクロールで移動できるのですね。最初、固定の確認でヘッダ列をリサイズしてたので迷いました(^^;。固定中は、`table.getTableHeader().setResizingAllowed(false); table.getTableHeader().setReorderingAllowed(false);`とかで、列のリサイズ、移動を禁止したほうがいいかも。でも、ソートや行選択などが簡単にできるのは便利ですね。 -- &user(aterai); &new{2010-12-22 (水) 17:32:51};
+-- 情報どうもです。ポップアップで固定する列を決めると、固定列の右が水平スクロールで移動できるのですね。最初、固定の確認で列ヘッダをリサイズしてたので迷いました(^^;。固定中は、`table.getTableHeader().setResizingAllowed(false); table.getTableHeader().setReorderingAllowed(false);`とかで、列のリサイズ、移動を禁止したほうがいいかも。でも、ソートや行選択などが簡単にできるのは便利ですね。 -- &user(aterai); &new{2010-12-22 (水) 17:32:51};
 
 #comment
