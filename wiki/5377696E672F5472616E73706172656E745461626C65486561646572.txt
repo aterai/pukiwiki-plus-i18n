@@ -35,7 +35,7 @@ class TransparentHeader extends JLabel implements TableCellRenderer {
 
 * 解説 [#j215b195]
 - `JTableHeader`
--- `JTableHeader`とヘッダレンダラーの両方を、`setOpaque(false)`, 背景色: `Color(0x0, true)`と設定
+-- `JTableHeader`とヘッダセルレンダラーの両方を、`setOpaque(false)`, 背景色: `Color(0x0, true)`と設定
 - `JTable`, `JScrollPane`(`Viewport`, `ColumnHeader`)も`setOpaque(false)`, 背景色: `Color(0x0, true)`と設定
 -- 背景パターンは、`JScrollPane#paintComponent(...)`をオーバーライドして描画
 --- [[JTableを半透明にする>Swing/TransparentTable]]は、`JViewport#paintComponent(...)`をオーバーライド

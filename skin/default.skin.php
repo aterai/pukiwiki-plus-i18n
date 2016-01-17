@@ -116,8 +116,8 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 </div>
 </nav>
 
-<aside class="text-center hidden-xs">
-<!-- xrea, link, 728x15, 09/01/04 -->
+<!-- aside class="text-center hidden-xs">
+xrea, link, 728x15, 09/01/04
 <ins class="adsbygoogle"
      style="display:inline-block;width:728px;height:15px"
      data-ad-client="ca-pub-6939179021013694"
@@ -125,7 +125,7 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-</aside>
+</aside -->
 
 <div class="container"> <!-- div class="content" -->
 <div class="row">

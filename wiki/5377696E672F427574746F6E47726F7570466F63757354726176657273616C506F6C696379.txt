@@ -1,0 +1,44 @@
+---
+title: ButtonGroup内で最初にフォーカスを取得するJRadioButtonを変更する
+tags: [ButtonGroup, FocusTraversalPolicy, JRadioButton, Focus]
+author: aterai
+pubdate: 2016-01-18T00:09:46+09:00
+description: Tabキーによるフォーカス移動が発生した場合、ButtonGroup内で現在選択されているJRadioButtonにフォーカスが移動するよう設定します。
+---
+* 概要 [#j7b435e2]
+KBD{Tab}キーによるフォーカス移動が発生した場合、`ButtonGroup`内で現在選択されている`JRadioButton`にフォーカスが移動するよう設定します。
+
+#download(https://lh3.googleusercontent.com/-r6C4rorBCYw/Vpuu38No8lI/AAAAAAAAOLc/6xa7VoLpsWI/s800-Ic42/ButtonGroupFocusTraversalPolicy.png)
+
+* サンプルコード [#g44dcd14]
+#code(link){{
+buttons.setFocusTraversalPolicyProvider(true);
+buttons.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
+  @Override public Component getDefaultComponent(Container focusCycleRoot) {
+    ButtonModel selection = bg.getSelection();
+    for (Component c: focusCycleRoot.getComponents()) {
+      JRadioButton radioBtn = (JRadioButton) c;
+      ButtonModel loopModel = radioBtn.getModel();
+      if (loopModel == selection) {
+        return radioBtn;
+      }
+    }
+    return super.getDefaultComponent(focusCycleRoot);
+  }
+});
+
+}}
+
+* 解説 [#t1739603]
+- `Default`
+-- デフォルトの`LayoutFocusTraversalPolicy`では、`JRadioButton`の選択状態には無関係に、レイアウトの先頭にある`JRadioButton`にフォーカスが移動する
+- `FocusTraversalPolicy`
+-- `JRadioButton`を配置したパネルに`getDefaultComponent(...)`メソッドをオーバーライドした`FocusTraversalPolicy`を設定し、現在選択されている`JRadioButton`が存在する場合は、それにフォーカスを移動する
+-- パネルに設定した`FocusTraversalPolicy`を有効にするために、`JPanel#setFocusTraversalPolicyProvider(true);`を設定する必要がある
+
+* 参考リンク [#z628475c]
+- [http://stackoverflow.com/questions/34820018/get-the-focus-in-a-buttongroup-of-jradiobuttons-to-go-to-the-currently-selected/34832814#34832814 java - Get the focus in a ButtonGroup of JRadioButtons to go to the currently selected item instead of first - Stack Overflow]
+
+* コメント [#b4307a3f]
+#comment
+#comment
