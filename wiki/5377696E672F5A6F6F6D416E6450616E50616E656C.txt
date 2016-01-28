@@ -16,41 +16,43 @@ hreflang:
 * サンプルコード [#cf006c68]
 #code(link){{
 class ZoomAndPanePanel extends JPanel {
-  private final AffineTransform coordTransform = new AffineTransform();
+  private final AffineTransform zoomTransform = new AffineTransform();
   private final transient Image img;
   private final Rectangle imgrect;
   private transient ZoomHandler handler;
   private transient DragScrollListener listener;
 
-  public ZoomAndPanePanel(Image img) {
+  protected ZoomAndPanePanel(Image img) {
     super();
     this.img = img;
-    this.imgrect = new Rectangle(img.getWidth(null), img.getHeight(null));
+    this.imgrect = new Rectangle(img.getWidth(this), img.getHeight(this));
   }
-  @Override public void paintComponent(Graphics g) {
+  @Override protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     Graphics2D g2 = (Graphics2D) g.create();
     g2.setPaint(new Color(0x55FF0000, true));
     Rectangle r = new Rectangle(500, 140, 150, 150);
 
+    //use: AffineTransform#concatenate(...) and Graphics2D#setTransform(...)
     //AffineTransform at = g2.getTransform();
-    //at.concatenate(coordTransform);
+    //at.concatenate(zoomTransform);
     //g2.setTransform(at);
     //g2.drawImage(img, 0, 0, this);
     //g2.fill(r);
 
-    //g2.drawRenderedImage((java.awt.image.RenderedImage) img, coordTransform);
-    g2.drawImage(img, coordTransform, this);
-    g2.fill(coordTransform.createTransformedShape(r));
+    //or use: Graphics2D#drawImage(Image, AffineTransform, ImageObserver)
+    g2.drawImage(img, zoomTransform, this);
+    //or: g2.drawRenderedImage((RenderedImage) img, zoomTransform);
+    g2.fill(zoomTransform.createTransformedShape(r));
 
     //BAD EXAMPLE
-    //g2.setTransform(coordTransform);
+    //g2.setTransform(zoomTransform);
     //g2.drawImage(img, 0, 0, this);
 
     g2.dispose();
   }
   @Override public Dimension getPreferredSize() {
-    Rectangle r = coordTransform.createTransformedShape(imgrect).getBounds();
+    Rectangle r = zoomTransform.createTransformedShape(imgrect).getBounds();
     return new Dimension(r.width, r.height);
   }
   @Override public void updateUI() {
@@ -66,8 +68,9 @@ class ZoomAndPanePanel extends JPanel {
   }
 
   protected class ZoomHandler extends MouseAdapter {
-    private static final int MIN_ZOOM = -9;
-    private static final int MAX_ZOOM = 16;
+    private static final double ZOOM_MULTIPLICATION_FACTOR = 1.2;
+    private static final int MIN_ZOOM = -10;
+    private static final int MAX_ZOOM = 10;
     private static final int EXTENT = 1;
     private final BoundedRangeModel zoomRange = new DefaultBoundedRangeModel(
         0, EXTENT, MIN_ZOOM, MAX_ZOOM + EXTENT);
@@ -81,15 +84,13 @@ class ZoomAndPanePanel extends JPanel {
         if (p instanceof JViewport) {
           JViewport vport = (JViewport) p;
           Rectangle ovr = vport.getViewRect();
-          double s = dir > 0 ? 1d / 1.2 : 1.2;
-          coordTransform.scale(s, s);
+          double s = dir > 0 ? 1d / ZOOM_MULTIPLICATION_FACTOR : ZOOM_MULTIPLICATION_FACTOR;
+          zoomTransform.scale(s, s);
           //double s = 1d + zoomRange.getValue() * .1;
-          //coordTransform.setToScale(s, s);
-          AffineTransform at = AffineTransform.getScaleInstance(s, s);
-          Rectangle nvr = at.createTransformedShape(ovr).getBounds();
+          //zoomTransform.setToScale(s, s);
+          Rectangle nvr = AffineTransform.getScaleInstance(s, s).createTransformedShape(ovr).getBounds();
           Point vp = nvr.getLocation();
-          vp.translate((nvr.width - ovr.width) / 2,
-                       (nvr.height - ovr.height) / 2);
+          vp.translate((nvr.width - ovr.width) / 2, (nvr.height - ovr.height) / 2);
           vport.setViewPosition(vp);
           c.revalidate();
           c.repaint();
@@ -106,24 +107,24 @@ class ZoomAndPanePanel extends JPanel {
 ----
 ズーム自体は、[[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]で使用しているものとほぼ同じ`MouseWheelListener`を設定して実行していますが、画像を描画している`JPanel`を`JScrollPane`内に設定してスクロールバーでのスクロールを可能にしているため、`JPanel#paintComponent(...)`内での`AffineTransform`の使用方法などを変更しています。
 
-- [[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]のようにズームを行うための`AffineTransform`(このサンプルでは`coordTransform`)を直接`Graphics2D`に設定すると、元からある`Graphics2D`コンテキスト内の`AffineTransform`(`JScrollBar`による移動)と競合して描画が乱れてしまう
+- [[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]のようにズームを行うための`AffineTransform`(このサンプルでは`zoomTransform`)を直接`Graphics2D`に設定すると、元からある`Graphics2D`コンテキスト内の`AffineTransform`(`JScrollBar`による移動)と競合して描画が乱れてしまう
 #code{{
 //BAD EXAMPLE
-g2.setTransform(coordTransform);
+g2.setTransform(zoomTransform);
 g2.drawImage(img, 0, 0, this);
 }}
 
 - `2`つの`AffineTransform`を`AffineTransform#concatenate(AffineTransform)`で連結してから、`Graphics2D#setTransform(AffineTransform)`で設定することで回避
 #code{{
 AffineTransform at = g2.getTransform();
-at.concatenate(coordTransform);
+at.concatenate(zoomTransform);
 g2.setTransform(at);
 g2.drawImage(img, 0, 0, this);
 }}
 
 - または、[http://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics2D.html#drawImage-java.awt.Image-java.awt.geom.AffineTransform-java.awt.image.ImageObserver- Graphics2D#drawImage(Image, AffineTransform, ImageObserver) (Java Platform SE 8)]を使用し、`Graphics2D`コンテキスト内の`AffineTransform`が適用される前にイメージにズーム変換を適用しておくことで回避
 #code{{
-g2.drawImage(img, coordTransform, this);
+g2.drawImage(img, zoomTransform, this);
 }}
 
 * 参考リンク [#pd1ded23]

@@ -12,7 +12,7 @@ description: JPanelの背景に画像をタイル状に並べて表示します�
 
 * サンプルコード [#t9b8baf0]
 #code(link){{
-@Override public void paintComponent(Graphics g) {
+@Override protected void paintComponent(Graphics g) {
   Dimension d = getSize();
   int w = bgimage.getIconWidth();
   int h = bgimage.getIconHeight();
