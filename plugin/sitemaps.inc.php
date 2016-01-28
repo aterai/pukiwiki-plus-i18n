@@ -31,8 +31,12 @@ function plugin_sitemaps_action() {
     $array[] = '^Relaxer.*';
     $array[] = '^English.*';
 
+    $array[] = '^GaChk$';
     $array[] = '^SwingTips$';
+    $array[] = '^aterai$';
     $array[] = '^terai$';
+    $array[] = '^upk$';
+    $array[] = '^Taka$';
     $array[] = '^xyzzy$';
     $array[] = '^RSS$';
     $array[] = '^Nitpick$';
