@@ -61,7 +61,7 @@ function plugin_frontmatter_convert() {
         $pubdate_str = date('Y-m-d', $pubdate);
 
         $author = isset($frontmatter['pubdate']) ? $frontmatter['pubdate'] : "aterai";
-        $url = get_script_uri() . $author . '.html';
+        $url = get_script_uri() . ':Users/' . $author . '.html';
         $posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time>';
     }
 
