@@ -109,7 +109,7 @@ public class RepaintLoopTest {
     JLabel label = new JLabel("aaaaaaaaa") {
       int h = 10;
       int d = 1;
-      @Override public void paintComponent(Graphics g) {
+      @Override protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         repaint(); //BUG: an infinite repaint loop
       }

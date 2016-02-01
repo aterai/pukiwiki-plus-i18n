@@ -18,7 +18,7 @@ class WipeImage extends JComponent implements ActionListener {
     super();
     setBackground(Color.BLACK);
   }
-  @Override public void paintComponent(Graphics g) {
+  @Override protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     int iw = (int) icon.getIconWidth();
     int ih = (int) icon.getIconHeight();
