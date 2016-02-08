@@ -49,7 +49,8 @@ popup.add(new JCheckBoxMenuItem("keeping open #2") {
 -- クリックしてもポップアップは閉じないが、カーソルが乗ってもハイライトされない
 - `JMenuItem + JCheckBox`
 -- `JCheckBox`を配置したタイトルが空の`JMenuItem`を作成して`JPopupMenu`に追加
--- `JCheckBox`へのマウスイベント(`mouseMoved`など)を親の`JMenuItem`に転送してハイライトは描画されるが、クリックイベント(`mouseClicked`など)はブロックしてポップアップは閉じないように設定
+-- `JCheckBox`へのマウスイベント(`MOUSE_DRAGGED`, `MOUSE_ENTERED`, `MOUSE_EXITED`, `MOUSE_MOVED`)を親の`JMenuItem`に転送してハイライトを描画
+-- `JCheckBox`へのマウスクリックイベント(`MOUSE_CLICKED`, `MOUSE_PRESSED`, `MOUSE_RELEASED`など)はブロックしてポップアップは閉じないように設定
 - `JCheckBoxMenuItem`
 -- デフォルトの`JCheckBoxMenuItem`で、クリックするとポップアップは閉じる
 - `keeping open #1`
