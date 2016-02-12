@@ -70,7 +70,7 @@ private boolean isPen = true;
 private Point startPoint = new Point(-10, -10);
 private BufferedImage currentImage = null;
 private BufferedImage backImage = null;
-@Override public void paintComponent(Graphics g) {
+@Override protected void paintComponent(Graphics g) {
   super.paintComponent(g);
   if (backImage != null) {
     g.drawImage(backImage, 0, 0, this);
