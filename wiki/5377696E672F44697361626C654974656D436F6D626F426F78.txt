@@ -101,14 +101,14 @@ class DisableItemComboBox<E> extends JComboBox<E> {
 * 解説 [#qdc48e21]
 上記のサンプルでは、以下の方法でドロップダウンリストの特定のアイテムを選択できないように設定しています。
 
-- 表示
+- アイテムの表示
 -- セルレンダラーで`setEnabled`などを設定
-- 選択不可
+- アイテムの選択不可
 -- `setSelectedIndex`をオーバーライド
-- 選択不可アイテムをクリックしてもポップアップを閉じない
--- `setPopupVisible`をオーバーライド
-- キー操作で選択不可アイテムを無視
--- `ActionMap`、`InputMap`の設定
+- 選択不可アイテムのクリックを無視
+-- `setPopupVisible`をオーバーライドして、ポップアップを閉じないよう設定
+- 選択不可アイテムのキー操作を無視
+-- カーソルキーなどの操作で、選択不可アイテムをスキップするよう、`ActionMap`、`InputMap`を設定
 
 * 参考リンク [#ic0f4012]
 - [[JListの任意のItemを選択不可にする>Swing/DisabledItem]]

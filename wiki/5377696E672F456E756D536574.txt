@@ -16,24 +16,23 @@ hreflang:
 * サンプルコード [#r2000810]
 #code(link){{
 enum Permissions { EXECUTE, WRITE, READ; }
-}}
 
-#code{{
-private final Object[][] data = {
+Object[][] data = {
   {"owner", EnumSet.of(Permissions.READ, Permissions.WRITE, Permissions.EXECUTE)},
   {"group", EnumSet.of(Permissions.READ)},
   {"other", EnumSet.noneOf(Permissions.class)}
 };
-}}
 
-#code{{
-@Override public Object getCellEditorValue() {
-  EnumSet<Permissions> f = EnumSet.noneOf(Permissions.class);
-  if (buttons[0].isSelected()) f.add(Permissions.READ);
-  if (buttons[1].isSelected()) f.add(Permissions.WRITE);
-  if (buttons[2].isSelected()) f.add(Permissions.EXECUTE);
-  return f;
-}
+//...
+class CheckBoxesEditor extends CheckBoxesPanel implements TableCellEditor {
+  @Override public Object getCellEditorValue() {
+    EnumSet<Permissions> f = EnumSet.noneOf(Permissions.class);
+    if (buttons[0].isSelected()) f.add(Permissions.READ);
+    if (buttons[1].isSelected()) f.add(Permissions.WRITE);
+    if (buttons[2].isSelected()) f.add(Permissions.EXECUTE);
+    return f;
+  }
+  //...
 }}
 
 * 解説 [#h7f85cf3]
