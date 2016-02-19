@@ -85,7 +85,7 @@ function plugin_header_convert() {
     return <<<EOD
 <div class="page-header">
 $navi
-<h1 itemprop="headline">$h1</h1>
+<h1 class="page-title" itemprop="name headline">$h1</h1>
 <div class="row">
 <div class="col-md-8 col-xs-12">
 $tags_buf
