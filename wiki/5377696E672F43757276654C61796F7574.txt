@@ -45,10 +45,10 @@ panel2.setLayout(new FlowLayout() {
 }}
 
 * 解説 [#cf9f86b7]
-- 左
--- `panel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));`
-- 右
--- `FlowLayout#layoutContainer(...)`をオーバーライドして、二次曲線の上にコンポーネントを並べる
+- 左: `FlowLayout(LEFT)`
+-- `new FlowLayout(FlowLayout.LEFT)`を設定した`JPanel`にコンポーネントを配置
+- 右: `y=Math.pow(x/4.0,2.0)`
+-- `FlowLayout#layoutContainer(...)`をオーバーライドして、二次曲線の上にコンポーネントを配置するレイアウトを`JPanel`に設定
 
 //* 参考リンク
 * コメント [#a7a05756]

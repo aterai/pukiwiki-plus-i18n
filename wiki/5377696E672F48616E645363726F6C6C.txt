@@ -43,7 +43,7 @@ class HandScrollListener extends MouseAdapter {
 }}
 
 * 解説 [#bf42cf21]
-`JViewport`の原点(左上)を %%`SwingUtilities.convertPoint`メソッドを使って中の`JLabel`(画像)の座標に変換し、これを基準座標としています。この座標を%% マウスの移動に応じて変更し、`JComponent#scrollRectToVisible`メソッドの引数として使用することで、覗き窓のスクロールを行っています。
+`JViewport`の原点(左上)をマウスの移動に応じて変更し、`JComponent#scrollRectToVisible`メソッドの引数として使用することで、覗き窓のスクロールを行っています。
 
 ----
 `JComponent#scrollRectToVisible(...)`ではなく、`JViewport#setViewPosition(Point)`を使用すると、内部コンポーネントの外側に移動することができます。
@@ -51,7 +51,7 @@ class HandScrollListener extends MouseAdapter {
 * 参考リンク [#b337b5bb]
 - [[JScrollPaneのオートスクロール>Swing/AutoScroll]]
 - [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
--- 猫の写真を拝借しています。
+-- 猫の写真を引用
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6333318 Bug ID: 6333318 JViewport.scrollRectToVisible( Rectangle cr ) doesn't scroll if cr left or above]
 - [[JScrollPaneでキネティックスクロール>Swing/KineticScrolling]]
 - [[JTreeの余白をドラッグしてスクロール>Swing/TreeDragScroll]]

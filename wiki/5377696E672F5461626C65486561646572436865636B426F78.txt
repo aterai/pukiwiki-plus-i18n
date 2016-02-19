@@ -96,7 +96,11 @@ class ComponentIcon implements Icon {
 }}
 
 * 解説 [#n8c8c285]
-上記のサンプルでは、`JCheckBox`のアイコンを作成して、これを`TableCellRenderer`(=`JLabel`)に`setIcon`することで描画しています。このため、ヘッダに追加した`MouseListener`で切り替えを行っています。
+上記のサンプルでは、`JCheckBox`のアイコンを作成し、これを`TableCellRenderer`(=`JLabel`)に`setIcon(...)`メソッドで設定しています。
+
+- `JCheckBox`をアイコン化しているので、これをクリックしてもイベントは発生しない
+-- 代わりにヘッダ自体に`MouseListener`を追加し、マウスクリックイベントが発生するとアイコンの入れ替えることで、チェック状態の表示を更新する
+- `LookAndFeel`によっては、`TableCellRenderer`のソートアイコンと競合する場合がある
 
 ----
 - `JTable`のモデルの更新
@@ -104,50 +108,7 @@ class ComponentIcon implements Icon {
 -- `JTable`のセル中にある`JCheckBox`のチェックが全てクリアされた場合、ヘッダの`JCheckBox`のチェックもクリアされる
 -- `JTable`のセル中にある`JCheckBox`でチェックの有無が混在している場合、ヘッダの`JCheckBox`は薄くチェックされた状態(`setEnabled(false)`で`setSelected(true)`)になる
 -- 注: ここでは、行の追加、削除は考慮していない
---- [[JTableのモデルが変更されたことをイベントで受け取る>Swing/TableModelEvent]]は、行の追加、削除を考慮したバージョン
-
-#code{{
-class HeaderCheckBoxHandler implements TableModelListener {
-  private final JTable table;
-  private final int targetColumnIndex;
-  public HeaderCheckBoxHandler(JTable table, int index) {
-    this.table = table;
-    this.targetColumnIndex = index;
-  }
-  @Override public void tableChanged(TableModelEvent e) {
-    int vci = table.convertColumnIndexToView(targetColumnIndex);
-    TableColumn column = table.getColumnModel().getColumn(vci);
-    Object status = column.getHeaderValue();
-    TableModel m = table.getModel();
-    if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == targetColumnIndex) {
-      //System.out.println("UPDATE");
-      if (Status.INDETERMINATE.equals(status)) {
-        boolean selected = true;
-        boolean deselected = true;
-        for (int i = 0; i < m.getRowCount(); i++) {
-          Boolean b = (Boolean) m.getValueAt(i, targetColumnIndex);
-          selected &= b;
-          deselected &= !b;
-          if (selected == deselected) {
-            return;
-          }
-        }
-        if (deselected) {
-          column.setHeaderValue(Status.DESELECTED);
-        } else if (selected) {
-          column.setHeaderValue(Status.SELECTED);
-        } else {
-          return;
-        }
-      } else {
-        column.setHeaderValue(Status.INDETERMINATE);
-      }
-    }
-    JTableHeader h = table.getTableHeader();
-    h.repaint(h.getHeaderRect(vci));
-  }
-}
-}}
+--- これを考慮したサンプルは、[[JTableのモデルが変更されたことをイベントで受け取る>Swing/TableModelEvent]]に移動
 
 * 参考リンク [#icecdcd6]
 - [http://www.coderanch.com/t/343795/Swing-AWT-SWT-JFace/java/Check-Box-JTable-header Check Box in JTable header (Swing / AWT / SWT / JFace forum at JavaRanch)]

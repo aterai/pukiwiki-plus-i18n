@@ -87,14 +87,13 @@ class ComboBoxLayout implements LayoutManager {
 }}
 
 * 解説 [#g2c763e2]
-上記のサンプルでは、`JComboBox`に独自のレイアウトマネージャーを設定して、`JButton`や`JLabel`を配置しています。
+上記のサンプルでは、`JComboBox`に独自のレイアウトマネージャーを設定して、内部に`JButton`や`JLabel`を配置しています。
 
 ----
 `RolloverIcon`は、元のアイコンに以下のようなフィルタを掛けて作成しています。
 
-- `RGBImageFilter`を使用
-
 #code{{
+// RGBImageFilter を使用
 private static ImageIcon makeFilteredImage(ImageIcon srcIcon) {
   RGBImageFilter filter = new SelectedImageFilter();
   FilteredImageSource fis = new FilteredImageSource(srcIcon.getImage().getSource(), filter);
@@ -110,11 +109,8 @@ class SelectedImageFilter extends RGBImageFilter {
     return (argb & 0xff000000) | (r << 16) | (g << 8) | (b);
   }
 }
-}}
 
-- `RescaleOp`を使用
-
-#code{{
+// RescaleOp を使用
 private static ImageIcon makeFilteredImage2(ImageIcon srcIcon) {
   RescaleOp op = new RescaleOp(
       new float[] { 1.2f, 1.2f, 1.2f, 1f },
