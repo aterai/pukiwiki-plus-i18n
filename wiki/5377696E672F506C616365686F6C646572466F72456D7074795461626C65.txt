@@ -34,8 +34,7 @@ model.addTableModelListener(new TableModelListener() {
 
 - `JTable#setFillsViewportHeight(true)`として、`JTable`の高さが`JViewport`の高さより小さい場合、両者が同じ高さになるように設定
 - `JTable`のレイアウトを`null`から、`GridBagLayout`に変更
-
-%%追加した`JEditorPane`の表示非表示の切り替えは、ポップアップメニューで行の追加削除を行ったとき、`JTable#getRowCount()==0`かどうかで判断しています。%% `TableModelListener`を使って行の追加削除を行ったときに`JEditorPane`の表示非表示を切り替えるように変更しました。
+- `TableModelListener#tableChanged(...)`イベントが発生したとき、モデルに行が残っているかどうかで`JEditorPane`の表示非表示を切り替え
 
 //* 参考リンク
 * コメント [#tbc8d393]

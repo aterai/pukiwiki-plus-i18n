@@ -23,6 +23,9 @@ pubdate: 2003-09-25
 RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the JFC and Swing (The Java™ Tutorials)]
 
 * 新着記事 [#u85d24d8]
+- 2016-02-29
+#swingdescription(Swing/InputTypeCheckBox,JLabelにHTMLフォーマットのinputタグで生成したcheckboxを表示する,JLabelを継承するヘッダのTableCellRendererにHTMLフォーマットのinputタグで生成したcheckboxを表示し、クリックに応じてその状態を変更します。,https://lh3.googleusercontent.com/-vnWIjLh4mRA/VtMSSVOc3gI/AAAAAAAAOPo/41aAmP3gMuc/s800-Ic42/InputTypeCheckBox.png)
+
 - 2016-02-22
 #swingdescription(Swing/DnDBetweenTrees,JTree間でのドラッグ＆ドロップによるノードの移動,JTree間でのドラッグ＆ドロップによるノードの移動を行います。,https://lh3.googleusercontent.com/-orv222AWr0E/VsnVITv64uI/AAAAAAAAOPE/vGmbPDCu4nY/s800-Ic42/DnDBetweenTrees.png)
 
@@ -32,15 +35,12 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - 2016-02-08
 #swingdescription(Swing/HtmlTableBorderStyle,JLabelに表示するtableタグの罫線を変更する,JLabelなどのコンポーネントにHTMLのtableタグを使用して描画する表の罫線を分離表示ではなく結合表示に変更します。,https://lh3.googleusercontent.com/-KUe25svxTkQ/VrdVpBBO6TI/AAAAAAAAONE/x6Lvt2P_x_c/s800-Ic42/HtmlTableBorderStyle.png)
 
-- 2016-02-01
-#swingdescription(Swing/StayOpenCheckBoxMenuItem,JCheckBoxMenuItemをクリックしてもJPopupMenuを閉じないように設定する,JPopupMenuにクリックしてもポップアップが開いたままの状態を維持するように設定したJCheckBoxMenuItemやJCheckBoxを追加します。,https://lh3.googleusercontent.com/-hje86Y7xU8k/Vq4umT64DuI/AAAAAAAAOMs/N6gysnrA3e4/s800-Ic42/StayOpenCheckBoxMenuItem.png)
-
 * Tips一覧 [#e739db5d]
 #twocolumn
 ** `javax.swing.JComponent` [#j7ba4ac7]
 - [[JTable(41)>Swing/_JTable]]
 -- [[CellEditor CellRenderer(39)>Swing/_CellEditor]]
--- [[JTableHeader TableColumn(26)>Swing/_JTableHeader]]
+-- [[JTableHeader TableColumn(27)>Swing/_JTableHeader]]
 -- [[TableRowSorter RowFilter(20)>Swing/_TableRowSorter]]
 -- [[JDK1.5.0(6)>Swing/_JTable1.5.0]]
 - [[JTextPane JEditorPane JTextArea(59)>Swing/_JTextPane]]
@@ -53,8 +53,8 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[JTextField JPasswordField(26)>Swing/_JTextField]]
 - [[JProgressBar ProgressMonitor(25)>Swing/_JProgressBar]]
 - [[JMenuBar JToolBar JSeparator(24)>Swing/_JMenuBar]]
+- [[JLabel(23)>Swing/_JLabel]]
 - [[JList(22)>Swing/_JList]]
-- [[JLabel(22)>Swing/_JLabel]]
 - [[JPanel JSplitPane(22)>Swing/_JPanel]]
 - [[JPopupMenu(22)>Swing/_JPopupMenu]]
 - [[JInternalFrame JLayeredPane JDesktopPane(18)>Swing/_JInternalFrame]]
@@ -71,7 +71,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[Animation(31)>Swing/_Animation]]
 - [[LayoutManager(30)>Swing/_Layout]]
 - [[Drag&Drop(27)>Swing/_DnD]]
-- [[Hyperlink Html(26)>Swing/_Hyperlink]]
+- [[Hyperlink Html(27)>Swing/_Hyperlink]]
 - [[SwingWorker(21)>Swing/_SwingWorker]]
 - [[Border(20)>Swing/_Border]]
 - [[Focus(19)>Swing/_Focus]]
@@ -87,7 +87,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[JDK 6, 7 での Swing 新機能(33)>Swing/_JDK6]]
 
 ** `Screenshot` [#b76d5b88]
-- [[スクリーンショット一覧(623)>Swing/_ScreenShots]]
+- [[スクリーンショット一覧(624)>Swing/_ScreenShots]]
 
 #twocolumn
 
@@ -95,7 +95,8 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - このページ以下のソースコードは、[https://github.com/aterai/java-swing-tips GitHub]で、[https://github.com/aterai/java-swing-tips/blob/master/LICENSE.txt MITライセンス]のもと公開しています。
 -- `Git`リポジトリを取得する場合: 
  git clone https://github.com/aterai/java-swing-tips.git
--- `Subversion`で特定のディレクトリ以下のみ取得する場合(以下の例では`SurrogatePair`を指定):
+-- `Subversion`で特定のディレクトリ以下のみ取得する場合:
+ # カレントディレクトリに`SurrogatePair`を作成し、`SurrogatePair`以下のサンプルコードだけダウンロード
  svn co https://github.com/aterai/java-swing-tips/trunk/SurrogatePair
 
 * 編集方針 [#ja35f484]
