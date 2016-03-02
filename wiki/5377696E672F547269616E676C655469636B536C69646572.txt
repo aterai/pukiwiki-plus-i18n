@@ -17,6 +17,7 @@ slider.setMajorTickSpacing(10);
 slider.setMinorTickSpacing(5);
 slider.setPaintLabels(true);
 slider.setSnapToTicks(true);
+slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);
 Dictionary dictionary = slider.getLabelTable();
 if (dictionary != null) {
   Enumeration elements = dictionary.elements();
