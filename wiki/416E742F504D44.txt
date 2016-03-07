@@ -256,6 +256,81 @@ public final class MenuBarFactoryTest {
 }
 }}
 
+* 警告 [#h56d397b]
+** GodClass [#rf4a20bc]
+- [http://pmd.sourceforge.net/pmd-5.0.0/rules/java/design.html Ruleset: Design]
+#code{{
+/**
+  * Very high threshold for WMC (Weighted Method Count). See: Lanza.
+  * Object-Oriented Metrics in Practice. Page 16.
+  */
+private static final int WMC_VERY_HIGH = 47;
+
+/**
+ * Few means between 2 and 5. See: Lanza. Object-Oriented Metrics in
+ * Practice. Page 18.
+ */
+private static final int FEW_THRESHOLD = 5;
+
+/**
+ * One third is a low value. See: Lanza. Object-Oriented Metrics in
+ * Practice. Page 17.
+ */
+private static final double ONE_THIRD_THRESHOLD = 1.0 / 3.0; //0.33333
+
+if (wmcCounter >= WMC_VERY_HIGH && atfdCounter > FEW_THRESHOLD && tcc < ONE_THIRD_THRESHOLD) {/**
+  * Very high threshold for WMC (Weighted Method Count). See: Lanza.
+  * Object-Oriented Metrics in Practice. Page 16.
+  */
+private static final int WMC_VERY_HIGH = 47;
+
+/**
+ * Few means between 2 and 5. See: Lanza. Object-Oriented Metrics in
+ * Practice. Page 18.
+ */
+private static final int FEW_THRESHOLD = 5;
+
+/**
+ * One third is a low value. See: Lanza. Object-Oriented Metrics in
+ * Practice. Page 17.
+ */
+private static final double ONE_THIRD_THRESHOLD = 1.0 / 3.0; //0.33333
+
+if (wmcCounter >= WMC_VERY_HIGH && atfdCounter > FEW_THRESHOLD && tcc < ONE_THIRD_THRESHOLD) {
+}}
+
+** SimplifiedTernary [#j7d4fe1d]
+- [http://pmd.sourceforge.net/snapshot/pmd-java/rules/java/basic.html PMD Java – Basic]
+#code{{
+public class SimplifiedTernaryTest {
+  public static void main(String... args) {
+    //boolean condition = true;
+    boolean b1 = condition ? true  : something(); // can be as simple as condition || something();
+    boolean b2 = condition ? false : something(); // can be as simple as !condition && something();
+    boolean b3 = condition ? something() : true;  // can be as simple as !condition || something();
+    boolean b4 = condition ? something() : false; // can be as simple as condition && something();
+  }
+  private static boolean something() {
+    return true;
+  }
+}
+}}
+
+- 例:
+#code{{
+model2 = new BasicDirectoryModel(getFileChooser()) {
+  @Override public boolean renameFile(File oldFile, File newFile) {
+    //return oldFile.canWrite() ? super.renameFile(oldFile, newFile) : false;
+    return oldFile.canWrite() && super.renameFile(oldFile, newFile);
+  }
+};
+}}
+
+- `PMD 5.4.0`
+-- `PMD 5.4.0`では、以下のような三項演算子も修正可と誤認識される
+--- `repaintRect = prevRollover ? r.union(table.getCellRect(prevRow, prevCol, false)) : r;`
+-- [http://sourceforge.net/p/pmd/bugs/1424/ PMD Issues #1424 False negative with ternary operator]
+
 * 参考リンク [#c56145b8]
 - [https://pmd.github.io/ PMD]
 - [http://d.hatena.ne.jp/guess880/20121014/1350200644 PMD5.0.0のルールを和訳しながら読む - 1 - Design Ruleset - 開発メモ]

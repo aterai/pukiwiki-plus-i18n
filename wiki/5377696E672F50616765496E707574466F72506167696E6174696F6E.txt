@@ -37,7 +37,7 @@ worker = new SwingWorker<String, List<Object[]>>() {
     List<Object[]> result = new ArrayList<Object[]>(size);
     int j = current;
     while (j < current + size) {
-      result.add(new Object[] {j, "Test: " + j, (j % 2 == 0) ? "" : "comment..."});
+      result.add(new Object[] {j, "Test: " + j, j % 2 == 0 ? "" : "comment..."});
       j++;
     }
     publish(result);
