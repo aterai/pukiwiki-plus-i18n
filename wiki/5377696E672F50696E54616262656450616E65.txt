@@ -27,7 +27,7 @@ JCheckBoxMenuItem pinTabMenuItem = new JCheckBoxMenuItem(new AbstractAction("pin
     if (check.isSelected()) {
       for (i = 0; i < idx; i++) {
         String s = t.getTitleAt(i);
-        if (s == null || s.length() == 0) {
+        if (s == null || s.isEmpty()) {
           continue;
         }
         break;
@@ -35,7 +35,7 @@ JCheckBoxMenuItem pinTabMenuItem = new JCheckBoxMenuItem(new AbstractAction("pin
     } else {
       for (i = t.getTabCount() - 1; i > idx; i--) {
         String s = t.getTitleAt(i);
-        if (s != null && s.length() > 0) {
+        if (s != null && !s.isEmpty()) {
           continue;
         }
         break;

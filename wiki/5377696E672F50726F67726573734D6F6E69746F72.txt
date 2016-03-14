@@ -74,11 +74,13 @@ class ProgressListener implements PropertyChangeListener {
     this.monitor.setProgress(0);
   }
   @Override public void propertyChange(PropertyChangeEvent e) {
+    Object o = e.getSource();
     String strPropertyName = e.getPropertyName();
-    if ("progress".equals(strPropertyName)) {
+    if ("progress".equals(strPropertyName) && o instanceof SwingWorker) {
+      SwingWorker task = (SwingWorker) o;
       monitor.setProgress((Integer) e.getNewValue());
-      if (monitor.isCanceled()) {
-        ((SwingWorker) e.getSource()).cancel(true);
+      if (monitor.isCanceled() || task.isDone()) {
+        task.cancel(true);
       }
     }
   }
@@ -88,7 +90,7 @@ class ProgressListener implements PropertyChangeListener {
 * 参考リンク [#r9011528]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/progress.html How to Use Progress Bars (The Java™ Tutorials)]
 - [[ProgressMonitorがダイアログを表示するまでの待ち時間>Swing/MillisToDecideToPopup]]
--- 処理時間が短くて`ProgressMonitor`が表示されない場合などについて
+-- 処理時間が短くて`ProgressMonitor`が表示されない場合の待ち時間をテスト
 
 * コメント [#p0a19264]
 #comment

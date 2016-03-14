@@ -15,6 +15,7 @@ description: JButtonにMnemonicが設定されている場合、JToolTipにそ�
 class MnemonicToolTip extends JToolTip {
   private final JLabel mnemonicLabel = new JLabel();
   public MnemonicToolTip() {
+    super();
     setLayout(new BorderLayout());
     mnemonicLabel.setForeground(Color.GRAY);
     mnemonicLabel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));

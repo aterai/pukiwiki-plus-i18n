@@ -77,7 +77,49 @@ pubdate: 2003-09-25
 
 - [[AntでPMDを実行する>Ant/PMD]]
 
-* `buildfile`オプション [#e6cb38d3]
+* targetのサンプル [#ab627600]
+** Checkstyleタスク [#b426d5d8]
+#code{{
+  <condition property="have.checkstyle">
+    <available file="${env.CHECKSTYLE_JAR}" />
+  </condition>
+  <target name="checkstyle" if="have.checkstyle">
+    <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+            classpath="${env.CHECKSTYLE_JAR}" />
+    <mkdir dir="${build.reports}" />
+    <checkstyle config="${user.dir}/checks.xml" failOnViolation="false">
+      <formatter type="plain" />
+      <formatter type="xml" toFile="${build.reports}/checkstyle-result.xml" />
+      <fileset dir="${src.dir}">
+        <include name="**/*.java" />
+      </fileset>
+    </checkstyle>
+  </target>
+}}
+
+** Scpタスク [#x8ac45f9]
+#code{{
+  <path id="jsch.path">
+    <property name="scp.userid" value="${env.SCP_USERID}" />
+    <property name="scp.server" value="${env.SCP_SERVER}" />
+    <property name="scp.remotedir" value="${env.SCP_BASEDIR}" />
+    <pathelement location="${ant.home}/lib/ant-jsch.jar" />
+    <!-- http://www.jcraft.com/jsch/ からダウンロードして${ant.home}/lib/以下にコピー -->
+    <pathelement location="${ant.home}/lib/jsch-0.1.53.jar" />
+  </path>
+  <target name="scp">
+    <taskdef name="scp" classname="org.apache.tools.ant.taskdefs.optional.ssh.Scp"
+                     classpathref="jsch.path" />
+    <!-- scp.userなどは、環境変数またはant scp -Dscp.user=fooなどで指定 -->
+    <scp todir="${scp.user}@${scp.server}:${scp.remotedir}"
+       keyfile="${user.home}/.ssh/id_rsa" trust="yes">
+      <fileset refid="scp.upload.fileset" />
+    </scp>
+  </target>
+}}
+
+* その他 [#f3dd13ae]
+** `buildfile`オプション [#e6cb38d3]
 `build.xml`ファイルを作ってコマンドプロンプトから`ant.bat`を実行します。引数が無い場合、カレントフォルダにある`build.xml`が使用されます。
  ant
 
@@ -89,7 +131,7 @@ pubdate: 2003-09-25
  ant -emacs -buildfile "c:\hoge\build.xml"
  ant -e -f "c:\hoge\build.xml"
 
-* `build.xml`ファイル [#v251ad1c]
+** `build.xml`ファイル [#v251ad1c]
 ネットを検索すれば、いろんな`build.xml`が見つかるので、まずはその中からサンプルを選び、[http://ant.apache.org/manual/index.html マニュアル]([http://www.jajakarta.org/ant/ant-1.6.1/docs/ja/manual/index.html 日本語訳])を見ながら修正すると、手っ取り早く作成することができます。
 
 - `build.xml`と`build.properties`のサンプル
