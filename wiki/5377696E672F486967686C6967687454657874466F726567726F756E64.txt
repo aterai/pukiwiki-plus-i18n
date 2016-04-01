@@ -13,9 +13,8 @@ description: Highlighter.HighlightPainterを使用したハイライト表示で
 * サンプルコード [#x94ec9b3]
 #code(link){{
 StyledDocument doc = textPane.getStyledDocument();
-Style def = StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE);
-Style regular = doc.addStyle("regular", def);
-Style htf = doc.addStyle("highlight-text-foreground", regular);
+Style def = doc.getStyle(StyleContext.DEFAULT_STYLE);
+Style htf = doc.addStyle("highlight-text-foreground", def);
 StyleConstants.setForeground(htf, new Color(0xFFDDFF));
 //...
 
@@ -41,8 +40,8 @@ scrollToCenter(textPane, hh.getStartOffset());
 * 解説 [#wee724cf]
 上記のサンプルでは、[[JTextAreaでハイライト付き検索を行う>Swing/HighlightSearch]]に、以下のような変更を追加することで、検索結果のハイライト表示と文字色変更を同時に行っています。
 
-- `StyledDocument`に名称`"regular"`で`Style`を追加
-- `StyledDocument`に親`Style`が`"regular"`で、名称`"highlight-text-foreground"`、文字色のみ変更した`Style`を追加
+- %%`StyledDocument`に名称`"regular"`で`Style`を追加%%
+- `StyledDocument`に、名称が`"highlight-text-foreground"`で文字色のみデフォルトから変更した`Style`を追加
 - 検索結果のハイライト(背景)と同時に、`StyledDocument#getStyle("highlight-text-foreground")`で取得した`Style`を`StyledDocument#setCharacterAttributes(...)`で、上書き追加
 -- 現在の対象になっている検索結果以外は、`StyledDocument#getStyle("highlight-text-foreground")`の`Style`で文字色を元に元に戻す
 

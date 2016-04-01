@@ -51,13 +51,12 @@ switch ((SortAlgorithms) algorithmsChoices.getSelectedItem()) {
 }}
 
 ----
-ソートアニメーション自体は、[http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]から基本部分はそのままコピーして、`Swing`に移植しています。
-
-- `SwingWorker`でキャンセル可能にしたため、実行するには、`JDK 6`以上が必要
-- 全部書き換えるのを止めて、移動する点のみウェイトを入れてゆっくり描画するように修正
+- ソートアニメーション自体は、%%[http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]%%のアプレットから基本部分をコピーして`Swing`に移植
+-- `SwingWorker`(`JDK 6`以上)を使用したキャンセル機能を追加
+-- 全画面の書き換えを止めて、移動する点のみウェイトを入れて再描画するように変更
 
 * 参考リンク [#z405b484]
-- [http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]
+- %%[http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]%%
 - [http://docs.oracle.com/javase/tutorial/uiswing/painting/ Lesson: Performing Custom Painting (The Java™ Tutorials > Creating a GUI With JFC/Swing)]
 
 * コメント [#bedcfd09]

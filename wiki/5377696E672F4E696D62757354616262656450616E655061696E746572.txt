@@ -1,0 +1,155 @@
+---
+title: JTabbedPaneのNimbusLookAndFeelにおけるスタイルを変更する
+tags: [JTabbedPane, Painter, NimbusLookAndFeel]
+author: aterai
+pubdate: 2016-03-28T02:33:36+09:00
+description: NimbusLookAndFeelにおけるJTabbedPaneのタブ、タブエリアなどのスタイルを変更します。
+---
+* 概要 [#u4637b9b]
+`NimbusLookAndFeel`における`JTabbedPane`のタブ、タブエリアなどのスタイルを変更します。
+
+#download(https://lh3.googleusercontent.com/-TJwPLjNC_3w/VvgUy3r36LI/AAAAAAAAORk/izF9EpBGdeEZ4exmIEiNN0elbLCjGQVOACCo/s800-Ic42/NimbusTabbedPanePainter.png)
+
+* サンプルコード [#i8757a09]
+#code(link){{
+private static void configureUI() {
+  UIDefaults d = UIManager.getLookAndFeelDefaults();
+  d.put("TabbedPane:TabbedPaneContent.contentMargins", new Insets(0, 5, 5, 5));
+  //d.put("TabbedPane:TabbedPaneTab.contentMargins",     new Insets(2, 8, 3, 8));
+  //d.put("TabbedPane:TabbedPaneTabArea.contentMargins", new Insets(3, 10, 4, 10));
+  d.put("TabbedPane:TabbedPaneTabArea.contentMargins", new Insets(3, 10, OVERPAINT, 10));
+
+  Painter<JComponent> tabAreaPainter = new TabAreaPainter();
+  d.put("TabbedPane:TabbedPaneTabArea[Disabled].backgroundPainter",          tabAreaPainter);
+  d.put("TabbedPane:TabbedPaneTabArea[Enabled].backgroundPainter",           tabAreaPainter);
+  d.put("TabbedPane:TabbedPaneTabArea[Enabled+MouseOver].backgroundPainter", tabAreaPainter);
+  d.put("TabbedPane:TabbedPaneTabArea[Enabled+Pressed].backgroundPainter",   tabAreaPainter);
+
+  d.put("TabbedPane:TabbedPaneContent.backgroundPainter", new TabContentPainter());
+
+  Painter<JComponent> tabPainter = new TabPainter(false);
+  d.put("TabbedPane:TabbedPaneTab[Enabled+MouseOver].backgroundPainter", tabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Enabled+Pressed].backgroundPainter",   tabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Enabled].backgroundPainter",           tabPainter);
+
+  Painter<JComponent> selectedTabPainter = new TabPainter(true);
+  d.put("TabbedPane:TabbedPaneTab[Focused+MouseOver+Selected].backgroundPainter", selectedTabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Focused+Pressed+Selected].backgroundPainter",   selectedTabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Focused+Selected].backgroundPainter",           selectedTabPainter);
+  d.put("TabbedPane:TabbedPaneTab[MouseOver+Selected].backgroundPainter",         selectedTabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Selected].backgroundPainter",                   selectedTabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Pressed+Selected].backgroundPainter",           selectedTabPainter);
+}
+public static void createAndShowGUI() {
+  try {
+    for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
+      if ("Nimbus".equals(laf.getName())) {
+        UIManager.setLookAndFeel(laf.getClassName());
+        configureUI();
+      }
+    }
+  } catch (ClassNotFoundException | InstantiationException
+             | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+    ex.printStackTrace();
+  }
+  JFrame frame = new JFrame("@title@");
+  frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+  frame.getContentPane().add(new MainPanel());
+  frame.pack();
+  frame.setLocationRelativeTo(null);
+  frame.setVisible(true);
+}
+private static class TabPainter implements Painter<JComponent> {
+  private final Color color;
+  private final boolean selected;
+  protected TabPainter(boolean selected) {
+    this.selected = selected;
+    this.color = selected ? Color.WHITE : Color.ORANGE;
+  }
+  @Override public void paint(Graphics2D g, JComponent c, int width, int height) {
+    int a = selected ? OVERPAINT : 0;
+    int r = 6;
+    int x = 3;
+    int y = 3;
+    Graphics2D g2 = (Graphics2D) g.create(0, 0, width, height + a);
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    int w = width - r - 1;
+    int h = height + r;
+    for (int i = 0; i < x; i++) {
+      g2.setColor(new Color(0, 0, 0, 20));
+      g2.fill(new RoundRectangle2D.Double(x - i, y - i, w + i + i, h, r, r));
+    }
+    g2.setColor(color);
+    g2.fill(new RoundRectangle2D.Double(x, y, w, h + OVERPAINT, r, r));
+    if (selected) {
+      g2.setColor(Color.GREEN);
+      g2.fill(new Rectangle2D.Double(0, height + STROKE_SIZE, width, OVERPAINT));
+    }
+    g2.dispose();
+  }
+}
+private static class TabAreaPainter implements Painter<JComponent> {
+  @Override public void paint(Graphics2D g, JComponent c, int w, int h) {
+    Graphics2D g2 = (Graphics2D) g.create(0, 0, w, h);
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+    RoundRectangle2D r = new RoundRectangle2D.Double(
+      0, h - OVERPAINT,
+      w - STROKE_SIZE,
+      h - STROKE_SIZE,
+      ARC, ARC);
+
+    g2.setPaint(Color.WHITE);
+    g2.fill(r);
+    g2.setColor(Color.RED);
+    g2.setStroke(new BasicStroke(STROKE_SIZE));
+    g2.draw(r);
+    g2.dispose();
+  }
+}
+private static class TabContentPainter implements Painter<JComponent> {
+  @Override public void paint(Graphics2D g, JComponent c, int w, int h) {
+    Graphics2D g2 = (Graphics2D) g.create(0, 0, w, h);
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.translate(0, -OVERPAINT);
+
+    RoundRectangle2D r = new RoundRectangle2D.Double(
+      0, 0,
+      w - STROKE_SIZE,
+      h - STROKE_SIZE + OVERPAINT,
+      ARC, ARC);
+
+    g2.setPaint(Color.WHITE);
+    g2.fill(r);
+    g2.setColor(Color.ORANGE);
+    g2.setStroke(new BasicStroke(STROKE_SIZE));
+    g2.draw(r);
+    g2.dispose();
+  }
+}
+}}
+
+* 解説 [#c4c84ca3]
+上記のサンプルでは、`NimbusLookAndFeel`の`UIDefaults`にタブ、タブ領域、コンテンツ領域などを描画する独自の縁や背景色の`Painter`を設定するテストを行っています。選択タブの`Color.GREEN`、タブ領域の`Color.CYAN`をコンテンツ領域と同じ`Color.WHITE`に変更すると、選択タブとコンテンツ領域が一体になったスタイルを作成することができます。
+
+- `TabbedPaneTabArea`
+-- タブを配置するエリアで、このサンプルでは下部背景を`Color.CYAN`、下部縁を`Color.RED`で描画する`Painter`を設定
+--- 下部の領域は、タブエリア下部の高さ`OVERPAINT`で、`TabbedPane:TabbedPaneTabArea.contentMargins`の`bottom`と同じに設定
+--- 縁は上辺のみラウンド表示されるように`RoundRectangle2D`をクリップ
+-- 一番最初に描画される
+- `TabbedPaneContent`
+-- コンテンツを配置するエリアで、このサンプルでは背景を`Color.WHITE`、縁を`Color.ORANGE`で描画する`Painter`を設定
+--- 縁は下辺のみラウンド表示されるように`RoundRectangle2D`をクリップ
+-- 一番最後に描画される
+- `TabbedPaneTab`
+-- タブを描画する`Painter`を設定
+-- 選択されたタブを描画する場合は、クリップ領域の高さを`OVERPAINT`だけ拡大(タブエリアの下部を上書き)
+--- 縁に影を設定し、タブエリアの下部にはみ出す部分は、`Color.GREEN`の矩形で塗り潰している
+
+* 参考リンク [#n0075adc]
+- [http://stackoverflow.com/questions/35622718/how-to-achieve-four-side-shadow-effect-for-tabbedpane-in-java-swing How to achieve four side shadow effect for TabbedPane in Java swing? - Stack Overflow]
+- [[JTabbedPaneのタブエリア背景色などをテスト>Swing/TabAreaBackground]]
+
+* コメント [#h70fd8ce]
+#comment
+#comment

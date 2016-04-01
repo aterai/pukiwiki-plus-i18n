@@ -34,6 +34,24 @@ pubdate: 2011-01-25
 - [[SwingアプリケーションのLookAndFeelを外部から切り替える>Tips/LookAndFeelDebugAgent]]
 -- `Swing`アプリケーションの`LookAndFeel`を`agent`を使って外部から切り替えてデバッグします。
 
+* `-g`オプションを使用してコンパイル [#y5168d8a]
+- `NetBeans`でソースにブレークポイントを設定し、`Swing`コンポーネントのソースにステップインすると、「変数の情報を使用できません。ソースは -gオプションを使用せずにコンパイルされています」となり、値が不明
+- [http://docs.oracle.com/javase/jp/8/docs/technotes/tools/windows/javac.html javac] `-g`オプション
+ -g ローカル変数を含むすべてのデバッグ情報を生成します。デフォルトでは、行番号およびソース・ファイル情報だけが生成されます。
+- [http://stackoverflow.com/questions/18255474/debug-jdk-source-cant-watch-variable-what-it-is java - debug jdk source can't watch variable what it is - Stack Overflow]を参考に、`%JAVA_HOME%/src.zip/javax/swing`以下のソースをコピーし、以下のようなバッチを実行
+#code{{
+@echo off
+setlocal
+rem set RT_JAR=%JAVA_HOME%\jre\lib\rt.jar
+set RT_JAR=rt.jar
+dir /B /S /X src\*.java > filelist.txt
+"%JAVA_HOME%\bin\javac" -g -classpath "%RT_JAR%" -sourcepath src -d debug @filelist.txt > log.txt 2>&1
+"%JAVA_HOME%\bin\jar" cf0 rt_debug.jar debug/*
+}}
+- 生成された`rt_debug.jar`を、`%JAVA_HOME%\lib\endorsed`(なければ管理者になって作成)にコピー
+-- [http://docs.oracle.com/javase/jp/8/docs/technotes/guides/standards/index.html Java推奨標準優先メカニズム]
+-- 「この機能は非推奨であり、今後のリリースで削除される予定です。」、`JDK 9`では使用できない？
+
 * Javadoc 翻訳 [#h4010d75]
 [[Javadoc]]に移動
 
@@ -88,7 +106,8 @@ const char *env_list[] = {
 
  > java -Duser.language=en Test
 
-- [http://java.sun.com/javase/technologies/core/basic/intl/faq_ja.jsp#set-default-locale Java 国際化 FAQ]
+//- [http://java.sun.com/javase/technologies/core/basic/intl/faq_ja.jsp#set-default-locale Java 国際化 FAQ]
+- [https://docs.oracle.com/javase/jp/1.4/guide/intl/faq.html 国際化についての FAQ]
  アプリケーションの外部からデフォルトのロケールを設定できますか。
  
  使用している Java プラットフォームの実装によって異なります。通常、初期のデフォルトロケールは、ホストオペレーティングシステムのロケールによって決まります。Sun の JRE のバージョン 1.4 以降では、コマンド行から user.language、user.country、および user.variant の各システムプロパティを設定することで、初期のデフォルトロケールを変更できます。たとえば、初期のデフォルトロケールとして Locale("th", "TH", "TH") を選択するには、次のコマンドを使用します。

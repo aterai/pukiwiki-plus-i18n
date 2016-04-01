@@ -75,7 +75,9 @@ textPane.insertComponent(new JLabel(" TEST"));
 -- 推奨サイズと最大サイズが(`JTextPane`の幅×`1`)になるよう、`JLabel#getPreferredSize()`と`JLabel#getMaximumSize()`をオーバーライド
 - `JSeparator.VERTICAL`
 -- `textPane.insertComponent(new JSeparator(JSeparator.VERTICAL));`で垂直`JSeparator`を追加
--- `JLabel#getPreferredSize()`、`JLabel#getMaximumSize()`をオーバーライドしないと表示されない？
+-- `JSeparator#getPreferredSize()`、`JSeparator#getMaximumSize()`をオーバーライドしないと表示されない
+--- [https://docs.oracle.com/javase/tutorial/uiswing/components/separator.html How to Use Separators (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]
+> In most implementations, a vertical separator has a preferred height of 0, and a horizontal separator has a preferred width of 0. This means a separator is not visible unless you either set its preferred size or put it in under the control of a layout manager such as BorderLayout or BoxLayout that stretches it to fill its available display area.
 
 //* 参考リンク
 * コメント [#z081fac5]

@@ -1,0 +1,66 @@
+---
+title: XSL Transformations (XSLT) Version 2.0
+description: XSL Transformations (XSLT) Version 2.0 に関するメモ書き
+author: aterai
+pubdate: 2016-03-24
+---
+* XSL Transformations (XSLT) Version 2.0 [#bda0353a]
+- [https://www.w3.org/TR/xslt20/ XSL Transformations (XSLT) Version 2.0]
+
+** fn:doc-avalable() [#x03c1df3]
+#code{{
+@echo off
+setlocal
+
+set SRC=C:/tmp/aaa/word/document.xml
+set DST=C:/output/aaa/xxx.xml
+set LIB=C:/lib/saxon-9.1.0.8.jar
+set SAXON=net.sf.saxon.Transform
+set XSLT=C:/xslt/docx2xxx.xsl
+
+"%JAVA_HOME%\bin\java" -cp "%LIB%" %SAXON% -s:"%SRC%" -xsl:"%XSLT%" -o:"%DST%"
+}}
+
+#code{{
+<!-- C:/tmp/aaa/word/numbering.xml が存在するかをチェックしたい -->
+<xsl:if test="fn:doc-available(fn:replace(fn:base-uri(),'document\.xml$','numbering.xml'))">
+  <xsl:variable name="numbering" select="fn:document('numbering.xml',/)/w:numbering" />
+</xsl:if>
+}}
+
+- `fn:document('numbering.xml',/)`のように第二引数を指定して入力ファイル相対パスで`fn:doc-available`を使用することは出来ない
+- `fn:base-uri()` -> `C:/tmp/aaa/word/document.xml`
+- `fn:resolve-uri('')` -> `C:/xslt/docx2xxx.xsl`
+
+** xsl:analyze-string [#ic1c9eb9]
+`docx`の`w:lvlText`のフォーマット(例えば`%1.%2.%3`)に従って、実際の段落番号文字列に変換する場合、`xsl:analyze-string`が便利。
+- [https://msdn.microsoft.com/ja-jp/library/office/ee922775(v=office.14).aspx Open XML WordprocessingML の段落番号を操作する]
+
+#code{{
+<!-- w:lvlRestartの処理などは省略 -->
+<xsl:variable name="numberText">
+  <xsl:analyze-string select="$lvl/w:lvlText/@w:val" regex="%\d">
+    <xsl:matching-substring>
+      <xsl:variable name="pos" select="number(replace(.,'%',''))" />
+      <xsl:variable name="i" select="$pos - 1" />
+      <xsl:variable name="ii" select="$i - 1" />
+      <xsl:variable name="parentList" select="$list[(w:pPr/w:numPr/w:ilvl and w:pPr/w:numPr/w:ilvl/@w:val=$ii) or ($ii=0 and not(w:pPr/w:numPr/w:ilvl))]" />
+      <xsl:variable name="pstl" select="if(empty($parentList)) then '' else $parentList[1]/w:pPr/w:pStyle/@w:val" />
+      <xsl:variable name="next" select="if(empty($psList) or empty($pstl)) then () else index-of($psList,$pstl)" />
+      <xsl:variable name="list2" select="if(empty($next)) then $list else subsequence($list,$next[last()])" />
+      <xsl:value-of select="fn:count($list2[(w:pPr/w:numPr/w:ilvl and w:pPr/w:numPr/w:ilvl/@w:val=$i) or ($i=0 and w:pPr/w:numPr and not(w:pPr/w:numPr/w:ilvl))])" />
+    </xsl:matching-substring>
+    <xsl:non-matching-substring>
+      <xsl:value-of select="." />
+    </xsl:non-matching-substring>
+  </xsl:analyze-string>
+</xsl:variable>
+}}
+
+** to演算子 [#y5a69778]
+
+** xsl:for-each-group [#sbfd6336]
+
+* コメント [#l049a3fc]
+#comment
+#comment

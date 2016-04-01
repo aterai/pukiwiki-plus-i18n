@@ -1,0 +1,36 @@
+---
+title: JInternalFrameの縁の装飾を変更してパレット化する
+tags: [JInternalFrame, JDesktopPane, MetalLookAndFeel]
+author: aterai
+pubdate: 2016-03-21T22:17:29+09:00
+description: パレット化したJInternalFrameをJDesktopPaneのパレットレイヤーに追加します。
+---
+* 概要 [#e3ac0f8a]
+パレット化した`JInternalFrame`を`JDesktopPane`のパレットレイヤーに追加します。
+
+#download(https://lh3.googleusercontent.com/-WI8tV2GL8no/Vu_vV8kqSCI/AAAAAAAAOQ4/Os6hBhlLlCYP7L87Qkn_RBlFp8qkUEZrwCCo/s800-Ic42/PaletteInternalFrame.png)
+
+* サンプルコード [#h799e026]
+#code(link){{
+JInternalFrame palette = new JInternalFrame("Palette", true, false, true, true);
+palette.setBounds(0, 0, 120, 120);
+palette.setMinimumSize(new Dimension(50, 50));
+palette.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+palette.add(new JScrollPane(new JTree()));
+palette.setVisible(true);
+desktop.add(palette, JDesktopPane.PALETTE_LAYER);
+}}
+
+* 解説 [#md0ea954]
+- `JInternalFrame#putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);`で、パレット化
+-- `MetalLookAndFeel`でのみ有効
+- `JDesktopPane#add(palette, JDesktopPane.PALETTE_LAYER);`でパレットレイヤーに追加
+-- パレットレイヤーは、デフォルトレイヤー(`JDesktopPane.DEFAULT_LAYER`)の一つ上のレイヤーで、常にその下のレイヤーに配置れさたコンポーネントより上に表示される
+- パレット化した`JInternalFrame`をデフォルトではマウス操作でアイコン化することはできない？
+-- `JInternalFrame#setIcon(boolean)`メソッドを使用すればアイコン化することは可能
+-- 最大化はパレットのタイトルバーをダブルクリック、クローズはタイトルバー右端のボタンをクリックで可能
+
+//* 参考リンク
+* コメント [#z2c5ce19]
+#comment
+#comment

@@ -75,32 +75,154 @@ nofollow: true
 -- %JAVA_HOME%\demo\jfc\FileChooserDemo\src\FileChooserDemo.java
 -- %JAVA_HOME%\demo\jfc\SwingSet2\src\FileChooserDemo.java
 - [[Swing/ClearComboBoxSelection]]
+- [[Swing/KeyEventDispatcher]]
 
 ** メモ [#bb7c5eda]
-- JTree Table
-- JPopupMenu BlankIcon
-- UIDefaults ProxyLazyValue
-- File createTempFile
-- JTable Vertical Table Header
-- File getTotalSpace, getFreeSpace, getUsableSpace
-- JTabbedPane tab height animation
-- Formatter and password char
+- BitFlagCheckBox undo redo
+- BufferedImage#getScaledInstance -1
+- CID Cmap
 - Cells with rouded corners in JTable
-- Tearaway tabs
-- Multi selection JComboBox
-- JSplitPane hide unhide tab
+- ComboBoxDropdownListSelect
+- File createTempFile
+- File getTotalSpace, getFreeSpace, getUsableSpace
+- Formatter and password char
+- Highlighter#removeAllHighlights()
+- JButton background color
+- JColorChooser pallet save load
+- JComboBox search highlight
+- JComboBox tooltips right side
+- JDesktopPane JInternalFrame Tab Loop
+- JEditorPane html 画像遅延読み込み
+- JFrame Window#isActive()
+- JList リストレンダラー、html、スピード
+- JMenuBar 全体スライドメニュー
+- JMenuItem JPopupMenu JButton Drag
+- JOptionPane scroll
+- JPopupMenu BlankIcon
+- JProgressBar Bootstrap center string
+- JRadioButton + JTextField
 - JScrollBar BlockIncrement
 - JScrollPane MapView subview
-- JDesktopPane JInternalFrame Tab Loop
+- JScrollPane VetoableChangeListener
+- JScrollPane 自動スクロール上下ストップ
+- JScrollPane 縦パネルリスト、DnD、内部
+- JSlider JLabel above JSlider Thumb
+- JSpinner 複数行
+- JSplitPane hide unhide tab
 - JTabbedPane ScrollButton Layout
-- JTabbedPane Transparency
+- JTabbedPane center SingleClick
+- JTabbedPane tab height animation
+- JTable Vertical Table Header
+- JTable cell Editable and Autocompletion JComboBox sugest in TableCell
+- JTable git graphe JLayer
+- JTable multi rows editor
+- JTable カレンダー
+- JTextArea 二段組
+- JTextField Focus Animation
 - JTextField(search) in JButton(Tab, ButtonBar)
-- switch JInternalFrame to JTabbedPane
+- JTextPane Parallax
+- JTextPane preview code html
+- JToolBar target JLayer
+- JToolBar 透明ツールバー上部
+- JTooltip JWindow Focus Drag
 - JTree JList(1.8.0) Nimbus Selection Rect
-- Highlighter#removeAllHighlights()
+- JTree Table
+- JTree under Node only sort
+- JTree ノード作成の階層制限
+- Multi selection JComboBox
+- OnOffToggleButton slider
+- Shape Line Animation
+- Shape contain test
+- StringWidthUnicode
+- Swing debug painter ダブルバッファ
+- TabbedPaneVerifyInputWhenFocusTarget
+- Table 行追加・削除 undo redo
+- TableHeaderIcon
+- Tearaway tabs
+- UIDefaults ProxyLazyValue
+- Zip
+- http://cr.openjdk.java.net/~alexsch/semyon-sadetsky/6921687/webrev.00/src/java.desktop/share/classes/com/sun/java/swing/plaf/windows/WindowsRootPaneUI.java.frames.html
 - http://docs.oracle.com/javase/jp/7/api/javax/swing/text/html/HTMLDocument.html#getIterator(javax.swing.text.html.HTML.Tag)
+- フレーム画像透明
+- Font ゲタ文字 `Font#canDisplay(...)`
+#code{{
+          spinner.addChangeListener(new ChangeListener() {
+             @Override public void stateChanged(ChangeEvent e) {
+ +                int code = ((Integer) spinner.getValue()).intValue();
+ +                System.out.println("IPAex: " + ipaEx.canDisplay(code));
+ +                System.out.println("IPAmj: " + ipaMj.canDisplay(code));
+                  repaint();
+              }
+          });
+}}
 
 * Swing関係のバグのメモ [#hb22f5ad]
+** NimbusLookAndFeelでのJComboBoxの推奨サイズ [#x115b70b]
+- [http://stackoverflow.com/questions/36274053/swing-jcombobox-bug-printing-dimension java - Swing (JComboBox) bug? printing dimension - Stack Overflow]
+-- `JComboBox`の時点と、`JFrame`に追加して`JFrame#pack()`もしくは`JFrame.setSize(...)`後で、`JComboBox`の推奨サイズ(幅)が異なる？
+-- `NimbusLookAndFeel`のみの現象？
+-- `setEditable(true)`にすると高さが異なる...
+- `JComboBox#getPreferredSize()`を呼ぶと項目の文字列長を検索して、`cachedMinimumSize`にサイズがキャッシュされる
+- `ArrowButton`の幅がデフォルト`16`と`JComboBox`用は`19`と異なる
+- `SynthArrowButton#getPreferredSize(JComponent)`で、`context.getStyle().getInt(context, "ArrowButton.size", 16);`が呼ばれている
+
+#code{{
+import java.awt.*;
+import javax.swing.*;
+
+public class NimbusComboBoxSizeTest {
+  public JComponent makeUI() {
+    String[] model = {"Average"};
+
+    JPanel p0 = new JPanel();
+    JComboBox<String> combo0 = new JComboBox<>(model);
+    p0.add(combo0);
+
+    JPanel p1 = new JPanel();
+    JComboBox<String> combo1 = new JComboBox<>(model);
+    p1.add(combo1);
+
+    Box box = Box.createVerticalBox();
+    box.add(p0);
+    box.add(p1);
+
+    EventQueue.invokeLater(() -> System.out.println("combo0: " + combo0.getPreferredSize()));
+    System.out.println("combo1: " + combo1.getPreferredSize());
+
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(box, BorderLayout.NORTH);
+
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(() -> createAndShowGUI());
+  }
+  public static void createAndShowGUI() {
+    try {
+      for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
+        if ("Nimbus".equals(laf.getName())) {
+          UIManager.setLookAndFeel(laf.getClassName());
+          UIDefaults d = UIManager.getLookAndFeelDefaults();
+          System.out.println("ArrowButton.size: " + d.getInt("ArrowButton.size"));
+          System.out.println("ComboBox.arrowButton.size: " + d.getInt("ComboBox:\"ComboBox.arrowButton\".size"));
+          //どちらかのコメントを外して値を揃えてやると、以下の現象は修正される？
+          //d.put("ComboBox:\"ComboBox.arrowButton\".size", 16);
+          //d.put("ArrowButton.size", 19);
+        }
+      }
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new NimbusComboBoxSizeTest().makeUI());
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
 ** 高解像度でJOptionPaneのアイコンが欠ける [#vfc496a6]
 - [http://stackoverflow.com/questions/30774828/bad-swing-ui-scaling-on-high-resolution-ms-surface java - Bad Swing UI scaling on high resolution (MS Surface) - Stack Overflow]
 -- `Surface Pro 3`でテキスト文字サイズを`150%`に設定し、`JOptionPane`を`WindowsLookAndFeel`で表示すると、アイコンが欠けるバグ？
