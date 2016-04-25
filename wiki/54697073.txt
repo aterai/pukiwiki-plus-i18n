@@ -35,7 +35,7 @@ pubdate: 2011-01-25
 -- `Swing`アプリケーションの`LookAndFeel`を`agent`を使って外部から切り替えてデバッグします。
 
 * `-g`オプションを使用してコンパイル [#y5168d8a]
-- `NetBeans`でソースにブレークポイントを設定し、`Swing`コンポーネントのソースにステップインすると、「変数の情報を使用できません。ソースは -gオプションを使用せずにコンパイルされています」となり、値が不明
+- `NetBeans`でソースにブレークポイントを設定し、`Swing`コンポーネントのソースにステップインすると、「変数の情報を使用できません。ソースは `-g`オプションを使用せずにコンパイルされています」と表示され、値は不明となる
 - [http://docs.oracle.com/javase/jp/8/docs/technotes/tools/windows/javac.html javac] `-g`オプション
  -g ローカル変数を含むすべてのデバッグ情報を生成します。デフォルトでは、行番号およびソース・ファイル情報だけが生成されます。
 - [http://stackoverflow.com/questions/18255474/debug-jdk-source-cant-watch-variable-what-it-is java - debug jdk source can't watch variable what it is - Stack Overflow]を参考に、`%JAVA_HOME%/src.zip/javax/swing`以下のソースをコピーし、以下のようなバッチを実行

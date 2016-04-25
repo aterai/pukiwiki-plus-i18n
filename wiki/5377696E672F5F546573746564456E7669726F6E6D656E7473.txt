@@ -29,42 +29,42 @@ description: このサイトにあるサンプルの動作・テスト環境や�
 * 動作環境 [#j82ab918]
 このサイトにあるサンプルコードは、主に以下の環境で開発と動作確認を行っています。
 
-- Windows 10 64bit
+- `Windows 10 64bit`
  >ver
  Microsoft Windows [Version 10.0.10240]
  
  >"%JAVA_HOME%\bin\java" -version
- java version "1.8.0_72"
- Java(TM) SE Runtime Environment (build 1.8.0_72-b15)
- Java HotSpot(TM) 64-Bit Server VM (build 25.72-b15, mixed mode)
+ java version "1.8.0_92"
+ Java(TM) SE Runtime Environment (build 1.8.0_92-b14)
+ Java HotSpot(TM) 64-Bit Server VM (build 25.92-b14, mixed mode)
 
-- Windows 10 64bit + Cygwin x86_64
+- `Windows 10 64bit` + `Cygwin x86_64`
  $ bash -version
  GNU bash, バージョン 4.3.42(4)-release (x86_64-unknown-cygwin)
  Copyright (C) 2013 Free Software Foundation, Inc.
  ライセンス GPLv3+: GNU GPL バージョン 3 またはそれ以降 <http://gnu.org/licenses/gpl.html>
  
- $ export JAVA_HOME="/cygdrive/c/Program Files/Java/jdk1.8.0_72"
+ $ export JAVA_HOME="/cygdrive/c/Program Files/Java/jdk1.8.0_92"
  $ "$JAVA_HOME/bin/java" -version
- java version "1.8.0_72"
- Java(TM) SE Runtime Environment (build 1.8.0_72-b15)
- Java HotSpot(TM) 64-Bit Server VM (build 25.72-b15, mixed mode)
+ java version "1.8.0_92"
+ Java(TM) SE Runtime Environment (build 1.8.0_92-b14)
+ Java HotSpot(TM) 64-Bit Server VM (build 25.92-b14, mixed mode)
 
-- Ubuntu 14.04 64bit
+- `Ubuntu 12.04.5 LTS`
  $ lsb_release -a
  No LSB modules are available.
  Distributor ID: Ubuntu
- Description:    Ubuntu 14.04 LTS
- Release:        14.04
- Codename:       trusty
+ Description:    Ubuntu 12.04.5 LTS
+ Release:        12.04
+ Codename:       precise
  
  $ echo $JAVA_HOME
- /usr/lib/jvm/jdk1.7.0_65
+ /usr/lib/jvm/jdk1.8.0_92
  
  $ $JAVA_HOME/bin/java -version
- java version "1.7.0_65"
- Java(TM) SE Runtime Environment (build 1.7.0_65-b17)
- Java HotSpot(TM) 64-Bit Server VM (build 24.65-b04, mixed mode)
+ java version "1.8.0_92"
+ Java(TM) SE Runtime Environment (build 1.8.0_92-b14)
+ Java HotSpot(TM) Client VM (build 25.92-b14, mixed mode)
 
 ** JDKのダウンロードについて [#nd0d5847]
 - 最新の`JDK`をダウンロード

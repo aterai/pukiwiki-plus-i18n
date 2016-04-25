@@ -12,28 +12,38 @@ description: JListのセル内に複数のJButtonを配置します。
 
 * サンプルコード [#oc796928]
 #code(link){{
-class ButtonsRenderer extends JPanel implements ListCellRenderer {
-  public JTextArea label = new JTextArea();
-  private final JButton viewButton = new JButton(new AbstractAction("view") {
+class ButtonsRenderer<E> extends JPanel implements ListCellRenderer<E> {
+  private static final Color EVEN_COLOR = new Color(230, 255, 230);
+  private final JTextArea textArea = new JTextArea();
+  private final JButton deleteButton = new JButton(new AbstractAction("delete") {
     @Override public void actionPerformed(ActionEvent e) {
-      System.out.println("aaa");
+      if (model.getSize() > 1) {
+        model.remove(index);
+      }
     }
   });
-  private final JButton editButton = new JButton(new AbstractAction("edit") {
+  private final JButton copyButton = new JButton(new AbstractAction("copy") {
     @Override public void actionPerformed(ActionEvent e) {
-      System.out.println("bbb");
+      model.add(index, model.get(index));
     }
   });
-  public ButtonsRenderer() {
+  private final DefaultListModel<E> model;
+  private int index;
+  public int pressedIndex  = -1;
+  public int rolloverIndex = -1;
+  public JButton button;
+
+  protected ButtonsRenderer(DefaultListModel<E> model) {
     super(new BorderLayout());
+    this.model = model;
     setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
     setOpaque(true);
-    label.setLineWrap(true);
-    label.setOpaque(false);
-    add(label);
+    textArea.setLineWrap(true);
+    textArea.setOpaque(false);
+    add(textArea);
 
     Box box = Box.createHorizontalBox();
-    for (JButton b: Arrays.asList(viewButton, editButton)) {
+    for (JButton b : Arrays.asList(deleteButton, copyButton)) {
       b.setFocusable(false);
       b.setRolloverEnabled(false);
       box.add(b);
@@ -41,25 +51,25 @@ class ButtonsRenderer extends JPanel implements ListCellRenderer {
     }
     add(box, BorderLayout.EAST);
   }
-  private final Color evenColor = new Color(230, 255, 230);
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.width = 0; // VerticalScrollBar as needed
+    return d;
+  }
   @Override public Component getListCellRendererComponent(
-      JList list, Object value, int index,
-      boolean isSelected, boolean hasFocus) {
-    label.setText((value == null) ? "" : value.toString());
+      JList<? extends E> list, E value, int index,
+      boolean isSelected, boolean cellHasFocus) {
+    textArea.setText(Objects.toString(value, ""));
+    this.index = index;
     if (isSelected) {
       setBackground(list.getSelectionBackground());
-      label.setForeground(list.getSelectionForeground());
+      textArea.setForeground(list.getSelectionForeground());
     } else {
-      setBackground(index % 2 == 0 ? evenColor : list.getBackground());
-      label.setForeground(list.getForeground());
+      setBackground(index % 2 == 0 ? EVEN_COLOR : list.getBackground());
+      textArea.setForeground(list.getForeground());
     }
-    for (JButton b : java.util.Arrays.asList(viewButton, editButton)) {
-      b.getModel().setRollover(false);
-      b.getModel().setArmed(false);
-      b.getModel().setPressed(false);
-      b.getModel().setSelected(false);
-    }
-    if (button != null) {
+    resetButtonStatus();
+    if (Objects.nonNull(button)) {
       if (index == pressedIndex) {
         button.getModel().setSelected(true);
         button.getModel().setArmed(true);
@@ -70,9 +80,15 @@ class ButtonsRenderer extends JPanel implements ListCellRenderer {
     }
     return this;
   }
-  public int pressedIndex  = -1;
-  public int rolloverIndex = -1;
-  public JButton button = null;
+  private void resetButtonStatus() {
+    for (JButton b : Arrays.asList(deleteButton, copyButton)) {
+      ButtonModel m = b.getModel();
+      m.setRollover(false);
+      m.setArmed(false);
+      m.setPressed(false);
+      m.setSelected(false);
+    }
+  }
 }
 }}
 

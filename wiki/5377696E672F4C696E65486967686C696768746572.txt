@@ -46,9 +46,7 @@ class HighlightCursorTextArea extends JTextArea {
 }}
 
 * 解説 [#jb96e960]
-ほぼ、[[JTextAreaに行カーソルを表示>Swing/LineCursor]]とやっていることは同じです。
-
-違うのは、以下の点になります。
+ほぼ、[[JTextAreaに行カーソルを表示>Swing/LineCursor]]と同様のコードを使用していますが、行全体を塗り潰すために、以下の`3`点を変更しています。
 
 - `Viewport`の色を`scroll.getViewport().setBackground(Color.WHITE)`にする
 - `JTextArea#setOpaque(false)`と設定して透明にする

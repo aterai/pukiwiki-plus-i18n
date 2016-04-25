@@ -1,28 +1,28 @@
 ---
-title: 来週のネタとか(ﾟεﾟ)
-noindex: true
-nofollow: true
-#pubdate: 2006-01-29
+title: Swingネタ帳
+keywords: [Java, Swing]
+description: Swing関連のメモ、バグIDリンク、ネタ帳
+author: aterai
+pubdate: 2006-01-29
 ---
+[[Swing]]関係の自分用のメモ、バグIDへのリンク、ネタ帳です。また、以前ここで頂いたコメントは、[[Comments/Swing]]に移動しました。
+
 #contents
-* 概要 [#a5760ded]
-[[Swing]]関係の自分用のメモとかネタ帳みたいなものです。
-
-* google八分メモ [#k1042248]
-- 状況
--- `2014/08`中頃からハブられている模様
---- `2014/09`中頃、何日か復活してたけど、また駄目になる
--- ウェブマスターツールには特にメッセージ無し
-- 対策(効果なし？)
--- 新着RSS用に更新してた「はてな」を非公開
--- 一覧やタグページを`<meta name="robots" content="NOINDEX,FOLLOW" />`に
--- `sitemap`を分割
--- コメントをDISQUSに移行
---- コメントユーザーページへの`404`ページを作成しない
--- `schema.org`でマークアップ
--- `xrea.jp`自体がペナルティを受けていると考えたほうが良さそう
---- 他のサイト(`*.xrea.jp`)でも、同じ症状(タイトルで検索しても上位に表示されない)が確認できる？
-
+//* google八分メモ [#k1042248]
+//- 状況
+//-- `2014/08`中頃からハブられている模様
+//--- `2014/09`中頃、何日か復活してたけど、また駄目になる
+//-- ウェブマスターツールには特にメッセージ無し
+//- 対策(効果なし？)
+//-- 新着RSS用に更新してた「はてな」を非公開
+//-- 一覧やタグページを`<meta name="robots" content="NOINDEX,FOLLOW" />`に
+//-- `sitemap`を分割
+//-- コメントをDISQUSに移行
+//--- コメントユーザーページへの`404`ページを作成しない
+//-- `schema.org`でマークアップ
+//-- `xrea.jp`自体がペナルティを受けていると考えたほうが良さそう
+//--- 他のサイト(`*.xrea.jp`)でも、同じ症状(タイトルで検索しても上位に表示されない)が確認できる？
+//
 //- あとは、googleへの依存を極力減らす方向で(下の方は難航しそうだけど)
 //-- google codeから、GitHubへリポジトリを移行
 //-- google サイト内検索を削除
@@ -37,28 +37,22 @@ nofollow: true
 //-- 未実行: google Analytics から移行
 //-- 未実行: google AdSenseから移行
 //-- 未実行: bloggerから移行
+//
+//** さくらレンタルサーバ(+独自ドメイン)に移行(2014/11/01) [#gc4ed6c9]
+//- PHP設定の編集
+// date.timezone = Asia/Tokyo
+// zlib.output_compression=On
 
-** さくらレンタルサーバ(+独自ドメイン)に移行(2014/11/01) [#gc4ed6c9]
-- PHP設定の編集
- date.timezone = Asia/Tokyo
- zlib.output_compression=On
+//- .htaccess で301リダイレクト
+// RewriteEngine on
+// RewriteBase /
+// RewriteCond %{http_host} ^terai\.xrea\.jp
+// RewriteRule ^(.*)$ http://ateraimemo.com/$1 [R=301,L]
+//
+//- 2014/11末現在、アクセス数などは以前の水準に戻っている
 
-- .htaccess で301リダイレクト
- RewriteEngine on
- RewriteBase /
- RewriteCond %{http_host} ^terai\.xrea\.jp
- RewriteRule ^(.*)$ http://ateraimemo.com/$1 [R=301,L]
-
-- 2014/11末現在、アクセス数などは以前の水準に戻っている
-
-* 移動: ネタのリクエスト、Swingのサンプルに関するメモ [#l7de666d]
-- 以前ここで頂いたコメントは、[[Comments/Swing]]に移動しました。
-
-* Swing調整中のネタ一覧 [#n8fba4d5]
-** 調整中 [#q66b670c]
-以下テスト中なので、`Exception`が発生したり、まともに動作しなくても(ﾟεﾟ)ｷﾆｼﾅｲ!!
-
-- [[Swing/CubeEffect]]
+* 調整中のネタ帳 [#d40ccf0d]
+- CubeEffect
 -- [https://java.net/projects/animatingcardlayout Animatingcardlayout — Project Kenai]
 -- [http://www.kawa.net/works/js/animation/cube-e.html (JavaScript) Animation.Cube - Rotating Cube Animation Effect]
 -- http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=36768&forum=12&7
@@ -66,95 +60,73 @@ nofollow: true
 -- [http://programamemo2.blogspot.com/2008/06/image-processing.html プログラマメモ2: Image Processing 台形変形への道 - へたれなので。]
 -- [http://www.javaworld.com/javaworld/jw-03-2008/jw-03-opensourcejava-animatingcardlayout.html Open source Java projects: AnimatingCardLayout - JavaWorld]
 -- [https://animatingcardlayout.dev.java.net/ animatingcardlayout: ホーム]
-- [[Swing/DefaultLookAndFeelDecorated]]
-- [[Swing/ScrollPaneCorner]]
-
-** 検討中で未実装 [#xa28093f]
-こっそり消えても(ﾟεﾟ)ｷﾆｼﾅｲ!!
-- [[Swing/FileChooserWithOptionPane]]
+- Swing/FileChooserWithOptionPane
 -- %JAVA_HOME%\demo\jfc\FileChooserDemo\src\FileChooserDemo.java
 -- %JAVA_HOME%\demo\jfc\SwingSet2\src\FileChooserDemo.java
-- [[Swing/ClearComboBoxSelection]]
-- [[Swing/KeyEventDispatcher]]
-
-** メモ [#bb7c5eda]
-- BitFlagCheckBox undo redo
-- BufferedImage#getScaledInstance -1
-- CID Cmap
-- Cells with rouded corners in JTable
-- ComboBoxDropdownListSelect
+- BufferedImage#getScaledInstance - 1
 - File createTempFile
 - File getTotalSpace, getFreeSpace, getUsableSpace
-- Formatter and password char
-- Highlighter#removeAllHighlights()
+- File zip unzip example
+- Font CID Cmap
+- Font `Font#canDisplay(...)` ゲタ文字 
 - JButton background color
+- JCheckBox BitFlagCheckBox undo redo
 - JColorChooser pallet save load
+- JComboBox ClearComboBoxSelection
 - JComboBox search highlight
 - JComboBox tooltips right side
+- JComobBox Multi selection ComboBoxDropdownListSelect
 - JDesktopPane JInternalFrame Tab Loop
-- JEditorPane html 画像遅延読み込み
+- JEditorPane [http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/HTMLDocument.html#getIterator-javax.swing.text.html.HTML.Tag- HTMLDocument#getIterator]
+- JEditorPane html Image Lazy loading
 - JFrame Window#isActive()
-- JList リストレンダラー、html、スピード
+- JFrame translate Image
+- JLabel String width Unicode
+- JList ListCellRenderer html performance
 - JMenuBar 全体スライドメニュー
 - JMenuItem JPopupMenu JButton Drag
+- JOptionPane KeyEventDispatcher
 - JOptionPane scroll
+- JPasswordField Formatter and password char
 - JPopupMenu BlankIcon
 - JProgressBar Bootstrap center string
 - JRadioButton + JTextField
+- JRootPane [http://cr.openjdk.java.net/~alexsch/semyon-sadetsky/6921687/webrev.00/src/java.desktop/share/classes/com/sun/java/swing/plaf/windows/WindowsRootPaneUI.java.frames.html isMnemonicHidden]
 - JScrollBar BlockIncrement
 - JScrollPane MapView subview
 - JScrollPane VetoableChangeListener
 - JScrollPane 自動スクロール上下ストップ
-- JScrollPane 縦パネルリスト、DnD、内部
-- JSlider JLabel above JSlider Thumb
-- JSpinner 複数行
+- JScrollPane 縦パネルリスト DnD 内部
+- JSlider JToggleButton OnOffToggleButton slider
+- JSpinner multiline
 - JSplitPane hide unhide tab
 - JTabbedPane ScrollButton Layout
+- JTabbedPane Tearaway tabs
+- JTabbedPane VerifyInputWhenFocusTarget
 - JTabbedPane center SingleClick
 - JTabbedPane tab height animation
+- JTable Calendar
+- JTable Cells with rouded corners in JTable
 - JTable Vertical Table Header
+- JTable add row remove row undo redo
 - JTable cell Editable and Autocompletion JComboBox sugest in TableCell
 - JTable git graphe JLayer
 - JTable multi rows editor
-- JTable カレンダー
-- JTextArea 二段組
+- JTextArea two-column format
 - JTextField Focus Animation
 - JTextField(search) in JButton(Tab, ButtonBar)
+- JTextPane Highlighter#removeAllHighlights()
 - JTextPane Parallax
 - JTextPane preview code html
 - JToolBar target JLayer
-- JToolBar 透明ツールバー上部
+- JToolBar transprent top
 - JTooltip JWindow Focus Drag
 - JTree JList(1.8.0) Nimbus Selection Rect
 - JTree Table
+- JTree TreeNodeMaxLevel TreePath#getPathCount DefaultMutableTreeNode#getLevel
 - JTree under Node only sort
-- JTree ノード作成の階層制限
-- Multi selection JComboBox
-- OnOffToggleButton slider
 - Shape Line Animation
-- Shape contain test
-- StringWidthUnicode
-- Swing debug painter ダブルバッファ
-- TabbedPaneVerifyInputWhenFocusTarget
-- Table 行追加・削除 undo redo
-- TableHeaderIcon
-- Tearaway tabs
 - UIDefaults ProxyLazyValue
-- Zip
-- http://cr.openjdk.java.net/~alexsch/semyon-sadetsky/6921687/webrev.00/src/java.desktop/share/classes/com/sun/java/swing/plaf/windows/WindowsRootPaneUI.java.frames.html
-- http://docs.oracle.com/javase/jp/7/api/javax/swing/text/html/HTMLDocument.html#getIterator(javax.swing.text.html.HTML.Tag)
-- フレーム画像透明
-- Font ゲタ文字 `Font#canDisplay(...)`
-#code{{
-          spinner.addChangeListener(new ChangeListener() {
-             @Override public void stateChanged(ChangeEvent e) {
- +                int code = ((Integer) spinner.getValue()).intValue();
- +                System.out.println("IPAex: " + ipaEx.canDisplay(code));
- +                System.out.println("IPAmj: " + ipaMj.canDisplay(code));
-                  repaint();
-              }
-          });
-}}
 
 * Swing関係のバグのメモ [#hb22f5ad]
 ** NimbusLookAndFeelでのJComboBoxの推奨サイズ [#x115b70b]

@@ -25,13 +25,13 @@ sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
 }}
 
 * 解説 [#a272ecaa]
-上記のサンプルでは、行フィルタだけ利用して、行のソートは出来なくしておきたいので、`sorter`に以下のような設定をしています。
+上記のサンプルでは、行フィルタだけ利用して、行のソートは不可にしておきたいので、`sorter`に以下のような設定をしています。
 
 - `DefaultRowSorter#setRowFilter(RowFilter)`で偶数行だけ表示するフィルタを設定
 - `DefaultRowSorter#isSortable(int)`をオーバーライドして常に`false`を返す
 
 ----
-`DefaultRowSorter#setSortable(int, boolean)`を使用して、一部の列だけソート不可にすることもできます。
+`DefaultRowSorter#setSortable(int, boolean)`を使用して、一部の列だけソート不可にする方法もあります。
 
 * 参考リンク [#ea345b1c]
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/DefaultRowSorter.html DefaultRowSorter (Java Platform SE 6)]

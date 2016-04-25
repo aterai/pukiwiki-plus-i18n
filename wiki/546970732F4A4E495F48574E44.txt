@@ -132,15 +132,20 @@ set Path=%Path%;%JAVA_HOME%\jre\bin
 
 #code{{
 import java.awt.*;
+import java.awt.peer.ComponentPeer;
 import javax.swing.*;
 import sun.awt.windows.WComponentPeer;
+
 public class WComponentPeerTest {
   public static long getHWnd(Frame f) {
-    return f.getPeer()!=null ? ((WComponentPeer)f.getPeer()).getHWnd() : 0;
+    ComponentPeer p = f.getPeer();
+    return p instanceof WComponentPeer ? ((WComponentPeer) p).getHWnd() : 0;
   }
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
-      @Override public void run() { createAndShowGUI(); }
+      @Override public void run() {
+        createAndShowGUI();
+      }
     });
   }
   public static void createAndShowGUI() {
@@ -149,7 +154,7 @@ public class WComponentPeerTest {
     f.setSize(320, 240);
     f.setLocationRelativeTo(null);
     f.setVisible(true);
-    f.setTitle("HWnd: "+getHWnd(f));
+    f.setTitle("HWnd: " + getHWnd(f));
   }
 }
 }}

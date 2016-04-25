@@ -4,9 +4,15 @@ description: XSL Transformations (XSLT) Version 2.0 に関するメモ書き
 author: aterai
 pubdate: 2016-03-24
 ---
-* XSL Transformations (XSLT) Version 2.0 [#bda0353a]
+#contents
+
+* 概要 [#i267e6c9]
+`XSL Transformations (XSLT) Version 2.0`関連のメモ書きです。
+
+** XSL Transformations (XSLT) Version 2.0 とは [#l44110f7]
 - [https://www.w3.org/TR/xslt20/ XSL Transformations (XSLT) Version 2.0]
 
+* 関数など [#ead3d3a5]
 ** fn:doc-avalable() [#x03c1df3]
 #code{{
 @echo off
@@ -58,6 +64,33 @@ set XSLT=C:/xslt/docx2xxx.xsl
 }}
 
 ** to演算子 [#y5a69778]
+`<xsl:for-each select="1 to $gridBefore">`のように、指定した回数でループすることが可能で、以下の例では`w:trPr/w:gridBefore`で指定された数だけ空の`td`を作成している。
+
+#code{{
+  <xsl:template match="w:tr">
+    <tr>
+      <xsl:variable name="gridBefore" as="xs:integer" select="if(w:trPr/w:gridBefore) then w:trPr/w:gridBefore/@w:val else 0" />
+      <xsl:if test="$gridBefore &gt; 0">
+        <xsl:for-each select="1 to $gridBefore">
+          <td></td>
+        </xsl:for-each>
+      </xsl:if>
+      <xsl:apply-templates select="w:tc[not(w:tcPr/w:vMerge) or w:tcPr/w:vMerge/@w:val='restart']" />
+    <tr>
+  </xsl:template>
+}}
+
+- [http://xsltbyexample.blogspot.jp/2010/05/obtain-position-from-for-expression-in.html XSLT by Example: Obtain position() from “for” expression in Xpath 2]のように、`<xsl:variable name="aaa" select="for $i in (1 to 9) return $i" />`で`<xsl:variable name="bbb" as="xs:integer*" select="(1,2,3,4,5,6,7,8,9)" />`と同じシーケンスが作成可能
+
+#code{{
+<xsl:variable name="aaa" select="for $i in (1 to 9) return $i" />
+<xsl:variable name="bbb" as="xs:integer*" select="(1,2,3,4,5,6,7,8,9)" />
+<xsl:value-of select="deep-equal($aaa,$bbb)" /> <!-- true -->
+}}
+
+- `<xsl:value-of select="for $i in (9 to 1) return $i" />`は、`()`
+- `<xsl:value-of select="for $i in (1 to 1) return $i" />`は、`(1)`
+- `<xsl:value-of select="for $i in (-1 to 1) return $i" />`は、`(-1,0,1)`
 
 ** xsl:for-each-group [#sbfd6336]
 

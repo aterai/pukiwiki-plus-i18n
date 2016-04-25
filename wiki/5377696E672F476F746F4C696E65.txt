@@ -41,9 +41,9 @@ frame.getRootPane().setDefaultButton(button);
 }}
 
 * 解説 [#qa71cf1b]
-上記のサンプルでは、任意の行番号を指定してKBD{Enter}キー、またはボタンをクリックすると、`1`から最大行数までの範囲で、その行が先頭にくるように表示位置が変更されます。
+上記のサンプルでは、任意の行番号を指定してKBD{Enter}キー、またはボタンをクリックすると、その行が`JViewport`の表示範囲の最上部に配置されるよう表示領域を更新します。
 
-`JTextArea#setCaretPosition(int)`メソッドによるキャレットの位置変更だけでは、移動先を移動元より大きな行番号にした場合、`JTextArea`の下までしかスクロールしないので、`JTextArea#modelToView(int)`メソッドで取得した座標が出来るだけ上部にくるように処理しています。
+`JTextArea#setCaretPosition(int)`メソッドによるキャレットの位置変更だけでは、移動先を移動元より大きな行番号にした場合、`JTextArea`の下部までしかスクロールしないので、`JTextArea#modelToView(int)`メソッドで取得した座標が出来るだけ上部にくるように処理しています。
 
 * 参考リンク [#kf6e13ea]
 - [[JTextAreaでSmoothScrollによる行移動>Swing/SmoothScroll]]

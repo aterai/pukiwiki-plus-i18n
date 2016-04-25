@@ -17,7 +17,7 @@ menuBar.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2) {
   @Override public Dimension preferredLayoutSize(Container target) {
     synchronized (target.getTreeLock()) {
       int targetWidth = target.getSize().width;
-      if (targetWidth == 0) targetWidth = Integer.MAX_VALUE;
+      targetWidth = targetWidth == 0 ? Integer.MAX_VALUE : targetWidth;
       Insets insets = target.getInsets();
       int hgap = getHgap();
       int vgap = getVgap();

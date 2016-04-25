@@ -1,0 +1,105 @@
+---
+title: JTableのセルに設定した日付をRegexFilterでフィルタリングする
+tags: [JTable, RowFilter, Date]
+author: aterai
+pubdate: 2016-04-11T00:24:26+09:00
+description: JTableのセルに設定した日付をRegexFilterなどでフィルタリングするテストを行います。
+---
+* 概要 [#wa9c9bf5]
+`JTable`のセルに設定した日付を`RegexFilter`などでフィルタリングするテストを行います。
+
+#download(https://lh3.googleusercontent.com/-yjS3rTYWgk0/VwprmN868uI/AAAAAAAAOSs/-HBZ7l1VimsTNtZo7FDk0wwasI3G4wirACCo/s800-Ic42/RegexDateFilter.png)
+
+* サンプルコード [#v05e1338]
+#code(link){{
+ActionListener al = e -> {
+  Object o = e.getSource();
+  String txt = field.getText();
+  if (r1.equals(o)) {
+    sorter.setRowFilter(RowFilter.regexFilter(txt));
+  } else if (r2.equals(o)) {
+    sorter.setRowFilter(new RegexDateFilter(Pattern.compile(txt)));
+  } else {
+    sorter.setRowFilter(null);
+  }
+};
+
+class RegexDateFilter extends RowFilter<TableModel, Integer> {
+  private final Matcher matcher;
+  protected RegexDateFilter(Pattern pattern) {
+    super();
+    this.matcher = pattern.matcher("");
+  }
+  @Override public boolean include(
+      Entry<? extends TableModel, ? extends Integer> entry) {
+    for (int i = entry.getValueCount() - 1; i >= 0; i--) {
+      Object v = entry.getValue(i);
+      if (v instanceof Date) {
+        matcher.reset(DateFormat.getDateInstance().format(v));
+      } else {
+        matcher.reset(entry.getStringValue(i));
+      }
+      if (matcher.find()) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
+}}
+
+* 解説 [#zb7e76df]
+- `null`
+-- フィルタをクリア
+- `RowFilter.regexFilter`
+-- `RowFilter.regexFilter(txt)`を設定
+-- 以下のように、`RowFilter.regexFilter`では`Date#toString()`メソッドが使用され、セルに表示されている文字列ではフィルタリングされない
+#code{{
+//@see javax/swing/RowFilter.java
+public static abstract class Entry<M, I> {
+  //...
+  public String getStringValue(int index) {
+    Object value = getValue(index);
+    return (value == null) ? "" : value.toString();
+  }
+  //...
+}}
+-- 例: `12`ではすべての行が非表示だが、`Dec`では二行表示される
+- `new RowFilter()`
+-- `RowFilter<TableModel, Integer>`を継承するフィルタを作成して設定
+-- このフィルタでは、以下のように、`DateRenderer`が表示に使用しているデフォルトの`DateFormat`を使用して`Date`を文字列に変換し、フィルタリングを行う
+#code{{
+//@see javax/swing/JTable.java
+static class DateRenderer extends DefaultTableCellRenderer.UIResource {
+  public void setValue(Object value) {
+    //...
+    DateFormat formatter = DateFormat.getDateInstance();
+    setText((value == null) ? "" : formatter.format(value));
+  }
+}
+}}
+
+----
+- `JDK 1.8.0`以上なら、`toString()`でロケールを無視する`Date`ではなく`LocalDateTime`を使用すれば、`LocalDateTime#toString()`が`ISO-8601`形式の文字列を返すので面倒が少ない
+
+#code{{
+  LocalDateTime d = LocalDateTime.of(2002, 12, 31, 0, 0);
+  Object[][] data = {
+    {date,  d},
+    {start, d.minus(2, ChronoUnit.DAYS)},
+    {end,   d.plus(7, ChronoUnit.DAYS)}
+  };
+  DefaultTableModel model = new DefaultTableModel(data, new String[] {"Date", "LocalDateTime"}) {
+  @Override public Class<?> getColumnClass(int column) {
+    return column == 0 ? Date.class : column == 1 ? LocalDateTime.class : Object.class;
+  }
+};
+}}
+
+----
+`Date`を文字列ではなく、日付として各条件を指定し、フィルタリングする場合は、[http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.html#dateFilter-javax.swing.RowFilter.ComparisonType-java.util.Date-int...- RowFilter#dateFilter (Java Platform SE 8)]を使用します。
+
+//* 参考リンク
+* コメント [#ra845442]
+#comment
+#comment
