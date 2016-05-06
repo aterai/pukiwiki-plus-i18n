@@ -426,15 +426,14 @@ def main
   srcmask = ARGV[2] ? ARGV[2] : "*.txt"
 
   if File.exist?(srcpath)
+    parser = PukiWikiParser.new()
     Dir::glob("#{srcpath}/#{srcmask}").each {|f|
+      page_names = []
       fname = File.basename(f)
       tbody = File.read(f)
-      page_names = []
-      parser = PukiWikiParser.new()
-      buf    = parser.to_md(tbody, page_names, HTMLUtils.urldecode(fname))
-      tmp    = parser.filename(fname)
-
-      if parser.has_pubdate then
+      buf   = parser.to_md(tbody, page_names, HTMLUtils.urldecode(fname))
+      tmp   = parser.filename(fname)
+      if !tmp.include?("_") and parser.has_pubdate then
         nname  = [tgtpath, tmp].join('/')
         puts tmp
         outf = open(nname, "wb")

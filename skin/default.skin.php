@@ -112,6 +112,7 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/JavaScript.html">JavaScript</a></li>
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Subversion.html">Subversion</a></li>
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Jekyll.html">Jekyll</a></li>
+<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/XSLT20.html">XSLT 2.0</a></li>
 </ul>
 <?php include_once(PLUGIN_DIR.'search_form.inc.php'); echo plugin_search_form_convert(); ?>
 </div>

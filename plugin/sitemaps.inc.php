@@ -18,7 +18,7 @@ function plugin_sitemaps_action() {
     $date = $items = '';
 
     $array = array();
-    $array[] = '^.+%2F_.+$';
+    //$array[] = '^.+%2F_.+$';
 
     $array[] = '.*ChangeLog.*';
     $array[] = '.*Questionnaire.*';
