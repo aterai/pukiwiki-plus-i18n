@@ -26,7 +26,29 @@ if (detailsAction != null) {
 * 解説 [#d6cd620d]
 - 以下のリンクで紹介されているように、`ActionMap`から`viewTypeDetails`アクションを取得する方法が一番簡単なようです。
 -- [http://stackoverflow.com/questions/16292502/how-can-i-start-the-jfilechooser-in-the-details-view java - How can I start the JFileChooser in the Details view? - Stack Overflow]
--- 何時から使用できるようになったのか、それとも元から使用可能だったのかなどを調査中。
+
+#code{{
+//@see javax/swing/plaf/basic/BasicFileChooserUI.java
+ActionMap map = new ActionMapUIResource();
+Action refreshAction = new UIAction(FilePane.ACTION_REFRESH) {
+  public void actionPerformed(ActionEvent evt) {
+    getFileChooser().rescanCurrentDirectory();
+  }
+};
+map.put(FilePane.ACTION_APPROVE_SELECTION, getApproveSelectionAction());
+map.put(FilePane.ACTION_CANCEL, getCancelSelectionAction());
+map.put(FilePane.ACTION_REFRESH, refreshAction);
+map.put(FilePane.ACTION_CHANGE_TO_PARENT_DIRECTORY, getChangeToParentDirectoryAction());
+
+//sun.swing.FilePane.ACTION_APPROVE_SELECTION = "approveSelection";
+//sun.swing.FilePane.ACTION_CANCEL            = "cancelSelection";
+//sun.swing.FilePane.ACTION_EDIT_FILE_NAME    = "editFileName";
+//sun.swing.FilePane.ACTION_REFRESH           = "refresh";
+//sun.swing.FilePane.ACTION_CHANGE_TO_PARENT_DIRECTORY = "Go Up";
+//sun.swing.FilePane.ACTION_NEW_FOLDER        = "New Folder";
+//sun.swing.FilePane.ACTION_VIEW_LIST         = "viewTypeList";
+//sun.swing.FilePane.ACTION_VIEW_DETAILS      = "viewTypeDetails";
+}}
 
 ----
 `JFileChooser`の子で`UIManager.getIcon("FileChooser.detailsViewIcon")`アイコンが設定されている`JToggleButton`を検索、`doClick()`することで、`List`から`DetailsView`(詳細)に切り替える方法もあります。

@@ -1,0 +1,75 @@
+---
+title: JTableHeaderでTableColumnのグループ化を行う
+tags: [JTable, JTableHeaer, TableColumn]
+author: aterai
+pubdate: 2016-05-02T00:35:46+09:00
+description: TableColumnのグループ化を可能にし、JTableHeaderでの列結合を実現します。
+---
+* 概要 [#u5f74b42]
+`TableColumn`のグループ化を可能にし、`JTableHeader`での列結合を実現します。%%[http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html Groupable Header - JTable Examples 1]%%からの引用です。
+
+#download(https://lh3.googleusercontent.com/-DIZZyiOX9YU/VyYbXr9opNI/AAAAAAAAOTs/QhLBqtw5Z34ULclU9aZHnVjnEZMJvhJmgCCo/s800/GroupableTableHeader.png)
+
+* サンプルコード [#jbfea3c8]
+#code(link){{
+/** GroupableTableHeader
+ * http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html
+ * @version 1.0 10/20/98
+ * @author Nobuo Tamemasa
+ * modified by aterai aterai@outlook.com
+ */
+class GroupableTableHeader extends JTableHeader {
+  private transient List<ColumnGroup> columnGroups;
+
+  protected GroupableTableHeader(TableColumnModel model) {
+    super(model);
+  }
+  @Override public void updateUI() {
+    super.updateUI();
+    setUI(new GroupableTableHeaderUI());
+  }
+  //@Override public boolean getReorderingAllowed() {
+  //  return false;
+  //}
+  @Override public void setReorderingAllowed(boolean b) {
+    super.setReorderingAllowed(false);
+  }
+  public void addColumnGroup(ColumnGroup g) {
+    if (columnGroups == null) {
+      columnGroups = new ArrayList<>();
+    }
+    columnGroups.add(g);
+  }
+  public List<?> getColumnGroups(TableColumn col) {
+    if (columnGroups == null) {
+      return Collections.emptyList();
+    }
+    for (ColumnGroup cGroup : columnGroups) {
+      List<?> groups = cGroup.getColumnGroupList(col, new ArrayList<Object>());
+      if (!groups.isEmpty()) {
+        return groups;
+      }
+    }
+    return Collections.emptyList();
+  }
+}
+}}
+
+* 解説 [#q2ae14a6]
+上記のサンプルでは、`JTableHeader`に列のグループ化設定を追加し、`BasicTableHeaderUI#paint(...)`をオーバーライドしてヘッダセルの描画領域を変更することで、`TableColumn`の列結合を実現しています。
+
+- %%[http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html オリジナル]%%からの主な変更点:
+-- `header.getColumnModel().getColumnMargin()`で取得した余白を無視(ヘッダセルと本体セルがずれてしまう)
+-- グループ化設定の保持に、`Vector`ではなく`ArrayList`を使用
+-- グループ化設定がない場合は、`null`ではなく`Collections.emptyList()`を返す
+-- `BasicTableHeaderUI`からコピーしている`private`メソッド？を最新版に更新
+
+* 参考リンク [#wb4beb81]
+- %%[http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html Groupable Header - JTable Examples 1]%%
+-- オリジナル版
+- [http://www.java2s.com/Code/Java/Swing-Components/GroupableGroupHeaderExample.htm Groupable(Group) Header Example : Grid Table « Swing Components « Java]
+-- `revised by Java2s.com`でいくつか変更点がある
+
+* コメント [#ma6db711]
+#comment
+#comment

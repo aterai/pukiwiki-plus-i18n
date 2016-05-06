@@ -182,11 +182,13 @@ public class EvenOddTest {
 
 * 正の数と負の数を反転 [#t6341d2a]
 - [https://community.oracle.com/thread/1253898 How do you Invert signed numbers? | Oracle Community]
+- [http://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.15.4 15.15.4. Unary Minus Operator - / Chapter 15. Expressions]
 
 #code{{
 public class InvertSignedNumbersTest {
   private static void print(int i) {
     System.out.println(i);
+    System.out.format(" :%d\n", -i);
     System.out.format(" :%d\n", ~i + 1);
     System.out.format(" :%d\n", (i > 0 ? -1 : 1) * Math.abs(i));
     System.out.format(" :%d\n", ~--i);
@@ -194,9 +196,199 @@ public class InvertSignedNumbersTest {
   public static void main(String... args) {
     print(256);
     print(-256);
+    print(0);
+    print(-0);
     print(Integer.MAX_VALUE);
     print(Integer.MIN_VALUE + 1);
     print(Integer.MIN_VALUE);
+  }
+}
+}}
+
+* Objects.compare(...) [#lde83489]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/util/Objects.html#compare-T-T-java.util.Comparator- Objects.compare(...) (Java Platform SE 8)]
+
+#code{{
+    /**
+     * Returns 0 if the arguments are identical and {@code
+     * c.compare(a, b)} otherwise.
+     * Consequently, if both arguments are {@code null} 0
+     * is returned.
+     *
+     * <p>Note that if one of the arguments is {@code null}, a {@code
+     * NullPointerException} may or may not be thrown depending on
+     * what ordering policy, if any, the {@link Comparator Comparator}
+     * chooses to have for {@code null} values.
+     *
+     * @param <T> the type of the objects being compared
+     * @param a an object
+     * @param b an object to be compared with {@code a}
+     * @param c the {@code Comparator} to compare the first two arguments
+     * @return 0 if the arguments are identical and {@code
+     * c.compare(a, b)} otherwise.
+     * @see Comparable
+     * @see Comparator
+     */
+    public static <T> int compare(T a, T b, Comparator<? super T> c) {
+        return (a == b) ? 0 :  c.compare(a, b);
+    }
+}}
+
+- [http://stackoverflow.com/questions/32722171/what-is-the-purpose-of-the-objects-compare-method java - What is the purpose of the Objects.compare() method? - Stack Overflow]
+-- 確かに`Objects.compare(...)`の使いどころが分からない
+-- `TableSorter.java`の以下のようなコードが短くなるか？と思ったけど、無理だった
+
+#code{{
+//@see http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSorterDemoProject/src/components/TableSorter.java
+public int compareTo(Object o) {
+  int row1 = modelIndex;
+  int row2 = ((Row) o).modelIndex;
+
+  for (Iterator it = sortingColumns.iterator(); it.hasNext();) {
+    Directive directive = (Directive) it.next();
+    int column = directive.column;
+    Object o1 = tableModel.getValueAt(row1, column);
+    Object o2 = tableModel.getValueAt(row2, column);
+
+    int comparison = 0;
+    // Define null less than everything, except null.
+    if (o1 == null && o2 == null) {
+      comparison = 0;
+    } else if (o1 == null) {
+      comparison = -1;
+    } else if (o2 == null) {
+      comparison = 1;
+    } else {
+      comparison = getComparator(column).compare(o1, o2);
+    }
+    if (comparison != 0) {
+      return directive.direction == DESCENDING ? -comparison : comparison;
+    }
+  }
+  return 0;
+}
+}}
+
+- 以下のように`Objects.compare(...)`を使用するとテーブルモデルの値に`null`が存在すると、ソートで`NullPointerException`が発生する
+- [http://www.ne.jp/asahi/hishidama/home/tech/java/comparator.html#nulls Java Comparatorメモ(Hishidama's Java Comparator Memo)]を参考に、`Comparator.nullsFirst(comparator)`と合わせて使用すれば、`NullPointerException`は発生しない
+
+#code{{
+//@see http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSorterDemoProject/src/components/TableSorter.java
+public int compareTo(Object o) {
+  int row1 = modelIndex;
+  int row2 = ((Row) o).modelIndex;
+
+  for (Iterator it = sortingColumns.iterator(); it.hasNext();) {
+    Directive directive = (Directive) it.next();
+    int column = directive.column;
+    Object o1 = tableModel.getValueAt(row1, column);
+    Object o2 = tableModel.getValueAt(row2, column);
+
+    @SuppressWarnings("unchecked")
+    Comparator<Object> comparator = getComparator(column);
+    int comparison = Objects.compare(o1, o2, comparator);
+    //int comparison = Objects.compare(o1, o2, Comparator.nullsFirst(comparator));
+    if (comparison != 0) {
+      return directive.direction == DESCENDING ? ~comparison + 1 : comparison;
+    }
+  }
+  return 0;
+}
+}}
+
+* 無名匿名クラスとラムダ式の中でのthisキーワード [#l84f20a2]
+- [http://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.27.2 15.27.2. Lambda Body - Chapter 15. Expressions]
+-- via: [http://stackoverflow.com/questions/24202236/lambda-this-reference-in-java Lambda this reference in java - Stack Overflow]
+- [[Javaラムダ式メモ(Hishidama's Java8 Lambda Expression Memo)>http://www.ne.jp/asahi/hishidama/home/tech/java/lambda]]
+- 単純に無名匿名クラスをラムダ式に置き換えると、「`static`でないメソッド`getClass()`を`static`コンテキストから参照することはできません」とコンパイルエラーになる場合がある
+#code{{
+MainPanel.java:43: error: non-static method getClass() cannot be referenced from a static context
+  splashScreen.getContentPane().add(new JLabel(new ImageIcon(getClass().getResource("splash.png"))));
+}}
+-- 無名匿名クラス中の`this`キーワードは、無名匿名クラスのインスタンスを指すが、ラムダ式はラムダ式を定義したメソッドが属しているクラスのインスタンスを指すため
+- `this.getClass()`ではなく、`MainPanel.class.getClass()`のように`class`リテラルを使用して回避
+-- [http://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.8.2 15.8.2. Class Literals - Chapter 15. Expressions]
+
+#code{{
+import java.awt.*;
+import java.beans.*;
+import javax.swing.*;
+
+public final class MainPanel extends JPanel {
+  private MainPanel() {
+    super(new BorderLayout());
+    try {
+      Thread.sleep(3000); //dummy task
+    } catch (InterruptedException ex) {
+      ex.printStackTrace();
+    }
+    add(new JScrollPane(new JTree()));
+    setPreferredSize(new Dimension(320, 240));
+  }
+
+  public static void main(String... args) {
+    /*
+    final JFrame frame = new JFrame();
+    final JDialog splashScreen  = new JDialog(frame, Dialog.ModalityType.DOCUMENT_MODAL);
+    final JProgressBar progress = new JProgressBar();
+    EventQueue.invokeLater(new Runnable() {
+        @Override public void run() {
+            splashScreen.setUndecorated(true);
+            splashScreen.getContentPane().add(new JLabel(new ImageIcon(getClass().getResource("splash.png"))));
+            splashScreen.getContentPane().add(progress, BorderLayout.SOUTH);
+            splashScreen.pack();
+            splashScreen.setLocationRelativeTo(null);
+            splashScreen.setVisible(true);
+        }
+    });
+    /*/
+    JFrame frame = new JFrame();
+    JDialog splashScreen  = new JDialog(frame, Dialog.ModalityType.DOCUMENT_MODAL);
+    JProgressBar progress = new JProgressBar();
+    EventQueue.invokeLater(() -> {
+      splashScreen.setUndecorated(true);
+      splashScreen.getContentPane().add(new JLabel(new ImageIcon(MainPanel.class.getResource("splash.png"))));
+      //NG: splashScreen.getContentPane().add(new JLabel(new ImageIcon(getClass().getResource("splash.png"))));
+      splashScreen.getContentPane().add(progress, BorderLayout.SOUTH);
+      splashScreen.pack();
+      splashScreen.setLocationRelativeTo(null);
+      splashScreen.setVisible(true);
+    });
+    //*/
+    SwingWorker<Void, Void> worker = new Task() {
+      @Override public void done() {
+        splashScreen.dispose();
+      }
+    };
+    worker.addPropertyChangeListener(e -> {
+      if ("progress".equals(e.getPropertyName())) {
+        progress.setValue((Integer) e.getNewValue());
+      }
+    });
+    worker.execute();
+
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.getContentPane().add(new MainPanel());
+    frame.pack();
+    frame.setLocationRelativeTo(null);
+    EventQueue.invokeLater(() -> frame.setVisible(true));
+  }
+}
+
+class Task extends SwingWorker<Void, Void> {
+  @Override public Void doInBackground() {
+    int current = 0;
+    int lengthOfTask = 120;
+    while (current < lengthOfTask && !isCancelled()) {
+      try {
+        Thread.sleep(50);
+      } catch (InterruptedException ie) {
+        ie.printStackTrace();
+        return null;
+      }
+      setProgress(100 * current++ / lengthOfTask);
+    }
+    return null;
   }
 }
 }}
