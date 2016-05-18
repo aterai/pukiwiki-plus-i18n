@@ -50,7 +50,7 @@ int getWordStart(JTextComponent c, int offs) throws BadLocationException {
 }}
 
 * 解説 [#d3c9dafb]
-上記のサンプルでは、JTextAreaで文字列をダブルクリックした場合に実行される単語選択アクション(`new TextAction(DefaultEditorKit.selectWordAction)`)を変更し、常に`_`、`-`記号で単語を区切るように設定しています。
+上記のサンプルでは、`JTextArea`で文字列をダブルクリックした場合に実行される単語選択アクション(`new TextAction(DefaultEditorKit.selectWordAction)`)を変更し、常に`_`、`-`記号で単語を区切るように設定しています。
 
 - `Default`
 -- `_`、`-`は、単語区切りにならず、`AA-BB_CC`は一つの単語として選択される

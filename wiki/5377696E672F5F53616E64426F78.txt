@@ -128,6 +128,12 @@ pubdate: 2006-01-29
 - UIDefaults ProxyLazyValue
 
 * Swing関係のバグのメモ [#hb22f5ad]
+** JToolBarに配置したJButtonのフォーカス描画 [#w21ce2da]
+- [http://stackoverflow.com/questions/37295099/decorating-a-rollover-toolbar-button-with-jlayer-paints-its-border#37295921 java - Decorating a rollover toolbar button with JLayer paints its border - Stack Overflow]
+-- `JButton`を`JLayer`でラップして`JToolBar`に追加すると、`JToolBar`用のフォーカス描画ではなく、デフォルトのフォーカス描画が適用されてしまう
+-- 回答されているように、`BasicToolBarUI#setBorderToRollover(...)`などが、`JLayer`を想定していない
+-- [[JLayerで隣接する別コンポーネント上に縁を描画>Swing/OverlapBorderPaintLayer]]のように、親の`JToolBar`に`JLayer`を設定し、`e.getComponent()`で`JButton`を取得して回避可能
+
 ** NimbusLookAndFeelでのJComboBoxの推奨サイズ [#x115b70b]
 - [http://stackoverflow.com/questions/36274053/swing-jcombobox-bug-printing-dimension java - Swing (JComboBox) bug? printing dimension - Stack Overflow]
 -- `JComboBox`の時点と、`JFrame`に追加して`JFrame#pack()`もしくは`JFrame.setSize(...)`後で、`JComboBox`の推奨サイズ(幅)が異なる？

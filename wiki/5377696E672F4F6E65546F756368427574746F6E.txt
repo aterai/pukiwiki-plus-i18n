@@ -38,7 +38,8 @@ for (Component c: divider.getComponents()) {
 -- `NimbusLookAndFeel`では無効で、`Divider`のサイズに依存？
 - `OneTouchButton`のオフセット指定
 -- `UIManager.put("oneTouchButtonOffset", 50);`
--- `JSplitPane.VERTICAL_SPLIT`の場合、`Divider`の左端から`LeftOneTouchButton`までと、`LeftOneTouchButton`と`RightOneTouchButton`までの距離が設定可能
+-- `JSplitPane.VERTICAL_SPLIT`の場合、`Divider`の左端から`LeftOneTouchButton`%%までと、`LeftOneTouchButton`と`RightOneTouchButton`%%までの距離が設定可能
+-- `NimbusLookAndFeel`のデフォルトは、`30`になっているため、`JSplitPane.HORIZONTAL_SPLIT`で`Divider`の高さがそれ以下の場合は、`OneTouchButton`が表示できない
 - `OneTouchButton`の背景色
 -- `JButton#paint(...)`がオーバーライドされて、`oneTouchButton.getBackground()`の色で塗り潰されている(`oneTouchButton.setOpaque(false)`で透明にしても無意味)ので、`setBackground()`で、`Divider`の背景色と同じ色を設定
 --- `OneTouchButton`の図形の色と形も、`JButton#paint(...)`の中で直接描画(`Color.BLACK`固定)されているので、簡単に変更することが出来ない(`BasicSplitPaneUI`や`BasicSplitPaneDivider`をオーバーライドする必要がある)

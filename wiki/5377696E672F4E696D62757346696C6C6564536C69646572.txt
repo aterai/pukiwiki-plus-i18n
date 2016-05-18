@@ -1,0 +1,79 @@
+---
+title: NimbusLookAndFeelを適用したJSliderで範囲の塗りつぶしを行う
+tags: [JSlider, NimbusLookAndFeel]
+author: aterai
+pubdate: 2016-05-16T00:30:20+09:00
+description: NimbusLookAndFeelを適用したJSliderでトラックの現在値を示す範囲の背景を塗りつぶします。
+---
+* 概要 [#yc62409e]
+`NimbusLookAndFeel`を適用した`JSlider`でトラックの現在値を示す範囲の背景を塗りつぶします。
+
+#download(https://lh3.googleusercontent.com/-dCrSqcYLbEg/VziRkYw8_xI/AAAAAAAAOXg/0oS6CVwRbkIa02qT5nmfNEMzLqdckmAkwCCo/s800/NimbusFilledSlider.png)
+
+* サンプルコード [#j49e1ead]
+#code(link){{
+UIDefaults d = new UIDefaults();
+d.put("Slider:SliderTrack[Enabled].backgroundPainter", new Painter<JSlider>() {
+  @Override public void paint(Graphics2D g, JSlider c, int w, int h) {
+    int arc         = 10;
+    int trackHeight = 8;
+    int trackWidth  = w - 2;
+    int fillTop     = 4;
+    int fillLeft    = 1;
+
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                       RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setStroke(new BasicStroke(1.5f));
+    g.setColor(Color.GRAY);
+    g.fillRoundRect(fillLeft, fillTop, trackWidth, trackHeight, arc, arc);
+
+    int fillBottom = fillTop + trackHeight;
+    int fillRight  = xPositionForValue(c, new Rectangle(
+        fillLeft, fillTop, trackWidth, fillBottom - fillTop));
+
+    g.setColor(Color.ORANGE);
+    g.fillRect(
+        fillLeft + 1, fillTop + 1, fillRight - fillLeft, fillBottom - fillTop);
+
+    g.setColor(Color.WHITE);
+    g.drawRoundRect(fillLeft, fillTop, trackWidth, trackHeight, arc, arc);
+  }
+  //@see javax/swing/plaf/basic/BasicSliderUI#xPositionForValue(int value)
+  protected int xPositionForValue(JSlider slider, Rectangle trackRect) {
+    int value = slider.getValue();
+    int min = slider.getMinimum();
+    int max = slider.getMaximum();
+    int trackLength = trackRect.width;
+    double valueRange = (double) max - (double) min;
+    double pixelsPerValue = (double) trackLength / valueRange;
+    int trackLeft = trackRect.x;
+    int trackRight = trackRect.x + trackRect.width - 1;
+    int xPosition;
+
+    xPosition = trackLeft;
+    xPosition += Math.round(pixelsPerValue * ((double) value - min));
+
+    xPosition = Math.max(trackLeft, xPosition);
+    xPosition = Math.min(trackRight, xPosition);
+
+    return xPosition;
+  }
+});
+
+JSlider slider = new JSlider();
+slider.putClientProperty("Nimbus.Overrides", d);
+}}
+
+* 解説 [#zdc2eb28]
+- `Default`
+-- `UIManager.put("JSlider.isFilled", Boolean.TRUE)`としても、`NimbusLookAndFeel`などでは、範囲の塗りつぶしは行われない
+- `Nimbus JSlider.isFilled`
+-- `UIDefaults#put("Slider:SliderTrack[Enabled].backgroundPainter", painter)`で、トラックの背景を描画する`Painter`を変更し、範囲の塗りつぶしを行う
+-- 上記のサンプルでは、垂直スライダー(`slider.getOrientation() == SwingConstants.VERTICAL`)や、表示される値の範囲が通常とは逆のスライダー(`slider#setInverted(true)`)には未対応
+
+* 参考リンク [#s993fec6]
+- [http://stackoverflow.com/questions/37126097/how-to-fill-jslider-track-up-to-the-point-of-the-current-thumb-value-with-nimubs java - How to fill JSlider track up to the point of the current thumb value with Nimubs L&F? - Stack Overflow]
+
+* コメント [#ee07395a]
+#comment
+#comment

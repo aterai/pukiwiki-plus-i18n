@@ -48,6 +48,10 @@ field.setAccessible(true);
 combo.putClientProperty(field.get(null), Boolean.TRUE);
 }}
 
+----
+- `JDK 1.9.0`では、常に`HeavyWeight`で開くのが簡単になるように修正されるかもしれない
+-- [https://bugs.openjdk.java.net/browse/JDK-8147521 JDK-8147521 macosx Internal API Usage: setPopupType used to force creation of heavyweight popup - Java Bug System]
+
 * 参考リンク [#webb6ab8]
 - [https://community.oracle.com/thread/1357949 Swing - ComboBox scroll and selected/highlight on glasspane]
 - [http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?mode=viewtopic&topic=42615&forum=12 JComboBox の GlassPane 上でのレンダリング]

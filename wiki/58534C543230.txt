@@ -39,7 +39,7 @@ set XSLT=C:/xslt/docx2xxx.xsl
 - `fn:resolve-uri('')` -> `C:/xslt/docx2xxx.xsl`
 
 ** xsl:analyze-string [#ic1c9eb9]
-`docx`の`w:lvlText`のフォーマット(例えば`%1.%2.%3`)に従って、実際の段落番号文字列に変換する場合、`xsl:analyze-string`が便利。
+`docx`の`w:lvlText`のフォーマット(例えば`%1.%2.%3`)に従って、実際の段落番号文字列(例えば、`1.5.10`)に変換する場合、`xsl:analyze-string`が便利。
 - [https://msdn.microsoft.com/ja-jp/library/office/ee922775(v=office.14).aspx Open XML WordprocessingML の段落番号を操作する]
 
 #code{{
@@ -88,9 +88,48 @@ set XSLT=C:/xslt/docx2xxx.xsl
 <xsl:value-of select="deep-equal($aaa,$bbb)" /> <!-- true -->
 }}
 
+- `<xsl:value-of select="for $i in (0 to 2) return $i" />`は、`(0,1,2)`
 - `<xsl:value-of select="for $i in (9 to 1) return $i" />`は、`()`
 - `<xsl:value-of select="for $i in (1 to 1) return $i" />`は、`(1)`
 - `<xsl:value-of select="for $i in (-1 to 1) return $i" />`は、`(-1,0,1)`
+
+** fn:codepoints-to-string, fn:string-to-codepoints [#cb578b10]
+- `Excel`などの列名(アルファベット`26`進数`bijective base-26`の文字列)を`10`進数の列番号に変換する
+-- `<xsl:value-of select="myfn:column-index('AA')" />`は、`27`
+-- `<xsl:value-of select="myfn:column-index('XFD')" />`は、`16384`
+
+#code{{
+<!-- 関数: アルファベット26進数(bijective base-26)の文字列を10進数のxs:integerに変換 -->
+<!-- べき乗が計算できない？ので、あらかじめ用意する。最大列はXFD(16384)なので、26^3(17576)は不要 -->
+<xsl:variable name="power" as="xs:integer+" select="(1, 26, 676)" />
+<!-- xsl:variable name="AtoZ" as="xs:string+" select="('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')" / -->
+<xsl:variable name="AtoZ" as="xs:string+" select="for $i in (0 to 26 - 1) return codepoints-to-string(string-to-codepoints('A') + $i)" />
+
+<xsl:function as="xs:integer" name="myfn:column-index">
+  <xsl:param name="str" as="xs:string" />
+  <xsl:variable name="len" select="fn:string-length($str)" /> <!-- 最大3桁 -->
+  <xsl:value-of select="sum(for $i in (1 to $len) return index-of($AtoZ, substring($str, $i, 1)) * $power[$len - $i + 1])" />
+</xsl:function>
+}}
+
+- 列番号の数値を列名に変換
+-- `<xsl:value-of select="myfn:column-label(702)" />`は、`ZZ`
+-- `<xsl:value-of select="myfn:column-label('703')" />`は、`AAA`
+
+#code{{
+  <xsl:function as="xs:string" name="myfn:column-label">
+    <xsl:param name="num" as="xs:integer" />
+    <xsl:variable name="cpa" as="xs:integer" select="string-to-codepoints('A')" />
+    <xsl:variable name="dv3" as="xs:integer" select="xs:integer(($num - 26 - 1) div 676)" />
+    <xsl:variable name="st3" as="xs:string"  select="if($dv3 != 0) then codepoints-to-string($cpa + $dv3 - 1) else ''" />
+    <xsl:variable name="md3" as="xs:integer" select="$num - ($dv3 * 676)" />
+    <xsl:variable name="dv2" as="xs:integer" select="xs:integer(($md3 - 1) div 26)" />
+    <xsl:variable name="st2" as="xs:string"  select="if($dv2 != 0) then codepoints-to-string($cpa + $dv2 - 1) else ''" />
+    <xsl:variable name="md2" as="xs:integer" select="$md3 - ($dv2 * 26)" />
+    <xsl:variable name="st1" as="xs:string"  select="codepoints-to-string($cpa + $md2 - 1)" />
+    <xsl:value-of select="concat($st3,$st2,$st1)" />
+  </xsl:function>
+}}
 
 ** xsl:for-each-group [#sbfd6336]
 
