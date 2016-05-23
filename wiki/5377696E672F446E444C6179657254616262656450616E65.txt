@@ -35,26 +35,18 @@ class DropLocationLayerUI extends LayerUI<DnDTabbedPane> {
       }
     }
   }
-  private void initLineRect(
-      DnDTabbedPane tabbedPane, DnDTabbedPane.DropLocation loc) {
+  private void initLineRect(JTabbedPane tabbedPane, DnDTabbedPane.DropLocation loc) {
     int index = loc.getIndex();
-    boolean isZero = index == 0;
-    Rectangle r = tabbedPane.getBoundsAt(isZero ? 0 : index - 1);
-    Rectangle rect = new Rectangle();
-    int a = isZero ? 0 : 1;
-    if (tabbedPane.getTabPlacement() == JTabbedPane.TOP ||
-        tabbedPane.getTabPlacement() == JTabbedPane.BOTTOM) {
-      rect.x = r.x - LINEWIDTH / 2 + r.width * a;
-      rect.y = r.y;
-      rect.width  = LINEWIDTH;
-      rect.height = r.height;
+    int a = index == 0 ? 0 : 1;
+    Rectangle r = tabbedPane.getBoundsAt(a * (index - 1));
+    if (tabbedPane.getTabPlacement() == JTabbedPane.TOP
+        || tabbedPane.getTabPlacement() == JTabbedPane.BOTTOM) {
+      lineRect.setBounds(
+        r.x - LINE_WIDTH / 2 + r.width * a, r.y, LINE_WIDTH, r.height);
     } else {
-      rect.x = r.x;
-      rect.y = r.y - LINEWIDTH / 2 + r.height * a;
-      rect.width  = r.width;
-      rect.height = LINEWIDTH;
+      lineRect.setBounds(
+        r.x, r.y - LINE_WIDTH / 2 + r.height * a, r.width, LINE_WIDTH);
     }
-    lineRect.setRect(rect);
   }
 }
 }}

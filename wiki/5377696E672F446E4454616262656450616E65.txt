@@ -15,19 +15,20 @@ hreflang:
 
 * サンプルコード [#jf8c35ef]
 #code(link){{
-private int getTargetTabIndex(Point glassPt) {
-  Point tabPt = SwingUtilities.convertPoint(glassPane, glassPt, DnDTabbedPane.this);
+protected int getTargetTabIndex(Point glassPt) {
+  Point tabPt = SwingUtilities.convertPoint(glassPane, glassPt, this);
   boolean isTB = getTabPlacement() == JTabbedPane.TOP || getTabPlacement() == JTabbedPane.BOTTOM;
+  Point d = isTB ? new Point(1, 0) : new Point(0, 1);
   for (int i = 0; i < getTabCount(); i++) {
     Rectangle r = getBoundsAt(i);
-    if (isTB) r.setRect(r.x - r.width / 2, r.y, r.width, r.height);
-    else      r.setRect(r.x, r.y - r.height / 2, r.width, r.height);
-    if (r.contains(tabPt)) return i;
+    r.translate(-r.width * d.x / 2, -r.height * d.y / 2);
+    if (r.contains(tabPt)) {
+      return i;
+    }
   }
   Rectangle r = getBoundsAt(getTabCount() - 1);
-  if (isTB) r.setRect(r.x + r.width / 2, r.y, r.width, r.height);
-  else      r.setRect(r.x, r.y + r.height / 2, r.width, r.height);
-  return    r.contains(tabPt) ? getTabCount() : -1;
+  r.translate(r.width * d.x / 2, r.height * d.y / 2);
+  return r.contains(tabPt) ? getTabCount() : -1;
 }
 
 private void convertTab(int prev, int next) {
@@ -47,7 +48,9 @@ private void convertTab(int prev, int next) {
 
   //When you drag'n'drop a disabled tab, it finishes enabled and selected.
   //pointed out by dlorde
-  if (flg) setSelectedIndex(tgtindex);
+  if (flg) {
+    setSelectedIndex(tgtindex);
+  }
 
   // I have a component in all tabs (jlabel with an X to close the tab)
   // and when i move a tab the component disappear.
