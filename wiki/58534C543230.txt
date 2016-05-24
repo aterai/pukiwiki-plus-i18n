@@ -116,7 +116,7 @@ set XSLT=C:/xslt/docx2xxx.xsl
 </xsl:function>
 }}
 
-- `myfn:get-merge-cells('A18:F26')`は、`(B18, C18, D18, A19, B19, C19, D19, A20, B20, C20, D20)`
+- `myfn:get-merge-cells('A18:D20')`は、`(B18, C18, D18, A19, B19, C19, D19, A20, B20, C20, D20)`
 
 ** fn:codepoints-to-string, fn:string-to-codepoints [#cb578b10]
 - `Excel`などの列名(アルファベット`26`進数`bijective base-26`の文字列)を`10`進数の列番号に変換する
@@ -155,6 +155,8 @@ set XSLT=C:/xslt/docx2xxx.xsl
     <xsl:value-of select="concat($st3,$st2,$st1)" />
   </xsl:function>
 }}
+
+** separator属性 [#p66433ee]
 
 ** xsl:for-each-group [#sbfd6336]
 
