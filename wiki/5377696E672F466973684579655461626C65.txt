@@ -20,10 +20,10 @@ hreflang:
   if (prev_row == row) {
     return;
   }
-  initRowHeigth(prev_height, row);
+  initRowHeight(prev_height, row);
   prev_row = row;
 }
-public void initRowHeigth(int height, int ccRow) {
+public void initRowHeight(int height, int ccRow) {
   int rd2      = (fishEyeRowList.size() - 1) / 2;
   int rowCount = getModel().getRowCount();
   int view_rc  = getViewableColoredRowCount(ccRow);

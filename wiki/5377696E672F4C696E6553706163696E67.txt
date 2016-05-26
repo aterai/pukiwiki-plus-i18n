@@ -40,7 +40,7 @@ class BottomInsetEditorKit extends StyledEditorKit {
 }}
 
 * 解説 [#oa458f2f]
-- 上: `StyleConstants.setLineSpacing`で、行間を指定した`AttributeSet`を作成し、`JTextPane#setParagraphAttributes`で設定しています。
+- 上: `StyleConstants.setLineSpacing`で、行間を指定した`AttributeSet`を作成し、`JTextPane#setParagraphAttributes`で設定
 -- フォントサイズ相対の行間になる
 
 #code{{
@@ -54,7 +54,7 @@ editor1.setParagraphAttributes(a, true);
 setDummyText(editor1);
 }}
 
-- 下: `ParagraphView#getBottomInset`をオーバーライドして、固定の行間をピクセルで指定しています。
+- 下: `ParagraphView#getBottomInset`をオーバーライドして、固定の行間をピクセルで指定
 -- フォントサイズに関係なく、アキ`5px`
 
 ----

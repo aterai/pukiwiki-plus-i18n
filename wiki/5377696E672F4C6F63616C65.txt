@@ -21,12 +21,10 @@ fileChooser.updateUI();
 上記のサンプルでは、コンボボックスで指定したロケールを`JFileChooser`に設定してから開くようになっています。
 タイトル、ボタンのラベルなどが、指定したロケールに変更されます。
 
-- `JDK 1.5.0_13`では、`JVM`のデフォルトが`English`以外だった場合、`Component#setLocale(Locale.ENGLISH)`や、`JComponent.setDefaultLocale(Locale.ENGLISH)`としても反映されないようです。
--- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6606475 Bug ID: 6606475 JComponent.setDefaultLocale(Locale.ENGLISH) useless if def locale is non-english]
--- `JDK 1.6.0`では修正済み
-
 * 参考リンク [#gbe40f72]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6606475 Bug ID: 6606475 JComponent.setDefaultLocale(Locale.ENGLISH) useless if def locale is non-english]
+-- %%`JDK 1.5.0_13`では、`JVM`のデフォルトが`English`以外だった場合、`Component#setLocale(Locale.ENGLISH)`や、`JComponent.setDefaultLocale(Locale.ENGLISH)`としても反映されない%%
+-- `JDK 1.6.0`で修正済み
 
 * コメント [#h2cbdcae]
 #comment

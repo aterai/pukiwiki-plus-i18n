@@ -77,12 +77,10 @@ MouseAdapter dummy = new MouseAdapter() {
 };
 }}
 
-- 上記のような`JComponent#dispatchEvent(...)`を伝搬させるリスナーを追加なくても、`JDK 1.7.0`以上の場合、`JLayer`を使用して子コンポーネントのすべての`MouseEvent`キャッチする方法を使用することができます。
--- [[JScrollPane内にある複数Componentを配置したJPanelをJLayerを使ってドラッグスクロール>Swing/DragScrollLayer]]
-
 * 参考リンク [#p851da48]
 - [[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]
 - [[JScrollPane内にある複数Componentを配置したJPanelをJLayerを使ってドラッグスクロール>Swing/DragScrollLayer]]
+-- `JDK 1.7.0`以上の場合、`JComponent#dispatchEvent(...)`を伝搬させるリスナーを追加なくても、`JLayer`を使用して子コンポーネントのすべての`MouseEvent`をキャッチすることが可能
 
 * コメント [#y1967494]
 #comment

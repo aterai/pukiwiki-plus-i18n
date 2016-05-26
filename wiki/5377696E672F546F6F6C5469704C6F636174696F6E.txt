@@ -46,7 +46,7 @@ private void updateTipText(MouseEvent e) {
 -- テキスト文字数が変更された場合のみ、`JWindow#pack()`を呼び出してサイズを更新
 - 左クリック以外でドラッグ
 -- `PopupFactory#getPopup()`で座標を指定した、`Popup`を取得し表示
--- `Popup`の位置が変更できずこれを再作成しているため、親フレームの外に`JToolTip`が表示される場合(`HeavyWeightな`JWindow`を再作成すると表示がチラつく)は非表示にしている
+-- `Popup`の位置が変更できずこれを再作成しているため、親フレームの外に`JToolTip`が表示される場合(`HeavyWeight`である`JWindow`を再作成すると表示がチラつく)は非表示にしている
 
 * 参考リンク [#i0350c1f]
 - [[JSliderのノブをドラッグ中にToolTipで値を表示>Swing/SliderToolTips]]

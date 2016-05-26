@@ -43,23 +43,23 @@ class DnDTable extends JTable implements DragGestureListener, Transferable {
   private void initTargetLine(Point p) {
     Rectangle2D testArea = new Rectangle2D.Float();
     int cellHeight = getRowHeight();
-    int lineWidht  = getWidth();
+    int lineWidth  = getWidth();
     int lineHeight = 2;
     int modelSize  = getRowCount();
     targetIndex = -1;
     for (int i = 0; i < modelSize; i++) {
       testArea.setBounds(
-          0, cellHeight * i - cellHeight / 2, lineWidht, cellHeight);
+          0, cellHeight * i - cellHeight / 2, lineWidth, cellHeight);
       if (testArea.contains(p)) {
         targetIndex = i;
-        targetLine.setBounds(0, i * cellHeight, lineWidht, lineHeight);
+        targetLine.setBounds(0, i * cellHeight, lineWidth, lineHeight);
         break;
       }
     }
     if (targetIndex < 0) {
       targetIndex = modelSize;
       targetLine.setBounds(
-          0, targetIndex * cellHeight - lineHeight, lineWidht, lineHeight);
+          0, targetIndex * cellHeight - lineHeight, lineWidth, lineHeight);
     }
   }
 
@@ -158,13 +158,11 @@ class DnDTable extends JTable implements DragGestureListener, Transferable {
 
 このサンプルのドラッグ＆ドロップの手順は、行の入れ替え処理などを除けば、[[JListの項目をドラッグ＆ドロップ>Swing/DnDList]]とほぼ同一です。
 
-- 複数行を選択しての移動には対応していません。
--- `Java 1.6.0`以上で複数行選択して移動する方法: [[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]
-
 * 参考リンク [#cef5dec4]
 - [[JListの項目をドラッグ＆ドロップ>Swing/DnDList]]
 - [[JTable自体の高さを拡張>Swing/FillsViewportHeight]]
 - [[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]
+-- `Java 1.6.0`以上で複数行を選択して移動を行う場合のサンプル
 - [[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]
 
 * コメント [#icf126b7]

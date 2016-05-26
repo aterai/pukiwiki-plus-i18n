@@ -89,7 +89,7 @@ class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
 上記のサンプルでは、`PersistenceService`で確保したファイルに、`HashMap<String, Serializable>`に格納した`JFrame`の位置、サイズを`XMLEncoder`、`XMLDecoder`を使って読み書きしています。
 
 ----
-- `Windows 7`、`JDK 1.7.0_03`では、`C:\Users\(user)\AppData\LocalLow\Sun\Java\Deployment\cache\6.0\muffin`以下に`muf`ファイルなどが作成されるようです。
+`Windows 7`、`JDK 1.7.0_03`の環境では、`C:\Users\(user)\AppData\LocalLow\Sun\Java\Deployment\cache\6.0\muffin`以下に`muf`ファイルが作成されるようです。
 
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>

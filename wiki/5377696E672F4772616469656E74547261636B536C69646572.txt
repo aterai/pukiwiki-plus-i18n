@@ -175,15 +175,14 @@ private static Color getColorFromPallet(int[] pallet, float x) {
 }}
 
 ----
-- メモ: 例えば`WindowsLookAndFeel`では、`UIManager.get("Slider.trackWidth")`は`null`なので、`MetalSliderUI#installUI()`中にある以下のコードでエラーになる。
+- メモ: 例えば`WindowsLookAndFeel`では、`UIManager.get("Slider.trackWidth")`は`null`なので、`MetalSliderUI#installUI()`中にある以下のコードでエラーになる
+-- なぜ`UIManager.getInt(...)`ではないのか不明
+-- `UIManager.put("Slider.majorTickLength", 6);`などで回避
+-- `MetalSliderUI`ではなく、`BasicSliderUI`を継承するぺき？
 
 #code{{
 trackWidth = ((Integer) UIManager.get("Slider.trackWidth")).intValue();
 }}
-
-- なぜ`UIManager.getInt(...)`ではないのか不明
-- `UIManager.put("Slider.majorTickLength", 6);`などで回避
-- `MetalSliderUI`ではなく、`BasicSliderUI`を継承するぺき？
 
 * 参考リンク [#c91e29bf]
 - [http://harmoniccode.blogspot.com/2011/05/varying-gradients.html Harmonic Code: Varying gradients...]

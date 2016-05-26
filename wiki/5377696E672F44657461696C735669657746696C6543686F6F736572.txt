@@ -24,8 +24,7 @@ if (detailsAction != null) {
 }}
 
 * 解説 [#d6cd620d]
-- 以下のリンクで紹介されているように、`ActionMap`から`viewTypeDetails`アクションを取得する方法が一番簡単なようです。
--- [http://stackoverflow.com/questions/16292502/how-can-i-start-the-jfilechooser-in-the-details-view java - How can I start the JFileChooser in the Details view? - Stack Overflow]
+[http://stackoverflow.com/questions/16292502/how-can-i-start-the-jfilechooser-in-the-details-view java - How can I start the JFileChooser in the Details view? - Stack Overflow]で紹介されているように、`ActionMap`から`viewTypeDetails`アクションを取得する方法が一番簡単なようです。
 
 #code{{
 //@see javax/swing/plaf/basic/BasicFileChooserUI.java
@@ -72,6 +71,7 @@ private static boolean searchAndClick(Container parent, Icon icon) {
 
 ----
 警告されますが、以下のように`sun.swing.FilePane#setViewType(sun.swing.FilePane.VIEWTYPE_DETAILS)`メソッドを使用する方法もあります。
+
 #code{{
 FilePane filePane = (FilePane) findChildComponent(chooser, FilePane.class);
 filePane.setViewType(FilePane.VIEWTYPE_DETAILS);
