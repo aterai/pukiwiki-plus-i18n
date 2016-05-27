@@ -136,7 +136,7 @@ LocalDateTime e = d.plus(7, ChronoUnit.DAYS);
 JSpinner spinner2 = new JSpinner(new SpinnerLocalDateTimeModel(
     d, s, e, ChronoUnit.DAYS));
 }}
--- スピナーエディタも、以下のような`LocalDateTime`を扱うものに変更
+-- スピナエディタも、以下のような`LocalDateTime`を扱うものに変更
 --- 参考: [https://tips4java.wordpress.com/2015/04/09/temporal-spinners/ Temporal Spinners « Java Tips Weblog]
 #code{{
 class LocalDateTimeEditor extends JSpinner.DefaultEditor {

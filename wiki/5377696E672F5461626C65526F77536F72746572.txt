@@ -40,13 +40,13 @@ table.setAutoCreateRowSorter(true);
 %%第二キーを使ったソートは`TableRowSorter`版では出来ない?ようなので、`TableSorter.java`を使う場合もまだあるかもしれません。%% 複数キーを使ったソートも可能です(ページ下部にあるsyoさんのコメントを参照)。デフォルトではソートキーは`3`つで、ヘッダにマークが表示されるのは最新のソートキーのみですが、クリックした順に保持されるようです。詳しくはドキュメントや[http://syo.cocolog-nifty.com/freely/2006/08/table_616d.html Tableの内容をソート]などを参照してください。
 
 - [http://tips4java.wordpress.com/2010/08/29/multisort-table-header-cell-renderer/ Multisort Table Header Cell Renderer « Java Tips Weblog]
--- 第二キー以下を薄く表示するサンプルがあります。
+-- 第二キー以下を薄く表示するサンプルがある
 - [[JTableの複数キーを使ったソートをヘッダに表示する>Swing/MultisortHeaderRenderer]]
--- ソートキーの状態を文字列にして追加しています。
+-- ソートキーの状態を文字列にして追加
 
 ----
-- `TableModel`に要素を追加した後で、`table.setRowSorter(sorter);`とすると、`IndexOutOfBoundsException`: `Invalid range`が、モデルへの追加、削除、編集中に別の行クリックなどで発生する。
--- 以下のサンプルの場合、`model.fireTableDataChanged()`メソッドを`table.setRowSorter(sorter)`の後で呼び出すと回避できる。
+- `TableModel`に要素を追加した後で、`table.setRowSorter(sorter);`とすると、`IndexOutOfBoundsException`: `Invalid range`が、モデルへの追加、削除、編集中に別の行クリックなどで発生する
+-- 以下のサンプルの場合、`model.fireTableDataChanged()`メソッドを`table.setRowSorter(sorter)`の後で呼び出すと回避可能
 
 #code{{
 import java.awt.*;
@@ -87,8 +87,8 @@ public class RowSorterTest extends JPanel {
 }
 }}
 
-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/RowSorter.html RowSorter (Java Platform SE 6)]
--- `RowSorter`の具象実装は、`TableModel`、`ListModel`などのモデルを参照する必要があります。`JTable`や`JList`などのビュークラスも、モデルを参照します。順序の依存性を回避するため、`RowSorter`実装がモデル上にリスナーをインストールしないようにしてください。モデルが変更されると、ビュークラスが`RowSorter`を呼び出します。例えば、`TableModel` `JTable` で行が更新された場合、`rowsUpdated`が呼び出されます。モデルが変更されると、ビューは、`modelStructureChanged`、`allRowsChanged`、`rowsInserted`、`rowsDeleted`、`rowsUpdated`のいずれかのメソッドを呼び出します。
+- [http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowSorter.html RowSorter (Java Platform SE 8)]
+> `RowSorter`の具象実装は、`TableModel`、`ListModel`などのモデルを参照する必要があります。`JTable`や`JList`などのビュークラスも、モデルを参照します。順序の依存性を回避するため、`RowSorter`実装がモデル上にリスナーをインストールしないようにしてください。モデルが変更されると、ビュークラスが`RowSorter`を呼び出します。例えば、`TableModel` `JTable` で行が更新された場合、`rowsUpdated`が呼び出されます。モデルが変更されると、ビューは、`modelStructureChanged`、`allRowsChanged`、`rowsInserted`、`rowsDeleted`、`rowsUpdated`のいずれかのメソッドを呼び出します。
 
 * 参考リンク [#i6859196]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/table.html How to Use Tables]
