@@ -51,7 +51,7 @@ p.add(new JScrollPane(tree));
 -- `UIManager.getInt("ScrollBar.width")`で取得したスクロールバーの幅だけ右側に余白を作成して検索ダイアログを配置
 - `Timer`を使った検索ダイアログ位置変更によるスライドインアニメーション
 -- 参考: [[JToolBarの半透明化とアニメーション>Swing/TranslucentToolBar]]、[[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]
-- `JTree`を配置した`JScrollPane`と検索用ダイアログ(`JPanel`)といった子コンポーネント同士がオーバーラップするので、親のJPanelの`isOptimizedDrawingEnabled()`が`false`を返すようにオーバーライドする必要がある
+- `JTree`を配置した`JScrollPane`と検索用ダイアログ(`JPanel`)といった子コンポーネント同士がオーバーラップするので、親の`JPanel`の`isOptimizedDrawingEnabled()`が`false`を返すようにオーバーライドする必要がある
 -- 参考: [[JScrollBarを半透明にする>Swing/TranslucentScrollBar]]
 - 検索用ダイアログが開くと内部の`JTextField`にフォーカスが移動するように`AncestorListener`を設定
 -- 参考: [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]

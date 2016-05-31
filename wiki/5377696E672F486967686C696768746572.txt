@@ -23,8 +23,8 @@ try {
     pos = matcher.end();
     highlighter.addHighlight(matcher.start(), pos, highlightPainter);
   }
-} catch (BadLocationException e) {
-  e.printStackTrace();
+} catch (BadLocationException | PatternSyntaxException ex) {
+  ex.printStackTrace();
 }
 }}
 

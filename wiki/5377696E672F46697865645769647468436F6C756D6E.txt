@@ -30,7 +30,7 @@ col.setMaxWidth(50);
 上記のサンプルでは、一番最初のカラム幅が`50px`で固定となるように、`TableColumn#setMaxWidth(int)`、`TableColumn#setMinWidth(int)`を使用しています。カーソルも変化しないようにする場合は、`setResizable(false)`も一緒に指定します。
 
 - メモ
--- `JTableHeader#setResizingAllowed(booelan)`を使うと、すべてのカラム幅が変更不可となる
+-- `JTableHeader#setResizingAllowed(boolean)`を使うと、すべてのカラム幅が変更不可となる
 -- `TableColumn#setResizable(boolean)`は、`JTable#setAutoResizeMode(JTable.AUTO_RESIZE_OFF)`の場合のみ有効
 -- `TableColumn#setMaxWidth(int)`、`TableColumn#setMinWidth(int)`を使用して、カラム幅を固定すると、`JTable.AUTO_RESIZE_OFF`でなくても有効
 

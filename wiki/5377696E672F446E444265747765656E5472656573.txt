@@ -102,7 +102,7 @@ class TreeTransferHandler extends TransferHandler {
 }}
 
 * 解説 [#tcbf3f3a]
-上記のサンプルでは、`JTree`間でのノード移動を可能にする`TransferHanlder`を作成して、`JTree#setTransferHandler(...)`で設定しています。
+上記のサンプルでは、`JTree`間でのノード移動を可能にする`TransferHandler`を作成して、`JTree#setTransferHandler(...)`で設定しています。
 
 `TransferHandler#importData(...)`メソッド内で、ドラッグして移動する`DefaultMutableTreeNode`をドラッグ元の`DefaultTreeModel`から削除せずに、`DefaultTreeModel#insertNodeInto(...)`メソッドでドロップ先の`JTree`の`DefaultTreeModel`に挿入すると、ノードの親子関係がおかしくなって、ドラッグ元の`JTree`から`DefaultTreeModel#removeNodeFromParent(...)`メソッドでノードを削除できなくなります(`DefaultTreeModel.reload()`ですべて再評価すると正常に表示されるが、ノードがすべて折り畳まれてしまう)。これを避けるために、移動する`DefaultMutableTreeNode`のクローン(親ノードは未設定)を作成してドロップ元に追加し、ドラッグ元からの削除は`TransferHandler#exportDone(...)`で実行するようにしています。
 

@@ -40,9 +40,9 @@ sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.DESCENDING))
 * 解説 [#d46c2258]
 上記のサンプルでは、☑ `viewRowIndex<5`をチェックすると、ソート状態とは無関係に表示上の`0`から`4`行目までの`5`行のみ表示されるフィルタが掛かります。
 
-- `Costom Sorting`チェック無し
+- `Custom Sorting`チェック無し
 -- ☑ `viewRowIndex<5`のフィルタで`AA-ee`が表示されている場合、`String`列で昇順から降順にソートすると`ee-AA`となる
-- `Costom Sorting` チェック有り
+- `Custom Sorting` チェック有り
 -- ☑ `viewRowIndex<5`のフィルタで`AA-ee`が表示されている場合、`String`列で昇順から降順にソートすると`OO-KK`となる
 --- `toggleSortOrder`メソッドをオーバーライドして、一旦`RowFilter`を解除(`setRowFilter(null)`)してから昇順から降順にソート`OO-KK-AA`、その後再び`RowFilter`を設定するので`OO-KK`が表示される
 

@@ -68,7 +68,7 @@ private void setLookAndFeel(String laf) {
 * 解説 [#hf60bcb1]
 上記のサンプルでは、`metal`、`motif`、`windows`などの`LookAndFeel`を予め用意しておき、`isAvailableLookAndFeel(...)`メソッドで、それらが実行した環境で使用できるかを調べてメニューの選択可不可を変更しています。
 
-`Look and Feel`を切り替えて、いろんなコンポーネントの見栄えを比較したい場合は、`%JAVA_HOME%\demo\jfc\SwingSet2\SwingSet2.jar`がお手軽です。
+`Look and Feel`を切り替えて、いろんなコンポーネントの見栄えを比較したい場合は、`%JAVA_HOME%/demo/jfc/SwingSet2/SwingSet2.jar`がお手軽です。
 
 ----
 `SwingSet3`では、`UIManager.getInstalledLookAndFeels()`メソッドを使って利用可能な`LookAndFeel`の一覧を取得し、これをメニューに表示しているようです。
@@ -81,7 +81,7 @@ private void setLookAndFeel(String laf) {
  java.exe -Dswing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel App
 
 ----
-`%JAVA_HOME%\lib`以下に`swing.properties`を作ってデフォルトの`Look and Feel`を指定する方法もあります。
+`%JAVA_HOME%/lib`以下に`swing.properties`を作ってデフォルトの`Look and Feel`を指定する方法もあります。
 
 - [http://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html#properties Specifying the Look and Feel: swing.properties File]
 
