@@ -62,7 +62,7 @@ class TranslucentPopupMenu extends JPopupMenu {
 }}
 
 * 解説 [#z80cf3e7]
-上記のサンプルでは、`JPopupMenu`は、`isOpaque()`メソッドをオーバーライド、`JMenuItemはsetOpaque(false)`として、それぞれ透明に設定し、`JPopupMenu#paintComponent(...)`で、半透明の背景を描画しています。
+上記のサンプルでは、`JPopupMenu`は`isOpaque()`メソッドをオーバーライド、`JMenuItem`は`setOpaque(false)`として、それぞれ透明に設定し、`JPopupMenu#paintComponent(...)`で、半透明の背景を描画しています。
 
 `JPopupMenu`が親フレームの外にはみ出す場合は、`Heavyweight`の`JWindow`を使って`JPopupMenu`が表示されるので、`JWindow#setBackground(new Color(0x0, true))`で(`JDK 1.6.0_10`では、`com.sun.awt.AWTUtilities.setWindowOpaque(w, false)`)、`JPopupMenu#show(...)`が呼ばれるたびに、毎回(親フレームの透明度を引き継がないように？)`JWindow`自体を透明にしています。
 

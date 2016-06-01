@@ -76,7 +76,7 @@ class DisableInputLayerUI extends LayerUI<JPanel> {
 - 入力禁止中の半透明グレー表示
 -- `LayerUI<JPanel>#paint(...)`をオーバーライドして表示を変更
 - マウス、キー入力の禁止
--- `LayerUI<JPanel>#eventDispatched(...)`をオーバーライドして、`((InputEvent)e).consume()`を使用し、イベントを消費
+-- `LayerUI<JPanel>#eventDispatched(...)`をオーバーライドして、`((InputEvent) e).consume()`を使用し、イベントを消費
 - マウスカーソルを砂時計に変更
 -- `Cursor.WAIT_CURSOR`を設定した`GlassPane`の表示を切り替える
 
