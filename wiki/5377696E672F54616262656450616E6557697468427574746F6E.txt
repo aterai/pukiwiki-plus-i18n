@@ -58,7 +58,7 @@ public Insets getButtonPaddingTabAreaInsets(JButton b, Insets ti, Insets ai) {
 - タブエリアに余裕がある場合は`80px`、無い場合は(タブエリアの幅/タブ数)と、常にタブ幅は一定
 -- 折り返しや、スクロールが発生するとレイアウトが崩れるため
 
-コンポーネントの追加には、以下の方法を使用しています(比較:[[JTabbedPaneの余白にJCheckBoxを配置>Swing/TabbedPaneWithCheckBox]])。
+コンポーネントの追加には、以下の方法を使用しています(比較: [[JTabbedPaneの余白にJCheckBoxを配置>Swing/TabbedPaneWithCheckBox]])。
 
 - ボタンの幅だけ、`tabAreaInsets`の左余白を拡大する
 -- `UIManager.getInsets("TabbedPane.tabAreaInsets")`などを使用するため、`Synth`など(`GTK`, `Nimbus`)の`LookAndFeel`には対応していない

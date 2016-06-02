@@ -66,9 +66,9 @@ slider.setUI(new MetalSliderUI() {
 }}
 
 * 解説 [#idd12036]
-- 上:デフォルト
+- 上: `Default SnapToTicks`
 -- `slider.setSnapToTicks(true);`としているので、マウスをリリースした時点で、ノブを置いた位置にもっとも近い目盛にスナップされる
-- 下:
+- 下: `Custom SnapToTicks`
 -- `TrackListener#mouseDragged`をオーバーライドして、マウスでドラッグ中でもカーソルからもっとも近い目盛にスナップされる
 
 //* 参考リンク
