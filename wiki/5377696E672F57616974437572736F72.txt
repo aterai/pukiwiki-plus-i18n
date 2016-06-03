@@ -98,7 +98,7 @@ setFocusTraversalPolicy(new DefaultFocusTraversalPolicy() {
 }}
 
 - または、`TraversalKeys`を空にする
--- 参考:[https://community.oracle.com/thread/1375257 Swing - How to display "Loading data..." to the user]
+-- 参考: [https://community.oracle.com/thread/1375257 Swing - How to display "Loading data..." to the user]
 
 #code{{
 Set<AWTKeyStroke> s = Collections.emptySet();
@@ -107,7 +107,7 @@ setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, s);
 }}
 
 ----
-`Mnemonic`なども禁止したい場合は、以下のような`GlassPane`を使用する方法があります(参考:[http://weblogs.java.net/blog/alexfromsun/archive/2008/01/ Disabling Swing Containers, the final solution?])。
+`Mnemonic`なども禁止したい場合は、以下のような`GlassPane`を使用する方法があります(参考: [http://weblogs.java.net/blog/alexfromsun/archive/2008/01/ Disabling Swing Containers, the final solution?])。
 
 #code{{
 class LockingGlassPane extends JComponent {
