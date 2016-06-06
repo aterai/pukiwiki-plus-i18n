@@ -13,7 +13,7 @@ description: JDK 6で追加された機能を使用して、ButtonGroup内の選
 * サンプルコード [#fb4e1828]
 #code(link){{
 final ButtonGroup bg = new ButtonGroup();
-Vector<AbstractButton> l = new Vector<>();
+List<? extends AbstractButton> l = new ArrayList<>();
 l.add(new JRadioButton("RadioButton1"));
 l.add(new JRadioButton("RadioButton2"));
 l.add(new JToggleButton(icon));
