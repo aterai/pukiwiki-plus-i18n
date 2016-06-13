@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2016-05-23T00:06:37+09:00
 description: JComboBoxのアイテムとしてJCheckBoxを表示し、ドロップダウンリストを開いたままこれを複数選択可能に設定します。
 ---
-* 概要 [#c55ce14d]
+* 概要 [#summary]
 `JComboBox`のアイテムとして`JCheckBox`を表示し、ドロップダウンリストを開いたままこれを複数選択可能に設定します。
 
 #download(https://lh3.googleusercontent.com/-I-fHfvCX-IU/V0G4uliNHdI/AAAAAAAAOX0/-746I_MG_jQkqTu1cniGzJqqu3xbc1khACCo/s800/CheckedComboBox.png)
 
-* サンプルコード [#aa48ed07]
+* サンプルコード [#sourcecode]
 #code(link){{
 class CheckedComboBox<E extends CheckableItem> extends JComboBox<E> {
   private boolean keepOpen;
@@ -71,7 +71,7 @@ class CheckedComboBox<E extends CheckableItem> extends JComboBox<E> {
 }
 }}
 
-* 解説 [#n0420ae7]
+* 解説 [#explanation]
 - タイトルと選択状態をもつアイテムオブジェクト`CheckableItem`を作成し、そのモデルとして`ComboBoxModel<CheckableItem>`を作成
 - `CheckBoxCellRenderer<E extends CheckableItem>`を作成し、チェック状態を表示
 -- `JComboBox`本体: レンダラーに`JLabel`を使用し、選択されている`CheckableItem`のタイトルを収集してカンマで結合して一覧表示
@@ -81,7 +81,7 @@ class CheckedComboBox<E extends CheckableItem> extends JComboBox<E> {
 - KBD{Space}キーでアイテムが選択された場合は、`BasicComboPopup`から`JList`を取得し、その選択アイテムを取得する
 -- この場合、`JComboBox#getSelectedIndex()`などを使用すると、ハイライト(`cellHasFocus`)されているアイテムではなく、選択状態(`isSelected`)のアイテムが取得される
 
-//* 参考リンク
-* コメント [#u1b09f05]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

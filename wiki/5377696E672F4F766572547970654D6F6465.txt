@@ -60,9 +60,9 @@ class OvertypeCaret extends DefaultCaret {
 }}
 
 * 解説 [#o73b8338]
-上記のサンプルでは、上書きモード用のキャレットを作成して、KBD{Insert}キーで切り替えるようになっています。
+上記のサンプルでは、`DefaultCaret#paint(...)`などをオーバーライドした上書きモード用の`Caret`を作成し、KBD{Insert}キーでこの`Caret`を表示するモードに切り替えることができます。
 
-上書きモード自体の動作は、`JTextArea#replaceSelection`メソッドをオーバーライドすることで行われています。キー入力があった場合、次の文字までを選択して置き換える処理がこのメソッドに追加されています。
+上書きモード自体の動作は、`JTextArea#replaceSelection`メソッドをオーバーライドすることで実行しています。キー入力があった場合、次の文字までを選択して置き換える処理をこのメソッドに追加されています。
 
 * 参考リンク [#c7f33248]
 - [https://community.oracle.com/forums/thread.jspa?threadID=1383467 Swing - JTextPane edit mode (insert or overwrite)???]

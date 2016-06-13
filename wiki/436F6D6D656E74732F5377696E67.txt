@@ -33,11 +33,11 @@ nofollow: true
 --JDK6に関係あるのは、選択状態からそのままドラッグ開始できるようになったこと？　%%あまりコードを書くのは簡単になってないような、勘違いしてたかも…。%% -- &user(aterai); &new{2007-02-19 (月) 15:36:10};
 --あれま。手間の量自体は大して変らないですか…ちと残念。 -- &user(bcg); &new{2007-02-20 (火) 11:56:45};
 --単に分かっていないだけかもしれません。[[ここ>http://weblogs.java.net/blog/shan_man/archive/2006/01/first_class_dra.html]]のソースコードがどこにあるのか探している状態ですし。 -- &user(aterai); &new{2007-02-20 (火) 15:08:24};
---TransferHandler が便利になっているのかな？ DragGestureListener とかDragGestureRecognizer などをたくさん使わなくても良さそう。メモ:[[Drag List Demo>http://www.java2s.com/Code/Java/Swing-JFC/DragListDemo.htm]] -- &user(aterai); &new{2007-02-20 (火) 16:16:54};
+--TransferHandler が便利になっているのかな？ DragGestureListener とかDragGestureRecognizer などをたくさん使わなくても良さそう。メモ: [[Drag List Demo>http://www.java2s.com/Code/Java/Swing-JFC/DragListDemo.htm]] -- &user(aterai); &new{2007-02-20 (火) 16:16:54};
 --結局TransferHandlerを使わないサンプルになってしまいました(´・ω・`)->[[Swing/DnDTree]] -- &user(aterai); &new{2007-02-26 (月) 16:38:35};
 --リクエストに答えて頂き、ありがとうございました。なるほど…旧バージョンより短くはなってる…ように見えますね。 -- &user(bcg); &new{2007-02-27 (火) 11:40:16};
 -こんにちはです。ダブルバッファの勉強をしていたら、swingでは不要だったんですね。どうりで、バッファを使わなくてもちらつかないわけだ・・・OT\ -- &user(やじるし); &new{2007-02-13 (火) 15:35:14};
---ども。でも自分もダブルバッファリングについて正確には理解できてないかもしれません(^^;。「Java SE 6 では、Swing は完全なダブルバッファリングを提供します。」とかもよくわかってないですし。(追記:[[他のウィンドウに隠されているウィンドウが前面に表示されるときの速度が改善>http://www.techscore.com/tech/J2SE/JavaSE6/3.html#mustang3-8]]されたことのようです) -- &user(aterai); &new{2007-02-13 (火) 15:59:44};
+--ども。でも自分もダブルバッファリングについて正確には理解できてないかもしれません(^^;。「Java SE 6 では、Swing は完全なダブルバッファリングを提供します。」とかもよくわかってないですし。(追記: [[他のウィンドウに隠されているウィンドウが前面に表示されるときの速度が改善>http://www.techscore.com/tech/J2SE/JavaSE6/3.html#mustang3-8]]されたことのようです) -- &user(aterai); &new{2007-02-13 (火) 15:59:44};
 --（笑）、真のダブルバッファリングを提供って書いてありますね。 -- &user(やじるし); &new{2007-02-14 (水) 12:24:57};
 -JCheckBox　の チェックボックスの部分だけ色を変える方法ってないでしょうか？ -- &user(ヤモ); &new{2007-04-05 (木) 17:47:21};
 --長くなってしまったので、ここに貼り付けていたソースなどは、[[Swing/CheckBoxColor]]に移動しました。
@@ -185,7 +185,7 @@ public class Test{
 }}
 -- このような現象を解消するには、<XXX>の内部をコメントアウトして、現在コメントアウトされている行を使うようにすると良いはず…です。 -- &user(aterai); &new{2009-08-17 (月) 18:37:03};
 -Swingでアプリを作る際、同じＤｉｒにiniファイルを置いて、設定など読み込みます。JavaWebStart化する時、iniファイルはサーバ上にあるため、読み込めません。Jnlpに記述以外、何か方法がありますか？paramが多すぎて、jnlpに書き切れません。ご教示ください。 -- &user(panda); &new{2010-05-25 (火) 11:22:29};
---どんなparam?なのか分からないので、的外れかもしれませんが、iniファイルをソースコード(Hoge.java)と一緒にjarファイル内にアーカイブしておけば、Hoge.class.getResource("hoge.ini");など(参考:[[ClassLoaderでリソース(URL)を取得>Swing/ClassLoader]])で取得自体は簡単にできると思います。あとJavaの場合は、iniファイルではなく、[[Resourceファイルからメニューバーを生成>Swing/ResourceMenuBar]]のように.propertiesファイルを使う場合が多いので、そちらで検索すれば色々例が見つかるかもしれません。 -- &user(aterai); &new{2010-05-25 (火) 17:10:10};
+--どんなparam?なのか分からないので、的外れかもしれませんが、iniファイルをソースコード(Hoge.java)と一緒にjarファイル内にアーカイブしておけば、Hoge.class.getResource("hoge.ini");など(参考: [[ClassLoaderでリソース(URL)を取得>Swing/ClassLoader]])で取得自体は簡単にできると思います。あとJavaの場合は、iniファイルではなく、[[Resourceファイルからメニューバーを生成>Swing/ResourceMenuBar]]のように.propertiesファイルを使う場合が多いので、そちらで検索すれば色々例が見つかるかもしれません。 -- &user(aterai); &new{2010-05-25 (火) 17:10:10};
 --また、設定したいparamが、例えばユーザーが設定したWebStartアプリの起動位置、サイズなどの場合は、[[PersistenceService>http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/examples.html#PersistenceService]]で読み込み、保存するのが便利です。 -- &user(aterai); &new{2010-05-25 (火) 17:33:37};
 -早速のご回答、ありがとうございました。Hoge.class.getResource("hoge.ini");まではできましたが、そのhoge.iniファイルを開いて、中身を取り出す方法が判っていません。即ち、FileReaderを使って、jar:file:/C:/tmp/Hoge.jar!/example/hoge.iniを開く方法が判りません。もう少しご教示いただけませんか？大変お手数をおかけしました。 -- &user(panda); &new{2010-05-26 (水) 14:51:18};
 --以下、手抜きのサンプルですが、こんな感じでしょうか？ -- &user(aterai); &new{2010-05-26 (水) 17:41:02};
@@ -215,7 +215,7 @@ public class Hoge {
 }
 }}
 -こんにちは、オペレーティングシステムのデフォルトフォントを取得する方法がありますか？ -- &user(そうがい); &new{2010-06-05 (Sat) 16:03:09};
--- こんにちは。「システムのデフォルトフォント」が、Windowsで「画面のプロパティ」「デザイン」「詳細設定」などで設定されるフォントを指すのなら、以下の要領で取得できると思います。(参考:[[Windows デスクトップ関連のプロパティーのサポート>http://docs.oracle.com/javase/jp/6/technotes/guides/swing/1.4/w2k_props.html]]) -- &user(aterai); &new{2010-06-05 (土) 19:13:06};
+-- こんにちは。「システムのデフォルトフォント」が、Windowsで「画面のプロパティ」「デザイン」「詳細設定」などで設定されるフォントを指すのなら、以下の要領で取得できると思います。(参考: [[Windows デスクトップ関連のプロパティーのサポート>http://docs.oracle.com/javase/jp/6/technotes/guides/swing/1.4/w2k_props.html]]) -- &user(aterai); &new{2010-06-05 (土) 19:13:06};
 #code{{
 import java.awt.*;
 import java.awt.event.*;

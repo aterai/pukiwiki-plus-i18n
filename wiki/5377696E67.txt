@@ -14,12 +14,15 @@ pubdate: 2003-09-25
 
 #contents
 
-* Swingとは [#p0b76fde]
+* Swingとは [#about]
 `Swing`は、`GUI`(グラフィカル・ユーザ・インタフェース)を作成するための、`Java`標準のコンポーネントセット(ライブラリ、`UI`ツールキット)です。
 
 RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the JFC and Swing (The Java™ Tutorials)]
 
-* 新着記事 [#u85d24d8]
+* 新着記事 [#whatsnew]
+- 2016-06-13
+#swingdescription(Swing/TabWithCheckBox,JTabbedPaneのタブにJCheckBoxを追加,JTabbedPaneのタブ内にクリック可能なJCheckBoxを追加します。,https://lh3.googleusercontent.com/-b5jcwNkPYZc/V12KPOBZsFI/AAAAAAAAObI/5fJ6EGqkXMg7fYFyLSDa_MwGJ3hXZGE-QCCo/s144/TabWithCheckBox.png)
+
 - 2016-06-06
 #swingdescription(Swing/ToggleButtonGroup,ButtonGroup中にある選択状態のJToggleButtonをクリックして選択解除可能にする,ButtonGroup中にある選択状態のJToggleButtonをもう一度クリックして選択を解除することができるように設定します。,https://lh3.googleusercontent.com/-xZ1YFhJedcg/V1Q_LKyzhzI/AAAAAAAAOao/S-uPsKtdlg8k1eWf2yCIGnh4Hw2r7bGNACCo/s144/ToggleButtonGroup.png)
 
@@ -29,12 +32,9 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - 2016-05-23
 #swingdescription(Swing/CheckedComboBox,JComboBoxのアイテムとして表示したJCheckBoxを複数選択する,JComboBoxのアイテムとしてJCheckBoxを表示し、ドロップダウンリストを開いたままこれを複数選択可能に設定します。,https://lh3.googleusercontent.com/-I-fHfvCX-IU/V0G4uliNHdI/AAAAAAAAOX0/-746I_MG_jQkqTu1cniGzJqqu3xbc1khACCo/s144/CheckedComboBox.png)
 
-- 2016-05-16
-#swingdescription(Swing/NimbusFilledSlider,NimbusLookAndFeelを適用したJSliderで範囲の塗りつぶしを行う,NimbusLookAndFeelを適用したJSliderでトラックの現在値を示す範囲の背景を塗りつぶします。,https://lh3.googleusercontent.com/-dCrSqcYLbEg/VziRkYw8_xI/AAAAAAAAOXg/0oS6CVwRbkIa02qT5nmfNEMzLqdckmAkwCCo/s144/NimbusFilledSlider.png)
-
-* Tips一覧 [#e739db5d]
+* Tips一覧 [#listoftips]
 #twocolumn
-** `javax.swing.JComponent` [#j7ba4ac7]
+** `javax.swing.JComponent` [#jcomponent]
 - [[JTable(41)>Swing/_JTable]]
 -- [[CellEditor CellRenderer(39)>Swing/_CellEditor]]
 -- [[JTableHeader TableColumn(28)>Swing/_JTableHeader]]
@@ -43,10 +43,10 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[JTextComponent(16)>Swing/_JTextComponent]]
 -- [[JTextArea(21)>Swing/_JTextArea]]
 -- [[JTextPane JEditorPane(24)>Swing/_JTextPane]]
-- [[JButton JCheckBox JToggleButton JRadioButton(53)>Swing/_JButton]]
+- [[JButton JCheckBox JToggleButton JRadioButton(54)>Swing/_JButton]]
 - [[JTree(48)>Swing/_JTree]]
 - [[JComboBox(44)>Swing/_JComboBox]]
-- [[JTabbedPane(38)>Swing/_JTabbedPane]]
+- [[JTabbedPane(39)>Swing/_JTabbedPane]]
 - [[JFrame JDialog JWindow(34)>Swing/_JFrame]]
 - [[JScrollPane JViewport JScrollBar(28)>Swing/_JScrollPane]]
 - [[JTextField JPasswordField(26)>Swing/_JTextField]]
@@ -65,7 +65,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 
 #twocolumn
 
-** `Others` [#hef7f318]
+** `Others` [#others]
 - [[Graphics(36)>Swing/_Graphics]]
 - [[Animation(31)>Swing/_Animation]]
 - [[LayoutManager(30)>Swing/_Layout]]
@@ -82,15 +82,15 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[Sound(4)>Swing/_Sound]]
 - [[Others(20)>Swing/_Others]]
 
-** `JDK 6`, `JDK 7` [#fd388b18]
-- [[JDK 6, 7 での Swing 新機能(34)>Swing/_JDK6]]
+** `JDK 6`, `JDK 7` [#jdk6jdk7]
+- [[JDK 6, 7 での Swing 新機能(35)>Swing/_JDK6]]
 
-** `Screenshot` [#b76d5b88]
+** `Screenshot` [#screenshot]
 - [[スクリーンショット一覧(638)>Swing/_ScreenShots]]
 
 #twocolumn
 
-* ライセンス [#p7b5d142]
+* ライセンス [#licence]
 このページ以下のすべてのソースコードは、[https://github.com/aterai/java-swing-tips GitHub]で、[https://github.com/aterai/java-swing-tips/blob/master/LICENSE.txt MITライセンス]のもと公開しています。
 
 - `Git`リポジトリを取得する場合:
@@ -99,7 +99,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
  # ./SurrogatePairディレクトリを作成し、trunk/SurrogatePair以下のサンプルコードだけチェックアウト
  svn co https://github.com/aterai/java-swing-tips/trunk/SurrogatePair
 
-* 編集方針 [#ja35f484]
+* 編集方針 [#policy]
 - ''最も欲しいものはサンプルである'' ([http://steps.dodgson.org/bn/2007/07/06/ あるチュートリアルの思い出 - Backnumbers: Steps to Phantasien])
 -- 各ページからダブルクリックなどで実行可能な`JAR`ファイルをダウンロードすることができる
 - ''SSCCE'' ([http://sscce.org/ Short, Self Contained, Correct Example])
@@ -110,21 +110,21 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 -- `7u51`から、署名が無い場合や、自己署名の場合は`JavaWebStart`で実行不可になったので、&ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TRD2KGq73BI/AAAAAAAAAwA/N8-6EXongNk/s800/webstart.png);ボタンをすべてのページから削除
 --- `JavaWebStart`の記事も修正、または削除する予定
 
-* 更新履歴 [#kde2d7e6]
+* 更新履歴 [#changelog]
 - [http://ateraimemo.com/archive.html Archive]
 - [[以前の更新履歴>Swing/_ChangeLog]]
 
-* 動作環境 [#dcae6b30]
+* 動作環境 [#environments]
 このサイトにあるサンプルの、動作・テスト環境や、`JDK`のダウンロード、利用方法、質問、不具合報告についてお願いなどを記述しています。
 
 - [[動作環境、サンプルの実行方法などについて>Swing/_TestedEnvironments]]
 
-* 参考リンク [#v0bd3645]
+* 参考リンク [#reference]
 参考にしたサイトなどのリンクをまとめています。
 
 - [[Java Swing 参考リンク>Swing/_Link]]
 
-* コメント [#w04556af]
+* コメント [#comment]
 #comment
 - [[SPAM対策で閉鎖する前のコメントのログ>Comments/Swing]]
 
