@@ -65,7 +65,7 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
         (キーストアのパスワードと同じ場合は RETURN を押してください):
  
  C:\TEST\SECURITY>
-+ JARファイルに署名
++ `JAR`ファイルに署名
 最後に、`JAR`ファイルに署名します。以下は`JAR`ファイルに署名するときの、`Ant`ターゲットのサンプルです。パスワードを聞かれるので、入力してください。
 #code{{
 <target name="sign" depends="init">
@@ -141,8 +141,8 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 //-- [[JSliderでクリックした位置にノブをスライド>Swing/JumpToClickedPositionSlider]]のまま
 //- jnlp.packEnabled, jnlp.versionEnabled: &jnlp2(Swing/Pack200);
 -- http://ateraimemo.com/swing/pack200/src.zip
--- http://ateraimemo.com/swing/pack200/example__V1.0.10.jar.pack.gz
--- 同じJarファイルを`Pack200`で圧縮して(`jnlp.packEnabled`)、ダウンロードするファイルのサイズを圧縮
+-- http://ateraimemo.com/swing/pack200/example__V1.0.17.jar.pack.gz
+-- 同じ`JAR`ファイルを`Pack200`で圧縮して(`jnlp.packEnabled`)、ダウンロードするファイルのサイズを圧縮
 -- ファイル名にバージョンを付加して(`jnlp.versionEnabled`)、不必要なアップデートのチェックをしない
 - 参考:
 -- [http://docs.oracle.com/javase/tutorial/deployment/deploymentInDepth/avoidingUnnecessaryUpdateChecks.html Avoiding Unnecessary Update Checks (The Java™ Tutorials > Deployment > Deployment In-Depth)]
@@ -198,11 +198,11 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 }}
 
 * Web Start のデバッグ [#m7950a4d]
--[http://icoloma.blogspot.com/2005/06/how-to-debug-jwsjnlp.html The 90th percentile: How to debug JWS/JNLP]
+- [http://icoloma.blogspot.com/2005/06/how-to-debug-jwsjnlp.html The 90th percentile: How to debug JWS/JNLP]
  set JAVAWS_VM_ARGS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8989,server=y,suspend=n
  javaws http://ateraimemo.com/swing/zoom/example.jnlp
--[http://www.smg.co.jp/JavaTroubleshooting/column_003Main.html コラム: Java Web Startのリモートデバッグ - SMG]
--[http://d.hatena.ne.jp/Kazzz/20080408/p2 Java web startアプリケーションをデバッグする(Java6) - Kazzzの日記]
+- [http://www.smg.co.jp/JavaTroubleshooting/column_003Main.html コラム: Java Web Startのリモートデバッグ - SMG]
+- [http://d.hatena.ne.jp/Kazzz/20080408/p2 Java web startアプリケーションをデバッグする(Java6) - Kazzzの日記]
  "%JAVA_HOME%\bin\java.exe" "-Xbootclasspath/a:%JAVA_HOME%\jre\lib\javaws.jar;%JAVA_HOME%\jre\lib\deploy.jar" -Djnlpx.home="%JAVA_HOME%\jre\bin" -Djnlp.jvm="%JAVA_HOME%\jre\bin\java.exe" -Djava.security.policy="file:%JAVA_HOME%\lib\security\javaws.policy" -DtrustProxy=true -Xverify:remote -Djnlpx.heapsize=NULL,NULL -Djnlpx.vmargs="-classic -Xdebug -Dnoagent -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8918" com.sun.javaws.Main "http://ateraimemo.com/swing/zoom/example.jnlp"
 -- `"%JAVA_HOME%\bin\javaws" -verbose example.jnlp`と、`verbose`オプションをつけて起動すると、`JAVAWS_VM_ARGS`の設定や、上記の内容などがダイアログ表示される
 - [http://pscode.org/janela/ JaNeLA - The Java Network Launch Anaylzer]
@@ -216,25 +216,25 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 <script>deployJava.createWebStartLaunchButtonEx('$url', '1.6+');</script>
 }}
 
-%%Java7をインストールしてから？、deployJava.jsを使うと、Java のダウンロードページに飛ばされるようになってしまった…。%%
+%%`Java7`をインストールしてから？、`deployJava.js`を使うと、`Java`のダウンロードページに飛ばされるようになってしまった…。%%
 - [https://community.oracle.com/thread/2311585 Java Web Start & JNLP - Problems using deployJava.js with Java 7]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=7111793 Bug ID: 7111793 deployJava.js installs 1.6 when asked for 1.7 on clean machine]
--- 7u4 で修正されている(が、また元に戻すのは面倒なのでdeployJava.jsは使用しない…)
+-- `7u4`で修正されている(が、また元に戻すのは面倒なので`deployJava.js`は使用しない…)
 
 * 参考リンク [#g131e2b0]
--[http://java.sun.com/javase/6/docs/technotes/guides/javaws/ Java(TM) Web Start]
--[http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/ Java(TM) Web Start(日本語)]
--[http://docs.oracle.com/javase/jp/6/technotes/tools/index.html#security JDK の開発ツール#セキュリティーツール]
--[http://docs.oracle.com/javase/jp/6/jre/api/javaws/jnlp/index.html javax.jnlp (JNLP API Reference 1.5)]
--[http://lopica.sourceforge.net/faq.html Unofficial Java Web Start/JNLP FAQ]
+- [http://java.sun.com/javase/6/docs/technotes/guides/javaws/ Java(TM) Web Start]
+- [http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/ Java(TM) Web Start(日本語)]
+- [http://docs.oracle.com/javase/jp/6/technotes/tools/index.html#security JDK の開発ツール#セキュリティーツール]
+- [http://docs.oracle.com/javase/jp/6/jre/api/javaws/jnlp/index.html javax.jnlp (JNLP API Reference 1.5)]
+- [http://lopica.sourceforge.net/faq.html Unofficial Java Web Start/JNLP FAQ]
 ----
--[https://community.oracle.com/community/developer/english/java/java_desktop/java_web_start_%26_jnlp Space: Java Web Start & JNLP | Oracle Forums]
-//-%%[http://www.waynegrant.info/keytool.html KeyTool GUI]%%
-//-[http://www.ki.rim.or.jp/~kuro/Java/JavaKey/ Java Key 実験場]
--[http://www.ibm.com/developerworks/jp/java/library/j-certgen/ Javaアプリケーションのテスト用に証明書チェーンを生成]
--[http://sqs2.net/tdiary/20051003.html#p01 無償で正統的なコードサイニング証明書を入手する方法 - 日々是開発:SQS Development(2005-10-03)]
---[http://www.slideshare.net/hiroya/webstart-maven-plugin webstart-maven-pugin + 無償で正統?なコード署名証明書を入手する方法]
-//-[http://nmag.jp/contents/servercertificate/index.html ネットワークマガジン - Network Magagine - 徹底比較 SSLサーバ証明書の「値段」と「品質」]
+- [https://community.oracle.com/community/developer/english/java/java_desktop/java_web_start_%26_jnlp Space: Java Web Start & JNLP | Oracle Forums]
+//- %%[http://www.waynegrant.info/keytool.html KeyTool GUI]%%
+//- [http://www.ki.rim.or.jp/~kuro/Java/JavaKey/ Java Key 実験場]
+- [http://www.ibm.com/developerworks/jp/java/library/j-certgen/ Javaアプリケーションのテスト用に証明書チェーンを生成]
+- [http://sqs2.net/tdiary/20051003.html#p01 無償で正統的なコードサイニング証明書を入手する方法 - 日々是開発:SQS Development(2005-10-03)]
+-- [http://www.slideshare.net/hiroya/webstart-maven-plugin webstart-maven-pugin + 無償で正統?なコード署名証明書を入手する方法]
+//- [http://nmag.jp/contents/servercertificate/index.html ネットワークマガジン - Network Magagine - 徹底比較 SSLサーバ証明書の「値段」と「品質」]
 
 - [https://blogs.oracle.com/thejavatutorials/entry/deploying_your_rich_internet_application Deploying Your Rich Internet Application Nice And Easy! (The Java Tutorials' Weblog)]
 - [https://blogs.oracle.com/thejavatutorials/entry/deployment_toolkit_101 Deployment Toolkit 101 (The Java Tutorials' Weblog)]
@@ -257,7 +257,7 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 --- [https://community.oracle.com/thread/1309656 How to enable IPV4 in JNLP file]
 
 -- 方法２がうまく動作するのなら、クライアントの環境変数 _JAVA_OPTIONS か、JAVA_TOOL_OPTIONS に、-Djava.net.preferIPv4Stack=true を追加するといいかもしれません。 -- &user(aterai); &new{2011-12-06 (火) 16:07:29};
----[https://community.oracle.com/thread/2292359 How to configure JRE?]
+--- [https://community.oracle.com/thread/2292359 How to configure JRE?]
 - メモ: [http://d.hatena.ne.jp/kaito834/20120308/1331218436 Java Web Startの脆弱性（CVE-2012-0500）を調べてみる - 思い立ったら書く日記] -- &user(aterai); &new{2012-03-09 (金) 14:23:11};
 
 #comment

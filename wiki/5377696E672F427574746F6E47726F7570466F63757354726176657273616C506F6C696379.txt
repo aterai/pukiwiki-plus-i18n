@@ -18,14 +18,9 @@ KBD{Tab}キーによるフォーカス移動が発生した場合、`ButtonGroup
 buttons.setFocusTraversalPolicyProvider(true);
 buttons.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
   @Override public Component getDefaultComponent(Container focusCycleRoot) {
-    ButtonModel selection = bg.getSelection();
-    for (Component c: focusCycleRoot.getComponents()) {
-      JRadioButton r = (JRadioButton) c;
-      if (r.getModel().equals(selection)) {
-        return r;
-      }
-    }
-    return super.getDefaultComponent(focusCycleRoot);
+    return Stream.of(focusCycleRoot.getComponents())
+                 .filter(c -> ((JRadioButton) c).getModel().equals(selection))
+                 .findFirst().orElse(super.getDefaultComponent(focusCycleRoot));
   }
 });
 }}

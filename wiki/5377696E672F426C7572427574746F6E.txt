@@ -19,8 +19,6 @@ class BlurButton extends JButton {
     .05f, .60f, .05f,
     .05f, .05f, .05f
   }), ConvolveOp.EDGE_NO_OP, null);
-  private int iw = -1;
-  private int ih = -1;
   private BufferedImage buf;
   public BlurButton(String label) {
     super(label);
@@ -30,11 +28,11 @@ class BlurButton extends JButton {
     if (isEnabled()) {
       super.paintComponent(g);
     } else {
-      if (buf == null || iw != getWidth() || ih != getHeight()) {
-        iw = getWidth();
-        ih = getHeight();
-        buf = new BufferedImage(iw, ih, BufferedImage.TYPE_INT_ARGB);
-      }
+      int w = getWidth();
+      int h = getHeight();
+      buf = Optional.ofNullable(buf)
+                    .filter(bi -> bi.getWidth() == w && bi.getHeight() == h)
+                    .orElseGet(() -> new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB));
       Graphics2D g2 = buf.createGraphics();
       super.paintComponent(g2);
       g2.dispose();
