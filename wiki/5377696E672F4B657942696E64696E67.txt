@@ -5,14 +5,14 @@ author: aterai
 pubdate: 2008-08-18T11:17:11+09:00
 description: JComponentから、ActionMap、InputMapを取得し、KeyBindingの一覧表を作成します。
 ---
-* 概要 [#cb69954b]
+* 概要 [#summary]
 `JComponent`から、`ActionMap`、`InputMap`を取得し、`KeyBinding`の一覧表を作成します。
 
 //[ftp://ftp.oreilly.de/pub/examples/english_examples/jswing2/code/goodies/misc.html Miscellaneous Tools - Java Swing Utilities]%%の[ftp://ftp.oreilly.de/pub/examples/english_examples/jswing2/code/goodies/Mapper.java Mapper.java]を元に`UI`を変更しています。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTO1Qi0Y2I/AAAAAAAAAdA/yMsuc2sjSKg/s800/KeyBinding.png)
 
-* サンプルコード [#a816ad41]
+* サンプルコード [#sourcecode]
 #code(link){{
 final List<Integer> focusType = Arrays.asList(
         JComponent.WHEN_FOCUSED, JComponent.WHEN_IN_FOCUSED_WINDOW,
@@ -32,15 +32,15 @@ p.add(new JButton(new AbstractAction("show") {
 }));
 }}
 
-* 解説 [#i5cf507a]
+* 解説 [#explanation]
 上記のサンプルでは、`JComboBox`で選択されたコンポーネントに割り当てられているデフォルトの`KeyBinding`を、`JTable`に表示することができます。
 
-* 参考リンク [#md8e3446]
+* 参考リンク [#reference]
 - %%[ftp://ftp.oreilly.de/pub/examples/english_examples/jswing2/code/goodies/misc.html Miscellaneous Tools - Java Swing Utilities]%%
 -- %%[ftp://ftp.oreilly.de/pub/examples/english_examples/jswing2/code/goodies/Mapper.java Mapper.java]%%
 - [http://docs.oracle.com/javase/tutorial/uiswing/misc/keybinding.html How to Use Key Bindings (The Java™ Tutorials)]
 
-* コメント [#icc0b15a]
+* コメント [#comment]
 #comment
 - メールで質問があったので: このサンプルは、`properties.xml`の、`compile.source`を`1.5`にして、`MainPanel.java`の`table.setAutoCreateRowSorter(true);`をコメントアウトすれば、`JDK 1.5`でも動作するはずです。 -- &user(aterai); &new{2008-08-18 (月) 11:17:11};
 - `JFileChooser`をコメントアウトして、`Web Start`でも実行できるように修正。 -- &user(aterai); &new{2013-11-02 (土) 01:11:59};

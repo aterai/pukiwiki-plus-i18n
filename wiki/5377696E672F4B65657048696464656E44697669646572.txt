@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-07-26T06:35:29+09:00
 description: JSplitPaneのサイズが変更されても、ディバイダの収納状態を維持するように設定します。
 ---
-* 概要 [#uaf1fd86]
+* 概要 [#summary]
 `JSplitPane`のサイズが変更されても、ディバイダの収納状態を維持するように設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOy71x7HI/AAAAAAAAAc8/gLDHiIJS_Yw/s800/KeepHiddenDivider.png)
 
-* サンプルコード [#uf26d930]
+* サンプルコード [#sourcecode]
 #code(link){{
 final Container divider = ((BasicSplitPaneUI) splitPane.getUI()).getDivider();
 ButtonModel selectMinModel = null;
@@ -31,7 +31,7 @@ JButton smax = new JButton("Max:keepHidden");
 smax.setModel(selectMaxModel);
 }}
 
-* 解説 [#s4ccc36a]
+* 解説 [#explanation]
 - `Min:DividerLocation, Max:DividerLocation`
 -- `JSplitPane#setDividerLocation(...)`メソッドで`Divider`の位置を設定
 -- `JSplitPane`のリサイズで収納状態が解除される
@@ -80,11 +80,11 @@ try {
 }
 }}
 
-* 参考リンク [#p81df09a]
+* 参考リンク [#reference]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=5006095 Bug ID: 5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5]
 - [[JSplitPaneのディバイダを展開、収納する>Swing/OneTouchExpandable]]
 
-* コメント [#z926bfc1]
+* コメント [#comment]
 #comment
 - `JSplitPane.setOneTouchExpandable(true);`を使用せず、`JSplitPane`からコンポーネントを削除(`null`に置き換える)追加することで、収納展開する方法(`setVisible(...)`だと収納はうまくいくけど、正常に展開ができない):  [http://stackoverflow.com/questions/14644362/hide-left-right-component-of-a-jsplitpane-or-different-layout java - Hide left/right component of a JSplitPane (or different layout) - Stack Overflow] -- &user(aterai); &new{2013-02-01 (金) 20:14:58};
 

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-12-28T00:09:10+09:00
 description: JComboBoxで編集した後の文字列がドロップダウンリスト中に存在する場合、そのアイテムを選択するように設定します。
 ---
-* 概要 [#d8a54c95]
+* 概要 [#summary]
 `JComboBox`で編集した後の文字列がドロップダウンリスト中に存在する場合、そのアイテムを選択するように設定します。
 
 #download(https://lh3.googleusercontent.com/-EomuM0qaNtw/Vn_-BRt08_I/AAAAAAAAOJ0/hrUTPDKhroE/s800-Ic42/ComboBoxDropdownSelection.png)
 
-* サンプルコード [#qe82e9af]
+* サンプルコード [#sourcecode]
 #code(link){{
 class SelectItemMenuListener implements PopupMenuListener {
   @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -22,7 +22,7 @@ class SelectItemMenuListener implements PopupMenuListener {
 }
 }}
 
-* 解説 [#bd5640fd]
+* 解説 [#explanation]
 - `Default`
 -- `123456`を編集して`a`に変更し、ドロップダウンリストを開くと、`123456`が選択状態
 - `popupMenuWillBecomeVisible`
@@ -57,7 +57,7 @@ Action a = new AbstractAction() {
 getActionMap().put(ENTER_PRESSED, a);
 }}
 
-//* 参考リンク
-* コメント [#o4ca7806]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

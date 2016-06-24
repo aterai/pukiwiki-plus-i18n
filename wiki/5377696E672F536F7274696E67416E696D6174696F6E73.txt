@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-07-09T14:59:22+09:00
 description: JComboBoxのモデルとしてenumを使用します。
 ---
-* 概要 [#y688293a]
+* 概要 [#summary]
 `JComboBox`のモデルとして`enum`を使用します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTcZXYeSI/AAAAAAAAAkY/_frjM9wSJsc/s800/SortingAnimations.png)
 
-* サンプルコード [#i89c933e]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static enum SortAlgorithms {
   Isort    ("Insertion Sort"),
@@ -34,7 +34,7 @@ private final JComboBox algorithmsChoices = new JComboBox(SortAlgorithms.values(
 //private final JComboBox<SortAlgorithms> algorithmsChoices = new JComboBox<>(SortAlgorithms.values());
 }}
 
-* 解説 [#q914d563]
+* 解説 [#explanation]
 `enum`型で`JComboBox`のモデルを作成しています。上記のコードでは、`Enum#toString()`メソッドをオーバーライドして、`JComboBox`の表示はユーザーに分かりやすい名前になるようにしています。
 
 コード中で、どのアイテムが選択されているかなどを調べる場合などは、例えば以下のようにして使用します。
@@ -55,10 +55,10 @@ switch ((SortAlgorithms) algorithmsChoices.getSelectedItem()) {
 -- `SwingWorker`(`JDK 6`以上)を使用したキャンセル機能を追加
 -- 全画面の書き換えを止めて、移動する点のみウェイトを入れて再描画するように変更
 
-* 参考リンク [#z405b484]
+* 参考リンク [#reference]
 - %%[http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]%%
 - [http://docs.oracle.com/javase/tutorial/uiswing/painting/ Lesson: Performing Custom Painting (The Java™ Tutorials > Creating a GUI With JFC/Swing)]
 
-* コメント [#bedcfd09]
+* コメント [#comment]
 #comment
 #comment

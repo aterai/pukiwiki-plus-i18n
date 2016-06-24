@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-12-07T02:44:17+09:00
 description: JTreeのセル選択色で塗りつぶす範囲をNimbusLookAndFeelのデフォルトである行全体ではなくノードのみになるように設定します。
 ---
-* 概要 [#c4b03871]
+* 概要 [#summary]
 `JTree`のセル選択色で塗りつぶす範囲を`NimbusLookAndFeel`のデフォルトである行全体ではなくノードのみになるように設定します。
 
 #download(https://lh3.googleusercontent.com/-iMbDreRXOYI/VmRwiLsVZmI/AAAAAAAAOIg/tfanc-vemfo/s800-Ic42/TreeCellSelectionBackground.png)
 
-* サンプルコード [#l99b97bb]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIDefaults def = new UIDefaults();
 JTree tree = new JTree();
@@ -36,7 +36,7 @@ tree.setCellRenderer(new DefaultTreeCellRenderer() {
 });
 }}
 
-* 解説 [#o961c821]
+* 解説 [#explanation]
 上記のサンプルでは、`NimbusLookAndFeel`がデフォルトで使用するセルレンダラーなどを空にした`UIDefaults`を`JTree`に設定し、選択時にノードのみ背景色で塗りつぶしを行うセルレンダラーを`JTree#setCellRenderer(...)`で設定して使用しています。
 
 ----
@@ -69,11 +69,11 @@ def.put("Tree[Enabled+Selected].collapsedIconPainter", null);
 def.put("Tree[Enabled+Selected].expandedIconPainter", null);
 }}
 
-* 参考リンク [#a052ecaa]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/33939381/jtree-nimbus-selectionbackground-not-working-on-java-1-8 swing - JTree Nimbus Selectionbackground not Working on Java 1.8 - Stack Overflow]
 - [[JTreeを行クリックで選択し、行全体を選択状態の背景色で描画>Swing/TreeRowSelection]]
 -- こちらは逆に、`MetalLookAndFeel`などで行全体の選択を行う方法
 
-* コメント [#j2683037]
+* コメント [#comment]
 #comment
 #comment

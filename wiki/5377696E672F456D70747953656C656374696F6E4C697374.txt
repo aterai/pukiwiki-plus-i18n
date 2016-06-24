@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-03-14
 description: JListのセルアイテムをマウスクリックなどの操作で選択出来ないように設定します。
 ---
-* 概要 [#j04d5de5]
+* 概要 [#summary]
 `JList`のセルアイテムをマウスクリックなどの操作で選択出来ないように設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMI697_II/AAAAAAAAAYs/EhpPEXnw1bc/s800/EmptySelectionList.png)
 
-* サンプルコード [#g97b104e]
+* サンプルコード [#sourcecode]
 #code(link){{
 list2.setFocusable(false);
 list2.setSelectionModel(new DefaultListSelectionModel() {
@@ -33,7 +33,7 @@ class EmptySelectionRenderer implements ListCellRenderer {
 }
 }}
 
-* 解説 [#a0f3861e]
+* 解説 [#explanation]
 - 左
 -- `JList#setEnabled(false)`で編集不可にしているため、選択も不可
 -- 文字色が薄くなる
@@ -96,9 +96,9 @@ public class DisabledTextForegroundList {
 }
 }}
 
-* 参考リンク [#df459cec]
+* 参考リンク [#reference]
 - [[JListの任意のItemを選択不可にする>Swing/DisabledItem]]
 
-* コメント [#b5251fbd]
+* コメント [#comment]
 #comment
 #comment

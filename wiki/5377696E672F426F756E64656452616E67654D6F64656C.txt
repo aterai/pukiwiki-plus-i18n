@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-02-17T02:41:10+09:00
 description: JScrollBarからBoundedRangeModelを取得し、JLabelとIconで表示した検索位置表示バーをマウスで操作可能にします。
 ---
-* 概要 [#aa79bffa]
+* 概要 [#summary]
 `JScrollBar`から`BoundedRangeModel`を取得し、`JLabel`と`Icon`で表示した検索位置表示バーをマウスで操作可能にします。
 
 #download(https://lh4.googleusercontent.com/-EN1vcmWX7Gs/UwDyGP5n91I/AAAAAAAACAE/tb9w7pHxtk8/s800/BoundedRangeModel.png)
 
-* サンプルコード [#r1e8db94]
+* サンプルコード [#sourcecode]
 #code(link){{
 class HighlightBarHandler extends MouseAdapter {
   private void processMouseEvent(MouseEvent e) {
@@ -30,16 +30,16 @@ class HighlightBarHandler extends MouseAdapter {
 }
 }}
 
-* 解説 [#gb6564fa]
+* 解説 [#explanation]
 - `Icon`に検索結果をハイライト表示し、`JLabel`に設定
 -- この`JLabel`は、`JScrollPane`の子コンポーネントではないので、縦`JScrollBar`の`BoundedRangeModel`に`ChangeListener`を追加して、更新ごとに`JLabel`も`repaint`
 - `JLabel`上の表示範囲をマウスで操作可能にするため、`MouseListener`などを追加
 -- 位置は`JScrollBar`から`BoundedRangeModel`を取得して計算
 
-* 参考リンク [#a33a250e]
+* 参考リンク [#reference]
 - [[JScrollBarに検索結果をハイライト表示>Swing/ScrollBarSearchHighlighter]]
 
-* コメント [#y78c20fd]
+* コメント [#comment]
 #comment
 - ハイライトのサンプルとして`JTable`を使用しているけど、実際に行数が多くなるなら[[JTableの検索結果をRowFilterとHighlighterで強調表示する>Swing/TableHighlightRegexFilter]]のようにフィルタを使用するほうが良さそう。 -- &user(aterai); &new{2014-02-17 (月) 02:41:10};
 

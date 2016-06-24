@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/02/highlight-entire-jtree-row-on-selection.html
     lang: en
 ---
-* 概要 [#w37a10e2]
+* 概要 [#summary]
 `JTree`の行をクリックして選択し、行全体を選択状態の背景色で描画します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TTPdCvaUyfI/AAAAAAAAAyQ/QnF4vHjyUiM/s800/TreeRowSelection.png)
 
-* サンプルコード [#n08c6886]
+* サンプルコード [#sourcecode]
 #code(link){{
 class RowSelectionTree extends JTree {
   private static final Color SELC = new Color(100, 150, 200);
@@ -81,7 +81,7 @@ class RowSelectionTree extends JTree {
 }
 }}
 
-* 解説 [#vd003856]
+* 解説 [#explanation]
 以下のような設定で、`JTree`を行選択できるように変更し、表示も`NimbusLookAndFeel`風に行全体を選択状態の背景色で描画するようにしています。
 
 - `BasicTreeUI#getPathBounds(...)`をオーバーライドして、ノードではなく、行のクリックで選択可能に変更
@@ -91,13 +91,13 @@ class RowSelectionTree extends JTree {
 -- デフォルトではノードのみ再描画されるので、`FocusListener`を追加して、`JTree`全体を再描画
 -- `UIManager.put("Tree.repaintWholeRow", Boolean.TRUE);`を設定することでも回避可能
 
-* 参考リンク [#l98bff1d]
+* 参考リンク [#reference]
 - [http://d.hatena.ne.jp/KrdLab/20071209/1197143960 JTable でセルのないところに行っぽい表示を出せますか？ - KrdLabの不定期日記]
 - [http://jroller.com/santhosh/entry/highlight_a_node_s_descendants Highlight a node's descendants in JTree - Santhosh Kumar's Weblog]
 -- via: [https://community.oracle.com/thread/2160338 Swing - JTree - highlight entire row on selection]
 - [[NimbusLookAndFeelでJTreeのセル選択を行全体ではなくノードに限定する>Swing/TreeCellSelectionBackground]]
 -- こちらは逆に、`NimbusLookAndFeel`で行全体の選択を行わないようにする方法
 
-* コメント [#pf976939]
+* コメント [#comment]
 #comment
 #comment

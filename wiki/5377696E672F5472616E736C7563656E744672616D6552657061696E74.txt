@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2014/02/translucent-jframe-repaint.html
     lang: en
 ---
-* 概要 [#vb5228db]
+* 概要 [#summary]
 透明にした`JFrame`に半透明のデジタル時計を配置し、文字更新による背景色の再描画をテストします。
 
 #download(https://lh4.googleusercontent.com/-ujoDf8eD4vE/TqLcC0f2CHI/AAAAAAAABD4/LHaXXW6HW1k/s800/TranslucentFrameRepaint.png)
 
-* サンプルコード [#vc402d77]
+* サンプルコード [#sourcecode]
 #code(link){{
 private final SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
 private final JLabel label = new JLabel(df.format(new Date()));
@@ -36,7 +36,7 @@ private void repaintWindowAncestor(JComponent c) {
 }
 }}
 
-* 解説 [#k3a01a3f]
+* 解説 [#explanation]
 上記のサンプルでは、実際は`JFrame`が半透明ではなく、以下のように%%半透明にした%%透明にした`JFrame`に、半透明の`JPanel`を追加、さらにその子として一秒ごとに文字列が変化する`JLabel`(時計)を配置しています。
 
 - `JFrame`
@@ -59,11 +59,11 @@ frame.setBackground(new Color(0x0, true)); //1.7.0
 -- 一秒ごとに文字列を変更する時計
 -- `setOpaque(false)`で背景は透明
 
-* 参考リンク [#s8b81bf4]
+* 参考リンク [#reference]
 - [http://www.viva-edo.com/komon/edokomon.html 江戸の文様（和風素材・デスクトップ壁紙）]
 - [http://www.yourname.jp/soft/digitalfonts-20090306.shtml ユアネーム・7セグ・12セグフォント大全集]
 
-* コメント [#q7c95e31]
+* コメント [#comment]
 #comment
 - フォントをデジタル時計ぽいものに変更。 -- &user(aterai); &new{2012-02-10 (金) 17:35:12};
 -- スクリーンショットは入れ替えるのが面倒なので、古いフォントのまま。 -- &user(aterai); &new{2012-04-17 (火) 17:26:14};

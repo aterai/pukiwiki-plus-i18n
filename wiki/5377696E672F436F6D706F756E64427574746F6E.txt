@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2012/12/combine-five-jbuttons-to-make.html
     lang: en
 ---
-* 概要 [#k3db803a]
+* 概要 [#summary]
 `4`つの扇形ボタンと円形ボタンを、`OverlayLayout`を設定した`JPanel`に配置して、複合ボタンを作成します。
 
 #download(https://lh6.googleusercontent.com/-0bLp9wWHHOw/ULIxE5DUtzI/AAAAAAAABX4/pRUF7k-l4D0/s800/CompoundButton.png)
 
-* サンプルコード [#o06b5b91]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static JComponent makeCompoundButton(final Dimension d) {
   JPanel p = new JPanel() {
@@ -118,7 +118,7 @@ class CompoundButton extends JButton {
 }
 }}
 
-* 解説 [#m88cf345]
+* 解説 [#explanation]
 - 円形ボタン
 -- [[JButtonの形を変更>Swing/RoundButton]]を使って、幅高さの半分の直径をもつ円ボタンを作成
 -- `JButton#contains(...)`をオーバーライドして、図形内のみマウスカーソルが反応するように変更
@@ -132,11 +132,11 @@ class CompoundButton extends JButton {
 -- `JPanel#getPreferredSize()`をオーバーライドして、サイズが`5`つのボタンと同じになるように設定
 --- [[OverlayLayoutの使用>Swing/OverlayLayout]]
 
-* 参考リンク [#nbcad931]
+* 参考リンク [#reference]
 - [[OverlayLayoutの使用>Swing/OverlayLayout]]
 - [[JButtonの形を変更>Swing/RoundButton]]
 - [[Mouseで画像を移動、回転>Swing/MouseDrivenImageRotation]]
 
-* コメント [#jad86718]
+* コメント [#comment]
 #comment
 #comment

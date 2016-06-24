@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/03/reset-rowfilter-before-sorting.html
     lang: en
 ---
-* 概要 [#w1c7ac54]
+* 概要 [#summary]
 `JTable`の`RowFilter`を一旦解除してソートし、再びフィルタを設定することで表示される行を更新します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTRuQZLwOI/AAAAAAAAAho/ovjovr-5nuI/s800/ResetRowFilter.png)
 
-* サンプルコード [#w70af4db]
+* サンプルコード [#sourcecode]
 #code(link){{
 final RowFilter<TableModel, Integer> filter = new RowFilter<TableModel, Integer>() {
   @Override public boolean include(Entry<? extends TableModel, ? extends Integer> entry) {
@@ -37,7 +37,7 @@ table.setRowSorter(sorter);
 sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.DESCENDING)));
 }}
 
-* 解説 [#d46c2258]
+* 解説 [#explanation]
 上記のサンプルでは、☑ `viewRowIndex<5`をチェックすると、ソート状態とは無関係に表示上の`0`から`4`行目までの`5`行のみ表示されるフィルタが掛かります。
 
 - `Custom Sorting`チェック無し
@@ -63,10 +63,10 @@ final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) 
 };
 }}
 
-* 参考リンク [#qb585f6b]
+* 参考リンク [#reference]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6301297 Specification for the javax.swing.DefaultRowSorter.setSortsOnUpdates/rowsUpdated method is not clear]
 
-* コメント [#y76c22c5]
+* コメント [#comment]
 #comment
 - もっと簡単な方法がありそう・・・。 -- &user(aterai); &new{2008-11-03 (月) 16:35:24};
 

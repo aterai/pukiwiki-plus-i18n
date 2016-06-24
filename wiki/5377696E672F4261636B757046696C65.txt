@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2003-11-03
 description: 番号付きバックアップファイルを作成します。
 ---
-* 概要 [#da6c5825]
+* 概要 [#summary]
 [[xyzzy]]風の番号付きバックアップファイルを作成します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTH9enrSII/AAAAAAAAASA/du4XRgNsIZs/s800/BackupFile.png)
 
-* サンプルコード [#dbcb1005]
+* サンプルコード [#sourcecode]
 #code(link){{
 private File makeBackupFile(File file, int intold, int intnew) {
   File testFile = null;
@@ -60,7 +60,7 @@ private File makeBackupFile(File file, int intold, int intnew) {
 }
 }}
 
-* 解説 [#xf457df5]
+* 解説 [#explanation]
 上記のサンプルでは、[[xyzzy]]風の番号付きバックアップのテストを行っています。
 
 以下の例では、古いバージョンを`2`つ、新しいバージョンを`3`つバックアップとして残します。
@@ -82,6 +82,6 @@ File file = makeBackupFile(file, 2, 3);
 tmpFile.renameTo(file);
 }}
 
-* コメント [#c2bd4ac8]
+* コメント [#comment]
 #comment
 #comment

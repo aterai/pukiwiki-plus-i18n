@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-01-26
 description: イベント(イベントオブジェクト、イベントリスナー、イベントソース)を新たに作成し、これを使用します。
 ---
-* 概要 [#sc76994a]
+* 概要 [#summary]
 イベント(イベントオブジェクト、イベントリスナー、イベントソース)を新たに作成し、これを使用します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTMNwgwo5I/AAAAAAAAAY0/lpZGrcgRE8g/s800/EventListener.png)
 
-* サンプルコード [#a2ffd4f4]
+* サンプルコード [#sourcecode]
 #code(link){{
 interface FontChangeListener extends EventListener {
   public void fontStateChanged(FontChangeEvent e);
@@ -53,7 +53,7 @@ public void fireFontChangeEvent(String cmd, Font font) {
 }
 }}
 
-* 解説 [#t8cad221]
+* 解説 [#explanation]
 上記のサンプルではメニューからのイベントでコンポーネントのフォントを変更しています。ラベルとボタンをリスナーとして追加しているので、`fireFontChangeEvent`でそれらのフォントサイズが変更されます。
 
 `Java`のイベントモデルは、`delegation event model`(委譲型のイベントモデル)です。[http://www.asahi-net.or.jp/~dp8t-asm/java/tips/Event.html イベント]などを参考にしてみてください。
@@ -92,12 +92,12 @@ protected void fireFontChangeEvent(String cmd, Font font) {
 }
 }}
 
-* 参考リンク [#v3fa59a9]
+* 参考リンク [#reference]
 - [http://www.asahi-net.or.jp/~dp8t-asm/java/tips/Event.html イベント]
 - [http://docs.oracle.com/javase/jp/7/api/javax/swing/event/EventListenerList.html EventListenerList (Java Platform SE 7)]
 - [http://d.hatena.ne.jp/Kazzz/20080618/p1 習慣の生き物 - Kazzzの日記]
 
-* コメント [#i8717bdd]
+* コメント [#comment]
 #comment
 - `EventListenerList`を使用する方法を追加、リンクを追加、整理。 -- &user(aterai); &new{2008-06-18 (水) 12:57:22};
 

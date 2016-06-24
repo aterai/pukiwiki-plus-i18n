@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2014/03/long-pressing-jbutton-to-get-jpopupmenu.html
     lang: en
 ---
-* 概要 [#m55da14e]
+* 概要 [#summary]
 `JToolBar`に、長押しで`JPopupMenu`、クリックで選択されたメニューを表示するボタンを追加します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRIzHMLNI/AAAAAAAAAgs/0_PwsyZOl-I/s800/PressAndHoldButton.png)
 
-* サンプルコード [#n8b1ddb4]
+* サンプルコード [#sourcecode]
 #code(link){{
 class PressAndHoldHandler extends AbstractAction implements MouseListener {
   public final JPopupMenu pop = new JPopupMenu();
@@ -92,13 +92,13 @@ class PressAndHoldHandler extends AbstractAction implements MouseListener {
 }
 }}
 
-* 解説 [#m649a122]
+* 解説 [#explanation]
 上記のサンプルでは、`1000`ミリ秒ボタンを押したままにしておくと、`JRadioButton`を配置した`JPopupMenu`を表示します。普通にクリックした場合は、現在選択されている`JRadioButton`の色をコンソールに出力するようになっています。
 
 ----
 `JPopupMenu`のレイアウトを`pop.setLayout(new GridLayout(0,3));`で変更し、三列に`JRadioButton`を並べています。
 
-//* 参考リンク
-* コメント [#b93295c6]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

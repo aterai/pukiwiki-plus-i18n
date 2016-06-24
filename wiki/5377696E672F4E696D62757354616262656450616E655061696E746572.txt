@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2016-03-28T02:33:36+09:00
 description: NimbusLookAndFeelにおけるJTabbedPaneのタブ、タブエリアなどのスタイルを変更します。
 ---
-* 概要 [#u4637b9b]
+* 概要 [#summary]
 `NimbusLookAndFeel`における`JTabbedPane`のタブ、タブエリアなどのスタイルを変更します。
 
 #download(https://lh3.googleusercontent.com/-TJwPLjNC_3w/VvgUy3r36LI/AAAAAAAAORk/izF9EpBGdeEZ4exmIEiNN0elbLCjGQVOACCo/s800-Ic42/NimbusTabbedPanePainter.png)
 
-* サンプルコード [#i8757a09]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static void configureUI() {
   UIDefaults d = UIManager.getLookAndFeelDefaults();
@@ -129,7 +129,7 @@ private static class TabContentPainter implements Painter<JComponent> {
 }
 }}
 
-* 解説 [#c4c84ca3]
+* 解説 [#explanation]
 上記のサンプルでは、`NimbusLookAndFeel`の`UIDefaults`にタブ、タブ領域、コンテンツ領域などを描画する独自の縁や背景色の`Painter`を設定するテストを行っています。選択タブの`Color.GREEN`、タブ領域の`Color.CYAN`をコンテンツ領域と同じ`Color.WHITE`に変更すると、選択タブとコンテンツ領域が一体になったスタイルを作成することができます。
 
 - `TabbedPaneTabArea`
@@ -146,10 +146,10 @@ private static class TabContentPainter implements Painter<JComponent> {
 -- 選択されたタブを描画する場合は、クリップ領域の高さを`OVERPAINT`だけ拡大(タブエリアの下部を上書き)
 --- 縁に影を設定し、タブエリアの下部にはみ出す部分は、`Color.GREEN`の矩形で塗り潰している
 
-* 参考リンク [#n0075adc]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/35622718/how-to-achieve-four-side-shadow-effect-for-tabbedpane-in-java-swing How to achieve four side shadow effect for TabbedPane in Java swing? - Stack Overflow]
 - [[JTabbedPaneのタブエリア背景色などをテスト>Swing/TabAreaBackground]]
 
-* コメント [#h70fd8ce]
+* コメント [#comment]
 #comment
 #comment

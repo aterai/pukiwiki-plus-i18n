@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-07-23T15:06:56+09:00
 description: JSpinnerの上下ボタンにJToolTipを付けます。
 ---
-* 概要 [#je13981e]
+* 概要 [#summary]
 `JSpinner`の上下ボタンに`JToolTip`を付けます。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTmW4UoMI/AAAAAAAAAks/SXmtS71QSg0/s800/SpinnerButton.png)
 
-* サンプルコード [#z21fec9a]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static class MySpinnerUI extends BasicSpinnerUI {
   @Override protected Component createNextButton() {
@@ -39,7 +39,7 @@ private static void searchSpinnerButtons(Container comp) {
 }
 }}
 
-* 解説 [#y0c63bb1]
+* 解説 [#explanation]
 - 上:
 -- `BasicSpinnerUI`を継承する`SpinnerUI`を作成し、`createNextButton`、`createPreviousButton`メソッドをオーバーライドして、`ToolTipText`を設定
 - 中:
@@ -48,8 +48,8 @@ private static void searchSpinnerButtons(Container comp) {
 - 下:
 -- `Windows`環境の場合は`WindowsSpinnerUI`を継承して、それ以外の場合は、名前で検索して`ToolTipText`を設定
 
-//* 参考リンク
-* コメント [#m2199b64]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=5036022 Bug ID: 5036022 JSpinner does not reflect new font on subsequent calls to setFont]、[http://d.hatena.ne.jp/kaiseh/20071120/1195560201 JSpinnerのフォント指定 - kaisehのブログ] -- &user(aterai); &new{2007-11-26 (月) 12:10:19};
 

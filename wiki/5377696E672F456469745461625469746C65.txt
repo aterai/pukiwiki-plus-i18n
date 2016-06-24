@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2008/09/double-click-on-each-tab-and-change-its.html
     lang: en
 ---
-* 概要 [#l3a0e3fa]
+* 概要 [#summary]
 `JTabbedPane`のタブタイトルを直接編集します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMGR-jIQI/AAAAAAAAAYo/g3tGLp5zrdY/s800/EditTabTitle.png)
 
-* サンプルコード [#o93646f5]
+* サンプルコード [#sourcecode]
 #code(link){{
 class EditableTabbedPane extends JTabbedPane {
   private final JComponent glassPane = new EditorGlassPane();
@@ -103,7 +103,7 @@ class EditableTabbedPane extends JTabbedPane {
 }
 }}
 
-* 解説 [#t11e99b7]
+* 解説 [#explanation]
 `Excel`風に`JTabbedPane`のタブタイトルを直接編集しています。
 
 編集が開始されると、対象となるタブ上に`JTextField`をレイアウトした`GlassPane`を表示しています。この`GlassPane`には、編集中はフォーカスの移動が起こらないようにするための`FocusTraversalPolicy`などを設定しています。
@@ -115,14 +115,14 @@ class EditableTabbedPane extends JTabbedPane {
 -- KBD{Esc}キーで編集をキャンセル
 -- `0`文字で確定した場合も、キャンセル扱い
 
-* 参考リンク [#k3c4771a]
+* 参考リンク [#reference]
 - [[Cursorを砂時計に変更>Swing/WaitCursor]]
 - [[JTabbedPaneのタブにJTextFieldを配置してタイトルを編集>Swing/TabTitleEditor]]
 -- `JDK 6`で追加された`JTabbedPane#setTabComponentAt`メソッドで、タブに`JTextField`を配置し、同様のことを行うサンプル
 - [https://community.oracle.com/thread/1359811 Swing - Floating text field]
 -- `JPopupMenu`に`JTextField`を配置することで、同様のことを行うコードをKelVarnsonさんが投稿している
 
-* コメント [#s3b3f708]
+* コメント [#comment]
 #comment
 - `1.4`系だと編集開始時にうまく選択状態にできない場合があるようです。 -- &user(aterai); &new{2006-03-27 (月) 15:03:01};
 -- 上記の問題と、選択状態がマウスの移動で外れてしまうバグを修正しました。 -- &user(aterai); &new{2006-03-29 (水) 03:26:56};

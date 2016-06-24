@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-12-05T11:02:14+09:00
 description: Highlighterを使ってテキスト中の文字列を強調表示します。
 ---
-* 概要 [#e299b873]
+* 概要 [#summary]
 `Highlighter`を使ってテキスト中の文字列を強調表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTN25SyRaI/AAAAAAAAAbc/i3gVEjh-mlQ/s800/Highlighter.png)
 
-* サンプルコード [#l4fc3b9f]
+* サンプルコード [#sourcecode]
 #code(link){{
 jtc.getHighlighter().removeAllHighlights();
 try {
@@ -28,16 +28,16 @@ try {
 }
 }}
 
-* 解説 [#aaff25e3]
+* 解説 [#explanation]
 テキストコンポーネントから`Highlighter`を取得し、`Highlighter#addHighlight`メソッドで検索した文字列を追加していきます。
 
 上記のサンプルでは、ハイライト色を`DefaultHighlighter.DefaultHighlightPainter`を使って指定しています。
 
-* 参考リンク [#ncf1589c]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1387954 Swing - Searching text in files & highlighting that text]
 - [[JTextPaneで検索結果のハイライト表示と文字色変更を同時に行う>Swing/HighlightTextForeground]]
 
-* コメント [#z9e32e25]
+* コメント [#comment]
 #comment
 - こんにちは。はじめまして。Keithと言います。このプログラムだと、テキスト中の複数の異なる文字に、それぞれハイライトを割り当てることが出来ないのですが、解決策はあるでしょうか。 -- &user(Keith); &new{2007-11-28 (水) 19:12:19};
 -- こんばんは。`Highlighter#addHighlight`メソッドは、複数のハイライトを追加できるので、パターン毎に色を変えたいだけなら(効率とか、同じ文字列が含まれる場合とか、エラー処理などの面倒なことは考えない)、以下のようにパターンを配列にして繰り返すだけでもいいかもしれません。 -- &user(aterai); &new{2007-11-28 (水) 20:25:31};

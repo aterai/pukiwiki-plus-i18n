@@ -6,81 +6,82 @@ description: JTextPane、JEditorPane、StyledDocument関係の記事へのスク
 このページでは、`JTextPane`、`JEditorPane`などの`StyledDocument`関係のコンポーネントの使い方を集めて一覧にしています。
 
 #contents
-* JTextPane JEditorPane JTextArea [#h960fb56]
-** JEditorPaneで改行を表示 [#a4aaeede]
+
+* JTextPane JEditorPane JTextArea [#JTextPane]
+** JEditorPaneで改行を表示 [#ParagraphMark]
 #swingdescription(Swing/ParagraphMark,JEditorPaneで改行を表示,JEditorPaneのパラグラフ終了位置に改行を意味する図形を追加表示します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTQ3cf9HLI/AAAAAAAAAgQ/gIbt2d-Hz7k/s144/ParagraphMark.png)
 
-** JTextPaneで全角スペースやタブを可視化 [#if1516c8]
+** JTextPaneで全角スペースやタブを可視化 [#WhitespaceMark]
 #swingdescription(Swing/WhitespaceMark,JTextPaneで全角スペースやタブを可視化,JTextPaneに表示した文字列中の全角スペースやタブを可視化します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWpb1ogMI/AAAAAAAAApk/3IWJ2qvvECo/s144/WhitespaceMark.png)
 
-** JEditorPaneで長い行を折り返さない [#c90a7778]
+** JEditorPaneで長い行を折り返さない [#NoWrapTextPane]
 #swingdescription(Swing/NoWrapTextPane,JEditorPaneで長い行を折り返さない,JEditorPaneや、JTextPaneで、行をViewportの幅で折り返さないよう設定します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTQbo-LQJI/AAAAAAAAAfk/YnnnPAQE-R4/s144/NoWrapTextPane.png)
 
-** JTextPaneでキーワードのSyntaxHighlight [#q7fba30d]
-#swingdescription(Swing/SimpleSyntaxHighlight,JTextPaneでキーワードのSyntaxHighlight,JTextPaneで キーワードのSyntax Highlight を行います。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTAw3RBeI/AAAAAAAAAjs/LtUs6l9UpZo/s144/SimpleSyntaxHighlight.png)
+** JTextPaneでキーワードのSyntaxHighlight [#SimpleSyntaxHighlight]
+#swingdescription(Swing/SimpleSyntaxHighlight,JTextPaneでキーワードのSyntaxHighlight,JTextPaneでキーワードのSyntax Highlightを行います。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTAw3RBeI/AAAAAAAAAjs/LtUs6l9UpZo/s144/SimpleSyntaxHighlight.png)
 
-** JTextPaneで最終行に移動 [#h7dbc616]
+** JTextPaneで最終行に移動 [#CaretPosition]
 #swingdescription(Swing/CaretPosition,JTextPaneで最終行に移動,CaretPositionを指定してJTextPaneの最終行に移動します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTId9wo-yI/AAAAAAAAAS0/GZbZiJfMOwI/s144/CaretPosition.png)
 
-** JTextPaneでタブサイズを設定 [#h380928c]
+** JTextPaneでタブサイズを設定 [#TabSize]
 #swingdescription(Swing/TabSize,JTextPaneでタブサイズを設定,JTextPaneのStyledDocumentが使用するパラグラフ属性として、タブストップが展開する文字数を設定します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTUxfmvVtI/AAAAAAAAAmk/hIXOEpGYKYw/s144/TabSize.png)
 
-** JTextPaneに修飾した文字列を挿入 [#z96e5218]
+** JTextPaneに修飾した文字列を挿入 [#StyleConstants]
 #swingdescription(Swing/StyleConstants,JTextPaneに修飾した文字列を挿入,JTextPaneに、スタイル付けした文字列を挿入して、ログ風に表示します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTT31r9lEI/AAAAAAAAAlI/7PqL2Aa3UJU/s144/StyleConstants.png)
 
-** JEditorPaneのHTMLEditorKitにCSSを適用 [#f5876339]
+** JEditorPaneのHTMLEditorKitにCSSを適用 [#StyleSheet]
 #swingdescription(Swing/StyleSheet,JEditorPaneのHTMLEditorKitにCSSを適用,JEditorPaneにStyleSheetを追加したHTMLEditorKitを設定します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTT6cwbhCI/AAAAAAAAAlM/PsSYnlumJJg/s144/StyleSheet.png)
 
-** JEditorPaneやJTextPaneに行間を設定する [#u427116c]
+** JEditorPaneやJTextPaneに行間を設定する [#LineSpacing]
 #swingdescription(Swing/LineSpacing,JEditorPaneやJTextPaneに行間を設定する,JEditorPaneやJTextPaneに行間を設定します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPYZn_u9I/AAAAAAAAAd4/5-1ThpWwM5U/s144/LineSpacing.png)
 
-** JEditorPaneにリンクを追加 [#e2b4b63e]
+** JEditorPaneにリンクを追加 [#HyperlinkListener]
 #swingdescription(Swing/HyperlinkListener,JEditorPaneにリンクを追加,JEditorPaneに追加したリンクのクリックイベントなどをHyperlinkListenerで処理します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOK8UtUUI/AAAAAAAAAb8/yiME-hTTlWA/s144/HyperlinkListener.png)
 
 * ↑10 ↓11 [#paf35bde]
 #adsensebar
 
-** JEditorPaneのHTMLタグにToolTipTextを設定する [#vabe6e9a]
+** JEditorPaneのHTMLタグにToolTipTextを設定する [#ElementAttribute]
 #swingdescription(Swing/ElementAttribute,JEditorPaneのHTMLタグにToolTipTextを設定する,JEditorPaneでdivやspanタグのtitle属性をToolTipで表示できるように設定します。,https://lh4.googleusercontent.com/-3HQ42PjgBfs/Tj97O_2VS6I/AAAAAAAABAc/EnrOPXrJxfE/s144/ElementAttribute.png)
 
-** JTextPaneに追加するコンポーネントのベースラインを揃える [#j1a00072]
+** JTextPaneに追加するコンポーネントのベースラインを揃える [#InsertComponentBaseline]
 #swingdescription(Swing/InsertComponentBaseline,JTextPaneに追加するコンポーネントのベースラインを揃える,JTextPaneに追加するコンポーネントのベースラインが他の文字列などとを揃うように設定します。,https://lh3.googleusercontent.com/-JveOiooEbAg/UEPEjv1VW2I/AAAAAAAABR4/qts-97h_JuA/s144/InsertComponentBaseline.png)
 
-** JEditorPaneのStyleSheetを使ってlist bulletを画像に変更 [#p0f8837d]
+** JEditorPaneのStyleSheetを使ってlist bulletを画像に変更 [#EditorPaneListStyle]
 #swingdescription(Swing/EditorPaneListStyle,JEditorPaneのStyleSheetを使ってlist bulletを画像に変更,JEditorPaneのHTMLEditorKitからStyleSheetを取得し、list-style-imageを使ってList bulletを変更します。,https://lh4.googleusercontent.com/-cVKrTqKAhYk/UMSbt8J09jI/AAAAAAAABY0/IWonqNua5dM/s144/EditorPaneListStyle.png)
 
-** JTextPaneを一行に制限してスタイル可能なJTextFieldとして使用する [#cd55d581]
+** JTextPaneを一行に制限してスタイル可能なJTextFieldとして使用する [#OneLineTextPane]
 #swingdescription(Swing/OneLineTextPane,JTextPaneを一行に制限してスタイル可能なJTextFieldとして使用する,JTextPaneの行数を一行のみに制限して、文字色などのスタイル付けが可能なJTextFieldとして使用します。,https://lh4.googleusercontent.com/-jckifA3Ym6c/UYZlsvWPTqI/AAAAAAAABrY/ERGHE6rtaPo/s144/OneLineTextPane.png)
 
-** JEditorPaneのHTMLDocumentからIDでElementを取得する [#u39901de]
+** JEditorPaneのHTMLDocumentからIDでElementを取得する [#HTMLAttributeID]
 #swingdescription(Swing/HTMLAttributeID,JEditorPaneのHTMLDocumentからIDでElementを取得する,JEditorPaneに設定したHTMLDocumentを検索してid属性を持つElementを取得します。,https://lh6.googleusercontent.com/-qbmJcawN3vU/UiyAF7K-MRI/AAAAAAAABz0/i1Hw-dPyqSw/s144/HTMLAttributeID.png)
 
-** JEditorPaneで選択色を半透明化 [#n68bba7f]
+** JEditorPaneで選択色を半透明化 [#SelectionColor]
 #swingdescription(Swing/SelectionColor,JEditorPaneで選択色を半透明化,JEditorPaneで選択色を半透明化し、HighlightPainterによるハイライトやCSSでの背景色変更と組み合わせた場合の描画のテストを行います。,https://lh4.googleusercontent.com/-vbDIDKoUbmw/UlFdSAKWCVI/AAAAAAAAB3A/wbVAmRfeTCY/s144/SelectionColor.png)
 
-** JTextPaneで検索結果のハイライト表示と文字色変更を同時に行う [#r81bee68]
+** JTextPaneで検索結果のハイライト表示と文字色変更を同時に行う [#HighlightTextForeground]
 #swingdescription(Swing/HighlightTextForeground,JTextPaneで検索結果のハイライト表示と文字色変更を同時に行う,Highlighter.HighlightPainterを使用したハイライト表示では文字色を変更することが出来ないので、JTextPaneにStyleを適用してこれを同時に行います。,https://lh6.googleusercontent.com/-fNEZKm4idgc/VF96YuCU_UI/AAAAAAAANpM/7YVQ1GL5sjw/s144/HighlightTextForeground.png)
 
-** JEditorPaneに読み込んだHTMLを画像に変換する [#p26d5ec0]
+** JEditorPaneに読み込んだHTMLを画像に変換する [#LoadsSynchronously]
 #swingdescription(Swing/LoadsSynchronously,JEditorPaneに読み込んだHTMLを画像に変換する,JEditorPaneに画像付きのHTMLを読み込み、描画が完了した段階で全体のスクリーンショットを撮る方法をテストします。,https://lh5.googleusercontent.com/-JPZBF-3MA9o/VHskydE02OI/AAAAAAAANrs/7WXsb2t0ahg/s144/LoadsSynchronously.png)
 
-** JTextPaneにTabSetを設定してTabStopの文字列揃えをテストする [#d6767bd3]
+** JTextPaneにTabSetを設定してTabStopの文字列揃えをテストする [#TabSet]
 #swingdescription(Swing/TabSet,JTextPaneにTabSetを設定してTabStopの文字列揃えをテストする,JTextPaneのパラグラフ属性にTabSetを設定し、TabStopによる文字列の揃えをテストします。,https://lh3.googleusercontent.com/-hvnKWYKZNQc/VPMhtSl-SSI/AAAAAAAANx4/QN9HbnXx4J0/s144/TabSet.png)
 
-** JTextPaneにJSeparatorを追加する [#u5cf15ea]
+** JTextPaneにJSeparatorを追加する [#SeparatorOnTextPane]
 #swingdescription(Swing/SeparatorOnTextPane,JTextPaneにJSeparatorを追加する,JTextPaneにセパレータとして、hr要素やJSeparator、MatteBorderを設定したJLabelなどを追加します。,https://lh3.googleusercontent.com/-DttSBuXmfOs/VTOx9lKJR2I/AAAAAAAAN2s/3ZCvhgC8QDw/s144/SeparatorOnTextPane.png)
 
 * ↑20 ↓21 [#k0646f9b]
 #adsensebar
 
-** JEditorPaneに設定したフォントをHTMLテキストに適用する [#i530046b]
+** JEditorPaneに設定したフォントをHTMLテキストに適用する [#HonorDisplayProperties]
 #swingdescription(Swing/HonorDisplayProperties,JEditorPaneに設定したフォントをHTMLテキストに適用する,HTMLEditorKitでbodyタグにデフォルトで指定されている文字サイズではなく、JEditorPaneに設定したフォントをHTMLテキストで使用します。,https://lh3.googleusercontent.com/-eKfbGIGltkw/VeNSQCA5DkI/AAAAAAAAOAg/PyS8lMWBPu0/s800-Ic42/HonorDisplayProperties.png)
 
-** JTextPaneに入力した文字をアイコンに変換する [#t7aa7972]
+** JTextPaneに入力した文字をアイコンに変換する [#SmyliyIconStyle]
 #swingdescription(Swing/SmyliyIconStyle,JTextPaneに入力した文字をアイコンに変換する,JTextPaneに入力した文字を顔文字アイコンに変換して表示します。,https://lh3.googleusercontent.com/-NLmesRy01ro/VfXFpQeOQSI/AAAAAAAAOBo/L7P-9nfFeNk/s800-Ic42/SmyliyIconStyle.png)
 
-** JEditorPaneのHTMLDocumentに要素を追加する [#ae144c92]
+** JEditorPaneのHTMLDocumentに要素を追加する [#InsertHtmlText]
 #swingdescription(Swing/InsertHtmlText,JEditorPaneのHTMLDocumentに要素を追加する,JEditorPaneのHTMLDocumentからtable要素を取得し、その子要素としてtr要素などを追加します。,https://lh5.googleusercontent.com/-hU9bkPgb4Q8/U10bg5XoDfI/AAAAAAAACEI/BJrmelBz93M/s144/InsertHtmlText.png)
 
-** JEditorPaneに表示したリンク上にカーソルが乗ったとき文字色を変更する [#x2a267a1]
+** JEditorPaneに表示したリンク上にカーソルが乗ったとき文字色を変更する [#HyperlinkHoverEffect]
 #swingdescription(Swing/HyperlinkHoverEffect,JEditorPaneに表示したリンク上にカーソルが乗ったとき文字色を変更する,JEditorPaneに表示したリンクで:hover擬似クラスのような効果を行うためのHyperlinkListenerを設定します。,https://lh3.googleusercontent.com/-8YH7U9Pzs_c/VlITNjFkBKI/AAAAAAAAOHM/9wWxL-OhdoE/s800-Ic42/HyperlinkHoverEffect.png)

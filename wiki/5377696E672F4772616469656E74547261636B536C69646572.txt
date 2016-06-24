@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/06/gradient-translucent-track-jslider.html
     lang: en
 ---
-* 概要 [#idffa752]
+* 概要 [#summary]
 `JSlider`のトラックとノブを透明にし、値を半透明の色で描画します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TdnxSfPEQLI/AAAAAAAAA7k/vYTnJ_FPktg/s800/GradientTrackSlider.png)
 
-* サンプルコード [#wfa9a67f]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIManager.put("Slider.horizontalThumbIcon", new Icon() {
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {}
@@ -134,7 +134,7 @@ slider.setUI(new MetalSliderUI() {
 });
 }}
 
-* 解説 [#yc3103a1]
+* 解説 [#explanation]
 上記のサンプルでは、`MetalSliderUI#paintTrack(...)`メソッドをオーバーライドした`SliderUI`を設定するなどして、`JSlider`の各スタイルを変更しています。
 
 - `Track`
@@ -184,9 +184,9 @@ private static Color getColorFromPallet(int[] pallet, float x) {
 trackWidth = ((Integer) UIManager.get("Slider.trackWidth")).intValue();
 }}
 
-* 参考リンク [#c91e29bf]
+* 参考リンク [#reference]
 - [http://harmoniccode.blogspot.com/2011/05/varying-gradients.html Harmonic Code: Varying gradients...]
 
-* コメント [#ne8506fc]
+* コメント [#comment]
 #comment
 #comment

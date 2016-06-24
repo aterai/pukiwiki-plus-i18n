@@ -5,22 +5,23 @@ author: aterai
 pubdate: 2005-05-16T06:02:26+09:00
 description: JFileChooser内でのファイル名変更や新規フォルダ作成などの編集を不可にします。
 ---
-* 概要 [#v2eca394]
+* 概要 [#summary]
 `JFileChooser`内でのファイル名変更や新規フォルダ作成などの編集を不可にします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTR_zuU1UI/AAAAAAAAAiE/nZgj97xKO24/s800/ROFileChooser.png)
 
-* サンプルコード [#u34dd39b]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIManager.put("FileChooser.readOnly", Boolean.TRUE);
 }}
 
-* 解説 [#oa8f776b]
+* 解説 [#explanation]
 `JDK 1.5.0`以上の場合、`UIManager.put("FileChooser.readOnly", Boolean.TRUE)`とすることで、`JFileChooser`をリードオンリーにし、ファイル名の変更や新規フォルダの作成などを禁止することができます。
 
-* 参考リンク [#t8d0c593]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1377535 Swing - disabling "rename" on JFileChooser]
+- [[JFileChooserで読み取り専用ファイルのリネームを禁止>Swing/RenameIfCanWriteFileChooser]]
 
-* コメント [#h20d6278]
+* コメント [#comment]
 #comment
 #comment

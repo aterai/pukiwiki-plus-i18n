@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-02-23T12:08:35+09:00
 description: JSliderの目盛にJComponentを表示することで、アイコンを追加したり、文字列の色などを変更します。
 ---
-* 概要 [#l66e3fb4]
+* 概要 [#summary]
 `JSlider`の目盛に`JComponent`を表示することで、アイコンを追加したり、文字列の色などを変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTNRK4g8I/AAAAAAAAAkA/dn8dNaWNmxM/s800/SliderLabelTable.png)
 
-* サンプルコード [#z0aa3bc1]
+* サンプルコード [#sourcecode]
 #code(link){{
 Hashtable<Integer, Component> labelTable = new Hashtable<>();
 int c = 0;
@@ -31,7 +31,7 @@ slider1.setPaintTicks(true);
 slider1.setPaintLabels(true);
 }}
 
-* 解説 [#a3a5576d]
+* 解説 [#explanation]
 上記のサンプルでは、`JSlider#setLabelTable(Dictionary)`メソッドを使用して、任意のキーと値のペアで作成したマップを追加し、スライダーのラベルを以下のように変更しています。
 
 - 左
@@ -40,10 +40,10 @@ slider1.setPaintLabels(true);
 - 右、下
 -- `JLabel`を追加して、目盛の文字列と色を変更
 
-* 参考リンク [#f7d54ab9]
+* 参考リンク [#reference]
 - [[JSliderのUIや色を変更する>Swing/VolumeSlider]]
 - [http://www.icongalore.com/ XP Style Icons - Windows Application Icon, Software XP Icons]
 
-* コメント [#d7c41d7b]
+* コメント [#comment]
 #comment
 #comment

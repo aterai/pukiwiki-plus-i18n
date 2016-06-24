@@ -4,97 +4,99 @@ tags: [JTable, JTableHeader, TableColumn]
 description: JTableHeader、TableColumn関係の記事へのスクリーンショット付きリンク一覧
 ---
 このページでは、`JTableHeader`、`TableColumn`関係のメモを集めて一覧にしています。
+
 #contents
-* JTableHeader TableColumn [#n7eb692d]
-** TableColumnの幅を比率で設定 [#e79dc0bc]
+
+* JTableHeader TableColumn [#JTableHeader]
+** TableColumnの幅を比率で設定 [#HeaderRatio]
 #swingdescription(Swing/HeaderRatio,TableColumnの幅を比率で設定,列幅調整がデフォルトのJTableで、ヘッダの各TableColumnが指定した比率の幅になるように設定します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TSs6oj80RcI/AAAAAAAAAxs/hm2gp4ELiDI/s144/HeaderRatio.png)
 
-** JTableに行ヘッダを追加 [#k7b6d08b]
+** JTableに行ヘッダを追加 [#TableRowHeader]
 #swingdescription(Swing/TableRowHeader,JTableに行ヘッダを追加,JTableを設定したJScrollPaneのRowHeaderViewに、JListで作成した行ヘッダを追加します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUk9YzW7I/AAAAAAAAAmQ/wjin9CuyfBg/s144/TableRowHeader.png)
 
-** JTableHeaderにJCheckBoxを追加してセルの値を切り替える [#b174bc43]
+** JTableHeaderにJCheckBoxを追加してセルの値を切り替える [#TableHeaderCheckBox]
 #swingdescription(Swing/TableHeaderCheckBox,JTableHeaderにJCheckBoxを追加してセルの値を切り替える,JTableHeaderにJCheckBoxを追加して、同じ列のJCheckBoxで表示している値をすべて切り替えます。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUf8Li6CI/AAAAAAAAAmI/mj7-1IwK86o/s144/TableHeaderCheckBox.png)
 
-** JTableHeaderにJPopupMenuを追加してソート [#a4b5aae1]
+** JTableHeaderにJPopupMenuを追加してソート [#RowSorterPopupMenu]
 #swingdescription(Swing/RowSorterPopupMenu,JTableHeaderにJPopupMenuを追加してソート,JTableHeaderにJPopupMenuを追加してソートします。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSY9WWpNI/AAAAAAAAAis/Z0YqvftAIh8/s144/RowSorterPopupMenu.png)
 
-** JTableHeaderをクリックしてそのColumnのセルを全選択 [#d01fe524]
+** JTableHeaderをクリックしてそのColumnのセルを全選択 [#ColumnSelection]
 #swingdescription(Swing/ColumnSelection,JTableHeaderをクリックしてそのColumnのセルを全選択,JTableHeaderをクリックしたとき、そのColumn以下にあるセルを全選択します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTJrC8DyhI/AAAAAAAAAUw/SO1wMAudBiE/s144/ColumnSelection.png)
 
-** JTableHeaderの字揃えを変更 [#mf634496]
+** JTableHeaderの字揃えを変更 [#HorizontalAlignmentHeaderRenderer]
 #swingdescription(Swing/HorizontalAlignmentHeaderRenderer,JTableHeaderの字揃えを変更,JTableHeaderの字揃えをTableCellRendererを使って変更します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTN5ZuPeZI/AAAAAAAAAbg/Fivi4R1rR-Y/s144/HorizontalAlignmentHeaderRenderer.png)
 
-** JTableHeaderのフォントを変更 [#o127bda8]
+** JTableHeaderのフォントを変更 [#HeaderFont]
 #swingdescription(Swing/HeaderFont,JTableHeaderのフォントを変更,TableCellRendererを使って、JTableのヘッダが使用するフォントを変更します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTNshbAJvI/AAAAAAAAAbM/xYo1iOQ9fxU/s144/HeaderFont.png)
 
-** JTableHeaderのTooltipsを列ごとに変更 [#o48d8a5c]
+** JTableHeaderのTooltipsを列ごとに変更 [#HeaderTooltips]
 #swingdescription(Swing/HeaderTooltips,JTableHeaderのTooltipsを列ごとに変更,JTableHeaderのTooltipsが、カーソルのある列の内容などを表示するようにします。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTNx5xm6BI/AAAAAAAAAbU/LCSjxDNp8p0/s144/HeaderTooltips.png)
 
-** JTableのセルがクリップされている場合のみJToolTipを表示 [#ia6df276]
+** JTableのセルがクリップされている場合のみJToolTipを表示 [#ClippedCellTooltips]
 #swingdescription(Swing/ClippedCellTooltips,JTableのセルがクリップされている場合のみJToolTipを表示,JTableのセルがクリップされている場合のみJToolTipを表示します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTJNQAyg-I/AAAAAAAAAUA/F6oQbiUShl4/s144/ClippedCellTooltips.png)
 
-** JTableのカラム幅を一部だけ固定 [#a026a238]
+** JTableのカラム幅を一部だけ固定 [#FixedWidthColumn]
 #swingdescription(Swing/FixedWidthColumn,JTableのカラム幅を一部だけ固定する,JTableのヘッダでカラム幅を一部だけ固定します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTM9YcNZfI/AAAAAAAAAaA/sbjwdihBwqY/s144/FixedWidthColumn.png)
 
 * ↑10 ↓11 [#ab538b38]
 #adsensebar
 
-** JTableのヘッダ入れ替えを禁止 [#a9236815]
+** JTableのヘッダ入れ替えを禁止 [#Reordering]
 #swingdescription(Swing/Reordering,JTableのヘッダ入れ替えを禁止,JTableのカラムヘッダをマウスによるドラッグ＆ドロップで並べ替え可能かどうかを切り替えます。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRr3AzfQI/AAAAAAAAAhk/mfgsIhuaEz0/s144/Reordering.png)
 
-** JTableHeaderを非表示にする [#m9f93419]
+** JTableHeaderを非表示にする [#RemoveTableHeader]
 #swingdescription(Swing/RemoveTableHeader,JTableHeaderを非表示にする,JTableでJTableHeaderを表示するかどうかを、動的に切り替えます。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRpYOxz3I/AAAAAAAAAhg/7HdNawHaulI/s144/RemoveTableHeader.png)
 
-** JTableHeaderで作成したタブエリアでCardLayoutのコンテナを切り替える [#u5f99889]
+** JTableHeaderで作成したタブエリアでCardLayoutのコンテナを切り替える [#TableHeaderTabArea]
 #swingdescription(Swing/TableHeaderTabArea,JTableHeaderで作成したタブエリアでCardLayoutのコンテナを切り替える,JTableHeaderをタブエリアとして使用し、TableColumnをクリックするとCardLayoutのコンテナが切り替わるようにマウスリスナーを設定します。,https://lh3.googleusercontent.com/-ZfZAc1Xgx9Q/VZBDTAXsteI/AAAAAAAAN7c/VEw9Z6haOP0/s144/TableHeaderTabArea.png)
 
-** JTableのヘッダを透明化 [#hf91099c]
+** JTableのヘッダを透明化 [#TransparentTableHeader]
 #swingdescription(Swing/TransparentTableHeader,JTableのヘッダを透明化,JTableのヘッダ背景、セル間の垂直罫線を非表示にします。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TZl3Ci_GNnI/AAAAAAAAA40/wSbo6ySTlz0/s144/TransparentTableHeader.png)
 
-** JTableHeaderにJButtonを追加する [#z0a21c8b]
+** JTableHeaderにJButtonを追加する [#ButtonInTableHeader]
 #swingdescription(Swing/ButtonInTableHeader,JTableHeaderにJButtonを追加する,JTableHeaderにクリックするとポップアップメニューを表示するJButtonを追加します。,https://lh3.googleusercontent.com/-ccZ08VSXYwE/Trd27UaeD2I/AAAAAAAABEk/1NAYoZ1NGV0/s144/ButtonInTableHeader.png)
 
-** JCheckBoxに不定状態のアイコンを追加する [#w33d33d0]
+** JCheckBoxに不定状態のアイコンを追加する [#TriStateCheckBox]
 #swingdescription(Swing/TriStateCheckBox,JCheckBoxに不定状態のアイコンを追加する,JCheckBoxの選択状態、非選択状態に加えて、不定状態を表すアイコンを追加します。,https://lh6.googleusercontent.com/-Rs-vnlD35Cg/TuTNCuEvU_I/AAAAAAAABF4/IzDezx4Rq8M/s144/TriStateCheckBox.png)
 
-** JTableHeaderの高さを変更 [#r55bb952]
+** JTableHeaderの高さを変更 [#TableHeaderHeight]
 #swingdescription(Swing/TableHeaderHeight,JTableHeaderの高さを変更,内部の文字サイズなどはそのままで、JTableHeaderの高さだけを変更する方法をテストします。,https://lh4.googleusercontent.com/-l20IOO5wKSo/T8MIf7FVUwI/AAAAAAAABNM/9BNN63T96Fo/s144/TableHeaderHeight.png)
 
-** JTableの行ヘッダに列ヘッダのRendererを使用する [#hdebaa52]
+** JTableの行ヘッダに列ヘッダのRendererを使用する [#RowHeaderStyle]
 #swingdescription(Swing/RowHeaderStyle,JTableの行ヘッダに列ヘッダのRendererを使用する,JTableの行の描画に、JTableHeaderから取得した列ヘッダのRendererを適用します。,https://lh3.googleusercontent.com/-FSdrv2BDUCo/UJaJTUVXcdI/AAAAAAAABWU/gBeKokda9h8/s144/RowHeaderStyle.png)
 
-** JTableのColumn名を変更する [#j5f4981d]
+** JTableのColumn名を変更する [#EditColumnName]
 #swingdescription(Swing/EditColumnName,JTableのColumn名を変更する,JTableのColumn名をJPopupMenuを使用して変更します。,https://lh4.googleusercontent.com/-axnByzuSfvw/Uj9Bj3mhK0I/AAAAAAAAB2U/GgzDuKdOje8/s144/EditColumnName.png)
 
-** JTableの複数キーを使ったソートをヘッダに表示する [#bcf78d61]
+** JTableの複数キーを使ったソートをヘッダに表示する [#MultisortHeaderRenderer]
 #swingdescription(Swing/MultisortHeaderRenderer,JTableの複数キーを使ったソートをヘッダに表示する,JTableの複数キーを使ったソートの状態をヘッダ上に別途表示します。,https://lh3.googleusercontent.com/-QNe3lJ3oXH0/Ulqu3vaS91I/AAAAAAAAB3U/Tb2kXiKV8Fs/s144/MultisortHeaderRenderer.png)
 
 * ↑20 ↓21 [#w05f38f7]
 #adsensebar
 
-** JTableのモデルが変更されたことをイベントで受け取る [#jf25ea8a]
-#swingdescription(Swing/TableModelEvent,JTableのモデルが変更されたことをイベントで受け取る,JTableのモデルの変更を受け取ってJTableHeaderに追加したJCheckBoxを更新します。 ,https://lh3.googleusercontent.com/-Mndxsu0wtCM/Uzg00YuVfyI/AAAAAAAACCw/HoRS9CVP_-o/s144/TableModelEvent.png)
+** JTableのモデルが変更されたことをイベントで受け取る [#TableModelEvent]
+#swingdescription(Swing/TableModelEvent,JTableのモデルが変更されたことをイベントで受け取る,JTableのモデルの変更を受け取ってJTableHeaderに追加したJCheckBoxを更新します。,https://lh3.googleusercontent.com/-Mndxsu0wtCM/Uzg00YuVfyI/AAAAAAAACCw/HoRS9CVP_-o/s144/TableModelEvent.png)
 
-** JTableのリサイズで最後のTableColumnのみリサイズする [#h3c7b21e]
+** JTableのリサイズで最後のTableColumnのみリサイズする [#ResizingColumnAndTable]
 #swingdescription(Swing/ResizingColumnAndTable,JTableのリサイズで最後のTableColumnのみリサイズする,JTableがリサイズされた場合、最後にあるTableColumnがその幅の変更を吸収するように設定します。,https://lh4.googleusercontent.com/-uhbVwRqsa2g/U4HyPhrI8PI/AAAAAAAACF8/OJXWaFVxavE/s144/ResizingColumnAndTable.png)
 
-** JTableHeaderのハイライト表示 [#r10c10f7]
+** JTableHeaderのハイライト表示 [#ColumnHeaderHighlight]
 #swingdescription(Swing/ColumnHeaderHighlight,JTableHeaderのハイライト表示,JTableのセルが選択されている場合、そのセルが存在するカラムヘッダにフォーカスを設定します。,https://lh6.googleusercontent.com/-g01DwekSNRs/VKAYFMHxxEI/AAAAAAAANtw/OwiMQuJ3gQY/s144/ColumnHeaderHighlight.png)
 
-** JTableで選択可能な列を制限する [#ia4fa1ca]
+** JTableで選択可能な列を制限する [#ColumnSelectability]
 #swingdescription(Swing/ColumnSelectability,JTableで選択可能な列を制限する,JTableの任意の列でマウスクリックなどによる選択ができないように制限します。,https://lh3.googleusercontent.com/-kvjA0RzkNxQ/ViOrBhPfAiI/AAAAAAAAOEc/meMBIUCKAmc/s800-Ic42/ColumnSelectability.png)
 
-** TableColumnModelをXMLファイルで保存、復元する [#f905e436]
+** TableColumnModelをXMLファイルで保存、復元する [#ColumnModelPersistence]
 #swingdescription(Swing/ColumnModelPersistence,TableColumnModelをXMLファイルで保存、復元する,JTableのヘッダからTableColumnModelを取得し、XMLEncoderとXMLDecoderを使って、XMLファイルで保存、復元します。,https://lh3.googleusercontent.com/-3ZhmTqRFkgU/Vm2uUZ4_gCI/AAAAAAAAOI4/bY9IRX-guT4/s800-Ic42/ColumnModelPersistence.png)
 
-** JTableのカラムヘッダにIconを表示する [#z23d8dd0]
+** JTableのカラムヘッダにIconを表示する [#TableColumnHeaderIcon]
 #swingdescription(Swing/TableColumnHeaderIcon,JTableのカラムヘッダにIconを表示する,JTableの各カラムヘッダにアイコンとタイトル文字列を表示するよう設定します。,https://lh3.googleusercontent.com/-yQYpkrDnAcQ/VqT3Oq7tovI/AAAAAAAAOL8/YbbgnXgZ9B4/s800-Ic42/TableColumnHeaderIcon.png)
 
-** JLabelにHTMLフォーマットのinputタグで生成したcheckboxを表示する [#j2521323]
+** JLabelにHTMLフォーマットのinputタグで生成したcheckboxを表示する [#InputTypeCheckBox]
 #swingdescription(Swing/InputTypeCheckBox,JLabelにHTMLフォーマットのinputタグで生成したcheckboxを表示する,JLabelを継承するヘッダのTableCellRendererにHTMLフォーマットのinputタグで生成したcheckboxを表示し、クリックに応じてその状態を変更します。,https://lh3.googleusercontent.com/-vnWIjLh4mRA/VtMSSVOc3gI/AAAAAAAAOPo/41aAmP3gMuc/s800-Ic42/InputTypeCheckBox.png)
 
-** JTableHeaderでTableColumnのグループ化を行う [#o2a4862c]
+** JTableHeaderでTableColumnのグループ化を行う [#GroupableTableHeader]
 #swingdescription(Swing/GroupableTableHeader,JTableHeaderでTableColumnのグループ化を行う,TableColumnのグループ化を可能にし、JTableHeaderでの列結合を実現します。,https://lh3.googleusercontent.com/-DIZZyiOX9YU/VyYbXr9opNI/AAAAAAAAOTs/QhLBqtw5Z34ULclU9aZHnVjnEZMJvhJmgCCo/s144/GroupableTableHeader.png)
 
-** JTableの列を編集可、かつ選択不可に設定 [#g270eb38]
+** JTableの列を編集可、かつ選択不可に設定 [#DisableColumnSelection]
 #swingdescription(Swing/DisableColumnSelection,JTableの列を編集可、かつ選択不可に設定,JTableの指定した列を編集は可能、ただし選択することができなくなるように設定します。,https://lh3.googleusercontent.com/-goXZsRlvEdI/V2a1zMod1iI/AAAAAAAAOcA/ZX8_9YIkBwYS45vkDbZRBa6wf2PyjUS1QCCo/s144/DisableColumnSelection.png)

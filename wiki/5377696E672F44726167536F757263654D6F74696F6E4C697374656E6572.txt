@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-08-06T15:46:37+09:00
 description: ドラッグ中のカーソル位置をDragSourceMotionListenerで取得し、そこにアイコンを追加したWindowを移動することで、JFrameの外側でもドラッグアイコンを表示します。
 ---
-* 概要 [#c4f3f6cb]
+* 概要 [#summary]
 ドラッグ中のカーソル位置を`DragSourceMotionListener`で取得し、そこにアイコンを追加した`Window`を移動することで、`JFrame`の外側でもドラッグアイコンを表示します。
 
 #download(https://lh4.googleusercontent.com/-HM5QzW5AZlk/UB9iFlbSZMI/AAAAAAAABQM/fggojAo0b-E/s800/DragSourceMotionListener.png)
 
-* サンプルコード [#f394f0f4]
+* サンプルコード [#sourcecode]
 #code(link){{
 final JWindow window = new JWindow();
 window.add(label);
@@ -24,7 +24,7 @@ DragSource.getDefaultDragSource().addDragSourceMotionListener(new DragSourceMoti
 });
 }}
 
-* 解説 [#s38cbe68]
+* 解説 [#explanation]
 上記のサンプルでは、`JPanel`中に配置した`JLabel`(アイコン)を`Drag & Drop`で別の`JPanel`など(親の`JFrame`が異なる場合も可)に移動することができます。ドラッグ中の`JLabel`は透明化した`Window`に配置され、ドラッグに合わせてその`Window`を移動しているので、`JFrame`の外でもドラッグアイコンが表示可能になっています。
 ドラッグ中のカーソル位置取得には、`MouseMotionListener`を使用する方法もありますが、このサンプルのような`TransferHandler`を使ったドラッグでは`MouseMotionListener`でマウスイベントを取得することができないので、`DefaultDragSource`に`DragSourceMotionListener`を追加してドラッグ中のカーソル位置を取得しています。
 
@@ -32,10 +32,10 @@ DragSource.getDefaultDragSource().addDragSourceMotionListener(new DragSourceMoti
 -- `DragSourceDragEvent#getLocation()`で取得した位置は、スクリーン座標系なので、そのまま`Window#setLocation(...)`で使用可能
 -- `Point pt = tgtLabel.getLocation();`で取得したドラッグ対象`JLabel`の位置は、親コンポーネントの座標系なので、`SwingUtilities.convertPointToScreen(pt, parent);`で変換する必要がある
 
-* 参考リンク [#jda9a30f]
+* 参考リンク [#reference]
 - [[JLayerを使ってJTabbedPaneのタブの挿入位置を描画する>Swing/DnDLayerTabbedPane]]
 
-* コメント [#y921464d]
+* コメント [#comment]
 #comment
 - `OSX`などの場合はどうなるか不明(テストしていない)。 -- &user(aterai); &new{2012-08-06 (月) 15:50:35};
 - `OSX`でも表示しましたよ。ただクリックした時にアイコン周りに枠が表示されるのですが、その位置がアイコンとずれてます -- &user(nsby); &new{2012-08-07 (火) 11:04:46};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-02-02T00:12:04+09:00
 description: DateやCalendarなどを使用するSpinnerDateModelの代わりに、JDK 8で導入されたLocalDateTimeなどを使用するSpinnerModelを作成して、JSpinnerで日付を選択します。
 ---
-* 概要 [#r709ebae]
+* 概要 [#summary]
 `Date`や`Calendar`などを使用する`SpinnerDateModel`の代わりに、`JDK 8`で導入された`LocalDateTime`などを使用する`SpinnerModel`を作成して、`JSpinner`で日付を選択します。
 
 #download(https://lh4.googleusercontent.com/-eqirUqK4YWc/VM4--ZB0j_I/AAAAAAAANwI/rsoFU67UgI8/s800/SpinnerLocalDateTimeModel.png)
 
-* サンプルコード [#a10f4cf7]
+* サンプルコード [#sourcecode]
 #code(link){{
 class SpinnerLocalDateTimeModel extends AbstractSpinnerModel implements Serializable {
   private Comparable<ChronoLocalDateTime<?>> start, end;
@@ -107,7 +107,7 @@ class SpinnerLocalDateTimeModel extends AbstractSpinnerModel implements Serializ
 }
 }}
 
-* 解説 [#zcf11af3]
+* 解説 [#explanation]
 - 上: `SpinnerDateModel`
 -- `Calendar`などを使用して開始日、終了日を生成し、`SpinnerDateModel`を作成して、`JSpinner`に設定
 #code{{
@@ -201,7 +201,7 @@ class LocalDateTimeEditor extends JSpinner.DefaultEditor {
         }
         Comparable<ChronoLocalDateTime<?>> min = model.getStart();
         Comparable<ChronoLocalDateTime<?>> max = model.getEnd();
-        if (Objects.nonNull(min) && min.compareTo(value) > 0 
+        if (Objects.nonNull(min) && min.compareTo(value) > 0
          || Objects.nonNull(max) && max.compareTo(value) < 0) {
           throw new ParseException(text + " is out of range", 0);
         }
@@ -216,10 +216,10 @@ class LocalDateTimeEditor extends JSpinner.DefaultEditor {
 }
 }}
 
-* 参考リンク [#jd46cbda]
+* 参考リンク [#reference]
 - [[JSpinnerで日付を設定>Swing/SpinnerDateModel]]
 - [https://tips4java.wordpress.com/2015/04/09/temporal-spinners/ Temporal Spinners « Java Tips Weblog]
 
-* コメント [#k6b36833]
+* コメント [#comment]
 #comment
 #comment

@@ -1,69 +1,72 @@
 ---
 title: Others
+tags: [JComponent, KeyBinding, AWTEvent, Desktop, ClassLoader]
 description: JComponent共通、JNLP Service、イベント関係の記事へのスクリーンショット付きリンク一覧
 ---
 このページでは、`JComponent`共通、`JNLP Service`、イベントに関する記事を一覧にしています。
+
 #contents
-* Others [#a2003456]
-** JComponentのKeyBinding一覧を取得する [#i81414a6]
+
+* Others [#Others]
+** JComponentのKeyBinding一覧を取得する [#KeyBinding]
 #swingdescription(Swing/KeyBinding,JComponentのKeyBinding一覧を取得する,JComponentから、ActionMap、InputMapを取得し、KeyBindingの一覧表を作成します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTO1Qi0Y2I/AAAAAAAAAdA/yMsuc2sjSKg/s144/KeyBinding.png)
 
-** ClassLoaderでリソース(URL)を取得 [#m835cd8c]
+** ClassLoaderでリソース(URL)を取得 [#ClassLoader]
 #swingdescription(Swing/ClassLoader,ClassLoaderでリソース(URL)を取得,クラスパスからのエントリ(相対パス風)を使って、ClassLoaderからURLを取得します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTI-UTFN-I/AAAAAAAAATo/6sdQoVO0Kc4/s144/ClassLoader.png)
 
-** SingleInstanceServiceを使って Web Start アプリケーションの重複起動を禁止 [#i8df08a8]
-#swingdescription(Swing/SingleInstanceService,SingleInstanceServiceを使って Web Start アプリケーションの重複起動を禁止,ServerSocketを使ってポートをロック代わりに使用し、アプリケーションの複数起動を禁止します。Java Swing Hacks #68 単一インスタンスのアプリケーションを作る を参考にしています。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTIU5TktI/AAAAAAAAAj4/muKNMFrhEcE/s144/SingleInstanceService.png)
+** SingleInstanceServiceを使ってWeb Startアプリケーションの重複起動を禁止 [#SingleInstanceService]
+#swingdescription(Swing/SingleInstanceService,SingleInstanceServiceを使ってWeb Startアプリケーションの重複起動を禁止,ServerSocketを使ってポートをロック代わりに使用し、アプリケーションの複数起動を禁止します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTIU5TktI/AAAAAAAAAj4/muKNMFrhEcE/s144/SingleInstanceService.png)
 
-** ServerSocketを使ってアプリケーションの複数起動を禁止 [#o5605df1]
-#swingdescription(Swing/SingleInstanceApplication,ServerSocketを使ってアプリケーションの複数起動を禁止,SingleInstanceServiceを使って、Web Start アプリケーションの重複起動を禁止したり、引数の取得を行います。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTF6N0NjI/AAAAAAAAAj0/Ld2Nyv4QXsI/s144/SingleInstanceApplication.png)
+** ServerSocketを使ってアプリケーションの複数起動を禁止 [#SingleInstanceApplication]
+#swingdescription(Swing/SingleInstanceApplication,ServerSocketを使ってアプリケーションの複数起動を禁止,SingleInstanceServiceを使って、Web Startアプリケーションの重複起動を禁止したり、引数の取得を行います。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTF6N0NjI/AAAAAAAAAj0/Ld2Nyv4QXsI/s144/SingleInstanceApplication.png)
 
-** Desktopでブラウザを起動 [#g8c991bf]
-#swingdescription(Swing/Desktop,Desktopでブラウザを起動,JDK 6 で導入されたDesktopを使ってブラウザを起動します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTKu9HhvrI/AAAAAAAAAWc/iMheiQnF4hQ/s144/Desktop.png)
+** Desktopでブラウザを起動 [#Desktop]
+#swingdescription(Swing/Desktop,Desktopでブラウザを起動,JDK 6で導入されたDesktopを使ってブラウザを起動します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTKu9HhvrI/AAAAAAAAAWc/iMheiQnF4hQ/s144/Desktop.png)
 
-** Browserを起動 [#jfd8ddd9]
+** Browserを起動 [#BrowserLauncher]
 #swingdescription(Swing/BrowserLauncher,Browserを起動,ラベル上のURLがクリックされるとBrowserを起動します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIRWyBTSI/AAAAAAAAASg/pT9GD2uz8BI/s144/BrowserLauncher.png)
 
-** TimeZoneによる日付表示の変換 [#m1d420a6]
+** TimeZoneによる日付表示の変換 [#TimeZone]
 #swingdescription(Swing/TimeZone,TimeZoneによる日付表示の変換,TimeZoneなどを使って、日付の表示を変換します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVW5Ljb9I/AAAAAAAAAng/mMDH4E_v9ZQ/s144/TimeZone.png)
 
-** EventListenerを実装して独自イベント作成 [#x6a53660]
+** EventListenerを実装して独自イベント作成 [#EventListener]
 #swingdescription(Swing/EventListener,EventListenerを実装して独自イベント作成,イベント(イベントオブジェクト、イベントリスナー、イベントソース)を新たに作成し、これを使用します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTMNwgwo5I/AAAAAAAAAY0/lpZGrcgRE8g/s144/EventListener.png)
 
-** AWTEventを取得して入力イベントを監視 [#ncf5c67a]
+** AWTEventを取得して入力イベントを監視 [#DispatchEvent]
 #swingdescription(Swing/DispatchEvent,AWTEventを取得して入力イベントを監視,AWTEventを取得して、マウスやキーボードの入力イベントを監視します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLPUOE2MI/AAAAAAAAAXQ/5qrFGk7E5GM/s144/DispatchEvent.png)
 
-** JComponentの表示状態 [#yfbd489c]
+** JComponentの表示状態 [#ShowingDisplayableVisible]
 #swingdescription(Swing/ShowingDisplayableVisible,JComponentの表示状態,JComponentの表示状態が切り替わった時、そのisDisplayable、isShowing、isVisibleメソッドが返す値をテストします。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTS-a1ZnQI/AAAAAAAAAjo/jB4n-1WmEIs/s144/ShowingDisplayableVisible.png)
 
 * ↑10 ↓11 [#x5c24aeb]
 #adsensebar
 
-** DesktopPropertyの変更を監視する [#g4d85de7]
+** DesktopPropertyの変更を監視する [#DesktopProperty]
 #swingdescription(Swing/DesktopProperty,DesktopPropertyの変更を監視する,ToolkitにPropertyChangeListenerを追加して、ダブルクリックの速度などの変更を監視します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKxXuJ4EI/AAAAAAAAAWg/utfOkK69KBk/s144/DesktopProperty.png)
 
-** Clipboardから文字列や画像を取得する [#zfb12b45]
+** Clipboardから文字列や画像を取得する [#SystemClipboard]
 #swingdescription(Swing/SystemClipboard,Clipboardから文字列や画像を取得する,Clipboardから文字列や画像データを取得し、JLabelに表示します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUB2-qFWI/AAAAAAAAAlY/hlwTEjnyC_g/s144/SystemClipboard.png)
 
-** JFrameの位置・サイズを記憶する [#i8834696]
+** JFrameの位置・サイズを記憶する [#Preferences]
 #swingdescription(Swing/Preferences,JFrameの位置・サイズを記憶する,Preferences(レジストリなど)に、フレーム(パネル)のサイズ、位置を記憶します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRGT4S7mI/AAAAAAAAAgo/GDUrxdRJ4x4/s144/Preferences.png)
 
-** PersistenceServiceを使ってJFrameの位置・サイズを記憶 [#zc0e7f0a]
+** PersistenceServiceを使ってJFrameの位置・サイズを記憶 [#PersistenceService]
 #swingdescription(Swing/PersistenceService,PersistenceServiceを使ってJFrameの位置・サイズを記憶,ServiceManagerからPersistenceServiceを取得し、JFrameなどの位置・サイズの保存、呼び出しを行います。,https://lh6.googleusercontent.com/-PyOW5DW5kHU/T3APD_Cq_bI/AAAAAAAABKk/i9eivMuQZ0Y/s144/PersistenceService.png)
 
-** MnemonicをクリアしてJButtonを初期状態に戻す [#pcfdb2a6]
+** MnemonicをクリアしてJButtonを初期状態に戻す [#ClearMnemonic]
 #swingdescription(Swing/ClearMnemonic,MnemonicをクリアしてJButtonを初期状態に戻す,JButtonに設定されたMnemonicをクリアして初期状態に戻します。,https://lh4.googleusercontent.com/-VBCuKbB3hhs/TyZJM3aWNzI/AAAAAAAABIg/01Dscav-qV4/s144/ClearMnemonic.png)
 
-** JRootPaneの背景として画像を表示 [#q8459109]
+** JRootPaneの背景として画像を表示 [#RootPaneBackground]
 #swingdescription(Swing/RootPaneBackground,JRootPaneの背景として画像を表示,JRootPaneの背景として画像を表示しています。,https://lh6.googleusercontent.com/-2HEcpl-4XqA/UOmSieyPnxI/AAAAAAAABaI/KBA4i6QGH3E/s144/RootPaneBackground.png)
 
-** NimbusLookAndFeelでJComponentのサイズを変更する [#e4ae2dd8]
+** NimbusLookAndFeelでJComponentのサイズを変更する [#ComponentSizeVariant]
 #swingdescription(Swing/ComponentSizeVariant,NimbusLookAndFeelでJComponentのサイズを変更する,NimbusLookAndFeelを使用している場合、クライアントプロパティを設定することでJComponentの表示サイズを変更することが出来ます。,https://lh6.googleusercontent.com/-Uru9Oco4olg/U9T5RHzJ_5I/AAAAAAAACKY/7N7a3Ya3sYw/s144/ComponentSizeVariant.png)
 
-** ToolkitからScreenResolutionを取得し、コンポーネントで使用するフォントの倍率を変更する [#z5c8b2b1]
+** ToolkitからScreenResolutionを取得し、コンポーネントで使用するフォントの倍率を変更する [#ScreenResolution]
 #swingdescription(Swing/ScreenResolution,ToolkitからScreenResolutionを取得し、コンポーネントで使用するフォントの倍率を変更する,ディスプレイの解像度の設定によってパネルの初期サイズ、フォントサイズ、行の高さなどを変更するテストを行います。,https://lh3.googleusercontent.com/-Ckc4ZMaD6-8/VPzorX2t8MI/AAAAAAAAN0A/XSE6tpiT92A/s144/ScreenResolution.png)
 
-** SecondaryLoopを使用してイベント・ディスパッチ・スレッド上で別途イベント・ループを実行する [#b1e951d6]
+** SecondaryLoopを使用してイベント・ディスパッチ・スレッド上で別途イベント・ループを実行する [#SecondaryLoop]
 #swingdescription(Swing/SecondaryLoop,SecondaryLoopを使用してイベント・ディスパッチ・スレッド上で別途イベント・ループを実行する,SecondaryLoopを使用して、イベント・ディスパッチ・スレッドをブロックせずに、別スレッドをイベント・ループを実行します。,https://lh3.googleusercontent.com/-eAqnf0aNSsQ/VhrDDmUQQeI/AAAAAAAAODs/fwDgjYwjTbk/s800-Ic42/SecondaryLoop.png)
 
-** JCheckBoxの選択状態をBigIntegerで記憶し、UndoManagerを使用して元に戻したりやり直したりする [#pf61727e]
+** JCheckBoxの選択状態をBigIntegerで記憶し、UndoManagerを使用して元に戻したりやり直したりする [#UndoRedoCheckBoxes]
 #swingdescription(Swing/UndoRedoCheckBoxes,JCheckBoxの選択状態をBigIntegerで記憶し、UndoManagerを使用して元に戻したりやり直したりする,複数のJCheckBoxの選択状態をBigIntegerで記憶し、UndoManagerを使用してアンドゥ・リドゥを行います。,https://lh3.googleusercontent.com/-lcOSQhE6Wp4/VxOpe3dlKII/AAAAAAAAOTE/_lpl9dzIlw8hXFZ-GfuX8HT2fGsENQNvgCCo/s800-Ic42/UndoRedoCheckBoxes.png)

@@ -8,115 +8,115 @@ description: Java 6、7でSwingに新しく追加された機能を紹介した�
 - [http://docs.oracle.com/javase/jp/7/technotes/guides/swing/enhancements-7.html Java SE 7 での Swing の拡張機能]
 
 #contents
-* Java 6 [#p20f4424]
-** TableRowSorterでJTableのソート [#j167756b]
-#swingdescription(Swing/TableRowSorter,TableRowSorterでJTableのソート,JDK 6 で導入された、TableRowSorterを利用して、JTableの行を降順、昇順にソートします。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUnbg2jyI/AAAAAAAAAmU/-7yjlGSjBmo/s144/TableRowSorter.png)
+* Java 6 [#Java6]
+** TableRowSorterでJTableのソート [#TableRowSorter]
+#swingdescription(Swing/TableRowSorter,TableRowSorterでJTableのソート,JDK 6で導入された、TableRowSorterを利用して、JTableの行を降順、昇順にソートします。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUnbg2jyI/AAAAAAAAAmU/-7yjlGSjBmo/s144/TableRowSorter.png)
 
-** TableRowSorterのソートをヘッダクリックで昇順、降順、初期状態に変更 [#q2b3c9f2]
-#swingdescription(Swing/TriStateSorting,TableRowSorterのソートをヘッダクリックで昇順、降順、初期状態に変更,JDK 6 で導入された TableRowSorter のソートを、TableSorter.java のようにヘッダクリックで昇順、降順、初期状態に切り替わるように設定します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWVWrGvdI/AAAAAAAAApE/-DL1kAZzGsM/s144/TriStateSorting.png)
+** TableRowSorterのソートをヘッダクリックで昇順、降順、初期状態に変更 [#TriStateSorting]
+#swingdescription(Swing/TriStateSorting,TableRowSorterのソートをヘッダクリックで昇順、降順、初期状態に変更,JDK 6で導入されたTableRowSorterのソートを、TableSorter.javaのようにヘッダクリックで昇順、降順、初期状態に切り替わるように設定します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWVWrGvdI/AAAAAAAAApE/-DL1kAZzGsM/s144/TriStateSorting.png)
 
-** RowFilterでJTableの行をフィルタリング [#u5f7d3a6]
-#swingdescription(Swing/RowFilter,RowFilterでJTableの行をフィルタリング,JDK 6 で導入されたTableRowSorterにRowFilterを設定して、行のフィルタリングを行います。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTST-FvjRI/AAAAAAAAAik/ZbU9nuVVCiI/s144/RowFilter.png)
+** RowFilterでJTableの行をフィルタリング [#RowFilter]
+#swingdescription(Swing/RowFilter,RowFilterでJTableの行をフィルタリング,JDK 6で導入されたTableRowSorterにRowFilterを設定して、行のフィルタリングを行います。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTST-FvjRI/AAAAAAAAAik/ZbU9nuVVCiI/s144/RowFilter.png)
 
-** JTableのRowFilterを一旦解除してソート [#g1d4435a]
+** JTableのRowFilterを一旦解除してソート [#ResetRowFilter]
 #swingdescription(Swing/ResetRowFilter,JTableのRowFilterを一旦解除してソート,JTableのRowFilterを一旦解除してソートし、再びフィルタを設定することで表示される行を更新します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTRuQZLwOI/AAAAAAAAAho/ovjovr-5nuI/s144/ResetRowFilter.png)
 
-** SwingWorkerを使った処理の中断と進捗状況表示 [#r3b1d074]
-#swingdescription(Swing/SwingWorker,SwingWorkerを使った処理の中断と進捗状況表示,JDK 6 で新しくなったSwingWorkerを使って、処理の中断や進捗状況の表示更新などを行います。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTT8xXI-cI/AAAAAAAAAlQ/ueJc6P4EJVg/s144/SwingWorker.png)
+** SwingWorkerを使った処理の中断と進捗状況表示 [#SwingWorker]
+#swingdescription(Swing/SwingWorker,SwingWorkerを使った処理の中断と進捗状況表示,JDK 6で新しくなったSwingWorkerを使って、処理の中断や進捗状況の表示更新などを行います。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTT8xXI-cI/AAAAAAAAAlQ/ueJc6P4EJVg/s144/SwingWorker.png)
 
-** JTabbedPaneにタブを閉じるボタンを追加 [#g6f992f7]
-#swingdescription(Swing/TabWithCloseButton,JTabbedPaneにタブを閉じるボタンを追加,JDK 6 の新機能を使ってJTabbedPaneにタブを閉じるボタンを追加します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVCzHeo0I/AAAAAAAAAnA/hnMCEbHXnnw/s144/TabWithCloseButton.png)
+** JTabbedPaneにタブを閉じるボタンを追加 [#TabWithCloseButton]
+#swingdescription(Swing/TabWithCloseButton,JTabbedPaneにタブを閉じるボタンを追加,JDK 6の新機能を使ってJTabbedPaneにタブを閉じるボタンを追加します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVCzHeo0I/AAAAAAAAAnA/hnMCEbHXnnw/s144/TabWithCloseButton.png)
 
-** JTabbedPaneのタブにJTextFieldを配置してタイトルを編集 [#q39b2ddd]
+** JTabbedPaneのタブにJTextFieldを配置してタイトルを編集 [#TabTitleEditor]
 #swingdescription(Swing/TabTitleEditor,JTabbedPaneのタブにJTextFieldを配置してタイトルを編集,JTabbedPaneのタブタイトルを直接編集します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTU43AZWdI/AAAAAAAAAmw/6klnGPa4D9o/s144/TabTitleEditor.png)
 
-** JTabbedPaneのタイトルをクリップ [#n7abfe8c]
-#swingdescription(Swing/ClippedTabLabel,JTabbedPaneのタイトルをクリップ,JDK 6 で導入されたタブにコンポーネントを追加する機能を使って、長いタイトルのタブは文字列をクリップして表示します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJU-PNaRI/AAAAAAAAAUM/yAbkpSgRNVY/s144/ClippedTabLabel.png)
+** JTabbedPaneのタイトルをクリップ [#ClippedTabLabel]
+#swingdescription(Swing/ClippedTabLabel,JTabbedPaneのタイトルをクリップ,JDK 6で導入されたタブにコンポーネントを追加する機能を使って、長いタイトルのタブは文字列をクリップして表示します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJU-PNaRI/AAAAAAAAAUM/yAbkpSgRNVY/s144/ClippedTabLabel.png)
 
-** JTable自体の高さを拡張 [#k67cf4fb]
-#swingdescription(Swing/FillsViewportHeight,JTable自体の高さを拡張,JDK 6 で導入された機能を使用して、JViewportの高さまでJTableを拡張します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMkfiP8jI/AAAAAAAAAZY/qHWqJtrcUgQ/s144/FillsViewportHeight.png)
+** JTable自体の高さを拡張 [#FillsViewportHeight]
+#swingdescription(Swing/FillsViewportHeight,JTable自体の高さを拡張,JDK 6で導入された機能を使用して、JViewportの高さまでJTableを拡張します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMkfiP8jI/AAAAAAAAAZY/qHWqJtrcUgQ/s144/FillsViewportHeight.png)
 
-** ButtonGroup内のJRadioButtonなどの選択をクリア [#y774adf9]
-#swingdescription(Swing/ClearGroupSelection,ButtonGroup内のJRadioButtonなどの選択をクリア,JDK 6 で追加された機能を使用して、ButtonGroup 内の選択をクリアします。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTJDUnsHFI/AAAAAAAAATw/gkcmzcekHus/s144/ClearGroupSelection.png)
+** ButtonGroup内のJRadioButtonなどの選択をクリア [#ClearGroupSelection]
+#swingdescription(Swing/ClearGroupSelection,ButtonGroup内のJRadioButtonなどの選択をクリア,JDK 6で追加された機能を使用して、ButtonGroup内の選択をクリアします。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTJDUnsHFI/AAAAAAAAATw/gkcmzcekHus/s144/ClearGroupSelection.png)
 
 * ↑10 ↓11 [#vd40ee92]
 #adsensebar
 
-** SystemTrayにアイコンを表示 [#qa540ad8]
-#swingdescription(Swing/SystemTray,SystemTrayにアイコンを表示,JDK 6 で追加された機能を使って、SystemTrayにアイコンを表示します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUJeisovI/AAAAAAAAAlk/zvAoP96Ntcs/s144/SystemTray.png)
+** SystemTrayにアイコンを表示 [#SystemTray]
+#swingdescription(Swing/SystemTray,SystemTrayにアイコンを表示,JDK 6で追加された機能を使って、SystemTrayにアイコンを表示します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUJeisovI/AAAAAAAAAlk/zvAoP96Ntcs/s144/SystemTray.png)
 
-** TrayIconのアニメーション [#x10dafff]
-#swingdescription(Swing/AnimatedTrayIcon,TrayIconのアニメーション,SystemTrayに追加したアイコン(JDK 6 以上)をアニメーションさせます。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHtWabBgI/AAAAAAAAARk/J0ExgthCnn4/s144/AnimatedTrayIcon.png)
+** TrayIconのアニメーション [#AnimatedTrayIcon]
+#swingdescription(Swing/AnimatedTrayIcon,TrayIconのアニメーション,SystemTrayに追加したトレイアイコンをアニメーションさせます。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHtWabBgI/AAAAAAAAARk/J0ExgthCnn4/s144/AnimatedTrayIcon.png)
 
-** TrayIconのダブルクリック [#i07c4d57]
+** TrayIconのダブルクリック [#ClickTrayIcon]
 #swingdescription(Swing/ClickTrayIcon,TrayIconのダブルクリック,TrayIconをダブルクリックした場合フレームを表示、シングルクリックした場合はフレームを前面に表示します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJK3dhHYI/AAAAAAAAAT8/1MUtk0Z-NQU/s144/ClickTrayIcon.png)
 
-** Desktopでブラウザを起動 [#u342245e]
-#swingdescription(Swing/Desktop,Desktopでブラウザを起動,JDK 6 で導入されたDesktopを使ってブラウザを起動します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTKu9HhvrI/AAAAAAAAAWc/iMheiQnF4hQ/s144/Desktop.png)
+** Desktopでブラウザを起動 [#Desktop]
+#swingdescription(Swing/Desktop,Desktopでブラウザを起動,JDK 6で導入されたDesktopを使ってブラウザを起動します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTKu9HhvrI/AAAAAAAAAWc/iMheiQnF4hQ/s144/Desktop.png)
 
-** GroupLayoutの使用 [#h31e0eca]
-#swingdescription(Swing/GroupLayout,GroupLayoutの使用,JDK 6 で新しく導入されたGroupLayoutとGridBagLayoutを比較しています。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTNn9AdVUI/AAAAAAAAAbE/yOFdtRVr6P4/s144/GroupLayout.png)
+** GroupLayoutの使用 [#GroupLayout]
+#swingdescription(Swing/GroupLayout,GroupLayoutの使用,JDK 6で新しく導入されたGroupLayoutとGridBagLayoutを比較しています。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTNn9AdVUI/AAAAAAAAAbE/yOFdtRVr6P4/s144/GroupLayout.png)
 
-** TableRowSorterのSortKeysをクリアする [#vf8d3a60]
-#swingdescription(Swing/ClearSortingState,TableRowSorterのSortKeysをクリアする,JDK 6 で導入されたTableRowSorterでの行ソートを、テーブルヘッダの「Shift+クリック」でクリアします。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJF8YbgvI/AAAAAAAAAT0/NDSO1fqmVNw/s144/ClearSortingState.png)
+** TableRowSorterのSortKeysをクリアする [#ClearSortingState]
+#swingdescription(Swing/ClearSortingState,TableRowSorterのSortKeysをクリアする,JDK 6で導入されたTableRowSorterでの行ソートを、テーブルヘッダの「Shift+クリック」でクリアします。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJF8YbgvI/AAAAAAAAAT0/NDSO1fqmVNw/s144/ClearSortingState.png)
 
-** JTabbedPaneのCloseButtonをフォーカスがある場合だけ表示 [#ka549799]
+** JTabbedPaneのCloseButtonをフォーカスがある場合だけ表示 [#HoverCloseButton]
 #swingdescription(Swing/HoverCloseButton,JTabbedPaneのCloseButtonをフォーカスがある場合だけ表示,JTabbedPaneのタブを閉じるボタンを、タブにフォーカスがある場合だけ表示します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTN-acwv2I/AAAAAAAAAbo/gFaIpQr1XGc/s144/HoverCloseButton.png)
 
-** JTabbedPaneのタブにJProgressBarを表示 [#h97f47d2]
+** JTabbedPaneのタブにJProgressBarを表示 [#TabWithProgressBar]
 #swingdescription(Swing/TabWithProgressBar,JTabbedPaneのタブにJProgressBarを表示,JTabbedPaneのタブにJProgressBarを配置して、進捗を表示します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTVHzMYZuI/AAAAAAAAAnI/7G4e4YZbiAQ/s144/TabWithProgressBar.png)
 
-** JTableをソートした後の選択状態 [#b122606b]
-#swingdescription(Swing/UpdateSelectionOnSort,JTableをソートした後の選択状態,JDK 1.6 で導入された RowSorter を使って、JTableをソートした場合、直前の選択状態がどう変化するかテストします。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTWaXC_E3I/AAAAAAAAApM/H9h2pJw-VSQ/s144/UpdateSelectionOnSort.png)
+** JTableをソートした後の選択状態 [#UpdateSelectionOnSort]
+#swingdescription(Swing/UpdateSelectionOnSort,JTableをソートした後の選択状態,JDK 1.6で導入されたRowSorterを使って、JTableをソートした場合、直前の選択状態がどう変化するかテストします。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTWaXC_E3I/AAAAAAAAApM/H9h2pJw-VSQ/s144/UpdateSelectionOnSort.png)
 
-** JTableのソートアイコンを変更 [#i3943788]
+** JTableのソートアイコンを変更 [#TableSortIcon]
 #swingdescription(Swing/TableSortIcon,JTableのソートアイコンを変更,JTableのソートアイコンを非表示にしたり、別の画像に変更します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUsaUYVkI/AAAAAAAAAmc/34Qz14LqOGc/s144/TableSortIcon.png)
 
 * ↑20 ↓21 [#adbbac3d]
 #adsensebar
 
-** JTableのRowSorterをフィルタありソート不可にする [#hce55072]
-#swingdescription(Swing/FilterWithoutSorting,JTableのRowSorterをフィルタありソート不可にする,フィルタありでソート不可の TableRowSorter を作成します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMr425A3I/AAAAAAAAAZk/ZFpsuUZWGcQ/s144/FilterWithoutSorting.png)
+** JTableのRowSorterをフィルタありソート不可にする [#FilterWithoutSorting]
+#swingdescription(Swing/FilterWithoutSorting,JTableのRowSorterをフィルタありソート不可にする,フィルタありでソート不可のTableRowSorterを作成します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMr425A3I/AAAAAAAAAZk/ZFpsuUZWGcQ/s144/FilterWithoutSorting.png)
 
-** TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え [#a748c13b]
+** TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え [#DnDReorderList]
 #swingdescription(Swing/DnDReorderList,TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え,JListのアイテムを複数選択し、ドラッグ＆ドロップで並べ替えを可能にするTransferHandlerを作成します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLeSCyHuI/AAAAAAAAAXo/v2OLiSPdgEY/s144/DnDReorderList.png)
 
-** JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え [#fe22b24e]
+** JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え [#DragSelectDropReordering]
 #swingdescription(Swing/DragSelectDropReordering,JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え,JListのアイテムを、ラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え可能にします。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTL3XY_VqI/AAAAAAAAAYQ/RFVaD4w5C9w/s144/DragSelectDropReordering.png)
 
-** JTableの列固定とソート [#tbb949ba]
-#swingdescription(Swing/FixedColumnTableSorting,JTableの列固定とソート,列固定したJTableで、JDK 6 で導入されたTableRowSorterを使った行ソートを行います。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMzes1hqI/AAAAAAAAAZw/-m-PZSFzYAk/s144/FixedColumnTableSorting.png)
+** JTableの列固定とソート [#FixedColumnTableSorting]
+#swingdescription(Swing/FixedColumnTableSorting,JTableの列固定とソート,列固定したJTableで、JDK 6で導入されたTableRowSorterを使った行ソートを行います。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMzes1hqI/AAAAAAAAAZw/-m-PZSFzYAk/s144/FixedColumnTableSorting.png)
 
-** JTabbedPane間でタブのドラッグ＆ドロップ移動 [#n2f54b22]
+** JTabbedPane間でタブのドラッグ＆ドロップ移動 [#DnDExportTabbedPane]
 #swingdescription(Swing/DnDExportTabbedPane,JTabbedPane間でタブのドラッグ＆ドロップ移動,JTabbedPane間でタブのDrag&Dropによる移動を行います。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLW06ZMXI/AAAAAAAAAXc/vzeXm4pwhVY/s144/DnDExportTabbedPane.png)
 
-** ButtonGroup中にある選択状態のJToggleButtonをクリックして選択解除可能にする [#o7a685e3]
+** ButtonGroup中にある選択状態のJToggleButtonをクリックして選択解除可能にする [#ToggleButtonGroup]
 #swingdescription(Swing/ToggleButtonGroup,ButtonGroup中にある選択状態のJToggleButtonをクリックして選択解除可能にする,ButtonGroup中にある選択状態のJToggleButtonをもう一度クリックして選択を解除することができるように設定します。,https://lh3.googleusercontent.com/-xZ1YFhJedcg/V1Q_LKyzhzI/AAAAAAAAOao/S-uPsKtdlg8k1eWf2yCIGnh4Hw2r7bGNACCo/s144/ToggleButtonGroup.png)
 
-** JTabbedPaneのタブにJCheckBoxを追加 [#i12ee661]
+** JTabbedPaneのタブにJCheckBoxを追加 [#TabWithCheckBox]
 #swingdescription(Swing/TabWithCheckBox,JTabbedPaneのタブにJCheckBoxを追加,JTabbedPaneのタブ内にクリック可能なJCheckBoxを追加します。,https://lh3.googleusercontent.com/-b5jcwNkPYZc/V12KPOBZsFI/AAAAAAAAObI/5fJ6EGqkXMg7fYFyLSDa_MwGJ3hXZGE-QCCo/s144/TabWithCheckBox.png)
 
-* Java 7 [#v1a0e0d0]
-** JLayerで指定したコンポーネントへの入力を禁止 [#q9add33b]
-#swingdescription(Swing/DisableInputLayer,JLayerで指定したコンポーネントへの入力を禁止,JDK 7 で導入された、JLayerを利用して、指定したコンポーネントへの入力を禁止します。,https://lh3.googleusercontent.com/-fJbneWE3WB4/TpLGoNbk1TI/AAAAAAAABDk/GJWfhRR4UB0/s144/DisableInputLayer.png)
+* Java 7 [#Java7]
+** JLayerで指定したコンポーネントへの入力を禁止 [#DisableInputLayer]
+#swingdescription(Swing/DisableInputLayer,JLayerで指定したコンポーネントへの入力を禁止,JDK 7で導入された、JLayerを利用して、指定したコンポーネントへの入力を禁止します。,https://lh3.googleusercontent.com/-fJbneWE3WB4/TpLGoNbk1TI/AAAAAAAABDk/GJWfhRR4UB0/s144/DisableInputLayer.png)
 
-** JLayerで子コンポーネントへの入力を制限する [#xe7e25df]
+** JLayerで子コンポーネントへの入力を制限する [#PopupMenuBlockLayer]
 #swingdescription(Swing/PopupMenuBlockLayer,JLayerで子コンポーネントへの入力を制限する,JLayerを使って、子コンポーネントへのすべての入力を制限します。,https://lh5.googleusercontent.com/-Svne2X0djJ8/TtJGGlPU-OI/AAAAAAAABFM/xjZfqHHbkJ0/s144/PopupMenuBlockLayer.png)
 
-** JLayerを使ってJTabbedPaneのタブの挿入位置を描画する [#e0f0b610]
+** JLayerを使ってJTabbedPaneのタブの挿入位置を描画する [#DnDLayerTabbedPane]
 #swingdescription(Swing/DnDLayerTabbedPane,JLayerを使ってJTabbedPaneのタブの挿入位置を描画する,JLayerを使って、タブのドラッグ＆ドロップでの移動先をJTabbedPane上に描画します。,https://lh3.googleusercontent.com/-xX0rzgauC5c/Txz4AxE_u2I/AAAAAAAABIM/jHQdxU1yP9g/s144/DnDLayerTabbedPane.png)
 
-** JLayerを使用して無効時のコンポーネントの文字色を変更する [#w1b01156]
+** JLayerを使用して無効時のコンポーネントの文字色を変更する [#JLayerDisabledText]
 #swingdescription(Swing/JLayerDisabledText,JLayerを使用して無効時のコンポーネントの文字色を変更する,JLayerを使用して、JButtonなどのコンポーネントを無効にしたときの文字色を変更します。,https://lh5.googleusercontent.com/-_2bogxiuOec/TzilFn0ms8I/AAAAAAAABJI/oMz_T6SqCwE/s144/JLayerDisabledText.png)
 
-** StrokeBorderを使用する [#m04ff9ea]
-#swingdescription(Swing/StrokeBorder,StrokeBorderを使用する,Java 1.7.0 で導入されたStrokeBorderをテストします。,https://lh3.googleusercontent.com/-MSfWQgMprsI/UAy_-BOqVII/AAAAAAAABPo/0uH5WtaajqY/s144/StrokeBorder.png)
+** StrokeBorderを使用する [#StrokeBorder]
+#swingdescription(Swing/StrokeBorder,StrokeBorderを使用する,Java 1.7.0で導入されたStrokeBorderをテストします。,https://lh3.googleusercontent.com/-MSfWQgMprsI/UAy_-BOqVII/AAAAAAAABPo/0uH5WtaajqY/s144/StrokeBorder.png)
 
-** JProgressBarの文字列をJLayerを使って表示する [#s0d43100]
+** JProgressBarの文字列をJLayerを使って表示する [#ProgressStringLayer]
 #swingdescription(Swing/ProgressStringLayer,JProgressBarの文字列をJLayerを使って表示する,垂直JProgressBarの文字列をJLayerを使って横組で表示します。,https://lh4.googleusercontent.com/-ATDPf7XMEzg/UbTLqsulmsI/AAAAAAAABt0/_0ZOg11jmXk/s144/ProgressStringLayer.png)
 
-** SecondaryLoopを使用してイベント・ディスパッチ・スレッド上で別途イベント・ループを実行する [#y0e6fb3c]
+** SecondaryLoopを使用してイベント・ディスパッチ・スレッド上で別途イベント・ループを実行する [#SecondaryLoop]
 #swingdescription(Swing/SecondaryLoop,SecondaryLoopを使用してイベント・ディスパッチ・スレッド上で別途イベント・ループを実行する,SecondaryLoopを使用して、イベント・ディスパッチ・スレッドをブロックせずに、別スレッドをイベント・ループを実行します。,https://lh3.googleusercontent.com/-eAqnf0aNSsQ/VhrDDmUQQeI/AAAAAAAAODs/fwDgjYwjTbk/s800-Ic42/SecondaryLoop.png)
 
-** ComboBoxEditorにJLayerを設定し入力の妥当性を表示する [#rff41450]
+** ComboBoxEditorにJLayerを設定し入力の妥当性を表示する [#ComboBoxEditorVerifier]
 #swingdescription(Swing/ComboBoxEditorVerifier,ComboBoxEditorにJLayerを設定し入力の妥当性を表示する,JComboBoxのComboBoxEditorにJLayerを設定し、その入力が妥当でない場合はアイコンを表示します。,https://lh3.googleusercontent.com/-4gsRLzrKTE0/VjYu_qwZ8pI/AAAAAAAAOFk/t0JvVmjMcjI/s800-Ic42/ComboBoxEditorVerifier.png)

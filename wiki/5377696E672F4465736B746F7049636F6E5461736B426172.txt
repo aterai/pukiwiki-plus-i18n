@@ -5,23 +5,23 @@ author: aterai
 pubdate: 2016-03-07T09:09:57+09:00
 description: JDesktopPaneに追加されているJInternalFrameの一覧を表示するタスクバーを設定します。
 ---
-* 概要 [#ta15646c]
+* 概要 [#summary]
 `JDesktopPane`に追加されている`JInternalFrame`の一覧を表示するタスクバーを設定します。
 
 #download(https://lh3.googleusercontent.com/-RFRKt-CvY4E/VtzC8EelOgI/AAAAAAAAOQQ/NK8GMY49kGY/s800-Ic42/DesktopIconTaskBar.png)
 
-* サンプルコード [#gb90cebf]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIManager.put("InternalFrame.useTaskBar", Boolean.TRUE);
 }}
 
-* 解説 [#y04ff707]
+* 解説 [#explanation]
 上記のサンプルでは、`JDesktopPane`に追加されている`JInternalFrame`の一覧を表示するタスクバーを使用するかどうかを、`UIManager.put("InternalFrame.useTaskBar", ...);`で切り替えています。
 
 - `InternalFrame.useTaskBar`が有効かどうかは、`LookAndFeel`に依存する
 -- `NimbusLookAndFeel`は有効で、`JInternalFrame`がアイコン化されているかどうかにかかわらず、`TaskBar`にその一覧が表示される
 -- また、`JInternalFrame`がアイコン化されている場合でも、その`DesktopIcon`は`TaskBar`から移動できない
 
-//* 参考リンク
-* コメント [#g04da771]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment

@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2015/08/change-indeterminate-jprogressbar.html
     lang: en
 ---
-* 概要 [#r83d3616]
+* 概要 [#summary]
 `JProgressBar`が不確定状態の場合に描画するアニメーションパターンを変更します。
 
 #download(https://lh5.googleusercontent.com/-NNzCJkyUG1U/U8KcWq3YRjI/AAAAAAAACJg/tB7jz0r9Frg/s800/StripedProgressBar.png)
 
-* サンプルコード [#scb8db3c]
+* サンプルコード [#sourcecode]
 #code(link){{
 class StripedProgressBarUI extends BasicProgressBarUI {
   private final boolean dir;
@@ -76,7 +76,7 @@ class StripedProgressBarUI extends BasicProgressBarUI {
 }
 }}
 
-* 解説 [#e7ff2ddb]
+* 解説 [#explanation]
 上記のサンプルでは、`BasicProgressBarUI#paintIndeterminate(...)`をオーバーライドした`ProgressBarUI`を設定して、不確定状態で描画されるアニメーションのパターンをストライプ模様に変更しています。また、デフォルトの不確定状態アニメーションは、`JProgressBar`の内部をボックスが左右(縦の場合は上下)に跳ねるパターンですが、今回は`JProgressBar`全体をストライプで描画するため、`BasicProgressBarUI#getBoxLength()`も`JProgressBar`自体の長さを返すようにオーバーライドしています。
 
 ----
@@ -87,10 +87,10 @@ UIManager.put("ProgressBar.cycleTime", 1000);
 UIManager.put("ProgressBar.repaintInterval", 10);
 }}
 
-* 参考リンク [#eb3a5dcc]
+* 参考リンク [#reference]
 - [[JProgressBarのNimbusLookAndFeelにおける不確定状態アニメーションを変更する>Swing/IndeterminateRegionPainter]]
 - [[JProgressBarの不確定進捗サイクル時間を設定>Swing/IndeterminateCycleTime]]
 
-* コメント [#a077586b]
+* コメント [#comment]
 #comment
 #comment

@@ -5,17 +5,17 @@ author: aterai
 pubdate: 2012-03-19T15:02:42+09:00
 description: JScrollBarのKnobの最小サイズを設定します。
 ---
-* 概要 [#g69fae5d]
+* 概要 [#summary]
 `JScrollBar`の`Knob`の最小サイズを設定します。
 
 #download(https://lh4.googleusercontent.com/-A8TRDbOQ1p4/T2bKeM8dcvI/AAAAAAAABKI/iBKMsL6eGfM/s800/MinimumThumbSize.png)
 
-* サンプルコード [#b46ad21c]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32));
 }}
 
-* 解説 [#q43a92a4]
+* 解説 [#explanation]
 上記のサンプルでは、右の`JScrollPane`で、`JScrollBar`の`Knob`(`Thumb`)が短くなりすぎないように、最小サイズ(`Horizontal`の場合は幅、`Vertical`の場合は高さ)を設定します。
 
 - 注: `LookAndFeel`によって、`UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32));`が有効かどうかは異なる
@@ -49,10 +49,10 @@ protected Dimension getMinimumThumbSize() {
 - [[JSliderのつまみの形状を変更>Swing/ThumbArrowShape]]
 -- トラックを表示したくない場合は、`slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);`で、つまみの形だけ変更
 
-* 参考リンク [#o5c9b079]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/2754306/java-swing-rendering-bug-on-windows-7-look-and-feel Java Swing rendering bug on Windows 7 look-and-feel? - Stack Overflow]
 - [[JSliderのつまみの形状を変更>Swing/ThumbArrowShape]]
 
-* コメント [#k98a1523]
+* コメント [#comment]
 #comment
 #comment

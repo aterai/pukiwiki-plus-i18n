@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2003-11-17
 description: JFileChooserにファイルフィルタを追加します。
 ---
-* 概要 [#ja5c24a0]
+* 概要 [#summary]
 `JFileChooser`にファイルフィルタを追加します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMc7NJ5UI/AAAAAAAAAZM/p-hliI-ZnLs/s800/FileFilter.png)
 
-* サンプルコード [#v2620577]
+* サンプルコード [#sourcecode]
 #code(link){{
 JFileChooser fileChooser = new JFileChooser();
 fileChooser.addChoosableFileFilter(new FileFilter() {
@@ -26,7 +26,7 @@ fileChooser.addChoosableFileFilter(new FileFilter() {
 });
 }}
 
-* 解説 [#id38fa2f]
+* 解説 [#explanation]
 上記のサンプルでは、フィルタを匿名インナークラスで書いていますが、複数のフィルタを追加する場合は、それぞれクラスを作ったほうがすっきり書けるかもしれません。
 
 `addChoosableFileFilter(FileFilter)`メソッドを使うと、そのフィルタが現在選択されているフィルタになります。例えば「すべてのファイル」をデフォルト(選択された状態)に戻したい場合は、以下のようにします。
@@ -47,10 +47,10 @@ fileChooser.addChoosableFileFilter(filter);
 
 上記のように説明の後に、可変長引数で拡張子を複数指定することが可能です。ドットは必要なく、大文字小文字も区別されないようです。
 
-* 参考リンク [#af725dfb]
+* 参考リンク [#reference]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6400960 Bug ID: 6400960 Swing File*Filters should extend java.io.File*Filters]
 
-* コメント [#o0017e45]
+* コメント [#comment]
 #comment
 -`jpg` → `.jpg` -- &user(MT); &new{2003-12-24 (水) 12:15:54};
 -- 直しておきました。どもです。 -- &user(aterai); &new{2003-12-24 (水) 12:41:13};

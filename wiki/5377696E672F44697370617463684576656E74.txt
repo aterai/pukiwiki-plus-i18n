@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-02-11T21:32:38+09:00
 description: AWTEventを取得して、マウスやキーボードの入力イベントを監視します。
 ---
-* 概要 [#ad33b611]
+* 概要 [#summary]
 `AWTEvent`を取得して、マウスやキーボードの入力イベントを監視します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLPUOE2MI/AAAAAAAAAXQ/5qrFGk7E5GM/s800/DispatchEvent.png)
 
-* サンプルコード [#fc4a223d]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static int DELAY = 10 * 1000; //10s
 private final javax.swing.Timer timer = new javax.swing.Timer(DELAY, new ActionListener() {
@@ -39,7 +39,7 @@ JButton button = new JButton(new AbstractAction("Connect") {
 });
 }}
 
-* 解説 [#rdf0df57]
+* 解説 [#explanation]
 上記のサンプルでは、一定時間(`10`秒)、マウスやキーボードからの入力が無い場合、接続(ダミー)を切るようになっています。
 
 ----
@@ -50,10 +50,10 @@ JButton button = new JButton(new AbstractAction("Connect") {
 - `AWTEvent`が発生した時に`timer.restart();`でタイマーをリセット
 - 時間がきたら`Toolkit.getDefaultToolkit().removeAWTEventListener`で`AWTEvent`を取り除く
 
-* 参考リンク [#db411231]
+* 参考リンク [#reference]
 - [http://tips4java.wordpress.com/2008/10/24/application-inactivity/ Application Inactivity « Java Tips Weblog]
 
-* コメント [#k0faafe0]
+* コメント [#comment]
 #comment
 - `java.security.AccessControlException: access denied ("java.awt.AWTPermission" "listenToAllAWTEvents")`が発生するので、`Web Start`起動のリンクを削除。 -- &user(aterai); &new{2014-01-14 (火) 13:57:01};
 

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-09-12T16:36:34+09:00
 description: JListにフォーカスがある状態で英数字キー入力をしたときに先頭文字が一致するアイテムを検索して選択する機能を無効にします。
 ---
-* 概要 [#v9cc8d26]
+* 概要 [#summary]
 `JList`にフォーカスがある状態で英数字キー入力をしたときに先頭文字が一致するアイテムを検索して選択する機能を無効にします。
 
 #download(https://lh6.googleusercontent.com/-_wtzuIN_MvU/Tm2wga2X4hI/AAAAAAAABBs/dUuDS1gj9mM/s800/DisablePrefixMatchSelection.png)
 
-* サンプルコード [#u37e69cc]
+* サンプルコード [#sourcecode]
 #code(link){{
 JList list = new JList() {
   @Override public int getNextMatch(String prefix, int startIndex, Position.Bias bias) {
@@ -19,7 +19,7 @@ JList list = new JList() {
 };
 }}
 
-* 解説 [#uef15a1d]
+* 解説 [#explanation]
 上記のサンプルでは、`JList#getNextMatch(...)`メソッドをオーバーライドし、戻り値(次にマッチする要素のインデックス)が常に`-1`になるようにすることで、キー入力による先頭文字検索選択を無効にしています。
 
 ----
@@ -33,7 +33,7 @@ JTree tree = new JTree() {
 };
 }}
 
-//* 参考リンク
-* コメント [#yd9ebab2]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

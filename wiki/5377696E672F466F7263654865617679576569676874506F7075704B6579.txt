@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-05-11T16:10:58+09:00
 description: JToolTipをGlassPane上のコンポーネントに追加した場合でも、手前に表示されるように設定します。
 ---
-* 概要 [#d46a12cd]
+* 概要 [#summary]
 `JToolTip`を`GlassPane`上のコンポーネントに追加した場合でも、手前に表示されるように設定します。主に[https://community.oracle.com/thread/1357949 Swing - ComboBox scroll and selected/highlight on glasspane]を参考にしています。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTNMeZI4ZI/AAAAAAAAAaY/8XHy9j6jQw0/s800/ForceHeavyWeightPopupKey.png)
 
-* サンプルコード [#f0477f43]
+* サンプルコード [#sourcecode]
 #code(link){{
 //Swing - ComboBox scroll and selected/highlight on glasspane
 //https://community.oracle.com/thread/1357949
@@ -24,7 +24,7 @@ try {
 }
 }}
 
-* 解説 [#rec54369]
+* 解説 [#explanation]
 上記のサンプルでは、ボタンをクリックすると、二つのラベルをもつ`GlassPane`が表示されます。
 
 - `111...`(左)
@@ -52,13 +52,13 @@ combo.putClientProperty(field.get(null), Boolean.TRUE);
 - `JDK 1.9.0`では、常に`HeavyWeight`で開くのが簡単になるように修正されるかもしれない
 -- [https://bugs.openjdk.java.net/browse/JDK-8147521 JDK-8147521 macosx Internal API Usage: setPopupType used to force creation of heavyweight popup - Java Bug System]
 
-* 参考リンク [#webb6ab8]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1357949 Swing - ComboBox scroll and selected/highlight on glasspane]
 - [http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?mode=viewtopic&topic=42615&forum=12 JComboBox の GlassPane 上でのレンダリング]
 - [https://community.oracle.com/thread/1366094 Swing - Why glass pane requires setLightWeightPopupEnabled(false)?]
 - [http://ateraimemo.com/Swing/ModalInternalFrame.html JInternalFrameをModalにする]
 
-* コメント [#n67c57a8]
+* コメント [#comment]
 #comment
 - `ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);`がバージョンによって効かない場合があるらしい。[http://stackoverflow.com/questions/17150483/force-heavyweight-tooltip-with-shaped-jpanel java - Force HeavyWeight Tooltip with shaped JPanel - Stack Overflow] -- &user(aterai); &new{2013-06-18 (火) 08:34:11};
 -- 上記のリンクのサンプルコードだと、`Windows 7` + `JDK 1.7.0_05`: `OK`, `JDK 1.7.0_06`: `NG`。 -- &user(aterai); &new{2013-06-18 (火) 08:42:24};

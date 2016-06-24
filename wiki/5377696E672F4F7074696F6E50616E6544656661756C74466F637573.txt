@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-11-23T19:41:03+09:00
 description: JOptionPaneにデフォルトでフォーカスをもつコンポーネントを追加します。
 ---
-* 概要 [#p8003f6b]
+* 概要 [#summary]
 `JOptionPane`にデフォルトでフォーカスをもつコンポーネントを追加します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTQoUaDrDI/AAAAAAAAAf4/nUnrCrmb5io/s800/OptionPaneDefaultFocus.png)
 
-* サンプルコード [#nd2fa665]
+* サンプルコード [#sourcecode]
 #code(link){{
 textField4.addAncestorListener(new AncestorListener() {
   @Override public void ancestorAdded(AncestorEvent e) {
@@ -21,7 +21,7 @@ textField4.addAncestorListener(new AncestorListener() {
 });
 }}
 
-* 解説 [#k9a64d2f]
+* 解説 [#explanation]
 上記のサンプルでは、`JOptionPane.showConfirmDialog`で表示する`JTextField`にデフォルトのフォーカスがあたるように設定しています。
 
 - 左上
@@ -86,10 +86,10 @@ if (result == JOptionPane.OK_OPTION) {
 -- `textField`に`addAncestorListener`を追加し、`ancestorAdded`が呼ばれたときに、`textField.requestFocusInWindow();`
 -- [https://community.oracle.com/thread/1354218 Swing - Input focus]
 
-* 参考リンク [#u3c4a8af]
+* 参考リンク [#reference]
 - [[Windowを開いたときのフォーカスを指定>Swing/DefaultFocus]]
 - [https://community.oracle.com/thread/1354218 Swing - Input focus]
 
-* コメント [#nef3f20f]
+* コメント [#comment]
 #comment
 #comment

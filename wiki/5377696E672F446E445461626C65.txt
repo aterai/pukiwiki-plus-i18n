@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-04-02T16:29:09+09:00
 description: JTableの行を選択し、その順序をドラッグ＆ドロップで入れ替えます。
 ---
-* 概要 [#a9cb5120]
+* 概要 [#summary]
 `JTable`の行を選択し、その順序をドラッグ＆ドロップで入れ替えます。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLl0NAFoI/AAAAAAAAAX0/su1r-c7f4V0/s800/DnDTable.png)
 
-* サンプルコード [#bea7b546]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DnDTable extends JTable implements DragGestureListener, Transferable {
   private static final String NAME = "test";
@@ -153,18 +153,18 @@ class DnDTable extends JTable implements DragGestureListener, Transferable {
 }
 }}
 
-* 解説 [#weac537f]
+* 解説 [#explanation]
 ドラッグソースとドラッグターゲットをどちらも`JTable`にして、行の入れ替えがドラッグ＆ドロップで出来るようになっています。
 
 このサンプルのドラッグ＆ドロップの手順は、行の入れ替え処理などを除けば、[[JListの項目をドラッグ＆ドロップ>Swing/DnDList]]とほぼ同一です。
 
-* 参考リンク [#cef5dec4]
+* 参考リンク [#reference]
 - [[JListの項目をドラッグ＆ドロップ>Swing/DnDList]]
 - [[JTable自体の高さを拡張>Swing/FillsViewportHeight]]
 - [[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]
 -- `Java 1.6.0`以上で複数行を選択して移動を行う場合のサンプル
 - [[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]
 
-* コメント [#icf126b7]
+* コメント [#comment]
 #comment
 #comment

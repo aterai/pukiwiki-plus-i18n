@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-03-09T09:59:02+09:00
 description: ディスプレイの解像度の設定によってパネルの初期サイズ、フォントサイズ、行の高さなどを変更するテストを行います。
 ---
-* 概要 [#nb1d5b27]
+* 概要 [#summary]
 ディスプレイの解像度の設定によってパネルの初期サイズ、フォントサイズ、行の高さなどを変更するテストを行います。
 
 #download(https://lh3.googleusercontent.com/-Ckc4ZMaD6-8/VPzorX2t8MI/AAAAAAAAN0A/XSE6tpiT92A/s800/ScreenResolution.png)
 
-* サンプルコード [#k0ad66c8]
+* サンプルコード [#sourcecode]
 #code(link){{
 private Dimension defaultSize = new Dimension(320, 240);
 private Dimension preferredSize;
@@ -30,7 +30,7 @@ public static float getSizeOfText() {
 }
 }}
 
-* 解説 [#cc9aaec4]
+* 解説 [#explanation]
 上記のサンプルでは、`Windows`環境で`Smaller-100%`、`Medium-125%`、`Larger-150%`とディスプレイの設定を切り替えて、`ContentPane`のサイズ、`JTable`、`JTree`のフォントサイズや行の高さを変更するテストしています。
 
 - 例: `Medium-125%`の場合
@@ -61,11 +61,11 @@ JTable table = new JTable(model) {
 -- `Insets`などは変更していない
 -- `GraphicsConfiguration#getNormalizingTransform()`などは未調査
 
-* 参考リンク [#tcccad73]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#getScreenResolution-- Toolkit (Java Platform SE 8)]
 -- %%日本語版がすべて参照できない？%% 移転の模様...
 - [[UIManagerで使用するFontを統一>Swing/FontChange]]
 
-* コメント [#ee91226e]
+* コメント [#comment]
 #comment
 #comment

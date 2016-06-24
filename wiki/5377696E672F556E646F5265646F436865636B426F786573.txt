@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2016-04-18T00:42:25+09:00
 description: 複数のJCheckBoxの選択状態をBigIntegerで記憶し、UndoManagerを使用してアンドゥ・リドゥを行います。
 ---
-* 概要 [#b3d28206]
+* 概要 [#summary]
 複数の`JCheckBox`の選択状態を`BigInteger`で記憶し、`UndoManager`を使用してアンドゥ・リドゥを行います。
 
 #download(https://lh3.googleusercontent.com/-lcOSQhE6Wp4/VxOpe3dlKII/AAAAAAAAOTE/_lpl9dzIlw8hXFZ-GfuX8HT2fGsENQNvgCCo/s800-Ic42/UndoRedoCheckBoxes.png)
 
-* サンプルコード [#pc154bed]
+* サンプルコード [#sourcecode]
 #code(link){{
 private BigInteger status = new BigInteger("111000111", 2);
 private static final int BIT_LENGTH = 50;
@@ -30,16 +30,16 @@ for (int i = 0; i < BIT_LENGTH; i++) {
 }
 }}
 
-* 解説 [#t8cf9abb]
+* 解説 [#explanation]
 - `JCheckBox`の選択状態を`BigInteger`のビットフラグで管理、記憶
 - `UndoableEditSupport#addUndoableEditListener(...)`でリスナに`UndoManager`を追加
 - `JCheckBox`がクリックされるなどで値が変化した場合、変更前と変更後の`BigInteger`を持つ`UndoableEdit`を作成して、`UndoableEditSupport#postEdit(...)`で登録
 - `UndoManager#undo()`でアンドゥ、`UndoManager#redo()`でリドゥを実行し、`BigInteger`のステータスを更新
 -- 更新された`BigInteger`から各`JCheckBox`の選択状態を復元
 
-* 参考リンク [#y1e49a85]
+* 参考リンク [#reference]
 - [http://www.ne.jp/asahi/hishidama/home/tech/java/swing/UndoManager.html Java Swing「UndoManager」メモ(Hishidama's Swing-UndoManager Memo)]
 
-* コメント [#o065ba14]
+* コメント [#comment]
 #comment
 #comment

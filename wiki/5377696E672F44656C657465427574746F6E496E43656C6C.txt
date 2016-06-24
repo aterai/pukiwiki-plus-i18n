@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-10-22T07:55:05+09:00
 description: JTableのセルにJButtonを追加し、クリックされたらその行を削除します。
 ---
-* 概要 [#y5a20522]
+* 概要 [#summary]
 `JTable`のセルに`JButton`を追加し、クリックされたらその行を削除します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKsRqqqeI/AAAAAAAAAWY/X0y-Ph7jngA/s800/DeleteButtonInCell.png)
 
-* サンプルコード [#i9dca28f]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DeleteButton extends JButton {
   @Override public void updateUI() {
@@ -57,7 +57,7 @@ class DeleteButtonEditor extends DeleteButton implements TableCellEditor {
 //......
 }}
 
-* 解説 [#qcbd9c4d]
+* 解説 [#explanation]
 %%上記のサンプルでは、ボタンがクリックされたときの削除自体は、`JTable`に追加したマウスリスナーで行っており、セルエディタやセルレンダラーに使っている`JButton`は表示のためのダミーです。%%
 
 - セルレンダラーに使っている`JButton`は表示のためのダミー
@@ -66,14 +66,14 @@ class DeleteButtonEditor extends DeleteButton implements TableCellEditor {
 --- `JTable#updateUI()`、`Java 1.6.0`の`JTable#updateSubComponentUI(...)`、`Java 1.7.0`の`SwingUtilities#updateRendererOrEditorUI(Object)`を参照
 -- `AbstractCellEditor`を継承していても`updateUI()`は呼ばれない、`DefaultCellEditor`は継承しづらい…
 
-* 参考リンク [#kcf3a9d4]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1357728 Swing - JButton inside JTable Cell]
 - [[JTableの行を追加、削除>Swing/AddRow]]
 - [[JTableの行を全削除>Swing/ClearTable]]
 - [[JTableのセルに複数のJButtonを配置する>Swing/MultipleButtonsInTableCell]]
 - [[JTableのセルにHyperlinkを表示>Swing/HyperlinkInTableCell]]
 
-* コメント [#t2516d67]
+* コメント [#comment]
 #comment
 - ボタンのセル内でマウスを移動しても削除するように変更。 -- &user(aterai); &new{2008-03-28 (金) 16:59:11};
 -- メモ: %%`0`行目のボタンをクリックし、真上のヘッダ上でリリースしても削除可能%% 修正済み: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6291631 Bug ID: 6291631 JTable: rowAtPoint returns 0 for negative y] (追記: このバグは未修正になっているけど、`JDK 1.6, 1.7`などのソースではコメントにある修正が追加されている) -- &user(aterai); &new{2008-03-28 (金) 17:21:10};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-07-22T01:35:03+09:00
 description: LookAndFeel一覧からNimbusLookAndFeelを名前で検索取得して使用します。
 ---
-* 概要 [#dc5c278f]
+* 概要 [#summary]
 `LookAndFeel`一覧から`NimbusLookAndFeel`を名前で検索取得して使用します。[http://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/nimbus.html Nimbus Look and Feel (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]などのサンプルから引用しています。
 
 #download(https://lh5.googleusercontent.com/-40dXjNq1HbU/UewL67WFpWI/AAAAAAAABwg/zOHVr2U7KiM/s800/NimbusLookAndFeel.png)
 
-* サンプルコード [#ub4d63c2]
+* サンプルコード [#sourcecode]
 #code(link){{
 try {
   for (UIManager.LookAndFeelInfo laf: UIManager.getInstalledLookAndFeels()) {
@@ -23,15 +23,15 @@ try {
 }
 }}
 
-* 解説 [#zb2d6bfe]
+* 解説 [#explanation]
 `JDK 1.7.0`で`NimbusLookAndFeel`のパッケージが移動されて完全クラス名が変更されたので、`NimbusLookAndFeel`のインスタンスを生成して設定するのではなく、一旦`UIManager.getInstalledLookAndFeels()`で全`LookAndFeelInfo`を取得し、名前が`Nimbus`となっている`LookAndFeel`を検索してからその完全クラス名を取得しています。
 
 - `JDK 1.6.0_10`: `com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel`
 - `JDK 1.7.0`以降: `javax.swing.plaf.nimbus.NimbusLookAndFeel`
 
-* 参考リンク [#b9019d38]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/nimbus.html Nimbus Look and Feel (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
 
-* コメント [#he687711]
+* コメント [#comment]
 #comment
 #comment

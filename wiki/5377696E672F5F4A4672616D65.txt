@@ -4,114 +4,116 @@ tags: [JFrame, JDialog, JWindow]
 description: JFrame、JDialog、JWindow関係の記事へのスクリーンショット付きリンク一覧
 ---
 このページでは、`JFrame`、`JDialog`、`JWindow`などの`Window`関係のコンポーネントの使い方を集めて一覧にしています。
+
 #contents
-* JFrame JDialog JWindow [#y5e435b5]
-** JFrameを常に前面に表示する [#uc3732ea]
+
+* JFrame JDialog JWindow [#JFrame]
+** JFrameを常に前面に表示する [#AlwaysOnTop]
 #swingdescription(Swing/AlwaysOnTop,JFrameを常に前面に表示する,JFrameが常に他のウィンドウよりも前面に表示されるように設定します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTHh-ILwOI/AAAAAAAAARU/SYnOw7As81Y/s144/AlwaysOnTop.png)
 
-** JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする [#wbc07327]
+** JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする [#CustomDecoratedFrame]
 #swingdescription(Swing/CustomDecoratedFrame,JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする,JFrameのタイトルバーなどを非表示にして独自に描画し、これに移動リサイズなどの機能も追加します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKV1P7mYI/AAAAAAAAAV0/u4qjd-ItBYU/s144/CustomDecoratedFrame.png)
 
-** JInternalFrameをJFrameとして表示する [#m4c6541d]
+** JInternalFrameをJFrameとして表示する [#InternalFrameTitleBar]
 #swingdescription(Swing/InternalFrameTitleBar,JInternalFrameをJFrameとして表示する,JFrameのタイトルバーなどを非表示にし、JInternalFrameのタイトルバーでこれらを代用します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTOo9LcVwI/AAAAAAAAAcs/fUEpKhXr_aI/s144/InternalFrameTitleBar.png)
 
-** JWindowをマウスで移動 [#g2e585cf]
+** JWindowをマウスで移動 [#DragWindow]
 #swingdescription(Swing/DragWindow,JWindowをマウスで移動,JWindowなどのタイトルバーのないフレームをマウスで移動します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTL8cG8F0I/AAAAAAAAAYY/vZfyqnyr6-I/s144/DragWindow.png)
 
-** Windowのフルスクリーン化 [#d1a0b2fc]
+** Windowのフルスクリーン化 [#FullScreen]
 #swingdescription(Swing/FullScreen,Windowのフルスクリーン化,JDialogやJFrameなどを、フルスクリーン表示に切り替えます。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTNRUUD2xI/AAAAAAAAAag/G7fNPgecnss/s144/FullScreen.png)
 
-** JFrameのアイコンを非表示 [#n6eb44ec]
+** JFrameのアイコンを非表示 [#DisableDefaultIcon]
 #swingdescription(Swing/DisableDefaultIcon,JFrameのアイコンを非表示,JFrameなどのタイトルバーにあるアイコンを非表示にします。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTK49Ua_nI/AAAAAAAAAWs/Ipb_maWCOgY/s144/DisableDefaultIcon.png)
 
-** JFrameの移動を同期 [#za191cc4]
+** JFrameの移動を同期 [#DockingFrames]
 #swingdescription(Swing/DockingFrames,JFrameの移動を同期,JFrameを2つ並べて作成し、その位置関係を保ったまま移動できるようにします。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLtEL3M0I/AAAAAAAAAYA/9HmyXI1Uw0M/s144/DockingFrames.png)
 
-** JFrameの複数作成と終了 [#lfe4effa]
+** JFrameの複数作成と終了 [#CloseOperation]
 #swingdescription(Swing/CloseOperation,JFrameの複数作成と終了,JFrameを複数作成し、これらをすべて閉じた時にアプリケーションを終了します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJey1HvEI/AAAAAAAAAUc/KdbEeHP-Ij0/s144/CloseOperation.png)
 
-** WindowAncestor(親ウィンドウ)の取得 [#z02282a7]
+** WindowAncestor(親ウィンドウ)の取得 [#WindowAncestor]
 #swingdescription(Swing/WindowAncestor,WindowAncestor(親ウィンドウ)の取得,SwingUtilities.getWindowAncestor()などで、親ウィンドウを取得します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWr-a0yaI/AAAAAAAAApo/Wm-nQMxDh4s/s144/WindowAncestor.png)
 
-** JFrameのIconを変更 [#k6752dfc]
+** JFrameのIconを変更 [#FrameIcon]
 #swingdescription(Swing/FrameIcon,JFrameのIconを変更,JFrameのタイトルバー左に表示されているアイコンを別の画像に変更します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTNO_p95yI/AAAAAAAAAac/gl0vOOoKH14/s144/FrameIcon.png)
 
 * ↑10 ↓11 [#xae0c617]
 #adsensebar
 
-** JFrameの終了をキャンセル [#c544ab33]
+** JFrameの終了をキャンセル [#WindowClosing]
 #swingdescription(Swing/WindowClosing,JFrameの終了をキャンセル,JFrameを閉じる前に、本当に終了してよいか、終了をキャンセルするかなどを確認するダイアログを表示します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWuSq18TI/AAAAAAAAAps/aCkiOWRqfDE/s144/WindowClosing.png)
 
-** Windowを開いたときのフォーカスを指定 [#x5fe2efc]
+** Windowを開いたときのフォーカスを指定 [#DefaultFocus]
 #swingdescription(Swing/DefaultFocus,Windowを開いたときのフォーカスを指定,JFrameやJDialogなどのWindowを開いたときに、デフォルトでフォーカスを持つコンポーネントを指定します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKp09XXEI/AAAAAAAAAWU/p3YhSijyS90/s144/DefaultFocus.png)
 
-** JFrameのサイズを固定 [#ha112fdd]
+** JFrameのサイズを固定 [#FixedSizeFrame]
 #swingdescription(Swing/FixedSizeFrame,JFrameのサイズを固定,JFrameやJDialogのサイズを固定し、変更不可にします。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTM4ZlDyXI/AAAAAAAAAZ4/xXHwfOJP7p0/s144/FixedSizeFrame.png)
 
-** JDialogをESCキーで閉じる [#te96a67a]
+** JDialogをESCキーで閉じる [#InputMap]
 #swingdescription(Swing/InputMap,JDialogをESCキーで閉じる,ESCキーを押すと閉じるJDialogを作成します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOj22ObUI/AAAAAAAAAck/b5izKCmGkHk/s144/InputMap.png)
 
-** JFrameをスクリーン中央に表示 [#gd1c14de]
+** JFrameをスクリーン中央に表示 [#CenterFrame]
 #swingdescription(Swing/CenterFrame,JFrameをスクリーン中央に表示,JFrameやJDialogなどのWindowが現在のスクリーン中央に配置されるように設定します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIvEn-69I/AAAAAAAAATQ/Fw4dLY4C0EE/s144/CenterFrame.png)
 
-** JFrameの縦横比を一定にする [#oc14c79d]
+** JFrameの縦横比を一定にする [#ConstrainedProportions]
 #swingdescription(Swing/ConstrainedProportions,JFrameの縦横比を一定にする,JFrameの幅と高さの比率が一定になるように制限します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKJeWlAAI/AAAAAAAAAVg/GMclfo0TYBM/s144/ConstrainedProportions.png)
 
-** DynamicLayoutでレイアウトの動的評価 [#tfb47cfa]
+** DynamicLayoutでレイアウトの動的評価 [#DynamicLayout]
 #swingdescription(Swing/DynamicLayout,DynamicLayoutでレイアウトの動的評価,ウィンドウのリサイズなどに応じてレイアウトを再評価するように、DynamicLayoutを設定します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMDyaDeJI/AAAAAAAAAYk/-EIAq3TyJbw/s144/DynamicLayout.png)
 
-** JFrameの最小サイズ [#t5cd4aff]
+** JFrameの最小サイズ [#MinimumFrame]
 #swingdescription(Swing/MinimumFrame,JFrameの最小サイズ,フレームやダイアログの最小サイズを指定します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTP41PdCsI/AAAAAAAAAes/cxniHSm55rQ/s144/MinimumFrame.png)
 
-** JWindowを使ったSplash Screenの表示 [#t175e182]
+** JWindowを使ったSplash Screenの表示 [#SplashScreen]
 #swingdescription(Swing/SplashScreen,JWindowを使ったSplash Screenの表示,JWindowを使って、スプラッシュ・スクリーンを表示します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTtxuiuuI/AAAAAAAAAk4/JhuyuS80C4M/s144/SplashScreen.png)
 
-** JDialogでモーダルなJProgressBar付きSplash Screenを表示する [#j3993c6a]
+** JDialogでモーダルなJProgressBar付きSplash Screenを表示する [#ProgressSplashScreen]
 #swingdescription(Swing/ProgressSplashScreen,JDialogでモーダルなJProgressBar付きSplash Screenを表示する,JDialogでモーダルなJProgressBar付きSplash Screenを表示します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTRSxG9iaI/AAAAAAAAAg8/Wpd3hycacS4/s144/ProgressSplashScreen.png)
 
 * ↑20 ↓21 [#x0e7f215]
 #adsensebar
 
-** JFrameを半透明化 [#w964352c]
+** JFrameを半透明化 [#WindowOpacity]
 #swingdescription(Swing/WindowOpacity,JFrameを半透明化,JFrameのタイトルや子コンポーネントを除く背景が半透明になるよう設定します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTWw2d9LNI/AAAAAAAAApw/NXG2EcaSv_s/s144/WindowOpacity.png)
 
-** JFrameの透明化と再描画 [#bb0356c8]
+** JFrameの透明化と再描画 [#TranslucentFrameRepaint]
 #swingdescription(Swing/TranslucentFrameRepaint,JFrameの透明化と再描画,透明にしたJFrameに半透明のデジタル時計を配置し、文字更新による背景色の再描画をテストします。,https://lh4.googleusercontent.com/-ujoDf8eD4vE/TqLcC0f2CHI/AAAAAAAABD4/LHaXXW6HW1k/s144/TranslucentFrameRepaint.png)
 
-** Windowの形を変更 [#o6ac24ed]
+** Windowの形を変更 [#WindowShape]
 #swingdescription(Swing/WindowShape,Windowの形を変更,JFrameのタイトルバーなどを非表示にし、Windowの形を非矩形図形に変更します。,https://lh4.googleusercontent.com/-f54GogC4jCU/Tu7AbPCJhsI/AAAAAAAABGc/EzG0Tf9ITFI/s144/WindowShape.png)
 
-** JFrameの位置・サイズを記憶する [#x8927fbc]
+** JFrameの位置・サイズを記憶する [#Preferences]
 #swingdescription(Swing/Preferences,JFrameの位置・サイズを記憶する,Preferences(レジストリなど)に、フレーム(パネル)のサイズ、位置を記憶します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRGT4S7mI/AAAAAAAAAgo/GDUrxdRJ4x4/s144/Preferences.png)
 
-** PersistenceServiceを使ってJFrameの位置・サイズを記憶 [#g2d07fcb]
+** PersistenceServiceを使ってJFrameの位置・サイズを記憶 [#PersistenceService]
 #swingdescription(Swing/PersistenceService,PersistenceServiceを使ってJFrameの位置・サイズを記憶,ServiceManagerからPersistenceServiceを取得し、JFrameなどの位置・サイズの保存、呼び出しを行います。,https://lh6.googleusercontent.com/-PyOW5DW5kHU/T3APD_Cq_bI/AAAAAAAABKk/i9eivMuQZ0Y/s144/PersistenceService.png)
 
-** JFrameの外側でもドラッグアイコンを表示する [#d4867862]
+** JFrameの外側でもドラッグアイコンを表示する [#DragSourceMotionListener]
 #swingdescription(Swing/DragSourceMotionListener,JFrameの外側でもドラッグアイコンを表示する,ドラッグ中のカーソル位置をDragSourceMotionListenerで取得し、そこにアイコンを追加したWindowを移動することで、JFrameの外側でもドラッグアイコンを表示します。,https://lh4.googleusercontent.com/-HM5QzW5AZlk/UB9iFlbSZMI/AAAAAAAABQM/fggojAo0b-E/s144/DragSourceMotionListener.png)
 
-** JSliderのノブをドラッグ中にToolTipで値を表示 [#u56a635e]
+** JSliderのノブをドラッグ中にToolTipで値を表示 [#SliderToolTips]
 #swingdescription(Swing/SliderToolTips,JSliderのノブをドラッグ中にToolTipで値を表示,JSliderのノブをドラッグ中にToolTipでその現在値を表示します。,https://lh6.googleusercontent.com/-RBRHhAqSA3A/UM3gOvnmIOI/AAAAAAAABZM/LdLir_Y4dQc/s144/SliderToolTips.png)
 
-** JPopupMenuなどからWindowを閉じる [#lff33ee3]
+** JPopupMenuなどからWindowを閉じる [#WindowClosingAction]
 #swingdescription(Swing/WindowClosingAction,JPopupMenuなどからWindowを閉じる,JPopupMenuや、JToolBarなどに親Windowを閉じるためのActionを作成します。,https://lh6.googleusercontent.com/-xWsEbhvjfDY/UT2P-83x0FI/AAAAAAAABmc/7isd5KoGMQc/s144/WindowClosingAction.png)
 
-** JToolBarに配置したアイコンをドラッグして並べ替える [#h8db3189]
+** JToolBarに配置したアイコンをドラッグして並べ替える [#RearrangeToolBarIcon]
 #swingdescription(Swing/RearrangeToolBarIcon,JToolBarに配置したアイコンをドラッグして並べ替える,JToolBarに配置したアイコンをドラッグ＆ドロップで並べ替えます。,https://lh6.googleusercontent.com/-bxLoJ6g9K_I/UWBOghG3kxI/AAAAAAAABpQ/tvVELkL1RV0/s144/RearrangeToolBarIcon.png)
 
-** JRootPaneにリサイズのための装飾を設定する [#w1cd22b6]
+** JRootPaneにリサイズのための装飾を設定する [#WindowDecorationStyle]
 #swingdescription(Swing/WindowDecorationStyle,JRootPaneにリサイズのための装飾を設定する,JFrame自体の装飾を削除し、JRootPaneにリサイズのためのウィンドウ装飾(透明)を設定します。,https://lh3.googleusercontent.com/-6jloCHHvTmw/Ub30100G84I/AAAAAAAABuM/AHxMNa5jyB0/s144/WindowDecorationStyle.png)
 
 * ↑30 ↓31 [#q28241a8]
 
-** JWindowをデスクトップにスライドインで表示する [#gadf9d24]
+** JWindowをデスクトップにスライドインで表示する [#SlideInNotificationWindow]
 #swingdescription(Swing/SlideInNotificationWindow,JWindowをデスクトップにスライドインで表示する,JOptionPaneを追加したJWindowを、スライドインアニメーションを使ってデスクトップ上に表示します。,https://lh4.googleusercontent.com/-axruZWDGZys/U98iB0eZi8I/AAAAAAAACK0/hh_jWt5nsi4/s144/SlideInNotificationWindow.png)
 
-** JFrameがデフォルトのウィンドウ装飾を使用する場合のタイトルバー背景色を変更 [#i94dacf8]
+** JFrameがデフォルトのウィンドウ装飾を使用する場合のタイトルバー背景色を変更 [#WindowTitleBackground]
 #swingdescription(Swing/WindowTitleBackground,JFrameがデフォルトのウィンドウ装飾を使用する場合のタイトルバー背景色を変更,JFrameがデフォルトのウィンドウ装飾を使用する場合、タイトルバーの文字色、背景色などを変更します。,https://lh5.googleusercontent.com/-kMDDoLGWoSA/VEPUosVXWPI/AAAAAAAACQw/94kmPEN2CT8/s144/WindowTitleBackground.png)
 
-** TrayIconの使用中にJFrameを最小化したとき、タスクバーボタンを非表示にする [#wea478c0]
+** TrayIconの使用中にJFrameを最小化したとき、タスクバーボタンを非表示にする [#HideTaskbarButton]
 #swingdescription(Swing/HideTaskbarButton,TrayIconの使用中にJFrameを最小化したとき、タスクバーボタンを非表示にする,TrayIconを使用中にJFrameを最小化した場合に、そのアプリケーションのタスクバーボタンを表示するかどうかを切り替えます。,https://lh4.googleusercontent.com/-tzpDxy7_qEA/VLKpHbpgC8I/AAAAAAAANuw/sRLjm08PrO8/s144/HideTaskbarButton.png)
 
-** Modalで透明なJDialogを使って親のJFrameへの入力をブロックする [#o7749916]
+** Modalで透明なJDialogを使って親のJFrameへの入力をブロックする [#BlockingDialog]
 #swingdescription(Swing/BlockingDialog,Modalで透明なJDialogを使って親のJFrameへの入力をブロックする,Modalで透明なJDialogを表示することで、親のJFrame全体への入力操作をブロックします。,https://lh3.googleusercontent.com/-BlvRwXum2Vc/Vi0ubz6y1mI/AAAAAAAAOE4/XKHozK0runE/s800-Ic42/BlockingDialog.png)

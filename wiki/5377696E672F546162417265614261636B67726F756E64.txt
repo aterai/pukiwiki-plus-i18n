@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-01-03T14:25:13+09:00
 description: MetalLookAndFeelのJTabbedPaneで、タブエリアの背景色などを変更するテストをしています。
 ---
-* 概要 [#g60a9b96]
+* 概要 [#summary]
 `MetalLookAndFeel`の`JTabbedPane`で、タブエリアの背景色などを変更するテストをしています。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TSFbcaeJLEI/AAAAAAAAAw0/zQFscoerEGk/s800/TabAreaBackground.png)
 
-* サンプルコード [#ec1711da]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIManager.put("TabbedPane.shadow",                Color.GRAY);
 UIManager.put("TabbedPane.darkShadow",            Color.GRAY);
@@ -27,7 +27,7 @@ UIManager.put("TabbedPane.selectHighlight",       Color.WHITE);
 UIManager.put("TabbedPane.borderHightlightColor", Color.WHITE);
 }}
 
-* 解説 [#x4421498]
+* 解説 [#explanation]
 上記のサンプルでは、`UIManager.put("TabbedPane.unselectedBackground", Color.GREEN);`などを利用して、タブエリアの背景色などを変更することができます。
 
 - メモ
@@ -35,10 +35,10 @@ UIManager.put("TabbedPane.borderHightlightColor", Color.WHITE);
 -- `JPanel`タブ内に配置されている`JComboBox`で、`TabbedPane.tabAreaBackground`などのキーを指定し、その色を変更することが可能
 - タブ文字色は、`JTabbedPane#setForegroundAt(...)`メソッドを使用して切り替え
 
-* 参考リンク [#r37bc4ff]
+* 参考リンク [#reference]
 - [[JTabbedPaneの選択文字色を変更>Swing/ColorTab]]
 - [[JTabbedPaneのタブ文字列をハイライト>Swing/TabTitleHighlight]]
 
-* コメント [#f0162397]
+* コメント [#comment]
 #comment
 #comment

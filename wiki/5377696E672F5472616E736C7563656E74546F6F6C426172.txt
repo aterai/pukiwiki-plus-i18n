@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-09-19T17:00:43+09:00
 description: コンポーネントにマウスカーソルがある場合だけ表示される半透明のJToolBarを追加します。
 ---
-* 概要 [#p4034716]
+* 概要 [#summary]
 コンポーネントにマウスカーソルがある場合だけ表示される半透明の`JToolBar`を追加します。
 
 #download(https://lh5.googleusercontent.com/-36mkZfbor58/Tnb1d-2vaPI/AAAAAAAABCM/Hoor7aG7K-g/s800/TranslucentToolBar.png)
 
-* サンプルコード [#e2dd3103]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ImageCaptionLabel extends JLabel implements HierarchyListener {
   private float alpha = 0f;
@@ -56,7 +56,7 @@ class ImageCaptionLabel extends JLabel implements HierarchyListener {
     //...
 }}
 
-* 解説 [#xb67dfb3]
+* 解説 [#explanation]
 上記のサンプルでは、画像を表示した`JLabel`に半透明にした`JToolBar`を追加しています。
 
 - 参考
@@ -64,10 +64,10 @@ class ImageCaptionLabel extends JLabel implements HierarchyListener {
 -- 表示アニメーションは、[[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]
 -- `JToolBar`内部の`JButton`は、[[JButtonの描画>Swing/ButtonPainted]]
 
-* 参考リンク [#f68df189]
+* 参考リンク [#reference]
 - [http://chrfb.deviantart.com/art/quot-ecqlipse-2-quot-PNG-59941546 "ecqlipse 2" PNG by ~chrfb on deviantART]
 -- アイコンを借用
 
-* コメント [#xb3bce6b]
+* コメント [#comment]
 #comment
 #comment

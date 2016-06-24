@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-04-03T01:35:12+09:00
 description: JTabbedPaneの余白にJCheckBoxを配置して特定のタブの開閉を行います。
 ---
-* 概要 [#jf5f1d6a]
+* 概要 [#summary]
 `JTabbedPane`の余白に`JCheckBox`を配置して特定のタブの開閉を行います。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUQ8ALIWI/AAAAAAAAAlw/7jfCbNrxWK8/s800/TabbedPaneWithCheckBox.png)
 
-* サンプルコード [#hd0302da]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TabbedPaneWithCompBorder implements Border, MouseListener, SwingConstants {
   private final JComponent  dummy = new JPanel();
@@ -61,7 +61,7 @@ class TabbedPaneWithCompBorder implements Border, MouseListener, SwingConstants 
 }
 }}
 
-* 解説 [#md0e801a]
+* 解説 [#explanation]
 `JTabbedPane`の`Border`に`SwingUtilities.paintComponent`メソッドを使って`JCheckBox`を描画しています。`JCheckBox`が`JTabbedPane`の子になってタブが増えないように、ダミーパネルを中間コンテナに指定しています。
 
 `JTabbedPane`で受け取ったマウスイベントを、`SwingUtilities.convertMouseEvent`メソッドを利用し、チェックボックス用に座標などを変換して送り出しています。
@@ -80,10 +80,10 @@ frame.setMinimumSize(new Dimension(240, 80));
 -- レイアウトマネージャーを自作するweebibさんの投稿 (reply 1)
 -- `OverlayLayout`を利用するcamickrさんの投稿 (reply 2)
 
-* 参考リンク [#ze3b3f0b]
+* 参考リンク [#reference]
 - [[JTabbedPaneの余白に文字列を表示>Swing/TabbedPaneWithText]]
 - [[JTabbedPaneの余白にJButtonを配置>Swing/TabbedPaneWithButton]]
 
-* コメント [#n00381b0]
+* コメント [#comment]
 #comment
 #comment

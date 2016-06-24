@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/03/mouse-dragging-viewport-scroll.html
     lang: en
 ---
-* 概要 [#ef47828b]
+* 概要 [#summary]
 `JScrollPane`の窓の中をマウスで掴んで画像をスクロールします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTNqjajfcI/AAAAAAAAAbI/Km-h7tWdYOo/s800/HandScroll.png)
 
-* サンプルコード [#e92a8d9e]
+* サンプルコード [#sourcecode]
 #code(link){{
 class HandScrollListener extends MouseAdapter {
   private final Cursor defCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
@@ -42,13 +42,13 @@ class HandScrollListener extends MouseAdapter {
 }
 }}
 
-* 解説 [#bf42cf21]
+* 解説 [#explanation]
 `JViewport`の原点(左上)をマウスの移動に応じて変更し、`JComponent#scrollRectToVisible`メソッドの引数として使用することで、覗き窓のスクロールを行っています。
 
 ----
 `JComponent#scrollRectToVisible(...)`ではなく、`JViewport#setViewPosition(Point)`を使用すると、内部コンポーネントの外側に移動することができます。
 
-* 参考リンク [#b337b5bb]
+* 参考リンク [#reference]
 - [[JScrollPaneのオートスクロール>Swing/AutoScroll]]
 - [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
 -- 猫の写真を引用
@@ -56,7 +56,7 @@ class HandScrollListener extends MouseAdapter {
 - [[JScrollPaneでキネティックスクロール>Swing/KineticScrolling]]
 - [[JTreeの余白をドラッグしてスクロール>Swing/TreeDragScroll]]
 
-* コメント [#ubd1d4e0]
+* コメント [#comment]
 #comment
 - つかんで移動ということですが、移動方向が逆の気がします。 -- &user(名無し); &new{2006-02-25 (土) 01:24:46};
 -- ご指摘ありがとうございます。確かに逆ですね。画像を掴んでというより、スクロールバーを掴んでみたいな動きになってました。修正しておきます。 -- &user(aterai); &new{2006-02-25 (土) 03:33:50};

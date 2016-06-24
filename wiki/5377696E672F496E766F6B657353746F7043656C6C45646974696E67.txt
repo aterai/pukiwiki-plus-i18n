@@ -5,17 +5,17 @@ author: aterai
 pubdate: 2014-02-24T00:00:29+09:00
 description: JTreeのノード編集中に割り込みが発生した場合、変更の自動保存を行うかどうかを設定します。
 ---
-* 概要 [#n643a931]
+* 概要 [#summary]
 `JTree`のノード編集中に割り込みが発生した場合、変更の自動保存を行うかどうかを設定します。
 
 #download(https://lh6.googleusercontent.com/-KbIRjsEYzEA/Uwny844Zc3I/AAAAAAAACAY/_3w4abiuaIo/s800/InvokesStopCellEditing.png)
 
-* サンプルコード [#c2ececa7]
+* サンプルコード [#sourcecode]
 #code(link){{
 tree.setInvokesStopCellEditing(true);
 }}
 
-* 解説 [#sef9f0f4]
+* 解説 [#explanation]
 `JTree`のノード編集に割り込みが発生した場合の動作を変更します。
 
 - `tree.setInvokesStopCellEditing(false);`
@@ -27,10 +27,10 @@ tree.setInvokesStopCellEditing(true);
 ----
 ノード編集の割り込みは、その`JTree`内の別のノードがクリックされた場合などに発生します。KBD{Tab}キーなどで`JTree`以外のコンポーネントにフォーカスが移動したり、親`Window`がフォーカスを失っても、割り込みは発生しないため、編集中の状態が維持され、再度`JTree`にフォーカスを戻せば編集を再開することができます。
 
-* 参考リンク [#x38bb578]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/7/api/javax/swing/JTree.html#setInvokesStopCellEditing(boolean) JTree#setInvokesStopCellEditing(boolean) (Java Platform SE 7)]
 - [[JTableのセルの編集をコミット>Swing/TerminateEdit]]
 
-* コメント [#i00d486a]
+* コメント [#comment]
 #comment
 #comment

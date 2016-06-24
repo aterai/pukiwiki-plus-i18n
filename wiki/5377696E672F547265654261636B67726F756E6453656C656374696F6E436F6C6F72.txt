@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-10-29T01:14:10+09:00
 description: JTreeのノード条件によって、その選択背景色を変更します。
 ---
-* 概要 [#qafe3f1f]
+* 概要 [#summary]
 `JTree`のノード条件によって、その選択背景色を変更します。
 
 #download(https://lh4.googleusercontent.com/-7JA4jpNa55U/UI1VhdHlkwI/AAAAAAAABVw/dAUHGh4q014/s800/TreeBackgroundSelectionColor.png)
 
-* サンプルコード [#e9085f3e]
+* サンプルコード [#sourcecode]
 #code(link){{
 class SelectionColorTreeCellRenderer extends DefaultTreeCellRenderer {
   @Override public Component getTreeCellRendererComponent(
@@ -52,7 +52,7 @@ class SelectionColorTreeCellRenderer extends DefaultTreeCellRenderer {
 }
 }}
 
-* 解説 [#dfd16025]
+* 解説 [#explanation]
 上記のサンプルでは、以下の条件でノードの選択背景色を変更しています。
 
 - `DefaultMutableTreeNode#getUserObject()`が`Color`の場合、その色を選択背景色に変更
@@ -64,7 +64,7 @@ class SelectionColorTreeCellRenderer extends DefaultTreeCellRenderer {
 
 `SynthLookAndFeel`で作成されている`NimbusLookAndFeel`などでは、上記のような選択背景色にならない場合があります。
 
-//* 参考リンク
-* コメント [#cf353b4a]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

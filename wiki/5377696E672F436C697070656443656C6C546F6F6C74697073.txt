@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-10-12T17:37:22+09:00
 description: JTableのセルがクリップされている場合のみJToolTipを表示します。
 ---
-* 概要 [#kb1661a0]
+* 概要 [#summary]
 `JTable`のセルがクリップされている場合のみ`JToolTip`を表示します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTJNQAyg-I/AAAAAAAAAUA/F6oQbiUShl4/s800/ClippedCellTooltips.png)
 
-* サンプルコード [#a310ddc6]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ToolTipHeaderRenderer implements TableCellRenderer {
   private final Icon icon = UIManager.getIcon("Table.ascendingSortIcon");
@@ -36,7 +36,7 @@ class ToolTipHeaderRenderer implements TableCellRenderer {
 }
 }}
 
-* 解説 [#rb49016f]
+* 解説 [#explanation]
 - ヘッダセル
 -- `TableCellRenderer`で、セルの幅と文字列の長さを比較して、`ToolTip`を設定
 -- ソートアイコンと文字列の間の`gap`が不明?
@@ -64,10 +64,10 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 参考リンク [#l13d8dfe]
+* 参考リンク [#reference]
 - [[JTableHeaderのTooltipsを列ごとに変更>Swing/HeaderTooltips]]
 - [[JTableのTooltipsを行ごとに変更>Swing/RowTooltips]]
 
-* コメント [#kb103118]
+* コメント [#comment]
 #comment
 #comment

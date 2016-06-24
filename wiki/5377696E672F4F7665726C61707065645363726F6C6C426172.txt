@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-11-30T00:46:26+09:00
 description: 半透明のJScrollBarをJTable上に重ねてレイアウトするJScrollPaneを作成します。
 ---
-* 概要 [#b5246478]
+* 概要 [#summary]
 半透明の`JScrollBar`を`JTable`上に重ねてレイアウトする`JScrollPane`を作成します。
 
 #download(https://lh3.googleusercontent.com/-IHqUJwyfm8A/Vlsa4OUr4XI/AAAAAAAAOHk/QWKZO4xmtQo/s800-Ic42/OverlappedScrollBar.png)
 
-* サンプルコード [#h3cfb069]
+* サンプルコード [#sourcecode]
 #code(link){{
 class OverlapScrollPaneLayout extends ScrollPaneLayout {
   private static final int BAR_SIZE = 12;
@@ -70,16 +70,16 @@ class OverlapScrollPaneLayout extends ScrollPaneLayout {
 }
 }}
 
-* 解説 [#d5e1184d]
+* 解説 [#explanation]
 [[JScrollBarを半透明にする>Swing/TranslucentScrollBar]]とほぼ同様の`ScrollPaneLayout`を使用していますが、`JTable`のヘッダを表示するために、`JScrollPane`のカラムヘッダのレイアウトに対応するよう追加修正しています。
 
 - 注:
 -- 横スクロールバーにも対応しているが、右下のコーナーコンポーネントは常に空き状態になる(片方のスクロールバーが非表示でもその領域まで拡張しない)
 -- スクロールバーの幅は推奨サイズなどを無視して固定
 
-* 参考リンク [#e98e707f]
+* 参考リンク [#reference]
 - [[JScrollBarを半透明にする>Swing/TranslucentScrollBar]]
 
-* コメント [#sc2c234b]
+* コメント [#comment]
 #comment
 #comment

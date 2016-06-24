@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-04-12T18:23:41+09:00
 description: JTreeのノードラベル編集が、葉ノードの場合だけ可能になるよう設定します。
 ---
-* 概要 [#ja3545ca]
+* 概要 [#summary]
 `JTree`のノードラベル編集が、葉ノードの場合だけ可能になるよう設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPB-TVk9I/AAAAAAAAAdU/Aq5YDSMvqaY/s800/LeafTreeCellEditor.png)
 
-* サンプルコード [#bc2dfe8c]
+* サンプルコード [#sourcecode]
 #code(link){{
 class LeafTreeCellEditor extends DefaultTreeCellEditor {
   protected LeafTreeCellEditor(JTree tree, DefaultTreeCellRenderer renderer) {
@@ -27,16 +27,16 @@ class LeafTreeCellEditor extends DefaultTreeCellEditor {
 }
 }}
 
-* 解説 [#n0670581]
+* 解説 [#explanation]
 上記のサンプルでは、`CellEditor#isCellEditable(...)`メソッドをオーバーライドし、葉ノードの場合だけ編集が可能にしたセルエディタを作成し、これを`JTree#setCellEditor(...)`で設定しています。
 
 #code{{
 tree.setCellEditor(new LeafTreeCellEditor(tree, (DefaultTreeCellRenderer) tree.getCellRenderer()));
 }}
 
-* 参考リンク [#ha42a5fc]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1371600 Swing - How can I persist all changes I made to these edited leaves and nodes??]
 
-* コメント [#zc7bd3a1]
+* コメント [#comment]
 #comment
 #comment

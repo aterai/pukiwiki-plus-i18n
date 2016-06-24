@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2015/12/show-jtooltip-for-icons-placed-in-cell.html
     lang: en
 ---
-* 概要 [#u3c535f5]
+* 概要 [#summary]
 `JTable`のセル中に複数個配置したコンポーネントにそれぞれ`JToolTip`が表示されるように設定します。
 
 #download(https://lh4.googleusercontent.com/-OhwzDU_Mys4/ULuQJmYCRiI/AAAAAAAABYQ/Y3Q5mVlliHs/s800/TooltipInTableCell.png)
 
-* サンプルコード [#d6f37acd]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   @Override public String getToolTipText(MouseEvent e) {
@@ -41,7 +41,7 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 解説 [#ec1ec814]
+* 解説 [#explanation]
 上記のサンプルでは、`JTable#getToolTipText(MouseEvent)`をオーバーライドして、`JTable`のセルに複数配置したコンポーネントの情報を`ToolTipText`として返すように設定しています。
 
 - `JTable#getCellRect(...)`で、カーソル下のセル描画に使用されるコンポーネントを取得
@@ -50,11 +50,11 @@ JTable table = new JTable(model) {
 - 更新したコンポーネント内から、`SwingUtilities.getDeepestComponentAt()`で、カーソル下のアイコン(`JLabel`)を取得
 - `ImageIcon#getDescription()`で取得した文字列を`ToolTipText`として返す
 
-* 参考リンク [#g3230fef]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/10854831/tool-tip-in-jpanel-in-jtable-not-working java - Tool tip in JPanel in JTable not working - Stack Overflow]
 - [[JTableのTooltipsを行ごとに変更>Swing/RowTooltips]]
 - [[JListのセル中に配置したコンポーネント毎にカーソルを変更する>Swing/CursorOfCellComponent]]
 
-* コメント [#l9b52767]
+* コメント [#comment]
 #comment
 #comment

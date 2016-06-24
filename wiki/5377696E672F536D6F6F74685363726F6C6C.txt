@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-08-13T13:01:23+09:00
 description: SmoothScrollアニメーション有りでJTextAreaの任意の行まで移動します。
 ---
-* 概要 [#qdf0c9e9]
+* 概要 [#summary]
 `SmoothScroll`アニメーション有りで`JTextArea`の任意の行まで移動します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTTSaxFSzI/AAAAAAAAAkI/KtedLqwCXBY/s800/SmoothScroll.png)
 
-* サンプルコード [#u2a76de6]
+* サンプルコード [#sourcecode]
 #code(link){{
 Document doc = textArea.getDocument();
 Element root = doc.getDefaultRootElement();
@@ -45,12 +45,12 @@ try {
 }
 }}
 
-* 解説 [#kad57b23]
+* 解説 [#explanation]
 `java.swing.Timer`でイベントを発生させ、目的位置と現在位置の差の半分だけ`ViewRect`のスクロールを繰り返すことで、行の移動アニメーションを行っています。
 
-* 参考リンク [#ua27efde]
+* 参考リンク [#reference]
 - [[JTextAreaの任意の行に移動>Swing/GotoLine]]
 
-* コメント [#o3d598ba]
+* コメント [#comment]
 #comment
 #comment

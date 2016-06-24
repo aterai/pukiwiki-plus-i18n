@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2015/08/create-custom-drag-ghost-image.html
     lang: en
 ---
-* 概要 [#mfd9baf3]
+* 概要 [#summary]
 `JList`のアイテムをドラッグ中に表示するイメージをカスタマイズして`TransferHandler`に設定します。
 
 #download(https://lh4.googleusercontent.com/-lGkFK-bJoYE/VDEztZsJyOI/AAAAAAAACOg/Hs7B-dcJAkk/s800/GhostDragImage.png)
 
-* サンプルコード [#x36176a4]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ListItemTransferHandler extends TransferHandler {
   @Override public int getSourceActions(JComponent c) {
@@ -85,7 +85,7 @@ class ListItemTransferHandler extends TransferHandler {
 //...
 }}
 
-* 解説 [#v88d2c21]
+* 解説 [#explanation]
 - `CompactDragImageMode`: `false`
 -- `JList`のサイズで`BufferedImage`を作成し、これに選択したリストアイテムのみドラッグイメージとして位置を変更せずに描画
 -- オフセットは、`JList#getMousePosition()`で取得したドラッグ開始位置を設定
@@ -94,9 +94,9 @@ class ListItemTransferHandler extends TransferHandler {
 -- `JList`のリストアイテムの固定サイズ(リストアイテム一個分)で`BufferedImage`を作成し、これに選択されたリストアイテムの最初のイメージと選択数を設定した`JLabel`を描画
 -- オフセットは、作成したドラッグイメージの底辺中央付近を設定
 
-* 参考リンク [#jeb316be]
+* 参考リンク [#reference]
 - [[JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え>Swing/DragSelectDropReordering]]
 
-* コメント [#c7552975]
+* コメント [#comment]
 #comment
 #comment

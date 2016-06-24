@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-10-09
 description: JTextAreaなどのテキストコンポーネントから一行ずつ文字列を取り出してそれを処理します。
 ---
-* 概要 [#sce4576b]
+* 概要 [#summary]
 `JTextArea`などのテキストコンポーネントから一行ずつ文字列を取り出してそれを処理します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTNWn74dWI/AAAAAAAAAao/pNdeF8CSOfM/s800/GetLineText.png)
 
-* サンプルコード [#cba0b2ee]
+* サンプルコード [#sourcecode]
 #code(link){{
 int count = 0;
 StringTokenizer st = new StringTokenizer(textArea.getText(), "\n");
@@ -21,7 +21,7 @@ while (st.hasMoreTokens()) {
 }
 }}
 
-* 解説 [#v1446cab]
+* 解説 [#explanation]
 上記のサンプルでは、`JTextArea#getText()`ですべてのテキストを取得し、`StringTokenizer`を使って行毎に分解しています。`returnDelims`フラグが`false`なので、トークンが空行になることはありません。
 
 ----
@@ -71,7 +71,7 @@ try {
 }
 }}
 
-//* 参考リンク
-* コメント [#ee4fa454]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

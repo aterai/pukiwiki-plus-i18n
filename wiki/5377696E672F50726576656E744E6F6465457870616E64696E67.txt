@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-01-27T00:45:37+09:00
 description: JTreeで特定のノードだけ展開できないように設定します。
 ---
-* 概要 [#s658b7b2]
+* 概要 [#summary]
 `JTree`で特定のノードだけ展開できないように設定します。
 
 #download(https://lh4.googleusercontent.com/-WcBsEg_mxgc/UuUbyvn84EI/AAAAAAAAB-0/iZ6t8_EGeZQ/s800/PreventNodeExpanding.png)
 
-* サンプルコード [#a2d19b1b]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DirectoryExpandVetoListener implements TreeWillExpandListener {
   @Override public void treeWillExpand(TreeExpansionEvent e)
@@ -32,14 +32,14 @@ class DirectoryExpandVetoListener implements TreeWillExpandListener {
 }
 }}
 
-* 解説 [#kffe6e96]
+* 解説 [#explanation]
 - `TreeWillExpandListener`を実装し、`treeWillExpand(...)`メソッド内で、ノード(`File`)の名前がドットで始まる場合、`ExpandVetoException`を投げて展開をキャンセル
 -- これらのノードは展開は不可だが、選択自体は可能
 - `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`内で、名前がドットで始まる場合、そのノードを`setEnabled(false)`で無効状態にして描画
 
-* 参考リンク [#uf2330a5]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/tutorial/uiswing/events/treewillexpandlistener.html How to Write a Tree-Will-Expand Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]
 
-* コメント [#jee1557e]
+* コメント [#comment]
 #comment
 #comment

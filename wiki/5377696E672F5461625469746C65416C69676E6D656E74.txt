@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-10-11T18:19:33+09:00
 description: JTabbedPaneのTabTitleをデフォルトに中央揃えから左揃えに変更します。
 ---
-* 概要 [#y839b018]
+* 概要 [#summary]
 `JTabbedPane`の`TabTitle`をデフォルトに中央揃えから左揃えに変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTU2Jp4a6I/AAAAAAAAAms/x6g2ML8eyyQ/s800/TabTitleAlignment.png)
 
-* サンプルコード [#a4171eff]
+* サンプルコード [#sourcecode]
 #code(link){{
 class MyTabbedPaneUI extends javax.swing.plaf.metal.MetalTabbedPaneUI {
   @Override protected void layoutLabel(int tabPlacement,
@@ -38,7 +38,7 @@ class MyTabbedPaneUI extends javax.swing.plaf.metal.MetalTabbedPaneUI {
 }
 }}
 
-* 解説 [#m7c4ecf6]
+* 解説 [#explanation]
 - 上
 -- デフォルト(中央揃え)
 - 中
@@ -57,12 +57,12 @@ public ButtonTabComponent(final JTabbedPane pane) {
   //...
 }}
 
-* 参考リンク [#vd528ee3]
+* 参考リンク [#reference]
 - [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]
 - [http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TabComponentsDemoProject/src/components/ButtonTabComponent.java ButtonTabComponent.java]
 - [https://community.oracle.com/thread/1556158 Swing - JTabbedPane title alignment]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4220177 Bug ID: 4220177 labels within JTabbedPane tabs should be alignable]
 
-* コメント [#scc2e8ab]
+* コメント [#comment]
 #comment
 #comment

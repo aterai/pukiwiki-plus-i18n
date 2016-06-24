@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-02-08T14:27:32+09:00
 description: JTableのCellEditorとCellRendererにJSliderを使用するように設定します。
 ---
-* 概要 [#u2d61749]
+* 概要 [#summary]
 `JTable`の`CellEditor`と`CellRenderer`に`JSlider`を使用するように設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTTK5HPd3I/AAAAAAAAAj8/qhIGBo92NNE/s800/SliderInTableCell.png)
 
-* サンプルコード [#ydc20559]
+* サンプルコード [#sourcecode]
 #code(link){{
 class SliderRednerer extends JSlider implements TableCellRenderer {
   public SliderRednerer() {
@@ -61,11 +61,11 @@ class SliderEditor extends JSlider implements TableCellEditor {
 //......
 }}
 
-* 解説 [#wf104d2c]
+* 解説 [#explanation]
 上記のサンプルでは、`1`列目のセルエディタ、レンダラーに`JSlider`を使用するように設定しています。このスライダーの値を変更すると、同じ行の`0`列目の値も変更されるように、セルエディタには`ChangeListener`を追加しています。
 
-//* 参考リンク
-* コメント [#ib89232e]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6348946 Bug ID: 6348946 JSlider's thumb moves in the wrong direction when used as a JTable cell editor.] via. [https://community.oracle.com/thread/2153323 Swing - How to insert a JComponent into a cell of JTable] -- &user(aterai); &new{2011-01-16 (日) 02:25:31};
 

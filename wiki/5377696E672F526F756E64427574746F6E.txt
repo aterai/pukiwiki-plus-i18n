@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2008/11/rounded-corner-jbutton.html
     lang: en
 ---
-* 概要 [#d17df847]
+* 概要 [#summary]
 円形やラウンド矩形などの任意の図形を適用した`JButton`を作成します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSJxI6T0I/AAAAAAAAAiU/uPR0zvWSEnQ/s800/RoundButton.png)
 
-* サンプルコード [#y810b25e]
+* サンプルコード [#sourcecode]
 #code(link){{
 class RoundedCornerButton extends JButton {
   private static final float ARC_WIDTH = 16f;
@@ -111,7 +111,7 @@ class RoundedCornerButton extends JButton {
 }
 }}
 
-* 解説 [#k9a59fc8]
+* 解説 [#explanation]
 上記のサンプルでは、ボタンの形や縁、クリック可能な領域をラウンド矩形などの`Shape`に置き換えています。
 
 - `JButton#paintComponent()`をオーバーライドして描画を変更
@@ -147,12 +147,12 @@ class RoundButton extends RoundedCornerButton {
 }
 }}
 
-* 参考リンク [#f6518f76]
+* 参考リンク [#reference]
 - [http://web.archive.org/web/20090805104428/http://java.sun.com/developer/TechTips/1999/tt0826.html CREATING ROUND SWING BUTTONS - JDC Tech Tips: August 26, 1999]
 -- [http://web.archive.org/web/20090804054527/http://java.sun.com/developer/TechTips/txtarchive/1999/Aug99_PatrickC.txt Aug99_PatrickC.txt]
 - [[ImageIconの形でJButtonを作成>Swing/RoundImageButton]]
 
-* コメント [#wae57c9c]
+* コメント [#comment]
 #comment
 - アイコンを追加したスクリーンショットに更新。 -- &user(aterai); &new{2008-07-10 (木) 17:25:34};
 

@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2015/06/an-image-inside-jscrollpane-zooming-by.html
     lang: en
 ---
-* 概要 [#yfd80c64]
+* 概要 [#summary]
 `JScrollPane`内に配置した`JPanel`を、マウスホイールを使った拡大縮小と、スクロールバーを使った表示領域の移動が可能になるように設定します。
 
 #download(https://lh3.googleusercontent.com/-Um9j8O0t3Kg/VYdMPIUOfwI/AAAAAAAAN7A/LAJ5KRiDdp0/s800/ZoomAndPanPanel.png)
 
-* サンプルコード [#cf006c68]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ZoomAndPanePanel extends JPanel {
   private final AffineTransform zoomTransform = new AffineTransform();
@@ -101,7 +101,7 @@ class ZoomAndPanePanel extends JPanel {
 }
 }}
 
-* 解説 [#w2dd6ea8]
+* 解説 [#explanation]
 上記のサンプルでは、`JPanel#getPreferredSize()`を拡大後の画像サイズを返すようにオーバーライドすることで、画像が`JViewport`より大きくなる場合は、スクロールバーが表示されるように設定しています。
 
 ----
@@ -127,13 +127,13 @@ g2.drawImage(img, 0, 0, this);
 g2.drawImage(img, zoomTransform, this);
 }}
 
-* 参考リンク [#pd1ded23]
+* 参考リンク [#reference]
 - [[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]
 -- マウスホイールによるズーム用のリスナを引用
 - [[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]
 -- マウスドラッグによるスクロール用のリスナを引用
 - [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
 
-* コメント [#xd8ff1ff]
+* コメント [#comment]
 #comment
 #comment

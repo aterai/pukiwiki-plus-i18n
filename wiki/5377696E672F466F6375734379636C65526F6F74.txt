@@ -5,19 +5,19 @@ author: aterai
 pubdate: 2010-07-19T23:07:24+09:00
 description: JPanelがフォーカストラバーサルサイクルのルートになるように設定します。
 ---
-* 概要 [#id58f427]
+* 概要 [#summary]
 `JPanel`がフォーカストラバーサルサイクルのルートになるように設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNCX36INI/AAAAAAAAAaI/xunzBpsDJLk/s800/FocusCycleRoot.png)
 
-* サンプルコード [#t9143965]
+* サンプルコード [#sourcecode]
 #code(link){{
 JPanel p1 = new JPanel();
 p1.setFocusCycleRoot(true);
 p1.add(new JTextField(16));
 }}
 
-* 解説 [#c38342df]
+* 解説 [#explanation]
 上記のサンプルでは、各`JPanel`がそれぞれフォーカストラバーサルサイクルのルートになるように設定しています。
 
 - 左の`JPanel`
@@ -27,9 +27,9 @@ p1.add(new JTextField(16));
 -- `setFocusTraversalPolicyProvider(true);`
 -- 順方向キーボードトラバーサルとリバースキーボードトラバーサルを入れ替え
 
-* 参考リンク [#p3d834cf]
+* 参考リンク [#reference]
 - [[Focusの移動>Swing/FocusTraversal]]
 
-* コメント [#d3d42358]
+* コメント [#comment]
 #comment
 #comment

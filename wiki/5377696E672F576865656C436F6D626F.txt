@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-11-15T02:34:50+09:00
 description: JComboBoxにフォーカスがある場合、その値をMouseWheelの上下で変更します。
 ---
-* 概要 [#i7ef2fc7]
+* 概要 [#summary]
 `JComboBox`にフォーカスがある場合、その値を`MouseWheel`の上下で変更します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWm95sa5I/AAAAAAAAApg/1tiQsmg5QKw/s800/WheelCombo.png)
 
-* サンプルコード [#ef581a0a]
+* サンプルコード [#sourcecode]
 #code(link){{
 JComboBox<String> combo = makeComboBox();
 combo.addMouseWheelListener(new MouseWheelListener() {
@@ -27,10 +27,10 @@ combo.addMouseWheelListener(new MouseWheelListener() {
 });
 }}
 
-* 解説 [#r2f99b4c]
+* 解説 [#explanation]
 上記のサンプルでは、一番上のコンボボックスに`MouseWheelListener`が設定され、マウスホイールの上下回転に反応して、表示される内容が順次変更されるようになっています。
 
-//* 参考リンク
-* コメント [#ebca23c2]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

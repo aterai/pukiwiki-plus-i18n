@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-05-05T01:10:29+09:00
 description: JListのセル内に文字列が収まらない場合のみ、その上にToolTipを重ねて表示します。
 ---
-* 概要 [#c325d61c]
+* 概要 [#summary]
 `JList`のセル内に文字列が収まらない場合のみ、その上に`ToolTip`を重ねて表示します。
 
 #download(https://lh3.googleusercontent.com/-KLOWyeZG-zU/U2Zif591XkI/AAAAAAAACE0/JDZZwAWkY50/s800/ToolTipOnCellBounds.png)
 
-* サンプルコード [#q860bd54]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TooltipList<E> extends JList<E> {
   public TooltipList(ListModel<E> m) {
@@ -38,7 +38,7 @@ class TooltipList<E> extends JList<E> {
 }
 }}
 
-* 解説 [#gd16eabf]
+* 解説 [#explanation]
 - 左: `CellBounds`
 -- `JList#getToolTipLocation()`をオーバーライドして、表示する`JToolTip`の原点を`JList#getCellBounds(int, int)`で取得したセル領域の左上に変更
 - 中: `ListCellRenderer`
@@ -69,9 +69,9 @@ class TooltipListCellRenderer extends DefaultListCellRenderer {
 }
 }}
 
-* 参考リンク [#ze6fa593]
+* 参考リンク [#reference]
 - [[JToolTipの表示位置>Swing/ToolTipLocation]]
 
-* コメント [#z5ec3274]
+* コメント [#comment]
 #comment
 #comment

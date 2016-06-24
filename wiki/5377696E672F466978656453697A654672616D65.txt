@@ -5,22 +5,22 @@ author: aterai
 pubdate: 2004-05-17
 description: JFrameやJDialogのサイズを固定し、変更不可にします。
 ---
-* 概要 [#z96189b1]
+* 概要 [#summary]
 `JFrame`や`JDialog`のサイズを固定し、変更不可にします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTM4ZlDyXI/AAAAAAAAAZ4/xXHwfOJP7p0/s800/FixedSizeFrame.png)
 
-* サンプルコード [#qeee79ae]
+* サンプルコード [#sourcecode]
 #code(link){{
 frame.setResizable(false);
 }}
 
-* 解説 [#eff61b3d]
+* 解説 [#explanation]
 `JFrame#setResizable`メソッドで、フレームのサイズをマウスなどで変更できないように設定しています。タイトルバーの最大化ボタンなども選択できなくなります。
 
 この設定を切り替えると、`LookAndFeel`によっては装飾が変化して`JFrame`自体のサイズが変化する場合があります。
 
-* コメント [#zeef23a7]
+* コメント [#comment]
 #comment
 - アイコン化ボタンを無効化する方法はないようですね。`JInternalFrame`ならクローズも最大化もアイコン化も全部いじれるのに。 -- &user(さく); &new{2004-08-12 (木) 15:17:30};
 - なんだか無さそうですね。`JDialog`を使うか、以下のように誤魔化すか…、`LookAndFeel`を自作すれば何とかなるのかな？ -- &user(aterai); &new{2004-08-12 (木) 17:01:45};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-07-05T10:15:47+09:00
 description: Htmlタグを使ってSwingコンポーネントで使用する文字列を修飾します。
 ---
-* 概要 [#y5ef8764]
+* 概要 [#summary]
 `Html`タグを使って`Swing`コンポーネントで使用する文字列を修飾します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOA5i9OdI/AAAAAAAAAbs/1c_xZ6W4mdo/s800/Html.png)
 
-* サンプルコード [#bbee9a55]
+* サンプルコード [#sourcecode]
 #code(link){{
 public class TestModel extends DefaultTableModel {
   private static final String[] columnNames = {
@@ -21,17 +21,17 @@ public class TestModel extends DefaultTableModel {
   //......
 }}
 
-* 解説 [#nd3ae2dd]
+* 解説 [#explanation]
 上記のサンプルでは、`JTable`のヘッダと`JTabbedPane`のタブに`html`タグを使用しています。`<p>`タグなどで簡単に改行するとこができます。
 
 整形式になっていなくても、ある程度なら大丈夫なようです。属性も、エスケープした`"`や、`'`で囲んでいなくても認識されます。
 
-* 参考リンク [#s4bf4aa9]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/label.html How to Use Labels]
 - [http://web.archive.org/web/20090608140218/http://java.sun.com/developer/JDCTechTips/2003/tt1210.html More About Handling Exceptions and Using HTML in Swing Components Tech Tips]
 - [http://docs.oracle.com/javase/jp/7/api/javax/swing/text/html/HTML.Tag.html HTML.Tag (Java Platform SE 7)]
 
-* コメント [#m546e28c]
+* コメント [#comment]
 #comment
 - メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6670274 Bug ID: 6670274 Incorrect tab titles for JTabbedPane if using HTML (BasicTabbedPanelUI problem)] -- &user(aterai); &new{2010-01-04 (月) 22:49:01};
 -- `JDK 1.6.0_18`, `JDK 1.7.0`で修正済: [http://hg.openjdk.java.net/jdk7/swing/jdk/rev/82524b068f77 6670274: Incorrect tab titles for JTabbedPane if using HTML (BasicTabbedPanelUI problem)] -- &user(aterai); &new{2010-05-30 (日) 00:26:16};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2003-09-08
 description: ファイルチューザーなどで入力されたファイル名が、デバイスファイル名(con、prn、nul、auxなど)でないかチェックします。
 ---
-* 概要 [#g9d2457b]
+* 概要 [#summary]
 ファイルチューザーなどで入力されたファイル名が、デバイスファイル名(`con`、`prn`、`nul`、`aux`など)でないかチェックします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKz2LmiiI/AAAAAAAAAWk/HOTsKRHPAVo/s800/DeviceName.png)
 
-* サンプルコード [#i6a151e5]
+* サンプルコード [#sourcecode]
 #code(link){{
 private boolean isCanonicalPath(File file) {
   if (file == null) return false;
@@ -25,7 +25,7 @@ private boolean isCanonicalPath(File file) {
 }
 }}
 
-* 解説 [#s7367925]
+* 解説 [#explanation]
 `Windows`環境で、`Device Name`を含むような''正しくないファイルパス''(`c:\con.txt`など)を読み書きしようとすると、`Exception`が発生します。正しいファイルパスかどうかは、`File#getCanonicalPath()`メソッドが`null`を返すかどうかでチェックすることができます。
 
 - 追記: `1.5.0_08`で以下のように修正された
@@ -33,9 +33,9 @@ private boolean isCanonicalPath(File file) {
 - [http://docs.oracle.com/javase/jp/6/technotes/guides/io/enhancements.html#6 Java SE 6 の拡張機能 - Java I/O の拡張機能]
 -- 引用:「`CON`、`NUL`、`AUX`、`LPT`などの予約されたデバイス名には必ず`false`を返すように、`File.isFile()`の`Windows`実装が変更されました。 以前の戻り値は`true`で、それが`Unix`で使用するデバイスの動作と整合していないことから、対象ユーザーはこれをバグとみなしていました。」
 
-* 参考リンク [#sa0510ba]
+* 参考リンク [#reference]
 - [http://www.ipa.go.jp/security/awareness/vendor/programming/b08_01_main.html Windowsパス名の落とし穴]
 
-* コメント [#z8d1a04a]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-07-11T15:16:42+09:00
 description: JComboBoxのドロップダウンリストに表示するItemをTree状に配置します。
 ---
-* 概要 [#mfee4e22]
+* 概要 [#summary]
 `JComboBox`のドロップダウンリストに表示する`Item`を`Tree`状に配置します。
 
 #download(https://lh6.googleusercontent.com/-5GlQEjeLoH8/ThqUIL9b4UI/AAAAAAAAA_E/9h5dxYzSSm8/s800/TreeComboBox.png)
 
-* サンプルコード [#r862e8e5]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TreeComboBox extends JComboBox {
   public TreeComboBox() {
@@ -93,19 +93,19 @@ class TreeComboBox extends JComboBox {
 }
 }}
 
-* 解説 [#k6b519eb]
+* 解説 [#explanation]
 上記のサンプルでは、`TreeModel`から取得した`TreeNode`を`JComboBox`の`Item`として、ドロップダウンリストに表示しています。
 
 - `TreeNode#isLeaf()`の場合だけ、選択可能
 -- [[JComboBoxのアイテムを選択不可にする>Swing/DisableItemComboBox]]
 - 子要素のインデントは`BorderFactory.createEmptyBorder(0,indent,0,0)`
 
-* 参考リンク [#hfd4fbb7]
+* 参考リンク [#reference]
 - [http://www.jroller.com/santhosh/entry/tree_inside_jcombobox Tree inside JComboBox - Santhosh Kumar's Weblog]
 -- `TreeCellRenderer`を使用し、ノードアイコンなども含めて`JTree`をドロップダウンリストに表示するサンプルがある
 - [[JComboBoxのアイテムを選択不可にする>Swing/DisableItemComboBox]]
 
-* コメント [#k2ac0bc1]
+* コメント [#comment]
 #comment
 - `src.zip`などが正しいディレクトリに配置されてなかったのを修正。 -- &user(aterai); &new{2011-07-13 (水) 19:02:23};
 

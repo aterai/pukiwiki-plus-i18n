@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2016-01-25T01:26:15+09:00
 description: JTableの各カラムヘッダにアイコンとタイトル文字列を表示するよう設定します。
 ---
-* 概要 [#o28842ce]
+* 概要 [#summary]
 `JTable`の各カラムヘッダにアイコンとタイトル文字列を表示するよう設定します。
 
 #download(https://lh3.googleusercontent.com/-yQYpkrDnAcQ/VqT3Oq7tovI/AAAAAAAAOL8/YbbgnXgZ9B4/s800-Ic42/TableColumnHeaderIcon.png)
 
-* サンプルコード [#k64977b3]
+* サンプルコード [#sourcecode]
 #code(link){{
 URL[] icons = {
     getIconURL("wi0062-16.png"),
@@ -29,7 +29,7 @@ for (int i = 0; i < m.getColumnCount(); i++) {
 table.setAutoCreateRowSorter(true);
 }}
 
-* 解説 [#l2c90275]
+* 解説 [#explanation]
 上記のサンプルでは、カラムヘッダにアイコンを表示するために、タイトル文字列として`<img>`タグでアイコンを表示する`html`文字列を設定しています。
 
 - メモ
@@ -53,9 +53,9 @@ class IconColumnHeaderRenderer implements TableCellRenderer {
 }
 }}
 
-* 参考リンク [#r203a13f]
+* 参考リンク [#reference]
 - [http://www.icongalore.com/ XP Style Icons - Windows Application Icon, Software XP Icons]
 
-* コメント [#ib057248]
+* コメント [#comment]
 #comment
 #comment

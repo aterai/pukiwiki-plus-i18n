@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-03-21T16:05:37+09:00
 description: JTreeの葉ノードを編集可能なJCheckBoxにします。
 ---
-* 概要 [#kbc9469a]
+* 概要 [#summary]
 `JTree`の葉ノードを編集可能な`JCheckBox`にします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TYb2-BFsTHI/AAAAAAAAA4U/Fs8-t9x9XSw/s800/CheckBoxNodeTree.png)
 
-* サンプルコード [#le0a2547]
+* サンプルコード [#sourcecode]
 #code(link){{
 class CheckBoxNode {
   public final String text;
@@ -110,7 +110,7 @@ class CheckBoxNodeEditor extends JCheckBox implements TreeCellEditor {
 //......
 }}
 
-* 解説 [#kfab6821]
+* 解説 [#explanation]
 `JCheckBox`を継承する`TreeCellRenderer`、`TreeCellEditor`を作成して、`setEditable(true)`とした`JTree`に設定し、葉ノードをチェックできるようにしています。ノードがチェックされているかどうかといった状態の保存は、`DefaultMutableTreeNode#setUserObject(Object)`でタイトルと選択状態をもつオブジェクトを設定することで行っています。
 
 ----
@@ -123,11 +123,11 @@ class CheckBoxNodeEditor extends JCheckBox implements TreeCellEditor {
 
 - [[JTreeの葉ノードだけ編集可能にする>Swing/LeafTreeCellEditor]]
 
-* 参考リンク [#o07a01b5]
+* 参考リンク [#reference]
 //- [http://www2.gol.com/users/tame/swing/examples/JTreeExamples2.html CheckNode - JTree Examples 2]
 - [[JTreeの葉ノードだけ編集可能にする>Swing/LeafTreeCellEditor]]
 - [[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]]
 
-* コメント [#f566e35a]
+* コメント [#comment]
 #comment
 #comment

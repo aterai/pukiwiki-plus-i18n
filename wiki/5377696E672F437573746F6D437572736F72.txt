@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-01-24
 description: BufferedImageからカーソルオブジェクトを作成し、これをコンポーネントに設定します。
 ---
-* 概要 [#l60ded0f]
+* 概要 [#summary]
 `BufferedImage`からカーソルオブジェクトを作成し、これをコンポーネントに設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTKTOEY7FI/AAAAAAAAAVw/OeBJRlIWHsQ/s800/CustomCursor.png)
 
-* サンプルコード [#x837b7d6]
+* サンプルコード [#sourcecode]
 #code(link){{
 BufferedImage bi = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
 Graphics2D g2 = bi.createGraphics();
@@ -20,10 +20,10 @@ g2.dispose();
 label.setCursor(getToolkit().createCustomCursor(bi,　new Point(16,　16),　"oval"));
 }}
 
-* 解説 [#k25e265f]
+* 解説 [#explanation]
 `Toolkit#createCustomCursor`メソッドでカーソルオブジェクトを作成します。上記のサンプルコードでは、`32 * 32`のバッファの中心に、直径`16`の円をかき、この円の中心がホットスポットとなるようなカーソルを作っています。
 
-//* 参考リンク
-* コメント [#qecf5901]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

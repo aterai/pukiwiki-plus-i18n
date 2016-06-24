@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-03-28T02:50:10+09:00
 description: JTableのTooltipsが、カーソルのある行の内容などを表示するようにします。
 ---
-* 概要 [#gb8e2d40]
+* 概要 [#summary]
 `JTable`の`Tooltips`が、カーソルのある行の内容などを表示するようにします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSbfFU7HI/AAAAAAAAAiw/EPWumbZCrr0/s800/RowTooltips.png)
 
-* サンプルコード [#t48b17d4]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   @Override public String getToolTipText(MouseEvent e) {
@@ -22,7 +22,7 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 解説 [#t35291c0]
+* 解説 [#explanation]
 `JTable`の`getToolTipText`メソッドをオーバーライドして、カーソルがある行の情報を表示しています。
 
 - `JTable#convertRowIndexToModel`メソッドを使って`viewRowIndex`を`modelRowIndex`に変更し、モデルから行情報を取得
@@ -63,12 +63,12 @@ table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 });
 }}
 
-* 参考リンク [#cc50cbc5]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/table.html#celltooltip How to Use Tables (The Java™ Tutorials > Creating a GUI with JFC/Swing > Using Swing Components)]
 - [[JTableHeaderのTooltipsを列ごとに変更>Swing/HeaderTooltips]]
 - [[JTableのセルがクリップされている場合のみJToolTipを表示>Swing/ClippedCellTooltips]]
 
-* コメント [#y73c58db]
+* コメント [#comment]
 #comment
 - 名前もコメントも空の場合は、空のツールチップが表示されないように、`null`を返すようにした方がいいかも。 -- &user(aterai); &new{2007-04-04 (水) 19:26:19};
 

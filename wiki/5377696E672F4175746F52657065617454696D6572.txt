@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-06-08T00:00:32+09:00
 description: JButtonがマウスで押されている間は指定したアクションを繰り返し実行するTimerを設定します。
 ---
-* 概要 [#b3444985]
+* 概要 [#summary]
 `JButton`がマウスで押されている間は指定したアクションを繰り返し実行する`Timer`を設定します。
 
 #download(https://lh3.googleusercontent.com/-zp2-TOEE4JE/VXRXk25rFUI/AAAAAAAAN6I/_Kn4GsC9a1g/s800/AutoRepeatTimer.png)
 
-* サンプルコード [#y20eb7d2]
+* サンプルコード [#sourcecode]
 #code(link){{
 class AutoRepeatHandler extends MouseAdapter implements ActionListener {
   private final Timer autoRepeatTimer;
@@ -58,12 +58,12 @@ class AutoRepeatHandler extends MouseAdapter implements ActionListener {
 }
 }}
 
-* 解説 [#i55adeba]
+* 解説 [#explanation]
 上記のサンプルでは、`JButton`にクリックで指定した`JLabel`の数値を増減するための`ActionListener`と、自動リピートを行う`Timer`を起動するための`MouseListener`を設定しています。
 
 - `JSpinner`で使用されている`javax.swing.plaf.basic.BasicSpinnerUI`内の`ArrowButtonHandler`と`Timer`のリピート間隔(`60ms`)や初回起動までの時間(`300ms`)は同じ値を設定
 
-//* 参考リンク
-* コメント [#f83762cb]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

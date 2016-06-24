@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-01-16T15:56:38+09:00
 description: JTextAreaにキャレット上の文字を上書きする上書きモードを追加します。
 ---
-* 概要 [#bce20037]
+* 概要 [#summary]
 `JTextArea`にキャレット上の文字を上書きする上書きモードを追加します。[https://community.oracle.com/forums/thread.jspa?threadID=1383467 Swing - JTextPane edit mode (insert or overwrite)???]のソースコードを変更して全角文字対応にしています。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQtaGO6gI/AAAAAAAAAgA/XPqHe-c_DUo/s800/OverTypeMode.png)
 
-* サンプルコード [#hf545cfe]
+* サンプルコード [#sourcecode]
 #code(link){{
 // Paint a horizontal line the width of a column and 1 pixel high
 class OvertypeCaret extends DefaultCaret {
@@ -59,15 +59,15 @@ class OvertypeCaret extends DefaultCaret {
 }
 }}
 
-* 解説 [#o73b8338]
+* 解説 [#explanation]
 上記のサンプルでは、`DefaultCaret#paint(...)`などをオーバーライドした上書きモード用の`Caret`を作成し、KBD{Insert}キーでこの`Caret`を表示するモードに切り替えることができます。
 
 上書きモード自体の動作は、`JTextArea#replaceSelection`メソッドをオーバーライドすることで実行しています。キー入力があった場合、次の文字までを選択して置き換える処理をこのメソッドに追加されています。
 
-* 参考リンク [#c7f33248]
+* 参考リンク [#reference]
 - [https://community.oracle.com/forums/thread.jspa?threadID=1383467 Swing - JTextPane edit mode (insert or overwrite)???]
 
-* コメント [#n3e0ddb6]
+* コメント [#comment]
 #comment
 - 改行の処理がまだいい加減です。 -- &user(aterai); &new{2006-01-16 (月) 15:56:38};
 - テキストを選択状態にしてKBD{Insert}キーを押すと、反転されたままになるようなので修正。 -- &user(aterai); &new{2006-01-16 (月) 18:45:02};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-11-13
 description: GlyphVectorを生成して、これを電光掲示板のようにスクロールさせます。
 ---
-* 概要 [#c40292de]
+* 概要 [#summary]
 `GlyphVector`を生成して、これを電光掲示板のようにスクロールさせます。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTSlbxO22I/AAAAAAAAAjA/SJLXTaAYArY/s800/ScrollingMessage.png)
 
-* サンプルコード [#o7b152c4]
+* サンプルコード [#sourcecode]
 #code(link){{
 class MarqueePanel extends JComponent implements ActionListener {
   public final javax.swing.Timer animator;
@@ -42,7 +42,7 @@ class MarqueePanel extends JComponent implements ActionListener {
 }
 }}
 
-* 解説 [#qe412244]
+* 解説 [#explanation]
 上記のサンプルでは、`GlyphVector`や`LineMetrics`から、テキストの`VisualBounds`や`Ascent`を取得して、文字列を描画する位置などを計算しています。
 
 以下のように`TextLayout`を使用する方法もあります。
@@ -53,7 +53,7 @@ Rectangle2D b = tl.getBounds();
 yy = tl.getAscent() / 2f + (float) b.getY();
 }}
 
-//* 参考リンク
-* コメント [#l55e2ad9]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

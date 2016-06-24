@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-07-30T15:46:47+09:00
 description: JDK 6で新しく導入されたGroupLayoutとGridBagLayoutを比較しています。
 ---
-* 概要 [#j81288d1]
+* 概要 [#summary]
 `JDK 6`で新しく導入された`GroupLayout`と`GridBagLayout`を比較しています。`GroupLayout`のサンプルは、`API`ドキュメントの例をそのまま引用しています。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTNn9AdVUI/AAAAAAAAAbE/yOFdtRVr6P4/s800/GroupLayout.png)
 
-* サンプルコード [#aa18780d]
+* サンプルコード [#sourcecode]
 #code(link){{
 //GroupLayout
 JPanel p1 = new JPanel();
@@ -58,17 +58,17 @@ c.gridy   = 0; p2.add(tf3, c);
 c.gridy   = 1; p2.add(tf4, c);
 }}
 
-* 解説 [#f747ae82]
+* 解説 [#explanation]
 `GroupLayout`を手で書く場合は、少ないかもしれませんが、それでも`GridBagLayout`と同程度の記述で同じようなレイアウトも作成できるようです。また手書きでも、`GroupLayout`の場合、コンテナとコンポーネントの間に、ギャップを自動的に作成してくれる`GroupLayout#setAutoCreateContainerGaps`などが便利です。
 
 上記のサンプルでは、`GroupLayout`、`GridBagLayout`でレイアウトしたパネルを、`GridLayout`(`BorderLayout.CENTER`と同じで、推奨サイズが無視される)で上下に並べているため、フレームを拡大すると、`GroupLayout`は上揃え、`GridBagLayout`は中央揃えになっています。
 
-* 参考リンク [#l70114e0]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/GroupLayout.html GroupLayout (Java Platform SE 6)]
 - [[GridBagLayoutの使用>Swing/GridBagLayout]]
 - [http://d.hatena.ne.jp/jawagenjin/20080127/1201444435 GroupLayoutの考え方２ - ばかの一つ覚え。]
 -- `GroupLayout`のイメージが、図で分かりやすく解説されている
 
-* コメント [#r1874ae6]
+* コメント [#comment]
 #comment
 #comment

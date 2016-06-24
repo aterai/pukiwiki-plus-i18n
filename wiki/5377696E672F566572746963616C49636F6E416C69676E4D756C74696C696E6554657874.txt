@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-03-03T00:16:40+09:00
 description: JCheckBoxのテキストが複数行の場合、チェックアイコンが一行目中央に配置されるよう設定します。
 ---
-* 概要 [#u2318589]
+* 概要 [#summary]
 `JCheckBox`のテキストが複数行の場合、チェックアイコンが一行目中央に配置されるよう設定します。
 
 #download(https://lh4.googleusercontent.com/-xEdb1NQpk3A/UxNGwOHM8dI/AAAAAAAACBE/GDPtPjFUuJs/s800/VerticalIconAlignMultilineText.png)
 
-* サンプルコード [#qa9993e6]
+* サンプルコード [#sourcecode]
 #code(link){{
 class WindowsVerticalAlignmentCheckBoxUI extends WindowsCheckBoxUI {
   @Override public synchronized void paint(Graphics g, JComponent c) {
@@ -43,7 +43,7 @@ class WindowsVerticalAlignmentCheckBoxUI extends WindowsCheckBoxUI {
 }
 }}
 
-* 解説 [#k8262d79]
+* 解説 [#explanation]
 - 左: `SwingConstants.TOP`
 -- `JCheckBox#setVerticalTextPosition(SwingConstants.TOP);`と設定して、チェックアイコンとテキストの上辺が揃うように設定
 -- フォントサイズなどが大きくなると、チェックアイコンが上に飛び出しているように見えてしまう
@@ -51,9 +51,9 @@ class WindowsVerticalAlignmentCheckBoxUI extends WindowsCheckBoxUI {
 -- `WindowsCheckBoxUI#paint(...)`などをオーバーライドし、一行目の中央にチェックアイコンの中心が揃うように設定
 -- `<html>aa<font size="+5">bb</font>cc...</html>`のような一部の文字サイズを大きくしたテキストを設定しても行の中央に揃えることが可能
 
-* 参考リンク [#e2845105]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/22121439/jcheckbox-vertical-alignment-for-multi-line-text java - JCheckBox: Vertical alignment for multi-line text - Stack Overflow]
 
-* コメント [#f69cb930]
+* コメント [#comment]
 #comment
 #comment

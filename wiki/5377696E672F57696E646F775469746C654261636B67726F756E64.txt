@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-10-20T00:23:21+09:00
 description: JFrameがデフォルトのウィンドウ装飾を使用する場合、タイトルバーの文字色、背景色などを変更します。
 ---
-* 概要 [#y9898e67]
+* 概要 [#summary]
 `JFrame`がデフォルトのウィンドウ装飾を使用する場合、タイトルバーの文字色、背景色などを変更します。
 
 #download(https://lh5.googleusercontent.com/-kMDDoLGWoSA/VEPUosVXWPI/AAAAAAAACQw/94kmPEN2CT8/s800/WindowTitleBackground.png)
 
-* サンプルコード [#s82d93ab]
+* サンプルコード [#sourcecode]
 #code(link){{
 Object[][] data = {
   {"activeCaption",         UIManager.getColor("activeCaption")},
@@ -69,19 +69,19 @@ model.addTableModelListener(new TableModelListener() {
 });
 }}
 
-* 解説 [#c020b7f3]
+* 解説 [#explanation]
 上記のサンプルでは、`JFrame.setDefaultLookAndFeelDecorated(true);`で`JFrame`がデフォルトのウィンドウ装飾を使用するよう設定し、`UIManager.setColor(...)`を使用して、タイトルバーの文字色、背景色を変更するテストを実行することが可能です。
 
 - `activeCaption`: タイトルバーの背景色
 - `activeCaptionBorder`: タイトルバーの`Border`の色
 - `activeCaptionText`: タイトルバーの文字色
 
-* 参考リンク [#z2201ae3]
+* 参考リンク [#reference]
 - [[SystemColorの使用>Swing/SystemColor]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/SystemColor.html SystemColor (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/metal/MetalLookAndFeel.html#initSystemColorDefaults-javax.swing.UIDefaults- MetalLookAndFeel#initSystemColorDefaults (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/metal/MetalTheme.html MetalTheme (Java Platform SE 8)]
 
-* コメント [#jcb9ce2d]
+* コメント [#comment]
 #comment
 #comment

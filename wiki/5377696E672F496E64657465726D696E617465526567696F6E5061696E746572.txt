@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-06-30T15:57:20+09:00
 description: JProgressBarをNimbusLookAndFeelで使用している場合、その不確定状態アニメーションを変更します。
 ---
-* 概要 [#m75936ad]
+* 概要 [#summary]
 `JProgressBar`を`NimbusLookAndFeel`で使用している場合、その不確定状態アニメーションを変更します。
 
 #download(https://lh5.googleusercontent.com/-L28C52EISs4/U7AofjsiWqI/AAAAAAAACIo/OHDDAqKKk6E/s800/IndeterminateRegionPainter.png)
 
-* サンプルコード [#z3c5a365]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIDefaults d = new UIDefaults();
 d.put("ProgressBar[Enabled+Indeterminate].foregroundPainter", new AbstractRegionPainter() {
@@ -38,12 +38,12 @@ progressBar1 = new JProgressBar(model);
 progressBar1.putClientProperty("Nimbus.Overrides", d);
 }}
 
-* 解説 [#o2b0fae5]
+* 解説 [#explanation]
 上記のサンプルでは、`NimbusLookAndFeel`で`JProgressBar`の不確定状態を表現するアニメーションを変更するために、セルの描画を行う`AbstractRegionPainter#doPaint(...)`をオーバーライドした`Painter`を作成し、これを`UIDefaults`に設定しています。
 
-* 参考リンク [#w7e2a7d9]
+* 参考リンク [#reference]
 - [[JProgressBarの不確定状態でのアニメーションパターンを変更する>Swing/StripedProgressBar]]
 
-* コメント [#d84bb52b]
+* コメント [#comment]
 #comment
 #comment

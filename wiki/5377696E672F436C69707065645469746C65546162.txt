@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-08-08
 description: JTabbedPaneのタブを等幅にし、長いタイトルはクリップして表示します。
 ---
-* 概要 [#r616bd2a]
+* 概要 [#summary]
 `JTabbedPane`のタブを等幅にし、長いタイトルはクリップして表示します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTJXdZi5MI/AAAAAAAAAUQ/5nvfRoEEDEM/s800/ClippedTitleTab.png)
 
-* サンプルコード [#z01f21c5]
+* サンプルコード [#sourcecode]
 #code(link){{
 final Insets tabInsets = UIManager.getInsets("TabbedPane.tabInsets");
 tab1.setUI(new BasicTabbedPaneUI() {
@@ -50,7 +50,7 @@ tab1.setUI(new BasicTabbedPaneUI() {
 });
 }}
 
-* 解説 [#v0f32f18]
+* 解説 [#explanation]
 上記のサンプルでは、`BasicTabbedPaneUI#calculateTabWidth`メソッドをオーバーライドして、`JTabbedPane`のタブ幅が、すべて等しくなるように設定しています。
 
 - タイトル文字列のほうが、このタブ幅より長い場合は、`SwingUtilities.layoutCompoundLabel`メソッドで文字列をクリップして表示
@@ -62,11 +62,11 @@ tab1.setUI(new BasicTabbedPaneUI() {
 ----
 `JDK 1.6.0`なら、[[JTabbedPaneのタイトルをクリップ>Swing/ClippedTabLabel]]のように、`JTabbedPane#setTabComponentAt`メソッドを使って、`JLabel`のクリップ機能をそのまま利用する方法もあります。
 
-* 参考リンク [#ude612bf]
+* 参考リンク [#reference]
 - [[JTabbedPaneのタイトルをクリップ>Swing/ClippedTabLabel]]
 - [[JTabbedPaneのTabTitleを左揃えに変更>Swing/TabTitleAlignment]]
 
-* コメント [#y18543e1]
+* コメント [#comment]
 #comment
 - `tabAreaInsets`を考慮するように修正しました。 -- &user(aterai); &new{2008-02-26 (火) 22:18:27};
 

@@ -5,27 +5,27 @@ author: aterai
 pubdate: 2003-10-20
 description: Swingコンポーネントの色をSystemColorクラスから取得します。
 ---
-* 概要 [#u69460d3]
+* 概要 [#summary]
 `Swing`コンポーネントの色を`SystemColor`クラスから取得します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUESCOFBI/AAAAAAAAAlc/eXW_0wilSew/s800/SystemColor.png)
 
-* サンプルコード [#d56e9e8d]
+* サンプルコード [#sourcecode]
 #code(link){{
 Color color = SystemColor.textHighlightText;
 }}
 
-* 解説 [#l578b2c0]
+* 解説 [#explanation]
 各プラットフォームのデスクトップデザインに対応したシステムカラーは、`SystemColor`クラスの`static`フィールドにまとめて定義されています。例えば、`Windows`プラットフォームでデスクトップのカスタマイズでテーマなどを変更すると、この`SystemColor`も動的にその変更に追従します。
 
 - メモ
 -- `SystemColor`は`LookAndFeel`の変更では変化しない
 -- `GTKLookAndFeel`がシステムデフォルトになる環境では`SystemColor`を取得することが出来ない
 
-* 参考リンク [#rcd6ac16]
+* 参考リンク [#reference]
 - [http://www.asahi-net.or.jp/~dp8t-asm/java/tips/SystemColor.html システムカラー]
 
-* コメント [#s998c29d]
+* コメント [#comment]
 #comment
 //- `GTK`の環境でその`SystemColor`を取得することは出来ないようです。`UIManager`を使った方がいいかもしれません。 -- &user(aterai); &new{2007-05-07 (月) 17:04:59};
 

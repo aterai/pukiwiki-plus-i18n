@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2012/02/jcheckbox-node-jtree.html
     lang: en
 ---
-* 概要 [#v2eb0f91]
+* 概要 [#summary]
 `JTree`のすべてのノードに編集可能な`JCheckBox`を追加します。
 
 #download(https://lh4.googleusercontent.com/-DK6aW3VNikg/TygxL3j8UoI/AAAAAAAABIw/6_9FyPe4v7U/s800/CheckBoxNodeEditor.png)
 
-* サンプルコード [#pdf0395c]
+* サンプルコード [#sourcecode]
 #code(link){{
 class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
   private DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
@@ -96,7 +96,7 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
 //...
 }}
 
-* 解説 [#a6fcfbcf]
+* 解説 [#explanation]
 上記のサンプルでは、`JCheckBox`を継承する`TreeCellEditor`、`TreeCellRenderer`を作成し、`TreeCellEditor#getTreeCellEditorComponent(...)`などは、この`JCheckBox`、`JLabel`(文字列、アイコン)などを含む`JPanel`を生成して返しています。
 
 マウスクリックなどでノードのチェック状態が変更されたら、子ノードと親ノードの選択状態も更新する必要があるので、`TreeModelListener`をモデルに設定して、その監視を行っています。
@@ -205,12 +205,12 @@ if (isFirstTime && System.getProperty("java.version").startsWith("1.7.0")) {
 }
 }}
 
-* 参考リンク [#ab7883bf]
+* 参考リンク [#reference]
 - [[JTreeの葉ノードをJCheckBoxにする>Swing/CheckBoxNodeTree]]
 - [[JCheckBoxに不定状態のアイコンを追加する>Swing/TriStateCheckBox]]
 - [[JCheckBox付きJTreeでディレクトリ構造を表示>Swing/FileSystemTreeWithCheckBox]]
 
-* コメント [#nbcaf27c]
+* コメント [#comment]
 #comment
 - 親ノードまでではなく、ルートノードまで不定状態の変更を行うように修正。 -- &user(aterai); &new{2012-03-23 (金) 17:43:32};
 

@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2014/09/forward-mouse-wheel-scroll-event-in.html
     lang: en
 ---
-* 概要 [#a29251c3]
+* 概要 [#summary]
 `JLayer`を使って、ネストする`JScrollPane`への`MouseWheelEvent`を転送し、スクロールが継続するように設定します。
 
 #download(https://lh4.googleusercontent.com/-Ax3sBgN85bo/U_DD4w3kEjI/AAAAAAAACLg/H0QTGo7hLH4/s800/WheelOverNestedScrollPane.png)
 
-* サンプルコード [#ied9d98d]
+* サンプルコード [#sourcecode]
 #code(link){{
 class WheelScrollLayerUI extends LayerUI<JScrollPane> {
   @Override public void installUI(JComponent c) {
@@ -48,14 +48,14 @@ class WheelScrollLayerUI extends LayerUI<JScrollPane> {
 }
 }}
 
-* 解説 [#r2d3a46b]
+* 解説 [#explanation]
 `JScrollPane`がネストしている場合、デフォルトでは子`JScrollPane`内の`MouseWheelEvent`は、親`JScrollPane`には伝搬しません。
 
 上記のサンプルでは、子`JScrollPane`のスクロールバーが最下部にあるなら下方向(最上部なら上方向)の`MouseWheelEvent`は親`JScrollPane`に転送する`LayerUI`を作成し、これを親`JScrollPane`の`JLayer<JScrollPane>`に適用しています。
 
-* 参考リンク [#y6712f22]
+* 参考リンク [#reference]
 - [[JScrollBarが最後までスクロールしたことを確認する>Swing/DetectScrollToBottom]]
 
-* コメント [#xe15c26d]
+* コメント [#comment]
 #comment
 #comment

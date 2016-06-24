@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-12-23T01:15:16+09:00
 description: JTreeのノードにJProgressBarを表示するTreeCellRendererを設定します。
 ---
-* 概要 [#r38f06fc]
+* 概要 [#summary]
 `JTree`のノードに`JProgressBar`を表示する`TreeCellRenderer`を設定します。
 
 #download(https://lh4.googleusercontent.com/-SBg5NOTGinM/UrcLHfPzXVI/AAAAAAAAB84/HD0k-sWiJGo/s800/TreeNodeProgressBar.png)
 
-* サンプルコード [#k25739e8]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ProgressBarRenderer extends DefaultTreeCellRenderer {
   private int nodeWidth = 100;
@@ -62,7 +62,7 @@ class ProgressBarRenderer extends DefaultTreeCellRenderer {
 }
 }}
 
-* 解説 [#gc82b31a]
+* 解説 [#explanation]
 上記のサンプルでは、タスクが実行中の場合、ノードの幅(アイコンと文字列)だけの長さを持つ`JProgressBar`を配置する`TreeCellRenderer`を作成して、これを`JTree#setCellRenderer(...)`で設定しています。
 
 - スタートボタンを押すと、`JButton`を選択不可にし、`SwingWorker`を起動して葉以外のノードをすべて捜査
@@ -70,7 +70,7 @@ class ProgressBarRenderer extends DefaultTreeCellRenderer {
 -- ダミータスクが終了するとそのノードを展開
 - すべてのノードのタスクが終了したことを`ExecutorService#awaitTermination(...)`で検知したら、`JButton`を選択可に戻す
 
-//* 参考リンク
-* コメント [#i5011a06]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

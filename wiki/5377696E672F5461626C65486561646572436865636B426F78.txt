@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/02/jtableheader-checkbox.html
     lang: en
 ---
-* 概要 [#u315ddf5]
+* 概要 [#summary]
 `JTableHeader`に`JCheckBox`を追加して、同じ列の`JCheckBox`で表示している値をすべて切り替えます。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUf8Li6CI/AAAAAAAAAmI/mj7-1IwK86o/s800/TableHeaderCheckBox.png)
 
-* サンプルコード [#lf375b70]
+* サンプルコード [#sourcecode]
 #code(link){{
 enum Status { SELECTED, DESELECTED, INDETERMINATE }
 class HeaderRenderer extends JCheckBox implements TableCellRenderer {
@@ -95,7 +95,7 @@ class ComponentIcon implements Icon {
 }
 }}
 
-* 解説 [#n8c8c285]
+* 解説 [#explanation]
 上記のサンプルでは、`JCheckBox`のアイコンを作成し、これを`TableCellRenderer`(=`JLabel`)に`setIcon(...)`メソッドで設定しています。
 
 - `JCheckBox`をアイコン化しているので、これをクリックしてもイベントは発生しない
@@ -110,12 +110,12 @@ class ComponentIcon implements Icon {
 -- 注: ここでは、行の追加、削除は考慮していない
 --- これを考慮したサンプルは、[[JTableのモデルが変更されたことをイベントで受け取る>Swing/TableModelEvent]]に移動
 
-* 参考リンク [#icecdcd6]
+* 参考リンク [#reference]
 - [http://www.coderanch.com/t/343795/Swing-AWT-SWT-JFace/java/Check-Box-JTable-header Check Box in JTable header (Swing / AWT / SWT / JFace forum at JavaRanch)]
 - [[JCheckBoxに不定状態のアイコンを追加する>Swing/TriStateCheckBox]]
 - [[JTableのモデルが変更されたことをイベントで受け取る>Swing/TableModelEvent]]
 
-* コメント [#zfb599ad]
+* コメント [#comment]
 #comment
 - `LookAndFeel`を`Nimbus`に変更したとき、`JTableHeader`の高さがおかしい？ -- &user(aterai); &new{2011-05-30 (月) 22:13:05};
 -- レンダラー中で`label.setText(null);`や、`JLabel`を挟んで二重に`ImageIcon`を作成するなどして回避中。 -- &user(aterai); &new{2012-03-02 (金) 16:01:51};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-11-30T13:18:03+09:00
 description: JTabbedPaneのタブ中に配置するタイトルとアイコンの位置を変更します。
 ---
-* 概要 [#q929fb91]
+* 概要 [#summary]
 `JTabbedPane`のタブ中に配置するタイトルとアイコンの位置を変更します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTU96IMXGI/AAAAAAAAAm4/LydkDv26XY8/s800/TabTitleTextPosition.png)
 
-* サンプルコード [#e92683ea]
+* サンプルコード [#sourcecode]
 #code(link){{
 tabbedPane.addTab(title, c);
 JLabel label = new JLabel(title, icon, SwingConstants.CENTER);
@@ -23,7 +23,7 @@ label.setHorizontalTextPosition(SwingConstants.CENTER);
 tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, label);
 }}
 
-* 解説 [#acfe3cc1]
+* 解説 [#explanation]
 上記のサンプルでは、タブにアイコンとラベルの位置を変更した`JLabel`を配置しています。
 
 ----
@@ -39,11 +39,11 @@ private String makeTitle(String t, String p) {
 }
 }}
 
-* 参考リンク [#ce461cd3]
+* 参考リンク [#reference]
 - [http://www.icongalore.com/ XP Style Icons - Windows Application Icon, Software XP Icons]
 - [[JLabelのアイコンと文字列の位置>Swing/TextPositionAndAlignment]]
 - [[JTabbedPaneのタイトルをクリップ>Swing/ClippedTabLabel]]
 
-* コメント [#id90ae59]
+* コメント [#comment]
 #comment
 #comment

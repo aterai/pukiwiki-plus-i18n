@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/05/left-clipped-jcombobox.html
     lang: en
 ---
-* 概要 [#ia7b0026]
+* 概要 [#summary]
 `JComboBox`のアイテム文字列がコンポーネントより長い場合、これを左側からクリップします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTPEaiR2iI/AAAAAAAAAdY/E5fxUtKW0sM/s800/LeftClippedComboBox.png)
 
-* サンプルコード [#x51d3784]
+* サンプルコード [#sourcecode]
 #code(link){{
 final JButton arrowButton = getArrowButton(combo02);
 combo02.setRenderer(new DefaultListCellRenderer() {
@@ -62,7 +62,7 @@ combo02.setRenderer(new DefaultListCellRenderer() {
 });
 }}
 
-* 解説 [#qf9b52f8]
+* 解説 [#explanation]
 標準の`JComboBox`では、長い文字列は右側をクリップするので、上記のサンプルでは左側を切り取り、`...`で置き換えるようにセルレンダラーを変更しています。
 
 例えば、コンボボックスのセルよりファイル名が長くても、拡張子が表示できるようにしたいといった場合に使用します。
@@ -93,13 +93,13 @@ if (fm.stringWidth(cellText) > availableWidth) {
 }
 }}
 
-* 参考リンク [#u56983b7]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1389543 Swing - JTable - right align in cell even if the text is wider than the cell]
 -- camickr さんが投稿(2005/06/10 5:52)した`JTable`でのサンプルがある
 - [http://tips4java.wordpress.com/2008/11/12/left-dot-renderer/ Left Dot Renderer « Java Tips Weblog]
 - [http://www.ibm.com/developerworks/jp/ysl/library/java/j-unicode_surrogate/index.html Java による Unicode サロゲートプログラミング]
 
-* コメント [#h4fa25ab]
+* コメント [#comment]
 #comment
 - 参考リンク、スクリーンショット更新。 -- &user(aterai); &new{2008-11-13 (木) 14:26:39};
 

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-05-08
 description: JComboBoxで入力した文字列などのアイテムを順に保存します。
 ---
-* 概要 [#x6756518]
+* 概要 [#summary]
 `JComboBox`で入力した文字列などのアイテムを順に保存します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTL-2krEbI/AAAAAAAAAYc/9yTnbMmSi1Q/s800/DropDownHistory.png)
 
-* サンプルコード [#b09ed436]
+* サンプルコード [#sourcecode]
 #code(link){{
 public static boolean addItem(JComboBox<String> combo, String str, int max) {
   if (str == null || str.length() == 0) {
@@ -29,10 +29,10 @@ public static boolean addItem(JComboBox<String> combo, String str, int max) {
 }
 }}
 
-* 解説 [#r024d364]
+* 解説 [#explanation]
 `JComboBox`に検索する文字列が入力されて、検索ボタンが押されるたびに履歴を更新しています。上記のサンプルでは、`4`個まで履歴を保存し、それ以上は古いものから消されます。履歴にある文字列が再度検索された場合は、それを一番上に移動しています。
 
-//* 参考リンク
-* コメント [#z20d96f6]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-11-14T21:13:08+09:00
 description: JavaアプリケーションからWindowsのデスクトップなどにFileをドロップします。
 ---
-* 概要 [#q12d43d9]
+* 概要 [#summary]
 `Java`アプリケーションから`Windows`のデスクトップなどに`File`をドロップします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTL5-PTzWI/AAAAAAAAAYU/G2P--5GJWSU/s800/DragSource.png)
 
-* サンプルコード [#nad9512e]
+* サンプルコード [#sourcecode]
 #code(link){{
 class MyDragGestureListener implements DragGestureListener {
   @Override public void dragGestureRecognized(DragGestureEvent dge) {
@@ -43,7 +43,7 @@ class MyDragGestureListener implements DragGestureListener {
 }
 }}
 
-* 解説 [#z58c49a2]
+* 解説 [#explanation]
 上記のサンプルでは、ボタンで空の一時ファイルを生成し、ラベルをマウスでドラッグすると生成したファイルをデスクトップなどに移動することが出来ます。
 
 以下のように`DragGestureListener`を登録してラベルをドラッグ＆ドロップすることで、`JFileChooser`などで書き出すフォルダなどを指定する手間が省いています。
@@ -89,9 +89,9 @@ label.addMouseListener(new MouseAdapter() {
 });
 }}
 
-* 参考リンク [#rde48634]
+* 参考リンク [#reference]
 - [http://opus-i.biz/ opus-i | シンプル素材 テンプレート 音楽素材]
 
-* コメント [#zd263401]
+* コメント [#comment]
 #comment
 #comment

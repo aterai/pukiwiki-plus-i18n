@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-03-11T17:04:49+09:00
 description: JPopupMenuや、JToolBarなどに親Windowを閉じるためのActionを作成します。
 ---
-* 概要 [#s4d4f1c8]
+* 概要 [#summary]
 `JPopupMenu`や、`JToolBar`などに親`Window`を閉じるための`Action`を作成します。
 
 #download(https://lh6.googleusercontent.com/-xWsEbhvjfDY/UT2P-83x0FI/AAAAAAAABmc/7isd5KoGMQc/s800/WindowClosingAction.png)
 
-* サンプルコード [#bd96e7d1]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static class ExitAction extends AbstractAction {
   public ExitAction() {
@@ -43,7 +43,7 @@ private static class ExitAction extends AbstractAction {
 }
 }}
 
-* 解説 [#xcbdae17]
+* 解説 [#explanation]
 上記のサンプルでは、親となる`JFrame`を取得し、`window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));`を
 使って、終了イベントを実行しています。
 
@@ -55,10 +55,10 @@ private static class ExitAction extends AbstractAction {
 -- 移動中の場合、`JComponent#setComponentPopupMenu(toolbar)`で取得した移動中の`Window`の親`Window`を`Window#getOwner()`で取得
 -- 移動中では無い場合、`SwingUtilities.getWindowAncestor(toolbar)`で、自身の親`Window`を取得
 
-* 参考リンク [#f4cf3abb]
+* 参考リンク [#reference]
 - [[JFrameの終了をキャンセル>Swing/WindowClosing]]
 - [[WindowAncestor(親ウィンドウ)の取得>Swing/WindowAncestor]]
 
-* コメント [#r69fe5c7]
+* コメント [#comment]
 #comment
 #comment

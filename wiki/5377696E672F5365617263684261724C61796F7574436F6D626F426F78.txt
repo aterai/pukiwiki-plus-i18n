@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2010/09/searchbar-jcombobox.html
     lang: en
 ---
-* 概要 [#a4ce349d]
+* 概要 [#summary]
 `JComboBox`が使用するレイアウトを変更して、検索欄風のコンポーネントを作成します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTSqLxrLoI/AAAAAAAAAjI/M2OZzogy3-Q/s800/SearchBarLayoutComboBox.png)
 
-* サンプルコード [#k8b9a8a7]
+* サンプルコード [#sourcecode]
 #code(link){{
 public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI {
   public static javax.swing.plaf.ComponentUI createUI(JComponent c) {
@@ -81,7 +81,7 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI {
 //......
 }}
 
-* 解説 [#g9ab284c]
+* 解説 [#explanation]
 上記のサンプルでは、`JComboBox`が使用するレイアウトを以下のように変更しています。
 
 - 元の`ArrowButton`は、左側に表示
@@ -121,8 +121,8 @@ protected PopupMenuListener createPopupMenuListener() {
 }
 }}
 
-//* 参考リンク
-* コメント [#ca736f58]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - `editor`にフォーカスがある場合、左のボタンをクリックしてもポップアップメニューが開かないバグを修正。 -- &user(aterai); &new{2010-09-24 (金) 20:20:42};
 - `ArrowButton`をクリックして、カーソルキーを押すと`NullPointerException`が発生するバグを修正(この修正？で、ポップアップが表示されている状態で、例えばKBD{G}キーを押しても、項目の`google`は選択されなくなった)。 -- &user(aterai); &new{2011-01-07 (金) 16:29:00};

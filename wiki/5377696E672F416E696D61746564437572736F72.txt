@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-05-01T12:35:56+09:00
 description: Timerを使ったCursorの切り替えで、マウスポインタのループアニメーションを行います。
 ---
-* 概要 [#j7158da4]
+* 概要 [#summary]
 `Timer`を使った`Cursor`の切り替えで、マウスポインタのループアニメーションを行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHkbNXdwI/AAAAAAAAARY/RzDAT8xyR3c/s800/AnimatedCursor.png)
 
-* サンプルコード [#h16203df]
+* サンプルコード [#sourcecode]
 #code(link){{
 Toolkit tk = Toolkit.getDefaultToolkit();
 list[0] = tk.createCustomCursor(tk.createImage(url00), pt, "00");
@@ -37,18 +37,18 @@ button = new JButton(new AbstractAction("Start") {
 });
 }}
 
-* 解説 [#b3798cf8]
+* 解説 [#explanation]
 上記のサンプルでは、ボタンをクリックすると、パネル上にあるカーソルがアニメーションするようになっています。`3`枚の透過`png`ファイルをコマにして、`Timer`で順番にこれを切り替えています。
 
 各コマは、[http://www11.atwiki.jp/vippointer/pages/54.html ぶーん(通常の選択.ani、VIPポインタ)]から、[http://www.vector.co.jp/soft/win95/amuse/se195017.html ANIめーかー]を使って生成しています。
 
-* 参考リンク [#bf958cfb]
+* 参考リンク [#reference]
 - [http://www11.atwiki.jp/vippointer/ VIPポインタ@Wiki - トップページ]
 - [http://www.vector.co.jp/soft/win95/amuse/se195017.html ANIめーかー(Windows95/98/Me/アミューズメント)]
 - [[Cursorオブジェクトの生成>Swing/CustomCursor]]
 - [http://www.oreilly.co.jp/books/4873112788/download.html oreilly.co.jp -- Online Catalog: Java Swing Hacks]
 
-* コメント [#q9ef944e]
+* コメント [#comment]
 #comment
 - `Cursor`に用いる`png`ファイルは、フルカラー(`24`ビット)ではなく`256`色にしておかないと、うまく透過できないようです。もしかしたら自分の`PC`の画面の色が`16`ビットになっているせいかもしれません。 -- &user(aterai); &new{2006-07-11 (火) 12:41:59};
 -- `32`ビットにしてもだめみたいです。 -- &user(aterai); &new{2006-07-25 (火) 16:53:29};

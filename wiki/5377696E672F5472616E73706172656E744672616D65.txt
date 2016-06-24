@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/02/translucent-jinternalframe-nimbus.html
     lang: en
 ---
-* 概要 [#dc212a57]
+* 概要 [#summary]
 `JInternalFrame`のフレーム内を半透明にします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTV8kztxuI/AAAAAAAAAoc/oXSU5-bQorE/s800/TransparentFrame.png)
 
-* サンプルコード [#w6d0f503]
+* サンプルコード [#sourcecode]
 #code(link){{
 JPanel p1 = new JPanel();
 p1.setOpaque(false);
@@ -50,7 +50,7 @@ protected JInternalFrame createFrame(JPanel panel) {
   //...
 }}
 
-* 解説 [#z8b1a843]
+* 解説 [#explanation]
 各フレームは、`JInternalFrame#setContentPane(Container)`メソッドを使用して、`ContentPane`を以下のような半透明パネルに変更しています。
 
 - `Frame#1` (`Transparent`)
@@ -62,11 +62,11 @@ protected JInternalFrame createFrame(JPanel panel) {
 - `Frame#3` (`Translucent`)
 -- `ContentPane`を半透明な色を使ってチェック柄で塗りつぶし
 
-* 参考リンク [#a3727514]
+* 参考リンク [#reference]
 - [http://www.bekkoame.ne.jp/~bootan/free2.html デジタル出力工房　絵写楽]
 - [[SynthでJInternalFrameを半透明にする>Swing/TranslucentFrame]]
 
-* コメント [#vc94b782]
+* コメント [#comment]
 #comment
 - `JRE6.0`だと、半透明にならずチェック模様が描画されるだけですね。仕様変わったのかな… --  &new{2007-05-25 (金) 11:05:17};
 -- 御指摘ありがとうございます。`Windows XP`で、`Java 1.6.0_01`、`1.5.0_11`は、半透明になったのですが、`Ubuntu 7.04`で、`Java 1.6.0`では駄目みたいです。`Mac`は環境がないので試せてません。 -- &user(aterai); &new{2007-05-25 (金) 13:02:13};

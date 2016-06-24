@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-06-14
 description: JTableのすべてのセルを編集不可にする方法をテストします。
 ---
-* 概要 [#g3871d47]
+* 概要 [#summary]
 `JTable`のすべてのセルを編集不可にする方法をテストします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTIgUbMHLI/AAAAAAAAAS4/v0jIwB26ie4/s800/CellEditor.png)
 
-* サンプルコード [#x41114f8]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(new DefaultTableModel() {
   @Override public boolean isCellEditable(int row, int column) {
@@ -19,7 +19,7 @@ JTable table = new JTable(new DefaultTableModel() {
 });
 }}
 
-* 解説 [#y1fb1620]
+* 解説 [#explanation]
 上記のサンプルは、以下の三種類の設定で、セルを編集不可にする方法をテストしています。
 
 - `Override TableModel#isCellEditable(...) { return false; }`
@@ -36,10 +36,10 @@ table.setDefaultEditor(Object.class, null);
 table.setEnabled(false);
 }}
 
-* 参考リンク [#h3c8692e]
+* 参考リンク [#reference]
 - [[JTableでキー入力によるセル編集開始を禁止する>Swing/PreventStartCellEditing]]
 
-* コメント [#s3a072c4]
+* コメント [#comment]
 #comment
 - セルや行の選択をしないのであれば、`JTable#setFocusable(false)`と`JTable#setCellSelectionEnabled(false)`を合わせて利用することでも編集不可にできるようです。こちらは編集不可というより、文字通りフォーカスしないといった感じですが。 -- &user(shuna); &new{2009-10-23 (Fri) 03:12:58};
 -- なるほど。KBD{F2}も含めてキー入力で編集開始できなくなる(マウスクリックでは可能？)ようですね。`table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`よりすこし強力といった所でしょうか。いつか、こちらから[[JTableでキー入力によるセル編集開始を禁止する>Swing/PreventStartCellEditing]]に移動するかも。 -- &user(aterai); &new{2009-10-23 (金) 22:07:44};

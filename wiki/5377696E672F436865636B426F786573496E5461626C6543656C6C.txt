@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/03/checkboxes-in-jtable-cell.html
     lang: en
 ---
-* 概要 [#v80be979]
+* 概要 [#summary]
 `JTable`のセル中に`JCheckBox`を複数個配置します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TWs6JY73P8I/AAAAAAAAA2M/wwrwT7R5K4k/s800/CheckBoxesInTableCell.png)
 
-* サンプルコード [#p4dd25d7]
+* サンプルコード [#sourcecode]
 #code(link){{
 class CheckBoxesPanel extends JPanel {
   protected final String[] title = {"r", "w", "x"};
@@ -112,7 +112,7 @@ class CheckBoxesEditor extends CheckBoxesPanel
   //......
 }}
 
-* 解説 [#mb2dc2f3]
+* 解説 [#explanation]
 上記のサンプルでは、`JTable`のセル内に`3`つの`JCheckBox`を配置した`JPanel`を作成し、これを`CellRenderer`と`CellEditor`として別々に使用しています。`JCheckBox`をマウスでクリックすると、その`JCheckBox`の選択状態だけが変化します。
 
 ----
@@ -120,12 +120,12 @@ class CheckBoxesEditor extends CheckBoxesPanel
 
 %%`JTable`自体に以下の様な`MouseListener`を追加してチェックボックスがクリックされるたびに`table.getCellEditor(row, col).stopCellEditing();`を呼び出しています。%%
 
-* 参考リンク [#wc856fe8]
+* 参考リンク [#reference]
 - [[JTableのセル中にJRadioButtonを配置>Swing/RadioButtonsInTableCell]]
 - [[JTableのセルに複数のJButtonを配置する>Swing/MultipleButtonsInTableCell]]
 - [[JCheckBoxのセルをロールオーバーする>Swing/RolloverBooleanRenderer]]
 
-* コメント [#xf4aaa77]
+* コメント [#comment]
 #comment
 - ビットフラグを`EnumSet`に変更するテスト -- &user(aterai); &new{2011-03-01 (火) 14:22:06};
 -- [[JTableの列にEnumSetを使用する>Swing/EnumSet]]に移動

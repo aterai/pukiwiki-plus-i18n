@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-03-26T15:45:39+09:00
 description: ServiceManagerからPersistenceServiceを取得し、JFrameなどの位置・サイズの保存、呼び出しを行います。
 ---
-* 概要 [#da09cfeb]
+* 概要 [#summary]
 `ServiceManager`から`PersistenceService`を取得し、`JFrame`などの位置・サイズの保存、呼び出しを行います。
 
 #download(https://lh6.googleusercontent.com/-PyOW5DW5kHU/T3APD_Cq_bI/AAAAAAAABKk/i9eivMuQZ0Y/s800/PersistenceService.png)
 
-* サンプルコード [#xdef909f]
+* サンプルコード [#sourcecode]
 #code(link){{
 class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
   private final WindowState windowState;
@@ -85,7 +85,7 @@ class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
 }
 }}
 
-* 解説 [#p124cd93]
+* 解説 [#explanation]
 上記のサンプルでは、`PersistenceService`で確保したファイルに、`HashMap<String, Serializable>`に格納した`JFrame`の位置、サイズを`XMLEncoder`、`XMLDecoder`を使って読み書きしています。
 
 ----
@@ -200,14 +200,14 @@ public class MainPanel extends JPanel {
 }
 }}
 
-* 参考リンク [#m74e8dfc]
+* 参考リンク [#reference]
 - [http://pscode.org/jws/api.html JWS javax.jnlp.* API demos]
 - [http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/examples.html#PersistenceService PersistenceService]
 - [http://www.finnw.me.uk/persistencetest.html PersistenceService Demo]
 - [[JFrameの位置・サイズを記憶する>Swing/Preferences]]
 - [[JTableのモデルをXMLファイルで保存、復元する>Swing/PersistenceDelegate]]
 
-* コメント [#x92d06e4]
+* コメント [#comment]
 #comment
 - `JScrollPane` + `JTable` + `DefaultTableModel`を`XMLEncoder`で`XML`書出しする場合のエラーなどについて: [http://wiki.byte-welt.net/wiki/JTable_speichern JTable speichern – Byte-Welt Wiki] -- &user(aterai); &new{2013-11-14 (木) 19:06:49};
 

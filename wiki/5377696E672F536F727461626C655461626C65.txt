@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-01-05
 description: JTableのカラムヘッダをクリックすることで、行表示を降順、昇順にソートします。
 ---
-* 概要 [#jc31212f]
+* 概要 [#summary]
 `JTable`のカラムヘッダをクリックすることで、行表示を降順、昇順にソートします。以下のサンプルは、%%[http://www2.gol.com/users/tame/swing/examples/JTableExamples5.html SortableTableExample]%%を参考にして作成しています。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTXXYDR5I/AAAAAAAAAkQ/DeBHN6piDhQ/s800/SortableTable.png)
 
-* サンプルコード [#y7f29510]
+* サンプルコード [#sourcecode]
 #code(link){{
 class SortableTableModel extends DefaultTableModel {
   public SortableTableModel(String[] str, int row) {
@@ -60,7 +60,7 @@ class ColumnComparator implements Comparator {
 }
 }}
 
-* 解説 [#j738ec00]
+* 解説 [#explanation]
 上記のサンプルでは、カラムヘッダをクリックすることでソートできます。右クリックからポップアップメニューで、行を追加、削除したり、セルをダブルクリックして中身を色々編集するなどしてソートを試してみてください。
 
 - メモ
@@ -68,11 +68,11 @@ class ColumnComparator implements Comparator {
 -- `JDK 1.6.0`で、`JTable`のソートが標準機能として追加された
 --- [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
 
-* 参考リンク [#f1d425ba]
+* 参考リンク [#reference]
 - %%[http://www2.gol.com/users/tame/swing/examples/JTableExamples5.html SortableTableExample]%%
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/table.html#sorting Sorting and Otherwise Manipulating Data - How to Use Tables (The Java™ Tutorials > Creating a GUI with JFC/Swing > Using Swing Components)]
 
-* コメント [#n7689273]
+* コメント [#comment]
 #comment
 - 非常に参考になりました。すぐに実装に使わせていただきます。 -- &user(akio); &new{2005-01-12 18:11:14 (水)};
 - カラムをドラッグして移動したとき、矢印が残ってしまうようです。 %%元からだったかデグレードしたのかちょっと不明です。%% 元からのようです。 -- &user(aterai); &new{2005-02-25 19:55:01 (金)};

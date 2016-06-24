@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-11-28T18:26:47+09:00
 description: 列幅調整がデフォルトのJTableで、ヘッダの各TableColumnが指定した比率の幅になるように設定します。
 ---
-* 概要 [#s3d330d1]
+* 概要 [#summary]
 列幅調整がデフォルトの`JTable`で、ヘッダの各`TableColumn`が指定した比率の幅になるように設定します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TSs6oj80RcI/AAAAAAAAAxs/hm2gp4ELiDI/s800/HeaderRatio.png)
 
-* サンプルコード [#dc125241]
+* サンプルコード [#sourcecode]
 #code(link){{
 private void setTableHeaderColumnRaito() {
   TableColumnModel m = table.getColumnModel();
@@ -29,7 +29,7 @@ private void setTableHeaderColumnRaito() {
 }
 }}
 
-* 解説 [#r3b250ae]
+* 解説 [#explanation]
 上記のサンプルでは、`JTextField`にコロン区切りで入力した比率に従って、各カラムヘッダの幅を調整しています。
 
 - `ComponentListener#componentResized(...)`がチェックされている場合
@@ -41,9 +41,9 @@ private void setTableHeaderColumnRaito() {
 ----
 `TableColumn#setMaxWidth`メソッドでカラムの幅を指定する場合は、マウスのドラッグによるサイズの変更はできません。
 
-* 参考リンク [#h308024b]
+* 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#doLayout-- デルタの分散 - JTable#doLayout() (Java Platform SE 8)]
 
-* コメント [#f4b5dfe7]
+* コメント [#comment]
 #comment
 #comment

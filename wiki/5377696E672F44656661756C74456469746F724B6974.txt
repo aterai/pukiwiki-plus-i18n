@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-07-25
 description: DefaultEditorKitを使って、JTextFieldなどでポップアップメニューを使ったコピー、貼り付け、切り取りを行います。
 ---
-* 概要 [#d4309d1c]
+* 概要 [#summary]
 `DefaultEditorKit`を使って、`JTextField`などでポップアップメニューを使ったコピー、貼り付け、切り取りを行います。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKk8KGiNI/AAAAAAAAAWM/dJouzZuxv6g/s800/DefaultEditorKit.png)
 
-* サンプルコード [#mcf85a7d]
+* サンプルコード [#sourcecode]
 #code(link){{
 //textField.setComponentPopupMenu(new TextFieldPopupMenu());
 class TextFieldPopupMenu extends JPopupMenu {
@@ -56,7 +56,7 @@ class TextFieldPopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#n6767e6a]
+* 解説 [#explanation]
 `DefaultEditorKit`には、エディタとして必要な最小限度の機能がデフォルトで実装されています。上記のサンプルでは、`DefaultEditorKit.CopyAction`で、システムクリップボードを使ったコピーをポップアップメニューで行っています。
 
 サンプルの「切り取り`2`」のように、`JTextComponent#cut()`などを使っても同様のことが行えます。
@@ -68,10 +68,10 @@ class TextFieldPopupMenu extends JPopupMenu {
 
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKnUb6nqI/AAAAAAAAAWQ/L3ylLdA-GIw/s800/DefaultEditorKit1.png)
 
-* 参考リンク [#q0a22893]
+* 参考リンク [#reference]
 - [[JTextFieldでコピー、貼り付けなどを禁止>Swing/ActionMap]]
 
-* コメント [#wef3f011]
+* コメント [#comment]
 #comment
 - 「今後この警告を表示しない」をやめて、セキュリティの警告を表示したいけど、やり方が分からないorz。 -- &user(aterai); &new{2008-02-06 (水) 13:00:48};
 

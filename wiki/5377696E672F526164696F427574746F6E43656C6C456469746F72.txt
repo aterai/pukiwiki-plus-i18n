@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-04-25T17:34:01+09:00
 description: JTableのセルにJRadioButtonを配置し、全体で一つだけ選択できるように設定します。
 ---
-* 概要 [#o78918d7]
+* 概要 [#summary]
 `JTable`のセルに`JRadioButton`を配置し、全体で一つだけ選択できるように設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TbUwB1XoMEI/AAAAAAAAA6M/5VwHykCV4OI/s800/RadioButtonCellEditor.png)
 
-* サンプルコード [#d4849766]
+* サンプルコード [#sourcecode]
 #code(link){{
 DefaultTableModel model = new DefaultTableModel(data, columnNames) {
   @Override public Class<?> getColumnClass(int column) {
@@ -28,17 +28,17 @@ DefaultTableModel model = new DefaultTableModel(data, columnNames) {
 };
 }}
 
-* 解説 [#g90ccab3]
+* 解説 [#explanation]
 上記のサンプルでは、`2`列目のカラムクラスを`Boolean`に設定し、`JRadioButton`を継承するセルレンダラ、セルエディタを使って`Boolean`値の表示、編集を行っています。
 
 - セルレンダラとセルエディタの`JRadioButton`は、行数分ではなく、描画用にそれぞれ一つだけ作成して使用
 - `ButtonGroup`を使用して、表中の`JRadioButton`を一つだけ選択状態に制限することは出来ない
 - 代わりに、ある`2`列目セルの値を`TRUE`にすると、ほかの行の`2`列目セルの値がすべて`FALSE`になるよう、`TableModel#setValueAt(...)`メソッドをオーバーライド
 
-* 参考リンク [#o1c7f4c6]
+* 参考リンク [#reference]
 - [[JTableのセル中にJRadioButtonを配置>Swing/RadioButtonsInTableCell]]
 -- 一つのセルの中に複数の`JRadioButton`を配置(`ButtonGroup`を使用して、セル中で一つだけ選択可能)
 
-* コメント [#q4c16bbb]
+* コメント [#comment]
 #comment
 #comment

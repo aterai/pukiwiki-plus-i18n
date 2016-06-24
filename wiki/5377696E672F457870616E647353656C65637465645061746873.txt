@@ -5,17 +5,17 @@ author: aterai
 pubdate: 2012-09-24T13:08:25+09:00
 description: JTreeの選択されたノードまでのパスをすべて展開して可視状態にします。
 ---
-* 概要 [#fdd0db61]
+* 概要 [#summary]
 `JTree`の選択されたノードまでのパスをすべて展開して可視状態にします。
 
 #download(https://lh6.googleusercontent.com/-sOsnOftT8xE/UF_b7dSxzQI/AAAAAAAABS0/i_xYkTfxbZg/s800/ExpandsSelectedPaths.png)
 
-* サンプルコード [#pffd84f2]
+* サンプルコード [#sourcecode]
 #code(link){{
 tree.setExpandsSelectedPaths(true);
 }}
 
-* 解説 [#s84ec3a0]
+* 解説 [#explanation]
 上記のサンプルでは、マウスによるノード選択ではなく、`JTree#addSelectionPath(TreePath)`などによるノード選択が行われた場合、そのノードまでのパスを展開するかどうかを、`JTree#setExpandsSelectedPaths(...)`メソッドを使って切り替えるテストを行っています。
 
 - `JTree#setExpandsSelectedPaths(false);`
@@ -24,12 +24,12 @@ tree.setExpandsSelectedPaths(true);
 -- デフォルト(`JDK 1.3`から)
 -- 選択されたノードまでのパスをすべて展開して可視化(スクロールはしない)
 
-* 参考リンク [#ia19db6d]
+* 参考リンク [#reference]
 - http://docs.oracle.com/javase/1.3/docs/guide/swing/JTreeChanges.html
 - http://docs.oracle.com/javase/jp/1.3/guide/swing/JTreeChanges.html
 -- メモ: 日本語版には`docs`が付かない
 - [[JTreeのノードを検索する>Swing/SearchBox]]
 
-* コメント [#l42b97e5]
+* コメント [#comment]
 #comment
 #comment

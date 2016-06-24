@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-07-20T03:24:10+09:00
 description: JTableのセルエディタとしてJPanel中央に配置したJCheckBoxを設定し、そのJCheckBoxをクリックした場合のみ選択状態が変化するように設定します。
 ---
-* 概要 [#ne3709f3]
+* 概要 [#summary]
 `JTable`のセルエディタとして`JPanel`中央に配置した`JCheckBox`を設定し、その`JCheckBox`をクリックした場合のみ選択状態が変化するように設定します。
 
 #download(https://lh3.googleusercontent.com/-t1TDt_cSOzU/VavlaZDRBaI/AAAAAAAAN9c/nVCdYcC71e8/s800-Ic42/CheckBoxCellEditor.png)
 
-* サンプルコード [#u952757c]
+* サンプルコード [#sourcecode]
 #code(link){{
 class CheckBoxPanelEditor extends AbstractCellEditor implements TableCellEditor {
   private final JPanel p = new JPanel(new GridBagLayout());
@@ -69,7 +69,7 @@ class CheckBoxPanelEditor extends AbstractCellEditor implements TableCellEditor 
 }
 }}
 
-* 解説 [#i2a8444f]
+* 解説 [#explanation]
 上記のサンプルでは、`JTable`の`Boolean`に対応する`TableCellEditor`として、中央に`JCheckBox`を配置した`JPanel`を適用しています。
 
 - デフォルトの`JTable.BooleanEditor`
@@ -111,10 +111,10 @@ class CheckBoxPanelEditor extends AbstractCellEditor implements TableCellEditor 
 }
 }}
 
-* 参考リンク [#laa2c569]
+* 参考リンク [#reference]
 - [[JTableのCellにJCheckBoxを複数配置する>Swing/CheckBoxesInTableCell]]
 - [[JCheckBoxのセルをロールオーバーする>Swing/RolloverBooleanRenderer]]
 
-* コメント [#kb76e676]
+* コメント [#comment]
 #comment
 #comment

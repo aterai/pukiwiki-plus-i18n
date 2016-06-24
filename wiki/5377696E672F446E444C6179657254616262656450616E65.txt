@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2012/01/sharing-tabs-between-2-jframes.html
     lang: en
 ---
-* 概要 [#t75e37f6]
+* 概要 [#summary]
 `JLayer`を使って、タブのドラッグ＆ドロップでの移動先を`JTabbedPane`上に描画します。
 
 #download(https://lh3.googleusercontent.com/-xX0rzgauC5c/Txz4AxE_u2I/AAAAAAAABIM/jHQdxU1yP9g/s800/DnDLayerTabbedPane.png)
 
-* サンプルコード [#d057781e]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DropLocationLayerUI extends LayerUI<DnDTabbedPane> {
   private static final int LINEWIDTH = 3;
@@ -51,7 +51,7 @@ class DropLocationLayerUI extends LayerUI<DnDTabbedPane> {
 }
 }}
 
-* 解説 [#se007f95]
+* 解説 [#explanation]
 上記のサンプルでは、[[JTabbedPaneのタブをドラッグ＆ドロップ>Swing/DnDTabbedPane]]や、[[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]のように`GlassPane`を使用する代わりに、`JDK 1.7.0`で導入された`JLayer`を使用して、タブの挿入先を描画しています。`JLayer`を使用することで、別ウィンドウにある`JTabbedPane`へのタブ移動などの描画が簡単にできるようになっています。
 
 ----
@@ -90,12 +90,12 @@ public TabTransferHandler() {
 //...
 }}
 
-* 参考リンク [#t09438dd]
+* 参考リンク [#reference]
 - [[JTabbedPaneのタブをドラッグ＆ドロップ>Swing/DnDTabbedPane]]
 - [[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]
 - [http://free-the-pixel.blogspot.com/2010/04/ghost-drag-and-drop-over-multiple.html Free the pixel: GHOST drag and drop, over multiple windows]
 
-* コメント [#b93fe731]
+* コメント [#comment]
 #comment
 - `JFrame`の外にドロップした場合は、新しいフレームと`JTabbedPane`を作成して表示したいけど、KBD{Esc}キーや右クリックでのキャンセルと区別がつかない？ので、難しそう。 -- &user(aterai); &new{2012-01-25 (水) 19:57:10};
 

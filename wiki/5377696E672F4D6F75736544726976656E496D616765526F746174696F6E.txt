@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-05-25T13:21:41+09:00
 description: 画像をマウスのドラッグで任意の位置に移動、回転します。
 ---
-* 概要 [#d4ffaeaa]
+* 概要 [#summary]
 画像をマウスのドラッグで任意の位置に移動、回転します。[http://satoshi.blogs.com/life/2007/05/uiflash_1.html Life is beautiful: 習作UI：初めてのFlash その２]、[http://satoshi.blogs.com/life/2007/05/uiflash_2.html その３]の`UI`を参考にしています。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQAQVe8YI/AAAAAAAAAe4/y6GTZLKjqx0/s800/MouseDrivenImageRotation.png)
 
-* サンプルコード [#h5489e69]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DraggableImageMouseListener extends MouseAdapter {
   private static final BasicStroke BORDER_STROKE = new BasicStroke(4f);
@@ -127,16 +127,16 @@ class DraggableImageMouseListener extends MouseAdapter {
 }
 }}
 
-* 解説 [#c10308ac]
+* 解説 [#explanation]
 - 画像の移動: 画像の中心にマウスが近づくと表示される円図形をドラッグ
 - 画像の回転: 上記の円図形の外側に表示されるドーナツ型図形をドラッグ
 -- ドーナツ型図形は、`Area#subtract`メソッドを使用して作成
 
-* 参考リンク [#ad7709ab]
+* 参考リンク [#reference]
 - [http://satoshi.blogs.com/life/2007/05/uiflash_1.html Life is beautiful: 習作UI：初めてのFlash その２]
 - [http://satoshi.blogs.com/life/2007/05/uiflash_2.html Life is beautiful: 習作UI：初めてのFlash その３]
 //- [http://d.hatena.ne.jp/aterai/20081209/1228801099 JavaFXで画像の移動、回転 (Image Mover Rotator)]
 
-* コメント [#bbf128d8]
+* コメント [#comment]
 #comment
 #comment

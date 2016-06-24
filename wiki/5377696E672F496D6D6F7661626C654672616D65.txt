@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-10-10
 description: JInternalFrameをマウスなどで移動できないように固定します。
 ---
-* 概要 [#o5f11a62]
+* 概要 [#summary]
 `JInternalFrame`をマウスなどで移動できないように固定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTOXXz-C5I/AAAAAAAAAcQ/0qYBPzKq7js/s800/ImmovableFrame.png)
 
-* サンプルコード [#a83e5c01]
+* サンプルコード [#sourcecode]
 #code(link){{
 BasicInternalFrameUI ui = (BasicInternalFrameUI) immovableFrame.getUI();
 Component titleBar = ui.getNorthPane();
@@ -19,7 +19,7 @@ for (MouseMotionListener l: titleBar.getListeners(MouseMotionListener.class)) {
 }
 }}
 
-* 解説 [#k07f6217]
+* 解説 [#explanation]
 `JInternalFrame`の`MouseMotionListener`をすべて削除することで、マウスによる移動を不可能にしています。
 
 ----
@@ -36,9 +36,9 @@ internalframe.pack();
 
 #ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOZ803FiI/AAAAAAAAAcU/Bj1t9F8ZKqI/s800/ImmovableFrame1.png)
 
-* 参考リンク [#t17ee3f9]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1392111 Swing - Lock JInternalPane]
 
-* コメント [#rd25830b]
+* コメント [#comment]
 #comment
 #comment

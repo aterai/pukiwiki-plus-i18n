@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2012/03/rounded-border-for-jtextfield.html
     lang: en
 ---
-* 概要 [#f7c187e5]
+* 概要 [#summary]
 `JTextField`の角を丸めて表示するよう`Border`を設定しています。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTSMYm3vgI/AAAAAAAAAiY/37FVcZLSXI0/s800/RoundedTextField.png)
 
-* サンプルコード [#ecbd0878]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTextField textField01 = new JTextField(20) {
   //Unleash Your Creativity with Swing and the Java 2D API!
@@ -40,7 +40,7 @@ textField01.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 textField01.setText("aaaaaaaaaaa");
 }}
 
-* 解説 [#sc0a1c68]
+* 解説 [#explanation]
 - 上
 -- `JTextField#paintComponent(...)`をオーバーライド、`BorderをEmptyBorder`、`JTextField#setOpaque(false);`
 -- 参考: [http://web.archive.org/web/20091205092230/http://java.sun.com/products/jfc/tsc/articles/swing2d/index.html Unleash Your Creativity with Swing and the Java 2D API!]
@@ -81,12 +81,12 @@ class RoundedCornerBorder extends AbstractBorder {
 }
 }}
 
-* 参考リンク [#mcc5799a]
+* 参考リンク [#reference]
 - [http://web.archive.org/web/20091205092230/http://java.sun.com/products/jfc/tsc/articles/swing2d/index.html Unleash Your Creativity with Swing and the Java 2D API!]
 - [http://www.coderanch.com/t/336048/GUI/java/Border-rounded-JTextField Border on an rounded JTextField? (Swing / AWT / SWT / JFace forum at JavaRanch)]
 - [http://stackoverflow.com/questions/9785911/how-i-remove-unneeded-background-under-roundedborder java - how i remove unneeded background under roundedborder? - Stack Overflow]
 
-* コメント [#o62b0e9d]
+* コメント [#comment]
 #comment
 - `TextUI#paintSafely(...)`をオーバーライドして、`JTextField`内を上書きする方法はやめて、`Area#subtract`で切り抜いた図形を親の背景色で描画する方法に変更。 -- &user(aterai); &new{2012-03-21 (水) 02:37:10};
 

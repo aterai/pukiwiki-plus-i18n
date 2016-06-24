@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-11-21
 description: ColorConvertOpを使って画像をグレースケールに変換します。
 ---
-* 概要 [#t5e7fcf3]
+* 概要 [#summary]
 `ColorConvertOp`を使って画像をグレースケールに変換します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTJmEhFayI/AAAAAAAAAUo/x4JGGk_f08c/s800/ColorConvertOp.png)
 
-* サンプルコード [#a2a42159]
+* サンプルコード [#sourcecode]
 #code(link){{
 Image img = icon1.getImage();
 BufferedImage source = new BufferedImage(
@@ -25,7 +25,7 @@ BufferedImage destination = colorConvert.filter(source, null);
 icon2 = new ImageIcon(destination);
 }}
 
-* 解説 [#s9c1238a]
+* 解説 [#explanation]
 用意したアイコンから、`BufferedImage`を作成し、これを`ColorConvertOp#filter`メソッドを使ってグレースケールに変換しています。
 
 上記のサンプルでは、各`JLabel`をクリックすると`Icon`として表示されている元画像とグレースケール画像とが切り替わるようになっています。
@@ -69,14 +69,14 @@ g.drawImage(img, 0, 0, this);
 g.dispose();
 }}
 
-* 参考リンク [#wb3b736d]
+* 参考リンク [#reference]
 - [http://www.java2s.com/Code/Java/2D-Graphics-GUI/ImageColorGrayEffect.htm Image Color Gray Effect : Java examples (example source code) » 2D Graphics GUI » Image]
 - [http://opus-i.biz/ opus-i | シンプル素材 テンプレート 音楽素材]
 - [http://ofo.jp/osakana/cgtips/grayscale.phtml osakana.factory - グレースケールのひみつ]
 --via: [http://programamemo2.blogspot.com/2007/08/blog-post_21.html プログラマメモ2: グレースケール]
 - [https://community.oracle.com/thread/1903279 Swing - image manipulation]
 
-* コメント [#i2aa6deb]
+* コメント [#comment]
 #comment
 - リンクを参考にして`RGBImageFilter`を使うサンプルを修正しました。 -- &user(aterai); &new{2007-08-21 (火) 13:06:10};
 - グレイスケールからグレースケールに変更。 -- &user(aterai); &new{2008-01-10 (木) 14:31:00};

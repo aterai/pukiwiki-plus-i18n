@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-11-02T12:51:40+09:00
 description: JEditorPaneやJTextPaneに行間を設定します。
 ---
-* 概要 [#u308ecd7]
+* 概要 [#summary]
 `JEditorPane`や`JTextPane`に行間を設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPYZn_u9I/AAAAAAAAAd4/5-1ThpWwM5U/s800/LineSpacing.png)
 
-* サンプルコード [#x743f159]
+* サンプルコード [#sourcecode]
 #code(link){{
 class BottomInsetEditorKit extends StyledEditorKit {
   @Override public ViewFactory getViewFactory() {
@@ -39,7 +39,7 @@ class BottomInsetEditorKit extends StyledEditorKit {
 }
 }}
 
-* 解説 [#oa458f2f]
+* 解説 [#explanation]
 - 上: `StyleConstants.setLineSpacing`で、行間を指定した`AttributeSet`を作成し、`JTextPane#setParagraphAttributes`で設定
 -- フォントサイズ相対の行間になる
 
@@ -73,7 +73,7 @@ editor1.setEditorKit(htmlEditorKit);
 editor1.setText("<html><body><div class='test'>12<br />a<br />n<font size='32'>123<br />sd</font></div></body></html>");
 }}
 
-//* 参考リンク
-* コメント [#q7d6c5ab]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

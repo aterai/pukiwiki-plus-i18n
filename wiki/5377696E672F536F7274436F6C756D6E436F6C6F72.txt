@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-04-07T12:47:33+09:00
 description: どのカラムでソートされているかを表示するために、セルの背景色を変更します。
 ---
-* 概要 [#q2f9c6cb]
+* 概要 [#summary]
 どのカラムでソートされているかを表示するために、セルの背景色を変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTZ75OnPI/AAAAAAAAAkU/k4lx4c2XKK8/s800/SortColumnColor.png)
 
-* サンプルコード [#r785420f]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   private final Color evenColor = new Color(255, 250, 250);
@@ -43,11 +43,11 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 解説 [#zc8cc798]
+* 解説 [#explanation]
 上記のサンプルでは、`JTable#getSortKeys()#getSortKeys()`で、ソート中のカラムを取得し、第一キーのカラムセル色を変更しています。
 
-//* 参考リンク
-* コメント [#qa7d6ae8]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - このサンプルでは、`NimbusLookAndFeel`などの場合、`BooleanCellRenderer`(`JCheckBox`を使った`Boolean`用のデフォルトセルレンダラー)を使った列の背景色を変更できない。 -- &user(aterai); &new{2013-01-15 (火) 16:33:54};
 

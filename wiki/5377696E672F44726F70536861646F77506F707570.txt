@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-07-03
 description: Robotで画面をキャプチャーするなどして、半透明の影をJPopupMenuに付けます。
 ---
-* 概要 [#z6537cfc]
+* 概要 [#summary]
 `Robot`で画面をキャプチャーするなどして、半透明の影を`JPopupMenu`に付けます。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMBgsMvZI/AAAAAAAAAYg/QBh9VXR7P-I/s800/DropShadowPopup.png)
 
-* サンプルコード [#q20cf4f0]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ShadowBorder extends AbstractBorder {
   private final int xoff, yoff;
@@ -59,7 +59,7 @@ class ShadowBorder extends AbstractBorder {
 }
 }}
 
-* 解説 [#te55e54d]
+* 解説 [#explanation]
 ポップアップメニューに半透明の影をつける際、フレームからはみ出すかどうかで異なる処理を行っています。
 
 上記のサンプルコードは、フレームからはみ出す場合に使用する`Border`クラスです。
@@ -130,10 +130,10 @@ class DropShadowPopupMenu extends JPopupMenu {
 }
 }}
 
-* 参考リンク [#jb8cc361]
+* 参考リンク [#reference]
 - [[Menuに半透明の影を付ける>Swing/MenuWithShadow]]
 
-* コメント [#e88a4825]
+* コメント [#comment]
 #comment
 - キャプチャーが遅いのは画面全体を撮っているからで、必要なサイズだけにすれば結構速いようです。サンプルを修正してみたところ、毎回キャプチャーするようにしても特に気にならない速度で動いてます。 -- &user(aterai); &new{2006-07-18 (火) 12:02:13};
 - ソース中で`isInRootPanel`がおかしい気がするのですが・・・

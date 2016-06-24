@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-01-21T15:27:41+09:00
 description: JTabbedPaneのタブを閉じるボタンを、タブにフォーカスがある場合だけ表示します。
 ---
-* 概要 [#s04e3478]
+* 概要 [#summary]
 `JTabbedPane`のタブを閉じるボタンを、タブにフォーカスがある場合だけ表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTN-acwv2I/AAAAAAAAAbo/gFaIpQr1XGc/s800/HoverCloseButton.png)
 
-* サンプルコード [#h7af8be1]
+* サンプルコード [#sourcecode]
 #code(link){{
 class HoverCloseButtonTabbedPane extends JTabbedPane {
   private transient MouseMotionListener hoverHandler;
@@ -49,17 +49,17 @@ class HoverCloseButtonTabbedPane extends JTabbedPane {
 }
 }}
 
-* 解説 [#bb2c52ca]
+* 解説 [#explanation]
 上記のサンプルでは、`JDK 6`で導入されたタブにコンポーネントを追加する機能を使って、タブ上にマウスカーソルがある場合だけ`JButton`を表示しています。
 
 - `JButton`が表示されても、そのタブ幅は常に一定
 - `JButton`が表示されて、内部のタブタイトル表示幅が短くなった場合は、文字列を`...`でクリップ
 
-* 参考リンク [#c695580a]
+* 参考リンク [#reference]
 - [[JTabbedPaneにタブを閉じるボタンを追加>Swing/TabWithCloseButton]]
 - [[JTabbedPaneのタブ文字列をハイライト>Swing/TabTitleHighlight]]
 
-* コメント [#e680e90e]
+* コメント [#comment]
 #comment
 - タブが選択されている場合にも`JButton`を表示していましたが、これを変更してタブ上にマウスカーソルがある場合だけ`JButton`を表示するようにしました。 -- &user(aterai); &new{2008-03-19 (水) 21:09:18};
 

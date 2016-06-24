@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-10-25T14:24:03+09:00
 description: JTableのセルの高さを、文字列の折り返しに応じて自動調整します。
 ---
-* 概要 [#pe4a7c92]
+* 概要 [#summary]
 `JTable`のセルの高さを、文字列の折り返しに応じて自動調整します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTH4TWFB1I/AAAAAAAAAR4/8C89wEJ8EUA/s800/AutoWrapTableCell.png)
 
-* サンプルコード [#f1f7d94f]
+* サンプルコード [#sourcecode]
 #code(link){{
 private List<List<Integer>> rowAndCellHeightList= new ArrayList<>();
 private void adjustRowHeight(JTable table, int row, int column) {
@@ -40,16 +40,16 @@ private void adjustRowHeight(JTable table, int row, int column) {
 }
 }}
 
-* 解説 [#cef4d3e6]
+* 解説 [#explanation]
 上記のサンプルでは、セルレンダラーに、`setLineWrap(true)`とした`JTextArea`を使用し、カラムサイズの変更などがあったときに、その`JTextArea`の高さを取得して`JTable#setRowHeight(int)`メソッドで各行の高さとして設定しています。
 
-* 参考リンク [#xfcd757b]
+* 参考リンク [#reference]
 - [http://tips4java.wordpress.com/2008/10/26/text-utilities/ Text Utilities « Java Tips Weblog]
 - [[JTableのセル幅で文字列を折り返し>Swing/TableCellRenderer]]
 - [[ToolkitからScreenResolutionを取得し、コンポーネントで使用するフォントの倍率を変更する>Swing/ScreenResolution]]
 -- `JTable`の行の高さは`LookAndFeel`依存で一定のため、フォントサイズの変更に応じた自動調整などは行われない(自前で高さを変更する必要がある)
 
-* コメント [#y52d6f46]
+* コメント [#comment]
 #comment
 - 高さが微妙に更新されない場合がある…。 -- &user(aterai); &new{2010-10-27 (水) 14:02:02};
 - フレームのサイズ(`JTable`の高さ)を微妙に調整すると、スクロールバーが表示・非表示を繰り返す場合がある。 -- &user(aterai); &new{2010-11-02 (火) 20:23:55};

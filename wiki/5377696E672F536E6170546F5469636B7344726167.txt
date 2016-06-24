@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/12/snap-to-ticks-drag-jslider.html
     lang: en
 ---
-* 概要 [#ec2028a2]
+* 概要 [#summary]
 `JSlider`の`SnapToTicks`をマウスでのドラッグ中にも適用されるように設定します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTU-ruijI/AAAAAAAAAkM/p3Mze4pjyEk/s800/SnapToTicksDrag.png)
 
-* サンプルコード [#hccb5c20]
+* サンプルコード [#sourcecode]
 #code(link){{
 slider.setUI(new MetalSliderUI() {
   @Override protected TrackListener createTrackListener(final JSlider slider) {
@@ -65,14 +65,14 @@ slider.setUI(new MetalSliderUI() {
 });
 }}
 
-* 解説 [#idd12036]
+* 解説 [#explanation]
 - 上: `Default SnapToTicks`
 -- `slider.setSnapToTicks(true);`としているので、マウスをリリースした時点で、ノブを置いた位置にもっとも近い目盛にスナップされる
 - 下: `Custom SnapToTicks`
 -- `TrackListener#mouseDragged`をオーバーライドして、マウスでドラッグ中でもカーソルからもっとも近い目盛にスナップされる
 
-//* 参考リンク
-* コメント [#h246efdc]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - `SwingConstants.HORIZONTAL`にしか対応していません。 -- &user(aterai); &new{2009-12-21 (月) 11:01:51};
 - bobndrewさんからの指摘で、ミニマムにマイナスの値を入れるとおかしくなるバグ修正と、`MinorTickSpacing`に対応。 -- &user(aterai); &new{2010-10-26 (火) 15:32:11};

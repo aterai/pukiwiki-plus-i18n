@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-05-26T17:13:17+09:00
 description: UIManagerにAuditoryCues.playListを設定して、ダイアログが開いた時の警告音などを鳴らします。
 ---
-* 概要 [#v95f25a7]
+* 概要 [#summary]
 `UIManager`に`AuditoryCues.playList`を設定して、ダイアログが開いた時の警告音などを鳴らします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHzQ8XbXI/AAAAAAAAARw/-TGnQ_tvnnM/s800/AuditoryCues.png)
 
-* サンプルコード [#b4933fee]
+* サンプルコード [#sourcecode]
 #code(link){{
 Object[] optionPaneAuditoryCues = {
   "OptionPane.errorSound", "OptionPane.informationSound",
@@ -22,7 +22,7 @@ Object[] optionPaneAuditoryCues = {
 UIManager.put("AuditoryCues.playList", optionPaneAuditoryCues);
 }}
 
-* 解説 [#nb3f1b60]
+* 解説 [#explanation]
 上記のサンプルでは、デフォルトではすべて再生しないように設定されている聴覚フィードバックを、`JOptionPane`でダイアログを開いた場合は有効になるように変更しています。
 
 - `showMessageDialog1`
@@ -40,7 +40,7 @@ UIManager.put("AuditoryCues.playList", optionPaneAuditoryCues);
 UIManager.put("OptionPane.informationSound", "/example/notice2.wav");
 }}
 
-* 参考リンク [#t9700925]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/6/technotes/guides/swing/SwingChanges.html#Miscellaneous Swing コンポーネントの音声フィードバック]
 - [http://www.ibm.com/developerworks/jp/java/library/j-mer0730/ Merlinの魔術: Swingのオーディオ]
 - [http://www.taitaistudio.com/wav/ "taitai studio" フリーWav素材集]
@@ -48,6 +48,6 @@ UIManager.put("OptionPane.informationSound", "/example/notice2.wav");
 - [[MIDIファイルの演奏>Swing/MidiSystem]]
 - [[Wavファイルの演奏>Swing/Sound]]
 
-* コメント [#k5553b1c]
+* コメント [#comment]
 #comment
 #comment

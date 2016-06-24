@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-06-23T01:04:57+09:00
 description: LookAndFeelの変更を取得するリスナーの作成などを行います。
 ---
-* 概要 [#w3605aae]
+* 概要 [#summary]
 `LookAndFeel`の変更を取得するリスナーの作成などを行います。
 
 #download(https://lh3.googleusercontent.com/-dbduLE1mbyM/U6b3UwtJj6I/AAAAAAAACH4/AUy3dSpgxMg/s800/LookAndFeelChangeListener.png)
 
-* サンプルコード [#a56ca989]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIManager.addPropertyChangeListener(new PropertyChangeListener() {
   @Override public void propertyChange(PropertyChangeEvent e) {
@@ -22,7 +22,7 @@ UIManager.addPropertyChangeListener(new PropertyChangeListener() {
 });
 }}
 
-* 解説 [#ke54c5ce]
+* 解説 [#explanation]
 上記のサンプルでは、以下の三種類の方法で`LookAndFeel`の変更を取得するテストを行っています。
 
 - `UIManager: propertyChange`
@@ -35,7 +35,7 @@ UIManager.addPropertyChangeListener(new PropertyChangeListener() {
 -- このサンプルでは、`JRadioButtonMenuItem`で`LookAndFeel`を切り替えているので、各ボタンに`ActionListener`を追加し、チェックされた時に`LookAndFeel`の変更を取得
 -- アクションが実行された時点では、`LookAndFeel`の変更が完了しておらず、`UIManager`のプロパティ値も前の`LookAndFeel`のままなので、その値の取得は`EventQueue.invokeLater(...)`を使って一連の`UI`イベントの一番最後に実行する
 
-//* 参考リンク
-* コメント [#v8dcdbb6]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

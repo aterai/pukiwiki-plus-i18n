@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-09-08T00:05:45+09:00
 description: JSplitPaneのDividerをワンクリックで展開・収納するためのOneTouchButtonのサイズ、オフセット、背景色などを変更します。
 ---
-* 概要 [#fde03520]
+* 概要 [#summary]
 `JSplitPane`の`Divider`をワンクリックで展開・収納するための`OneTouchButton`のサイズ、オフセット、背景色などを変更します。
 
 #download(https://lh4.googleusercontent.com/-_zdaiM8x6a4/VAxzwh3xxFI/AAAAAAAACM0/hBR-P4Nn56A/s800/OneTouchButton.png)
 
-* サンプルコード [#l4e7fe73]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIManager.put("SplitPane.oneTouchButtonSize", 32);
 UIManager.put("SplitPane.oneTouchButtonOffset", 50);
@@ -29,7 +29,7 @@ for (Component c: divider.getComponents()) {
 }
 }}
 
-* 解説 [#kc4ddd94]
+* 解説 [#explanation]
 上記のサンプルでは、`OneTouchButton`(`JSplitPane`の`Divider`をワンクリックで展開・収納するための`JButton`)のサイズ、オフセット、背景色などを変更しています。
 
 - `OneTouchButton`のサイズ指定
@@ -50,7 +50,7 @@ for (Component c: divider.getComponents()) {
 - `Divider`の`Border`と、`OneTouchButton`
 -- `divider.setBorder(BorderFactory.createMatteBorder(20, 0, 5, 0, Color.RED));`などを設定すると、`OneTouchButton`が`Border`にめり込んでしまう？
 
-//* 参考リンク
-* コメント [#ibc02520]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

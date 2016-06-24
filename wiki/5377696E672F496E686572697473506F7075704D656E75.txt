@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-03-17T13:34:51+09:00
 description: 親コンポーネントに設定されているJPopupMenuを取得して、これを表示します。
 ---
-* 概要 [#pc27654d]
+* 概要 [#summary]
 親コンポーネントに設定されている`JPopupMenu`を取得して、これを表示します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOe9ph-LI/AAAAAAAAAcc/iwxbgnjvxg8/s800/InheritsPopupMenu.png)
 
-* サンプルコード [#hdc4396d]
+* サンプルコード [#sourcecode]
 #code(link){{
 JScrollPane scroll = new JScrollPane(table);
 scroll.setComponentPopupMenu(new TablePopupMenu());
@@ -35,7 +35,7 @@ private class TablePopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#c30a34a4]
+* 解説 [#explanation]
 上記のサンプルでは、`JScrollPane`に`setComponentPopupMenu(JPopupMenu)`メソッドで、ポップアップメニューを追加し、`JTable`の方は、`setInheritsPopupMenu(true)`とすることで、親の`JScrollPane`に設定したポップアップメニューを使用するようになっています。
 
 `JDK 1.5`では、`JViewport`も`setInheritsPopupMenu(true)`とする必要がありましたが、`JDK 1.6`ではデフォルトが変更されているようです。
@@ -113,9 +113,9 @@ public class HeaderPopupMenuTest {
 }
 }}
 
-* 参考リンク [#ga62d80c]
+* 参考リンク [#reference]
 - [[JPopupMenuをコンポーネントに追加>Swing/ComponentPopupMenu]]
 
-* コメント [#q2cd9879]
+* コメント [#comment]
 #comment
 #comment

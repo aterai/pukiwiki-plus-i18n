@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2008/04/drag-and-drop-tabs-in-jtabbedpane.html
     lang: en
 ---
-* 概要 [#ncb175e4]
+* 概要 [#summary]
 `JTabbedPane`のタブを`Drag&Drop`で移動します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLjYzYe0I/AAAAAAAAAXw/nr90t9LvfMI/s800/DnDTabbedPane.png)
 
-* サンプルコード [#jf8c35ef]
+* サンプルコード [#sourcecode]
 #code(link){{
 protected int getTargetTabIndex(Point glassPt) {
   Point tabPt = SwingUtilities.convertPoint(glassPane, glassPt, this);
@@ -59,20 +59,20 @@ private void convertTab(int prev, int next) {
 }
 }}
 
-* 解説 [#d37fac64]
+* 解説 [#explanation]
 上記のサンプルでは、`JTabbedPane`のタブをドラッグすると、マウスカーソルが変更されて、ドロップ可能な位置に青い線を描画します。
 
 ドラッグ中、半透明のタブゴーストを表示するかどうかを切り替えることが出来ます。タブ領域以外にドロップしようとすると、カーソルが変化します。`JTabbedPane`のタブが二段以上になる場合の検証はほとんどしていません。
 
 `MouseMotionListener`と`MouseListener`ではなく、`DragGestureListener`、`DragSourceListener`、`DropTargetListener`を使用する方法に変更しました。
 
-* 参考リンク [#za2e1c66]
+* 参考リンク [#reference]
 - [http://www.oreilly.co.jp/books/4873112788/toc.html Java Swing Hacks #63 半透明のドラッグ＆ドロップ]
 - [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]
 - [[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]
 - [[JLayerを使ってJTabbedPaneのタブの挿入位置を描画する>Swing/DnDLayerTabbedPane]]
 
-* コメント [#x7903657]
+* コメント [#comment]
 #comment
 - ドラッグ中のタブゴーストを表示する機能を追加しました。 -- &user(aterai); &new{2006-06-23 (金) 15:18:30};
 - `java.awt.dnd`パッケージを使用する方法にソースを変更しました。 -- &user(aterai); &new{2006-07-01 (土) 16:22:48};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-10-20T14:22:27+09:00
 description: JFileChooserのボタンテキストを変更します。
 ---
-* 概要 [#q32fca17]
+* 概要 [#summary]
 `JFileChooser`のボタンテキストを変更します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHw6_sLrI/AAAAAAAAARs/5fsN5G2p15U/s800/ApproveButtonText.png)
 
-* サンプルコード [#b602fe55]
+* サンプルコード [#sourcecode]
 #code(link){{
 //UIManager.put("FileChooser.saveButtonText",   "保存(S)");
 //UIManager.put("FileChooser.openButtonText",   "開く(O)");
@@ -21,7 +21,7 @@ JFileChooser fileChooser = new JFileChooser();
 //fileChooser.setApproveButtonMnemonic('O');
 }}
 
-* 解説 [#d57fefff]
+* 解説 [#explanation]
 上記のサンプルは、日本語の`WindowsLookAndFeel`に合わせて`JFileChooser`の`ApproveButton`やキャンセルボタンのテキストを以下のように変更しています。
 
 - %%`OpenDialog`のデフォルトでは、ファイルリストでフォルダが選択された状態の場合「開く(`O`)」、ファイルが選択された状態の場合「開く」に切り替わる%%
@@ -29,8 +29,8 @@ JFileChooser fileChooser = new JFileChooser();
 - %%`SaveDialog`のデフォルトでは、ファイルリストでフォルダが選択されていると「開く(`O`)」、ファイルが選択されていると「保存」なので、「保存(`S`)」に揃える%%
 -- `CancelButton`のデフォルトは、「取消し」で`SaveDialog`のフォルダ・ファイルの選択が切り替わるとボタンサイズに合わせてレイアウトが変化してしまうので、これを防ぐために二文字分長い「キャンセル」に変更
 
-//* 参考リンク
-* コメント [#m3d63c30]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - `Java 1.6.0_12`以降、デフォルトでは`Mnemonic`の表示がなくなっているようです(もしかしてバグだった？)。 -- &user(aterai); &new{2009-10-09 (金) 20:01:14};
 -- メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=5045878 Bug ID: 5045878 &#91;ja&#93; extra mnemonic characters on control buttons in JFileChooser] でも、`1.6.0`は関係なさそう…。 -- &user(aterai); &new{2009-10-09 (金) 20:16:41};

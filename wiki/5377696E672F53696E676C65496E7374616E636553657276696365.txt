@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-02-25T02:06:56+09:00
 description: SingleInstanceServiceを使って、Web Startアプリケーションの重複起動を禁止したり、引数の取得を行います。
 ---
-* 概要 [#md640f9c]
+* 概要 [#summary]
 `SingleInstanceService`を使って、`Web Start`アプリケーションの重複起動を禁止したり、引数の取得を行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTIU5TktI/AAAAAAAAAj4/muKNMFrhEcE/s800/SingleInstanceService.png)
 
-* サンプルコード [#zf8b6235]
+* サンプルコード [#sourcecode]
 #code(link){{
 final JFrame frame = new JFrame("@title@");
 try {
@@ -35,7 +35,7 @@ try {
 }
 }}
 
-* 解説 [#kf8f5501]
+* 解説 [#explanation]
 `Web Start`アプリケーションの場合、`javax.jnlp.SingleInstanceService`に、`SingleInstanceListener`を追加することで、新しい次のインスタンスの起動やその時の引数を取得することが簡単に出来ます。
 
 - %%メモ: `JDK 1.6.0_03`では、`SingleInstanceService`は正常に動作しない%%
@@ -58,13 +58,13 @@ try {
 
 - [http://javahowto.blogspot.com/2006/05/javahome-vs-javahome.html Java How To ...: JAVA_HOME vs java.home]
 
-* 参考リンク [#aa4383a9]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/6/jre/api/javaws/jnlp/javax/jnlp/SingleInstanceService.html SingleInstanceService (JNLP API Reference 1.5)]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6631056 Bug ID: 6631056 SingleInstanceService does not work on JRE 1.6.0_03]
 -- via: [https://community.oracle.com/thread/1307009 Java Web Start & JNLP - How to use singleinstance service with a JWS application]
 - [https://appframework.dev.java.net/servlets/ReadMsg?listName=users&msgNo=396 Java Web Start SingleInstanceService - appframework(JSR-296)]
 - [[ServerSocketを使ってアプリケーションの複数起動を禁止>Swing/SingleInstanceApplication]]
 
-* コメント [#rd58f835]
+* コメント [#comment]
 #comment
 #comment

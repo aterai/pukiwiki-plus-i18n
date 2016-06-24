@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-10-27T00:01:06+09:00
 description: JTabbedPaneのタブ上にドロップすることで、選択しているListItemをそのタブ内にあるJListへ移動します。
 ---
-* 概要 [#xc0cff8b]
+* 概要 [#summary]
 `JTabbedPane`のタブ上にドロップすることで、選択している`ListItem`をそのタブ内にある`JList`へ移動します。
 
 #download(https://lh5.googleusercontent.com/-oMjKQSnXvmM/VEzg70T1BQI/AAAAAAAANnU/Exu8u5wYyAw/s800/DropOnTabTitle.png)
 
-* サンプルコード [#of6fb758]
+* サンプルコード [#sourcecode]
 #code(link){{
 new DropTarget(jtp, DnDConstants.ACTION_MOVE, new DropTargetListener() {
   private int targetTabIndex = -1;
@@ -64,13 +64,13 @@ new DropTarget(jtp, DnDConstants.ACTION_MOVE, new DropTargetListener() {
 }, true);
 }}
 
-* 解説 [#lc8b22af]
+* 解説 [#explanation]
 上記のサンプルでは、`DropTarget`に`JTabbedPane`を設定し、`DropTargetListener#dragOver(...)`メソッドをオーバーライドして、マウスのドラッグポイントがタブ上(現在選択されているタブ以外)にある場合のみドロップ可能になるように、`DropTargetDragEvent#acceptDrag(...)`、`DropTargetDragEvent#rejectDrag()`で切り替えています。
 
-* 参考リンク [#i2c00efd]
+* 参考リンク [#reference]
 - [[JListの項目をドラッグ＆ドロップ>Swing/DnDList]]
 -- コメントを参照
 
-* コメント [#i63e920d]
+* コメント [#comment]
 #comment
 #comment

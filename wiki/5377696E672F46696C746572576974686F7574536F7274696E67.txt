@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-08-04T00:17:37+09:00
 description: フィルタありでソート不可のTableRowSorterを作成します。
 ---
-* 概要 [#nf0e4e54]
+* 概要 [#summary]
 フィルタありでソート不可の`TableRowSorter`を作成します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMr425A3I/AAAAAAAAAZk/ZFpsuUZWGcQ/s800/FilterWithoutSorting.png)
 
-* サンプルコード [#cbb5da29]
+* サンプルコード [#sourcecode]
 #code(link){{
 final TableRowSorter<TableModel> sorter = new TableRowSorter<>(model) {
   @Override public boolean isSortable(int column) {
@@ -24,7 +24,7 @@ sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
 });
 }}
 
-* 解説 [#a272ecaa]
+* 解説 [#explanation]
 上記のサンプルでは、行フィルタだけ利用して、行のソートは不可にしておきたいので、`sorter`に以下のような設定をしています。
 
 - `DefaultRowSorter#setRowFilter(RowFilter)`で偶数行だけ表示するフィルタを設定
@@ -33,10 +33,10 @@ sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
 ----
 `DefaultRowSorter#setSortable(int, boolean)`を使用して、一部の列だけソート不可にする方法もあります。
 
-* 参考リンク [#ea345b1c]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/DefaultRowSorter.html DefaultRowSorter (Java Platform SE 6)]
 - [[JTableHeaderのカラムを選択不可にする>Swing/DisabledHeader]]
 
-* コメント [#g670778a]
+* コメント [#comment]
 #comment
 #comment

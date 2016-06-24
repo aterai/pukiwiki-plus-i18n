@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2014/07/highlight-all-search-pattern-matches-in.html
     lang: en
 ---
-* 概要 [#jc1279e9]
+* 概要 [#summary]
 `JTextArea`内の文字列を指定した条件で検索し、マッチした文字列をすべてハイライト表示します。
 
 #download(https://lh5.googleusercontent.com/-jdjIr-6A1l8/U7ljpxPgxzI/AAAAAAAACJI/x2Okpzkcce8/s800/HighlightSearch.png)
 
-* サンプルコード [#wa588a68]
+* サンプルコード [#sourcecode]
 #code(link){{
 private Pattern getPattern() {
   String text = field.getText();
@@ -72,7 +72,7 @@ private void changeHighlight() {
 }
 }}
 
-* 解説 [#a3dd4ca2]
+* 解説 [#explanation]
 上記のサンプルでは、以下のような条件に一致する文字列をすべてハイライト表示(黄色)する検索を行います。また、文字列入力欄に文字列が入力されている場合、マッチした結果の総数とカレントの結果(オレンジでハイライト)の順番を`JLayer`で表示します。
 
 - `⋀`
@@ -85,10 +85,10 @@ private void changeHighlight() {
 - `Match whole word only`
 -- チェック有りで、`\b`(単語境界)を検索文字列の前後に追加して、単語検索を行う
 
-* 参考リンク [#y17ea508]
+* 参考リンク [#reference]
 - [[JTextPaneで検索結果のハイライト表示と文字色変更を同時に行う>Swing/HighlightTextForeground]]
 
-* コメント [#zd4f7fbc]
+* コメント [#comment]
 #comment
 - `Match case`の動作が逆になっていたのを修正。 -- &user(aterai); &new{2014-07-23 (水) 17:57:58};
 

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-08-03T20:40:16+09:00
 description: SpinnerNumberModelを使用するJSpinnerを無効にしたとき、数値を非表示にします。
 ---
-* 概要 [#yf2c696d]
+* 概要 [#summary]
 `SpinnerNumberModel`を使用する`JSpinner`を無効にしたとき、数値を非表示にします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKfhstbcI/AAAAAAAAAWE/MMaDVyQ9jNY/s800/DecimalFormatSymbols.png)
 
-* サンプルコード [#a40d872c]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static JSpinner makeSpinner1(SpinnerNumberModel m) {
   JSpinner s = new JSpinner(m);
@@ -33,13 +33,13 @@ private static JSpinner makeSpinner2(SpinnerNumberModel m) {
 }
 }}
 
-* 解説 [#e7cbe202]
+* 解説 [#explanation]
 + デフォルト
 + `JSpinner`から`JFormattedTextField`を取得し、この無効の場合の文字色を無効場合の背景色と同じにして非表示化
 + `JSpinner`から`JFormattedTextField`を取得し、`DecimalFormatSymbols#setNaN`メソッドを使用して、値が`NaN`の場合、表示する文字列をスペースに変更
 + `JSpinner`から`JFormattedTextField`を取得し、`DecimalFormatSymbols#setNaN`メソッドを使用して、値が`NaN`の場合、表示する文字列を`----`に変更
 
-//* 参考リンク
-* コメント [#v85ff054]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

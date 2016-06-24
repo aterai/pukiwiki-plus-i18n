@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-03-05T01:22:05+09:00
 description: ImageIconにImageObserverを設定して、JTableのセル中でAnimated GIFのアニメーションを行います。
 ---
-* 概要 [#m7551a70]
+* 概要 [#summary]
 `ImageIcon`に`ImageObserver`を設定して、`JTable`のセル中で`Animated GIF`のアニメーションを行います。
 
 #download(https://lh3.googleusercontent.com/-138Snht85-E/T1B6iHoG1pI/AAAAAAAABJw/XaESowuWEC4/s800/AnimatedIconInTableCell.png)
 
-* サンプルコード [#b724b7aa]
+* サンプルコード [#sourcecode]
 #code(link){{
 ImageIcon icon = new ImageIcon(url);
 //Wastefulness: icon.setImageObserver((ImageObserver) table);
@@ -33,7 +33,7 @@ icon.setImageObserver(new ImageObserver() {
 });
 }}
 
-* 解説 [#b35904a7]
+* 解説 [#explanation]
 上記のサンプルでは、[http://www2.gol.com/users/tame/swing/examples/SwingExamples.html AnimatedIconTableExample.java]を参考にして、`Animated GIF`ファイルから作成した`ImageIcon`に、`setImageObserver(ImageObserver)`を設定しています。直接`JTable`を`ImageObserver`として設定するとすべてのセルが再描画されて無駄なので、`JTable#getCellRect(row, col, false)`で対象セルのみ`repaint`するようにしています。
 
 - [http://www2.gol.com/users/tame/swing/examples/SwingExamples.html AnimatedIconTableExample.java]からの変更点
@@ -41,10 +41,10 @@ icon.setImageObserver(new ImageObserver() {
 -- `JDK 1.6.0`以降に導入された`JTable#convertRowIndexToView(row)`を使って、行がソートされていても正しいセルを再描画する
 -- `JTable#convertColumnIndexToView(col)`を使って、列の入れ替えがあっても正しいセルを再描画する
 
-* 参考リンク [#e193de0f]
+* 参考リンク [#reference]
 - [http://www2.gol.com/users/tame/swing/examples/SwingExamples.html AnimatedIconTableExample.java]
 -- 元サイトには繋がらないので、[https://www.google.com/search?q=AnimatedIconTableExample.java animatedicontableexample.java - Google 検索]などのミラーを参考
 
-* コメント [#d8bcbaea]
+* コメント [#comment]
 #comment
 #comment

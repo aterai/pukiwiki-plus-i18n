@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2008/03/jtable-pagination-example-using.html
     lang: en
 ---
-* 概要 [#sff7ad1c]
+* 概要 [#summary]
 `JDK 6`で導入された`RowFilter`を使って、`JTable`の行を`Pagination`風に分割して表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUiUh8yiI/AAAAAAAAAmM/eY1zd24d0ac/s800/TablePagination.png)
 
-* サンプルコード [#l576bdcf]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static int LR_PAGE_SIZE = 5;
 
@@ -94,7 +94,7 @@ private void initLinkBox(final int itemsPerPage, final int currentPageIndex) {
 }
 }}
 
-* 解説 [#uc3887af]
+* 解説 [#explanation]
 上記のサンプルは、検索サイトなどでよく使われている、`Pagination`を`JTable`で行っています。
 
 ある位置から一定の行数だけ表示するフィルタを予め作成し、これを上部の`JRadioButton`(`BasicRadioButtonUI`を継承して見た目だけリンク風に変更)で切り替えています。
@@ -104,10 +104,10 @@ private void initLinkBox(final int itemsPerPage, final int currentPageIndex) {
 - 参考: [[JTableのRowFilterを一旦解除してソート>Swing/ResetRowFilter]]
 -- [http://ateraimemo.com/data/swing/TablePaginationTest.java TablePaginationTest.java]
 
-* 参考リンク [#w74bc248]
+* 参考リンク [#reference]
 - [[JTableのPaginationとSwingWorkerでの逐次読み込み>Swing/PageInputForPagination]]
 
-* コメント [#n7c8e61e]
+* コメント [#comment]
 #comment
 - `Prev`、`Next`ボタンなどを追加して、Google風の`Pagination`を行うように変更しました。 -- &user(aterai); &new{2008-03-26 (水) 20:28:31};
 - ブログで指摘されていた恥ずかしいバグ(`paint`メソッドでコンポーネントの状態を変更し、無限ループ、`CPU100%`)を修正 -- &user(aterai); &new{2008-09-07 (日) 00:08:50};

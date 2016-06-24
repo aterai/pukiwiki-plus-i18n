@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/01/jtable-rowheader.html
     lang: en
 ---
-* 概要 [#le4e858f]
+* 概要 [#summary]
 `JTable`を設定した`JScrollPane`の`RowHeaderView`に、`JList`で作成した行ヘッダを追加します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUk9YzW7I/AAAAAAAAAmQ/wjin9CuyfBg/s800/TableRowHeader.png)
 
-* サンプルコード [#kfa64240]
+* サンプルコード [#sourcecode]
 #code(link){{
 class RowHeaderList<E> extends JList<E> {
   private final JTable table;
@@ -70,7 +70,7 @@ class RowHeaderList<E> extends JList<E> {
 }
 }}
 
-* 解説 [#z757f120]
+* 解説 [#explanation]
 上記のサンプルでは、`JList`で作成した行ヘッダを`JScrollPane`に`setRowHeaderView`メソッドで追加しています。
 
 表の余白などに色がついているのは、テストの名残です。特に意味は無いのですが、そのまま残しています。
@@ -81,12 +81,12 @@ scrollPane.setBackground(Color.RED);
 scrollPane.getViewport().setBackground(Color.GREEN);
 }}
 
-* 参考リンク [#a86f5ca5]
+* 参考リンク [#reference]
 //- [http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html JTable Examples]
 - [https://community.oracle.com/thread/1395446 Swing - excel styled table?]
 - [[JListのセルをカーソル移動でロールオーバー>Swing/RollOverListener]]
 
-* コメント [#t32c2230]
+* コメント [#comment]
 #comment
 - 不正なセルレンダラーを設定していたので修正しました。 -- &user(aterai); &new{2006-11-16 (木) 20:22:33};
 - `excel`のように、行ヘッダをクリックしてその行が選択されたり、テーブルの本体にてセルをクリックしてそのセルだけが選択されたりすることはできますか？いろいろ試しましたが、なかなかできませんでした。 -- &user(javalover); &new{2008-03-11 (火) 09:52:12};

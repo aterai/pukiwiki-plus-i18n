@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-07-23T12:17:18+09:00
 description: Java 1.7.0で導入されたStrokeBorderをテストします。
 ---
-* 概要 [#e0a9422e]
+* 概要 [#summary]
 `Java 1.7.0`で導入された`StrokeBorder`をテストします。
 
 #download(https://lh3.googleusercontent.com/-MSfWQgMprsI/UAy_-BOqVII/AAAAAAAABPo/0uH5WtaajqY/s800/StrokeBorder.png)
 
-* サンプルコード [#p740b063]
+* サンプルコード [#sourcecode]
 #code(link){{
 dashedStroke = new BasicStroke(5f,
     ((EndCapStyle) endcapCombo.getSelectedItem()).style,
@@ -19,13 +19,13 @@ dashedStroke = new BasicStroke(5f,
 label.setBorder(BorderFactory.createStrokeBorder(dashedStroke, Color.RED));
 }}
 
-* 解説 [#m70360e7]
+* 解説 [#explanation]
 上記のサンプルでは、破線パターンなどから`BasicStroke`を作成し(線幅、接合トリミングの制限値、破線パターン開始位置のオフセットなどは固定)、これを`StrokeBorder`に適用(色は固定)して、`JLabel`に設定しています。
 
-* 参考リンク [#q38584d6]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/7/docs/api/javax/swing/border/StrokeBorder.html StrokeBorder (Java Platform SE 7)]
 - [[BasicStrokeで点線を作成>Swing/DashedLine]]
 
-* コメント [#g04bbc34]
+* コメント [#comment]
 #comment
 #comment

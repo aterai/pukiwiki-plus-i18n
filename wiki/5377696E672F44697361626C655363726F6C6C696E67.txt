@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-10-03
 description: JScrollPaneのスクロールを一時的に禁止します。
 ---
-* 概要 [#idbca416]
+* 概要 [#summary]
 `JScrollPane`のスクロールを一時的に禁止します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLM6S99OI/AAAAAAAAAXM/9r2e_2JRA5g/s800/DisableScrolling.png)
 
-* サンプルコード [#id62505b]
+* サンプルコード [#sourcecode]
 #code(link){{
 JCheckBox check = new JCheckBox("Disable Scrolling");
 check.addItemListener(new ItemListener() {
@@ -30,7 +30,7 @@ check.addItemListener(new ItemListener() {
 });
 }}
 
-* 解説 [#m5e6b6de]
+* 解説 [#explanation]
 - `Disable Scrolling`をチェックして無効状態にする
 -- スクロールバーを取得し、`JScrollBar#setEnabled(boolean)`メソッドを使って、これを無効化
 -- `JScrollPane#setWheelScrollingEnabled(boolean)`メソッドで、マウスホイールによるスクロールを無効化
@@ -45,10 +45,10 @@ check.addItemListener(new ItemListener() {
 
 - [[JLayerで子コンポーネントへの入力を制限する>Swing/PopupMenuBlockLayer]]
 
-* 参考リンク [#f2cc6ec4]
+* 参考リンク [#reference]
 - [[JLayerで子コンポーネントへの入力を制限する>Swing/PopupMenuBlockLayer]]
 - [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]
 
-* コメント [#v37d76ac]
+* コメント [#comment]
 #comment
 #comment

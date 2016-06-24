@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-03-10T01:39:57+09:00
 description: コンポーネントに右クリックなどでポップアップするJPopupMenuを追加します。
 ---
-* 概要 [#nc8dcfd3]
+* 概要 [#summary]
 コンポーネントに右クリックなどでポップアップする`JPopupMenu`を追加します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKBw4_YtI/AAAAAAAAAVU/J_aFRLSj-VU/s800/ComponentPopupMenu.png)
 
-* サンプルコード [#s7d9a0a6]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTextArea textArea = new JTextArea("ComponentPopupMenu Test");
 textArea.setComponentPopupMenu(new TextComponentPopupMenu());
@@ -59,7 +59,7 @@ class TextComponentPopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#c9617b81]
+* 解説 [#explanation]
 上記のサンプルでは、`JTextArea`に`setComponentPopupMenu(JPopupMenu)`メソッドで、ポップアップメニューを追加しています。
 
 `JDK 1.5`でこのメソッドが追加されたため、各コンポーネントにマウスリスナーを設定して、`e.isPopupTrigger()`でポップアップを表示するクリックかを判断するといったコードを書く必要が無くなりました。
@@ -111,11 +111,11 @@ popup.addPopupMenuListener(new PopupMenuListener() {
 textArea.setComponentPopupMenu(popup);
 }}
 
-* 参考リンク [#rd20f140]
+* 参考リンク [#reference]
 - [[JPopupMenuの取得を親に委譲>Swing/InheritsPopupMenu]]
 - [[JTabbedPaneでタブを追加削除>Swing/TabbedPane]]
 
-* コメント [#ob667bd4]
+* コメント [#comment]
 #comment
 - メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6675802 Bug ID: 6675802 Regression: heavyweight popups cause SecurityExceptions in applets] -- &user(aterai); &new{2008-04-05 (土) 20:59:02};
 - メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6299213 Bug ID: 6299213 The PopupMenu is not updated if the LAF is changed (incomplete fix of 4962731)] -- &user(aterai); &new{2008-04-10 (木) 18:58:52};

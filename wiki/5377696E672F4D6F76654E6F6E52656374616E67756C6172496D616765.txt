@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-11-17T16:07:53+09:00
 description: マウスカーソルに反応するコンポーネントの領域をJLabelに設定した画像アイコンの不透明領域に合わせて変更します。
 ---
-* 概要 [#hda649fc]
+* 概要 [#summary]
 マウスカーソルに反応するコンポーネントの領域を`JLabel`に設定した画像アイコンの不透明領域に合わせて変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTQKdiDk4I/AAAAAAAAAfI/tb322r8ngL0/s800/MoveNonRectangularImage.png)
 
-* サンプルコード [#h071e116]
+* サンプルコード [#sourcecode]
 #code(link){{
 private JLabel makeLabelIcon(BufferedImage image) {
   JLabel label = new JLabel(new ImageIcon(image)) {
@@ -21,16 +21,16 @@ private JLabel makeLabelIcon(BufferedImage image) {
   //...
 }}
 
-* 解説 [#lea73de2]
+* 解説 [#explanation]
 - `JLabel#contains(int, int)`メソッドをオーバーライドし、与えられた座標にある画像の色成分が透明である場合は、`false`を返すように設定
 - 画像の透明部分は`JLabel`に含まれないことになり、`JLabel`に設定した`MouseListener`などに反応しない
 - 非矩形画像の不透明部分だけがマウスでドラッグ可能になる
 
-* 参考リンク [#va0cebde]
+* 参考リンク [#reference]
 - [http://duke.kenai.com/iconSized/index.html Duke Images: iconSized]
 - [[JButtonの形を変更>Swing/RoundButton]]
 - [[ImageIconの形でJButtonを作成>Swing/RoundImageButton]]
 
-* コメント [#a017a413]
+* コメント [#comment]
 #comment
 #comment

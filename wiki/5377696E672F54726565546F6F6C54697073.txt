@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-06-04
 description: ノード毎に内容の異なるJToolTipを表示するJTreeを作成します。
 ---
-* 概要 [#nf00970d]
+* 概要 [#summary]
 ノード毎に内容の異なる`JToolTip`を表示する`JTree`を作成します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWQe1RL2I/AAAAAAAAAo8/6HFqbUb3UZ8/s800/TreeToolTips.png)
 
-* サンプルコード [#nff3084c]
+* サンプルコード [#sourcecode]
 #code(link){{
 tree = new JTree() {
   @Override public String getToolTipText(MouseEvent e) {
@@ -26,7 +26,7 @@ tree = new JTree() {
 ToolTipManager.sharedInstance().registerComponent(tree);
 }}
 
-* 解説 [#b86117ab]
+* 解説 [#explanation]
 上記のサンプルでは、`JTree#getToolTipText(MouseEvent)`をオーバーライドして`JToolTip`を表示しています。以下のようなセルレンダラーを使用する方法もあります。
 
 #code{{
@@ -53,7 +53,7 @@ ToolTipManager.sharedInstance().registerComponent(tree);
 //tree.setToolTipText("dummy");
 }}
 
-//* 参考リンク
-* コメント [#g65ced14]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

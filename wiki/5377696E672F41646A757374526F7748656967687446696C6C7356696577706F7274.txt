@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2015/09/adjust-height-of-every-row-in-jtable-to.html
     lang: en
 ---
-* 概要 [#x7a24c00]
+* 概要 [#summary]
 `JTable`の各行の高さ変更することで行数などに変更があっても、`JViewport`に余白が発生しないように調整します。
 
 #download(https://lh3.googleusercontent.com/-Poa86QgNChU/VaKgwOMpRdI/AAAAAAAAN9E/2gQi6newmek/s800-Ic42/AdjustRowHeightFillsViewport.png)
 
-* サンプルコード [#h72d2e2d]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   int prevHeight = -1;
@@ -42,15 +42,15 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 解説 [#u3bc340a]
+* 解説 [#explanation]
 上記のサンプルでは、`JViewport`のサイズまで`JTable`の各セルを`GridLayout`風に同比率で拡大縮小するよう`JTable#doLayout()`をオーバーライドしています。
 
 - 余白(高さ方向)の調整
 -- `JViewport`の高さが変更されたり、行数の増減があった場合、行の高さを`JTable#setRowHeight(...)`で設定し直すことで、`JViewport`に余白が発生しないように調整
 
-* 参考リンク [#l889affc]
+* 参考リンク [#reference]
 - [[JTableの行の高さを変更する>Swing/FishEyeTable]]
 
-* コメント [#s65ddd45]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-08-16
 description: AudioSystemを使って、AudioInputStream、Clip(Line)などを作成取得し、wavファイルを演奏します。
 ---
-* 概要 [#ue05d866]
+* 概要 [#summary]
 `AudioSystem`を使って、`AudioInputStream`、`Clip`(`Line`)などを作成取得し、`wav`ファイルを演奏します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTj2hYTjI/AAAAAAAAAko/8dQ-XleMZBc/s800/Sound.png)
 
-* サンプルコード [#xc5680fe]
+* サンプルコード [#sourcecode]
 #code(link){{
 URL url = getClass().getResource("notice1.wav");
 AudioInputStream sound = AudioSystem.getAudioInputStream(url);
@@ -21,17 +21,17 @@ clip.open(sound);
 clip.start();
 }}
 
-* 解説 [#ndfc6e01]
+* 解説 [#explanation]
 `WAVE`、`AU`、`AIFF`、`SND`形式のサウンドファイルが演奏できるようです。
 
-* 参考リンク [#i44becfe]
+* 参考リンク [#reference]
 - %%"taitai studio" フリーWav素材集%%
--- %%上記のサイトの`wav`ファイルをサンプルとして利用しています。%% サイトが移転しているようなので、別の素材を探す予定 
+-- %%上記のサイトの`wav`ファイルをサンプルとして利用しています。%% サイトが移転しているようなので、別の素材を探す予定
 - [[MIDIファイルの演奏>Swing/MidiSystem]]
 - [[Beep音を鳴らす>Swing/Beep]]
 - [[AuditoryCuesでイベント音を設定する>Swing/AuditoryCues]]
 
-* コメント [#le6b4d7b]
+* コメント [#comment]
 #comment
 - こんなところからすみません。こちらのシステムの応用(というほどすごいものでもありませんが)を作ってもよろしいでしょうか。 -- &user(学生S); &new{2012-10-15 (月) 17:29:22};
 - 使用したい箇所は、ソースプログラムの`loadAndPlayAudio`というところになります。 -- &user(学生S); &new{2012-10-15 (月) 17:34:40};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-08-15
 description: JComponentのcreateToolTip()メソッドをオーバーライドして、Borderを変更したJToolTipを生成します。
 ---
-* 概要 [#kfc70601]
+* 概要 [#summary]
 `JComponent`の`createToolTip()`メソッドをオーバーライドして、`Border`を変更した`JToolTip`を生成します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVjcQsX6I/AAAAAAAAAn0/tieki8bniAM/s800/ToolTipBorder.png)
 
-* サンプルコード [#hae3c35e]
+* サンプルコード [#sourcecode]
 #code(link){{
 JButton button = new JButton() {
   @Override public JToolTip createToolTip() {
@@ -25,10 +25,10 @@ JButton button = new JButton() {
 button.setToolTipText("Test - ToolTipText1");
 }}
 
-* 解説 [#mf29af77]
+* 解説 [#explanation]
 上記のサンプルでは、`JComponent#createToolTip()`メソッドをオーバーライドし、その中で`Border`を設定した`JToolTip`を生成しています。
 
-//* 参考リンク
-* コメント [#s0820c45]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

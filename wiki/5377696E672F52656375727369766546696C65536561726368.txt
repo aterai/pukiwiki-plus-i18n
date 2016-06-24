@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2003-12-15
 description: 指定したDirectory以下のFileを再帰的に検索し、その進捗状況をJProgressBarで表示します。
 ---
-* 概要 [#la10adfb]
+* 概要 [#summary]
 指定した`Directory`以下の`File`を再帰的に検索し、その進捗状況を`JProgressBar`で表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRh7du1II/AAAAAAAAAhU/jcMUoOTcbTU/s800/RecursiveFileSearch.png)
 
-* サンプルコード [#n78bba98]
+* サンプルコード [#sourcecode]
 #code(link){{
 private void recursiveSearch(File dir, final List<File> list)
         throws InterruptedException {
@@ -32,7 +32,7 @@ private void recursiveSearch(File dir, final List<File> list)
 }
 }}
 
-* 解説 [#l9b71aa9]
+* 解説 [#explanation]
 上記のサンプルでは、選択したフォルダ以下のファイルを再帰的にすべて検索して表示しています。`JProgressBar`を使った進捗状況の表示とキャンセルには、`SwingWorker`を利用しています。
 
 ----
@@ -84,13 +84,13 @@ public class FilesWalkTest {
 }
 }}
 
-* 参考リンク [#oc687cdf]
+* 参考リンク [#reference]
 - [http://msugai.fc2web.com/java/IO/fileObj.html Java入門 ファイル]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/progress.html How to Use Progress Bars]
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/SwingWorker.html SwingWorker (Java Platform SE 6)]
 - [http://web.archive.org/web/20090830092511/http://java.sun.com/products/jfc/tsc/articles/threads/threads2.html Using a Swing Worker Thread]
 
-* コメント [#v7736a30]
+* コメント [#comment]
 #comment
 - 実際に動作するサンプルを追加してみました。 -- &user(aterai); &new{2006-04-28 (金) 21:50:55};
 - `JDK 6`の`SwingWorker`を使用するように変更しました。 -- &user(aterai); &new{2008-07-11 (金) 15:32:26};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-01-01T08:38:12+09:00
 description: JDesktopPaneとJInternalFrameの距離が近くなった場合、これらを自動的に吸着させます。
 ---
-* 概要 [#t9488112]
+* 概要 [#summary]
 `JDesktopPane`と`JInternalFrame`の距離が近くなった場合、これらを自動的に吸着させます。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPnXoiDZI/AAAAAAAAAeQ/9SMGwoIqOi8/s800/MagneticFrame.png)
 
-* サンプルコード [#o8501b2d]
+* サンプルコード [#sourcecode]
 #code(link){{
 desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
 desktop.setDesktopManager(new DefaultDesktopManager() {
@@ -37,10 +37,10 @@ desktop.setDesktopManager(new DefaultDesktopManager() {
 });
 }}
 
-* 解説 [#oa45d781]
+* 解説 [#explanation]
 `DesktopManager#dragFrame(JInternalFrame,int,int)`メソッドをオーバーライドすることで`JInternalFrame`の位置を調整しています。上記のサンプルでは、`JDesktopPane`と`JInternalFrame`の距離が`10px`以下になった場合、それぞれ吸着するよう設定しています。
 
-//* 参考リンク
-* コメント [#y9744126]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

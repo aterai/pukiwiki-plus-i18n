@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-05-02T16:45:24+09:00
 description: JTreeのノードを選択してJPopupMenuを開き、そのノードの削除や名前変更、子ノードの追加を行います。
 ---
-* 概要 [#y57e98ab]
+* 概要 [#summary]
 `JTree`のノードを選択して`JPopupMenu`を開き、そのノードの削除や名前変更、子ノードの追加を行います。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/Tb5bkDzXJHI/AAAAAAAAA6c/qxz0Vzwy4Ts/s800/AddNode.png)
 
-* サンプルコード [#l888db92]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TreePopupMenu extends JPopupMenu {
   private TreePath path;
@@ -53,7 +53,7 @@ class TreePopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#f470d783]
+* 解説 [#explanation]
 上記のサンプルでは、`JPopupMenu`を使って、選択したノードに子ノードの追加、削除、名前変更ができます。
 
 - 追加
@@ -73,11 +73,11 @@ model.valueForPathChanged(path, str);
 //model.nodeChanged(leaf);
 }}
 
-* 参考リンク [#gb30e7d7]
+* 参考リンク [#reference]
 - [[JTreeのノード上でJPopupMenuを表示 >Swing/TreeNodePopupMenu]]
 - [[JTreeのノード編集をPopupからのみに制限する>Swing/StartEditingPopupMenu]]
 
-* コメント [#ad4d46ba]
+* コメント [#comment]
 #comment
 - ソースなどのリンク切れを修正。 -- &user(aterai); &new{2011-05-06 (金) 18:46:23};
 

@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2012/09/create-gradient-titled-separator.html
     lang: en
 ---
-* 概要 [#ub2f11b2]
+* 概要 [#summary]
 `TitledBorder`と`MatteBorder`を使用して`Title`付きの`Separator`を作成します。
 
 #download(https://lh3.googleusercontent.com/-sRtVayYL37Q/UDs_iiXRk7I/AAAAAAAABRk/71qZoe9vM60/s800/TitledSeparator.png)
 
-* サンプルコード [#a13df73e]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TitledSeparator extends JLabel {
   private final String title;
@@ -84,7 +84,7 @@ class TitledSeparator extends JLabel {
 }
 }}
 
-* 解説 [#o6cd3ee7]
+* 解説 [#explanation]
 `TitledBorder`と、左下右の`Insets`が`0`(上余白のみ設定)でタイルアイコンでグラデーションを行う`MatteBorder`を組み合わせ、これを空の`JLabel`に設定することで、`TitledSeparator`を作成しています。
 
 - 上
@@ -96,10 +96,10 @@ class TitledSeparator extends JLabel {
 - 下
 -- デフォルトの`JSeparator`を使用
 
-* 参考リンク [#oc439ee0]
+* 参考リンク [#reference]
 - [[TitledBorderのタイトル位置>Swing/TitledBorder]]
 - [[Separatorのグラデーション>Swing/Gradient]]
 
-* コメント [#i31c8183]
+* コメント [#comment]
 #comment
 #comment

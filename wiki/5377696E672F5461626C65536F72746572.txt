@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-02-28
 description: JDK 1.5.0以前に、The Java™ TutorialにあったTableSorter.javaを使用して、JTableの行を降順、昇順、初期状態にソートします。
 ---
-* 概要 [#j367981a]
+* 概要 [#summary]
 `JDK 1.5.0`以前に、`The Java™ Tutorial`にあった`TableSorter.java`を使用して、`JTable`の行を降順、昇順、初期状態にソートします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUp0MLx6I/AAAAAAAAAmY/omjw4LoJbbc/s800/TableSorter.png)
 
-* サンプルコード [#nba2e358]
+* サンプルコード [#sourcecode]
 #code(link){{
 //DefaultTableModel model = new DefaultTableModel();
 TestModel model = new TestModel();
@@ -19,7 +19,7 @@ JTable table = new JTable(sorter);
 sorter.setTableHeader(table.getTableHeader());
 }}
 
-* 解説 [#h8a583cb]
+* 解説 [#explanation]
 `The Java™ Tutorial`版の`TableSorter`を使用して、[[JTableのソート>Swing/SortableTable]]で使用しているものと同じ`TableModel`でソートしています。
 
 `TableSorter`には、KBD{Ctrl}キーを押しながらヘッダをクリックすると、そのカラムを第二キーとしてソートする機能もあります。
@@ -93,13 +93,13 @@ private final JTable table = new JTable(sorter) {
 -- [http://www.oracle.com/technetwork/articles/javase/index-135205.html#1 Table Sorting and Filtering - New and Updated Desktop Features in Java SE 6, Part 2]
 -- [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
 
-* 参考リンク [#f1d425ba]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/table.html#sorting Sorting and Otherwise Manipulating Data - How to Use Tables (The Java™ Tutorials > Creating a GUI with JFC/Swing > Using Swing Components)]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/table.html How to Use Tables]
 - [https://community.oracle.com/thread/1185784 Generics - Simple method but hard with generics: compareTo()]
 - [http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSorterDemoProject/src/components/TableSorter.java TableSorter.java]
 
-* コメント [#n7689273]
+* コメント [#comment]
 #comment
 - いつもお世話になっております。 `jtable`を下記のように初期化します。 -- &user(Tiger); &new{2010-08-05 (木) 06:07:47};
 

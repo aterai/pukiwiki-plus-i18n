@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-04-22T03:35:42+09:00
 description: ProgressMonitorInputStreamを使用してテキストファイルのダウンロード状態を進捗表示します。
 ---
-* 概要 [#e62dec86]
+* 概要 [#summary]
 `ProgressMonitorInputStream`を使用してテキストファイルのダウンロード状態を進捗表示します。
 
 #download(https://lh4.googleusercontent.com/-gXnU23f7iiw/UXQuzmKdfVI/AAAAAAAABp8/aPk0QR78NlY/s800/ProgressMonitorInputStream.png)
 
-* サンプルコード [#pabe4298]
+* サンプルコード [#sourcecode]
 #code(link){{
 class RunAction extends AbstractAction {
   public RunAction() {
@@ -109,7 +109,7 @@ private static class Task extends SwingWorker<String, Chunk> {
 }
 }}
 
-* 解説 [#xaf420db]
+* 解説 [#explanation]
 上記のサンプルでは、`URLConnection`から開いた`InputStream`に`ProgressMonitorInputStream`をラップして、ファイルのダウンロード進捗状態を`ProgressMonitor`で表示しています。
 
 - `ProgressMonitorInputStream`の使用する`ProgressMonitor`の最大値は、ファイルサイズ(バイト)
@@ -121,10 +121,10 @@ private static class Task extends SwingWorker<String, Chunk> {
 -- 注: 改行は`1`バイトで決め打ちしている
 -- 進捗を表示する前に`ProgressMonitor#setNote("dummy note");`としておかないと、`Note`に使用する`JLabel`が`null`のままで表示されない、またはレイアウトがおかしくなる
 
-* 参考リンク [#ie55372f]
+* 参考リンク [#reference]
 - [[ProgressMonitorがダイアログを表示するまでの待ち時間>Swing/MillisToDecideToPopup]]
 
-* コメント [#f8c160df]
+* コメント [#comment]
 #comment
 - `EDT`外で`ProgressMonitor`を変更する(`monitor.setMinimum(0);`など)のは駄目な気がするので、修正。 -- &user(aterai); &new{2014-02-04 (火) 15:05:59};
 

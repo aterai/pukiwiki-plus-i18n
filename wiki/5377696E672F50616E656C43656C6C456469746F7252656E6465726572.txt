@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-11-17T00:00:08+09:00
 description: JTableのCellEditor、CellRendererにJPanelを使用することで、内部に複数コンポーネントを配置したり、セル内の余白を追加します。
 ---
-* 概要 [#zd55bee2]
+* 概要 [#summary]
 `JTable`の`CellEditor`、`CellRenderer`に`JPanel`を使用することで、内部に複数コンポーネントを配置したり、セル内の余白を追加します。
 
 #download(https://lh4.googleusercontent.com/-_MCc8pkoFGY/VGitX9B0RsI/AAAAAAAANpg/zAG38GESdsU/s800/PanelCellEditorRenderer.png)
 
-* サンプルコード [#m658cdae]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ButtonsPanel extends JPanel {
   public final List<JButton> buttons = Arrays.asList(
@@ -94,7 +94,7 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
   //...
 }}
 
-* 解説 [#y2752168]
+* 解説 [#explanation]
 - 左: `JPanel` + `JSpinner`
 -- `TableCellEditor`, `TableCellRenderer`に`JSpinner`を配置した`JPanel`を使用
 -- `JPanel`に`GridBagLayout`を指定し、`insets = new Insets(0, 10, 0, 10)`、`fill = GridBagConstraints.HORIZONTAL`で余白を設定
@@ -105,12 +105,12 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
 --- カラム幅が狭くなって折り返しが発生しても、セルの高さは変化しないので、コンポーネントが見切れてしまう
 -- [[JTableのセルに複数のJButtonを配置する>Swing/MultipleButtonsInTableCell]]
 
-* 参考リンク [#ia864c9d]
+* 参考リンク [#reference]
 - [[TableCellEditorのレイアウトを変更>Swing/CellEditorLayout]]
 - [[JTableのCellEditorに設定したJComboBoxに余白を追加する>Swing/ComboBoxCellEditorInsets]]
 - [[JTableのセルに複数のJButtonを配置する>Swing/MultipleButtonsInTableCell]]
 - [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
 
-* コメント [#t1dd1ae6]
+* コメント [#comment]
 #comment
 #comment

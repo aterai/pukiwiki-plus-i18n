@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-04-13T00:00:05+09:00
 description: JDesktopPaneとJTabbedPaneをCardLayoutで切り替えるとき、その内部のJInternalFrameとタブもすべて入れ替えます。
 ---
-* 概要 [#y8d09014]
+* 概要 [#summary]
 `JDesktopPane`と`JTabbedPane`を`CardLayout`で切り替えるとき、その内部の`JInternalFrame`とタブもすべて入れ替えます。
 
 #download(https://lh4.googleusercontent.com/-mNR8hjjt8Ao/VSp_fRS8WZI/AAAAAAAAN2Y/rTsBE6-6Ekg/s800/SwapInternalFramesWithTabs.png)
 
-* サンプルコード [#g2227ec9]
+* サンプルコード [#sourcecode]
 #code(link){{
 Action swapAction = new AbstractAction("JDesktopPane <-> JTabbedPane") {
   @Override public void actionPerformed(ActionEvent e) {
@@ -36,7 +36,7 @@ Action swapAction = new AbstractAction("JDesktopPane <-> JTabbedPane") {
 };
 }}
 
-* 解説 [#wcec2d7b]
+* 解説 [#explanation]
 - `JInternalFrame`をタブに変換する
 -- `JDesktopPane#getAllFrames()`で取得した順番は、`JInternalFrame`がアイコン化されているなどの状態で変化するので、タイトルでソートしてから`JTabbedPane`に追加
 -- `JInternalFrame`自体はそのままで、`ContentPane`のみタブコンポーネントに変換する
@@ -46,7 +46,7 @@ Action swapAction = new AbstractAction("JDesktopPane <-> JTabbedPane") {
 --- `JTabbedPane`側ではタブの削除を許可していない
 -- `JInternalFrame`のタイトルと同じタブのインデックスを`JTabbedPane#indexOfTab(String)`で検索し、そのコンポーネントを`ContentPane`として`JInternalFrame`に戻す
 
-//* 参考リンク
-* コメント [#v2d47b85]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

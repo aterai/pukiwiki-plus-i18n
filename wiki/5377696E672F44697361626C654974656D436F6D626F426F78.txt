@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2010/03/non-selectable-jcombobox-items.html
     lang: en
 ---
-* 概要 [#q640bc3b]
+* 概要 [#summary]
 `JComboBox`のドロップダウンリストで、指定したアイテムを選択不可にします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTLHzjDYpI/AAAAAAAAAXE/M4bkzWJetUI/s800/DisableItemComboBox.png)
 
-* サンプルコード [#eb0a9dc4]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DisableItemComboBox<E> extends JComboBox<E> {
   private final Set<Integer> disableIndexSet = new HashSet<>();
@@ -98,7 +98,7 @@ class DisableItemComboBox<E> extends JComboBox<E> {
 }
 }}
 
-* 解説 [#qdc48e21]
+* 解説 [#explanation]
 上記のサンプルでは、以下の方法でドロップダウンリストの特定のアイテムを選択できないように設定しています。
 
 - アイテムの表示
@@ -110,9 +110,9 @@ class DisableItemComboBox<E> extends JComboBox<E> {
 - 選択不可アイテムのキー操作を無視
 -- カーソルキーなどの操作で、選択不可アイテムをスキップするよう、`ActionMap`、`InputMap`を設定
 
-* 参考リンク [#ic0f4012]
+* 参考リンク [#reference]
 - [[JListの任意のItemを選択不可にする>Swing/DisabledItem]]
 
-* コメント [#v2920269]
+* コメント [#comment]
 #comment
 #comment

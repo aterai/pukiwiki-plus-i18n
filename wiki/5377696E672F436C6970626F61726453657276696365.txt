@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-04-30T10:43:03+09:00
 description: ClipboardServiceを使ってJava Web Startで動作中のアプリケーションからシステム全体の共有クリップボードにアクセスします。
 ---
-* 概要 [#keb95371]
+* 概要 [#summary]
 `ClipboardService`を使って`Java Web Start`で動作中のアプリケーションからシステム全体の共有クリップボードにアクセスします。
 
 #download(https://lh5.googleusercontent.com/--_lXbzG-H7g/T53noZrOnHI/AAAAAAAABME/FyY8MKdHSg0/s800/ClipboardService.png)
 
-* サンプルコード [#w95c9c42]
+* サンプルコード [#sourcecode]
 #code(link){{
 private ClipboardService cs;
 }}
@@ -51,7 +51,7 @@ JTextArea textArea = new JTextArea() {
 };
 }}
 
-* 解説 [#z1e6e45a]
+* 解説 [#explanation]
 `Java Web Start`から起動された制限付きのランタイム内で動作中するアプリケーションからは、システム全体の共有クリップボードにアクセスすることができないので、`ServiceManager`から`ClipboardService`を取得し、コピー、ペースト、カットなどでセキュリティ警告ダイアログを表示して、ユーザーにアクセス許可を求めます。
 
 - アプリケーションのクリップボードするカット
@@ -59,10 +59,10 @@ JTextArea textArea = new JTextArea() {
 - システム全体の共有クリップボードするカット
 -- セキュリティ警告でＯＫを選択するとシステム全体の共有クリップボードは上書きされ、取り消しを選択すると上書きされない
 
-* 参考リンク [#n9de5723]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/examples.html#ClipboardService ClipboardService サービスの使い方 - JNLP API の使用例]
 - [http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/contents.html Java Web Start 開発者ガイド]
 
-* コメント [#s3bd5228]
+* コメント [#comment]
 #comment
 #comment

@@ -5,17 +5,17 @@ author: aterai
 pubdate: 2010-03-15T14:27:52+09:00
 description: Font一覧を取得して、Fontのファミリ名、論理名などを表示します。
 ---
-* 概要 [#cb8a9ffc]
+* 概要 [#summary]
 `Font`一覧を取得して、`Font`のファミリ名、論理名などを表示します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHfZb6u3I/AAAAAAAAARQ/8XzwOvBod-Q/s800/AllFonts.png)
 
-* サンプルコード [#g4e77087]
+* サンプルコード [#sourcecode]
 #code(link){{
 Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 }}
 
-* 解説 [#i0263017]
+* 解説 [#explanation]
 上記のサンプルでは、`GraphicsEnvironment#getAllFonts()`メソッドを使って、この環境で利用可能なフォントの一覧を取得しています。
 このメソッドは、ユーザーに特定のフォントを選択させる場合に、よく使用されます。
 
@@ -30,7 +30,7 @@ Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 ----
 `GraphicsEnvironment#getAvailableFontFamilyNames()`メソッドでは、フォントファミリ名の配列を取得することができます。
 
-//* 参考リンク
-* コメント [#sdc83460]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

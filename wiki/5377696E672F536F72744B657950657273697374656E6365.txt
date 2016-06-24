@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-09-21T01:26:03+09:00
 description: JTableのSortKeyを永続化して、そのソート状態をXMLファイルで保存、復元できるように設定します。
 ---
-* 概要 [#yb40aa78]
+* 概要 [#summary]
 `JTable`の`SortKey`を永続化して、そのソート状態を`XML`ファイルで保存、復元できるように設定します。
 
 #download(https://lh3.googleusercontent.com/-x9GESOvXeyc/Vf7c-CY1veI/AAAAAAAAOCE/lUO7hcq8-fw/s800-Ic42/SortKeyPersistence.png)
 
-* サンプルコード [#y77bc390]
+* サンプルコード [#sourcecode]
 #code(link){{
 File file = File.createTempFile("output", ".xml");
 try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(file)))) {
@@ -21,7 +21,7 @@ try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStrea
 //...
 }}
 
-* 解説 [#za98b6c2]
+* 解説 [#explanation]
 上記のサンプルでは、`JTable`のソート状態を表す`RowSorter.SortKey`を永続化するため、以下のような設定を行っています。
 
 - `RowSorter.SortKey`クラスのコンストラクタの引数をプロパティ名として`DefaultPersistenceDelegate`を作成
@@ -33,10 +33,10 @@ try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStrea
 --- メモ: [http://wiki.byte-welt.net/wiki/JTable_Inhalte_speichern JTable Inhalte speichern – Byte-Welt Wiki]
 --- または、[[TableColumnModelをXMLファイルで保存、復元する>Swing/ColumnModelPersistence]]のような`DefaultPersistenceDelegate`を使ってカラムヘッダの幅や順序を保存する方法がある
 
-* 参考リンク [#bd8de50f]
+* 参考リンク [#reference]
 - [[JTableのモデルをXMLファイルで保存、復元する>Swing/PersistenceDelegate]]
 - [[TableColumnModelをXMLファイルで保存、復元する>Swing/ColumnModelPersistence]]
 
-* コメント [#m7e19549]
+* コメント [#comment]
 #comment
 #comment

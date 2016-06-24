@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-11-03T00:09:16+09:00
 description: JTreeのノードをマウスでクリックしても折り畳まれないように設定します。
 ---
-* 概要 [#p6725d02]
+* 概要 [#summary]
 `JTree`のノードをマウスでクリックしても折り畳まれないように設定します。
 
 #download(https://lh3.googleusercontent.com/-lmIva1c-vxw/VFZHTSmTigI/AAAAAAAANo0/jeRoJW178as/s800/TreeNodeCollapseVeto.png)
 
-* サンプルコード [#a526a403]
+* サンプルコード [#sourcecode]
 #code(link){{
 tree.addTreeWillExpandListener(new TreeWillExpandListener() {
   @Override public void treeWillExpand(TreeExpansionEvent e) throws ExpandVetoException {
@@ -22,15 +22,15 @@ tree.addTreeWillExpandListener(new TreeWillExpandListener() {
 });
 }}
 
-* 解説 [#e113ea49]
+* 解説 [#explanation]
 - 左: デフォルト
 - 右: ノードの折り畳み不可
 -- `TreeWillExpandListener#treeWillCollapse()`で、`ExpandVetoException`を発生させることで、マウスやキー入力による折り畳みを不可に設定
 -- ノードの展開、編集、選択などは可能
 
-* 参考リンク [#u6042dab]
+* 参考リンク [#reference]
 - [[JTreeで展開不可のノードを設定する>Swing/PreventNodeExpanding]]
 
-* コメント [#b99e4c02]
+* コメント [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2013/04/rearrange-jtoolbar-icon-by-drag-and-drop.html
     lang: en
 ---
-* 概要 [#o6c6a477]
+* 概要 [#summary]
 `JToolBar`に配置したアイコンをドラッグ＆ドロップで並べ替えます。
 
 #download(https://lh6.googleusercontent.com/-bxLoJ6g9K_I/UWBOghG3kxI/AAAAAAAABpQ/tvVELkL1RV0/s800/RearrangeToolBarIcon.png)
 
-* サンプルコード [#o5961551]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DragHandler extends MouseAdapter {
   private final JWindow window = new JWindow();
@@ -146,7 +146,7 @@ class DragHandler extends MouseAdapter {
 }
 }}
 
-* 解説 [#nac20b59]
+* 解説 [#explanation]
 上記のサンプルでは、`JToolBar`に`MouseListener`と`MouseMotionListener`を追加して、`JLabel`に配置したアイコンを並べ替えています。
 
 - ドラッグされて移動対象になった`JLabel`は、`JToolBar`から削除され、透明な`JWindow`に移動
@@ -163,11 +163,11 @@ class DragHandler extends MouseAdapter {
 -- 非表示のコンポーネント(`Box.createGlue()`など)がドラッグできてしまう
 -- `Ubuntu`などで移動の描画がチラつく
 
-* 参考リンク [#p7769453]
+* 参考リンク [#reference]
 - [[JFrameの外側でもドラッグアイコンを表示する>Swing/DragSourceMotionListener]]
 - [[JPanelの並び順をドラッグ＆ドロップで入れ替える>Swing/RearrangeOrderOfPanels]]
 
-* コメント [#x90de976]
+* コメント [#comment]
 #comment
 - メモ: `JLayer`などを使用すれば、`JButton`の移動も可能…な気がする。 -- &user(aterai); &new{2013-04-08 (月) 21:04:19};
 

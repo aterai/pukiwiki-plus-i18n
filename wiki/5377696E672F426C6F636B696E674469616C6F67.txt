@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-10-26T04:45:10+09:00
 description: Modalで透明なJDialogを表示することで、親のJFrame全体への入力操作をブロックします。
 ---
-* 概要 [#u5bfe260]
+* 概要 [#summary]
 `Modal`で透明な`JDialog`を表示することで、親の`JFrame`全体への入力操作をブロックします。
 
 #download(https://lh3.googleusercontent.com/-BlvRwXum2Vc/Vi0ubz6y1mI/AAAAAAAAOE4/XKHozK0runE/s800-Ic42/BlockingDialog.png)
 
-* サンプルコード [#u58c9caa]
+* サンプルコード [#sourcecode]
 #code(link){{
 Window w = SwingUtilities.getWindowAncestor(getRootPane());
 JDialog dialog = new JDialog(w, Dialog.ModalityType.DOCUMENT_MODAL); //APPLICATION_MODAL);
@@ -31,7 +31,7 @@ dialog.setBackground(new Color(color, true));
 dialog.setVisible(true);
 }}
 
-* 解説 [#w21c88bd]
+* 解説 [#explanation]
 上記のサンプルでは、以下のような設定を行った`JDialog`を表示することで、親の`JFrame`のタイトルバー、閉じる、最大化、最小化ボタンを含めて一定時間入力不可にするテストを行っています。
 
 - モーダル(`Dialog.ModalityType.DOCUMENT_MODAL`)な`JDialog`を作成
@@ -41,10 +41,10 @@ dialog.setVisible(true);
 
 - 注: このサンプルには`JDialog`の表示を途中で中断する方法がない
 
-* 参考リンク [#t24d97fc]
+* 参考リンク [#reference]
 - [[Cursorを砂時計に変更>Swing/WaitCursor]]
 - [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]
 
-* コメント [#r3f5aa80]
+* コメント [#comment]
 #comment
 #comment

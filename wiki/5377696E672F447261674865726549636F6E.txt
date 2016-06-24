@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-06-18T18:09:18+09:00
 description: Iconインタフェースから固定サイズのアイコンを作成します。
 ---
-* 概要 [#c1d925db]
+* 概要 [#summary]
 `Icon`インタフェースから固定サイズのアイコンを作成します。
 
 #download(https://lh5.googleusercontent.com/-PTY9ydf9DFE/T97u-rwg5lI/AAAAAAAABN0/52xJLmkoNak/s800/DragHereIcon.png)
 
-* サンプルコード [#zd96625c]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DragHereIcon implements Icon {
   private static int ICON_SIZE = 100;
@@ -75,7 +75,7 @@ class DragHereIcon implements Icon {
 }
 }}
 
-* 解説 [#h4ac96af]
+* 解説 [#explanation]
 上記のサンプルでは、以下のように`Icon`インタフェースを実装してアイコンを作成しています。フチもアイコンの内部に描画していますが、`BasicStroke`の破線ではなく背景色と同じ色の直線でパターンを表現しています。
 
 - `Icon#paintIcon(Component c, Graphics g, int x, int y)`を実装
@@ -91,11 +91,11 @@ class DragHereIcon implements Icon {
 ----
 注: ファイルをドロップしてもコンソールにファイル名を表示するだけで他はなにもしていません。
 
-* 参考リンク [#i14b9e44]
+* 参考リンク [#reference]
 - [[Fileのドラッグ＆ドロップ>Swing/FileListFlavor]]
 - [http://stackoverflow.com/questions/10751001/java-application-with-fancy-drag-drop swing - Java application with fancy Drag & Drop - Stack Overflow]
 
-* コメント [#e16090e7]
+* コメント [#comment]
 #comment
 - `TransferHandler`でファイルがドロップされるとき、カーソルを常にコピーにする(移動ではなく)方法が分からない(のでこのサンプルでは`DropTarget`を使用)。 -- &user(aterai); &new{2012-06-18 (月) 18:25:50};
 

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-04-29T08:31:48+09:00
 description: JSpinnerの代わりにJComboBoxを使用することで、アイテムの文字色などを変更しています。
 ---
-* 概要 [#f7106526]
+* 概要 [#summary]
 `JSpinner`の代わりに`JComboBox`を使用することで、アイテムの文字色などを変更しています。
 
 #download(https://lh6.googleusercontent.com/-kpruQCgOnLE/UX2r6exfrII/AAAAAAAABqo/JZnFlTBy1zw/s800/SpinnerTextColor.png)
 
-* サンプルコード [#xf53f1ef]
+* サンプルコード [#sourcecode]
 #code(link){{
 JButton nb = createArrowButton(SwingConstants.NORTH);
 nb.addActionListener(new ActionListener() {
@@ -40,7 +40,7 @@ p.add(comboBox);
 p.add(box, BorderLayout.EAST);
 }}
 
-* 解説 [#c462037c]
+* 解説 [#explanation]
 上記のサンプルでは、ドロップダウンリストの表示を無効にした`JComboBox`と`2`つの`ArrowButton`を組み合わせて、`JSpinner`風のコンポーネントを作成しています。各アイテムの文字色は、`Html`の`<font>`タグを使って変更しています。
 
 - `BasicComboBoxUI#createArrowButton()`をオーバーライドして、`JComboBox`の元`ArrowButton`を非表示
@@ -51,7 +51,7 @@ p.add(box, BorderLayout.EAST);
 -- [[JComponentのKeyBinding一覧を取得する>Swing/KeyBinding]]
 -- リピート機能には未対応
 
-//* 参考リンク
-* コメント [#ecf8bf9c]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

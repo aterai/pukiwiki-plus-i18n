@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-09-17T14:41:19+09:00
 description: JTextPaneに表示した文字列中の全角スペースやタブを可視化します。
 ---
-* 概要 [#vbe52881]
+* 概要 [#summary]
 `JTextPane`に表示した文字列中の全角スペースやタブを可視化します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWpb1ogMI/AAAAAAAAApk/3IWJ2qvvECo/s800/WhitespaceMark.png)
 
-* サンプルコード [#f57a2d79]
+* サンプルコード [#sourcecode]
 #code(link){{
 class WhitespaceLabelView extends LabelView {
   private static final String IDEOGRAPHIC_SPACE = "\u3000";
@@ -54,20 +54,20 @@ class WhitespaceLabelView extends LabelView {
 }
 }}
 
-* 解説 [#wfb05641]
+* 解説 [#explanation]
 上記のサンプルでは、`LabelView`を継承し、`LabelView#paint`メソッドをオーバーライドして全角スペースやタブの場合だけ、それぞれの図形を描画しています。
 
 - 注: タブの図形は、`xyzzy`風だが、ドットの数は面倒なので適当
 
 この`LabelView`を使用する`EditorKit(ViewFactory)`の作成は、[[JEditorPaneで改行を表示>Swing/ParagraphMark]]と同様になっています。
 
-* 参考リンク [#ja0a61a4]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1374478 Swing - JTextPane View Problem]
 - [http://web.archive.org/web/20120216035951/http://java.sun.com/products/jlf/ed1/dg/higo.htm Design Guidelines: Text Components]
 - [http://www.javafaq.nu/java-book-30.html Swing Chapter 19. (Advanced topics) Inside Text Components. Easy for reading, Click here!]
 - [[JEditorPaneで改行を表示>Swing/ParagraphMark]]
 - [[JTextPaneでタブサイズを設定>Swing/TabSize]]
 
-* コメント [#j5c6e373]
+* コメント [#comment]
 #comment
 #comment

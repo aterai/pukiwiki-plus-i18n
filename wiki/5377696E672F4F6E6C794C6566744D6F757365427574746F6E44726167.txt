@@ -5,17 +5,17 @@ author: aterai
 pubdate: 2015-11-09T00:56:22+09:00
 description: JSliderのノブをマウスの右ボタンで操作可能かどうかを設定で切り替えます。
 ---
-* 概要 [#j51e0b29]
+* 概要 [#summary]
 `JSlider`のノブをマウスの右ボタンで操作可能かどうかを設定で切り替えます。
 
 #download(https://lh3.googleusercontent.com/-coZSnO6AOYE/Vj9vbNsYp8I/AAAAAAAAOGA/2KnLThlR9u4/s800-Ic42/OnlyLeftMouseButtonDrag.png)
 
-* サンプルコード [#xbcd603e]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIManager.put("Slider.onlyLeftMouseButtonDrag", Boolean.TRUE);
 }}
 
-* 解説 [#w4d77bd0]
+* 解説 [#explanation]
 - `UIManager.put("Slider.onlyLeftMouseButtonDrag", Boolean.TRUE);`
 -- `JSlider`のノブをマウスの右ボタンでドラッグしても操作不可
 -- `WindowsLookAndFeel`などのデフォルト
@@ -23,10 +23,10 @@ UIManager.put("Slider.onlyLeftMouseButtonDrag", Boolean.TRUE);
 -- `JSlider`のノブをマウスの右ボタンでドラッグで操作可能
 -- `NimbusLookAndFeel`などのデフォルト
 
-* 参考リンク [#id845d4f]
+* 参考リンク [#reference]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6614972 Bug ID: JDK-6614972 JSlider value should not change on right-click]
 - [http://stackoverflow.com/questions/9736237/how-to-disable-position-change-of-jslider-on-mouse-right-click java - How to disable position change of JSlider on mouse right click - Stack Overflow]
 
-* コメント [#a1d5b19d]
+* コメント [#comment]
 #comment
 #comment

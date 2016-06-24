@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-10-19T00:12:40+09:00
 description: JTableの任意の列でマウスクリックなどによる選択ができないように制限します。
 ---
-* 概要 [#u2c8fbaa]
+* 概要 [#summary]
 `JTable`の任意の列でマウスクリックなどによる選択ができないように制限します。
 
 #download(https://lh3.googleusercontent.com/-kvjA0RzkNxQ/ViOrBhPfAiI/AAAAAAAAOEc/meMBIUCKAmc/s800-Ic42/ColumnSelectability.png)
 
-* サンプルコード [#lee0d24d]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   private boolean isColumnSelectable(int column) {
@@ -38,7 +38,7 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 解説 [#fadf7290]
+* 解説 [#explanation]
 上記のサンプルでは、第`0`列目のみ選択・編集可能にし、残りの列はマウスクリックやカーソル移動などで選択できないように、`JTable#changeSelection(...)`、`JTable#changeSelection(...)`をオーバーライドしています。
 
 - `JTable#isCellEditable(...)`は、編集不可にするためにオーバーライド
@@ -48,11 +48,11 @@ JTable table = new JTable(model) {
 - メモ: `table.putClientProperty("Table.isFileList", Boolean.TRUE);`で、第`0`列目の文字列のみ選択可能にすることが可能
 -- [[JTableで文字列をクリックした場合だけセルを選択状態にする>Swing/TableFileList]]
 
-* 参考リンク [#p174fa14]
+* 参考リンク [#reference]
 - [[JTableで文字列をクリックした場合だけセルを選択状態にする>Swing/TableFileList]]
 - [[JTableの列を編集可、かつ選択不可に設定>Swing/DisableColumnSelection]]
 -- こちらは、選択不可だが、編集は可能な列を設定する場合のサンプル
 
-* コメント [#oe3c5a0c]
+* コメント [#comment]
 #comment
 #comment

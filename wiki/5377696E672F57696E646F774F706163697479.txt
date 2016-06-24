@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2010/06/translucent-jframe.html
     lang: en
 ---
-* 概要 [#ea286453]
+* 概要 [#summary]
 `JFrame`タイトルや子コンポーネントを除く背景が半透明になるよう設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTWw2d9LNI/AAAAAAAAApw/NXG2EcaSv_s/s800/WindowOpacity.png)
 
-* サンプルコード [#l5dd57cc]
+* サンプルコード [#sourcecode]
 #code(link){{
 JFrame.setDefaultLookAndFeelDecorated(true);
 JFrame frame = new JFrame();
@@ -29,7 +29,7 @@ frame.setLocationRelativeTo(null);
 frame.setVisible(true);
 }}
 
-* 解説 [#v5c228ee]
+* 解説 [#explanation]
 `com.sun.awt.AWTUtilities.setWindowOpacity(frame, .5f);`を使って半透明化すると、フレームのタイトルバーや、子コンポーネントまで半透明化されるので、代わりに上記のサンプルでは以下のようにして半透明化を行っています。
 
 - `JFrame.setDefaultLookAndFeelDecorated(true);`で、タイトルバーなどを`JRootPane`に描画
@@ -37,12 +37,12 @@ frame.setVisible(true);
 -- `JDK 1.7.0`の場合は、代わりに、`frame.setBackground(new Color(0x0, true));`
 - `ContentPane`に`setBackground(new Color(.5f, .8f, .5f, .5f));`で半透明の背景色を設定したパネルを追加
 
-* 参考リンク [#pc13cea7]
+* 参考リンク [#reference]
 - [http://www.viva-edo.com/komon/edokomon.html 江戸の文様（和風素材・デスクトップ壁紙）]
 //- [http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/ How to Create Translucent and Shaped Windows]
 - [http://docs.oracle.com/javase/tutorial/uiswing/misc/trans_shaped_windows.html How to Create Translucent and Shaped Windows (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Other Swing Features)]
 
-* コメント [#d57b3c09]
+* コメント [#comment]
 #comment
 - そんな簡単にできるんですね！昔画面キャプチャーしたり色々苦労した結果断念しました； -- &user(riki); &new{2010-06-14 (月) 22:57:11};
 -- `AWTUtilities.setWindowOpaque`などが使えるようになったのは、`6u10`からですが、上記のサンプルみたいなことができるようになったのは、`6u14`から(多分[http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6683775 Bug ID: 6683775 Painting artifacts is seen when panel is made setOpaque(false) for a translucent window])みたいですから、最近(ちょうど一年ぐらい)のようです。 -- &user(aterai); &new{2010-06-15 (火) 13:26:11};

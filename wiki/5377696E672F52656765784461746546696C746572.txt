@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2016-04-11T00:24:26+09:00
 description: JTableのセルに設定した日付をRegexFilterなどでフィルタリングするテストを行います。
 ---
-* 概要 [#wa9c9bf5]
+* 概要 [#summary]
 `JTable`のセルに設定した日付を`RegexFilter`などでフィルタリングするテストを行います。
 
 #download(https://lh3.googleusercontent.com/-yjS3rTYWgk0/VwprmN868uI/AAAAAAAAOSs/-HBZ7l1VimsTNtZo7FDk0wwasI3G4wirACCo/s800-Ic42/RegexDateFilter.png)
 
-* サンプルコード [#v05e1338]
+* サンプルコード [#sourcecode]
 #code(link){{
 ActionListener al = e -> {
   Object o = e.getSource();
@@ -48,7 +48,7 @@ class RegexDateFilter extends RowFilter<TableModel, Integer> {
 }
 }}
 
-* 解説 [#zb7e76df]
+* 解説 [#explanation]
 - `null`
 -- フィルタをクリア
 - `RowFilter.regexFilter`
@@ -99,7 +99,7 @@ static class DateRenderer extends DefaultTableCellRenderer.UIResource {
 ----
 `Date`を文字列ではなく、日付として各条件を指定し、フィルタリングする場合は、[http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.html#dateFilter-javax.swing.RowFilter.ComparisonType-java.util.Date-int...- RowFilter#dateFilter (Java Platform SE 8)]を使用します。
 
-//* 参考リンク
-* コメント [#ra845442]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

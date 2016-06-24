@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-03-16T01:08:13+09:00
 description: JTextAreaなどのJTextComponentに、フォーカスがない場合でも文字列の選択状態をハイライト表示するCaretを設定します。
 ---
-* 概要 [#j8dc98fb]
+* 概要 [#summary]
 `JTextArea`などの`JTextComponent`に、フォーカスがない場合でも文字列の選択状態をハイライト表示する`Caret`を設定します。
 
 #download(https://lh5.googleusercontent.com/-weYSCZJkVwc/VQWpURBqaVI/AAAAAAAAN0U/1vFVeG8fLy4/s800/CaretSelectionHighlight.png)
 
-* サンプルコード [#m9b23a9a]
+* サンプルコード [#sourcecode]
 #code(link){{
 class FocusCaret extends DefaultCaret {
   DefaultHighlighter.DefaultHighlightPainter nonFocusHighlightPainter
@@ -31,7 +31,7 @@ class FocusCaret extends DefaultCaret {
 }
 }}
 
-* 解説 [#p3e0cd3d]
+* 解説 [#explanation]
 上記のサンプルでは、`JInternalFrame`の選択を切り替えることで、その内部の`JTextArea`のフォーカスを変更し、文字列の選択状態ハイライトがどう変化するかをテストしています。
 
 - `DefaultCaret`
@@ -41,9 +41,9 @@ class FocusCaret extends DefaultCaret {
 -- `DefaultCaret#getSelectionPainter()`をオーバーライドし、フォーカスがない場合のハイライト色を変更
 -- `DefaultCaret#focusGained(...)`をオーバーライドし、フォーカスが戻ると一旦ハイライトを削除してハイライト色を元に戻し、あらためて選択状態ハイライトを表示状態にする
 
-* 参考リンク [#maaa99c9]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/18237317/how-to-retain-selected-text-in-jtextfield-when-focus-lost java - How to retain selected text in JTextField when focus lost? - Stack Overflow]
 
-* コメント [#y182798e]
+* コメント [#comment]
 #comment
 #comment

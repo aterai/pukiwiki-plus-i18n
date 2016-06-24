@@ -4,73 +4,75 @@ tags: [JList, ListCellRenderer, ListSelectionModel]
 description: JList関係の記事へのスクリーンショット付きリンク一覧
 ---
 このページでは、`JList`の使い方を集めて一覧にしています。
+
 #contents
-* JList [#a7bfd4e4]
-** JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え [#z6518648]
+
+* JList [#JList]
+** JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え [#DragSelectDropReordering]
 #swingdescription(Swing/DragSelectDropReordering,JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え,JListのアイテムを、ラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え可能にします。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTL3XY_VqI/AAAAAAAAAYQ/RFVaD4w5C9w/s144/DragSelectDropReordering.png)
 
-** JListのアイテムを範囲指定で選択 [#l5018045]
+** JListのアイテムを範囲指定で選択 [#RubberBanding]
 #swingdescription(Swing/RubberBanding,JListのアイテムを範囲指定で選択,JListのアイテムをラバーバンドで範囲指定して選択します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSd-lu2aI/AAAAAAAAAi0/AQTsBqR1OUc/s144/RubberBanding.png)
 
-** JListのセルのアニメーション [#wdf25d2e]
+** JListのセルのアニメーション [#ListCellAnimation]
 #swingdescription(Swing/ListCellAnimation,JListのセルのアニメーション,JListの選択されたセルをアニメーションさせます。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPa7B8VkI/AAAAAAAAAd8/uLpJ50Oxwf8/s144/ListCellAnimation.png)
 
-** JListのセルをカーソル移動でロールオーバー [#s31d6209]
+** JListのセルをカーソル移動でロールオーバー [#RollOverListener]
 #swingdescription(Swing/RollOverListener,JListのセルをカーソル移動でロールオーバー,JListでマウスカーソルの下にあるセルをハイライト表示します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTSE8rUioI/AAAAAAAAAiM/4EMPSFpuBVo/s144/RollOverListener.png)
 
-** JTableの編集にセルより大きなセルエディタを使用 [#vdd1734f]
+** JTableの編集にセルより大きなセルエディタを使用 [#LargeCellEditor]
 #swingdescription(Swing/LargeCellEditor,JTableの編集にセルより大きなセルエディタを使用,通常のセルエディタではなく、セルより大きなアイコンを選択する為のセルエディタを使用してJTableを編集します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTO6b-zTJI/AAAAAAAAAdI/UAROdzzun4k/s144/LargeCellEditor.png)
 
-** JListで異なる高さのセルを使用 [#p3a94cda]
+** JListで異なる高さのセルを使用 [#DifferentCellHeight]
 #swingdescription(Swing/DifferentCellHeight,JListで異なる高さのセルを使用,JListのレンダラーにJTextAreaを使って、異なる高さのセルを作成します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTK2Z8UOTI/AAAAAAAAAWo/7GoDkuVX8Fc/s144/DifferentCellHeight.png)
 
-** JListの任意のItemを選択不可にする [#xd728b3b]
+** JListの任意のItemを選択不可にする [#DisabledItem]
 #swingdescription(Swing/DisabledItem,JListの任意のItemを選択不可にする,JListの任意のItemを選択不可にするようなレンダラーを設定します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLAYVmo3I/AAAAAAAAAW4/3MUtTm4ixyo/s144/DisabledItem.png)
 
-** JListを選択不可にする [#gc273361]
+** JListを選択不可にする [#EmptySelectionList]
 #swingdescription(Swing/EmptySelectionList,JListを選択不可にする,JListのセルアイテムをマウスクリックなどの操作で選択出来ないように設定します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMI697_II/AAAAAAAAAYs/EhpPEXnw1bc/s144/EmptySelectionList.png)
 
-** TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え [#s0c6d48e]
+** TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え [#DnDReorderList]
 #swingdescription(Swing/DnDReorderList,TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え,JListのアイテムを複数選択し、ドラッグ＆ドロップで並べ替えを可能にするTransferHandlerを作成します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLeSCyHuI/AAAAAAAAAXo/v2OLiSPdgEY/s144/DnDReorderList.png)
 
-** JListの項目をドラッグ＆ドロップ [#v5e3b215]
+** JListの項目をドラッグ＆ドロップ [#DnDList]
 #swingdescription(Swing/DnDList,JListの項目をドラッグ＆ドロップ,JListをドラッグ＆ドロップして、項目を入れ替えます。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLb3DW2ZI/AAAAAAAAAXk/8VfeirUfaoo/s144/DnDList.png)
 
 * ↑10 ↓11 [#jc01f6cc]
 #adsensebar
 
-** JTableに行ヘッダを追加 [#c2358bc7]
+** JTableに行ヘッダを追加 [#TableRowHeader]
 #swingdescription(Swing/TableRowHeader,JTableに行ヘッダを追加,JTableを設定したJScrollPaneのRowHeaderViewに、JListで作成した行ヘッダを追加します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUk9YzW7I/AAAAAAAAAmQ/wjin9CuyfBg/s144/TableRowHeader.png)
 
-** JList間でのドラッグ＆ドロップによるアイテムの移動 [#h6e7e1c2]
+** JList間でのドラッグ＆ドロップによるアイテムの移動 [#DnDBetweenLists]
 #swingdescription(Swing/DnDBetweenLists,JList間でのドラッグ＆ドロップによるアイテムの移動,JList間でのドラッグ＆ドロップによるアイテムの移動や並べ替えを行います。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLUTkzH4I/AAAAAAAAAXY/tSQriEN1G_Y/s144/DnDBetweenLists.png)
 
-** JListのセルにJCheckBoxを使用する [#r943bf33]
+** JListのセルにJCheckBoxを使用する [#CheckBoxCellList]
 #swingdescription(Swing/CheckBoxCellList,JListのセルにJCheckBoxを使用する,JListのセルにJCheckBoxを使用して、チェックボックスの一覧を作成します。,https://lh3.googleusercontent.com/-EfbwsqycTvg/UlyukvM4ivI/AAAAAAAAB3o/NJBvrfM4xPA/s144/CheckBoxCellList.png)
 
-** JListの選択を解除 [#g66a8915]
+** JListの選択を解除 [#ClearSelection]
 #swingdescription(Swing/ClearSelection,JListの選択を解除,JListのセル選択状態をセル以外の余白領域をクリックすることで解除できるように設定します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TavH8_fQKAI/AAAAAAAAA5s/MyUXQnSHPUA/s144/ClearSelection.png)
 
-** JListをマウスクリックのみで複数選択する [#tbdaa3ac]
+** JListをマウスクリックのみで複数選択する [#ListMouseSelection]
 #swingdescription(Swing/ListMouseSelection,JListをマウスクリックのみで複数選択する,JListをアイテムをマウスクリックだけで複数選択できるように設定します。,https://lh6.googleusercontent.com/-wj2xm8BlBbA/TiPrjr1sQ5I/AAAAAAAAA_c/NiXO891B5fs/s144/ListMouseSelection.png)
 
-** JListの先頭文字キー入力による検索選択を無効にする [#p151dca3]
-#swingdescription(Swing/DisablePrefixMatchSelection,JListの先頭文字キー入力による検索選択を無効にする,JListにフォーカスがある状態で英数字キー入力をしたときに先頭文字が一致するアイテムを検索して選択する機能を無効にします。 ,https://lh6.googleusercontent.com/-_wtzuIN_MvU/Tm2wga2X4hI/AAAAAAAABBs/dUuDS1gj9mM/s144/DisablePrefixMatchSelection.png)
+** JListの先頭文字キー入力による検索選択を無効にする [#DisablePrefixMatchSelection]
+#swingdescription(Swing/DisablePrefixMatchSelection,JListの先頭文字キー入力による検索選択を無効にする,JListにフォーカスがある状態で英数字キー入力をしたときに先頭文字が一致するアイテムを検索して選択する機能を無効にします。,https://lh6.googleusercontent.com/-_wtzuIN_MvU/Tm2wga2X4hI/AAAAAAAABBs/dUuDS1gj9mM/s144/DisablePrefixMatchSelection.png)
 
-** JListのセル内にJButtonを配置する [#vc7f78a8]
+** JListのセル内にJButtonを配置する [#ButtonsInListCell]
 #swingdescription(Swing/ButtonsInListCell,JListのセル内にJButtonを配置する,JListのセル内に複数のJButtonを配置します。,https://lh3.googleusercontent.com/-j4_Xv9F17Jc/TolDAZSkQUI/AAAAAAAABDU/GK_sK9k5aJE/s144/ButtonsInListCell.png)
 
-** JListのセル中に配置したコンポーネント毎にカーソルを変更する [#s9da3d76]
+** JListのセル中に配置したコンポーネント毎にカーソルを変更する [#CursorOfCellComponent]
 #swingdescription(Swing/CursorOfCellComponent,JListのセル中に配置したコンポーネント毎にカーソルを変更する,JListのセルに配置されているコンポーネントをマウスの座標から検索し、それに設定されたカーソルをJListに適用します。,https://lh3.googleusercontent.com/-v3ugRz81Y0Q/UmPxM3SwOYI/AAAAAAAAB4Y/PqZaNMCPgN0/s144/CursorOfCellComponent.png)
 
-** JListのセル上にToolTipを表示する [#bcf80b81]
+** JListのセル上にToolTipを表示する [#ToolTipOnCellBounds]
 #swingdescription(Swing/ToolTipOnCellBounds,JListのセル上にToolTipを表示する,JListのセル内に文字列が収まらない場合のみ、その上にToolTipを重ねて表示します。,https://lh3.googleusercontent.com/-KLOWyeZG-zU/U2Zif591XkI/AAAAAAAACE0/JDZZwAWkY50/s144/ToolTipOnCellBounds.png)
 
-** JListのTransferHandlerにドラッグイメージを設定する [#jf95246b]
+** JListのTransferHandlerにドラッグイメージを設定する [#GhostDragImage]
 #swingdescription(Swing/GhostDragImage,JListのTransferHandlerにドラッグイメージを設定する,JListのアイテムをドラッグ中に表示するイメージをカスタマイズしてTransferHandlerに設定します。,https://lh4.googleusercontent.com/-lGkFK-bJoYE/VDEztZsJyOI/AAAAAAAACOg/Hs7B-dcJAkk/s144/GhostDragImage.png)
 
-** JTabbedPaneのタブ上にリストアイテムをドロップ [#h6e4269b]
+** JTabbedPaneのタブ上にリストアイテムをドロップ [#DropOnTabTitle]
 #swingdescription(Swing/DropOnTabTitle,JTabbedPaneのタブ上にリストアイテムをドロップ,JTabbedPaneのタブ上にドロップすることで、選択しているListItemをそのタブ内にあるJListへ移動します。,https://lh5.googleusercontent.com/-oMjKQSnXvmM/VEzg70T1BQI/AAAAAAAANnU/Exu8u5wYyAw/s144/DropOnTabTitle.png)
 
-** JTableのセルを選択してJListにドラッグ＆ドロップでIconをコピーする [#xd93e693]
+** JTableのセルを選択してJListにドラッグ＆ドロップでIconをコピーする [#TableCellTransferHandler]
 #swingdescription(Swing/TableCellTransferHandler,JTableのセルを選択してJListにドラッグ＆ドロップでIconをコピーする,JTableのセルを選択可能にし、ドラッグ＆ドロップでそのセル内のIconをJListにコピーできるようにTransferHandlerを設定します。,https://lh3.googleusercontent.com/-TUrxk7yYqYM/VWHkR1mENvI/AAAAAAAAN4w/bEU29WIgjOE/s144/TableCellTransferHandler.png)

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-09-06
 description: JWindowなどのタイトルバーのないフレームをマウスで移動します。
 ---
-* 概要 [#g9940ceb]
+* 概要 [#summary]
 `JWindow`などのタイトルバーのないフレームをマウスで移動します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTL8cG8F0I/AAAAAAAAAYY/vZfyqnyr6-I/s800/DragWindow.png)
 
-* サンプルコード [#r3a65b7b]
+* サンプルコード [#sourcecode]
 #code(link){{
 public void createSplashScreen(String path) {
   ImageIcon img = new ImageIcon(getClass().getResource(path));
@@ -45,7 +45,7 @@ class DragWindowListener extends MouseAdapter {
 }
 }}
 
-* 解説 [#p1806440]
+* 解説 [#explanation]
 `JWindow`や、`setUndecorated(true)`した`JFrame`のようにタイトルバーのないフレームをマウスのドラッグで移動します。実際は`JWindow`に、`MouseMotionListener`などを実装したコンポーネントを追加しています。
 
 上記のサンプルでは、`Splash Screen`の`JLabel`にリスナーを追加し、これを`JWindow`に貼り付けてドラッグできるようにしています。
@@ -60,11 +60,11 @@ class DragWindowListener extends MouseAdapter {
 -- `Look and feel decorated`: 画面外に移動不可
 -- `Window system decorated`: 画面外に移動可能
 
-* 参考リンク [#n4c8a267]
+* 参考リンク [#reference]
 - [[JInternalFrameをJFrameとして表示する>Swing/InternalFrameTitleBar]]
 - [[JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする>Swing/CustomDecoratedFrame]]
 
-* コメント [#hfe1ff82]
+* コメント [#comment]
 #comment
 - `JLabel`無しで`JFrame`を直接つかんで移動させようと，ソース中の`DragWindowListener`を`Frame`の引数に指定して`addMouseListener()`，`addMouseMotionListener()`に追加してみたのですが，うまく動きませんでした。ラベルではなくフレームを直接つかんで移動させるにはどうすればよいのでしょうか？ -- &user(hshs); &new{2013-03-14 (木) 08:00:42};
 -- `frame.getContentPane().addMouseListener(dwl);...`と、`ContentPane`か`RootPane`に`DragWindowListener`を追加するか、以下のように`DragWindowListener`を変更するのはどうでしょうか？ -- &user(aterai); &new{2013-03-14 (木) 13:53:25};

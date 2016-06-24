@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2016/03/validating-input-on-editable-jcombobox.html
     lang: en
 ---
-* 概要 [#ie986195]
+* 概要 [#summary]
 `JComboBox`の`ComboBoxEditor`に`JLayer`を設定し、その入力が妥当でない場合はアイコンを表示します。
 
 #download(https://lh3.googleusercontent.com/-4gsRLzrKTE0/VjYu_qwZ8pI/AAAAAAAAOFk/t0JvVmjMcjI/s800-Ic42/ComboBoxEditorVerifier.png)
 
-* サンプルコード [#n4068000]
+* サンプルコード [#sourcecode]
 #code(link){{
 comboBox.setEditable(true);
 comboBox.setInputVerifier(new LengthInputVerifier());
@@ -29,7 +29,7 @@ comboBox.setEditor(new BasicComboBoxEditor() {
 });
 }}
 
-* 解説 [#h682ed61]
+* 解説 [#explanation]
 - `6`文字以上入力すると赤い`×`アイコンを表示する`LayerUI`を作成
 -- アイコンは[http://www.oracle.com/technetwork/jp/articles/java/jlayer-439461-ja.html JLayerを使用したコンポーネントのデコレート方法]から引用
 -- 入力の妥当性の検証自体は、`JComboBox`に設定した`InputVerifier`を使用
@@ -62,7 +62,7 @@ JComboBox<String> comboBox = new JComboBox<String>(model) {
 };
 }}
 
-//* 参考リンク
-* コメント [#kf8565bc]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

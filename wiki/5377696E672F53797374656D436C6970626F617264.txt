@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-09-27T15:53:12+09:00
 description: Clipboardから文字列や画像データを取得し、JLabelに表示します。
 ---
-* 概要 [#ea481a83]
+* 概要 [#summary]
 `Clipboard`から文字列や画像データを取得し、`JLabel`に表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUB2-qFWI/AAAAAAAAAlY/hlwTEjnyC_g/s800/SystemClipboard.png)
 
-* サンプルコード [#y98eaa92]
+* サンプルコード [#sourcecode]
 #code(link){{
 private ClipboardService cs = null;
 public JComponent makeUI() {
@@ -49,7 +49,7 @@ public JComponent makeUI() {
 }
 }}
 
-* 解説 [#wc0fc224]
+* 解説 [#explanation]
 上記のサンプルを`Web Start`で実行した場合は、`Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null)`ではなく、`ClipboardService#getContents()`を使って、`Transferable`を取得するようになっています。
 
 - 文字列
@@ -57,9 +57,9 @@ public JComponent makeUI() {
 - 画像
 -- `Transferable#getTransferData(DataFlavor.imageFlavor)`
 
-* 参考リンク [#offe3c4c]
+* 参考リンク [#reference]
 - [http://www.ne.jp/asahi/hishidama/home/tech/java/clipboard.html Javaクリップボードメモ(Hishidama's Java Clipboard Memo)]
 
-* コメント [#u9d01034]
+* コメント [#comment]
 #comment
 #comment

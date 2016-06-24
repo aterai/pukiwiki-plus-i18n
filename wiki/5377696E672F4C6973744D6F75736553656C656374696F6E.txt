@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2012/04/select-multiple-items-in-jlist-by.html
     lang: en
 ---
-* 概要 [#n2f0193f]
+* 概要 [#summary]
 `JList`をアイテムをマウスクリックだけで複数選択できるように設定します。
 
 #download(https://lh6.googleusercontent.com/-wj2xm8BlBbA/TiPrjr1sQ5I/AAAAAAAAA_c/NiXO891B5fs/s800/ListMouseSelection.png)
 
-* サンプルコード [#ncc6d7b3]
+* サンプルコード [#sourcecode]
 #code(link){{
 JList list = new JList(model) {
   private ClearSelectionListener listener;
@@ -36,7 +36,7 @@ JList list = new JList(model) {
 };
 }}
 
-* 解説 [#cd959e47]
+* 解説 [#explanation]
 - 左: `Default`
 - 中: `MouseEvent`
 -- `JList#processMouseEvent`, `JList#processMouseMotionEvent`をオーバーライドして、常にKBD{Ctrl}キーが押されている状態にする
@@ -84,12 +84,12 @@ JList list = new JList(model) {
 -- 参考: [https://community.oracle.com/thread/1351452#5694413 Swing - Re: JList where mouse click acts like ctrl-mouse click]
 -- `JList`の空白部分をクリックした場合、アイテムの選択状態をすべてクリア([[JListの選択を解除>Swing/ClearSelection]])
 
-* 参考リンク [#e59c2cca]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1351452 Swing - JList where mouse click acts like ctrl-mouse click]
 - [[JListの選択を解除>Swing/ClearSelection]]
 - [[JListのセルにJCheckBoxを使用する>Swing/CheckBoxCellList]]
 
-* コメント [#tdd44287]
+* コメント [#comment]
 #comment
 - `OSX(snow leopard)`では、`MouseEvent`は複数選択が出来ません。キーボードを使っても(KBD{command}+クリック)無理でした。 -- &user(nsby); &new{2011-07-20 (水) 13:15:30};
 -- ご指摘ありがとうございます。`OSX`では「KBD{command}+クリック」で複数選択でしたっけ？ `InputEvent.CTRL_MASK`決め打ちではなく、`Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()`に修正した方がいいのかもしれません(ソースなどを更新しましたが、正常に動作するかは確認していません…)。 -- &user(aterai); &new{2011-07-20 (水) 19:33:29};

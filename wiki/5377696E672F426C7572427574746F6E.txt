@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-12-09T00:54:27+09:00
 description: ConvolveOpを使って、使用不可状態のJButtonにぼかしを入れます。
 ---
-* 概要 [#s496b23a]
+* 概要 [#summary]
 `ConvolveOp`を使って、使用不可状態の`JButton`にぼかしを入れます。
 
 #download(https://lh6.googleusercontent.com/-KJB6Hz9n1R0/UqSGnCNV3HI/AAAAAAAAB70/sTyoJce2HZQ/s800/BlurButton.png)
 
-* サンプルコード [#pa5f0d91]
+* サンプルコード [#sourcecode]
 #code(link){{
 class BlurButton extends JButton {
   private final ConvolveOp op = new ConvolveOp(
@@ -47,7 +47,7 @@ class BlurButton extends JButton {
 }
 }}
 
-* 解説 [#u10c29db]
+* 解説 [#explanation]
 - 上
 -- デフォルトの`JButton`
 - 中
@@ -57,12 +57,12 @@ class BlurButton extends JButton {
 -- `WindowsLookAndFeel`の場合、右端`1`ドットの表示が乱れる場合があるので、`EdgeCondition`をデフォルトの`EDGE_ZERO_FILL`から、`EDGE_NO_OP`に変更
 -- `WindowsLookAndFeel`の場合、これらのぼかしを入れると文字が拡大されて？(左右の`Border`が広いから？)、文字列が省略されてしまうので、`JButton#getPreferredSize()`をオーバーライドして幅を拡大
 
-* 参考リンク [#pbb0935e]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/7/api/java/awt/image/ConvolveOp.html ConvolveOp (Java Platform SE 7)]
 - [http://docs.oracle.com/javase/jp/1.4/guide/2d/spec/j2d-image.fm8.html 5.8.1 イメージ処理操作の使用方法]
 - [http://www.jhlabs.com/ip/blurring.html Java Image Processing - Blurring for Beginners]
 - [http://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks 9. 使用不可状態のコンポーネントをぼかし表示する]
 
-* コメント [#n46593bb]
+* コメント [#comment]
 #comment
 #comment

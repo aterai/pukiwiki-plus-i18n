@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-06-03T04:18:20+09:00
 description: JSpinnerの表記を16進数にして、そのUnicodeコードポイントに割り当てられた文字を表示します。
 ---
-* 概要 [#gd25fd97]
+* 概要 [#summary]
 `JSpinner`の表記を`16`進数にして、その`Unicode`コードポイントに割り当てられた文字を表示します。
 
 #download(https://lh4.googleusercontent.com/-eTZU_kuJGK4/UauUgRcPuTI/AAAAAAAABtc/7FNouA9JcLI/s800/HexFormatterSpinner.png)
 
-* サンプルコード [#t5f5a11f]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static DefaultFormatterFactory makeFFactory() {
   DefaultFormatter formatter = new DefaultFormatter() {
@@ -27,7 +27,7 @@ private static DefaultFormatterFactory makeFFactory() {
 }
 }}
 
-* 解説 [#vce45de0]
+* 解説 [#explanation]
 上記のサンプルでは、`DefaultFormatter#stringToValue(String)`と`DefaultFormatter#valueToString(Object)`をオーバーライドして、`0`から`0x10FFFF`までの整数を`16`進数で表示する`Formatter`を作成し、`JSpinner`に設定しています。
 
 ----
@@ -42,12 +42,12 @@ String str = new String(Character.toChars(code));
 ----
 [http://mojikiban.ipa.go.jp/download.html IPAmj明朝]と[http://ipafont.ipa.go.jp/ IPAex明朝]フォントがインストールされている場合、その文字の形の違いを比較することができます。
 
-* 参考リンク [#ga82bd73]
+* 参考リンク [#reference]
 - [[Fontのアウトラインを取得して文字列の内部を修飾する>Swing/LineSplittingLabel]]
 - [http://mojikiban.ipa.go.jp/1300.html IPAmj明朝フォント | 文字情報基盤整備事業]
 - [http://ipafont.ipa.go.jp/ IPAexフォント/IPAフォント]
 - [http://f.hatena.ne.jp/NAOI/20130411131759 IPAmj明朝とIPAex明朝で形の違う字 NAOI's fotolife - 20130411131759]
 
-* コメント [#td71f10f]
+* コメント [#comment]
 #comment
 #comment

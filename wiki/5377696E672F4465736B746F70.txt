@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-02-19T16:02:04+09:00
 description: JDK 6で導入されたDesktopを使ってブラウザを起動します。
 ---
-* 概要 [#jdc5207e]
+* 概要 [#summary]
 `JDK 6`で導入された`Desktop`を使ってブラウザを起動します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTKu9HhvrI/AAAAAAAAAWc/iMheiQnF4hQ/s800/Desktop.png)
 
-* サンプルコード [#ndf80e33]
+* サンプルコード [#sourcecode]
 #code(link){{
 if (!Desktop.isDesktopSupported()) {
   return;
@@ -22,16 +22,16 @@ try {
 }
 }}
 
-* 解説 [#e351d712]
+* 解説 [#explanation]
 `Desktop`を使用することで、ブラウザのほかにも、メーラーや拡張子に関連付けられたデフォルトのアプリケーションを起動することが出来るようになります。
 
 このため、`OS`毎に`Runtime.getRuntime().exec(String[])`でアプリケーションを切り替えなくても、ブラウザを起動することができます。
 
-* 参考リンク [#z1b70371]
+* 参考リンク [#reference]
 //- [http://java.sun.com/developer/technicalArticles/J2SE/Desktop/javase6/desktop_api/ Using the Desktop API in Java SE 6]
 - [http://www.oracle.com/technetwork/articles/javase/index-135182.html Using the Desktop API in Java SE 6]
 - [[Browserを起動>Swing/BrowserLauncher]]
 
-* コメント [#g46c8031]
+* コメント [#comment]
 #comment
 #comment

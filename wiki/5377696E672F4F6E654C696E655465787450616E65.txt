@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-05-06T00:34:13+09:00
 description: JTextPaneの行数を一行のみに制限して、文字色などのスタイル付けが可能なJTextFieldとして使用します。
 ---
-* 概要 [#i94a5c71]
+* 概要 [#summary]
 `JTextPane`の行数を一行のみに制限して、文字色などのスタイル付けが可能な`JTextField`として使用します。
 
 #download(https://lh4.googleusercontent.com/-jckifA3Ym6c/UYZlsvWPTqI/AAAAAAAABrY/ERGHE6rtaPo/s800/OneLineTextPane.png)
 
-* サンプルコード [#la6c46b8]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTextPane textPane = new JTextPane() {
   @Override public void scrollRectToVisible(Rectangle rect) {
@@ -53,7 +53,7 @@ JScrollPane scrollPane = new JScrollPane(
 };
 }}
 
-* 解説 [#fffdaf9e]
+* 解説 [#explanation]
 - `JScrollPane`に追加
 -- `JScrollBar`を常に非表示にした、`JScrollPane`に`JTextPane`を追加
 - `JTextPane`の折り返しを無効化
@@ -72,11 +72,11 @@ JScrollPane scrollPane = new JScrollPane(
 -- [[JTextPaneでキーワードのSyntaxHighlight>Swing/SimpleSyntaxHighlight]]
 -- `SyntaxDocument.java`を使って、入力された`red`, `green`, `blue`の文字色を変更
 
-* 参考リンク [#ab80be9a]
+* 参考リンク [#reference]
 - [[JEditorPaneで長い行を折り返さない>Swing/NoWrapTextPane]]
 - [[FocusTraversalKeysに矢印キーを追加してフォーカス移動>Swing/FocusTraversalKeys]]
 
-* コメント [#y0a07202]
+* コメント [#comment]
 #comment
 - `JTextField`では、`aaaaa|bbbbb`でカーソル`|`の位置に文字を追加していくと領域外にカーソルが移動した時点で`bbbbb`が表示されるようにスクロールするが、ここの`OneLineTextPane`では未対応。 -- &user(aterai); &new{2013-05-06 (月) 15:35:00};
 - `InputMap`と`ActionMap`を間違えて使用していた箇所を修正。 -- &user(aterai); &new{2013-11-01 (金) 17:55:13};

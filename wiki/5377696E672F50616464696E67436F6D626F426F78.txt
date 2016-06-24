@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-05-28T05:42:18+09:00
 description: JComboBoxのエディタなどに内余白を設定します。
 ---
-* 概要 [#s9f3687d]
+* 概要 [#summary]
 `JComboBox`のエディタなどに内余白を設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTQv1E_b9I/AAAAAAAAAgE/nxvnwwFoDyU/s800/PaddingComboBox.png)
 
-* サンプルコード [#o79d2c4d]
+* サンプルコード [#sourcecode]
 #code(link){{
 static Border padding = BorderFactory.createEmptyBorder(0, 5, 0, 0);
 //...
@@ -41,7 +41,7 @@ JComboBox<String> combo = new JComboBox<String>(model) {
 };
 }}
 
-* 解説 [#ra0eef84]
+* 解説 [#explanation]
 上記のサンプルでは、`JComboBox`に、`Border`(`EmptyBorder`と`MatteBorder`を切り替え可能)を設定した`ListCellRenderer`を設定して、ドロップダウンリストの左余白をすこし広げています。`JComboBox`が編集不可の場合、エディタ部分もこの余白が自動的に適用されます。
 
 - `0`:編集不可
@@ -117,11 +117,11 @@ UIManager.put("ComboBox.editorBorder", BorderFactory.createEmptyBorder(0, 5, 0, 
 
 コードは、[[JComboBoxのBorderを変更する>Swing/ComboBoxBorder]]に移動。
 
-* 参考リンク [#w8434b1f]
+* 参考リンク [#reference]
 - [[JComboBoxにアイコンを表示>Swing/IconComboBox]]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4515838 Bug ID: 4515838 Can't change the border of a JComboBox]
 
-* コメント [#df84d3cd]
+* コメント [#comment]
 #comment
 - %%なんだか、よく分からなくなってきましたorz。%% `JDK 1.6.0_10-beta-b22`で、`BasicComboBoxUI`の`padding`にすこし修正が入っている？ようです。 -- &user(aterai); &new{2008-03-11 (火) 21:38:58};
 - `LookAndFeel`の切り替えなどを追加しました。 -- &user(aterai); &new{2008-04-02 (水) 20:08:01};

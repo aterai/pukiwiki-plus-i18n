@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-01-16T15:35:56+09:00
 description: JTreeのノードからEnumerationを取得してサブツリーの走査を行います。
 ---
-* 概要 [#f9a6390a]
+* 概要 [#summary]
 `JTree`のノードから`Enumeration`を取得してサブツリーの走査を行います。
 
 #download(https://lh5.googleusercontent.com/-m8cdaUCibl0/TxPCZQMYqkI/AAAAAAAABH4/eAK9LyYkv14/s800/TraverseAllNodes.png)
 
-* サンプルコード [#r3bbf840]
+* サンプルコード [#sourcecode]
 #code(link){{
 TreeModel model = tree.getModel();
 DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
@@ -21,7 +21,7 @@ while (e.hasMoreElements()) {
 }
 }}
 
-* 解説 [#h568007c]
+* 解説 [#explanation]
 上記のサンプルでは、この`JTree`の最上位ノードをルートにするサブツリーを、深さ優先、幅優先などで全走査しています。
 
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/tree/DefaultMutableTreeNode.html#depthFirstEnumeration() DefaultMutableTreeNode#depthFirstEnumeration()]
@@ -35,9 +35,9 @@ while (e.hasMoreElements()) {
 -- 前順走査
 -- `JTree, colors, blue, violet, red, yellow, sports, basketball, soccer, ...`
 
-* 参考リンク [#h80dcbd0]
+* 参考リンク [#reference]
 - [[JTreeのノードを検索する>Swing/SearchBox]]
 
-* コメント [#od0a5ba7]
+* コメント [#comment]
 #comment
 #comment

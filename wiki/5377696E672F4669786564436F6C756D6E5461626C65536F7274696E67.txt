@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-11-10T14:26:25+09:00
 description: 列固定したJTableで、JDK 6で導入されたTableRowSorterを使った行ソートを行います。
 ---
-* 概要 [#j1bd19e9]
+* 概要 [#summary]
 列固定した`JTable`で、`JDK 6`で導入された`TableRowSorter`を使った行ソートを行います。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMzes1hqI/AAAAAAAAAZw/-m-PZSFzYAk/s800/FixedColumnTableSorting.png)
 
-* サンプルコード [#bb39c51e]
+* サンプルコード [#sourcecode]
 #code(link){{
 fixedTable = new JTable(model);
 table      = new JTable(model);
@@ -58,7 +58,7 @@ scroll.getRowHeader().addChangeListener(new ChangeListener() {
 add(scroll);
 }}
 
-* 解説 [#x610cfac]
+* 解説 [#explanation]
 左の固定テーブル(`fixedTable`)と、右のテーブル(`table`)に同じ`RowSorter`を設定することで、列固定表でもソートできるようにしています。
 ただし、上記のサンプルでは、ソート中に行の追加を行うと例外が発生するので、追加の前に`sorter.setSortKeys(null);`で`SortKeys`をクリアしています。
 
@@ -96,11 +96,11 @@ scroll.getRowHeader().addChangeListener(new ChangeListener() {
 });
 }}
 
-* 参考リンク [#y3ae24e4]
+* 参考リンク [#reference]
 - [http://www.google.com/search?q=FixedColumnExample.java FixedColumnExample.java]
 - [http://tips4java.wordpress.com/2008/11/05/fixed-column-table/ Fixed Column Table ≪ Java Tips Weblog]
 
-* コメント [#tda194b1]
+* コメント [#comment]
 #comment
 - KBD{Tab}キーによるフォーカスの移動は…、まぁいいかな。 -- &user(aterai); &new{2008-11-10 (月) 14:26:25};
 - 固定列は、数字でソートするように変更。 -- &user(aterai); &new{2008-11-10 (月) 15:27:19};

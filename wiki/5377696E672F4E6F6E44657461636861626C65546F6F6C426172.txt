@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-06-01T00:19:48+09:00
 description: JToolBarをドラッグで同コンテナ内で移動することは可能だが、別ウインドウへの分離は不可になるよう設定します。
 ---
-* 概要 [#f75e03c1]
+* 概要 [#summary]
 `JToolBar`をドラッグで同コンテナ内で移動することは可能だが、別ウインドウへの分離は不可になるよう設定します。
 
 #download(https://lh3.googleusercontent.com/-YGC3PvuL8Vg/VWsjz3ObkoI/AAAAAAAAN5w/_XAG0E-FOpM/s800/NonDetachableToolBar.png)
 
-* サンプルコード [#l29d216f]
+* サンプルコード [#sourcecode]
 #code(link){{
 toolbar.setUI(new BasicToolBarUI() {
   @Override public void setFloating(boolean b, Point p) {
@@ -20,7 +20,7 @@ toolbar.setUI(new BasicToolBarUI() {
 });
 }}
 
-* 解説 [#odd5cb81]
+* 解説 [#explanation]
 - `Floatable(movable)`
 -- `JToolBar#setFloatable(boolean)`で、ドラッグによる移動の可不可を設定
 -- 別ウィンドウへのドラッグアウトが不可になるだけでなく、同コンテナ内での移動も不可になる
@@ -28,9 +28,9 @@ toolbar.setUI(new BasicToolBarUI() {
 -- `BasicToolBarUI#setFloating(...)`をオーバーライドして、`JToolBar`が別ウインドウに分離できないように設定
 -- 別ウィンドウへのドラッグアウトは不可になるが、ドラッグによる同コンテナ内の移動は可能
 
-* 参考リンク [#f4507d4f]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/30484769/can-you-make-a-jtoolbar-undetachable java - Can you make a JToolBar undetachable? - Stack Overflow]
 
-* コメント [#wf96f10c]
+* コメント [#comment]
 #comment
 #comment

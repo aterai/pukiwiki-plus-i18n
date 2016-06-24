@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-04-28T15:00:16+09:00
 description: JEditorPaneのHTMLDocumentからtable要素を取得し、その子要素としてtr要素などを追加します。
 ---
-* 概要 [#te025c95]
+* 概要 [#summary]
 `JEditorPane`の`HTMLDocument`から`table`要素を取得し、その子要素として`tr`要素などを追加します。
 
 #download(https://lh5.googleusercontent.com/-hU9bkPgb4Q8/U10bg5XoDfI/AAAAAAAACEI/BJrmelBz93M/s800/InsertHtmlText.png)
 
-* サンプルコード [#gf4627e1]
+* サンプルコード [#sourcecode]
 #code(link){{
 HTMLDocument doc = (HTMLDocument) editor.getDocument();
 Element element = doc.getElement("log");
@@ -24,15 +24,15 @@ try {
 }
 }}
 
-* 解説 [#q731d6e8]
+* 解説 [#explanation]
 - `insertAfterStart`
 -- `table`要素の開始タグの後に、子要素として`tr`要素を追加
 -- 注: 挿入後のスクロールがおかしい場合がある？
 - `insertBeforeEnd`
 -- `table`要素の終了タグの前に、子要素として`tr`要素を追加
 
-//* 参考リンク
-* コメント [#m2d1174b]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - メモ: [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/HTMLEditorKit.html#insertHTML-javax.swing.text.html.HTMLDocument-int-java.lang.String-int-int-javax.swing.text.html.HTML.Tag- HTMLEditorKit.html#insertHTML(HTMLDocument, int, String, int, int, HTML.Tag) (Java Platform SE 8)]よりは簡単？速度的にどちらが速いかなどは未検証。 -- &user(aterai); &new{2014-04-28 (月) 15:00:16};
 

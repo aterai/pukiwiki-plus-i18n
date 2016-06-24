@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-01-22T13:27:16+09:00
 description: JFileChooserのリサイズや、最小サイズ以下へのサイズ変更を禁止します。
 ---
-* 概要 [#b6bb287d]
+* 概要 [#summary]
 `JFileChooser`のリサイズや、最小サイズ以下へのサイズ変更を禁止します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTM16q-C_I/AAAAAAAAAZ0/i21vjp9vPjc/s800/FixedSizeFileChooser.png)
 
-* サンプルコード [#i99787b1]
+* サンプルコード [#sourcecode]
 #code(link){{
 JFileChooser fileChooser = new JFileChooser() {
   @Override protected JDialog createDialog(Component parent) throws HeadlessException {
@@ -23,15 +23,15 @@ JFileChooser fileChooser = new JFileChooser() {
 };
 }}
 
-* 解説 [#i7707be5]
+* 解説 [#explanation]
 `JFileChooser`の`createDialog`メソッドをオーバーライドして、リサイズを制限したり、最小サイズを設定したりしています。
 
 `JDK 6`では、`Windows`環境でも、オーバーライドした`createDialog`メソッド内で、`JDialog#setMinimumSize(Dimension)`を使うだけで、最小サイズの設定が出来るようになっています。
 
-* 参考リンク [#z0f87abe]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1374445 Swing - JFileChooser setMinimunSize not working?]
 - [[JFrameの最小サイズ>Swing/MinimumFrame]]
 
-* コメント [#x9017146]
+* コメント [#comment]
 #comment
 #comment

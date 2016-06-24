@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-12-18T16:11:14+09:00
 description: JTextField,JPasswordField,JSpinner,JComboBoxの幅をカラム数で指定して比較しています。
 ---
-* 概要 [#ve8ef0dc]
+* 概要 [#summary]
 `JTextField`,`JPasswordField`,`JSpinner`,`JComboBox`の幅をカラム数で指定して比較しています。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTS72PP0tI/AAAAAAAAAjk/RRG_w2fJBtA/s800/SetColumns.png)
 
-* サンプルコード [#ib603a1f]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTextField field = new JTextField(20);
 JPasswordField passwd = new JPasswordField(20);
@@ -23,7 +23,7 @@ if (c instanceof JTextField) {
 }
 }}
 
-* 解説 [#fd934c68]
+* 解説 [#explanation]
 上記のサンプルでは、要素が空の`JComboBox`などのカラム幅を同じにして(下二つは`default`のまま)、以下のような順番で並べています。
 + `JTextField` [`setColumns(20)`]
 + `JPasswordField` [`setColumns(20)`]
@@ -34,10 +34,10 @@ if (c instanceof JTextField) {
 
 スクリーンショットは、左が`JDK 1.6.0`、右が、`JDK 1.5.0_10`で実行したものになっています(どちらも`WindowsLookAndFeel`)。`1.6.0`ではきれいに揃っていますが、`1.5.0_10`などでは幅も高さも余白もガタガタ(左の内余白も`JTextField`は広すぎ、`JComboBox`などは狭すぎるなどバラバラ)なので、レイアウトマネージャーで工夫するか、`setPreferredSize(Dimension)`を使って幅を揃える方がよさそうです([[JButtonなどの高さを変更せずに幅を指定>Swing/ButtonWidth]])。
 
-* 参考リンク [#oe03e66c]
+* 参考リンク [#reference]
 - [[JButtonなどの高さを変更せずに幅を指定>Swing/ButtonWidth]]
 - [[JComboBoxのセルサイズを決定するためのプロトタイプ値を設定する>Swing/PrototypeDisplayValue]]
 
-* コメント [#w970c125]
+* コメント [#comment]
 #comment
 #comment

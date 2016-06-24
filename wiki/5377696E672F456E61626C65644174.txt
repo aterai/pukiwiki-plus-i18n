@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-07-26T06:10:38+09:00
 description: JTabbedPaneのタブが選択できるかどうかを切り替えます。
 ---
-* 概要 [#j4059381]
+* 概要 [#summary]
 `JTabbedPane`のタブが選択できるかどうかを切り替えます。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTMLdSGopI/AAAAAAAAAYw/aRU27uh4vuQ/s800/EnabledAt.png)
 
-* サンプルコード [#gd234ddc]
+* サンプルコード [#sourcecode]
 #code(link){{
 checkbox.addItemListener(new ItemListener() {
   @Override public void itemStateChanged(ItemEvent e) {
@@ -23,12 +23,14 @@ checkbox.addItemListener(new ItemListener() {
 });
 }}
 
-* 解説 [#hc8e2c68]
+* 解説 [#explanation]
 上記のサンプルでは、チェックボックスを使って詳細設定タブが選択できるかどうかを切り替えることができます。
 
-タブが選択できるかどうかは、`JTabbedPane#setEnabledAt`メソッドで設定します。
+タブが選択できるかどうかは、`JTabbedPane#setEnabledAt(...)`メソッドで設定します。
 
-//* 参考リンク
-* コメント [#d3f2ec2b]
+* 参考リンク [#reference]
+- [http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setEnabledAt-int-boolean- JTabbedPane#setEnabledAt(int, boolean) (Java Platform SE 8)]
+
+* コメント [#comment]
 #comment
 #comment

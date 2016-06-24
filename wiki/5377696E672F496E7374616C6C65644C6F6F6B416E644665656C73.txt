@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-01-19T13:31:06+09:00
 description: インストールされているLookAndFeelの一覧を取得し、これらを切り替えるためのメニューバーを作成します。
 ---
-* 概要 [#n56e30d7]
+* 概要 [#summary]
 インストールされている`LookAndFeel`の一覧を取得し、これらを切り替えるためのメニューバーを作成します。[https://java.net/projects/Swingset3 Swingset3 — Project Kenai]からの引用です。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOmfktdJI/AAAAAAAAAco/gBdSD5Qn9-Y/s800/InstalledLookAndFeels.png)
 
-* サンプルコード [#hedae77c]
+* サンプルコード [#sourcecode]
 #code(link){{
 private ButtonGroup lookAndFeelRadioGroup;
 private String lookAndFeel;
@@ -59,14 +59,14 @@ private void updateLookAndFeel() {
 }
 }}
 
-* 解説 [#q3a14a56]
+* 解説 [#explanation]
 上記のサンプルでは、`UIManager.getInstalledLookAndFeels()`メソッドを使用して`UIManager.LookAndFeelInfo`のリストを取得しています。
 
-* 参考リンク [#p2860eba]
+* 参考リンク [#reference]
 - [https://java.net/projects/Swingset3 Swingset3 — Project Kenai]
 - [[Look and Feelの変更>Swing/LookAndFeel]]
 -- `SwingSet2`版
 
-* コメント [#k986f53e]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-06-19T06:28:53+09:00
 description: Iconで波パターンを作成し、これを順番に並べて波線を描画するJSeparatorを作成します。
 ---
-* 概要 [#g6af9d8e]
+* 概要 [#summary]
 `Icon`で波パターンを作成し、これを順番に並べて波線を描画する`JSeparator`を作成します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWkeY23gI/AAAAAAAAApc/r6W1VFeeAYA/s800/WavyLineSeparator.png)
 
-* サンプルコード [#r8936d7c]
+* サンプルコード [#sourcecode]
 #code(link){{
 class WavyLineSeparator extends JSeparator {
   private static final int ICONWIDTH = 3;
@@ -87,11 +87,11 @@ class WavyLineSeparator extends JSeparator {
 }
 }}
 
-* 解説 [#q8db10c5]
+* 解説 [#explanation]
 水平用の波パターン`Icon`を作成して、これを順番に並べてセパレータとして描画しています。垂直用のパターンは水平用を回転して生成しています。
 
-//* 参考リンク
-* コメント [#l8c965e9]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - `SwingConstants.VERTICAL`に対応しました。 -- &user(aterai); &new{2006-06-19 (月) 14:39:49};
 

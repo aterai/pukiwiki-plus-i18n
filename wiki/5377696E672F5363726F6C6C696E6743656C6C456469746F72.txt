@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-06-20T14:39:55+09:00
 description: JTableのTableCellEditorとして、JTextAreaとJScrollPaneを使用します。
 ---
-* 概要 [#i988a941]
+* 概要 [#summary]
 `JTable`の`TableCellEditor`として、`JTextArea`と`JScrollPane`を使用します。
 
 #download(https://lh4.googleusercontent.com/-DDRbJ9WhSJk/Tf7btYjUE7I/AAAAAAAAA9s/yVKIKC55zIw/s800/ScrollingCellEditor.png)
 
-* サンプルコード [#gf065aec]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TextAreaCellEditor extends JTextArea implements TableCellEditor {
   private static final String KEY = "Stop-Cell-Editing";
@@ -75,7 +75,7 @@ class TextAreaCellEditor extends JTextArea implements TableCellEditor {
 }
 }}
 
-* 解説 [#nc5d399e]
+* 解説 [#explanation]
 上記のサンプルでは、`0`列目にデフォルトの`TableCellEditor(JTextField)`、`1`列目に`JTextArea`を継承した`TableCellEditor`を設定しています。
 
 - `TableCellEditor#isCellEditable`
@@ -87,10 +87,10 @@ class TextAreaCellEditor extends JTextArea implements TableCellEditor {
 - `TableCellEditor#getTableCellEditorComponent`, `EventQueue.invokeLater`
 -- `JTextArea`にフォーカスを移動し、`JTextArea`のキャレットも文字列末尾に移動
 
-* 参考リンク [#wcd8d89d]
+* 参考リンク [#reference]
 - [[TableCellEditorのレイアウトを変更>Swing/CellEditorLayout]]
 - [[JTableのセル幅で文字列を折り返し>Swing/TableCellRenderer]]
 
-* コメント [#w195090b]
+* コメント [#comment]
 #comment
 #comment

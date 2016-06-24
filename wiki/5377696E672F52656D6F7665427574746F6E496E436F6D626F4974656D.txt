@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2012/10/delete-button-in-jcombobox-popup-menu.html
     lang: en
 ---
-* 概要 [#w66d2f92]
+* 概要 [#summary]
 `JButton`のドロップダウンリストで、各アイテムにクリック可能な`JButton`を追加しこれを削除します。
 
 #download(https://lh6.googleusercontent.com/-x9uTOO9fSds/T_pElwy8GBI/AAAAAAAABPM/Jx30phjG3bM/s800/RemoveButtonInComboItem.png)
 
-* サンプルコード [#o70b5054]
+* サンプルコード [#sourcecode]
 #code(link){{
 class CellButtonsMouseListener extends MouseAdapter {
   private int prevIndex = -1;
@@ -109,7 +109,7 @@ class CellButtonsMouseListener extends MouseAdapter {
 }
 }}
 
-* 解説 [#sc8b8fec]
+* 解説 [#explanation]
 `JComboBox`のドロップダウンリスト(`BasicComboPopup`)から`JList`を取得し、これに上記のような`MouseListener`を追加しています。この`JList`がクリックされた場合、レンダラーから対応するセルに表示されている`JButton`を取得し、`button.doClick()`を呼び出します。
 
 #code{{
@@ -126,9 +126,9 @@ if (a instanceof BasicComboPopup) {
 - 削除ボタンがクリックされてもドロップダウンリストは表示状態のまま残るように、`MutableComboBoxModel#removeElementAt(index);`のあとで`comboBox.showPopup();`を実行
 - `BasicComboPopup`が、フレーム外に表示されている場合(`Heavy weight`)、一旦閉じたあとで再度開かれるように見える
 
-* 参考リンク [#df35f1fa]
+* 参考リンク [#reference]
 - [[JListのセル内にJButtonを配置する>Swing/ButtonsInListCell]]
 
-* コメント [#h9cd9631]
+* コメント [#comment]
 #comment
 #comment

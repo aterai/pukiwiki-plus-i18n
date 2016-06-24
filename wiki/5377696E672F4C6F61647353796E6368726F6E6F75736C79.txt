@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-12-01T00:02:34+09:00
 description: JEditorPaneに画像付きのHTMLを読み込み、描画が完了した段階で全体のスクリーンショットを撮る方法をテストします。
 ---
-* 概要 [#ha11582f]
+* 概要 [#summary]
 `JEditorPane`に画像付きの`HTML`を読み込み、描画が完了した段階で全体のスクリーンショットを撮る方法をテストします。
 
 #download(https://lh5.googleusercontent.com/-JPZBF-3MA9o/VHskydE02OI/AAAAAAAANrs/7WXsb2t0ahg/s800/LoadsSynchronously.png)
 
-* サンプルコード [#jee2555f]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ImageLoadSynchronouslyHTMLEditorKit extends HTMLEditorKit {
   @Override public ViewFactory getViewFactory() {
@@ -32,7 +32,7 @@ class ImageLoadSynchronouslyHTMLEditorKit extends HTMLEditorKit {
 }
 }}
 
-* 解説 [#zf649ed8]
+* 解説 [#explanation]
 上記のサンプルでは、タブを切り替えた後に`JEditorPane#setText(...)`で`HTML`の読み込みを行い、全体のスクリーンショットを縮小して画像にし、サムネイルとして右端の`JLabel`に表示しています。
 
 - 左: `default`
@@ -45,11 +45,11 @@ class ImageLoadSynchronouslyHTMLEditorKit extends HTMLEditorKit {
 - 右: `LoadsSynchronously`
 -- `HTMLEditorKit#getViewFactory()`と`ViewFactory#create(Element)`をオーバーライドし、`ImageView`に`setLoadsSynchronously(true)`を設定することで画像の読み込みを同期的に行う
 
-* 参考リンク [#r178aab7]
+* 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/ImageView.html#setLoadsSynchronously-boolean- ImageView#setLoadsSynchronously(boolean) (Java Platform SE 8)]
 - [https://community.oracle.com/thread/1353113 setAsynchronousLoadPriority on JTextPane does not seem to work in 1.6 | Oracle Community]
 -- via: [http://stackoverflow.com/questions/27044987/jscrollpane-does-not-update-its-scroll-to-go-down-to-follow-the-caret-position-b java - JScrollPane does not update its scroll to go down to follow the caret position because of Image in JEditorPane - Stack Overflow]
 
-* コメント [#mfb4e5cc]
+* コメント [#comment]
 #comment
 #comment

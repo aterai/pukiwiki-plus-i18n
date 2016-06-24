@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/08/filesystemtree-with-jcheckbox.html
     lang: en
 ---
-* 概要 [#w66e4684]
+* 概要 [#summary]
 編集可能な`JCheckBox`をノードに追加した`JTree`でディレクトリ構造を表示します。
 
 #download(https://lh6.googleusercontent.com/-5ihZ2R-e4Ug/Tki-blUTxaI/AAAAAAAABA0/5KCjlm9CkSY/s800/FileSystemTreeWithCheckBox.png)
 
-* サンプルコード [#i1700889]
+* サンプルコード [#sourcecode]
 #code(link){{
 class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
   private final FileSystemView fileSystemView;
@@ -98,17 +98,17 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
 //......
 }}
 
-* 解説 [#r3f14f2c]
+* 解説 [#explanation]
 このサンプルは、[[FileSystemViewを使ってディレクトリ構造をJTreeに表示する>Swing/DirectoryTree]]と、[[JTreeの葉ノードをJCheckBoxにする>Swing/CheckBoxNodeTree]]を組み合わせて作成しています。
 
 ----
 `TreeCellEditor#isCellEditable(...)`をオーバーライドして、`JCheckBox`付近をクリックした場合のみ編集可能(チェックの有無を切り替えることができる)にし、ラベルやアイコンなどをクリックした場合は、編集状態にせずノードの展開や折り畳みができるように設定しています。
 
-* 参考リンク [#v001ce9d]
+* 参考リンク [#reference]
 - [[FileSystemViewを使ってディレクトリ構造をJTreeに表示する>Swing/DirectoryTree]]
 - [[JTreeの葉ノードをJCheckBoxにする>Swing/CheckBoxNodeTree]]
 
-* コメント [#b9b92412]
+* コメント [#comment]
 #comment
 - [[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]] で使用している`TreeModelListener`を追加して`JCheckBox`の状態を変更するように修正。 -- &user(aterai); &new{2012-04-13 (金) 20:12:08};
 - チェックされたノード(最上位となる)の一覧をコンソールに表示する`JButton`を追加(スクリーンショットなどは面倒なので更新しない)。 -- &user(aterai); &new{2012-04-19 (木) 19:50:07};

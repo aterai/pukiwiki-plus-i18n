@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2013/01/jscrollbar-search-highlighter.html
     lang: en
 ---
-* 概要 [#i481e1eb]
+* 概要 [#summary]
 `JScrollBar`などに`JTextArea`の文字列検索の結果をハイライト表示します。
 
 #download(https://lh4.googleusercontent.com/-69jv_2q3f8g/UQT6FH3HXbI/AAAAAAAABcY/FmYcY3aLr6w/s800/ScrollBarSearchHighlighter.png)
 
-* サンプルコード [#g03baf61]
+* サンプルコード [#sourcecode]
 #code(link){{
 scrollbar.setUI(new WindowsScrollBarUI() {
   @Override protected void paintTrack(
@@ -39,7 +39,7 @@ scrollbar.setUI(new WindowsScrollBarUI() {
 });
 }}
 
-* 解説 [#y104c6ca]
+* 解説 [#explanation]
 上記のサンプルでは、`ScrollBarUI#paintTrack(...)`メソッドをオーバーライドして、`JTextArea`内の文字列の検索結果を縦の`JScrollBar`内部に描画しています。
 
 - 注:
@@ -151,8 +151,8 @@ JScrollBar scrollBar = new JScrollBar(Adjustable.VERTICAL) {
 scroll.setVerticalScrollBar(scrollBar);
 }}
 
-//* 参考リンク
-* コメント [#jab8403b]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - 行ヘッダーを使用したハイライトは`Java7`以降でのみ有効に機能するようです。 -- &user(読者); &new{2013-08-18 (日) 23:10:11};
 -- ご指摘ありがとうございます。仰るとおり、`1.6.0_45`で行ヘッダ版が正常に動作しないことを確認しました。回避方法がないか、`Bug Database`あたりを調べてみようと思います。 -- &user(aterai); &new{2013-08-19 (月) 00:04:59};

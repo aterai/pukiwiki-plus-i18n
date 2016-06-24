@@ -5,24 +5,24 @@ author: aterai
 pubdate: 2007-12-17T14:31:41+09:00
 description: JFrameが常に他のウィンドウよりも前面に表示されるように設定します。
 ---
-* 概要 [#g058b4ba]
+* 概要 [#summary]
 `JFrame`が常に他のウィンドウよりも前面に表示されるように設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTHh-ILwOI/AAAAAAAAARU/SYnOw7As81Y/s800/AlwaysOnTop.png)
 
-* サンプルコード [#qd70d208]
+* サンプルコード [#sourcecode]
 #code(link){{
 frame.setAlwaysOnTop(true);
 }}
 
-* 解説 [#nafc3612]
+* 解説 [#explanation]
 `JDK 1.5.0`で導入された、`Window#setAlwaysOnTop(boolean)`メソッドを使って、フレームを常に最前面に表示します。
 
 プラットフォームで、最前面がサポートされていない場合は、何も起こらないようです。サポートされているかどうかは、`JDK 1.6.0`で導入された、`Window#isAlwaysOnTopSupported()`か、`Toolkit.isAlwaysOnTopSupported()`で調べることができます。
 
-* 参考リンク [#ydeb541a]
+* 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#setAlwaysOnTop-boolean- Window.html#setAlwaysOnTop(boolean) (Java Platform SE 8)]
 
-* コメント [#i5ea5fc6]
+* コメント [#comment]
 #comment
 #comment

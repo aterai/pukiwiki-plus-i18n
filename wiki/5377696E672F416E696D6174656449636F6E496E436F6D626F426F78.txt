@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-03-12T17:23:26+09:00
 description: JComboBoxと、そのドロップダウンリストにAnimated GIFを表示します。
 ---
-* 概要 [#tf47b649]
+* 概要 [#summary]
 `JComboBox`と、そのドロップダウンリストに`Animated GIF`を表示します。
 
 #download(https://lh3.googleusercontent.com/-kS7gIhaebeM/T12ukNN94JI/AAAAAAAABJ8/wM8SvLNzWEE/s800/AnimatedIconInComboBox.png)
 
-* サンプルコード [#ra30b4ca]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static ImageIcon makeImageIcon(URL url, final JComboBox combo, final int row) {
   ImageIcon icon = new ImageIcon(url);
@@ -35,14 +35,14 @@ private static ImageIcon makeImageIcon(URL url, final JComboBox combo, final int
 }
 }}
 
-* 解説 [#ff36f816]
+* 解説 [#explanation]
 - `JComboBox`自体が非表示(`JComboBox#isShowing(...)==false`)の場合は、再描画しない
 - `Animated GIF`が選択されている(`JComboBox#getSelectedIndex()==row`)場合のみ、`JComboBox#repaint()`で再描画する
 - ドロップダウンリストが表示されている場合、`Animated GIF`の表示されている領域(`JList#getCellBounds(row, row)`で取得)だけ再描画
 
-* 参考リンク [#s0602434]
+* 参考リンク [#reference]
 - [[JTableのセルにAnimated GIFを表示する>Swing/AnimatedIconInTableCell]]
 
-* コメント [#oef480dc]
+* コメント [#comment]
 #comment
 #comment

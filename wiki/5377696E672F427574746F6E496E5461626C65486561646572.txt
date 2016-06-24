@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/12/dropdown-menu-button-in-jtableheader.html
     lang: en
 ---
-* 概要 [#m34a7190]
+* 概要 [#summary]
 `JTableHeader`にクリックするとポップアップメニューを表示する`JButton`を追加します。
 
 #download(https://lh3.googleusercontent.com/-ccZ08VSXYwE/Trd27UaeD2I/AAAAAAAABEk/1NAYoZ1NGV0/s800/ButtonInTableHeader.png)
 
-* サンプルコード [#g556fd49]
+* サンプルコード [#sourcecode]
 #code(link){{
 @Override public void mouseClicked(MouseEvent e) {
   JTableHeader header = (JTableHeader) e.getSource();
@@ -51,11 +51,11 @@ hreflang:
 }
 }}
 
-* 解説 [#m5fb923c]
+* 解説 [#explanation]
 上記のサンプルでは、`JTableHeader`の各カラムにマウスカーソルがある場合、`HeaderRenderer#getTableCellRendererComponent(...)`内で、右端に`JButton`を追加しています。ボタンがクリックされたときに表示する`JPopupMenu`は、`JTableHeader`に追加したマウスリスナーでクリックされた位置などを取得して表示するようになっています。
 
-//* 参考リンク
-* コメント [#p1ee78e8]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - `NimbusLookAndFeel`で、`JPopupMenu`が表示されないのを修正。 -- &user(aterai); &new{2011-11-07 (月) 22:15:02};
 

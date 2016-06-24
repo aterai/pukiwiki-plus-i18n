@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-04-20T00:00:12+09:00
 description: JTextPaneにセパレータとして、hr要素やJSeparator、MatteBorderを設定したJLabelなどを追加します。
 ---
-* 概要 [#j05937c8]
+* 概要 [#summary]
 `JTextPane`にセパレータとして、`hr`要素や`JSeparator`、`MatteBorder`を設定した`JLabel`などを追加します。
 
 #download(https://lh3.googleusercontent.com/-DttSBuXmfOs/VTOx9lKJR2I/AAAAAAAAN2s/3ZCvhgC8QDw/s800/SeparatorOnTextPane.png)
 
-* サンプルコード [#cfebdf7e]
+* サンプルコード [#sourcecode]
 #code(link){{
 HTMLEditorKit kit = new HTMLEditorKit();
 HTMLDocument doc = new HTMLDocument();
@@ -62,7 +62,7 @@ textPane.insertComponent(new JSeparator(JSeparator.VERTICAL) {
 textPane.insertComponent(new JLabel(" TEST"));
 }}
 
-* 解説 [#bc760f8e]
+* 解説 [#explanation]
 - `hr`要素
 -- `htmlEditorKit.insertHTML(doc, doc.getLength(), "<hr />", 0, 0, null);`などで、`hr`要素を追加
 - `JSeparator`
@@ -79,7 +79,7 @@ textPane.insertComponent(new JLabel(" TEST"));
 --- [https://docs.oracle.com/javase/tutorial/uiswing/components/separator.html How to Use Separators (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]
 > In most implementations, a vertical separator has a preferred height of 0, and a horizontal separator has a preferred width of 0. This means a separator is not visible unless you either set its preferred size or put it in under the control of a layout manager such as BorderLayout or BoxLayout that stretches it to fill its available display area.
 
-//* 参考リンク
-* コメント [#z081fac5]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

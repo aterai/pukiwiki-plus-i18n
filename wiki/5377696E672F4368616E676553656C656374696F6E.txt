@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-06-25T18:03:27+09:00
 description: JTableの選択状態をchangeSelectionメソッドを使って変更します。
 ---
-* 概要 [#z546a74d]
+* 概要 [#summary]
 `JTable`の選択状態を`changeSelection`メソッドを使って変更します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTI0VFZw9I/AAAAAAAAATY/1C_mVqWcXPc/s800/ChangeSelection.png)
 
-* サンプルコード [#y659a560]
+* サンプルコード [#sourcecode]
 #code(link){{
 box.add(new JButton(new AbstractAction("changeSelection") {
   @Override public void actionPerformed(ActionEvent e) {
@@ -30,7 +30,7 @@ box.add(new JButton(new AbstractAction("changeSelection") {
 }));
 }}
 
-* 解説 [#s9ff2036]
+* 解説 [#explanation]
 `JTable#changeSelection`は、`toggle`と`extend`の`2`つのフラグで、セルの選択状態を以下のようにいろいろ変更することができます([https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#changeSelection-int-int-boolean-boolean- JTable#changeSelection(int, int, boolean, boolean)] より引用)。
 
 - `toggle`:`false`、`extend`:`false`
@@ -44,7 +44,7 @@ box.add(new JButton(new AbstractAction("changeSelection") {
 
 上記のサンプルは、`toggle`、`extend`の状態を変えて、実際に選択状態の変化をテストすることができます。アンカーや選択状態、列の入れ替えなどを行って`changeSelection`による変更の確認をしてみてください。
 
-//* 参考リンク
-* コメント [#wbfb09b1]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

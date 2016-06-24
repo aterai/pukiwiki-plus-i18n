@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2013/12/breadcrumb-navigation-with-jradiobutton.html
     lang: en
 ---
-* 概要 [#bdc42ffd]
+* 概要 [#summary]
 `FlowLayout`の水平間隔をマイナスにして、`JRadioButton`を重ねて表示し、パンくずリスト風のコンポーネントを作成します。
 
 #download(https://lh5.googleusercontent.com/-aKK_2LaPfVQ/UpsqWSS4lUI/AAAAAAAAB7c/VSzPRuRu3IY/s800/BreadcrumbList.png)
 
-* サンプルコード [#c72ee4fd]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static JComponent makeBreadcrumbList(int overlap, List<String> list) {
   JPanel p = new JPanel(new FlowLayout(FlowLayout.LEADING, -overlap, 0));
@@ -29,7 +29,7 @@ private static JComponent makeBreadcrumbList(int overlap, List<String> list) {
 }
 }}
 
-* 解説 [#i59e5919]
+* 解説 [#explanation]
 上記のサンプルでは、指定したピクセル分だけ重なるように、`FlowLayout`の水平間隔にマイナスの値を指定しています。このため、左側の`JRadioButton`の下に右側の`JRadioButton`が配置されている状態になっています。各`JRadioButton`自体は重なっていますが、描画やマウスクリックなどは重ならないよう、以下のような設定を追加しています。
 
 - 描画
@@ -37,13 +37,13 @@ private static JComponent makeBreadcrumbList(int overlap, List<String> list) {
 - マウスクリック
 -- `JRadioButton#contains(...)`をオーバーライドして、上記の矢羽図形の外では反応しないよう設定
 
-* 参考リンク [#zbdf2001]
+* 参考リンク [#reference]
 - [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]
 - [[JMenuItemの内部にJButtonを配置する>Swing/ButtonsInMenuItem]]
 -- 前後のコンポーネントのフチを共通化して(`1px`だけ重ねる)、`JLayer`でそのフォーカスを描画するサンプル
 - [[JToggleButtonをFlowLayoutで重ねて表示する>Swing/BackgroundButtonIcon]]
 -- 中央揃えではなく、左揃えのボタンを作成するサンプル
 
-* コメント [#radf5949]
+* コメント [#comment]
 #comment
 #comment

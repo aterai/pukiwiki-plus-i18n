@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2003-10-13
 description: JWindowを使って、Splash Screenを表示します。
 ---
-* 概要 [#u76ddf25]
+* 概要 [#summary]
 `JWindow`を使って、`Splash Screen`を表示します。以下のサンプルコードは、`%JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java`から引用改変したものです。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTtxuiuuI/AAAAAAAAAk4/JhuyuS80C4M/s800/SplashScreen.png)
 
-* サンプルコード [#raad4e3d]
+* サンプルコード [#sourcecode]
 #code(link){{
 private JWindow splashScreen;
 private JLabel  splashLabel;
@@ -64,7 +64,7 @@ public void showPanel() {
 }
 }}
 
-* 解説 [#j7466f5a]
+* 解説 [#explanation]
 上記のサンプルコードでは、クラスパスの通った場所にある`/resources/images/splash.png`を読み込んでスプラッシュ・スクリーン(起動画面)を表示しています。`JWindow`の表示、非表示は、イベントディスパッチスレッド(`EDT`)で行われるように、`EventQueue.invokeLater`の中で実行しています。
 
 ----
@@ -74,12 +74,12 @@ public void showPanel() {
 //- [http://java.sun.com/developer/technicalArticles/J2SE/Desktop/javase6/splashscreen/ New Splash-Screen Functionality in Java SE 6]
 - [http://www.oracle.com/technetwork/articles/javase/splashscreen-135938.html New Splash-Screen Functionality in Java SE 6]
 
-* 参考リンク [#l19aa452]
+* 参考リンク [#reference]
 - [[JDialogでモーダルなJProgressBar付きSplash Screenを表示する>Swing/ProgressSplashScreen]]
 - %%[http://www.n-generate.com/download.html n-Gen]%%
 -- サンプルの画像の生成に利用
 
-* コメント [#gc355cfa]
+* コメント [#comment]
 #comment
 - `Splash Screen`を`Java SE 6`の機能で表示させるために、`splashScreen.setVisible(false)`にしていたテスト版のサンプルが添付されていたのを修正しました。 -- &user(aterai); &new{2007-09-25 (火) 18:56:13};
 

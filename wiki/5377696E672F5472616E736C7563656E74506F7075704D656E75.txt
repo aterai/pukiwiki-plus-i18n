@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2012/07/translucent-jpopupmenu.html
     lang: en
 ---
-* 概要 [#gcc0b988]
+* 概要 [#summary]
 `JPopupMenu`自体の背景を透明に設定し、別途その`paintComponent(...)`メソッドをオーバーライドして半透明の背景を描画します。
 
 #download(https://lh3.googleusercontent.com/-SKQis3B-SmY/T0dd531MovI/AAAAAAAABJk/fWIZIAeE3oE/s800/TranslucentPopupMenu.png)
 
-* サンプルコード [#yd15f03c]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TranslucentPopupMenu extends JPopupMenu {
   private static final Color ALPHA_ZERO = new Color(0x0, true);
@@ -61,7 +61,7 @@ class TranslucentPopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#z80cf3e7]
+* 解説 [#explanation]
 上記のサンプルでは、`JPopupMenu`は`isOpaque()`メソッドをオーバーライド、`JMenuItem`は`setOpaque(false)`として、それぞれ透明に設定し、`JPopupMenu#paintComponent(...)`で、半透明の背景を描画しています。
 
 `JPopupMenu`が親フレームの外にはみ出す場合は、`Heavyweight`の`JWindow`を使って`JPopupMenu`が表示されるので、`JWindow#setBackground(new Color(0x0, true))`で(`JDK 1.6.0_10`では、`com.sun.awt.AWTUtilities.setWindowOpaque(w, false)`)、`JPopupMenu#show(...)`が呼ばれるたびに、毎回(親フレームの透明度を引き継がないように？)`JWindow`自体を透明にしています。
@@ -71,11 +71,11 @@ class TranslucentPopupMenu extends JPopupMenu {
 -- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=7156657 Bug ID: 7156657 Version 7 doesn't support translucent popup menus against a translucent window]
 -- `JDK 1.7.0_06`などで修正された
 
-* 参考リンク [#dcc353c1]
+* 参考リンク [#reference]
 - [http://today.java.net/pub/a/today/2008/03/18/translucent-and-shaped-swing-windows.html Translucent and Shaped Swing Windows | Java.net]
 - [[JMenuなどから開くPopupMenuを半透明化>Swing/TranslucentSubMenu]]
 
-* コメント [#bd72dc66]
+* コメント [#comment]
 #comment
 - メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=7156657 Bug ID: 7156657 Version 7 doesn't support translucent popup menus against a translucent window]、[http://hg.openjdk.java.net/jdk8/jdk8/jdk/rev/4acd0211f48b jdk8/jdk8/jdk: changeset 5453:4acd0211f48b] -- &user(aterai); &new{2012-08-10 (金) 19:22:39};
 -- `JDK 1.7.0_06`で修正されている？ [http://www.oracle.com/technetwork/java/javase/2col/7u6-bugfixes-1733378.html Java™ SE Development Kit 7 Update 6 Bug Fixes] -- &user(aterai); &new{2012-08-15 (水) 13:55:37};

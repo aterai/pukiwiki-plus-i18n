@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-10-26T13:04:26+09:00
 description: JTextFieldの文字列が空でフォーカスがない場合、透かし画像を表示するように設定します。
 ---
-* 概要 [#l4413cba]
+* 概要 [#summary]
 `JTextField`の文字列が空でフォーカスがない場合、透かし画像を表示するように設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWh1Qjh4I/AAAAAAAAApY/bLarzjLy7-8/s800/WatermarkInTextField.png)
 
-* サンプルコード [#bef878a0]
+* サンプルコード [#sourcecode]
 #code(link){{
 class WatermarkTextField extends JTextField implements FocusListener {
   private final ImageIcon image;
@@ -42,17 +42,17 @@ class WatermarkTextField extends JTextField implements FocusListener {
 }
 }}
 
-* 解説 [#kcbc0705]
+* 解説 [#explanation]
 - 上
 -- [[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]
 - 下
 -- `JTextField`の文字列が空でフォーカスも無い場合、文字列ではなく画像を表示
 
-* 参考リンク [#w2323b40]
+* 参考リンク [#reference]
 - [[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]
 - [[JPasswordFieldにヒント文字列を描画する>Swing/InputHintPasswordField]]
 -- [[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]では、`JPasswordField`に応用できないので、`JLabel`を配置することでヒント文字列を表示
 
-* コメント [#rbb7650a]
+* コメント [#comment]
 #comment
 #comment

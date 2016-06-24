@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-06-13T03:13:10+09:00
 description: JTabbedPaneのタブ幅をできるだけ一定のサイズに固定します。
 ---
-* 概要 [#ke4395dc]
+* 概要 [#summary]
 `JTabbedPane`のタブ幅をできるだけ一定のサイズに固定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTVAYay_fI/AAAAAAAAAm8/1gWXosPj93A/s800/TabWidth.png)
 
-* サンプルコード [#gf9ffe1b]
+* サンプルコード [#sourcecode]
 #code(link){{
 tabbedPane.setUI(new BasicTabbedPaneUI() {
   @Override protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
@@ -19,7 +19,7 @@ tabbedPane.setUI(new BasicTabbedPaneUI() {
 });
 }}
 
-* 解説 [#vdaead36]
+* 解説 [#explanation]
 上記のサンプルでは、`BasicTabbedPaneUI`の`calculateTabWidth`メソッドをオーバーライドして、`JTabbedPane`のタブ幅がタイトル文字列の長さにかかわらず一定になるように設定しています。
 
 `JTabbedPane`のサイズが十分で無い場合、タブ列が二段になってタブは指定された幅を維持出来なくなります。
@@ -35,7 +35,7 @@ public String makeTitle(String title) {
 }
 }}
 
-//* 参考リンク
-* コメント [#t721888e]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

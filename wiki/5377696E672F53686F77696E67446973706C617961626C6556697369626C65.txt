@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-04-20T14:24:13+09:00
 description: JComponentの表示状態が切り替わった時、そのisDisplayable、isShowing、isVisibleメソッドが返す値をテストします。
 ---
-* 概要 [#t8509340]
+* 概要 [#summary]
 `JComponent`の表示状態が切り替わった時、その`isDisplayable`、`isShowing`、`isVisible`メソッドが返す値をテストします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTS-a1ZnQI/AAAAAAAAAjo/jB4n-1WmEIs/s800/ShowingDisplayableVisible.png)
 
-* サンプルコード [#e72673c3]
+* サンプルコード [#sourcecode]
 #code(link){{
 button.addHierarchyListener(new HierarchyListener() {
   @Override public void hierarchyChanged(HierarchyEvent e) {
@@ -23,7 +23,7 @@ button.addHierarchyListener(new HierarchyListener() {
 });
 }}
 
-* 解説 [#c904a45d]
+* 解説 [#explanation]
 上記のサンプルでは、コンポーネント(`JButton`)に`HierarchyListener`を追加して、表示状態が切り替わった時の`isDisplayable`、`isShowing`、`isVisible`を調べています。
 
 - 対象ボタンを作成してパネルに追加した状態で、`frame.setVisible(true)`を実行する前の場合:
@@ -51,7 +51,7 @@ button.addHierarchyListener(new HierarchyListener() {
 -- `isShowing`: `false`
 -- `isVisible`: `false`
 
-//* 参考リンク
-* コメント [#s4735b0e]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

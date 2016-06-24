@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-09-10
 description: JComboBoxのドロップダウンリストが表示されたとき、本体の幅が狭くても一定の幅以下にはならないように設定します。
 ---
-* 概要 [#i9a11225]
+* 概要 [#summary]
 `JComboBox`のドロップダウンリストが表示されたとき、本体の幅が狭くても一定の幅以下にはならないように設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJ8wQD77I/AAAAAAAAAVM/Ade6cu49JUQ/s800/ComboPopupWidth.png)
 
-* サンプルコード [#v4b8bfc8]
+* サンプルコード [#sourcecode]
 #code(link){{
 class WidePopupMenuListener implements PopupMenuListener {
   private static final int POPUP_MIN_WIDTH = 300;
@@ -34,7 +34,7 @@ class WidePopupMenuListener implements PopupMenuListener {
 }
 }}
 
-* 解説 [#cc7f021e]
+* 解説 [#explanation]
 上記のサンプルでは、下二つの`JComboBox`に`PopupMenuListener`を実装したリスナーを設定しています。このリスナーでは、ポップアップメニュー(ドロップダウンリスト)が開かれる前に`JComboBox`本体の幅を指定値と比較し、小さかった場合は以下のような通常とは異なる手順でポップアップメニューの表示を行っています。
 
 - `JComboBox`のサイズを取得し保存
@@ -43,13 +43,13 @@ class WidePopupMenuListener implements PopupMenuListener {
 -- ポップアップメニューの幅も、指定値まで拡大している
 - `JComboBox`本体のサイズを保存していた元の値に戻す
 
-* 参考リンク [#a112d945]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1368300 Swing - How to widen the drop-down list in a JComboBox]
 -- `dlinderm`さんの投稿(2007/06/08 23:24)に、`PopupMenuListener`を使用するサンプルがある
 - [http://www.jroller.com/santhosh/entry/make_jcombobox_popup_wide_enough Make JComboBox popup wide enough - Santhosh Kumar's Weblog]
 -- `JComboBox#doLayout()`と、`JComboBox#getSize()`をオーバーライドして、十分な幅のドロップダウンリストを表示するサンプルがある
 
-* コメント [#p6e4cf7f]
+* コメント [#comment]
 #comment
 - メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4743225 Bug ID: 4743225 Size of JComboBox list is wrong when list is populated via PopupMenuListener]  -- &user(aterai); &new{2011-06-05 (日) 02:34:16};
 

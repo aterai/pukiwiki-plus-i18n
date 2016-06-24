@@ -5,24 +5,24 @@ author: aterai
 pubdate: 2015-01-19T00:22:44+09:00
 description: JTableのモデルが更新された時にソートを行うように設定し、値の変更、行の追加などでの状態変化をテストします。
 ---
-* 概要 [#w555aabc]
+* 概要 [#summary]
 `JTable`のモデルが更新された時にソートを行うように設定し、値の変更、行の追加などでの状態変化をテストします。
 
 #download(https://lh3.googleusercontent.com/-sydiHRbXRzw/VLvNhDDXdlI/AAAAAAAANvI/Qelj8B1NIWs/s800/SortsOnUpdates.png)
 
-* サンプルコード [#e0ec892f]
+* サンプルコード [#sourcecode]
 #code(link){{
 ((DefaultRowSorter) table.getRowSorter()).setSortsOnUpdates(true);
 }}
 
-* 解説 [#kfd0b3a0]
+* 解説 [#explanation]
 - 値の編集、変更
 -- `SortsOnUpdates(false)`の場合、ソートに変化なし
 -- `SortsOnUpdates(true)`の場合、`CellEditor`が値をコミットした(`rowsUpdated`が呼び出された)後にソートが行われる
 - 行の追加、削除
 -- `SortsOnUpdates`の値に関わらず、ソートが行われる
 
-//* 参考リンク
-* コメント [#d230abf2]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

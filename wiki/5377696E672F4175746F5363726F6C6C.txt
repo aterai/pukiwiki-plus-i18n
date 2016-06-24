@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2008/06/mouse-drag-auto-scrolling.html
     lang: en
 ---
-* 概要 [#h85af000]
+* 概要 [#summary]
 `JScrollPane`上でのマウスドラッグに応じてラベルをオートスクロールします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTH2GCzRoI/AAAAAAAAAR0/FR7seILhmaM/s800/AutoScroll.png)
 
-* サンプルコード [#nf7c2bf6]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ViewportDragScrollListener extends MouseAdapter
                                  implements HierarchyListener {
@@ -77,7 +77,7 @@ class ViewportDragScrollListener extends MouseAdapter
 }
 }}
 
-* 解説 [#i40d83e6]
+* 解説 [#explanation]
 上記のサンプルでは、`JViewport`内の画像ラベルをマウスでドラッグすると、その移動方向に応じて自動的にスクロールします。マウスをクリックすると停止します。
 
 `javax.swing.Timer`を使うことでスクロールの開始、継続、停止を行っています。
@@ -85,12 +85,12 @@ class ViewportDragScrollListener extends MouseAdapter
 ----
 `JTextPane`で文字列を挿入したときに、最後まで自動スクロールしたい場合は、[[JTextPaneで最終行に移動>Swing/CaretPosition]]を参考にしてください。
 
-* 参考リンク [#j6c969ff]
+* 参考リンク [#reference]
 - [[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]
 - [[JTextPaneで最終行に移動>Swing/CaretPosition]]
 - [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
 
-* コメント [#paa26bcc]
+* コメント [#comment]
 #comment
 - 猫の手スクロール風の動作に変更しました。 -- &user(aterai); &new{2007-05-24 (木) 19:16:16};
 - ドラッグ中は、[[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]と同じ動作をするように変更しました。 -- &user(aterai); &new{2011-12-22 (木) 18:38:02};

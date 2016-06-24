@@ -5,17 +5,17 @@ author: aterai
 pubdate: 2005-09-05T12:06:35+09:00
 description: ウィンドウのリサイズなどに応じてレイアウトを再評価するように、DynamicLayoutを設定します。
 ---
-* 概要 [#m403640d]
+* 概要 [#summary]
 ウィンドウのリサイズなどに応じてレイアウトを再評価するように、`DynamicLayout`を設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMDyaDeJI/AAAAAAAAAYk/-EIAq3TyJbw/s800/DynamicLayout.png)
 
-* サンプルコード [#z7ca7790]
+* サンプルコード [#sourcecode]
 #code(link){{
 Toolkit.getDefaultToolkit().setDynamicLayout(true);
 }}
 
-* 解説 [#h95a943d]
+* 解説 [#explanation]
 上記のサンプルでは、`JCheckBox`をチェックすると`DefaultToolkit`の`setDynamicLayout`メソッドを使って`DynamicLayout`の設定を切り替えています。
 
 - `DynamicLayout`: `false`
@@ -28,9 +28,9 @@ Toolkit.getDefaultToolkit().setDynamicLayout(true);
 Toolkit.getDefaultToolkit().getDesktopProperty("awt.dynamicLayoutSupported");
 }}
 
-* 参考リンク [#hfb11949]
+* 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#setDynamicLayout-boolean- Toolkit#setDynamicLayout(boolean) (Java Platform SE 8)]
 
-* コメント [#h2fab599]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-08-08T15:04:19+09:00
 description: JEditorPaneでdivやspanタグのtitle属性をToolTipで表示できるように設定します。
 ---
-* 概要 [#r24f4ad3]
+* 概要 [#summary]
 `JEditorPane`で`div`や`span`タグの`title`属性を`ToolTip`で表示できるように設定します。
 
 #download(https://lh4.googleusercontent.com/-3HQ42PjgBfs/Tj97O_2VS6I/AAAAAAAABAc/EnrOPXrJxfE/s800/ElementAttribute.png)
 
-* サンプルコード [#c3b2443d]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTextPane editor1 = new JTextPane() {
   private transient Position.Bias[] bias = new Position.Bias[1];
@@ -41,7 +41,7 @@ JTextPane editor1 = new JTextPane() {
 editor1.setEditorKit(new HTMLEditorKit());
 }}
 
-* 解説 [#g114332d]
+* 解説 [#explanation]
 上記のサンプルでは、`JEditorPane`で`HTMLEditorKit`を使った場合の`ToolTip`表示についてテストしています。`img`タグの`alt`属性は自動的に`ToolTip`表示され、リンクは`HyperlinkListener`を追加することで`ToolTip`を変更することができます。
 
 #code{{
@@ -93,9 +93,9 @@ class TooltipEditorKit extends HTMLEditorKit {
 }
 }}
 
-* 参考リンク [#p5154cf7]
+* 参考リンク [#reference]
 - [[JEditorPaneにリンクを追加>Swing/HyperlinkListener]]
 
-* コメント [#h336329b]
+* コメント [#comment]
 #comment
 #comment

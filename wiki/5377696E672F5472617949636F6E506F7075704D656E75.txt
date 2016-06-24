@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-01-31T15:26:03+09:00
 description: TrayIconをクリックしてJPopupMenuを表示します。
 ---
-* 概要 [#kc07ccfd]
+* 概要 [#summary]
 `TrayIcon`をクリックして`JPopupMenu`を表示します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TUZUBCgOGJI/AAAAAAAAA0A/Ox5g3HoxmoI/s800/TrayIconPopupMenu.png)
 
-* サンプルコード [#q69216fd]
+* サンプルコード [#sourcecode]
 #code(link){{
 final SystemTray tray  = SystemTray.getSystemTray();
 final Image image      = new ImageIcon(getClass().getResource("16x16.png")).getImage();
@@ -47,7 +47,7 @@ icon.addMouseListener(new MouseAdapter() {
 });
 }}
 
-* 解説 [#sa6566ea]
+* 解説 [#explanation]
 `Java 1.6.0`では、`TrayIcon`には`java.awt.PopupMenu`しか使用できないので、`setUndecorated(true)`かつ、サイズが`0x0`の`JDialog`を適当な位置(`TrayIcon`のクリックで`JPopupMenu`が開いたように見える場所)に配置し、これを親にして`javax.swing.JPopupMenu`を表示しています。
 
 ----
@@ -111,14 +111,14 @@ private static Point adjustPopupLocation(JPopupMenu popup, int xposition, int yp
 }
 }}
 
-* 参考リンク [#y7e86d22]
+* 参考リンク [#reference]
 - [http://weblogs.java.net/blog/alexfromsun/archive/2008/02/jtrayicon_updat.html JTrayIcon update | Java.net]
 -- [http://java.net/projects/swinghelper/sources/svn/content/trunk/src/java/org/jdesktop/swinghelper/tray/JXTrayIcon.java Swinghelper: Subversion: JXTrayIcon.java — Java.net]
 - [http://docs.oracle.com/javase/tutorial/uiswing/misc/systemtray.html How to Use the System Tray (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Other Swing Features)]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6285881 Bug ID: 6285881 JTrayIcon: support Swing JPopupMenus for tray icons]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6453521 Bug ID: 6453521 TrayIcon should support transparency]
 
-* コメント [#kcb0edde]
+* コメント [#comment]
 #comment
 - ソースを上げ忘れていたのを修正orz。 -- &user(aterai); &new{2011-02-02 (水) 19:07:51};
 - `JRE1.6.0u3`で`2`度連続で右クリックすると`ClassCastException`起きちゃうんですよね・・・`BugParade`でも見つけらんなかったです -- &user(sawshun); &new{2011-10-25 (火) 18:45:38};

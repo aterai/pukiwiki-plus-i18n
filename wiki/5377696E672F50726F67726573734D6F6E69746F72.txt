@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-02-15T14:18:06+09:00
 description: ProgressMonitorで処理の進捗を表示します。
 ---
-* 概要 [#qfcff5da]
+* 概要 [#summary]
 `ProgressMonitor`で処理の進捗を表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRQXIAu4I/AAAAAAAAAg4/bh8niw_k5AE/s800/ProgressMonitor.png)
 
-* サンプルコード [#fd3db85b]
+* サンプルコード [#sourcecode]
 #code(link){{
 final ProgressMonitor monitor = new ProgressMonitor(
     this, "message", "note", 0, 100);
@@ -60,7 +60,7 @@ worker.addPropertyChangeListener(new ProgressListener(monitor));
 worker.execute();
 }}
 
-* 解説 [#x1f15ca5]
+* 解説 [#explanation]
 上記のサンプルでは、`SwingWorker`を使ったタスクの進捗状態を`ProgressMonitor`で表示しています。
 
 ----
@@ -87,11 +87,11 @@ class ProgressListener implements PropertyChangeListener {
 }
 }}
 
-* 参考リンク [#r9011528]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/progress.html How to Use Progress Bars (The Java™ Tutorials)]
 - [[ProgressMonitorがダイアログを表示するまでの待ち時間>Swing/MillisToDecideToPopup]]
 -- 処理時間が短くて`ProgressMonitor`が表示されない場合の待ち時間をテスト
 
-* コメント [#p0a19264]
+* コメント [#comment]
 #comment
 #comment

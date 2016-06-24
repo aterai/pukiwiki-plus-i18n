@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/08/jbutton-in-comboeditor.html
     lang: en
 ---
-* 概要 [#j9d62836]
+* 概要 [#summary]
 `JComboBox`の`EditorComponent`に`JButton`や`JLabel`などを配置します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTIT4iCWGI/AAAAAAAAASk/pFFcvRBoyIg/s800/ButtonInComboEditor.png)
 
-* サンプルコード [#o63272a1]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ComboBoxLayout implements LayoutManager {
   private final JLabel label;
@@ -86,7 +86,7 @@ class ComboBoxLayout implements LayoutManager {
 }
 }}
 
-* 解説 [#g2c763e2]
+* 解説 [#explanation]
 上記のサンプルでは、`JComboBox`に独自のレイアウトマネージャーを設定して、内部に`JButton`や`JLabel`を配置しています。
 
 ----
@@ -125,12 +125,12 @@ private static ImageIcon makeFilteredImage2(ImageIcon srcIcon) {
 }
 }}
 
-* 参考リンク [#eb8b8cf3]
+* 参考リンク [#reference]
 - [http://feedicons.com/ Feed Icons - Home of the Standard Web Feed Icon]
 - [[JComboBoxにアイコンを表示>Swing/IconComboBox]]
 - [[JTextField内にアイコンを追加>Swing/IconTextField]]
 
-* コメント [#i9c7403d]
+* コメント [#comment]
 #comment
 - `EditorComponent`に追加した`JButton`をクリックすると例外が発生する場合があるバグを修正 -- &user(aterai); &new{2009-08-28 (金) 16:42:47};
 

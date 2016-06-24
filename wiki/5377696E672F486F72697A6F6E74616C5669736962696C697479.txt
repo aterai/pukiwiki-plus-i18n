@@ -8,17 +8,17 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2015/04/scrollbar-for-jtextfield.html
     lang: en
 ---
-* 概要 [#ac86776b]
+* 概要 [#summary]
 `JTextField`の表示領域を`JScrollBar`でスクロール可能にします。
 
 #download(https://lh3.googleusercontent.com/-e-5Z2Ze6fmU/U4Q5K7nrzqI/AAAAAAAACGQ/9vdUHpxI2VA/s800/HorizontalVisibility.png)
 
-* サンプルコード [#e0731aeb]
+* サンプルコード [#sourcecode]
 #code(link){{
 scroller.setModel(textField.getHorizontalVisibility());
 }}
 
-* 解説 [#sb017c03]
+* 解説 [#explanation]
 上記のサンプルでは、`JTextField#getHorizontalVisibility()`で取得した`BoundedRangeModel`(可視領域のモデル)を`JScrollBar`に設定することで、これを使用したスクロールや現在の可視領域の位置、幅の表示などが可能になっています。
 
 - 注: `setCaretPosition: 0`
@@ -121,8 +121,8 @@ class ArrowButtonlessScrollBarUI extends BasicScrollBarUI {
 -- 縦スクロールバーを非表示にした`JScrollPane`を使用する場合、`JTextField`内の文字列選択でスクロールしない
 -- 文字列を適当な長さまで削除するとノブが非表示になる
 
-//* 参考リンク
-* コメント [#r73c1367]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - 可視領域の幅の表示を考えると`ArrowButton`は不要なので、[[JScrollBarを半透明にする>Swing/TranslucentScrollBar]]のような外見の`JScrollBar`を使用した方が良いかもしれない。 -- &user(aterai); &new{2014-05-14 (水) 16:05:32};
 - サンプルの追加と、スクリーンショットの更新。 -- &user(aterai); &new{2014-05-27 (火) 16:12:38};

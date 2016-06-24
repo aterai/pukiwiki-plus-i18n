@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-06-04T14:33:56+09:00
 description: JPasswordFieldに入力がない場合、ヒント文字列を描画します。
 ---
-* 概要 [#cec5d8dc]
+* 概要 [#summary]
 `JPasswordField`に入力がない場合、ヒント文字列を描画します。
 
 #download(https://lh3.googleusercontent.com/-UKh7dosDsR4/T8xFLnpMGwI/AAAAAAAABNY/nxgzH2XN1vo/s800/InputHintPasswordField.png)
 
-* サンプルコード [#c9574319]
+* サンプルコード [#sourcecode]
 #code(link){{
 class WatermarkPasswordField extends JPasswordField
                              implements FocusListener, DocumentListener {
@@ -53,12 +53,12 @@ class WatermarkPasswordField extends JPasswordField
 }
 }}
 
-* 解説 [#gd45f72d]
+* 解説 [#explanation]
 上記のサンプルでは、`JPasswordField#paintComponent(...)`をオーバーライドしてヒント文字列を描画しています。
 
 `paintComponent(...)`メソッドをオーバーライドするのは同じですが、[[JTextFieldに透かし画像を表示する>Swing/WatermarkInTextField]]とは異なり、`JPasswordField`にフォーカスがあっても、まだ入力がない場合(`DocumentListener`を追加)などに、ヒント文字列を非表示にはせず、薄く表示するようにしています(参考: [http://tips4java.wordpress.com/2009/11/29/text-prompt/ Text Prompt « Java Tips Weblog])。
 
-* 参考リンク [#rc33439c]
+* 参考リンク [#reference]
 - [http://tips4java.wordpress.com/2009/11/29/text-prompt/ Text Prompt « Java Tips Weblog]
 -- `JTextComponent`に`BorderLayout`を設定して、文字列やアイコンを設定した`JLabel`を追加し、これを`JLabel#setVisible(boolean)`で切り替えているので、汎用的に使用することが可能
 - [[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]
@@ -66,6 +66,6 @@ class WatermarkPasswordField extends JPasswordField
 - [[JTextFieldに透かし画像を表示する>Swing/WatermarkInTextField]]
 -- `paintComponent(...)`メソッドをオーバーライド
 
-* コメント [#w04b195a]
+* コメント [#comment]
 #comment
 #comment

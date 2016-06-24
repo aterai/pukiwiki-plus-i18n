@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-04-09T15:16:42+09:00
 description: JCheckBoxで使用するチェックアイコンの色や形を変更します。
 ---
-* 概要 [#j820b62f]
+* 概要 [#summary]
 `JCheckBox`で使用するチェックアイコンの色や形を変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTI225hC_I/AAAAAAAAATc/YxhkQ5Bq2sk/s800/CheckBoxColor.png)
 
-* サンプルコード [#ue47b08d]
+* サンプルコード [#sourcecode]
 #code(link){{
 class MyCheckBoxIcon2 implements Icon {
   private final Icon orgIcon = UIManager.getIcon("CheckBox.icon");
@@ -42,7 +42,7 @@ class MyCheckBoxIcon2 implements Icon {
 }
 }}
 
-* 解説 [#gba9d4b3]
+* 解説 [#explanation]
 - `org`
 -- デフォルトの`JCheckBox`
 - `check1`
@@ -64,10 +64,10 @@ UIManager.put("CheckBox.darkShadow", new ColorUIResource(Color.RED));
 JCheckBox cb = new JCheckBox("check box");
 }}
 
-* 参考リンク [#qf2b955f]
+* 参考リンク [#reference]
 - [http://www.ibm.com/developerworks/jp/java/library/j-synth/ 進歩したSynth]
 -- `SynthLookAndFeel`を使って、画像でチェックを描画するサンプルなどが紹介されている
 
-* コメント [#of8fbb29]
+* コメント [#comment]
 #comment
 #comment

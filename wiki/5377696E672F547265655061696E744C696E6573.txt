@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-02-04T16:09:01+09:00
 description: JTreeのアイコンを繋ぐ水平垂直線の表示の有無を切り替えます。
 ---
-* 概要 [#la642829]
+* 概要 [#summary]
 `JTree`のアイコンを繋ぐ水平垂直線の表示の有無を切り替えます。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWNxTrfYI/AAAAAAAAAo4/xS9RjkcNYYM/s800/TreePaintLines.png)
 
-* サンプルコード [#a4057d44]
+* サンプルコード [#sourcecode]
 #code(link){{
 final JTree tree = new JTree();
 add(new JCheckBox(new AbstractAction("Tree.paintLines") {
@@ -25,16 +25,16 @@ add(new JCheckBox(new AbstractAction("Tree.paintLines") {
 }), BorderLayout.NORTH);
 }}
 
-* 解説 [#d8a44352]
+* 解説 [#explanation]
 上記のサンプルでは、左の`JTree`の水平線などの表示を、`UIManager.put("Tree.paintLines", Boolean.FALSE);`で切り替えています(右は常に非表示)。
 
 元々、線を表示しない`GTKLookAndFeel`などでは、`UIManager.put("Tree.paintLines", Boolean.TRUE);`としても線は描画されないようです。
 
 複数の`JTree`の表示を個別に切り替えたい場合は、[https://community.oracle.com/thread/1367209 Hide horizontal and vertical lines in a JTree | Oracle Forums]で、Michael_Dunn さんが投稿(`2007/10/24 2:42`)したコードのように、`BasicTreeUI#paintHorizontalLine`メソッドなどをオーバーライドする方法もあります。
 
-* 参考リンク [#ld863a92]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1367209 Hide horizontal and vertical lines in a JTree | Oracle Forums]
 
-* コメント [#v77a9c8a]
+* コメント [#comment]
 #comment
 #comment

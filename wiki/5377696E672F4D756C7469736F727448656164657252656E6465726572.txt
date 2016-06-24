@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-10-14T00:15:08+09:00
 description: JTableの複数キーを使ったソートの状態をヘッダ上に別途表示します。
 ---
-* 概要 [#mc764da6]
+* 概要 [#summary]
 `JTable`の複数キーを使ったソートの状態をヘッダ上に別途表示します。
 
 #download(https://lh3.googleusercontent.com/-QNe3lJ3oXH0/Ulqu3vaS91I/AAAAAAAAB3U/Tb2kXiKV8Fs/s800/MultisortHeaderRenderer.png)
 
-* サンプルコード [#pd57d3dd]
+* サンプルコード [#sourcecode]
 #code(link){{
 class MultisortHeaderRenderer implements TableCellRenderer {
   @Override public Component getTableCellRendererComponent(
@@ -36,7 +36,7 @@ class MultisortHeaderRenderer implements TableCellRenderer {
 }
 }}
 
-* 解説 [#x5c99bb4]
+* 解説 [#explanation]
 `JTable`の`TableRowSorter`は、デフォルトで最大数`3`の`SortKey`が設定されているため、複数キーを使ったソートが可能ですが、`JTableHeader`には第一ソートキーの状態だけが表示されます。
 このサンプルでは、ヘッダのセルレンダラー内部でソートキーを取得し、その状態を文字列にしてヘッダタイトルに追記表示することで識別できるようにしています。
 
@@ -46,11 +46,11 @@ class MultisortHeaderRenderer implements TableCellRenderer {
 -- `Windows 7`でデフォルトの`WindowsLookAndFeel`が使用するヘッダセルレンダラー(ソートのマークが文字列の右ではなく上部に表示される)と併用したい場合は、修正が必要
 --- この修正を行ったレンダラーを、他の`LookAndFeel`で使用すると第一ソートキーが非表示になる
 
-* 参考リンク [#k330f2ae]
+* 参考リンク [#reference]
 - [http://tips4java.wordpress.com/2010/08/29/multisort-table-header-cell-renderer/ Multisort Table Header Cell Renderer « Java Tips Weblog]
 - [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
 - [[JTableのソートアイコンを変更>Swing/TableSortIcon]]
 
-* コメント [#n4085924]
+* コメント [#comment]
 #comment
 #comment

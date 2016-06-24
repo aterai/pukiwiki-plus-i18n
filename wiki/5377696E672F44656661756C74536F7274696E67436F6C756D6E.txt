@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-06-06T18:40:01+09:00
 description: JTableがデフォルトでソートする列とその方向を設定します。
 ---
-* 概要 [#t18d1eb2]
+* 概要 [#summary]
 `JTable`がデフォルトでソートする列とその方向を設定します。
 
 #download(https://lh5.googleusercontent.com/-qvzRq_TxwSg/Texuvm22ELI/AAAAAAAAA84/DhfjZ3TEATk/s800/DefaultSortingColumn.png)
 
-* サンプルコード [#a2768444]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(model);
 table.setAutoCreateRowSorter(true);
@@ -20,7 +20,7 @@ table.getRowSorter().setSortKeys(
     Arrays.asList(new RowSorter.SortKey(index, SortOrder.DESCENDING)));
 }}
 
-* 解説 [#h11e48c2]
+* 解説 [#explanation]
 上記のサンプルでは、`RowSorter#setSortKeys(...)`を使って、指定の列のソート順序(ここでは、`0`列目を`SortOrder.DESCENDING`で降順)のリストを設定しています。
 
 - メモ
@@ -28,9 +28,9 @@ table.getRowSorter().setSortKeys(
 -- `RowSorter#setSortKeys(null)`で、ソート無し状態になる
 --- [[TableRowSorterのSortKeysをクリアする>Swing/ClearSortingState]]
 
-* 参考リンク [#p9343c5c]
+* 参考リンク [#reference]
 - [[TableRowSorterのSortKeysをクリアする>Swing/ClearSortingState]]
 
-* コメント [#c094ddb6]
+* コメント [#comment]
 #comment
 #comment

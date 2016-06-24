@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/02/translucent-jinternalframe-nimbus.html
     lang: en
 ---
-* 概要 [#n658aabb]
+* 概要 [#summary]
 `Synth`を使った`LookAndFeel`で、`JInternalFrame`を半透明にします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVvwg_IhI/AAAAAAAAAoI/wQpW8Msbo2Y/s800/TranslucentFrame.png)
 
-* サンプルコード [#m302be7e]
+* サンプルコード [#sourcecode]
 #code(link){{
 try {
   for (UIManager.LookAndFeelInfo laf: UIManager.getInstalledLookAndFeels())
@@ -73,7 +73,7 @@ class TranslucentSynthStyle extends SynthStyle {
   //...
 }}
 
-* 解説 [#p3984476]
+* 解説 [#explanation]
 上記のサンプルでは、`SynthStyle#paintInternalFrameBackground`、`SynthStyle#isOpaque`などのメソッドをオーバーライドして`JInternalFrame`を半透明にします。
 
 ----
@@ -180,10 +180,10 @@ public class BackgroundPainterTest {
 }
 }}
 
-* 参考リンク [#cef3d81f]
+* 参考リンク [#reference]
 - [[JInternalFrameを半透明にする>Swing/TransparentFrame]]
 
-* コメント [#c0c35d4a]
+* コメント [#comment]
 #comment
 - メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6919629 Bug ID: 6919629 Nimbus L&F Nimus.Overrides option leaks significant amounts of memory], [http://hg.openjdk.java.net/jdk7/jdk7/jdk/rev/042eb92f89ad jdk7/jdk7/jdk: changeset 2337:042eb92f89ad] -- &user(aterai); &new{2010-05-24 (月) 15:27:28};
 - [http://java-swing-tips.blogspot.com blogger]で、`JButton`の周りに変な矩形が描画される場合があるとの指摘を頂いたので、`p2.setOpaque(false);`を追加。 -- &user(aterai); &new{2011-02-08 (火) 04:05:50};

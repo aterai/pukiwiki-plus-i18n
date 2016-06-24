@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-08-11T12:27:41+09:00
 description: JTextFieldの背景色を半透明にしても、文字列選択やキャレットの点滅などで描画が乱れないようにする方法をテストします。
 ---
-* 概要 [#x96d09bf]
+* 概要 [#summary]
 `JTextField`の背景色を半透明にしても、文字列選択やキャレットの点滅などで描画が乱れないようにする方法をテストします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTV03Q10yI/AAAAAAAAAoQ/xH8xmeARg4k/s800/TranslucentTextField.png)
 
-* サンプルコード [#taebf677]
+* サンプルコード [#sourcecode]
 #code(link){{
 Color BG_COLOR = new Color(1f, .8f, .8f, .2f);
 
@@ -34,7 +34,7 @@ field2.setOpaque(false);
 field2.setBackground(BG_COLOR);
 }}
 
-* 解説 [#p23f641d]
+* 解説 [#explanation]
 上記のサンプルでは、それぞれアルファ値を使った半透明の背景色を`JTextField`に設定しています。
 
 - `0`: `setOpaque(true)`
@@ -57,11 +57,11 @@ field2.setBackground(BG_COLOR);
 
 #ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTV55zD1gI/AAAAAAAAAoY/0PCTmGDb2AA/s800/TranslucentTextField2.png)
 
-* 参考リンク [#s707327e]
+* 参考リンク [#reference]
 - [http://www.viva-edo.com/komon/edokomon.html 江戸の文様（和風素材・デスクトップ壁紙）]
 -- 背景画像として名物裂から雲鶴を借用
 - [http://tips4java.wordpress.com/2009/05/31/backgrounds-with-transparency/ Backgrounds With Transparency « Java Tips Weblog]
 
-* コメント [#l25f2c0b]
+* コメント [#comment]
 #comment
 #comment

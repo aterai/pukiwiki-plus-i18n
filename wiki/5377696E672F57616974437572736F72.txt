@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-06-07
 description: バックグラウンドで処理が実行されている間は、Cursorに砂時計が設定されたGlassPaneを有効にします。
 ---
-* 概要 [#w760af9f]
+* 概要 [#summary]
 バックグラウンドで処理が実行されている間は、`Cursor`に砂時計が設定された`GlassPane`を有効にします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTWfYWDbsI/AAAAAAAAApU/rldJwQuVm-8/s800/WaitCursor.png)
 
-* サンプルコード [#r111147b]
+* サンプルコード [#sourcecode]
 #code(link){{
 frame.setGlassPane(new LockingGlassPane());
 frame.getGlassPane().setVisible(false);
@@ -77,7 +77,7 @@ class LockingGlassPane extends JComponent {
 }
 }}
 
-* 解説 [#a497267c]
+* 解説 [#explanation]
 上記のサンプルでは、カーソルを砂時計に変更し、なにもしないマウスリスナーなどを設定した`GlassPane`を`JFrame#setGlassPane()`メソッドでフレームに追加しています。
 
 スタートボタンがクリックされて処理が継続している間は、この`GlassPane`が有効になり、マウス、キー、フォーカス移動などのイベントが、すべて`GlassPane`に奪われるため、フレーム内のコンポーネントをアクセス不可にすることが出来ます。
@@ -146,13 +146,13 @@ class LockingGlassPane extends JComponent {
 
 - [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]] に移動
 
-* 参考リンク [#xaea8879]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1375257 Swing - How to display "Loading data..." to the user]
 - [http://weblogs.java.net/blog/alexfromsun/archive/2008/01/ Disabling Swing Containers, the final solution?]
 -- [[JInternalFrameをModalにする>Swing/ModalInternalFrame]]
 - [http://tips4java.wordpress.com/2008/11/07/disabled-glass-pane/ Disabled Glass Pane « Java Tips Weblog]
 
-* コメント [#h83774c4]
+* コメント [#comment]
 #comment
 - KBD{Tab}キーで状態遷移しないようにするため、なにもしない`FocusTraversalPolicy`を追加しました。 -- &user(aterai); &new{2005-04-18 (月) 10:51:25};
 - 相当悩みました。`JDialog`だと同じことができないのは何でなんでしょうねぇ。。。 -- &user(おれ); &new{2006-05-17 (水) 16:33:12};

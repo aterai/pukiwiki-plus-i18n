@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-06-15
 description: 高さの異なるコンポーネントをスクロールできるようにリスト状に並べます。
 ---
-* 概要 [#n63d4aaf]
+* 概要 [#summary]
 高さの異なるコンポーネントをスクロールできるようにリスト状に並べます。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJ_UDZVaI/AAAAAAAAAVQ/BbW1hLhenS8/s800/ComponentList.png)
 
-* サンプルコード [#gefca96e]
+* サンプルコード [#sourcecode]
 #code(link){{
 private final Box box = Box.createVerticalBox();
 private final Component glue = Box.createVerticalGlue();
@@ -30,7 +30,7 @@ public void addComp(final JComponent comp) {
 }
 }}
 
-* 解説 [#b910d821]
+* 解説 [#explanation]
 上記のサンプルでは、`Box.createVerticalBox()`で作成した`Box`にコンポーネントを追加してリスト状に並べています。この際、各コンポーネントの高さは変化せず、幅だけフレームサイズに追従するように、`JComponent#setMaximumSize`を設定しています。
 
 コンポーネントの高さの合計がフレームの高さより小さい場合は、下部に余白が出来るように、最後に`Box.createVerticalGlue()`を追加しています。
@@ -47,8 +47,8 @@ public void addComp(final JComponent comp) {
 //  initComps();
 //}
 
-//* 参考リンク
-* コメント [#eec7c049]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - `SpringLayout`ではなく、`BoxLayout`を使うようにサンプルを変更しました。 -- &user(aterai); &new{2006-06-26 (月) 15:34:41};
 - 解説がソースと異なり、`setMinimumSize`となっていたのを`setMaximumSize`に修正。 -- &user(aterai); &new{2009-05-15 (金) 22:58:16};

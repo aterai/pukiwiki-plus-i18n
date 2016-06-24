@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2003-11-10
 description: JMenuに、「最近使ったファイル(F)」を履歴として追加していきます。
 ---
-* 概要 [#a3e2a135]
+* 概要 [#summary]
 `JMenu`に、「最近使ったファイル(`F`)」を履歴として追加していきます。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMffElRbI/AAAAAAAAAZQ/1d47Mop5D-0/s800/FileHistory.png)
 
-* サンプルコード [#u0f87931]
+* サンプルコード [#sourcecode]
 #code(link){{
 private int MAXHISTORY = 3;
 private void updateHistory(String str) {
@@ -47,15 +47,15 @@ class HistoryAction extends AbstractAction {
 }
 }}
 
-* 解説 [#p7efb749]
+* 解説 [#explanation]
 上記のサンプルでは、「ファイル→開く」で、ダミーファイルの履歴が残ります。履歴は`3`件まで残り、履歴をメニューから選択すると、そのファイルが履歴の先頭に移動します。
 
 実際に使用する場合は、ダミーファイルを使用している箇所を修正したり、アプリケーションを終了する際に履歴を保存したりするコードを追加する必要があります。
 
-* 参考リンク [#k3eb0d01]
+* 参考リンク [#reference]
 - [[Resourceファイルからメニューバーを生成>Swing/ResourceMenuBar]]
 - [[JFrameの位置・サイズを記憶する>Swing/Preferences]]
 
-* コメント [#j906ef87]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-07-28T12:01:57+09:00
 description: AffineTransformで図形や画像を反転して表示します。
 ---
-* 概要 [#ac299306]
+* 概要 [#summary]
 `AffineTransform`で図形や画像を反転して表示します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTN731lMzI/AAAAAAAAAbk/Wc0qp3ocR88/s800/HorizontalFlip.png)
 
-* サンプルコード [#ie746204]
+* サンプルコード [#sourcecode]
 #code(link){{
 Font font = new Font(Font.MONOSPACED, Font.PLAIN, 200);
 FontRenderContext frc = new FontRenderContext(null, true, true);
@@ -22,15 +22,15 @@ AffineTransform at = AffineTransform.getScaleInstance(-1d, 1d);
 Shape copyleft = at.createTransformedShape(copyright);
 }}
 
-* 解説 [#m5fa2d66]
+* 解説 [#explanation]
 上記のサンプルでは、コピーライトの文字を鏡像(左右)反転して、コピーレフトのアイコンを作成しています。
 
 上下反転の場合は、`AffineTransform.getScaleInstance(1d, -1d)`を使用します。
 
-* 参考リンク [#fd86c595]
+* 参考リンク [#reference]
 - [http://en.wikipedia.org/wiki/Copyleft コピーレフト - Wikipedia]
 - [[AffineTransformOpで画像を反転する>Swing/AffineTransformOp]]
 
-* コメント [#c9ea5267]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-06-10
 description: JDK 6で新しくなったSwingWorkerを使って、処理の中断や進捗状況の表示更新などを行います。
 ---
-* 概要 [#ibc5942e]
+* 概要 [#summary]
 `JDK 6`で新しくなった`SwingWorker`を使って、処理の中断や進捗状況の表示更新などを行います。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTT8xXI-cI/AAAAAAAAAlQ/ueJc6P4EJVg/s800/SwingWorker.png)
 
-* サンプルコード [#p4592f3b]
+* サンプルコード [#sourcecode]
 #code(link){{
 class Task extends SwingWorker<String, String> {
   @Override public String doInBackground() {
@@ -111,7 +111,7 @@ class CancelAction extends AbstractAction {
 }
 }}
 
-* 解説 [#k7f99d1c]
+* 解説 [#explanation]
 `JDK 6`以前の`SwingWorker.java`から一部メソッド名が変更されていますが、基本的な使い方は一緒のようです。
 
 - `SwingWorker#execute()`メソッドで処理が開始され、`SwingWorker#doInBackground()`メソッドが、バックグラウンドのワーカースレッドで実行される
@@ -141,7 +141,7 @@ protected final void setProgress(int progress) {
 ----
 `SwingWorker#process()`メソッド内などで`JPanel#sDisplayable()`を呼び、アプリケーション(`frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);`が設定されている)が終了している場合は、タスクを中断することで`SwingWorker`が生き残るのを防止しています。
 
-* 参考リンク [#e809b8de]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/SwingWorker.html SwingWorker (Java Platform SE 6)]
 //- [http://java.sun.com/developer/technicalArticles/javase/swingworker/ Improve Application Performance With SwingWorker in Java SE 6]
 - [http://www.oracle.com/technetwork/articles/javase/swingworker-137249.html Improve Application Performance With SwingWorker in Java SE 6]
@@ -150,7 +150,7 @@ protected final void setProgress(int progress) {
 - [[SwingWorkerで複数のJProgressBarを使用する>Swing/TwoProgressBars]]
 - [[SwingWorkerの一時停止と再開>Swing/PauseResumeSwingWorker]]
 
-* コメント [#p903f9d0]
+* コメント [#comment]
 #comment
 - %%以前の`SwingWorker`の使い方などは、[[Timerでアニメーションするアイコンを作成>Swing/AnimeIcon]]、[[Fileの再帰的検索>Swing/RecursiveFileSearch]]などのソースコードやリンク先を参考にしてみてください。%% [[Fileの再帰的検索>Swing/RecursiveFileSearch]]は、`JDK 1.6`の`javax.swing.SwingWorker`を使用するように変更しました。 -- &user(aterai); &new{2007-02-22 (木) 17:57:58};
 -- [[Timerでアニメーションするアイコンを作成>Swing/AnimeIcon]]は %%https://swingworker.dev.java.net/ にある%% `JDK 1.6`からバックポートされた`org.jdesktop.swingworker.SwingWorker`を使用するように変更しました。 -- &user(aterai); &new{2009-12-17 (木) 01:47:38};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-12-27T01:32:14+09:00
 description: JComboBoxを編集可にしてテキスト入力部分とリスト部分にアイコンを表示します。
 ---
-* 概要 [#za138060]
+* 概要 [#summary]
 `JComboBox`を編集可にしてテキスト入力部分とリスト部分にアイコンを表示します。
 
 #download(https://lh5.googleusercontent.com/-4rGEnYRGuys/VQfEDJHomCI/AAAAAAAAN0o/vja8KE3Cm-o/s800/IconComboBox.png)
 
-* サンプルコード [#h76ab388]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static Border makeIconBorder(JComponent c, ImageIcon i) {
   int iw = i.getIconWidth();
@@ -21,7 +21,7 @@ private static Border makeIconBorder(JComponent c, ImageIcon i) {
 }
 }}
 
-* 解説 [#ycb2dfc7]
+* 解説 [#explanation]
 上記のサンプルでは、`JLabel#setIcon(...)`でアイコンを追加し、リスト内の各項目にアイコンが表示されるように設定した`ListCellRenderer`を`JComboBox`に設定しています。
 
 - `setEditable(false)`
@@ -35,12 +35,12 @@ private static Border makeIconBorder(JComponent c, ImageIcon i) {
 --- `combo.getEditor().getEditorComponent()`で取得した`JTextField`にアイコンを追加した`JLabel`を追加
 --- `JLabel`が文字列と重ならないように、`JTextField`にはその幅だけ余白をとるように設定
 
-* 参考リンク [#l13dc690]
+* 参考リンク [#reference]
 - [[MatteBorderでラベル枠を修飾>Swing/MatteBorder]]
 - [[JTextField内にアイコンを追加>Swing/IconTextField]]
 - [[JComboBoxの内余白>Swing/PaddingComboBox]]
 - [[JComboBoxのEditorComponentにJButtonを配置>Swing/ButtonInComboEditor]]
 
-* コメント [#z463c6ec]
+* コメント [#comment]
 #comment
 #comment

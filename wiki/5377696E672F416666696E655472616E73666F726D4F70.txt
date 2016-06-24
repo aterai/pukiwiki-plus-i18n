@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-01-11T23:59:17+09:00
 description: AffineTransformOpなどを使って、画像の上下反転、左右反転を行います。
 ---
-* 概要 [#j7db4b3d]
+* 概要 [#summary]
 `AffineTransformOp`などを使って、画像の上下反転、左右反転を行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHczsN2NI/AAAAAAAAARM/D8gpa0-KfEI/s800/AffineTransformOp.png)
 
-* サンプルコード [#yf8dbae5]
+* サンプルコード [#sourcecode]
 #code(link){{
 int w = bi.getWidth(this);
 int h = bi.getHeight(this);
@@ -20,7 +20,7 @@ AffineTransformOp atOp = new AffineTransformOp(at, null);
 g.drawImage(atOp.filter(bi, null), 0, 0, w, h, this);
 }}
 
-* 解説 [#pb25b986]
+* 解説 [#explanation]
 上記のサンプルでは、`AffineTransformOp#filter(...)`メソッドで左右反転した`BufferedImage`を生成しています。
 
 ----
@@ -32,9 +32,9 @@ at.translate(0, -h);
 g2.drawImage(bi, at, this);
 }}
 
-* 参考リンク [#m98de6d0]
+* 参考リンク [#reference]
 - [[Shapeの反転>Swing/HorizontalFlip]]
 
-* コメント [#k216642b]
+* コメント [#comment]
 #comment
 #comment

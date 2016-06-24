@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-03-21T07:27:38+09:00
 description: JTableのセル上にマウスカーソルが存在する場合、その背景色を変更します。
 ---
-* 概要 [#z4e80d4e]
+* 概要 [#summary]
 `JTable`のセル上にマウスカーソルが存在する場合、その背景色を変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTIqY941CI/AAAAAAAAATI/gk-sbbRE5gw/s800/CellHighlight.png)
 
-* サンプルコード [#j4bc80b6]
+* サンプルコード [#sourcecode]
 #code(link){{
 class HighlightListener extends MouseAdapter {
   private int row = -1;
@@ -62,7 +62,7 @@ class HighlightRenderer extends DefaultTableCellRenderer {
 }
 }}
 
-* 解説 [#y0f7d171]
+* 解説 [#explanation]
 セルレンダラーに`MouseListener`、`MouseMotionListener`を追加し、マウスカーソルが乗っているセルの色を変更しています。
 
 ----
@@ -91,10 +91,10 @@ class HighlightableTable extends JTable {
 }
 }}
 
-* 参考リンク [#a069e48b]
+* 参考リンク [#reference]
 - [[JListのセルをカーソル移動でロールオーバー>Swing/RollOverListener]]
 
-* コメント [#y73c58db]
+* コメント [#comment]
 #comment
 - ソースコードの整理、スクリーンショットの更新 -- &user(aterai); &new{2008-03-14 (金) 16:38:10};
 

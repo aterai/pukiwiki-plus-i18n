@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-01-12T18:57:42+09:00
 description: JTreeを検索して、一致するアイテムを選択します。
 ---
-* 概要 [#l1857467]
+* 概要 [#summary]
 `JTree`を検索して、一致するアイテムを選択します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTSs3gdysI/AAAAAAAAAjM/r_j-mrb83aU/s800/SearchBox.png)
 
-* サンプルコード [#e7516ef5]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static void searchTree(
     JTree tree, TreePath path, String q, List<TreePath> rollOverPathLists) {
@@ -32,7 +32,7 @@ private static void searchTree(
 }
 }}
 
-* 解説 [#h95e65f3]
+* 解説 [#explanation]
 上記のサンプルでは、選択された`JTree`のノード以下に、検索文字列と一致するノードがあれば、`JTree#addSelectionPath(TreePath)`メソッドで選択するようになっています。
 
 ----
@@ -85,13 +85,13 @@ while (depth.hasMoreElements()) {
 }
 }}
 
-* 参考リンク [#vd69b823]
+* 参考リンク [#reference]
 - [[JTreeのノードを展開・折り畳み>Swing/ExpandAllNodes]]
 - [https://community.oracle.com/thread/1357454 Swing - how to get everything in DefaultTreeNode]
 - [[JTreeで条件に一致するノードを検索しハイライト>Swing/TreeNodeHighlightSearch]]
 - [[JTreeのノードを走査する>Swing/TraverseAllNodes]]
 
-* コメント [#a7ae0491]
+* コメント [#comment]
 #comment
 - ソースを拝見させていただきましたが, 要素の挿入の箇所がさっぱりわかりません... -- &user(taji); &new{2010-01-20 (水) 00:38:18};
 - 途中で切れてしまい失礼しました. できればどこで挿入しているのか教えていただけませんか? -- &user(taji); &new{2010-01-20 (水) 00:39:44};

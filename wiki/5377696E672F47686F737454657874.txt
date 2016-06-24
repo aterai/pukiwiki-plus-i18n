@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-11-07T16:50:50+09:00
 description: JTextFieldにフォーカスが無く文字列が空の場合、薄い色でその説明を表示します。
 ---
-* 概要 [#m17af070]
+* 概要 [#summary]
 `JTextField`にフォーカスが無く文字列が空の場合、薄い色でその説明を表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTNY3BG1nI/AAAAAAAAAas/YJB5L9kNK-c/s800/GhostText.png)
 
-* サンプルコード [#lf2627f8]
+* サンプルコード [#sourcecode]
 #code(link){{
 class PlaceholderFocusListener implements FocusListener {
   private static final Color INACTIVE
@@ -38,7 +38,7 @@ class PlaceholderFocusListener implements FocusListener {
 }
 }}
 
-* 解説 [#r832c3b6]
+* 解説 [#explanation]
 上記のサンプルでは、下の`JTextField`からフォーカスが失われた時、まだ何も入力されていない場合は、その`JTextField`の説明などを薄く表示することができるようにしています。
 
 ----
@@ -86,12 +86,12 @@ class PlaceholderLayerUI extends LayerUI<JTextComponent> {
 }
 }}
 
-* 参考リンク [#o0c01026]
+* 参考リンク [#reference]
 - [[JTextFieldに透かし画像を表示する>Swing/WatermarkInTextField]]
 - [[JPasswordFieldにヒント文字列を描画する>Swing/InputHintPasswordField]]
 -- `JPasswordField`の場合、`setText(String)`は使用できないので、透かし画像と同じ要領で`paintComponent`をオーバーライドして文字列を描画
 
-* コメント [#h0951933]
+* コメント [#comment]
 #comment
 - タイトルを変更?: `Input Hint`、`Placeholder`、`Watermark` ... -- &user(aterai); &new{2009-11-17 (火) 15:48:18};
 - `LayerUI#paint(...)`中で、子コンポーネントの`repaint()`を呼び出して再描画が無限ループしていたバグを修正。 -- &user(aterai); &new{2014-07-26 (土) 04:51:11};

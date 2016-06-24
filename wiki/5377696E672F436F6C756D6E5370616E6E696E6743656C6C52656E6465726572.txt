@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2013/05/column-spanning-tablecellrenderer.html
     lang: en
 ---
-* 概要 [#y3d3b7a0]
+* 概要 [#summary]
 `JTable`のセルを横方向に連結するセルレンダラーを作成します。
 
 #download(https://lh5.googleusercontent.com/-wcXag_bBidU/UY-uA3riCRI/AAAAAAAABrs/Q_V-fdNVRu8/s800/ColumnSpanningCellRenderer.png)
 
-* サンプルコード [#j27fd87a]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ColumnSpanningCellRenderer extends JPanel implements TableCellRenderer {
   private final JTextArea textArea = new JTextArea(2, 999999);
@@ -86,7 +86,7 @@ class ColumnSpanningCellRenderer extends JPanel implements TableCellRenderer {
 }
 }}
 
-* 解説 [#m5397014]
+* 解説 [#explanation]
 文字列を配置した`JTextArea`を各カラムごとに`JViewport`で表示する領域を切り取ってセルに貼り付けています。さらに、`JTable`のセルの縦罫線自体は、`table.setShowVerticalLines(false);`などで非表示にすることでレンダラー内の`JTextArea`は、連続しているように見せかけ、上部の`JLabel`は`Border`を設定することで区切りを表示しています。
 
 - メモ
@@ -99,12 +99,12 @@ class ColumnSpanningCellRenderer extends JPanel implements TableCellRenderer {
 --- %%`JTable#repaint(Rectangle)`をオーバーライドして常に全体を描画することで回避%%
 -- `JScrollPane`内に`JTextArea`を配置せずに、直接`JTextArea`から表示領域を切り取っても良さそう？
 
-* 参考リンク [#k0cadf9c]
+* 参考リンク [#reference]
 - [http://docs.huihoo.com/javaone/2007/desktop/TS-3548.pdf PDF: Extreme GUI Makeover 2007]
 -- via: [http://stackoverflow.com/questions/16305023/jtable-complex-cell-renderer java - JTable : Complex Cell Renderer - Stack Overflow]
 - [[JTableの罫線の有無とセルの内余白を変更>Swing/IntercellSpacing]]
 
-* コメント [#dcdb5bd1]
+* コメント [#comment]
 #comment
 - `JTable`をスクロールするとおかしくなる？ -- &user(aterai); &new{2013-06-04 (火) 13:37:19};
 -- `0`行目ではなく、一番上に表示されている行の表示が原因かもしれない。 -- &user(aterai); &new{2013-06-04 (火) 13:44:14};

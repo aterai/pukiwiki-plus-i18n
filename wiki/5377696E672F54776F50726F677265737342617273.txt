@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-06-13T13:44:00+09:00
 description: ひとつのSwingWorkerで、進捗を表示するJProgressBarをふたつ使用します。
 ---
-* 概要 [#xec05bbb]
+* 概要 [#summary]
 ひとつの`SwingWorker`で、進捗を表示する`JProgressBar`をふたつ使用します。
 
 #download(https://lh6.googleusercontent.com/-S6ko35_DIi8/TfWPa08dHvI/AAAAAAAAA9I/MNhC-0LF8YQ/s800/TwoProgressBars.png)
 
-* サンプルコード [#p537a3f8]
+* サンプルコード [#sourcecode]
 #code(link){{
 enum Component { TOTAL, FILE, LOG }
 class Progress {
@@ -67,7 +67,7 @@ worker = new SwingWorker<String, Progress>() {
 //...
 }}
 
-* 解説 [#n2dcd9c0]
+* 解説 [#explanation]
 上記のサンプルでは、デフォルトで用意されている`SwingWorker#setProgress(int)`は使用せず、以下の`3`つのコンポーネントの状態を表す`Progress`クラスを作成し、これを`SwingWorker<String, Progress>#publish(Progress)`メソッドに与えて`EDT`上でそれぞれの状態を更新しています。
 
 - 全体の進捗を表示する`JProgressBar`
@@ -96,10 +96,10 @@ class SubProgressListener implements PropertyChangeListener {
 }
 }}
 
-* 参考リンク [#m6d8d35f]
+* 参考リンク [#reference]
 - [[SwingWorkerを使った処理の中断と進捗状況表示>Swing/SwingWorker]]
 - [[SwingWorkerの一時停止と再開>Swing/PauseResumeSwingWorker]]
 
-* コメント [#bf0141a1]
+* コメント [#comment]
 #comment
 #comment

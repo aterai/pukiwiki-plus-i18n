@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-08-22T15:46:11+09:00
 description: JSpinnerに、下限値を設定したSpinnerDateModelを設定して、日付の変更をテストします。
 ---
-* 概要 [#e79d682c]
+* 概要 [#summary]
 `JSpinner`に、下限値を設定した`SpinnerDateModel`を設定して、日付の変更をテストします。
 
 #download(https://lh5.googleusercontent.com/-llHXaOVDQbQ/TlH5yRAODSI/AAAAAAAABBE/XsSUtm7J_U0/s800/SpinnerDateModel.png)
 
-* サンプルコード [#b916b77a]
+* サンプルコード [#sourcecode]
 #code(link){{
 final String dateFormatPattern = "yyyy/MM/dd";
 JSpinner s = new JSpinner(
@@ -29,7 +29,7 @@ editor.getTextField().addFocusListener(new FocusAdapter() {
 });
 }}
 
-* 解説 [#a7924332]
+* 解説 [#explanation]
 - `Calendar.DAY_OF_MONTH`
 -- 本日を現在の値と下限値、上限値は`null`(制限無し)、増減値を`Calendar.DAY_OF_MONTH`とした`SpinnerDateModel`を使用
 --- 下限値が現在時刻(例: `Mon Aug 22 15:09:27 JST 2011`)なので、現在の値(`Mon Aug 22 00:00:00 JST 2011`)が範囲外となり、矢印ボタンで日付を変更できない
@@ -59,13 +59,13 @@ spinner2.setEditor(new JSpinner.DateEditor(spinner2, dateFormatPattern));
 --- 矢印ボタンのクリックで編集開始した場合、先頭の年度部分ではなく日付が増減する
 --- 参考: [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
 
-* 参考リンク [#r0bd2cc7]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/2268752 Swing - DateSpinner spins only after an edit]
 - [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
 - [[JSpinnerでLocalDateTimeを使用する>Swing/SpinnerLocalDateTimeModel]]
 -- `Date`ではなく、`LocalDateTime`を使用する方法
 
 
-* コメント [#h4700b7a]
+* コメント [#comment]
 #comment
 #comment

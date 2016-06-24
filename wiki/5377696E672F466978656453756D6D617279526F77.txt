@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-04-27T14:50:32+09:00
 description: JTableの行をソートしても、常に最終行にサマリーを表示します。
 ---
-* 概要 [#gb96ab51]
+* 概要 [#summary]
 `JTable`の行をソートしても、常に最終行にサマリーを表示します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTM63Y0s8I/AAAAAAAAAZ8/o3lbm9QBcIs/s800/FixedSummaryRow.png)
 
-* サンプルコード [#n2f33436]
+* サンプルコード [#sourcecode]
 #code(link){{
 public JTable makeTable() {
   final JTable table = new JTable(model);
@@ -61,17 +61,17 @@ public JTable makeTable() {
 }
 }}
 
-* 解説 [#n25f3e6d]
+* 解説 [#explanation]
 上記のサンプルでは、以下のようにしてサマリー行を作成しています。
 
 - モデル(`Integer`)の先頭と末尾にダミー行を追加
 -- 値は、`Integer.MIN_VALUE`と、`Integer.MAX_VALUE`でソートしても先頭か末尾にくるようにしておく
 - ソートでどちらかが表示上の先頭行になった場合、フィルタでこれを非表示にする
 
-* 参考リンク [#ve21225c]
+* 参考リンク [#reference]
 - [http://www.jroller.com/santhosh/date/20070812 Sorting Table with Summary Row - Santhosh Kumar's Weblog]
 - [https://community.oracle.com/thread/1356123 Swing - Sort rows in JTable except the last row]
 
-* コメント [#gf3adf94]
+* コメント [#comment]
 #comment
 #comment

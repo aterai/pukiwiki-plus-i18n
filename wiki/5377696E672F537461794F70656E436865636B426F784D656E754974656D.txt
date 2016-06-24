@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2016/05/keep-visible-jpopupmenu-while-clicking.html
     lang: en
 ---
-* 概要 [#f0722069]
+* 概要 [#summary]
 `JPopupMenu`にクリックしてもポップアップが開いたままの状態を維持するように設定した`JCheckBoxMenuItem`や`JCheckBox`を追加します。
 
 #download(https://lh3.googleusercontent.com/-hje86Y7xU8k/Vq4umT64DuI/AAAAAAAAOMs/N6gysnrA3e4/s800-Ic42/StayOpenCheckBoxMenuItem.png)
 
-* サンプルコード [#na4cab44]
+* サンプルコード [#sourcecode]
 #code(link){{
 JMenuItem mi = new JMenuItem(" ");
 mi.setLayout(new BorderLayout());
@@ -46,7 +46,7 @@ popup.add(new JCheckBoxMenuItem("keeping open #2") {
 });
 }}
 
-* 解説 [#o3d8ceda]
+* 解説 [#explanation]
 - `JCheckBox`
 -- `JPopupMenu`に`JCheckBox`を追加
 -- クリックしてもポップアップは閉じないが、カーソルが乗ってもハイライトされない
@@ -64,9 +64,9 @@ popup.add(new JCheckBoxMenuItem("keeping open #2") {
 --- このイベントでクリック後にポップアップを閉じない代わりに、`menuItem.doClick(0);`でチェック状態のみ変更する
 --- 参考: [http://stackoverflow.com/questions/3759379/how-to-prevent-jpopupmenu-disappearing-when-checking-checkboxes-in-it swing - How to prevent JPopUpMenu disappearing when checking checkboxes in it? - Stack Overflow]
 
-* 参考リンク [#h07389b0]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/3759379/how-to-prevent-jpopupmenu-disappearing-when-checking-checkboxes-in-it swing - How to prevent JPopUpMenu disappearing when checking checkboxes in it? - Stack Overflow]
 
-* コメント [#n05a9053]
+* コメント [#comment]
 #comment
 #comment

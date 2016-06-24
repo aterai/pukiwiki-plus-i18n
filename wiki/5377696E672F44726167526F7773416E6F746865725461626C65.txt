@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/09/drag-rows-from-one-jtable-to-another.html
     lang: en
 ---
-* 概要 [#d6e1d5a6]
+* 概要 [#summary]
 `JTable`の行を別の`JTable`に`Drag & Drop`で移動します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTL05H70DI/AAAAAAAAAYM/YtTZHzrA2HU/s800/DragRowsAnotherTable.png)
 
-* サンプルコード [#hff1cdbe]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TableRowTransferHandler extends TransferHandler {
   private final DataFlavor localObjectFlavor;
@@ -114,7 +114,7 @@ class TableRowTransferHandler extends TransferHandler {
 }
 }}
 
-* 解説 [#o083b831]
+* 解説 [#explanation]
 上記のサンプルでは、一つの`JTable`内での行の並べ替えを行う[[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]を元に`TableRowTransferHandler`を作成し、`JTable`間での行移動もできるようになっています。
 
 ----
@@ -135,10 +135,10 @@ table.setFillsViewportHeight(true);
 
 また、このサンプルでは、各`JTable`に`TableRowSorter`などが設定され、ソートされた状態での並べ替えは想定していません。
 
-* 参考リンク [#abb79ad0]
+* 参考リンク [#reference]
 - [[JTableの行をドラッグ＆ドロップ>Swing/DnDTable]]
 - [[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]
 
-* コメント [#e53ec850]
+* コメント [#comment]
 #comment
 #comment

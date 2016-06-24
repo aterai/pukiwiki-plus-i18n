@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/11/jump-to-clicked-position-jslider.html
     lang: en
 ---
-* 概要 [#n7414230]
+* 概要 [#summary]
 `JSlider`をマウスでクリックした場合、その位置にノブをスライド、続けてドラッグ可能にします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOt05WV7I/AAAAAAAAAc0/Eobj6KIAQzk/s800/JumpToClickedPositionSlider.png)
 
-* サンプルコード [#o79573fb]
+* サンプルコード [#sourcecode]
 #code(link){{
 slider.setUI(new MetalSliderUI() {
   @Override protected TrackListener createTrackListener(JSlider slider) {
@@ -46,7 +46,7 @@ slider.setUI(new MetalSliderUI() {
 });
 }}
 
-* 解説 [#bd0e40a6]
+* 解説 [#explanation]
 - 縦の左、横の上
 -- デフォルトの動作
 -- ノブをクリックすると、ドラッグ可能
@@ -57,9 +57,9 @@ slider.setUI(new MetalSliderUI() {
 --- 目盛の間隔が広い場合、ノブがスナップされてマウスカーソルからはずれてしまい、続けてドラッグできない場合がある
 -- メディアプレイヤー風？
 
-* 参考リンク [#w99369c4]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/518471/jslider-question-position-after-leftclick JSlider question: Position after leftclick - Stack Overflow]
 
-* コメント [#o91edc64]
+* コメント [#comment]
 #comment
 #comment

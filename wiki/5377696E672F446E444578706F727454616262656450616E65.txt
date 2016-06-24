@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2010/02/tabtransferhandler.html
     lang: en
 ---
-* 概要 [#yae9971e]
+* 概要 [#summary]
 `JTabbedPane`間でタブの`Drag&Drop`による移動を行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLW06ZMXI/AAAAAAAAAXc/vzeXm4pwhVY/s800/DnDExportTabbedPane.png)
 
-* サンプルコード [#e06345a4]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TabTransferHandler extends TransferHandler {
   private final DataFlavor localObjectFlavor;
@@ -145,7 +145,7 @@ class TabTransferHandler extends TransferHandler {
 }
 }}
 
-* 解説 [#o96b9e3f]
+* 解説 [#explanation]
 上記のサンプルでは、`JDK 6`で導入された、`TransferHandler.DropLocation`を継承する`DnDTabbedPane.DropLocation`などを作成して、`JTabbedPane`間でタブの移動ができるように設定しています。
 
 - 注意点
@@ -163,11 +163,11 @@ class TabTransferHandler extends TransferHandler {
 
 #ref(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLZe_UIkI/AAAAAAAAAXg/bCzrlm037N8/s800/DnDExportTabbedPane1.png)
 
-* 参考リンク [#y58f4e18]
+* 参考リンク [#reference]
 - [[JTabbedPaneのタブをドラッグ＆ドロップ>Swing/DnDTabbedPane]]
 - [[JLayerを使ってJTabbedPaneのタブの挿入位置を描画する>Swing/DnDLayerTabbedPane]]
 
-* コメント [#gcad5394]
+* コメント [#comment]
 #comment
 - タブのドラッグ中、`JTable`上などで`Cursor`が点滅するのを修正。 -- &user(aterai); &new{2009-05-19 (火) 17:32:38};
 - 点滅の原因は？ -- &user(Dad); &new{2010-01-16 (土) 01:48:13};

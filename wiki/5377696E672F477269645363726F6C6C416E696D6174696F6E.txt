@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-08-13T16:28:05+09:00
 description: JPanelにGridLayoutでコンポーネントを追加し、これをJScrollPaneに配置して、グリッド単位での表示、スクロールアニメーションによる切り替えを行います。
 ---
-* 概要 [#m01103e8]
+* 概要 [#summary]
 `JPanel`に`GridLayout`でコンポーネントを追加し、これを`JScrollPane`に配置して、グリッド単位での表示、スクロールアニメーションによる切り替えを行います。
 
 #download(https://lh4.googleusercontent.com/-V2E4xmdHmBE/UCiUOuOlrLI/AAAAAAAABQg/IYqzH9-WdsI/s800/GridScrollAnimation.png)
 
-* サンプルコード [#a0c71bc0]
+* サンプルコード [#sourcecode]
 #code(link){{
 class GridPanel extends JPanel implements Scrollable {
   public static int cols = 3, rows = 4;
@@ -95,7 +95,7 @@ class ScrollAction extends AbstractAction {
 }
 }}
 
-* 解説 [#bca84c26]
+* 解説 [#explanation]
 上記のサンプルでは、`GridLayout`を使ってグリッド状に配置したコンポーネントを、`JScrollPane`と`scrollRectToVisible(...)`メソッドで、グリッド単位の表示と切り替え(スクロールアニメーション付き)を行なっています。
 
 - 最初に表示されるコンポーネントは、左上にある(一番最初に`JPanel`に追加した)コンポーネント
@@ -104,9 +104,9 @@ class ScrollAction extends AbstractAction {
 - フォーカスの移動に表示切り替えは対応していない
 - `CardLayout`+スクロールアニメーションでも同様の動作が可能？
 
-* 参考リンク [#v0438a49]
+* 参考リンク [#reference]
 - [[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]
 
-* コメント [#wbce83a5]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-03-18T02:26:09+09:00
 description: Animated GIFから各フレームの画像を抽出します。
 ---
-* 概要 [#g9299c8d]
+* 概要 [#summary]
 `Animated GIF`から各フレームの画像を抽出します。主に[https://community.oracle.com/thread/1271862 Swing - Reading gif animation frame rates and such?]の回答を参考に作成しています。
 
 #download(https://lh4.googleusercontent.com/-_xu1jNmYJe0/UUX3d_PzwKI/AAAAAAAABoA/cyS5ABVZdkM/s800/ExtractFramesFromAnimatedGif.png)
 
-* サンプルコード [#q1a56a3f]
+* サンプルコード [#sourcecode]
 #code(link){{
 ImageReader reader = null;
 Iterator<ImageReader> readers = ImageIO.getImageReaders(imageStream);
@@ -35,19 +35,19 @@ for (int i = 0; i < reader.getNumImages(true); i++) {
 reader.dispose();
 }}
 
-* 解説 [#z2a7a3c4]
+* 解説 [#explanation]
 上記のサンプルでは、`ImageReader`に`Animated GIF`ファイルを読み込んで、`IIOImage#getRenderedImage()`メソッドで各フレームの`BufferedImage`を取得しています。
 
 - 注:
 -- 背景色や差分フレームは無視している
 -- `try-with-resources`を使っているので、`JDK 1.7.0`以上が必要
 
-* 参考リンク [#gf7bd402]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1271862 Swing - Reading gif animation frame rates and such?]
 - [[JPEGファイルのコメントを取り出す>Swing/IIOMetadata]]
 - [[JLabelに表示したAnimated Gifのアニメーションを停止する>Swing/DisableAnimatedGif]]
 - [[Animated GIFでのコマ描画時処理>Swing/AnimatedGif]]
 
-* コメント [#hade8703]
+* コメント [#comment]
 #comment
 #comment

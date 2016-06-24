@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-12-07T14:24:46+09:00
 description: JTableHeaderにJPopupMenuを追加してソートします。
 ---
-* 概要 [#h2e26e10]
+* 概要 [#summary]
 `JTableHeader`に`JPopupMenu`を追加してソートします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSY9WWpNI/AAAAAAAAAis/Z0YqvftAIh8/s800/RowSorterPopupMenu.png)
 
-* サンプルコード [#f95550c3]
+* サンプルコード [#sourcecode]
 #code(link){{
 private class TablePopupMenu extends JPopupMenu {
   private final List<SortAction> actions = Arrays.asList(
@@ -50,7 +50,7 @@ private class SortAction extends AbstractAction {
 }
 }}
 
-* 解説 [#lf26eb87]
+* 解説 [#explanation]
 上記のサンプルでは、マウスカーソルの下にある`JTableHeader`カラムをクリック(`WindowsLookAndFeel`:右クリック)することで、`JPopupMenu`を表示してソートすることができます。
 
 - 左クリックではソートしない
@@ -74,7 +74,7 @@ pop.addPopupMenuListener(new PopupMenuListener() {
 });
 }}
 
-//* 参考リンク
-* コメント [#pda540a5]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

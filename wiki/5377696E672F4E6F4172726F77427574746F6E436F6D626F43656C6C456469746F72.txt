@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-08-17T01:24:54+09:00
 description: JTableのCellEditorとしてArrowButtonを非表示にしたJComboBoxを使用します。
 ---
-* 概要 [#o877b550]
+* 概要 [#summary]
 `JTable`の`CellEditor`として`ArrowButton`を非表示にした`JComboBox`を使用します。
 
 #download(https://lh3.googleusercontent.com/-rMRAQF0w4iQ/VdC10-8iyjI/AAAAAAAAN_c/5hX5mZ8KFUg/s800-Ic42/NoArrowButtonComboCellEditor.png)
 
-* サンプルコード [#n79e735c]
+* サンプルコード [#sourcecode]
 #code(link){{
 class LocalDateTimeTableCellEditor extends AbstractCellEditor
                                    implements TableCellEditor {
@@ -91,17 +91,17 @@ class LocalDateTimeTableCellEditor extends AbstractCellEditor
 }
 }}
 
-* 解説 [#t57d2882]
+* 解説 [#explanation]
 上記のサンプルでは、`ArrowButton`を非表示にした`JComboBox`を使用する`TableCellEditor`を作成しています。
 
 - メモ
 -- この`JComboBox`で編集する値は`LocalDateTime`なので、`DefaultCellEditor`は使用せず、`AbstractCellEditor`を継承して`TableCellEditor`を作成
 -- `LocalDateTime.now()`で取得した日付から7日分を`JComboBox`で選択可能になるよう、`TableCellEditor#getTableCellEditorComponent(...)`内で、`ComboBoxModel`を更新
 
-* 参考リンク [#h363973f]
+* 参考リンク [#reference]
 - [[JComboBoxのArrowButtonを隠す>Swing/HideComboArrowButton]]
 - [[JTableのCellEditorにJComboBoxを設定>Swing/ComboCellEditor]]
 
-* コメント [#k3a9c598]
+* コメント [#comment]
 #comment
 #comment

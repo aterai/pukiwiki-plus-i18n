@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-10-12T05:29:04+09:00
 description: SecondaryLoopを使用して、イベント・ディスパッチ・スレッドをブロックせずに、別スレッドをイベント・ループを実行します。
 ---
-* 概要 [#wde8b9b4]
+* 概要 [#summary]
 `SecondaryLoop`を使用して、イベント・ディスパッチ・スレッドをブロックせずに、別スレッドをイベント・ループを実行します。
 
 #download(https://lh3.googleusercontent.com/-eAqnf0aNSsQ/VhrDDmUQQeI/AAAAAAAAODs/fwDgjYwjTbk/s800-Ic42/SecondaryLoop.png)
 
-* サンプルコード [#ge7593c2]
+* サンプルコード [#sourcecode]
 #code(link){{
 layerUI.setInputBlock(true);
 final SecondaryLoop loop = Toolkit.getDefaultToolkit().getSystemEventQueue().createSecondaryLoop();
@@ -25,14 +25,14 @@ work.start();
 loop.enter();
 }}
 
-* 解説 [#ha616cca]
+* 解説 [#explanation]
 上記のサンプルでは、[[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]と同様の`JLayer`を使用して任意のコンポーネントへの入力可不可を切り替えていますが、`SwingWorker`を使用するのではなく、`SecondaryLoop`を使用して、バックグラウンドで処理を実行している間でも、イベント・ディスパッチ・スレッドをブロックしないようにしています。
 
-* 参考リンク [#scb0c7fd]
+* 参考リンク [#reference]
 - [http://sellmic.com/blog/2012/02/29/hidden-java-7-features-secondaryloop/ Hidden Java 7 Features – SecondaryLoop @ sellmic.com]
 -- [http://stackoverflow.com/questions/10196809/secondaryloop-instead-of-swingworker java - SecondaryLoop instead of SwingWorker? - Stack Overflow]
 - [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]
 
-* コメント [#ee6dfa24]
+* コメント [#comment]
 #comment
 #comment

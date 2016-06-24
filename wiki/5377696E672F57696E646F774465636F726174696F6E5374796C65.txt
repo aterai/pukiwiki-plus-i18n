@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-06-17T02:37:17+09:00
 description: JFrame自体の装飾を削除し、JRootPaneにリサイズのためのウィンドウ装飾(透明)を設定します。
 ---
-* 概要 [#ua0d016f]
+* 概要 [#summary]
 `JFrame`自体の装飾を削除し、`JRootPane`にリサイズのためのウィンドウ装飾(透明)を設定します。
 
 #download(https://lh3.googleusercontent.com/-6jloCHHvTmw/Ub30100G84I/AAAAAAAABuM/AHxMNa5jyB0/s800/WindowDecorationStyle.png)
 
-* サンプルコード [#la3e1157]
+* サンプルコード [#sourcecode]
 #code(link){{
 JFrame frame = new JFrame();
 try {
@@ -42,7 +42,7 @@ p.add(internalFrame);
 frame.getContentPane().add(p);
 }}
 
-* 解説 [#o91734f9]
+* 解説 [#explanation]
 - `JFrame`の装飾を削除
 -- `JFrame#setUndecorated(true);`
 - `JInternalFrame`を`ContentPane`に追加
@@ -68,10 +68,10 @@ for (Window window: Frame.getWindows()) {
 }
 }}
 
-* 参考リンク [#oa091bd6]
+* 参考リンク [#reference]
 - [[JInternalFrameをJFrameとして表示する>Swing/InternalFrameTitleBar]]
 - [[JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする>Swing/CustomDecoratedFrame]]
 
-* コメント [#d262f5c2]
+* コメント [#comment]
 #comment
 #comment

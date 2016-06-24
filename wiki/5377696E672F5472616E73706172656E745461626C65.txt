@@ -9,12 +9,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2010/08/transparent-translucent-jtable.html
     lang: en
 ---
-* 概要 [#n1e3aa38]
+* 概要 [#summary]
 `JTable`自体を`setOpaque(false)`で透明に、またセル描画に使用される`JTable`の背景色を半透明にするなどの設定で、半透明の`JTable`を作成します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTV-0biw5I/AAAAAAAAAog/GI9-wLqeOK8/s800/TransparentTable.png)
 
-* サンプルコード [#u6a06559]
+* サンプルコード [#sourcecode]
 #code(link){{
 JScrollPane scroll = new JScrollPane(table) {
   private final TexturePaint texture = makeImageTexture();
@@ -38,7 +38,7 @@ scroll.getViewport().setOpaque(false);
 scroll.getViewport().setBackground(alphaZero);
 }}
 
-* 解説 [#o0880a1f]
+* 解説 [#explanation]
 上記のサンプルでは、`JViewport`と`JTable`のそれぞれに`setOpaque(false)`, `setBackground(new Color(0x0, true));`と設定することで、透明な`JTable`を作成しています。テクスチャ画像は`JViewport`の`paintComponent`メソッドをオーバーライドすることで表示しています。
 
 ----
@@ -89,12 +89,12 @@ class TranslucentBooleanRenderer extends JCheckBox implements TableCellRenderer 
 }
 }}
 
-* 参考リンク [#ia2fc942]
+* 参考リンク [#reference]
 - [http://www.viva-edo.com/komon/edokomon.html 江戸の文様（和風素材・デスクトップ壁紙）]
 - [[JTextFieldの背景色を半透明にする>Swing/TranslucentTextField]]
 - [http://web.archive.org/web/20091205092230/http://java.sun.com/products/jfc/tsc/articles/swing2d/index.html Unleash Your Creativity with Swing and the Java 2D API!]
 - [[JTableのヘッダを透明化>Swing/TransparentTableHeader]]
 
-* コメント [#u87975c6]
+* コメント [#comment]
 #comment
 #comment

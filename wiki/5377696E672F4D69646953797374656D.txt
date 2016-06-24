@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-01-09
 description: MidiSystemからSequencerを作成取得し、MIDIファイルを演奏します。
 ---
-* 概要 [#q50a5f5c]
+* 概要 [#summary]
 `MidiSystem`から`Sequencer`を作成取得し、`MIDI`ファイルを演奏します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTP2Xw5rXI/AAAAAAAAAeo/3v8-ggh9ZBE/s800/MidiSystem.png)
 
-* サンプルコード [#s9901c5c]
+* サンプルコード [#sourcecode]
 #code(link){{
 URL url = getClass().getResource("Mozart_toruko_k.mid");
 final Sequencer sequencer;
@@ -30,18 +30,18 @@ startButton = new JButton(new AbstractAction("start") {
 });
 }}
 
-* 解説 [#f3cdbcb2]
+* 解説 [#explanation]
 `MidiSystem.getSequencer`メソッドで`Sequencer`を取得し、これに`MidiSystem.getSequence`メソッドで`MIDI`ファイルから生成した`Sequence`を設定します。
 
 `Sequencer#start()`メソッドで演奏を開始することができます。
 
-* 参考リンク [#h23d44e1]
+* 参考リンク [#reference]
 - [http://muimi.com/j/game/sound/ Javaでゲーム - サウンドメモ]
 - [http://classic-midi.com/ クラシックMIDI ラインムジーク]
 - [[Wavファイルの演奏>Swing/Sound]]
 - [[Beep音を鳴らす>Swing/Beep]]
 - [[AuditoryCuesでイベント音を設定する>Swing/AuditoryCues]]
 
-* コメント [#u2657308]
+* コメント [#comment]
 #comment
 #comment

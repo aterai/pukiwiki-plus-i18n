@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-09-07T00:03:04+09:00
 description: TitledBorderのタイトルに文字列だけでなく、アイコンを表示するように設定します。
 ---
-* 概要 [#d26f3d38]
+* 概要 [#summary]
 `TitledBorder`のタイトルに文字列だけでなく、アイコンを表示するように設定します。
 
 #download(https://lh3.googleusercontent.com/-CoxU1H7Z550/VexP9UAQdbI/AAAAAAAAOBI/QIVGOXu5MNE/s800-Ic42/IconTitledBorder.png)
 
-* サンプルコード [#s693618b]
+* サンプルコード [#sourcecode]
 #code(link){{
 URL url = getClass().getResource("16x16.png");
 String path = url.toString();
@@ -18,7 +18,7 @@ String title = String.format("<html><table cellpadding='0'><tr><td><img src='%s'
 panel.setBorder(BorderFactory.createTitledBorder(title));
 }}
 
-* 解説 [#y55365dc]
+* 解説 [#explanation]
 - `<img>`
 -- `TitledBorder#setTitle(...)`で`<img>`タグでアイコンを指定した`Html`テキストを設定
 -- `Class#getResource(...)`でアイコンの`URL`を取得し、`<img>`のソースに指定
@@ -31,9 +31,9 @@ panel.setBorder(BorderFactory.createTitledBorder(title));
 - `ComponentTitledBorder`
 -- [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]からマウスリスナーなどを削除し、アイコンを追加した`JLabel`を適用
 
-* 参考リンク [#h36c5891]
+* 参考リンク [#reference]
 - [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]
 
-* コメント [#l53b431b]
+* コメント [#comment]
 #comment
 #comment

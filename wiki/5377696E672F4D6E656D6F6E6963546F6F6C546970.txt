@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-11-15T14:41:06+09:00
 description: JButtonにMnemonicが設定されている場合、JToolTipにそれを表示します。
 ---
-* 概要 [#ic2516e4]
+* 概要 [#summary]
 `JButton`に`Mnemonic`が設定されている場合、`JToolTip`にそれを表示します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTP7StneAI/AAAAAAAAAew/RwPtDfNOEyg/s800/MnemonicToolTip.png)
 
-* サンプルコード [#t35bb5eb]
+* サンプルコード [#sourcecode]
 #code(link){{
 class MnemonicToolTip extends JToolTip {
   private final JLabel mnemonicLabel = new JLabel();
@@ -44,15 +44,15 @@ class MnemonicToolTip extends JToolTip {
 }
 }}
 
-* 解説 [#gc7f8a7c]
+* 解説 [#explanation]
 - 上
 -- `setToolTipText`で直接`Mnemonic`を追加
 - 下
 -- `JToolTip`に`BorderLayout`を設定して、`Mnemonic`用の`JLabel`を追加
 
-* 参考リンク [#w7797da0]
+* 参考リンク [#reference]
 - [[JToolTipにアイコンを表示>Swing/ToolTipIcon]]
 
-* コメント [#ff0a0d99]
+* コメント [#comment]
 #comment
 #comment

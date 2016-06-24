@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2010/09/placeholder-for-empty-jtable.html
     lang: en
 ---
-* 概要 [#rde6e8d9]
+* 概要 [#summary]
 `JTable`が空の場合、表領域の中央に任意の`JComponent`が表示されるように設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRDxbcszI/AAAAAAAAAgk/5iisfYFJom0/s800/PlaceholderForEmptyTable.png)
 
-* サンプルコード [#qf7e20d3]
+* サンプルコード [#sourcecode]
 #code(link){{
 JEditorPane hint = new JEditorPane("text/html", "<html><a href='dummy'>No data!</a></html>");
 
@@ -29,15 +29,15 @@ model.addTableModelListener(new TableModelListener() {
 });
 }}
 
-* 解説 [#d4225e0d]
+* 解説 [#explanation]
 上記のサンプルでは、`JTable`に編集不可にした`JEditorPane`を追加し、以下のように設定して、常に中央にレイアウトされるように設定しています。
 
 - `JTable#setFillsViewportHeight(true)`として、`JTable`の高さが`JViewport`の高さより小さい場合、両者が同じ高さになるように設定
 - `JTable`のレイアウトを`null`から、`GridBagLayout`に変更
 - `TableModelListener#tableChanged(...)`イベントが発生したとき、モデルに行が残っているかどうかで`JEditorPane`の表示非表示を切り替え
 
-//* 参考リンク
-* コメント [#tbc8d393]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - 大変素晴らしいです。参考にさせていただきました。 -- &user(shuna); &new{2010-09-18 (土) 12:12:50};
 -- ありがとうございます。どうもです。 -- &user(aterai); &new{2010-09-18 (土) 20:19:21};

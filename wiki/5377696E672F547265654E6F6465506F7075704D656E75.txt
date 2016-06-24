@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-06-01T15:04:19+09:00
 description: JTreeのノード上でクリックした場合のみ、JPopupMenuを表示します。
 ---
-* 概要 [#u7d9276c]
+* 概要 [#summary]
 `JTree`のノード上でクリックした場合のみ、`JPopupMenu`を表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWLWQUjBI/AAAAAAAAAo0/3F3RUbU5sx8/s800/TreeNodePopupMenu.png)
 
-* サンプルコード [#i85dc25c]
+* サンプルコード [#sourcecode]
 #code(link){{
 static class TreePopupMenu extends JPopupMenu {
   private TreePath[] tsp;
@@ -35,13 +35,13 @@ static class TreePopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#kb3d3d05]
+* 解説 [#explanation]
 上記のサンプルでは以下の場合、`JPopupMenu`を表示しています。
 
 - `JTree`のノードが選択されている
 - 選択されたノード上にカーソルがある
 
-//* 参考リンク
-* コメント [#jef30594]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2012/07/rounded-corner-jcombobox-border.html
     lang: en
 ---
-* 概要 [#qaa89d29]
+* 概要 [#summary]
 `JComboBox`の左上、右上の角を丸める`Border`を設定します。
 
 #download(https://lh6.googleusercontent.com/-0VloXBzelwQ/T5TD3KZRIzI/AAAAAAAABLs/siwBGiic6Tw/s800/RoundedComboBox.png)
 
-* サンプルコード [#ddcb1f58]
+* サンプルコード [#sourcecode]
 #code(link){{
 class RoundedCornerBorder extends AbstractBorder {
   @Override public void paintBorder(
@@ -78,7 +78,7 @@ class KamabokoBorder extends RoundedCornerBorder {
 }
 }}
 
-* 解説 [#o2425edc]
+* 解説 [#explanation]
 上記のサンプルでは、`Path2D#lineTo`、`Path2D#quadTo`を使ってかまぼこ型の図形を作成し、`JComboBox`の`Border`に設定しています。
 
 以下のような方法でも、かまぼこ型の図形を作成することができます。
@@ -101,11 +101,11 @@ round.add(new Area(b));
 ----
 メモ: これらの方法で、角丸の`JComboBox`が作成できるのは、`BasicLookAndFeel`と`WindowsLookAndFeel`の場合のみ？
 
-* 参考リンク [#td29c3c7]
+* 参考リンク [#reference]
 - [[JComboBoxのBorderを変更する>Swing/ComboBoxBorder]]
 - [[JTextFieldの角を丸める>Swing/RoundedTextField]]
 
-* コメント [#lf1bda9b]
+* コメント [#comment]
 #comment
 - 編集可不可の切り替えと、`WindowsLookAndFeel`に適用したサンプルを追加 -- &user(aterai); &new{2012-06-30 (土) 04:07:30};
 

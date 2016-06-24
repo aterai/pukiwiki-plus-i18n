@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-09-14T03:54:53+09:00
 description: JTextPaneに入力した文字を顔文字アイコンに変換して表示します。
 ---
-* 概要 [#t9da3440]
+* 概要 [#summary]
 `JTextPane`に入力した文字を顔文字アイコンに変換して表示します。
 
 #download(https://lh3.googleusercontent.com/-NLmesRy01ro/VfXFpQeOQSI/AAAAAAAAOBo/L7P-9nfFeNk/s800-Ic42/SmyliyIconStyle.png)
 
-* サンプルコード [#ya210c43]
+* サンプルコード [#sourcecode]
 #code(link){{
 private void update(DefaultStyledDocument doc, int offset) {
   final Element elm = doc.getCharacterElement(offset);
@@ -35,7 +35,7 @@ private void update(DefaultStyledDocument doc, int offset) {
 }
 }}
 
-* 解説 [#r80e52ff]
+* 解説 [#explanation]
 上記のサンプルでは、`StyleConstants.setIcon(doc.addStyle(":)", null), new FaceIcon());`でドキュメントにアイコン属性を設定し、文字列の追加、削除が実行されると、文字列から`:)`を検索し、見つけた文字列に対して`StyledDocument#setCharacterAttributes(...)`でそのアイコン属性を適用しています。
 
 - 注:
@@ -49,9 +49,9 @@ StyleConstants.setIcon(face, new FaceIcon());
 StyleConstants.setForeground(face, Color.RED);
 }}
 
-* 参考リンク [#j487c36f]
+* 参考リンク [#reference]
 - [https://community.oracle.com/message/5853611 Replacing text in JTextPane with an image (think smileys) | Oracle Community]
 
-* コメント [#i0e2f0c0]
+* コメント [#comment]
 #comment
 #comment

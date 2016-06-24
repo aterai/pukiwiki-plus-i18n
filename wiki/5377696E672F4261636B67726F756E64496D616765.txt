@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-09-13T03:00:13+09:00
 description: JPanelの背景に画像をタイル状に並べて表示します。
 ---
-* 概要 [#be947c3e]
+* 概要 [#summary]
 `JPanel`の背景に画像をタイル状に並べて表示します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTH67VnIQI/AAAAAAAAAR8/JMqkIoI8n1Y/s800/BackgroundImage.png)
 
-* サンプルコード [#t9b8baf0]
+* サンプルコード [#sourcecode]
 #code(link){{
 @Override protected void paintComponent(Graphics g) {
   Dimension d = getSize();
@@ -25,15 +25,15 @@ description: JPanelの背景に画像をタイル状に並べて表示します�
 }
 }}
 
-* 解説 [#s57f4112]
+* 解説 [#explanation]
 上記のサンプルでは、`JPanel#setOpaque(false)`と背景を描画しないように設定したパネルで、`JPanel#paintComponent(Graphics)`メソッドをオーバーライドし、ここで`Image`を順番に並べて描画しています。
 
-* 参考リンク [#w44c5faa]
+* 参考リンク [#reference]
 - [[TexturePaintを使って背景に画像を表示>Swing/TexturePaint]]
 -- 同様に画像から`TexturePaint`を作成してタイル状に並べて表示
 - [[JTextAreaの背景に画像を表示>Swing/CentredBackgroundBorder]]
 -- ひとつの画像を中央に表示
 
-* コメント [#f9db4b8d]
+* コメント [#comment]
 #comment
 #comment

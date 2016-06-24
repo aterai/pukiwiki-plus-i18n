@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2014/09/change-layout-of-jpopupmenu-to-use.html
     lang: en
 ---
-* 概要 [#cdf4acde]
+* 概要 [#summary]
 `JPopupMenu`のレイアウトを変更することで、上部にメニューボタンを水平に並べて表示します。
 
 #download(https://lh6.googleusercontent.com/-puZjATgiuLQ/VCgMaUlMzLI/AAAAAAAACN0/PkEeTJkX7Hg/s800/PopupMenuLayout.png)
 
-* サンプルコード [#iab55d86]
+* サンプルコード [#sourcecode]
 #code(link){{
 JPopupMenu popup = new JPopupMenu();
 GridBagConstraints c = new GridBagConstraints();
@@ -44,7 +44,7 @@ popup.add(new JMenuItem("ccccccccccccccccccccc"), c);
 popup.add(new JMenuItem("dddddddddd"), c);
 }}
 
-* 解説 [#lfd293b9]
+* 解説 [#explanation]
 上記のサンプルでは、`JPopupMenu`のレイアウトを`GridBagLayout`に変更して、上部に`4`つのメニューボタンを水平に並べて表示(`FireFox`風？)します。
 
 これらのメニューボタンは、`JMenuItem`の以下のメソッドをオーバーライドすることで、ボタン風に表示を変更しています。
@@ -73,11 +73,11 @@ JMenuItem b = new JMenuItem() {
 b.setOpaque(true);
 }}
 
-* 参考リンク [#fa18e3d4]
+* 参考リンク [#reference]
 - [[JMenuItemの内部にJButtonを配置する>Swing/ButtonsInMenuItem]]
 -- こちらは、`JPopupMenu`のレイアウトを変更するのではなく、`JMenuItem`のレイアウトを変更して、`JMenuItem`の子としてボタンを追加している
 - [[JPopupMenuをボタンの長押しで表示>Swing/PressAndHoldButton]]
 
-* コメント [#e6c5c2cb]
+* コメント [#comment]
 #comment
 #comment

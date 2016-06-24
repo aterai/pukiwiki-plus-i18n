@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2013/11/using-drop-caps-on-jlabel.html
     lang: en
 ---
-* 概要 [#l5abfb9b]
+* 概要 [#summary]
 `JLabel`の先頭文字を拡大、残りの文字列を`TextLayout`で回り込むよう配置し、ドロップキャップで描画します。
 
 #download(https://lh6.googleusercontent.com/-kf9qTpS1Olg/Un-Dk5bbC-I/AAAAAAAAB5s/fAVjwJVHBqA/s800/DropcapLabel.png)
 
-* サンプルコード [#h6119f73]
+* サンプルコード [#sourcecode]
 #code(link){{
 @Override protected void paintComponent(Graphics g) {
   Graphics2D g2 = (Graphics2D) g.create();
@@ -64,7 +64,7 @@ hreflang:
 }
 }}
 
-* 解説 [#t950dc96]
+* 解説 [#explanation]
 上記のサンプルでは、以下の手順で`JLabel`にドロップキャップの装飾を行っています。
 
 - 先頭一文字の`Shape`を取得し、これを拡大して表示
@@ -72,10 +72,10 @@ hreflang:
 - 拡大した先頭文字の高さに行の`y`座標が収まる場合は、`JLabel`の幅から先頭文字幅を除いた幅に収まる文字列を`LineBreakMeasurer`で取得し描画
 - 拡大した先頭文字の高さを行の`y`座標が超えた場合は、`JLabel`の幅に収まる文字列を`LineBreakMeasurer`で取得し描画
 
-* 参考リンク [#i5c4f5ce]
+* 参考リンク [#reference]
 - [[JLabelの文字列を折り返し>Swing/GlyphVector]]
 - [[Fontを回転する>Swing/TransformedShape]]
 
-* コメント [#t2bf7f5e]
+* コメント [#comment]
 #comment
 #comment

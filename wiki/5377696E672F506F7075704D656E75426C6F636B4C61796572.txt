@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-11-28T15:32:54+09:00
 description: JLayerを使って、子コンポーネントへのすべての入力を制限します。
 ---
-* 概要 [#p53eaa44]
+* 概要 [#summary]
 `JLayer`を使って、子コンポーネントへのすべての入力を制限します。
 
 #download(https://lh5.googleusercontent.com/-Svne2X0djJ8/TtJGGlPU-OI/AAAAAAAABFM/xjZfqHHbkJ0/s800/PopupMenuBlockLayer.png)
 
-* サンプルコード [#p31bbd51]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DisableInputLayerUI extends LayerUI<JComponent> {
   private final transient MouseAdapter dummyMouseListener = new MouseAdapter() {};
@@ -52,7 +52,7 @@ class DisableInputLayerUI extends LayerUI<JComponent> {
 }
 }}
 
-* 解説 [#qb9093db]
+* 解説 [#explanation]
 上記のサンプルでは、`JLayer`を使って、`JScrollPane(JScrollBar)`のスクロール、`JTable`のセル選択、`JToolTip`、`JTableHeader`の移動など、子コンポーネントへのすべての入力をまとめて制限しています。
 
 - [[JScrollPaneのスクロールを禁止>Swing/DisableScrolling]]のように、`JScrollPane`、`JTable`などを個別に入力禁止にする必要がない
@@ -60,12 +60,12 @@ class DisableInputLayerUI extends LayerUI<JComponent> {
 -- `JLayer#setLayerEventMask(...)`でポップアップメニュー表示の入力イベントが取得できない？(`Windows7`, `JDK 1.7.0_01`)
 -- [[Cursorを砂時計に変更>Swing/WaitCursor]]のように、`GlassPane`にダミーのマウスリスナーを追加してポップアップメニューの表示トリガーを無視する
 
-* 参考リンク [#r3e1e146]
+* 参考リンク [#reference]
 - [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]
 - [[JScrollPaneのスクロールを禁止>Swing/DisableScrolling]]
 - [[Cursorを砂時計に変更>Swing/WaitCursor]]
 
-* コメント [#u010a713]
+* コメント [#comment]
 #comment
 - また`src.zip`などを上げ忘れていたので修正。 -- &user(aterai); &new{2011-11-29 (火) 17:16:11};
 

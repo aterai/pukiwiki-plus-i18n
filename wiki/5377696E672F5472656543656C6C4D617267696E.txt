@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-05-17T14:59:42+09:00
 description: JTreeのノードにある文字列の左右に余白を追加します。
 ---
-* 概要 [#v6efd6d6]
+* 概要 [#summary]
 `JTree`のノードにある文字列の左右に余白を追加します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWBZNFbLI/AAAAAAAAAok/8_0YqLhhqTk/s800/TreeCellMargin.png)
 
-* サンプルコード [#ee4a208e]
+* サンプルコード [#sourcecode]
 #code(link){{
 class MyTreeCellRenderer2 extends DefaultTreeCellRenderer {
   private final JPanel p = new JPanel(new BorderLayout());
@@ -61,7 +61,7 @@ class MyTreeCellRenderer2 extends DefaultTreeCellRenderer {
 }
 }}
 
-* 解説 [#xfb0c510]
+* 解説 [#explanation]
 - 左
 -- `Default`
 - 中
@@ -71,7 +71,7 @@ class MyTreeCellRenderer2 extends DefaultTreeCellRenderer {
 -- `DefaultTreeCellRenderer#getTreeCellRendererComponent`メソッドをオーバーライドして、アイコンと文字列を別の`JLabel`に分解し、文字列にのみ`BorderFactory.createEmptyBorder(0,0,0,2)`の余白を追加
 -- 注: `WindowsLookAndFeel`(フォーカスのボーダーがアイコンの周りには描画されない)で、`getComponentOrientation().isLeftToRight()==true`の場合のみ対応
 
-//* 参考リンク
-* コメント [#c84c93c7]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

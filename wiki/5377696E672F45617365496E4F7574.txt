@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/05/translucent-image-caption-using.html
     lang: en
 ---
-* 概要 [#wf8e9a74]
+* 概要 [#summary]
 画像の上に`JTextArea`をスライドインアニメーションで表示します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/Tcd9MqA6BlI/AAAAAAAAA64/Q7KLCkUETZ4/s800/EaseInOut.png)
 
-* サンプルコード [#i6cf925e]
+* サンプルコード [#sourcecode]
 #code(link){{
 private int delay = 4;
 private int count = 0;
@@ -67,7 +67,7 @@ public double easeInOut(double t) {
 }
 }}
 
-* 解説 [#b1064c6f]
+* 解説 [#explanation]
 上記のサンプルでは、`JLabel`に画像を表示し、これにマウスカーソルが入った場合、`JTextArea`がキャプションとして`ease-in`, `ease-out`でスライドインするようになっています。
 
 - `OverlayLayout#layoutContainer`内で、`JTextArea`の`y`座標を変更してアニメーション
@@ -99,7 +99,7 @@ public static double intpow(double x, int n) {
 }
 }}
 
-* 参考リンク [#wdb4f6db]
+* 参考リンク [#reference]
 - [http://www.anima-entertainment.de/math-easein-easeout-easeinout-and-bezier-curves Math: EaseIn EaseOut, EaseInOut and Beziér Curves | Anima Entertainment GmbH]
 - [http://css-tricks.com/slide-in-image-captions/ Slide In Image Captions | CSS-Tricks]
 - [http://radiumsoftware.tumblr.com/post/5031889912 指数関数を使ったお手軽イーズ・アウト - Radium Software]
@@ -107,6 +107,6 @@ public static double intpow(double x, int n) {
 - [http://wonderfl.net/c/3GhW イーズイン/アウトいろいろ - wonderfl build flash online]
 - [http://cpplover.blogspot.jp/2014/03/gccaaaaaa-aaaaaa.html 本の虫: なんでGCCはa*a*a*a*a*a を (a*a*a)*(a*a*a) に最適化できないの？っと]
 
-* コメント [#c7b3d96a]
+* コメント [#comment]
 #comment
 #comment

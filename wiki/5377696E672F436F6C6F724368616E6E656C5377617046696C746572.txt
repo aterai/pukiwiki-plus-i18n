@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2013/06/turn-jprogressbar-red-with-jlayer-and.html
     lang: en
 ---
-* 概要 [#d3b2b8a6]
+* 概要 [#summary]
 `JLayer`を使って`JProgressBar`の色相を緑から赤に変更します。
 
 #download(https://lh3.googleusercontent.com/-BOomq0cC-U4/UceBZ2TsWWI/AAAAAAAABug/yoXs3wbBVGk/s800/ColorChannelSwapFilter.png)
 
-* サンプルコード [#x5a13e52]
+* サンプルコード [#sourcecode]
 #code(link){{
 class BlockedColorLayerUI extends LayerUI<JProgressBar> {
   public boolean isPreventing;
@@ -58,7 +58,7 @@ class RedGreenChannelSwapFilter extends RGBImageFilter {
 }
 }}
 
-* 解説 [#u70c6460]
+* 解説 [#explanation]
 - `setStringPainted(true)`: 上
 -- デフォルト色の`JProgressBar`に、`JProgressBar#setStringPainted(true)`を設定
 - `setStringPainted(true)`: 下
@@ -70,12 +70,12 @@ class RedGreenChannelSwapFilter extends RGBImageFilter {
 -- チェックボックスが選択された場合、`JLayer`を使って色を変更
 --- `Windows 7`での中断状態風に、緑を赤に入れ替えるため、`RGBImageFilter#filterRGB(...)`をオーバーライド
 
-* 参考リンク [#wfd4e65e]
+* 参考リンク [#reference]
 - [[RGBImageFilterでアイコンの色調を変更>Swing/RatingLabel]]
 - [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]
 - [[JProgressBarの進捗状況と進捗文字列色を変更する>Swing/ProgressBarSelectionColor]]
 
-* コメント [#bd6a9d2c]
+* コメント [#comment]
 #comment
 - `NimbusLookAndFeel`の場合、`JProgressBar#setOpaque(true)`として`JLayer`と`RedGreenChannelSwapFilter`を使用しないと、フチが半透明にならない。また`NimbusLookAndFeel`の場合、`JProgressBar#setForeground(Color)`で変化するのは他の`LookAndFeel`とは異なり、進捗文字列になる。 -- &user(aterai); &new{2013-06-25 (火) 20:51:09};
 

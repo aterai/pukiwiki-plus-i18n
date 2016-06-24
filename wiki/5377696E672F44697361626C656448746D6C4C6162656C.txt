@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-12-24T23:18:44+09:00
 description: Htmlを使ったJLabelと、JEditorPaneをsetEnabled(false)で無効にします。
 ---
-* 概要 [#g7a086cf]
+* 概要 [#summary]
 `Html`を使った`JLabel`と、`JEditorPane`を`setEnabled(false)`で無効にします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTK9vV2SGI/AAAAAAAAAW0/PIlAG2B9yZA/s800/DisabledHtmlLabel.png)
 
-* サンプルコード [#m4ad0b68]
+* サンプルコード [#sourcecode]
 #code(link){{
 final JLabel label2 = new JLabel(HTML_TEXT) {
   @Override public void setEnabled(boolean b) {
@@ -24,7 +24,7 @@ editor1.setOpaque(false);
 editor1.setEditable(false);
 }}
 
-* 解説 [#r2f0a6d6]
+* 解説 [#explanation]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4783068 Bug ID: 4783068 Components with HTML text should gray out the text when disabled]
 -- `JDK 1.7.0-ea-b55`で、以下の描画は修正された
 -- このサンプルを実行すると、スクリーンショットとは異なり、無効化ですべての文字列がグレーになる
@@ -59,11 +59,11 @@ editor2.setFont(UIManager.getFont("Label.font"));
 ----
 `Html`レンダリングを無効化して、タグを文字列として表示する場合は、[[JLabelなどのHtmlレンダリングを無効化>Swing/HtmlDisable]]を参考にしてください。
 
-* 参考リンク [#o6dbac3d]
+* 参考リンク [#reference]
 - [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4740519 Bug ID: 4740519 HTML JLabel not greyed out on setEnabled(false)]
 - [https://community.oracle.com/thread/1377943 Swing - JLabel with html tag can not be disabled or setForegroud?!]
 - [[Hyperlinkを、JLabel、JButton、JEditorPaneで表示>Swing/HyperlinkLabel]]
 
-* コメント [#wa1ddeea]
+* コメント [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2010/08/kinetic-scrolling-jscrollpane.html
     lang: en
 ---
-* 概要 [#dad5d28f]
+* 概要 [#summary]
 `JScrollPane`にキネティックスクロール(慣性スクロール)風の動作をするマウスリスナーを設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTO32D08pI/AAAAAAAAAdE/TpuoGrYo-Q0/s800/KineticScrolling.png)
 
-* サンプルコード [#dca6c47f]
+* サンプルコード [#sourcecode]
 #code(link){{
 class KineticScrollingListener2 extends MouseAdapter implements HierarchyListener {
   private static final int SPEED = 4;
@@ -116,19 +116,19 @@ class KineticScrollingListener2 extends MouseAdapter implements HierarchyListene
 }
 }}
 
-* 解説 [#ne8d550b]
+* 解説 [#explanation]
 - `scrollRectToVisible`
 -- マウスを放したあと、タイマーを起動し、`JComponent#scrollRectToVisible(Rectangle)`メソッドでスクロール
 - `setViewPosition`
 -- マウスを放したあと、タイマーを起動し、`JViewport#setViewPosition(Point)`メソッドでスクロール
 -- `View`である`JLabel`の外で、移動が止まった(またはマウスがリリースされた)場合は、別のタイマーで`JLabel`の縁まで戻る
 
-* 参考リンク [#edac2f7a]
+* 参考リンク [#reference]
 - [[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]
 - [[JScrollPaneのオートスクロール>Swing/AutoScroll]]
 - [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
 
-* コメント [#h5b61d84]
+* コメント [#comment]
 #comment
 - 慣性(モーメンタム)スクロール、フリックスクロール(フリック+慣性スクロール？)、・・・でもやっぱり猫の掌スクロールを最初に思い出してしまう。 -- &user(aterai); &new{2010-08-16 (月) 13:41:47};
 - `JDK 1.7.0`では、`JViewport#setViewPosition(Point)`を使って右下外部に移動できなくなっているので、[[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]と同じ対応をしてソースを更新。 -- &user(aterai); &new{2011-10-03 (月) 18:08:23};

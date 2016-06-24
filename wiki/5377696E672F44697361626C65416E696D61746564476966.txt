@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-02-25T00:50:43+09:00
 description: JLabelに表示したAnimated GIFのアニメーションを停止します。
 ---
-* 概要 [#g1d82430]
+* 概要 [#summary]
 `JLabel`に表示した`Animated GIF`のアニメーションを停止します。
 
 #download(https://lh6.googleusercontent.com/-pYT15pLG7KY/USoyuJzLxUI/AAAAAAAABfo/JgO7-MbsL5U/s800/DisableAnimatedGif.png)
 
-* サンプルコード [#fde5e06a]
+* サンプルコード [#sourcecode]
 #code(link){{
 JLabel label2 = new JLabel() {
   @Override public boolean imageUpdate(Image img, int infoflags, int x, int y, int w, int h) {
@@ -22,7 +22,7 @@ JLabel label2 = new JLabel() {
 };
 }}
 
-* 解説 [#g5035119]
+* 解説 [#explanation]
 上記のサンプルでは、`JLabel`が`Enabled`でない場合にアニメーションを停止するよう設定しています。
 
 - `Default`
@@ -34,12 +34,12 @@ JLabel label2 = new JLabel() {
 -- 別途用意した静止画像を使って、`JLabel#setDisabledIcon(...)`を設定
 -- `GrayFilter.createDisabledImage(Image)`でアイコンをグレースケール化
 
-* 参考リンク [#i19d53cf]
+* 参考リンク [#reference]
 - [http://duke.kenai.com/iconSized/index.html Duke Images: iconSized]
 - [http://docs.oracle.com/javase/jp/6/api/java/awt/image/ImageObserver.html ImageObserver (Java Platform SE 6)]
 - [[ColorConvertOpで画像をグレースケールに変換>Swing/ColorConvertOp]]
 - [[Animated Gifからフレーム画像を抽出する>Swing/ExtractFramesFromAnimatedGif]]
 
-* コメント [#k10a32fd]
+* コメント [#comment]
 #comment
 #comment

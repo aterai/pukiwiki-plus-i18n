@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2012/05/creating-custom-layout-manager.html
     lang: en
 ---
-* 概要 [#jba0ffbd]
+* 概要 [#summary]
 `LayoutManager`を拡張して曲線上にコンポーネントを配置します。
 
 #download(https://lh4.googleusercontent.com/-Rww2mulIVEI/TggO-rFh_2I/AAAAAAAAA98/R3ZVsfyu3IU/s800/CurveLayout.png)
 
-* サンプルコード [#d3bf9d05]
+* サンプルコード [#sourcecode]
 #code(link){{
 final double A2 = 4.0;
 panel2.setLayout(new FlowLayout() {
@@ -44,13 +44,13 @@ panel2.setLayout(new FlowLayout() {
 });
 }}
 
-* 解説 [#cf9f86b7]
+* 解説 [#explanation]
 - 左: `FlowLayout(LEFT)`
 -- `new FlowLayout(FlowLayout.LEFT)`を設定した`JPanel`にコンポーネントを配置
 - 右: `y=Math.pow(x/4.0,2.0)`
 -- `FlowLayout#layoutContainer(...)`をオーバーライドして、二次曲線の上にコンポーネントを配置するレイアウトを`JPanel`に設定
 
-//* 参考リンク
-* コメント [#a7a05756]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

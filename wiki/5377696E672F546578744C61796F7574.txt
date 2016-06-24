@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-01-09T13:16:40+09:00
 description: TextLayoutからFontのAscent、Descent、Leadingなどのメトリック情報を取得して描画します。
 ---
-* 概要 [#he53e271]
+* 概要 [#summary]
 `TextLayout`から`Font`の`Ascent`、`Descent`、`Leading`などのメトリック情報を取得して描画します。
 
 #download(https://lh4.googleusercontent.com/--iErOVV0RYk/TwpnJGdl4OI/AAAAAAAABHs/pHLpQWbpTWg/s800/TextLayout.png)
 
-* サンプルコード [#n8d2211d]
+* サンプルコード [#sourcecode]
 #code(link){{
 String text = "abcdefthijklmnopqrstuvwxyz";
 Font font = new Font(Font.SERIF, Font.ITALIC, 64);
@@ -45,7 +45,7 @@ TextLayout tl = new TextLayout(text, font, frc);
 }
 }}
 
-* 解説 [#lb24c19b]
+* 解説 [#explanation]
 上記のサンプルでは、上の文字列は`TextLayout`を使用して、下は`GlyphVector` + `LineMetrics`で`Font`のメトリック情報を取得して描画しています。
 
 - `Color.RED`
@@ -59,7 +59,7 @@ TextLayout tl = new TextLayout(text, font, frc);
 - `Color.CYAN`: `x-height`
 -- ベースライン - 文字`x`の高さ;
 
-//* 参考リンク
-* コメント [#x5a22ca9]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

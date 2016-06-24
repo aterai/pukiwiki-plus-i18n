@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-09-16T00:01:42+09:00
 description: Fontから取得した字形の輪郭を抽出し、縁取りや内部の塗り潰しなどを行います。
 ---
-* 概要 [#g07a2f18]
+* 概要 [#summary]
 `Font`から取得した字形の輪郭を抽出し、縁取りや内部の塗り潰しなどを行います。このサンプルは、[http://stackoverflow.com/questions/18686199/fill-unicode-characters-in-labels java - 'Fill' Unicode characters in labels - Stack Overflow]に投稿されているコードを参考にしています。
 
 #download(https://lh5.googleusercontent.com/-kzMG9iEHFz4/UjWgNdHCh1I/AAAAAAAAB2A/0gpKBcNqz44/s800/FontSilhouette.png)
 
-* サンプルコード [#u80cc8b3]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static Area getOuterShape(Shape shape) {
   Area area = new Area();
@@ -48,15 +48,15 @@ private static Area getOuterShape(Shape shape) {
 }
 }}
 
-* 解説 [#k5b39527]
+* 解説 [#explanation]
 上記のサンプルの下二行は、チェスの駒の字形から輪郭を取得し、それを使って縁取り、内部の塗り潰しを行う`Icon`を`JLabel`に配置して表示しています。
 
 字形(`Shape`)の輪郭は、`Shape#getPathIterator(...)`で`PathIterator`を取得し、%%開始点が一番外側にある%%パスの集合を`Path2D`に変換、`Area`に追加することで作成しています。
 
-* 参考リンク [#l4dba66c]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/18686199/fill-unicode-characters-in-labels java - 'Fill' Unicode characters in labels - Stack Overflow]
 
-* コメント [#f643624a]
+* コメント [#comment]
 #comment
 - `src.zip`などがダウンロードできない状態(上げ忘れ？)だったのを修正。 -- &user(aterai); &new{2013-12-06 (金) 16:37:48};
 - [http://blog.livedoor.jp/kinisoku/archives/4204798.html 漢字の線に囲まれた部分だけを塗りつぶした画像で何の四字熟語か当てるスレ：キニ速] のような問題を作成するツールを作ってみた。%%アンチエイリアスのせいでフチがボケてしまう。%% `Area#exclusiveOr(...)`を使用するように修正した。 -- &user(aterai); &new{2014-10-16 (金) 19:00:48};

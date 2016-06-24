@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2003-11-24
 description: メニューバーから選択したLook and Feelを起動中のアプリケーションに適用します。
 ---
-* 概要 [#a86ced2d]
+* 概要 [#summary]
 メニューバーから選択した`Look and Feel`を起動中のアプリケーションに適用します。以下のサンプルコードは、`%JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java`から引用改変したものです。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPf78s81I/AAAAAAAAAeE/DIOTnqtAOnY/s800/LookAndFeel.png)
 
-* サンプルコード [#d19635f9]
+* サンプルコード [#sourcecode]
 #code(link){{
 //%JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java
 // Possible Look & Feels
@@ -65,7 +65,7 @@ private void setLookAndFeel(String laf) {
 }
 }}
 
-* 解説 [#hf60bcb1]
+* 解説 [#explanation]
 上記のサンプルでは、`metal`、`motif`、`windows`などの`LookAndFeel`を予め用意しておき、`isAvailableLookAndFeel(...)`メソッドで、それらが実行した環境で使用できるかを調べてメニューの選択可不可を変更しています。
 
 `Look and Feel`を切り替えて、いろんなコンポーネントの見栄えを比較したい場合は、`%JAVA_HOME%/demo/jfc/SwingSet2/SwingSet2.jar`がお手軽です。
@@ -103,12 +103,12 @@ try {
 - `6u10`で修正済
 -- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6389282 Bug ID: 6389282 NPE in GTKLookAndFeel.initSystemColorDefaults() on mustang when remote X11 displaying.]
 
-* 参考リンク [#w6ef8eac]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html How to Set the Look and Feel]
 - [[LookAndFeelの一覧を取得する>Swing/InstalledLookAndFeels]]
 -- `SwingSet3`からコードを引用したサンプル
 
-* コメント [#v06b763b]
+* コメント [#comment]
 #comment
 - スクリーンショットなどを更新。 -- &user(aterai); &new{2008-03-28 (金) 21:37:52};
 

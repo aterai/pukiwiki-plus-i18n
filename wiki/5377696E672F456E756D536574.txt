@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/03/checkboxes-in-jtable-cell.html
     lang: en
 ---
-* 概要 [#fd986dd9]
+* 概要 [#summary]
 `JTable`の列に`EnumSet`を設定し、その状態を`JCheckBox`を使ったレンダラーで表示します。
 
 #download(https://lh6.googleusercontent.com/-sFAMn6DioFo/T7nL6BrEaHI/AAAAAAAABM0/QqVOr4uGNdE/s800/EnumSet.png)
 
-* サンプルコード [#r2000810]
+* サンプルコード [#sourcecode]
 #code(link){{
 enum Permissions { EXECUTE, WRITE, READ; }
 
@@ -35,13 +35,13 @@ class CheckBoxesEditor extends CheckBoxesPanel implements TableCellEditor {
   //...
 }}
 
-* 解説 [#h7f85cf3]
+* 解説 [#explanation]
 上記のサンプルでは、[[JTableのCellにJCheckBoxを複数配置する>Swing/CheckBoxesInTableCell]]と同様に、パーミッション(第`1`列目)を`JCheckBox`を配置した`JPanel`で作成したセルレンダラーで表現していますが、モデルのデータはビットフラグではなく、`EnumSet`を使用するように変更しています。
 
-* 参考リンク [#a8c6193a]
+* 参考リンク [#reference]
 - [[JTableのCellにJCheckBoxを複数配置する>Swing/CheckBoxesInTableCell]]
 - [http://www.ne.jp/asahi/hishidama/home/tech/java/enum.html#h2_flag フラグとしての論理和(EnumSetの例) - Java列挙型メモ(Hishidama's Java enum Memo)]
 
-* コメント [#z3cd7fd6]
+* コメント [#comment]
 #comment
 #comment

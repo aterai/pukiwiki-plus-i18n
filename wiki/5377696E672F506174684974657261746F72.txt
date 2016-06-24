@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2013/02/get-svg-from-pathiterator.html
     lang: en
 ---
-* 概要 [#h0bc8b69]
+* 概要 [#summary]
 `Shape`から`PathIterator`を取得し、この`Path`を`SVG`に変換します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTQ-2m7pMI/AAAAAAAAAgc/B55RHlb8ajM/s800/PathIterator.png)
 
-* サンプルコード [#gabf6062]
+* サンプルコード [#sourcecode]
 #code(link){{
 private StringBuilder makeStarburstSvg(PathIterator pi, int sz, String style, String desc) {
   StringBuilder sb = new StringBuilder();
@@ -46,18 +46,18 @@ private StringBuilder makeStarburstSvg(PathIterator pi, int sz, String style, St
 }
 }}
 
-* 解説 [#o16c7ad1]
+* 解説 [#explanation]
 上記のサンプルでは、`Shape`から`PathIterator`を取得し、そのパスを辿って`SVG`ファイルを生成しています。
 
 //- %%対応しているのは、`PathIterator.SEG_MOVETO`、`PathIterator.SEG_LINETO`のみ%%
 
-* 参考リンク [#p458d4b4]
+* 参考リンク [#reference]
 - [http://www.hcn.zaq.ne.jp/___/SVG11-2nd/index.html SVG 1.1 仕様 （第２版） 日本語訳]
 -- [http://www.hcn.zaq.ne.jp/___/SVG11-2nd/paths.html パス – SVG 1.1 （第２版）]
 - [http://www.w3schools.com/svg/svg_path.asp SVG Path]
 - [http://www.inkscape.org/ Inkscape 自由に描く。]
 
-* コメント [#g1aae1e8]
+* コメント [#comment]
 #comment
 - サンプルコードにはコードすべて表示（記入）した方がいいと思います。 -- &user(名無し); &new{2012-03-27 (火) 21:48:06};
 - 追記：そうじゃなくてはわかりにくいので。例えばJavaDriveさんのように -- &user(名無し); &new{2012-03-27 (火) 21:48:48};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-08-20T11:28:51+09:00
 description: JDK 6で導入された機能を使用して、JViewportの高さまでJTableを拡張します。
 ---
-* 概要 [#va78a74c]
+* 概要 [#summary]
 `JDK 6`で導入された機能を使用して、`JViewport`の高さまで`JTable`を拡張します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMkfiP8jI/AAAAAAAAAZY/qHWqJtrcUgQ/s800/FillsViewportHeight.png)
 
-* サンプルコード [#j4e564fb]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(model);
 table.setFillsViewportHeight(true);
@@ -22,7 +22,7 @@ scroll.getViewport().setBackground(Color.GREEN);
 //table.setBackground(scroll.getBackground());
 }}
 
-* 解説 [#y553338e]
+* 解説 [#explanation]
 上記のサンプルでは、チェックボックスの選択状態で、`JTable#setFillsViewportHeight(boolean)`を適用するかどうかを切り替えることができます。
 
 - `getFillsViewportHeight() == false`(デフォルト値)の場合
@@ -50,12 +50,12 @@ scroll.getViewport().setBackground(Color.GREEN);
 -- 列をドラッグして移動する場合の隙間の色
 -- `JTable#setAutoResizeMode(JTable.AUTO_RESIZE_OFF)`としたときの右余白
 
-* 参考リンク [#oc8c4477]
+* 参考リンク [#reference]
 - [[JTableの背景色を変更>Swing/TableBackground]]
 - [[TableCellRendererでセルの背景色を変更>Swing/StripeTable]]
 - [[Fileのドラッグ＆ドロップ>Swing/FileListFlavor]]
 - [http://www.jroller.com/santhosh/entry/jtable_becomes_uglier_with_auto JTable becomes uglier with AUTO_RESIZE_OFF - Santhosh Kumar's Weblog]
 
-* コメント [#r893ee1b]
+* コメント [#comment]
 #comment
 #comment

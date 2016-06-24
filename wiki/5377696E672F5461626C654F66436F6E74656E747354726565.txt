@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2014/01/use-jtree-as-table-of-contents.html
     lang: en
 ---
-* 概要 [#b49290b2]
+* 概要 [#summary]
 `JTree`のノードにリーダーとページ番号を追加表示して目次を作成します。
 
 #download(https://lh4.googleusercontent.com/-uecZSLw75K4/UsAxPx9ol2I/AAAAAAAAB9M/TcD_QI2Ex_Y/s800/TableOfContentsTree.png)
 
-* サンプルコード [#ta946b33]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TableOfContentsTreeCellRenderer extends DefaultTreeCellRenderer {
   private static BasicStroke READER = new BasicStroke(
@@ -89,7 +89,7 @@ class TableOfContentsTreeCellRenderer extends DefaultTreeCellRenderer {
 }
 }}
 
-* 解説 [#t1ea06a1]
+* 解説 [#explanation]
 - 左: `TreeCellRenderer`
 -- `DefaultTreeCellRenderer`をオーバーライドし、デフォルトのレンダリングで使用する`JLabel`を`JTree`を超える十分な幅をもつ`JPanel`でラップ
 --- `JTree#getScrollableTracksViewportWidth()`が常に`true`を返すようオーバーライドして、スクロールバーが表示されないよう設定(参考: [https://community.oracle.com/thread/1357473 JTree cell width question | Oracle Forums])
@@ -192,9 +192,9 @@ JTree tree2 = new JTree(makeModel()) {
 ----
 `NimbusLookAndFeel`等の場合、ノード選択時にリーダーとページ番号の文字色を変更するよう設定しています。
 
-* 参考リンク [#x841c125]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1357473 JTree cell width question | Oracle Forums]
 
-* コメント [#m21c402f]
+* コメント [#comment]
 #comment
 #comment

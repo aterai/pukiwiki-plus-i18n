@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-12-11T14:51:59+09:00
 description: JPasswordFieldのエコー文字を独自のIcon図形に変更します。
 ---
-* 概要 [#x1cc913a]
+* 概要 [#summary]
 `JPasswordField`のエコー文字を独自の`Icon`図形に変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTQ8cs8ApI/AAAAAAAAAgY/gxUUdKI65yA/s800/PasswordView.png)
 
-* サンプルコード [#bd030635]
+* サンプルコード [#sourcecode]
 #code(link){{
 class MyPasswordFieldUI extends BasicPasswordFieldUI {
   private static final StarIcon ICON = new StarIcon();
@@ -35,12 +35,12 @@ class MyPasswordFieldUI extends BasicPasswordFieldUI {
 }
 }}
 
-* 解説 [#vc509445]
+* 解説 [#explanation]
 上記のサンプルでは、下の`JPasswordField`のエコー文字を独自の図形に変更しています。またこの図形のサイズを上の`JPasswordField`のエコー文字と幅を合わせるために同じ文字を`setEchoChar`しています。
 
-* 参考リンク [#hf2c6b11]
+* 参考リンク [#reference]
 - [[JPasswordFieldでパスワードを可視化する>Swing/ShowHidePasswordField]]
 
-* コメント [#n2314028]
+* コメント [#comment]
 #comment
 #comment

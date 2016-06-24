@@ -3,74 +3,76 @@ title: SwingWorker
 tags: [SwingWorker]
 description: SwingWorker関係の記事へのスクリーンショット付きリンク一覧
 ---
-このページでは、`SwingWorker`の使い方をまとめて一覧にしています。
+このページでは、`SwingWorker`を使って`EDT`とは別のスレッドで処理を実行するサンプルなどをまとめて一覧にしています。
+
 #contents
-* SwingWorker [#d0a0e71a]
-** SwingWorkerを使った処理の中断と進捗状況表示 [#rb1de7fd]
+
+* SwingWorker [#SwingWorker]
+** SwingWorkerを使った処理の中断と進捗状況表示 [#SwingWorker]
 #swingdescription(Swing/SwingWorker,SwingWorkerを使った処理の中断と進捗状況表示,JDK 6で新しくなったSwingWorkerを使って、処理の中断や進捗状況の表示更新などを行います。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTT8xXI-cI/AAAAAAAAAlQ/ueJc6P4EJVg/s144/SwingWorker.png)
 
-** SwingWorkerの一時停止と再開 [#v241bc27]
+** SwingWorkerの一時停止と再開 [#PauseResumeSwingWorker]
 #swingdescription(Swing/PauseResumeSwingWorker,SwingWorkerの一時停止と再開,SwingWorkerで処理の一時停止と再開を行います。,https://lh6.googleusercontent.com/-3BCjKLnQbGM/Ti0AQV5nkwI/AAAAAAAAA_s/RY75ol3pFak/s144/PauseResumeSwingWorker.png)
 
-** SwingWorkerで複数のJProgressBarを使用する [#z1112e2a]
+** SwingWorkerで複数のJProgressBarを使用する [#TwoProgressBars]
 #swingdescription(Swing/TwoProgressBars,SwingWorkerで複数のJProgressBarを使用する,ひとつのSwingWorkerで、進捗を表示するJProgressBarをふたつ使用します。,https://lh6.googleusercontent.com/-S6ko35_DIi8/TfWPa08dHvI/AAAAAAAAA9I/MNhC-0LF8YQ/s144/TwoProgressBars.png)
 
-** ProgressMonitorで処理の進捗を表示 [#j21d5377]
+** ProgressMonitorで処理の進捗を表示 [#ProgressMonitor]
 #swingdescription(Swing/ProgressMonitor,ProgressMonitorで処理の進捗を表示,ProgressMonitorで処理の進捗を表示します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRQXIAu4I/AAAAAAAAAg4/bh8niw_k5AE/s144/ProgressMonitor.png)
 
-** ProgressMonitorInputStreamを使用してテキストファイルのダウンロード状況を表示 [#v2fc82fb]
+** ProgressMonitorInputStreamを使用してテキストファイルのダウンロード状況を表示 [#ProgressMonitorInputStream]
 #swingdescription(Swing/ProgressMonitorInputStream,ProgressMonitorInputStreamを使用してテキストファイルのダウンロード状況を表示,ProgressMonitorInputStreamを使用してテキストファイルのダウンロード状態を進捗表示します。,https://lh4.googleusercontent.com/-gXnU23f7iiw/UXQuzmKdfVI/AAAAAAAABp8/aPk0QR78NlY/s144/ProgressMonitorInputStream.png)
 
-** JTableのセルにJProgressBarを表示 [#v9ecd852]
+** JTableのセルにJProgressBarを表示 [#TableCellProgressBar]
 #swingdescription(Swing/TableCellProgressBar,JTableのセルにJProgressBarを表示,JTableのセルにJProgressBarを使用して進捗を表示します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUYeEtfWI/AAAAAAAAAl8/47mUyOKeiQY/s144/TableCellProgressBar.png)
 
-** JTreeのノードにJProgressBarを表示する [#ia7e34a2]
+** JTreeのノードにJProgressBarを表示する [#TreeNodeProgressBar]
 #swingdescription(Swing/TreeNodeProgressBar,JTreeのノードにJProgressBarを表示する,JTreeのノードにJProgressBarを表示するTreeCellRendererを設定します。,https://lh4.googleusercontent.com/-SBg5NOTGinM/UrcLHfPzXVI/AAAAAAAAB84/HD0k-sWiJGo/s144/TreeNodeProgressBar.png)
 
-** JDialogでモーダルなJProgressBar付きSplash Screenを表示する [#x13e35e3]
+** JDialogでモーダルなJProgressBar付きSplash Screenを表示する [#ProgressSplashScreen]
 #swingdescription(Swing/ProgressSplashScreen,JDialogでモーダルなJProgressBar付きSplash Screenを表示する,JDialogでモーダルなJProgressBar付きSplash Screenを表示します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTRSxG9iaI/AAAAAAAAAg8/Wpd3hycacS4/s144/ProgressSplashScreen.png)
 
-** JTabbedPaneのタブにJProgressBarを表示 [#md4a59c0]
+** JTabbedPaneのタブにJProgressBarを表示 [#TabWithProgressBar]
 #swingdescription(Swing/TabWithProgressBar,JTabbedPaneのタブにJProgressBarを表示,JTabbedPaneのタブにJProgressBarを配置して、進捗を表示します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTVHzMYZuI/AAAAAAAAAnI/7G4e4YZbiAQ/s144/TabWithProgressBar.png)
 
-** JComboBox内にJProgressBarを表示 [#f9f1c62b]
+** JComboBox内にJProgressBarを表示 [#ProgressComboBox]
 #swingdescription(Swing/ProgressComboBox,JComboBox内にJProgressBarを表示,JComboBox内にJProgressBarを設定して進捗を表示します。,https://lh6.googleusercontent.com/-wtOABuv6qdQ/TmR3t1oq-qI/AAAAAAAABBg/jbHLwwMR1gc/s144/ProgressComboBox.png)
 
 * ↑10 ↓11 [#ab1162e4]
 #adsensebar
 
-** Fileの再帰的検索 [#f41617ec]
+** Fileの再帰的検索 [#RecursiveFileSearch]
 #swingdescription(Swing/RecursiveFileSearch,Fileの再帰的検索,指定したDirectory以下のFileを再帰的に検索し、その進捗状況をJProgressBarで表示します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRh7du1II/AAAAAAAAAhU/jcMUoOTcbTU/s144/RecursiveFileSearch.png)
 
-** FileSystemViewを使ってディレクトリ構造をJTreeに表示する [#jbabe5e8]
+** FileSystemViewを使ってディレクトリ構造をJTreeに表示する [#DirectoryTree]
 #swingdescription(Swing/DirectoryTree,FileSystemViewを使ってディレクトリ構造をJTreeに表示する,FileSystemViewを使ってディレクトリ構造をJTree上に表示します。,https://lh3.googleusercontent.com/-FkX-8X4KxDo/ThFoeY8M64I/AAAAAAAAA-Y/Ry_RA9yVCxc/s144/DirectoryTree.png)
 
-** JCheckBox付きJTreeでディレクトリ構造を表示 [#h38a891e]
+** JCheckBox付きJTreeでディレクトリ構造を表示 [#FileSystemTreeWithCheckBox]
 #swingdescription(Swing/FileSystemTreeWithCheckBox,JCheckBox付きJTreeでディレクトリ構造を表示,編集可能なJCheckBoxをノードに追加したJTreeでディレクトリ構造を表示します。,https://lh6.googleusercontent.com/-5ihZ2R-e4Ug/Tki-blUTxaI/AAAAAAAABA0/5KCjlm9CkSY/s144/FileSystemTreeWithCheckBox.png)
 
-** PersistenceServiceを使ってJFrameの位置・サイズを記憶 [#o16b86e6]
+** PersistenceServiceを使ってJFrameの位置・サイズを記憶 [#PersistenceService]
 #swingdescription(Swing/PersistenceService,PersistenceServiceを使ってJFrameの位置・サイズを記憶,ServiceManagerからPersistenceServiceを取得し、JFrameなどの位置・サイズの保存、呼び出しを行います。,https://lh6.googleusercontent.com/-PyOW5DW5kHU/T3APD_Cq_bI/AAAAAAAABKk/i9eivMuQZ0Y/s144/PersistenceService.png)
 
-** ProgressMonitorがダイアログを表示するまでの待ち時間 [#fe013296]
+** ProgressMonitorがダイアログを表示するまでの待ち時間 [#MillisToDecideToPopup]
 #swingdescription(Swing/MillisToDecideToPopup,ProgressMonitorがダイアログを表示するまでの待ち時間,ProgressMonitorのダイアログが表示されるまでの待ち時間を設定します。,https://lh6.googleusercontent.com/-R5-8dJERlmk/UWrm3iXBukI/AAAAAAAABpk/i7YjNRcIkpM/s144/MillisToDecideToPopup.png)
 
-** JComboBoxのモデルとしてenumを使用する [#b121b17a]
+** JComboBoxのモデルとしてenumを使用する [#SortingAnimations]
 #swingdescription(Swing/SortingAnimations,JComboBoxのモデルとしてenumを使用する,JComboBoxのモデルとしてenumを使用します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTcZXYeSI/AAAAAAAAAkY/_frjM9wSJsc/s144/SortingAnimations.png)
 
-** Cursorを砂時計に変更 [#g53b4266]
+** Cursorを砂時計に変更 [#WaitCursor]
 #swingdescription(Swing/WaitCursor,Cursorを砂時計に変更,バックグラウンドで処理が実行されている間は、Cursorに砂時計が設定されたGlassPaneを有効にします。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTWfYWDbsI/AAAAAAAAApU/rldJwQuVm-8/s144/WaitCursor.png)
 
-** JLayerを使ってJProgressBarの色相を変更する [#fdef8ae9]
+** JLayerを使ってJProgressBarの色相を変更する [#ColorChannelSwapFilter]
 #swingdescription(Swing/ColorChannelSwapFilter,JLayerを使ってJProgressBarの色相を変更する,JLayerを使ってJProgressBarの色相を緑から赤に変更します。,https://lh3.googleusercontent.com/-BOomq0cC-U4/UceBZ2TsWWI/AAAAAAAABug/yoXs3wbBVGk/s144/ColorChannelSwapFilter.png)
 
-** JTableのPaginationとSwingWorkerでの逐次読み込み [#hf481b6b]
+** JTableのPaginationとSwingWorkerでの逐次読み込み [#PageInputForPagination]
 #swingdescription(Swing/PageInputForPagination,JTableのPaginationとSwingWorkerでの逐次読み込み,JTableでRowFilterを使ったPaginationとSwingWorkerでの逐次読み込みを行います。,https://lh5.googleusercontent.com/-1qIJd4HlwkQ/UnaN9fNNZtI/AAAAAAAAB5Y/JqssphQAq3Q/s144/PageInputForPagination.png)
 
-** TableCellRendererに進捗文字列を設定したJProgressBarを使用する [#r06f7e3b]
+** TableCellRendererに進捗文字列を設定したJProgressBarを使用する [#StringPaintedCellProgressBar]
 #swingdescription(Swing/StringPaintedCellProgressBar,TableCellRendererに進捗文字列を設定したJProgressBarを使用する,JTableのTableCellRendererとして、進捗文字列を表示するJProgressBarを設定します。,https://lh4.googleusercontent.com/-XSMYQI-BTU8/Uy67ZR-E4TI/AAAAAAAACCE/2zdsU6o7iA0/s144/StringPaintedCellProgressBar.png)
 
 * ↑20 ↓21 [#o0d28c6f]
 #adsensebar
 
-** JProgressBarの進捗状況を円形で表示する [#ra1b6015]
+** JProgressBarの進捗状況を円形で表示する [#ProgressCircle]
 #swingdescription(Swing/ProgressCircle,JProgressBarの進捗状況を円形で表示する,JProgressBarの進捗状況を円形表示するように設定します。,https://lh3.googleusercontent.com/-K2Us5zyEGJs/U4rt4SgHxVI/AAAAAAAACGo/IBfgQ2C1jxE/s144/ProgressCircle.png)

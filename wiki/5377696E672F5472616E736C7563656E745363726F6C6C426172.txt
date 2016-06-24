@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2015/03/create-translucent-jscrollbar.html
     lang: en
 ---
-* 概要 [#hce3a1ca]
+* 概要 [#summary]
 半透明の`JScrollBar`を作成して、`JViewport`内部に配置します。
 
 #download(https://lh3.googleusercontent.com/-X8o390yxqhI/UZjhjkgUrkI/AAAAAAAABsY/Aajtim-5-uE/s800/TranslucentScrollBar.png)
 
-* サンプルコード [#t5cb201e]
+* サンプルコード [#sourcecode]
 #code(link){{
 public JComponent makeTranslucentScrollBar(JComponent c) {
   JScrollPane scrollPane = new JScrollPane(c) {
@@ -109,7 +109,7 @@ public JComponent makeTranslucentScrollBar(JComponent c) {
 }
 }}
 
-* 解説 [#aa85f74b]
+* 解説 [#explanation]
 上記のサンプルでは、`JScrollBar`の増減ボタンのサイズを`0x0`、トラックを透明、つまみを半透明にして、`JViewport`内部に配置しています。
 
 - `ScrollPaneLayout#layoutContainer(...)`をオーバーライドして、`JScrollBar`を`JViewport`の内部にオーバーラップするように配置
@@ -128,11 +128,11 @@ public JComponent makeTranslucentScrollBar(JComponent c) {
 -- このサンプルでは、横スクロールバーの表示、カラムヘッダの表示に未対応
 --- [[JScrollBarをJTable上に重ねて表示するJScrollPaneを作成する>Swing/OverlappedScrollBar]]
 
-* 参考リンク [#i4a3affa]
+* 参考リンク [#reference]
 - [http://www.oracle.com/technetwork/java/painting-140037.html "Optimized" Drawing - Painting in AWT and Swing]
 - [[JScrollBarをJTable上に重ねて表示するJScrollPaneを作成する>Swing/OverlappedScrollBar]]
 
-* コメント [#p0420684]
+* コメント [#comment]
 #comment
 - `ScrollPaneLayout`を変更してオーバーラップするより、`JLayer`などを使ってドラッグ可能な矩形を描画する方が簡単かもしれない…。 -- &user(aterai); &new{2013-05-20 (月) 17:20:39};
 

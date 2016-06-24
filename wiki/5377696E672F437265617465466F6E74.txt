@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-03-07T02:07:13+09:00
 description: 独自フォント(mona.ttf)をファイルから読み込み、ASCII artを表示します。
 ---
-* 概要 [#o126bcf5]
+* 概要 [#summary]
 独自フォント(`mona.ttf`)をファイルから読み込み、`ASCII art`を表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKOUJYB7I/AAAAAAAAAVo/K2rl3dXD4ic/s800/CreateFont.png)
 
-* サンプルコード [#ibfdaff0]
+* サンプルコード [#sourcecode]
 #code(link){{
 Font makeFont(URL url) {
     Font font = null;
@@ -45,16 +45,16 @@ Font makeFont(URL url) {
 //}
 }}
 
-* 解説 [#v308e626]
+* 解説 [#explanation]
 `Font.createFont`メソッドでフォントを作成しています。
 
 上記のサンプルでは、[http://monafont.sourceforge.net/index.html モナーフォント]を使用しています。
 
-* 参考リンク [#cbcb57f0]
+* 参考リンク [#reference]
 - [http://monafont.sourceforge.net/index.html モナーフォント]
 - [https://community.oracle.com/thread/1483177 Swing (Archive) - Loading TYPE1 fonts with JRE 1.5.0]
 
-* コメント [#d9deff49]
+* コメント [#comment]
 #comment
 - `JDK 1.5.0_01`でずれる？ -- &user(aterai); &new{2005-03-07 11:19:11 (月)};
 -- 応急処置済み -- &user(aterai); &new{2005-03-07 11:32:44 (月)};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-02-02T14:08:34+09:00
 description: TableCellEditorのレイアウトを変更して、CellEditorの隣にJButtonを配置します。
 ---
-* 概要 [#d64f644d]
+* 概要 [#summary]
 `TableCellEditor`のレイアウトを変更して、`CellEditor`の隣に`JButton`を配置します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTIlcF-6vI/AAAAAAAAATA/mS6Q_BfuY6c/s800/CellEditorLayout.png)
 
-* サンプルコード [#bcfb306a]
+* サンプルコード [#sourcecode]
 #code(link){{
 class CustomComponentCellEditor extends DefaultCellEditor {
   protected final JTextField field;
@@ -60,7 +60,7 @@ class CustomComponentCellEditor extends DefaultCellEditor {
 }
 }}
 
-* 解説 [#k40bb169]
+* 解説 [#explanation]
 - `0`列目
 -- `DefaultCellEditor`を継承する`CustomComponentCellEditor`を作成
 -- `JTextField`をコンストラクタの引数にしているが、ダミー
@@ -154,11 +154,11 @@ class CustomComponentCellEditor2 extends DefaultCellEditor {
 - `3`列目
 -- デフォルト
 
-* 参考リンク [#i9a92ff6]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1354286 Swing - JTable editor issue]
 - [[JTextField内にアイコンを追加>Swing/IconTextField]]
 
-* コメント [#k839423b]
+* コメント [#comment]
 #comment
 - KBD{F2}で編集開始した場合、フォーカスできない問題を修正。 -- &user(aterai); &new{2009-08-10 (月) 15:50:27};
 - ソースコードだけ変更して、こちらのページの修正を忘れていたorzので、新しく追加した`2`列目の解説と、最終列はデフォルトであることを追記。スクリーンショットは面倒なので更新しない。 -- &user(aterai); &new{2011-08-30 (火) 18:26:59};

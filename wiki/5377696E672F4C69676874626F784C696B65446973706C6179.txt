@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-12-08T13:07:38+09:00
 description: GlassPaneを使用して、Lightbox風にアニメーションしながら画像を表示します。
 ---
-* 概要 [#ddbfe472]
+* 概要 [#summary]
 `GlassPane`を使用して、`Lightbox`風にアニメーションしながら画像を表示します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTPJaQROVI/AAAAAAAAAdg/MXDWfchqmso/s800/LightboxLikeDisplay.png)
 
-* サンプルコード [#c203fac1]
+* サンプルコード [#sourcecode]
 #code(link){{
 class LightboxGlassPane extends JPanel {
   private final ImageIcon image = new ImageIcon(
@@ -121,14 +121,14 @@ class LightboxGlassPane extends JPanel {
 }
 }}
 
-* 解説 [#v5741bbd]
+* 解説 [#explanation]
 上記のサンプルでは、`JFrame`に`GlassPane`を設定して、この`GlassPane`の中央にインジケータ、高さ幅がアニメーションしながら拡大する矩形、画像を順番に表示しています。
 
 `GlassPane`に自分を`setVisible(false)`するマウスリスナーを追加しているので、任意の場所をクリックするとこの画像は非表示になります。
 
-* 参考リンク [#j49caa72]
+* 参考リンク [#reference]
 - [http://www.huddletogether.com/projects/lightbox2/ Lightbox 2]
 
-* コメント [#ue8a85c9]
+* コメント [#comment]
 #comment
 #comment

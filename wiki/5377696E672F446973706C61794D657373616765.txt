@@ -5,25 +5,25 @@ author: aterai
 pubdate: 2011-02-07T16:27:51+09:00
 description: TrayIconのポップアップメッセージ表示をテストします。
 ---
-* 概要 [#nb7482fa]
+* 概要 [#summary]
 `TrayIcon`のポップアップメッセージ表示をテストします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TU-dbe20pkI/AAAAAAAAA0g/3fG2yE_NmHw/s800/DisplayMessage.png)
 
-* サンプルコード [#l58a3b4a]
+* サンプルコード [#sourcecode]
 #code(link){{
 //TrayIcon.MessageType: ERROR, WARNING, INFO, NONE
 trayIcon.displayMessage("caption", "text text...", TrayIcon.MessageType.ERROR);
 }}
 
-* 解説 [#mea49689]
+* 解説 [#explanation]
 上記のサンプルでは、`TrayIcon.displayMessage(...)`メソッドを使用して、ポップアップメッセージを表示しています。
 
 - メモ:
 -- `TrayIcon`に`ActionListener`を追加しておくと、ポップアップメッセージのクリックイベントを取得することが可能
 -- `Windows 10`で`TrayIcon.MessageType.NONE`を使用する場合、`TrayIcon#setImage(...)`がポップアップメッセージのアイコンとして表示されるが、`TrayIcon.setImageAutoSize(false)`でも自動的にリサイズされ、背景色は透過せず黒になる
 
-//* 参考リンク
-* コメント [#g4f83164]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

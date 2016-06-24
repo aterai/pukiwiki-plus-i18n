@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-04-26
 description: FocusTraversalPolicyを使って、KBD{Tab}キーなどによるフォーカスの移動を制御します。
 ---
-* 概要 [#x8547c84]
+* 概要 [#summary]
 `FocusTraversalPolicy`を使って、KBD{Tab}キーなどによるフォーカスの移動を制御します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNE9BAwqI/AAAAAAAAAaM/57d2rzX7ixk/s800/FocusTraversal.png)
 
-* サンプルコード [#le272dee]
+* サンプルコード [#sourcecode]
 #code(link){{
 final JButton nb = new JButton("NORTH");
 final JButton sb = new JButton("SOUTH");
@@ -50,7 +50,7 @@ frame.setFocusTraversalPolicy(policy);
 //setFocusTraversalPolicy(policy);
 }}
 
-* 解説 [#h3d0848b]
+* 解説 [#explanation]
 上記のサンプルでは、`FocusTraversalPolicy`を使用することで、キー入力によるフォーカスの移動を制御しています。また、`JRadioButton`で以下のような`FocusTraversalPolicy`に切り替えることができます。
 
 - `Default`
@@ -78,12 +78,12 @@ frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
 });
 }}
 
-* 参考リンク [#n149aa1a]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/7/api/java/awt/doc-files/FocusSpec.html AWT フォーカスサブシステム]
 - [http://www.ibm.com/developerworks/jp/java/library/j-mer07153/ Merlinの魔術: フォーカス、フォーカス、フォーカス]
 - [[Windowを開いたときのフォーカスを指定>Swing/DefaultFocus]]
 - [[FocusTraversalKeysに矢印キーを追加してフォーカス移動>Swing/FocusTraversalKeys]]
 
-* コメント [#o2ee0e2b]
+* コメント [#comment]
 #comment
 #comment

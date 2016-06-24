@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2008/09/jdk6-cycle-through-ascending-descending.html
     lang: en
 ---
-* 概要 [#qcd17147]
+* 概要 [#summary]
 `JDK 6`で導入された`TableRowSorter`のソートを、`TableSorter.java`のようにヘッダクリックで昇順、降順、初期状態に切り替わるように設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWVWrGvdI/AAAAAAAAApE/-DL1kAZzGsM/s800/TriStateSorting.png)
 
-* サンプルコード [#l29c9a20]
+* サンプルコード [#sourcecode]
 #code(link){{
 TableModel model = makeTestTableModel();
 JTable table = new JTable(model);
@@ -35,14 +35,14 @@ TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
 table.setRowSorter(sorter);
 }}
 
-* 解説 [#lc89320d]
+* 解説 [#explanation]
 上記のサンプルでは、`TableRowSorter#toggleSortOrder(int)`をオーバーライドして、クリックした列がソートの第一キーで、ソート順序が`DESCENDING`の場合、ソートキーをクリアしています。このため、同じカラムヘッダを連続して三回クリックすると、昇順(`ASCENDING`)、降順(`DESCENDING`)、初期状態(`UNSORTED`)と遷移して元に戻るようになっています。
 
-* 参考リンク [#qf7f31ba]
+* 参考リンク [#reference]
 - [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
 - [[TableRowSorterのSortKeysをクリアする>Swing/ClearSortingState]]
 
-* コメント [#s4c0fcaa]
+* コメント [#comment]
 #comment
 - スクリーンショットを更新 -- &user(aterai); &new{2008-09-25 (木) 14:23:27};
 

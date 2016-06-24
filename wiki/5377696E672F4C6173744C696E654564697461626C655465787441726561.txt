@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-12-24T00:48:21+09:00
 description: DocumentFilterを使用して最終行のみ編集可能なJTextAreaを作成します。
 ---
-* 概要 [#zaa011b0]
+* 概要 [#summary]
 `DocumentFilter`を使用して最終行のみ編集可能な`JTextArea`を作成します。
 
 #download(https://lh3.googleusercontent.com/-WoZIsdy2Qd0/UNcd6P73NAI/AAAAAAAABZg/a2O8KLk4hVQ/s800/LastLineEditableTextArea.png)
 
-* サンプルコード [#k6b28166]
+* サンプルコード [#sourcecode]
 #code(link){{
 class NonEditableLineDocumentFilter extends DocumentFilter {
   public static final String PROMPT = "> ";
@@ -55,16 +55,16 @@ class NonEditableLineDocumentFilter extends DocumentFilter {
 }
 }}
 
-* 解説 [#c57d84df]
+* 解説 [#explanation]
 - `DocumentFilter#replace(...)`をオーバーライド
 - `Document#getDefaultRootElement()`でルートエレメントを取得し、`Element#getElementCount()`で全体の行数を取得
 - `offset`(文字挿入位置)から`Element#getElementIndex(offset)`で、挿入位置の行番号と、`Element`を取得
 - 上記の`挿入位置の行番号`と`全体の行数 - 1`が等しい場合だけ、`DocumentFilter.FilterBypass#replace(...)`を実行(編集可能)する
 -- 上記のサンプルでは、コマンドプロンプト風に、最終行の行頭にあるプロンプトは編集不可で、改行の入力ごとに最終行の文字列を評価してメッセージを追加表示している
 
-* 参考リンク [#hf263a31]
+* 参考リンク [#reference]
 - [[JTextAreaの一部を編集不可にする>Swing/NonEditableLine]]
 
-* コメント [#re29de04]
+* コメント [#comment]
 #comment
 #comment

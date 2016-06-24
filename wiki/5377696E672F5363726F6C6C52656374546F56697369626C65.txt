@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2012-09-10T16:06:04+09:00
 description: JScrollPaneのJViewport内にあるJTable、JList、JTreeで、それぞれ追加された最終行が可視化されるようにスクロールします。
 ---
-* 概要 [#i0ec10e7]
+* 概要 [#summary]
 `JScrollPane`の`JViewport`内にある`JTable`、`JList`、`JTree`で、それぞれ追加された最終行が可視化されるようにスクロールします。
 
 #download(https://lh3.googleusercontent.com/-t_4BD1mGUGk/UE1eF0Ead3I/AAAAAAAABSM/4a4aPSpMDM4/s800/ScrollRectToVisible.png)
 
-* サンプルコード [#kcb0b4e6]
+* サンプルコード [#sourcecode]
 #code(link){{
 model.addRow(new Object[] {date.toString(), model.getRowCount(), false});
 int i = table.convertRowIndexToView(model.getRowCount() - 1);
@@ -18,7 +18,7 @@ Rectangle r = table.getCellRect(i, 0, true);
 table.scrollRectToVisible(r);
 }}
 
-* 解説 [#h5ca79e3]
+* 解説 [#explanation]
 - `JTable`
 -- `JTable#scrollRectToVisible(Rectangle)`を使用して、追加した行の`0`列目のセル領域までスクロール
 -- ソートやフィルタが使用されている場合を考慮して、追加した行のインデックスを`JTable#convertRowIndexToView(int)`で変換してから、セル領域を取得
@@ -50,12 +50,12 @@ tree.scrollPathToVisible(new TreePath(newChild.getPath()));
 //*/
 }}
 
-* 参考リンク [#pf4abfe7]
+* 参考リンク [#reference]
 - [[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]
 -- `JComponent#scrollRectToVisible(...)`を使用してスクロール
 - [[JTextPaneで最終行に移動>Swing/CaretPosition]]
 -- キャレットの移動でスクロール
 
-* コメント [#x0728da5]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-02-26T16:17:41+09:00
 description: JTreeのノードをドラッグ＆ドロップで移動します。
 ---
-* 概要 [#uec75d42]
+* 概要 [#summary]
 `JTree`のノードをドラッグ＆ドロップで移動します。[http://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks #26: DnD JTree]のソースコードをベースにしています。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTLofRhAtI/AAAAAAAAAX4/d1C6sFO5s4g/s800/DnDTree.png)
 
-* サンプルコード [#le4b53da]
+* サンプルコード [#sourcecode]
 #code(link){{
 @Override public void dragOver(DropTargetDragEvent dtde) {
   DataFlavor[] f = dtde.getCurrentDataFlavors();
@@ -59,7 +59,7 @@ private void rejectDrag(DropTargetDragEvent dtde) {
 }
 }}
 
-* 解説 [#lc4f6171]
+* 解説 [#explanation]
 [http://www.oreilly.co.jp/books/4873112788/ HACK #26: DnD JTree]から以下の動作を変更しています。
 
 - ルートノードのドラッグを禁止
@@ -76,12 +76,12 @@ private void rejectDrag(DropTargetDragEvent dtde) {
 -- それらの親ノードにドロップすると兄弟ノードの一番最後に追加される
 -- [https://bugs.openjdk.java.net/browse/JDK-8129830 #JDK-8129830 JTree drag/drop on lower half of last child of container incorrect - Java Bug System]
 
-* 参考リンク [#c25ab43d]
+* 参考リンク [#reference]
 - [http://www.oreilly.co.jp/books/4873112788/ HACK #26: DnD JTree]
 - [http://www.javaworld.com/javaworld/javatips/jw-javatip114.html Java Tip 114: Add ghosted drag images to your JTrees - Java World]
 - [http://www.java2s.com/Code/Java/Swing-JFC/DnDdraganddropJTreecode.htm DnD (drag and drop)JTree code : Tree : Swing JFC : Java examples (example source code) Organized by topic]
 
-* コメント [#of354fb4]
+* コメント [#comment]
 #comment
 - `JWS`による起動の場合、`AccessControlException`が発生します。解決する方法はあるのでしょうか。 -- &user(hiraoka); &new{2010-09-21 (火) 18:24:44};
 -- ご指摘ありがとうございます。たしか`Java 1.6.0_20`あたりから`droppedObject = dtde.getTransferable().getTransferData(localObjectFlavor);`が`Web Start`で駄目だったような気がします。`JTable`とか`JTabbedPane`のサンプル([[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]])は修正したけど、`JTree`はすっかり忘れていました。このサンプルの場合はひとつの`JTree`の中で並べ替えるだけなので、`Object droppedObject = getSelectionPath().getLastPathComponent();`のように修正すればいいようです。%%あとでもう少し調べてサンプルコードも修正しようと思います。%% 修正しました。 -- &user(aterai); &new{2010-09-21 (火) 21:15:43};

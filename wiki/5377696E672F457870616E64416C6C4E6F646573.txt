@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-05-07T17:11:21+09:00
 description: JTreeのすべてのノードに対して、展開、折り畳みを行います。
 ---
-* 概要 [#qe99cde9]
+* 概要 [#summary]
 `JTree`のすべてのノードに対して、展開、折り畳みを行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMS3T9nvI/AAAAAAAAAY8/ooi4QMbp6fA/s800/ExpandAllNodes.png)
 
-* サンプルコード [#ia645451]
+* サンプルコード [#sourcecode]
 #code(link){{
 //@see http://www.rgagnon.com/javadetails/java-0210.html
 //Expand or collapse a JTree - Real's Java How-to
@@ -47,7 +47,7 @@ private void visitAll(JTree tree, TreePath parent, boolean expand) {
 }
 }}
 
-* 解説 [#gee86b85]
+* 解説 [#explanation]
 - `expandAll(A)`
 -- `JTree`をリストとみなして`expandAll`では先頭から順番に`JTree#expandRow(int)`メソッドを実行
 -- ループは全展開された時の`JTree`の行数だけ繰り返す
@@ -64,12 +64,12 @@ private void visitAll(JTree tree, TreePath parent, boolean expand) {
 -- `visitAll(tree, new TreePath(root), false);`
 -- 再帰的に`TreePath`を辿って、折り畳み(`JTree#collapsePath(TreePath)`メソッド)を実行
 
-* 参考リンク [#je145430]
+* 参考リンク [#reference]
 //- %%[http://www.exampledepot.com/egs/javax.swing.tree/ExpandAll.html Expanding or Collapsing All Nodes in a JTree Component (Java Developers Almanac Example)]%%
 - [http://www.rgagnon.com/javadetails/java-0210.html Expand or collapse a JTree - Real's Java How-to]
 - [[JTreeのノードを検索する>Swing/SearchBox]]
 
-* コメント [#d120e1b9]
+* コメント [#comment]
 #comment
 - 解説のラベル`A`と`B`が、ソースとは逆になっていたのを修正しました。 -- &user(aterai); &new{2008-02-05 (火) 19:31:53};
 

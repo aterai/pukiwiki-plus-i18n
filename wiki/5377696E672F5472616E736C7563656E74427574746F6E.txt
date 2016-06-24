@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2013/01/make-translucent-jbutton.html
     lang: en
 ---
-* 概要 [#v7bccd63]
+* 概要 [#summary]
 背景が透明な`JButton`に半透明な`Icon`を設定するなどして、ボタンテキスト以外が半透明な`JButton`を作成します。
 
 #download(https://lh3.googleusercontent.com/-W5o-8ilpY6k/UOCzLo2oOeI/AAAAAAAABZ0/m1_AjYpKqiY/s800/TranslucentButton.png)
 
-* サンプルコード [#r4eab624]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TranslucentButton extends JButton {
   private static final Color TL = new Color(1f, 1f, 1f, .2f);
@@ -66,7 +66,7 @@ class TranslucentButton extends JButton {
 }
 }}
 
-* 解説 [#kc10b7de]
+* 解説 [#explanation]
 - 透明な`JButton`、全体を半透明な`Icon`、タイトルの`Icon`と文字列は`align='middle'`などを指定して配置
 -- 参考: [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]
 -- `setOpaque(false);`、`setContentAreaFilled(false);`などで、`JButton`自体は透明化
@@ -124,7 +124,7 @@ add(p);
 -- %%`MetalLookAndFeel`で、余計なフチ？が表示される%%
 -- `JButton#setBorderPainted(false);`で、フチを非表示にできる
 -- `setBorder(BorderFactory.createEmptyBorder(2, 8, 2, 8));`で設定した余白は、`Icon`自体のサイズには含めないが、`Icon`の描画は使用する
--- `JButton#setMargin(new Insets(2, 8, 2, 8));`が有効かどうかは、環境または`LookAndFeel`に依存する？ 
+-- `JButton#setMargin(new Insets(2, 8, 2, 8));`が有効かどうかは、環境または`LookAndFeel`に依存する？
 
 #code{{
 class TranslucentButtonIcon implements Icon {
@@ -181,10 +181,10 @@ class TranslucentButtonIcon implements Icon {
 }
 }}
 
-* 参考リンク [#b8a76b5c]
+* 参考リンク [#reference]
 - [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]
 - [http://chrfb.deviantart.com/art/quot-ecqlipse-2-quot-PNG-59941546 "ecqlipse 2" PNG by ~chrfb on deviantART]
 
-* コメント [#c2b45262]
+* コメント [#comment]
 #comment
 #comment

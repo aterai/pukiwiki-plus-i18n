@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-05-14T19:32:29+09:00
 description: JLabelなどで使用できるAnimated GIFファイルをテストします。
 ---
-* 概要 [#c03dda88]
+* 概要 [#summary]
 `JLabel`などで使用できる`Animated GIF`ファイルをテストします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTHnR-lE1I/AAAAAAAAARc/gDDOKXhD7hQ/s800/AnimatedGif.png)
 
-* サンプルコード [#z30a391c]
+* サンプルコード [#sourcecode]
 #code(link){{
 JLabel label1 = new JLabel("何もしない",
   new ImageIcon(getClass().getResource("no_disposal_specified.gif")),
@@ -26,7 +26,7 @@ JLabel label4 = new JLabel("直前の画像に戻す",
   SwingConstants.LEFT);
 }}
 
-* 解説 [#red85da1]
+* 解説 [#explanation]
 `Animated GIF`で、次のコマを描画する時、直前の画像を異なる方法で消去する`Animated GIF`ファイルを作成し、これらを`JLabel`に貼り付けてアニメーションをテストしています。上記のように透過色を使用する場合、`Swing`では、`3`番目の「背景色でつぶす」にしておかないと残像が出てしまうようです。
 
 - 何もしない
@@ -41,13 +41,13 @@ JLabel label4 = new JLabel("直前の画像に戻す",
 - 直前の画像に戻す
 > Restore to previous. The decoder is required to restore the area overwritten by the graphic with what was there prior to rendering the graphic.
 
-* 参考リンク [#z45d5419]
+* 参考リンク [#reference]
 - [http://www.w3.org/Graphics/GIF/spec-gif89a.txt Cover Sheet for the GIF89a Specification]
 -- 「23. Graphic Control Extension.」の、「iv) Disposal Method」から説明を引用
 - [http://homepage3.nifty.com/furumizo/giamd.htm Giam ダウンロードのページ]
 -- `Giam`を使って、各`Animated GIF`を生成
 
-* コメント [#aa58fc4b]
+* コメント [#comment]
 #comment
 - `Swing`のバージョンを入れておいてもらえますか？現バージョンでも背景色でつぶすにしないと残像が残るんでしょうか？ -- &user(とおりすがり); &new{2009-05-14 (木) 19:32:37};
 -- `Windows XP`で現バージョン(`1.5.0_18`, `1.6.0_14`, `1.7.0`)を実行してみましたが、同様だと思います。 -- &user(aterai); &new{2009-05-14 (木) 21:14:04};

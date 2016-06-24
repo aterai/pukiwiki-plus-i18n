@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/01/create-auto-suggest-jcombobox.html
     lang: en
 ---
-* 概要 [#jc5d9269]
+* 概要 [#summary]
 `JComboBox`に入力候補の一覧表示機能(補完機能、コードアシスト、コンテンツアシスト)を追加します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJwW_1EoI/AAAAAAAAAU4/ENqthfUJCsc/s800/ComboBoxSuggestion.png)
 
-* サンプルコード [#c1c19fbc]
+* サンプルコード [#sourcecode]
 #code(link){{
 String[] array = {
     "aaaa", "aaaabbb", "aaaabbbcc", "aaaabbbccddd",
@@ -108,7 +108,7 @@ class ComboKeyHandler extends KeyAdapter {
 }
 }}
 
-* 解説 [#se4084d9]
+* 解説 [#explanation]
 上記のサンプルでは、次のキー操作に対応しています。
 
 - KBD{Up}KBD{Down}キー
@@ -154,8 +154,8 @@ JComboBox = new JComboBox(model) {
 };
 }}
 
-//* 参考リンク
-* コメント [#k1139ae6]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - 変換途中の日本語も、問題がないともっといいですね。 -- &user(toshi); &new{2006-04-24 (月) 13:45:06};
 -- あー、日本語のこと全然考えてなかったです…。 -- &user(aterai); &new{2006-04-24 (月) 15:54:00};

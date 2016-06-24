@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-08-30T18:25:18+09:00
 description: TabComponentを使用するJTabbedPaneで、タブ名称を編集更新します。
 ---
-* 概要 [#v3420ee8]
+* 概要 [#summary]
 `TabComponent`を使用する`JTabbedPane`で、タブ名称を編集更新します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTR4c_40eI/AAAAAAAAAh4/dLbGOWvSzSc/s800/RevalidateTabComponent.png)
 
-* サンプルコード [#oacb1cc0]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TabTitleRenamePopupMenu extends JPopupMenu {
   private final JTextField textField = new JTextField(10);
@@ -69,17 +69,17 @@ class TabTitleRenamePopupMenu extends JPopupMenu {
 };
 }}
 
-* 解説 [#z53cbc17]
+* 解説 [#explanation]
 上記のサンプルでは、タブを閉じる`JButton`を`TabComponent`に追加した`JTabbedPane`に、タブ名称を変更する`JPopupMenu`を設定しています。
 
 [http://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html How to Use Tabbed Panes (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]の`ButtonTabComponent`を使っているので、`JTabbedPane#setTitleAt(...)`と名前を変更したときに、`tabbedPane.getTabComponentAt(idx)`で取得した`JComponent`を`revalidate()`することで、文字列の長さに応じたサイズへの変更と、タブの内部レイアウトの更新を行なっています。
 
-* 参考リンク [#k0638175]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html How to Use Tabbed Panes (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]
 - [[JTabbedPaneのタブにJTextFieldを配置してタイトルを編集>Swing/TabTitleEditor]]
 - [[JTabbedPaneのタブタイトルを変更>Swing/EditTabTitle]]
 - [[JTabbedPaneにタブを閉じるボタンを追加>Swing/TabWithCloseButton]]
 
-* コメント [#q268aea3]
+* コメント [#comment]
 #comment
 #comment

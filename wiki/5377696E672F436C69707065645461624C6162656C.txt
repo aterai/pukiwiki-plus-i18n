@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2008/03/horizontally-fill-tab-of-jtabbedpane.html
     lang: en
 ---
-* 概要 [#paeaad58]
+* 概要 [#summary]
 `JDK 6`で導入されたタブにコンポーネントを追加する機能を使って、長いタイトルのタブは文字列をクリップして表示します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJU-PNaRI/AAAAAAAAAUM/yAbkpSgRNVY/s800/ClippedTabLabel.png)
 
-* サンプルコード [#xad70fa1]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ClippedTitleTabbedPane extends JTabbedPane {
   public ClippedTitleTabbedPane() {
@@ -88,16 +88,16 @@ class ClippedTitleTabbedPane extends JTabbedPane {
 }
 }}
 
-* 解説 [#xe7c3559]
+* 解説 [#explanation]
 下の`JTabbedPane`では、タブに`JTabbedPane#setTabComponentAt`メソッドを使って`JLabel`を追加し、そのクリップ機能を利用して長いタイトル文字列の後半を省略表示しています。
 
 [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]と、ほぼ同等(文字列の長さがばらばらでも、左右にタブをおいた場合は全体の`1/4`の幅に、上下にタブをおいた場合はすべてのタブ幅が均等になる)ですが、`TabbedPaneUI#paintText`で文字列の描画をオーバーライドする必要も無く、ソースも短くて実装が簡単です。
 
-* 参考リンク [#r6054f8d]
+* 参考リンク [#reference]
 - [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]
 - [[JTabbedPaneのTabTitleを左揃えに変更>Swing/TabTitleAlignment]]
 
-* コメント [#p47877ec]
+* コメント [#comment]
 #comment
 - `tabAreaInsets`を考慮するように修正し、`TOP-LEFT`の切り替え機能を追加しました。 -- &user(aterai); &new{2008-02-26 (火) 22:15:27};
 - `SynthLookAndFeel`に仮？対応。 -- &user(aterai); &new{2008-03-22 (土) 12:49:05};

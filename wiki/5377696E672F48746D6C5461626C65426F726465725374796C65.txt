@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2016-02-08T00:00:25+09:00
 description: JLabelなどのコンポーネントにHTMLのtableタグを使用して描画する表の罫線を分離表示ではなく結合表示に変更します。
 ---
-* 概要 [#t2e55e82]
+* 概要 [#summary]
 `JLabel`などのコンポーネントに`HTML`の`table`タグを使用して描画する表の罫線を分離表示ではなく結合表示に変更します。
 
 #download(https://lh3.googleusercontent.com/-KUe25svxTkQ/VrdVpBBO6TI/AAAAAAAAONE/x6Lvt2P_x_c/s800-Ic42/HtmlTableBorderStyle.png)
 
-* サンプルコード [#me9e29a5]
+* サンプルコード [#sourcecode]
 #code(link){{
 String TD1 = "<td style='background-color:white;border-right:1px solid green;border-top:1px solid blue'>a...";
 String TS1 = "style='border-left:1px solid red;border-bottom:1px solid red;background-color:yellow' cellspacing='0px' cellpadding='5px'";
@@ -25,7 +25,7 @@ String TS3 = "style='border:0px;background-color:red' cellspacing='1px' cellpadd
 String html3 = "<html><table " + TS3 + ">" + "<tr>" + TD3 + TD3 + "<tr>" + TD3 + TD3;
 }}
 
-* 解説 [#z0c5b528]
+* 解説 [#explanation]
 `Swing`の[http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/CSS.html CSS]では、`table`の`border-collapse`プロパティに対応していないので、`border-bottom`などを組み合わせて罫線を結合表示します。
 
 - `border-left, border-bottom`
@@ -38,10 +38,10 @@ String html3 = "<html><table " + TS3 + ">" + "<tr>" + TD3 + TD3 + "<tr>" + TD3 +
 -- すべての罫線が同じ色になる
 -- 参考: [http://stackoverflow.com/questions/3355469/1-pixel-table-border-in-jtextpane-using-html java - 1 pixel table border in JTextPane using HTML - Stack Overflow]
 
-* 参考リンク [#ece71c99]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/3355469/1-pixel-table-border-in-jtextpane-using-html java - 1 pixel table border in JTextPane using HTML - Stack Overflow]
 - [[BasicStrokeで指定した辺の描画を行うBorderを作成する>Swing/StrokeMatteBorder]]
 
-* コメント [#fe3f0666]
+* コメント [#comment]
 #comment
 #comment

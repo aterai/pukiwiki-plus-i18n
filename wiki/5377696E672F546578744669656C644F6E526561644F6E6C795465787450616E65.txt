@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-02-11T00:11:13+09:00
 description: JTextFieldを空欄として編集不可にしたJTextPaneに追加します。
 ---
-* 概要 [#e24a9325]
+* 概要 [#summary]
 `JTextField`を空欄として編集不可にした`JTextPane`に追加します。
 
 #download(https://lh4.googleusercontent.com/-N1aQ1F9Zrn8/UReetdvfWQI/AAAAAAAABdc/9J_2lkAgW0Y/s800/TextFieldOnReadOnlyTextPane.png)
 
-* サンプルコード [#y583333f]
+* サンプルコード [#sourcecode]
 #code(link){{
 void insertQuestion(final JTextPane textPane, String str) {
   Document doc = textPane.getDocument();
@@ -53,7 +53,7 @@ void insertQuestion(final JTextPane textPane, String str) {
 }
 }}
 
-* 解説 [#kcf658d9]
+* 解説 [#explanation]
 上記のサンプルでは、編集不可にした`JTextPane`内の文字列中に、編集可能な空欄として`JTextField`を追加(`JTextPane#insertComponent(...)`を使用)しています。
 
 - `JTextPane`
@@ -67,7 +67,7 @@ void insertQuestion(final JTextPane textPane, String str) {
 --- [[JTextPaneに追加するコンポーネントのベースラインを揃える>Swing/InsertComponentBaseline]]
 -- `JTextField`に`FocusListener`を追加し、KBD{Tab}キーなどで`Focus`が移動したら、その`JTextField`までスクロールするように設定
 
-//* 参考リンク
-* コメント [#b8c6c78c]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

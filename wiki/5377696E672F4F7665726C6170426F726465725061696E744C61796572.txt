@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-12-16T00:12:50+09:00
 description: JLayerを使用して隣接する別コンポーネント上にも縁や影を描画します。
 ---
-* 概要 [#o7ec047a]
+* 概要 [#summary]
 `JLayer`を使用して隣接する別コンポーネント上にも縁や影を描画します。
 
 #download(https://lh5.googleusercontent.com/-VshDpoewqBc/Uq2wDsedThI/AAAAAAAAB8g/TFMskJO7jys/s800/OverlapBorderPaintLayer.png)
 
-* サンプルコード [#x699c707]
+* サンプルコード [#sourcecode]
 #code(link){{
 class BreadcrumbLayerUI extends LayerUI<JPanel> {
   private Shape shape;
@@ -84,13 +84,13 @@ class BreadcrumbLayerUI extends LayerUI<JPanel> {
 }
 }}
 
-* 解説 [#sa6bcaa6]
+* 解説 [#explanation]
 上記のサンプルでは、`JLayer#processMouseEvent(...)`, `JLayer#processMouseMotionEvent(...)`をオーバーライドして、カーソルの下にある`JRadioButton`を取得し、その周辺に`JLayer#paint(...)`メソッドを使って影と縁を描画しています。これらは一番手前の別レイヤーに描画されるので、隣接したり奥に重なったりしているコンポーネントなどの上に描画することができます。
 
-* 参考リンク [#j1c09926]
+* 参考リンク [#reference]
 - [[FlowLayoutでボタンを重ねてパンくずリストを作成する>Swing/BreadcrumbList]]
 - [[JMenuItemの内部にJButtonを配置する>Swing/ButtonsInMenuItem]]
 
-* コメント [#i88b4a5d]
+* コメント [#comment]
 #comment
 #comment

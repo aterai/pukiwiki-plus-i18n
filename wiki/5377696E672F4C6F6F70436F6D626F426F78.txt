@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-10-24
 description: JComboBoxのItemの選択が、上下のカーソルキーでループするように設定します。
 ---
-* 概要 [#t1a92582]
+* 概要 [#summary]
 `JComboBox`の`Item`の選択が、上下のカーソルキーでループするように設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPicRK7pI/AAAAAAAAAeI/ApRsPHlRWe0/s800/LoopComboBox.png)
 
-* サンプルコード [#b3f4d4b8]
+* サンプルコード [#sourcecode]
 #code(link){{
 Action up = new AbstractAction() {
   @Override public void actionPerformed(ActionEvent e) {
@@ -32,10 +32,10 @@ imc.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0),   "myUp");
 imc.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "myDown");
 }}
 
-* 解説 [#d842f217]
+* 解説 [#explanation]
 上記のサンプルでは、下のコンボボックスの`ActionMap`と`InputMap`を使って、上下キーに対応する新しいアクションを設定しています。
 
-//* 参考リンク
-* コメント [#fd90efef]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2016-05-16T00:30:20+09:00
 description: NimbusLookAndFeelを適用したJSliderでトラックの現在値を示す範囲の背景を塗りつぶします。
 ---
-* 概要 [#yc62409e]
+* 概要 [#summary]
 `NimbusLookAndFeel`を適用した`JSlider`でトラックの現在値を示す範囲の背景を塗りつぶします。
 
 #download(https://lh3.googleusercontent.com/-dCrSqcYLbEg/VziRkYw8_xI/AAAAAAAAOXg/0oS6CVwRbkIa02qT5nmfNEMzLqdckmAkwCCo/s800/NimbusFilledSlider.png)
 
-* サンプルコード [#j49e1ead]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIDefaults d = new UIDefaults();
 d.put("Slider:SliderTrack[Enabled].backgroundPainter", new Painter<JSlider>() {
@@ -64,16 +64,16 @@ JSlider slider = new JSlider();
 slider.putClientProperty("Nimbus.Overrides", d);
 }}
 
-* 解説 [#zdc2eb28]
+* 解説 [#explanation]
 - `Default`
 -- `UIManager.put("JSlider.isFilled", Boolean.TRUE)`としても、`NimbusLookAndFeel`などでは、範囲の塗りつぶしは行われない
 - `Nimbus JSlider.isFilled`
 -- `UIDefaults#put("Slider:SliderTrack[Enabled].backgroundPainter", painter)`で、トラックの背景を描画する`Painter`を変更し、範囲の塗りつぶしを行う
 -- 上記のサンプルでは、垂直スライダー(`slider.getOrientation() == SwingConstants.VERTICAL`)や、表示される値の範囲が通常とは逆のスライダー(`slider#setInverted(true)`)には未対応
 
-* 参考リンク [#s993fec6]
+* 参考リンク [#reference]
 - [http://stackoverflow.com/questions/37126097/how-to-fill-jslider-track-up-to-the-point-of-the-current-thumb-value-with-nimubs java - How to fill JSlider track up to the point of the current thumb value with Nimubs L&F? - Stack Overflow]
 
-* コメント [#ee07395a]
+* コメント [#comment]
 #comment
 #comment

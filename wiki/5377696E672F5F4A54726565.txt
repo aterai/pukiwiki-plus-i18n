@@ -4,158 +4,160 @@ tags: [JTree, TreeCellEditor, TreeCellRenderer, TreeModelListener, TreeWillExpan
 description: JTree関係の記事へのスクリーンショット付きリンク一覧
 ---
 このページでは、`JTree`関係の使い方を一覧にしています。
+
 #contents
-* JTree [#q2a17263]
-** JTreeのノード追加、削除 [#zd3f7f28]
+
+* JTree [#JTree]
+** JTreeのノード追加、削除 [#AddNode]
 #swingdescription(Swing/AddNode,JTreeのノード追加、削除,JTreeのノードを選択してJPopupMenuを開き、そのノードの削除や名前変更、子ノードの追加を行います。,https://lh6.googleusercontent.com/_9Z4BYR88imo/Tb5bkDzXJHI/AAAAAAAAA6c/qxz0Vzwy4Ts/s144/AddNode.png)
 
-** JTreeのノードをドラッグ＆ドロップ [#vab978a4]
+** JTreeのノードをドラッグ＆ドロップ [#DnDTree]
 #swingdescription(Swing/DnDTree,JTreeのノードをドラッグ＆ドロップ,JTreeのノードをドラッグ＆ドロップで移動します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTLofRhAtI/AAAAAAAAAX4/d1C6sFO5s4g/s144/DnDTree.png)
 
-** JTreeのノードを検索する [#fd31f3a0]
+** JTreeのノードを検索する [#SearchBox]
 #swingdescription(Swing/SearchBox,JTreeのノードを検索する,JTreeを検索して、一致するアイテムを選択します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTSs3gdysI/AAAAAAAAAjM/r_j-mrb83aU/s144/SearchBox.png)
 
-** JTreeのノードを走査する [#o25206dc]
+** JTreeのノードを走査する [#TraverseAllNodes]
 #swingdescription(Swing/TraverseAllNodes,JTreeのノードを走査する,JTreeのノードからEnumerationを取得してサブツリーの走査を行います。,https://lh5.googleusercontent.com/-m8cdaUCibl0/TxPCZQMYqkI/AAAAAAAABH4/eAK9LyYkv14/s144/TraverseAllNodes.png)
 
-** JTreeのノードを展開・折り畳み [#z2f25418]
+** JTreeのノードを展開・折り畳み [#ExpandAllNodes]
 #swingdescription(Swing/ExpandAllNodes,JTreeのノードを展開・折り畳み,JTreeのすべてのノードに対して、展開、折り畳みを行います。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMS3T9nvI/AAAAAAAAAY8/ooi4QMbp6fA/s144/ExpandAllNodes.png)
 
-** JTreeのノードをハイライト [#mf1f634b]
+** JTreeのノードをハイライト [#RollOverTree]
 #swingdescription(Swing/RollOverTree,JTreeのノードをハイライト,JTreeのノード上にマウスカーソルがきたら、ハイライト表示します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTSHWXxwwI/AAAAAAAAAiQ/MP7tLgM--lo/s144/RollOverTree.png)
 
-** JTreeのToolTipsを表示 [#g67d2b13]
+** JTreeのToolTipsを表示 [#TreeToolTips]
 #swingdescription(Swing/TreeToolTips,JTreeのToolTipsを表示,ノード毎に内容の異なるJToolTipを表示するJTreeを作成します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWQe1RL2I/AAAAAAAAAo8/6HFqbUb3UZ8/s144/TreeToolTips.png)
 
-** JTreeのソート [#q7c2c3ce]
+** JTreeのソート [#SortTree]
 #swingdescription(Swing/SortTree,JTreeのソート,葉ノードより親ノード優先でノード名を比較するComparatorを作成して、JTreeをソートします。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTThR240sI/AAAAAAAAAkg/h3mIbDu9xa4/s144/SortTree.png)
 
-** JTreeのノード上でJPopupMenuを表示 [#y43afc60]
+** JTreeのノード上でJPopupMenuを表示 [#TreeNodePopupMenu]
 #swingdescription(Swing/TreeNodePopupMenu,JTreeのノード上でJPopupMenuを表示,JTreeのノード上でクリックした場合のみ、JPopupMenuを表示します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWLWQUjBI/AAAAAAAAAo0/3F3RUbU5sx8/s144/TreeNodePopupMenu.png)
 
-** JTreeの葉ノードだけ編集可能にする [#q4e1f5ba]
+** JTreeの葉ノードだけ編集可能にする [#LeafTreeCellEditor]
 #swingdescription(Swing/LeafTreeCellEditor,JTreeの葉ノードだけ編集可能にする,JTreeのノードラベルの編集が、葉ノードの場合だけ可能になるよう設定します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPB-TVk9I/AAAAAAAAAdU/Aq5YDSMvqaY/s144/LeafTreeCellEditor.png)
 
 * ↑10 ↓11 [#n1198b30]
 #adsensebar
 
-** JTreeのノード編集をPopupからのみに制限する [#w8f4cbf9]
+** JTreeのノード編集をPopupからのみに制限する [#StartEditingPopupMenu]
 #swingdescription(Swing/StartEditingPopupMenu,JTreeのノード編集をPopupからのみに制限する,JTreeのノード編集を、マウスクリックではなく、Popupからのみに制限します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTy9Cda5I/AAAAAAAAAlA/6uCGiCD2iGY/s144/StartEditingPopupMenu.png)
 
-** Jpegファイルのコメントを取り出す [#vee7c063]
+** Jpegファイルのコメントを取り出す [#IIOMetadata]
 #swingdescription(Swing/IIOMetadata,Jpegファイルのコメントを取り出す,Jpegファイルからコメントなどのメタデータ(XML)を取り出してJTreeで表示します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOUrdw9GI/AAAAAAAAAcM/4rakKDY0jI0/s144/IIOMetadata.png)
 
-** JTreeのノードの文字列に余白を追加 [#x445e760]
+** JTreeのノードの文字列に余白を追加 [#TreeCellMargin]
 #swingdescription(Swing/TreeCellMargin,JTreeのノードの文字列に余白を追加,JTreeのノードにある文字列の左右に余白を追加します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWBZNFbLI/AAAAAAAAAok/8_0YqLhhqTk/s144/TreeCellMargin.png)
 
-** JTreeの展開、折畳みアイコンを非表示にする [#j3b392e8]
+** JTreeの展開、折畳みアイコンを非表示にする [#TreeExpandedIcon]
 #swingdescription(Swing/TreeExpandedIcon,JTreeの展開、折畳みアイコンを非表示にする,JTreeの展開、折畳みアイコンを変更して非表示にします。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWHHSFZMI/AAAAAAAAAos/aymKObZa7WQ/s144/TreeExpandedIcon.png)
 
-** JTreeのOpenIcon、ClosedIcon、LeafIconを変更 [#v28d5492]
+** JTreeのOpenIcon、ClosedIcon、LeafIconを変更 [#TreeLeafIcon]
 #swingdescription(Swing/TreeLeafIcon,JTreeのOpenIcon、ClosedIcon、LeafIconを変更,JTreeのOpenIcon、ClosedIcon、LeafIconの表示を切り替えます。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TX24gbN5bHI/AAAAAAAAA30/l8Pn8nUfJiA/s144/TreeLeafIcon.png)
 
-** JTreeで条件に一致するノードを検索しハイライト [#c1413ebc]
+** JTreeで条件に一致するノードを検索しハイライト [#TreeNodeHighlightSearch]
 #swingdescription(Swing/TreeNodeHighlightSearch,JTreeで条件に一致するノードを検索しハイライト,JTreeを検索し、TreeCellRendererを使ってノードをハイライトします。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWIqTzfbI/AAAAAAAAAow/n7eIy_ax-zY/s144/TreeNodeHighlightSearch.png)
 
-** JTreeの選択状態を解除する [#zd89092c]
+** JTreeの選択状態を解除する [#TreeClearSelection]
 #swingdescription(Swing/TreeClearSelection,JTreeの選択状態を解除する,JTreeでノード以外の領域をマウスでクリックした場合、選択状態を解除します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWDzni-uI/AAAAAAAAAoo/r6UW4JENwgI/s144/TreeClearSelection.png)
 
-** JTreeを行クリックで選択し、行全体を選択状態の背景色で描画 [#s5095d4c]
+** JTreeを行クリックで選択し、行全体を選択状態の背景色で描画 [#TreeRowSelection]
 #swingdescription(Swing/TreeRowSelection,JTreeを行クリックで選択し、行全体を選択状態の背景色で描画,JTreeの行をクリックして選択し、行全体を選択状態の背景色で描画します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TTPdCvaUyfI/AAAAAAAAAyQ/QnF4vHjyUiM/s144/TreeRowSelection.png)
 
-** JTreeの葉ノードをJCheckBoxにする [#rce9465e]
+** JTreeの葉ノードをJCheckBoxにする [#CheckBoxNodeTree]
 #swingdescription(Swing/CheckBoxNodeTree,JTreeの葉ノードをJCheckBoxにする,JTreeの葉ノードを編集可能なJCheckBoxにします。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TYb2-BFsTHI/AAAAAAAAA4U/Fs8-t9x9XSw/s144/CheckBoxNodeTree.png)
 
-** JTreeのノードタイトルを複数行表示する [#td95678f]
+** JTreeのノードタイトルを複数行表示する [#MultiLineTree]
 #swingdescription(Swing/MultiLineTree,JTreeのノードタイトルを複数行表示する,JTreeの各ノードで改行を使用し、タイトルを複数行表示します。,https://lh6.googleusercontent.com/_9Z4BYR88imo/TaKbyMKLtkI/AAAAAAAAA5M/NoozvykYAUE/s144/MultiLineTree.png)
 
 * ↑20 ↓21 [#w79b5a69]
 #adsensebar
 
-** JTreeの水平垂直線を表示しない [#a2ed9758]
+** JTreeの水平垂直線を表示しない [#TreePaintLines]
 #swingdescription(Swing/TreePaintLines,JTreeの水平垂直線を表示しない,JTreeのアイコンを繋ぐ水平垂直線の表示の有無を切り替えます。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWNxTrfYI/AAAAAAAAAo4/xS9RjkcNYYM/s144/TreePaintLines.png)
 
-** FileSystemViewを使ってディレクトリ構造をJTreeに表示する [#bf5ccff9]
+** FileSystemViewを使ってディレクトリ構造をJTreeに表示する [#DirectoryTree]
 #swingdescription(Swing/DirectoryTree,FileSystemViewを使ってディレクトリ構造をJTreeに表示する,FileSystemViewを使ってディレクトリ構造をJTree上に表示します。,https://lh3.googleusercontent.com/-FkX-8X4KxDo/ThFoeY8M64I/AAAAAAAAA-Y/Ry_RA9yVCxc/s144/DirectoryTree.png)
 
-** JCheckBox付きJTreeでディレクトリ構造を表示 [#m5293a1b]
+** JCheckBox付きJTreeでディレクトリ構造を表示 [#FileSystemTreeWithCheckBox]
 #swingdescription(Swing/FileSystemTreeWithCheckBox,JCheckBox付きJTreeでディレクトリ構造を表示,編集可能なJCheckBoxをノードに追加したJTreeでディレクトリ構造を表示します。,https://lh6.googleusercontent.com/-5ihZ2R-e4Ug/Tki-blUTxaI/AAAAAAAABA0/5KCjlm9CkSY/s144/FileSystemTreeWithCheckBox.png)
 
-** JTreeのすべてのノードにJCheckBoxを追加する [#d0dc44f0]
+** JTreeのすべてのノードにJCheckBoxを追加する [#CheckBoxNodeEditor]
 #swingdescription(Swing/CheckBoxNodeEditor,JTreeのすべてのノードにJCheckBoxを追加する,JTreeのすべてのノードに編集可能なJCheckBoxを追加します。,https://lh4.googleusercontent.com/-DK6aW3VNikg/TygxL3j8UoI/AAAAAAAABIw/6_9FyPe4v7U/s144/CheckBoxNodeEditor.png)
 
-** JComboBoxのItemをTree状に表示する [#e15c12bb]
+** JComboBoxのItemをTree状に表示する [#TreeComboBox]
 #swingdescription(Swing/TreeComboBox,JComboBoxのItemをTree状に表示する,JComboBoxのドロップダウンリストに表示するItemをTree状に配置します。,https://lh6.googleusercontent.com/-5GlQEjeLoH8/ThqUIL9b4UI/AAAAAAAAA_E/9h5dxYzSSm8/s144/TreeComboBox.png)
 
-** JTreeの選択モードを切り替える [#t3dab435]
+** JTreeの選択モードを切り替える [#TreeSelection]
 #swingdescription(Swing/TreeSelection,JTreeの選択モードを切り替える,JTreeからSelectionModelを取得し、ノードの選択モードを切り替えます。,https://lh6.googleusercontent.com/-bPltus2wD6w/TjZCCGnH40I/AAAAAAAABAE/tgmolSg-2Ys/s144/TreeSelection.png)
 
-** JTreeの余白をドラッグしてスクロール [#v141e1fe]
+** JTreeの余白をドラッグしてスクロール [#TreeDragScroll]
 #swingdescription(Swing/TreeDragScroll,JTreeの余白をドラッグしてスクロール,JTreeの余白などをマウスでドラッグしてスクロールします。,https://lh3.googleusercontent.com/-8b-0M5bS9Tw/Tvf_XhVVreI/AAAAAAAABHU/BdECxkBAdzU/s144/TreeDragScroll.png)
 
-** JTreeのノードアイコンサイズとテキストの選択状態 [#ebc477bb]
+** JTreeのノードアイコンサイズとテキストの選択状態 [#TreeRowHeightCellMargin]
 #swingdescription(Swing/TreeRowHeightCellMargin,JTreeのノードアイコンサイズとテキストの選択状態,JTreeのノードアイコンによって行の高さが変更された場合のテキストの選択状態を修正します。,https://lh3.googleusercontent.com/-W4SPLnW3RVY/UAQjez2fI3I/AAAAAAAABPY/c4v9ljR2k40/s144/TreeRowHeightCellMargin.png)
 
-** JTreeの選択されたノードを展開する [#w81d0015]
+** JTreeの選択されたノードを展開する [#ExpandsSelectedPaths]
 #swingdescription(Swing/ExpandsSelectedPaths,JTreeの選択されたノードを展開する,JTreeの選択されたノードまでのパスをすべて展開して可視状態にします。,https://lh6.googleusercontent.com/-sOsnOftT8xE/UF_b7dSxzQI/AAAAAAAABS0/i_xYkTfxbZg/s144/ExpandsSelectedPaths.png)
 
-** JTreeの選択背景色を変更 [#ff91a9ac]
+** JTreeの選択背景色を変更 [#TreeBackgroundSelectionColor]
 #swingdescription(Swing/TreeBackgroundSelectionColor,JTreeの選択背景色を変更,JTreeのノード条件によって、その選択背景色を変更します。,https://lh4.googleusercontent.com/-7JA4jpNa55U/UI1VhdHlkwI/AAAAAAAABVw/dAUHGh4q014/s144/TreeBackgroundSelectionColor.png)
 
 * ↑30 ↓31 [#ff47b54a]
 
-** JTreeを透明にし、選択状態を半透明にする [#vf922166]
+** JTreeを透明にし、選択状態を半透明にする [#TranslucentTree]
 #swingdescription(Swing/TranslucentTree,JTreeを透明にし、選択状態を半透明にする,JTreeの背景を透明にし、ノードの選択色を半透明にします。,https://lh4.googleusercontent.com/-HxmekrVRX6M/UPLEn6O6-VI/AAAAAAAABbM/XJoGyl2khVM/s144/TranslucentTree.png)
 
-** JTreeのノード中の文字列をハイライトする [#d1f0be5d]
+** JTreeのノード中の文字列をハイライトする [#HighlightWordInNode]
 #swingdescription(Swing/HighlightWordInNode,JTreeのノード中の文字列をハイライトする,JTreeのノードから文字列を検索して、HighlightPainterで強調表示します。,https://lh4.googleusercontent.com/-rBf-D-8MbOM/UdBIT7ksWjI/AAAAAAAABvI/m_v7K_LuLao/s144/HighlightWordInNode.png)
 
-** JListのセルにJCheckBoxを使用する [#gdc4b881]
+** JListのセルにJCheckBoxを使用する [#CheckBoxCellList]
 #swingdescription(Swing/CheckBoxCellList,JListのセルにJCheckBoxを使用する,JListのセルにJCheckBoxを使用して、チェックボックスの一覧を作成します。,https://lh3.googleusercontent.com/-EfbwsqycTvg/UlyukvM4ivI/AAAAAAAAB3o/NJBvrfM4xPA/s144/CheckBoxCellList.png)
 
-** JTreeの展開状態を記憶・復元する [#cbd117f1]
+** JTreeの展開状態を記憶・復元する [#ExpandedDescendants]
 #swingdescription(Swing/ExpandedDescendants,JTreeの展開状態を記憶・復元する,JTreeのノードが展開されているかどうかを記憶、復元します。,https://lh4.googleusercontent.com/-FcYsZkFYSxE/UojBcoMtHwI/AAAAAAAAB6k/A7D221doy2w/s144/ExpandedDescendants.png)
 
-** JTreeのノードにJProgressBarを表示する [#o204bd12]
-#swingdescription(Swing/TreeNodeProgressBar,JTreeのノードにJProgressBarを表示する,JTreeのノードにJProgressBarを表示するTreeCellRendererを設定します。 ,https://lh4.googleusercontent.com/-SBg5NOTGinM/UrcLHfPzXVI/AAAAAAAAB84/HD0k-sWiJGo/s144/TreeNodeProgressBar.png)
+** JTreeのノードにJProgressBarを表示する [#TreeNodeProgressBar]
+#swingdescription(Swing/TreeNodeProgressBar,JTreeのノードにJProgressBarを表示する,JTreeのノードにJProgressBarを表示するTreeCellRendererを設定します。,https://lh4.googleusercontent.com/-SBg5NOTGinM/UrcLHfPzXVI/AAAAAAAAB84/HD0k-sWiJGo/s144/TreeNodeProgressBar.png)
 
-** JTreeで目次を作成する [#t369bc33]
+** JTreeで目次を作成する [#TableOfContentsTree]
 #swingdescription(Swing/TableOfContentsTree,JTreeで目次を作成する,JTreeのノードにリーダーとページ番号を追加表示して目次を作成します。,https://lh4.googleusercontent.com/-uecZSLw75K4/UsAxPx9ol2I/AAAAAAAAB9M/TcD_QI2Ex_Y/s144/TableOfContentsTree.png)
 
-** JTreeで展開不可のノードを設定する [#a82e6a90]
+** JTreeで展開不可のノードを設定する [#PreventNodeExpanding]
 #swingdescription(Swing/PreventNodeExpanding,JTreeで展開不可のノードを設定する,JTreeで特定のノードだけ展開できないように設定します。,https://lh4.googleusercontent.com/-WcBsEg_mxgc/UuUbyvn84EI/AAAAAAAAB-0/iZ6t8_EGeZQ/s144/PreventNodeExpanding.png)
 
-** JTreeへのノード追加をテスト [#h9b659ce]
+** JTreeへのノード追加をテスト [#InsertNodeInto]
 #swingdescription(Swing/InsertNodeInto,JTreeへのノード追加をテスト,JTreeにノード追加をした場合、兄弟ノードの展開状態などがどうなるかをテストします。,https://lh3.googleusercontent.com/-siBaGX1oXx8/Uu8JPWZaA7I/AAAAAAAAB_Y/fzV1VSKYg9I/s144/InsertNodeInto.png)
 
-** JTreeのノード編集をコミット [#dc6b5d2e]
+** JTreeのノード編集をコミット [#InvokesStopCellEditing]
 #swingdescription(Swing/InvokesStopCellEditing,JTreeのノード編集をコミット,JTreeのノード編集中に割り込みが発生した場合、変更の自動保存を行うかどうかを設定します。,https://lh6.googleusercontent.com/-KbIRjsEYzEA/Uwny844Zc3I/AAAAAAAACAY/_3w4abiuaIo/s144/InvokesStopCellEditing.png)
 
-** JTreeのセルエディタにJComboBoxなどを配置したJPanelを使用する [#z3c86cc9]
+** JTreeのセルエディタにJComboBoxなどを配置したJPanelを使用する [#ComboBoxCellEditor]
 #swingdescription(Swing/ComboBoxCellEditor,JTreeのセルエディタにJComboBoxなどを配置したJPanelを使用する,JTreeのセルエディタ、セルレンダラとして、JComboBoxなどを配置したJPanelを使用します。,https://lh4.googleusercontent.com/-kNa0cfgyvbY/U5SIYOWjVtI/AAAAAAAACHM/XkjN37IzSas/s144/ComboBoxCellEditor.png)
 
 * ↑40 ↓41 [#i9f82592]
 
-** JTreeのノードがフォーカス状態になった場合のBorderを変更する [#ab10bad5]
-#swingdescription(Swing/DrawsTreeFocus,JTreeのノードがフォーカス状態になった場合のBorderを変更する,JTreeのノードが選択されてフォーカス状態になった場合のBorderによる描画をUIManagerで変更します。 ,https://lh3.googleusercontent.com/-I62wWvQhdQI/U53BUsVLj9I/AAAAAAAACHk/SSHVLXv9m28/s144/DrawsTreeFocus.png)
+** JTreeのノードがフォーカス状態になった場合のBorderを変更する [#DrawsTreeFocus]
+#swingdescription(Swing/DrawsTreeFocus,JTreeのノードがフォーカス状態になった場合のBorderを変更する,JTreeのノードが選択されてフォーカス状態になった場合のBorderによる描画をUIManagerで変更します。,https://lh3.googleusercontent.com/-I62wWvQhdQI/U53BUsVLj9I/AAAAAAAACHk/SSHVLXv9m28/s144/DrawsTreeFocus.png)
 
-** JTreeで葉ノードが存在しない親ノードの描画を変更する [#fc18c341]
+** JTreeで葉ノードが存在しない親ノードの描画を変更する [#AsksAllowsChildren]
 #swingdescription(Swing/AsksAllowsChildren,JTreeで葉ノードが存在しない親ノードの描画を変更する,JTreeの親ノードに子として葉ノードがひとつも存在しない場合でも、フォルダアイコン表示になるよう設定します。,https://lh6.googleusercontent.com/-vfEqezCRy2w/VB7mN-AcppI/AAAAAAAACNg/VkZLdGkiDRQ/s144/AsksAllowsChildren.png)
 
-** JTreeのノードを折り畳み不可に設定する [#z4984cba]
+** JTreeのノードを折り畳み不可に設定する [#TreeNodeCollapseVeto]
 #swingdescription(Swing/TreeNodeCollapseVeto,JTreeのノードを折り畳み不可に設定する,JTreeのノードをマウスでクリックしても折り畳まれないように設定します。,https://lh3.googleusercontent.com/-lmIva1c-vxw/VFZHTSmTigI/AAAAAAAANo0/jeRoJW178as/s144/TreeNodeCollapseVeto.png)
 
-** JTreeのルートノードに展開折り畳みアイコンを表示する [#ge7572ca]
+** JTreeのルートノードに展開折り畳みアイコンを表示する [#ShowsRootHandles]
 #swingdescription(Swing/ShowsRootHandles,JTreeのルートノードに展開折り畳みアイコンを表示する,JTreeのルートノードにノードの展開と折り畳みやその状態を表示するアイコン(ルートハンドル)を表示するかどうかを切り替えます。,https://lh3.googleusercontent.com/-UsJgMi0D1h0/VNd47dUqy8I/AAAAAAAANwc/NyIfxKP0SVw/s144/ShowsRootHandles.png)
 
-** JTreeのルートノードを非表示に設定する [#t876d57a]
+** JTreeのルートノードを非表示に設定する [#TreeRootVisible]
 #swingdescription(Swing/TreeRootVisible,JTreeのルートノードを非表示に設定する,JTreeに表示しているTreeModelのルートノードを表示するかどうかを切り替えます。,https://lh3.googleusercontent.com/-XEFtRsrOd3Q/VdoESnrikqI/AAAAAAAAN_0/wxHSA5WkDVg/s800-Ic42/TreeRootVisible.png)
 
-** NimbusLookAndFeelでJTreeのセル選択を行全体ではなくノードに限定する [#ic7ca3e4]
+** NimbusLookAndFeelでJTreeのセル選択を行全体ではなくノードに限定する [#TreeCellSelectionBackground]
 #swingdescription(Swing/TreeCellSelectionBackground,NimbusLookAndFeelでJTreeのセル選択を行全体ではなくノードに限定する,JTreeのセル選択色で塗りつぶす範囲をNimbusLookAndFeelのデフォルトである行全体ではなくノードのみになるように設定します。,https://lh3.googleusercontent.com/-iMbDreRXOYI/VmRwiLsVZmI/AAAAAAAAOIg/tfanc-vemfo/s800-Ic42/TreeCellSelectionBackground.png)
 
-** JTree間でのドラッグ＆ドロップによるノードの移動 [#j8bbed03]
+** JTree間でのドラッグ＆ドロップによるノードの移動 [#DnDBetweenTrees]
 #swingdescription(Swing/DnDBetweenTrees,JTree間でのドラッグ＆ドロップによるノードの移動,JTree間でのドラッグ＆ドロップによるノードの移動を行います。,https://lh3.googleusercontent.com/-orv222AWr0E/VsnVITv64uI/AAAAAAAAOPE/vGmbPDCu4nY/s800-Ic42/DnDBetweenTrees.png)
 
-** JTreeのノードに追加したJCheckBoxのチェック状態の保存と復元 [#aa59dc59]
+** JTreeのノードに追加したJCheckBoxのチェック状態の保存と復元 [#UserObjectPersistence]
 #swingdescription(Swing/UserObjectPersistence,JTreeのノードに追加したJCheckBoxのチェック状態の保存と復元,JTreeのノードに追加したJCheckBoxのチェック状態など保持するUserObjectを永続化可能になるよう設定し、その保存と復元を行います。,https://lh3.googleusercontent.com/-Foeg7fF4Uj4/VxzbvHpNTUI/AAAAAAAAOTY/LnDkJRi6CtQXJcQAGJ2boc27LJrY_lT-QCCo/s144/UserObjectPersistence.png)

@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/02/use-jscrollbar-as-jslider.html
     lang: en
 ---
-* 概要 [#mb679a0c]
+* 概要 [#summary]
 `JScrollBar`を`JSlider`の代わりとして使用します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTSgYVysvI/AAAAAAAAAi4/5UjLktCUVb8/s800/ScrollBarAsSlider.png)
 
-* サンプルコード [#j692e22c]
+* サンプルコード [#sourcecode]
 #code(link){{
 int step   = 5;
 int extent = 20;
@@ -34,15 +34,15 @@ final JSpinner spinner = new JSpinner(
 //...
 }}
 
-* 解説 [#ob9937c1]
+* 解説 [#explanation]
 上記のサンプルでは、`JScrollBar`を`JSlider`として使用し、`JSpinner`と連動させています。`JScrollBar`に設定する最大値は、スクロールバーのノブ(`extent`はノブの幅)の右ではなく左端になるように調整する必要があります。
 
 - このため、`JSpinner`の最大値とは異なり、`max`+`extent`が`JScrollBar`に設定する最大値となる
 - 垂直なら上端
 
-* 参考リンク [#sdac3685]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/JScrollBar.html JScrollBar]
 
-* コメント [#f4046233]
+* コメント [#comment]
 #comment
 #comment

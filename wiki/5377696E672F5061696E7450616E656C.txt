@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-12-19
 description: マウスをドラッグしてパネル上に自由曲線を描画します。
 ---
-* 概要 [#n9266a0a]
+* 概要 [#summary]
 マウスをドラッグしてパネル上に自由曲線を描画します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQ0y2U6WI/AAAAAAAAAgM/AAHllQ3_VHw/s800/PaintPanel.png)
 
-* サンプルコード [#jb2b9b9e]
+* サンプルコード [#sourcecode]
 #code(link){{
 class PaintPanel extends JPanel {
   private static final Stroke STROKE = new BasicStroke(
@@ -55,7 +55,7 @@ class PaintPanel extends JPanel {
 }
 }}
 
-* 解説 [#t35e18f2]
+* 解説 [#explanation]
 上記のサンプルでは、パネル上でマウスがドラッグされた場合、その軌跡を短い直線でつなぎ合わせることで、曲線を描画しています。
 
 - 新規`Path2D`を生成し、マウスがクリックされた場所を始点(`Path2D.moveTo(...)`)に設定
@@ -63,10 +63,10 @@ class PaintPanel extends JPanel {
 - `paintComponent(...)`をオーバーライドして、上記の直線のリスト(`Path2D`のリスト)を描画
 - 次の直線のための始点を現在の終点に変更
 
-* 参考リンク [#z7d1c60c]
+* 参考リンク [#reference]
 - [[MemoryImageSourceで配列から画像を生成>Swing/MemoryImageSource]]
 
-* コメント [#j1077dd9]
+* コメント [#comment]
 #comment
 - マウス右ボタンをドラッグで消しゴム…のテスト -- &user(aterai); &new{2010-01-12 (火) 16:16:59};
 -- 追記:不要なコードを削除。 -- &user(aterai); &new{2010-04-30 (金) 19:26:37};

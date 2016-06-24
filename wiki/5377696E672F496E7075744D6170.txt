@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-03-15
 description: KBD{Esc}キーを押すと閉じるJDialogを作成します。
 ---
-* 概要 [#v1b20b60]
+* 概要 [#summary]
 KBD{Esc}キーを押すと閉じる`JDialog`を作成します。大部分を[https://community.oracle.com/thread/1488562 Swing (Archive) - JDialog says ESC key is already registered--where?]から、そのまま引用しています。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOj22ObUI/AAAAAAAAAck/b5izKCmGkHk/s800/InputMap.png)
 
-* サンプルコード [#k02432cf]
+* サンプルコード [#sourcecode]
 #code(link){{
 final JDialog dialog = new JDialog(frame, "title", true);
 AbstractAction act = new AbstractAction() {
@@ -24,15 +24,15 @@ imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close-it");
 dialog.getRootPane().getActionMap().put("close-it", act);
 }}
 
-* 解説 [#f3c1a4c6]
+* 解説 [#explanation]
 `JOptionPane.showMessageDialog()`メソッドなどで作成したダイアログは、KBD{Esc}キーを押すと閉じますが、デフォルトの`JDialog`の場合はそのような設定はされていません。`JDialog`でKBD{Esc}キーを押すと閉じるようにするには、`InputMap`などを使ってアクションを設定する必要があります。
 
-* 参考リンク [#x13c393a]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1488562 Swing (Archive) - JDialog says ESC key is already registered--where?]
 - [https://community.oracle.com/thread/1490398 Swing (Archive) - ESC Key to Close a JFrame]
 - [[JComponentのKeyBinding一覧を取得する>Swing/KeyBinding]]
 
-* コメント [#u5283c56]
+* コメント [#comment]
 #comment
 - メモ: [http://www.javaroad.jp/bbs/answer.jsp?q_id=20100528123134643 Javaの道＞掲示板(JDialogが最小化されてしまう)]。 %% `JDK 1.7.0`だと、`JDialog`などの`TitleBar`を右クリックすると、「`Java Result: -1073741819`」で落ちる？%% -- &user(aterai); &new{2010-06-17 (木) 17:28:06};
 -- かなり前から再現しないのに消し忘れていた。 `Nvidia`のドライバのせいだった？ [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6458746 Bug ID: JDK-6458746 OGL: mustang b94 doesn't work correctly with JDialog (Nvidia, 91.31, Windows)] -- &user(aterai); &new{2013-09-13 (金) 20:45:00};

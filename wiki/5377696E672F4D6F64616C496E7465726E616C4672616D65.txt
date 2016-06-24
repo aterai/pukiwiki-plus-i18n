@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2008/10/modal-internal-frame.html
     lang: en
 ---
-* 概要 [#le7c13f6]
+* 概要 [#summary]
 `JInternalFrame`を`Modal`にして、他の`JInternalFrame`などを操作できないようにブロックします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTP9wW-lJI/AAAAAAAAAe0/xQ9vJrX3MuQ/s800/ModalInternalFrame.png)
 
-* サンプルコード [#d9d01b15]
+* サンプルコード [#sourcecode]
 #code(link){{
 //menuItem.setMnemonic(KeyEvent.VK_1);
 class ModalInternalFrameAction1 extends AbstractAction {
@@ -83,7 +83,7 @@ class ModalInternalFrameAction3 extends AbstractAction {
 }
 }}
 
-* 解説 [#v497998b]
+* 解説 [#explanation]
 - KBD{Alt+1}: `JOptionPane.showInternalMessageDialog`メソッドを使用して、簡単なメッセージを表示する`Modal`な`Dialog`を`JDesktopPane`内に表示
 -- `JButton`のマウスクリックは無効になるが、`Mnemonic`が無効にならない
 --- KBD{Alt+B}でボタンを押すことが出来てしまう
@@ -179,13 +179,13 @@ class PrintGlassPane extends JPanel {
 
 この方法は、`JDK 5`などの場合、`WindowsLookAndFeel`で、KBD{Alt}キーを押すとメニューバーにフォーカスが移ることがあります。
 
-* 参考リンク [#n6c5a455]
+* 参考リンク [#reference]
 - [http://web.archive.org/web/20090803142839/http://java.sun.com/developer/JDCTechTips/2001/tt1220.html Creating Modal Internal Frames -- Approach 1 and Approach 2]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/rootpane.html How to Use Root Panes]
 - [http://weblogs.java.net/blog/alexfromsun/archive/2008/01/ Disabling Swing Containers, the final solution?]
 -- [[Cursorを砂時計に変更>Swing/WaitCursor]]
 
-* コメント [#h8218ae6]
+* コメント [#comment]
 #comment
 - %%[[JInternalFrameを半透明にする>Swing/TransparentFrame]]と、同様に`GlassPane`が`Ubuntu`(`GNOME`)などで半透明にならない場合があります。%% -- &user(aterai); &new{2007-10-15 (月) 13:16:07};
 -- KBD{Alt+2}で開いた場合、`JInternalFrame`に`GlassPane`を乗せるのではなく、直接`JDesktopPane`の`JLayeredPane.MODAL_LAYER`に追加するように変更しました。 -- &user(aterai); &new{2007-10-16 (火) 17:31:50};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-02-16
 description: JListをドラッグ＆ドロップして、項目を入れ替えます。
 ---
-* 概要 [#vdb92e79]
+* 概要 [#summary]
 `JList`をドラッグ＆ドロップして、項目を入れ替えます。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLb3DW2ZI/AAAAAAAAAXk/8VfeirUfaoo/s800/DnDList.png)
 
-* サンプルコード [#kadf6356]
+* サンプルコード [#sourcecode]
 #code(link){{
 @Override protected void paintComponent(Graphics g) {
   super.paintComponent(g);
@@ -83,20 +83,20 @@ private void initTargetLine(Point p) {
 }
 }}
 
-* 解説 [#na78421d]
+* 解説 [#explanation]
 上記のサンプルでは、ドラッグソースとドラッグターゲットの両方を`JList`自身に設定して、項目をドラッグ＆ドロップしているように見せかけています。
 
 - メモ:
 -- 複数アイテムを選択して移動する場合は、[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]のサンプルなどを参照
 
-* 参考リンク [#qca3b1e2]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/tutorial/uiswing/dnd/intro.html Introduction to Drag and Drop and Data Transfer]
 - [https://community.oracle.com/thread/1487942 Swing (Archive) - DND from a JList with a single gesture]
 - [https://community.oracle.com/thread/1487416 Swing (Archive) - Smoother Drag Drop JList JTable]
 - [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]
 - [[JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え>Swing/DragSelectDropReordering]]
 
-* コメント [#m0be05ec]
+* コメント [#comment]
 #comment
 - 以下を修正しました。 -- &user(aterai); &new{2006-04-24 (月) 22:47:06};
 -- ドラッグで選択されたアイテムがずれにくいように修正

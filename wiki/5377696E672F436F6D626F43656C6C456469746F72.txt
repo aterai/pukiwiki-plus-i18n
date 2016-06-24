@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-09-26
 description: JTableのCellEditorにJComboBoxを使用し、リストから値を選択できるようにします。
 ---
-* 概要 [#f57b6c70]
+* 概要 [#summary]
 `JTable`の`CellEditor`に`JComboBox`を使用し、リストから値を選択できるようにします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJy9xBM6I/AAAAAAAAAU8/h5YELRcY4gE/s800/ComboCellEditor.png)
 
-* サンプルコード [#y53e1620]
+* サンプルコード [#sourcecode]
 #code(link){{
 JComboBox cb = new JComboBox(new String[] {"名前0", "名前1", "名前2"});
 cb.setBorder(BorderFactory.createEmptyBorder());
@@ -20,7 +20,7 @@ col.setCellEditor(new DefaultCellEditor(cb));
 //col.setCellRenderer(new ComboBoxCellRenderer());
 }}
 
-* 解説 [#k4fd12f0]
+* 解説 [#explanation]
 上記のサンプルでは、`1`列目のセルエディタとしてコンボボックスを使う`DefaultCellEditor`を登録しています。
 
 ----
@@ -33,11 +33,11 @@ col.setCellEditor(new DefaultCellEditor(cb));
 ----
 セルの表示にも`JComboBox`を使用する場合は、[[JTableのCellRendererにJComboBoxを設定>Swing/ComboCellRenderer]]を参考に`JComboBox`を継承するセルレンダラーを使用してみてください。
 
-* 参考リンク [#w85587e3]
+* 参考リンク [#reference]
 - [http://www.jroller.com/page/santhosh?entry=tweaking_jtable_editing Santhosh Kumar's Weblog : Santhosh Kumar's Weblog]
 - [[JTableのCellRendererにJComboBoxを設定>Swing/ComboCellRenderer]]
 - [[JComboBoxセルエディタのドロップダウンリストを編集開始直後は表示しないよう設定する>Swing/CellEditorTogglePopup]]
 
-* コメント [#naf1e6fc]
+* コメント [#comment]
 #comment
 #comment

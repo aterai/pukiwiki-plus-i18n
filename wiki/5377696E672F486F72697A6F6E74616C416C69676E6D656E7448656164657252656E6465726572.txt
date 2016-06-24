@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-11-29T14:41:04+09:00
 description: JTableHeaderの字揃えをTableCellRendererを使って変更します。
 ---
-* 概要 [#kd2e1845]
+* 概要 [#summary]
 `JTableHeader`の字揃えを`TableCellRenderer`を使って変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTN5ZuPeZI/AAAAAAAAAbg/Fivi4R1rR-Y/s800/HorizontalAlignmentHeaderRenderer.png)
 
-* サンプルコード [#od4f9b74]
+* サンプルコード [#sourcecode]
 #code(link){{
 class HorizontalAlignmentHeaderRenderer implements TableCellRenderer {
   private int horizontalAlignment = SwingConstants.LEFT;
@@ -29,7 +29,7 @@ class HorizontalAlignmentHeaderRenderer implements TableCellRenderer {
 }
 }}
 
-* 解説 [#y547a05a]
+* 解説 [#explanation]
 - `Test1`:
 -- `JTableHeader`から、`DefaultRenderer`を取得し、`setHorizontalAlignment`メソッドで字揃えを設定
 -- すべての列の字揃えが変更される
@@ -96,9 +96,9 @@ table.getTableHeader().setDefaultRenderer(new TableCellRenderer() {
 });
 }}
 
-* 参考リンク [#s123999d]
+* 参考リンク [#reference]
 - [[JTableHeaderのフォントを変更>Swing/HeaderFont]]
 
-* コメント [#f205a091]
+* コメント [#comment]
 #comment
 #comment

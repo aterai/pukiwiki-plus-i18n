@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-06-28T05:48:37+09:00
 description: JTableのセルをダブルクリックして内容を表示します。
 ---
-* 概要 [#h86d20ad]
+* 概要 [#summary]
 `JTable`のセルをダブルクリックして内容を表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLv3qaXoI/AAAAAAAAAYE/aAnkonlteYo/s800/DoubleClick.png)
 
-* サンプルコード [#t2033b2b]
+* サンプルコード [#sourcecode]
 #code(link){{
 table.setAutoCreateRowSorter(true);
 table.addMouseListener(new MouseAdapter() {
@@ -30,11 +30,11 @@ table.addMouseListener(new MouseAdapter() {
 });
 }}
 
-* 解説 [#h9a084b1]
+* 解説 [#explanation]
 上記のサンプルでは、セルをマウスでダブルクリックするとダイアログが開くようになっています。各セルはクリックで編集状態になってしまわないように、すべて編集不可にしています。
 
-//* 参考リンク
-* コメント [#b0c89640]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - 行以外の場所をダブルクリックすると、`IndexOutOfBoundsException`が発生する不具合を修正。 -- &user(aterai); &new{2011-02-02 (水) 19:09:18};
 

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-10-16
 description: マウスホイールなどで画像をズームイン、ズームアウトします。
 ---
-* 概要 [#g39f1afa]
+* 概要 [#summary]
 マウスホイールなどで画像をズームイン、ズームアウトします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTW1yBNHvI/AAAAAAAAAp4/ba6eQ-Ul2sg/s800/Zoom.png)
 
-* サンプルコード [#n33b6ada]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ZoomImage extends JPanel {
   private transient MouseWheelListener handler;
@@ -52,13 +52,13 @@ class ZoomImage extends JPanel {
 }
 }}
 
-* 解説 [#h16d4c28]
+* 解説 [#explanation]
 上記のサンプルでは、画像をマウスホイールの上回転で拡大、下回転で縮小して`JPanel`内に表示しています。
 
-* 参考リンク [#ud24b7c5]
+* 参考リンク [#reference]
 - [[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]
 
-* コメント [#g84ab533]
+* コメント [#comment]
 #comment
 - `ih = icon.getIconWidth();`の部分は`getIconHeight();`ではありませんでしょうか？ -- &user(syo); &new{2007-05-18 (金) 13:11:04};
 -- ご指摘ありがとうございます。スクリーンショットもよく見たら中の画像が正方形になってますね(^^;。修正しておきます。 -- &user(aterai); &new{2007-05-18 (金) 13:25:06};

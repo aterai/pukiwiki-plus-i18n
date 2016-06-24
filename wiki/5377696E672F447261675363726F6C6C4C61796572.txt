@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-08-05T11:49:22+09:00
 description: 複数のネストしたComponentを配置したJPanelのドラッグイベントを、JScrollPaneをラップしたJLayerで受け取ってスクロール可能にします。
 ---
-* 概要 [#s1cfff1c]
+* 概要 [#summary]
 複数のネストした`Component`を配置した`JPanel`のドラッグイベントを、`JScrollPane`をラップした`JLayer`で受け取ってスクロール可能にします。
 
 #download(https://lh5.googleusercontent.com/-5zBF0JOr6kM/UfuiEj7Do7I/AAAAAAAABxg/7tKYnrOl9eo/s800/DragScrollLayer.png)
 
-* サンプルコード [#k3c044c8]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DragScrollLayerUI extends LayerUI<JScrollPane> {
   private final Point pp = new Point();
@@ -58,7 +58,7 @@ class DragScrollLayerUI extends LayerUI<JScrollPane> {
 }
 }}
 
-* 解説 [#u8652939]
+* 解説 [#explanation]
 - 左: `DragScrollListener`
 -- [[JTreeの余白をドラッグしてスクロール>Swing/TreeDragScroll]]
 -- このリスナーを追加した一つの`Component`をドラッグしてスクロールが可能
@@ -68,11 +68,11 @@ class DragScrollLayerUI extends LayerUI<JScrollPane> {
 -- この`JLayer`で`JScrollPane`をラップし、子にマウスイベントを消費するコンポーネントがあっても、ビューである`JPanel`をドラッグに応じてスクロール
 -- `JScrollBar`や`JSlider`のように、ノブのドラッグを使用するコンポーネントは二重にスクロールしてしまうので除外
 
-* 参考リンク [#y3afd013]
+* 参考リンク [#reference]
 - [http://java-swing-tips.blogspot.com/2009/03/mouse-dragging-viewport-scroll.html Java Swing Tips: Mouse Dragging ViewPort Scroll]
 - [[JTreeの余白をドラッグしてスクロール>Swing/TreeDragScroll]]
 - [[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]
 
-* コメント [#i29c712d]
+* コメント [#comment]
 #comment
 #comment

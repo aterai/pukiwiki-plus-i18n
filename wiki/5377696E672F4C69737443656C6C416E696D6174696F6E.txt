@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-11-27
 description: JListの選択されたセルをアニメーションさせます。
 ---
-* 概要 [#gfab1816]
+* 概要 [#summary]
 `JList`の選択されたセルをアニメーションさせます。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPa7B8VkI/AAAAAAAAAd8/uLpJ50Oxwf8/s800/ListCellAnimation.png)
 
-* サンプルコード [#dddb9e20]
+* サンプルコード [#sourcecode]
 #code(link){{
 class AnimeListCellRenderer extends JPanel implements ListCellRenderer {
   private static final Color selectedColor = new Color(230, 230, 255);
@@ -50,17 +50,17 @@ class AnimeListCellRenderer extends JPanel implements ListCellRenderer {
   //...
 }}
 
-* 解説 [#u20e47f0]
+* 解説 [#explanation]
 上記のサンプルでは、セルが選択されると左のアイコンがアニメーションし、文字列がクリップされている場合は、スクロールするようになっています。
 
 %%選択されたセルだけ再描画しているのではなく、`ActionListener`を実装したセルレンダラーを作成して`JList`全体を`repaint`しています。%%
 選択されたセルだけ再描画してアニメーションを行っています。
 
-* 参考リンク [#e65685cf]
+* 参考リンク [#reference]
 - [[Timerでアニメーションするアイコンを作成>Swing/AnimeIcon]]
 - [[GlyphVectorで文字列を電光掲示板風にスクロール>Swing/ScrollingMessage]]
 
-* コメント [#x428be3b]
+* コメント [#comment]
 #comment
 - 選択されたセルのみ再描画、`JScrollPane`に対応、スクリーンショット更新。 -- &user(aterai); &new{2008-05-13 (火) 14:53:51};
 

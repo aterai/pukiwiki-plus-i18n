@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-05-19T13:41:14+09:00
 description: JLayeredPaneに、マウスで移動、リサイズ可能なコンポーネントを追加します。
 ---
-* 概要 [#f4a8d50c]
+* 概要 [#summary]
 `JLayeredPane`に、マウスで移動、リサイズ可能なコンポーネントを追加します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRw-M85QI/AAAAAAAAAhs/BFyVP2IYoak/s800/ResizableComponents.png)
 
-* サンプルコード [#n84bb09d]
+* サンプルコード [#sourcecode]
 #code(link){{
 @Override public void mouseDragged(MouseEvent e) {
   if (startPos == null || startingBounds == null) return;
@@ -50,7 +50,7 @@ description: JLayeredPaneに、マウスで移動、リサイズ可能なコン�
 //...
 }}
 
-* 解説 [#sc16de97]
+* 解説 [#explanation]
 上記のサンプルでは、ツールバーやポップアップメニューから、移動、リサイズ可能な`JTable`や`JTree`を`JLayeredPane`(`JLayeredPane`のデフォルトレイアウトは`null`)に追加することができます。
 
 リサイズボーダーの描画などは、[http://www.jroller.com/santhosh/entry/resizable_components Resizable Components - Santhosh Kumar's Weblog]から、マウスのドラッグによる移動、リサイズの最大値、最小値の制限などは、`%JAVA_HOME%/src/javax/swing/plaf/basic/BasicInternalFrameUI.java`からの引用です。
@@ -68,9 +68,9 @@ layer.addMouseListener(new MouseAdapter() {});
 
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRzAZnaVI/AAAAAAAAAhw/t9TWz3YYv6U/s800/ResizableComponents1.png)
 
-* 参考リンク [#qf2f4f0c]
+* 参考リンク [#reference]
 - [http://www.jroller.com/santhosh/entry/resizable_components Resizable Components - Santhosh Kumar's Weblog]
 
-* コメント [#r6bdc669]
+* コメント [#comment]
 #comment
 #comment

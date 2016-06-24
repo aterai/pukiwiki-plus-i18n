@@ -5,18 +5,18 @@ author: aterai
 pubdate: 2014-09-22T00:06:58+09:00
 description: JTreeの親ノードに子として葉ノードがひとつも存在しない場合でも、フォルダアイコン表示になるよう設定します。
 ---
-* 概要 [#h1cf1d60]
+* 概要 [#summary]
 `JTree`の親ノードに子として葉ノードがひとつも存在しない場合でも、フォルダアイコン表示になるよう設定します。
 
 #download(https://lh6.googleusercontent.com/-vfEqezCRy2w/VB7mN-AcppI/AAAAAAAACNg/VkZLdGkiDRQ/s800/AsksAllowsChildren.png)
 
-* サンプルコード [#e17c30fa]
+* サンプルコード [#sourcecode]
 #code(link){{
 DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
 model.setAsksAllowsChildren(true);
 }}
 
-* 解説 [#m96dae48]
+* 解説 [#explanation]
 - 左: `DefaultTreeModel#setAsksAllowsChildren(false)`
 -- デフォルト
 -- `DefaultMutableTreeNode`が親ノード(`DefaultMutableTreeNode#getAllowsChildren() == true`)であっても、子として葉ノードがひとつも存在しない場合、そのアイコンは、葉ノードアイコンになる
@@ -25,7 +25,7 @@ model.setAsksAllowsChildren(true);
 -- `DefaultMutableTreeNode`が親ノード(`DefaultMutableTreeNode#getAllowsChildren() == true`)の場合、子として葉ノードが存在するかどうかにかかわらず、そのアイコンは、親ノードアイコンになる
 -- `JTree`に`TreeWillExpandListener`などを追加し、この親ノード(葉ノードが存在しない)をクリックした場合、`treeWillExpand(...)`が発生する(このタイミングで後からノードを追加するといった処理が可能になる)
 
-//* 参考リンク
-* コメント [#x7ad6151]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

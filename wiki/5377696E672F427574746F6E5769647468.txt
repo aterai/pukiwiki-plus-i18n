@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2011/10/fixed-width-jbuttons-in-bottom-right.html
     lang: en
 ---
-* 概要 [#d4f459ec]
+* 概要 [#summary]
 高さはデフォルトのまま幅だけを指定して、`JButton`、`JComboBox`、`JTextField`などのサイズを変更します。
 
 #download(https://lh5.googleusercontent.com/-B3A8vHPu9_I/UmY7hTtdmtI/AAAAAAAAB4s/7NknsHc_vwI/s800/ButtonWidth.png)
 
-* サンプルコード [#xbca7694]
+* サンプルコード [#sourcecode]
 #code(link){{
 private static JComponent createRightAlignButtonBox2(
   final List<JButton> list, final int buttonWidth, int gap) {
@@ -49,7 +49,7 @@ private static JComponent createRightAlignButtonBox2(
 }
 }}
 
-* 解説 [#v8878c59]
+* 解説 [#explanation]
 上記のサンプルでは、`JButton`の高さはデフォルト、幅をその文字列によらずに一定、配置は右寄せで水平にしたい場合のレイアウト方法をテストしています。
 
 - `Default`
@@ -112,7 +112,7 @@ l.setPreferredSize(null); //preferredSizeをnullに戻した場合
 //l.getPreferredSize() -> Dimension[width=12, height=26]
 }}
 
-* 参考リンク [#gf6df44a]
+* 参考リンク [#reference]
 - [[JComboBoxなどの幅をカラム数で指定>Swing/SetColumns]]
 -- `JComboBox`、`JTextField`などのコンポーネントでは、カラム数で幅を指定することが可能
 --- `JDK 1.5.0`: カラム数で幅を指定すると、コンポーネントによってサイズや余白などが微妙に異なる
@@ -122,7 +122,7 @@ l.setPreferredSize(null); //preferredSizeをnullに戻した場合
 -- 専用のレイアウトマネージャーを作成するサンプル
 - [[JOptionPaneで使用するボタンのサイズを揃える>Swing/SameSizeButtons]]
 
-* コメント [#c408da48]
+* コメント [#comment]
 #comment
 - `SpringLayout`などを使って幅を固定する方法を追加(更新日時は忘れました)。スクリーンショットは未更新。 -- &user(aterai); &new{2013-04-14 (日) 00:36:03};
 - `GridLayout`+`Box`のサンプルを追加、`LookAndFeel`を実行中に変更する場合の注意点を追加、スクリーンショットを更新。 -- &user(aterai); &new{2013-10-22 (火) 17:33:58};

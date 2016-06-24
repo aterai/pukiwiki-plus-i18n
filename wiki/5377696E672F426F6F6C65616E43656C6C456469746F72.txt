@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-09-06T11:51:11+09:00
 description: JTableがデフォルトで使用するBooleanCellEditorの背景色を選択色に変更します。
 ---
-* 概要 [#t541c708]
+* 概要 [#summary]
 `JTable`がデフォルトで使用する`BooleanCellEditor`の背景色を選択色に変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIJ0rZk-I/AAAAAAAAASU/JvYohArvFpU/s800/BooleanCellEditor.png)
 
-* サンプルコード [#ve611f4c]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   @Override public Component prepareEditor(TableCellEditor editor, int row, int column) {
@@ -25,14 +25,14 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 解説 [#ybbf81d6]
+* 解説 [#explanation]
 - 上: デフォルト
 -- セルをクリックして編集状態になると`CellEditor`として、背景色が白の`JCheckBox`が表示される
 - 下: `JTable#getSelectionBackground()`
 -- `BooleanCellEditor`として使用する`JCheckBox`の背景色が常に`JTable#getSelectionBackground()`になるように`JTable#prepareEditor(...)`をオーバーライド
 
-//* 参考リンク
-* コメント [#d9435978]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - KBD{Ctrl}キーを押しながら選択されている行にある`JCheckBox`をマウスで選択すると、リリースするまで`JCheckBox`の背景色が残っている、`NimbusLookAndFeel`から別の`LookAndFeel`に変更すると選択色が残ってしまうなどの問題に対応しました。 -- &user(aterai); &new{2012-02-23 (木) 15:05:20};
 

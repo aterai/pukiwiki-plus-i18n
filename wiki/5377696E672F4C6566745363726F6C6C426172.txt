@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-01-08T14:26:45+09:00
 description: JScrollBarの配置位置を、JScrollPaneの左側、上側に変更します。
 ---
-* 概要 [#l79e30ba]
+* 概要 [#summary]
 `JScrollBar`の配置位置を、`JScrollPane`の左側、上側に変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTPG13yZbI/AAAAAAAAAdc/1a4aTgyblRo/s800/LeftScrollBar.png)
 
-* サンプルコード [#c9e13a36]
+* サンプルコード [#sourcecode]
 #code(link){{
 scroll.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 JPanel panel = new JPanel(new BorderLayout());
@@ -21,19 +21,19 @@ add(panel,  BorderLayout.NORTH);
 add(scroll, BorderLayout.CENTER);
 }}
 
-* 解説 [#y5955037]
+* 解説 [#explanation]
 - 水平スクロールバーを右から左に移動
 -- パネルのレイアウトを、`BorderLayout`にして、`JScrollPane`をそのパネルの中央(`BorderLayout.CENTER`)に追加し、`JScrollPane#setComponentOrientation`メソッドで、`ComponentOrientation.RIGHT_TO_LEFT`を設定
 - 垂直スクロールバーを下から上に移動
 -- `JScrollPane#getHorizontalScrollBar()`メソッドでスクロールバーを取得し、パネルレイアウトを使って`JScrollPane`の上部(`BorderLayout.NORTH`)に配置されているように表示
 -- 左上隅の余白は、`Box.createHorizontalStrut`(縦スクロールバーの幅)
 
-* 参考リンク [#u3788d1b]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1375964 Swing - JScrollPane with scroll bar on the left]
 - [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
 - [[JScrollBarのButtonの位置を変更>Swing/ScrollBarButtonLayout]]
 
-* コメント [#ybd1b696]
+* コメント [#comment]
 #comment
 - グッド -- &user(a1); &new{2008-12-26 (金) 13:52:59};
 -- どうもです。 -- [[aterai]]

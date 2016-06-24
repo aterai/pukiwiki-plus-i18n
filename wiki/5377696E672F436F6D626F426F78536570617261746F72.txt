@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-08-29
 description: JComboBoxに選択できないJSeparatorを挿入します。
 ---
-* 概要 [#xfede4a1]
+* 概要 [#summary]
 `JComboBox`に選択できない`JSeparator`を挿入します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJt9fH4ZI/AAAAAAAAAU0/c9vovQi9Jvo/s800/ComboBoxSeparator.png)
 
-* サンプルコード [#gc9aec18]
+* サンプルコード [#sourcecode]
 #code(link){{
 JComboBox<Object> combo = new JComboBox<>();
 combo.setRenderer(new DefaultListCellRenderer() {
@@ -37,7 +37,7 @@ model.addElement("bbbbb");
 combo.setModel(model);
 }}
 
-* 解説 [#ha026ab6]
+* 解説 [#explanation]
 - `ListCellRenderer`
 -- `JSeparator`が選択された場合は、セル描画`Component`として`JSeparator`を返すような`ListCellRenderer`を設定
 - `DefaultComboBoxModel`
@@ -105,10 +105,10 @@ im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),    "selectNext3");
 im.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, 0), "selectNext3");
 }}
 
-* 参考リンク [#ad16a9b2]
+* 参考リンク [#reference]
 - [[JComboBoxのアイテムをBorderで修飾してグループ分け>Swing/BorderSeparator]]
 
-* コメント [#v07260fb]
+* コメント [#comment]
 #comment
 - KBD{Up}KBD{Down}キーでの選択状態移動に対応しました。 -- &user(aterai); &new{2007-08-10 (金) 18:54:05};
 

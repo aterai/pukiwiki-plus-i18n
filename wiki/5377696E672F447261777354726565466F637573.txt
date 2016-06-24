@@ -5,18 +5,18 @@ author: aterai
 pubdate: 2014-06-16T01:26:31+09:00
 description: JTreeのノードが選択されてフォーカス状態になった場合のBorderによる描画をUIManagerで変更します。
 ---
-* 概要 [#o962fb9d]
-`JTree`のノードが選択されてフォーカス状態になった場合の`Border`による描画を`UIManager`で変更します。 
+* 概要 [#summary]
+`JTree`のノードが選択されてフォーカス状態になった場合の`Border`による描画を`UIManager`で変更します。
 
 #download(https://lh3.googleusercontent.com/-I62wWvQhdQI/U53BUsVLj9I/AAAAAAAACHk/SSHVLXv9m28/s800/DrawsTreeFocus.png)
 
-* サンプルコード [#t78e9fdb]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIManager.putBoolean("Tree.drawsFocusBorderAroundIcon", false);
 UIManager.putBoolean("Tree.drawDashedFocusIndicator", false);
 }}
 
-* 解説 [#e9db303f]
+* 解説 [#explanation]
 - `Tree.drawsFocusBorderAroundIcon`
 -- `true`の場合、`JTree`のノードアイコンを囲むように`Border`が拡張される(背景色で塗りつぶされる範囲は変化しない)
 -- `MotifLookAndFeel`の初期値は`true`
@@ -24,7 +24,7 @@ UIManager.putBoolean("Tree.drawDashedFocusIndicator", false);
 -- `true`の場合、`JTree`のフォーカスの描画に使用する`Border`が点線になる
 -- `WindowsLookAndFeel`の初期値は`true`
 
-//* 参考リンク
-* コメント [#n8b2231b]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

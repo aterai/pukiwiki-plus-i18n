@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2014-03-31T00:21:38+09:00
 description: JTableのモデルの変更を受け取ってJTableHeaderに追加したJCheckBoxを更新します。
 ---
-* 概要 [#i5b94092]
+* 概要 [#summary]
 `JTable`のモデルの変更を受け取って`JTableHeader`に追加した`JCheckBox`を更新します。
 
 #download(https://lh3.googleusercontent.com/-Mndxsu0wtCM/Uzg00YuVfyI/AAAAAAAACCw/HoRS9CVP_-o/s800/TableModelEvent.png)
 
-* サンプルコード [#obcbca53]
+* サンプルコード [#sourcecode]
 #code(link){{
 class HeaderCheckBoxHandler implements TableModelListener {
   private final JTable table;
@@ -87,7 +87,7 @@ class HeaderCheckBoxHandler implements TableModelListener {
 }
 }}
 
-* 解説 [#z0c8a08b]
+* 解説 [#explanation]
 上記のサンプルでは、`0`行目の値(`boolean`)の変更、行の追加、削除を受け取って`JTableHeader`のチェック状態を更新する`TableModelListener`を作成して、これを`TableModel#addTableModelListener(...)`で設定しています。
 
 - 行の削除: `e.getType() == TableModelEvent.DELETE`
@@ -101,9 +101,9 @@ class HeaderCheckBoxHandler implements TableModelListener {
 -- `JTableHeader`が不定状態の場合は、全行を検索して選択状態を変更するかどうかを調査する
 -- `JTableHeader`が不定状態でない場合は、この更新によって`JTableHeader`は不定状態になる
 
-* 参考リンク [#t968531f]
+* 参考リンク [#reference]
 - [[JTableHeaderにJCheckBoxを追加してセルの値を切り替える>Swing/TableHeaderCheckBox]]
 
-* コメント [#d9fb2d0a]
+* コメント [#comment]
 #comment
 #comment

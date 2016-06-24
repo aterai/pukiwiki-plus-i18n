@@ -3,14 +3,14 @@ title: TrayIconのアニメーション
 tags: [SystemTray, Icon, Animation]
 author: aterai
 pubdate: 2007-02-05T02:07:43+09:00
-description: SystemTrayに追加したアイコン(JDK 6以上)をアニメーションさせます。
+description: SystemTrayに追加したトレイアイコンをアニメーションさせます。
 ---
-* 概要 [#fe9b32a0]
-`SystemTray`に追加したアイコン(`JDK 6`以上)をアニメーションさせます。
+* 概要 [#summary]
+`SystemTray`に追加したトレイアイコンをアニメーションさせます。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHtWabBgI/AAAAAAAAARk/J0ExgthCnn4/s800/AnimatedTrayIcon.png)
 
-* サンプルコード [#l1766e4f]
+* サンプルコード [#sourcecode]
 #code(link){{
 final TrayIcon icon = new TrayIcon(imglist[0], "TRAY", popup);
 animator = new javax.swing.Timer(100, new ActionListener() {
@@ -22,14 +22,14 @@ animator = new javax.swing.Timer(100, new ActionListener() {
 });
 }}
 
-* 解説 [#s4dc164c]
+* 解説 [#explanation]
 `16*16`の画像を`3`パターン用意し、これを`JDK 6`で追加された`TrayIcon#setImage(Image)`メソッドを使って切り替えることでアニメーションを行っています。
 
-* 参考リンク [#af1e3679]
+* 参考リンク [#reference]
 - [[SystemTrayにアイコンを表示>Swing/SystemTray]]
 - [[TrayIconのダブルクリック>Swing/ClickTrayIcon]]
 
-* コメント [#x7cedb82]
+* コメント [#comment]
 #comment
 - `animated gif`を使うほうが簡単だと思うのですが、作った`Gif`が悪いのか、環境のせいなのか、残像がでてしまいます。 -- &user(aterai); &new{2007-02-05 (月) 19:00:34};
 -- メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6453582 Bug ID: 6453582 Animation gif too fast] -- &user(aterai); &new{2007-04-19 (木) 21:11:50};

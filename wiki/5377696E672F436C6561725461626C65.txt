@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-04-11
 description: JTableのモデルから、カラムヘッダの状態は変更せず、すべての行を一括で削除します。
 ---
-* 概要 [#j3b5fd74]
+* 概要 [#summary]
 `JTable`のモデルから、カラムヘッダの状態は変更せず、すべての行を一括で削除します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJISEHcVI/AAAAAAAAAT4/syR1Ucd5n5o/s800/ClearTable.png)
 
-* サンプルコード [#i0d5d0ba]
+* サンプルコード [#sourcecode]
 #code(link){{
 button.addActionListener(new AbstractAction("clear") {
   @Override public void actionPerformed(ActionEvent e) {
@@ -20,7 +20,7 @@ button.addActionListener(new AbstractAction("clear") {
 });
 }}
 
-* 解説 [#q9ec8847]
+* 解説 [#explanation]
 - `TableModel`が`DefaultTableModel`を継承している場合、`model.setRowCount(0)`ですべての行を削除することが可能
 - 空の`TableModel`を`JTable`に設定することでも、行の全削除を行うことが可能だが、ヘッダモデルの再作成が発生し、カラム幅や順番などが初期化されてしまう
 -- `JTable#setAutoCreateColumnsFromModel(false)`とカラムをモデルから自動生成しないようにしておけば、`TableModel`を入れ替えても、列幅などは保存される
@@ -43,11 +43,11 @@ public void clear() {
 }
 }}
 
-* 参考リンク [#sa1a2655]
+* 参考リンク [#reference]
 - [[JTableの行を追加、削除>Swing/AddRow]]
 - [[JTableのセルにJButtonを追加して行削除>Swing/DeleteButtonInCell]]
 
-* コメント [#h696ae90]
+* コメント [#comment]
 #comment
 - ソートした状態で「remove all rows」を押すと例外が発生しますよ -- &user(tohrisugari); &new{2013-07-23 (火) 08:51:30};
 -- ご指摘ありがとうございます。確かに`ArrayIndexOutOfBoundsException: 0 >= 0`が発生していますね。以前は正常だったはず？と思って調べてみたら、[http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6967479 Bug ID: JDK-6967479 JTable sorter fires even if the model is empty]が原因？で、`6u10,6u20`以降で発生しているようです。 %%`8`で修正される予定？みたいなので、しばらくは別の方法を使用するように修正し%% %%何時修正されるか分からないので回避方法を考えてみようと思います。%% -- &user(aterai); &new{2013-07-23 (火) 10:47:23};

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-04-18T14:47:37+09:00
 description: JListのセル選択状態をセル以外の余白領域をクリックすることで解除できるように設定します。
 ---
-* 概要 [#y7eeee60]
+* 概要 [#summary]
 `JList`のセル選択状態をセル以外の余白領域をクリックすることで解除できるように設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TavH8_fQKAI/AAAAAAAAA5s/MyUXQnSHPUA/s800/ClearSelection.png)
 
-* サンプルコード [#w9ea8a72]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ClearSelectionListener extends MouseAdapter {
   private static void clearSelectionAndFocus(JList list) {
@@ -47,7 +47,7 @@ class ClearSelectionListener extends MouseAdapter {
 }
 }}
 
-* 解説 [#f030e228]
+* 解説 [#explanation]
 上記のサンプルでは、`JList`のセル以外の領域をクリックすると、選択とフォーカスを解除するようにマウスリスナーなどを設定しています。
 
 - 選択解除
@@ -58,9 +58,9 @@ class ClearSelectionListener extends MouseAdapter {
 -- `list.getSelectionModel().setLeadSelectionIndex(-1);`
 -- アンカー(アイテムのハイライト)、リード(アイテムのフォーカス)の順番で解除する必要がある
 
-* 参考リンク [#b276e015]
+* 参考リンク [#reference]
 - [http://docs.oracle.com/javase/tutorial/uiswing/events/listselectionlistener.html How to Write a List Selection Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]
 
-* コメント [#c5b93fc8]
+* コメント [#comment]
 #comment
 #comment

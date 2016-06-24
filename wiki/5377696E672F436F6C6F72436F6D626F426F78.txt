@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/06/color-jcombobox.html
     lang: en
 ---
-* 概要 [#jce4ead6]
+* 概要 [#summary]
 `JComboBox`の`Editor`部分と、`List`部分の色を変更します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTJhY0CAaI/AAAAAAAAAUg/J70FCr-EUlI/s800/ColorComboBox.png)
 
-* サンプルコード [#b2f19a3d]
+* サンプルコード [#sourcecode]
 #code(link){{
 class AlternateRowColorComboBox<E> extends JComboBox<E> {
   private static final Color EVEN_BGCOLOR = new Color(225, 255, 225);
@@ -82,7 +82,7 @@ class AlternateRowColorComboBox<E> extends JComboBox<E> {
 }
 }}
 
-* 解説 [#bbe45ca3]
+* 解説 [#explanation]
 `JComboBox`を編集可にした状態で、以下のように`List`部分、`Editor`部分に背景色を設定します。
 
 - `List`部分
@@ -97,10 +97,10 @@ class AlternateRowColorComboBox<E> extends JComboBox<E> {
 
 #ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJj4vDxSI/AAAAAAAAAUk/ZZtKylfc0k8/s800/ColorComboBox1.png)
 
-* 参考リンク [#f155df82]
+* 参考リンク [#reference]
 - [[JComboBoxの文字色を変更する>Swing/ComboBoxForegroundColor]]
 
-* コメント [#i79a7ae9]
+* コメント [#comment]
 #comment
 - `JComboBox#setEditable(true)`は必須のようです。編集不可にするには`Editor`部分の`JTextField`に対して`setEditable(false)` -- &user(Y); &new{2006-10-10 (火) 18:51:38};
 -- ご指摘ありがとうございます。せっかく`JComboBox`を上下に並べているのだから、編集可の場合と不可の場合のサンプルにすればよかったですね。編集不可の場合(`JComboBox#setEditable(false)`)に色を着けるには、上記の方法と、以下のように`JComboBox#setBackground(Color)`メソッドを使う方法があるようです。 %%編集不可の場合は、この部分の色もレンダラーが勝手にやってくれてたような気がするのですが、勘違いだったのかも。%% バージョンや`LookAndFeel`で異なる？ようです。 -- &user(aterai); &new{2006-10-10 (火) 19:58:51};

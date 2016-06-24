@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2008-06-09T10:55:29+09:00
 description: JTextFieldへのキー入力や貼り込みを数値のみに制限する方法をテストします。
 ---
-* 概要 [#da351c31]
+* 概要 [#summary]
 `JTextField`へのキー入力や貼り込みを数値のみに制限する方法をテストします。ソースコードは、[http://web.archive.org/web/20090831154020/http://java.sun.com/developer/JDCTechTips/2005/tt0518.html Validating Text and Filtering Documents and Accessibility and the Java Access Bridge Tech Tips]からの引用です。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTQjTks6aI/AAAAAAAAAfw/VCCb81SSh1s/s800/NumericTextField.png)
 
-* サンプルコード [#e7b4eac7]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTextField textField1 = new JTextField("1000");
 textField1.setHorizontalAlignment(JTextField.RIGHT);
@@ -34,7 +34,7 @@ JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 
 spinner.setValue(5000);
 }}
 
-* 解説 [#r1c4bc0e]
+* 解説 [#explanation]
 - `1`:`JTextField` + `InputVerifier`
 -- [http://web.archive.org/web/20090831154020/http://java.sun.com/developer/JDCTechTips/2005/tt0518.html Validating with Input Verifiers]
 -- `InputVerifier`を継承する`IntegerInputVerifier`を作成し、これを`JComponent#setInputVerifier`メソッドで設定
@@ -189,11 +189,11 @@ class NumberFormatterFactory extends DefaultFormatterFactory {
 - `5`:`JSpinner` + `SpinnerNumberModel`
 -- `JFormattedTextField`の場合と同等
 
-* 参考リンク [#r60440e6]
+* 参考リンク [#reference]
 - [http://web.archive.org/web/20090831154020/http://java.sun.com/developer/JDCTechTips/2005/tt0518.html Validating Text and Filtering Documents and Accessibility and the Java Access Bridge Tech Tips]
 - [http://docs.oracle.com/javase/tutorial/uiswing/components/formattedtextfield.html How to Use Formatted Text Fields]
 - [[JSpinnerで無効な値の入力を許可しない>Swing/NumberFormatter]]
 
-* コメント [#yc4c9280]
+* コメント [#comment]
 #comment
 #comment

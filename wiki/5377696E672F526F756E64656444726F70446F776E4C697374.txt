@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2016-01-11T00:02:17+09:00
 description: JComboBoxからBasicComboPopupを取得し、これに角丸のBorderを設定します。
 ---
-* 概要 [#f11a21e1]
+* 概要 [#summary]
 `JComboBox`から`BasicComboPopup`を取得し、これに角丸の`Border`を設定します。
 
 #download(https://lh3.googleusercontent.com/-hO6OrwNE6O4/VpJu21j7FbI/AAAAAAAAOLA/mUBgzYUJpes/s800-Ic42/RoundedDropDownList.png)
 
-* サンプルコード [#h724f5c1]
+* サンプルコード [#sourcecode]
 #code(link){{
 JComboBox<String> combo1 = new JComboBox<String>(makeModel()) {
   private transient PopupMenuListener listener;
@@ -32,7 +32,7 @@ JComboBox<String> combo1 = new JComboBox<String>(makeModel()) {
 };
 }}
 
-* 解説 [#k30224d4]
+* 解説 [#explanation]
 - 上:
 -- `UIManager.put(...)`メソッドで、背景色などを変更し、`BasicComboBoxUI`を設定した`JComboBox`
 - 中:
@@ -42,10 +42,10 @@ JComboBox<String> combo1 = new JComboBox<String>(makeModel()) {
 -- 中の`JComboBox`と同様に`BasicComboPopup`を取得し、下辺のみ角丸の`Border`を設定(`JComboBox`自体には上辺のみ角丸の`Border`を設定)
 -- `ArrowButton`を変更
 
-* 参考リンク [#qf8eb8c5]
+* 参考リンク [#reference]
 - [[JComboBoxの角を丸める>Swing/RoundedComboBox]]
 - [http://stackoverflow.com/questions/34503780/rounded-corner-for-jcombobox/34534091#34534091 java - Rounded Corner for JComboBox - Stack Overflow]
 
-* コメント [#m4e509c1]
+* コメント [#comment]
 #comment
 #comment

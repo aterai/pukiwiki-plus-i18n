@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2014/11/make-transparent-jtree-and-translucent.html
     lang: en
 ---
-* 概要 [#da646bdd]
+* 概要 [#summary]
 `JTree`の背景を透明にし、ノードの選択色を半透明にします。
 
 #download(https://lh4.googleusercontent.com/-HxmekrVRX6M/UPLEn6O6-VI/AAAAAAAABbM/XJoGyl2khVM/s800/TranslucentTree.png)
 
-* サンプルコード [#geb986e1]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TransparentTreeCellRenderer extends DefaultTreeCellRenderer {
   @Override public Component getTreeCellRendererComponent(
@@ -41,7 +41,7 @@ class TranslucentTreeCellRenderer extends TransparentTreeCellRenderer {
 }
 }}
 
-* 解説 [#re16c92a]
+* 解説 [#explanation]
 - 左: `TreeCellRenderer`を半透明化
 -- `JTree#setOpaque(false);`として`JTree`や`JScrollPane`などを透明化
 -- `DefaultTreeCellRenderer#getBackgroundNonSelectionColor(...)`をオーバーライドしてノードの背景色を透明化
@@ -70,10 +70,10 @@ tree2.putClientProperty("Nimbus.Overrides", d);
 tree2.putClientProperty("Nimbus.Overrides.InheritDefaults", false);
 }}
 
-* 参考リンク [#jeb3f180]
+* 参考リンク [#reference]
 - [[JTreeを行クリックで選択し、行全体を選択状態の背景色で描画>Swing/TreeRowSelection]]
 - [[JRootPaneの背景として画像を表示>Swing/RootPaneBackground]]
 
-* コメント [#kb45a165]
+* コメント [#comment]
 #comment
 #comment

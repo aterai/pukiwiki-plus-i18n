@@ -5,17 +5,17 @@ author: aterai
 pubdate: 2014-09-15T00:00:21+09:00
 description: JSplitPaneのDividerがドラッグ中の場合に、その移動先を示す矩形の色を変更します。
 ---
-* 概要 [#o80016ef]
+* 概要 [#summary]
 `JSplitPane`の`Divider`がドラッグ中の場合に、その移動先を示す矩形の色を変更します。
 
 #download(https://lh5.googleusercontent.com/-M9cMsnuWpL0/VBWl0TfGYyI/AAAAAAAACNI/qvejKL7NGVk/s800/DividerDraggingColor.png)
 
-* サンプルコード [#ya9caa72]
+* サンプルコード [#sourcecode]
 #code(link){{
 UIManager.put("SplitPaneDivider.draggingColor", new Color(255, 100, 100, 100));
 }}
 
-* 解説 [#ff320695]
+* 解説 [#explanation]
 上記のサンプルでは、`JSplitPane#setContinuousLayout(false)`を使用して、`JSplitPane`の`Divider`がドラッグ中の場合に`Divider`の移動先を示す矩形の色を変更しています。
 
 ----
@@ -26,9 +26,9 @@ BasicSplitPaneDivider divider = ((BasicSplitPaneUI) getUI()).getDivider();
 divider.setBackground(Color.ORANGE);
 }}
 
-* 参考リンク [#z74232ef]
+* 参考リンク [#reference]
 - [[JSplitPaneでディバイダの移動を連続的に再描画>Swing/ContinuousLayout]]
 
-* コメント [#uc73b3da]
+* コメント [#comment]
 #comment
 #comment

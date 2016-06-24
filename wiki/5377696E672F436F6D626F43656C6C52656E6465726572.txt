@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-03-19
 description: JTableのCellRendererとしてJComboBoxを使用します。
 ---
-* 概要 [#xc6bebbb]
+* 概要 [#summary]
 `JTable`の`CellRenderer`として`JComboBox`を使用します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTJ35Po_yI/AAAAAAAAAVE/z4Jn6Mv7-pc/s800/ComboCellRenderer.png)
 
-* サンプルコード [#l43fa315]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ComboCellRenderer extends JComboBox implements TableCellRenderer {
   private static final Color ec = new Color(240, 240, 255);
@@ -40,7 +40,7 @@ class ComboCellRenderer extends JComboBox implements TableCellRenderer {
 }
 }}
 
-* 解説 [#k4fd12f0]
+* 解説 [#explanation]
 上記のサンプルでは、`1`列目(中央)のセルの表示を`JComboBox`にするために、これを継承するセルレンダラーを設定しています。`1`列目はセルエディタも`JComboBox`ですが、これらは同じ`JComboBox`のインスタンスではなく、別々に用意しています。
 
 レンダラーで使用する`JComboBox`は、セルの表示のみに使用するため、以下のように設定しています。
@@ -49,10 +49,10 @@ class ComboCellRenderer extends JComboBox implements TableCellRenderer {
 - 編集可にして`EditorComponent`の背景色などを他のセルと同様になるように変更
 - セル内にきれいに収まるように余白を`0`に設定
 
-* 参考リンク [#ta6ab55a]
+* 参考リンク [#reference]
 - [[JTableのCellEditorにJComboBoxを設定>Swing/ComboCellEditor]]
 
-* コメント [#u7323d9c]
+* コメント [#comment]
 #comment
 - セルの幅を大きくするとセルの表示が消えますが・・・これは一体なんでしょうか？ -- &user(ichikawa); &new{2010-11-01 (月) 23:09:02};
 -- ご指摘ありがとうございます。リサイズなどでセルの表示がおかしくなるのは、バグです。`DefaultTableCellRenderer#invalidate()`などと同じ(パフォーマンス上の理由)にするため、何もしないようにオーバーライドした、テスト中のコードとサンプルを誤ってアップロードしていました。 -- &user(aterai); &new{2010-11-02 (火) 14:23:32};

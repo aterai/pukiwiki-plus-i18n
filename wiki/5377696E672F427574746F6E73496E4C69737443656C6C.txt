@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2011-10-03T14:43:12+09:00
 description: JListのセル内に複数のJButtonを配置します。
 ---
-* 概要 [#f39bded5]
+* 概要 [#summary]
 `JList`のセル内に複数の`JButton`を配置します。
 
 #download(https://lh3.googleusercontent.com/-j4_Xv9F17Jc/TolDAZSkQUI/AAAAAAAABDU/GK_sK9k5aJE/s800/ButtonsInListCell.png)
 
-* サンプルコード [#oc796928]
+* サンプルコード [#sourcecode]
 #code(link){{
 class ButtonsRenderer<E> extends JPanel implements ListCellRenderer<E> {
   private static final Color EVEN_COLOR = new Color(230, 255, 230);
@@ -92,14 +92,14 @@ class ButtonsRenderer<E> extends JPanel implements ListCellRenderer<E> {
 }
 }}
 
-* 解説 [#fa1d498d]
+* 解説 [#explanation]
 上記のサンプルでは、`JList`のセルに`2`つの`JButton`を配置する`ListCellRenderer`を設定しています。
 `JButton`のクリックイベントは、`JList`に追加したマウスリスナーで`SwingUtilities.getDeepestComponentAt(...)`を使用して対象の`JButton`を取得し、`JButton#doClick()`を呼び出すようになっています。
 
-* 参考リンク [#c6b43733]
+* 参考リンク [#reference]
 - [[JTableのセルに複数のJButtonを配置する>Swing/MultipleButtonsInTableCell]]
 
-* コメント [#h3d1b37d]
+* コメント [#comment]
 #comment
 - ダミーの`view, edit`ボタンを実際に動作する行の`delete, copy`ボタンに変更(ソースを修正したのは2011年10月、スクリーンショットは未変更)。 -- &user(aterai); &new{2013-11-20 (水) 16:13:40};
 

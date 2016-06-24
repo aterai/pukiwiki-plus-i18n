@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-05-10T16:07:06+09:00
 description: JEditorPaneに追加したリンクのクリックイベントなどをHyperlinkListenerで処理します。
 ---
-* 概要 [#yfa0ae51]
+* 概要 [#summary]
 `JEditorPane`に追加したリンクのクリックイベントなどを`HyperlinkListener`で処理します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOK8UtUUI/AAAAAAAAAb8/yiME-hTTlWA/s800/HyperlinkListener.png)
 
-* サンプルコード [#p6936087]
+* サンプルコード [#sourcecode]
 #code(link){{
 final JEditorPane editorPane = new JEditorPane();
 editorPane.setEditable(false);
@@ -35,7 +35,7 @@ editorPane.addHyperlinkListener(new HyperlinkListener() {
 });
 }}
 
-* 解説 [#l1011ba2]
+* 解説 [#explanation]
 上記のサンプルでは、`JEditorPane`(`HTMLEditorKit`,編集不可)に挿入したタグ`<a href='...'>...</a>`のクリックなどを受信する`HyperlinkListener`を追加しています。
 
 ----
@@ -46,10 +46,10 @@ editorPane.addHyperlinkListener(new HyperlinkListener() {
 - %%ベースラインがうまく揃わない？%% `JComponent#setAlignmentY(...)`でテキストベースラインに揃えることが可能
 -- サンプルコードは、[[JTextPaneに追加するコンポーネントのベースラインを揃える>Swing/InsertComponentBaseline]]に移動
 
-* 参考リンク [#zc3bd74d]
+* 参考リンク [#reference]
 - [[Hyperlinkを、JLabel、JButton、JEditorPaneで表示>Swing/HyperlinkLabel]]
 
-* コメント [#aba69bd8]
+* コメント [#comment]
 #comment
 - いつもお世話になっております。`JEditorPane`に画像ファイルを表示したいですが、画像サイズが揃えていないため、一部表示したり、全部表示したりなどの現状です。そこで、サイズに関係なく、各画像ファイルを全体表示したいです。可能でしょうか？もしかしたら、`JEditorPane`ではなく、別の`Swing`コンポを使う必要があるかなと思います。画像全体表示の方法を教えてください。よろしくお願いいたします。 -- &user(panda); &new{2011-07-27 (水) 08:57:42};
 -- こんばんは。「サイズに関係なく、各画像ファイルを全体表示したい」とは、画像を縮小してすべて同じサイズのサムネイルを表示したいということでしょうか？ 画質にこだわらないなら、以下のように`img`タグの属性で幅と高さを指定する方法があります。 -- &user(aterai); &new{2011-07-27 (水) 18:21:59};

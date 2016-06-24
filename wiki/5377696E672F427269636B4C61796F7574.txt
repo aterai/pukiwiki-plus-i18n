@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2009-03-09T14:08:29+09:00
 description: GridBagLayoutを使ってコンポーネントをレンガ状に配置します。
 ---
-* 概要 [#h2da3fd7]
+* 概要 [#summary]
 `GridBagLayout`を使ってコンポーネントをレンガ状に配置します。[https://community.oracle.com/thread/1357310 Swing - GridBagLayout to create a board]を参考にしています。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIOzg1doI/AAAAAAAAASc/V_SwABvAldE/s800/BrickLayout.png)
 
-* サンプルコード [#s089dab7]
+* サンプルコード [#sourcecode]
 #code(link){{
 JPanel panel = new JPanel(new GridBagLayout());
 panel.setBorder(BorderFactory.createTitledBorder("Brick Layout"));
@@ -47,7 +47,7 @@ for (c.gridx = 0; c.gridx <= WIDTH * XSIZE; c.gridx++) {
 //</dummy-row>
 }}
 
-* 解説 [#lba85e7c]
+* 解説 [#explanation]
 上記のサンプルでは、`GridBagLayout`を使って、`JButton`をレンガ状に配置します。互い違いに二列ずつ占めるようにボタンを配置していますが、`<dummy-row>`が無い場合、うまくレンガ状にはなりません。
 
 以下、[https://community.oracle.com/thread/1357310 Swing - GridBagLayout to create a board]のDarryl.Burkeさんの投稿を引用
@@ -140,9 +140,9 @@ class KeyButton extends JButton {
 }
 }}
 
-* 参考リンク [#u6f8dce4]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1357310 Swing - GridBagLayout to create a board]
 
-* コメント [#te0e3d58]
+* コメント [#comment]
 #comment
 #comment

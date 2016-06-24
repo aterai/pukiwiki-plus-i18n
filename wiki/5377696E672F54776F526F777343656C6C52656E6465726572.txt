@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2010-12-20T15:44:39+09:00
 description: JTableのセル内に文字列を二行分だけ表示し、あふれる場合は...で省略します。
 ---
-* 概要 [#vef8433b]
+* 概要 [#summary]
 `JTable`のセル内に文字列を二行分だけ表示し、あふれる場合は`...`で省略します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQ77KlEsZJI/AAAAAAAAAuE/mc9fcp-ZmBU/s800/TwoRowsCellRenderer.png)
 
-* サンプルコード [#la63af91]
+* サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(model);
 table.setAutoCreateRowSorter(true);
@@ -59,7 +59,7 @@ class TwoRowsCellRenderer extends JPanel implements TableCellRenderer {
 }
 }}
 
-* 解説 [#ga8b707a]
+* 解説 [#explanation]
 `JLabel`を上下に配置した`JPanel`を使って、`TableCellRenderer`を作成しています。`...`での省略は、二行目の`JLabel`のデフォルト動作です。
 
 ----
@@ -80,10 +80,10 @@ while (i < text.length()) {
 }
 }}
 
-* 参考リンク [#a2270495]
+* 参考リンク [#reference]
 - [[JLabelの文字列を折り返し>Swing/GlyphVector]]
 - [http://www.ibm.com/developerworks/jp/ysl/library/java/j-unicode_surrogate/index.html Java による Unicode サロゲートプログラミング]
 
-* コメント [#u1b3cdf7]
+* コメント [#comment]
 #comment
 #comment

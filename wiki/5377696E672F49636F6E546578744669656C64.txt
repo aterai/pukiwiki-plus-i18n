@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2005-01-03
 description: JTextFieldの内部に余白を生成し、そこにImageIconを設定したJLabelを配置します。
 ---
-* 概要 [#h496664d]
+* 概要 [#summary]
 `JTextField`の内部に余白を生成し、そこに`ImageIcon`を設定した`JLabel`を配置します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOSatpfJI/AAAAAAAAAcI/9Ghfvb82FsM/s800/IconTextField.png)
 
-* サンプルコード [#rc7f0af2]
+* サンプルコード [#sourcecode]
 #code(link){{
 ImageIcon image = new ImageIcon(getClass().getResource("16x16.png"));
 int w = image.getIconWidth();
@@ -28,7 +28,7 @@ label.setBounds(m.left, m.top, w, h);
 field.add(label);
 }}
 
-* 解説 [#z9fc33ce]
+* 解説 [#explanation]
 サンプルでは`setMargin`で`JTextField`の左に余白を作り、そこに`JLabel`を配置することでアイコン(画像)を表示しています。
 
 [[JComboBoxにアイコンを追加>Swing/IconComboBox]]のように、`Border`を使っても同様のことができますが、`JTextComponent`を継承したコンポーネントでは、`setMargin`を使用するとカーソルの指定などが簡単に実現できます。
@@ -70,11 +70,11 @@ m = field2.getMargin();
 field2.setMargin(new Insets(m.top + 2, m.left, m.bottom, m.right + w));
 }}
 
-* 参考リンク [#g5b06829]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1489851 Swing (Archive) - Add a clickable icon to the left corner of a JTextField]
 - [[JTextFieldのMarginを設定する>Swing/TextFieldMargin]]
 - [[JComboBoxにアイコンを追加>Swing/IconComboBox]]
 
-* コメント [#p5da2dfd]
+* コメント [#comment]
 #comment
 #comment

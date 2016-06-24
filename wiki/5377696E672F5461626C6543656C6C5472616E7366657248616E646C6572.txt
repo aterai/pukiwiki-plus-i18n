@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-05-25T00:03:51+09:00
 description: JTableのセルを選択可能にし、ドラッグ＆ドロップでそのセル内のIconをJListにコピーできるようにTransferHandlerを設定します。
 ---
-* 概要 [#w448274c]
+* 概要 [#summary]
 `JTable`のセルを選択可能にし、ドラッグ＆ドロップでそのセル内の`Icon`を`JList`にコピーできるように`TransferHandler`を設定します。
 
 #download(https://lh3.googleusercontent.com/-TUrxk7yYqYM/VWHkR1mENvI/AAAAAAAAN4w/bEU29WIgjOE/s800/TableCellTransferHandler.png)
 
-* サンプルコード [#s870885c]
+* サンプルコード [#sourcecode]
 #code(link){{
 //DataFlavor FLAVOR = new ActivationDataFlavor(JTable.class, DataFlavor.javaJVMLocalObjectMimeType, "JTable");
 class CellIconTransferHandler extends TransferHandler {
@@ -72,14 +72,14 @@ class TableCellTransferHandler extends TransferHandler {
 }
 }}
 
-* 解説 [#z18ca370]
+* 解説 [#explanation]
 上記のサンプルでは、ドラッグ元の`JTable`に`CellIconTransferHandler`を設定して特定の列のアイコンのみドラッグ可能にし、ドロップ先の`JList`には`TableCellTransferHandler`を設定してアイコンを受け取り(実際は`JTable`ごと受け取って選択されたアイコンを取得)、これを一行で表示しています。
 
 - テスト
 -- `clear`ボタン: `JList`にドロップされたアイコンをクリア
 -- `filter`ボタン: `JList`にドロップされたアイコンを含む行のみ表示するフィルタを`JTable`に設定
 
-//* 参考リンク
-* コメント [#kd14e7ec]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

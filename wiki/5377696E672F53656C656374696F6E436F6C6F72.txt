@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-10-07T00:14:25+09:00
 description: JEditorPaneで選択色を半透明化し、HighlightPainterによるハイライトやCSSでの背景色変更と組み合わせた場合の描画のテストを行います。
 ---
-* 概要 [#f585b5dc]
+* 概要 [#summary]
 `JEditorPane`で選択色を半透明化し、`HighlightPainter`によるハイライトや`CSS`での背景色変更と組み合わせた場合の描画のテストを行います。
 
 #download(https://lh4.googleusercontent.com/-vbDIDKoUbmw/UlFdSAKWCVI/AAAAAAAAB3A/wbVAmRfeTCY/s800/SelectionColor.png)
 
-* サンプルコード [#d528a36d]
+* サンプルコード [#sourcecode]
 #code(link){{
 JEditorPane area = new JEditorPane();
 area.setOpaque(false);
@@ -20,7 +20,7 @@ area.setBackground(new Color(0x0, true));
 area.setSelectionColor(new Color(0xC86464FF, true));
 }}
 
-* 解説 [#b70e8c84]
+* 解説 [#explanation]
 上記のサンプルでは、`JEditorPane`の選択色などを半透明化して、ハイライトや`CSS`での背景色変更と組み合わせた場合のテストをしています。
 
 - `JTextComponent#setSelectionColor`, `JTextComponent#setSelectedTextColor`
@@ -39,13 +39,13 @@ area.setSelectionColor(new Color(0xC86464FF, true));
 -- デフォルトの`HTMLEditorKit`は`CSS`の`opacity: 0.5`、`background: rgba(255,100,100,0.6);`などに未対応で、半透明化は不可
 - 文字列選択の描画や、ハイライトの矩形より奥に描画される
 
-* 参考リンク [#qdc33d95]
+* 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setSelectionColor-java.awt.Color- JTextComponent#setSelectionColor(Color) (Java Platform SE 8)]
 - [[JEditorPaneのHTMLEditorKitにCSSを適用>Swing/StyleSheet]]
 - [[Highlighterで文字列をハイライト>Swing/Highlighter]]
 - [[JTextAreaの背景に画像を表示>Swing/CentredBackgroundBorder]]
 - [[DefaultHighlighterの描画方法を変更する>Swing/DrawsLayeredHighlights]]
 
-* コメント [#s49c55fb]
+* コメント [#comment]
 #comment
 #comment

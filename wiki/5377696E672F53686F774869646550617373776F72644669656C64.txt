@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2015/01/showhide-passwordfield-using-cardlayout.html
     lang: en
 ---
-* 概要 [#n9158cb5]
+* 概要 [#summary]
 `JPasswordField`に入力したパスワードの表示・非表示を切り替えるためのボタンを作成し、これを入力欄などに配置します。
 
 #download(https://lh4.googleusercontent.com/-zXk3TZfF_v4/VPXFdo3UBzI/AAAAAAAANzU/VfiEUdm-aUI/s800/ShowHidePasswordField.png)
 
-* サンプルコード [#h57d319a]
+* サンプルコード [#sourcecode]
 #code(link){{
 JPasswordField pf = new JPasswordField(24);
 pf.setText("abcdefghijklmn");
@@ -50,10 +50,10 @@ panel.add(b);
 panel.add(pf);
 }}
 
-* 解説 [#c666192f]
+* 解説 [#explanation]
 上記のサンプルでは、`JPasswordField#setEchoChar(...)`メソッドの値に`\u0000`(`0`)を設定することで、パスワードを可視状態に切り替えるボタンを追加しています。
 
-- `BorderLayout + JCheckBox`: 
+- `BorderLayout + JCheckBox`:
 -- `BorderLayout`で、`JPasswordField`の下にパスワード表示非表示切り替え用の`JCheckBox`を配置
 - `OverlayLayout + JToggleButton`:
 --  `OverlayLayout`で、`JPasswordField`内の右端にパスワード表示非表示切り替え用の`JToggleButton`を配置
@@ -106,10 +106,10 @@ b4.addMouseListener(new MouseAdapter() {
 -- `CardLayout`を使って`JTextField`を表示する方法は一旦削除したが、表示のパスワードをコピーできるので、残しておくことにした
 - ボタンをクリックしている間だけパスワードを表示するサンプルを追加
 
-* 参考リンク [#y8235689]
+* 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JPasswordField.html#setEchoChar-char- JPasswordField#setEchoChar(...) (Java Platform SE 8)]
 - [[JPasswordFieldのエコー文字を変更>Swing/PasswordView]]
 
-* コメント [#f8f3965d]
+* コメント [#comment]
 #comment
 #comment

@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-02-27T11:11:21+09:00
 description: ドキュメントのサイズを一定にして、JTextAreaなど表示できる行数を制限します。
 ---
-* 概要 [#e59bb955]
+* 概要 [#summary]
 ドキュメントのサイズを一定にして、`JTextArea`など表示できる行数を制限します。[https://community.oracle.com/thread/1479784 Swing (Archive) - JTextArea Memory Overflow ??]にあるソースコードを参考にしています。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMafjL8xI/AAAAAAAAAZI/-KMSGPcn0jM/s800/FIFODocument.png)
 
-* サンプルコード [#x24ef034]
+* サンプルコード [#sourcecode]
 #code(link){{
 jta.setEditable(false);
 jta.getDocument().addDocumentListener(new DocumentListener() {
@@ -44,7 +44,7 @@ final Timer timer = new Timer(100, new ActionListener() {
 });
 }}
 
-* 解説 [#v8d4dbca]
+* 解説 [#explanation]
 一行追加された時に、規定の行数を越えている場合は、先頭から一行を削除しています。
 
 上記のサンプルでは、`10`行以上になると先頭行から削除されていきます。また、複数行の入力やペーストには対応していません。それらにも対応する場合は、[https://community.oracle.com/thread/1479784 Swing (Archive) - JTextArea Memory Overflow ??]を参考にしてみてください。
@@ -68,10 +68,10 @@ class FIFODocumentFilter extends DocumentFilter {
 }
 }}
 
-* 参考リンク [#z483e8cb]
+* 参考リンク [#reference]
 - [https://community.oracle.com/thread/1479784 Swing (Archive) - JTextArea Memory Overflow ??]
 
-* コメント [#ba2d344b]
+* コメント [#comment]
 #comment
 - `sample`実行できないよ -- &user(cinik); &new{2006-11-16 (木) 01:09:03};
 -- `jnlp`ファイルの名前を`sample`から`example`に変更しているので、一旦キャッシュを消してみるとうまくいくかもしれません。(じゃなくて`Exception`などが発生しているのでしょうか？) -- &user(aterai); &new{2006-11-16 (木) 12:39:54};

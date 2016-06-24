@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-08-10T13:10:18+09:00
 description: Component上に重ねて配置した検索用ダイアログの位置をアニメーション付きで変更するレイアウトマネージャーを作成し、その表示非表示をキー入力で切り替えます。
 ---
-* 概要 [#lf671d2f]
+* 概要 [#summary]
 `Component`上に重ねて配置した検索用ダイアログの位置をアニメーション付きで変更するレイアウトマネージャーを作成し、その表示非表示をキー入力で切り替えます。
 
 #download(https://lh3.googleusercontent.com/-gEMKmLyIHno/VcgZ2tpTyMI/AAAAAAAAN-0/HLb8wuLN_LE/s800-Ic42/OverlayBorderLayout.png)
 
-* サンプルコード [#x1cd240b]
+* サンプルコード [#sourcecode]
 #code(link){{
 JPanel p = new JPanel() {
   @Override public boolean isOptimizedDrawingEnabled() {
@@ -44,7 +44,7 @@ p.add(searchBox, BorderLayout.NORTH);
 p.add(new JScrollPane(tree));
 }}
 
-* 解説 [#e4f41b61]
+* 解説 [#explanation]
 - `BorderLayout#layoutContainer(...)`メソッドをオーバーライドし、`BorderLayout.NORTH`で追加した検索ダイアログを`OverlayLayout`のように`BorderLayout.CENTER`で追加した`JTree`に重ねて配置
 -- `BorderLayout.CENTER`と`BorderLayout.NORTH`のみ対応
 -- 検索ダイアログの幅は、`BorderLayout`の`BorderLayout.NORTH`配置のように親コンポーネントの幅まで拡張せず、`FlowLayout`などと同様に`PreferredSize`固定
@@ -59,7 +59,7 @@ p.add(new JScrollPane(tree));
 -- 参考: [[JTreeのノードを検索する>Swing/SearchBox]]
 - KBD{Ctrl+F}で検索用ダイアログの表示非表示切り替え、KBD{Esc}で検索用ダイアログを閉じる、KBD{Enter}で`JTree`のノードを検索
 
-//* 参考リンク
-* コメント [#w65279d8]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

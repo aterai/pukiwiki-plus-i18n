@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2015-01-12T02:04:17+09:00
 description: TrayIconを使用中にJFrameを最小化した場合に、そのアプリケーションのタスクバーボタンを表示するかどうかを切り替えます。
 ---
-* 概要 [#y04411c1]
+* 概要 [#summary]
 `TrayIcon`を使用中に`JFrame`を最小化した場合に、そのアプリケーションのタスクバーボタンを表示するかどうかを切り替えます。
 
 #download(https://lh4.googleusercontent.com/-tzpDxy7_qEA/VLKpHbpgC8I/AAAAAAAANuw/sRLjm08PrO8/s800/HideTaskbarButton.png)
 
-* サンプルコード [#ubcffecf]
+* サンプルコード [#sourcecode]
 #code(link){{
 frame.addWindowListener(new WindowAdapter() {
   @Override public void windowIconified(WindowEvent e) {
@@ -29,16 +29,16 @@ frame.addWindowListener(new WindowAdapter() {
 //});
 }}
 
-* 解説 [#cfe650a8]
+* 解説 [#explanation]
 上記のサンプルでは、`WindowListener#windowIconified(...)`で`JFrame`が最小化(アイコン化)された場合、`Window#dispose()`でネイティブリソースを開放し、タスクバーボタンを非表示にしています。
 
 - タスクバーボタン: 上記の`Windows 7`でのスクリーンショットでは、左下にあるサイズ`40x40`のアイコンが表示されているボタン
 - `frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);`を設定している場合、`Java`仮想マシン(`JVM`)内で最後の表示可能なウィンドウを`dispose()`すると通常は`JVM`も終了するが、このサンプルでは`SystemTray`に`TrayIcon`が残っているので`JVM`は終了しない
 - この後、`tray.remove(icon);`で`TrayIcon`を`SystemTray`から削除すると、`JVM`は終了する
 
-* 参考リンク [#v76f3576]
+* 参考リンク [#reference]
 - [[SystemTrayにアイコンを表示>Swing/SystemTray]]
 
-* コメント [#c43eb50f]
+* コメント [#comment]
 #comment
 #comment

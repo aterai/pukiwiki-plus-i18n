@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2004-02-23
 description: ツールバーや、ポップアップメニューを使って、JTableの行を上下に移動します。
 ---
-* 概要 [#u1a0d5a8]
+* 概要 [#summary]
 ツールバーや、ポップアップメニューを使って、`JTable`の行を上下に移動します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTQMwXadCI/AAAAAAAAAfM/mZbfFQ513GI/s800/MoveRow.png)
 
-* サンプルコード [#yc463e85]
+* サンプルコード [#sourcecode]
 #code(link){{
 class DownAction extends AbstractAction {
   public DownAction(String str) {
@@ -68,11 +68,11 @@ public void showRowPop(MouseEvent e) {
 }
 }}
 
-* 解説 [#q2ca8783]
+* 解説 [#explanation]
 上記のサンプルでは、`DefaultTableModel#moveRow`メソッドを使用して、選択した行を上下に動かしています。KBD{Shift}キーを押しながら、ツールバーの移動ボタンを押すとそれぞれ、先頭、末尾に移動します。
 
-//* 参考リンク
-* コメント [#b4d206da]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 - いつもお世話になっております。違うカテゴリに投稿して、すみません。`JTable`のカラムの幅をマウスで広げたり、縮んだりする際、イベントで検出し、その幅を変数に取っておく方法はご存知でしょうか？当方は`JDK 1.5`を使っています。よろしくお願いいたします。 -- &user(Panda); &new{2011-03-01 (火) 15:12:21};
 - こんばんは。`TableColumnModelListener`を使うのはどうでしょうか。 -- &user(aterai); &new{2011-03-01 (火) 16:48:43};

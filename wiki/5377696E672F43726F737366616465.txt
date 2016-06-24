@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2007-03-12T13:33:16+09:00
 description: Crossfadeアニメーションで画像の切り替えを行います。
 ---
-* 概要 [#o6388e71]
+* 概要 [#summary]
 `Crossfade`アニメーションで画像の切り替えを行います。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKRJIdouI/AAAAAAAAAVs/yU1oEsWfzvA/s800/Crossfade.png)
 
-* サンプルコード [#s306a237]
+* サンプルコード [#sourcecode]
 #code(link){{
 class Crossfade extends JComponent implements ActionListener {
   private final javax.swing.Timer animator;
@@ -54,12 +54,12 @@ class Crossfade extends JComponent implements ActionListener {
 }
 }}
 
-* 解説 [#lc4f6171]
+* 解説 [#explanation]
 上記のサンプルでは、二枚の画像の描画に使用する`AlphaComposite`をそれぞれ変化させながら上書きすることで、`Crossfade`による画像の切り替えを行っています。
 
 上書きの規則には、`AlphaComposite.SRC_OVER`を使っています。
 
-//* 参考リンク
-* コメント [#t10dec59]
+//* 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

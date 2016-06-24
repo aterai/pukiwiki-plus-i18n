@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2009/06/new-tab-button.html
     lang: en
 ---
-* 概要 [#hc561759]
+* 概要 [#summary]
 `CardLayout`と`JRadioButton`で作成した`JTabbedPane`風コンポーネントのタブ配置を自作レイアウトマネージャーで変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTQUU8wtpI/AAAAAAAAAfY/BJyG5weJ1VA/s800/NewTabButton.png)
 
-* サンプルコード [#dbcd9376]
+* サンプルコード [#sourcecode]
 #code(link){{
 class TabLayout implements LayoutManager, Serializable {
   private static final long serialVersionUID = 1L;
@@ -77,7 +77,7 @@ class TabLayout implements LayoutManager, Serializable {
 }
 }}
 
-* 解説 [#l2903531]
+* 解説 [#explanation]
 上記のサンプルでは、以下のような`LayoutManager`を作成して`JRadioButton`を`JTabbedPane`風に並べています。
 
 - 最後のタブ(タブ追加ボタン)は常に幅固定
@@ -90,11 +90,11 @@ class TabLayout implements LayoutManager, Serializable {
 -- 左の`JButton`(ダミー)は、タブエリアをラップする`JPanel(BorderLayout)`の`BorderLayout.WEST`に配置
 -- アイコンはランダム
 
-* 参考リンク [#rea3e94d]
+* 参考リンク [#reference]
 - [http://www.icongalore.com/ XP Style Icons - Windows Application Icon, Software XP Icons]
 - [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]
 
-* コメント [#n5459406]
+* コメント [#comment]
 #comment
 - タブの切り替えは、`mouseClicked`ではなく、`mousePressed`した時に行うように変更。 -- &user(aterai); &new{2012-03-21 (水) 18:46:30};
 

@@ -8,12 +8,12 @@ hreflang:
     href: http://java-swing-tips.blogspot.com/2013/08/create-9-slice-scaling-image-jbutton.html
     lang: en
 ---
-* 概要 [#a1f17c92]
+* 概要 [#summary]
 `JButton`を拡大縮小しても四隅などのサイズが変更しないようにように`9`分割した画像を使用します。
 
 #download(https://lh5.googleusercontent.com/-yYRfTw-3_BU/UgaFQAAiUcI/AAAAAAAABx4/koHqjZ3o36Q/s800/NineSliceScalingButton.png)
 
-* サンプルコード [#jde946d0]
+* サンプルコード [#sourcecode]
 #code(link){{
 class NineSliceScalingIcon implements Icon {
   private final BufferedImage image;
@@ -71,7 +71,7 @@ class NineSliceScalingIcon implements Icon {
 }
 }}
 
-* 解説 [#ke8c296f]
+* 解説 [#explanation]
 上記のサンプルでは、`BufferedImage#getSubimage(...)`メソッドで元画像を`9`分割し、`4`隅はサイズ変更なし、上下辺は幅のみ拡大縮小、左右辺は高さのみ拡大縮小、中央は幅高さが拡大縮小可能になるように、`Graphics#drawImage(...)`メソッドのスケーリングを利用して描画しています。
 
 - `4`隅などの固定サイズ
@@ -80,10 +80,10 @@ class NineSliceScalingIcon implements Icon {
 -- `c`: 左右上隅の高さ
 -- `d`: 左右下隅の高さ
 
-* 参考リンク [#t0591086]
+* 参考リンク [#reference]
 - [http://rwillustrator.blogspot.jp/2007/04/understanding-9-slice-scaling.html Real World Illustrator: Understanding 9-Slice Scaling]
 -- テスト用の画像(`symbol_scale_2.jpg`)を拝借
 
-* コメント [#f2f4e3e3]
+* コメント [#comment]
 #comment
 #comment

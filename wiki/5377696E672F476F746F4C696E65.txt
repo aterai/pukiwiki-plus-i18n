@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2006-10-02
 description: 指定した行番号がJTextAreaの中で先頭にくるようにジャンプします。
 ---
-* 概要 [#f76f67cc]
+* 概要 [#summary]
 指定した行番号が`JTextArea`の中で先頭にくるようにジャンプします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNdpDdyKI/AAAAAAAAAa0/cOjr09yncHI/s800/GotoLine.png)
 
-* サンプルコード [#he8c09bc]
+* サンプルコード [#sourcecode]
 #code(link){{
 JButton button = new JButton(new AbstractAction("Goto Line") {
   @Override public void actionPerformed(ActionEvent e) {
@@ -40,14 +40,14 @@ JButton button = new JButton(new AbstractAction("Goto Line") {
 frame.getRootPane().setDefaultButton(button);
 }}
 
-* 解説 [#qa71cf1b]
+* 解説 [#explanation]
 上記のサンプルでは、任意の行番号を指定してKBD{Enter}キー、またはボタンをクリックすると、その行が`JViewport`の表示範囲の最上部に配置されるよう表示領域を更新します。
 
 `JTextArea#setCaretPosition(int)`メソッドによるキャレットの位置変更だけでは、移動先を移動元より大きな行番号にした場合、`JTextArea`の下部までしかスクロールしないので、`JTextArea#modelToView(int)`メソッドで取得した座標が出来るだけ上部にくるように処理しています。
 
-* 参考リンク [#kf6e13ea]
+* 参考リンク [#reference]
 - [[JTextAreaでSmoothScrollによる行移動>Swing/SmoothScroll]]
 
-* コメント [#f180c8f9]
+* コメント [#comment]
 #comment
 #comment

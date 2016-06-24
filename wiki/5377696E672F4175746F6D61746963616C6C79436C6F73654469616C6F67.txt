@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2013-09-02T00:27:47+09:00
 description: JOptionPaneにカウントダウンと自動クローズを行うためのJLabelを追加します。
 ---
-* 概要 [#q5e9254b]
+* 概要 [#summary]
 `JOptionPane`にカウントダウンと自動クローズを行うための`JLabel`を追加します。
 
 #download(https://lh6.googleusercontent.com/-NvrpIdRXy8M/UiMOJmS8OMI/AAAAAAAABzg/6QK49B0s-NE/s800/AutomaticallyCloseDialog.png)
 
-* サンプルコード [#cd625d9b]
+* サンプルコード [#sourcecode]
 #code(link){{
 label.addHierarchyListener(new HierarchyListener() {
   private Timer timer = null;
@@ -53,7 +53,7 @@ label.addHierarchyListener(new HierarchyListener() {
 });
 }}
 
-* 解説 [#g03a2618]
+* 解説 [#explanation]
 - `java.awt.event.HierarchyListener`
 -- `HierarchyListener`を使って、`JLabel`の表示状態の変化を監視
 --- [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]
@@ -63,11 +63,11 @@ label.addHierarchyListener(new HierarchyListener() {
 -- 指定した時間が経過したら、`Window#dispose()`を使って、親の`JOptionPane`を自動的に閉じる
 --- `Window#dispose()`を使うので、`JOptionPane.showConfirmDialog(...)`の戻り値は、`JOptionPane.CLOSED_OPTION`になる
 
-* 参考リンク [#oc1924dd]
+* 参考リンク [#reference]
 - [[JComponentの表示状態>Swing/ShowingDisplayableVisible]]
 - [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]
 - [http://stackoverflow.com/questions/10021969/java-how-to-continuously-update-jlabel-which-uses-atomicinteger-to-countdown-af swing - Java: How to continuously update JLabel which uses atomicInteger to countdown after ActionListener - Stack Overflow]
 
-* コメント [#de2bf5bd]
+* コメント [#comment]
 #comment
 #comment
