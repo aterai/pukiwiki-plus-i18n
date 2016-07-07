@@ -39,7 +39,7 @@ frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
 }}
 
 - `WindowListener#windowOpened(...)`で、`requestFocusInWindow()`
--- フレームに`WindowListener`を設定して、`windowOpened(...)`が呼び出されたときに、`requestFocusInWindow()`
+-- フレームに`WindowListener`を設定して、`windowOpened(...)`が呼び出されたときに、`requestFocusInWindow()`を実行
 
 #code{{
 frame.addWindowListener(new WindowAdapter() {
@@ -50,7 +50,7 @@ frame.addWindowListener(new WindowAdapter() {
 }}
 
 - `ComponentListener#componentShown(...)`で、`requestFocusInWindow()`
--- フレームに`ComponentListener`を設定して、`componentShown(...)`が呼び出されたとき(=フレームが`setVisible(true)`されたとき)に、`requestFocusInWindow()`
+-- フレームに`ComponentListener`を設定して、`componentShown(...)`が呼び出されたとき(=フレームが`setVisible(true)`されたとき)に、`requestFocusInWindow()`を実行
 
 #code{{
 frame.addComponentListener(new ComponentAdapter() {
@@ -61,7 +61,7 @@ frame.addComponentListener(new ComponentAdapter() {
 }}
 
 - `KeyboardFocusManager#addPropertyChangeListener(...)`で、`requestFocusInWindow()`
--- `KeyboardFocusManager`に`PropertyChangeListener`を設定して、`propertyChange(...)`が呼び出され、`PropertyName`が、`activeWindow`、かつ`PropertyChangeEvent#getNewValue()`が`null`でないときに、`requestFocusInWindow()`
+-- `KeyboardFocusManager`に`PropertyChangeListener`を設定して、`propertyChange(...)`が呼び出され、`PropertyName`が、`activeWindow`、かつ`PropertyChangeEvent#getNewValue()`が`null`でないときに、`requestFocusInWindow()`を実行
 
 #code{{
 KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();

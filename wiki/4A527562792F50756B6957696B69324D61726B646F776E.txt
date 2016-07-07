@@ -244,6 +244,8 @@ class PukiWikiParser
         buf.concat array
         codeblock = true
         listblock = false
+      when /\A\*/
+        break
       else
         if listblock then
           buf.push "<!-- dummy comment line for breaking list -->"

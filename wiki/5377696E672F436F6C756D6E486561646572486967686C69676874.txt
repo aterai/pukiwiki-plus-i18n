@@ -31,11 +31,8 @@ class ColumnHeaderRenderer implements TableCellRenderer {
 -- このため、`TableColumnModel`から取得した`SelectionModel`に`ListSelectionListener`を追加して、リードインデックスの移動イベントが発生するたび、`JTableHeader#repaint()`を呼び出して`JTableHeader`のフォーカス変更を描画し直すように設定
 
 #code{{
-TableColumnModel cm = table.getColumnModel();
-cm.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-  @Override public void valueChanged(ListSelectionEvent e) {
-    header.repaint();
-  }
+table.getColumnModel().getSelectionModel().addListSelectionListener(e -> {
+  header.repaint();
 });
 }}
 
