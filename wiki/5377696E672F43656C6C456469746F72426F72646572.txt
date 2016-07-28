@@ -21,12 +21,11 @@ table.setDefaultEditor(Object.class, new DefaultCellEditor(field));
 上記のサンプルでは、`BorderFactory.createLineBorder(Color.RED, 2)`を設定した`JTextField`を使用する`DefaultCellEditor`を作成し、`JTable#setDefaultEditor(...)`で、`Object.class`のデフォルトエディタとして設定しています。
 
 ----
-`JTable#setDefaultEditor(...)`を使用せずに、`JTable#prepareEditor(...)`をオーバーライドして、セルエディタとして使用するコンポーネントの背景色や`Border`を変更することもできます。
+`JTable#setDefaultEditor(...)`を使用せずに、`JTable#prepareEditor(...)`をオーバーライドして、セルエディタとして使用するコンポーネントの背景色や`Border`を変更する方法もあります。
 
 #code{{
 JTable table = new JTable(model) {
-  @Override public Component prepareEditor(
-      TableCellEditor editor, int row, int column) {
+  @Override public Component prepareEditor(TableCellEditor editor, int row, int column) {
     Component c = super.prepareEditor(editor, row, column);
     if (c instanceof JCheckBox) {
       JCheckBox b = (JCheckBox) c;

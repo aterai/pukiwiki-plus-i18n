@@ -156,6 +156,29 @@ set XSLT=C:/xslt/docx2xxx.xsl
   </xsl:function>
 }}
 
+** fn:format-date関数、xs:dayTimeDurationデータタイプ [#q5c8e46f]
+- `Excel`の日付のシリアル値を指定された書式で日付に変換する
+-- シリアル値は、`1900-01-00`からの日数
+-- `1900-01-01`: `1`
+-- `1900-02-29`: `60`(うるう年計算のバグ、`Leap year bug`)
+-- `2016-07-27`: `42577`
+- `xs:date('1899-12-31') + (シリアル値 - 1) * xs:dayTimeDuration('P1D')`
+-- シリアル値から`1`引いて計算するのは、うるう年計算のバグで本来存在しないはずの`1900-02-29`日分を除くため
+-- [https://support.microsoft.com/en-us/kb/214326 Excel incorrectly assumes that the year 1900 is a leap year]
+- `fn:format-date`関数に与える書式は、条件式を削除したり`\`エスケープなどを処理しておく
+
+#code{{
+<xsl:variable name="styleSheetNumFmts" select="document('styles.xml',/)/styleSheet/numFmts/numFmt" />
+<xsl:template match="c">
+  <xsl:variable name="xf" select="..." />
+  <xsl:variable name="numFmt" select="$styleSheetNumFmts[@numFmtId = $xf/@numFmtId]" />
+  <xsl:variable name="formatCode" select="if(fn:exists($numFmt)) then fn:replace(fn:tokenize($numFmt/@formatCode,';')[1], '\[.+\]|_\)|\\(.)', '$1') else ''" />
+  <td>
+    <xsl:value-of select="fn:format-date(xs:date('1900-01-01') + xs:integer(v - 2) * xs:dayTimeDuration('P1D'), $formatCode)" />
+  </td>
+</xsl:template>
+}}
+
 ** separator属性 [#p66433ee]
 
 ** xsl:for-each-group [#sbfd6336]
