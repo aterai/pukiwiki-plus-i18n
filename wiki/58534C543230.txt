@@ -63,6 +63,67 @@ set XSLT=C:/xslt/docx2xxx.xsl
 </xsl:variable>
 }}
 
+- `Excel`の日付書式(`YYYY/MM/DD`)を`XSLT 2.0`の日付書式(`[Y0001]/[M01]/[D01]`)に変換
+-- 条件付き書式や`\`エスケープなどには未対応
+
+#code{{
+<!-- 関数: Excelの日付書式をXSLTの日付書式に変換 -->
+<xsl:function as="xs:string" name="kjxf:convertDateFormat">
+  <xsl:param name="formatCode" />
+  <xsl:variable name="ret">
+    <xsl:analyze-string select="$formatCode" regex="([Y|y]+)|([M|m]+)|([D|d])+">
+      <xsl:matching-substring>
+        <xsl:variable name="len" select="fn:string-length(.)" />
+        <xsl:choose>
+          <xsl:when test="regex-group(1)"><!-- Y -->
+            <xsl:value-of select="'[Y',substring('0000',1,$len - 1),'1]'" separator="" />
+          </xsl:when>
+          <xsl:when test="regex-group(2)"><!-- M -->
+            <xsl:choose>
+              <xsl:when test="$len = 5">
+                <xsl:value-of select="'[MN,*-1]'" />
+              </xsl:when>
+              <xsl:when test="$len = 4">
+                <xsl:value-of select="'[MNn]'" />
+              </xsl:when>
+              <xsl:when test="$len = 3">
+                <xsl:value-of select="'[MNn,*-3]'" />
+              </xsl:when>
+              <xsl:when test="$len = 2">
+                <xsl:value-of select="'[M01]'" />
+              </xsl:when>
+              <xsl:when test="$len = 1">
+                <xsl:value-of select="'[M]'" />
+              </xsl:when>
+            </xsl:choose>
+          </xsl:when>
+          <xsl:when test="regex-group(3)"><!-- D -->
+            <xsl:choose>
+              <xsl:when test="$len = 4">
+                <xsl:value-of select="'[FNn]'" />
+              </xsl:when>
+              <xsl:when test="$len = 3">
+                <xsl:value-of select="'[FNn,*-3]'" />
+              </xsl:when>
+              <xsl:when test="$len = 2">
+                <xsl:value-of select="'[D01]'" />
+              </xsl:when>
+              <xsl:when test="$len = 1">
+                <xsl:value-of select="'[D]'" />
+              </xsl:when>
+            </xsl:choose>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:matching-substring>
+      <xsl:non-matching-substring>
+        <xsl:value-of select="." />
+      </xsl:non-matching-substring>
+    </xsl:analyze-string>
+  </xsl:variable>
+  <xsl:value-of select="$ret" />
+</xsl:function>
+}}
+
 ** to演算子 [#y5a69778]
 `<xsl:for-each select="1 to $gridBefore">`のように、指定した回数でループすることが可能で、以下の例では`w:trPr/w:gridBefore`で指定された数だけ空の`td`を作成している。
 
@@ -165,7 +226,7 @@ set XSLT=C:/xslt/docx2xxx.xsl
 - `xs:date('1899-12-31') + (シリアル値 - 1) * xs:dayTimeDuration('P1D')`
 -- シリアル値から`1`引いて計算するのは、うるう年計算のバグで本来存在しないはずの`1900-02-29`日分を除くため
 -- [https://support.microsoft.com/en-us/kb/214326 Excel incorrectly assumes that the year 1900 is a leap year]
-- `fn:format-date`関数に与える書式は、条件式を削除したり`\`エスケープなどを処理しておく
+- `Excel`の日付書式(例:`YYYY/MM/DD`)を`fn:format-date`関数に与える書式(例:`[Y0001]/[M01]/[D01]`)に変換する必要がある(以下のサンプルテンプレートでは省略)
 
 #code{{
 <xsl:variable name="styleSheetNumFmts" select="document('styles.xml',/)/styleSheet/numFmts/numFmt" />
@@ -177,6 +238,15 @@ set XSLT=C:/xslt/docx2xxx.xsl
     <xsl:value-of select="fn:format-date(xs:date('1900-01-01') + xs:integer(v - 2) * xs:dayTimeDuration('P1D'), $formatCode)" />
   </td>
 </xsl:template>
+}}
+
+** fn:tokenize関数 [#u62a28d9]
+- 文字列を分割
+
+#code{{
+<xsl:value-of select="fn:tokenize('aaa;bbb;ccc', ';')[1]" /> <!-- aaa -->
+<xsl:value-of select="fn:tokenize('aaa&quot;bbb&quot;;ccc', ';')[1]" /> <!-- aaa&#34;bbb&#34; -->
+<xsl:value-of select="fn:tokenize('aaa&#34;', ';')[1]" /> <!-- aaa&#34; -->
 }}
 
 ** separator属性 [#p66433ee]
