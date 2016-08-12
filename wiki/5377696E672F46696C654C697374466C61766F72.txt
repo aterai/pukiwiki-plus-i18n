@@ -73,10 +73,8 @@ class FileTransferHandler extends TransferHandler {
         for (Object o: (List) support.getTransferable().getTransferData(
             DataFlavor.javaFileListFlavor)) {
           if (o instanceof File) {
-            File file = (File) o;
-            model.addRow(new Object[] {
-                file, file.length(), file.getAbsolutePath()
-            });
+            File f= (File) o;
+            model.addRow(new Object[] { f, f.length(), f.getAbsolutePath() });
           }
         }
         return true;

@@ -13,7 +13,7 @@ description: JComboBoxで入力した文字列などのアイテムを順に保�
 * サンプルコード [#sourcecode]
 #code(link){{
 public static boolean addItem(JComboBox<String> combo, String str, int max) {
-  if (str == null || str.length() == 0) {
+  if (Objects.isNull(str) || str.isEmpty()) {
     return false;
   }
   combo.setVisible(false);

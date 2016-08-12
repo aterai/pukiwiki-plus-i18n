@@ -59,11 +59,11 @@ class DragScrollLayerUI extends LayerUI<JScrollPane> {
 }}
 
 * 解説 [#explanation]
-- 左: `DragScrollListener`
+- `DragScrollListener` (左)
 -- [[JTreeの余白をドラッグしてスクロール>Swing/TreeDragScroll]]
 -- このリスナーを追加した一つの`Component`をドラッグしてスクロールが可能
 -- `JPanel`を掴んでスクロールすることができるが、その子コンポーネントの`JTabbedPane`などをドラッグしてもスクロールはできない
-- 右: `DragScrollLayer`
+- `DragScrollLayer` (右)
 -- すべての下位コンポーネントの`MouseEvent`をキャッチするよう`JLayer#setLayerEventMask(...)`と設定した`JLayer`を作成
 -- この`JLayer`で`JScrollPane`をラップし、子にマウスイベントを消費するコンポーネントがあっても、ビューである`JPanel`をドラッグに応じてスクロール
 -- `JScrollBar`や`JSlider`のように、ノブのドラッグを使用するコンポーネントは二重にスクロールしてしまうので除外

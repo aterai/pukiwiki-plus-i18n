@@ -26,13 +26,12 @@ JTable table = new JTable(model) {
 `JTable`の`getToolTipText`メソッドをオーバーライドして、カーソルがある行の情報を表示しています。
 
 - `JTable#convertRowIndexToModel`メソッドを使って`viewRowIndex`を`modelRowIndex`に変更し、モデルから行情報を取得
-- 第`1`列、第`2`列を`html`タグを使ってそれぞれ`Tooltips`に設定
-
-//上記のサンプルでは、モデルにTableSorter.javaを使っているので、行のソートや列の移動があってもマウスの下の行の情報を一定のレイアウト((このサンプルの場合、Tooltipの上部に名前、下部にコメント))で表示するように、セルの値の取得には、Table#getValueAtメソッドではなく、TableModel#getValueAtメソッドを使っています。
+- 第`1`列、第`2`列を`html`タグを使ってそれぞれ`ToolTipText`として設定
 
 ----
-以下のように、`JTable#prepareRenderer`メソッドや、`CellRenderer`などで`setToolTipText`を使用する方法でも、ツールチップを設定することができます。
+以下のように、`setToolTipText(...)`メソッドを使用して、各行に`ToolTipText`を設定する方法もあります。
 
+- `JTable#prepareRenderer`メソッド内で`setToolTipText(...)`を使用する
 #code{{
 JTable table = new JTable() {
   @Override public Component prepareRenderer(
@@ -49,6 +48,8 @@ JTable table = new JTable() {
   }
 };
 }}
+
+- `TableCellRenderer#getTableCellRendererComponent(...)`メソッド内で`setToolTipText(...)`を使用する
 #code{{
 table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
   @Override public Component getTableCellRendererComponent(

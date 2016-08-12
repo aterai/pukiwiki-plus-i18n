@@ -39,9 +39,9 @@ JTable table = new JTable(model) {
 上記のサンプルでは、以下のような設定になっています。
 
 - KBD{Tab}やKBD{Enter}キーでのセルフォーカス移動では編集開始しない
-- `JTable#processKeyBinding`をオーバーライドして、入力モードが確定したら選択セルの編集開始
+- `JTable#processKeyBinding(...)`メソッドをオーバーライドして、入力モードが確定したら選択セルの編集開始
 
-インプットメソッドが起動中かどうかは、`Component#getInputContext#isCompositionEnabled`メソッドで判断しています。
+インプットメソッドが起動中かどうかは、`Component#getInputContext#isCompositionEnabled()`メソッドで判断しています。
 
 * 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/6/technotes/guides/imf/index.html Java Input Method Framework テクノロジ]
