@@ -1,9 +1,12 @@
 ---
+category: swing
+folder: CheckedComboBox
 title: JComboBoxのアイテムとして表示したJCheckBoxを複数選択する
 tags: [JComboBox, JCheckBox]
 author: aterai
 pubdate: 2016-05-23T00:06:37+09:00
 description: JComboBoxのアイテムとしてJCheckBoxを表示し、ドロップダウンリストを開いたままこれを複数選択可能に設定します。
+image: https://lh3.googleusercontent.com/-I-fHfvCX-IU/V0G4uliNHdI/AAAAAAAAOX0/-746I_MG_jQkqTu1cniGzJqqu3xbc1khACCo/s800/CheckedComboBox.png
 hreflang:
     href: http://java-swing-tips.blogspot.com/2016/07/select-multiple-jcheckbox-in-jcombobox.html
     lang: en
@@ -84,7 +87,7 @@ class CheckedComboBox<E extends CheckableItem> extends JComboBox<E> {
 - KBD{Space}キーでアイテムが選択された場合は、`BasicComboPopup`から`JList`を取得し、その選択アイテムを取得する
 -- この場合、`JComboBox#getSelectedIndex()`などを使用すると、ハイライト(`cellHasFocus`)されているアイテムではなく、選択状態(`isSelected`)のアイテムが取得される
 
-//* 参考リンク [#reference] [#reference]
+//* 参考リンク [#reference]
 * コメント [#comment]
 #comment
 #comment

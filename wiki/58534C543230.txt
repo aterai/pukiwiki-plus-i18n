@@ -2,7 +2,7 @@
 title: XSL Transformations (XSLT) Version 2.0
 description: XSL Transformations (XSLT) Version 2.0 に関するメモ書き
 author: aterai
-pubdate: 2016-03-24
+pubdate: 2016-03-24T16:35:29+09:00
 ---
 #contents
 
@@ -250,6 +250,18 @@ set XSLT=C:/xslt/docx2xxx.xsl
 }}
 
 ** separator属性 [#p66433ee]
+- `xsl:value-of`要素で、`separator`属性が使用できる
+- `separator=""`で区切り文字なしで連結(`fn:concat`の代わりになる)
+
+#code{{
+<xsl:variable name="hex" select="'0123456789ABCDEF'" />
+<xsl:function as="xs:string?" name="myfn:decimalToHex">
+  <xsl:param as="xs:integer" name="dec" />
+  <xsl:if test="$dec gt 0">
+    <xsl:value-of select="myfn:decimalToHex($dec idiv 16), substring($hex, ($dec mod 16) + 1, 1)" separator="" />
+  </xsl:if>
+</xsl:function>
+}}
 
 ** xsl:for-each-group [#sbfd6336]
 
