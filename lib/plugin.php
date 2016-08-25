@@ -66,7 +66,7 @@ function limit_plugin($name)
 	static $count = array();
 
 	$name = strtolower($name);
-	if (!isset($count[$name])) {
+	if (!isset($count[$name]) || $name === 'epoch') {
 		$count[$name] = 1;
 	}
 	if (++$count[$name] > PKWK_PLUGIN_CALL_TIME_LIMIT) {

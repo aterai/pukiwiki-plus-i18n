@@ -7,27 +7,34 @@ function plugin_download_convert() {
     $args = func_get_args();
     $imgpath = '';
 
-    $params = plugin_ref_body(func_get_args());
-    if (isset($params['_error']) && $params['_error'] != '') {
-        // Error
-        $imgpath = '&amp;ref(): ' . $params['_error'] . ';';
-    } else {
-        $imgpath = $params['_body'];
-    }
+    $path = func_get_args();
+    $image = $path[0];
+    //$head_tags[] = '<meta property="og:image" content="' . $image . '" />';
 
     $page = isset($vars['page']) ? $vars['page'] : '';
     if($page == '' || $page == $defaultpage) return '';
+
+    if (strstr($image, 'drive.google.com')) {
+        $imgpath = '<img src="' . $image . '" class="img-responsive" itemprop="image" alt="' . $page . '.png" title="' . $page . '.png" />';
+    } else {
+        $params = plugin_ref_body($args);
+        if (isset($params['_error']) && $params['_error'] != '') {
+            // Error
+            $imgpath = '&amp;ref(): ' . $params['_error'] . ';';
+        } else {
+            $imgpath = $params['_body'];
+        }
+    }
 
     $ads = '';
     if (! strstr($page, 'JLayeredPane1')) {
         $ads = <<<EOD
 <aside class="col-md-6 col-md-offset-1 col-xs-12">
-<!-- responsive -->
+<!-- ateraimemo.com, 336x280, 09/11/04 -->
 <ins class="adsbygoogle"
-     style="display:block"
+     style="display:inline-block;width:336px;height:280px"
      data-ad-client="ca-pub-6939179021013694"
-     data-ad-slot="1067574330"
-     data-ad-format="auto"></ins>
+     data-ad-slot="9248548235"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>

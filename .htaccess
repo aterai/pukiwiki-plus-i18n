@@ -78,6 +78,7 @@ RewriteBase /
 # RewriteRule ^Recent\.html$ index.php?cmd=recent [L]
 # RewriteRule ^List\.html$ index.php?cmd=list [L]
 RewriteRule ^sitemap\.xml$ index.php?cmd=sitemaps [QSA,PT,L]
+RewriteRule ^swing-sitemap\.xml$ index.php?cmd=sitemaps&category=Swing [QSA,PT,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

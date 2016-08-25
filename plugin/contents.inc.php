@@ -20,7 +20,7 @@ EOD;
         $ad = '';
     }else{
         $ad = <<<EOD
-<!-- xrea, big, 336x280, 09/11/04 -->
+<!-- ateraimemo.com, 336x280, 09/11/04 -->
 <ins class="adsbygoogle"
      style="display:inline-block;width:336px;height:280px"
      data-ad-client="ca-pub-6939179021013694"
