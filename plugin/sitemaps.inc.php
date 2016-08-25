@@ -32,7 +32,6 @@ function plugin_sitemaps_action() {
     $array[] = '^English.*';
 
     $array[] = '^GaChk$';
-    $array[] = '^SwingTips$';
     $array[] = '^aterai$';
     $array[] = '^terai$';
     $array[] = '^upk$';
@@ -43,11 +42,19 @@ function plugin_sitemaps_action() {
     $array[] = '^Popular$';
     $array[] = '^Earphones$';
 
+    $array[] = '^SwingTips$';
+    $array[] = '^HighlightTextForeground$';
+
     $array[] = '^Swing%2FAnchorSelection$';
+    $array[] = '^Swing%2FAutoAdjustRowHeight$';
     $array[] = '^Swing%2FCellAtPoint$';
+    $array[] = '^Swing%2FDoubleBuffering$';
     $array[] = '^Swing%2FIncremental$';
     $array[] = '^Swing%2FJarFile$';
     $array[] = '^Swing%2FNonSelectableList$';
+    $array[] = '^Swing%2FTabWithCloseButtoun$';
+    $array[] = '^Swing%2F_Hacks$';
+    $array[] = '^Swing%2F_ScreenShots$';
 
     $array[] = '^Subversion%2FSubclipse$';
     $array[] = '^Subversion%2FeSvn$';
@@ -65,6 +72,10 @@ function plugin_sitemaps_action() {
         if ($category != '' && preg_match("/".$category."/i", $r_page) == $reverse) {
             continue;
         }
+        if ($category != '' && preg_match("/" . $category . "%2F_/i", $r_page) == 1) {
+            continue;
+        }
+
         //GMTで日時を出力する場合
         //$time = $time + date('Z'); //recent.datのtimeがdefine('UTIME', time()-LOCALZONE)で保存されているため
         //$date = gmdate('Y-m-d\TH:i:s', $time) . '+00:00';
@@ -73,9 +84,14 @@ function plugin_sitemaps_action() {
         //それぞれのロケールで日時を出力する場合(PHP 5.1.3以上)
         //$date = date('Y-m-d\TH:i:sO', $time);
         $date = date('c', $time);
+
+        $loc = $self . $page . ".html";
+        if(preg_match("/FrontPage/i", $r_page)) {
+            $loc = $self;
+        }
         $items .= <<<EOD
 <url>
-  <loc>$self$page.html</loc>
+  <loc>$loc</loc>
   <lastmod>$date</lastmod>
 </url>
 

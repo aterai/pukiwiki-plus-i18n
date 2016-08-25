@@ -172,6 +172,19 @@ function catbody($title, $page, $body)
     if ( isset($frontmatter['title']) ) {
         $newtitle = $frontmatter['title'];
     }
+    $withtitle = '';
+    if ($newtitle != '') {
+        if (strpos($title, 'Swing/') === false) {
+            $withtitle = $newtitle." - ".$page_title;
+        } else {
+            $withtitle = $newtitle." - Java Swing Tips";
+        }
+    } else {
+        $withtitle = $title." - ".$page_title;
+    }
+    $head_tags[] = '<title>'.$withtitle.'</title>';
+    $head_tags[] = '<meta property="og:title" content="'.$newtitle.'" />';
+    $head_tags[] = '<meta property="og:type" content="website" />';
 
     $has_keywords = FALSE;
     if ( isset($frontmatter['keywords']) ) {
@@ -187,6 +200,12 @@ function catbody($title, $page, $body)
     if ( isset($frontmatter['description']) ) {
         $contents = htmlspecialchars($frontmatter['description'], ENT_QUOTES, 'UTF-8');
         $head_tags[] = '<meta name="description" content="' . $contents . '" />';
+        $head_tags[] = '<meta property="og:description" content="' . $contents . '" />';
+    }
+
+    if ( isset($frontmatter['image']) ) {
+        $contents = $frontmatter['image']; //htmlspecialchars($frontmatter['image'], ENT_QUOTES, 'UTF-8');
+        $head_tags[] = '<meta property="og:image" content="' . $contents . '" />';
     }
 
     if ( isset($frontmatter['nofollow']) ) {
@@ -202,8 +221,10 @@ function catbody($title, $page, $body)
     } else {
         if ($title == $defaultpage) {
             $head_tags[] = '<link rel="canonical" href="'.$script.'" />';
+            $head_tags[] = '<meta property="og:url" content="'.$script.'" />';
         } else {
             $head_tags[] = '<link rel="canonical" href="'.$script.$title.'.html" />';
+            $head_tags[] = '<meta property="og:url" content="'.$script.$title.'.html" />';
         }
     }
     //if ( isset($frontmatter['hreflang']) ) {

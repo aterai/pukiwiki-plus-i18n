@@ -268,8 +268,8 @@ class Heading extends Element
 	{
 		$fixed_anchor = make_heading($this->text, FALSE);
 		$id = (empty($fixed_anchor)) ? 'h' . $this->level . '_' . $this->id : $fixed_anchor;
-		return $this->msg_top .  $this->wrap(parent::toString(),
-			'h' . $this->level, ' id="' . $id . '"');
+		return $this->msg_top . $this->wrap(parent::toString(),
+			'h' . $this->level, ' id="' . $id . '" data-needslink="' . $id . '"');
 	}
 }
 

@@ -15,6 +15,10 @@ function plugin_swingdescription_convert() {
     $paurl       = get_script_uri() . $page . '.html';
     $ssurl       = htmlspecialchars(trim($aryargs[3]));
 
+    $pattern     = '/([\w\s\.\(\)]+)/i';
+    $replacement = '<code>$1</code>';
+    $description = preg_replace($pattern, $replacement, htmlspecialchars(trim($aryargs[2])));
+
     return <<<EOD
 <div class="row">
   <div class="col-md-2 col-xs-12">

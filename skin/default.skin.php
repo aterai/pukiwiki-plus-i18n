@@ -21,13 +21,14 @@ header('ETag: ' . md5(MUTIME));
 }
 ?>
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" prefix="og: http://ogp.me/ns#">
 <head>
-<meta charset="UTF-8" />
+<meta charset="utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no" />
 <?php echo $head_tag ?>
-<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAFVBMVEX///+ZmZmCuGKZmZn///+q+Xzd+stVi+GoAAAAAnRSTlMAAHaTzTgAAABKSURBVHheZY5BCsBACAOzifr/JxcXi9WOpwxRhBaQDVJ49JgwTYpTS28jzcXc3XRQyII3t/hnmr45mIV1AbOxjZPLcJj6V2iUAA+UgAJpJuyTrAAAAABJRU5ErkJggg==" type="image/png" />
-<title><?php include_once(PLUGIN_DIR.'title.inc.php'); echo plugin_title_inline(); ?></title>
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAFVBMVEX///+ZmZmCuGKZmZn///+q+Xzd+stVi+GoAAAAAnRSTlMAAHaTzTgAAABKSURBVHheZY5BCsBACAOzifr/JxcXi9WOpwxRhBaQDVJ49JgwTYpTS28jzcXc3XRQyII3t/hnmr45mIV1AbOxjZPLcJj6V2iUAA+UgAJpJuyTrAAAAABJRU5ErkJggg==" sizes="16x16" type="image/png" />
 <style>
 html,body{height:100%;margin:0}
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
@@ -144,6 +145,18 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 <div class="note"><?php echo $notes ?></div>
 </aside>
 <?php } ?>
+<aside class="ad_bar">
+<h2 id="matched" data-needslink="matched">関連コンテンツ＆広告</h2>
+<!-- 関連コンテンツ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6939179021013694"
+     data-ad-slot="7781965536"
+     data-ad-format="autorelaxed"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</aside>
 </article>
 <!-- google_ad_section_end -->
 </div><!-- /.blog-main -->
