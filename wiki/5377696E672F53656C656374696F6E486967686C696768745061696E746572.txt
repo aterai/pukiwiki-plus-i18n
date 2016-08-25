@@ -1,0 +1,54 @@
+---
+category: swing
+folder: SelectionHighlightPainter
+title: JTextComponentの選択ハイライトを変更
+tags: [JTextComponent, DefaultCaret, Highlighter.HighlightPainter]
+author: aterai
+pubdate: 2016-08-22T08:53:24+09:00
+description: JTextComponentのサブクラスで文字列選択する際に使用するハイライトの背景色や形状を変更します。
+image: https://drive.google.com/uc?export=view&id=1jKS8v_MfiUwAw1tg6tJVXOKcyTj7i21NZA
+---
+* 概要 [#summary]
+`JTextComponent`のサブクラスで文字列選択する際に使用するハイライトの背景色や形状を変更します。
+
+#download(https://drive.google.com/uc?export=view&id=1jKS8v_MfiUwAw1tg6tJVXOKcyTj7i21NZA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+Highlighter.HighlightPainter selectionPainter =
+        new DefaultHighlighter.DefaultHighlightPainter(Color.WHITE) {
+  @Override public Shape paintLayer(
+      Graphics g, int offs0, int offs1, Shape bounds, JTextComponent c, View view) {
+    Shape s = super.paintLayer(g, offs0, offs1, bounds, c, view);
+    if (s instanceof Rectangle) {
+      Rectangle r = (Rectangle) s;
+      g.setColor(Color.ORANGE);
+      g.fillRect(r.x, r.y + r.height - 2, r.width, 2);
+    }
+    return s;
+  }
+};
+Caret caret = new DefaultCaret() {
+  @Override protected Highlighter.HighlightPainter getSelectionPainter() {
+    return selectionPainter;
+  }
+};
+caret.setBlinkRate(field2.getCaret().getBlinkRate());
+field2.setSelectedTextColor(Color.RED);
+field2.setCaret(caret);
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- 選択ハイライトには、`LookAndFeel`毎に指定された`Highlighter.HighlightPainter`が使用される
+- `JTextComponent#setSelectionColor(...)`
+-- `JTextComponent`の`setSelectionColor(...)`メソッドで、選択ハイライトの背景色を変更
+- `JTextComponent#setCaret(...)`
+-- `DefaultCaret#getSelectionPainter()`メソッドをオーバーライドして、選択ハイライトの色と形状を変更した`DefaultHighlighter.DefaultHighlightPainter`を返す`Caret`を作成し、これを`JTextComponent`に設定
+
+* 参考リンク [#reference]
+- [https://tips4java.wordpress.com/2008/10/28/rectangle-painter/ Rectangle Painter « Java Tips Weblog]
+
+* コメント [#comment]
+#comment
+#comment
