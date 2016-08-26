@@ -16,32 +16,15 @@ image: https://lh4.googleusercontent.com/-uhbVwRqsa2g/U4HyPhrI8PI/AAAAAAAACF8/OJ
 * サンプルコード [#sourcecode]
 #code(link){{
 private final JTable table = new JTable(100, 3) {
-  private transient ComponentListener resizeHandler;
-  @Override public void updateUI() {
-    removeComponentListener(resizeHandler);
-    super.updateUI();
-    resizeHandler = new ComponentAdapter() {
-      @Override public void componentResized(ComponentEvent e) {
-        JTable table = (JTable) e.getComponent();
-        JTableHeader tableHeader = table.getTableHeader();
-        if (tableHeader != null) {
-          tableHeader.setResizingColumn(null);
-        }
-      }
-    };
-    addComponentListener(resizeHandler);
-  }
   //http://stackoverflow.com/questions/16368343/jtable-resize-only-selected-column-when-container-size-changes
   //http://stackoverflow.com/questions/23201818/jtable-columns-doesnt-resize-probably-when-jframe-resize
   @Override public void doLayout() {
-    if (tableHeader != null && autoResizeMode != AUTO_RESIZE_OFF && check.isSelected()) {
-      TableColumn resizingColumn = tableHeader.getResizingColumn();
-      if (resizingColumn == null) {
+    Optional.ofNullable(getTableHeader()).ifPresent(h -> {
+      if (Objects.isNull(h.getResizingColumn()) && getAutoResizeMode() == AUTO_RESIZE_LAST_COLUMN) {
         TableColumnModel tcm = getColumnModel();
-        int lastColumn = tcm.getColumnCount() - 1;
-        tableHeader.setResizingColumn(tcm.getColumn(lastColumn));
+        h.setResizingColumn(tcm.getColumn(tcm.getColumnCount() - 1));
       }
-    }
+    });
     super.doLayout();
   }
 };
@@ -51,10 +34,10 @@ private final JTable table = new JTable(100, 3) {
 上記のサンプルでは、`JFrame`のリサイズに連動して`JTable`、`JTableHeader`もリサイズされた場合、最後の`TableColumn`が幅の変更をすべて吸収するように、`JTable#doLayout()`のオーバーライドや`JTableHeader.setResizingColumn(...)`の設定を行なっています。
 
 - 注:
--- `table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);`を設定しても、`JTableHeader`自体がリサイズされた場合、すべての`TableColumn`の幅が均等に変化してしまう
+-- `table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);`を設定しても、例えば親`JFrame`の幅が変更されて、`JTableHeader`自体がリサイズされた場合、すべての`TableColumn`の幅が均等に変化してしまう
 -- 列を入れ替えた場合でも、表示上最後にある`TableColumn`がリサイズされる
--- チェックボックスで設定を切り替えているため、`JTable`に`ComponentListener`を追加して、変更ごとに`JTableHeader.setResizingColumn(null)`でリセット
--- 以下のように、`JTable#doLayout()`をオーバーライドではなく、`ComponentListener`の追加でも同様の動作をするように設定することができるが、リサイズ開始時に最後の`TableColumn`にも幅の変更が適用されてしまう(先に`JTable#doLayout()`が実行される)
+-- %%チェックボックスで設定を切り替えているため、`JTable`に`ComponentListener`を追加して、変更ごとに`JTableHeader.setResizingColumn(null)`でリセット%% チェックボックスでの設定切り替えではなく、デフォルト設定の`JTable`を追加し、これと二つ並べて表示するサンプルに変更
+-- 以下のように、`JTable#doLayout()`をオーバーライドではなく、`JTable`または`JTableHeader`に`ComponentListener`を追加しても同様の動作をするように設定することが可能だが、リサイズ開始時に最後の`TableColumn`にも幅の変更が適用されてしまうため、微妙に幅が変化してしまう場合がある(先に`JTable#doLayout()`が実行される)
 
 #code{{
 JTable table2 = new JTable(100, 3);
