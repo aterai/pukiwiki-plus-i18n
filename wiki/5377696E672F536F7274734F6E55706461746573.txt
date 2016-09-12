@@ -20,12 +20,14 @@ image: https://lh3.googleusercontent.com/-sydiHRbXRzw/VLvNhDDXdlI/AAAAAAAANvI/Qe
 
 * 解説 [#explanation]
 - セルエディタで値を編集、変更
--- `SortsOnUpdates(false)`の場合、ソートに変化なし
--- `SortsOnUpdates(true)`の場合、`CellEditor`が値をコミットした(`rowsUpdated`が呼び出された)後にソートが行われる
+-- `SortsOnUpdates(false)`の場合、ソートに変化なし(デフォルト)
+-- `SortsOnUpdates(true)`の場合、`CellEditor`が値をコミットした(`rowsUpdated`が呼び出された)後にソートが実行される
 - モデルに行を追加、削除
--- `SortsOnUpdates`の値に関わらず、ソートが行われる
+-- `SortsOnUpdates`の値には依存せず、常にソートが実行される
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultRowSorter.html#setSortsOnUpdates-boolean- DefaultRowSorter#setSortsOnUpdates(boolean) (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment
