@@ -78,11 +78,7 @@ class DocumentFilterUndoManager extends UndoManager {
     return undoFilter;
   }
   @Override public void undoableEditHappened(UndoableEditEvent e) {
-    if (compoundEdit == null) {
-      addEdit(e.getEdit());
-    } else {
-      compoundEdit.addEdit(e.getEdit());
-    }
+    Optional.ofNullable(compoundEdit).orElseGet(() -> this).addEdit(e.getEdit());
   }
 }
 }}
