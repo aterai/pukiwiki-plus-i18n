@@ -23,9 +23,7 @@ class ComboCellEditor extends AbstractCellEditor implements TableCellEditor {
   protected ComboCellEditor() {
     super();
     combo.setEditable(true);
-    combo.addActionListener(e -> {
-      fireEditingStopped();
-    });
+    combo.addActionListener(e -> fireEditingStopped());
   }
   @Override public Component getTableCellEditorComponent(
       JTable table, Object value, boolean isSelected, int row, int column) {
