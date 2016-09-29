@@ -14,9 +14,7 @@ function plugin_download_convert() {
     $page = isset($vars['page']) ? $vars['page'] : '';
     if($page == '' || $page == $defaultpage) return '';
 
-    if (strstr($image, 'drive.google.com')) {
-        $imgpath = '<img src="' . $image . '" class="img-responsive" itemprop="image" alt="' . $page . '.png" title="' . $page . '.png" />';
-    } else {
+    if (strstr($image, 'googleusercontent')) {
         $params = plugin_ref_body($args);
         if (isset($params['_error']) && $params['_error'] != '') {
             // Error
@@ -24,6 +22,8 @@ function plugin_download_convert() {
         } else {
             $imgpath = $params['_body'];
         }
+    } else {
+        $imgpath = '<img src="' . $image . '" class="img-responsive" itemprop="image" alt="' . $page . '.png" title="' . $page . '.png" />';
     }
 
     $ads = '';

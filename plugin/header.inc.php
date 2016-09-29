@@ -40,7 +40,8 @@ function plugin_header_convert() {
     $hreflang = '';
     if ( isset($frontmatter['hreflang']) ) {
         $lng = $frontmatter['hreflang']['lang'];
-        $hrf = $frontmatter['hreflang']['href'];
+        //$hrf = $frontmatter['hreflang']['href'];
+        $hrf = preg_replace("/^https?:/", "", $frontmatter['hreflang']['href']);
         $hreflang = '<ul class="tag_box inline"><li><span class="glyphicon-list-alt"></span></li><li><a rel="alternate" hreflang="' . $lng . '" href="' . $hrf . '">' . $lng . '</a></li></ul>';
     }
 

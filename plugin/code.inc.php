@@ -40,8 +40,9 @@ function plugin_code_convert() {
 
     $pre = sprintf('<pre class="prettyprint' . $buf . '" itemscope="itemscope" itemtype="http://schema.org/Code"><code itemprop="sampleType" content="code snippet">%s</code></pre>', $str);
     //$svn = "http://java-swing-tips.googlecode.com/svn/trunk/" . str_replace('Swing/', '', $page) . "/src/java/example/MainPanel.java";
-    $git = 'https://github.com/aterai/java-swing-tips/blob/master/' . str_replace('Swing/', '', $page) . '/src/java/example/MainPanel.java';
-    if ($flag && is_url($git)) {
+    $git = '//github.com/aterai/java-swing-tips/blob/master/' . str_replace('Swing/', '', $page) . '/src/java/example/MainPanel.java';
+    //if ($flag && is_url($git)) {
+    if ($flag) {
         return '<div style="position:relative">' . $pre . sprintf('<a href="%s" style="position:absolute;right:1.5EM;top:-1.5EM;z-index:50">view all</a></div>', $git);
     }else{
         return $pre;
