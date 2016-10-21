@@ -146,6 +146,8 @@ xrea, link, 728x15, 09/01/04
 <div class="note"><?php echo $notes ?></div>
 </aside>
 <?php } ?>
+
+<?php if (! arg_check('edit')) { ?>
 <aside class="ad_bar">
 <h2 id="matched" data-needslink="matched">関連コンテンツ＆広告</h2>
 <!-- 関連コンテンツ -->
@@ -158,6 +160,8 @@ xrea, link, 728x15, 09/01/04
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 </aside>
+<?php } ?>
+
 </article>
 <!-- google_ad_section_end -->
 </div><!-- /.blog-main -->

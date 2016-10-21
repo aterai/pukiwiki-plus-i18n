@@ -56,23 +56,20 @@ class TitledSeparator extends JLabel {
     private Paint painter2;
     @Override public void paintIcon(Component c, Graphics g, int x, int y) {
       int w = c.getWidth();
-      Color color = getBackground();
       if (w != width || painter1 == null || painter2 == null) {
         width = w;
-        Point2D start = new Point2D.Float(0f, 0f);
-        Point2D end   = new Point2D.Float((float) width, 0f);
+        Point2D start = new Point2D.Float();
+        Point2D end   = new Point2D.Float(width, 0);
         float[] dist  = {0f, 1f};
-        color = color == null ? UIManager.getColor("Panel.background") : color;
-        Color tc = target == null ? color : target;
-        painter1 = new LinearGradientPaint(
-            start, end, dist, new Color[] {tc.darker(),   color});
-        painter2 = new LinearGradientPaint(
-            start, end, dist, new Color[] {tc.brighter(), color});
+        Color ec = Optional.ofNullable(getBackground()).orElse(UIManager.getColor("Panel.background"));
+        Color sc = Optional.ofNullable(target).orElse(ec);
+        painter1 = new LinearGradientPaint(start, end, dist, new Color[] {sc.darker(),   ec});
+        painter2 = new LinearGradientPaint(start, end, dist, new Color[] {sc.brighter(), ec});
       }
       int h = getIconHeight() / 2;
       Graphics2D g2  = (Graphics2D) g.create();
       g2.setPaint(painter1);
-      g2.fillRect(x, y,   width, getIconHeight());
+      g2.fillRect(x, y, width, getIconHeight());
       g2.setPaint(painter2);
       g2.fillRect(x, y + h, width, getIconHeight() - h);
       g2.dispose();
