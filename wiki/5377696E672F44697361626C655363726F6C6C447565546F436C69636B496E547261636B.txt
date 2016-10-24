@@ -1,0 +1,77 @@
+---
+category: swing
+folder: DisableScrollDueToClickInTrack
+title: JSliderのトラックをクリックしても値の変更が発生しないように設定する
+tags: [JSlider, JLayer]
+author: aterai
+pubdate: 2016-10-10T01:47:45+09:00
+description: JSliderのノブのドラッグとカーソルキーでのみ値変更を許可し、トラックのマウスクリックによる値変更を無効にします。
+image: https://drive.google.com/uc?export=view&id=1ifIQLyAQgYQFw_5p3MbXRm4Z9j5VB33lSg
+
+---
+* 概要 [#summary]
+`JSlider`のノブのドラッグとカーソルキーでのみ値変更を許可し、トラックのマウスクリックによる値変更を無効にします。
+
+#download(https://drive.google.com/uc?export=view&id=1ifIQLyAQgYQFw_5p3MbXRm4Z9j5VB33lSg)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+slider.setUI(new MetalSliderUI() {
+  @Override protected TrackListener createTrackListener(JSlider slider) {
+    return new TrackListener() {
+      @Override public boolean shouldScroll(int direction) {
+        return false;
+      }
+    };
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `Override TrackListener#shouldScroll(...): false`
+-- `BasicSliderUI#createTrackListener(...)`をオーバーライドし、`shouldScroll(...)`メソッドが常に`false`を返す`TrackListener`を生成する
+-- `BasicSliderUI#scrollDueToClickInTrack(...)`を空にしても、長押しでスクロールを行う`Timer`が起動し、`BasicSliderUI#scrollByBlock(...)`などが実行されて値が変化する
+- 
+-- `UIManager.put("Slider.onlyLeftMouseButtonDrag", false);`を設定し、マウスの右ボタンでノブのドラッグを可能に設定し、`JLayer`を使用して左ボタンの押下を右ボタンの押下に入れ替える
+-- 参考: [[JSliderのノブをマウスの右ボタンで操作不可に設定する>Swing/OnlyLeftMouseButtonDrag]]
+-- トラックの右クリックは、元々無効なので、この入れ替えにより、トラックのクリックによる値変更は無効になる
+
+#code{{
+class DisableLeftPressedLayerUI extends LayerUI<JSlider> {
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK);
+    }
+  }
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+  @Override protected void processMouseEvent(
+      MouseEvent e, JLayer<? extends JSlider> l) {
+    if (e.getID() == MouseEvent.MOUSE_PRESSED
+        && SwingUtilities.isLeftMouseButton(e)) {
+      e.getComponent().dispatchEvent(new MouseEvent(
+          e.getComponent(),
+          e.getID(), e.getWhen(),
+          InputEvent.BUTTON3_DOWN_MASK, //e.getModifiers(),
+          e.getX(), e.getY(),
+          e.getXOnScreen(), e.getYOnScreen(),
+          e.getClickCount(),
+          e.isPopupTrigger(),
+          MouseEvent.BUTTON3)); //e.getButton());
+      e.consume();
+    }
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [http://stackoverflow.com/questions/39904127/stopping-the-jslider-from-moving-when-clicked java - Stopping the jslider from moving when clicked - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

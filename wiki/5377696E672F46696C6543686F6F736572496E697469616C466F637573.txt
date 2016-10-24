@@ -1,0 +1,107 @@
+---
+category: swing
+folder: FileChooserInitialFocus
+title: JFileChooserを開いたときの初期フォーカスを設定する
+tags: [JFileChooser, NimbusLookAndFeel, Focus]
+author: aterai
+pubdate: 2016-10-17T00:34:37+09:00
+description: NimbusLookAndFeelを使用しているJFileChooserを開いた場合、ファイル名表示用のJTextFieldに初期フォーカスを設定します。
+image: https://drive.google.com/uc?export=view&id=1uW5FnfU0V3Yi9iBBMFV7uoN8M9IA2sskmg
+---
+* 概要 [#summary]
+`NimbusLookAndFeel`を使用している`JFileChooser`を開いた場合、ファイル名表示用の`JTextField`に初期フォーカスを設定します。
+
+#download(https://drive.google.com/uc?export=view&id=1uW5FnfU0V3Yi9iBBMFV7uoN8M9IA2sskmg)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+fileChooser.setSelectedFile(new File(field.getText().trim()));
+if (r2.isSelected()) {
+  EventQueue.invokeLater(() -> {
+    findFileNameTextField(fileChooser).ifPresent(c -> {
+      ((JTextField) c).selectAll();
+      c.requestFocusInWindow();
+    });
+  });
+}
+//...
+private static Optional<Component> findFileNameTextField(JFileChooser fileChooser) {
+  return Arrays.stream(fileChooser.getComponents())
+  .flatMap(new Function<Component, Stream<Component>>() {
+    @Override public Stream<Component> apply(Component c) {
+      if (c instanceof Container) {
+        Component[] sub = ((Container) c).getComponents();
+        return sub.length == 0 ? Stream.of(c)
+               : Arrays.stream(sub).flatMap(cc -> apply(cc));
+      } else {
+        return Stream.of(c);
+      }
+    }
+  })
+  .filter(c -> c instanceof JTextField)
+  .findFirst();
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、`NimbusLookAndFeel`(`SynthLookAndFeel`)を使用している場合、`JFileChooser`を開いたときの初期フォーカスは、フォルダ選択用の`JComboBox`になっているので、これをファイル名表示用の`JTextField`に変更するテストを行っています。
+
+- `JFileChooser`を開いた後でフォーカスを移動するため、`EventQueue.invokeLater(...)`を使用
+- `JFileChooser`から直接ファイル名表示用の`JTextField`を取得することができないので、`Container#getComponents()`で子コンポーネントを検索している
+- `MetalLookAndFeel`や`WindowsLookAndFeel`の場合、初期フォーカスはファイル名表示用の`JTextField`
+-- `SynthLookAndFeel`のバグ？
+- または、`PropertyChangeListener`、`AncestorListener`などを使用、`SynthFileChooserUIImpl#doAncestorChanged()`をオーバーライドする方法がある
+
+#code{{
+//TEST: PropertyChangeListener
+fileChooser.addPropertyChangeListener(e -> {
+  String s = e.getPropertyName();
+  if (s.equals("ancestor")) {
+    if (e.getOldValue() == null && e.getNewValue() != null) {
+      // Ancestor was added, set initial focus
+      findFileNameTextField(fileChooser).ifPresent(c -> {
+        ((JTextField) c).selectAll();
+        c.requestFocusInWindow();
+      });
+    }
+  }
+});
+}}
+
+#code{{
+//TEST: AncestorListener
+fileChooser.addAncestorListener(new AncestorListener() {
+  @Override public void ancestorAdded(AncestorEvent e) {
+    findFileNameTextField(fileChooser).ifPresent(c -> {
+      ((JTextField) c).selectAll();
+      c.requestFocusInWindow();
+    });
+  }
+  @Override public void ancestorMoved(AncestorEvent e) {}
+  @Override public void ancestorRemoved(AncestorEvent e) {}
+});
+}}
+
+#code{{
+//TEST: doAncestorChanged
+fileChooser = new JFileChooser() {
+  @Override public void updateUI() {
+    super.updateUI();
+    EventQueue.invokeLater(() -> {
+      setUI(new sun.swing.plaf.synth.SynthFileChooserUIImpl(fileChooser) {
+        @Override protected void doAncestorChanged(PropertyChangeEvent e) {
+          findFileNameTextField(fileChooser).ifPresent(c -> {
+            ((JTextField) c).selectAll();
+            c.requestFocusInWindow();
+          });
+        }
+      });
+    });
+  }
+};
+}}
+
+//* 参考リンク [#reference]
+* コメント [#comment]
+#comment
+#comment
