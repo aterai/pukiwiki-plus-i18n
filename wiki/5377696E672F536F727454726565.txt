@@ -77,9 +77,12 @@ public static void sort3(DefaultMutableTreeNode parent) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、チェックボックスをクリックするとルートの`DefaultMutableTreeNode`から`deep copy`でクローンを作成し、各親ノードを深さ優先で探索して、昇順ソートしています。
+上記のサンプルでは、チェックボックスがクリックされると、以下の手順でソートを行っています。
 
-元のソート無しの状態に戻す場合は、`DefaultTreeModel`を作成し直しています。
+- `DefaultTreeModel`から`deep copy`でクローンを作成
+- クローンされたモデルのルート`DefaultMutableTreeNode`を深さ優先で探索することで昇順ソート
+- ソート済みのモデルを`JTree`に設定
+-- ソート無しの状態に戻す場合は、別途保存してある元の`DefaultTreeModel`を`JTree`に設定
 
 ----
 - `DefaultMutableTreeNode`の比較は、`Comparator<DefaultMutableTreeNode>#compare`をオーバーライドし、節ノードが葉ノードより上、かつ`getUserObject().toString()`で生成した文字列の大文字小文字を無視している

@@ -35,7 +35,7 @@ scroll.getVerticalScrollBar().setUnitIncrement(25);
 --- すでに上限、下限近くまでスクロールして余地がない場合などは除く(限界を超えてスクロールなどはしない)
 -- %%`Scrollable#getScrollableUnitIncrement(...)`などをオーバーライドしても、ホイールスクロールには関係ない？(カーソルキー用？)%%
 -- `JScrollBar#getClientProperty("JScrollBar.fastWheelScrolling")`が`true`(デフォルト)で、`View`が`JList`などのように`Scrollable`を実装している場合は、`Scrollable#getScrollableUnitIncrement(...)`、`Scrollable#getScrollableBlockIncrement(...)`が使用されている
---- `@See BasicScrollPaneUI.Handler`
+--- 詳細は`BasicScrollPaneUI.Handler`を参照
 -- マウスのプロパティで「`1`画面ずつスクロールする」にすると、`e.getScrollType()`が`WHEEL_UNIT_SCROLL`から`WHEEL_BLOCK_SCROLL`になり、上記の`3`行×スクロール量(`BasicScrollBarUI.scrollByUnits(...)`)ではなく、`BasicScrollBarUI.scrollByBlock(...)`が使用される
 
 #code{{

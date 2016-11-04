@@ -56,8 +56,8 @@ private void visitAll(JTree tree, TreePath parent, boolean expand) {
 -- ループは全展開された時の`JTree`の行数だけ繰り返す
 
 - `collapseAll(A)`
--- 末尾から順番に`JTree#collapseRow(int)`メソッドを実行し、見かけ上すべてのノードを折り畳み
--- 子ノードは展開されているが、親ノードが折り畳まれている場合、その子ノードは折り畳まれない
+-- 末尾から順番に`JTree#collapseRow(int)`メソッドを実行し、表示されているすべてのノードを折り畳む
+-- 子ノードは展開されているが、親ノードが折り畳まれている場合、その非表示となっている子ノードに対しては折り畳みを実行しない
 
 - `expandAll(B)`
 -- `visitAll(tree, new TreePath(root), true);`
@@ -74,6 +74,6 @@ private void visitAll(JTree tree, TreePath parent, boolean expand) {
 
 * コメント [#comment]
 #comment
-- 解説のラベル`A`と`B`が、ソースとは逆になっていたのを修正しました。 -- &user(aterai); &new{2008-02-05 (火) 19:31:53};
+- 解説中のラベル`A`と`B`が、ソースコードとは逆になっていたので、これをソースコードと同じになるよう修正。 -- &user(aterai); &new{2008-02-05 (火) 19:31:53};
 
 #comment
