@@ -123,12 +123,11 @@ class TableNextMatchKeyHandler extends KeyAdapter {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、キー入力と`0`列目の文字列の先頭文字が一致(大文字小文字は無視)する行を検索、選択し、そこまでスクロールします。
+上記のサンプルでは、キー入力を行うと、`0`列目の文字列の先頭文字が一致(大文字小文字は無視)する行を検索、選択し、その位置までスクロールします。
+
 検索方法は、`BasicListUI.Handler`、`BasicTreeUI.Handler`、`JList#getNextMatch(...)`、`JTree#getNextMatch(...)`のものと、ほぼ同じ(KBD{Shift}キーを同時に押すと逆検索を追加)です。
 
-----
-- `table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`として、キー入力で編集を開始しないように設定
--- マウスクリック、KBD{F2}キーでの編集は可能
+`JList`などとは異なり、デフォルトの`JTable`はキー入力でセルエディタが起動するため、キー入力による検索が実行するためには、`table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`として、キー入力による編集開始を無効(マウスクリック、KBD{F2}キーでの編集は可能)にする必要があります。
 
 //* 参考リンク [#reference]
 * コメント [#comment]

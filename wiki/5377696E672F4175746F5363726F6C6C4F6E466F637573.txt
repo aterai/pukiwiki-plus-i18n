@@ -1,0 +1,60 @@
+---
+category: swing
+folder: AutoScrollOnFocus
+title: FocusTraversalPolicyを使用してフォーカスを取得したコンポーネントまでスクロールする
+tags: [Focus, JScrollPane, JTextField, FocusTraversalPolicy]
+author: aterai
+pubdate: 2016-11-07T03:34:14+09:00
+description: FocusTraversalPolicyを使用してフォーカスをもつコンポーネントを取得し、その全体が表示されるまでスクロールします。
+image: https://drive.google.com/uc?export=view&id=1FEs_WslEqQzxCPS7bxq_smwC8Ao3j6-JcA
+---
+* 概要 [#summary]
+`FocusTraversalPolicy`を使用してフォーカスをもつコンポーネントを取得し、その全体が表示されるまでスクロールします。
+
+#download(https://drive.google.com/uc?export=view&id=1FEs_WslEqQzxCPS7bxq_smwC8Ao3j6-JcA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+Box box = Box.createVerticalBox();
+box.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+IntStream.range(0, 20).forEach(i -> {
+  box.add(new JTextField("test" + i));
+  box.add(Box.createVerticalStrut(5));
+});
+box.add(Box.createVerticalGlue());
+box.setFocusCycleRoot(true);
+box.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
+  @Override public Component getComponentAfter(Container focusCycleRoot, Component aComponent) {
+    Component c = super.getComponentAfter(focusCycleRoot, aComponent);
+    if (focusCycleRoot instanceof JComponent) {
+      ((JComponent) focusCycleRoot).scrollRectToVisible(c.getBounds());
+    }
+    return c;
+  }
+  @Override public Component getComponentBefore(Container focusCycleRoot, Component aComponent) {
+    Component c = super.getComponentBefore(focusCycleRoot, aComponent);
+    if (focusCycleRoot instanceof JComponent) {
+      ((JComponent) focusCycleRoot).scrollRectToVisible(c.getBounds());
+    }
+    return c;
+  }
+});
+add(new JScrollPane(box));
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、`JScrollPane`内に配置されているコンポーネントにフォーカスが移動した場合、そのコンポーネント全体が表示されるようにスクロールを行う`FocusTraversalPolicy`を作成しています。
+
+- 左: デフォルト
+-- 現在表示範囲外にある`JTextField`にKBD{Tab}キーなどでフォーカスが移動しても、自動的にスクロールしない
+- 右: `LayoutFocusTraversalPolicy#getComponentAfter(...)`
+-- `LayoutFocusTraversalPolicy#getComponentAfter(...)`メソッドなどをオーバーライドして、フォーカスを取得するコンポーネントを取得し、`JComponent#scrollRectToVisible(...)`メソッドでそのコンポーネントの領域が表示されるまでスクロールを実行
+
+* 参考リンク [#reference]
+- [[JTextFieldを編集不可のJTextPaneに追加する>Swing/TextFieldOnReadOnlyTextPane]]
+-- 同様に`JComponent#scrollRectToVisible(...)`を使用しているが、こちらは`FocusListener`を各`JTextField`に設定している
+- [https://tips4java.wordpress.com/2010/05/09/scrolling-a-form/ Scrolling a Form « Java Tips Weblog]
+
+* コメント [#comment]
+#comment
+#comment
