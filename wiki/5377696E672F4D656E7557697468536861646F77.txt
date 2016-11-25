@@ -45,13 +45,16 @@ public class CustomPopupMenuUI extends BasicPopupMenuUI {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`BasicPopupMenuUI`を継承した、`CustomPopupMenuUI`を作成して、これを`UIManager`に登録しています。
+上記のサンプルでは、`BasicPopupMenuUI`を継承した`CustomPopupMenuUI`を作成して、`UIManager`に登録しています。
 
 #code{{
 UIManager.put("PopupMenuUI","example.CustomPopupMenuUI");
 }}
 
-この`CustomPopupMenuUI`では、ポップアップメニューがフレームの中にあるか外にあるかで、影のつけ方を切り替えています。外にある場合は、`Robot`を使って画面をキャプチャーしています。
+この`CustomPopupMenuUI`では、ポップアップメニューがフレームの中にあるか外にあるかで、影のつけ方を切り替えています。
+
+- 内側: ポップアップメニューに半透明の`Border`を設定して影を描画
+- 外側: 別`Window`でポップアップメニューが開くため、`Robot`を使って背景画面をキャプチャーし、その上に影を描画して`Border`に設定
 
 %%メニューがフレームの外にはみ出す場合に、メニューをすばやく切り替えたりすると、ゴミが残ることがあるようです。参考リンクの`contrib.com.jgoodies.looks.common.ShadowPopupFactory`を使っても同様のゴミが出る場合があります。%% 再現しなくなった？ようです。
 

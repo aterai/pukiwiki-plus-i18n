@@ -36,7 +36,7 @@ UIManager.put("TabbedPane.borderHightlightColor", fgc);
 `UIManager.put(...)`を使用して、`JTabbedPane`のタブやコンテンツエリアなどに、半透明の色を設定します。
 
 - 注:
--- `Swing`のコンポーネントは、背景色が半透明かどうかを判断して再描画しているわけではないので、マウスカーソルのイベントなどで景色が重複して上書きされて残像が発生し、色が濃くなる場合がある
+-- `Swing`のコンポーネントは、背景色が半透明かどうかを判断して再描画しているわけではないため、例えばマウスカーソルの下の領域を再描画するイベントなどで背景色が重複上書きされて、残像が残ったり、次第に色が濃くなる現象などが発生する
 --- 半透明色で全体を再描画するように`JPanel#paintComponent(...)`をオーバーライドしたコンポーネントを挟んで回避する必要がある
 --- [https://tips4java.wordpress.com/2009/05/31/backgrounds-with-transparency/ Backgrounds With Transparency « Java Tips Weblog]
 --- [[JFrameの透明化と再描画>Swing/TranslucentFrameRepaint]]
