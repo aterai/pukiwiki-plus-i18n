@@ -90,10 +90,10 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 @media print{h1,h2,h3,h4,h5,h6{color:#000;background-color:#FFF}td,th,tr{border:1px solid;color:#000;background-color:#FFF;border-collapse:collapse}.content{width:100%}a:link,a:visited{text-decoration:underline}.sidebar,.navigator,.header,.footer,.menubar,.attach,.toolbar,.related,.logo,.ad_box,.jumpmenu,.paraedit,.anchor_super{display:none}.str{color:#060}.kwd{color:#006;font-weight:bold}.com{color:#600;font-style:italic}.typ{color:#404;font-weight:bold}.lit{color:#044}.pun,.opn,.clo{color:#440}.tag{color:#006;font-weight:bold}.atn{color:#404}.atv{color:#060}}
 </style>
 </head>
-<body itemscope="itemscope" itemtype="http://schema.org/WebPage">
+<body itemscope="itemscope" itemtype="https://schema.org/WebPage">
 <script async="" src="//ateraimemo.com/skin/google_tm.js"></script>
 <div class="wrap">
-<nav class="navbar navbar-default" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
+<nav class="navbar navbar-default" role="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
 <div class="navbar-header">
 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#jb-navbar-collapse">
 <span class="sr-only">Toggle navigation</span>
@@ -160,15 +160,15 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 </article>
 <!-- google_ad_section_end -->
 </div><!-- /.blog-main -->
-<nav class="col-md-3 col-xs-12 blog-sidebar sidebar" itemscope="itemscope" itemtype="http://schema.org/WPSideBar">
+<nav class="col-md-3 col-xs-12 blog-sidebar sidebar" itemscope="itemscope" itemtype="https://schema.org/WPSideBar">
 <?php if (exist_plugin_convert('menu')) { echo do_plugin_convert('menu'); } ?>
 </nav>
 </div><!-- /.row -->
 </div><!-- /.container -->
 <div class="push"></div>
 </div><!-- /.wrap -->
-<footer class="footer text-center" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
-<p>© 2015 <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="http://ateraimemo.com/:Users/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//github.com/plusjade/jekyll-bootstrap/" target="_blank">Jekyll Bootstrap</a></p>
+<footer class="footer text-center" itemscope="itemscope" itemtype="https://schema.org/WPFooter">
+<p>© 2016 <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="http://ateraimemo.com/:Users/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//github.com/plusjade/jekyll-bootstrap/" target="_blank">Jekyll Bootstrap</a></p>
 </footer>
 </body>
 </html>

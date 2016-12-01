@@ -67,7 +67,7 @@ function plugin_header_convert() {
     if ( $time ) {
         $isotime = date('c', $time);
         $lastmod = date('Y-m-d H:i', $time);
-        $last_modified_str = '<br />Last-modified: <a href="' . get_script_uri() . '?cmd=diff&page=' . $_page . '"><time datetime="' . $isotime . '">' . $lastmod . '</time></a>';
+        $last_modified_str = '<br />Last-modified: <a href="' . get_script_uri() . '?cmd=diff&page=' . $_page . '"><time itemprop="dateModified" datetime="' . $isotime . '">' . $lastmod . '</time></a>';
         //$last_modified_str = '<br />Last-modified: <code><time itemprop="dateModified" datetime="' . $isotime . '">' . $lastmod . '</time></code>';
     }
 
@@ -80,8 +80,8 @@ function plugin_header_convert() {
 
         $author = isset($frontmatter['author']) ? $frontmatter['author'] : "aterai";
         $url = get_script_uri() . ':Users/' . $author . '.html';
-        //$posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <code><time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time></code>';
-        $posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <a href="' . get_script_uri() . '?cmd=backup&page=' . $_page . '"><time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time></a>';
+        //$posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <code><time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time></code>';
+        $posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <a href="' . get_script_uri() . '?cmd=backup&page=' . $_page . '"><time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time></a>';
     }
 
     return <<<EOD
