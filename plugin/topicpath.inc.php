@@ -77,7 +77,7 @@ function plugin_topicpath_inline()
                 $act = 'class="active" ';
             }
             $topic_path[] = <<<EOD
-<span {$act}itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
+<span {$act}itemprop="itemListElement" itemscope="itemscope" itemtype="https://schema.org/ListItem">
 <a itemprop="item" href="{$url}"><span itemprop="name">{$element}</span></a>
 <meta itemprop="position" content="{$pos}" />
 </span>
@@ -89,6 +89,6 @@ EOD;
       $topic_path[] = make_pagelink($defaultpage, PLUGIN_TOPICPATH_TOP_LABEL);
 
     //return '<span itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">' . join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path)) . '</span>';
-    return '<span class="breadcrumb" itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList">' . join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path)) . '</span>';
+    return '<span class="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">' . join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path)) . '</span>';
 }
 ?>

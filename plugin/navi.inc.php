@@ -174,7 +174,7 @@ function plugin_navi_convert()
 	} else if (! $footer) {
 		// Header
 		$ret = <<<EOD
-<nav role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
+<nav role="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
 <ul class="pager">
  <li itemprop="name" class="previous"><a itemprop="url" href="{$navi[$home]['prevhref']}">Prev</a></li>
  <li itemprop="name" class="hidden-xs">{$navi[$home]['home']}</li>

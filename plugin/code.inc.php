@@ -38,7 +38,8 @@ function plugin_code_convert() {
         $buf = ' ' + $buf.rtrim();
     }
 
-    $pre = sprintf('<pre class="prettyprint' . $buf . '" itemscope="itemscope" itemtype="http://schema.org/Code"><code itemprop="sampleType" content="code snippet">%s</code></pre>', $str);
+    //$pre = sprintf('<pre class="prettyprint' . $buf . '" itemscope="itemscope" itemtype="https://schema.org/Code"><code itemprop="sampleType" content="code snippet">%s</code></pre>', $str);
+    $pre = sprintf('<pre class="prettyprint' . $buf . '"><code itemscope="itemscope" itemtype="https://schema.org/Code">%s</code></pre>', $str);
     //$svn = "http://java-swing-tips.googlecode.com/svn/trunk/" . str_replace('Swing/', '', $page) . "/src/java/example/MainPanel.java";
     $git = '//github.com/aterai/java-swing-tips/blob/master/' . str_replace('Swing/', '', $page) . '/src/java/example/MainPanel.java';
     //if ($flag && is_url($git)) {

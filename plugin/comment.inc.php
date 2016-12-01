@@ -199,16 +199,32 @@ function plugin_comment_convert()
 // 		$keyword = $ticket;
 // 		$_SESSION[$keyword] = md5(get_ticket() . $digest);
 // 	}
+    global $script, $title;
 
+    $page_url = "'.$script.$title.'.html";
     static $times = 0;
     $times++;
     if ($times == 1) {
-        return '<article itemprop="comment" itemscope="itemscope" itemtype="http://schema.org/UserComments">';
+        return '<article itemscope="itemscope" itemtype="https://schema.org/UserComments">';
     }
     //$times = 0;
     return <<<EOD
 <br />
-<div id="livefyre-comments"></div>
+<!-- div id="livefyre-comments"></div -->
+<div id="disqus_thread"></div>
+<script>
+var disqus_config = function () {
+this.page.url = $page_url;
+this.page.identifier = $title;
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//javaswingtips.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </article>
 <br />
 <aside class="ad_bar">
