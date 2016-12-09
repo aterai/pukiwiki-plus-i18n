@@ -97,6 +97,32 @@ pubdate: 2003-09-25
   </target>
 }}
 
+** ErrorProneタスク [#w4a0bdde]
+- [http://errorprone.info/ Error Prone]
+-- [http://errorprone.info/docs/flags Command-line flags]
+
+#code{{
+<target name="errorprone" depends="prepare-src, prepare-resource, prepare-web">
+  <componentdef name="errorprone"
+                classname="com.google.errorprone.ErrorProneExternalCompilerAdapter"
+                classpath="${errorprone.dir}/error_prone_ant-2.0.9.jar" />
+  <javac srcdir="${build.src}"
+         includes="**/*.java"
+         destdir="${build.dest}"
+         encoding="${compile.encoding}"
+         debug="${compile.debug}"
+         optimize="${compile.optimize}"
+         deprecation="${compile.deprecation}"
+         includeAntRuntime="no"
+         fork="true"
+         classpathref="project.class.path">
+    <errorprone />
+    <!-- MultipleTopLevelClassesのチェックを無視する例 -->
+    <compilerarg value="-Xep:MultipleTopLevelClasses:OFF" />
+  </javac>
+</target>
+}}
+
 ** Scpタスク [#x8ac45f9]
 #code{{
   <path id="jsch.path">

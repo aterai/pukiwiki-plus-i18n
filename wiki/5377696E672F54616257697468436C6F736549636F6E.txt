@@ -44,19 +44,19 @@ public class JTabbedPaneWithCloseIcons extends JTabbedPane {
 }}
 
 * 解説 [#explanation]
-- `JTabbedPaneWithCloseButton`(上)
+- 上: `JTabbedPaneWithCloseButton`
 -- `TabbedPaneLayout`を使用して、ボタンをタブの中にレイアウト
-- `JTabbedPaneWithCloseIcons`(中)
--- `JTabbedPane`の、タブにアイコンを表示する機能を利用
--- タブのクリックされた位置がアイコン上かどうかで、そのタブを閉じるかどうかを判断
-- `CloseableTabbedPane`(下)
+- 中: `JTabbedPaneWithCloseIcons`
+-- `JTabbedPane`のタブにアイコンを表示する機能を利用
+-- `JTabbedPane`に`MouseListener`を設定し、タブのクリックされた位置がアイコン上かどうかで、そのタブを閉じるかどうかを判断
+- 下: `CloseableTabbedPane`
 -- `JTabbedPaneWithCloseIcons`の改良版
 -- アイコンの位置、マウスがアイコン上に来たときの描画機能などを追加
 
 //上記のサンプルコードは、一番簡単なJTabbedPaneWithCloseIconsのものを掲載しています。
 
 ----
-`Java 1.6.0`では、`JTabbedPane`のタブ部分に、文字列・アイコンに加え`Swing`コンポーネントが使えるようになっているので、上記のサンプルはもっと簡単に実現できるようになっています。
+`JDK 1.6.0`では、`JTabbedPane`のタブ部分に、文字列・アイコンに加え`Swing`コンポーネントが使えるようになっているので、上記のサンプルはもっと簡単に実現できるようになっています。
 
 - [[JTabbedPaneにタブを閉じるボタンを追加>Swing/TabWithCloseButton]]
 - [http://www.02.246.ne.jp/~torutk/jvm/mustang.html Java SE 6 Mustangの新機能]
