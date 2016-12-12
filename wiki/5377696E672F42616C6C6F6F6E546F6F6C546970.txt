@@ -1,0 +1,80 @@
+---
+category: swing
+folder: BalloonToolTip
+title: JToolTipの形状を吹き出し風に変更する
+tags: [JToolTip, JWindow, HierarchyListener, Shape, Area, JList]
+author: aterai
+pubdate: 2016-12-12T01:24:24+09:00
+description: JToolTipの形状を吹き出し風に変更し、JListのセル上にこれを表示します。
+image: https://drive.google.com/uc?export=view&id=1tL6BwEx2s_gjjZZX3nwBOUAtoslcPXQnrA
+---
+* 概要 [#summary]
+`JToolTip`の形状を吹き出し風に変更し、`JList`のセル上にこれを表示します。
+
+#download(https://drive.google.com/uc?export=view&id=1tL6BwEx2s_gjjZZX3nwBOUAtoslcPXQnrA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class BalloonToolTip extends JToolTip {
+  private HierarchyListener listener;
+  @Override public void updateUI() {
+    removeHierarchyListener(listener);
+    super.updateUI();
+    listener = e -> {
+      Component c = e.getComponent();
+      if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0
+          && c.isShowing()) {
+        Window w = SwingUtilities.windowForComponent(c);
+        if (w instanceof JWindow) {
+          ((JWindow) w).setBackground(new Color(0x0, true));
+        }
+      }
+    };
+    addHierarchyListener(listener);
+    setOpaque(false);
+    setBorder(BorderFactory.createEmptyBorder(8, 5, 0, 5));
+  }
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.height = 28;
+    return d;
+  }
+  @Override public void paintComponent(Graphics g) {
+    Shape s = makeBalloonShape();
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.setColor(getBackground());
+    g2.fill(s);
+    g2.setColor(getForeground());
+    g2.draw(s);
+    g2.dispose();
+    super.paintComponent(g);
+  }
+  private Shape makeBalloonShape() {
+    Insets i = getInsets();
+    int w = getWidth() - 1;
+    int h = getHeight() - 1;
+    int v = i.top / 2;
+    Polygon triangle = new Polygon();
+    triangle.addPoint(i.left + v + v, 0);
+    triangle.addPoint(i.left + v, v);
+    triangle.addPoint(i.left + v + v + v, v);
+    Area area = new Area(new RoundRectangle2D.Float(
+        0, v, w, h - i.bottom - v, i.top, i.top));
+    area.add(new Area(triangle));
+    return area;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JToolTop`に`HierarchyListener`を追加し、その`JToolTop`が表示状態になったら親の`JWindow`を透明に設定
+-- `JWindow#setShape(...)`で形状を変更することも可能だが、この場合フチを滑らかにすることが難しい
+- `setOpaque(false)`で背景色を描画しない`JToolTop`を作成し、`JToolTop#paintComponent(...)`をオーバーライドして吹き出し風の背景を描画
+- `JList#createToolTip()`をオーバーライドし、通常の`JToolTip`の代わりに`BalloonToolTip`(上記の`JToolTip`)を作成して返すように設定
+
+//* 参考リンク [#reference]
+* コメント [#comment]
+#comment
+#comment
