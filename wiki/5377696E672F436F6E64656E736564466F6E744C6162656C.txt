@@ -1,0 +1,36 @@
+---
+category: swing
+folder: CondensedFontLabel
+title: Fontに長体をかけてJTextAreaで使用する
+tags: [Font, JLabel, JTextArea, AffineTransform]
+author: aterai
+pubdate: 2016-12-19T00:45:00+09:00
+description: 文字に長体をかけたフォントを生成し、これをJTextAreaなどのコンポーネントで使用します。
+image: https://drive.google.com/uc?export=view&id=1uTWfknLeV-mrE81h-aAWdGPHYOpf9dEC1g
+---
+* 概要 [#summary]
+文字に長体をかけたフォントを生成し、これを`JTextArea`などのコンポーネントで使用します。
+
+#download(https://drive.google.com/uc?export=view&id=1uTWfknLeV-mrE81h-aAWdGPHYOpf9dEC1g)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+Font font = new Font(Font.MONOSPACED, Font.PLAIN, 18).deriveFont(
+    AffineTransform.getScaleInstance(.9, 1d));
+textArea.setFont(font);
+}}
+
+* 解説 [#explanation]
+- 上: `JTextArea(condensed: 0.9)`
+-- `90%`の変形をかけた長体のフォントを作成し、`JTextArea`に設定
+- 中: `GlyphVector(condensed: 0.9)`
+-- `90%`の変形をかけた長体のフォントを作成し、その`Font`から`FontMetrics`、`GlyphVector`を生成して文字列を描画
+-- 一文字変形する場合は、`GlyphVector#setGlyphTransform(idx, affineTransform)`を使用する方法もある
+- 下: `LineBreakMeasurer(condensed: 0.9)`
+-- `90%`の変形をかけた長体のフォントを作成し、その`Font`を`AttributedString#addAttribute(TextAttribute.FONT, font)`で属性付き文字列に設定
+-- `LineBreakMeasurer`、`TextLayout`で属性付き文字列を描画
+
+//* 参考リンク [#reference]
+* コメント [#comment]
+#comment
+#comment

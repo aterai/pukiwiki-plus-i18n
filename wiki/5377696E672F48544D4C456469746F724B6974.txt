@@ -43,7 +43,7 @@ tabbedPane.addChangeListener(new ChangeListener() {
 }}
 
 * 解説 [#explanation]
-`HTMLEditorKit`を使用(コンテンツ形式を`text/html`に設定)する`JTextPane`で`JEditorPane#getText()`を実行すると、`HTMLEditorKit`からスタイル(文字色)などを設定した`Html`ソースとして文字列を取得することができるので、これを`JTabbedPane`が`JTextArea`に切り替わるときに`JTextArea`に流しこんでいます。
+`HTMLEditorKit`を使用(コンテンツ形式を`text/html`に設定)する`JTextPane`で`JEditorPane#getText()`を実行すると、`HTMLEditorKit`から文字色などの`Style`を設定した`Html`ソースとして文字列を取得することができるので、これを`JTabbedPane`が`JTextArea`に切り替わるときに`JTextArea`に流しこんでいます。
 
 逆に、`JTextArea`で`Html`ソースを編集し、`JTabbedPane`で`JTextPane`に切り替える時には、`JEditorPane#setText(String)`内で、`HTMLEditorKit`に`HTML`形式で読み込まれるようになっています。
 

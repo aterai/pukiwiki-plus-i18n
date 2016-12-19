@@ -39,7 +39,7 @@ JTable table = new JTable(model) {
 -- [[JTableでキー入力によるセル編集開始を禁止する>Swing/PreventStartCellEditing]]
 
 ----
-上記のサンプルには、`InputMap`、`ActionMap`にKBD{F3}キーで`beep`が鳴るようにキーストロークとアクションを追加しています。このキーストロークは`JTable#editCellAt`メソッドでのキー入力チェックとは別に実行されるので、デフォルトのKBD{F2}キーでの`startEditing`、KBD{F8}キーでの`focusHeader`は、`JTable#editCellAt(...)`の戻り値とは関係なく有効になっています。
+上記のサンプルでは、`InputMap`、`ActionMap`にKBD{F3}キーで`beep`が鳴るようにキーストロークとアクションを追加しています。このキーストロークは`JTable#editCellAt`メソッドでのキー入力チェックとは別に実行されるので、デフォルトのKBD{F2}キーでの`startEditing`、KBD{F8}キーでの`focusHeader`は、`JTable#editCellAt(...)`の戻り値とは関係なく有効になっています。
 
 - `JTable#processKeyBinding(...)`をオーバーライドしてキー入力自体を弾くと、`InputMap`に追加したキーストロークも除かれるので、これらのアクションも実行されない
 

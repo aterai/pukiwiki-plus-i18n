@@ -56,9 +56,9 @@ private DefaultListModel makeList() {
 }}
 
 * 解説 [#explanation]
-左が複数行に対応した`JList`、右が通常の`JList`になります。左の`JList`では、`JList#getFixedCellHeight()`が`-1`で、`ListCellRenderer`に`JTextArea`を使用しているため、テキストに`\n`を含めることで複数行を作成することができます。
-
-セルの区切りを分かりやすくするために、偶数奇数で行の背景色を変更しています。
+- 右: デフォルトの`JList`
+- 左: 複数行に対応した`JList`
+-- `JList#getFixedCellHeight()`が`-1`で、`ListCellRenderer`に`JTextArea`を使用しているため、テキストに`\n`を含めることで複数行を作成することが可能
 
 - セルの選択状態
 -- %%`JTextArea`にセルフォーカスがある状態を表現するために、`LineBorder`を継承して作成した`DotBorder`を使用%%
