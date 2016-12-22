@@ -109,6 +109,7 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Tips.html">Java Tips</a></li>
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Javadoc.html">Javadoc</a></li>
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Ant.html">Ant</a></li>
+<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Gradle.html">Gradle</a></li>
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/JRuby.html">JRuby</a></li>
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/JavaScript.html">JavaScript</a></li>
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Subversion.html">Subversion</a></li>
@@ -146,22 +147,6 @@ xrea, link, 728x15, 09/01/04
 <div class="note"><?php echo $notes ?></div>
 </aside>
 <?php } ?>
-
-<?php if (! arg_check('edit')) { ?>
-<aside class="ad_bar">
-<h2 id="matched" data-needslink="matched">関連コンテンツ＆広告</h2>
-<!-- 関連コンテンツ -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-6939179021013694"
-     data-ad-slot="7781965536"
-     data-ad-format="autorelaxed"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</aside>
-<?php } ?>
-
 </article>
 <!-- google_ad_section_end -->
 </div><!-- /.blog-main -->
