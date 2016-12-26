@@ -1,0 +1,46 @@
+---
+category: swing
+folder: TabbedPaneInputVerifier
+title: JTabbedPaneのタブ移動時にInputVerifierによる検証を実行する
+tags: [JTabbedPane, InputVerifier, Focus]
+author: aterai
+pubdate: 2016-12-26T16:12:59+09:00
+description: JTabbedPaneのタブ移動時にタブコンポーネントに設定されたInputVerifierを実行し、その検証で入力が無効な場合はタブの切替をキャンセルします。
+image: https://drive.google.com/uc?export=view&id=1E4H4aD4uZ-DBc_H6-KLuEEsZoyJqNxdHuQ
+---
+* 概要 [#summary]
+`JTabbedPane`のタブ移動時にタブコンポーネントに設定された`InputVerifier`を実行し、その検証で入力が無効な場合はタブの切替をキャンセルします。
+
+#download(https://drive.google.com/uc?export=view&id=1E4H4aD4uZ-DBc_H6-KLuEEsZoyJqNxdHuQ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+tabbedPane.setModel(new DefaultSingleSelectionModel() {
+  @Override public void setSelectedIndex(int index) {
+    InputVerifier verifier = p.getInputVerifier();
+    if (Objects.nonNull(verifier) && !verifier.shouldYieldFocus(p)) {
+      UIManager.getLookAndFeel().provideErrorFeedback(p);
+      JOptionPane.showMessageDialog(p, "InputVerifier#verify(...): false");
+      return;
+    }
+    super.setSelectedIndex(index);
+  }
+});
+}}
+
+* 解説 [#explanation]
+- デフォルト
+-- タブ切替時に`JTextField`にフォーカスが存在する場合はその`InputVerifier`で検証が実行されるが、入力が無効の場合でもタブの移動は実行される
+-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4403182 Bug ID: JDK-4403182 InputVerifier failed on JTabbedPane & JMenuBar]
+- `override SingleSelectionModel#setSelectedIndex(int): true`
+-- `DefaultSingleSelectionModel#setSelectedIndex(int)`をオーバーライドした`SingleSelectionModel`を`JTabbedPane`に設定
+-- 現在表示中のタブの`InputVerifier#shouldYieldFocus(...)`を実行し、入力が無効の場合はタブの変更をキャンセルする
+-- [http://stackoverflow.com/questions/34315657/java-swing-jtextfield-setinputverifier-keep-focus-on-textfield Java Swing JTextField setInputVerifier keep focus on TextField - Stack Overflow]
+
+* 参考リンク [#reference]
+- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4403182 Bug ID: JDK-4403182 InputVerifier failed on JTabbedPane & JMenuBar]
+- [http://stackoverflow.com/questions/34315657/java-swing-jtextfield-setinputverifier-keep-focus-on-textfield Java Swing JTextField setInputVerifier keep focus on TextField - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment
