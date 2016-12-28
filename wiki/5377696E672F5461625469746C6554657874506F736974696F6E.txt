@@ -30,7 +30,7 @@ tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, label);
 上記のサンプルでは、タブにアイコンとラベルの位置を変更した`JLabel`を配置しています。
 
 ----
-`Java 1.6.0`以前の場合は、以下のように、`html`タグを使用しても良いかもしれません。
+`JDK 1.6`以前の場合は、タブにコンポーネントを直接配置する方法がないので、以下のように`html`タグを使用する方法で代用する必要があります。
 
 #code{{
 JTabbedPane tabs = new JTabbedPane();
