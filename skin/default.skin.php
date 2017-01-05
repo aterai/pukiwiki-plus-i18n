@@ -157,7 +157,7 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 <div class="push"></div>
 </div><!-- /.wrap -->
 <footer class="footer text-center" itemscope="itemscope" itemtype="https://schema.org/WPFooter">
-<p>© 2016 <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="http://ateraimemo.com/:Users/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//github.com/plusjade/jekyll-bootstrap/" target="_blank">Jekyll Bootstrap</a></p>
+<p>© 2017 <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="http://ateraimemo.com/:Users/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//github.com/plusjade/jekyll-bootstrap/" target="_blank">Jekyll Bootstrap</a></p>
 </footer>
 </body>
 </html>
