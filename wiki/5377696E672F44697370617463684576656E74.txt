@@ -52,6 +52,7 @@ JButton button = new JButton(new AbstractAction("Connect") {
 - `Toolkit.getDefaultToolkit().addAWTEventListener`で、`AWTEventListener`を設定
 - `AWTEvent`が発生した時に`timer.restart();`でタイマーをリセット
 - 時間がきたら`Toolkit.getDefaultToolkit().removeAWTEventListener`で`AWTEvent`を取り除く
+- `JDK 1.7.0`以上の場合、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/LayerUI.html LayerUI (Java Platform SE 8)]で同様の処理が可能
 
 * 参考リンク [#reference]
 - [http://tips4java.wordpress.com/2008/10/24/application-inactivity/ Application Inactivity « Java Tips Weblog]

@@ -36,7 +36,7 @@ editor2.setText("(\uD85B\uDE40) (\u26E40)\n(\uD842\uDF9F) (\u20B9F)");
 -- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6836089 Bug ID: 6836089 Swing HTML parser can't properly decode codepoints outside the Unicode Plane 0 into a surrogate pair]で修正されたので、`&#x26E40;`などでも正常に文字が表示される(上記のスクリーンショットのように文字化けしない)
 -- `JEditorPane(HTMLEditorKit)`の場合
 --- `JEditorPane` + `&#xD85B;&#xDE40;`: `OK`
---- `JEditorPane` + `&#x26E40;`: `%%NG%% OK`
+--- `JEditorPane` + `&#x26E40;`: `%%NG%%` `OK`
 
 -- ブラウザ(試したのは`IE`, `FireFox`, `Chrome`, `Opera`)の場合
 --- `Browser` + `&#xD85B;&#xDE40;`: `NG`
@@ -53,7 +53,7 @@ editor2.setText("(\uD85B\uDE40) (\u26E40)\n(\uD842\uDF9F) (\u20B9F)");
 `Windows 7`, `JDK 1.7.0_02`の環境では、`JTextComponent`からメモ帳などにサロゲートペアの文字をコピーペーストは可能ですが、逆にメモ帳やブラウザから`JTextComponent`にサロゲートペアの文字をコピーペーストすることができないようです。
 
 ----
-`JTextComponent`(`Java 1.7.0`)は、異体字セレクタに対応していない
+`JTextComponent`(`Java 1.7.0`)は、異体字セレクタに対応していません。
 
 - フォントを`IVS`に対応している`IPAmj明朝`などに変更し、異体字セレクタ付き文字列のある`UTF-8`のテキストを`JTextArea`などに読み込んでも異体字セレクタが下駄になる
 - 数値文字参照、`Unicode`エスケープを使う方法でも下駄になる
@@ -67,7 +67,8 @@ editor2.setText("(\uD85B\uDE40) (\u26E40)\n(\uD842\uDF9F) (\u20B9F)");
 //%%`小塚明朝 Pr6N`(メモ: `Pr6N`の`N`は`JIS2004`対応の意味で、`IVS`対応とは関係ないらしい)%%
 
 ----
-- `Windows 7`、`JDK 1.7.0_21`、`小塚明朝 Pr6N R`(`KozMinPr6N-Regular.otf`)で、`Font.createFont(...)`を使って`Font`を作成すると`IllegalArgumentException`が発生する場合がある
+- `Windows 10 64bit`、`JDK 1.8.0_112`、`小塚明朝 Pr6N R`(`KozMinPr6N-Regular.otf`)で、`Font.createFont(...)`を使って`Font`を作成すると`IllegalArgumentException`が発生する場合がある
+-- 例外が発生しなくても、文字は正常に表示されない
 -- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=5092191 Bug ID: 5092191 RFE: CFF/Type2 embedded fonts not supported with Font.createFont()]
 
  Exception in thread "AWT-EventQueue-0" java.lang.IllegalArgumentException: Length must be >= 0.
@@ -78,18 +79,18 @@ import java.awt.*;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
+
 public class OTFTest {
   public JComponent makeUI() {
     JTextArea textArea = new JTextArea("1234567890\n \uD85B\uDE40");
-    String str = "file:///C:/Program Files (x86)/Adobe/Reader 11.0/Resource/CIDFont/KozMinPr6N-Regular.otf"; //6.014
-    //String str = "file:///C:/Program Files (x86)/Adobe/Acrobat 9.0/Resource/CIDFont/KozMinPr6N-Regular.otf"; //6.004
+    String str = "file:///C:/Program Files (x86)/Adobe/Acrobat 2015/Resource/CIDFont/KozMinPr6N-Regular.otf";
+    //String str = "file:///C:/Program Files (x86)/Adobe/Reader 11.0/Resource/CIDFont/KozMinPr6N-Regular.otf";
     //String str = "file:///C:/Windows/Fonts/meiryo.ttc";
     //String str = "file:///C:/Windows/Fonts/ipaexg.ttf";
     //String str = "file:///C:/Windows/Fonts/A-OTF-ShinGoPro-Regular.otf";
-    try (InputStream is = (new URL(str)).openStream()) {
-      Font font = (Font.createFont(Font.TRUETYPE_FONT, is)).deriveFont(32f);
-      textArea.setFont(font);
-      is.close();
+    try (InputStream is = new URL(str).openStream()) {
+      //textArea.setFont(Font.createFont(Font.TRUETYPE_FONT, is));
+      textArea.setFont(Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(32f));
     } catch (IOException | FontFormatException ex) {
       ex.printStackTrace();
     }
