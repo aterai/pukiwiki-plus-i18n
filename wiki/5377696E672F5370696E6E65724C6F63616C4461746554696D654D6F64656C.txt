@@ -2,7 +2,7 @@
 category: swing
 folder: SpinnerLocalDateTimeModel
 title: JSpinnerでLocalDateTimeを使用する
-tags: [JSpinner, SpinnerModel, LocalDateTime]
+tags: [JSpinner, SpinnerModel, LocalDateTime, JFormattedTextField]
 author: aterai
 pubdate: 2015-02-02T00:12:04+09:00
 description: DateやCalendarなどを使用するSpinnerDateModelの代わりに、JDK 8で導入されたLocalDateTimeなどを使用するSpinnerModelを作成して、JSpinnerで日付を選択します。
@@ -218,6 +218,19 @@ class LocalDateTimeEditor extends JSpinner.DefaultEditor {
   }
 }
 }}
+
+----
+- [https://bugs.openjdk.java.net/browse/JDK-8169482 JDK-8169482 java.time.DateTimeFormatter javadoc: F is not week-of-month - Java Bug System]
+- [http://stackoverflow.com/questions/40389916/java-8-dateformatter-week-of-month-and-year-key-symbols-difference time - Java 8 DateFormatter week of month and year key symbols difference - Stack Overflow]
+-- メモ: [http://docs.oracle.com/javase/jp/8/docs/api/java/time/format/DateTimeFormatter.html#patterns DateTimeFormatter]のパターン文字で、`W`と`F`の説明が両方`week-of-month`になっている
+-- 実際は`F`が`day_of_week_in_month`で、`JDK 1.9.0`ではドキュメントが修正されている
+- `day_of_week_in_month`について
+-- [https://docs.oracle.com/javase/jp/8/docs/api/java/time/temporal/ChronoField.html#ALIGNED_DAY_OF_WEEK_IN_MONTH ChronoField#ALIGNED_DAY_OF_WEEK_IN_MONTH (Java Platform SE 8)]
+ たとえば、7日からなる週を使用する暦体系では、最初の「位置合せされた月の週番号」は「月の日」1から始まり、2番目の「位置合せされた月の週番号」は「月の日」8から始まる、というようになります。これらの位置合せされた各週に含まれる日に1から7までの番号が付けられ、このフィールドの値として返されます。したがって、「月の日」1から7では、「位置合せされた曜日」の値は1から7になります。また、「月の日」8から14でもこれが繰り返され、「位置合せされた曜日」の値は1から7になります。
+-- `F`(`day_of_week_in_month`)は、`1`～`7`の数値文字列に変換される
+-- 例えば月の第一日が日曜日の場合、その月の日曜日は`1`、月曜日は`2`、～、土曜日は`7`となる
+--- `2017-01-10`(火)は、`2017-01-01`が日曜なので、`3`に変換される
+--- `DateTimeFormatter.ofPattern("F").format(LocalDate.of(2017, Month.JANUARY, 10))`は文字列の`3`を返す
 
 * 参考リンク [#reference]
 - [[JSpinnerで日付を設定>Swing/SpinnerDateModel]]

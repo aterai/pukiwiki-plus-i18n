@@ -74,7 +74,7 @@ public double easeInOut(double t) {
 上記のサンプルでは、`JLabel`に画像を表示し、これにマウスカーソルが入った場合、`JTextArea`がキャプションとして`ease-in`, `ease-out`でスライドインするようになっています。
 
 - `OverlayLayout#layoutContainer`内で、`JTextArea`の`y`座標を変更してアニメーション
-- `EaseInOut`の計算は、[http://www.anima-entertainment.de/math-easein-easeout-easeinout-and-bezier-curves Math: EaseIn EaseOut, EaseInOut and Beziér Curves | Anima Entertainment GmbH]を参考
+- `EaseInOut`の計算は、%%[http://www.anima-entertainment.de/math-easein-easeout-easeinout-and-bezier-curves Math: EaseIn EaseOut, EaseInOut and Beziér Curves | Anima Entertainment GmbH]%%を参考
 - マウスカーソルが`JLabel`(画像)内にあっても、そこに`JTextArea`がスライドインした場合、`mouseExited`が発生するので、注意
 -- `JTextArea#contains(int x, int y)`が常に`false`を返すようにすれば、上記の場合でも`mouseExited`などは発生しないが、`JTextArea`内の文字列が選択できなくなるので、このサンプルでは、`JTextArea`にマウスイベントを親へ素通しするリスナーを追加している
 - `JTextArea`の背景色は`setOpaque(false)`にして描画せず、別途`JTextArea#paintComponent(...)`をオーバーライドしてアルファ成分を`EaseInOut`した色で全体を塗りつぶしている
@@ -103,7 +103,7 @@ public static double intpow(double x, int n) {
 }}
 
 * 参考リンク [#reference]
-- [http://www.anima-entertainment.de/math-easein-easeout-easeinout-and-bezier-curves Math: EaseIn EaseOut, EaseInOut and Beziér Curves | Anima Entertainment GmbH]
+- %%[http://www.anima-entertainment.de/math-easein-easeout-easeinout-and-bezier-curves Math: EaseIn EaseOut, EaseInOut and Beziér Curves | Anima Entertainment GmbH]%%
 - [http://css-tricks.com/slide-in-image-captions/ Slide In Image Captions | CSS-Tricks]
 - [http://radiumsoftware.tumblr.com/post/5031889912 指数関数を使ったお手軽イーズ・アウト - Radium Software]
 - [http://radiumsoftware.tumblr.com/post/10719023826 Soft maximum 関数 - Radium Software]

@@ -161,6 +161,19 @@ IllegalArgumentException - newModel が null の場合
 
 サンプルコードで、implements が抜けている。
 
+* 1.9.0 で修正済み [#ad8c34d4]
+** setAlignmentX, setAlignmentY, getAlignmentX, getAlignmentY javadoc of JComponent [#ueae105a]
+- [https://bugs.openjdk.java.net/browse/JDK-8068374 JDK-8068374 setAlignmentX, setAlignmentY, getAlignmentX, getAlignmentY javadoc of JComponent - Java Bug System]
+
+水平と垂直が実際の動作と入れ替わっている。
+
+** DateTimeFormatter week-of-month [#yda50306]
+- [https://bugs.openjdk.java.net/browse/JDK-8169482 JDK-8169482 java.time.DateTimeFormatter javadoc: F is not week-of-month - Java Bug System]
+- [http://stackoverflow.com/questions/40389916/java-8-dateformatter-week-of-month-and-year-key-symbols-difference time - Java 8 DateFormatter week of month and year key symbols difference - Stack Overflow]
+- [http://docs.oracle.com/javase/jp/8/docs/api/java/time/format/DateTimeFormatter.html#patterns DateTimeFormatter (Java Platform SE 8)]
+- パターン文字の`W`と`F`が両方`week-of-month`になっている
+- 実際は`F`が`day_of_week_in_month`
+
 * コメント [#z1d2c369]
 #comment
 #comment

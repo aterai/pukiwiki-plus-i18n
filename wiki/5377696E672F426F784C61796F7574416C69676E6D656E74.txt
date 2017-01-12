@@ -53,6 +53,14 @@ p2.add(Box.createVerticalGlue());
 - `BoxLayout.Y_AXIS`の`Box`に、この`JLabel`が上下中央に配置されるよう、`Box.createVerticalGlue()`で挟んで追加
 - `JLabel#getMinimumSize()`の返す値を`JSpinner`で変更すると、値が奇数になる場合で揃えがずれてしまう
 
+----
+- [https://bugs.openjdk.java.net/browse/JDK-8068374 JDK-8068374 setAlignmentX, setAlignmentY, getAlignmentX, getAlignmentY javadoc of JComponent - Java Bug System]
+-- via: [http://openjdk.5641.n7.nabble.com/lt-Swing-Dev-gt-8u-Typos-in-JComponent-setAlignment-methods-td295805.html OpenJDK Swing Development - <Swing Dev> 8u Typos in JComponent#setAlignment methods]
+-- https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#setAlignmentY-float-
+-- 「水平の配置方法を設定します。」はドキュメントの間違いで、実際の動作は「垂直の配置方法を設定します。」
+-- `setAlignmentX`、`getAlignmentX`、`getAlignmentY`も同様に逆の説明になっている
+-- `JDK 1.9.0`ではドキュメントが修正されている
+
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/layout/box.html How to Use BoxLayout (The Java™ Tutorials > Creating a GUI With JFC/Swing > Laying Out Components Within a Container)]
 - [http://stackoverflow.com/questions/27790417/alignment-of-single-characters-in-java-boxlayout-on-y-axis-is-off-center swing - Alignment of Single Characters in Java BoxLayout on Y-Axis Is Off-Center - Stack Overflow]

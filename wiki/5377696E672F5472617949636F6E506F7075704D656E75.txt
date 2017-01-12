@@ -51,10 +51,10 @@ icon.addMouseListener(new MouseAdapter() {
 }}
 
 * 解説 [#explanation]
-`Java 1.6.0`では、`TrayIcon`には`java.awt.PopupMenu`しか使用できないので、`setUndecorated(true)`かつ、サイズが`0x0`の`JDialog`を適当な位置(`TrayIcon`のクリックで`JPopupMenu`が開いたように見える場所)に配置し、これを親にして`javax.swing.JPopupMenu`を表示しています。
+`JDK 1.6.0`の`TrayIcon`は`java.awt.PopupMenu`のみ設定可能で、`javax.swing.JPopupMenu`は使用できません。そのため、上記のサンプルでは、`setUndecorated(true)`かつ、サイズが`0x0`の`JDialog`を適当な位置(`TrayIcon`のクリックで`JPopupMenu`が開いたように見える場所)に配置し、これを親にして`javax.swing.JPopupMenu`を表示しています。
 
 ----
-`PopupMenu`ではなく、`JPopupMenu`が使用できるので、以下のようなことが可能になります。
+この方法では、`PopupMenu`ではなく`JPopupMenu`が使用できるので、以下のようなことが可能になります。
 
 - `JCheckBoxMenuItem`、`JRadioButtonMenuItem`の使用
 - `LookAndFeel`の変更

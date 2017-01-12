@@ -55,7 +55,7 @@ class FirstCharToUpperCaseDocumentFilter extends DocumentFilter {
 上記のサンプルでは、`JTextField`に入力された文字列の先頭一文字が、常に大文字になるように変換する`DocumentFilter`を設定しています。
 
 ----
-以下のように、`JFormattedTextField` + `MaskFormatter`を使うと、先頭文字を削除した場合などで空白文字が挿入される(長さが決まっているから？)。
+以下のように、`JFormattedTextField` + `MaskFormatter`を使うと、%%先頭文字を削除した場合などで空白文字が挿入される(長さが決まっているから？)%% 指定した文字列長に足りない場合などでアンドゥが実行される。
 
 #code{{
 JFormattedTextField field1 = new JFormattedTextField(new MaskFormatter("ULLLLLLLLLL"));
