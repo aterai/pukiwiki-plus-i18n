@@ -1,0 +1,108 @@
+---
+category: swing
+folder: IsoscelesTrapezoidTabs
+title: JTabbedPaneのタブの形を台形に変更する
+tags: [JTabbedPane, UIManager, Shape]
+author: aterai
+pubdate: 2017-01-16T03:46:40+09:00
+description: JTabbedPaneのタブの形を台形に変更し、左側にあるタブが上に表示されるよう設定します。
+image: https://drive.google.com/uc?export=view&id=1NeVPi85J0fLf7nSH0xB03Rk9tclob08S7w
+---
+* 概要 [#summary]
+`JTabbedPane`のタブの形を台形に変更し、左側にあるタブが上に表示されるよう設定します。
+
+#download(https://drive.google.com/uc?export=view&id=1NeVPi85J0fLf7nSH0xB03Rk9tclob08S7w)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class IsoscelesTrapezoidTabbedPaneUI extends BasicTabbedPaneUI {
+  private static final int ADJ2 = 3;
+  private final Color selectedTabColor = UIManager.getColor("TabbedPane.selected");
+  private final Color tabBackgroundColor = Color.LIGHT_GRAY;
+  private final Color tabBorderColor = Color.GRAY;
+
+  @Override protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) { //NOPMD
+    int tabCount = tabPane.getTabCount();
+
+    Rectangle iconRect = new Rectangle(),
+    textRect = new Rectangle();
+    Rectangle clipRect = g.getClipBounds();
+
+    for (int i = runCount - 1; i >= 0; i--) {
+      int start = tabRuns[i];
+      int next = tabRuns[(i == runCount - 1) ? 0 : i + 1];
+      int end = next != 0 ? next - 1 : tabCount - 1; //NOPMD
+      // for (int j = start; j <= end; j++) {
+      // http://stackoverflow.com/questions/41566659/tabs-rendering-order-in-custom-jtabbedpane
+      for (int j = end; j >= start; j--) {
+        if (j != selectedIndex && rects[j].intersects(clipRect)) {
+          paintTab(g, tabPlacement, rects, j, iconRect, textRect);
+        }
+      }
+    }
+    if (selectedIndex >= 0 && rects[selectedIndex].intersects(clipRect)) {
+      paintTab(g, tabPlacement, rects, selectedIndex, iconRect, textRect);
+    }
+  }
+  @Override protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
+    // Do nothing
+  }
+  @Override protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
+    // Do nothing
+  }
+  @Override protected void paintContentBorderTopEdge(Graphics g, int tabPlacement, int selectedIndex, int x, int y, int w, int h) {
+    super.paintContentBorderTopEdge(g, tabPlacement, selectedIndex, x, y, w, h);
+    Rectangle selRect = getTabBounds(selectedIndex, calcRect);
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setColor(selectedTabColor);
+    g2.drawLine(selRect.x - ADJ2 + 1, y, selRect.x + selRect.width + ADJ2 - 1, y);
+    g2.dispose();
+  }
+  @Override protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    int textShiftOffset = isSelected ? 0 : 1;
+
+    Rectangle clipRect = g2.getClipBounds();
+    clipRect.grow(ADJ2 + 1, 0);
+    g2.setClip(clipRect);
+
+    GeneralPath trapezoid = new GeneralPath();
+    trapezoid.moveTo(x - ADJ2,     y + h);
+    trapezoid.lineTo(x + ADJ2,     y + textShiftOffset);
+    trapezoid.lineTo(x + w - ADJ2, y + textShiftOffset);
+    trapezoid.lineTo(x + w + ADJ2, y + h);
+    //trapezoid.closePath();
+
+    g2.setColor(isSelected ? selectedTabColor : tabBackgroundColor);
+    g2.fill(trapezoid);
+
+    g2.setColor(tabBorderColor);
+    g2.draw(trapezoid);
+
+    g2.dispose();
+  }
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、タブの形を台形に変更し、左側にあるタブが上に表示されるように、`BasicTabbedPaneUI`の各描画メソッドをオーバーライドし、これを`setUI(...)`メソッドで`JTabbedPane`に設定しています。
+
+- `BasicTabbedPaneUI#paintTabArea(...)`をオーバーライドして、右側のタブを先に描画するよう変更
+-- 参考: [http://stackoverflow.com/questions/41566659/tabs-rendering-order-in-custom-jtabbedpane java - Tabs Rendering Order in Custom JTabbedPane - Stack Overflow]
+- `BasicTabbedPaneUI#paintTabBorder(...)`、`BasicTabbedPaneUI#paintFocusIndicator(...)`メソッドをオーバーライドして、なにも描画しないように変更
+-- タブのフチの罫線などは、`BasicTabbedPaneUI#paintTabBackground(...)`でまとめて描画する
+- `BasicTabbedPaneUI#paintContentBorderTopEdge(...)`をオーバーライドして、台形タブの拡大した部分に掛かるコンテンツエリアの罫線を上書きで塗り潰す
+-- `JTabbedPane#setTabPlacement (JTabbedPane.TOP)`のみに対応
+- `BasicTabbedPaneUI#paintTabBackground(...)`をオーバーライドして、タブの形を台形に変更
+-- タブ矩形の外側に台形がはみ出すので、`Graphics2D#setClip(...)`で描画領域を拡大する必要がある
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのタブエリア背景色などをテスト>Swing/TabAreaBackground]]
+- [[JTabbedPaneのNimbusLookAndFeelにおけるスタイルを変更する>Swing/NimbusTabbedPanePainter]]
+-- `SynthLookAndFeel`などの場合は、`javax.swing.plaf.Painter`を変更する
+- [http://stackoverflow.com/questions/41566659/tabs-rendering-order-in-custom-jtabbedpane java - Tabs Rendering Order in Custom JTabbedPane - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment
