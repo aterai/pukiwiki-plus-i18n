@@ -63,7 +63,7 @@ private static JLabel makeLabel(String title, Color c) {
 - `new Color(Integer.decode("#0000ff"))`
 -- [https://docs.oracle.com/javase/jp/8/docs/api/java/lang/Integer.html#decode-java.lang.String- Integer.decode(String) (Java Platform SE 8)]
 -- `Integer.decode(String)`を使用して、文字列を整数にデコード
--- 基数指定子のない`0000ff`や桁間のアンダースコアのある`0x00_00_ff`は`NumberFormatException`になる
+-- 基数指定子のない`0000ff`や桁間のアンダースコアがある`0x00_00_ff`は`NumberFormatException`になる
 - `Color.decode("#00ffff")`
 -- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Color.html#decode-java.lang.String- Color.decode(String) (Java Platform SE 8)]
 -- 内部で`Integer.decode(String)`を使用して、文字列を整数にデコードし、`Color`を生成

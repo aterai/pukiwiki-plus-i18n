@@ -30,7 +30,7 @@ buttons.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
 
 * 解説 [#explanation]
 - `Default`
--- デフォルトの`LayoutFocusTraversalPolicy`では、`JRadioButton`の選択状態には無関係に、レイアウトの先頭にある`JRadioButton`にフォーカスが移動する
+-- デフォルトの`LayoutFocusTraversalPolicy`では、`JRadioButton`の選択状態には無関係に、レイアウト内のグループ先頭にある`JRadioButton`にフォーカスが移動する
 - `FocusTraversalPolicy`
 -- `JRadioButton`を配置したパネルに`getDefaultComponent(...)`メソッドをオーバーライドした`FocusTraversalPolicy`を設定し、現在選択されている`JRadioButton`が存在する場合は、それにフォーカスを移動する
 -- パネルに設定した`FocusTraversalPolicy`を有効にするために、`JPanel#setFocusTraversalPolicyProvider(true);`を設定する必要がある

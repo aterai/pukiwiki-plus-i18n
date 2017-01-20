@@ -16,8 +16,10 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTQg6Td8tI/AAAAAAAAAfs/u5
 * サンプルコード [#sourcecode]
 #code(link){{
 JSpinner.NumberEditor editor = (JSpinner.NumberEditor) spinner.getEditor();
-DefaultFormatter formatter = (DefaultFormatter) editor.getTextField().getFormatter();
-formatter.setAllowsInvalid(false);
+JFormattedTextField.AbstractFormatter formatter = editor.getTextField().getFormatter();
+if (formatter instanceof DefaultFormatter) {
+  ((DefaultFormatter) formatter).setAllowsInvalid(false);
+}
 }}
 
 * 解説 [#explanation]
