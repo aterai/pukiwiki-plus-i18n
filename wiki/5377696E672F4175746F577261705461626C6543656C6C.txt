@@ -44,7 +44,7 @@ private void adjustRowHeight(JTable table, int row, int column) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、セルレンダラーに、`setLineWrap(true)`とした`JTextArea`を使用し、カラムサイズの変更などがあったときに、その`JTextArea`の高さを取得して`JTable#setRowHeight(int)`メソッドで各行の高さとして設定しています。
+上記のサンプルでは、セルレンダラーに`setLineWrap(true)`を指定した`JTextArea`を使用し、カラムサイズの変更などが実行されるたびに、その`JTextArea`の高さを取得し、`JTable#setRowHeight(int)`メソッドで各行の高さとして設定しています。
 
 * 参考リンク [#reference]
 - [http://tips4java.wordpress.com/2008/10/26/text-utilities/ Text Utilities « Java Tips Weblog]
