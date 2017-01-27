@@ -23,7 +23,7 @@ function plugin_topicpath_convert()
 {
 	global $topicpath;
 	if (isset($topicpath) && $topicpath == false) return '';
-	return '<div id ="topicpath">' . plugin_topicpath_inline() . '</div>';
+	return '<div id ="topicpath" class="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">' . plugin_topicpath_inline() . '</div>';
 }
 
 function plugin_topicpath_inline()
@@ -85,10 +85,9 @@ EOD;
             $pos -= 1;
         }
     }
-    if (PLUGIN_TOPICPATH_TOP_DISPLAY)
-      $topic_path[] = make_pagelink($defaultpage, PLUGIN_TOPICPATH_TOP_LABEL);
-
-    //return '<span itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">' . join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path)) . '</span>';
-    return '<span class="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">' . join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path)) . '</span>';
+    if (PLUGIN_TOPICPATH_TOP_DISPLAY) {
+        $topic_path[] = make_pagelink($defaultpage, PLUGIN_TOPICPATH_TOP_LABEL);
+    }
+    return join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path));
 }
 ?>

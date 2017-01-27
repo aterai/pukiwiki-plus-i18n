@@ -5,7 +5,7 @@
 include_once(PLUGIN_DIR.'counter.inc.php');
 
 function plugin_header_convert() {
-    global $title, $newtitle, $whatsnew;
+    global $title, $newtitle, $whatsnew, $defaultpage;
     global $vars;
     global $frontmatter;
 
@@ -64,7 +64,7 @@ function plugin_header_convert() {
     }
 
     $last_modified_str = '';
-    if ( $time ) {
+    if ( $time && $defaultpage != $title ) {
         $isotime = date('c', $time);
         $lastmod = date('Y-m-d H:i', $time);
         $last_modified_str = '<br />Last-modified: <a href="' . get_script_uri() . '?cmd=diff&page=' . $_page . '"><time itemprop="dateModified" datetime="' . $isotime . '">' . $lastmod . '</time></a>';
@@ -72,7 +72,7 @@ function plugin_header_convert() {
     }
 
     $posted_by_str = '';
-    if (isset($frontmatter['pubdate'])) {
+    if ( isset($frontmatter['pubdate']) && $defaultpage != $title ) {
         $pubdate = $frontmatter['pubdate'];
         $utime = strtotime($pubdate);
         $iso_pubdate_str = $pubdate; //date('c', $utime);
