@@ -407,6 +407,40 @@ Arrays.stream(menuBar.getSubElements())
   .forEach(mi -> ((JRadioButtonMenuItem) mi).addActionListener(al));
 }}
 
+** Containerの子コンポーネントを再帰的に取得 [#e3003802]
+- `Container`を検索してすべての子コンポーネントを再帰的に取得
+
+#code{{
+//stream(parent)
+//  .forEach(c -> System.out.println(c.getClass().getName()));
+public static Stream<Component> stream(Container parent) {
+  return Arrays.stream(parent.getComponents())
+    .filter(Container.class::isInstance).map(c -> stream(Container.class.cast(c)))
+    .reduce(Stream.of(parent), Stream::concat);
+}
+}}
+
+** Containerの子コンポーネントを再帰的に検索し、指定したクラスのコンポーネントを取得 [#y34f3eac]
+
+#code{{
+//getComponentByClass(chooser, JTable.class)
+//  .ifPresent(t -> t.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN));
+public static <T> Optional<T> getComponentByClass(Container parent, Class<T> clz) {
+  if (clz.isInstance(parent)) {
+    return Optional.of(clz.cast(parent));
+  }
+  for (Component c: parent.getComponents()) {
+    if (c instanceof Container) {
+      Optional<T> op = getComponentByClass((Container) c, clz);
+      if (op.isPresent()) {
+        return op;
+      }
+    }
+  }
+  return Optional.empty();
+}
+}}
+
 * Swingのサンプルに関するメモ(引用) [#p449f4e0]
 目標にしようと思っているけど、なかなか難しそう…。
 
