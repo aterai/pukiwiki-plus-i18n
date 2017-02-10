@@ -34,12 +34,11 @@ private void collapseAll(JTree tree) {
 
 private void visitAll(JTree tree, TreePath parent, boolean expand) {
   TreeNode node = (TreeNode) parent.getLastPathComponent();
+  //children(node).forEach(n -> visitAll(tree, parent.pathByAddingChild(n), expand));
   if (!node.isLeaf() && node.getChildCount() >= 0) {
-    Enumeration e = node.children();
+    Enumeration<?> e = node.children();
     while (e.hasMoreElements()) {
-      TreeNode n = (TreeNode) e.nextElement();
-      TreePath path = parent.pathByAddingChild(n);
-      visitAll(tree, path, expand);
+      visitAll(tree, parent.pathByAddingChild(e.nextElement()), expand);
     }
   }
   if (expand) {
@@ -48,6 +47,11 @@ private void visitAll(JTree tree, TreePath parent, boolean expand) {
     tree.collapsePath(parent);
   }
 }
+
+//private static Stream<TreeNode> children(TreeNode node) {
+//  return Collections.list((Enumeration<?>) node.children())
+//    .stream().filter(TreeNode.class::isInstance).map(TreeNode.class::cast);
+//}
 }}
 
 * 解説 [#explanation]

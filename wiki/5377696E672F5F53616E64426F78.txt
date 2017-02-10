@@ -413,6 +413,71 @@ Arrays.stream(menuBar.getSubElements())
 ** Containerの子コンポーネントを再帰的に検索し、指定したクラスのコンポーネントを取得 [#y34f3eac]
 - [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]に移動
 
+** TreeNodeを再帰的に検索してStreamを生成 [#p8192b4b]
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.stream.Stream;
+import javax.swing.*;
+import javax.swing.tree.*;
+
+public class TreeNodeStreamTest {
+  public JComponent makeUI() {
+    JTree tree = new JTree();
+    TreeNode root = (TreeNode) tree.getModel().getRoot();
+
+    System.out.println("-- flatMap concat --");
+    stream1(root).forEach(System.out::println);
+
+    System.out.println("-- concat flatMap --");
+    stream2(root).forEach(System.out::println);
+
+    System.out.println("-- map reduce --");
+    stream3(root).forEach(System.out::println);
+
+    System.out.println("-- preorderEnumeration --");
+    Enumeration<?> e = ((DefaultMutableTreeNode) root).preorderEnumeration();
+    Collections.list(e).stream()
+      .filter(TreeNode.class::isInstance).map(TreeNode.class::cast)
+      .forEach(System.out::println);
+
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(new JScrollPane(tree));
+    return p;
+  }
+
+  public static Stream<TreeNode> children(TreeNode node) {
+    return Collections.list((Enumeration<?>) node.children()).stream()
+      .filter(TreeNode.class::isInstance).map(TreeNode.class::cast);
+  }
+
+  public static Stream<TreeNode> stream1(TreeNode p) {
+    return children(p).flatMap(c -> Stream.concat(Stream.of(c), stream1(c)));
+  }
+
+  public static Stream<TreeNode> stream2(TreeNode p) {
+    return Stream.concat(Stream.of(p), children(p).flatMap(TreeNodeStreamTest::stream2));
+  }
+
+  public static Stream<TreeNode> stream3(TreeNode p) {
+    return children(p).map(TreeNodeStreamTest::stream3).reduce(Stream.of(p), Stream::concat);
+  }
+
+  public static void main(String... args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      f.getContentPane().add(new TreeNodeStreamTest().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+}}
+
 * Swingのサンプルに関するメモ(引用) [#p449f4e0]
 目標にしようと思っているけど、なかなか難しそう…。
 
