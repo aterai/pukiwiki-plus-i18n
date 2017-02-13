@@ -1,0 +1,130 @@
+---
+category: swing
+folder: CustomBevelBorder
+title: BevelBorderの射影のサイズを変更する
+tags: [BevelBorder, Border, JButton]
+author: aterai
+pubdate: 2017-02-13T15:04:11+09:00
+description: BevelBorderの射影のサイズを変更し、それをJButtonに設定します。
+image: https://drive.google.com/uc?export=view&id=1fuHYW5tx-oxLY2qD2ARNOmLzj85ZtxEzjg
+---
+* 概要 [#summary]
+`BevelBorder`の射影のサイズを変更し、それを`JButton`に設定します。
+
+#download(https://drive.google.com/uc?export=view&id=1fuHYW5tx-oxLY2qD2ARNOmLzj85ZtxEzjg)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class CustomBevelBorder extends BevelBorder {
+  private final Insets i = new Insets(8, 8, 8, 8);
+  protected CustomBevelBorder(int bevelType) {
+    super(bevelType);
+  }
+  @Override public Insets getBorderInsets(Component c, Insets insets) {
+    insets.set(i.top + 2, i.left + 2, i.bottom + 2, i.right + 2);
+    return insets;
+  }
+  @Override public void paintBorder(
+      Component c, Graphics g, int x, int y, int width, int height) {
+    boolean isPressed = false;
+    if (c instanceof AbstractButton) {
+      ButtonModel m = ((AbstractButton) c).getModel();
+      isPressed = m.isPressed();
+    }
+    if (bevelType == RAISED && !isPressed) {
+      paintRaisedBevel(c, g, x, y, width, height);
+    } else { //if (bevelType == LOWERED) {
+      paintLoweredBevel(c, g, x, y, width, height);
+    }
+  }
+  @Override protected void paintRaisedBevel(
+      Component c, Graphics g, int x, int y, int width, int height)  {
+    int w = width  - 1;
+    int h = height - 1;
+
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.translate(x, y);
+
+    g2.setPaint(getHighlightInnerColor(c));
+    fillTopLeft(g2, w, h, i);
+
+    g2.setPaint(getShadowInnerColor(c));
+    g2.fill(makeBottomRightShape(w, h, i));
+
+    g2.setPaint(getShadowOuterColor(c));
+    drawRectLine(g2, w, h, i);
+
+    g2.dispose();
+  }
+  @Override protected void paintLoweredBevel(
+      Component c, Graphics g, int x, int y, int width, int height)  {
+    int w = width  - 1;
+    int h = height - 1;
+
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.translate(x, y);
+
+    g2.setPaint(getShadowInnerColor(c));
+    fillTopLeft(g2, w, h, i);
+
+    g2.setPaint(getHighlightInnerColor(c));
+    g2.fill(makeBottomRightShape(w, h, i));
+
+    g2.setPaint(getShadowOuterColor(c));
+    drawRectLine(g2, w, h, i);
+
+    g2.dispose();
+  }
+  private void fillTopLeft(Graphics2D g2, int w, int h, Insets i) {
+    g2.fillRect(0, 0, w, i.top);
+    g2.fillRect(0, 0, i.left, h);
+  }
+  private Shape makeBottomRightShape(int w, int h, Insets i) {
+    Path2D p = new Path2D.Double();
+    p.moveTo(w, 0);
+    p.lineTo(w - i.right, i.top);
+    p.lineTo(w - i.right, h - i.bottom);
+    p.lineTo(i.left, h - i.bottom);
+    p.lineTo(0, h);
+    p.lineTo(w, h);
+    p.closePath();
+    return p;
+  }
+  private void drawRectLine(Graphics2D g2, int w, int h, Insets i) {
+    g2.drawRect(0, 0, w, h);
+    g2.drawRect(i.left, i.top, w - i.left - i.right, h - i.top - i.bottom);
+    g2.drawLine(0, 0, i.left, i.top);
+    g2.drawLine(w, 0, w - i.right, i.top);
+    g2.drawLine(0, h, i.left, h - i.bottom);
+    g2.drawLine(w, h, w - i.right, h - i.bottom);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Default BevelBorder`
+-- 射影の高さは`1px`で固定
+-- `BevelBorder#getBorderInsets(...)`をオーバーライドして内余白を変更しても変化しない
+- `Custom BevelBorder`
+-- `BevelBorder#getBorderInsets(...)`をオーバーライドして内余白を変更
+-- `BevelBorder#paintBorder(...)`をオーバーライドして、`JButton`の状態に応じて、`BevelBorder#paintRaisedBevel(...)`と`BevelBorder#paintLoweredBevel(...)`の描画を切り替える
+-- `BevelBorder#paintRaisedBevel(...)`をオーバーライドして、内余白に応じたサイズの射影と境界線を描画
+-- `BevelBorder#paintLoweredBevel(...)`をオーバーライドして、内余白に応じたサイズの射影と境界線を描画
+
+----
+- メモ
+-- `JButton`の`ContentArea`の描画が`LookAndFeel`や初期値の関係で不正になる場合がある？
+--- `SwingUtilities.updateComponentTreeUI(...)`を使用して回避
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/border/BevelBorder.html BevelBorder (Java Platform SE 8)]
+- [https://stackoverflow.com/questions/38967517/create-bevelborder-of-certain-width-in-java-swing Create BevelBorder of certain width in Java Swing - Stack Overflow]
+- [[JButtonの描画>Swing/ButtonPainted]]
+
+* コメント [#comment]
+#comment
+#comment
