@@ -31,7 +31,7 @@ scroll2.setViewportBorder(BorderFactory.createLineBorder(textArea2.getBackground
 -- 行変更などのカーソル移動で先頭や末尾の余白分まではスクロールされない
 - 右: `JScrollPane#setViewportBorder(...)`
 -- `JTextArea#setMargin(new Insets(0, 0, 0, 1))`で`JTextArea`自体の余白を変更
---- すべて`0`の場合、一番長い行の末尾でキャレットが表示されない
+--- すべて`0`の場合、一番長い行の末尾で`Caret`が表示されない
 --- [https://bugs.openjdk.java.net/browse/JDK-6866751 #JDK-6866751 J2SE_Swing_Reg: the caret disappears when moving to the end of the line. - Java Bug System]
 -- `JScrollPane#setViewportBorder(...)`で`JViewport`の周囲に余白を設定
 --- スクロールバーなどの有無によらず、この余白は常に表示されている

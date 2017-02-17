@@ -5,12 +5,12 @@ author: aterai
 pubdate: 2003-09-25
 ---
 #contents
-* 概要 [#b59a5f9b]
+* 概要 [#summary]
 `Ant`は、`Java`ベースのビルドツールです。理論的には、`make`の欠点がない`make`の一種です(`Ant`翻訳より引用)。
 
 このページでは、`Java`ベースのビルドツールである`Ant`の使い方についてメモしています。
 
-* インストールと環境変数の設定 [#v1ec3010]
+* インストールと環境変数の設定 [#environments]
 [http://ant.apache.org/ Apache Ant - Welcome]などからダウンロードしたアーカイブを展開して、そこを環境変数`ANT_HOME`に設定します。「システムのプロパティ→詳細設定→環境変数」で、`ANT_HOME`を新規作成、もしくは編集してください。
 
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQsClLJ428I/AAAAAAAAAs0/B0-VGelgHu4/s800/ant_home.png)
@@ -22,63 +22,68 @@ pubdate: 2003-09-25
 * タスクのサンプル [#of688f72]
 `build.xml`、タスクなどのサンプルや、その他のちょっとした`Tips`などを、以下別ページにまとめています。
 
-** AntのConditionタスクで条件分岐を行う [#aa49e22c]
+** AntのConditionタスクで条件分岐を行う [#Condition]
 `Condition`タスクを使って、例えばディレクトリの有無などによる条件で、`Target`タスクを実行するかどうかを振り分けます。
 
 - [[AntのConditionタスクで条件分岐を行う>Ant/Condition]]
 
-** AntのScriptタスク中でif文を使った条件分岐を行う [#k88bfb49]
+** AntのScriptタスク中でif文を使った条件分岐を行う [#Script]
 `Condition`タスクの条件が複雑になるようなら、`<script language="javascript">`タスクなどで`if`文を使う方法もあります。
 
 - [[AntのScriptタスク中でif文を使った条件分岐を行う>Ant/Script]]
 
-** AntのTaskを自作 [#d8026cb6]
+** AntのTaskを自作 [#Task]
 `Ant`の`Task`を自作し、これを利用する方法をテストします。
 
 - [[AntのTaskを自作>Ant/Task]]
 
-** AntのScriptタスクでJavaScriptを使用する [#b7ff3b37]
+** AntのScriptタスクでJavaScriptを使用する [#NewProperty]
 `Ant`の`Script`タスクで`JavaScript`を使用し、簡単なタスクを作成、実行します。
 
 - [[AntのScriptタスクでJavaScriptを使用する>Ant/NewProperty]]
 
-** AntのJarタスクで実行可能なJarファイルの作成 [#q763cefc]
+** AntのJarタスクで実行可能なJarファイルの作成 [#JarPackage]
 `Ant`を使って、`Windows`環境などでダブルクリックすると起動する`Jar`ファイルを作成します。
 
 - [[AntのJarタスクで実行可能なJarファイルの作成>Ant/JarPackage]]
 
-** AntでOutOfMemoryErrorが発生する場合 [#yee90b60]
+** AntでOutOfMemoryErrorが発生する場合 [#OutOfMemoryError]
 `Ant`を実行すると`OutOfMemoryError`が発生する場合の処置方法について解説しています。
 
 - [[AntでOutOfMemoryErrorが発生する場合>Ant/OutOfMemoryError]]
 
-** AntのプロパティファイルをXMLにする [#fb0bd314]
+** AntのプロパティファイルをXMLにする [#Properties]
 プロパティファイルのエンコーディングなどを気にせずに使えるように、`Ant`のプロパティファイルを`XML`にしてみます。
 
 - [[AntのプロパティファイルをXMLにする>Ant/Properties]]
 
-** Antで子フォルダのbuild.xmlを全部実行 [#cca68c8e]
+** Antで子フォルダのbuild.xmlを全部実行 [#Subant]
 `Subant`タスクを使って、一度に全部同じターゲットで子フォルダの`build.xml`を実行します。
 
 - [[Antで子フォルダのbuild.xmlを全部実行>Ant/Subant]]
 
-** Antのbasedirを子フォルダに変更して全部実行 [#i684141c]
+** Antのbasedirを子フォルダに変更して全部実行 [#basedir]
 `basedir`をカレントディレクトリ(`${user.dir}`)とは別の場所に指定して、`ant.bat`を実行します。
 
 - [[Antのbasedirを子フォルダに変更して全部実行>Ant/basedir]]
 
-** AntでFindBugsを実行する [#eeb19868]
+** AntでFindBugsを実行する [#FindBugs]
 `Ant`から`FindBugs`を実行します。
 
 - [[AntでFindBugsを実行する>Ant/FindBugs]]
 
-** AntでPMDを実行する [#nf28b60e]
+** AntでPMDを実行する [#PMD]
 `Ant`から`PMD`を実行します。
 
 - [[AntでPMDを実行する>Ant/PMD]]
 
-* targetのサンプル [#ab627600]
-** Checkstyleタスク [#b426d5d8]
+** Antタスクの定義をスクリプト言語を使用して行う [#Scriptdef]
+スクリプト言語(`Javascript`)を使用して、`FTPS`(`File Transfer Protocol over SSL/TLS`)で通信する`Ant`タスクを定義します。
+
+- [[Antタスクの定義をスクリプト言語を使用して行う>Ant/Scriptdef]]
+
+* targetのサンプル [#target]
+** Checkstyleタスク [#Checkstyle]
 #code{{
   <condition property="have.checkstyle">
     <available file="${env.CHECKSTYLE_JAR}" />
@@ -97,7 +102,7 @@ pubdate: 2003-09-25
   </target>
 }}
 
-** ErrorProneタスク [#w4a0bdde]
+** ErrorProneタスク [#ErrorProne]
 - [http://errorprone.info/ Error Prone]
 -- [http://errorprone.info/docs/flags Command-line flags]
 
@@ -124,7 +129,7 @@ pubdate: 2003-09-25
 </target>
 }}
 
-** Scpタスク [#x8ac45f9]
+** Scpタスク [#scp]
 #code{{
   <path id="jsch.path">
     <property name="scp.userid" value="${env.SCP_USERID}" />
@@ -145,8 +150,8 @@ pubdate: 2003-09-25
   </target>
 }}
 
-* その他 [#f3dd13ae]
-** `buildfile`オプション [#e6cb38d3]
+* その他 [#others]
+** `buildfile`オプション [#buildfile]
 `build.xml`ファイルを作ってコマンドプロンプトから`ant.bat`を実行します。引数が無い場合、カレントフォルダにある`build.xml`が使用されます。
  ant
 
@@ -158,7 +163,7 @@ pubdate: 2003-09-25
  ant -emacs -buildfile "c:\hoge\build.xml"
  ant -e -f "c:\hoge\build.xml"
 
-** `build.xml`ファイル [#v251ad1c]
+** `build.xml`ファイル [#buildxml]
 ネットを検索すれば、いろんな`build.xml`が見つかるので、まずはその中からサンプルを選び、[http://ant.apache.org/manual/index.html マニュアル]([http://www.jajakarta.org/ant/ant-1.6.1/docs/ja/manual/index.html 日本語訳])を見ながら修正すると、手っ取り早く作成することができます。
 
 - `build.xml`と`build.properties`のサンプル
@@ -169,11 +174,11 @@ pubdate: 2003-09-25
 -- http://ateraimemo.com/swing/toolbarlayout/src.zip
 -- このサイトの[[Java Swing Tips>Swing]]のサンプルに添付されている`build.xml`はすべて同一です。こちらは、「`build.xml`と`build.properties`のサンプル」とは違い、ソースコードは`UTF-8`で、`build.properties`ではなく、`xml`ファイル(`properties.xml`)をプロパティファイルとして使用しています。
 
-* 参考リンク [#v9b28311]
+* 参考リンク [#reference]
 - [http://ant.apache.org/ Apache Ant]
 - [http://ant.apache.org/manual/index.html Apache Ant Manual]
 - [http://amateras.sourceforge.jp/cgi-bin/fswiki/wiki.cgi/free?page=xyzzy xyzzy Antモード]
 
-* コメント [#i47478e7]
+* コメント [#comment]
 #comment
 #comment

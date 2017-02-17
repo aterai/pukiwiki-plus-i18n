@@ -1,0 +1,133 @@
+---
+title: Antタスクの定義をスクリプト言語を使用して行う
+author: aterai
+pubdate: 2017-02-15T13:41:06+09:00
+description: スクリプト言語(Javascript)を使用して、FTPS(File Transfer Protocol over SSL/TLS)で通信するAntタスクを定義します。
+---
+#contents
+
+* 概要 [#summary]
+スクリプト言語(`Javascript`)を使用して、`FTPS`(`File Transfer Protocol over SSL/TLS`)で通信する`Ant`タスクを定義します。
+
+* サンプルコード [#sourcecode]
+#code{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="example" default="ftp" basedir=".">
+  <property environment="env" />
+  <target name="ftp">
+    <echo message="ftp" />
+    <property name="ftp.userid" value="${env.FTP_USERID}" />
+    <property name="ftp.server" value="${env.FTP_SERVER}" />
+    <property name="ftp.remotedir" value="${env.FTP_BASEDIR}" />
+    <property name="ssh.inkey" value="${env.SSH_INKEY}" />
+    <property name="ssh.in" value="${env.SSH_IN}" />
+    <exec executable="openssl" outputproperty="ftp.password" failonerror="true">
+      <arg value="rsautl" />
+      <arg value="-decrypt" />
+      <arg value="-inkey" />
+      <arg value="${ssh.inkey}" />
+      <arg value="-in" />
+      <arg value="${ssh.in}" />
+    </exec>
+    <fileset id="ftp.upload.fileset" dir="${basedir}/_site">
+      <include name="*.html" />
+      <exclude name="404.html" />
+    </fileset>
+    <ftp server="${ftp.server}" remotedir="${ftp.remotedir}"
+         userid="${ftp.userid}" password="${ftp.password}"
+         passive="yes" verbose="yes">
+      <fileset refid="ftp.upload.fileset" />
+    </ftp>
+  </target>
+
+  <target name="ftps">
+    <echo message="ftps" />
+    <property name="ftp.userid" value="${env.FTP_USERID}" />
+    <property name="ftp.server" value="${env.FTP_SERVER}" />
+    <property name="ftp.remotedir" value="${env.FTP_BASEDIR}" />
+    <property name="ssh.inkey" value="${env.SSH_INKEY}" />
+    <property name="ssh.in" value="${env.SSH_IN}" />
+    <exec executable="openssl" outputproperty="ftp.password" failonerror="true">
+      <arg value="rsautl" />
+      <arg value="-decrypt" />
+      <arg value="-inkey" />
+      <arg value="${ssh.inkey}" />
+      <arg value="-in" />
+      <arg value="${ssh.in}" />
+    </exec>
+    <fileset id="ftp.upload.fileset" dir="${basedir}/_site">
+      <include name="*.html" />
+      <exclude name="404.html" />
+    </fileset>
+    <ftps server="${ftp.server}" remotedir="${ftp.remotedir}"
+          userid="${ftp.userid}" password="${ftp.password}">
+      <fileset refid="ftp.upload.fileset" />
+    </ftps>
+  </target>
+
+  <scriptdef name="ftps" language="javascript">
+    <attribute name="server" />
+    <attribute name="remotedir" />
+    <attribute name="userid" />
+    <attribute name="password" />
+    <element name="fileset" type="fileset" />
+    <![CDATA[
+      var server = attributes.get("server");
+      var remotedir = attributes.get("remotedir");
+      var username = attributes.get("userid");
+      var password = attributes.get("password");
+      try {
+        var ftps = new org.apache.commons.net.ftp.FTPSClient("SSL");
+        ftps.connect(server);
+        var reply = ftps.getReplyCode();
+        if (!org.apache.commons.net.ftp.FTPReply.isPositiveCompletion(reply)) {
+          ftps.disconnect();
+          print("FTP server refused connection.");
+          System.exit(1);
+        }
+        ftps.setBufferSize(1000);
+        if (!ftps.login(username, password)) {
+          print("FTP server refused connection.");
+        } else {
+          print("Remote system is " + ftps.getSystemName());
+          //ftps.setFileType(FTP.BINARY_FILE_TYPE);
+          ftps.enterLocalPassiveMode();
+          var filesets = elements.get("fileset");
+          for (i = 0; i < filesets.size(); i++) {
+            var fileset = filesets.get(i);
+            var scanner = fileset.getDirectoryScanner(project);
+            scanner.scan();
+            var basedir  = fileset.getDir(project);
+            var files = scanner.getIncludedFiles();
+            for(j = 0; j < files.length; j++) {
+              var filename = files[j];
+                var local = new java.io.File(basedir, filename);
+                print("file: " + local);
+                var input = new java.io.FileInputStream(local);
+                ftps.storeFile(remotedir + filename, input);
+                input.close();
+              }
+            }
+        }
+        ftps.logout();
+      } catch (ex) {
+        ex.printStackTrace();
+      }
+      ftps.disconnect();
+    ]]>
+  </scriptdef>
+</project>
+}}
+
+* 解説 [#explanation]
+- さくらレンタルサーバのライトプランでは、`scp`や`SFTP`が使用不可だが、`FTPS`は使用可能
+- `Ant`の`ftp`タスクは、`FTPS`に対応していない？
+- `ftp`タスクが使用する`Apache commons-net`には、`FTPSClient`が用意されているので、代わりにこれを使用するタスクを`Javascript`で作成する
+
+* 参考リンク [#reference]
+- [https://ant.apache.org/manual/Tasks/scriptdef.html Scriptdef Task]
+- [https://svn.apache.org/repos/asf/commons/proper/net/tags/NET_2_2/src/main/java/examples/ftp/FTPSExample.java FTPSClientExample.java]
+
+* コメント [#comment]
+#comment
+#comment
