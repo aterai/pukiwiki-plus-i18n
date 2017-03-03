@@ -97,7 +97,7 @@ class ListItemTransferHandler extends TransferHandler {
 }}
 
 * 解説 [#explanation]
-上記のサンプルの`TransferHandler`は、主に[http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#BasicDnD Drag and Drop and Data Transfer: Examples (The Java™ Tutorials > Creating a GUI with JFC/Swing > Drag and Drop and Data Transfer)]の[http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/DropDemoProject/src/dnd/ListTransferHandler.java ListTransferHandler.java]を参考にして作成しています。ただし、この`ListTransferHandler.java`は項目を複数選択して、`JList`内での並べ替えは想定していない？(もしくはバグ)ようなので、`importData(...)`メソッドや、`cleanup()`メソッドをすこし変更しています。
+上記のサンプルの`TransferHandler`は、主に[http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#BasicDnD Drag and Drop and Data Transfer: Examples (The Java™ Tutorials > Creating a GUI with JFC/Swing > Drag and Drop and Data Transfer)]の[http://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/DropDemoProject/src/dnd/ListTransferHandler.java ListTransferHandler.java]を参考にして作成しています。ただし、この`ListTransferHandler.java`は項目を複数選択して、`JList`内での並べ替えは想定していない(もしくはバグ？)ようなので、`importData(...)`メソッドや、`cleanup()`メソッドを修正しています。
 
 #code{{
 JList list = new JList(listModel);
@@ -110,7 +110,7 @@ list.setDragEnabled(true);
 - `importData`
 -- 使用されていない？`importString(...)`の内容をこちらに移動
 - `cleanup`
--- 例えば、項目`0`,`1`,`2`を複数選択して、`1`と`2`の間にドロップすると、`1`,`2`,`2`になるので、以下のように変更
+-- 例えば、項目`0`,`1`,`2`を複数選択して、`1`と`2`の間にドロップすると、`1`,`2`,`2`になるので、以下のように修正
 #code{{
 for (int i = 0; i < indices.length; i++) {
   //if (indices[i] > addIndex) {

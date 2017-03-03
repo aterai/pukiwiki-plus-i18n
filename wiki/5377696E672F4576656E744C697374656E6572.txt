@@ -57,10 +57,9 @@ public void fireFontChangeEvent(String cmd, Font font) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルではメニューからのイベントでコンポーネントのフォントを変更しています。ラベルとボタンをリスナーとして追加しているので、`fireFontChangeEvent`でそれらのフォントサイズが変更されます。
+上記のサンプルでは`JMenuItem`に設定したイベントでコンポーネントのフォントを変更することができます。ラベルとボタンをその独自イベントのリスナーとして追加しているので、`fireFontChangeEvent(...)`メソッド内でそれらのフォントサイズが変更されます。
 
-`Java`のイベントモデルは、`delegation event model`(委譲型のイベントモデル)です。[http://www.asahi-net.or.jp/~dp8t-asm/java/tips/Event.html イベント]などを参考にしてみてください。
-
+`Java`のイベントモデルは、`delegation event model`(委譲型のイベントモデル)です。
 ----
 `Vector`ではなく、`EventListenerList`を使用する場合は、[http://docs.oracle.com/javase/jp/7/api/javax/swing/event/EventListenerList.html EventListenerList (Java Platform SE 7)]のサンプルが参考になります。
 
@@ -96,8 +95,8 @@ protected void fireFontChangeEvent(String cmd, Font font) {
 }}
 
 * 参考リンク [#reference]
-- [http://www.asahi-net.or.jp/~dp8t-asm/java/tips/Event.html イベント]
-- [http://docs.oracle.com/javase/jp/7/api/javax/swing/event/EventListenerList.html EventListenerList (Java Platform SE 7)]
+- %%[http://www.asahi-net.or.jp/~dp8t-asm/java/tips/Event.html イベント]%%
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/EventListenerList.html EventListenerList (Java Platform SE 8)]
 - [http://d.hatena.ne.jp/Kazzz/20080618/p1 習慣の生き物 - Kazzzの日記]
 
 * コメント [#comment]

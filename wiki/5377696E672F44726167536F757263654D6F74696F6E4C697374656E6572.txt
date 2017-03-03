@@ -2,7 +2,7 @@
 category: swing
 folder: DragSourceMotionListener
 title: JFrameの外側でもドラッグアイコンを表示する
-tags: [DragAndDrop, JWindow, ImageIcon, JFrame]
+tags: [DragAndDrop, JWindow, ImageIcon, JFrame, JLabel]
 author: aterai
 pubdate: 2012-08-06T15:46:37+09:00
 description: ドラッグ中のカーソル位置をDragSourceMotionListenerで取得し、そこにアイコンを追加したWindowを移動することで、JFrameの外側でもドラッグアイコンを表示します。
@@ -28,7 +28,7 @@ DragSource.getDefaultDragSource().addDragSourceMotionListener(new DragSourceMoti
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JPanel`中に配置した`JLabel`(アイコン)を`Drag & Drop`で別の`JPanel`など(親の`JFrame`が異なる場合も可)に移動することができます。ドラッグ中の`JLabel`は透明化した`Window`に配置され、ドラッグに合わせてその`Window`を移動しているので、`JFrame`の外でもドラッグアイコンが表示可能になっています。
+上記のサンプルでは、`JPanel`中に配置されているアイコンなどを設定した`JLabel`を、`Drag & Drop`で別の`JPanel`(例えば親の`JFrame`が異なる場合も可)に移動することができます。`JLabel`のドラッグ開始時に元の親`JPanel`からそれを削除して透明化した`Window`に移し替え、ドラッグに合わせて`Window`自体を移動しているので、`JFrame`の外でもドラッグアイコンが表示可能になっています。
 ドラッグ中のカーソル位置取得には、`MouseMotionListener`を使用する方法もありますが、このサンプルのような`TransferHandler`を使ったドラッグでは`MouseMotionListener`でマウスイベントを取得することができないので、`DefaultDragSource`に`DragSourceMotionListener`を追加してドラッグ中のカーソル位置を取得しています。
 
 - 注:
