@@ -23,7 +23,7 @@ function plugin_topicpath_convert()
 {
 	global $topicpath;
 	if (isset($topicpath) && $topicpath == false) return '';
-	return '<div id ="topicpath" class="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">' . plugin_topicpath_inline() . '</div>';
+	return '<ol id ="topicpath" class="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">' . plugin_topicpath_inline() . '</ol>';
 }
 
 function plugin_topicpath_inline()
@@ -71,16 +71,16 @@ function plugin_topicpath_inline()
             $topic_path[] = $element;
         } else { // Page exists or not exists
             $url = get_page_uri($_landing);
-            $act = '';
+            $act = 'class="breadcrumb-item"';
             if (! $b_link)  { // This page ($_landing == $page)
                 $b_link = TRUE;
-                $act = 'class="active" ';
+                $act = 'class="breadcrumb-item active"';
             }
             $topic_path[] = <<<EOD
-<span {$act}itemprop="itemListElement" itemscope="itemscope" itemtype="https://schema.org/ListItem">
-<a itemprop="item" href="{$url}"><span itemprop="name">{$element}</span></a>
-<meta itemprop="position" content="{$pos}" />
-</span>
+<li {$act} itemprop="itemListElement" itemscope="itemscope" itemtype="https://schema.org/ListItem">
+  <a itemprop="item" href="{$url}"><span itemprop="name">{$element}</span></a>
+  <meta itemprop="position" content="{$pos}" />
+</li>
 EOD;
             $pos -= 1;
         }
@@ -88,6 +88,7 @@ EOD;
     if (PLUGIN_TOPICPATH_TOP_DISPLAY) {
         $topic_path[] = make_pagelink($defaultpage, PLUGIN_TOPICPATH_TOP_LABEL);
     }
-    return join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path));
+    // return join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path));
+    return join('', array_reverse($topic_path));
 }
 ?>
