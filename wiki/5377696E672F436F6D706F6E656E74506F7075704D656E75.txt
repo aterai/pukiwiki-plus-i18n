@@ -72,9 +72,9 @@ class TextComponentPopupMenu extends JPopupMenu {
 このサンプルでは、テキストが選択されている場合だけ、カット、コピー、削除メニューが有効になるよう設定しています。
 
 ----
-以下のように、`PopupMenuListener`を追加しても、同様の処理を行うことが出来ます。
+`JPopupMenu#show(Component, int, int)`のオーバーライドではなく、`PopupMenuListener`を使用する方法もあります。
 
-- 注: `JTabbedPane`などで、どのタブの上でポップアップが表示されるかなどを取得したい場合[[JTabbedPaneでタブを追加削除>Swing/TabbedPane]]は、この方法だと面倒かも…
+- 注: `PopupMenuEvent`からはクリック位置の取得ができないので、`JTabbedPane`などでどのタブの上でポップアップが表示されるかなどを取得したい場合[[JTabbedPaneでタブを追加削除>Swing/TabbedPane]]は、多少手間が掛かる
 
 #code{{
 JPopupMenu popup = new JPopupMenu();

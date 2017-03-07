@@ -65,8 +65,7 @@ frame.getContentPane().add(p);
 #code{{
 for (Window window: Frame.getWindows()) {
   if (window instanceof RootPaneContainer) {
-    RootPaneContainer rpc = (RootPaneContainer) window;
-    SwingUtilities.updateComponentTreeUI(rpc.getContentPane());
+    SwingUtilities.updateComponentTreeUI(((RootPaneContainer) window).getContentPane());
   }
 }
 }}

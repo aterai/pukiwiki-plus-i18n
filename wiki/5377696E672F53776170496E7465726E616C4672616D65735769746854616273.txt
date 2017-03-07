@@ -20,8 +20,7 @@ Action swapAction = new AbstractAction("JDesktopPane <-> JTabbedPane") {
     if (((AbstractButton) e.getSource()).isSelected()) {
       Arrays.stream(desktopPane.getAllFrames())
         .sorted(Comparator.comparing(JInternalFrame::getTitle))
-        .forEach(f -> tabbedPane.addTab(
-            f.getTitle(), f.getFrameIcon(), f.getContentPane()));
+        .forEach(f -> tabbedPane.addTab(f.getTitle(), f.getFrameIcon(), f.getContentPane()));
 
       JInternalFrame sf = desktopPane.getSelectedFrame();
       if (Objects.nonNull(sf)) {
@@ -30,9 +29,8 @@ Action swapAction = new AbstractAction("JDesktopPane <-> JTabbedPane") {
       cardLayout.show(panel, tabbedPane.getClass().getName());
     } else {
       Arrays.stream(desktopPane.getAllFrames())
-      .forEach(f -> f.setContentPane(
-          (Container) tabbedPane.getComponentAt(
-              tabbedPane.indexOfTab(f.getTitle()))));
+        .forEach(f -> f.setContentPane(
+          (Container) tabbedPane.getComponentAt(tabbedPane.indexOfTab(f.getTitle()))));
       cardLayout.show(panel, desktopPane.getClass().getName());
     }
   }

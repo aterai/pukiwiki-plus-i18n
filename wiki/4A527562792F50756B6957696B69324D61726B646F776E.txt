@@ -493,8 +493,8 @@ main
 --- コードブロックも、`(リスト階層+1)*4`スペース(もしくはタブ)のインデントが必要だが、`p2m.rb`では生成できていない
 
 ** Liquid [#cc063cb0]
-`PukiWiki`のプラグインを`Liquid`タグに移植
-
+- `PukiWiki`のプラグインを`Liquid`タグに移植
+-- 例えば、`PukiWiki`で利用している`&src(swing/surrogatepair);`プラグイン(自作)に対応する`{% src swing/surrogatepair %}`を作成する
 - `C:\jekyll-bootstrap\_plugins\src.rb`
 #code{{
 # -*- encoding: utf-8 -*-
@@ -514,8 +514,6 @@ class Src < Liquid::Tag
   Liquid::Template.register_tag "src", self
 end
 }}
-
- PukiWikiプラグインの&zip(swing/surrogatepair); などを {% src swing/surrogatepair %} に置き換える
 
 * Front Matter [#zdaefb02]
 - [http://jekyllrb.com/docs/frontmatter/ Front Matter]を参考にして、ファイル先頭にページのメタ情報をYAMLで記述しているので、これを本体の`Markdown`形式変換とは分けて処理する

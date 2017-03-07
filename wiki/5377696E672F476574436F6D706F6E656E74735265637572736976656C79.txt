@@ -31,7 +31,7 @@ stream(chooser)
 上記のサンプルでは、`JFileChooser`の詳細表示で使用されている`JTable`を取得し、その自動サイズ変更モードを変更しています。
 
 - メモ
--- `JPopupMenu`などの子`Component`は取得しない
+-- `JPopupMenu`が`JComponent#setComponentPopupMenu(...)`で設定されていても、その子`Component`は取得しない
 --- [[JFileChooserでの隠しファイルの非表示設定を変更する>Swing/FileHidingEnabled]]
 -- `JDK1.8`で導入された`Stream`を使用
 --- 以下のように`flatMap`を使用する方法もある
