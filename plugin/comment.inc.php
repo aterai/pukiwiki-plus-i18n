@@ -205,7 +205,7 @@ function plugin_comment_convert()
     static $times = 0;
     $times++;
     if ($times == 1) {
-        return '<article itemscope="itemscope" itemtype="https://schema.org/UserComments">';
+        return '<aside itemscope="itemscope" itemtype="https://schema.org/UserComments">';
     }
     //$times = 0;
     return <<<EOD
@@ -225,9 +225,10 @@ s.setAttribute('data-timestamp', +new Date());
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</article>
+</aside>
 <br />
 <aside class="ad_bar">
+<h2>広告</h2>
 <!-- responsive -->
 <ins class="adsbygoogle"
      style="display:block"

@@ -8,7 +8,7 @@ function plugin_download_convert() {
     $imgpath = '';
 
     $path = func_get_args();
-    $image = $path[0];
+    $image = htmlspecialchars(trim($path[0]));
     //$head_tags[] = '<meta property="og:image" content="' . $image . '" />';
 
     $page = isset($vars['page']) ? $vars['page'] : '';

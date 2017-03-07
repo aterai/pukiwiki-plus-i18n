@@ -219,7 +219,7 @@ function plugin_search_display_format($highlight, $id = '', $start = 0, $len = 1
 
 		if ($found_pages>$len) {
 			$_total = ceil($found_pages / $len);
-			$retval .= '<nav role="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement"><ul class="pagination">';
+			$retval .= '<nav itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement"><ul class="pagination">';
 			
 			if($start>0) {
 				// Add Prev link

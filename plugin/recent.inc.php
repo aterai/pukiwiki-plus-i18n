@@ -168,7 +168,7 @@ function plugin_recent_action()
 	}
 	$body .= <<<EOD
 <hr class="full_hr" />
-<nav role="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
+<nav itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
 <ul class="pagination pagination-sm">
 <li class="previous">$prev_link</li>
 $page_link

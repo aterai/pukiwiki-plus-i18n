@@ -21,8 +21,8 @@ header('ETag: ' . md5(MUTIME));
 }
 ?>
 <!DOCTYPE html>
-<html lang="ja" prefix="og: http://ogp.me/ns#">
-<head>
+<html lang="ja">
+<head prefix="og: http://ogp.me/ns#">
 <meta charset="utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -101,7 +101,7 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:#e0f0e8}
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <div class="wrap">
-<nav class="navbar navbar-default" role="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
+<nav class="navbar navbar-default" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
 <div class="navbar-header">
 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#jb-navbar-collapse">
 <span class="sr-only">Toggle navigation</span>

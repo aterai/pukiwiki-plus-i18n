@@ -172,18 +172,22 @@ function catbody($title, $page, $body)
     if ( isset($frontmatter['title']) ) {
         $newtitle = $frontmatter['title'];
     }
+
+    $site_name = $page_title;
     $withtitle = '';
     if ($newtitle != '') {
         if (strpos($title, 'Swing/') === false) {
             $withtitle = $newtitle." - ".$page_title;
         } else {
-            $withtitle = $newtitle." - Java Swing Tips";
+            $site_name = "Java Swing Tips";
+            $withtitle = $newtitle." - ".$site_name;
         }
     } else {
         $withtitle = $title." - ".$page_title;
     }
     $head_tags[] = '<title>'.$withtitle.'</title>';
     $head_tags[] = '<meta property="og:title" content="'.$newtitle.'" />';
+    $head_tags[] = '<meta property="og:site_name" content="'.$site_name.'" />';
     $head_tags[] = '<meta property="og:type" content="website" />';
 
     $has_keywords = FALSE;
@@ -204,7 +208,7 @@ function catbody($title, $page, $body)
     }
 
     if ( isset($frontmatter['image']) ) {
-        $contents = $frontmatter['image']; //htmlspecialchars($frontmatter['image'], ENT_QUOTES, 'UTF-8');
+        $contents = htmlspecialchars($frontmatter['image'], ENT_QUOTES, 'UTF-8');
         $head_tags[] = '<meta property="og:image" content="' . $contents . '" />';
     }
 
