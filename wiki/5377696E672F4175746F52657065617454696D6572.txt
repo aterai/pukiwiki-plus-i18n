@@ -62,7 +62,7 @@ class AutoRepeatHandler extends MouseAdapter implements ActionListener {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JButton`にクリックで指定した`JLabel`の数値を増減するための`ActionListener`と、自動リピートを行う`Timer`を起動するための`MouseListener`を設定しています。
+上記のサンプルでは、`JButton`をクリックすると`JLabel`に表示される数値の増減を実行する`ActionListener`と、`JButton`が押されている間はこのアクションを自動的にリピートする`Timer`を起動するための`MouseListener`のふたつのリスナーを設定しています。
 
 - `JSpinner`で使用されている`javax.swing.plaf.basic.BasicSpinnerUI`内の`ArrowButtonHandler`と`Timer`のリピート間隔(`60ms`)や初回起動までの時間(`300ms`)は同じ値を設定
 

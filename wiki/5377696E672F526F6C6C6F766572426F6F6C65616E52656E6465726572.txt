@@ -56,9 +56,9 @@ class RolloverBooleanRenderer extends JCheckBox implements TableCellRenderer, UI
 
 * 解説 [#explanation]
 - 上: デフォルト
-- 下: `JTable#setDefaultRenderer`メソッドで、`Object`, `Number`, `Boolean`クラスそれぞれに、マウスカーソルに反応するレンダラーを設定
--- これらは、`JTable$BooleanRenderer`クラスなどを参考に作成
--- `JCheckBox`のロールオーバーは、`JCheckBox#getModel()#setRollover(boolean)`メソッドを使用
+- 下: `JTable#setDefaultRenderer`メソッドで、`Object`, `Number`, `Boolean`クラスそれぞれに、マウスカーソルに反応するセルレンダラーを設定
+-- これらは、デフォルトの`JTable$BooleanRenderer`クラスなどを参考に作成
+-- `JCheckBox`のロールオーバー表示は、`JCheckBox#getModel()#setRollover(boolean)`メソッドを使用
 
 //* 参考リンク [#reference]
 * コメント [#comment]

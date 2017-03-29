@@ -56,7 +56,7 @@ class LineCursorTextArea extends JTextArea {
 * 解説 [#explanation]
 `JTextArea#paintComponent`メソッドをオーバーライドして、カーソルがある行にアンダーラインを引いています。
 
-- `Caret`の移動に対応するため、`DefaultCaret#damage`メソッドを変更して、変更のあった領域を再描画
+- `Caret`の移動に対応するため、`DefaultCaret#damage`メソッドをオーバーライドして、変更された領域を再描画
 - [http://www.jroller.com/page/santhosh/20050601?catname=%2FSwing Highlighting Current Line ]のように、`Highlighter`を使用する方法もある
 
 * 参考リンク [#reference]

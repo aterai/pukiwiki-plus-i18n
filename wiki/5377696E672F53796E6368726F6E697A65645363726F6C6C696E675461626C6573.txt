@@ -30,7 +30,7 @@ scroll2.getVerticalScrollBar().setModel(scroll1.getVerticalScrollBar().getModel(
 * 解説 [#explanation]
 - `JTable`
 -- `TableModel`を共有し、`JTable#removeColumn()`で、それぞれで非表示にする列を指定
--- 左右で`RowSorter`、`SelectionModel`を共有
+-- 左右の`JTable`で`RowSorter`と`SelectionModel`を共有
 - `JScrollPane`
 -- それぞれ内部に配置する`JTable`の高さは、常に同じになるので、`VerticalScrollBar`の`BoundedRangeModel`を共有
 

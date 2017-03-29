@@ -108,9 +108,14 @@ pubdate: 2003-09-25
 
 #code{{
 <target name="errorprone" depends="prepare-src, prepare-resource, prepare-web">
-  <componentdef name="errorprone"
-                classname="com.google.errorprone.ErrorProneExternalCompilerAdapter"
-                classpath="${errorprone.dir}/error_prone_ant-2.0.9.jar" />
+  <path id="errorprone.classpath">
+    <!-- 環境変数などでerror_prone_ant-x.x.x.jarのあるディレクトリを指定 -->
+    <fileset dir="${env.ERRORPRONE_HOME}">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+  <componentdef name="errorprone" classname="com.google.errorprone.ErrorProneExternalCompilerAdapter"
+                classpathref="errorprone.classpath" />
   <javac srcdir="${build.src}"
          includes="**/*.java"
          destdir="${build.dest}"

@@ -42,7 +42,7 @@ tabs.getActionMap().put("next2", new AbstractAction() {
 -- 参考: `javax/swing/plaf/basic/BasicPopupMenuUI.java`の`List<JPopupMenu> getPopups()`メソッド
 
 ----
-- 以下のように、`LayeredPane#getComponentsInLayer(JLayeredPane.POPUP_LAYER)`で表示中の`JPopupMenu`を取得する方法もあるが、`JFrame`の外に表示される場合の`HeavyWeightWindow`を使用した`JPopupMenu`が取得できない
+- 以下のように`LayeredPane#getComponentsInLayer(JLayeredPane.POPUP_LAYER)`で表示中の`JPopupMenu`を取得する方法も存在するが、これは`JFrame`の外に表示される場合の`HeavyWeightWindow`を使用した`JPopupMenu`が取得できない
 #code{{
 JLayeredPane lp = ((JFrame) tabs.getTopLevelAncestor()).getLayeredPane();
 for (Component c: lp.getComponentsInLayer(JLayeredPane.POPUP_LAYER)) {

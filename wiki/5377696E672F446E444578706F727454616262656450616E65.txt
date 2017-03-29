@@ -152,7 +152,7 @@ class TabTransferHandler extends TransferHandler {
 上記のサンプルでは、`JDK 6`で導入された、`TransferHandler.DropLocation`を継承する`DnDTabbedPane.DropLocation`などを作成して、`JTabbedPane`間でタブの移動ができるように設定しています。
 
 - 注意点
--- 自身の子である`JTabbedPane`にタブを移動することはできない
+-- 自身の子として配置されている`JTabbedPane`にタブを移動することはできない
 -- 子コンポーネントが`null`(例えば`addTab("Tab",null)`)のタブは移動不可
 -- タブが選択不可(例えば`setEnabledAt(idx, false)`)の場合は移動不可
 - バグ？

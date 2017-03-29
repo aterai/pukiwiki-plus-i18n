@@ -49,7 +49,7 @@ JTable table = new JTable(model) {
 上記のサンプルでは、`JViewport`のサイズまで`JTable`の各セルを`GridLayout`風に同比率で拡大縮小するよう`JTable#doLayout()`をオーバーライドしています。
 
 - 余白(高さ方向)の調整
--- `JViewport`の高さが変更されたり、行数の増減があった場合、行の高さを`JTable#setRowHeight(...)`で設定し直すことで、`JViewport`に余白が発生しないように調整
+-- `JViewport`の高さが変更されたり、行数の増減が発生した場合、行の高さを`JTable#setRowHeight(...)`で設定し直すことで、`JViewport`に余白が生成されないように調整
 
 * 参考リンク [#reference]
 - [[JTableの行の高さを変更する>Swing/FishEyeTable]]

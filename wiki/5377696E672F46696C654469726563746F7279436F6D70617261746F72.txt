@@ -54,9 +54,9 @@ class FileGroupComparator extends DefaultFileComparator {
 - `Default`
 -- `File#getName()`で取得できる`String`などのデフォルトで比較
 - `Directory < File`
--- 「ディレクトリ < ファイル」となるような`Comparator`を設定
+-- 「ディレクトリ < ファイル」となる`Comparator`を設定
 - `Group Sorting`
--- 昇順の場合は「ディレクトリ < ファイル」、降順の場合は、「ディレクトリ > ファイル」として、ディレクトリが常に先頭になる`Comparator`を設定
+-- 昇順の場合は「ディレクトリ < ファイル」、降順の場合は、「ディレクトリ > ファイル」として、常にディレクトリが優先される`Comparator`を設定
 
 * 参考リンク [#reference]
 - [[JTreeのソート>Swing/SortTree]]

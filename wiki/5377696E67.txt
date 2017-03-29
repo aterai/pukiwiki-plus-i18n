@@ -20,17 +20,17 @@ pubdate: 2003-09-25
 RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the JFC and Swing (The Java™ Tutorials)]
 
 * 新着記事 [#whatsnew]
+- 2017-03-27
+#swingdescription(Swing/ClearComboBoxItemSelection,JComboBoxを選択なしの状態にする,JComboBoxの項目が何も選択されていない状態になるよう設定します。,https://drive.google.com/uc?export=view&id=1ytLrgrvvfQGy-YNgOPiY67cT8EaLV1yHoA)
+
+- 2017-03-20
+#swingdescription(Swing/ExpandingTextArea,JTextAreaにフォーカスが当たったときその高さを自動拡張する,JTextAreaにフォーカスが当たったときその高さを自動拡張、外れたときに縮小します。,https://drive.google.com/uc?export=view&id=11MUj8pt3sndJr2o7ebuYFDE4gaRnE4AklA)
+
+- 2017-03-13
+#swingdescription(Swing/MaskFormatterPlaceholder,JFormattedTextFieldにプレースホルダ文字列を追加したMaskFormatterを設定する,JFormattedTextFieldにプレースホルダ文字やプレースホルダ文字列を追加したMaskFormatterを設定します。,https://drive.google.com/uc?export=view&id=1jr_CEn9HFdHVL7hiYobxNFuuuVvnlXuyrA)
+
 - 2017-03-06
 #swingdescription(Swing/AutoChapterNumberingTreeNode,JTreeの各ノードタイトルに章番号を自動追加して表示する,JTreeの各ノードに章番号を自動的に追加し、タイトル先頭にそれを表示するTreeCellRendererを作成します。,https://drive.google.com/uc?export=view&id=1sr9avobwqRpWX2bNvLVutxduLQa66KvKTg)
-
-- 2017-02-27
-#swingdescription(Swing/CalendarFieldStepSize,JSpinnerに設定したSpinnerDateModelの各日付フィールドに増減サイズを指定する,JSpinnerにSpinnerDateModelを設定し、スピンボタンをクリックした際の増減サイズを各日付フィールドごとに指定します。,https://drive.google.com/uc?export=view&id=1TPoA7k0gp-SsdcPNfoTDKvN4bZikpOkgrA)
-
-- 2017-02-20
-#swingdescription(Swing/SpinCalendarField,JSpinnerのスピンで変更可能な日付フィールドを制限する,JSpinnerのスピンボタンで変更可能な日付フィールドを、カーソルで指定したフィールドではなく、初期値で指定したフィールドのみに制限します。,https://drive.google.com/uc?export=view&id=1iKgUTqT5ugWKrxJ_KXkjbe-2rNjsGwujLw)
-
-- 2017-02-13
-#swingdescription(Swing/CustomBevelBorder,BevelBorderの射影のサイズを変更する,BevelBorderの射影のサイズを変更し、それをJButtonに設定します。,https://drive.google.com/uc?export=view&id=1fuHYW5tx-oxLY2qD2ARNOmLzj85ZtxEzjg)
 
 ** 更新履歴 [#changelog]
 - [http://ateraimemo.com/archive.html Archive]
@@ -45,18 +45,18 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 -- [[TableRowSorter RowFilter(22)>Swing/_TableRowSorter]]
 -- [[JDK1.5.0(6)>Swing/_JTable1.5.0]]
 - [[JTextComponent(20)>Swing/_JTextComponent]]
--- [[JTextArea(22)>Swing/_JTextArea]]
+-- [[JTextArea(23)>Swing/_JTextArea]]
 -- [[JTextPane JEditorPane(25)>Swing/_JTextPane]]
 - [[JTree(57)>Swing/_JTree]]
 - [[JButton JCheckBox JToggleButton JRadioButton(55)>Swing/_JButton]]
-- [[JComboBox(45)>Swing/_JComboBox]]
+- [[JComboBox(46)>Swing/_JComboBox]]
 - [[JTabbedPane(41)>Swing/_JTabbedPane]]
 - [[JFrame JDialog JWindow(34)>Swing/_JFrame]]
-- [[JTextField JPasswordField JFormattedTextField(31)>Swing/_JTextField]]
+- [[JTextField JPasswordField JFormattedTextField(32)>Swing/_JTextField]]
 - [[JScrollPane JViewport JScrollBar(29)>Swing/_JScrollPane]]
 - [[JMenuBar JToolBar JSeparator(28)>Swing/_JMenuBar]]
+- [[JLabel(26)>Swing/_JLabel]]
 - [[JProgressBar ProgressMonitor(25)>Swing/_JProgressBar]]
-- [[JLabel(25)>Swing/_JLabel]]
 - [[JList(24)>Swing/_JList]]
 - [[JPopupMenu(24)>Swing/_JPopupMenu]]
 - [[JPanel JSplitPane(23)>Swing/_JPanel]]
@@ -75,7 +75,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[LayoutManager(30)>Swing/_Layout]]
 - [[Hyperlink Html(30)>Swing/_Hyperlink]]
 - [[Drag&Drop(27)>Swing/_DnD]]
-- [[Focus(26)>Swing/_Focus]]
+- [[Focus(27)>Swing/_Focus]]
 - [[SwingWorker(21)>Swing/_SwingWorker]]
 - [[Border(21)>Swing/_Border]]
 - [[Font(19)>Swing/_Font]]
@@ -90,7 +90,7 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
 - [[JDK 6, 7 での Swing 新機能(35)>Swing/_JDK6]]
 
 ** `Screenshot` [#screenshot]
-- [[スクリーンショット一覧(675)>Swing/_ScreenShots]]
+- [[スクリーンショット一覧(678)>Swing/_ScreenShots]]
 
 #twocolumn
 
@@ -104,8 +104,8 @@ RIGHT:[http://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the
  svn co https://github.com/aterai/java-swing-tips/trunk/SurrogatePair
 
 * 編集方針 [#policy]
-- ''最も欲しいものはサンプルである'' ([http://steps.dodgson.org/bn/2007/07/06/ あるチュートリアルの思い出 - Backnumbers: Steps to Phantasien])
--- 各ページからダブルクリックなどで実行可能な`JAR`ファイルをダウンロードすることが可能
+- ''最も欲しいものはサンプル'' ([http://steps.dodgson.org/bn/2007/07/06/ あるチュートリアルの思い出 - Backnumbers: Steps to Phantasien])
+-- 各ページからダブルクリックなどで実行可能な`JAR`ファイルをダウンロードが可能
 - ''SSCCE'' ([http://sscce.org/ Short, Self Contained, Correct Example])
 - ''MCVE'' ([http://stackoverflow.com/help/mcve How to create a Minimal, Complete, and Verifiable example - Help Center - Stack Overflow])
 -- すべての記事毎に、ソースコードや画像などのリソース、それらを[[Ant]]でコンパイル、実行するための`build.xml`をまとめた`zip`ファイルを添付

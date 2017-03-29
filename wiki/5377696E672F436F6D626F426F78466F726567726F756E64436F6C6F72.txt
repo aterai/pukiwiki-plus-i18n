@@ -5,11 +5,11 @@ title: JComboBoxの文字色を変更する
 tags: [JComboBox, ListCellRenderer, Html]
 author: aterai
 pubdate: 2011-02-14T15:46:36+09:00
-description: JComboBoxに選択中のセルアイテム文字色を変更するセルレンダラを設定します。
+description: JComboBoxに選択中のセルアイテム文字色を変更するセルレンダラーを設定します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TVjIM1AMFkI/AAAAAAAAA1M/BSd3As9dxZE/s800/ComboBoxForegroundColor.png
 ---
 * 概要 [#summary]
-`JComboBox`に選択中のセルアイテム文字色を変更するセルレンダラを設定します。
+`JComboBox`に選択中のセルアイテム文字色を変更するセルレンダラーを設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TVjIM1AMFkI/AAAAAAAAA1M/BSd3As9dxZE/s800/ComboBoxForegroundColor.png)
 
@@ -50,13 +50,13 @@ class ComboForegroundRenderer extends DefaultListCellRenderer {
 
 * 解説 [#explanation]
 - 上: `Default`
--- デフォルトのセルレンダラを使用
+-- デフォルトのセルレンダラーを使用
 - 中: `setForeground`
 -- `ListCellRenderer`で`JList`の選択時文字色(`JList#setSelectionForeground`)、選択時背景色(`JList#setSelectionBackground`)を変更
--- `XPStyle.getXP()!=null`な`Windows LookAndFeel`や、`Motif LookAndFeel`の場合、フィールド部分の非選択時文字色は、`JComboBox`の文字色(`getForeground()`)が使用されるため、セルレンダラで、`JComboBox#setForeground(Color)`を使用
+-- `XPStyle.getXP()!=null`な`Windows LookAndFeel`や、`Motif LookAndFeel`の場合、フィールド部分の非選択時文字色は、`JComboBox`の文字色(`getForeground()`)が使用されるため、セルレンダラーで、`JComboBox#setForeground(Color)`を使用
 - 下: `Html tag`
 -- 選択時背景色は、上記の`setForeground`と同様に、`JList#setSelectionBackground`を使用
--- セルレンダラで文字色を`Html`タグで変更
+-- セルレンダラーで文字色を`Html`タグで変更
 
 #code{{
 class ComboHtmlRenderer extends DefaultListCellRenderer {

@@ -1,0 +1,47 @@
+---
+category: swing
+folder: ExpandingTextArea
+title: JTextAreaにフォーカスが当たったときその高さを自動拡張する
+tags: [JTextArea, FocusListener, JLabel, CardLayout]
+author: aterai
+pubdate: 2017-03-20T03:11:21+09:00
+description: JTextAreaにフォーカスが当たったときその高さを自動拡張、外れたときに縮小します。
+image: https://drive.google.com/uc?export=view&id=11MUj8pt3sndJr2o7ebuYFDE4gaRnE4AklA
+---
+* 概要 [#summary]
+`JTextArea`にフォーカスが当たったときその高さを自動拡張、外れたときに縮小します。
+
+#download(https://drive.google.com/uc?export=view&id=11MUj8pt3sndJr2o7ebuYFDE4gaRnE4AklA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+textArea.addFocusListener(new FocusAdapter() {
+  @Override public void focusLost(FocusEvent e) {
+    String text = textArea.getText();
+    label.setText(text.isEmpty() ? " " : text);
+    cardLayout.show(cp, "TextField");
+  }
+});
+label.addFocusListener(new FocusAdapter() {
+  @Override public void focusGained(FocusEvent e) {
+    cardLayout.show(cp, "TextArea");
+    textArea.requestFocusInWindow();
+  }
+});
+}}
+
+* 解説 [#explanation]
+- 上: `JTextArea` + `FocusListener`
+-- `JTextArea`にフォーカスが当たったとき`JTextArea#setRows(...)`で行数を拡張、外れたときに一行に縮小
+-- 複数行分の文字列が入力されている状態で一行に縮小した場合、`JScrollPane`のスクロールボタンが表示される
+- 下: `JLabel` + `JTextArea` + `CardLayout` + `FocusListener`
+-- フォーカス可能に設定した`JLabel`に`JTextField`の文字色、背景色などを設定し、フォーカス状態が変更されたとき`CardLayout`でこれを`JTextArea`と切り替えることで拡張縮小を実行
+-- 複数行分の文字列が入力されている状態で一行に縮小した場合、`JLabel`のデフォルトの切り詰めで末尾が`...`に置換表示される
+-- `JLabel`が空の場合、その高さが`0`になってしまうので、その場合は空白文字を追加することで回避
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/42847168/it-is-posible-to-expand-a-jtextarea-or-jtextpane-by-clicking-on-it java - It is posible to expand a JTextArea or JTextPane by clicking on it? - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment
