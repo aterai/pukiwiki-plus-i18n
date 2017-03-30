@@ -39,10 +39,8 @@ Object o = combo.getAccessibleContext().getAccessibleChild(0);
 - 上: `MetalComboBoxUI`
 -- `UIManager.put("ComboBox.border", border)`などで、`Border`を変更しているが、これとは別に、`UI`で独自に余白？が描画される
 -- `MetalComboBoxUI`独自の余白を消す場合は、`MetalTheme`を変更して`MetalLookAndFeel.getControlShadow()`を同色にするか、`MetalComboBoxUI#paintCurrentValueBackground(...)`をオーバーライドする必要がある
-
 - 中: `BasicComboBoxUI`
--- `MetalComboBoxUI`などにあった余白は消すことができるが、`ComboBox.buttonDarkShadow`が`ArrowButton`の三角とボタンの影に使用されているため、両方を一度に非表示にすることができない
-
+-- `MetalComboBoxUI`などに存在する余白は消すことができるが、`ComboBox.buttonDarkShadow`が`ArrowButton`の三角とボタンの影に使用されているため、両方を一度に非表示にすることができない
 - 下: `BasicComboBoxUI#createArrowButton()`
 -- `BasicComboBoxUI#createArrowButton()`をオーバーライドして、独自のアイコンをもつ`JButton`を使用するように変更
 -- `JComboBox`に`MouseListener`を追加して、マウスカーソルが`JComboBox`内にある場合、`ArrowButton`が`Hover`表示されるように設定

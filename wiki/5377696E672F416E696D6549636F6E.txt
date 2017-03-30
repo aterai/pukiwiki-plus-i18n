@@ -113,7 +113,7 @@ class AnimeIcon implements Icon, Serializable {
 -- `Java 1.6.0`では「小さな円(曲線)が円に見えなかった問題」が解消されてた([http://www.02.246.ne.jp/~torutk/jvm/mustang.html#SEC26 参考])
 
 ----
-一々自分で座標を計算して`new Ellipse2D`を`8`個も並べるのが嫌だったり、もうすこし正確に円を配置したい場合は、`AffineTransform`などを使ってアイコンを生成する方法もあります。
+一々自分で座標を計算して`new Ellipse2D`を`8`個も並べるのを避けたい、またはもうすこし正確に円を配置したい場合は、`AffineTransform`などを使ってアイコンを生成する方法もあります。
 
 #code{{
 class AnimeIcon2 implements Icon, Serializable {

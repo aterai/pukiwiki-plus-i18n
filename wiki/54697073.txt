@@ -236,8 +236,7 @@ public class InvertSignedNumbersTest {
 
 - [http://stackoverflow.com/questions/32722171/what-is-the-purpose-of-the-objects-compare-method java - What is the purpose of the Objects.compare() method? - Stack Overflow]
 -- 確かに`Objects.compare(...)`の使いどころが分からない
--- `TableSorter.java`の以下のようなコードが短くなるか？と思ったけど、無理だった
-
+-- `TableSorter.java`の以下のようなコードが短くなるか？と考えたが、
 #code{{
 //@see http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSorterDemoProject/src/components/TableSorter.java
 public int compareTo(Object o) {
@@ -269,7 +268,7 @@ public int compareTo(Object o) {
 }
 }}
 
-- 以下のように`Objects.compare(...)`を使用するとテーブルモデルの値に`null`が存在すると、ソートで`NullPointerException`が発生する
+- 以下のように`Objects.compare(...)`を使用すると、テーブルモデルの値に`null`が存在する場合、ソートで`NullPointerException`が発生する
 - [http://www.ne.jp/asahi/hishidama/home/tech/java/comparator.html#nulls Java Comparatorメモ(Hishidama's Java Comparator Memo)]を参考に、`Comparator.nullsFirst(comparator)`と合わせて使用すれば、`NullPointerException`は発生しない
 
 #code{{

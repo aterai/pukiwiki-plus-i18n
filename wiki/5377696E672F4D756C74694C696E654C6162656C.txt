@@ -85,7 +85,7 @@ private static Box setLeftIcon(JTextComponent label, ImageIcon icon) {
  java -Dawt.useSystemAAFontSettings=on -cp ".\target\classes" example.MainPanel
 
 - ありがとうございます。なるほど、いろいろ書かれていますね！明日試してみます！ -- &user(ばしばし); &new{2007-10-17 (水) 23:59:34};
-- こんにちは。当方の環境が`JDK1.5`であったので、非標準の`-Dswing.aatext=true`を設定するとアンチエイリアスがかかりました。けれども、標準ではどうするのかと言う疑問が。。。 -- &user(ばしばし); &new{2007-10-18 (木) 09:37:28};
+- こんにちは。当方の環境が`JDK1.5`だったので、非標準の`-Dswing.aatext=true`を設定するとアンチエイリアスがかかりました。けれども、標準ではどうするのかと言う疑問が。。。 -- &user(ばしばし); &new{2007-10-18 (木) 09:37:28};
 -- ども。Sunに「`1.5`にも標準のオプション用意して」とお願いする…のはひとまず置いといて…。`Java Swing Hacks`本では、テキストにアンチエイリアスを適用するためだけの`Look & Feel`([http://wraplf.l2fprod.com/ Wrap Look And Feel - L2FProd.com])を使用する方法が紹介(`HACK#52`)されています。これを使えば、`-Dswing.aatext=true`無しで、`1.5`でもアンチエイリアスが掛かります。 -- &user(aterai); &new{2007-10-18 (木) 14:42:33};
 -- もし、一部の`JLabel`をアンチエイリアスするだけでいいのなら、以下のように`JLabel#paintComponent`メソッドをオーバーライドしてしまうのが手っ取り早いかもしれません。 -- &user(aterai); &new{2007-10-18 (木) 15:16:04};
 

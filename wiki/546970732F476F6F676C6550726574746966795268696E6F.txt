@@ -297,6 +297,6 @@ __extend__(HTMLPreElement.prototype, {
 - 新しい`prettify.js`(`prettify-1-Jun-2011.tar.bz2`、[https://github.com/google/code-prettify/blob/0b3341b3e9105ddaecf93cc632284f8db7994faf/src/prettify.js First pass at a way to dodge newline issues in IE.]の修正が入っているバージョン)では、`prettyPrintOne`の内部で`Document`型のオブジェクトが使用されるようになっているので`Rhino`だけ(`Envjs`とか使えば良さそうなんだけど…)では実行できない。このため上記のサンプルでは古い`prettify.js`([https://github.com/google/code-prettify/blob/f5ad44e3253f1bc8e288477a36b2ce5972e8e161/src/prettify.js Fixed prettyPrintOne by removing requirement that a job have a source node. Fixes issues 133 and 134.])を参照するように変更。 -- &user(aterai); &new{2012-03-09 (金) 16:58:03};
 - `JEditorPane`でのプレビューを追加。 -- &user(aterai); &new{2012-05-28 (月) 17:45:14};
 - `1.8.0`の`Nashorn`を使うとなぜか文字のハイライトがずれる？ -- &user(aterai); &new{2013-07-21 (日) 00:21:18};
--- 何が原因(`regex`あたりかも？)だったのかがよく分からないけど、[http://download.java.net/jdk8/changes/jdk8-b100.html jdk8-b100]では正常に動作している。 -- &user(aterai); &new{2013-08-01 (木) 19:20:09};
+-- 詳細は不明だが(`regex`あたりのバグ？)、[http://download.java.net/jdk8/changes/jdk8-b100.html jdk8-b100]では正常に動作するようになった。 -- &user(aterai); &new{2013-08-01 (木) 19:20:09};
 
 #comment

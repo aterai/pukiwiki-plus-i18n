@@ -23,13 +23,13 @@ button2.setVerifyInputWhenFocusTarget(false);
 
 - `Default`:
 -- `JButton`のデフォルトで、`getVerifyInputWhenFocusTarget()`が`true`、`isFocusable()`も`true`
--- すべての`JTextField`の値をクリアし、自身にフォーカスが移動するが、フォーカスのあった`JTextField`に入力されている値が`Integer`でない場合、警告音が鳴る
+-- すべての`JTextField`の値をクリアし、自身にフォーカスが移動するが、フォーカスの存在した`JTextField`に入力されている値が`Integer`でない場合、警告音が鳴る
 - `setFocusable(false)`:
 -- `setFocusable(false)`を設定
--- すべての`JTextField`の値をクリアするが、フォーカスは移動しないため、フォーカスのあった`JTextField`に入力されている値が`Integer`でない場合でも、警告音は鳴らない(設定されている`InputVerifier#verify(...)`は呼ばれない)
+-- すべての`JTextField`の値をクリアするが、フォーカスは移動しないため、フォーカスの存在した`JTextField`に入力されている値が`Integer`でない場合でも、警告音は鳴らない(設定されている`InputVerifier#verify(...)`は呼ばれない)
 - `setVerifyInputWhenFocusTarget(false)`:
 -- `setVerifyInputWhenFocusTarget(false)`を設定
--- すべての`JTextField`の値をクリアし、自身にフォーカスが移動するが、フォーカスのあった`JTextField`に入力されている値が`Integer`でない場合でも、警告音は鳴らない(設定されている`InputVerifier#verify(...)`は呼ばれない)
+-- すべての`JTextField`の値をクリアし、自身にフォーカスが移動するが、フォーカスの存在した`JTextField`に入力されている値が`Integer`でない場合でも、警告音は鳴らない(設定されている`InputVerifier#verify(...)`は呼ばれない)
 
 * 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/1.4/guide/swing/1.3/InputChanges.html 入力の検証]

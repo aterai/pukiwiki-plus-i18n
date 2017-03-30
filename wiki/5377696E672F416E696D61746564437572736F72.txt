@@ -59,6 +59,6 @@ button = new JButton(new AbstractAction("Start") {
 - `Windows XP`で、カーソルを`Animated GIF`ファイルから生成(`Toolkit.getDefaultToolkit().createCustomCursor`)しようとすると、 %%落ちる？%% `Ubuntu`だと、アニメーションはしないけど、ちゃんと画像がカーソルになる。 -- &user(aterai); &new{2007-05-08 (火) 14:25:37};
 -- デッドロック？ -- &user(aterai); &new{2008-05-07 (水) 19:38:38};
 -- メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4343270 Bug ID: 4343270 Toolkit.createCustomCursor() hangs the VM under Win NT]、[http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4939855 Bug ID: 4939855 Please allow Toolkit.createCustomCursor() to accept multi-frame images] -- &user(aterai); &new{2008-09-01 (月) 23:18:57};
--- よくみたら、[http://docs.oracle.com/javase/jp/6/api/java/awt/Toolkit.html#createCustomCursor(java.awt.Image,%20java.awt.Point,%20java.lang.String) Toolkit#createCustomCursor]に、「マルチフレームイメージは無効で、このメソッドがハングすることがあります。」と注意書きがあった(`1.4.2`のドキュメントから？)。 -- &user(aterai); &new{2010-01-19 (火) 17:03:17};
+-- よくみたら、[http://docs.oracle.com/javase/jp/6/api/java/awt/Toolkit.html#createCustomCursor(java.awt.Image,%20java.awt.Point,%20java.lang.String) Toolkit#createCustomCursor]に、「マルチフレームイメージは無効で、このメソッドがハングすることがあります。」と注意書きが存在する(`1.4.2`のドキュメントから？)。 -- &user(aterai); &new{2010-01-19 (火) 17:03:17};
 
 #comment
