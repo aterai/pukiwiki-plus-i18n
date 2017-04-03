@@ -1,0 +1,51 @@
+---
+category: swing
+folder: TitledBorderHorizontalInsetOfText
+title: TitledBorderにタイトル文字列までの内余白を設定する
+tags: [TitledBorder, Border, JLabel]
+author: aterai
+pubdate: 2017-04-03T15:46:05+09:00
+description: 左寄せのTitledBorderで、ボーダーの左端からタイトル文字列までの内余白を設定するテストを行います。
+image: https://drive.google.com/uc?export=view&id=17kiVkxVACOFeT1HK8R68epgwBPGtzRYMJQ
+---
+* 概要 [#summary]
+左寄せの`TitledBorder`で、ボーダーの左端からタイトル文字列までの内余白を設定するテストを行います。
+
+#download(https://drive.google.com/uc?export=view&id=17kiVkxVACOFeT1HK8R68epgwBPGtzRYMJQ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// Space between the border and the component's edge
+protected static final int EDGE_SPACING = 2; //2;
+
+// Space between the border and text
+protected static final int TEXT_SPACING = 5; //2;
+
+// Horizontal inset of text that is left or right justified
+protected static final int TEXT_INSET_H = 10; //5;
+}}
+
+* 解説 [#explanation]
+- `override TitledBorder#paintBorder(...)`
+-- `TitledBorder#paintBorder(...)`をオーバーライドして、ボーダーの描画位置を`10px`右に移動
+-- タイトル文字列までの内余白は変化しない、また中身のコンポーネントは移動しないのでボーダーと重なる
+- `override TitledBorder#getBorderInsets(...)`
+-- `TitledBorder#getBorderInsets(...)`をオーバーライドして、ボーダーの左内余白を`10px`増加
+-- タイトル文字列までの内余白は変化しないが、中身のコンポーネントが`10px`右に移動する
+- `ComponentTitledBorder + EmptyBorder`
+-- 文字列ではなく、`JLabel`をタイトルとして描画する`ComponentTitledBorder`を使用し、`JLabel`の描画開始位置を`10px`右に移動
+--- 参考: [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]
+-- タイトル文字列までの`10px`の内余白にボーダーが描画され、タイトルに使用する`JLabel`に設定した`EmptyBorder`分の`5px`は空白になり、合計`15px`の内余白が生成される
+- `TitledBorder2: copied from TitledBorder`
+-- 内余白の設定が外部から変更できないので、`TitledBorder`を全てコピーして`TEXT_SPACING`と`TEXT_INSET_H`の値だけ変更
+-- `TEXT_INSET_H`を`2px`から`10px`に変更したため、ボーダーからタイトル文字列までの間に`10px`の内余白が生成される
+-- `TEXT_SPACING`を`2px`から`5px`に変更したため、上記の内余白から`5px`分ボーダーが描画されない空白が生成される
+--- ボーダーと中身のコンポーネントとの余白もこの値を変更すると増減してしまう？
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/border/TitledBorder.html TitledBorder (Java Platform SE 8)]
+- [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]
+
+* コメント [#comment]
+#comment
+#comment
