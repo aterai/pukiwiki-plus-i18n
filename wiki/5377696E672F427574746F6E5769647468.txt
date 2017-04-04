@@ -93,7 +93,7 @@ private static JComponent createRightAlignButtonBox2(
 - 高さ: 各コンポーネントの推奨サイズ(`getPreferredSize`メソッド)で得られた中からもっとも大きな値
 -- 上記のサンプルで`button1.setPreferredSize(new Dimension(100, 0));`としても結果は同じ
 
-例えば、各ボタンを格納した親フレームを`pack()`する前に`JButton#getPreferredSize()`ではなく、`JButton#getSize()`でサイズを取得すると、`[width=0,height=0]`が帰ってきます。コンポーネントが表示されている場合、`getSize()`で得られるサイズは、その実際に表示されているサイズ(レイアウトマネージャーが決める)になります。
+例えば、各ボタンを格納した親フレームを`pack()`する前に`JButton#getPreferredSize()`ではなく、`JButton#getSize()`でサイズを取得すると、`[width=0,height=0]`が帰ってきます。コンポーネントが表示されている場合、`getSize()`で得られるサイズは、その実際に表示されているサイズ(レイアウトマネージャーが決定する)になります。
 
 以下は`JLabel`を`getPreferredSize()`した場合の例です。初期状態(`preferredSize`が`null`)の場合は、`JLabel`の`UI`がサイズを計算しています。
 

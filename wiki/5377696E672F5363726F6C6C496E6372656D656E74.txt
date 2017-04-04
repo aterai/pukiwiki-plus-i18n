@@ -28,7 +28,7 @@ scroll.getVerticalScrollBar().setUnitIncrement(25);
 - [http://tips4java.wordpress.com/2010/01/10/mouse-wheel-controller/ Mouse Wheel Controller « Java Tips Weblog]
 -- `Windows 7`環境での`e.getScrollAmount()`のデフォルト値: `3`
 -- `DesktopProperty`などを経由せず、`OS`のコントロールパネルのマウスのプロパティを直接参照している模様？
-- [http://docs.oracle.com/javase/tutorial/uiswing/events/mousewheellistener.html How to Write a Mouse-Wheel Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]
+- [https://docs.oracle.com/javase/tutorial/uiswing/events/mousewheellistener.html How to Write a Mouse-Wheel Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]
 -- `scrollPane.getVerticalScrollBar().setBlockIncrement(...)`を設定した場合、その設定した値と`Scroll amount`(デフォルトの`3`固定) × `unit increment(scrollPane.getVerticalScrollBar().getUnitIncrement(...))`のより小さい方がホイールでのスクロール量となる
 --- ただし、`scrollPane.getVerticalScrollBar().setBlockIncrement(...)`で設定した値が、`scrollPane.getVerticalScrollBar().getUnitIncrement(...)` より小さい場合は、`UnitIncrement`自体が、ホイールでのスクロール量となる
 --- このため、例えば縦のアイテムを配置する通常の`JList`などのホイールスクロールをスクロールバーの矢印ボタンクリックと同じ`1`行ごとにしたいなら、`scrollPane.getVerticalScrollBar().setBlockIncrement(0)`でも可能

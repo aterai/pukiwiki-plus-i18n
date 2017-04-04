@@ -125,7 +125,7 @@ g2.setTransform(at);
 g2.drawImage(img, 0, 0, this);
 }}
 
-- または、[http://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics2D.html#drawImage-java.awt.Image-java.awt.geom.AffineTransform-java.awt.image.ImageObserver- Graphics2D#drawImage(Image, AffineTransform, ImageObserver) (Java Platform SE 8)]を使用し、`Graphics2D`コンテキスト内の`AffineTransform`が適用される前にイメージにズーム変換を適用しておくことで回避
+- または、[https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics2D.html#drawImage-java.awt.Image-java.awt.geom.AffineTransform-java.awt.image.ImageObserver- Graphics2D#drawImage(Image, AffineTransform, ImageObserver) (Java Platform SE 8)]を使用し、`Graphics2D`コンテキスト内の`AffineTransform`が適用される前にイメージにズーム変換を適用しておくことで回避
 #code{{
 g2.drawImage(img, zoomTransform, this);
 }}

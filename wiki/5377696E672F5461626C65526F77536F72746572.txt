@@ -90,11 +90,11 @@ public class RowSorterTest extends JPanel {
 }
 }}
 
-- [http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowSorter.html RowSorter (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowSorter.html RowSorter (Java Platform SE 8)]
 > `RowSorter`の具象実装は、`TableModel`、`ListModel`などのモデルを参照する必要があります。`JTable`や`JList`などのビュークラスも、モデルを参照します。順序の依存性を回避するため、`RowSorter`実装がモデル上にリスナーをインストールしないようにしてください。モデルが変更されると、ビュークラスが`RowSorter`を呼び出します。例えば、`TableModel` `JTable` で行が更新された場合、`rowsUpdated`が呼び出されます。モデルが変更されると、ビューは、`modelStructureChanged`、`allRowsChanged`、`rowsInserted`、`rowsDeleted`、`rowsUpdated`のいずれかのメソッドを呼び出します。
 
 * 参考リンク [#reference]
-- [http://docs.oracle.com/javase/tutorial/uiswing/components/table.html How to Use Tables]
+- [https://docs.oracle.com/javase/tutorial/uiswing/components/table.html How to Use Tables]
 - [[TableSorterでJTableをソート>Swing/TableSorter]]
 - [[TableRowSorterのSortKeysをクリアする>Swing/ClearSortingState]]
 - [[TableRowSorterのソートをヘッダクリックで昇順、降順、初期状態に変更>Swing/TriStateSorting]]

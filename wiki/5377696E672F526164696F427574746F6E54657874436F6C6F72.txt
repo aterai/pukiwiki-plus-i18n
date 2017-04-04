@@ -40,7 +40,7 @@ class ColorRadioButton extends JRadioButton {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JRadioButton`が選択やロールオーバーした時の文字色を、マウスリスナーではなく、`fireStateChanged`メソッドをオーバーライドして変更しています。
+上記のサンプルでは、`JRadioButton`が選択やロールオーバーした時の文字色をマウスリスナーではなく`AbstractButton#fireStateChanged()`メソッドをオーバーライドして変更しています。
 
 アイコンは、`setPressedIcon`、`setSelectedIcon`、`setRolloverIcon`メソッドなどが用意されているので、これを使用しています。
 
@@ -66,7 +66,9 @@ radioButton.addChangeListener(new ChangeListener() {
 });
 }}
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#fireStateChanged-- AbstractButton#fireStateChanged() (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 - スクリーンショットのタイトルボーダーが入れ替わっていたのを修正。 -- &user(aterai); &new{2009-06-03 (水) 21:27:13};

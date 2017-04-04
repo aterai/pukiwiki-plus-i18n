@@ -30,30 +30,30 @@ JButton button = new JButton(new AbstractAction("フレームのタイトルを�
 * 解説 [#explanation]
 自分(コンポーネント)の最初の上位ウィンドウ(親ウィンドウ)を取得します。
 
-- [http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#getWindowAncestor-java.awt.Component- SwingUtilities.getWindowAncestor(Component c)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#getWindowAncestor-java.awt.Component- SwingUtilities.getWindowAncestor(Component c)]
 -- `SwingUtilities.windowForComponent(Component c)`は、この`getWindowAncestor`をラップしただけのメソッド
 -- 親の`java.awt.Window`が返る
 -- 親`Window`が無い場合は、`null`が返る
 -- 引数の`Component`自体が`Window`の場合、その`Window`のオーナウィンドウが返る
 --- オーナウィンドウが`null`の場合は、`null`が返る
-- [http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#getRoot-java.awt.Component- SwingUtilities.getRoot(Component c)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#getRoot-java.awt.Component- SwingUtilities.getRoot(Component c)]
 -- 親の`Component`(`java.awt.Window`または`java.awt.Applet`)が返る
 --- `Window`の場合は、`c.getParent()`で見つかる最初の上位`Window`オブジェクトだが、`Applet`の場合は、`JComponent#getTopLevelAncestor()`とは異なり、最後の上位`Applet`オブジェクト
 -- どちらも存在しない場合は、`null`
 -- 引数の`Component`自体が`Window`の場合は、そのまま自身が返る
-- [http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#getTopLevelAncestor-- JComponent#getTopLevelAncestor()]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#getTopLevelAncestor-- JComponent#getTopLevelAncestor()]
 -- 自身の親`Container`(`java.awt.Window`または`java.awt.Applet`)が返る
 -- 親`Container`が無い場合は、`null`
 -- `java.awt.Window`または`java.awt.Applet`から呼ばれた場合は、そのまま自身が返る
 -- 下のコメント参照
 
-- [http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JOptionPane.html#getFrameForComponent-java.awt.Component- JOptionPane.getFrameForComponent(Component parentComponent)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JOptionPane.html#getFrameForComponent-java.awt.Component- JOptionPane.getFrameForComponent(Component parentComponent)]
 -- 親の`java.awt.Frame`が返る
 -- 有効な親`Frame`が無い場合は`JOptionPane.getRootFrame()`で、非表示にしている`TookKit Private`なフレームが返る
 -- `JOptionPane`用？
 
 * 参考リンク [#reference]
-- [http://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#getRoot-java.awt.Component- SwingUtilities.getRoot(Component c)] を追加
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#getRoot-java.awt.Component- SwingUtilities.getRoot(Component c)] を追加
 -- via: [http://stackoverflow.com/questions/9650874/java-swing-obtain-window-jframe-from-inside-a-jpanel Java/Swing: Obtain Window/JFrame from inside a JPanel - Stack Overflow]
 
 * コメント [#comment]

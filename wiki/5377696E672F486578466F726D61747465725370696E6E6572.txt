@@ -34,7 +34,7 @@ private static DefaultFormatterFactory makeFFactory() {
 上記のサンプルでは、`DefaultFormatter#stringToValue(String)`と`DefaultFormatter#valueToString(Object)`をオーバーライドして、`0`から`0x10FFFF`までの整数を`16`進数で表示する`Formatter`を作成し、`JSpinner`に設定しています。
 
 ----
-`JSpinner`から取得した数値(コードポイント)から文字を生成する時、サロゲートペアなどの基本多言語面(`BMP`)外に対応するために、[http://docs.oracle.com/javase/tutorial/i18n/text/usage.html Sample Usage (The Java™ Tutorials > Internationalization > Working with Text)]を参考にして、以下のような方法を使用しています。
+`JSpinner`から取得した数値(コードポイント)から文字を生成する時、サロゲートペアなどの基本多言語面(`BMP`)外に対応するために、[https://docs.oracle.com/javase/tutorial/i18n/text/usage.html Sample Usage (The Java™ Tutorials > Internationalization > Working with Text)]を参考にして、以下のような方法を使用しています。
 
 #code{{
 int code = ((Integer) spinner.getValue()).intValue();

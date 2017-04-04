@@ -176,7 +176,7 @@ class TabTransferHandler extends TransferHandler {
 - 点滅の原因は？ -- &user(Dad); &new{2010-01-16 (土) 01:48:13};
 -- おそらく、[http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6700748 Cursor flickering during D&D when using CellRendererPane with validation]が原因。現在は、`canImport`メソッド内で、一々`GlassPane#setCursor(isDropable ? DragSource.DefaultMoveDrop : DragSource.DefaultMoveNoDrop);`として回避中。 -- &user(aterai); &new{2010-01-16 (土) 12:25:38};
 - `6u20`ぐらいから`Web Start`で、`java.security.AccessControlException: access denied (java.awt.AWTPermission accessClipboard)`? -- &user(aterai); &new{2010-06-17 (木) 01:57:34};
--- チュートリアルのデモ[http://docs.oracle.com/javase/tutorial/uiswing/dnd/dropmodedemo.html Demo - DropDemo (The Java™ Tutorials > Creating a GUI With JFC/Swing Drag and Drop and Data Transfer)]でも同様のエラーが発生するので多分`Java 1.6.0_??`のバグ。 -- &user(aterai); &new{2010-06-17 (木) 14:31:14};
+-- チュートリアルのデモ[https://docs.oracle.com/javase/tutorial/uiswing/dnd/dropmodedemo.html Demo - DropDemo (The Java™ Tutorials > Creating a GUI With JFC/Swing Drag and Drop and Data Transfer)]でも同様のエラーが発生するので多分`Java 1.6.0_??`のバグ。 -- &user(aterai); &new{2010-06-17 (木) 14:31:14};
 -- `6u21`では、修正されている？: [http://download.java.net/jdk6/6u21/promoted/b05/changes/JDK6u21.b05.list.html 6945178 2-High Defect SecurityException upon drag-and-drop(Bug/RFE fixed in JDK 6u21 build)] -- &user(aterai); &new{2010-06-17 (木) 14:32:45};
 -- 修正されたようです。[http://www.oracle.com/technetwork/java/javase/bugfixes6u21-156339.html Java SE 6 Update 21 Bug Fixes] -- &user(aterai); &new{2010-07-08 (木) 21:54:27};
 - `getTabPlacement()==RIGHT`などの場合に、`DropTarget`の描画がおかしくなるのを修正。 -- &user(aterai); &new{2012-02-05 (日) 11:13:40};

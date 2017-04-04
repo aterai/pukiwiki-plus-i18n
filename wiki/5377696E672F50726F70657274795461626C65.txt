@@ -80,7 +80,7 @@ table.setDefaultEditor(Date.class,    new DateEditor());
 -- `String`, `Integer`と`Double`, `Boolean`クラスは、それぞれデフォルトの`JTable$GenericEditor`, `JTable$NumberEditor`, `JTable$BooleanEditor`を使用
 -- `Date`, `Color`クラスは、`JTable#setDefaultEditor(Class, TableCellEditor)`で、それぞれ対応するセルエディタを用意して使用
 --- 参考: [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
---- 参考: [http://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html#TableDialogEditDemo TableDialogEditDemo]
+--- 参考: [https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html#TableDialogEditDemo TableDialogEditDemo]
 
 ----
 - `JTable#getColumnClass(int)`メソッドの引数は列のみなので、`1`列目の場合は、`JTable#getCellEditor(...)`で取得したクラスを返すようにオーバーライド
@@ -89,7 +89,7 @@ table.setDefaultEditor(Date.class,    new DateEditor());
 * 参考リンク [#reference]
 - [http://stackoverflow.com/questions/1464691/property-list-gui-component-in-swing java - Property list GUI component in Swing - Stack Overflow]
 - [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
-- [http://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html#TableDialogEditDemo TableDialogEditDemo]
+- [https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html#TableDialogEditDemo TableDialogEditDemo]
 
 * コメント [#comment]
 #comment
