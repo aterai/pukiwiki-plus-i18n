@@ -38,7 +38,7 @@ pubdate: 2011-01-25
 - `NetBeans`でソースにブレークポイントを設定し、`Swing`コンポーネントのソースにステップインすると、「変数の情報を使用できません。ソースは `-g`オプションを使用せずにコンパイルされています」と表示され、値は不明となる
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/tools/windows/javac.html javac] `-g`オプション
  -g ローカル変数を含むすべてのデバッグ情報を生成します。デフォルトでは、行番号およびソース・ファイル情報だけが生成されます。
-- [http://stackoverflow.com/questions/18255474/debug-jdk-source-cant-watch-variable-what-it-is java - debug jdk source can't watch variable what it is - Stack Overflow]を参考に、`%JAVA_HOME%/src.zip/javax/swing`以下のソースをコピーし、以下のようなバッチを実行
+- [https://stackoverflow.com/questions/18255474/debug-jdk-source-cant-watch-variable-what-it-is java - debug jdk source can't watch variable what it is - Stack Overflow]を参考に、`%JAVA_HOME%/src.zip/javax/swing`以下のソースをコピーし、以下のようなバッチを実行
 #code{{
 @echo off
 setlocal
@@ -234,7 +234,7 @@ public class InvertSignedNumbersTest {
     }
 }}
 
-- [http://stackoverflow.com/questions/32722171/what-is-the-purpose-of-the-objects-compare-method java - What is the purpose of the Objects.compare() method? - Stack Overflow]
+- [https://stackoverflow.com/questions/32722171/what-is-the-purpose-of-the-objects-compare-method java - What is the purpose of the Objects.compare() method? - Stack Overflow]
 -- 確かに`Objects.compare(...)`の使いどころが分からない
 -- `TableSorter.java`の以下のようなコードが短くなるか？と考えたが、
 #code{{
@@ -297,7 +297,7 @@ public int compareTo(Object o) {
 
 * 無名匿名クラスとラムダ式の中でのthisキーワード [#l84f20a2]
 - [http://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.27.2 15.27.2. Lambda Body - Chapter 15. Expressions]
--- via: [http://stackoverflow.com/questions/24202236/lambda-this-reference-in-java Lambda this reference in java - Stack Overflow]
+-- via: [https://stackoverflow.com/questions/24202236/lambda-this-reference-in-java Lambda this reference in java - Stack Overflow]
 - [[Javaラムダ式メモ(Hishidama's Java8 Lambda Expression Memo)>http://www.ne.jp/asahi/hishidama/home/tech/java/lambda]]
 - 単純に無名匿名クラスをラムダ式に置き換えると、「`static`でないメソッド`getClass()`を`static`コンテキストから参照することはできません」とコンパイルエラーになる場合がある
 #code{{

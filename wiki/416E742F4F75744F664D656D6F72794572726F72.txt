@@ -12,7 +12,7 @@ description: Antを実行するとOutOfMemoryErrorが発生する場合の処置
 ----
 - %%注: `Java 8`では、これらの設定をしなくても、`OutOfMemoryError`は発生しないはず？%%
 //-- [http://equj65.net/tech/java8hotspot/ Java8のHotSpotVMからPermanent領域が消えた理由とその影響 | ギークを目指して]
-//-- [http://stackoverflow.com/questions/18339707/permgen-elimination-in-jdk-8 java - PermGen elimination in jdk 8 - Stack Overflow]
+//-- [https://stackoverflow.com/questions/18339707/permgen-elimination-in-jdk-8 java - PermGen elimination in jdk 8 - Stack Overflow]
 
 * javacタスク [#hb7645c8]
 `javac`タスクなどで`OutOfMemoryError`が発生する場合、以下のようなユーザー環境変数(またはシステム環境変数)を設定して`ant`が使用できるメモリサイズを増加しておく必要があります。

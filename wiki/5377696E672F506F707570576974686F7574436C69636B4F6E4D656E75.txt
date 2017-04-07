@@ -41,7 +41,7 @@ visitAll(menubar, new MouseAdapter() {
 -- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6949414 Bug ID: JDK-6949414 JMenu.buildMenuElementArray() endless loop]
 - 回避方法:
 -- マウスイベントを作成し、`menu.dispatchEvent(new MouseEvent(menu, MouseEvent.MOUSE_ENTERED, e.getWhen(), 0, 0, 0, 0, false));`を実行する
---- [http://stackoverflow.com/questions/25260684/programmatically-expand-sub-jmenuitems java - Programmatically expand sub JMenuItems - Stack Overflow]
+--- [https://stackoverflow.com/questions/25260684/programmatically-expand-sub-jmenuitems java - Programmatically expand sub JMenuItems - Stack Overflow]
 -- `MenuElement`の配列を作成し、`MenuSelectionManager.defaultManager().setSelectedPath(new MenuElement[]{...});`を実行する
 --- ドキュメントには、[http://docs.oracle.com/javase/jp/7/api/javax/swing/MenuSelectionManager.html#setSelectedPath(javax.swing.MenuElement%5B%5D) 「このメソッドは public ですが、Look & Feel エンジンで使用されるため、クライアントアプリケーションからは呼び出さないでください。」]と記述されているが、現状では`JMenu`の`buildMenuElementArray(...)`が以下の状態なので仕方ない
 
@@ -81,7 +81,7 @@ private MenuElement[] buildMenuElementArray(JMenu leaf) {
 
 * 参考リンク [#reference]
 - [http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=9327&forum=12 JMenuBarの動作 － Java Solution － ＠IT]
-- [http://stackoverflow.com/questions/12125402/activate-jmenubar-on-hover java - Activate JMenuBar on hover - Stack Overflow]
+- [https://stackoverflow.com/questions/12125402/activate-jmenubar-on-hover java - Activate JMenuBar on hover - Stack Overflow]
 
 * コメント [#comment]
 #comment

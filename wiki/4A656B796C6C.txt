@@ -9,7 +9,7 @@ pubdate: 2014-09-28T01:50:02+09:00
 `Windows` + `Cygwin64` + `ruby 2.0.0`の環境で、`Jekyll`をインストールし`Markdown`記法のテキストから静的サイトを生成します。
 
 * インストール [#t4eb21f1]
-- `setup-x86_64.exe`から、`ruby`、`rubygems`、`gcc-core`、`make`などをインストール
+- `setup-x86_64.exe`から、`gcc-core`、`make`、`ruby`、`rubygems`、`ruby-devel`、`libffi-devel`、`openssh`、`openssl`、`git`をインストール
 - `~/.gemrc`を作成
 #code{{
 ---
@@ -76,6 +76,16 @@ collect2: エラー: ld はステータス 1 で終了しました
 Makefile:254: ターゲット 'stemmer.so' のレシピで失敗しました
 make: *** [stemmer.so] エラー 1
 }}
+
+* 実行 [#ydc8923b]
+- `jekyll new my-awesome-site`で`my-awesome-site`ディレクトリを作成
+-- `/usr/share/rubygems/rubygems/core_ext/kernel_require.rb:55:in 'require': cannot load such file -- bigdecimal (LoadError)`とエラーになる場合
+--- `gem install bigdecimal`で`bigdecimal`をインストール
+- `cd my-awesome-site && bundle exec jekyll build`でビルド
+-- `LoadError: cannot load such file -- bigdecimal`とエラーになる場合
+--- `./my-awesome-site/Gemfile`ファイルに`gem 'bigdecimal'`を一行追加
+-- `LoadError: cannot load such file -- json`とエラーになる場合
+--- `./my-awesome-site/Gemfile`ファイルに`gem 'json'`を一行追加
 
 * Jekyll で google-code-prettify [#dd21a813]
 - 参考: [http://fnordig.de/2011/09/02/kramdown-test/ fnordig.de]

@@ -116,7 +116,7 @@ Comparator<DefaultMutableTreeNode> tnc = Comparator.comparing(DefaultMutableTree
 }}
 
 ----
-`sort3`で使用している`Collections.sort(...)`は、内部で`Arrays.sort(T[], Comparator<? super T>)`を使用しているので、`JDK 1.6.0`と、`JDK 1.7.0`以降でソートアルゴリズムが異なるようです(参考: [http://stackoverflow.com/questions/4018332/is-java-7-using-tim-sort-for-the-method-arrays-sort Is Java 7 using Tim Sort for the Method Arrays.Sort? - Stack Overflow])。
+`sort3`で使用している`Collections.sort(...)`は、内部で`Arrays.sort(T[], Comparator<? super T>)`を使用しているので、`JDK 1.6.0`と、`JDK 1.7.0`以降でソートアルゴリズムが異なるようです(参考: [https://stackoverflow.com/questions/4018332/is-java-7-using-tim-sort-for-the-method-arrays-sort Is Java 7 using Tim Sort for the Method Arrays.Sort? - Stack Overflow])。
 
 - `JDK 1.6.0`
 #code{{

@@ -151,13 +151,13 @@ pubdate: 2006-01-29
 
 * Swing関係のバグのメモ [#hb22f5ad]
 ** JToolBarに配置したJButtonのフォーカス描画 [#w21ce2da]
-- [http://stackoverflow.com/questions/37295099/decorating-a-rollover-toolbar-button-with-jlayer-paints-its-border#37295921 java - Decorating a rollover toolbar button with JLayer paints its border - Stack Overflow]
+- [https://stackoverflow.com/questions/37295099/decorating-a-rollover-toolbar-button-with-jlayer-paints-its-border#37295921 java - Decorating a rollover toolbar button with JLayer paints its border - Stack Overflow]
 -- `JButton`を`JLayer`でラップして`JToolBar`に追加すると、`JToolBar`用のフォーカス描画ではなく、デフォルトのフォーカス描画が適用されてしまう
 -- 回答されているように、`BasicToolBarUI#setBorderToRollover(...)`などが、`JLayer`を想定していない
 -- [[JLayerで隣接する別コンポーネント上に縁を描画>Swing/OverlapBorderPaintLayer]]のように、親の`JToolBar`に`JLayer`を設定し、`e.getComponent()`で`JButton`を取得して回避可能
 
 ** NimbusLookAndFeelでのJComboBoxの推奨サイズ [#x115b70b]
-- [http://stackoverflow.com/questions/36274053/swing-jcombobox-bug-printing-dimension java - Swing (JComboBox) bug? printing dimension - Stack Overflow]
+- [https://stackoverflow.com/questions/36274053/swing-jcombobox-bug-printing-dimension java - Swing (JComboBox) bug? printing dimension - Stack Overflow]
 -- `JComboBox`の時点と、`JFrame`に追加して`JFrame#pack()`もしくは`JFrame.setSize(...)`後で、`JComboBox`の推奨サイズ(幅)が異なる？
 -- `NimbusLookAndFeel`のみの現象？
 -- `setEditable(true)`にすると高さが異なる...
@@ -223,7 +223,7 @@ public class NimbusComboBoxSizeTest {
 }}
 
 ** 高解像度でJOptionPaneのアイコンが欠ける [#vfc496a6]
-- [http://stackoverflow.com/questions/30774828/bad-swing-ui-scaling-on-high-resolution-ms-surface java - Bad Swing UI scaling on high resolution (MS Surface) - Stack Overflow]
+- [https://stackoverflow.com/questions/30774828/bad-swing-ui-scaling-on-high-resolution-ms-surface java - Bad Swing UI scaling on high resolution (MS Surface) - Stack Overflow]
 -- `Surface Pro 3`でテキスト文字サイズを`150%`に設定し、`JOptionPane`を`WindowsLookAndFeel`で表示すると、アイコンが欠けるバグ？
 -- 以下のように`OptionPane.minimumSize`を設定しても解消しない
 -- レイアウトでおかしくなっているのではなく、取得するアイコン自体が欠けている？
@@ -263,7 +263,7 @@ public class OptionPaneResolutionTest {
 }}
 
 ** 親フレームのドラッグ中にJWindowでクラッシュ [#hed7be2e]
-- [http://stackoverflow.com/questions/30072883/java-swing-jwindow-application-crash Java Swing JWindow application crash - Stack Overflow]
+- [https://stackoverflow.com/questions/30072883/java-swing-jwindow-application-crash Java Swing JWindow application crash - Stack Overflow]
 -- 親フレームのドラッグ中に？子`JWindow`が表示されると`JVM`が落ちる(`Windows 7 64bit JKD1.8.0_11`)。
 --[https://bugs.openjdk.java.net/browse/JDK-8079595?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel #JDK-8079595 Resizing dialog which is JWindow parent makes JVM crash - Java Bug System]
 -- [http://hg.openjdk.java.net/jdk9/client/jdk/rev/b5125fa7ef4b jdk9/client/jdk: b5125fa7ef4b] 修正された模様
@@ -315,7 +315,7 @@ public class Main2 {
 }}
 
 ** TimSortでレイアウトをソート中に例外発生 [#decaf774]
-- [http://stackoverflow.com/questions/16547365/swing-gui-flickering-white-error java - swing gui flickering white error - Stack Overflow]のサンプルを試していたら面白い挙動に遭遇。
+- [https://stackoverflow.com/questions/16547365/swing-gui-flickering-white-error java - swing gui flickering white error - Stack Overflow]のサンプルを試していたら面白い挙動に遭遇。
 -- `JDK1.8.0_40`で(以前のソートを使用するように)修正された
 -- [http://bugs.java.com/view_bug.do?bug_id=8048887 Bug ID: JDK-8048887 SortingFocusTraversalPolicy throws IllegalArgumentException from the sort method]
 - `JDK1.7.0_21`
@@ -588,7 +588,7 @@ Posted by: ewin on September 28, 2007 at 02:58 PM
 
 - ライセンス
 -- %%google code においた%%ソースコードは、[http://www.opensource.org/licenses/mit-license.php MIT License]
--- [http://stackoverflow.com/questions/259384/what-license-should-i-use-for-code-snippets-released-on-my-blog What license should I use for code snippets released on my blog? - Stack Overflow]
+-- [https://stackoverflow.com/questions/259384/what-license-should-i-use-for-code-snippets-released-on-my-blog What license should I use for code snippets released on my blog? - Stack Overflow]
 -- http://hobbylinux.info/download/rtl8181/src/GPL/wireless_tools.25-broken!!!/sample_pm.c
 -- This particular snipset of code is available under the Apache license, BSD license, CC0, ..., WTFPL (at your choice).
 

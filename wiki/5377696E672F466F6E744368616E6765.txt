@@ -127,7 +127,7 @@ JLabel label = new JLabel() {
 -すばらしいサンプルありがとうございます！参考にさせていただきました☆フォントの変更を`Look and Feel`で行って、残りの描画できなかった背景色などを`PropertyChangeListenerを`実装して描画しなおす、という方法も考えたのですが、こちらでも問題ないでしょうか？主題から外れてしまって申し訳ありません・・・。 -- &user(mari); &new{2004-01-26 (月) 09:56:38};
 -次のネタ用にイベント作っただけなので、`PropertyChangeListener`使うのはまったく問題ないと思います。むしろちゃんと`JavaBeans`にして`PropertyChangeListener`使うほうがいいかもしれません(^^;。 -- &user(aterai); &new{2004-01-26 (月) 12:54:00};
 - `updateUI()`をオーバーライドする方法を追記。 -- &user(aterai); &new{2013-02-26 (火) 16:15:09};
-- `Nimbus`の場合は、この方法では駄目でした。バグのようです。回避策は、`UIManager.getLookAndFeelDefaults().put("defaultFont", new Font(Font.SANS_SERIF, 0, 20));`をフレームを`new`する前に実行する事でした。 参考：[http://stackoverflow.com/questions/949353/java-altering-ui-fonts-nimbus-doesnt-work swing - Java: Altering UI fonts (Nimbus) doesn't work! - Stack Overflow] -- &user(匿名); &new{2013-05-25 (土) 09:14:08};
+- `Nimbus`の場合は、この方法では駄目でした。バグのようです。回避策は、`UIManager.getLookAndFeelDefaults().put("defaultFont", new Font(Font.SANS_SERIF, 0, 20));`をフレームを`new`する前に実行する事でした。 参考：[https://stackoverflow.com/questions/949353/java-altering-ui-fonts-nimbus-doesnt-work swing - Java: Altering UI fonts (Nimbus) doesn't work! - Stack Overflow] -- &user(匿名); &new{2013-05-25 (土) 09:14:08};
 -- 情報ありがとうございます。これバグだとすると修正されるのかな？(仕様になりそうな気がしますが) 参考のリンク先にある[http://jasperpotts.com/blogfiles/nimbusdefaults/nimbus.html Nimbus Defaults]一覧が便利ですね(チュートリアル[https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]にも転載されています)。このサイトでは、そちらを参考にして`NimbusLookAndFeel`の色をまとめて変換するサンプル([[NimbusLookAndFeelのカラーパレット>Swing/NimbusColorPalette]])を作成しています。 -- &user(aterai); &new{2013-05-26 (日) 00:51:21};
 
 #comment

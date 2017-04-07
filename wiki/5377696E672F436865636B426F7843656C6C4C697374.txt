@@ -87,7 +87,7 @@ class CheckBoxCellRenderer<E extends CheckBoxNode> extends JCheckBox
 
 - 中: `JList`
 -- `JCheckBox`を継承する`ListCellRenderer`を設定
--- チェックボックスのロールオーバーなどは、`JList`にマウスリスナーを設定して表示
+-- チェックボックスのロールオーバーなどは、`JList`にマウスリスナーを設定して描画
 -- `JList#processMouseEvent`、`JList#processMouseMotionEvent`のオーバーライドと、`JList#putClientProperty("List.isFileList", Boolean.TRUE);`で、クリックが有効になる領域をチェックボックスの幅に制限
 
 #code{{
@@ -143,7 +143,7 @@ JList list1 = new JList(model) {
 
 - 右: `JTree`
 -- `JCheckBox`を継承する`TreeCellRenderer`を設定
---- [[JTreeの葉ノードをJCheckBoxにする>Swing/CheckBoxNodeTree]]のセルレンダラーを使用
+--- [[JTreeの葉ノードをJCheckBoxにする>Swing/CheckBoxNodeTree]]で作成したセルレンダラーを使用
 -- `JTree#setRootVisible(false)`でルートノードを非表示に設定
 --- [[JTreeのルートノードを非表示に設定する>Swing/TreeRootVisible]]
 

@@ -9,7 +9,7 @@ description: FileSystemViewを使ってディレクトリ構造をJTree上に表
 image: https://lh3.googleusercontent.com/-FkX-8X4KxDo/ThFoeY8M64I/AAAAAAAAA-Y/Ry_RA9yVCxc/s800/DirectoryTree.png
 ---
 * 概要 [#summary]
-`FileSystemView`を使ってディレクトリ構造を`JTree`上に表示します。主に[http://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]を参考にしています。
+`FileSystemView`を使ってディレクトリ構造を`JTree`上に表示します。主に[https://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]を参考にしています。
 
 #download(https://lh3.googleusercontent.com/-FkX-8X4KxDo/ThFoeY8M64I/AAAAAAAAA-Y/Ry_RA9yVCxc/s800/DirectoryTree.png)
 
@@ -55,13 +55,13 @@ class FolderSelectionListener implements TreeSelectionListener {
 }}
 
 * 解説 [#explanation]
-このサンプルでは、[http://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]のディレクトリ表示部分を抜き出して、ルートパーティション(`Windows`の場合、`Desktop`フォルダ)をルートノードにして`JTree`で表示しています。
+このサンプルでは、[https://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]のディレクトリ表示部分を抜き出して、ルートパーティション(`Windows`の場合、`Desktop`フォルダ)をルートノードにして`JTree`で表示しています。
 
 - クリックされたノードがディレクトリの場合、子ファイルの検索と`JTree`へのそれらの追加を`SwingWorker`を使用して別スレッドで実行する
 
 * 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/filechooser/FileSystemView.html FileSystemView (Java Platform SE 6)]
-- [http://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]
+- [https://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]
 - [http://www.pushing-pixels.org/2007/07/22/showing-the-file-system-as-a-swing-jtree.html Showing the file system as a Swing JTree ・ Pushing Pixels]
 
 * コメント [#comment]

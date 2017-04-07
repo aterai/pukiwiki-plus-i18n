@@ -36,7 +36,7 @@ class IsoscelesTrapezoidTabbedPaneUI extends BasicTabbedPaneUI {
       int next = tabRuns[(i == runCount - 1) ? 0 : i + 1];
       int end = next != 0 ? next - 1 : tabCount - 1; //NOPMD
       // for (int j = start; j <= end; j++) {
-      // http://stackoverflow.com/questions/41566659/tabs-rendering-order-in-custom-jtabbedpane
+      // https://stackoverflow.com/questions/41566659/tabs-rendering-order-in-custom-jtabbedpane
       for (int j = end; j >= start; j--) {
         if (j != selectedIndex && rects[j].intersects(clipRect)) {
           paintTab(g, tabPlacement, rects, j, iconRect, textRect);
@@ -97,7 +97,7 @@ class IsoscelesTrapezoidTabbedPaneUI extends BasicTabbedPaneUI {
 上記のサンプルでは、タブの形を台形に変更し、左側にあるタブが上に表示されるように、`BasicTabbedPaneUI`の各描画メソッドをオーバーライドし、これを`setUI(...)`メソッドで`JTabbedPane`に設定しています。
 
 - `BasicTabbedPaneUI#paintTabArea(...)`をオーバーライドして、右側のタブを先に描画するよう変更
--- 参考: [http://stackoverflow.com/questions/41566659/tabs-rendering-order-in-custom-jtabbedpane java - Tabs Rendering Order in Custom JTabbedPane - Stack Overflow]
+-- 参考: [https://stackoverflow.com/questions/41566659/tabs-rendering-order-in-custom-jtabbedpane java - Tabs Rendering Order in Custom JTabbedPane - Stack Overflow]
 - `BasicTabbedPaneUI#paintTabBorder(...)`、`BasicTabbedPaneUI#paintFocusIndicator(...)`メソッドをオーバーライドして、なにも描画しないように変更
 -- タブのフチの罫線などは、`BasicTabbedPaneUI#paintTabBackground(...)`でまとめて描画する
 - `BasicTabbedPaneUI#paintContentBorderTopEdge(...)`をオーバーライドして、台形タブの拡大した部分に掛かるコンテンツエリアの罫線を上書きで塗り潰す
