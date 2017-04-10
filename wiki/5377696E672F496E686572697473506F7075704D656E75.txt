@@ -44,77 +44,13 @@ private class TablePopupMenu extends JPopupMenu {
 `JDK 1.5`では、`JViewport`も`setInheritsPopupMenu(true)`とする必要がありましたが、`JDK 1.6`ではデフォルトが変更されているようです。
 
 ----
-`JDK 1.6`では、`JTable`のヘッダも、`setInheritsPopupMenu(true)`で、`JScrollPane`からポップアップメニューを取得して表示することができます。ただし、`JDK 1.6` + `WindowsLookAndFeel`で、`JTableHeader`上にポップアップメニューを表示すると、以下のようにうまく再描画できない場合があるようです。
-
+- `JDK 1.6`では、`JTable`のヘッダも、`setInheritsPopupMenu(true)`で、`JScrollPane`からポップアップメニューを取得して表示可能
+-- %%`JDK 1.6` + `WindowsLookAndFeel`で、`JTableHeader`上にポップアップメニューを表示すると、以下のようにうまく再描画できない場合がある%% 修正済み
 + ヘッダを右クリックしながら、右端にドラッグ、ポップアップ表示
 + KBD{Esc}キーで、ポップアップ非表示
 + ヘッダ上で右クリック、ポップアップ、KBD{Esc}キー
 
-#ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOhYdteZI/AAAAAAAAAcg/CzWZOSF9pVw/s800/InheritsPopupMenu1.png)
-
-#code{{
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.table.*;
-public class HeaderPopupMenuTest {
-  public JComponent makeUI() {
-    JScrollPane scroll = new JScrollPane(makeTable());
-    scroll.setComponentPopupMenu(new TablePopupMenu());
-    JPanel p = new JPanel(new BorderLayout());
-    p.add(scroll);
-    return p;
-  }
-  private JTable makeTable() {
-    String[] columnNames = {"String", "Integer", "Boolean"};
-    Object[][] data = { {"AAA", 1, true}, {"BBB", 2, false} };
-    DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-      @Override public Class<?> getColumnClass(int column) {
-        return getValueAt(0, column).getClass();
-      }
-    };
-    JTable table = new JTable(model);
-    table.setInheritsPopupMenu(true);
-    table.getTableHeader().setInheritsPopupMenu(true);
-    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    return table;
-  }
-  private class TablePopupMenu extends JPopupMenu {
-    public TablePopupMenu() {
-      super();
-      add(new DummyAction("add"));
-      addSeparator();
-      add(new DummyAction("delete"));
-    }
-  }
-  class DummyAction extends AbstractAction {
-    public DummyAction(String label) {
-      super(label);
-    }
-    @Override public void actionPerformed(ActionEvent e) {}
-  }
-  public static void main(String[] args) {
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        createAndShowGUI();
-      }
-    });
-  }
-  public static void createAndShowGUI() {
-    try {
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    JFrame f = new JFrame();
-    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    f.getContentPane().add(new HeaderPopupMenuTest().makeUI());
-    f.setSize(320, 240);
-    f.setLocationRelativeTo(null);
-    f.setVisible(true);
-  }
-}
-}}
+// #ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOhYdteZI/AAAAAAAAAcg/CzWZOSF9pVw/s800/InheritsPopupMenu1.png)
 
 * 参考リンク [#reference]
 - [[JPopupMenuをコンポーネントに追加>Swing/ComponentPopupMenu]]

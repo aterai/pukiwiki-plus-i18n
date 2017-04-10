@@ -17,7 +17,8 @@ image: https://lh3.googleusercontent.com/-CoxU1H7Z550/VexP9UAQdbI/AAAAAAAAOBI/QI
 #code(link){{
 URL url = getClass().getResource("16x16.png");
 String path = url.toString();
-String title = String.format("<html><table cellpadding='0'><tr><td><img src='%s'></td><td>test</td></tr></table></html>", path);
+String title = String.format(
+  "<html><table cellpadding='0'><tr><td><img src='%s'></td><td>test</td></tr></table></html>", path);
 panel.setBorder(BorderFactory.createTitledBorder(title));
 }}
 
