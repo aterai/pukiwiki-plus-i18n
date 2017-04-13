@@ -46,15 +46,21 @@ p.add(box, BorderLayout.EAST);
 * 解説 [#explanation]
 上記のサンプルでは、ドロップダウンリストの表示を無効にした`JComboBox`と`2`つの`ArrowButton`を組み合わせて、`JSpinner`風のコンポーネントを作成しています。各アイテムの文字色は、`Html`の`<font>`タグを使って変更しています。
 
-- `BasicComboBoxUI#createArrowButton()`をオーバーライドして、`JComboBox`の元`ArrowButton`を非表示
+- `BasicComboBoxUI#createArrowButton()`メソッドをオーバーライドして、`JComboBox`の`ArrowButton`を非表示に設定
 -- [[JComboBoxのArrowButtonを隠す>Swing/HideComboArrowButton]]
-- `BasicComboBoxUI#setPopupVisible`、`BasicComboBoxUI#createPopup()`、`BasicComboPopup#show()`などをオーバーライドしてドロップダウンリストを無効化
+- `BasicComboBoxUI#setPopupVisible(...)`、`BasicComboBoxUI#createPopup()`、`BasicComboPopup#show()`メソッドなどをオーバーライドしてドロップダウンリストを無効化
 - `JComboBox#getActionMap()#get("selectNext2")`などで取得したアクションを実行する`ArrowButton`を作成してレイアウト
 -- [[JTableを別コンポーネントから操作>Swing/SelectAllButton]]
 -- [[JComponentのKeyBinding一覧を取得する>Swing/KeyBinding]]
--- リピート機能には未対応
+- ボタンをクリックしたままの場合、値変更が繰り返し実行されるリピート機能には未対応
+-- [[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [[JComboBoxのArrowButtonを隠す>Swing/HideComboArrowButton]]
+- [[JTableを別コンポーネントから操作>Swing/SelectAllButton]]
+- [[JComponentのKeyBinding一覧を取得する>Swing/KeyBinding]]
+- [[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]
+
 * コメント [#comment]
 #comment
 #comment

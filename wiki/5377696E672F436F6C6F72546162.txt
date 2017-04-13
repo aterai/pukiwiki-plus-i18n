@@ -37,7 +37,13 @@ tab.addChangeListener(new ChangeListener() {
 * 解説 [#explanation]
 `JTabbedPane`に`ChangeListener`を追加し、条件によってタブの文字色を変更しています。
 
-背景色も変更したかったのですが、`Look and Feel`などによってはうまくいかないようです。`Windows XP`でタブの背景色を変更したい場合は、以下のように`System.setProperty("swing.noxp", "true")`とする必要があります。
+- タブ文字色: `JTabbedPane#setForegroundAt(Color)`
+-- `Look and Feel`に依存(`JDK 1.7.0`からドキュメントに記述されている)
+-- `Synth(Nimbus)LookAndFeel`などでは、`JTabbedPane#setForegroundAt(Color)`で変更することができない
+-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6939001 Bug ID: 6939001 Nimbus: JTabbedPane setBackgroundAt and setForegroundAt have no effect]
+- タブ背景色: `JTabbedPane#setBackgroundAt(Color)`
+- `Look and Feel`に依存(`JDK 1.7.0`からドキュメントに記述されている)
+- `Windows XP`でタブの背景色を変更したい場合は、以下のように`System.setProperty("swing.noxp", "true")`とする必要がある
 
 #code{{
 public static void createAndShowGUI() {
@@ -51,12 +57,9 @@ public static void createAndShowGUI() {
 //......
 }}
 
-----
-文字色も`Synth(Nimbus)LookAndFeel`などでは、`JTabbedPane#setForegroundAt(...)`で変更することができないようです。
-
-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6939001 Bug ID: 6939001 Nimbus: JTabbedPane setBackgroundAt and setForegroundAt have no effect]
-
 * 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setForegroundAt-int-java.awt.Color- JTabbedPane#setForegroundAt(Color) (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setBackgroundAt-int-java.awt.Color- JTabbedPane#setBackgroundAt(Color) (Java Platform SE 8)]
 - [[JTabbedPaneのタブ文字列をハイライト>Swing/TabTitleHighlight]]
 
 * コメント [#comment]

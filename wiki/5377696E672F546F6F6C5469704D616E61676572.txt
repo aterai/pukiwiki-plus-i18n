@@ -15,23 +15,19 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVq857V2I/AAAAAAAAAoA/yR
 
 * サンプルコード [#sourcecode]
 #code(link){{
-ActionListener al = new ActionListener() {
-  @Override public void actionPerformed(ActionEvent e) {
-    ToolTipManager.sharedInstance().setEnabled(onRadio.isSelected());
-  }
-};
-onRadio.addActionListener(al);
-offRadio.addActionListener(al);
+ToolTipManager.sharedInstance().setEnabled(true);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JButton#setToolTipText(...)`でボタンにツールチップを設定し、かつ表示するかどうかを`ToolTipManager`を使って切り替えています。
+上記のサンプルでは、`JButton#setToolTipText(...)`でボタンにツールチップテキストを設定し、表示するかどうかを`ToolTipManager`を使って切り替えています。
 
 - メモ
 -- コンポーネントに`setToolTipText(...)`メソッドで`null`以外が設定された場合、「表示する」がデフォルト
 -- `ToolTipManager`は、アプリケーション全体でのツールチップの表示時間、表示までの遅延時間などが設定可能
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ToolTipManager.html ToolTipManager (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment

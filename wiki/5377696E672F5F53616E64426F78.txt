@@ -53,7 +53,7 @@ pubdate: 2006-01-29
 //- 2014/11末現在、アクセス数などは以前の水準に戻っている
 
 * 調整中のネタ帳 [#memo]
-- JComboBox [[Swing/ClearComboBoxItemSelection]]
+- JComboBox [[Swing/ComboBoxToolTip]]
 
 - CubeEffect
 -- [https://java.net/projects/animatingcardlayout Animatingcardlayout — Project Kenai]
@@ -150,6 +150,43 @@ pubdate: 2006-01-29
 |Swing/MoveRow|5377696E672F4D6F7665526F77|2004-02-23|
 
 * Swing関係のバグのメモ [#hb22f5ad]
+** MetalLookAndFeelでのJComboBoxとJToolTip [#fc4b2abf]
+- ドロップダウンリストを開いた状態でツールチップが表示されると描画がおかしくなる場合がある
+-- `MetalLookAndFeel`のみ
+-- ドロップダウンリストが`HeavyWeightWindow`か`LightWeightWindow`かは無関係
+
+#img2(https://drive.google.com/uc?export=view&id=1l662LOjb0AFVh6F9lOSm78ZsXzJfuG0GDQ)
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class CustomJComboBoxTest2 {
+  public JComponent makeUI() {
+    JComboBox<String> box = new JComboBox<>();
+    box.addItem("Item 1");
+    box.addItem("Item 2");
+    box.setToolTipText("TooTip");
+
+    JPanel p = new JPanel(new BorderLayout());
+    p.setBorder(BorderFactory.createEmptyBorder(60, 20, 60, 20));
+    p.add(box);
+    return p;
+  }
+  public static void main(String... args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      f.getContentPane().add(new CustomJComboBoxTest2().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+}}
+
 ** JToolBarに配置したJButtonのフォーカス描画 [#w21ce2da]
 - [https://stackoverflow.com/questions/37295099/decorating-a-rollover-toolbar-button-with-jlayer-paints-its-border#37295921 java - Decorating a rollover toolbar button with JLayer paints its border - Stack Overflow]
 -- `JButton`を`JLayer`でラップして`JToolBar`に追加すると、`JToolBar`用のフォーカス描画ではなく、デフォルトのフォーカス描画が適用されてしまう

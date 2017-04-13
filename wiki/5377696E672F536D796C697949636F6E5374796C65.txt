@@ -41,9 +41,10 @@ private void update(DefaultStyledDocument doc, int offset) {
 * 解説 [#explanation]
 上記のサンプルでは、`StyleConstants.setIcon(doc.addStyle(":)", null), new FaceIcon());`でドキュメントにアイコン属性を設定し、文字列の追加、削除が実行されると、文字列から`:)`を検索し、見つけた文字列に対して`StyledDocument#setCharacterAttributes(...)`でそのアイコン属性を適用しています。
 
-- 注:
--- 顔文字の検索範囲を`StyledDocument#getCharacterElement(offset)`で取得した`Element`に限定することで高速化
+- 制限:
 -- `:)`から一文字削除してもアイコンが解除されない
+- メモ:
+-- 顔文字の検索範囲を`StyledDocument#getCharacterElement(offset)`で取得した`Element`に限定することで高速化
 -- スタイルにアイコン属性だけでなく、文字色属性などを追加する場合、`MutableAttributeSet inputAttributes = textPane.getInputAttributes();inputAttributes.removeAttributes(inputAttributes);`などを実行して、後続の入力文字列に属性が引き継がれないようにする必要がある？
 #code{{
 Style def = StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE);
