@@ -13,16 +13,23 @@ description: 静的解析で潜在的なエラーを検査するFindBugsをAnt�
 #code{{
 <property environment="env" />
 <condition property="have.findbugs">
-  <and>
-    <available classname="edu.umd.cs.findbugs.anttask.FindBugsTask" />
-    <available file="${env.FINDBUGS_HOME}" />
-  </and>
+  <available file="${env.FINDBUGS_HOME}" />
 </condition>
 <target name="findbugs" depends="compile" if="have.findbugs">
-  <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" />
+  <echo>${env.FINDBUGS_HOME}</echo>
+  <path id="findbugs.classpath">
+    <fileset dir="${env.FINDBUGS_HOME}/lib">
+      <include name="*-ant.jar" />
+    </fileset>
+  </path>
+  <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
+    classpathref="findbugs.classpath" />
   <mkdir dir="${build.reports}" />
-  <findbugs home="${env.FINDBUGS_HOME}" effort="max"
-          output="xml" outputFile="${build.reports}/findbugs.xml" >
+  <echo>userdir: ${user.dir}</echo>
+  <echo>basedir: ${basedir}</echo>
+  <findbugs home="${env.FINDBUGS_HOME}" effort="max" reportLevel="low"
+          excludeFilter="${sca.dir}/excludefilter.xml"
+          output="xml:withMessages" outputFile="${build.reports}/findbugs.xml">
     <auxClasspath refid="project.class.path" />
     <sourcePath path="${src.dir}" />
     <class location="${build.dest}" />
@@ -35,14 +42,14 @@ description: 静的解析で潜在的なエラーを検査するFindBugsをAnt�
 + [http://findbugs.sourceforge.net/downloads.html FindBugs Downloads]からダウンロードした`findbugs-x.x.x.zip`を適当な場所に展開し、環境変数`FINDBUGS_HOME`に設定
 -- 変数名: `FINDBUGS_HOME`
 -- 変数値: `C:\Applications\findbugs-2.0.2`
-+ `%FINDBUGS_HOME%\lib\findbugs-ant.jar`を、`%ANT_HOME%\lib`にコピー(シンボリックリンクでも可)
++ %%`%FINDBUGS_HOME%\lib\findbugs-ant.jar`を、`%ANT_HOME%\lib`にコピー(シンボリックリンクでも可)%%
 + `ant findbugs`で、`findbugs.xml`を生成し、`jenkins`の`FindBugs`プラグインや、`%FINDBUGS_HOME%\bin\findbugs.bat`で`GUI`に読み込む
 
 ** Ubuntu 12.10 [#y35a4a7e]
 + [http://findbugs.sourceforge.net/downloads.html FindBugs Downloads]から、`findbugs-x.x.x.tar.gz`をダウンロード
-+ 適当な場所に展開して、`$ANT_HOME/lib`以下に、`findbugs-ant.jar`をリンク
- sudo tar zxvf findbugs-2.0.2.tar.gz -C /usr/share/
- sudo ln -f -s /usr/share/findbugs-2.0.2/lib/findbugs-ant.jar /usr/share/ant/lib/
++ %%適当な場所に展開して、`$ANT_HOME/lib`以下に、`findbugs-ant.jar`をリンク%%
+// sudo tar zxvf findbugs-2.0.2.tar.gz -C /usr/share/
+// sudo ln -f -s /usr/share/findbugs-2.0.2/lib/findbugs-ant.jar /usr/share/ant/lib/
 + `.bashrc`などに、環境変数`FINDBUGS_HOME`を記述
  export FINDBUGS_HOME=/usr/share/findbugs-2.0.2
 
