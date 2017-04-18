@@ -89,17 +89,17 @@ function plugin_header_convert() {
 $navi
 <h1 class="page-title" itemprop="name headline">$h1</h1>
 <div class="row">
-<div class="col-md-8 col-xs-12">
+<div class="col-md-7 col-xs-12">
 $tags_buf
 $hreflang
-</div><!-- col-md-8 -->
-<div class="col-md-4 col-xs-12">
+</div><!-- col-md-7 -->
+<div class="col-md-5 col-xs-12">
 <p class="text-right" style="line-height:2em">
 $counter
 $posted_by_str
 $last_modified_str
 </p>
-</div><!-- col-md-4 -->
+</div><!-- col-md-5 -->
 </div><!-- /row -->
 </div><!-- /page-header -->
 EOD;
