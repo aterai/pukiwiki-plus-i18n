@@ -53,10 +53,9 @@ editor2.setText("(\uD85B\uDE40) (\u26E40)\n(\uD842\uDF9F) (\u20B9F)");
 `Windows 7`, `JDK 1.7.0_02`の環境では、`JTextComponent`からメモ帳などにサロゲートペアの文字をコピーペーストは可能ですが、逆にメモ帳やブラウザから`JTextComponent`にサロゲートペアの文字をコピーペーストすることができないようです。
 
 ----
-`JTextComponent`(`Java 1.7.0`)は、異体字セレクタに対応していません。
-
-- フォントを`IVS`に対応している`IPAmj明朝`などに変更し、異体字セレクタ付き文字列のある`UTF-8`のテキストを`JTextArea`などに読み込んでも異体字セレクタが下駄になる
-- 数値文字参照、`Unicode`エスケープを使う方法でも下駄になる
+`JTextComponent`(`Java 1.7.0`)は、異体字セレクタに対応してない
+-- フォントを`IVS`に対応している`IPAmj明朝`などに変更し、異体字セレクタ付き文字列のある`UTF-8`のテキストを`JTextArea`などに読み込んでも異体字セレクタが〓になる
+-- 数値文字参照、`Unicode`エスケープを使う方法でも〓になる
 -- [http://d.hatena.ne.jp/terazzo/20110115/1295047469 Java IVSの異体字を元の字と同一視して比較する - terazzoの日記]のように、`VS`を`UTF-16`に(例えば`U+E0101`を`\uDB40\uDD01`に)しても、`JTextComponent`では駄目
 
 ----
@@ -70,6 +69,9 @@ editor2.setText("(\uD85B\uDE40) (\u26E40)\n(\uD842\uDF9F) (\u20B9F)");
 - `Windows 10 64bit`、`JDK 1.8.0_112`、`小塚明朝 Pr6N R`(`KozMinPr6N-Regular.otf`)で、`Font.createFont(...)`を使って`Font`を作成すると`IllegalArgumentException`が発生する場合がある
 -- 例外が発生しなくても、文字は正常に表示されない
 -- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=5092191 Bug ID: 5092191 RFE: CFF/Type2 embedded fonts not supported with Font.createFont()]
+-- [https://bugs.openjdk.java.net/browse/JDK-8074562 JDK-8074562 CID keyed OpenType fonts are not supported by T2K - Java Bug System]
+-- [https://bugs.openjdk.java.net/browse/JDK-8168288 JDK-8168288 Dubious FontMetrics values from NullFontScaler - Java Bug System]
+--- `JDK 9`で修正される？
 
  Exception in thread "AWT-EventQueue-0" java.lang.IllegalArgumentException: Length must be >= 0.
     at javax.swing.text.GlyphPainter2.getBoundedPosition(GlyphPainter2.java: 205)

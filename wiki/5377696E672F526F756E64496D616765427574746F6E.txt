@@ -96,8 +96,8 @@ class RoundButton extends JButton {
 -- `contains`で使用した図形を利用
 
 ----
-ボタンの揃えを変更するために、`JPanel`ではなく、`Box`を利用しているので、`JDK 5`でも`JDK 6`と同じように描画するために、`Box#paintComponent`を以下のようにオーバーライドしています。
-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4907674 Bug ID: 4907674 Box disregards setBackground() even when set Opaque(true)]
+- %%ボタンの揃えを変更するために、`JPanel`ではなく、`Box`を利用しているので、`JDK 5`でも`JDK 6`と同じように描画するために、`Box#paintComponent`を以下のようにオーバーライド%% `JDK 6`で修正済み
+-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4907674 Bug ID: 4907674 Box disregards setBackground() even when set Opaque(true)]
 
 &ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTSRb592NI/AAAAAAAAAig/4HrfRUSkPxc/s800/RoundImageButton1.png);
 
@@ -117,7 +117,7 @@ private final Box box = // JDK 6 Box.createHorizontalBox();
 }}
 
 * 参考リンク [#reference]
-- [http://gimp.blog.shinobi.jp/Entry/18/ アクア風の球体の描き方（GIMPチュートリアル) > ロゴ・ボタン | GIMP思い込みチュートリアル（GIMPの使い方）]
+//- [http://gimp.blog.shinobi.jp/Entry/18/ アクア風の球体の描き方（GIMPチュートリアル) > ロゴ・ボタン | GIMP思い込みチュートリアル（GIMPの使い方）]
 - [[JButtonの形を変更>Swing/RoundButton]]
 - [[JComponentの形状定義を変更する>Swing/MoveNonRectangularImage]]
 
