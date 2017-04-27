@@ -315,10 +315,45 @@ model2 = new BasicDirectoryModel(getFileChooser()) {
 --- `repaintRect = prevRollover ? r.union(table.getCellRect(prevRow, prevCol, false)) : r;`
 -- [http://sourceforge.net/p/pmd/bugs/1424/ PMD Issues #1424 False negative with ternary operator]
 
-* 参考リンク [#c56145b8]
+* Jenkins [#jenkins]
+- `Jenkinsfile`
+-- `ant`を呼び出す方法がよく分からない
+
+#code{{
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/aterai/java-swing-tips.git'
+            }
+        }
+        stage('PMD') {
+            steps {
+                sh "~/.sdkman/candidates/ant/current/bin/ant -file all.xml pmd"
+                step([$class: 'PmdPublisher', pattern: '**/pmd.xml'])
+            }
+        }
+        stage('CheckStyle') {
+            steps {
+                sh "~/.sdkman/candidates/ant/current/bin/ant -file all.xml checkstyle"
+                step([$class: 'CheckStylePublisher', pattern: '**/checkstyle-result.xml'])
+            }
+        }
+    }
+}
+}}
+
+- メモ: 最近の`Weekly`版(`2.5x`頃？)は、「インストール完了後、ジョブがなければJenkinsを再起動する」でジョブが実行中でも再起動されてしまい、ビルドが失敗する？
+-- 「ビルドを並列実行」を「しない」にしているビルドを複数を実行すると、後から実行したビルドがビルドキューに入らず、並列実行されてしまう
+-- 「システムの設定」で「同時ビルド数」を`1`にすれば、並列実行されなくなる
+-- [https://jenkins.io/security/advisory/2017-04-26/ Jenkins Security Advisory 2017-04-26]
+--- SECURITY-412: Restart Jenkins immediately, after all builds are finished, or after all plugin installations and builds are finished
+
+* 参考リンク [#reference]
 - [https://pmd.github.io/ PMD]
 - [http://d.hatena.ne.jp/guess880/20121014/1350200644 PMD5.0.0のルールを和訳しながら読む - 1 - Design Ruleset - 開発メモ]
 
-* コメント [#sc369256]
+* コメント [#comment]
 #comment
 #comment

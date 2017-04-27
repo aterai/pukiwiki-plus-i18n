@@ -50,8 +50,8 @@ class BigDecimalSpinnerModel extends SpinnerNumberModel {
 * 解説 [#explanation]
 - 上: `SpinnerNumberModel`
 -- `Double`型の`SpinnerNumberModel`では、最大・最小値の比較に、`Double#compare(...)`が使用されている
--- `stepSize`の`0.1`などが持つ浮動小数点の誤差のせいで、このサンプルの`JSpinner`の場合、下限(`2.0`や`29.6`)にダウンボタンで遷移できない
---- 例えば、`29.7 - 29.6 - 0.1 >= 0`は`false`なので、ダウンボタンで、`29.7`から`29.6`に遷移不可
+-- `stepSize`に指定した`0.1`などが持つ浮動小数点誤差のため、このサンプルの`JSpinner`の場合、下限(`2.0`や`29.6`)にダウンボタンで遷移できない
+--- 例えば、`29.7 - 29.6 - 0.1 >= 0`は`false`なので、ダウンボタンで`29.7`から`29.6`に遷移不可
 - 下: `BigDecimalSpinnerModel`
 -- `SpinnerNumberModel#getPreviousValue()`などをオーバーライドして、`Double#compareTo(Double)`ではなく、`BigDecimal#compareTo(BigDecimal)`で最小値との比較を行う
 

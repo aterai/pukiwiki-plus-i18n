@@ -49,7 +49,7 @@ class WindowsVerticalAlignmentCheckBoxUI extends WindowsCheckBoxUI {
 * 解説 [#explanation]
 - 左: `SwingConstants.TOP`
 -- `JCheckBox#setVerticalTextPosition(SwingConstants.TOP);`と設定して、チェックアイコンとテキストの上辺が揃うように設定
--- フォントサイズなどが大きくなると、チェックアイコンが上に飛び出しているように見えてしまう
+-- `JCheckBox`のフォントサイズが大きくなると、チェックアイコンが上にずれてしまう
 - 右: `First line center`
 -- `WindowsCheckBoxUI#paint(...)`などをオーバーライドし、一行目の中央にチェックアイコンの中心が揃うように設定
 -- `<html>aa<font size="+5">bb</font>cc...</html>`のような一部の文字サイズを大きくしたテキストを設定しても行の中央に揃えることが可能
