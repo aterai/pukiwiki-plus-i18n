@@ -23,9 +23,10 @@ tabbedPane.setUI(new BasicTabbedPaneUI() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`BasicTabbedPaneUI`の`calculateTabWidth`メソッドをオーバーライドして、`JTabbedPane`のタブ幅がタイトル文字列の長さにかかわらず一定になるように設定しています。
+上記のサンプルでは、`BasicTabbedPaneUI`の`calculateTabWidth`メソッドをオーバーライドして、`JTabbedPane`のタブ幅がタイトル文字列の長さにかかわらず一定以上になるように設定しています。
 
-`JTabbedPane`のサイズが十分で無い場合、タブ列が二段になってタブは指定された幅を維持出来なくなります。
+- タイトル文字列が短くても、最低`MIN_TAB_WIDTH(100px)`のタブ幅を維持する
+- タブ列が`2`段以上になると、指定されたタブ幅を維持できない場合がある
 
 ----
 以下のように、`html`タグを使ってタブ幅を固定する方法もあります。

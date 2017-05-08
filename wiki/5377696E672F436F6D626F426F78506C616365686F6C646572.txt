@@ -18,7 +18,8 @@ image: https://drive.google.com/uc?export=view&id=1R3IHJMxqNMm4oHGv9wmZ8FXpeZJn0
 JComboBox<String> combo1 = new JComboBox<>(new String[] {"One", "Two", "Three", "Four"});
 combo1.setSelectedIndex(-1);
 combo1.setRenderer(new DefaultListCellRenderer() {
-  @Override public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+  @Override public Component getListCellRendererComponent(
+        JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
     //XXX: String str = index < 0 ? "- Select Item -" : value.toString();
     String str = Objects.toString(value, "- Select Item -");
     super.getListCellRendererComponent(list, str, index, isSelected, cellHasFocus);
@@ -28,9 +29,9 @@ combo1.setRenderer(new DefaultListCellRenderer() {
 }}
 
 * 解説 [#explanation]
-- `JComboBox`のモデルにはプレースホルダー文字列を含めない
 - `DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドし、引数の値が`null`の場合のみ代わりにプレースホルダー文字列を表示するコンポーネントを返す
 -- インデックスが`-1`の場合にプレースホルダー文字列を表示するように設定すると、選択が変更できなくなる？
+-- `JComboBox`のモデルにはプレースホルダー文字列を含める必要がない
 
 //* 参考リンク [#reference]
 * コメント [#comment]
