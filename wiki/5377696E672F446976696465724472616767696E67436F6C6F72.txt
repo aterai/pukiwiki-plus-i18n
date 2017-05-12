@@ -19,11 +19,10 @@ UIManager.put("SplitPaneDivider.draggingColor", new Color(255, 100, 100, 100));
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JSplitPane#setContinuousLayout(false)`を使用して、`JSplitPane`の`Divider`がドラッグ中の場合に`Divider`の移動先を示す矩形の色を変更しています。
-
-----
-ドラッグ中ではない`Divider`の色は、`LookAndFeel`によっては、以下のような方法で変更することができます。
-
+- `JSplitPane`の`Divider`がドラッグ中の場合、その移動先を示す矩形の色を変更: `SplitPaneDivider.draggingColor`を半透明の色に変更
+-- `JSplitPane#setContinuousLayout(false)`が設定されている`JSplitPane`のみ半透明は有効
+- ドラッグ中ではない`Divider`の色は、以下のような方法で変更可能
+-- `LookAndFeel`に依存する
 #code{{
 BasicSplitPaneDivider divider = ((BasicSplitPaneUI) getUI()).getDivider();
 divider.setBackground(Color.ORANGE);
