@@ -317,7 +317,8 @@ model2 = new BasicDirectoryModel(getFileChooser()) {
 
 * Jenkins [#jenkins]
 - `Jenkinsfile`
--- `ant`を呼び出す方法がよく分からない
+-- パイプラインで`ant`を呼び出す方法がよく分からないので、`~/.sdkman/candidates/ant/current/bin/ant`を直接呼んでいる
+--- [https://issues.jenkins-ci.org/browse/JENKINS-42382 JENKINS-42382 AntInstallation not setting PATH+ANT - Jenkins JIRA]で、修正された？
 
 #code{{
 pipeline {
