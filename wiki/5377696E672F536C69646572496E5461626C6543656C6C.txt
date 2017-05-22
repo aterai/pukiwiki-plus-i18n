@@ -65,7 +65,11 @@ class SliderEditor extends JSlider implements TableCellEditor {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`1`列目のセルエディタ、レンダラーに`JSlider`を使用するように設定しています。このスライダーの値を変更すると、同じ行の`0`列目の値も変更されるように、セルエディタには`ChangeListener`を追加しています。
+- `0`列目
+-- 編集不可
+- `1`列目
+-- `JSlider`を継承するセルエディタ、セルレンダラーを作成して設定
+-- このスライダーのセルエディタに`ChangeListener`を追加し、同じ行の`0`列目の値と同期するよう設定
 
 //* 参考リンク [#reference]
 * コメント [#comment]

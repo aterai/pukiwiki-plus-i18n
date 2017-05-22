@@ -23,8 +23,9 @@ SwingUtilities.updateComponentTreeUI(this);
 上記のサンプルでは、`JButton`をクリックした際に、あわせて内部の文字列が移動する距離を、`0`、`1`、`-1`と切り替えることができます。
 
 - メモ
--- `JButton`に設定した`Icon`は文字列と同様に移動するが、文字列が`HTML`テキストの場合は移動しない
--- `JToggleButton`などには、効果がない(`UIManager.put("ToggleButton.textShiftOffset", 1)`なども無効)
+-- `JButton`に設定した`Icon`は文字列と同様に移動するが、文字列が`HTML`テキストの場合は無効で移動しない
+-- `JToggleButton`などには、効果がない
+--- `UIManager.put("ToggleButton.textShiftOffset", 1)`なども無効
 -- `Java 1.5.0` + `WindowsLookAndFeel`のデフォルトは`1`
 -- `Java 1.6.0` + `WindowsLookAndFeel`のデフォルトは`0`
 
