@@ -1,0 +1,580 @@
+---
+keywords: [Kotlin, Swing, Java]
+description: KotlinでのSwingの使用方法に関するメモなど
+author: aterai
+pubdate: 2017-05-31
+---
+#contents
+
+* 概要 [#summary]
+`Kotlin`で`Swing`を使用する場合のサンプルです。
+
+* 実行環境 [#s42e991c]
+- [http://sdkman.io/ SDKMAN! the Software Development Kit Manager]で`kotlin`をインストール可能
+
+ $ curl -s "https://get.sdkman.io" | bash 
+ $ sdk install kotlin
+ $ kotlinc -version
+ info: Kotlin Compiler version 1.1.2-2
+ $ kotlinc hello.kt -include-runtime -d hello.jar && "$JAVA_HOME/bin/java" -jar hello.jar
+
+* Swing + Kotlin サンプル [#swing]
+** JTable [#JTable]
+- メモ
+-- `Class<?>`は`Class<Any>`か`Class<Object>`
+-- `Object#getClass()`は`javaClass`
+-- オーバーライドの方法、`@Override`は`override`
+-- 二次元配列
+-- `apply`
+
+#twocolumn
+`Java`
+#code{{
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.table.*;
+
+public class JTableExample {
+  public JComponent makeUI() {
+    String[] cn = {"String", "Integer", "Boolean"};
+    Object[][] data = {
+      {"aaa", 12, true}, {"bbb", 5, false},
+      {"CCC", 92, true}, {"DDD", 0, false}
+    };
+    TableModel m = new DefaultTableModel(data, cn) {
+      @Override public Class<?> getColumnClass(int col) {
+        return getValueAt(0, col).getClass();
+      }
+    };
+    JTable table = new JTable(m);
+    table.setAutoCreateRowSorter(true);
+
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(new JScrollPane(table));
+    return p;
+  }
+  public static void main(String... args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      f.add(new JTableExample().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+}}
+#twocolumn
+`Kotlin`
+#code{{
+import java.awt.*
+import javax.swing.*
+import javax.swing.table.*
+
+fun makeUI(): JComponent {
+  val cn = arrayOf("String", "Integer", "Boolean")
+  val data = arrayOf(
+      arrayOf("aaa", 12, true), arrayOf("bbb", 5, false),
+      arrayOf("CCC", 92, true), arrayOf("DDD", 0, false))
+  val m = object : DefaultTableModel(data, cn) {
+    override fun getColumnClass(col : Int) : Class<Any> {
+      return getValueAt(0, col).javaClass
+    }
+  }
+  val table = JTable(m).apply {
+    autoCreateRowSorter = true
+  }
+  return JPanel(BorderLayout(5, 5)).apply {
+    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5))
+    add(JScrollPane(table))
+  }
+}
+fun main(args : Array<String>) {
+  EventQueue.invokeLater {
+    JFrame("kotlin swing").apply {
+      defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+      add(makeUI())
+      size = Dimension(320, 240)
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
+}
+}}
+#twocolumn
+
+** JTree [#JTree]
+#twocolumn
+`Java`
+#code{{
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+
+public class JTreeExample {
+  public JComponent makeUI() {
+    JTree tree = new JTree();
+
+    JButton b1 = new JButton("expand");
+    b1.addActionListener(e -> expandAll(tree));
+
+    JButton b2 = new JButton("collapse");
+    b2.addActionListener(e -> collapseAll(tree));
+
+    JPanel pp = new JPanel(new GridLayout(1, 0, 5, 5));
+    Arrays.asList(b1, b2).forEach(pp::add);
+    JPanel p = new JPanel(new BorderLayout(5, 5));
+    p.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    p.add(new JScrollPane(tree));
+    p.add(pp, BorderLayout.SOUTH);
+    return p;
+  }
+  protected static void expandAll(JTree tree) {
+    int row = 0;
+    while (row < tree.getRowCount()) {
+      tree.expandRow(row);
+      row++;
+    }
+  }
+  protected static void collapseAll(JTree tree) {
+    int row = tree.getRowCount() - 1;
+    while (row >= 0) {
+      tree.collapseRow(row);
+      row--;
+    }
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      f.add(new JTreeExample().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+}}
+#twocolumn
+`Kotlin`
+#code{{
+import java.awt.*
+import javax.swing.*
+
+fun makeUI(): JComponent {
+  val tree = JTree()
+  val p = JPanel(GridLayout(1, 0, 5, 5)).apply {
+    add(JButton("expand").apply {
+      addActionListener { expandAll(tree) }
+    })
+    add(JButton("collapse").apply {
+      addActionListener { collapseAll(tree) }
+    })
+  }
+  return JPanel(BorderLayout(5, 5)).apply {
+    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5))
+    add(JScrollPane(tree))
+    add(p, BorderLayout.SOUTH)
+  }
+}
+fun expandAll(tree : JTree) {
+  var row = 0
+  while (row < tree.getRowCount()) {
+    tree.expandRow(row)
+    row++
+  }
+}
+fun collapseAll(tree : JTree) {
+  var row = tree.getRowCount() - 1
+  while (row >= 0) {
+    tree.collapseRow(row)
+    row--
+  }
+}
+fun main(args : Array<String>) {
+  EventQueue.invokeLater {
+    JFrame("kotlin swing").apply {
+      defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+      add(makeUI())
+      size = Dimension(320, 240)
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
+}
+}}
+#twocolumn
+
+** JCheckBox [#JCheckBox]
+- `Smart Cast`、キャストで`if`のネストが深くなるのを避けたい
+-- 以下のような場合は、`apply`で回避できる
+
+#twocolumn
+`Java`
+#code{{
+import java.awt.*;
+import javax.swing.*;
+
+public class JCheckBoxExample {
+  public JComponent makeUI() {
+    JCheckBox cb = new JCheckBox("Always On Top", true);
+    cb.addActionListener(e -> {
+      AbstractButton b = (AbstractButton) e.getSource();
+      Container c = b.getTopLevelAncestor();
+      if (c instanceof Window) {
+        ((Window) c).setAlwaysOnTop(b.isSelected());
+      }
+    });
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(cb, BorderLayout.NORTH);
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      f.add(new JCheckBoxExample().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+}}
+#twocolumn
+`Kotlin`
+#code{{
+import java.awt.*
+import javax.swing.*
+
+fun makeUI(): JComponent {
+  val cb = JCheckBox("Always On Top", true).apply {
+    addActionListener {
+      val w = getTopLevelAncestor()
+      if (w is Window) {
+          w.setAlwaysOnTop(isSelected())
+      }
+    }
+//     addActionListener { e ->
+//       val c = e.getSource()
+//       if (c is AbstractButton) {
+//         val w = c.getTopLevelAncestor()
+//         if (w is Window) {
+//           w.setAlwaysOnTop(c.isSelected())
+//         }
+//       }
+    }
+  }
+  return JPanel(BorderLayout()).apply {
+    add(cb, BorderLayout.NORTH)
+  }
+}
+
+fun main(args : Array<String>) {
+  EventQueue.invokeLater {
+    JFrame("kotlin swing").apply {
+      defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+      add(makeUI())
+      size = Dimension(320, 240)
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
+}
+}}
+#twocolumn
+
+** インターフェイス、匿名内部クラス、throws [#tb58a862]
+- `addTreeWillExpandListener(object: TreeWillExpandListener() { ...`と記述すると`error: this class does not have a constructor`とエラーになる
+- インターフェイスから匿名内部クラスのインスタンスを生成する場合は`()`は不要で、`addTreeWillExpandListener(object: TreeWillExpandListener { ...`と記述する
+
+#twocolumn
+`Java`
+#code{{
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.plaf.IconUIResource;
+import javax.swing.tree.*;
+
+public class ThrowsExample {
+  public JComponent makeUI() {
+    JPanel p = new JPanel(new GridLayout(1, 0, 5, 5));
+    p.add(new JScrollPane(new JTree()));
+    p.add(new JScrollPane(makeTree()));
+    p.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    return p;
+  }
+  private static JTree makeTree() {
+    Icon icon = new EmptyIcon();
+    UIManager.put("Tree.expandedIcon",  new IconUIResource(icon));
+    UIManager.put("Tree.collapsedIcon", new IconUIResource(icon));
+
+    JTree tree = new JTree();
+    tree.setEditable(true);
+    tree.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+    int row = 0;
+    while (row < tree.getRowCount()) {
+      tree.expandRow(row++);
+    }
+    tree.addTreeWillExpandListener(new TreeWillExpandListener() {
+      @Override
+      public void treeWillExpand(TreeExpansionEvent e)
+          throws ExpandVetoException {
+        //throw new ExpandVetoException(e, "Tree expansion cancelled");
+      }
+      @Override
+      public void treeWillCollapse(TreeExpansionEvent e)
+          throws ExpandVetoException {
+        throw new ExpandVetoException(e, "Tree collapse cancelled");
+      }
+    });
+    return tree;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      f.getContentPane().add(new ThrowsExample().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+
+class EmptyIcon implements Icon {
+  @Override
+  public void paintIcon(Component c, Graphics g, int x, int y) {
+    /* Empty icon */
+  }
+  @Override public int getIconWidth() {
+    return 0;
+  }
+  @Override public int getIconHeight() {
+    return 0;
+  }
+}
+}}
+#twocolumn
+`Kotlin`
+#code{{
+import java.awt.*
+import javax.swing.*
+import javax.swing.event.*
+import javax.swing.plaf.IconUIResource
+import javax.swing.tree.*
+
+fun makeUI(): JComponent {
+  val emptyIcon = EmptyIcon()
+  UIManager.put("Tree.expandedIcon",  IconUIResource(emptyIcon))
+  UIManager.put("Tree.collapsedIcon", IconUIResource(emptyIcon))
+
+  val tree = JTree().apply {
+    setEditable(true)
+    border = BorderFactory.createEmptyBorder(4, 4, 4, 4)
+    addTreeWillExpandListener(object: TreeWillExpandListener {
+      //@Throws(ExpandVetoException::class)
+      override fun treeWillExpand(e: TreeExpansionEvent) {
+        //throw ExpandVetoException(e, "Tree expansion cancelled")
+      }
+      //@Throws(ExpandVetoException::class)
+      override fun treeWillCollapse(e: TreeExpansionEvent) {
+        throw ExpandVetoException(e, "Tree collapse cancelled")
+      }
+    })
+  }
+
+  var row = 0;
+  while (row < tree.getRowCount()) {
+    tree.expandRow(row++);
+  }
+
+  return JPanel(GridLayout(1, 0)).apply {
+    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5))
+    add(JScrollPane(JTree()))
+    add(JScrollPane(tree))
+  }
+}
+
+class EmptyIcon: Icon {
+    override fun paintIcon(c: Component, g: Graphics , x: Int, y: Int) {
+      /* Empty icon */
+    }
+    override fun getIconWidth():  Int = 0
+    override fun getIconHeight(): Int = 0
+}
+
+fun main(args: Array<String>) {
+  EventQueue.invokeLater {
+    JFrame("kotlin swing").apply {
+      defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+      add(makeUI())
+      size = Dimension(320, 240)
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
+}
+}}
+#twocolumn
+
+** Optional [#c0e18689]
+- `Optional#orElse(...)`は、`let {...} ?: ...`に変換
+-- `Integer stepSize = Optional.ofNullable(stepSizeMap.get(calendarField)).orElse(1);`
+-- `val stepSize = stepSizeMap.get(calendarField).let { it } ?: 1`
+- 例えば`SpinnerDateModel#getNextValue(...)`メソッドを`override fun getNextValue(): Object = Calendar.getInstance().apply { ...`のように変換すると、`error: type mismatch: inferred type is Date! but Object was expected`とエラーになる
+- `override fun getNextValue(): Any = Calendar.getInstance().apply { ...`と`Any`を使用するようオーバーライドする必要がある
+- `Date!`は、`Date`もしくは`Date?`の意味
+-- [http://kotlinlang.org/docs/reference/java-interop.html#null-safety-and-platform-types Calling Java from Kotlin - Kotlin Programming Language]
+-- `T! means "T or T?"`
+
+#twocolumn
+`Java`
+#code{{
+import java.awt.*;
+import java.text.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.text.*;
+
+public class OptionalExample {
+  private JComponent makeUI() {
+    SimpleDateFormat format = new SimpleDateFormat(
+        "mm:ss, SSS", Locale.getDefault());
+    DefaultFormatterFactory factory = new DefaultFormatterFactory(
+        new DateFormatter(format));
+
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
+    calendar.clear(Calendar.MINUTE);
+    calendar.clear(Calendar.SECOND);
+    calendar.clear(Calendar.MILLISECOND);
+    Date d = calendar.getTime();
+
+    JSpinner sp1 = new JSpinner(new SpinnerDateModel(
+        d, null, null, Calendar.SECOND));
+    JSpinner.DefaultEditor ed1 = (JSpinner.DefaultEditor) sp1.getEditor();
+    ed1.getTextField().setFormatterFactory(factory);
+
+    HashMap<Integer, Integer> stepSizeMap = new HashMap<>();
+    stepSizeMap.put(Calendar.HOUR_OF_DAY, 1);
+    stepSizeMap.put(Calendar.MINUTE,      1);
+    stepSizeMap.put(Calendar.SECOND,      30);
+    stepSizeMap.put(Calendar.MILLISECOND, 500);
+
+    JSpinner sp2 = new JSpinner(new SpinnerDateModel(
+        d, null, null, Calendar.SECOND) {
+      @Override public Object getPreviousValue() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getDate());
+        Integer calendarField = getCalendarField();
+        Integer stepSize = Optional.ofNullable(
+            stepSizeMap.get(calendarField)).orElse(1);
+        cal.add(calendarField, -stepSize);
+        return cal.getTime();
+      }
+      @Override public Object getNextValue() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getDate());
+        Integer calendarField = getCalendarField();
+        Integer stepSize = Optional.ofNullable(
+            stepSizeMap.get(calendarField)).orElse(1);
+        cal.add(calendarField, stepSize);
+        return cal.getTime();
+      }
+    });
+    JSpinner.DefaultEditor ed2 = (JSpinner.DefaultEditor) sp2.getEditor();
+    ed2.getTextField().setFormatterFactory(factory);
+
+    JPanel p = new JPanel();
+    p.add(sp1);
+    p.add(sp2);
+    return p;
+  }
+  public static void main(String... args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      f.getContentPane().add(new OptionalExample().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+}}
+#twocolumn
+`Kotlin`
+#code{{
+import java.awt.*
+import java.text.*
+import java.util.*
+import javax.swing.*
+import javax.swing.text.*
+
+fun makeUI(): JComponent {
+  val format = SimpleDateFormat("mm:ss, SSS", Locale.getDefault())
+  val factory = DefaultFormatterFactory(DateFormatter(format))
+
+  val calendar = Calendar.getInstance().apply {
+    set(Calendar.HOUR_OF_DAY, 0)
+    clear(Calendar.MINUTE)
+    clear(Calendar.SECOND)
+    clear(Calendar.MILLISECOND)
+  }
+  val d = calendar.getTime()
+
+  val sp1 = JSpinner(SpinnerDateModel(d, null, null, Calendar.SECOND))
+  val ed1 = sp1.getEditor()
+  if (ed1 is JSpinner.DefaultEditor) {
+    ed1.getTextField().setFormatterFactory(factory)
+  }
+
+  val stepSizeMap: HashMap<Int, Int> = hashMapOf(
+      Calendar.HOUR_OF_DAY to 1,
+      Calendar.MINUTE      to 1,
+      Calendar.SECOND      to 30,
+      Calendar.MILLISECOND to 500)
+
+  val sp2 = JSpinner(object: SpinnerDateModel(d, null, null, Calendar.SECOND) {
+    override fun getPreviousValue(): Any = Calendar.getInstance().apply {
+      time = getDate()
+      val stepSize = stepSizeMap.get(calendarField).let { it } ?: 1
+      add(calendarField, -stepSize)
+    }.getTime()
+    override fun getNextValue(): Any = Calendar.getInstance().apply {
+        setTime(getDate())
+        val stepSize = stepSizeMap.get(calendarField).let { it } ?: 1
+        add(calendarField, stepSize)
+    }.getTime()
+  })
+  val ed2 = sp2.getEditor()
+  if (ed2 is JSpinner.DefaultEditor) {
+    ed2.getTextField().setFormatterFactory(factory)
+  }
+
+  return JPanel().apply {
+    add(sp1)
+    add(sp2)
+  }
+}
+
+fun main(args: Array<String>) {
+  EventQueue.invokeLater {
+    JFrame("kotlin swing").apply {
+      defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+      add(makeUI())
+      size = Dimension(320, 240)
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
+}
+}}
+#twocolumn
+
+* コメント [#comment]
+#comment
+#comment

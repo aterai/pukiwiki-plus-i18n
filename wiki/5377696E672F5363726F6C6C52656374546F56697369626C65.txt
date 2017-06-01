@@ -28,7 +28,6 @@ table.scrollRectToVisible(r);
 
 - `JList`
 -- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JList.html#ensureIndexIsVisible(int) JList#ensureIndexIsVisible(int)]を使って、追加した最終行を可視化(このメソッド内部で`scrollRectToVisible`を使用)
-
 #code{{
 Rectangle cellBounds = list.getCellBounds(index, index);
 if (cellBounds != null) {
@@ -40,7 +39,6 @@ if (cellBounds != null) {
 -- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JTree.html#scrollRowToVisible(int) JTree#scrollRowToVisible(int)]、または[http://docs.oracle.com/javase/jp/6/api/javax/swing/JTree.html#scrollPathToVisible(javax.swing.tree.TreePath) JTree#scrollPathToVisible(TreePath)]で追加した最終行を可視化
 -- `tree.scrollRowToVisible(row)`は `tree.scrollPathToVisible(tree.getPathForRow(row))`と同等
 -- `JTree#scrollPathToVisible(TreePath)`は内部で、`tree.scrollRectToVisible(tree.getPathBounds(path))`を使用
-
 #code{{
 DefaultTreeModel treeModel = (DefaultTreeModel) tree.getModel();
 DefaultMutableTreeNode parent = (DefaultMutableTreeNode) treeModel.getRoot();

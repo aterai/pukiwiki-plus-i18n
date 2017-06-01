@@ -47,10 +47,10 @@ JTable table = new JTable(model) {
 * 解説 [#explanation]
 上記のサンプルでは、`JTable#getToolTipText(MouseEvent)`をオーバーライドして、`JTable`のセルに複数配置したコンポーネントの情報を`ToolTipText`として返すように設定しています。
 
-- `JTable#getCellRect(...)`で、カーソル下のセル描画に使用されるコンポーネントを取得
+- `JTable#prepareRenderer(...)`メソッドで、現在マウスカーソルがあるセルのレンダラー(描画用コンポーネント)を取得
 - 取得したコンポーネントの位置、サイズ、レイアウトを更新
 -- 参考: [https://stackoverflow.com/questions/10854831/tool-tip-in-jpanel-in-jtable-not-working java - Tool tip in JPanel in JTable not working - Stack Overflow]
-- 更新したコンポーネント内から、`SwingUtilities.getDeepestComponentAt()`で、カーソル下のアイコン(`JLabel`)を取得
+- 更新したコンポーネント内から、`SwingUtilities.getDeepestComponentAt()`で、マウスカーソル直下のアイコン(`JLabel`)を取得
 - `ImageIcon#getDescription()`で取得した文字列を`ToolTipText`として返す
 
 * 参考リンク [#reference]

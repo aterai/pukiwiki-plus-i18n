@@ -10,11 +10,13 @@ pubdate: 2017-03-17T20:58:39+09:00
 `Surface Pro 3`のペン先交換、再起動、トラブル対策などに関するメモ書きです。
 
 * トラブル [#Troubleshooting]
-** ペン先の交換 [#LoopsAndTips]
+** ペン先の交換 (解決済み) [#LoopsAndTips]
 - [https://www.microsoftstore.com/store/msjp/ja_JP/cat/categoryID.66247100?icid=CNavAccessories Microsoftストアのアクセサリ]などからは、`Surface Pro 3`付属の「側面に`2`つのボタンがある`Surface`ペン」用のペン先は購入できないので、マイクロソフトの[https://support.microsoft.com/ja-jp/devices デバイスサポート]から修復注文を行う必要がある
 -- 以前は「保証期間内であればペン本体ごとの交換」、「保証切れならペン本体ごと購入」のどちらかしかないという状態だったらしい...
 -- ストアで購入できる`Surface`ペン先キットは、`Surface Pro 4`などの「側面にボタンが`1`つある`Surface`ペン」用
 -- アマゾンなどで購入できる`SurfacePro3`用スタイラス替え芯`BM-SFP3SIN`は、純正品ではなくよく折れるらしい？ また値段も送料込みで修復注文したほうが安い
+
+*** ペン先の修復注文手順 [#k1d5598e]
 + [https://www.microsoft.com/surface/ja-jp/support/touch-mouse-and-search/surface-pen?os=windows-10&=undefined#getnewW10 Surface Pro 3 および Surface 3 用の Microsoft Surface ペン]から、[https://support.microsoft.com/ja-jp/devices デバイスのサポート]に移動して対象デバイスを選択
 -- 「申し訳ございません。弊社側で問題が発生しました。 しばらくしてから、もう一度お試しください。」とエラーになる場合がある...
 + カテゴリの選択で、アクセサリを選択
@@ -27,32 +29,7 @@ pubdate: 2017-03-17T20:58:39+09:00
 
 #img2(https://drive.google.com/uc?export=view&id=1FpwN_s1XnhBXQ9o_xCQFeNX70v0-xMOFIQ)
 
-** Wake On LAN [#kd3b360d]
-- [https://docs.microsoft.com/surface/wake-on-lan-for-surface-devices Wake On LAN for Surface devices (Surface) | Microsoft Docs]
--- via: [https://blogs.technet.microsoft.com/surface/2017/03/01/wake-on-lan-support-for-surface/ Wake on LAN Support for Surface – Surface]
--- `2017`年の`3`月に公開されたイーサネットアダプタのドライバ(`SurfaceWOL.msi`)を適用することで、`WOL`が可能になるらしい(自分の環境では、まだうまく起動できない...)
---- 以前は、[https://answers.microsoft.com/ja-jp/surface/forum/surfpro3-surfusingwin10/surfacepro3%E3%82%92wol%E3%81%A7%E3%81%8D%E3%82%8B/9b42e337-da90-4518-ac61-eaea82bad33e SurfacePro3をWOLできるか？ - マイクロソフト コミュニティ]にあるように無理だと回答されていた
-
-** ペンの電池 [#g8e6cead]
-- 単`6`(`AAAA`)電池
-
-** 塗装はげ [#q68c71f7]
-- 素手で触れる場所の塗装がはげてくる
-
-** 起動しない [#reboot]
-- スリープや休止などから復帰せず、電源を押しても何の反応もない
--- 電源コネクターを本体に接続するとコネクターのランプは点灯する
-- 以下の強制再起動も効果がない
--- [https://www.microsoft.com/surface/ja-jp/support/warranty-service-and-recovery/surface-wont-turn-on?os=windows-10 Surface の電源が入らない | Windows が起動しない | Surface バッテリーのトラブルシューティング]
--- [https://www.microsoft.com/surface/ja-jp/support/warranty-service-and-recovery/surface-wont-turn-on-or-wake-from-sleep?os=windows-10 Surface の電源が入らない | Surface がスリープから復帰しない]
-- 修理ではなく代替品に交換になるためデータが取り出せず、保証切れでその費用も高い
-- 廃棄するつもりで中央からへし折って`SSD`を取り出そうと液晶画面を軽く押して当たりを付けていたら、なぜか起動した...
--- 接触が悪かった？ 今後が不安
-
-** ファンから異音 [#fan]
-- カラカラと異音が発生する場合がある
-
-** 充電できない [#id2a0331]
+** 充電できない (2017-05-17発生、2017-05-19解決) [#charge]
 - バスで実家に帰り、電源を接続して`Surface Pro 3`を起動すると、不安定になりランダムにシャットダウンするようになった
 -- 振動でどこか故障したのかと危惧したが、電源に接続せずバッテリーで起動すれば問題なく安定している
 - しばらくすると電源に接続しても充電できなくなった
@@ -61,13 +38,50 @@ pubdate: 2017-03-17T20:58:39+09:00
 -- コネクターや充電ポート周辺の掃除も効果なし
 - `Surface Pro 3`本体ではなく電源アダプターがおかしい？
 -- コネクターを接続しても`LED`充電ライトが点灯しない
---- ケーブルが断線している？
+--- 外見からは問題なさそうだが、ケーブルが断線している？
 -- `AC`アダプターの`USB`充電ポートで携帯電話などの充電ができなくなっている
 --- ケーブルではなく、`AC`アダプター内部が壊れている？
 --- もしくは、リコールで無償交換になった電源コードが断線している？
 --- 古い電源コードでも同様に無反応なので`AC`アダプター内部がダメな可能性が高い
-- `Amazon`で一番安い`Surface Pro 3`用の`AC`アダプター(`AC` 壁の充電器ってなに？)を購入して接続すると、正常に充電できるようになった
+- `Amazon`で一番安い`Surface Pro 3`互換の`AC`アダプターを購入して接続すると、正常に充電できるようになった
 -- 保証サポート切れなので「ライトが消灯している場合: 電源アダプターを交換することが必要な可能性があります。詳しくは、マイクロソフトにお問い合わせください。」のリンク先で、`3249`円のサポート代を支払うより代替品を購入した方が手っ取り早くて安い
+
+*** ACアダプターケースの分解 [#h6e53912]
+- 壊れた`AC`アダプターのケースを割って基盤のチェックをする予定
+-- ケースを軽く振ってみると何か転がる音がする...
+-- [https://forums.surfacetip.com/topic/cracking-open-surface-pro-3-charger/ Cracking Open Surface Pro 3 Charger]
+-- [http://www.surfaceforums.net/threads/opening-the-charger.15078/ Opening the charger. | Microsoft Surface Forums]
+-- カッターナイフとマイナスドライバーでケースを開けてみたが、振ると音がなる原因は不明
+
+#img2(https://drive.google.com/uc?export=view&id=1F1igR2T3fyX9_nW2uyN13GRRWH3QojCETg)
+
+** 起動できない (2017-01発生、一応回復したが現在様子見) [#reboot]
+- スリープや休止などから復帰せず、電源を押しても何の反応もない
+-- 電源コネクターを本体に接続するとコネクターのランプは点灯する
+- 以下の強制再起動も効果がない
+-- [https://www.microsoft.com/surface/ja-jp/support/warranty-service-and-recovery/surface-wont-turn-on?os=windows-10 Surface の電源が入らない | Windows が起動しない | Surface バッテリーのトラブルシューティング]
+-- [https://www.microsoft.com/surface/ja-jp/support/warranty-service-and-recovery/surface-wont-turn-on-or-wake-from-sleep?os=windows-10 Surface の電源が入らない | Surface がスリープから復帰しない]
+- 一週間ほど放置してから電源に接続してボタンを押しても無反応
+- 修理ではなく代替品に交換になるためデータが取り出せず、保証切れでその費用も高い
+- 廃棄するつもりで中央からへし折って`SSD`を取り出そうと液晶画面を軽く押して当たりを付けていたら、なぜか起動した...
+-- [https://www.ifixit.com/Teardown/Microsoft+Surface+Pro+3+Teardown/26595 Microsoft Surface Pro 3 Teardown - iFixit]
+-- 接触が悪かった？ 今後が不安
+
+** Wake On LAN (未解決) [#WakeOnLAN]
+- [https://docs.microsoft.com/surface/wake-on-lan-for-surface-devices Wake On LAN for Surface devices (Surface) | Microsoft Docs]
+-- via: [https://blogs.technet.microsoft.com/surface/2017/03/01/wake-on-lan-support-for-surface/ Wake on LAN Support for Surface – Surface]
+-- `2017`年の`3`月に公開されたイーサネットアダプタのドライバ(`SurfaceWOL.msi`)を適用することで、`WOL`が可能になるらしい(自分の環境では、まだうまく起動できない...)
+--- 以前は、[https://answers.microsoft.com/ja-jp/surface/forum/surfpro3-surfusingwin10/surfacepro3%E3%82%92wol%E3%81%A7%E3%81%8D%E3%82%8B/9b42e337-da90-4518-ac61-eaea82bad33e SurfacePro3をWOLできるか？ - マイクロソフト コミュニティ]にあるように無理だと回答されていた
+
+** ファンから異音(未解決) [#fan]
+- カラカラと異音が発生する場合がある
+
+* その他 [#ga3799c8]
+** ペンの電池 [#battery]
+- 単`6`(`AAAA`)電池
+
+** 塗装はげ [#baldness]
+- 素手で触れる場所の塗装がはげてくる
 
 * コメント [#comment]
 #comment

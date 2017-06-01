@@ -15,16 +15,16 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTP41PdCsI/AAAAAAAAAes/cx
 
 * サンプルコード [#sourcecode]
 #code(link){{
-//1.6以上で有効
+// JDK 1.6.0 以上で有効
 frame.setMinimumSize(new Dimension(320, 150));
 }}
 
 * 解説 [#explanation]
 上記のサンプルでは、`JFrame`などを縮小する際の最小サイズを設定しています。
 
-`JDK 1.6`以上の場合、`JFrame#setMinimumSize`メソッドを使用することで、最小サイズを指定することができます。
+`JDK 1.6.0`以上の場合、`JFrame#setMinimumSize`メソッドを使用することで、最小サイズを指定することができます。
 
-`JDK 1.5`で、`JFrame#setMinimumSize`メソッドを使う場合は、`JFrame.setDefaultLookAndFeelDecorated(true)`、かつウィンドウのリサイズに応じてレイアウトを再評価するようにしておく必要があるようです。
+`JDK 1.5.0`で、`JFrame#setMinimumSize`メソッドを使う場合は、`JFrame.setDefaultLookAndFeelDecorated(true)`、かつウィンドウのリサイズに応じてレイアウトを再評価するようにしておく必要があるようです。
 
 #code{{
 JFrame.setDefaultLookAndFeelDecorated(true);
