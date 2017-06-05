@@ -75,10 +75,10 @@ import javax.swing.table.*
 fun makeUI(): JComponent {
   val cn = arrayOf("String", "Integer", "Boolean")
   val data = arrayOf(
-      arrayOf("aaa", 12, true), arrayOf("bbb", 5, false),
-      arrayOf("CCC", 92, true), arrayOf("DDD", 0, false))
-  val m = object : DefaultTableModel(data, cn) {
-    override fun getColumnClass(col : Int) : Class<Any> {
+    arrayOf("aaa", 12, true), arrayOf("bbb", 5, false),
+    arrayOf("CCC", 92, true), arrayOf("DDD", 0, false))
+  val m = object: DefaultTableModel(data, cn) {
+    override fun getColumnClass(col: Int): Class<Any> {
       return getValueAt(0, col).javaClass
     }
   }
@@ -86,11 +86,10 @@ fun makeUI(): JComponent {
     autoCreateRowSorter = true
   }
   return JPanel(BorderLayout(5, 5)).apply {
-    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5))
     add(JScrollPane(table))
   }
 }
-fun main(args : Array<String>) {
+fun main(args: Array<String>) {
   EventQueue.invokeLater {
     JFrame("kotlin swing").apply {
       defaultCloseOperation = JFrame.EXIT_ON_CLOSE
@@ -178,7 +177,7 @@ fun makeUI(): JComponent {
     add(p, BorderLayout.SOUTH)
   }
 }
-fun expandAll(tree : JTree) {
+fun expandAll(tree: JTree) {
   var row = 0
   while (row < tree.getRowCount()) {
     tree.expandRow(row)
@@ -192,7 +191,7 @@ fun collapseAll(tree : JTree) {
     row--
   }
 }
-fun main(args : Array<String>) {
+fun main(args: Array<String>) {
   EventQueue.invokeLater {
     JFrame("kotlin swing").apply {
       defaultCloseOperation = JFrame.EXIT_ON_CLOSE
@@ -271,7 +270,7 @@ fun makeUI(): JComponent {
   }
 }
 
-fun main(args : Array<String>) {
+fun main(args: Array<String>) {
   EventQueue.invokeLater {
     JFrame("kotlin swing").apply {
       defaultCloseOperation = JFrame.EXIT_ON_CLOSE

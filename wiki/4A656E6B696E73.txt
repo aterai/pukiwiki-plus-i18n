@@ -1,0 +1,151 @@
+---
+keywords: [Jenkins, Java]
+description: Jenkinsに関するメモ
+author: aterai
+pubdate: 2017-06-02
+---
+#contents
+
+* 概要 [#summary]
+`Jenkins`に関するメモを記述しています。
+
+* トラブル [#wf632491]
+** PipelineでStackOverflowError [#acd15478]
+- 06/01に`Pipeline`プラグイン(もしくは`GitHub`プラグイン)を最新に更新すると、`StackOverflowError`が発生するようになった？
+- 調査中
+- 旧プロジェクトは問題なく実行できる
+
+#code{{
+Started by user TERAI Atsuhiro
+ > git rev-parse --is-inside-work-tree # timeout=10
+Setting origin to https://github.com/aterai/java-swing-tips
+ > git config remote.origin.url https://github.com/aterai/java-swing-tips # timeout=10
+Fetching origin...
+Fetching upstream changes from origin
+ > git --version # timeout=10
+ > git fetch --tags --progress origin +refs/heads/*:refs/remotes/origin/*
+Seen branch in repository origin/master
+Seen 1 remote branch
+Obtained Jenkinsfile from ...
+[Pipeline] End of Pipeline
+java.lang.StackOverflowError
+	at java.io.UnixFileSystem.getBooleanAttributes0(Native Method)
+	at java.io.UnixFileSystem.getBooleanAttributes(UnixFileSystem.java:242)
+	at java.io.File.exists(File.java:819)
+	at sun.misc.URLClassPath$FileLoader.getResource(URLClassPath.java:1282)
+	at sun.misc.URLClassPath$FileLoader.findResource(URLClassPath.java:1249)
+	at sun.misc.URLClassPath.findResource(URLClassPath.java:215)
+	at java.net.URLClassLoader$2.run(URLClassLoader.java:569)
+	at java.net.URLClassLoader$2.run(URLClassLoader.java:567)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findResource(URLClassLoader.java:566)
+	at org.eclipse.jetty.webapp.WebAppClassLoader.loadClass(WebAppClassLoader.java:546)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at com.sun.beans.finder.ClassFinder.findClass(ClassFinder.java:103)
+	at com.sun.beans.finder.InstanceFinder.instantiate(InstanceFinder.java:93)
+	at com.sun.beans.finder.InstanceFinder.find(InstanceFinder.java:66)
+	at java.beans.Introspector.findExplicitBeanInfo(Introspector.java:448)
+	at java.beans.Introspector.<init>(Introspector.java:398)
+	at java.beans.Introspector.getBeanInfo(Introspector.java:173)
+	at groovy.lang.MetaClassImpl$15.run(MetaClassImpl.java:3313)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at groovy.lang.MetaClassImpl.addProperties(MetaClassImpl.java:3311)
+	at groovy.lang.MetaClassImpl.initialize(MetaClassImpl.java:3288)
+	at org.codehaus.groovy.reflection.ClassInfo.getMetaClassUnderLock(ClassInfo.java:260)
+	at org.codehaus.groovy.reflection.ClassInfo.getMetaClass(ClassInfo.java:302)
+	at org.codehaus.groovy.reflection.ClassInfo.getMetaClass(ClassInfo.java:312)
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.getMetaClass(MetaClassRegistryImpl.java:265)
+	at org.codehaus.groovy.runtime.InvokerHelper.getMetaClass(InvokerHelper.java:879)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.createPojoSite(CallSiteArray.java:125)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.createCallSite(CallSiteArray.java:166)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:48)
+	at org.codehaus.groovy.runtime.callsite.PojoMetaClassSite.call(PojoMetaClassSite.java:52)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)
+	at com.cloudbees.groovy.cps.CpsTransformer.visit(CpsTransformer.groovy:279)
+...
+}}
+
+** インストール後ジョブがなければ再起動が無効 [#ce37a5da]
+- 最近の`Weekly`版(`2.5x`頃？)は、「インストール完了後、ジョブがなければJenkinsを再起動する」でジョブが実行中でも再起動されてしまい、ビルドが失敗する？
+- 「ビルドを並列実行」を「しない」にしているビルドを複数を実行すると、後から実行したビルドがビルドキューに入らず、並列実行されてしまう
+-- 「システムの設定」で「同時ビルド数」を`1`にすれば、並列実行されなくなる
+-- [https://jenkins.io/security/advisory/2017-04-26/ Jenkins Security Advisory 2017-04-26]
+--- SECURITY-412: Restart Jenkins immediately, after all builds are finished, or after all plugin installations and builds are finished
+-- ジョブがエラーにはならなくなったが、実行中のジョブの終了は待たずにキャンセル扱いになる？
+
+** 1.597でフォルダ構成が変更 [#b05af004]
+- `Jenkins`を`1.597`にアップグレードしたら表示がおかしくなる
+-- `1.597`で、`JENKINS_HOME`以下のフォルダ構成が変更になった
+-- `Exception`をみると、`Disk usage plugin`がフォルダ文字列をパースできずにエラーを出している
+-- [https://groups.google.com/forum/#!msg/jenkinsci-users/Ft-a2EYiGG0/5TofhX2pfO8J Important: Upgrading to Jenkins 1.597]
+-- %%修正はまだスナップショットなので、当面`Disk usage plugin`を削除しておくことで対応%%
+
+** Jenkinsの自動更新に失敗 [#w5f8768e]
+- `Jenkins`の自動更新が失敗する
+-- `Windows`サービス化している場合に失敗する？
+-- [https://github.com/jenkinsci/jenkins/pull/1238 FIX JENKINS-22685 Jenkins cannot restart Windows service by gmjck ・ Pull Request #1238 ・ jenkinsci/jenkins]
+--- 修正された https://issues.jenkins-ci.org/browse/JENKINS-22685
+
+** リポジトリブラウザの設定が保存されない [#s05adb81]
+- %%[https://issues.jenkins-ci.org/browse/JENKINS-22064 [JENKINS-22064] Git Repository Browser URL not saved anymore - Jenkins JIRA]で、URLが正常に保存されない%%
+-- [https://github.com/jenkinsci/git-plugin/commit/b2a731e62272c93a60f7f45d9d3c5d3b1e57fa11 Merge pull request ＃211 from MarkEWaite/master-add-browser-url-round-tri... jenkinsci/git-plugin]で修正された
+
+* Jenkinsの設定 [#d2460c6c]
+- ホームディレクトリ(`Windows`環境)
+-- デフォルトの`~/.jenkins`に実行ファイルやビルド結果を一緒に保存すると、バックアップなどが面倒
+-- `C:\Program Files (x86)\Jenkins\`に`jenkins.exe`や`jenkins.war`をインストールすると`jenkins.xml`などが編集しづらいので、`C:\Jenkins_JAR`以下にインストールする
+-- `C:\Jenkins_JAR\jenkins.xml`を以下のように変更し、プラグインやビルドを`C:\jenkins`に変更する
+--- `<env name="JENKINS_HOME" value="C:\jenkins"/>`
+-- システム環境変数`JAVA_HOME`で指定したバージョンの`Java`を`Jenkins`が使用するように`C:\Jenkins_JAR\jenkins.xml`を変更
+--- `<executable>%JAVA_HOME%\bin\java</executable>`
+- 高度な設定(`Jenkins`の管理、システムの設定にあるボタンをクリック)
+-- ワークスペース・ルートディレクトリ: `C:/Edian/${ITEM_FULLNAME}`
+-- ビルド・ルートディレクトリ: `${ITEM_ROOTDIR}/builds`
+
+* Jenkinsfile [#z1d42b22]
+- パイプラインで`ant`を呼び出す方法がよく分からないので、`~/.sdkman/candidates/ant/current/bin/ant`を直接呼んでいる
+-- [https://issues.jenkins-ci.org/browse/JENKINS-42382 JENKINS-42382 AntInstallation not setting PATH+ANT - Jenkins JIRA]で、修正された？
+
+#code{{
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/aterai/java-swing-tips.git'
+            }
+        }
+        stage('PMD') {
+            steps {
+                sh "~/.sdkman/candidates/ant/current/bin/ant -file all.xml pmd"
+                step([$class: 'PmdPublisher', pattern: '**/pmd.xml'])
+            }
+        }
+        stage('CheckStyle') {
+            steps {
+                sh "~/.sdkman/candidates/ant/current/bin/ant -file all.xml checkstyle"
+                step([$class: 'CheckStylePublisher', pattern: '**/checkstyle-result.xml'])
+            }
+        }
+    }
+}
+}}
+
+* プラグイン [#befd1883]
+** GIT plugin [#f19e8447]
+- `Git cliant plugin`も一緒にインストールされる
+-- ログのエンコーディングが変更できない
+--- %%ログの文字コードを`Shift_JIS`にカスタマイズする%%
+--- `2.3.5`付近で修正された？ようなので、変更は不要になった
+
+** Warnings Plug-in [#a89b3076]
+- コンソールログから警告を集計してグラフ表示
+-- 同じくログのエンコーディングが変更できない
+--- %%ログの文字コードを`Shift_JIS`にカスタマイズする%%
+--- [https://issues.jenkins-ci.org/browse/JENKINS-24611 #JENKINS-24611 Warnings plugin, missing AntJavaParser in the parser selection list - Jenkins JIRA]で修正された
+
+* コメント [#comment]
+#comment
+#comment

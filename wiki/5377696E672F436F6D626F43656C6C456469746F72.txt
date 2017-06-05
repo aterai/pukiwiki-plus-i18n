@@ -26,19 +26,16 @@ col.setCellEditor(new DefaultCellEditor(cb));
 * 解説 [#explanation]
 上記のサンプルでは、`1`列目のセルエディタとしてコンボボックスを使う`DefaultCellEditor`を登録しています。
 
-----
-コンボボックスの余白を`0`にしておくと、セル内にきれいにぴったり収まります(参考: [http://www.jroller.com/page/santhosh?entry=tweaking_jtable_editing Santhosh Kumar's Weblog : Santhosh Kumar's Weblog])。
-
-- 以下は余白を`0`にしていない場合
-
+- 注
+-- コンボボックスの余白を`0`に設定すれば、セル内にきれいに収納される
+--- 参考: [http://www.jroller.com/page/santhosh?entry=tweaking_jtable_editing Santhosh Kumar's Weblog : Santhosh Kumar's Weblog]
+-- 以下は余白を`0`にしていない場合
 #ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJ1Ykl--I/AAAAAAAAAVA/ZRLgScHCF3s/s800/ComboCellEditor1.png)
-
-----
-セルの表示にも`JComboBox`を使用する場合は、[[JTableのCellRendererにJComboBoxを設定>Swing/ComboCellRenderer]]を参考に`JComboBox`を継承するセルレンダラーを使用してみてください。
 
 * 参考リンク [#reference]
 - [http://www.jroller.com/page/santhosh?entry=tweaking_jtable_editing Santhosh Kumar's Weblog : Santhosh Kumar's Weblog]
 - [[JTableのCellRendererにJComboBoxを設定>Swing/ComboCellRenderer]]
+-- セルの表示にも`JComboBox`を使用する場合は、`JComboBox`を継承するセルレンダラーを使用する
 - [[JComboBoxセルエディタのドロップダウンリストを編集開始直後は表示しないよう設定する>Swing/CellEditorTogglePopup]]
 
 * コメント [#comment]
