@@ -1,0 +1,69 @@
+---
+category: swing
+folder: UpdateComboBoxItem
+title: JComboBoxのドロップダウンリスト中にあるアイテムの状態を更新する
+tags: [JComboBox, JList, JCheckBox, BasicComboPopup, DefaultComboBoxModel]
+author: aterai
+pubdate: 2017-06-12T17:11:53+09:00
+description: JComboBoxのドロップダウンリスト中に設定されたアイテムの状態と描画を更新します。
+image: https://drive.google.com/uc?export=view&id=1R3XuZTHSo7KbYggs0QI2iKVrHHBawo6f2A
+---
+* 概要 [#summary]
+`JComboBox`のドロップダウンリスト中に設定されたアイテムの状態と描画を更新します。
+
+#download(https://drive.google.com/uc?export=view&id=1R3XuZTHSo7KbYggs0QI2iKVrHHBawo6f2A)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class CheckableComboBoxModel<E> extends DefaultComboBoxModel<E> {
+  protected CheckableComboBoxModel(E[] items) {
+    super(items);
+  }
+  public void fireContentsChanged(int index) {
+    super.fireContentsChanged(this, index, index);
+  }
+}
+
+class CheckedComboBox4<E extends CheckableItem> extends CheckedComboBox<E> {
+  protected CheckedComboBox4(ComboBoxModel<E> aModel) {
+    super(aModel);
+  }
+  @Override protected void updateItem(int index) {
+    if (isPopupVisible()) {
+      E item = getItemAt(index);
+      item.selected ^= true;
+      ComboBoxModel m = getModel();
+      if (m instanceof CheckableComboBoxModel) {
+        ((CheckableComboBoxModel) m).fireContentsChanged(index);
+      }
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+`JComboBox`の`BasicComboPopup`に表示されるリストは`JList`を使用しているため、マウスでクリックされたアイテムの状態を更新(上記のサンプルでは`JCheckBox`の選択状態の切替)しても、セルレンダラーでの描画は更新されません(同じアイテムがクリックされたときは再描画しないため)。このサンプルでは、`JComboBox`のアイテムの更新を描画に反映させるために以下のような方法をテストしています。
+
++ `setSelectedIndex(-1/idx)`
+-- `JComboBox#setSelectedIndex(-1)`メソッドを使用して選択解除後、クリックされたアイテムを再選択することで描画を更新
+-- 参考: [[JComboBoxのアイテムとして表示したJCheckBoxを複数選択する>Swing/CheckedComboBox]]
++ `contentsChanged(...)`
+-- `JComboBox#contentsChanged(ListDataEvent)`メソッドを使用して、クリックされたアイテムのみ更新しようとしているが、意図した動作にならない
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComboBox.html#contentsChanged-javax.swing.event.ListDataEvent- JComboBox#contentsChanged(ListDataEvent) (Java Platform SE 8)]
++ `repaint()`
+-- アイテム更新後、`JComboBox`と`BasicComboPopup`から取得した`JList`の両方の`repaint()`メソッドを実行して、全体を再描画
+-- 参考: [[JComboBoxにAnimated GIFを表示する>Swing/AnimatedIconInComboBox]]
+--- `list.repaint(list.getCellBounds(index, index));`を使用して再描画範囲を限定することも可能
++ `(remove/insert)ItemAt(...)`
+-- `JComboBox#removeItemAt(...)`でアイテムを削除、`JComboBox#insertItemAt(...)`で状態を更新したアイテムを元の場所に挿入、`JComboBox#setSelectedIndex(...)`で挿入されたアイテムを再選択することで描画を更新
++ `fireContentsChanged(...)`
+-- `DefaultComboBoxModel#fireContentsChanged(...)`メソッドは`protected`で直接呼び出せないため、これを呼び出し可能するラッパー`ComboBoxModel`を作成して`JComboBox`に設定し、クリックされたアイテムのみ描画を更新
+
+* 参考リンク [#reference]
+- [[JComboBoxのアイテムとして表示したJCheckBoxを複数選択する>Swing/CheckedComboBox]]
+- [[JListのセルにJCheckBoxを使用する>Swing/CheckBoxCellList]]
+-- こちらは`JList#processMouseEvent(...)`をオーバーライドして対応
+
+* コメント [#comment]
+#comment
+#comment

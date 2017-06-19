@@ -92,7 +92,7 @@ class ModalInternalFrameAction3 extends AbstractAction {
 --- KBD{Alt+B}でボタンを押すことが出来てしまう
 --- `Mnemonic`を設定したコンポーネントは`setEnabled(false)`とする必要がある
 -- `Mnemonic`を`JMenu`に設定していると`setEnabled(false)`としても、KBD{Alt}キーに反応する
---- これは`WindowsLookAndFeel`だけ？ 追記: [https://bugs.openjdk.java.net/browse/JDK-6921687 #JDK-6921687 Mnemonic disappears after repeated attempts to open menu items using mnemonics - Java Bug System]で修正されそう？
+--- これは`WindowsLookAndFeel`だけ？ 追記: [https://bugs.openjdk.java.net/browse/JDK-6921687 JDK-6921687 Mnemonic disappears after repeated attempts to open menu items using mnemonics - Java Bug System]で修正されそう？
 --- この`InternalMessageDialog`を表示している間は、`JMenuBar`をダミーと入れ替えて無効化
 -- この`InternalMessageDialog`を閉じない限り、アプリケーションをKBD{Alt+F4}などで閉じることは出来ない
 -- `InternalMessageDialog`のシステムメニュー(左上のアイコンをクリックすると表示される)がマウスで操作不可能
@@ -218,6 +218,6 @@ JOptionPane.showInternalMessageDialog(
 KeyboardFocusManager.setCurrentKeyboardFocusManager(manager);
 }}
 
-- メモ: [https://bugs.openjdk.java.net/browse/JDK-6921687 #JDK-6921687 Mnemonic disappears after repeated attempts to open menu items using mnemonics - Java Bug System] -- &user(aterai); &new{2015-03-24 (火) 21:23:15};
+- メモ: [https://bugs.openjdk.java.net/browse/JDK-6921687 JDK-6921687 Mnemonic disappears after repeated attempts to open menu items using mnemonics - Java Bug System] -- &user(aterai); &new{2015-03-24 (火) 21:23:15};
 
 #comment

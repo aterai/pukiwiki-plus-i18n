@@ -38,7 +38,8 @@ javascript:(function(){var l=location,m=l.href.match('^(https?://)(.+)((?:api|te
 - %%日本語版は dlc.sun.com.edgesuite.net/jdk/jdk-api-localizations/jdk-api-ja/builds/latest/html/ja/ を見るように変更%%
 
 * メモ [#b2b13194]
-- `URL`が`Java`の`API doc`風？なら、`Java 8`英語版(`Oracle`)に移動
+- 検索結果などに`Java 6`などの古いドキュメントが上位表示される場合が多いので、`URL`が`Java`の`API doc`風？なら、`Java 8`英語版(`Oracle`)に移動するブックマークレット
+
 #gist(9755681)
 // javascript:(function(){var l=location,m=l.href.match("^(https?://)(.+)(api[^+]+|technotes[^+]+)");if(m)l.href=m[1]+'docs.oracle.com/javase/8/docs/'+decodeURIComponent(m[3]).replace(/\+.*$/,'').replace(/\[\]/g,':A').replace(/, |\(|\)/g,'-');}());
 

@@ -68,10 +68,10 @@ class MyTreeCellRenderer2 extends DefaultTreeCellRenderer {
 - 左
 -- `Default`
 - 中
--- `DefaultTreeCellRenderer#paint`メソッドをオーバーライドして、余白を追加
+-- `DefaultTreeCellRenderer#paint(...)`メソッドをオーバーライドして、余白を追加
 -- 注: `WindowsLookAndFeel`(フォーカスのボーダーがアイコンの周りには描画されない)で、`getComponentOrientation().isLeftToRight()==true`の場合のみ対応
 - 右
--- `DefaultTreeCellRenderer#getTreeCellRendererComponent`メソッドをオーバーライドして、アイコンと文字列を別の`JLabel`に分解し、文字列にのみ`BorderFactory.createEmptyBorder(0,0,0,2)`の余白を追加
+-- `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`メソッドをオーバーライドして、アイコンと文字列を別の`JLabel`に分解し、文字列にのみ`BorderFactory.createEmptyBorder(0, 0, 0, 2)`で余白を追加
 -- 注: `WindowsLookAndFeel`(フォーカスのボーダーがアイコンの周りには描画されない)で、`getComponentOrientation().isLeftToRight()==true`の場合のみ対応
 
 //* 参考リンク [#reference]

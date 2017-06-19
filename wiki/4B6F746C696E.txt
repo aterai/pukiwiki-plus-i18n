@@ -1,13 +1,13 @@
 ---
 keywords: [Kotlin, Swing, Java]
-description: KotlinでのSwingの使用方法に関するメモなど
+description: KotlinでSwingコンポーネントを使用するサンプルと、Javaからの変換に関するメモなど
 author: aterai
 pubdate: 2017-05-31
 ---
 #contents
 
 * 概要 [#summary]
-`Kotlin`で`Swing`を使用する場合のサンプルです。
+`Kotlin`で`Swing`コンポーネントを使用するサンプルと、Javaからの変換に関するメモです。
 
 * 実行環境 [#s42e991c]
 - [http://sdkman.io/ SDKMAN! the Software Development Kit Manager]で`kotlin`をインストール可能
@@ -21,11 +21,18 @@ pubdate: 2017-05-31
 * Swing + Kotlin サンプル [#swing]
 ** JTable [#JTable]
 - メモ
--- `Class<?>`は`Class<Any>`か`Class<Object>`
--- `Object#getClass()`は`javaClass`
+-- `Class<?>`は%%`Class<Any>`か`Class<Object>`？%%、`Class<*>`か`Class<out Any>`に変換した方が良いかもしれない
+--- `IntelliJ`の自動変換では`Class<*>`
+-- `Object#getClass()`は`o.javaClass`
+--- [https://kotlinlang.org/docs/reference/java-interop.html#getclass getClass() - Calling Java from Kotlin - Kotlin Programming Language]
+--- `Integer::class.java`は`Class<Integer>`になるので、以下のサンプルで使用すると、`error: type inference failed. Expected type mismatch: inferred type is Class<Integer> but Class<Any> was expected`とエラーになる
+--- [https://kotlinlang.org/docs/reference/generics.html#star-projections Star-projections - Generics - Kotlin Programming Language]
 -- オーバーライドの方法、`@Override`は`override`
--- 二次元配列
+-- 配列、二次元配列
+--- [https://kotlinlang.org/docs/reference/java-interop.html#java-arrays Java Arrays - Calling Java from Kotlin - Kotlin Programming Language]
+--- `IntelliJ`の自動変換では`arrayOf(arrayOf<Any>("aaa", 12, true), ...`
 -- `apply`
+-- `switch`は`when`
 
 #twocolumn
 `Java`
@@ -82,6 +89,16 @@ fun makeUI(): JComponent {
       return getValueAt(0, col).javaClass
     }
   }
+  // val m = object: DefaultTableModel(data, cn) {
+  //   override fun getColumnClass(col: Int): Class<*> {
+  //     return when (col) {
+  //       0 -> String::class.java
+  //       1 -> Integer::class.java
+  //       2 -> Boolean::class.java
+  //       else -> Object::class.java
+  //     }
+  //   }
+  // }
   val table = JTable(m).apply {
     autoCreateRowSorter = true
   }
@@ -207,7 +224,8 @@ fun main(args: Array<String>) {
 
 ** JCheckBox [#JCheckBox]
 - `Smart Cast`、キャストで`if`のネストが深くなるのを避けたい
--- 以下のような場合は、`apply`で回避できる
+-- `as`を使用する: `val b = e.getSource() as AbstractButton`
+-- 以下のような場合は、`apply`でも回避可能
 
 #twocolumn
 `Java`
@@ -249,12 +267,6 @@ import javax.swing.*
 
 fun makeUI(): JComponent {
   val cb = JCheckBox("Always On Top", true).apply {
-    addActionListener {
-      val w = getTopLevelAncestor()
-      if (w is Window) {
-          w.setAlwaysOnTop(isSelected())
-      }
-    }
 //     addActionListener { e ->
 //       val c = e.getSource()
 //       if (c is AbstractButton) {
@@ -263,7 +275,19 @@ fun makeUI(): JComponent {
 //           w.setAlwaysOnTop(c.isSelected())
 //         }
 //       }
+    addActionListener { e ->
+      val b = e.getSource() as AbstractButton
+      val w = b.getTopLevelAncestor()
+      if (w is Window) {
+        w.setAlwaysOnTop(b.isSelected())
+      }
     }
+//     addActionListener {
+//       val w = getTopLevelAncestor()
+//       if (w is Window) {
+//           w.setAlwaysOnTop(isSelected())
+//       }
+//     }
   }
   return JPanel(BorderLayout()).apply {
     add(cb, BorderLayout.NORTH)
@@ -287,6 +311,7 @@ fun main(args: Array<String>) {
 ** インターフェイス、匿名内部クラス、throws [#tb58a862]
 - `addTreeWillExpandListener(object: TreeWillExpandListener() { ...`と記述すると`error: this class does not have a constructor`とエラーになる
 - インターフェイスから匿名内部クラスのインスタンスを生成する場合は`()`は不要で、`addTreeWillExpandListener(object: TreeWillExpandListener { ...`と記述する
+-- [https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions SAM Conversions - Calling Java from Kotlin - Kotlin Programming Language]
 
 #twocolumn
 `Java`
@@ -318,13 +343,11 @@ public class ThrowsExample {
       tree.expandRow(row++);
     }
     tree.addTreeWillExpandListener(new TreeWillExpandListener() {
-      @Override
-      public void treeWillExpand(TreeExpansionEvent e)
+      @Override public void treeWillExpand(TreeExpansionEvent e)
           throws ExpandVetoException {
         //throw new ExpandVetoException(e, "Tree expansion cancelled");
       }
-      @Override
-      public void treeWillCollapse(TreeExpansionEvent e)
+      @Override public void treeWillCollapse(TreeExpansionEvent e)
           throws ExpandVetoException {
         throw new ExpandVetoException(e, "Tree collapse cancelled");
       }
@@ -344,8 +367,7 @@ public class ThrowsExample {
 }
 
 class EmptyIcon implements Icon {
-  @Override
-  public void paintIcon(Component c, Graphics g, int x, int y) {
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
     /* Empty icon */
   }
   @Override public int getIconWidth() {
@@ -374,11 +396,11 @@ fun makeUI(): JComponent {
     setEditable(true)
     border = BorderFactory.createEmptyBorder(4, 4, 4, 4)
     addTreeWillExpandListener(object: TreeWillExpandListener {
-      //@Throws(ExpandVetoException::class)
+      @Throws(ExpandVetoException::class)
       override fun treeWillExpand(e: TreeExpansionEvent) {
         //throw ExpandVetoException(e, "Tree expansion cancelled")
       }
-      //@Throws(ExpandVetoException::class)
+      @Throws(ExpandVetoException::class)
       override fun treeWillCollapse(e: TreeExpansionEvent) {
         throw ExpandVetoException(e, "Tree collapse cancelled")
       }

@@ -1,19 +1,20 @@
 ---
 keywords: [Jenkins, Java]
-description: Jenkinsに関するメモ
+description: Jenkinsの設定、トラブルに関するメモなど
 author: aterai
 pubdate: 2017-06-02
 ---
 #contents
 
 * 概要 [#summary]
-`Jenkins`に関するメモを記述しています。
+`Jenkins`の設定、トラブルに関するメモなどを記述しています。
 
 * トラブル [#wf632491]
 ** PipelineでStackOverflowError [#acd15478]
-- 06/01に`Pipeline`プラグイン(もしくは`GitHub`プラグイン)を最新に更新すると、`StackOverflowError`が発生するようになった？
-- 調査中
-- 旧プロジェクトは問題なく実行できる
+- `Jenkins 2.63`で`Pipeline`プラグインを最新に更新すると`StackOverflowError`が発生する
+-- 旧プロジェクトは問題なく実行できる
+-- `StackOverflowError`が発生している環境は`CentOS release 6.8 (Final)` + `JDK 1.8.0_131 32bit`
+-- `Jenkins 2.64` + [https://issues.jenkins-ci.org/browse/JENKINS-44578 JENKINS-44578 StackOverflowError in CpsTransformer running Declarative on JVMs with small -Xss in workflow-cps 2.33 - Jenkins JIRA]で修正された
 
 #code{{
 Started by user TERAI Atsuhiro
@@ -68,7 +69,7 @@ java.lang.StackOverflowError
 }}
 
 ** インストール後ジョブがなければ再起動が無効 [#ce37a5da]
-- 最近の`Weekly`版(`2.5x`頃？)は、「インストール完了後、ジョブがなければJenkinsを再起動する」でジョブが実行中でも再起動されてしまい、ビルドが失敗する？
+- 最近の`Weekly`版(`2.5x`頃？)は、「インストール完了後、ジョブがなければ`Jenkins`を再起動する」でジョブが実行中でも再起動されてしまい、ビルドが失敗する？
 - 「ビルドを並列実行」を「しない」にしているビルドを複数を実行すると、後から実行したビルドがビルドキューに入らず、並列実行されてしまう
 -- 「システムの設定」で「同時ビルド数」を`1`にすれば、並列実行されなくなる
 -- [https://jenkins.io/security/advisory/2017-04-26/ Jenkins Security Advisory 2017-04-26]
