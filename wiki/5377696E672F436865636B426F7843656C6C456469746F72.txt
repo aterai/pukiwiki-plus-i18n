@@ -76,7 +76,7 @@ class CheckBoxPanelEditor extends AbstractCellEditor implements TableCellEditor 
 上記のサンプルでは、`JTable`の`Boolean`に対応する`TableCellEditor`として、中央に`JCheckBox`を配置した`JPanel`を適用しています。
 
 - デフォルトの`JTable.BooleanEditor`
--- セル全体が`JCheckBox`になるため、チェックアイコン以外の余白をクリックしても選択状態が変化する
+-- セル全体が`JCheckBox`になるため、チェックアイコン以外の余白をマウスでクリックした場合でも選択状態が変化する
 - `CheckBoxPanelEditor`
 -- `JPanel`の中央に`JCheckBox`を配置して作成
 -- 余白となる`JPanel`部分をクリックしても、`JCheckBox`の状態は変化しない
@@ -84,8 +84,7 @@ class CheckBoxPanelEditor extends AbstractCellEditor implements TableCellEditor 
 
 ----
 - 以下のように`getTableCellEditorComponent(...)`内で`JPanel`の背景色をセルの選択色にする場合、KBD{Ctrl}キーを押しながら`JCheckBox`をクリックするとセルの選択状態にズレが発生する
--- このサンプルでは、`JCheckBox`にマウスリスナーを追加することで回避している
-
+-- このサンプルでは、セルエディタの`JCheckBox`に以下のようなマウスリスナーを追加することで回避
 #code{{
 class CheckBoxPanelEditor extends AbstractCellEditor implements TableCellEditor {
   private final JPanel p = new JPanel(new GridBagLayout());
