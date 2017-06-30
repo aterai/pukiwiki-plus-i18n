@@ -21,12 +21,12 @@ monitor.setMillisToPopup((int) millisToPopup.getValue());
 }}
 
 * 解説 [#explanation]
-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/ProgressMonitor.html#getMillisToDecideToPopup() `ProgressMonitor#setMillisToDecideToPopup(int)`]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ProgressMonitor.html#getMillisToDecideToPopup-- ProgressMonitor#setMillisToDecideToPopup(int) (Java Platform SE 8)]
 -- `ProgressMonitor`のダイアログを表示するかどうかを決めるまでの待ち時間を設定
 -- デフォルト: `500`ミリ秒
 -- この待ち時間が経過するまで`ProgressMonitor`のダイアログは表示されない
---- `ProgressMonitor`で使用する`JProgressBar`が`null`でない場合(`ProgressMonitor`を使い回しして`ProgressMonitor#close()`されていないなど)は、無視してダイアログが表示される場合がある
-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/ProgressMonitor.html#getMillisToPopup() `ProgressMonitor#setMillisToPopup(int)`]
+--- `ProgressMonitor`で使用する`JProgressBar`が`null`でない(`ProgressMonitor`を使い回しして`ProgressMonitor#close()`されていないなど)場合は、この待ち時間を無視してダイアログが表示されることがある
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ProgressMonitor.html#getMillisToPopup-- ProgressMonitor#setMillisToPopup(int) (Java Platform SE 8)]
 -- `ProgressMonitor`のダイアログが表示されるまでの待ち時間を設定
 -- デフォルト: `2000`ミリ秒
 -- 予想残り時間がこの時間より短い場合、ダイアログは表示されない

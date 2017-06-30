@@ -1,0 +1,53 @@
+---
+category: swing
+folder: NimbusTreeLinesStyle
+title: NimbusLookAndFeelで、JTreeのノード接続線のスタイルを変更する
+tags: [JTree, NimbusLookAndFeel, LookAndFeel]
+author: aterai
+pubdate: 2017-06-26T14:46:25+09:00
+description: NimbusLookAndFeelでのJTreeのノード間の接続線を表示し、そのスタイルを点線に変更します。
+image: https://drive.google.com/uc?export=view&id=1u-SlKhxho10TFLrR_OwXc4RJ39aWzk4hkg
+---
+* 概要 [#summary]
+`NimbusLookAndFeel`での`JTree`のノード間の接続線を表示し、そのスタイルを点線に変更します。
+
+#download(https://drive.google.com/uc?export=view&id=1u-SlKhxho10TFLrR_OwXc4RJ39aWzk4hkg)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// UIManager.put("Tree.drawVerticalLines", true);
+UIManager.getLookAndFeelDefaults().put("Tree.drawVerticalLines", true);
+UIManager.put("Tree.drawHorizontalLines", true);
+UIManager.put("Tree.linesStyle", "dashed");
+// or
+JTree tree = new JTree();
+UIDefaults d = new UIDefaults();
+d.put("Tree.drawVerticalLines", Boolean.TRUE);
+d.put("Tree.drawHorizontalLines", Boolean.TRUE);
+d.put("Tree.linesStyle", "dashed");
+tree.putClientProperty("Nimbus.Overrides", d);
+}}
+
+* 解説 [#explanation]
+- 左: `Default`
+-- `NimbusLookAndFeel`でのデフォルトは、`JTree`のノード接続線は水平、垂直ともに非表示
+- 右: `linesStyle: dashed`
+-- `UIDefaults`を使用して、`Tree.drawVerticalLines`と`Tree.drawHorizontalLines`を`Boolean.TRUE`、`Tree.linesStyle`を`dashed`に設定
+--- スタイルの値は、`solid`と`dashed`のみ対応？(`none`や`dotted`を設定しても`solid`と同じ線になる)
+-- `UIManager.put("Tree.drawVerticalLines", true);`で変更に失敗し、`UIManager.getLookAndFeelDefaults().put("Tree.drawVerticalLines", true);`で成功する場合がある？
+--- [https://stackoverflow.com/questions/44655203/nimbus-jtree-presentation-error-under-java-version-1-8 swing - Nimbus JTree presentation error under java version 1.8 - Stack Overflow]
+--- `JTree`の生成のタイミングで変更に失敗したり、`UIManager.put("Tree.drawHorizontalLines", true);`は問題ない場合もあって、原因不明
+- メモ
+-- `BasicLookAndFeel`、`MetalLookAndFeel`、`WindowsLookAndFeel`などは、`Tree.linesStyle`の設定は効果がないが、`Tree.lineTypeDashed`が使用可能
+#code{{
+UIManager.put("Tree.paintLines", true);
+UIManager.put("Tree.lineTypeDashed", true);
+}}
+
+* 参考リンク [#reference]
+- [[JTreeの水平垂直線を表示しない>Swing/TreePaintLines]]
+- [[JTreeのノード間の接続線のスタイルを変更する>Swing/TreeLineStyle]]
+
+* コメント [#comment]
+#comment
+#comment

@@ -39,9 +39,10 @@ table.setRowSorter(sorter);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`TableRowSorter#toggleSortOrder(int)`をオーバーライドして、クリックした列がソートの第一キーで、ソート順序が`DESCENDING`の場合、ソートキーをクリアしています。このため、同じカラムヘッダを連続して三回クリックすると、昇順(`ASCENDING`)、降順(`DESCENDING`)、初期状態(`UNSORTED`)と遷移して元に戻るようになっています。
+上記のサンプルでは、`TableRowSorter#toggleSortOrder(int)`メソッドをオーバーライドして、クリックした列がソートの第`1`キー、かつソート順序が`DESCENDING`の場合、ソートキーをクリアしています。このため、同じカラムヘッダを連続して`3`回クリックすると、昇順(`ASCENDING`)、降順(`DESCENDING`)、初期状態(`UNSORTED`)と遷移して元の状態に戻ります。
 
 * 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultRowSorter.html#toggleSortOrder-int- DefaultRowSorter#toggleSortOrder(int) (Java Platform SE 8)]
 - [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
 - [[TableRowSorterのSortKeysをクリアする>Swing/ClearSortingState]]
 

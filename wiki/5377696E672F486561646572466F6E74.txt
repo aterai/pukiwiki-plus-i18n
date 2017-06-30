@@ -30,7 +30,7 @@ class HeaderRenderer implements TableCellRenderer {
 * 解説 [#explanation]
 上記のサンプルでは、`0`番目のカラムヘッダだけフォントを変更しています。`JTableHeader`のセルを修飾する場合も、`JTable`中のセルの場合と同様に、`TableCellRenderer`を実装したセルレンダラーを使用することができます。
 
-サンプルのセルレンダラーは、`TableCellRenderer#getTableCellRendererComponent`メソッドの中で、委譲しているヘッダのデフォルトのレンダラーから描画に使用するコンポーネント(`JLabel`)を取得し、そのラベルのフォントだけ`JLabel#setFont`メソッドで置き換えています。
+サンプルのセルレンダラーは、`TableCellRenderer#getTableCellRendererComponent(...)`メソッドの中で、委譲しているヘッダのデフォルトのレンダラーから描画に使用するコンポーネント(`JLabel`)を取得し、そのラベルのフォントだけ`JLabel#setFont`メソッドで置き換えています。
 
 同様の方法で、文字色、背景色、ボーダー、文字の中央揃え、右揃えなども変更することができます。
 
