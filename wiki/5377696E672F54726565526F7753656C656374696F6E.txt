@@ -85,14 +85,16 @@ class RowSelectionTree extends JTree {
 }}
 
 * 解説 [#explanation]
-以下のような設定で、`JTree`を行選択できるように変更し、表示も`NimbusLookAndFeel`風に行全体を選択状態の背景色で描画するようにしています。
-
-- `BasicTreeUI#getPathBounds(...)`をオーバーライドして、ノードではなく、行のクリックで選択可能に変更
-- `JTree`の背景を`setOpaque(false)`で透明(非描画)にし、`JTree#paintComponent(...)`をオーバーライドして選択された行を背景色で描画
-- 不透明にした`TreeCellRenderer`を使用して、ノードの選択色を`JTree#paintComponent(...)`の背景色と同じものに変更
-- 別コンポーネントにフォーカスが移動した場合、`LeadSelection`の`Border`を描画しない(選択背景色で上書き)ように設定
--- デフォルトではノードのみ再描画されるので、`FocusListener`を追加して、`JTree`全体を再描画
--- `UIManager.put("Tree.repaintWholeRow", Boolean.TRUE);`を設定することでも回避可能
+- 左: デフォルト
+-- 選択でノードの背景色が変化
+- 右: `JTree`ノードを行選択に変更
+-- `NimbusLookAndFeel`風に行全体を選択状態の背景色で描画
+-- `BasicTreeUI#getPathBounds(...)`をオーバーライドして、ノードではなく、行のクリックで選択可能に変更
+-- `JTree`の背景を`setOpaque(false)`で透明(非描画)にし、`JTree#paintComponent(...)`をオーバーライドして選択された行を背景色で描画
+-- 不透明にした`TreeCellRenderer`を使用して、ノードの選択色を`JTree#paintComponent(...)`の背景色と同じものに変更
+-- 別コンポーネントにフォーカスが移動した場合、`LeadSelection`の`Border`を描画しない(選択背景色で上書き)ように設定
+--- デフォルトではノードのみ再描画されるので、`FocusListener`を追加して、`JTree`全体を再描画
+--- `UIManager.put("Tree.repaintWholeRow", Boolean.TRUE);`を設定することでも回避可能
 
 * 参考リンク [#reference]
 - [http://d.hatena.ne.jp/KrdLab/20071209/1197143960 JTable でセルのないところに行っぽい表示を出せますか？ - KrdLabの不定期日記]

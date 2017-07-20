@@ -38,7 +38,7 @@ bp.add(new JButton(new AbstractAction("parse") {
 }}
 
 * 解説 [#explanation]
-上記のサンプルは、`Locale.US`(メールなど)の日付文字列を、`SimpleDateFormat#parse(...)`メソッドを使用して一旦`Date`に変換し、`DateFormat#format(...)`メソッドでデフォルトロケール`TimeZone`のフォーマットスタイルに変換しています。
+上記のサンプルは、`Locale.US`の日付文字列を`SimpleDateFormat#parse(...)`メソッドを使用して一旦`Date`に変換し、`DateFormat#format(...)`メソッドでデフォルトロケール`TimeZone`のフォーマットスタイルに変換しています。
 
 ----
 `Java 1.7.0`から、タイムゾーンのパターン文字として`X`を使用すると、`ISO 8601`形式に変換可能になりました。

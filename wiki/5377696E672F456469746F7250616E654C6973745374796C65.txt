@@ -15,6 +15,9 @@ image: https://lh4.googleusercontent.com/-cVKrTqKAhYk/UMSbt8J09jI/AAAAAAAABY0/IW
 
 * サンプルコード [#sourcecode]
 #code(link){{
+JEditorPane pane = new JEditorPane();
+pane.setContentType("text/html");
+pane.setEditable(false);
 HTMLEditorKit htmlEditorKit = (HTMLEditorKit) pane.getEditorKit();
 StyleSheet styleSheet = htmlEditorKit.getStyleSheet();
 String u = getClass().getResource(bullet).toString();

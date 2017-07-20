@@ -21,7 +21,7 @@ private static ImageIcon makeImageIcon(URL url, final JComboBox combo, final int
   icon.setImageObserver(new ImageObserver() {
     //@see http://www2.gol.com/users/tame/swing/examples/SwingExamples.html
     @Override public boolean imageUpdate(Image img, int infoflags, int x, int y, int w, int h) {
-      if (combo.isShowing() && (infoflags & (FRAMEBITS|ALLBITS)) != 0) {
+      if (combo.isShowing() && (infoflags & (FRAMEBITS | ALLBITS)) != 0) {
         if (combo.getSelectedIndex() == row) {
           combo.repaint();
         }

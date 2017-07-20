@@ -422,31 +422,6 @@ public class Gui {
 //キーボードが壊れたのかもと思ったけど、`JDK 1.7.0`では、問題なく動作している？。暇なときに、`Bug Database`を調べること。追記:`IME`を変更したら再現しなくなった…。関係ないけど、最近`Bug Database`に繋がらない。
 
 * テスト中のコードなど [#u71f964b]
-** JMenuBarの検索 [#gb196686]
-- `JMenuBar`を検索して`JRadioButtonMenuItem`に、`ActionListener`を追加
-
-#code{{
-Arrays.stream(menuBar.getSubElements())
-  .flatMap(new Function<MenuElement, Stream<MenuElement>> () {
-      @Override public Stream<MenuElement> apply(MenuElement me) {
-          MenuElement[] sub = me.getSubElements();
-          if (sub.length != 0) {
-              return Arrays.stream(sub).flatMap(sme -> apply(sme));
-          } else {
-              return Stream.of(me);
-          }
-      }
-  })
-  .filter(mi -> mi instanceof JRadioButtonMenuItem)
-  .forEach(mi -> ((JRadioButtonMenuItem) mi).addActionListener(al));
-}}
-
-** Containerの子コンポーネントを再帰的に取得 [#e3003802]
-- [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]に移動
-
-** Containerの子コンポーネントを再帰的に検索し、指定したクラスのコンポーネントを取得 [#y34f3eac]
-- [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]に移動
-
 ** TreeNodeを再帰的に検索してStreamを生成 [#p8192b4b]
 #code{{
 import java.awt.*;

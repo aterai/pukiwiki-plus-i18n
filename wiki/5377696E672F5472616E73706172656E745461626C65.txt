@@ -53,7 +53,7 @@ scroll.getViewport().setBackground(alphaZero);
 -- 常に`setBackground(JTable#getSelectionBackground());`
 
 ----
-`JTable`の背景色にアルファ値を設定して透過性を持たせた場合、デフォルトの`BooleanRenderer`では色が濃くなる(二重に描画される？)ので、`paintComponent`メソッドを以下のようにオーバーライドしています。
+`JTable`の背景色にアルファ値を設定して透過性を持たせた場合、デフォルトの`BooleanRenderer`では色が濃くなる(`2`重に描画されてしまう)ので、`paintComponent`メソッドを以下のようにオーバーライドしています。
 
 #code{{
 class TranslucentBooleanRenderer extends JCheckBox implements TableCellRenderer {

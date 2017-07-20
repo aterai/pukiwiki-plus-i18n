@@ -44,7 +44,7 @@ class WindowsTabHeightTabbedPaneUI extends WindowsTabbedPaneUI {
 * 解説 [#explanation]
 上記のサンプルでは、選択されていないタブの高さを低くすることで、選択されたタブの高さが目立つように設定しています。
 
-- `BasicTabbedPaneUI#calculateTabHeight(...)`などをオーバーライドして、タブ(領域)の高さを変更
+- `BasicTabbedPaneUI#calculateTabHeight(...)`などをオーバーライドして、タブ領域の高さを変更
 - `BasicTabbedPaneUI#paintTab(...)`などをオーバーライドして、描画されるタブの高さを`BasicTabbedPaneUI#calculateTabHeight(...)`で設定した高さの半分程度に変更
 -- `JTabbedPane.TOP`の場合、選択されていないタブの`y`座標を下に移動
 - 対応しているのは、`JTabbedPane.SCROLL_TAB_LAYOUT`の場合のみ

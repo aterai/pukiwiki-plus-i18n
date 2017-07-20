@@ -2,7 +2,7 @@
 category: swing
 folder: PopupMenuLayout
 title: JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する
-tags: [JPopupMenu, GridBagLayout, JMenuItem, Icon]
+tags: [JPopupMenu, GridBagLayout, JMenuItem, Icon, LayoutManager]
 author: aterai
 pubdate: 2014-09-29T00:00:12+09:00
 description: JPopupMenuのレイアウトを変更することで、上部にメニューボタンを水平に並べて表示します。
@@ -53,7 +53,8 @@ popup.add(new JMenuItem("dddddddddd"), c);
 これらのメニューボタンは、`JMenuItem`の以下のメソッドをオーバーライドすることで、ボタン風に表示を変更しています。
 - `JMenuItem#paintComponent(...)`をオーバーライドして`32x32`の`Icon`のみを直接描画
 -- `JMenuItem#setIcon(...)`を使用すると、文字列の左側に`Icon`が表示される
--- ボタン中央に`Icon`が描画されるように位置を計算する(`GridBagLayout`で`GridBagConstraints.HORIZONTAL`と水平方向に拡張しているため、`getSize()`で現在のボタンサイズを取得して中央を求める)
+-- ボタン中央に`Icon`が描画されるように位置を計算する
+--- `GridBagLayout`で`GridBagConstraints.HORIZONTAL`と水平方向に拡張しているため、`getSize()`で現在のボタンサイズを取得して中央を求める
 - `JMenuItem#getPreferredSize()`をオーバーライドして、`Icon`のサイズを推奨サイズとして返す
 -- `JMenuItem#setIcon(...)`を使用していないので、直接`Icon`のサイズを渡す必要がある
 

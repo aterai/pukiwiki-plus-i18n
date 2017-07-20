@@ -134,8 +134,7 @@ class CompoundButton extends JButton {
 -- `5`つのボタンを、`OverlayLayout`を設定した`JPanel`に配置
 -- `JPanel#getPreferredSize()`をオーバーライドして、サイズが`5`つのボタンと同じになるように設定
 --- [[OverlayLayoutの使用>Swing/OverlayLayout]]
--- これらの`5`つのボタンはクリック可能な領域が重なることはないので、`JComponent.html#isOptimizedDrawingEnabled()`をオーバーライドする必要はない
---- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#isOptimizedDrawingEnabled-- JComponent (Java Platform SE 8)]
+-- これらの`5`つのボタンはクリック可能な領域が重なることはないので、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#isOptimizedDrawingEnabled-- JComponent#isOptimizedDrawingEnabled()]メソッドをオーバーライドしなくても良い
 
 * 参考リンク [#reference]
 - [[OverlayLayoutの使用>Swing/OverlayLayout]]

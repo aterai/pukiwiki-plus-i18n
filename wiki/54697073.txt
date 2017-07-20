@@ -7,10 +7,10 @@ pubdate: 2011-01-25
 ---
 #contents
 
-* 概要 [#y77453b1]
+* 概要 [#summary]
 `JDK`のインストール、`Java Swing`のデバッグ方法、環境変数で実行する`java.exe`を切り替えるバッチファイルなどのメモの一覧です。
 
-* Ubuntu に、oracle-java8 をインストール [#o7e2c25c]
+* Ubuntu に、oracle-java8 をインストール [#JdkInUbuntu]
 - `apt-get install`でインストール
 -- [http://www.webupd8.org/2012/01/install-oracle-java-jdk-7-in-ubuntu-via.html Install Oracle Java 7 in Ubuntu via PPA Repository ~ Web Upd8: Ubuntu / Linux blog]
 
@@ -27,14 +27,13 @@ pubdate: 2011-01-25
  export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_66
  export PATH=$PATH:$JAVA_HOME/bin
 
-* Swing debug agent[#l59af361]
+* Swing debug agent[#DebugPainterAgent]
 - [[Swingコンポーネントの再描画をJXLayerのDebugPainterを使ってデバッグ>Tips/DebugPainterAgent]]
--- `JXLayer`の`DebugPainter`を使ってコンポーネントの再描画を可視化する`javaagent`を作成してデバッグを行います。
-
+-- `JXLayer`の`DebugPainter`を使ってコンポーネントの再描画を可視化する`javaagent`を作成してデバッグを実行
 - [[SwingアプリケーションのLookAndFeelを外部から切り替える>Tips/LookAndFeelDebugAgent]]
--- `Swing`アプリケーションの`LookAndFeel`を`agent`を使って外部から切り替えてデバッグします。
+-- `Swing`アプリケーションの`LookAndFeel`を`agent`を使って外部から切り替えてデバッグを実行
 
-* `-g`オプションを使用してコンパイル [#y5168d8a]
+* `-g`オプションを使用してコンパイル [#DebugWatchVariable]
 - `NetBeans`でソースにブレークポイントを設定し、`Swing`コンポーネントのソースにステップインすると、「変数の情報を使用できません。ソースは `-g`オプションを使用せずにコンパイルされています」と表示され、値は不明となる
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/tools/windows/javac.html javac] `-g`オプション
  -g ローカル変数を含むすべてのデバッグ情報を生成します。デフォルトでは、行番号およびソース・ファイル情報だけが生成されます。
@@ -52,33 +51,17 @@ dir /B /S /X src\*.java > filelist.txt
 -- [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/standards/index.html Java推奨標準優先メカニズム]
 -- 「この機能は非推奨であり、今後のリリースで削除される予定です。」、`JDK 9`では使用できない？
 
-* Javadoc 翻訳 [#h4010d75]
-[[Javadoc]]に移動
-
-* JRuby [#rd5be1f5]
-[[JRuby]]に移動
-
-//* 「Java Swing Hacks」本のレビュー [#ef1cba4d]
-//- [http://d.hatena.ne.jp/aterai/20060502 「Java Swing Hacks」本のレビュー - てんぷらメモ@はてな]
-//-- [http://d.hatena.ne.jp/aterai/searchdiary?word=%2a%5bSwing%20Hacks%5d 記事一覧]
-//-- [http://d.hatena.ne.jp/aterai/archive?word=%2a%5bSwing%20Hacks%5d タイトル一覧]
-
-* Java その他 [#i6c38ca4]
+* その他 [#etc]
 - [[環境変数JAVA_HOMEを変更して使用するJDKを切り替える>Tips/SetJAVA_HOME]]
--- 環境変数`JAVA_HOME`を変更するバッチファイルを作成して、コマンドプロンプトで使用する`JDK`を切り替えます。
-
+-- 環境変数`JAVA_HOME`を変更するバッチファイルを作成して、コマンドプロンプトで使用する`JDK`を切り替える
 - [[Rhinoでgoogle-prettify.jsを実行する>Tips/GooglePrettifyRhino]]
--- `Rhino`で`google-prettify.js`を実行し、ソースコードをハイライトされた`Html`(`google sites`用)に変換します。
-
+-- `Rhino`で`google-prettify.js`を実行し、ソースコードをハイライトされた`Html`(`google sites`用)に変換する
 - [[JNIでJFrameのHWNDを取得>Tips/JNI_HWND]]
--- `JNI`(`Java Native Interface`)で`JFrame`(`SunAwtFrame`)の`HWND`(ウィンドウハンドル)を取得します。
-
+-- `JNI`(`Java Native Interface`)で`JFrame`(`SunAwtFrame`)の`HWND`(ウィンドウハンドル)を取得する
 - Java API Doc の「日本語、英語」をブックマークレットで切り替える
 -- [[Java API Doc の「日本語、英語」をブックマークレットで切り替える>JavaScript/APIDocEnJa]]に移動
 
-* Java メモ [#afdfdb63]
-
-** 環境変数 [#n357d6c7]
+* 環境変数 [#EnvironmentVariables]
 - http://cr.openjdk.java.net/~gbenson/zero-08/raw_files/new/hotspot/src/share/vm/utilities/vmError.cpp
 #code{{
 // List of environment variables that should be reported in error log file.
@@ -101,7 +84,7 @@ const char *env_list[] = {
 };
 }}
 
-** コマンドプロンプトからデフォルトのロケールを変更 [#p9b18e96]
+* コマンドプロンプトからデフォルトのロケールを変更 [#DefaultLocale]
  > javac -J-Duser.language=en Test.java
 
  > java -Duser.language=en Test
@@ -115,7 +98,7 @@ const char *env_list[] = {
  
  この機能を使用できない実行環境もあるため、この機能はテスト目的だけに使用してください。
 
-** コード整形 [#k1323c34]
+* コード整形 [#CodeBeautifier]
 個人的に、`Java`のソースコードのインデントは、エディタでは`4space`、`Web`サイトにソースコードを表示する場合は`2space`にしているので、`xyzzy`の`filter-buffer`(`C-x #`)で`astyle`を呼び出して以下のように整形。
 
  astyle --style=java --mode=java --indent=spaces=2
@@ -130,7 +113,7 @@ const char *env_list[] = {
  astyle --style=java --mode=java --indent=spaces=2 | sed -e "s/^\(.*\)$/\t\1/"
  astyle --style=java --mode=java --indent=spaces=2 | sed -e "s/\A\(.*\)\z/    \1/"
 
-*** Checkstyle(sun_checks.xml) [#dd78623b]
+** astyle [#astyle]
  astyle --style=java --mode=java --indent=spaces=4 --pad-oper --pad-header --unpad-paren
 
 キャストの後にスペースを入れる方法は？
@@ -138,7 +121,7 @@ const char *env_list[] = {
  //(int)の後に空白を入れたい...
  int h = (int) (.5 + baseline / height);
 
-*** asyle 2.04 [#xbabc1fe]
+** asyle 2.04 [#bug]
  $ astyle --version
  Artistic Style Version 2.04
 
@@ -157,10 +140,18 @@ class Hoge
 - [http://sourceforge.net/p/astyle/bugs/305/ Artistic Style / Bugs / #305 Last character always repeated in output when reading from stdin]
 -- %%次バージョンで修正される模様%% 修正済み
 
-** ブラウザで表示されているソースコードのコピー [#c8b1879b]
-[[JavaScriptでpreタグで囲まれたソースコードをtextareaにコピーする>JavaScript/pre2textarea]]に移動
+* FileInputStream / FileOutputStream でメモリリーク [#FileInputStreamMemoryLeak]
+- [http://blog.cybozu.io/entry/8218 恐怖の JVM 大量メモリ消費！メモリリークの謎を追え！！ - Cybozu Inside Out | サイボウズエンジニアのブログ]
+- [https://bugs.openjdk.java.net/browse/JDK-8080225 JDK-8080225 FileInputStream cleanup should be improved. - Java Bug System]
+- [https://www.cloudbees.com/blog/fileinputstream-fileoutputstream-considered-harmful FileInputStream / FileOutputStream Considered Harmful | CloudBees]
+-- via: [http://marxsoftware.blogspot.jp/2017/04/java-finalizer-file-io-streams.html Inspired by Actual Events: Java Finalizer and Java File Input/Output Streams]
+-- `FileInputStream`や`FileOutputStream`は、`finalize()`メソッドをオーバーライドしている(`FinalReference`に登録されてしまう)ので`close()`メソッドを呼んだ後でもフル`GC`が発生するまでメモリ上に残り続ける
+-- `Files.newInputStream(...)`や`Files.newOutputStream(...)`に置き換える必要がある
+- [https://www.reddit.com/r/java/comments/64k16e/fileinputstream_fileoutputstream_considered/ FileInputStream / FileOutputStream Considered Harmful : java]
+-- `Files.newInputStream(...)`(`ChannelInputStream`?)は`skip()`がすこし遅いらしい？
+- `ClassLoader#getResourceAsStream(...)`は？
 
-* 偶数・奇数の判断 [#p14852ed]
+* 偶数・奇数の判断 [#EvenAndOdd]
 #code{{
 public class EvenOddTest {
   public static void main(String... args) {
@@ -180,7 +171,7 @@ public class EvenOddTest {
 }
 }}
 
-* 正の数と負の数を反転 [#t6341d2a]
+* 正の数と負の数を反転 [#InvertSignedNumbers]
 - [https://community.oracle.com/thread/1253898 How do you Invert signed numbers? | Oracle Community]
 - [http://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.15.4 15.15.4. Unary Minus Operator - / Chapter 15. Expressions]
 
@@ -205,7 +196,7 @@ public class InvertSignedNumbersTest {
 }
 }}
 
-* Objects.compare(...) [#lde83489]
+* Objects.compare(...) [#ObjectsCompare]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/util/Objects.html#compare-T-T-java.util.Comparator- Objects.compare(...) (Java Platform SE 8)]
 
 #code{{
@@ -295,7 +286,7 @@ public int compareTo(Object o) {
 }
 }}
 
-* 無名匿名クラスとラムダ式の中でのthisキーワード [#l84f20a2]
+* 無名匿名クラスとラムダ式の中でのthisキーワード [#LambdaThisReference]
 - [http://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.27.2 15.27.2. Lambda Body - Chapter 15. Expressions]
 -- via: [https://stackoverflow.com/questions/24202236/lambda-this-reference-in-java Lambda this reference in java - Stack Overflow]
 - [[Javaラムダ式メモ(Hishidama's Java8 Lambda Expression Memo)>http://www.ne.jp/asahi/hishidama/home/tech/java/lambda]]
@@ -392,8 +383,10 @@ class Task extends SwingWorker<Void, Void> {
 }
 }}
 
-* コメント [#k546af30]
+* コメント [#comment]
 #comment
 - [[Nitpick]]を[[Javadoc]]以下に分割して移動。 -- &user(aterai); &new{2011-11-11 (金) 16:57:12};
+- `Javadoc`翻訳を[[Javadoc]]に移動。 -- &user(aterai); &new{2011-11-11 (金) 16:57:12};
+- `JRuby`関係のメモを[[JRuby]]に移動。 -- &user(aterai); &new{2011-11-11 (金) 16:57:12};
 
 #comment
