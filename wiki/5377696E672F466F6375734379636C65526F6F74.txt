@@ -21,7 +21,7 @@ p1.add(new JTextField(16));
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、各`JPanel`がそれぞれフォーカストラバーサルサイクルのルートになるように設定しています。
+上記のサンプルでは、各`JPanel`がそれぞれフォーカストラバーサルサイクルのルートコンテナになるように設定しています。
 
 - 左の`JPanel`
 -- `setFocusCycleRoot(true);`
@@ -31,6 +31,8 @@ p1.add(new JTextField(16));
 -- 順方向キーボードトラバーサルとリバースキーボードトラバーサルを入れ替え
 
 * 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#setFocusCycleRoot-boolean- Container#setFocusCycleRoot(boolean) (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#setFocusTraversalPolicyProvider-boolean- Container#setFocusTraversalPolicyProvider(boolean) (Java Platform SE 8)]
 - [[Focusの移動>Swing/FocusTraversal]]
 
 * コメント [#comment]
