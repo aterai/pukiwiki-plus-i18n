@@ -16,9 +16,9 @@ image: https://lh3.googleusercontent.com/-WI8tV2GL8no/Vu_vV8kqSCI/AAAAAAAAOQ4/Os
 * サンプルコード [#sourcecode]
 #code(link){{
 JInternalFrame palette = new JInternalFrame("Palette", true, false, true, true);
+palette.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
 palette.setBounds(0, 0, 120, 120);
 palette.setMinimumSize(new Dimension(50, 50));
-palette.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
 palette.add(new JScrollPane(new JTree()));
 palette.setVisible(true);
 desktop.add(palette, JDesktopPane.PALETTE_LAYER);
