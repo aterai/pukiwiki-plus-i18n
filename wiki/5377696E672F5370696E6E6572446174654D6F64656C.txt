@@ -15,10 +15,10 @@ image: https://lh5.googleusercontent.com/-llHXaOVDQbQ/TlH5yRAODSI/AAAAAAAABBE/Xs
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final String dateFormatPattern = "yyyy/MM/dd";
+String dateFormatPattern = "yyyy/MM/dd";
 JSpinner s = new JSpinner(
     new SpinnerDateModel(date, start, null, Calendar.DAY_OF_MONTH));
-final JSpinner.DateEditor editor = new JSpinner.DateEditor(s, dateFormatPattern);
+JSpinner.DateEditor editor = new JSpinner.DateEditor(s, dateFormatPattern);
 s.setEditor(editor);
 editor.getTextField().addFocusListener(new FocusAdapter() {
   @Override public void focusGained(FocusEvent e) {
