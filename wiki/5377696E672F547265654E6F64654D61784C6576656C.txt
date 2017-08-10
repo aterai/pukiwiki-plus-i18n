@@ -42,7 +42,7 @@ if (path.getPathCount() < 3) {
 
 - メモ:
 -- ルートパスの`TreePath#getPathCount()`は`1`、ルートノードの`DefaultMutableTreeNode#getLevel()`は`0`
--- `TreePath#getPathCount()`、`DefaultMutableTreeNode#getLevel()`の戻り値は、ルートノードの可視・不可視には依存しない
+-- `TreePath#getPathCount()`、`DefaultMutableTreeNode#getLevel()`の戻り値は、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#setRootVisible-boolean- JTree#setRootVisible(boolean)]で設定したルートノードの可視・不可視には依存しない
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/TreePath.html#getPathCount-- TreePath#getPathCount() (Java Platform SE 8)]

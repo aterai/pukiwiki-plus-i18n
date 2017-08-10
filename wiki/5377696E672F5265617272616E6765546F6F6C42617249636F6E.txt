@@ -153,7 +153,7 @@ class DragHandler extends MouseAdapter {
 上記のサンプルでは、`JToolBar`に`MouseListener`と`MouseMotionListener`を追加して、`JLabel`に配置したアイコンを並べ替えています。
 
 - ドラッグされて移動対象になった`JLabel`は、`JToolBar`から削除され、透明な`JWindow`に移動
--- `JWindow`なので、元のフレームの外側にも移動可能
+-- `JWindow`なので、元のフレームの外側でも表示可能
 - ドロップする位置に`JWindow`が移動してきた場合、`JToolBar`に`Box.createHorizontalStrut(24);`で作成したアイコンと同じ幅の`Box`を配置
 - `JLabel`がドロップされると、ダミーの`Box`は削除され、`JLabel`と入れ替え
 -- `JWindow`は非表示に設定

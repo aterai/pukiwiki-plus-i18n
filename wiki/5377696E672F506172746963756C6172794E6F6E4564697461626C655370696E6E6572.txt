@@ -47,16 +47,13 @@ class StringBorder implements Border {
 * 解説 [#explanation]
 - 上: `JSpinner.NumberEditor` + `DecimalFormat`
 -- [[JSpinnerの値をパーセントで指定>Swing/NumberEditor]]
-
 #code{{
 JSpinner spinner1 = new JSpinner(new SpinnerNumberModel(0, 0, 1, 0.01));
 JSpinner.NumberEditor editor1 = new JSpinner.NumberEditor(spinner1, "0%");
 spinner1.setEditor(editor1);
 }}
-
 - 下: `JSpinner` + `StringBorder`
 -- `JSpinner`のエディタに設定した余白内に文字列を描画
-
 #code{{
 JSpinner spinner2 = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 JSpinner.NumberEditor editor2 = new JSpinner.NumberEditor(spinner2);
@@ -68,10 +65,8 @@ Border b = new StringBorder(editor2, "%");
 Border c = editor2.getBorder();
 editor2.setBorder((c == null) ? b : BorderFactory.createCompoundBorder(c, b));
 }}
-
-----
-以下のように、[http://tips4java.wordpress.com/2009/09/27/component-border/ Component Border ≪ Java Tips Weblog]を利用して、`JLabel`を余白に描画する方法もあります。
-
+- メモ
+-- 以下のように、`JLabel`を余白に描画する方法(参考: [http://tips4java.wordpress.com/2009/09/27/component-border/ Component Border ≪ Java Tips Weblog])もある
 #code{{
 JLabel label = new JLabel("%");
 label.setBorder(BorderFactory.createEmptyBorder());

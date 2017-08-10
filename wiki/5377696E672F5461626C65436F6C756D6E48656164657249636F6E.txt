@@ -36,8 +36,8 @@ table.setAutoCreateRowSorter(true);
 上記のサンプルでは、カラムヘッダにアイコンを表示するために、タイトル文字列として`<img>`タグでアイコンを表示する`html`文字列を設定しています。
 
 - メモ
--- `html`文字列として、`String.format("<html><img src='%s'/>&nbsp;%s", url, str)`を使用するとアイコンと文字列のベースラインが揃わない場合があるので、`<table>`タグを使用している
--- `<table>`タグを使用する場合、`JTableHeader`の高さが拡大するので、`cellpadding='0' cellspacing='0'`などでセル余白を`0`に変更している
+-- `html`文字列として、`String.format("<html><img src='%s'/>&nbsp;%s", url, str)`を使用するとアイコンと文字列のベースラインが揃わない場合があるので、`<table>`タグを使用
+-- `<table>`タグを使用する場合、`JTableHeader`の高さが拡大するので、`cellpadding='0' cellspacing='0'`などでセル余白を`0`に変更
 -- デフォルトのヘッダレンダラーは`JLabel`を継承しているので、`setIcon(...)`メソッドが使用可能だが、`LookAndFeel`によってはソートアイコンと競合する場合がある
 
 #code{{
