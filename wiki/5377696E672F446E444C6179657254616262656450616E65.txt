@@ -27,7 +27,7 @@ class DropLocationLayerUI extends LayerUI<DnDTabbedPane> {
       JLayer layer = (JLayer) c;
       DnDTabbedPane tabbedPane = (DnDTabbedPane) layer.getView();
       DnDTabbedPane.DropLocation loc = tabbedPane.getDropLocation();
-      if (loc != null && loc.isDropable() && loc.getIndex() >= 0) {
+      if (loc != null && loc.isDroppable() && loc.getIndex() >= 0) {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setComposite(
             AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));

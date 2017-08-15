@@ -40,7 +40,7 @@ toolbar.setUI(new BasicToolBarUI() {
 
 `ToolBarUI#canDock(Component, Point)`メソッドをオーバーライドして、左右の場合は`false`を返すようにしています。
 
-ドッキングできるかどうかを判定している`BasicToolBarUIのgetDockingConstraint`メソッドが`private`のため、サンプルコードでは、これをコピーしてすこしだけ条件を変更した`isHorizontalDockingConstraint`メソッドを作成しています。
+ドッキングできるかどうかを判定している`BasicToolBarUI#getDockingConstraint`メソッドが`private`のため、サンプルコードでは、これをコピーしてすこしだけ条件を変更した`isHorizontalDockingConstraint`メソッドを作成しています。
 
 ----
 `BorderLayout`の`WEST`と`EAST`に、適当なダミーコンポーネント(例えばサイズ`0`の`Box`)を配置するだけで、`LookAndFeel`を変更しなくてもドッキングを制限することができます。

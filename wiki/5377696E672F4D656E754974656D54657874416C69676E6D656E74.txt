@@ -28,7 +28,7 @@ item3.add(new JMenuItem("JMenuItem(disabled) with JMenuItem", HSTRUT) {
 }}
 
 * 解説 [#explanation]
-`JMenu`や`JPopupuMenu`にクリック不可の項目として`JMenuItem`の代わりに`JLabel`を追加すると、`WindowsLookAndFeel`を使用している場合や他の`JMenuItem`にアイコンが設定されている場合に、テキストの開始位置が揃わないので、これを回避するために以下の方法をテストしています。
+`JMenu`や`JPopupMenu`にクリック不可の項目として`JMenuItem`の代わりに`JLabel`を追加すると、`WindowsLookAndFeel`を使用している場合や他の`JMenuItem`にアイコンが設定されている場合に、テキストの開始位置が揃わないので、これを回避するために以下の方法をテストしています。
 
 - `JMenuItem.setEnabled(false);`
 -- `JMenuItem.setEnabled(false);`と`UIManager.put("MenuItem.disabledForeground", Color.BLACK);`を使用
