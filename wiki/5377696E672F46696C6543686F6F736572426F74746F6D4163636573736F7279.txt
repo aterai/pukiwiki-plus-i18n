@@ -68,6 +68,9 @@ class EncodingFileChooserUI extends MetalFileChooserUI {
 --- 例えば`WindowsLookAndFeel`では`BoxLayout.LINE_AXIS`、`MetalLookAndFeel`では`BoxLayout.Y_AXIS`
 -- `MetalFileChooserUI`では、`JLabel`を継承する`AlignedLabel`で最も長い文字列幅から推奨サイズを揃えているが、`private`のため、このサンプルでは使用できない
 --- [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]で、ラベルを検索して推奨サイズを取得しているが、もし`Encoding:`がこの最も長い文字列幅より長い場合は末尾が省略されてしまう
+- `JFileChooser#updateUI()`メソッドをオーバーライドして、`super.updateUI(); setUI(new EncodingFileChooserUI(this));`などを実行した場合、`AcceptAll`ファイルフィルタが重複追加されてしまう
+-- `setUI(...)`の後で`JFileChooser#resetChoosableFileFilters()`を実行するか、`super.updateUI()`を実行しないことで回避可能
+--- 個別のファイルフィルタ追加などの設定は、`JFileChooser#updateUI()`メソッド内でおこなう
 
 * 参考リンク [#reference]
 - [[JFileChooserに画像プレビューを追加>Swing/PreviewAccessory]]

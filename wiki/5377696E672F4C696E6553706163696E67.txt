@@ -25,7 +25,9 @@ class BottomInsetEditorKit extends StyledEditorKit {
             return new LabelView(elem);
           } else if (kind.equals(AbstractDocument.ParagraphElementName)) {
             return new javax.swing.text.ParagraphView(elem) {
-              @Override protected short getBottomInset() { return 5; }
+              @Override protected short getBottomInset() {
+                return 5;
+              }
             };
           } else if (kind.equals(AbstractDocument.SectionElementName)) {
             return new BoxView(elem, View.Y_AXIS);
@@ -76,7 +78,10 @@ editor1.setEditorKit(htmlEditorKit);
 editor1.setText("<html><body><div class='test'>12<br />a<br />n<font size='32'>123<br />sd</font></div></body></html>");
 }}
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextPane.html#setParagraphAttributes-javax.swing.text.AttributeSet-boolean- JTextPane#setParagraphAttributes(...) (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/CompositeView.html#getBottomInset-- CompositeView#getBottomInset() (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment

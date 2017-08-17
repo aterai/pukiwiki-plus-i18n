@@ -119,9 +119,9 @@ private static class Task extends SwingWorker<String, Chunk> {
 -- `ProgressMonitorInputStream`がデフォルトで設定する最大値は、`InputStream#available()`の値
 -- この値がダウンロード中のストリームの合計バイト数を返す訳ではないので、これを最大値のままにしておくと、`ProgressMonitor`が表示されない、またはすぐ閉じてしまう
 -- `URLConnection#getContentLength()`で取得したバイト数を`ProgressMonitor#setMaximum(...)`で設定
-- 一行ずつ`JTextArea`に文字列として読み込ませるために、`InputStreamReader`を使用しているので、エンコードを`URLConnection#getContentEncoding()`や`URLConnection#getContentType()`などで取得
--- 何パーセント読み込んだかを`ProgressMonitor#setNote(...)`で表示する場合は、一行が何バイトかを`String#getBytes(Charset)`で取得して計算
--- 注: 改行は`1`バイトで決め打ちしている
+- `1`行ずつ`JTextArea`に文字列として読み込ませるために、`InputStreamReader`を使用しているので、エンコードを`URLConnection#getContentEncoding()`や`URLConnection#getContentType()`などで取得
+-- 何パーセント読み込んだかを`ProgressMonitor#setNote(...)`で表示する場合は、`1`行が何バイトかを`String#getBytes(Charset)`で取得して計算
+-- 注: 改行は`LF`のみの`1`バイトであると決め打ちしている
 -- 進捗を表示する前に`ProgressMonitor#setNote("dummy note");`としておかないと、`Note`に使用する`JLabel`が`null`のままで表示されない、またはレイアウトがおかしくなる
 
 * 参考リンク [#reference]
