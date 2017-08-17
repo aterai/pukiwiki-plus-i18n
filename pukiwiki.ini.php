@@ -240,9 +240,9 @@ require_once(add_homedir('config-log.ini.php'));
 $use_spam_check = array(
 	'page_view'		=> 0,
 	'page_remote_addr'	=> 0,
-	'page_contents'		=> 1,
+	'page_contents'		=> 0,
 	'page_write_proxy'	=> 0,
-	'trackback'		=> 1,
+	'trackback'		=> 0,
 	'referer'		=> 0,
 );
 
@@ -302,7 +302,7 @@ $deny_countory = array();
 //    Ping is not transmitted by the automatic operation.
 // 2: on
 //    Function in the past. Automatic ping transmission.
-$trackback = 1;
+$trackback = 0;
 
 /////////////////////////////////////////////////
 // Referer list feature

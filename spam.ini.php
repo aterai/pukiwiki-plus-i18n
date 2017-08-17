@@ -72,6 +72,7 @@ $blocklist['goodhost'] = array(
 	//'emasaka.blog65.fc2.com',	// Text-to-Impress converter
 	//'ifastnet.com',				// Server hosting
 	//'threefortune.ifastnet.com',	// Server hosting
+    'www.javaspecialists.eu'
 
 	// Yours
 	//''
