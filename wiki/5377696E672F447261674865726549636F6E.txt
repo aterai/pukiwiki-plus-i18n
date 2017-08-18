@@ -87,7 +87,7 @@ class DragHereIcon implements Icon {
 -- 直線で格子状のスリットを上書き
 -- 矢印のアウトラインをフォントから取得して中心に描画
 -- 原点を戻す
---- 直接`g.translate(x, y)`で原点を変更した場合、``g.translate(-x, -y)`で元に戻す必要がある
+--- 直接`g.translate(x, y)`で原点を変更した場合、`g.translate(-x, -y)`で元に戻す必要がある
 --- または、`Graphics2D g2 = (Graphics2D) g.create()`で別の`Graphics`を生成し、原点を移動した場合は、最後に`g2.dispose()`で破棄する
 - `Icon#getIconWidth()`, `Icon#getIconHeight()`を実装してアイコンのサイズを指定-
 

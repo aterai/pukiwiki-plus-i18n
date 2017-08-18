@@ -20,10 +20,8 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TSq77M-soeI/AAAAAAAAAxg/0n
 //for (Object key: chooser.getActionMap().allKeys()) {
 //    System.out.println(key);
 //}
-Action detailsAction = chooser.getActionMap().get("viewTypeDetails");
-if (detailsAction != null) {
-  detailsAction.actionPerformed(null);
-}
+Optional.ofNullable(chooser.getActionMap().get("viewTypeDetails"))
+  .ifPresent(a -> a.actionPerformed(null));
 }}
 
 * 解説 [#explanation]

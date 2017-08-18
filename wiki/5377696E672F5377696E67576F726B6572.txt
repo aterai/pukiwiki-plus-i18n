@@ -142,7 +142,7 @@ protected final void setProgress(int progress) {
 -- `Swing`関連のすべての作業(例えば`JProgressBar`の進捗表示更新)は、`EDT`で行う必要があるので、`process()`か`done()`メソッド内で実行する
 
 ----
-`SwingWorker#process()`メソッド内などで`JPanel#sDisplayable()`を呼び、アプリケーション(`frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);`が設定されている)が終了している場合は、タスクを中断することで`SwingWorker`が生き残るのを防止しています。
+`SwingWorker#process()`メソッド内などで`JPanel#isDisplayable()`を呼び、アプリケーション(`frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);`が設定されている)が終了している場合は、タスクを中断することで`SwingWorker`が生き残るのを防止しています。
 
 * 参考リンク [#reference]
 - [http://docs.oracle.com/javase/jp/6/api/javax/swing/SwingWorker.html SwingWorker (Java Platform SE 6)]

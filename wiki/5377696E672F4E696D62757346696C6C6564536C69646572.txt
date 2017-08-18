@@ -71,7 +71,7 @@ slider.putClientProperty("Nimbus.Overrides", d);
 - `Default`
 -- `UIManager.put("JSlider.isFilled", Boolean.TRUE)`としても、`NimbusLookAndFeel`などでは、範囲の塗りつぶしは行われない
 - `Nimbus JSlider.isFilled`
--- `UIDefaults#put("Slider:SliderTrack[Enabled].backgroundPainter", painter)`で、トラックの背景を描画する`Painter`を変更し、範囲の塗りつぶしを行う
+-- `UIDefaults#put("Slider:SliderTrack[Enabled].backgroundPainter", painter)`メソッドでトラックの背景を描画する`Painter`を変更し、範囲の塗りつぶしを行う
 -- 上記のサンプルでは、垂直スライダー(`slider.getOrientation() == SwingConstants.VERTICAL`)や、表示される値の範囲が通常とは逆のスライダー(`slider#setInverted(true)`)には未対応
 
 * 参考リンク [#reference]
