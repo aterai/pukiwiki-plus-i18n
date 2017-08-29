@@ -68,18 +68,20 @@ class CopyOnSelectListener extends MouseAdapter implements CaretListener, KeyLis
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、マウス操作を使って文字列を選択する場合%%のみ%%、選択文字列を自動的にクリップボードにコピーするリスナーを`JTextArea`に設定しています。
+上記のサンプルでは、マウス操作を使って文字列を選択する場合、選択文字列を自動的にクリップボードにコピーするリスナーを`JTextArea`に設定しています。
 
 - マウスのドラッグで文字列選択:
 -- ドラッグ終了後に、クリップボードへ選択されている文字列をコピー
 - KBD{Shift}+カーソルキーによる文字列選択:
--- %%無視する%% KBD{Shift}キーをリリース後、クリップボードへ選択されている文字列をコピー
+-- KBD{Shift}キーをリリース後、クリップボードへ選択されている文字列をコピー
 - KBD{Shift}+マウスクリックによる文字列選択:
 -- マウスリリース後、クリップボードへ選択されている文字列をコピー
 - マウスのダブルクリックによる文字列選択:
 -- ダブルクリック終了後、クリップボードへ選択されている文字列をコピー
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#copy-- JTextComponent#copy() (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment
