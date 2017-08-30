@@ -49,8 +49,9 @@ slider2.setForeground(Color.BLUE);
 -- 注: 垂直方向には未対応
 - 下:
 -- `JSlider#setForeground(Color)`で、目盛のキャプションの色を青に変更
--- `MetalSliderUI`を継承する`SliderUI`を作成して、`paintHorizontalLabel(Graphics, int, Component)`メソッドをオーバーライドし目盛を緑色に変更
--- 別の方法: [[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]
+-- `MetalSliderUI`を継承する`SliderUI`を作成
+--- `paintHorizontalLabel(Graphics, int, Component)`メソッドをオーバーライドし目盛を緑色に変更
+-- 目盛の色は、[[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]でも変更可能
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1375990 Swing - Problem in changing forground color of JSlider!!]
