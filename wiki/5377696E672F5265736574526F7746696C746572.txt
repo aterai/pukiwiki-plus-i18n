@@ -47,7 +47,7 @@ sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.DESCENDING))
 -- ☑ `viewRowIndex<5`のフィルタで`AA-ee`が表示されている場合、`String`列で昇順から降順にソートすると`ee-AA`となる
 - `Custom Sorting` チェック有り
 -- ☑ `viewRowIndex<5`のフィルタで`AA-ee`が表示されている場合、`String`列で昇順から降順にソートすると`OO-KK`となる
---- `toggleSortOrder`メソッドをオーバーライドして、一旦`RowFilter`を解除(`setRowFilter(null)`)してから昇順から降順にソート`OO-KK-AA`、その後再び`RowFilter`を設定するので`OO-KK`が表示される
+--- `toggleSortOrder`メソッドをオーバーライドして、一旦`TableRowSorter#setRowFilter(null)`メソッドを実行して`RowFilter`を解除してから昇順から降順にソート`OO-KK-AA`、その後再び`RowFilter`を設定するので`OO-KK`が表示される
 
 ----
 以下は、`toggleSortOrder`メソッドをオーバーライドし、すべての行が変更されている可能性があることをリスナーに通知してから、もう一度ソートのやり直しを行う方法です。

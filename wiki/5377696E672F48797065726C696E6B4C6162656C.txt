@@ -74,24 +74,26 @@ editor.addHyperlinkListener(new HyperlinkListener() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、クリックされた時に、リンクをブラウザで開く([[Desktopでブラウザを起動>Swing/Desktop]])代わりに、`beep`音を鳴らしています。
+上記のサンプルでは、リンクを`JLabel`、`JButton`、`JEditorPane`で表現し、それぞれクリックした時のイベントを取得するテストを行っています。
 
 - `JLabel` + `MouseListener`
 -- `JLabel`に`MouseListener`を設定
 -- リンクの表示には`<a>`タグを使用
-
 - `JButton` + `ButtonUI`
 -- `JButton`に、文字の描画を変更する`ButtonUI`を設定
 --- `Rollover`: アンダーライン
 --- `Pressed`: 黒
-
 - `JEditorPane` + `HyperlinkListener`
 -- 編集不可にした`JEditorPane`に`HyperlinkListener`を設定
 -- リンクの表示には`<a>`タグを使用
 -- 文字列選択してコピーが可能
 
+----
+- 注: このサンプルでは、クリックされた時に実行するイベントは`beep`音を鳴らすだけのダミー
+- リンクをブラウザで開く場合は、[[Desktopでブラウザを起動>Swing/Desktop]]などを参照
+
 * 参考リンク [#reference]
-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JEditorPane.html JEditorPane (Java Platform SE 6)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JEditorPane.html JEditorPane (Java Platform SE 8)]
 - [http://www.jroller.com/santhosh/entry/link_buttons_in_swing Link Buttons in Swing - Santhosh Kumar's Weblog]
 -- `JButton`+`MatteBorder`でリンクを表現するサンプルがある
 - [[TransferHandlerでHyperlinkをブラウザにドロップ>Swing/DraggableLinkButton]]
