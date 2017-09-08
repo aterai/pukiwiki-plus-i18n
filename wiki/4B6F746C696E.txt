@@ -15,24 +15,23 @@ pubdate: 2017-05-31
  $ curl -s "https://get.sdkman.io" | bash 
  $ sdk install kotlin
  $ kotlinc -version
- info: Kotlin Compiler version 1.1.2-2
+ info: kotlinc-jvm 1.1.4-3 (JRE 1.8.0_141-b15)
  $ kotlinc hello.kt -include-runtime -d hello.jar && "$JAVA_HOME/bin/java" -jar hello.jar
 
 * Swing + Kotlin サンプル [#swing]
 ** JTable [#JTable]
-- メモ
--- `Class<?>`は%%`Class<Any>`か`Class<Object>`？%%、`Class<*>`か`Class<out Any>`に変換した方が良いかもしれない
---- `IntelliJ`の自動変換では`Class<*>`
--- `Object#getClass()`は`o.javaClass`
---- [https://kotlinlang.org/docs/reference/java-interop.html#getclass getClass() - Calling Java from Kotlin - Kotlin Programming Language]
---- `Integer::class.java`は`Class<Integer>`になるので、以下のサンプルで使用すると、`error: type inference failed. Expected type mismatch: inferred type is Class<Integer> but Class<Any> was expected`とエラーになる
---- [https://kotlinlang.org/docs/reference/generics.html#star-projections Star-projections - Generics - Kotlin Programming Language]
--- オーバーライドの方法、`@Override`は`override`
--- 配列、二次元配列
---- [https://kotlinlang.org/docs/reference/java-interop.html#java-arrays Java Arrays - Calling Java from Kotlin - Kotlin Programming Language]
---- `IntelliJ`の自動変換では`arrayOf(arrayOf<Any>("aaa", 12, true), ...`
--- `apply`
--- `switch`は`when`
+- `Class<?>`は%%`Class<Any>`か`Class<Object>`？%%、`Class<*>`か`Class<out Any>`に変換した方が良いかもしれない
+-- `IntelliJ`の自動変換では`Class<*>`
+- `Object#getClass()`は`o.javaClass`
+-- [https://kotlinlang.org/docs/reference/java-interop.html#getclass getClass() - Calling Java from Kotlin - Kotlin Programming Language]
+-- `Integer::class.java`は`Class<Integer>`になるので、以下のサンプルで使用すると、`error: type inference failed. Expected type mismatch: inferred type is Class<Integer> but Class<Any> was expected`とエラーになる
+-- [https://kotlinlang.org/docs/reference/generics.html#star-projections Star-projections - Generics - Kotlin Programming Language]
+- オーバーライドの方法、`@Override`は`override`
+- 配列、二次元配列
+-- [https://kotlinlang.org/docs/reference/java-interop.html#java-arrays Java Arrays - Calling Java from Kotlin - Kotlin Programming Language]
+-- `IntelliJ`の自動変換では`arrayOf(arrayOf<Any>("aaa", 12, true), ...`
+- `apply`
+- `switch`は`when`
 
 #twocolumn
 `Java`
@@ -224,7 +223,8 @@ fun main(args: Array<String>) {
 
 ** JCheckBox [#JCheckBox]
 - `Smart Cast`、キャストで`if`のネストが深くなるのを避けたい
--- `as`を使用する: `val b = e.getSource() as AbstractButton`
+-- イベント発生元が`AbstractButton`なのは自明なので`as`を使用する
+--- `val b = e.getSource() as AbstractButton`
 -- 以下のような場合は、`apply`でも回避可能
 
 #twocolumn
@@ -591,6 +591,301 @@ fun main(args: Array<String>) {
       setLocationRelativeTo(null)
       setVisible(true)
     }
+  }
+}
+}}
+#twocolumn
+
+** JTable2 [#JTable2]
+- `extends`, `implements`
+-- `IntelliJ`の自動変換では勝手に`open`は付けないようなので、以下のようなエラーが出る場合は、`internal class CheckBoxesPanel : JPanel() {`を`open class CheckBoxesPanel : JPanel() {`に修正する
+#code{{
+MainPanel.kt:81:37: error: this type is final, so it cannot be inherited from
+internal class CheckBoxesRenderer : CheckBoxesPanel(), TableCellRenderer {
+}}
+- 論理演算子: 左シフト
+-- `Java`: `buttons[0].setSelected((i & (1 << 2) ) != 0);`
+-- `Kotlin`: `buttons[0].setSelected(i and (1 shl 2) != 0)`
+--- `IntelliJ`の自動変換では括弧が減る(`and`の優先順位が異なる？)
+--- `IntelliJ`の自動変換では時々`buttons[0].setSelected(i and (1 shl 2 != 0) )`に誤変換される？
+- `bitwise AND`(`and`の優先順位)
+- [https://discuss.kotlinlang.org/t/bitwise-operators-are-not-in-the-precedence-table/2075 Bitwise operators are not in the precedence table - Support - Kotlin Discussions]
+-- [https://kotlinlang.org/docs/reference/grammar.html#precedence 演算子の優先順位表]
+-- [https://kotlinlang.org/docs/reference/basic-types.html#operations Basic Types: Numbers, Strings, Arrays - Kotlin Programming Language]
+-- `and`は`Infix function`で`Equality`の`!=`より優先順位が高い
+-- `Java`は逆: [https://docs.oracle.com/javase/tutorial/java/nutsandbolts/operators.html Operators (The Java™ Tutorials > Learning the Java Language > Language Basics)]
+- `IntelliJ`の自動変換では`static`変数がうまく変換できない？
+-- 手動で`enum class`にして回避
+#code{{
+companion object {
+  protected val TITLES = arrayOf("r", "w", "x")
+}
+//...
+MainPanel.kt:45:5: error: property must be initialized or be abstract
+    var buttons: Array<JCheckBox>
+    ^
+MainPanel.kt:55:19: error: type mismatch: inferred type is Array<JCheckBox?> but Array<JCheckBox> was expected
+        buttons = arrayOfNulls<JCheckBox>(TITLES.size)
+}}
+
+#twocolumn
+`Java`
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.plaf.*;
+import javax.swing.table.*;
+
+public final class MainPanel {
+  public JComponent makeUI() {
+    String[] columnNames = {"user", "rwx"};
+    Object[][] data = {
+      {"owner", 7}, {"group", 6}, {"other", 5}
+    };
+    TableModel model = new DefaultTableModel(data, columnNames) {
+      @Override public Class<?> getColumnClass(int column) {
+        return getValueAt(0, column).getClass();
+      }
+    };
+    JTable table = new JTable(model) {
+      @Override public void updateUI() {
+        super.updateUI();
+        getColumnModel().getColumn(1).setCellRenderer(new CheckBoxesRenderer());
+        getColumnModel().getColumn(1).setCellEditor(new CheckBoxesEditor());
+      }
+    };
+    table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(new JScrollPane(table));
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(() -> {
+      JFrame frame = new JFrame();
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      frame.getContentPane().add(new MainPanel().makeUI());
+      frame.setSize(320, 240);
+      frame.setLocationRelativeTo(null);
+      frame.setVisible(true);
+    });
+  }
+}
+
+class CheckBoxesPanel extends JPanel {
+  protected static final String[] TITLES = {"r", "w", "x"};
+  public JCheckBox[] buttons;
+  @Override public void updateUI() {
+    super.updateUI();
+    setOpaque(false);
+    setBackground(new Color(0x0, true));
+    setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+    initButtons();
+  }
+  private void initButtons() {
+    buttons = new JCheckBox[TITLES.length];
+    for (int i = 0; i < buttons.length; i++) {
+      JCheckBox b = new JCheckBox(TITLES[i]);
+      b.setOpaque(false);
+      b.setFocusable(false);
+      b.setRolloverEnabled(false);
+      b.setBackground(new Color(0x0, true));
+      buttons[i] = b;
+      add(b);
+      add(Box.createHorizontalStrut(5));
+    }
+  }
+  protected void updateButtons(Object v) {
+    removeAll();
+    initButtons();
+    Integer i = v instanceof Integer ? (Integer) v : 0;
+    buttons[0].setSelected((i & (1 << 2)) != 0);
+    buttons[1].setSelected((i & (1 << 1)) != 0);
+    buttons[2].setSelected((i & (1 << 0)) != 0);
+  }
+}
+
+class CheckBoxesRenderer extends CheckBoxesPanel implements TableCellRenderer {
+  @Override public void updateUI() {
+    super.updateUI();
+    setName("Table.cellRenderer");
+  }
+  @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    updateButtons(value);
+    return this;
+  }
+}
+
+class CheckBoxesEditor extends AbstractCellEditor implements TableCellEditor {
+  private final CheckBoxesPanel panel = new CheckBoxesPanel() {
+    @Override public void updateUI() {
+      super.updateUI();
+      EventQueue.invokeLater(() -> {
+        ActionMap am = getActionMap();
+        for (int i = 0; i < buttons.length; i++) {
+          String title = TITLES[i];
+          am.put(title, new AbstractAction(title) {
+            @Override public void actionPerformed(ActionEvent e) {
+              Arrays.stream(buttons)
+              .filter(b -> b.getText().equals(title))
+              .findFirst()
+              .ifPresent(JCheckBox::doClick);
+              fireEditingStopped();
+            }
+          });
+        }
+        InputMap im = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0), TITLES[0]);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), TITLES[1]);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, 0), TITLES[2]);
+      });
+    }
+  };
+  @Override public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+    panel.updateButtons(value);
+    return panel;
+  }
+  @Override public Object getCellEditorValue() {
+    int i = 0;
+    i = panel.buttons[0].isSelected() ? 1 << 2 | i : i;
+    i = panel.buttons[1].isSelected() ? 1 << 1 | i : i;
+    i = panel.buttons[2].isSelected() ? 1 << 0 | i : i;
+    return i;
+  }
+}
+}}
+#twocolumn
+`Kotlin`
+#code{{
+import java.awt.*
+import java.awt.event.*
+import java.util.*
+import javax.swing.*
+import javax.swing.event.*
+import javax.swing.plaf.*
+import javax.swing.table.*
+
+fun makeUI(): JComponent {
+  val columnNames = arrayOf("user", "rwx")
+  val data = arrayOf(arrayOf<Any>("owner", 7), arrayOf<Any>("group", 6), arrayOf<Any>("other", 5))
+  val model = object : DefaultTableModel(data, columnNames) {
+    override fun getColumnClass(column: Int): Class<*> {
+      return getValueAt(0, column).javaClass
+    }
+  }
+  val table = object : JTable(model) {
+    override fun updateUI() {
+      super.updateUI()
+      getColumnModel().getColumn(1).setCellRenderer(CheckBoxesRenderer())
+      getColumnModel().getColumn(1).setCellEditor(CheckBoxesEditor())
+    }
+  }
+  table.putClientProperty("terminateEditOnFocusLost", java.lang.Boolean.TRUE)
+  return JPanel(BorderLayout(5, 5)).apply {
+    add(JScrollPane(table))
+  }
+}
+
+fun main(args: Array<String>) {
+  EventQueue.invokeLater {
+    JFrame("kotlin swing").apply {
+      defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+      add(makeUI())
+      size = Dimension(320, 240)
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
+}
+
+open class CheckBoxesPanel() : JPanel() {
+  public val buttons = arrayOf(JCheckBox(Permission.READ.toString()), JCheckBox(Permission.WRITE.toString()), JCheckBox(Permission.EXECUTE.toString()))
+
+  override fun updateUI() {
+    super.updateUI()
+    setOpaque(false)
+    setBackground(Color(0x0, true))
+    setLayout(BoxLayout(this, BoxLayout.X_AXIS))
+    EventQueue.invokeLater({ initButtons() })
+  }
+
+  private fun initButtons() {
+    for (b in buttons) {
+      b.setOpaque(false)
+      b.setFocusable(false)
+      b.setRolloverEnabled(false)
+      b.setBackground(Color(0x0, true))
+      add(b)
+      add(Box.createHorizontalStrut(5))
+    }
+  }
+
+  public fun updateButtons(v: Any) {
+    removeAll()
+    initButtons()
+    val i = v as ? Int ? : 0
+    buttons[0].setSelected(i and (1 shl 2) != 0)
+    buttons[1].setSelected(i and (1 shl 1) != 0)
+    buttons[2].setSelected(i and (1 shl 0) != 0)
+  }
+}
+
+enum class Permission(var str: String) {
+  READ("r"), WRITE("w"), EXECUTE("x");
+  override fun toString() = str
+}
+
+internal class CheckBoxesRenderer : CheckBoxesPanel(), TableCellRenderer {
+  override fun updateUI() {
+    super.updateUI()
+    setName("Table.cellRenderer")
+  }
+  override fun getTableCellRendererComponent(table: JTable, value: Any, isSelected: Boolean, hasFocus: Boolean, row: Int, column: Int): Component {
+    updateButtons(value)
+    return this
+  }
+}
+
+internal class CheckBoxesEditor : AbstractCellEditor(), TableCellEditor {
+  private val panel = object : CheckBoxesPanel() {
+    override fun updateUI() {
+      super.updateUI()
+      EventQueue.invokeLater({
+        val am = getActionMap()
+        for (i in buttons.indices) {
+          val title = buttons[i].getText()
+          am.put(title, object : AbstractAction(title) {
+            override fun actionPerformed(e: ActionEvent) {
+              Arrays.stream(buttons)
+                .filter({ b -> b.getText() == title })
+                .findFirst()
+                .ifPresent({ it.doClick() })
+              fireEditingStopped()
+            }
+          })
+        }
+        val im = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0), Permission.READ.toString())
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), Permission.WRITE.toString())
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, 0), Permission.EXECUTE.toString())
+      })
+    }
+  }
+
+  override fun getTableCellEditorComponent(table: JTable, value: Any, isSelected: Boolean, row: Int, column: Int): Component {
+    panel.updateButtons(value)
+    return panel
+  }
+
+  override fun getCellEditorValue(): Any {
+    var i = 0
+    i = if (panel.buttons[0].isSelected()) 1 shl 2 or i else i
+    i = if (panel.buttons[1].isSelected()) 1 shl 1 or i else i
+    i = if (panel.buttons[2].isSelected()) 1 shl 0 or i else i
+    return i
   }
 }
 }}

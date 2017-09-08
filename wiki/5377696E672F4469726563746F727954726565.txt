@@ -57,10 +57,11 @@ class FolderSelectionListener implements TreeSelectionListener {
 * 解説 [#explanation]
 このサンプルでは、[https://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]のディレクトリ表示部分を抜き出して、ルートパーティション(`Windows`の場合、`Desktop`フォルダ)をルートノードにして`JTree`で表示しています。
 
-- クリックされたノードがディレクトリの場合、子ファイルの検索と`JTree`へのそれらの追加を`SwingWorker`を使用して別スレッドで実行する
+- 注:
+-- クリックされたノードがディレクトリの場合、子ファイルの検索と`JTree`へのそれらの追加を`SwingWorker`を使用して別スレッドで実行するよう変更
 
 * 参考リンク [#reference]
-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/filechooser/FileSystemView.html FileSystemView (Java Platform SE 6)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/filechooser/FileSystemView.html FileSystemView (Java Platform SE 8)]
 - [https://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]
 - [http://www.pushing-pixels.org/2007/07/22/showing-the-file-system-as-a-swing-jtree.html Showing the file system as a Swing JTree ・ Pushing Pixels]
 
