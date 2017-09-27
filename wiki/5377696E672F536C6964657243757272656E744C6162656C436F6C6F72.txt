@@ -2,7 +2,7 @@
 category: swing
 folder: SliderCurrentLabelColor
 title: JSliderの現在値に対応するラベルの文字色を変更する
-tags: [JSlider, JLabel, ChangeListener]
+tags: [JSlider, JLabel, ChangeListener, BoundedRangeModel]
 author: aterai
 pubdate: 2014-12-15T00:11:41+09:00
 description: JSliderの大目盛りなどに設定した値ラベルが現在値を表すノブにもっとも近い場合、その色を変更します。
@@ -51,7 +51,9 @@ slider.getModel().addChangeListener(new ChangeListener() {
 -- 現在値をハイライトするための`ChangeListener`を追加
 -- 現在値(`slider.getMajorTickSpacing()`が`0`なので)に対応する`JLabel`を`JSlider#getLabelTable()`から取得して、文字色を変更
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSlider.html#getLabelTable-- JSlider#getLabelTable() (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment

@@ -102,9 +102,9 @@ class SlideInNotification implements PropertyChangeListener, HierarchyListener {
 上記のサンプルでは、`Window#setLocation(int, int)`メソッドを使用して`JOptionPane`を追加した`JWindow`のデスクトップ上での表示位置を変更し、画面右下からスライドインするように設定しています。
 
 - 注:
--- マルチスクリーン環境では、メインの`JFrame`が存在する画面(`frame.getGraphicsConfiguration()`)に警告(`new JWindow(GraphicsConfiguration)`)がスライドインすることを想定しているが、テストしていない
+-- マルチスクリーン環境では、メインの`JFrame`が存在する画面(`frame.getGraphicsConfiguration()`)に警告(`new JWindow(GraphicsConfiguration)`)がスライドインすることを想定しているが未検証
 -- `JOptionPane.WARNING_MESSAGE`以外の`JOptionPane`は未検証
--- スクリーンショットでは親フレーム中央に`JOptionPane`が表示されているが、これは手動で移動している
+-- このページのスクリーンショットでは親フレーム中央に`JOptionPane`が表示されているが、これは手動で移動している
 
 * 参考リンク [#reference]
 - [[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]

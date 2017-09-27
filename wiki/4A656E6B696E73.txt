@@ -10,6 +10,19 @@ pubdate: 2017-06-02
 `Jenkins`の設定、トラブルに関するメモなどを記述しています。
 
 * トラブル [#wf632491]
+** GIT_ASKPASS credentials [#zb68dbf4]
+- `Jenkins`が`git`コマンドを使用するとき、資格情報が入力されるのを待ち続けてタイムアウトしてしまう場合がある
+#code{{
+ > C:\Program Files\Git\bin\git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials ユーザ名
+ > C:\Program Files\Git\bin\git.exe fetch --tags --progress http://example.com/git/test +refs/heads/*:refs/remotes/origin/*
+ERROR: Timeout after 10 minutes
+ERROR: Error fetching remote repo 'origin'
+}}
+
+- `git config --system --unset credential.helper`などを実行するなどして`C:\Program Files\Git\mingw64\etc\gitconfig`から資格情報ヘルパーを削除する
+-- 参考: [https://stackoverflow.com/questions/42627269/jenkins-using-git-askpass-to-set-credentials/42636309 Jenkins - using GIT_ASKPASS to set credentials - Stack Overflow]
+
 ** diskcheckプラグインでArrayIndexOutOfBoundsException [#i4932bd9]
 - `diskcheck`を`0.29`にすると`ArrayIndexOutOfBoundsException`が発生してビルドに失敗する場合がある？
 -- [https://wiki.jenkins-ci.org/display/JENKINS/DiskCheck+Plugin DiskCheck Plugin - Jenkins - Jenkins Wiki]
@@ -117,21 +130,21 @@ java.lang.StackOverflowError
 -- `Windows`サービス化している場合に失敗する？
 -- [https://github.com/jenkinsci/jenkins/pull/1238 FIX JENKINS-22685 Jenkins cannot restart Windows service by gmjck ・ Pull Request #1238 ・ jenkinsci/jenkins]
 --- 修正された https://issues.jenkins-ci.org/browse/JENKINS-22685
+-- [https://issues.jenkins-ci.org/browse/JENKINS-13153 JENKINS-13153 "Upgrade Automatically" does not seem to work on Windows - Jenkins JIRA]
+--- Windows環境で`JENKINS_HOME`を変更している場合、自動更新に失敗する不具合が`2.77`で修正された
 
 ** リポジトリブラウザの設定が保存されない [#s05adb81]
-- %%[https://issues.jenkins-ci.org/browse/JENKINS-22064 [JENKINS-22064] Git Repository Browser URL not saved anymore - Jenkins JIRA]で、URLが正常に保存されない%%
+- %%[https://issues.jenkins-ci.org/browse/JENKINS-22064 JENKINS-22064 Git Repository Browser URL not saved anymore - Jenkins JIRA]で、URLが正常に保存されない%%
 -- [https://github.com/jenkinsci/git-plugin/commit/b2a731e62272c93a60f7f45d9d3c5d3b1e57fa11 Merge pull request ＃211 from MarkEWaite/master-add-browser-url-round-tri... jenkinsci/git-plugin]で修正された
 
 * Jenkinsの設定 [#d2460c6c]
 - ホームディレクトリ(`Windows`環境)
 -- デフォルトの`~/.jenkins`に実行ファイルやビルド結果を一緒に保存すると、バックアップなどが面倒
--- `C:\Program Files (x86)\Jenkins\`に`jenkins.exe`や`jenkins.war`をインストールすると`jenkins.xml`などが編集しづらいので、`C:\Jenkins_JAR`以下にインストールする
--- `C:\Jenkins_JAR\jenkins.xml`を以下のように変更し、プラグインやビルドを`C:\jenkins`に変更する
---- `<env name="JENKINS_HOME" value="C:\jenkins"/>`
--- システム環境変数`JAVA_HOME`で指定したバージョンの`Java`を`Jenkins`が使用するように`C:\Jenkins_JAR\jenkins.xml`を変更
+-- `C:\Program Files (x86)\Jenkins\`に`jenkins.exe`や`jenkins.war`をインストールすると`jenkins.xml`などが編集しづらいので、`C:\Jenkins`以下にインストールする
+-- システム環境変数`JAVA_HOME`で指定したバージョンの`Java`を`Jenkins`が使用するように`C:\Jenkins\jenkins.xml`を変更
 --- `<executable>%JAVA_HOME%\bin\java</executable>`
 - 高度な設定(`Jenkins`の管理、システムの設定にあるボタンをクリック)
--- ワークスペース・ルートディレクトリ: `C:/Edian/${ITEM_FULLNAME}`
+-- ワークスペース・ルートディレクトリ: `C:/HogeHoge/${ITEM_FULLNAME}`
 -- ビルド・ルートディレクトリ: `${ITEM_ROOTDIR}/builds`
 
 * Jenkinsfile [#z1d42b22]

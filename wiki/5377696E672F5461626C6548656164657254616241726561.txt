@@ -121,9 +121,10 @@ class TableHeaderTabbedPane extends JPanel {
 * 解説 [#explanation]
 このサンプルでは、`CardLayout`と`JTableHeader`を使用して、コンテナの切り替えを行う`JTabbedPane`風のコンポーネントを作成しています。
 
-- `JTableHeader`は、空の`JTable`を作成
+- `JTableHeader`は、空の`JTable`を作成してそこから取得
+-- `new JTableHeader(TableColumnModel cm)`より簡単なため
 - `JScrollPane`にサイズ`0`の`JViewport`を設定し、上記の`JTable`を追加
--- 直接、`JTableHeader`を追加すると、うまくリサイズできない？
+-- 直接`JTableHeader`を追加すると、うまくリサイズできない？
 - `JTableHeader`に`MouseListener`を追加し、`TableColumn`(タブとして代用)がクリックされると、そのタイトル文字列を引数にして`CardLayout#show(...)`を実行してコンテナの切り替えを行う
 - `JTableHeader`のドラッグ＆ドロップによる入れ替えや、ヘッダ(タブ)幅のリサイズが利用可能
 

@@ -66,9 +66,8 @@ private JMenu createMenu(String key) {
 * 解説 [#explanation]
 上記のサンプルでは、`JMenuBar`に画像を描画し、これに追加する`JMenu`を通常は透明、選択されたときなどは不透明となるように`setOpaque`メソッドで切り替えています。
 
-- 注意点
--- `WindowsLookAndFeel`の場合、`JMenu#setBackground(new Color(0x0, true));`とする必要がある？
--- %%`NimbusLookAndFeel`には対応していない%%
+- 注:
+-- `WindowsLookAndFeel`の場合、`JMenu#setBackground(new Color(0x0, true));`を設定する必要がある
 -- `WindowsLookAndFeel`に切り替えた直後、メニューの文字色などがおかしい？
 
 ----

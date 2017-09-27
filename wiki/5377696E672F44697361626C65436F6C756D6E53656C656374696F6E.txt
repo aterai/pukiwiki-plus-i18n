@@ -57,7 +57,7 @@ table2.getColumnModel().setSelectionModel(new DefaultListSelectionModel() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTable#changeSelection(...)`をオーバーライドするなどの方法で、`0`列目以外を編集は可能だが、、選択不可となるように設定しています。
+上記のサンプルでは、`JTable#changeSelection(...)`をオーバーライドするなどの方法で、`0`列目以外を編集は可能、ただし選択は不可となるように設定しています。
 
 - 上: `Override JTable#prepareRenderer(...)`
 -- `JTable#prepareRenderer(...)`をオーバーライドし、`0`列目以外は選択状態を描画しないように設定

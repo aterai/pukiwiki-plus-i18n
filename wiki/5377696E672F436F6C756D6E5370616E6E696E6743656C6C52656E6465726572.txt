@@ -19,15 +19,15 @@ hreflang:
 * サンプルコード [#sourcecode]
 #code(link){{
 class ColumnSpanningCellRenderer extends JPanel implements TableCellRenderer {
+  private static final int TARGET_COLIDX = 0;
   private final JTextArea textArea = new JTextArea(2, 999999);
   private final JLabel label = new JLabel();
   private final JLabel iconLabel = new JLabel();
-  private final JScrollPane scroll = new JScrollPane();
+  private final JScrollPane scroll = new JScrollPane(textArea);
 
-  public ColumnSpanningCellRenderer() {
-    super(new BorderLayout(0, 0));
+  protected ColumnSpanningCellRenderer() {
+    super(new BorderLayout());
 
-    scroll.setViewportView(textArea);
     scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
     scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     scroll.setBorder(BorderFactory.createEmptyBorder());
@@ -57,34 +57,49 @@ class ColumnSpanningCellRenderer extends JPanel implements TableCellRenderer {
   @Override public Component getTableCellRendererComponent(
       JTable table, Object value, boolean isSelected,
       boolean hasFocus, int row, int column) {
-    Test test;
-    if (value instanceof Test) {
-      test = (Test) value;
+    OptionPaneDescription d;
+    if (value instanceof OptionPaneDescription) {
+      d = (OptionPaneDescription) value;
       add(iconLabel, BorderLayout.WEST);
     } else {
+      String title = Objects.toString(value, "");
       int mrow = table.convertRowIndexToModel(row);
-      String title = value != null ? value.toString() : "";
-      Test t = (Test) table.getModel().getValueAt(mrow, 0);
-      String text = t != null ? t.text : "";
-      Icon icon = t != null ? t.icon : null;
-      test = new Test(title, icon, text);
+      Object o = table.getModel().getValueAt(mrow, 0);
+      if (o instanceof OptionPaneDescription) {
+        OptionPaneDescription t = (OptionPaneDescription) o;
+        d = new OptionPaneDescription(title, t.icon, t.text);
+      } else {
+        d = new OptionPaneDescription(title, null, "");
+      }
       remove(iconLabel);
     }
-    label.setText(test.title);
-    textArea.setText(test.text);
-    iconLabel.setIcon(test.icon);
+    label.setText(d.title);
+    textArea.setText(d.text);
+    iconLabel.setIcon(d.icon);
 
     Rectangle cr = table.getCellRect(row, column, false);
-    if (column != 0) {
+    if (column != TARGET_COLIDX) {
       cr.x -= iconLabel.getPreferredSize().width;
     }
     scroll.getViewport().setViewPosition(cr.getLocation());
+
     if (isSelected) {
       setBackground(Color.ORANGE);
     } else {
       setBackground(Color.WHITE);
     }
     return this;
+  }
+}
+
+class OptionPaneDescription {
+  public final String title;
+  public final Icon icon;
+  public final String text;
+  protected OptionPaneDescription(String title, Icon icon, String text) {
+    this.title = title;
+    this.icon  = icon;
+    this.text  = text;
   }
 }
 }}

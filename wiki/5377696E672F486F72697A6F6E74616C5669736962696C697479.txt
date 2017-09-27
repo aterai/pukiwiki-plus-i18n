@@ -131,7 +131,9 @@ class ArrowButtonlessScrollBarUI extends BasicScrollBarUI {
 -- 縦スクロールバーを非表示にした`JScrollPane`を使用する場合、`JTextField`内の文字列選択でスクロールしない
 -- 文字列を適当な長さまで削除するとノブが非表示になる
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextField.html#getHorizontalVisibility-- JTextField#getHorizontalVisibility() (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 - 可視領域の幅の表示を考えると`ArrowButton`は不要なので、[[JScrollBarを半透明にする>Swing/TranslucentScrollBar]]のような外見の`JScrollBar`を使用した方が良いかもしれない。 -- &user(aterai); &new{2014-05-14 (水) 16:05:32};

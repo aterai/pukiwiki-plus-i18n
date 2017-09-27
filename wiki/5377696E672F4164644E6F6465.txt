@@ -60,15 +60,14 @@ class TreePopupMenu extends JPopupMenu {
 上記のサンプルでは、`JPopupMenu`を使って、選択したノードに子ノードの追加、削除、名前変更ができます。
 
 - 追加
--- `DefaultTreeModel#insertNodeInto(...)`メソッドを使用して、ノードを追加
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeModel.html#insertNodeInto-javax.swing.tree.MutableTreeNode-javax.swing.tree.MutableTreeNode-int- DefaultTreeModel#insertNodeInto(...)]メソッドを使用して、ノードを追加
 - 追加とリロード
--- `DefaultMutableTreeNode#add(DefaultMutableTreeNode)`メソッドを使ってノードを追加し、`DefaultTreeModel#reload(...)`、または`DefaultTreeModel#nodeStructureChanged(DefaultMutableTreeNode)`で更新を通知
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultMutableTreeNode.html#add-javax.swing.tree.MutableTreeNode- DefaultMutableTreeNode#add(MutableTreeNode)]メソッドを使ってノードを追加し、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeModel.html#reload-javax.swing.tree.TreeNode- DefaultTreeModel#reload(...)]、または[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeModel.html#nodeStructureChanged-javax.swing.tree.TreeNode- DefaultTreeModel#nodeStructureChanged(TreeNode)]メソッドで更新を通知
 --- 兄弟ノードの展開状態などがリセットされてしまう
 - 削除
--- ルートノードでない場合(`DefaultMutableTreeNode#isRoot()`が`false`)、`DefaultTreeModel#removeNodeFromParent(DefaultMutableTreeNode)`で削除
+-- ルートノードでない場合(`DefaultMutableTreeNode#isRoot()`が`false`)、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeModel.html#removeNodeFromParent-javax.swing.tree.MutableTreeNode- DefaultTreeModel#removeNodeFromParent(MutableTreeNode)]メソッドで削除
 - 名前変更
 -- [[JTreeのノード編集をPopupからのみに制限する>Swing/StartEditingPopupMenu]]と同じ
-
 #code{{
 model.valueForPathChanged(path, str);
 //もしくは、
