@@ -48,12 +48,13 @@ private void fireDocumentChangeEvent() {
 
 - `TreePath`に指定された接頭辞で始まる`TreeNode`が含まれている場合、そのノードの`UserObject`に表示フラグを立てる
 -- 例: `foo`で検索した場合、`food`ノード以下の子ノードも表示される
-- `TreeCellRenderer`で、`UserObject`を取得し、非表示の場合は高さ`0`の`JLabel`をレンダラーとして返す
--- `tree.setRowHeight(-1);`と設定しているので、各ノードの推奨サイズが行の高さとして使用される
+- `TreeCellRenderer`内で`UserObject`を取得し、非表示の場合は高さ`0`の`JLabel`をレンダラーとして返す
+-- `tree.setRowHeight(-1);`と設定しているので、各ノードの描画を行うレンダラーの推奨サイズが行の高さとして使用される
 - 高さ`0`のノードに対しても関連ノード間を繋ぐ点線が引かれる場合がある(`LookAndFeel`に依存)ので、これを非表示にする場合は、`UIManager.put("Tree.paintLines", Boolean.FALSE);`、または`tree.putClientProperty("JTree.lineStyle", "None");`などを使用する
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/38369170/filter-jtree-keeping-all-nodes-and-children-of-nodes-that-match-criteria java - Filter jtree - keeping all nodes and children of nodes that match criteria - Stack Overflow]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#setRowHeight-int- JTree#setRowHeight(int) (Java Platform SE 8)]
 
 * コメント [#comment]
 #comment
