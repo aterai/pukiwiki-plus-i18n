@@ -596,24 +596,27 @@ fun main(args: Array<String>) {
 }}
 #twocolumn
 
-** JTable2 [#JTable2]
-- `extends`, `implements`
--- `IntelliJ`の自動変換では勝手に`open`は付けないようなので、以下のようなエラーが出る場合は、`internal class CheckBoxesPanel : JPanel() {`を`open class CheckBoxesPanel : JPanel() {`に修正する
-#code{{
-MainPanel.kt:81:37: error: this type is final, so it cannot be inherited from
-internal class CheckBoxesRenderer : CheckBoxesPanel(), TableCellRenderer {
-}}
+** 演算子の優先順位[#precedence]
 - 論理演算子: 左シフト
 -- `Java`: `buttons[0].setSelected((i & (1 << 2) ) != 0);`
 -- `Kotlin`: `buttons[0].setSelected(i and (1 shl 2) != 0)`
 --- `IntelliJ`の自動変換では括弧が減る(`and`の優先順位が異なる？)
 --- `IntelliJ`の自動変換では時々`buttons[0].setSelected(i and (1 shl 2 != 0) )`に誤変換される？
 - `bitwise AND`(`and`の優先順位)
-- [https://discuss.kotlinlang.org/t/bitwise-operators-are-not-in-the-precedence-table/2075 Bitwise operators are not in the precedence table - Support - Kotlin Discussions]
--- [https://kotlinlang.org/docs/reference/grammar.html#precedence 演算子の優先順位表]
--- [https://kotlinlang.org/docs/reference/basic-types.html#operations Basic Types: Numbers, Strings, Arrays - Kotlin Programming Language]
--- `and`は`Infix function`で`Equality`の`!=`より優先順位が高い
--- `Java`は逆: [https://docs.oracle.com/javase/tutorial/java/nutsandbolts/operators.html Operators (The Java™ Tutorials > Learning the Java Language > Language Basics)]
+-- [https://discuss.kotlinlang.org/t/bitwise-operators-are-not-in-the-precedence-table/2075 Bitwise operators are not in the precedence table - Support - Kotlin Discussions]
+-- [https://kotlinlang.org/docs/reference/grammar.html#precedence Kotlinの演算子優先順位表]
+--- [https://kotlinlang.org/docs/reference/basic-types.html#operations Basic Types: Numbers, Strings, Arrays - Kotlin Programming Language]
+--- `Kotlin`の`bitwise and`は`infix function`のため、`Equality`の`!=`より優先順位が高い
+-- `Java`の演算子優先順位表: [https://docs.oracle.com/javase/tutorial/java/nutsandbolts/operators.html Operators (The Java™ Tutorials > Learning the Java Language > Language Basics)]
+--- `Java`は逆で、`equality`(`==`, `!=`)のほうが`bitwise AND`(`&`)より優先順位が高い
+
+----
+- `extends`, `implements`
+-- `IntelliJ`の自動変換では勝手に`open`は付けないようなので、以下のようなエラーが出る場合は、`internal class CheckBoxesPanel : JPanel() {`を`open class CheckBoxesPanel : JPanel() {`に修正する
+#code{{
+MainPanel.kt:81:37: error: this type is final, so it cannot be inherited from
+internal class CheckBoxesRenderer : CheckBoxesPanel(), TableCellRenderer {
+}}
 - `IntelliJ`の自動変換では`static`変数がうまく変換できない？
 -- 手動で`enum class`にして回避
 #code{{

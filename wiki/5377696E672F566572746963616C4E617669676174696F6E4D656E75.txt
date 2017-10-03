@@ -1,0 +1,62 @@
+---
+category: swing
+folder: VerticalNavigationMenu
+title: JTreeとCardLayoutでサイドメニューを作成する
+tags: [JTree, CardLayout, TreeSelectionListener]
+author: aterai
+pubdate: 2017-10-02T15:53:07+09:00
+description: JTreeのスタイルを変更してサイドメニュー風のコンポーネントを作成し、ノード選択に応じてCardLayoutでのパネル切り替えを実行します。
+image: https://drive.google.com/uc?export=view&id=1HtdjEFvmcBet6Qv2s2zHMZWTgzkb2rcqqQ
+---
+* 概要 [#summary]
+`JTree`のスタイルを変更してサイドメニュー風のコンポーネントを作成し、ノード選択に応じて`CardLayout`でのパネル切り替えを実行します。
+
+#download(https://drive.google.com/uc?export=view&id=1HtdjEFvmcBet6Qv2s2zHMZWTgzkb2rcqqQ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+TreeModel model = makeModel();
+CardLayout cardLayout = new CardLayout();
+JPanel p = new JPanel(cardLayout);
+DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+Enumeration en = root.postorderEnumeration();
+while (en.hasMoreElements()) {
+  DefaultMutableTreeNode node = (DefaultMutableTreeNode) en.nextElement();
+  String title = Objects.toString(node.getUserObject());
+  p.add(new JLabel(title), title);
+}
+
+JTree tree = new RowSelectionTree();
+tree.setModel(model);
+tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+tree.addTreeSelectionListener(e -> {
+  // http://ateraimemo.com/Swing/CardLayoutTabbedPane.html
+  Object o = tree.getLastSelectedPathComponent();
+  if (o instanceof DefaultMutableTreeNode) {
+    DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
+    String title = Objects.toString(node.getUserObject());
+    cardLayout.show(p, title);
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `JTree`のスタイルをサイドメニュー風に変更
+-- ルートノードを非表示: [[JTreeのルートノードを非表示に設定する>Swing/TreeRootVisible]]
+-- ノード選択をシングルセレクションモードに変更: [[JTreeの選択モードを切り替える>Swing/TreeSelection]]
+-- ノードアイコンを非表示: [[JTreeのOpenIcon、ClosedIcon、LeafIconを変更>Swing/TreeLeafIcon]]
+-- 展開、折畳みアイコンを非表示: [[JTreeの展開、折畳みアイコンを非表示にする>Swing/TreeExpandedIcon]]
+-- 初期状態でノードを全展開: [[JTreeのノードを展開・折り畳み>Swing/ExpandAllNodes]]
+-- ノードを選択可能で折り畳みを不可に設定: [[JTreeのノードを折り畳み不可に設定する>Swing/TreeNodeCollapseVeto]]
+-- 行全体を選択背景色で描画: [[JTreeを行クリックで選択し、行全体を選択状態の背景色で描画>Swing/TreeRowSelection]]
+- ノード選択を`TreeSelectionListener`で取得し対応するタイトルのパネルを`CardLayout`で切り替え
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#addTreeSelectionListener-javax.swing.event.TreeSelectionListener- JTree#addTreeSelectionListener(...)]メソッドを使用してノードの選択を取得
+-- ノードタイトルをキーに`CardLayout`で右パネルの切り替えを実行
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#addTreeSelectionListener-javax.swing.event.TreeSelectionListener- JTree#addTreeSelectionListener(...) (Java Platform SE 8)]
+- [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]
+
+* コメント [#comment]
+#comment
+#comment
