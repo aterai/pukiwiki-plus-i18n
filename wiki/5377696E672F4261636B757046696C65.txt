@@ -68,16 +68,16 @@ private File makeBackupFile(File file, int intold, int intnew) {
 
 以下の例では、古いバージョンを`2`つ、新しいバージョンを`3`つバックアップとして残します。
 
-- `tmp.foo.1~`から`tmp.foo.5~`が残される
+- `tmp.foo.1~`から`tmp.foo.5~`が残る
 - `tmp.foo.1~`がもっとも古いバージョンのファイルになる
 
 バックアップファイルが`5`個以上になった場合、古い方のバージョン`2`つはそのまま残し、新しいバージョンをずらしてバックアップが更新されます。
 
-- `tmp.foo.1~`, `tmp.foo.2~`は残される
-- `tmp.foo.3~`は削除される
+- `tmp.foo.1~`, `tmp.foo.2~`は残る
+- `tmp.foo.3~`は削除
 - `tmp.foo.4~`は`tmp.foo.3~`にリネーム
 - `tmp.foo.5~`は`tmp.foo.4~`にリネーム
-- `tmp.foo.5~`が新にバックアップとして生成される
+- `tmp.foo.5~`が新にバックアップとして生成
 
 #code{{
 File tmpFile = File.createTempFile("tmp", ".foo~", file.getParentFile());
