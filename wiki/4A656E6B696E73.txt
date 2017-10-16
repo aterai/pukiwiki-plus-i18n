@@ -20,8 +20,12 @@ ERROR: Timeout after 10 minutes
 ERROR: Error fetching remote repo 'origin'
 }}
 
-- `git config --system --unset credential.helper`などを実行するなどして`C:\Program Files\Git\mingw64\etc\gitconfig`から資格情報ヘルパーを削除する
+- `git config --system --unset credential.helper`を実行して`C:\Program Files\Git\mingw64\etc\gitconfig`から資格情報ヘルパーを削除する
 -- 参考: [https://stackoverflow.com/questions/42627269/jenkins-using-git-askpass-to-set-credentials/42636309 Jenkins - using GIT_ASKPASS to set credentials - Stack Overflow]
+- `Git for Windows`の再インストールで`C:\Program Files\Git\mingw64\etc\gitconfig`が上書きされる？ようなので、`Enable Git Credential Manager`のチェックを外すほうが確実かもしれない
+-- [https://support.cloudbees.com/hc/en-us/articles/221046888-Build-Hang-or-Fail-with-Git-for-Windows Build Hang or Fail with Git for Windows – CloudBees Support]
+
+#img2(https://drive.google.com/uc?export=view&id=1X7AIqvx-6Lich4bS87hCBpe2JA5CUBzZKg)
 
 ** diskcheckプラグインでArrayIndexOutOfBoundsException [#i4932bd9]
 - `diskcheck`を`0.29`にすると`ArrayIndexOutOfBoundsException`が発生してビルドに失敗する場合がある？

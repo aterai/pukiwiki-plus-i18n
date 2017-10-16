@@ -44,7 +44,7 @@ class ComboCellRenderer extends JComboBox implements TableCellRenderer {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`1`列目(中央)のセルの表示を`JComboBox`にするために、これを継承するセルレンダラーを設定しています。`1`列目はセルエディタも`JComboBox`ですが、これらは同じ`JComboBox`のインスタンスではなく、別々に用意しています。
+上記のサンプルでは、`1`列目(中央)のセルの表示を`JComboBox`にするために、これを継承するセルレンダラーを設定しています。この列はセルエディタも`JComboBox`ですが、セルレンダラーとは別の`JComboBox`のインスタンスを使用しています。
 
 レンダラーで使用する`JComboBox`は、セルの表示のみに使用するため、以下のように設定しています。
 

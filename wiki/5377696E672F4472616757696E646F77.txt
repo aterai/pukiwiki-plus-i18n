@@ -49,9 +49,9 @@ class DragWindowListener extends MouseAdapter {
 }}
 
 * 解説 [#explanation]
-`JWindow`や、`setUndecorated(true)`した`JFrame`のようにタイトルバーのないフレームをマウスのドラッグで移動します。実際は`JWindow`に、`MouseMotionListener`などを実装したコンポーネントを追加しています。
+`JWindow`や、`setUndecorated(true)`した`JFrame`のようにタイトルバーのないフレームをマウスのドラッグで移動します。実際は`JWindow`自体にリスナーを設定するのではなく、子コンポーネントに`MouseMotionListener`などを追加しています。
 
-上記のサンプルでは、`Splash Screen`の`JLabel`にリスナーを追加し、これを`JWindow`に貼り付けてドラッグできるようにしています。
+上記のサンプルでは`JLabel`にリスナーを追加し、これを`JWindow`に追加することでドラッグ可能にしています。
 
 次に開く`setUndecorated(true)`した`JFrame`では、青いラベル部分をドラッグすることが出来ます。
 

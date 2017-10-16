@@ -265,6 +265,23 @@ set XSLT=C:/xslt/docx2xxx.xsl
 
 ** xsl:for-each-group [#sbfd6336]
 
+* Office Open XML [#OOXML]
+** DrawingML [#DrawingML]
+** English Metric Units [#emu]
+- [http://archive.oreilly.com/pub/post/what_is_an_emu.html Why EMUs?]
+- [https://startbigthinksmall.wordpress.com/2010/01/04/points-inches-and-emus-measuring-units-in-office-open-xml/ Points, inches and Emus: Measuring units in Office Open XML – Lars Corneliussen]
+-- インチやミリの橋渡しをする高精度の内部単位として使用
+-- [https://ja.wikipedia.org/wiki/Edian Edian]の内部単位`neu`とその理由なども完全に同じ
+-- 上限は`int`(`Integer.MAX_VALUE`,`2147483647`)で`50mm`程度表現可能
+
+ 1in = 914400emu = 127 * 3 * 2400emu
+ 1pt = 12700emu = 127 * 100emu
+ 1mm = 36000emu
+ 1級 = 9000emu
+
+// 1in = 25.4mm
+// 72pt = 1in
+
 * コメント [#comment]
 #comment
 #comment

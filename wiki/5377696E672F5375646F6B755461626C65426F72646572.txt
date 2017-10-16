@@ -73,8 +73,8 @@ static class SudokuCellRenderer extends DefaultTableCellRenderer {
 -- [[JTableの罫線の有無とセルの内余白を変更>Swing/IntercellSpacing]]
 -- `JTable#setShowVerticalLines(false)`、`JTable#setShowHorizontalLines(false)`、`JTable#setIntercellSpacing(new Dimension());`
 - 列幅、行高を罫線分だけ増加
--- `3,6,9`列目のセル列幅をブロック罫線の幅だけ増加、その他のセル列幅はセル罫線の幅だけ増加: `TableColumn#setPreferredWidth(int)`
--- `3,6,9`行目のセル行高をブロック罫線の幅だけ増加、その他のセル行高はセル罫線の幅だけ増加: `JTable#setRowHeight(int, int)`
+-- `2,5,8`列目のセル列幅をブロック罫線の幅だけ増加、その他のセル列幅はセル罫線の幅だけ増加: `TableColumn#setPreferredWidth(int)`
+-- `2,5,8`行目のセル行高をブロック罫線の幅だけ増加、その他のセル行高はセル罫線の幅だけ増加: `JTable#setRowHeight(int, int)`
 - `MatteBorder`でセル罫線を描画する`DefaultTableCellRenderer`を設定
 -- 罫線を描画するのは右辺と下辺のみ
 -- `3`行、`3`列ごとに太さの異なるブロック罫線を描画する

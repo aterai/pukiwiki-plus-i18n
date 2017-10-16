@@ -56,7 +56,7 @@ model.addTableModelListener(e -> {
 - 選択用の`JTable`:
 -- `0`列目の値(`Boolean`)を`JCheckBox`で編集可能になるよう設定
 - 表示用の`JTable`:
--- `JTable#isCellEditable(...)`をオーバーライドして編集不可に設定
+-- `JTable#isCellEditable(...)`をオーバーライドしてモデルではなく`JTable`側で編集不可を設定
 -- `Boolean`値を持つモデルの`0`列目(表示は`JCheckBox`)を`TableColumnModel#removeColumn(...)`メソッドで非表示に設定
 -- `RowFilter#include(...)`をオーバーライドして、`0`列目の値が`Boolean.TRUE`の場合、その行を表示する`RowFilter`を作成して設定
 - 共有の`TableModel`:

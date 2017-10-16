@@ -15,21 +15,19 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTIHWUuKaI/AAAAAAAAASQ/gf
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final JLabel label = new JLabel();
-Timer timer = new Timer(600, new ActionListener() {
-  private boolean flg = true;
-  @Override public void actionPerformed(ActionEvent e) {
-    flg ^= true;
-    label.setText(flg ? "!!!Warning!!!" : "");
-  }
-});
+JLabel label = new JLabel();
+Timer timer = new Timer(300, e -> label.setText("".equals(label.getText()) ? "!!!Warning!!!" : ""));
 timer.start();
 }}
 
 * 解説 [#explanation]
 `javax.swing.Timer`を使って、`JLabel`にテキスト文字列と空文字列を交互に設定することで点滅を表現しています。
 
-//* 参考リンク [#reference]
+新しい`java.util.Timer`は汎用的で多くの機能を持っていますが、`Swing`などの`GUI`コンポーネントを更新する場合はアクションが`EDT`(イベント・ディスパッチ・スレッド)で実行される`javax.swing.Timer`を使用します。
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/Timer.html Timer (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 - `Timer`があいまいなら`javax.swing.Timer`で解決 -- &user(666); &new{2007-06-22 (金) 11:51:42};
