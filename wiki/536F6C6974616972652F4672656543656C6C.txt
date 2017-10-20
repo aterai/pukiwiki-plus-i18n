@@ -1,0 +1,49 @@
+---
+title: FreeCell - Microsoft Solitaire Collection
+description: Microsoft Solitaire CollectionのFreeCellに関するメモ書き
+author: aterai
+pubdate: 2017-10-19T19:11:43+09:00
+---
+#contents
+
+`Microsoft Solitaire Collection`の`FreeCell`に関するメモ書きです。
+
+* 用語 [#glossary]
+- `Cell`: フリーセル(`4`スペース、左上)
+- `Foundation`: ホームセル(`4`スート分、右上)
+- `Tableau`: 場札(`8`列、`4 * 7 + 4 * 6 = 52`枚)
+
+* 初期状態 [#card]
+- 基本デッキの`13 * 4 = 52`枚のカードを使用する
+- すべてのカードを数字が見えるように開いて`8`列に並べる
+-- 左の`4`列は`7`枚、右の`4`列は`6`枚
+
+* 連続カード移動可能枚数 [#moves]
+- 「〇以内の動作で山札を片付ける」などの「手数制限チャレンジ」では、連続カード移動は`1`動作になる
+- 連続カード移動可能枚数は、`(1 + フリーセル) * (2 ^ 空き列)`枚
+-- 参考: [http://www.solitairecentral.com/articles/FreecellPowerMovesExplained.html Freecell PowerMoves Explained]
+--- via: [https://sansesoftcatalog.blogspot.jp/2016/08/anniversary-microsoft-solitaire-collection.html Microsoft Solitaire Collection ： サンセソフトカタログ]
+- 例
+-- フリーセル`1`つ空きで、`2`つの連続カード移動可
+-- フリーセル`2`つ空きで、`3`つの連続カード移動可
+-- フリーセル`3`つ空きで、`4`つの連続カード移動可
+-- フリーセル`4`つ空きで、`5`つの連続カード移動可
+-- フリーセル`2`つ空き、列`1`つ空きで、`(1 + 2) * (2 ^ 1) = 6`枚の連続カードが移動可
+-- フリーセル`3`つ空き、列`1`つ空きで、`(1 + 3) * (2 ^ 1) = 8`枚の連続カードが移動可
+-- フリーセル`1`つ空き、列`2`つ空きで、`(1 + 1) * (2 ^ 2) = 8`枚の連続カードが移動可
+-- フリーセル`2`つ空き、列`2`つ空きで、`(1 + 2) * (2 ^ 2) = 12`枚の連続カードが移動可
+
+* 時間経過 [#time]
+- 最初のカード移動開始前は、ゲーム時間に含まれない
+- 自動カード移動中はゲーム時間に含まれない
+-- 自動カード移動中でもカードの操作が可能
+-- ダブルクリックでのカード移動中も時間は経過しない？ので、すこしだけドラッグより時間が節約できる
+- `Undo`中は時間が経過する
+
+* 参考リンク [#reference]
+- [http://www.solitairecentral.com/articles/FreecellPowerMovesExplained.html Freecell PowerMoves Explained]
+- [https://sansesoftcatalog.blogspot.jp/2016/08/anniversary-microsoft-solitaire-collection.html Microsoft Solitaire Collection ： サンセソフトカタログ]
+
+* コメント [#comment]
+#comment
+#comment

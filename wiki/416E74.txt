@@ -151,6 +151,37 @@ pubdate: 2003-09-25
 </target>
 }}
 
+- 上記の`componentdef`を使用する方法では、`Java 9`で`bootclasspath/p is no longer a supported option.`とエラーになる
+errorprone:
+    [javac] Compiling 2 source files to C:\Users\terai\jst\SelectionKeeper\target\classes
+    [javac] -Xbootclasspath/p is no longer a supported option.
+    [javac] Error: Could not create the Java Virtual Machine.
+    [javac] Error: A fatal exception has occurred. Program will exit.
+
+- ドキュメントにあるように、`javac`タスクで`compiler="com.google.errorprone.ErrorProneAntCompilerAdapter"`属性を追加使用するよう修正
+
+#code{{
+<target name="errorprone" depends="prepare-src, prepare-resource, prepare-web">
+  <javac srcdir="${build.src}"
+         includes="**/*.java"
+         destdir="${build.dest}"
+         encoding="${compile.encoding}"
+         debug="${compile.debug}"
+         optimize="${compile.optimize}"
+         deprecation="${compile.deprecation}"
+         includeAntRuntime="no"
+         compiler="com.google.errorprone.ErrorProneAntCompilerAdapter"
+         includeantruntime="false"
+         classpathref="project.class.path">
+    <compilerclasspath>
+      <fileset dir="${env.ERRORPRONE_HOME}" includes="*.jar" />
+    </compilerclasspath>
+    <compilerarg value="-Xlint:unchecked" />
+    <compilerarg value="-Xep:MultipleTopLevelClasses:OFF" />
+  </javac>
+</target>
+}}
+
 ** Scpタスク [#scp]
 #code{{
   <path id="jsch.path">

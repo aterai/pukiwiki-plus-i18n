@@ -3,15 +3,15 @@ title: Java Swing 動作環境
 description: このサイトにあるサンプルの動作・テスト環境や、JDKのダウンロード、利用方法など
 ---
 #contents
-* サンプル利用方法 [#wdd24dcc]
-** Jarファイルで起動する場合 [#s5311996]
+* サンプル利用方法 [#example]
+** Jarファイルで起動する場合 [#jar]
 `example.jar`をダウンロードしてサンプルプログラムを起動する場合は、コマンドプロンプトで、以下のように入力します。
 
  java -jar example.jar
 
 `Jar`ファイルが`Java`に関連付けされている場合は、マウスでダブルクリックでも起動します。
 
-** ソースをコンパイルして起動する場合 [#d9b0bcd0]
+** ソースをコンパイルして起動する場合 [#source]
 `src.zip`をダウンロードしたり、[https://github.com/aterai/java-swing-tips GitHub]からソースコード一式を取得することができます。
 
  git clone https://github.com/aterai/java-swing-tips.git
@@ -26,7 +26,7 @@ description: このサイトにあるサンプルの動作・テスト環境や�
  ant compile
  sh run.sh
 
-* 動作環境 [#j82ab918]
+* 動作環境 [#environments]
 このサイトにあるサンプルコードは、主に以下の環境で開発と動作確認を行っています。
 
 - `Windows 10 64bit`
@@ -34,9 +34,9 @@ description: このサイトにあるサンプルの動作・テスト環境や�
  Microsoft Windows [Version 10.0.15063] 
  
  >"%JAVA_HOME%\bin\java" -version
- java version "1.8.0_144"
- Java(TM) SE Runtime Environment (build 1.8.0_144-b01)
- Java HotSpot(TM) 64-Bit Server VM (build 25.144-b01, mixed mode)
+ java version "1.8.0_152"
+ Java(TM) SE Runtime Environment (build 1.8.0_152-b16)
+ Java HotSpot(TM) 64-Bit Server VM (build 25.152-b16, mixed mode)
 
 - `Windows 10 64bit` + `Cygwin x86_64`
  $ bash -version
@@ -44,11 +44,11 @@ description: このサイトにあるサンプルの動作・テスト環境や�
  Copyright (C) 2016 Free Software Foundation, Inc.
  ライセンス GPLv3+: GNU GPL バージョン 3 またはそれ以降 <http://gnu.org/licenses/gpl.html>
  
- $ export JAVA_HOME="/cygdrive/c/Program Files/Java/jdk1.8.0_141"
+ $ export JAVA_HOME="/cygdrive/c/Program Files/Java/jdk-9.0.1"
  $ "$JAVA_HOME/bin/java" -version
- java version "1.8.0_144"
- Java(TM) SE Runtime Environment (build 1.8.0_144-b01)
- Java HotSpot(TM) 64-Bit Server VM (build 25.144-b01, mixed mode)
+ java version "9.0.1"
+ Java(TM) SE Runtime Environment (build 9.0.1+11)
+ Java HotSpot(TM) 64-Bit Server VM (build 9.0.1+11, mixed mode)
 
 - `Ubuntu 12.04.5 LTS`
  $ lsb_release -a
@@ -66,7 +66,7 @@ description: このサイトにあるサンプルの動作・テスト環境や�
  Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
  Java HotSpot(TM) Client VM (build 25.102-b14, mixed mode)
 
-** JDKのダウンロードについて [#nd0d5847]
+** JDKのダウンロードについて [#jdk-download]
 - 最新の`JDK`をダウンロード
 -- [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java SE Downloads]
 - 古いバージョンの`JDK`をダウンロード
