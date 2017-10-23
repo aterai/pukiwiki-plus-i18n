@@ -65,7 +65,9 @@ private void convertTab(int prev, int next) {
 * 解説 [#explanation]
 上記のサンプルでは、`JTabbedPane`のタブをドラッグすると、マウスカーソルが変更されて、ドロップ可能な位置に青い線を描画します。
 
-ドラッグ中、半透明のタブゴーストを表示するかどうかを切り替えることが出来ます。タブ領域以外にドロップしようとすると、カーソルが変化します。`JTabbedPane`のタブが二段以上になる場合の検証はほとんどしていません。
+- ドラッグ中、半透明のタブゴーストを表示するかどうかを切り替え可能
+- タブ領域以外にドロップしようとすると、カーソルが変化
+- `JTabbedPane`のタブが二段以上になる場合は未検証
 
 `MouseMotionListener`と`MouseListener`ではなく、`DragGestureListener`、`DragSourceListener`、`DropTargetListener`を使用する方法に変更しました。
 
