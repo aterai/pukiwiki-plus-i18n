@@ -67,6 +67,7 @@ private class MouseHandler extends MouseAdapter {
 }
 }}
 
+----
 `JDK 1.6.0`で導入された、`TableRowSorter`を使っている場合は、ソート不可にするカラムを`DefaultRowSorter#setSortable(int, boolean)`で指定し、表示を以下のようなレンダラーで切り替えます(参考: [[TableRowSorterでJTableのソート>Swing/TableRowSorter]])。
 
 #code{{
@@ -84,7 +85,9 @@ hd.setDefaultRenderer(new TableCellRenderer() {
 });
 }}
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultRowSorter.html#setSortable-int-boolean- DefaultRowSorter#setSortable(...) (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment

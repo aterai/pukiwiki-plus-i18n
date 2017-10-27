@@ -3,23 +3,26 @@ title: TriPeaks - Microsoft Solitaire Collection
 description: Microsoft Solitaire CollectionのTriPeaksに関するメモ書き
 author: aterai
 pubdate: 2017-10-24T13:59:38+09:00
+image: https://drive.google.com/uc?export=view&id=1iwfecJUON35PnRll44Y0HRIKdLvlJAIm-A
 ---
 #contents
+
+#img2(https://drive.google.com/uc?export=view&id=1iwfecJUON35PnRll44Y0HRIKdLvlJAIm-A)
 
 `Microsoft Solitaire Collection`の`TriPeaks`に関するメモ書きです。
 
 * 初期状態 [#card]
 - 基本デッキの`13 * 4 = 52`枚のカードを使用する
-- `1`段目に`3`枚、`2`段目に`2 * 3 = 6`枚、`3`段目に`3 * 3 = 9`枚のカードを伏せて配置、`4`段目に`4 * 3 - 2 = 10`のカードを数字が見えるように開いて並べる
+- `1`段目に`3`枚、以降は前の段のカードの上に`2`枚重ねてカードを配置するので、`2`段目には`2 * 3 = 6`枚、`3`段目に`3 * 3 = 9`枚のカードを伏せて配置、`4`段目に`4 * 3 - 2 = 10`のカードを数字が見えるように開いて並べる
 -- `4`段目が`4 * 3 = 12`枚でないのは、`2`つの谷の部分で重なりができるため
 - 場札は`3 + 6 + 9 + 10 = 28`枚、山札は`52 - 28 = 24`枚
 
 * 得点 [#score]
+** 連鎖 [#l7a1bf4b]
 - 連続でカードを処理すると、その連鎖に応じて得点が加算される
--- `1`枚目は`100`点、以降は`200 * 連鎖 - 100`点が加算
---- 連鎖回数を`n`として階差数列型の漸化式で表すと`a(n + 1) - a(n) = 200 * (n + 1) - 100`、`a(1) = 100`
---- よって`n`連鎖で総和`100 * (n ^ 2)`点が取得できる
--- [https://sansesoftcatalog.blogspot.jp/2016/08/anniversary-microsoft-solitaire-collection.html Microsoft Solitaire Collection ： サンセソフトカタログ]
+-- `1`枚目は`100`点、`2`枚目以降は`200 * 連鎖 - 100`点が加算
+-- 連鎖回数を`n`として階差数列型の漸化式で表すと`a(n + 1) - a(n) = 200 * (n + 1) - 100`、`a(1) = 100`
+-- よって`n`連鎖で総和`100 * (n ^ 2)`点が取得できる
 - 例
 -- `1`連鎖: `100`点加算、合計`100`点
 -- `2`連鎖: `300`点加算、合計`400`点
@@ -40,8 +43,12 @@ pubdate: 2017-10-24T13:59:38+09:00
 -- `17`連鎖: `3300`点加算、合計`28900`点
 -- `18`連鎖: `3500`点加算、合計`32400`点
 - 「元に戻す」を使用すると連鎖が途切れてしまう
--- 例えば`17`連鎖後に`1`手戻ってその後`18`連鎖が完成しても得点は`16`連鎖と`2`連鎖分の`25600 + 400 = 26000`点の取得になってしまう
---- `Star Club`、`TriPeaks`、`Expert II`のスコアチャレンジ(ニ段目中央)、「`31,000`スコアを取得する」で確認
+-- 例えば`16`連鎖後に`1`手戻ってその後`18`連鎖が完成しても、得点は`15`連鎖と`3`連鎖分の`22500 + 900 = 23400`点の取得になってしまう
+--- `Star Club`、`TriPeaks`、`Expert II`のスコアチャレンジ(`2`段目中央)、「`31,000`スコアを取得する」で確認
+
+** 山のクリア [#cde6c4e7]
+- 山のクリアにもボーナス点があり、`1`つクリアで`500`点、`2`つで`1000`点、`3`つで`5000`点を別途取得できる
+- [https://sansesoftcatalog.blogspot.jp/2016/08/anniversary-microsoft-solitaire-collection.html Microsoft Solitaire Collection ： サンセソフトカタログ]
 
 * 参考リンク [#reference]
 - [https://sansesoftcatalog.blogspot.jp/2016/08/anniversary-microsoft-solitaire-collection.html Microsoft Solitaire Collection ： サンセソフトカタログ]

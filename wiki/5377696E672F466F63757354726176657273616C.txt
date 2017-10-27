@@ -71,14 +71,13 @@ frame.setFocusTraversalPolicy(policy);
 #code{{
 frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
   @Override protected boolean accept(Component c) {
-    if (c instanceof JTextComponent && !((JTextComponent) c).isEditable()) {
-      return false;
+    if (c instanceof JTextComponent) {
+      return ((JTextComponent) c).isEditable();
     } else {
       return super.accept(c);
     }
-    //return (c == textarea) ? false : super.accept(c);
   }
-});
+};
 }}
 
 * 参考リンク [#reference]

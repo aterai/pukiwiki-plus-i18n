@@ -29,11 +29,11 @@ description: Htmlのtable要素をCSV、TSVに変換するBookmarklet
 - アドレス(`YUI Compressor`で圧縮)
  javascript:(function(){function f(w){var s=w.getElementsByTagName("tr"),p,o,n,m,u,t,v,h,r=[],q=s.length,g;for(p=0;p<q;p++){r[p]=r[p]||[];v=s.item(p).cells;g=v.length;for(o=0;o<g;o++){h=v.item(o);t=h.innerHTML.replace(/<.*?>/mg,"").replace(/\t/g," ").replace(/(^\s+)|(\s+$)/g,"").replace(/\"/,'""');u=0;while(r[p][o+u]!=null){u++}r[p][o+u]=t;for(n=1;n<h.colSpan;n++){r[p][o+u+n]=t}for(m=1;m<h.rowSpan;m++){r[p+m]=r[p+m]||[];for(n=0;n<h.colSpan;n++){r[p+m][o+u+n]=t}}}}return e(r)}function e(o){var m=o.length,n=o[0].length,h="",j,i,g;for(i=0;i<m;i++){j="";for(g=0;g<n;g++){j+='\t"'+o[i][g]+'"'}if(j!=""){j=j.substring(1,j.length)}h+=j+"\n"}return h}var d=function(h){var g=document.createElement("textarea");g.value=f(this);g.style.width="80%";g.style.height="240px";g.originalTable=this;this.tx=g;this.parentNode.replaceChild(this.tx,this);g.addEventListener("dblclick",function(i){this.parentNode.replaceChild(this.originalTable,this)},false)},c=document.getElementsByTagName("table"),b=0,a=c.length;for(;b<a;b++){if(c[b].getElementsByTagName("table").length>0){continue}if(c[b].getAttribute("role")==="presentation"||(c[b].getAttribute("border")==="0")){continue}c[b].addEventListener("dblclick",d,false)}}());
 
-- アドレス(テスト用に[http://ateraimemo.com/data/javascript/table2csv.user.js table2csv.user.js]を読み込む)
- javascript:(function(){var s=document.createElement('script');s.charset='UTF-8';s.src='http://ateraimemo.com/data/javascript/table2csv.user.js?'+(new Date()).getTime();document.body.appendChild(s)}());
+- アドレス(テスト用に[https://ateraimemo.com/data/javascript/table2csv.user.js table2csv.user.js]を読み込む)
+ javascript:(function(){var s=document.createElement('script');s.charset='UTF-8';s.src='https://ateraimemo.com/data/javascript/table2csv.user.js?'+(new Date()).getTime();document.body.appendChild(s)}());
 
-- アドレス(テスト用に[http://ateraimemo.com/data/javascript/table2csv.min.js table2csv.min.js]を読み込む)
- javascript:(function(){var s=document.createElement('script');s.charset='UTF-8';s.src='http://ateraimemo.com/data/javascript/table2csv.min.js?'+(new Date()).getTime();document.body.appendChild(s)}());
+- アドレス(テスト用に[https://ateraimemo.com/data/javascript/table2csv.min.js table2csv.min.js]を読み込む)
+ javascript:(function(){var s=document.createElement('script');s.charset='UTF-8';s.src='https://ateraimemo.com/data/javascript/table2csv.min.js?'+(new Date()).getTime();document.body.appendChild(s)}());
 
 * ユーザースクリプト、拡張機能 [#oa746aa1]
 - `FireFox`

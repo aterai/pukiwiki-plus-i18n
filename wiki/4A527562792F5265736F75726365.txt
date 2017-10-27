@@ -13,7 +13,7 @@ description: JRubyからリソース(URL)のエントリを取得する方法を
 - [http://d.hatena.ne.jp/aterai/20071106 2007-11-06 - てんぷらメモ@はてな]から、こちらに移動
 
 * サンプルコード [#da146249]
-- http://ateraimemo.com/data/jruby/resources.rb
+- https://ateraimemo.com/data/jruby/resources.rb
 -- 画像は適当に用意してください。
 
 #code{{
@@ -31,8 +31,8 @@ class MainPanel < javax.swing.JPanel
     #icon = javax.swing.ImageIcon.new ".\\test\\test.png"
     #icon = javax.swing.ImageIcon.new "c:/tmp/test.png"
 
-    #new java.net.URL("http://ateraimemo.com/data/swing/screenshots.png");
-    #url = java.net.URL.new "http://ateraimemo.com/data/swing/screenshots.png"
+    #new java.net.URL("https://ateraimemo.com/data/swing/screenshots.png");
+    #url = java.net.URL.new "https://ateraimemo.com/data/swing/screenshots.png"
     #url = java.net.URL.new "file:/c:/tmp/test.png"
     #url = java.net.URL.new "file:///c:/tmp/test.png"
     #url = java.net.URL.new "file://localhost/c:/tmp/test.png"
@@ -93,7 +93,7 @@ icon = javax.swing.ImageIcon.new "test.png"
 `ImageIcon`は、`URL`から生成することも可能です。
 
 #code{{
-url = java.net.URL.new "http://ateraimemo.com/data/swing/screenshots.png"
+url = java.net.URL.new "https://ateraimemo.com/data/swing/screenshots.png"
 icon = javax.swing.ImageIcon.new url
 }}
 

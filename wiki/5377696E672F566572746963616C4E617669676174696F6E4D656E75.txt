@@ -30,7 +30,7 @@ JTree tree = new RowSelectionTree();
 tree.setModel(model);
 tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 tree.addTreeSelectionListener(e -> {
-  // http://ateraimemo.com/Swing/CardLayoutTabbedPane.html
+  // https://ateraimemo.com/Swing/CardLayoutTabbedPane.html
   Object o = tree.getLastSelectedPathComponent();
   if (o instanceof DefaultMutableTreeNode) {
     DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
