@@ -77,14 +77,20 @@ RewriteRule .* - [G]
 
 # RewriteRule ^Recent\.html$ index.php?cmd=recent [L]
 # RewriteRule ^List\.html$ index.php?cmd=list [L]
-RewriteRule ^sitemap\.xml$ index.php?cmd=sitemaps [QSA,PT,L]
+RewriteRule ^sitemap\.xml$ index.php?cmd=sitemaps [QSA,PT]
 # RewriteRule ^swing-sitemap\.xml$ index.php?cmd=sitemaps&category=Swing [QSA,PT,L]
-RewriteRule ^rssdiff\.xml$ index.php?cmd=rssdiff [QSA,PT,L]
+RewriteRule ^rssdiff\.xml$ index.php?cmd=rssdiff [QSA,PT]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !/\.html$
-RewriteRule ^(.+)\.html$ index.php?cmd=read&page=$1 [QSA,PT,L]
+RewriteRule ^(.+)\.html$ index.php?cmd=read&page=$1 [QSA,PT]
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{ENV:HTTPS} !on
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+</IfModule>
 
 <FilesMatch "\.(js|css|xml|gz)$">
 Header append Vary Accept-Encoding

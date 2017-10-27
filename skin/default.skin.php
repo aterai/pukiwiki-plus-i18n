@@ -126,6 +126,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Kotlin.html">Kotlin</a></li>
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Jenkins.html">Jenkins</a></li>
 <li itemprop="name"><a itemprop="url" href="//ateraimemo.com/SurfacePro3.html">Surface Pro 3</a></li>
+<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Solitaire.html">Solitaire</a></li>
 </ul>
 <?php include_once(PLUGIN_DIR.'search_form.inc.php'); echo plugin_search_form_convert(); ?>
 </div>
@@ -169,7 +170,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="push"></div>
 </div><!-- /.wrap -->
 <footer class="footer text-center" itemscope="itemscope" itemtype="https://schema.org/WPFooter">
-<p>© 2017 <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="http://ateraimemo.com/:Users/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//github.com/plusjade/jekyll-bootstrap/" target="_blank">Jekyll Bootstrap</a></p>
+<p>© 2017 <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="//ateraimemo.com/:Users/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//github.com/plusjade/jekyll-bootstrap/" target="_blank">Jekyll Bootstrap</a></p>
 </footer>
 </body>
 </html>

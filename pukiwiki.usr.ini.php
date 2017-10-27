@@ -1,7 +1,7 @@
 <?php
 $language_considering_setting_level = 1;
 $page_title = 'てんぷらメモ';
-$script = 'http:'.ROOT_URI;
+$script = 'https:'.ROOT_URI;
 $modifier = 'aterai';
 $modifierlink = ROOT_URI.'aterai.html';
 
