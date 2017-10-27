@@ -161,7 +161,7 @@ $page_title = 'てんぷらメモ';
 // 省略時は、絶対URIが自動で設定されます。
 //$script = 'http://example.com/pukiwiki/';
 //$script = './';
-$script = 'http:'.ROOT_URI;
+$script = 'https:'.ROOT_URI;
 
 // Shorten $script: Cut its file name (default: not cut)
 //$script_directory_index = 'index.php';
@@ -177,7 +177,7 @@ $script = 'http:'.ROOT_URI;
 $absolute_uri = 1;
 // Specify PukiWiki Plus! absoluteURI (Only when you set $script to relativeURI)
 // $script に相対URIを指定した際に、必要であれば、絶対URIを指定して下さい。
-//$script_abs = '';
+$script_abs = 'https://ateraimemo.com/';
 
 // Site admin's name (CHANGE THIS)
 $modifier = 'aterai';
