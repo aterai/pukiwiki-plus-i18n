@@ -12,7 +12,11 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 * サンプルターゲット [#h0deaf72]
 #code{{
 <target name="pmd">
-  <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" />
+  <!-- taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" / -->
+  <path id="pmd.classpath">
+    <fileset dir="${env.PMD_HOME}/lib" includes="*.jar" />
+  </path>
+  <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath" />
   <mkdir dir="${build.reports}" />
   <pmd rulesetfiles="java-basic,java-imports,java-strings" encoding="${compile.encoding}">
     <classpath refid="project.class.path" />
@@ -26,8 +30,8 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 }}
 
 * 解説 [#i9aab092]
-+ [https://pmd.github.io/ PMD]からダウンロードした`pmd-bin-x.x.zip`の`lib`以下にある`pmd-x.x.jar`などの`jar`ファイルを`%ANT_HOME%\lib`にコピー
-+ `ant pmd`で、`pmd.xml`を生成し、`jenkins`の`PMD`プラグインなどで読み込む
++ [https://pmd.github.io/ PMD]からダウンロードした`pmd-bin-x.x.zip`の`lib`以下にある`pmd-x.x.jar`などの`jar`ファイルを`%ANT_HOME%\lib`にコピー、もしくは環境変数`%PMD_HOME%`を設定した場所に`lib`を展開
++ 上記のような`pmd`ターゲットを`build.xml`に追加し、`ant pmd`で`pmd.xml`を生成、`jenkins`の`PMD`プラグインなどで読み込む
 
 *** toFile or toConsole [#w61eb2ba]
 `FindBugs`のように、`xml`ファイルとコンソールの両方に結果を表示したい場合が多いのですが、

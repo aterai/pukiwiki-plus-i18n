@@ -46,11 +46,11 @@ textField5.setTransferHandler(new TransferHandler() {
 - `setEditable(false)`
 -- 初期状態で、`BasicTextUI$TextTransferHandler`が設定されている
 -- `JTextField#setEditable(false)`を設定した場合、ドロップ不可となる
--- `JTextField#setEditable(false)`かつ`JTextField#setDragEnabled(true)`の場合、選択文字列を他の`JTextComponent`にドラッグ＆ドロップでコピー可能
+-- `JTextField#setEditable(false)`かつ`JTextField#setDragEnabled(true)`の場合、選択文字列を他の`JTextComponent`にドラッグ＆ドロップでコピー可能(移動は不可)
 - `setEnabled(false)`
 -- 初期状態で、`BasicTextUI$TextTransferHandler`が設定されている
 -- `JTextField#setEnabled(false)`で使用不可のコンポーネントにはドラッグ＆ドロップ不可
--- `JTextField#setDragEnabled(true)`を設定しても選択自体が不可なのでドラッグが開始できない
+-- `JTextField#setDragEnabled(true)`を設定しても文字列選択不可なので、`BasicTextUI$TextTransferHandler`ではドラッグ自体が開始できない
 - `setTransferHandler(null)`
 -- `JTextField#setTransferHandler(null)`で`BasicTextUI$TextTransferHandler`を削除
 -- 親コンポーネントの`TransferHandler`が有効になる
@@ -62,7 +62,7 @@ textField5.setTransferHandler(new TransferHandler() {
 - `TransferHandler#canImport(...): false`
 -- `TransferHandler#canImport(...)`が常に`false`を返す`TransferHandler`を設定
 -- 親コンポーネントの`TransferHandler`にドロップイベントは伝搬せず、常にドロップ不可
--- `JTextField#setDragEnabled(true)`を設定してもドラッグ開始できない
+-- `JTextField#setDragEnabled(true)`を設定してもこの`TransferHandler`ではドラッグ開始できない
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Component.html#setDropTarget-java.awt.dnd.DropTarget- Component#setDropTarget(...) (Java Platform SE 8)]
