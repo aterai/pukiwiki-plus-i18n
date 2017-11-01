@@ -96,11 +96,16 @@ pubdate: 2003-09-25
       <formatter type="plain" />
       <formatter type="xml" toFile="${build.reports}/checkstyle-result.xml" />
       <fileset dir="${src.dir}">
+        <exclude name="**/module-info.java" />
         <include name="**/*.java" />
       </fileset>
     </checkstyle>
   </target>
 }}
+
+*** module-info.java [#vec7503a]
+- `8.4`では`Java 9`の`module-info.java`に未対応なので、`<exclude name="**/module-info.java" />`などで回避
+ C:\temp\jst\all.xml:47: Unable to process files: [C:\...\src\java\module-info.java]
 
 *** Unable to create Root Module [#BuildFailed]
 `Checkstyle`のバージョン更新に伴うモジュールの廃止などの変更で、`config`ファイル(上記の例では`${user.dir}/checks.xml`)が不正になった場合などに発生するようです。
@@ -134,6 +139,7 @@ pubdate: 2003-09-25
   <componentdef name="errorprone" classname="com.google.errorprone.ErrorProneExternalCompilerAdapter"
                 classpathref="errorprone.classpath" />
   <javac srcdir="${build.src}"
+         excludes="**/module-info.java"
          includes="**/*.java"
          destdir="${build.dest}"
          encoding="${compile.encoding}"
