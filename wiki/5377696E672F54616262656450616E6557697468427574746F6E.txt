@@ -65,7 +65,7 @@ public Insets getButtonPaddingTabAreaInsets(JButton b, Insets ti, Insets ai) {
 
 - ボタンの幅だけ、`tabAreaInsets`の左余白を拡大する
 -- `UIManager.getInsets("TabbedPane.tabAreaInsets")`などを使用するため、`Synth`など(`GTK`, `Nimbus`)の`LookAndFeel`には対応していない
--- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6634504 Nimbus L&F: java.lang.NullPointer Exception throws when extended BaseUI Components]
+-- [https://bugs.openjdk.java.net/browse/JDK-6634504 Nimbus L&F: java.lang.NullPointer Exception throws when extended BaseUI Components]
 - `OverlayLayout`で、`JButton`と`JTabbedPane`(上で作った余白に)を重ねて表示
 -- このため、`JTabbedPane.TOP`にしか対応していない
 

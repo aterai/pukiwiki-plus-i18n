@@ -38,7 +38,7 @@ visitAll(menubar, new MouseAdapter() {
 
 ----
 - この`JMenu`の入った、`JPopupMenu`を`JComponent#setComponentPopupMenu(...)`で`JMenuBar`以外のコンポーネントに設定すると無限ループする
--- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6949414 Bug ID: JDK-6949414 JMenu.buildMenuElementArray() endless loop]
+-- [https://bugs.openjdk.java.net/browse/JDK-6949414 Bug ID: JDK-6949414 JMenu.buildMenuElementArray() endless loop]
 - 回避方法:
 -- マウスイベントを作成し、`menu.dispatchEvent(new MouseEvent(menu, MouseEvent.MOUSE_ENTERED, e.getWhen(), 0, 0, 0, 0, false));`を実行する
 --- [https://stackoverflow.com/questions/25260684/programmatically-expand-sub-jmenuitems java - Programmatically expand sub JMenuItems - Stack Overflow]

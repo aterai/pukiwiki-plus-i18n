@@ -121,7 +121,7 @@ c.addItemListener(new ItemListener() {
 }}
 
 -- せっかくなので、上の`JComboBox`は編集不可、下は編集可の場合で、色を着けるサンプルに変更しました。 -- &user(aterai); &new{2006-10-10 (火) 20:31:03};
-- メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6367601 Windows/Motif L&F: Changing the JComboBox background does not change the popup of the JCombobox] -- &user(aterai); &new{2007-12-13 (木) 15:43:50};
+- メモ: [https://bugs.openjdk.java.net/browse/JDK-6367601 Windows/Motif L&F: Changing the JComboBox background does not change the popup of the JCombobox] -- &user(aterai); &new{2007-12-13 (木) 15:43:50};
 - サンプルソースの`LookAndFeel`を設定しないようにすると、編集不可コンボはボタン部分も背景色になってしまう・・ -- &user(han); &new{2008-10-21 (火) 10:41:38};
 -- `MetalLookAndFeel`などは、コンボボックスの背景色を変更すると矢印ボタンの色まで変更してしまう仕様？みたいですね。回避するなら、以下のように`UI`で使っている`PropertyChangeListener`をオーバーライドしてしまうのはどうでしょう。 -- &user(aterai); &new{2008-10-21 (火) 15:41:21};
 

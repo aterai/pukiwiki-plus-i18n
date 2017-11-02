@@ -148,7 +148,7 @@ public void zooming(double zoom) {
 --[[Swing/HandScroll]]もすこし更新してみました。JComponent#scrollRectToVisibleの代わりに、JViewport#setViewPositionを使用すると、中のViewの外までスクロールできるので、このあたりが拡大したときに影響していたのかも。 -- &user(aterai); &new{2009-01-19 (Mon) 17:10:41};
 -しっかりと移動することができました　ありがとうございます！一週間ほど試行錯誤してたのですが、scrollRectToVisibleは盲点に入ってて試していませんでした。本当にありがとうございました。 -- &user(mogu); &new{2009-01-21 (水) 20:46:45};
 -再度失礼します。scrollRectToVisibleで出来たと思ったのですが、今度は縮小のときに違う方向に飛んでしまうようになりました。ですが、setViewPositionの方は縮小は問題ないので場合わけでなんとかできました。解決の助けをいただきありがとうございました。 -- &user(mogu); &new{2009-01-21 (水) 21:43:43};
---追加メモ: [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6333318 Bug ID: 6333318 JViewport.scrollRectToVisible( Rectangle cr ) doesn't scroll if cr left or above] -- &user(aterai); &new{2009-03-26 (木) 14:10:07};
+--追加メモ: [https://bugs.openjdk.java.net/browse/JDK-6333318 Bug ID: 6333318 JViewport.scrollRectToVisible( Rectangle cr ) doesn't scroll if cr left or above] -- &user(aterai); &new{2009-03-26 (木) 14:10:07};
 -[[Swing/_JFrame]]が壊れていたのを修正。 -- &user(aterai); &new{2009-03-17 (火) 20:41:02};
 -swingを勉強してるのですが、パネルを作る際コードが長くなってしますので、それぞれにJPanelを継承したクラスを作りフレームに貼り付けたいのですがうまくいきません。こういうことはできないのでしょうか？また普通はこんなことしないのでしょうか？ -- &user(さと); &new{2009-07-28 (火) 15:11:22};
 --フレームへの貼り付けがうまくいかないとのことですが、何かエラーになるのでしょうか？一つのJPanelにコンポーネントを並べるのではなく、コンポーネントを複数のSubJPanelに分割して作成し、そられのJPanelを一つのMainJPanelにまとめて配置する( frame.getContentPane().add(new Hoge().getMainJPanel(), BorderLayout.CENTER) )のは、よくある手法だと思います。パネルに分けるときに「JPanelを継承」((このサイトでは、サンプルだし面倒だからテンプレにしちゃっていますが・・・))は、JPanelのメソッドをなにかオーバーライドするのでなければ、あまりやらないかもしれません。IDEなどを使えば、initComponents()とか適当なメソッドを作って、その中で設定していくようになっているのが多いような気がします。 -- &user(aterai); &new{2009-07-28 (火) 16:20:48};
@@ -264,10 +264,10 @@ int i = table.convertRowIndexToView(table.getRowCount()-1); //ソートしない
 table.scrollRectToVisible(table.getCellRect(i, 0, true)); //追加した行の0列目のセル取得してscrollRectToVisibleで可視化
 }}
 -いけました！　JTableに追加された行が常に下に表示されるようになりました、感謝ですm(__)m -- &user(初心者); &new{2012-09-03 (月) 10:33:49};
--http://bugs.java.com/view_bug.do?bug_id=xxxxx がリダイレクトされなくなった？ので、http://bugs.java.com/bugdatabase/view_bug.do?bug_id=xxxxx に置換。 -- &user(aterai); &new{2012-10-23 (火) 16:29:24};
+-http://bugs.java.com/view_bug.do?bug_id=xxxxx がリダイレクトされなくなった？ので、https://bugs.openjdk.java.net/browse/JDK-xxxxx に置換。 -- &user(aterai); &new{2012-10-23 (火) 16:29:24};
 -http://java.sun.com/docs/books/tutorial/uiswing/ を、https://docs.oracle.com/javase/tutorial/uiswing/ に置換 -- &user(aterai); &new{2012-11-24 (土) 01:09:10};
 -jtableにデータベースのレコードを表示・更新・追加・削除といったサンプルってお願いできないでしょうか？ -- &user(今さらSwingで); &new{2013-01-27 (日) 19:48:50};
--- こんばんは。どのデータベースを用意するか…などで動作するサンプルを作成するのは難しいと思います。データベースは自前で用意するなら、`Access Database`などを使うサンプルで[http://tips4java.wordpress.com/2009/03/12/table-from-database/ Table From Database « Java Tips Weblog]、このサイトでは`Hibernate`と[[RowFilterでJTableのページ分割>Swing/TablePagination]]で表示を行うサンプル[https://ateraimemo.com/data/swing/TablePaginationLoadingTest.java TablePaginationLoadingTest](テストしていない)などが参考になるかもしれません。 -- &user(aterai); &new{2013-01-27 (日) 21:10:49};
+-- こんばんは。どのデータベースを用意するか…などで動作するサンプルを作成するのは難しいと思います。データベースは自前で用意するなら、`Access Database`などを使うサンプルで[https://tips4java.wordpress.com/2009/03/12/table-from-database/ Table From Database « Java Tips Weblog]、このサイトでは`Hibernate`と[[RowFilterでJTableのページ分割>Swing/TablePagination]]で表示を行うサンプル[https://ateraimemo.com/data/swing/TablePaginationLoadingTest.java TablePaginationLoadingTest](テストしていない)などが参考になるかもしれません。 -- &user(aterai); &new{2013-01-27 (日) 21:10:49};
 -Postgresql接続はできているのですが、defaulttablemodelが雛形のようなもの？あと、modelとabstracttablemodel をどう使えばいいのか？そのへんの関係が良く理解できません。 -- &user(今さらSwingで); &new{2013-01-28 (月) 12:33:46};
 -- `TableModel`がインタフェース、`AbstractTableModel`は文字道理、`TableModel`を`implements`する`Abstract`クラス(抽象クラス)です。これを継承して独自のモデルを作成する場合は、各データを配列やリストなどで保持するようし、`setValueAt(Object value, int row, int col)`などのメソッドを実装する必要があります。`DefaultTableModel`は、`AbstractTableModel`を継承し、`new Table()`で自動的に使用されるデフォルトの`TableModel`です。個人的には手っ取り早いので、`DefaultTableModel`をよく使用しています。詳しくは [https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#data How to Use Tables (Creating a Table Model)]が参考になります。 -- &user(aterai); &new{2013-01-29 (火) 14:34:54};
 -[[Swing/_JScrollPane]]に入れるべきサンプルを、なぜか[[Swing/_JProgressBar]]に挿入していたので修正。 -- &user(aterai); &new{2013-05-21 (火) 18:59:47};

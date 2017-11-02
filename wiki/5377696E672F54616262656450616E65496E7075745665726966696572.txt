@@ -31,14 +31,14 @@ tabbedPane.setModel(new DefaultSingleSelectionModel() {
 * 解説 [#explanation]
 - デフォルト
 -- タブ切替時に`JTextField`にフォーカスが存在する場合はその`InputVerifier`で検証が実行されるが、入力が無効の場合でもタブの移動は実行される
--- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4403182 Bug ID: JDK-4403182 InputVerifier failed on JTabbedPane & JMenuBar]
+-- [https://bugs.openjdk.java.net/browse/JDK-4403182 Bug ID: JDK-4403182 InputVerifier failed on JTabbedPane & JMenuBar]
 - `override SingleSelectionModel#setSelectedIndex(int): true`
 -- `DefaultSingleSelectionModel#setSelectedIndex(int)`をオーバーライドした`SingleSelectionModel`を`JTabbedPane`に設定
 -- 現在表示中のタブの`InputVerifier#shouldYieldFocus(...)`を実行し、入力が無効の場合はタブの変更をキャンセルする
 -- [https://stackoverflow.com/questions/34315657/java-swing-jtextfield-setinputverifier-keep-focus-on-textfield Java Swing JTextField setInputVerifier keep focus on TextField - Stack Overflow]
 
 * 参考リンク [#reference]
-- [http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4403182 Bug ID: JDK-4403182 InputVerifier failed on JTabbedPane & JMenuBar]
+- [https://bugs.openjdk.java.net/browse/JDK-4403182 Bug ID: JDK-4403182 InputVerifier failed on JTabbedPane & JMenuBar]
 - [https://stackoverflow.com/questions/34315657/java-swing-jtextfield-setinputverifier-keep-focus-on-textfield Java Swing JTextField setInputVerifier keep focus on TextField - Stack Overflow]
 
 * コメント [#comment]
