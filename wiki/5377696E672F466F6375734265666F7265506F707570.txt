@@ -1,0 +1,90 @@
+---
+category: swing
+folder: FocusBeforePopup
+title: JPopupMenuを開く前に対象となるJTextFieldにFocusを移動する
+tags: [JPopupMenu, JTextField, Focus, JTextComponent]
+author: aterai
+pubdate: 2017-11-06T15:23:38+09:00
+description: JTextFieldなどに設定したJPopupMenuをマウスの右クリックで開くとき、そのにFocusを移動し文字列を全選択します。
+image: https://drive.google.com/uc?export=view&id=1DYqevQ-Nj2i5IptiAWC7KPYVKcbmuL9sMA
+---
+* 概要 [#summary]
+`JTextField`などに設定した`JPopupMenu`をマウスの右クリックで開くとき、その`JTextComponent`に`Focus`を移動し文字列を全選択します。
+
+#download(https://drive.google.com/uc?export=view&id=1DYqevQ-Nj2i5IptiAWC7KPYVKcbmuL9sMA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class TextComponentPopupMenu extends JPopupMenu {
+  private final Action cutAction = new DefaultEditorKit.CutAction();
+  private final Action copyAction = new DefaultEditorKit.CopyAction();
+  private final Action pasteAction = new DefaultEditorKit.PasteAction();
+  protected TextComponentPopupMenu() {
+    super();
+    add(cutAction);
+    add(copyAction);
+    add(pasteAction);
+  }
+  @Override public void show(Component c, int x, int y) {
+    System.out.println(c.getClass().getName() + ": " + c.getName());
+    if (c instanceof JTextComponent) {
+      JTextComponent tc = (JTextComponent) c;
+      tc.requestFocusInWindow();
+      boolean isSelected = tc.getSelectionStart() != tc.getSelectionEnd();
+      if (tc instanceof JTextField && !tc.isFocusOwner() && !isSelected) {
+        tc.selectAll();
+        isSelected = true;
+      }
+      cutAction.setEnabled(isSelected);
+      copyAction.setEnabled(isSelected);
+      super.show(c, x, y);
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Default setComponentPopupMenu`
+-- `JTextField#setComponentPopupMenu(...)`で`JTextField`に`JPopupMenu`を設定
+-- 別の`JTextComponent`にフォーカスがある状態で、この`JTextField`内を右クリックして`JPopupMenu`を表示してもフォーカスは前の`JTextComponent`に残る
+-- `new DefaultEditorKit.PasteAction()`で生成した貼り込みアクションなどは、フォーカスのある`JTextComponent`に対して実行されるので、前の`JTextComponent`に文字列が張り込まれる
+- `Override JPopupMenu#show(...)`
+-- `JTextField#setComponentPopupMenu(...)`で`JTextField`に`JPopupMenu`を設定
+-- `JPopupMenu#show(...)`をオーバーライドして`JPopupMenu`を開く前に`Component#requestFocusInWindow()`メソッドを実行し、この`JTextField`にフォーカスを移動する
+--- `PopupMenuListener#popupMenuWillBecomeVisible(...)`、または`MouseListener#mousePressed(...)`をオーバーライドする方法でも構わない
+-- フォーカス移動と合わせて、`JTextField`内を右クリックして`JPopupMenu`を開く場合は内部の文字列を全選択する処理を追加
+
+----
+- `JPopupMenu does not open???`
+-- 編集可能に設定した`JComboBox`の`JTextField`にマウスクリックでフォーカスを移動しても、他コンポーネントの`JPopupMenu`が開いたままになるバグ(仕様？)があるため、`JTextField#setComponentPopupMenu(...)`で追加した`JPopupMenu`を開くことができない
+- `addMouseListener`
+-- 編集可能に設定した`JComboBox`の`JTextField`に`MouseListener`を追加し、マウスでクリックされたら一旦すべての`JPopupMenu`を閉じるよう設定
+--- 参考: [[MenuSelectionManagerですべてのJPopupMenuを取得する>Swing/GetAllPopupMenus]]
+
+#code{{
+JComboBox<String> combo4 = new JComboBox<>(new String[] {"addMouseListener", "111", "222"});
+combo4.setEditable(true);
+JTextField textField4 = (JTextField) combo4.getEditor().getEditorComponent();
+textField4.setComponentPopupMenu(popup2);
+textField4.setName("textField4");
+textField4.addMouseListener(new MouseAdapter() {
+  @Override public void mousePressed(MouseEvent e) {
+    System.out.println("Close all JPopUpMenu");
+    // https://ateraimemo.com/Swing/GetAllPopupMenus
+    for (MenuElement m : MenuSelectionManager.defaultManager().getSelectedPath()) {
+      if (m instanceof JPopupMenu) {
+        ((JPopupMenu) m).setVisible(false);
+      }
+    }
+  }
+});
+}}
+
+* 参考リンク [#reference]
+- [[DefaultEditorKitでポップアップメニューからコピー>Swing/DefaultEditorKit]]
+- [[MenuSelectionManagerですべてのJPopupMenuを取得する>Swing/GetAllPopupMenus]]
+- [[JTextField内のテキストをすべて選択>Swing/SelectAll]]
+
+* コメント [#comment]
+#comment
+#comment
