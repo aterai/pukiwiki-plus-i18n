@@ -110,8 +110,9 @@ class ComponentIcon implements Icon {
 -- `JTable`のセル中にある`JCheckBox`が全てチェックされた場合、ヘッダの`JCheckBox`もチェックされる
 -- `JTable`のセル中にある`JCheckBox`のチェックが全てクリアされた場合、ヘッダの`JCheckBox`のチェックもクリアされる
 -- `JTable`のセル中にある`JCheckBox`でチェックの有無が混在している場合、ヘッダの`JCheckBox`は薄くチェックされた状態(`setEnabled(false)`で`setSelected(true)`)になる
--- 注: ここでは、行の追加、削除は考慮していない
---- これを考慮したサンプルは、[[JTableのモデルが変更されたことをイベントで受け取る>Swing/TableModelEvent]]に移動
+- 注:
+-- このサンプルでは、行の追加、削除を考慮していない
+-- 行の追加、削除に対応したサンプルは、[[JTableのモデルが変更されたことをイベントで受け取る>Swing/TableModelEvent]]に移動
 
 * 参考リンク [#reference]
 - [http://www.coderanch.com/t/343795/Swing-AWT-SWT-JFace/java/Check-Box-JTable-header Check Box in JTable header (Swing / AWT / SWT / JFace forum at JavaRanch)]

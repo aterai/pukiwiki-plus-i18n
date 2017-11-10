@@ -894,6 +894,63 @@ internal class CheckBoxesEditor : AbstractCellEditor(), TableCellEditor {
 }}
 #twocolumn
 
+** Arrays.asList(...) [#vbc11c20]
+- `IntelliJ`の自動変換では`Arrays.asList(...)`の型パラメータを自動的に変換してくれない
+-- `Arrays.<Component>asList(...)`と型パラメータを明示しても省略される
+-- `for (c in Arrays.asList(...)) {`に変換されて`error: none of the following functions can be called with the arguments supplied:`になる
+-- `for (c: Component in Arrays.asList<Component>(...)) {`、または`for (c in listOf<Component>(...)) {`などに手動で修正(`for (c: Component in Arrays<Component>.asList(...)) {`も可能？)
+- 型引数
+-- `Java`と`Kotlin`では型引数を付ける位置が異なるので注意
+
+-- `Java`: `Arrays.<Component>asList(...)`
+> [https://docs.oracle.com/javase/tutorial/java/generics/methods.html Generic Methods (The Java™ Tutorials > Learning the Java Language > Generics (Updated))]
+> For static generic methods, the type parameter section must appear ''before'' the method's return type.
+
+-- `Kotlin`: `Arrays.asList<Component>(...)`
+> [https://kotlinlang.org/docs/reference/generics.html Generics: in, out, where - Kotlin Programming Language]
+> To call a generic function, specify the type arguments at the call site ''after'' the name of the function:
+
+-- `Kotlin`で`Java`風に`for (c in Arrays.<Component>asList(...)) {`を使用すると、`hello.kt:97:26: error: expecting an element`とエラーになる
+
+#twocolumn
+- `Java`
+#code{{
+Box box = Box.createVerticalBox();
+for (Component c: Arrays.<Component>asList(textField1, textField2, combo3, combo4)) {
+  box.add(c);
+  box.add(Box.createVerticalStrut(5));
+}
+// for (Component c: Arrays.asList(...)) { でも同じ変換結果になる
+}}
+
+#twocolumn
+- `Kotlin`(自動変換)
+#code{{
+val box = Box.createVerticalBox()
+for (c in Arrays.asList(textField1, textField2, combo3, combo4)) {
+  box.add(c)
+  box.add(Box.createVerticalStrut(5))
+}
+// hello.kt:100:17: error: none of the following functions can be called with the arguments supplied:
+// public open fun add(p0: Component!): Component! defined in javax.swing.Box
+// public open fun add(p0: PopupMenu!): Unit defined in javax.swing.Box
+//             box.add(c)
+//                 ^
+}}
+
+- `Kotlin`(手動修正)
+#code{{
+val box = Box.createVerticalBox()
+for (c in Arrays.asList<Component>(textField1, textField2, combo3, combo4)) {
+  box.add(c);
+  box.add(Box.createVerticalStrut(5));
+}
+// or:
+// for (c in listOf<Component>(textField1, textField2, combo3, combo4)) {
+// for (c in Arrays<Component>.asList(textField1, textField2, combo3, combo4)) {
+}}
+#twocolumn
+
 * コメント [#comment]
 #comment
 #comment

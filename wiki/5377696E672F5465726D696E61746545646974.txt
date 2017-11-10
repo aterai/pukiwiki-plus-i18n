@@ -21,14 +21,15 @@ table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 * 解説 [#explanation]
 デフォルトの`JTable`では、KBD{Tab}キーやマウスのクリックなどで同じテーブルの別セルにフォーカスが移動すると編集が確定しますが、別のコンポーネントにフォーカスが移動しても編集は確定しません。
 
-- `table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);`を設定:
+- `terminateEditOnFocusLost`
+-- `table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);`を設定
 -- 同じフレームを親に持つコンポーネントにフォーカスが移動したとき、編集が確定する
 -- 別フレームのコンポーネントにフォーカスが移動しても編集中のまま
 -- ヘッダをクリック、入れ替え、サイズ変更すると、編集はキャンセルされる
-- `DefaultCellEditor`からエディタコンポーネントを取得し、`FocusListener`を設定し、セルが編集中なら`table.getCellEditor().stopCellEditing();`を実行:
+- `DefaultCellEditor:focusLost`
+-- `DefaultCellEditor`からエディタコンポーネントを取得してこれに`FocusListener`を設定し、セルが編集中なら`table.getCellEditor().stopCellEditing();`を実行
 -- 別フレームのコンポーネントにフォーカスが移動したときも、編集が確定する
 -- ヘッダをクリック、入れ替え、サイズ変更すると、編集はキャンセルされる
-
 #code{{
 DefaultCellEditor dce = (DefaultCellEditor) table.getDefaultEditor(Object.class);
 dce.getComponent().addFocusListener(new FocusAdapter() {
@@ -43,12 +44,12 @@ dce.getComponent().addFocusListener(new FocusAdapter() {
 });
 }}
 
-- `TableHeader`に`MouseListener`を設定して、セルが編集中なら`table.getCellEditor().stopCellEditing();`
-を実行:
+- `TableHeader:mousePressed`
+-- `TableHeader`に`MouseListener`を設定して、セルが編集中なら`table.getCellEditor().stopCellEditing();`
+を実行
 -- ヘッダをクリックしたとき、編集が確定する
 -- `JDK 1.7.0`では、このような`MouseListener`を`TableHeader`に設定しなくても、編集が確定するように修正済み
 -- [https://bugs.openjdk.java.net/browse/JDK-4330950 Bug ID: 4330950 Lost newly entered data in the cell when resizing column width]
-
 #code{{
 table.getTableHeader().addMouseListener(new MouseAdapter() {
   @Override public void mousePressed(MouseEvent e) {
@@ -106,7 +107,7 @@ frame.addWindowStateListener(new WindowStateListener() {
 
 * 参考リンク [#reference]
 - [https://bugs.openjdk.java.net/browse/JDK-4330950 Bug ID: 4330950 Lost newly entered data in the cell when resizing column width]
--- [http://hg.openjdk.java.net/jdk7/swing/jdk/rev/e753db9c4416 jdk7/swing/jdk: changeset 2709:e753db9c4416]
+- [http://hg.openjdk.java.net/jdk7/swing/jdk/rev/e753db9c4416 jdk7/swing/jdk: changeset 2709:e753db9c4416]
 
 * コメント [#comment]
 #comment

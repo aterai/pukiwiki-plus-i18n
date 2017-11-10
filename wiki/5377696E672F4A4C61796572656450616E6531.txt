@@ -123,12 +123,12 @@ public class TestJLayeredPane1 extends JFrame {
     DragMouseListener(JPanel p) {
       panel = p;
     }
-    public void mousePressed(MouseEvent e) {
+    @Override public void mousePressed(MouseEvent e) {
       origin = new Point(e.getX(), e.getY());
       //選択された部品を上へ
       layerPane.moveToFront(panel);
     }
-    public void mouseDragged(MouseEvent e) {
+    @Override public void mouseDragged(MouseEvent e) {
       if (origin == null) return;
 
       //ずれた分だけ JPanel を移動させる
@@ -138,11 +138,11 @@ public class TestJLayeredPane1 extends JFrame {
       panel.setLocation(p.x + dx, p.y + dy);
     }
 
-    public void mouseClicked(MouseEvent e) {}
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseExited(MouseEvent e) {}
-    public void mouseReleased(MouseEvent e) {}
-    public void mouseMoved(MouseEvent e) {}
+    @Override public void mouseClicked(MouseEvent e) {}
+    @Override public void mouseEntered(MouseEvent e) {}
+    @Override public void mouseExited(MouseEvent e) {}
+    @Override public void mouseReleased(MouseEvent e) {}
+    @Override public void mouseMoved(MouseEvent e) {}
   }
 
   //背景画像を描画する JLayeredPane
@@ -154,8 +154,7 @@ public class TestJLayeredPane1 extends JFrame {
     }
     Image bgImage;
 
-    //override
-    public void paint(Graphics g) {
+    @Override public void paint(Graphics g) {
       if (bgImage != null) {
         int imageh = bgImage.getHeight(null);
         int imagew = bgImage.getWidth(null);

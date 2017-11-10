@@ -16,39 +16,27 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTe98QmaI/AAAAAAAAAkc/w7
 * サンプルコード [#sourcecode]
 #code(link){{
 class SortAction extends AbstractAction {
-  public SortAction(String label, Icon icon) {
-    super(label, icon);
-  }
   @Override public void actionPerformed(ActionEvent e) {
-    setSortedTab(tab, makeSortedVector(tab));
+    JTabbedPane tabbedPane = (JTabbedPane) getInvoker();
+    List<ComparableTab> list = IntStream.range(0, tabbedPane.getTabCount())
+      .mapToObj(i -> new ComparableTab(tabbedPane.getTitleAt(i), tabbedPane.getComponentAt(i)))
+      .sorted(Comparator.comparing(ComparableTab::getTitle)).collect(Collectors.toList());
+    tabbedPane.removeAll();
+    list.forEach(c -> tabbedPane.addTab(c.getTitle(), c.getComponent()));
   }
-  private Vector makeSortedVector(JTabbedPane t) {
-    Vector l = new Vector();
-    for (int i = 0; i < t.getTabCount(); i++) {
-      l.addElement(new ComparableTab(t.getTitleAt(i), t.getComponentAt(i)));
-    }
-    Collections.sort(l);
-    return l;
+}
+class ComparableTab {
+  private final String title;
+  private final Component comp;
+  protected ComparableTab(String title, Component comp) {
+    this.title = title;
+    this.comp  = comp;
   }
-  private void setSortedTab(final JTabbedPane t, final Vector l) {
-    t.setVisible(false);
-    t.removeAll();
-    for (int i = 0; i < l.size(); i++) {
-      ComparableTab c = (ComparableTab) l.get(i);
-      t.addTab(c.title, c.comp);
-    }
-    t.setVisible(true);
+  public String getTitle() {
+    return title;
   }
-  class ComparableTab implements Comparable {
-    final public String title;
-    final public Component comp;
-    public ComparableTab(String title, Component comp) {
-      this.title = title;
-      this.comp  = comp;
-    }
-    @Override public int compareTo(Object o) {
-      return this.title.compareTo(((ComparableTab) o).title);
-    }
+  public Component getComponent() {
+    return comp;
   }
 }
 }}
@@ -60,7 +48,9 @@ class SortAction extends AbstractAction {
 - `JTabbedPane`から一旦タブをすべて削除
 - ソート済みのリストから`JTabbedPane`にタブを戻す
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#removeAll-- JTabbedPane#removeAll() (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment
