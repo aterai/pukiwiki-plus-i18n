@@ -7,6 +7,15 @@ description: Java クラスドキュメントで翻訳元の英語版から修�
 #contents
 
 * 未修正 [#k5733681]
+** translateMouseEvent() [#r6849aca]
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html#convertMouseEvent-java.awt.Component-java.awt.event.MouseEvent-java.awt.Component-
+-- the source field of the returned event will be set to destination if destination is non-null use the translateMouseEvent() method to translate a mouse event from one component to another without changing the source.
+- 修正案
+-- `translateMouseEvent()`というメソッドはどこにも存在しない？
+- 参考
+-- [https://bugs.openjdk.java.net/browse/JDK-8049533 JDK-8049533 SwingUtilities.convertMouseEvent misses MouseWheelEvent.preciseWheelRotation - Java Bug System]
+-- `Java 9`で`MouseWheelEvent`がコピーされない件は修正されているが、同時に指摘されている`translateMouseEvent()`などは未修整
+
 ** SwingConstants#VERTICAL [#i122ead5]
 - https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingConstants.html#VERTICAL
 -- Vertical orientation. Used for scrollbars and sliders.

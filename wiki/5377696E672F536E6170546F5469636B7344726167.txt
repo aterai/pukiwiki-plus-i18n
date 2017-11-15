@@ -55,13 +55,8 @@ slider.setUI(new MetalSliderUI() {
           offset = 0;
           //System.out.println(snappedPos);
         }
-        MouseEvent me = new MouseEvent(
-          e.getComponent(), e.getID(), e.getWhen(), e.getModifiers(),
-          snappedPos, e.getY(),
-          e.getXOnScreen(), e.getYOnScreen(),
-          e.getClickCount(), e.isPopupTrigger(), e.getButton());
-        e.consume();
-        super.mouseDragged(me);
+        e.translatePoint(snappedPos - e.getX(), 0);
+        super.mouseDragged(e);
       }
     };
   }

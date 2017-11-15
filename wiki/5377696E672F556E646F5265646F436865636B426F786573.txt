@@ -38,7 +38,7 @@ for (int i = 0; i < BIT_LENGTH; i++) {
 
 * 解説 [#explanation]
 - `JCheckBox`の選択状態を`BigInteger`のビットフラグで管理、記憶
-- `UndoableEditSupport#addUndoableEditListener(...)`でリスナに`UndoManager`を追加
+- リスナとして`UndoManager`を`UndoableEditSupport#addUndoableEditListener(...)`メソッドで追加
 - `JCheckBox`がクリックされるなどで値が変化した場合、変更前と変更後の`BigInteger`を持つ`UndoableEdit`を作成して、`UndoableEditSupport#postEdit(...)`で登録
 - `UndoManager#undo()`でアンドゥ、`UndoManager#redo()`でリドゥを実行し、`BigInteger`のステータスを更新
 -- 更新された`BigInteger`から各`JCheckBox`の選択状態を復元

@@ -63,7 +63,9 @@ setFocusCycleRoot(true);
 -- `InputVerifier#shouldYieldFocus(...)`や`FocusListener#focusLost(...)`内で、`EventQueue.invokeLater(() -> button.requestFocusInWindow() );`などを実行し、一番後でフォーカスを強制的に`JButton`に移動する
 -- または、`LayoutFocusTraversalPolicy#getComponentAfter(...)`をオーバーライドして、事前に`JButton#setEnabled(true)`を実行する
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/InputVerifier.html#shouldYieldFocus-javax.swing.JComponent- InputVerifier#shouldYieldFocus(JComponent) (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment

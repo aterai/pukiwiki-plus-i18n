@@ -913,7 +913,7 @@ internal class CheckBoxesEditor : AbstractCellEditor(), TableCellEditor {
 -- `Kotlin`で`Java`風に`for (c in Arrays.<Component>asList(...)) {`を使用すると、`hello.kt:97:26: error: expecting an element`とエラーになる
 
 #twocolumn
-- `Java`
+`Java`
 #code{{
 Box box = Box.createVerticalBox();
 for (Component c: Arrays.<Component>asList(textField1, textField2, combo3, combo4)) {
@@ -924,7 +924,7 @@ for (Component c: Arrays.<Component>asList(textField1, textField2, combo3, combo
 }}
 
 #twocolumn
-- `Kotlin`(自動変換)
+`Kotlin`(自動変換)
 #code{{
 val box = Box.createVerticalBox()
 for (c in Arrays.asList(textField1, textField2, combo3, combo4)) {
@@ -938,7 +938,7 @@ for (c in Arrays.asList(textField1, textField2, combo3, combo4)) {
 //                 ^
 }}
 
-- `Kotlin`(手動修正)
+`Kotlin`(手動修正)
 #code{{
 val box = Box.createVerticalBox()
 for (c in Arrays.asList<Component>(textField1, textField2, combo3, combo4)) {
@@ -948,6 +948,320 @@ for (c in Arrays.asList<Component>(textField1, textField2, combo3, combo4)) {
 // or:
 // for (c in listOf<Component>(textField1, textField2, combo3, combo4)) {
 // for (c in Arrays<Component>.asList(textField1, textField2, combo3, combo4)) {
+}}
+#twocolumn
+
+** JTree, ActionListener [#d4c27439]
+- `IntelliJ`の自動変換では`ActionListener`のラムダ式をうまく変換できない場合がある
+-- `AbstractCellEditor#stopCellEditing()`は`boolean`を返すので`error: type mismatch: inferred type is (???) -> Boolean but ActionListener? was expected`とエラーになる
+
+#twocolumn
+`Java`
+#code{{
+handler = e -> stopCellEditing();
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code{{
+handler = { e -> stopCellEditing() }
+// error: type mismatch: inferred type is (???) -> Boolean but ActionListener? was expected
+//             handler = { e -> stopCellEditing() }
+// error: cannot infer a type for this parameter. Please specify it explicitly.
+//             handler = { e -> stopCellEditing() }
+// error: modifier 'override' is not applicable to 'local function'
+//               override fun actionPerformed(e: ActionEvent) : Unit {
+}}
+
+`Kotlin`(手動修正)
+#code{{
+handler = object: ActionListener {
+  override fun actionPerformed(e: ActionEvent) : Unit { // Unitは無くても可
+    stopCellEditing()
+  }
+}
+}}
+#twocolumn
+
+- `IntelliJ`の自動変換で、以下のようなエラーになる場合は、`Object`を`Any`に手動変換する
+ error: class 'CheckBoxNodeRenderer' is not abstract and does not implement abstract member public abstract fun getTreeCellRendererComponent(p0: JTree!, p1: Any!, p2: Boolean, p3: Boolean, p4: Boolean, p5: Int, p6: Boolean): Component! defined in javax.swing.tree.TreeCellRenderer
+ internal class CheckBoxNodeRenderer : TreeCellRenderer {
+
+- getterのみオーバーライド
+
+#twocolumn
+`Java`
+#code{{
+class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor {
+  @Override public Object getCellEditorValue() {
+    return new CheckBoxNode(checkBox.getText(), checkBox.isSelected());
+  }
+  //...
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code{{
+val cellEditorValue: Any
+  override get() = CheckBoxNode(checkBox.getText(), checkBox.isSelected())
+//error: modifier 'override' is not applicable to 'getter'
+//       override get() = CheckBoxNode(checkBox.getText(), checkBox.isSelected())
+}}
+
+`Kotlin`(手動修正)
+#code{{
+  override fun getCellEditorValue(): Any {
+    return CheckBoxNode(checkBox.getText(), checkBox.isSelected())
+  }
+}}
+
+#twocolumn
+
+#twocolumn
+`Java`
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.tree.*;
+
+public class LeafCheckBoxTreeTest {
+  private JComponent makeUI() {
+    JTree tree = new JTree();
+    tree.setEditable(true);
+    tree.setCellRenderer(new CheckBoxNodeRenderer());
+    tree.setCellEditor(new CheckBoxNodeEditor());
+    tree.setRowHeight(18);
+
+    boolean b = true;
+    TreeModel model = tree.getModel();
+    DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+    Enumeration<?> e = root.breadthFirstEnumeration();
+    while (e.hasMoreElements()) {
+      DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.nextElement();
+      String s = Objects.toString(node.getUserObject(), "");
+      node.setUserObject(new CheckBoxNode(s, b));
+      b ^= true;
+    }
+
+    return new JScrollPane(tree);
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(() -> {
+      UIManager.put("swing.boldMetal", Boolean.FALSE);
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      f.getContentPane().add(new LeafCheckBoxTreeTest().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+
+class CheckBoxNodeRenderer implements TreeCellRenderer {
+  private final JCheckBox checkBox = new JCheckBox();
+  private final DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+  @Override public Component getTreeCellRendererComponent(
+      JTree tree, Object value, boolean selected, boolean expanded,
+      boolean leaf, int row, boolean hasFocus) {
+    if (leaf && value instanceof DefaultMutableTreeNode) {
+      checkBox.setEnabled(tree.isEnabled());
+      checkBox.setFont(tree.getFont());
+      checkBox.setOpaque(false);
+      checkBox.setFocusable(false);
+      Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
+      if (userObject instanceof CheckBoxNode) {
+        CheckBoxNode node = (CheckBoxNode) userObject;
+        checkBox.setText(node.text);
+        checkBox.setSelected(node.selected);
+      }
+      return checkBox;
+    }
+    return renderer.getTreeCellRendererComponent(
+        tree, value, selected, expanded, leaf, row, hasFocus);
+  }
+}
+
+class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor {
+  private final JCheckBox checkBox = new JCheckBox() {
+    protected transient ActionListener handler;
+    @Override public void updateUI() {
+      removeActionListener(handler);
+      super.updateUI();
+      setOpaque(false);
+      setFocusable(false);
+      handler = e -> stopCellEditing();
+      addActionListener(handler);
+    }
+  };
+  @Override public Component getTreeCellEditorComponent(
+      JTree tree, Object value, boolean selected, boolean expanded,
+      boolean leaf, int row) {
+    if (leaf && value instanceof DefaultMutableTreeNode) {
+      Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
+      if (userObject instanceof CheckBoxNode) {
+        checkBox.setSelected(((CheckBoxNode) userObject).selected);
+      } else {
+        checkBox.setSelected(false);
+      }
+      checkBox.setText(value.toString());
+    }
+    return checkBox;
+  }
+  @Override public Object getCellEditorValue() {
+    return new CheckBoxNode(checkBox.getText(), checkBox.isSelected());
+  }
+  @Override public boolean isCellEditable(EventObject e) {
+    if (e instanceof MouseEvent && e.getSource() instanceof JTree) {
+      MouseEvent me = (MouseEvent) e;
+      JTree tree = (JTree) me.getComponent();
+      TreePath path = tree.getPathForLocation(me.getX(), me.getY());
+      Object o = path.getLastPathComponent();
+      if (o instanceof TreeNode) {
+        return ((TreeNode) o).isLeaf();
+      }
+    }
+    return false;
+  }
+}
+
+class CheckBoxNode {
+  public final String text;
+  public final boolean selected;
+  protected CheckBoxNode(String text, boolean selected) {
+    this.text = text;
+    this.selected = selected;
+  }
+  @Override public String toString() {
+    return text;
+  }
+}
+}}
+
+#twocolumn
+`Kotlin`
+#code{{
+import java.awt.*
+import java.awt.event.*
+import java.util.*
+import javax.swing.*
+import javax.swing.event.*
+import javax.swing.tree.*
+
+private fun makeUI(): JComponent {
+  val tree = JTree()
+  tree.setEditable(true)
+  tree.setCellRenderer(CheckBoxNodeRenderer())
+  tree.setCellEditor(CheckBoxNodeEditor())
+  tree.setRowHeight(18)
+
+  var b = true
+  val model = tree.getModel()
+  val root = model.getRoot() as DefaultMutableTreeNode
+  val e = root.breadthFirstEnumeration()
+  while (e.hasMoreElements()) {
+    val node = e.nextElement() as DefaultMutableTreeNode
+    val s = Objects.toString(node.getUserObject(), "")
+    node.setUserObject(CheckBoxNode(s, b))
+    b = b xor true
+  }
+  return JScrollPane(tree)
+}
+
+fun main(args: Array<String>) {
+  EventQueue.invokeLater {
+    UIManager.put("swing.boldMetal", false)
+    JFrame("kotlin swing").apply {
+      defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+      add(makeUI())
+      size = Dimension(320, 240)
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
+}
+
+internal class CheckBoxNodeRenderer : TreeCellRenderer {
+  private val checkBox = JCheckBox()
+  private val renderer = DefaultTreeCellRenderer()
+  override fun getTreeCellRendererComponent(
+    tree: JTree, value: Any, selected: Boolean, expanded: Boolean,
+    leaf: Boolean, row: Int, hasFocus: Boolean): Component {
+    if (leaf && value is DefaultMutableTreeNode) {
+      checkBox.setEnabled(tree.isEnabled())
+      checkBox.setFont(tree.getFont())
+      checkBox.setOpaque(false)
+      checkBox.setFocusable(false)
+      val userObject = value.getUserObject()
+      if (userObject is CheckBoxNode) {
+        val node = userObject // as CheckBoxNode
+        checkBox.setText(node.text)
+        checkBox.setSelected(node.selected)
+      }
+      return checkBox
+    }
+    return renderer.getTreeCellRendererComponent(
+      tree, value, selected, expanded, leaf, row, hasFocus)
+  }
+}
+
+internal class CheckBoxNodeEditor : AbstractCellEditor(), TreeCellEditor {
+  private val checkBox = object : JCheckBox() {
+    protected var handler: ActionListener? = null
+    override fun updateUI() {
+      removeActionListener(handler)
+      super.updateUI()
+      setOpaque(false)
+      setFocusable(false)
+      handler = object: ActionListener {
+        override fun actionPerformed(e: ActionEvent) : Unit {
+        stopCellEditing()
+        }
+      }
+      addActionListener(handler)
+    }
+  }
+
+  override fun getTreeCellEditorComponent(
+      tree: JTree, value: Any, selected: Boolean, expanded: Boolean,
+      leaf: Boolean, row: Int): Component {
+    if (leaf && value is DefaultMutableTreeNode) {
+      val userObject = value.getUserObject()
+      if (userObject is CheckBoxNode) {
+        checkBox.setSelected(userObject.selected)
+      } else {
+        checkBox.setSelected(false)
+      }
+      checkBox.setText(value.toString())
+    }
+    return checkBox
+  }
+
+  override fun getCellEditorValue(): Any {
+    return CheckBoxNode(checkBox.getText(), checkBox.isSelected())
+  }
+
+  override fun isCellEditable(e: EventObject): Boolean {
+    if (e is MouseEvent && e.getSource() is JTree) {
+      val tree = e.getComponent() as JTree
+      val path = tree.getPathForLocation(e.getX(), e.getY())
+      val o = path.getLastPathComponent()
+      if (o is TreeNode) {
+        return o.isLeaf()
+      }
+    }
+    return false
+  }
+}
+
+internal class CheckBoxNode public constructor(val text: String, val selected: Boolean) {
+  override fun toString(): String {
+    return text
+  }
+}
 }}
 #twocolumn
 
