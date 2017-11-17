@@ -58,7 +58,8 @@ class TextComponentPopupMenu extends JPopupMenu {
 - `JPopupMenu does not open???`
 -- 編集可能に設定した`JComboBox`の`JTextField`にマウスクリックでフォーカスを移動しても、他コンポーネントの`JPopupMenu`が開いたままになるバグ(仕様？)があるため、`JTextField#setComponentPopupMenu(...)`で追加した`JPopupMenu`を開くことができない
 -- [https://bugs.openjdk.java.net/browse/JDK-8044493 JDK-8044493 Clicking on an editable JComboBox leaves JPopupMenus and other menus open - Java Bug System]
---- `textField.putClientProperty("doNotCancelPopup", null);`で回避可能？
+-- [https://explodingpixels.wordpress.com/2008/11/10/prevent-popup-menu-dismissal/ Prevent popup menu dismissal | Exploding Pixels]
+--- `textField.putClientProperty("doNotCancelPopup", null);`で回避可能(ただしエディタをマウスでクリックすると`JComboBox`のドロップダウンリストも閉じるようになる)
 #code{{
 JComboBox<String> combo5 = new JComboBox<>(new String[] {"000", "111", "222"});
 combo5.setEditable(true);
@@ -69,6 +70,7 @@ textField5.putClientProperty("doNotCancelPopup", null);
 
 - `addMouseListener`
 -- 編集可能に設定した`JComboBox`の`JTextField`に`MouseListener`を追加し、マウスでクリックされたら一旦すべての`JPopupMenu`を閉じるよう設定
+--- ただし、自身の親の`JComboBox`が開いたドロップダウンリストは除外する
 --- 参考: [[MenuSelectionManagerですべてのJPopupMenuを取得する>Swing/GetAllPopupMenus]]
 
 #code{{
@@ -82,7 +84,9 @@ textField4.addMouseListener(new MouseAdapter() {
     System.out.println("Close all JPopUpMenu");
     // https://ateraimemo.com/Swing/GetAllPopupMenus.html
     for (MenuElement m : MenuSelectionManager.defaultManager().getSelectedPath()) {
-      if (m instanceof JPopupMenu) {
+      if (combo4.isPopupVisible()) {
+        continue;
+      } else if (m instanceof JPopupMenu) {
         ((JPopupMenu) m).setVisible(false);
       }
     }

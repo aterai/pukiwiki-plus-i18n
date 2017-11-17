@@ -210,6 +210,41 @@ errorprone:
 }}
 
 * その他 [#others]
+** Java 9 マイグレーション [#java9]
+- `javac`タスク
+-- `error: package com.sun.java.swing.plaf.windows is not visible`などとエラーになる場合は、コンパイル引数に`--add-exports=java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED`を追加
+-- `error: package javax.activation is not visible`の場合は、コンパイル引数に`--add-modules=java.activation`を追加
+#code{{
+<target name="compile" depends="prepare-src, prepare-resource, prepare-web">
+  <javac srcdir="${build.src}"
+         includes="**/*.java"
+         destdir="${build.dest}"
+         encoding="${compile.encoding}"
+         debug="${compile.debug}"
+         optimize="${compile.optimize}"
+         deprecation="${compile.deprecation}"
+         includeAntRuntime="no"
+         fork="true"
+         classpathref="project.class.path">
+    <compilerarg value="-J-Dfile.encoding=${compile.encoding}" />
+    <compilerarg value="-J-Duser.language=${user.language}" />
+    <compilerarg value="--add-exports=java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED" />
+    <compilerarg value="--add-modules=java.activation" />
+    <compilerarg value="-Xlint:unchecked" />
+  </javac>
+</target>
+}}
+
+- `java`タスク
+-- `Exception in thread "AWT-EventQueue-0" java.lang.NoClassDefFoundError: javax/activation/ActivationDataFlavor`などのエラーがでる場合は、`--add-modules=java.activation`などを`JVM`引数に追加
+#code{{
+<target name="run" depends="compile">
+  <java classname="${main.class}" classpathref="project.class.path" fork="true">
+    <jvmarg value="--add-modules=java.activation" />
+  </java>
+</target>
+}}
+
 ** `buildfile`オプション [#buildfile]
 `build.xml`ファイルを作ってコマンドプロンプトから`ant.bat`を実行します。引数が無い場合、カレントフォルダにある`build.xml`が使用されます。
  ant
