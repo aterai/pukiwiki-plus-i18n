@@ -109,24 +109,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 </button>
-<a class="navbar-brand" href="//ateraimemo.com/"><?php echo $page_title ?></a>
+<a class="navbar-brand" href="https://ateraimemo.com/"><?php echo $page_title ?></a>
 </div>
 <div class="collapse navbar-collapse" id="jb-navbar-collapse">
 <ul class="nav navbar-nav">
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Swing.html">Java Swing</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Tips.html">Java Tips</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Javadoc.html">Javadoc</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Ant.html">Ant</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Gradle.html">Gradle</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/JRuby.html">JRuby</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/JavaScript.html">JavaScript</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Subversion.html">Subversion</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Jekyll.html">Jekyll</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/XSLT20.html">XSLT 2.0</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Kotlin.html">Kotlin</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Jenkins.html">Jenkins</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/SurfacePro3.html">Surface Pro 3</a></li>
-<li itemprop="name"><a itemprop="url" href="//ateraimemo.com/Solitaire.html">Solitaire</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/Swing.html">Java Swing</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/Tips.html">Java Tips</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/Javadoc.html">Javadoc</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/Ant.html">Ant</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/Gradle.html">Gradle</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/JRuby.html">JRuby</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/JavaScript.html">JavaScript</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/Subversion.html">Subversion</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/Jekyll.html">Jekyll</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/XSLT20.html">XSLT 2.0</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/Kotlin.html">Kotlin</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/Jenkins.html">Jenkins</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/SurfacePro3.html">Surface Pro 3</a></li>
+<li itemprop="name"><a itemprop="url" href="https://ateraimemo.com/Solitaire.html">Solitaire</a></li>
 </ul>
 <?php include_once(PLUGIN_DIR.'search_form.inc.php'); echo plugin_search_form_convert(); ?>
 </div>
@@ -152,7 +152,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <?php include_once(PLUGIN_DIR.'header.inc.php'); echo plugin_header_convert(); ?>
 </header>
 
+<main role="main">
 <?php echo $body ?>
+</main>
 
 <?php if ($notes != '') { ?>
 <aside class="summary">
@@ -170,7 +172,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="push"></div>
 </div><!-- /.wrap -->
 <footer class="footer text-center" itemscope="itemscope" itemtype="https://schema.org/WPFooter">
-<p>© 2017 <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="//ateraimemo.com/:Users/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="//github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="//github.com/plusjade/jekyll-bootstrap/" target="_blank">Jekyll Bootstrap</a></p>
+<p>© 2017 <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="https://ateraimemo.com/:Users/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="https://github.com/miko2u/pukiwiki-plus-i18n" target="_blank">PukiWiki Plus!</a> and <a href="https://github.com/plusjade/jekyll-bootstrap/" target="_blank">Jekyll Bootstrap</a></p>
 </footer>
 </body>
 </html>

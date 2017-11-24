@@ -177,7 +177,7 @@ $script = 'https:'.ROOT_URI;
 $absolute_uri = 1;
 // Specify PukiWiki Plus! absoluteURI (Only when you set $script to relativeURI)
 // $script に相対URIを指定した際に、必要であれば、絶対URIを指定して下さい。
-$script_abs = 'https://ateraimemo.com/';
+// $script_abs = '';
 
 // Site admin's name (CHANGE THIS)
 $modifier = 'aterai';

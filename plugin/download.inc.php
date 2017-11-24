@@ -47,18 +47,17 @@ EOD;
     $zip = $url . '/src.zip';
     $dir = str_replace('Swing/', '', $page);
     //$low = strtolower($dir);
-    $git = "//github.com/aterai/java-swing-tips/tree/master/" . $dir;
+    $git = "https://github.com/aterai/java-swing-tips/tree/master/" . $dir;
 
     return <<<EOD
 <div class="row">
-
 <div class="col-md-5 col-xs-12">
-<div>
-<p><a href="$jar" class="btn btn-block btn-danger"  download="example.jar"><span class="glyphicon glyphicon-save icon-white"></span> Runnable JARファイル <small>example.jar</small></a></p>
-<p><a href="$zip" class="btn btn-block btn-success" download="src.zip"><span class="glyphicon glyphicon-cloud-download icon-white"></span> ソースコード <small>src.zip</small></a></p>
-<p><a href="$git" class="btn btn-block btn-info"><span class="glyphicon glyphicon-import icon-white"></span> リポジトリ <small>repository</small></a></p>
-</div>
-<p>$imgpath</p>
+<ul class="list-group">
+<li class="list-group-item"><a href="$jar" class="btn btn-block btn-danger"  download="example.jar"><span class="glyphicon glyphicon-save icon-white"></span> Runnable JARファイル <small>example.jar</small></a></li>
+<li class="list-group-item"><a href="$zip" class="btn btn-block btn-success" download="src.zip"><span class="glyphicon glyphicon-cloud-download icon-white"></span> ソースコード <small>src.zip</small></a></li>
+<li class="list-group-item"><a href="$git" class="btn btn-block btn-info"><span class="glyphicon glyphicon-import icon-white"></span> リポジトリ <small>repository</small></a></li>
+</ul>
+<figure>$imgpath</figure>
 </div>
 $ads
 </div>
