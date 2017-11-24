@@ -190,7 +190,7 @@ class ReorderingLayerUI extends LayerUI<JComponent> {
 }}
 
 * 解説 [#explanation]
-並べ替えの処理などは、[[JPanelの並び順をドラッグ＆ドロップで入れ替える>Swing/RearrangeOrderOfPanels]]と同じものを使用していますが、こちらはドラッグ中のコンポーネントの描画を親の`JPanel`内でのみに制限しているので、`JWindow`ではなく`JLayer`を使用しています。
+並べ替えの処理などは、[[JPanelの並び順をドラッグ＆ドロップで入れ替える>Swing/RearrangeOrderOfPanels]]と同じものを使用していますが、こちらはドラッグ中のコンポーネントの移動可能領域を親の`JPanel`内のみに制限しているので、`JWindow`ではなく`JLayer`を使用しています。
 
 - ドラッグ中のコンポーネントの位置・サイズ
 -- 位置: 親の`JPanel`から内部余白を除いた部分をドラッグ可能な領域(`SwingUtilities.calculateInnerArea(...)`で取得)に設定し、その範囲内に位置を制限

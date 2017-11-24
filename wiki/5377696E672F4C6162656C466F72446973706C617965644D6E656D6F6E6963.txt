@@ -26,14 +26,14 @@ label.setLabelFor(textField);
 
 - 編集不可の`JComboBox`などで、この方法ではフォーカスが移動しない？
 -- KBD{Tab}キーなどによるフォーカス移動や`JComboBox#requestFocusInWindow()`を実行した場合のようにならない
-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JLabel.html#setLabelFor(java.awt.Component) JLabel#setLabelFor(Component) (Java Platform SE 6)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JLabel.html#setLabelFor-java.awt.Component- JLabel#setLabelFor(Component) (Java Platform SE 8)]
 -- 「ニーモニックがアクティブになったときに、`labelFor`プロパティーで指定されているコンポーネントの`requestFocus`メソッドを呼び出します。」
-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/text/JTextComponent.html#setFocusAccelerator(char) JTextComponent#setFocusAccelerator(char) (Java Platform SE 6)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setFocusAccelerator-char- JTextComponent#setFocusAccelerator(char) (Java Platform SE 8)]
 -- ニーモニックを表示する必要がない場合は、`JTextComponent`などに直接`JTextComponent#setFocusAccelerator(char)`でフォーカスアクセラレータキーを設定することも可能(`JLabel#setLabelFor(Component)`と合わせて設定しても、どちらも有効)
 
 * 参考リンク [#reference]
-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JLabel.html#setLabelFor(java.awt.Component) JLabel#setLabelFor(Component) (Java Platform SE 6)]
-- [http://docs.oracle.com/javase/jp/6/api/javax/swing/text/JTextComponent.html#setFocusAccelerator(char) JTextComponent#setFocusAccelerator(char) (Java Platform SE 6)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JLabel.html#setLabelFor-java.awt.Component- JLabel#setLabelFor(Component) (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setFocusAccelerator-char- JTextComponent#setFocusAccelerator(char) (Java Platform SE 8)]
 
 * コメント [#comment]
 #comment

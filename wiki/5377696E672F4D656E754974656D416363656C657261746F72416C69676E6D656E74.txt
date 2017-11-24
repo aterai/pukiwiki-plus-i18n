@@ -81,7 +81,6 @@ public static void paintAccText(
 -- `JMenuItem`に`GridBagLayout`を設定し、`c.anchor = GridBagConstraints.EAST;`で、`Accelerator`文字列を設定した`JLabel`を配置
 -- 本来の`Accelerator`文字列は、`UIManager.put("MenuItem.acceleratorForeground", background);`などで背景色と同化して非表示
 -- 参考: [[JMenuItemの内部にJButtonを配置する>Swing/ButtonsInMenuItem]]
-
 #code{{
 private static JMenuItem makeMenuItem2(JMenuItem mi) {
   final JLabel label = new JLabel(MenuItemUIHelper.getAccText(mi, "+"));
@@ -131,17 +130,20 @@ private static JMenuItem makeMenuItem2(JMenuItem mi) {
 -- 例: `Space`が「スペース」
 - [http://docs.oracle.com/javase/jp/7/api/java/awt/event/KeyEvent.html#getKeyText(int) KeyEvent#getKeyText(int) (Java Platform SE 7)]では、「これらの文字列は`awt.properties`ファイルを変更することによりローカライズが可能です。」となっているが、`%JAVA_HOME%/jre/lib/rt.jar`内に`sun/awt/resources/awt.class`などの優先順位が高いクラスがあるため、`awt_ja.properties`などを作成しても読み込まれない
 -- `-Xbootclasspath/p:`などで、`rt.jar`より先に以下のような`sun.awt.resources.awt_ja.class`を読み込むよう指定
-
 #code{{
 package sun.awt.resources;
 import java.util.ListResourceBundle;
-//ant package
-//cd target
-//"%JAVA_HOME%/bin/java" -Xbootclasspath/p:example.jar -jar example.jar
-public class awt_ja extends ListResourceBundle {
+// ant package
+// cd target
+// "%JAVA_HOME%\bin\java" -Xbootclasspath/p:example.jar -jar example.jar
+// Class names should begin with an uppercase character
+@SuppressWarnings({"PMD.ClassNamingConventions", "checkstyle:typename"})
+public final class awt_ja extends ListResourceBundle {
   @Override protected Object[][] getContents() {
-    System.out.println("---- awt_ja ----");
-    return new Object[][] { { "AWT.space", "XXXXX" } };
+    System.out.println("awt_ja");
+    return new Object[][] {
+      {"AWT.space", "XXXXX"}
+    };
   }
 }
 }}

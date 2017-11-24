@@ -116,6 +116,75 @@ pubdate: 2006-01-29
 - Shape Line Animation
 - UIDefaults ProxyLazyValue
 
+* Java 9 [#java9]
+- [[Swing/AuxiliaryLookAndFeel]]
+ AuxiliaryLookAndFeel\src\java\example\AuxiliaryWindowsComboBoxUI.java:59: warning: [unchecked] unchecked 
+ method invocation: constructor <init> in class BasicComboPopup is applied to given types
+        super(combo);
+             ^
+  required: JComboBox<Object>
+  found: JComboBox
+ AuxiliaryLookAndFeel\src\java\example\AuxiliaryWindowsComboBoxUI.java:59: warning: [unchecked] unchecked 
+ conversion
+        super(combo);
+              ^
+  required: JComboBox<Object>
+  found:    JComboBox
+
+- [[Swing/BasicComboPopup]]
+ BasicComboPopup\src\java\example\MainPanel.java:52: warning: [deprecation] modelToView(int) in JTextComponent has been deprecated
+                    Rectangle rect = jtp.modelToView(jtp.getCaretPosition());
+                                        ^
+ BasicComboPopup\src\java\example\MainPanel.java:109: warning: [unchecked] unchecked method invocation: 
+ constructor <init> in class BasicComboPopup is applied to given types
+        super(cb);
+             ^
+  required: JComboBox<Object>
+  found: JComboBox
+ BasicComboPopup\src\java\example\MainPanel.java:109: warning: [unchecked] unchecked conversion
+        super(cb);
+              ^
+  required: JComboBox<Object>
+  found:    JComboBox
+
+- [[Swing/ElementAttribute]] 
+ ElementAttribute\src\java\example\MainPanel.java:137: warning: [deprecation] 
+ viewToModel(JTextComponent,Point,Bias[]) in TextUI has been deprecated
+            int pos = editor.getUI().viewToModel(editor, e.getPoint(), bias);
+                                    ^
+- [[Swing/GetLineText]]
+ C:\Users\terai\jst\GetLineText\src\java\example\MainPanel.java:170: warning: [deprecation] viewToModel(Point) 
+ in JTextComponent has been deprecated
+        int pos = textArea.viewToModel(new Point(0, y));
+                          ^
+
+- [[Swing/InputVerifierFocusOrder]]
+ InputVerifierFocusOrder\src\java\example\MainPanel.java:73: warning: [deprecation] 
+ shouldYieldFocus(JComponent) in InputVerifier has been deprecated
+            @Override public boolean shouldYieldFocus(JComponent input) {
+                                     ^
+ InputVerifierFocusOrder\src\java\example\MainPanel.java:76: warning: [deprecation] 
+ shouldYieldFocus(JComponent) in InputVerifier has been deprecated
+                return super.shouldYieldFocus(input);
+                            ^
+
+- [[Swing/InternalFrameDropTarget]]
+ InternalFrameDropTarget\src\java\example\MainPanel.java:11: error: package javax.activation is not visible
+ import javax.activation.*;
+            ^
+  (package javax.activation is declared in module java.activation, which is not in the module graph)
+
+- [[Swing/MenuItemAcceleratorAlignment]]
+ MenuItemAcceleratorAlignment\src\java\example\MainPanel.java:285: warning: [deprecation] 
+ getKeyModifiersText(int) in KeyEvent has been deprecated
+                accText.append(KeyEvent.getKeyModifiersText(modifiers)).append(acceleratorDelimiter);
+
+- [[Swing/PasswordView]]
+ PasswordView\src\java\example\MainPanel.java:75: warning: [deprecation] 
+ drawEchoCharacter(Graphics,int,int,char) in PasswordView has been deprecated
+        @Override protected int drawEchoCharacter(Graphics g, int x, int y, char c) {
+                                ^
+
 * 投稿日メモ [#t2d1fa26]
 - 投稿時間が不明な記事一覧
 -- buckupやアクセスログから調査可能な記事は、スクリプトや手動で復元したが、以下はwikihomeから移転した日時しか残っていない

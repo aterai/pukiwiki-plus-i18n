@@ -32,6 +32,8 @@ pubdate: 2017-05-31
 -- `IntelliJ`の自動変換では`arrayOf(arrayOf<Any>("aaa", 12, true), ...`
 - `apply`
 - `switch`は`when`
+- `DefaultTableModel#getColumnClass(...)`メソッドをオーバーライドして、`Boolean::class.java`を返してもセルレンダラーに`JCheckBox`は適用されない
+-- `IntelliJ`の自動変換では`Boolean::class.java`になるが、`java.lang.Boolean::class.java`に修正する必要がある
 
 #twocolumn
 `Java`
@@ -93,7 +95,8 @@ fun makeUI(): JComponent {
   //     return when (col) {
   //       0 -> String::class.java
   //       1 -> Integer::class.java
-  //       2 -> Boolean::class.java
+  //       // XXX: 2 -> Boolean::class.java
+  //       2 -> java.lang.Boolean::class.java
   //       else -> Object::class.java
   //     }
   //   }
