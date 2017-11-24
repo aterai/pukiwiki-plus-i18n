@@ -55,7 +55,11 @@ class PukiWikiParser
   def has_pubdate
     @timestamp != ''
   end
+<<<<<<< HEAD
   def to_md(src, page_names, page, base_uri = 'http://ateraimemo.com/', suffix= '/')
+=======
+  def to_md(src, page_names, page, base_uri = 'https://ateraimemo.com/', suffix= '/')
+>>>>>>> sakura-develop
     @page_names = page_names
     @base_uri = base_uri
     @page = page.sub(/\ASwing\/(.+)\.txt$/) { $1 }
