@@ -85,8 +85,9 @@ class PukiWikiParser
 #       @timestamp = yaml['pubdate'].strftime('%Y-%m-%d')
 #       head.push(yaml.to_yaml.rstrip)
 
-      head.push("---")
-      head.push("layout: post")
+      head.push("type=post")
+      head.push("status=published")
+
       #head.push("category: swing")
       #head.push("folder: #{@page}")
       heads = frontmatter.rstrip.split(/\r?\n/).map {|line| line.chomp }
@@ -94,17 +95,19 @@ class PukiWikiParser
         case heads.first
         when /\Apubdate: /
           pubdate = heads.shift
-          head.push pubdate
+          head.push pubdate.gsub(/pubdate: +/, 'date=')
           @timestamp = DateTime.parse(pubdate.sub(/\Apubdate: /, '')).strftime('%Y-%m-%d')
         when /\Anoindex: /
           @timestamp = ''
           return ''
+        when /\Atags: /
+          head.push heads.shift.gsub(/tags: \[([^\[\]]+)\]$/) { "tags=".concat($1) }
         else
-          head.push heads.shift
+          head.push heads.shift.gsub(/: +/, '=')
         end
       end
-      head.push("comments: true")
-      head.push("---\n")
+      head.push("comments=true")
+      head.push("~~~~~~\n\n")
     else
       body = src
     end
@@ -123,7 +126,7 @@ class PukiWikiParser
         buf.concat parse_pre2(take_multi_block(lines))
       when /\A\#.+/
         bp = parse_block_plugin(lines.shift)
-        buf.push bp unless bp.nil?
+        #buf.push bp unless bp.nil?
       when /\A\s/
         buf.concat parse_pre(take_block(lines, /\A\s/))
       when /\A\/\//
