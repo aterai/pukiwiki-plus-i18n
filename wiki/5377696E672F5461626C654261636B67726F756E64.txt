@@ -23,11 +23,11 @@ scroll.getViewport().setBackground(Color.WHITE);
 }}
 
 * 解説 [#explanation]
-このページのタイトルなどで「`JTable`の背景色」としている部分は、実際は`JTable`の背景色ではなく、`JTable`を追加した`JViewport`がセルで隠れていない部分のことです。
+このページのタイトルなどで「`JTable`の背景色」としている部分は、実際は`JTable`の背景色ではなく、`JTable`を追加した`JViewport`がセルで隠れていない領域を表しています。
 
 このため、上記のスクリーンショットのように色をつけたい場合は、`JTable`自身の背景色を設定するのではなく、`JViewport`の背景色を設定する必要があります。サンプルコードでは`JScrollPane`から`JViewport`を取得していますが、`JTable#getParent()`メソッドからも`JViewport`を取得することができます。
 
-上記のサンプルでは、背景色を不透明にするを選択して背景色を設定してやると、`JViewport`の背景色が変更されます。
+上記のサンプルでは、背景色を不透明にするを選択して背景色を設定すると`JViewport`の背景色が変更されます。
 
 ----
 セルの背景色を変更する場合は、`TableCellRenderer`を使用([[TableCellRendererでセルの背景色を変更>Swing/StripeTable]])します。

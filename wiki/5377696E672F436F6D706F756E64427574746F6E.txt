@@ -126,7 +126,7 @@ class CompoundButton extends JButton {
 -- [[JButtonの形を変更>Swing/RoundButton]]を使って、幅高さの半分の直径をもつ円ボタンを作成
 -- `JButton#contains(...)`をオーバーライドして、図形内のみマウスカーソルが反応するように変更
 - 扇形ボタン
--- 東西南北に`4`つ配置するので、角の大きさは`90`度、始角はそれぞれ、`45`、`135`、`225`、`-45`度で`Arc2D`を作成
+-- 東西南北に`4`つ配置するので、内角は`90`度、始角はそれぞれ、`45`、`135`、`225`、`-45`度で`Arc2D`を作成
 -- これらの`Arc2D`から上記の円形ボタンの領域を取り去って扇形に変形(`Area#subtract(Area)`を使用)
 --- [[Mouseで画像を移動、回転>Swing/MouseDrivenImageRotation]]
 -- `JButton#contains(...)`をオーバーライドして、図形内のみマウスカーソルが反応するように変更

@@ -119,7 +119,7 @@ class PauseAction extends AbstractAction {
 }}
 
 * 解説 [#explanation]
-`SwingWorker#doInBackground()`内のループで一時停止のフラグを参照し、一時停止状態の場合は本来の処理(上記のサンプルではカウントアップするだけ)を行わずに、`Thread.sleep(...)`と停止中を表現するコンポーネントの更新(`JTextArea`の文字列を点滅)のみ繰り返すようになっています。
+上記のサンプルでは、`SwingWorker#doInBackground()`内のループで一時停止のフラグを参照し、一時停止状態の場合は本来の処理(上記のサンプルではカウントアップするだけ)を行わずに、`Thread.sleep(...)`と停止中を表現するコンポーネントの更新(`JTextArea`の文字列を点滅)のみ繰り返す`SwingWorker`を使用しています。
 
 * 参考リンク [#reference]
 - [[SwingWorkerを使った処理の中断と進捗状況表示>Swing/SwingWorker]]
