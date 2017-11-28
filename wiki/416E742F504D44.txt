@@ -147,7 +147,7 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 -- 上記のサンプルから、`targetjdk="${compile.source}"`を削除
 
 ** PMD 5.1.2 [#xfc6bb0b]
-- `PMD 5.1.2`で以下のようなコードが、`Avoid unused private methods such as 'makePanel(String,JComponent)'.`と警告されてしまう？
+- %%`PMD 5.1.2`で以下のようなコードが、`Avoid unused private methods such as 'makePanel(String,JComponent)'.`と警告されてしまう？%% 修正済み
 -- [https://sourceforge.net/p/pmd/bugs/1228/ PMD / Issues / #1228 UnusedPrivateMethod returns false positives]
 -- `C:\pmd-bin-5.1.2\bin\pmd.bat -dir /root/directory/for/sources -rulesets java-unusedcode`
 
@@ -187,7 +187,7 @@ public class Foo {
 }}
 
 ** PMD 5.1.3-SNAPSHOT [#se3b451a]
-- `上記の誤検出はpmd-bin-5.1.3-SNAPSHOT.zip`ですべて無くなったけど、新規で今まで問題なかった?以下のようなコードの`makeButton(Action action, String title)`が`UnusedPrivateMethod`となってしまう。
+- %%上記の誤検出は`pmd-bin-5.1.3-SNAPSHOT.zip`ですべて修正済み。ただし新規で今まで問題なかった以下のようなコードの`makeButton(Action action, String title)`が`UnusedPrivateMethod`となってしまう%% 修正済み
 
  C:\temp>C:\pmd-bin-5.1.3-SNAPSHOT\bin\pmd.bat -dir . -rulesets java-unusedcode
  C:\temp\MenuBarFactoryTest.java:44: Avoid unused private methods such as 'makeButton(Action,String)'.
