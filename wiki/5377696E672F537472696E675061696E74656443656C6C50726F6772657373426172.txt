@@ -56,49 +56,49 @@ class ProgressValue {
 }
 
 class ProgressRenderer extends DefaultTableCellRenderer {
-  private final JProgressBar b = new JProgressBar();
-  private final JPanel p = new JPanel(new BorderLayout());
-  public ProgressRenderer() {
-    super();
-    setOpaque(true);
-    b.setStringPainted(true);
-    p.add(b);
-  }
+  private final JProgressBar progress = new JProgressBar();
+  private final JPanel renderer = new JPanel(new BorderLayout());
   @Override public Component getTableCellRendererComponent(
-      JTable table, Object value, boolean isSelected, boolean hasFocus,
-      int row, int column) {
-    String text = "Done";
+      JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    Component c;
+    renderer.removeAll();
+    progress.setValue(0);
     if (value instanceof ProgressValue) {
       ProgressValue pv = (ProgressValue) value;
       Integer current = pv.getProgress();
       Integer lengthOfTask = pv.getLengthOfTask();
       if (current < 0) {
-        text = "Canceled";
+        c = super.getTableCellRendererComponent(
+            table, "Canceled", isSelected, hasFocus, row, column);
       } else if (current < lengthOfTask) {
-        b.setMaximum(lengthOfTask);
-        b.setValue(current);
-        b.setString(String.format("%d/%d", current, lengthOfTask));
-        return p;
+        progress.setValue(current * 100 / lengthOfTask);
+        progress.setStringPainted(true);
+        progress.setString(String.format("%d/%d", current, lengthOfTask));
+        renderer.add(progress);
+        c = renderer;
+      } else {
+        c = super.getTableCellRendererComponent(table, "Done", isSelected, hasFocus, row, column);
       }
+    } else {
+      c = super.getTableCellRendererComponent(table, "Waiting...", isSelected, hasFocus, row, column);
     }
-    super.getTableCellRendererComponent(
-        table, text, isSelected, hasFocus, row, column);
-    return this;
+    return c;
   }
   @Override public void updateUI() {
     super.updateUI();
-    if (p != null) {
-      SwingUtilities.updateComponentTreeUI(p);
+    setOpaque(true);
+    if (Objects.nonNull(renderer)) {
+      SwingUtilities.updateComponentTreeUI(renderer);
     }
   }
 }
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`2`列目の`TableCellRenderer`として、`JProgressBar#setStringPainted(true)`と進捗文字列を表示するように設定した`JProgressBar`を使用しています。
+上記のサンプルでは、`2`列目の`TableCellRenderer`として`JProgressBar#setStringPainted(true)`で進捗文字列を表示するように設定した`JProgressBar`を使用しています。
 
 - 進捗状況文字列は「現在値/最大値」の形式で表示するため、この`2`つの値を保持する`ProgressValue`オブジェクトを作成して`SwingWorker#publish(...)`メソッドで`JTable`のモデルに設定
-- `TableCellRenderer`はモデルから取得した`ProgressValue`オブジェクトから、以下の`3`つの値を`JProgressBar`に設定し、セルの描画用コンポーネントとして使用
+- `TableCellRenderer`はモデルから取得した`ProgressValue`オブジェクトから以下の`3`つの値を`JProgressBar`に設定し、セルの描画用コンポーネントとして使用
 -- `JProgressBar#setMaximum(int)`(最大値は、各行ごとにランダムなので)で最大値を設定
 -- `JProgressBar#setValue(int)`で現在値を設定
 -- 上記の値から生成した進捗状況文字列を`JProgressBar#setString(String)`で設定

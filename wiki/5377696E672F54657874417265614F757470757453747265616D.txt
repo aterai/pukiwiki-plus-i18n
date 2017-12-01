@@ -38,7 +38,7 @@ class TextAreaOutputStream extends OutputStream {
 * 解説 [#explanation]
 - `TextAreaOutputStream`
 -- `ByteArrayOutputStream`を使用して、`JTextArea`に一行ずつ書き込みを行う
--- これを`System.setOut(new PrintStream(new TextAreaOutputStream(textArea), true, "UTF-8"));`のように標準出力ストリームに割り当てると、`System.out.println(...)`などで改行文字が書き込まれたときにバッファーの`flush()`が呼び出され、`textArea.append(buf.toString("UTF-8"));`メソッドで`JTextArea`に文字列が追記される
+-- これを`System.setOut(new PrintStream(new TextAreaOutputStream(textArea), true, "UTF-8"));`のように標準出力ストリームに割り当てると、`System.out.println(...)`などで改行文字が書き込まれたときにバッファの`flush()`が呼び出され、`textArea.append(buf.toString("UTF-8"));`メソッドで`JTextArea`に文字列が追記される
 - `TextAreaHandler`
 -- ログ出力を上記の`TextAreaOutputStream`などに割り当てるため、`StreamHandler`を継承する`TextAreaHandler`を作成し、`Logger#addHandler(...)`で設定
 -- `StreamHandler#setEncoding(...)`でエンコーディングを`UTF-8`に設定
