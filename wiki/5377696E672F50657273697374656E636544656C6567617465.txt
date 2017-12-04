@@ -34,7 +34,6 @@ class DefaultTableModelPersistenceDelegate extends DefaultPersistenceDelegate {
 - `XMLEncoder`ボタンをクリック
 -- `XMLEncoder#setPersistenceDelegate(...)`で、`DefaultTableModel`の書き出しを自作の`DefaultTableModelPersistenceDelegate`に設定
 -- テンポラリディレクトリに`XML`ファイルの書き出しと、`JTextArea`にその`XML`ファイルの読み込み
-
 #code{{
 try {
   File file = File.createTempFile("output", ".xml");
@@ -55,7 +54,6 @@ try {
 
 - `XMLDecoder`ボタンをクリック
 -- `JTextArea`に読み込まれている`XML`ファイルを`XMLDecoder`で`DefaultTableModel`に復元、`JTable#setModel(...)`で設定
-
 #code{{
 try (XMLDecoder xd = new XMLDecoder(new BufferedInputStream(
         new ByteArrayInputStream(textArea.getText().getBytes("UTF-8"))))) {
