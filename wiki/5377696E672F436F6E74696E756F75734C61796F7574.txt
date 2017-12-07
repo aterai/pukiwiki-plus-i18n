@@ -48,11 +48,9 @@ rightPane.addPropertyChangeListener(pcl);
 * 解説 [#explanation]
 上記のサンプルでは、`JSplitPane`を`3`つ使用し、`4`つに分割された領域を表示しています。
 
-----
-左右に配置されたディバイダがマウスのドラッグに同期して移動するように、以下のように設定しています。
-
-- 片方のディバイダが上下移動したら、残りも移動するように`PropertyChangeListener`を追加
-- `JSplitPane#setContinuousLayout(true)`として、移動を連続的に再描画
+- 左右に配置されたディバイダがマウスのドラッグに同期して移動するように以下を設定
+-- 片方のディバイダが上下移動したら、残りも移動するように`PropertyChangeListener`を追加
+-- `JSplitPane#setContinuousLayout(true)`として、移動を連続的に再描画
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1376808 Swing - Regading SplitPanes]

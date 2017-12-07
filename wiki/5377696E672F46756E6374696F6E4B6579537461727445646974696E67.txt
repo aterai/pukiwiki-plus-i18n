@@ -35,13 +35,13 @@ JTable table = new JTable(model) {
 -- チェックボックスをチェックしている場合、ファンクションキー(KBD{Shift}, KBD{Ctrl+Function}キーも含む)を押しても、セルの編集が開始されないように`JTable#editCellAt(...)`メソッドをオーバーライド
 
 - `table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`
--- キー入力(KBD{F2}は除く)によるセルの編集開始を禁止
+-- KBD{F2}は除くキー入力でのセルの編集開始を禁止
 -- [[JTableでキー入力によるセル編集開始を禁止する>Swing/PreventStartCellEditing]]
 
 ----
 上記のサンプルでは、`InputMap`、`ActionMap`にKBD{F3}キーで`beep`が鳴るようにキーストロークとアクションを追加しています。このキーストロークは`JTable#editCellAt`メソッドでのキー入力チェックとは別に実行されるので、デフォルトのKBD{F2}キーでの`startEditing`、KBD{F8}キーでの`focusHeader`は、`JTable#editCellAt(...)`の戻り値とは関係なく有効になっています。
 
-- `JTable#processKeyBinding(...)`をオーバーライドしてキー入力自体を弾くと、`InputMap`に追加したキーストロークも除かれるので、これらのアクションも実行されない
+- `JTable#processKeyBinding(...)`をオーバーライドしてキー入力自体を無視すると、`InputMap`に追加したキーストロークも除かれるので、これらのアクションも実行されない
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1350192 Swing - JTable starts editing when F3 is pressed - howto disable?]

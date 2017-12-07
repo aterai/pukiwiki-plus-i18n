@@ -15,43 +15,36 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVW5Ljb9I/AAAAAAAAAng/mM
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final SimpleDateFormat format =
-  new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.US);
-final DateFormat df = DateFormat.getDateTimeInstance();
-df.setTimeZone(TimeZone.getTimeZone("JST"));
-//field.setText("Mon, 19 Apr 2004 16:31:41 +0900");
-JPanel bp = new JPanel(new GridLayout(1, 0, 2, 2));
-bp.add(new JButton(new AbstractAction("format") {
-  @Override public void actionPerformed(ActionEvent e) {
-    field.setText(format.format(new Date()));
-  }
-}));
-bp.add(new JButton(new AbstractAction("parse") {
-  @Override public void actionPerformed(ActionEvent e) {
-    String str = field.getText().trim();
-    ParsePosition pp = new ParsePosition(0);
-    Date date = format.parse(str, pp);
-    String o = Objects.nonNull(date) ? df.format(date) : "error";
-    textArea.append(o + "\n");
-  }
-}));
+SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.US);
+DateFormat df = DateFormat.getDateTimeInstance();
+// df.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
+df.setTimeZone(TimeZone.getDefault());
+
+JButton formatButton = new JButton("format");
+formatButton.addActionListener(e -> field.setText(format.format(new Date())));
+
+JButton parseButton = new JButton("parse");
+parseButton.addActionListener(e -> {
+  String str = field.getText().trim();
+  Date date = format.parse(str, new ParsePosition(0));
+  String o = Optional.ofNullable(date).map(df::format).orElse("error");
+  textArea.append(o + "\n");
+});
 }}
 
 * 解説 [#explanation]
 上記のサンプルは、`Locale.US`の日付文字列を`SimpleDateFormat#parse(...)`メソッドを使用して一旦`Date`に変換し、`DateFormat#format(...)`メソッドでデフォルトロケール`TimeZone`のフォーマットスタイルに変換しています。
 
-----
-`Java 1.7.0`から、タイムゾーンのパターン文字として`X`を使用すると、`ISO 8601`形式に変換可能になりました。
-
-- 例:
--- `X`: `+09`
--- `XX`: `+0900`
--- `XXX`: `+09:00`
-
+- メモ:
+-- `dateFormat.setTimeZone(TimeZone.getTimeZone("JST"))`のような`3`文字のタイムゾーン`ID`の使用は非推奨
+-- `Java 1.7.0`から、タイムゾーンのパターン文字として`X`を使用すると、`ISO 8601`形式に変換可能になった
+--- `X`: `+09`
+--- `XX`: `+0900`
+--- `XXX`: `+09:00`
 #code{{
 DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
 System.out.println("pubdate: " + format.format(new Date()));
-//pubdate: 2014-09-08T00:05:45+09:00
+// pubdate: 2014-09-08T00:05:45+09:00
 }}
 
 * 参考リンク [#reference]
