@@ -45,13 +45,12 @@ class HorizontalAlignmentTableRenderer extends DefaultTableCellRenderer {
 }}
 
 * 解説 [#explanation]
-- ラジオボタンで、`JTable`の第一列のセル文字列の揃えを変更
--- `left`: 左揃え
--- `center`: 中央揃え
--- `right`: 右揃え
--- `custom`: 行ごとに左、中央、右揃えを変更
-- メモ
--- セルエディタなどにラジオボタンを配置する場合は、[[JTableのセル中にJRadioButtonを配置>Swing/RadioButtonsInTableCell]]
+上記のサンプルでは、`JTable`の第`1`列目のセルに表示されている文字列の揃えを変更するテストを行っています。
+
+- `left`: 左揃え
+- `center`: 中央揃え
+- `right`: 右揃え
+- `custom`: 行ごとに左、中央、右揃えを変更
 
 ----
 - `JTable`は、`Object`、`Number`、`Boolean`クラスのデフォルトセルレンダラーを持っているため、モデルが各列のクラスを正しく返すように、`TableModel#getColumnClass(int)`をオーバーライドすることで、そのクラスのデフォルトセルレンダラーが使用される
@@ -60,7 +59,6 @@ class HorizontalAlignmentTableRenderer extends DefaultTableCellRenderer {
 -- `Boolean`: `JCheckBox`, `CENTER`(チェックボックスは中央揃え)
 - `DefaultTableModel#TableModel#getColumnClass(int)`のデフォルトは、すべての列のクラスとして、`Object.class`を返す
 - 各クラスのデフォルトセルレンダラーが使用されるのは、列にセルレンダラーが割り当てられていない場合に限られる
-
 #code{{
 //JTableの手抜きサンプルなら、以下のようにオーバーライドするのが簡単？(モデルが空になる場合、例外が発生する可能性がある)
 String[] columnNames = {"String", "Integer", "Boolean"};
@@ -76,9 +74,7 @@ DefaultTableModel model = new DefaultTableModel(data, columnNames) {
 JTable table = new JTable(model);
 }}
 
-クラスのデフォルトセルレンダラーではなく、任意の列にセルレンダラーを割り当てて、例えば中央揃えにしたい場合は、以下のように設定します。
-// -- &user(aterai); &new{2007-06-14 (木) 13:19:36};
-
+- クラスのデフォルトセルレンダラーではなく、任意の列にセルレンダラーを割り当てて文字揃えを変更する方法もある
 #code{{
 DefaultTableCellRenderer r = new DefaultTableCellRenderer();
 r.setHorizontalAlignment(SwingConstants.CENTER);

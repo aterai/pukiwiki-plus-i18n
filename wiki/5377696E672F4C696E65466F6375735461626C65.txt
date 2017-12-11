@@ -56,7 +56,7 @@ class DotBorder extends EmptyBorder {
 }}
 
 * 解説 [#explanation]
-通常の`JTable`では、`JTable#setRowSelectionAllowed(true)`を設定すると選択状態は一行ごとになりますが、フォーカスはセル単位で描画されます。上記のサンプルでは、セルレンダラーの描画メソッド内で`JTable#getSelectionModel()#getLeadSelectionIndex()`を使用してフォーカスの有るセルを取得し、独自ラベルを使って最初と最後のセルの垂直の点線、途中のセルの水平点線を追加することで、フォーカスが一行全体に適用されているように見せかけています。
+通常の`JTable`では、`JTable#setRowSelectionAllowed(true)`を設定すると選択状態は一行ごとになりますが、フォーカスはセル単位で描画されます。上記のサンプルでは、セルレンダラーの描画メソッド内で`JTable#getSelectionModel()#getLeadSelectionIndex()`を使用してフォーカスが存在するセルを取得し、独自ラベルを使って最初と最後のセルの垂直の点線、途中のセルの水平点線を追加することで、フォーカスが一行全体に適用されているように見せています。
 
 カラム幅を変更するなどの操作を行っても、セル上下の水平点線のつなぎ目でドットが重ならないようにするため、偶数奇数ドット目のどちらで始まっているかを判断し、開始位置のオフセットを決定しています。
 

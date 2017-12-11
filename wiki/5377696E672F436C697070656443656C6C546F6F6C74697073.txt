@@ -44,11 +44,10 @@ class ToolTipHeaderRenderer implements TableCellRenderer {
 * 解説 [#explanation]
 - ヘッダセル
 -- `TableCellRenderer`で、セルの幅と文字列の長さを比較して、`ToolTip`を設定
--- %%ソートアイコンと文字列の間の`gap`が不明?%% `JLabel#getIconTextGap()`で取得可能
--- `Windows 10`で使用される`WindowsLookAndFeel`のように文字列の上にソートアイコンが表示される場合(`TableCellRenderer#getIcon()`が`null`)は、そのアイコンの幅を無視する
+-- ソートアイコンと文字列の間の`gap`は`JLabel#getIconTextGap()`で取得してセル幅から除外する
+--- `Windows 10`で使用される`WindowsLookAndFeel`のように文字列の上にソートアイコンが表示される場合(`TableCellRenderer#getIcon()`が`null`)は、このアイコンの幅を無視する
 - セル
 -- `JTable#prepareRenderer`メソッドをオーバーライドし、セルの幅と文字列の長さを比較して、`ToolTip`を設定
-
 #code{{
 JTable table = new JTable(model) {
   @Override public Component prepareRenderer(TableCellRenderer tcr, int row, int column) {

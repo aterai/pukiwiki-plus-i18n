@@ -51,6 +51,21 @@ JTable table = new JTable(model) {
 - 余白(高さ方向)の調整
 -- `JViewport`の高さが変更されたり、行数の増減が発生した場合、行の高さを`JTable#setRowHeight(...)`で設定し直すことで、`JViewport`に余白が生成されないように調整
 
+----
+- `JScrollPane`の高さだけ変更した場合、`JTable#doLayout()`が呼び出されなくなった？
+-- `JTable#setFillsViewportHeight(true)`を設定しても高さの縮小で`JTable#doLayout()`が呼び出されない
+-- `JScrollPane`に`ComponentListener`を追加して回避
+#code{{
+scroll.addComponentListener(new ComponentAdapter() {
+  @Override public void componentResized(ComponentEvent e) {
+    Component c = e.getComponent();
+    if (c instanceof JScrollPane) {
+      ((JScrollPane) c).getViewport().getView().revalidate();
+    }
+  }
+});
+}}
+
 * 参考リンク [#reference]
 - [[JTableの行の高さを変更する>Swing/FishEyeTable]]
 
