@@ -94,7 +94,7 @@ class IsoscelesTrapezoidTabbedPaneUI extends BasicTabbedPaneUI {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、タブの形を台形に変更し、左側にあるタブが上に表示されるように、`BasicTabbedPaneUI`の各描画メソッドをオーバーライドし、これを`setUI(...)`メソッドで`JTabbedPane`に設定しています。
+上記のサンプルでは、タブの形が台形で左側にあるタブが上に表示されるように`BasicTabbedPaneUI`の各描画メソッドをオーバーライドし、これを`setUI(...)`メソッドで`JTabbedPane`に設定しています。
 
 - `BasicTabbedPaneUI#paintTabArea(...)`をオーバーライドして、右側のタブを先に描画するよう変更
 -- 参考: [https://stackoverflow.com/questions/41566659/tabs-rendering-order-in-custom-jtabbedpane java - Tabs Rendering Order in Custom JTabbedPane - Stack Overflow]

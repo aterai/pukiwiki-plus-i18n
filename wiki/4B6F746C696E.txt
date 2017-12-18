@@ -75,7 +75,7 @@ public class JTableExample {
 }}
 #twocolumn
 `Kotlin`
-#code{{
+#code(lang-kotlin){{
 import java.awt.*
 import javax.swing.*
 import javax.swing.table.*
@@ -176,7 +176,7 @@ public class JTreeExample {
 }}
 #twocolumn
 `Kotlin`
-#code{{
+#code(lang-kotlin){{
 import java.awt.*
 import javax.swing.*
 
@@ -264,7 +264,7 @@ public class JCheckBoxExample {
 }}
 #twocolumn
 `Kotlin`
-#code{{
+#code(lang-kotlin){{
 import java.awt.*
 import javax.swing.*
 
@@ -383,7 +383,7 @@ class EmptyIcon implements Icon {
 }}
 #twocolumn
 `Kotlin`
-#code{{
+#code(lang-kotlin){{
 import java.awt.*
 import javax.swing.*
 import javax.swing.event.*
@@ -531,7 +531,7 @@ public class OptionalExample {
 }}
 #twocolumn
 `Kotlin`
-#code{{
+#code(lang-kotlin){{
 import java.awt.*
 import java.text.*
 import java.util.*
@@ -622,7 +622,7 @@ internal class CheckBoxesRenderer : CheckBoxesPanel(), TableCellRenderer {
 }}
 - `IntelliJ`の自動変換では`static`変数がうまく変換できない？
 -- 手動で`enum class`にして回避
-#code{{
+#code(lang-kotlin){{
 companion object {
   protected val TITLES = arrayOf("r", "w", "x")
 }
@@ -765,7 +765,7 @@ class CheckBoxesEditor extends AbstractCellEditor implements TableCellEditor {
 }}
 #twocolumn
 `Kotlin`
-#code{{
+#code(lang-kotlin){{
 import java.awt.*
 import java.awt.event.*
 import java.util.*
@@ -928,7 +928,7 @@ for (Component c: Arrays.<Component>asList(textField1, textField2, combo3, combo
 
 #twocolumn
 `Kotlin`(自動変換)
-#code{{
+#code(lang-kotlin){{
 val box = Box.createVerticalBox()
 for (c in Arrays.asList(textField1, textField2, combo3, combo4)) {
   box.add(c)
@@ -942,7 +942,7 @@ for (c in Arrays.asList(textField1, textField2, combo3, combo4)) {
 }}
 
 `Kotlin`(手動修正)
-#code{{
+#code(lang-kotlin){{
 val box = Box.createVerticalBox()
 for (c in Arrays.asList<Component>(textField1, textField2, combo3, combo4)) {
   box.add(c);
@@ -955,18 +955,23 @@ for (c in Arrays.asList<Component>(textField1, textField2, combo3, combo4)) {
 #twocolumn
 
 ** JTree, ActionListener [#d4c27439]
-- `IntelliJ`の自動変換では`ActionListener`のラムダ式をうまく変換できない場合がある
--- `AbstractCellEditor#stopCellEditing()`は`boolean`を返すので`error: type mismatch: inferred type is (???) -> Boolean but ActionListener? was expected`とエラーになる
+- `IntelliJ`の自動変換では`ActionListener`などの関数型インターフェースのラムダ式をうまく変換できない場合がある
+-- %%`AbstractCellEditor#stopCellEditing()`は`boolean`を返すので%%`error: type mismatch: inferred type is (???) -> Boolean but ActionListener? was expected`とエラーになる
+- [https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions SAM Conversions - Calling Java from Kotlin - Kotlin Programming Language]
 
 #twocolumn
 `Java`
 #code{{
+protected ActionListener handler;
+//...
 handler = e -> stopCellEditing();
 }}
 
 #twocolumn
 `Kotlin`(自動変換)
-#code{{
+#code(lang-kotlin){{
+protected var handler: ActionListener? = null
+//...
 handler = { e -> stopCellEditing() }
 // error: type mismatch: inferred type is (???) -> Boolean but ActionListener? was expected
 //             handler = { e -> stopCellEditing() }
@@ -977,7 +982,11 @@ handler = { e -> stopCellEditing() }
 }}
 
 `Kotlin`(手動修正)
-#code{{
+#code(lang-kotlin){{
+protected var handler: ActionListener? = null
+//...
+handler = ActionListener { stopCellEditing() }
+// or:
 handler = object: ActionListener {
   override fun actionPerformed(e: ActionEvent) : Unit { // Unitは無くても可
     stopCellEditing()
@@ -1004,7 +1013,7 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor {
 
 #twocolumn
 `Kotlin`(自動変換)
-#code{{
+#code(lang-kotlin){{
 val cellEditorValue: Any
   override get() = CheckBoxNode(checkBox.getText(), checkBox.isSelected())
 //error: modifier 'override' is not applicable to 'getter'
@@ -1012,7 +1021,7 @@ val cellEditorValue: Any
 }}
 
 `Kotlin`(手動修正)
-#code{{
+#code(lang-kotlin){{
   override fun getCellEditorValue(): Any {
     return CheckBoxNode(checkBox.getText(), checkBox.isSelected())
   }
@@ -1146,7 +1155,7 @@ class CheckBoxNode {
 
 #twocolumn
 `Kotlin`
-#code{{
+#code(lang-kotlin){{
 import java.awt.*
 import java.awt.event.*
 import java.util.*
@@ -1219,11 +1228,12 @@ internal class CheckBoxNodeEditor : AbstractCellEditor(), TreeCellEditor {
       super.updateUI()
       setOpaque(false)
       setFocusable(false)
-      handler = object: ActionListener {
-        override fun actionPerformed(e: ActionEvent) : Unit {
-        stopCellEditing()
-        }
-      }
+      // handler = object: ActionListener {
+      //   override fun actionPerformed(e: ActionEvent) : Unit {
+      //     stopCellEditing()
+      //   }
+      // }
+      handler = ActionListener { stopCellEditing() }
       addActionListener(handler)
     }
   }
@@ -1266,6 +1276,77 @@ internal class CheckBoxNode public constructor(val text: String, val selected: B
   }
 }
 }}
+#twocolumn
+
+** メソッド参照 [#MethodReference]
+- `IntelliJ`の自動変換ではメソッド参照の変換が苦手？
+
+#twocolumn
+`Java`
+#code{{
+public static Stream<TreeNode> children(TreeNode node) {
+  Class<TreeNode> clz = TreeNode.class;
+  return Collections.list((Enumeration<?>) node.children())
+    .stream().filter(clz::isInstance).map(clz::cast);
+}
+}}
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+fun children(node: TreeNode): Stream<TreeNode> {
+  val clz = TreeNode::class.java
+  return Collections.list(node.children() as Enumeration<*>)
+    .stream().filter(???({ clz!!.isInstance() })).map(clz!!.cast)
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+fun children(node: TreeNode): Stream<TreeNode> {
+  val clz = TreeNode::class.java
+  return Collections.list(node.children() as Enumeration<*>)
+    .stream().filter(clz::isInstance).map(clz::cast)
+}
+}}
+#twocolumn
+
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#add-java.awt.Component- Container#add(Component)]メソッドは戻り値として`Component`を返す
+-- `Java`の場合、終端処理の`forEach(p::add)`では戻り値を無視して`Container#add(Component)`をメソッド参照することが可能
+-- `Kotlin`の場合、`forEach(p::add)`とすると、`add`メソッドで引数が`Component!`、戻り値が`Unit`になるメソッドを探す？ためメソッド参照で以下のようなエラーになる
+--- [https://discuss.kotlinlang.org/t/function-reference-ignoring-the-returned-value/2442 Function reference: ignoring the returned value - Support - Kotlin Discussions]
+--- `map(p::add)`にすればエラーは回避できる
+
+ hello.kt:38:66: error: none of the following functions can be called with the arguments supplied:
+ public open fun add(p0: Component!): Component! defined in javax.swing.JPanel
+ public open fun add(p0: Component!, p1: Any!): Unit defined in javax.swing.JPanel
+ public open fun add(p0: Component!, p1: Any!, p2: Int): Unit defined in javax.swing.JPanel
+ public open fun add(p0: Component!, p1: Int): Component! defined in javax.swing.JPanel
+ public open fun add(p0: PopupMenu!): Unit defined in javax.swing.JPanel
+ public open fun add(p0: String!, p1: Component!): Component! defined in javax.swing.JPanel
+     listOf(button1, button2, button3, button4).forEach(p::add)
+                                                           ^
+
+#twocolumn
+`Java`
+#code{{
+JPanel p = new JPanel(new GridLayout(0, 1, 2, 2));
+Arrays.asList(button1, button2).forEach(p::add);
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+val p = JPanel(GridLayout(0, 1, 2, 2))
+Arrays.asList(button1, button2).forEach( ?? ? ({ p.add() }))
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+val p = JPanel(GridLayout(0, 1, 2, 2))
+listOf(button1, button2).forEach({ b -> p.add(b) })
+//or listOf(button1, button2).map(p::add)
+}}
+
 #twocolumn
 
 * コメント [#comment]

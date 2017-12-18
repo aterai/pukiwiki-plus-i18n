@@ -25,8 +25,7 @@ class MyPasswordFieldUI extends BasicPasswordFieldUI {
     return new MyPasswordView(elem);
   }
   private static class MyPasswordView extends PasswordView {
-    @Override protected int drawEchoCharacter(
-        Graphics g, int x, int y, char c) {
+    @Override protected int drawEchoCharacter(Graphics g, int x, int y, char c) {
       FontMetrics fm = g.getFontMetrics();
       ICON.paintIcon(null, g, x, y - fm.getAscent());
       return x + ICON.getIconWidth(); //fm.charWidth(c);

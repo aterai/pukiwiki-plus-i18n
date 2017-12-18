@@ -21,9 +21,10 @@ hreflang:
 private int delay = 4;
 private int count = 0;
 @Override public void mouseEntered(MouseEvent e) {
-  if (animator != null && animator.isRunning() ||
-     yy == textArea.getPreferredSize().height) return;
-  final double h = (double) textArea.getPreferredSize().height;
+  if (animator != null && animator.isRunning() || yy == textArea.getPreferredSize().height) {
+    return;
+  }
+  double h = (double) textArea.getPreferredSize().height;
   animator = new Timer(delay, new ActionListener() {
     @Override public void actionPerformed(ActionEvent e) {
       double a = easeInOut(++count / h);
@@ -58,10 +59,10 @@ private int count = 0;
   });
   animator.start();
 }
-//@see Math: EaseIn EaseOut, EaseInOut and Beziér Curves | Anima Entertainment GmbH
-//http://www.anima-entertainment.de/math-easein-easeout-easeinout-and-bezier-curves
+// @see Math: EaseIn EaseOut, EaseInOut and Beziér Curves | Anima Entertainment GmbH
+// http://www.anima-entertainment.de/math-easein-easeout-easeinout-and-bezier-curves
 public double easeInOut(double t) {
-  //range: 0.0 <= t <= 1.0
+  // range: 0.0 <= t <= 1.0
   if (t < .5) {
     return .5 * Math.pow(t * 2d, 3d);
   } else {
@@ -75,17 +76,16 @@ public double easeInOut(double t) {
 
 - `OverlayLayout#layoutContainer`内で、`JTextArea`の`y`座標を変更してアニメーション
 - `EaseInOut`の計算は、%%[http://www.anima-entertainment.de/math-easein-easeout-easeinout-and-bezier-curves Math: EaseIn EaseOut, EaseInOut and Beziér Curves | Anima Entertainment GmbH]%%を参考
-- マウスカーソルが`JLabel`(画像)内にあっても、そこに`JTextArea`がスライドインした場合、`mouseExited`が発生するので、注意
--- `JTextArea#contains(int x, int y)`が常に`false`を返すようにすれば、上記の場合でも`mouseExited`などは発生しないが、`JTextArea`内の文字列が選択できなくなるので、このサンプルでは、`JTextArea`にマウスイベントを親へ素通しするリスナーを追加している
+- マウスカーソルが`JLabel`(画像)内にあっても、そこに`JTextArea`がスライドインした場合、`mouseExited`イベントが発生するので、注意
+-- `JTextArea#contains(int x, int y)`が常に`false`を返すようにすれば、上記の場合でも`mouseExited`イベントなどは発生しないが、`JTextArea`内の文字列が選択できなくなるので、このサンプルでは、`JTextArea`にマウスイベントを親へ素通しするリスナーを追加している
 - `JTextArea`の背景色は`setOpaque(false)`にして描画せず、別途`JTextArea#paintComponent(...)`をオーバーライドしてアルファ成分を`EaseInOut`した色で全体を塗りつぶしている
 
 ----
-メモ: 累乗を`Math.pow(...)`の代わりにバイナリ法で
-
-- [http://d.hatena.ne.jp/pcl/20120617/p1 指数が整数ならMath.powは使うな - DoMshi]
-- [http://d.hatena.ne.jp/rexpit/20110328/1301305266 整数のべき乗 - rexpit's programming memo]
-- [http://c2.com/cgi/wiki?IntegerPowerAlgorithm Integer Power Algorithm]
-- [http://www.osix.net/modules/article/?id=696 The Power Algorithm - How a programmer can save time rising a real number to the power of a positive integer number. The code is dot.net but it's easily adaptable to any other language.]
+- 累乗を`Math.pow(...)`の代わりにバイナリ法で実行する場合のメモ
+-- [http://d.hatena.ne.jp/pcl/20120617/p1 指数が整数ならMath.powは使うな - DoMshi]
+-- [http://d.hatena.ne.jp/rexpit/20110328/1301305266 整数のべき乗 - rexpit's programming memo]
+-- [http://c2.com/cgi/wiki?IntegerPowerAlgorithm Integer Power Algorithm]
+-- [http://www.osix.net/modules/article/?id=696 The Power Algorithm - How a programmer can save time rising a real number to the power of a positive integer number. The code is dot.net but it's easily adaptable to any other language.]
 
 #code{{
 public static double intpow(double x, int n) {

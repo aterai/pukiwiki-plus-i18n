@@ -263,6 +263,23 @@ set XSLT=C:/xslt/docx2xxx.xsl
 </xsl:function>
 }}
 
+** シーケンスに要素が含まれているかをチェックする [#cd7d3228]
+- `XSLT 1.0`では一旦文字列にして`contains`関数などを使用する必要があったが、`XSLT 2.0`では、`=`でシーケンス内に要素が存在するかをチェックすることが可能
+-- 参考: [https://stackoverflow.com/questions/4810872/how-to-check-if-a-value-is-in-a-sequence-of-values xml - How to check if a value is in a sequence of values? - Stack Overflow]
+-- `2 = (1 to 3):  <xsl:value-of select="2 = (1 to 3)" /> <!-- true -->`
+-- `7 = (8, 6, 4): <xsl:value-of select="7 = (8, 6, 4)" /> <!-- false -->`
+-- `(1 to 3) = 2:  <xsl:value-of select="(1 to 3) = 2" /> <!-- true -->`
+
+#code{{
+<!-- 1～3番目のシートのみ処理する -->
+<xsl:variable name="output" as="xs:integer+" select="1 to 3" />
+<xsl:for-each select="sheets/sheet[position() = $output]">
+  <xsl:variable name="num" as="xs:integer" select="position()" />
+  <xsl:variable name="sheet" as="xs:string" select="concat('worksheets/sheet',$num,'.xml')" />
+  <xsl:variable name="worksheet" select="document($sheet,/)/worksheet" />
+  ...
+}}
+
 ** xsl:for-each-group [#sbfd6336]
 
 * Office Open XML [#OOXML]

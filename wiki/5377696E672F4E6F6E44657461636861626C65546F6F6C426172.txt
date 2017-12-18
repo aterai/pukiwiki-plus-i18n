@@ -25,10 +25,10 @@ toolbar.setUI(new BasicToolBarUI() {
 
 * 解説 [#explanation]
 - `Floatable(movable)`
--- `JToolBar#setFloatable(boolean)`で、マウスドラッグによる移動の可・不可を設定
+-- `JToolBar#setFloatable(boolean)`メソッドで、マウスドラッグによる移動の可・不可を設定
 -- 別ウィンドウへのドラッグアウトが不可になるだけでなく、同コンテナ内での移動も不可になる
 - `Floating(detachable)`
--- `BasicToolBarUI#setFloating(...)`をオーバーライドして、`JToolBar`が別ウインドウに分離できないように設定
+-- `BasicToolBarUI#setFloating(...)`メソッドをオーバーライドして、`JToolBar`が別ウインドウに分離できないように設定
 -- 別ウィンドウへのドラッグアウトは不可になるが、ドラッグによる同コンテナ内の移動は可能
 
 * 参考リンク [#reference]
