@@ -10,15 +10,14 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 `Ant`から`PMD`を実行します。
 
 * サンプルターゲット [#h0deaf72]
+- `build.xml`に記述するターゲットサンプル
 #code{{
 <target name="pmd">
-  <!-- taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" / -->
-  <path id="pmd.classpath">
-    <fileset dir="${env.PMD_HOME}/lib" includes="*.jar" />
-  </path>
-  <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath" />
+  <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" />
   <mkdir dir="${build.reports}" />
-  <pmd rulesetfiles="java-basic,java-imports,java-strings" encoding="${compile.encoding}">
+  <pmd rulesetfiles="ruleset.xml" encoding="${compile.encoding}"
+       cacheLocation="${build.reports}/pmd/pmd.cache">
+    <sourceLanguage name="java" version="${compile.source}"/>
     <classpath refid="project.class.path" />
     <formatter type="xml" toFile="${build.reports}/pmd.xml" />
     <formatter type="text" toConsole="true" />
@@ -27,166 +26,84 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 </target>
 }}
 
-* 解説 [#i9aab092]
-+ [https://pmd.github.io/ PMD]からダウンロードした`pmd-bin-x.x.zip`の`lib`以下にある`pmd-x.x.jar`などの`jar`ファイルを`%ANT_HOME%\lib`にコピー、もしくは環境変数`%PMD_HOME%`を設定した場所に`lib`を展開
-+ 上記のような`pmd`ターゲットを`build.xml`に追加し、`ant pmd`で`pmd.xml`を生成、`jenkins`の`PMD`プラグインなどで読み込む
-
-*** toFile or toConsole [#w61eb2ba]
-`FindBugs`のように、`xml`ファイルとコンソールの両方に結果を表示したい場合が多いのですが、
-
- ant -v pmd
-
-では、情報が多すぎるので`formatter`要素の`toConsole`属性を使用します。
-
-- [https://pmd.github.io/pmd-5.3.3/usage/ant-task.html PMD - Ant Task] にあるように、`<formatter type="html" toFile="pmd_report.html" toConsole="true"/>`や、`<formatter type="xml" toFile="${build.reports}/pmd.xml" toConsole="true" />`と`toFile`と`toConsole`を指定しても、ファイルにのみ結果が書き出されて、コンソールには何も出力されない
-- `<formatter type="text" toConsole="true" />`と、`toFile`属性なしで`toConsole="true"`とする必要がある？
--- `<formatter type="text" toConsole="false" />`は、`toFile or toConsole needs to be specified in Formatter`となって、`BUILD FAILED`
-- ファイルとコンソールの両方に出力する場合は、`formatter`を複数指定しなくてはならない？
-
-** ruleset [#lfb72958]
-チェックするルールを`ruleset.xml`などに記述して、これを`rulesetfiles`属性で参照する方法もあります。
-
-- `ruleset.xml`を使用するサンプルターゲット
-
-#code{{
-<target name="pmd">
-  <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" />
-  <mkdir dir="${build.reports}" />
-  <pmd rulesetfiles="ruleset.xml" encoding="${compile.encoding}">
-    <sourceLanguage name="java" version="1.7"/>
-    <classpath refid="project.class.path" />
-    <formatter type="xml" toFile="${build.reports}/pmd.xml" />
-    <formatter type="text" toConsole="true" />
-    <fileset dir="${src.dir}">
-      <exclude name="**/module-info.java" />
-      <include name="**/*.java" />
-    </fileset>
-  </pmd>
-</target>
-}}
-
-- `ruleset.xml`のサンプル
-
+- `PMD 6.0.0`向けの`ruleset.xml`サンプル
 #code{{
 <?xml version="1.0"?>
 <ruleset name="Custom ruleset"
     xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
-
   <description>This ruleset checks my code for bad stuff</description>
-
-  <rule ref="rulesets/java/basic.xml" />
-  <rule ref="rulesets/java/braces.xml" />
-  <rule ref="rulesets/java/clone.xml" />
-  <rule ref="rulesets/java/codesize.xml" />
-  <rule ref="rulesets/java/controversial.xml">
-    <exclude name="DataflowAnomalyAnalysis" />
-    <exclude name="OnlyOneReturn" />
-    <exclude name="AvoidLiteralsInIfCondition" />
-    <exclude name="NullAssignment" />
-    <!-- exclude name="AssignmentInOperand" / -->
+  <rule ref="category/java/bestpractices.xml">
+    <exclude name="AvoidPrintStackTrace" />
+    <exclude name="SystemPrintln" />
+  </rule>
+  <rule ref="category/java/codestyle.xml">
     <exclude name="AtLeastOneConstructor" />
-    <exclude name="AvoidUsingShortType" />
-  </rule>
-  <rule ref="rulesets/java/coupling.xml">
-    <exclude name="LawOfDemeter" />
-    <exclude name="LoosePackageCoupling" />
-  </rule>
-  <rule ref="rulesets/java/design.xml">
-    <exclude name="AvoidSynchronizedAtMethodLevel" />
-    <exclude name="AvoidDeeplyNestedIfStmts" />
-  </rule>
-  <rule ref="rulesets/java/design.xml/AvoidDeeplyNestedIfStmts">
-    <properties>
-      <property name="problemDepth" value="4"/>
-    </properties>
-  </rule>
-  <rule ref="rulesets/java/empty.xml" />
-  <rule ref="rulesets/java/finalizers.xml" />
-  <rule ref="rulesets/java/imports.xml" />
-  <rule ref="rulesets/java/migrating.xml">
-    <exclude name="ReplaceVectorWithList" />
-  </rule>
-  <rule ref="rulesets/java/naming.xml">
-    <exclude name="ShortClassName" />
+    <exclude name="OnlyOneReturn" />
     <exclude name="ShortVariable" />
     <exclude name="LongVariable" />
-  </rule>
-  <rule ref="rulesets/java/optimizations.xml">
-    <exclude name="AvoidInstantiatingObjectsInLoops" />
     <exclude name="LocalVariableCouldBeFinal" />
     <exclude name="MethodArgumentCouldBeFinal" />
   </rule>
-  <rule ref="rulesets/java/strictexception.xml" />
-  <rule ref="rulesets/java/strings.xml" />
-  <rule ref="rulesets/java/sunsecure.xml" />
-  <rule ref="rulesets/java/typeresolution.xml" />
-  <rule ref="rulesets/java/unnecessary.xml" />
-  <rule ref="rulesets/java/unusedcode.xml" />
-
-<!-- 
-  <rule ref="rulesets/java/comments.xml" />
-  <rule ref="rulesets/java/j2ee.xml" />
-  <rule ref="rulesets/java/javabeans.xml" />
-  <rule ref="rulesets/java/junit.xml" />
-  <rule ref="rulesets/java/logging-jakarta-commons.xml" />
-  <rule ref="rulesets/java/logging-java.xml" />
-  <rule ref="rulesets/java/migrating_to_13.xml" />
-  <rule ref="rulesets/java/migrating_to_14.xml" />
-  <rule ref="rulesets/java/migrating_to_15.xml" />
-  <rule ref="rulesets/java/migrating_to_junit4.xml" />
--->
+  <rule ref="category/java/design.xml">
+    <exclude name="DataClass" />
+    <exclude name="LawOfDemeter" />
+    <exclude name="LoosePackageCoupling" />
+    <exclude name="NcssCount" />
+  </rule>
+  <!-- rule ref="category/java/documentation.xml" / -->
+  <rule ref="category/java/errorprone.xml">
+    <exclude name="BeanMembersShouldSerialize" />
+    <exclude name="DataflowAnomalyAnalysis" />
+    <exclude name="DoNotCallSystemExit" />
+    <exclude name="NullAssignment" />
+    <exclude name="UseProperClassLoader" />
+  </rule>
+  <rule ref="category/java/multithreading.xml">
+    <exclude name="DoNotUseThreads" />
+  </rule>
+  <rule ref="category/java/performance.xml">
+    <exclude name="AvoidInstantiatingObjectsInLoops" />
+  </rule>
 </ruleset>
 }}
 
-** PMD 5.0.0 [#wf0618ac]
-- `RuleSet short names now require a language prefix, 'basic' is now 'java-basic', and 'rulesets/basic.xml' is now 'rulesets/java/basic.xml'`
--- 上記のサンプルで、`rulesetfiles`属性の`basic`などを、`java-basic`に変更
-- `Removed -targetjdk use -version {name} {version} instead`
--- 上記のサンプルから、`targetjdk="${compile.source}"`を削除
+* 解説 [#explanation]
++ [https://pmd.github.io/ PMD]からダウンロードした`pmd-bin-x.x.zip`の`lib`以下にある`pmd-x.x.jar`などの`jar`ファイルを`%ANT_HOME%\lib`にコピー、もしくは環境変数`%PMD_HOME%`を設定した場所に`lib`を展開
++ 上記のような`pmd`ターゲットを`build.xml`に追加し、`ant pmd`で`pmd.xml`を生成、`jenkins`の`PMD`プラグインなどで読み込む
++ チェックするルールをカスタマイズする場合は、`ruleset.xml`を記述してこれを`rulesetfiles`属性で参照する
 
-** PMD 5.1.2 [#xfc6bb0b]
-- %%`PMD 5.1.2`で以下のようなコードが、`Avoid unused private methods such as 'makePanel(String,JComponent)'.`と警告されてしまう？%% 修正済み
--- [https://sourceforge.net/p/pmd/bugs/1228/ PMD / Issues / #1228 UnusedPrivateMethod returns false positives]
--- `C:\pmd-bin-5.1.2\bin\pmd.bat -dir /root/directory/for/sources -rulesets java-unusedcode`
+*** toFile or toConsole [#w61eb2ba]
+- `FindBugs`のように、`xml`ファイルとコンソールの両方に結果を表示する場合は、`formatter`要素の`toFile`と`toConsole`属性を併用する
+-- `ant -v pmd`は、出力される情報が多すぎる
+- [https://pmd.github.io/pmd-5.3.3/usage/ant-task.html PMD - Ant Task] にあるように、`<formatter type="html" toFile="pmd_report.html" toConsole="true"/>`や、`<formatter type="xml" toFile="${build.reports}/pmd.xml" toConsole="true" />`と`toFile`と`toConsole`を指定しても、ファイルにのみ結果が書き出されて、コンソールには何も出力されない
+- `<formatter type="text" toConsole="true" />`と、`toFile`属性なしで`toConsole="true"`とする必要がある？
+-- `<formatter type="text" toConsole="false" />`は、`toFile or toConsole needs to be specified in Formatter`となって、`BUILD FAILED`
+- ファイルとコンソールの両方に出力する場合は、`formatter`を複数指定しなくてはならない？
 
+* 更新履歴 [#c022c47d]
+** PMD 6.0.0 [#f08801d0]
+- `rulesets/java/basic.xml`などが非推奨になって、`category/java/bestpractices.xml`などが使用可能になった
+- キャッシュディレクトリの指定がない場合、警告されるようになった
+-- [https://pmd.github.io/pmd/pmd_userdocs_getting_started.html#incremental-analysis Getting Started | PMD Source Code Analyzer]
+- 以下のような`JDK 1.8.0`で有効な総称型の型引数の省略が誤判定されて、`Error while parsing ...`とエラーになる
+-- `$PMD_HOME/bin/run.sh pmd -d example/MainPanel.java -R category/java/bestpractices.xml -language java -version 1.8`
+-- `Cannot use '<>' with anonymous inner classes when running in JDK inferior to 9 mode!`
 #code{{
-import java.awt.*;
-import javax.swing.*;
-
-public class Foo {
-    public JComponent makeUI() {
-        Box box = Box.createVerticalBox();
-        JTextField field = new JTextField();
-        box.add(makePanel("aaa", field));
-        return box;
-    }
-    private static JPanel makePanel(String title, JComponent c) {
-        JPanel p = new JPanel(new BorderLayout());
-        p.setBorder(BorderFactory.createTitledBorder(title));
-        p.add(c);
-        return p;
-    }
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            @Override public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
-    public static void createAndShowGUI() {
-        JFrame f = new JFrame();
-        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        f.getContentPane().add(new Foo().makeUI());
-        f.setSize(320, 240);
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
-    }
+// https://raw.githubusercontent.com/aterai/java-swing-tips/master/ComboBoxEditorVerifier/src/java/example/MainPanel.java
+private Component editorComponent;
+@Override public Component getEditorComponent() {
+  if (Objects.isNull(editorComponent)) {
+    JTextComponent tc = (JTextComponent) super.getEditorComponent();
+    editorComponent = new JLayer<>(tc, new ValidationLayerUI<>()); // `JDK 1.8.0`でもこの省略は有効
+    // editorComponent = new JLayer<JTextComponent>(tc, new ValidationLayerUI<>());
+  }
+  return editorComponent;
 }
 }}
 
-** PMD 5.1.3-SNAPSHOT [#se3b451a]
+** PMD 5.1.3 [#se3b451a]
 - %%上記の誤検出は`pmd-bin-5.1.3-SNAPSHOT.zip`ですべて修正済み。ただし新規で今まで問題なかった以下のようなコードの`makeButton(Action action, String title)`が`UnusedPrivateMethod`となってしまう%% 修正済み
 
  C:\temp>C:\pmd-bin-5.1.3-SNAPSHOT\bin\pmd.bat -dir . -rulesets java-unusedcode
@@ -258,6 +175,52 @@ public final class MenuBarFactoryTest {
   }
 }
 }}
+
+** PMD 5.1.2 [#xfc6bb0b]
+- %%`PMD 5.1.2`で以下のようなコードが、`Avoid unused private methods such as 'makePanel(String,JComponent)'.`と警告されてしまう？%% 修正済み
+-- [https://sourceforge.net/p/pmd/bugs/1228/ PMD / Issues / #1228 UnusedPrivateMethod returns false positives]
+-- `C:\pmd-bin-5.1.2\bin\pmd.bat -dir /root/directory/for/sources -rulesets java-unusedcode`
+
+#code{{
+import java.awt.*;
+import javax.swing.*;
+
+public class Foo {
+    public JComponent makeUI() {
+        Box box = Box.createVerticalBox();
+        JTextField field = new JTextField();
+        box.add(makePanel("aaa", field));
+        return box;
+    }
+    private static JPanel makePanel(String title, JComponent c) {
+        JPanel p = new JPanel(new BorderLayout());
+        p.setBorder(BorderFactory.createTitledBorder(title));
+        p.add(c);
+        return p;
+    }
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            @Override public void run() {
+                createAndShowGUI();
+            }
+        });
+    }
+    public static void createAndShowGUI() {
+        JFrame f = new JFrame();
+        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        f.getContentPane().add(new Foo().makeUI());
+        f.setSize(320, 240);
+        f.setLocationRelativeTo(null);
+        f.setVisible(true);
+    }
+}
+}}
+
+** PMD 5.0.0 [#wf0618ac]
+- `RuleSet short names now require a language prefix, 'basic' is now 'java-basic', and 'rulesets/basic.xml' is now 'rulesets/java/basic.xml'`
+-- 上記のサンプルで、`rulesetfiles`属性の`basic`などを、`java-basic`に変更
+- `Removed -targetjdk use -version {name} {version} instead`
+-- 上記のサンプルから、`targetjdk="${compile.source}"`を削除
 
 * 警告 [#h56d397b]
 ** GodClass [#rf4a20bc]
