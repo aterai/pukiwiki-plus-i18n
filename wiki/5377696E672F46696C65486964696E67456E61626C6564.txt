@@ -30,32 +30,13 @@ pop.add(mi);
 * 解説 [#explanation]
 上記のサンプルでは、`JFileChooser#setFileHidingEnabled(boolean)`メソッドを使用して、隠しファイル、隠しフォルダーなどの表示・非表示を設定しています。
 
-----
+- `JFileChooser`からファイルリストの`JPopupMenu`を直接取得することが出来ないので、子コンポーネントを検索する必要がある
+-- 参考: [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]
 - 初期値は、`OS`の設定(`Windows`なら「コントロールパネル、フォルダーオプション、表示、ファイルとフォルダーの表示」)に従う
 -- 参考: [[DesktopPropertyの変更を監視する>Swing/DesktopProperty]]
-
 #code{{
 Object showHiddenProperty = Toolkit.getDefaultToolkit().getDesktopProperty("awt.file.showHiddenFiles");
 System.out.println("awt.file.showHiddenFiles: " + showHiddenProperty);
-}}
-
-----
-`JFileChooser`から`JPopupMenu`を直接取得することが出来ないので、以下のように子コンポーネントを検索しています。
-
-#code{{
-private static JPopupMenu searchPopupMenu(Container parent) {
-  for (Component c: parent.getComponents()) {
-    if (c instanceof JComponent && ((JComponent) c).getComponentPopupMenu() != null) {
-      return ((JComponent) c).getComponentPopupMenu();
-    } else {
-      JPopupMenu pop = searchPopupMenu((Container) c);
-      if (pop != null) {
-        return pop;
-      }
-    }
-  }
-  return null;
-}
 }}
 
 * 参考リンク [#reference]
