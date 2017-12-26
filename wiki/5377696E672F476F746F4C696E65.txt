@@ -37,7 +37,7 @@ EventQueue.invokeLater(() -> getRootPane().setDefaultButton(button));
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、任意の行番号を指定してKBD{Enter}キー、またはボタンをクリックすると、その行が`JViewport`の表示範囲の最上部に配置されるよう表示領域を更新します。
+上記のサンプルでは、`JTextField`に任意の行番号を指定してKBD{Enter}キー、またはボタンをクリックすると、その行が`JViewport`の表示範囲の最上部に配置されるよう表示領域を更新します。
 
 `JTextArea#setCaretPosition(int)`メソッドによる`Caret`の位置変更だけでは、移動先を移動元より大きな行番号にした場合、`JTextArea`の下部までしかスクロールしないので、`JTextArea#modelToView(int)`メソッドで取得した座標が出来るだけ上部にくるように処理しています。
 

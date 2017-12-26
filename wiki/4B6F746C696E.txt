@@ -1305,6 +1305,15 @@ fun children(node: TreeNode): Stream<TreeNode> {
   val clz = TreeNode::class.java
   return Collections.list(node.children() as Enumeration<*>)
     .stream().filter(clz::isInstance).map(clz::cast)
+    // .filterIsInstance(clz).stream()
+}
+}}
+
+`Kotlin`(手動修正): `filterIsInstance`が便利
+#code(lang-kotlin){{
+fun children(node: TreeNode): List<TreeNode> {
+  return (node.children() as Enumeration<*>)
+    .toList().filterIsInstance(TreeNode::class.java)
 }
 }}
 #twocolumn
@@ -1344,6 +1353,40 @@ Arrays.asList(button1, button2).forEach( ?? ? ({ p.add() }))
 val p = JPanel(GridLayout(0, 1, 2, 2))
 listOf(button1, button2).forEach({ b -> p.add(b) })
 //or listOf(button1, button2).map(p::add)
+}}
+
+#twocolumn
+
+** BigDecimal [#zb932a10]
+- `IntelliJ`の自動変換では`error: unresolved reference: intValue`とエラーになるので、手動で`toInt()`に修正する必要がある
+
+#twocolumn
+`Java`
+#code{{
+double d = delta.y * GRAVITY;
+int ia = (int) d;
+int ib = (int) Math.floor(d);
+int ic = new BigDecimal(d).setScale(0, RoundingMode.DOWN).intValue();
+System.out.format("%d %d %d%n", ia, ib, ic);
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+val d = delta.y * GRAVITY
+val ia = d.toInt()
+val ib = Math.floor(d) as Int
+val ic = BigDecimal(d).setScale(0, RoundingMode.DOWN).intValue()
+System.out.format("%d %d %d%n", ia, ib, ic)
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+val d = delta.y * GRAVITY
+val ia = d.toInt()
+val ib = Math.floor(d).toInt()
+val ic = BigDecimal(d).setScale(0, RoundingMode.DOWN).toInt()
+println("${ia} ${ib} ${ic}")
 }}
 
 #twocolumn
