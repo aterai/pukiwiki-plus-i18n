@@ -16,7 +16,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTI-UTFN-I/AAAAAAAAATo/6s
 * サンプルコード [#sourcecode]
 #code(link){{
 URL url = getClass().getClassLoader().getResource("example/test.png");
-//URL url = getClass().getResource("test.png");
+// URL url = getClass().getResource("test.png");
 JLabel icon = new JLabel(new ImageIcon(url));
 JLabel path = new JLabel(url.toString());
 }}
@@ -35,8 +35,8 @@ JLabel path = new JLabel(url.toString());
 
 #code{{
 getClass().getClassLoader().getResource("example/test.png");
-//ただし、getClass().getClassLoader().getResource("./example/test.png");
-//だとjar内にパッケージした時うまくいかない。
+// ただし、getClass().getClassLoader().getResource("./example/test.png");
+// だとjar内にパッケージした場合で失敗する
 }}
 
 ----
@@ -49,7 +49,7 @@ getClass().getClassLoader().getResource("example/test.png");
 
 #code{{
 getClass().getResource("test.png"); //or MainPanel.class.getResource("test.png");
-//getClass().getClassLoader().getResource("example/test.png");と同じ
+// getClass().getClassLoader().getResource("example/test.png");と同じ
 }}
 
 - 絶対パス風(頭に`/`が付く)の場合
@@ -57,9 +57,9 @@ getClass().getResource("test.png"); //or MainPanel.class.getResource("test.png")
 
 #code{{
 getClass().getResource("/test.png");
-//getClass().getClassLoader().getResource("test.png");と同じ
-//上記の相対パスと同じリソースを取得する場合は、
-//getClass().getResource("/example/test.png");としなくてはならない
+// getClass().getClassLoader().getResource("test.png");と同じ
+// 上記の相対パスと同じリソースを取得する場合は、
+// getClass().getResource("/example/test.png");としなくてはならない
 }}
 
 ----

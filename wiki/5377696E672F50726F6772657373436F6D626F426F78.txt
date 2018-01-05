@@ -47,10 +47,10 @@ class ProgressCellRenderer extends DefaultListCellRenderer {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`index`が`-1`(アイテムリストのインデックスではない)の場合、`JProgressBar`を返すセルレンダラーを`JComboBox`に設定して進捗を表示しています。
+上記のサンプルでは、`index`が`-1`(アイテムリストのインデックスではない)の場合、`JProgressBar`を返すリストセルレンダラーを`JComboBox`に設定して進捗を表示しています。
 
 ----
-ロードボタンが押されたら、以下のような`SwingWorker`で、`JComboBox`にアイテムを追加しています。
+ロードボタンが押されたら、以下のような`SwingWorker`で`JComboBox`にアイテムを追加しています。
 
 #code{{
 button = new JButton(new AbstractAction("load") {
@@ -98,7 +98,9 @@ button = new JButton(new AbstractAction("load") {
 });
 }}
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultListCellRenderer.html DefaultListCellRenderer (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment

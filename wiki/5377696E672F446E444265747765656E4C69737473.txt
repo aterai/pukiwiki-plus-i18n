@@ -51,11 +51,11 @@ class ListItemTransferHandler extends TransferHandler {
     }
     return false;
   }
-//......
+//...
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、一つの`JList`内でのアイテムの並べ替えを行う[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]を元に`ListItemTransferHandler`を作成し、`JList`間でのアイテム移動もできるようになっています。
+上記のサンプルでは、一つの`JList`内でのアイテムの並べ替えを行う[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]を元に`ListItemTransferHandler`を作成し、`JList`間でのアイテム移動も可能にしています。
 
 変更した箇所は、[[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]から、[[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]と同じで、ドロップ先がドラッグ元と同じコンポーネントかどうかを調べて処理を変更しています。
 

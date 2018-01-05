@@ -47,7 +47,7 @@ private static class ExitAction extends AbstractAction {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、親となる`JFrame`を取得し、`window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));`を使用して、これを閉じるためのイベントを実行しています。
+上記のサンプルでは、親となる`JFrame`を取得して`window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));`を使用し、これを閉じるためのイベントを実行しています。
 
 コンポーネントの親`Window`を取得する場合、`SwingUtilities.getWindowAncestor(...)`などが使用可能ですが、`HeavyWeightWindow`な`JPopupMenu`や、`Floating`中の`JToolBar`では親`Window`とは別の`Window`を使用しているので注意が必要です。
 

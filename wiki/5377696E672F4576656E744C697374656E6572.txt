@@ -61,10 +61,10 @@ public void fireFontChangeEvent(String cmd, Font font) {
 
 `Java`のイベントモデルは、`delegation event model`(委譲型のイベントモデル)です。
 ----
-`Vector`ではなく、`EventListenerList`を使用する場合は、[http://docs.oracle.com/javase/jp/7/api/javax/swing/event/EventListenerList.html EventListenerList (Java Platform SE 7)]のサンプルが参考になります。
+リスナーの保存に`Vector`ではなく、`EventListenerList`を使用する場合は[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/EventListenerList.html EventListenerList]ドキュメントのサンプルが参考になります。
 
 #code{{
-// http://docs.oracle.com/javase/jp/6/api/javax/swing/event/EventListenerList.html
+// https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/EventListenerList.html
 EventListenerList listenerList = new EventListenerList();
 //FontChangeEvent fontChangeEvent = null;
 public void addFontChangeListener(FontChangeListener l) {

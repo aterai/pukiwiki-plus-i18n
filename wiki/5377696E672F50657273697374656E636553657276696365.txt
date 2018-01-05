@@ -89,10 +89,10 @@ class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`PersistenceService`で確保したファイルに、`HashMap<String, Serializable>`に格納した`JFrame`の位置、サイズを`XMLEncoder`、`XMLDecoder`を使って読み書きしています。
+上記のサンプルでは、`JFrame`の位置とサイズを`PersistenceService`で確保したファイルに`XMLEncoder`で保存、`XMLDecoder`でそのファイルから値を復元しています。
 
 ----
-`Windows 7`、`JDK 1.7.0_03`の環境では、`C:\Users\(user)\AppData\LocalLow\Sun\Java\Deployment\cache\6.0\muffin`以下に`muf`ファイルが作成されるようです。
+`Windows`環境では、`C:\Users\(user)\AppData\LocalLow\Sun\Java\Deployment\cache\6.0\muffin`以下に`muf`ファイルが作成されるようです。
 
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>
@@ -205,8 +205,8 @@ public class MainPanel extends JPanel {
 
 * 参考リンク [#reference]
 - [http://pscode.org/jws/api.html JWS javax.jnlp.* API demos]
-- [http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/examples.html#PersistenceService PersistenceService]
-- [http://www.finnw.me.uk/persistencetest.html PersistenceService Demo]
+- [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/javaws/developersguide/examples.html#PersistenceService PersistenceServiceサービスの使用]
+// - [http://www.finnw.me.uk/persistencetest.html PersistenceService Demo]
 - [[JFrameの位置・サイズを記憶する>Swing/Preferences]]
 - [[JTableのモデルをXMLファイルで保存、復元する>Swing/PersistenceDelegate]]
 

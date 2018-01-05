@@ -102,7 +102,7 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
 * 解説 [#explanation]
 上記のサンプルでは、`JCheckBox`を継承する`TreeCellEditor`、`TreeCellRenderer`を作成し、`TreeCellEditor#getTreeCellEditorComponent(...)`などは、この`JCheckBox`、`JLabel`(文字列、アイコン)などを含む`JPanel`を生成して返しています。
 
-マウスクリックなどでノードのチェック状態が変更されたら、子ノードと親ノードの選択状態も更新する必要があるので、`TreeModelListener`をモデルに設定して、その監視を行っています。
+マウスクリックなどでノードのチェック状態が変更されたら子ノードと親ノードの選択状態も更新する必要があるので、`TreeModelListener`をモデルに設定してその監視を行っています。
 
 ----
 `JPanel`を継承する`TreeCellEditor`、`TreeCellRenderer`でも、`JDK 1.7.0`、`JDK 1.6.0_30`などでは、問題なく動作するようです。

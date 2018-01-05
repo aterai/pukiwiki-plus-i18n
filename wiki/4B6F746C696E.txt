@@ -1391,6 +1391,86 @@ println("${ia} ${ib} ${ic}")
 
 #twocolumn
 
+** Comparator [#Comparator]
+- `IntelliJ`の自動変換では`error: calls to static methods in Java interfaces are prohibited in JVM target 1.6. Recompile with '-jvm-target 1.8'`とエラーになる
+-- `kotlinc hello.kt -jvm-target 1.8 -include-runtime -d hello.jar`と`kotlinc`にオプションを追加
+- `IntelliJ`の自動変換では`error: using 'sort(kotlin.Comparator<in T> /* = java.util.Comparator<in T> */): Unit' is an error. Use sortWith(comparator) instead.`とエラーになる
+-- `list.sort(...)`を`list.sortWith(...)`に修正
+- `IntelliJ`の自動変換では`error: type inference failed: Not enough information to infer parameter T in fun <T : Any!> comparingInt(p0: ((T!) -> Int)!): Comparator<T!>!`とエラーになる
+-- `Comparator.comparingInt({ l -> l.get(0) })`を`Comparator.comparingInt<List<Int>>({ l -> l.get(0) })`に修正
+
+#twocolumn
+`Java`
+#code{{
+import java.util.*;
+public class SortTest {
+  public static void main(String[] args) {
+    List<List<Integer>> list = Arrays.asList(
+      Arrays.asList(15, 20, 35),
+      Arrays.asList(30, 45, 72),
+      Arrays.asList(15, 20, 31),
+      Arrays.asList(27, 33, 59),
+      Arrays.asList(27, 35, 77));
+    list.sort(Comparator.<List<Integer>>comparingInt(l -> l.get(0))
+      .thenComparingInt(l -> l.get(1))
+      .thenComparingInt(l -> l.get(2))
+      .reversed());
+    System.out.println(list);
+  }
+}
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+fun main(args: Array<String>) {
+  val list = Arrays.asList(
+    Arrays.asList(15, 20, 35),
+    Arrays.asList(30, 45, 72),
+    Arrays.asList(15, 20, 31),
+    Arrays.asList(27, 33, 59),
+    Arrays.asList(27, 35, 77))
+  list.sort(Comparator.comparingInt({ l -> l.get(0) })
+    .thenComparingInt({ l -> l.get(1) })
+    .thenComparingInt({ l -> l.get(2) })
+    .reversed())
+  System.out.println(list)
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+fun main(args: Array<String>) {
+  val list = Arrays.asList(
+    Arrays.asList(15, 20, 35),
+    Arrays.asList(30, 45, 72),
+    Arrays.asList(15, 20, 31),
+    Arrays.asList(27, 33, 59),
+    Arrays.asList(27, 35, 77))
+  list.sortWith(Comparator.comparingInt<List<Int>>({ l -> l.get(0) })
+    .thenComparingInt({ l -> l.get(1) })
+    .thenComparingInt({ l -> l.get(2) })
+    .reversed())
+  System.out.println(list)
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+fun main(args: Array<String>) {
+  val list = listOf<List<Int>>(
+    listOf(15, 20, 35),
+    listOf(30, 45, 72),
+    listOf(15, 20, 31),
+    listOf(27, 33, 59),
+    listOf(27, 35, 77))
+  val l = list.sortedWith(compareBy({ it.get(0) }, { it.get(1) }, { it.get(2) })).reversed()
+  println(l)
+}
+}}
+
+#twocolumn
+
 * コメント [#comment]
 #comment
 #comment
