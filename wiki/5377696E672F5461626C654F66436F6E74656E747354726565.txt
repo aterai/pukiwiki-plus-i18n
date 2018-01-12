@@ -94,9 +94,11 @@ class TableOfContentsTreeCellRenderer extends DefaultTreeCellRenderer {
 
 * 解説 [#explanation]
 - 左: `TreeCellRenderer`
--- `DefaultTreeCellRenderer`をオーバーライドし、デフォルトのレンダリングで使用する`JLabel`を`JTree`を超える十分な幅をもつ`JPanel`でラップ
---- `JTree#getScrollableTracksViewportWidth()`が常に`true`を返すようオーバーライドして、スクロールバーが表示されないよう設定(参考: [https://community.oracle.com/thread/1357473 JTree cell width question | Oracle Forums])
---- `JTree`のノードの幅には、最初に表示された時にキャッシュされたものが使用されるため、`JTable`や`JList`のレンダラーのように`LayoutManager`を使ったセル内でのレイアウトが使用できない(`JTree`をリサイズした場合、右寄せが維持できない)
+-- `DefaultTreeCellRenderer`をオーバーライドし、デフォルトのレンダリングで使用する`JLabel`を`JTree`を超える十分な幅をもつ`JPanel`でラッピング
+--- `JTree#getScrollableTracksViewportWidth()`が常に`true`を返すようオーバーライドして、スクロールバーが表示されないよう設定
+--- 参考: [https://community.oracle.com/thread/1357473 JTree cell width question | Oracle Forums]
+--- `JTree`のノードの幅には、最初に表示された時にキャッシュされたものが使用されるため、`JTable`や`JList`のレンダラーのように`LayoutManager`を使ったセル内でのレイアウトが使用できない
+--- `JTree`をリサイズした場合、右寄せが維持できない
 --- 代わりに、ラップした`JPanel`の`paintComponent(...)`メソッドをオーバーライドして、ノードに続けてリーダー、`JTree`の右端付近にページ番号を表示
 -- ページ番号などをクリックしてノードを展開可能
 -- `JTree`に十分な幅がなく、ノードとページ番号が重なる場合などは考慮していない

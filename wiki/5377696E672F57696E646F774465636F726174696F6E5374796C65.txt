@@ -59,9 +59,8 @@ frame.getContentPane().add(p);
 -- マウスでリサイズ可能な領域を作成するために、`ContentPane`にほぼ透明な`Border`をもつ`JPanel`を追加
 
 ----
-- `MetalLookAndFeel`のみ`LookAndFeel#getSupportsWindowDecorations()`が`true`
+- `MetalLookAndFeel`のみ`LookAndFeel#getSupportsWindowDecorations()`は`true`を返す
 -- `LookAndFeel`を変更する場合は、`ContentPane`以下から更新することで、`JRootPane#setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);`が無効にならないようにする必要がある
-
 #code{{
 for (Window window: Frame.getWindows()) {
   if (window instanceof RootPaneContainer) {

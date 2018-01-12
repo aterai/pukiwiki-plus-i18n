@@ -74,16 +74,19 @@ table.setDefaultEditor(Date.class,    new DateEditor());
 上記のサンプルでは、`JTable#getCellRenderer(...)`、`JTable#getCellEditor(...)`をオーバーライドして、実際のモデル値からクラスを取得し、そのクラスに応じて行ごとに使用するセルレンダラー、セルエディタを変更しています。
 
 - セルレンダラー
--- `String`, `Integer`, `Double`, `Date`, `Boolean`クラスは、それぞれデフォルトの`DefaultTableCellRenderer`, `JTable$NumberRenderer`, `JTable$DoubleRenderer`, `JTable$BooleanRenderer`を使用
--- `Color`クラスは、`table.setDefaultRenderer(Color.class, new ColorRenderer());`で、自作の`ColorRenderer`を使用
+-- `String`クラスと`Date`クラスは、デフォルトの`DefaultTableCellRenderer`を使用
+-- `Integer`クラスと`Double`クラスは、デフォルトの`JTable$NumberRenderer`を使用
+-- `Color`クラスは、アイコンで色を表示するセルレンダラーを作成して`Table#setDefaultRenderer(Color.class, new ColorRenderer())`で設定
 - セルエディタ
--- `String`, `Integer`と`Double`, `Boolean`クラスは、それぞれデフォルトの`JTable$GenericEditor`, `JTable$NumberEditor`, `JTable$BooleanEditor`を使用
--- `Date`, `Color`クラスは、`JTable#setDefaultEditor(Class, TableCellEditor)`で、それぞれ対応するセルエディタを用意して使用
+-- `String`クラスは、デフォルトの`JTable$GenericEditor`を使用
+-- `Integer`クラスと`Double`クラスは、デフォルトの`JTable$NumberEditor`を使用
+-- `Boolean`クラスは、デフォルトの`JTable$BooleanEditor`を使用
+-- `Date`クラスは、`JSpinner`でセルエディタを作成して`JTable#setDefaultEditor(Class, TableCellEditor)`で設定
 --- 参考: [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
+-- `Color`クラスは、`JColorChooser`を開く`JButton`でセルエディタを作成して`JTable#setDefaultEditor(Class, TableCellEditor)`で設定
 --- 参考: [https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html#TableDialogEditDemo TableDialogEditDemo]
-
 ----
-- `JTable#getColumnClass(int)`メソッドの引数は列のみなので、`1`列目の場合は、`JTable#getCellEditor(...)`で取得したクラスを返すようにオーバーライド
+- `JTable#getColumnClass(int)`メソッドの引数は列のみのため、`1`列目の場合は`JTable#getCellEditor(...)`で取得したクラスを返すようにオーバーライド
 -- 参考: [https://stackoverflow.com/questions/1464691/property-list-gui-component-in-swing java - Property list GUI component in Swing - Stack Overflow]
 
 * 参考リンク [#reference]

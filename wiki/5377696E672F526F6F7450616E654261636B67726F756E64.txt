@@ -47,13 +47,13 @@ frame.getContentPane().add(new MainPanel());
 * 解説 [#explanation]
 このサンプルでは、`JFrame#createRootPane()`メソッドをオーバーライドして、以下の方法で背景に画像を描画する`JRootPane`を作成しています。
 
-- 中央に配置された背景画像: [https://community.oracle.com/thread/1395763 CentredBackgroundBorder]を使用
+- 背景画像を中央に配置: [https://community.oracle.com/thread/1395763 CentredBackgroundBorder]を使用
 - チェック柄: `JRootPane#paintComponent(...)`をオーバーライド
 
 ----
 - `JRootPane`の子コンポーネントの透明化、半透明化
 -- `ContentPane`: `setOpaque(false);`で透明化
--- `JDesktopPane`:  `setOpaque(false);`で透明化
+-- `JDesktopPane`: `setOpaque(false);`で透明化
 --- 参考: [[JInternalFrameを半透明にする>Swing/TransparentFrame]]
 --- `NimbusLookAndFeel`には未対応
 -- `JMenuBar`: `setOpaque(false);`で透明化し、`JMenuBar#paintComponent(...)`をオーバーライドして半透明化

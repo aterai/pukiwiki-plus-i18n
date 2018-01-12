@@ -312,9 +312,57 @@ fun main(args: Array<String>) {
 #twocolumn
 
 ** インターフェイス、匿名内部クラス、throws [#tb58a862]
-- `addTreeWillExpandListener(object: TreeWillExpandListener() { ...`と記述すると`error: this class does not have a constructor`とエラーになる
-- インターフェイスから匿名内部クラスのインスタンスを生成する場合は`()`は不要で、`addTreeWillExpandListener(object: TreeWillExpandListener { ...`と記述する
+- `IntelliJ`の自動変換では`error: this class does not have a constructor tree.addTreeWillExpandListener(object : TreeWillExpandListener() {`とエラーになる
+- インターフェイスから匿名内部クラスのインスタンスを生成する場合は`()`は不要
 -- [https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions SAM Conversions - Calling Java from Kotlin - Kotlin Programming Language]
+-- `tree.addTreeWillExpandListener(object : TreeWillExpandListener() {`を`tree.addTreeWillExpandListener(object : TreeWillExpandListener {`に修正
+
+#twocolumn
+`Java`
+#code{{
+tree.addTreeWillExpandListener(new TreeWillExpandListener() {
+  @Override public void treeWillExpand(TreeExpansionEvent e)
+      throws ExpandVetoException {
+    //throw new ExpandVetoException(e, "Tree expansion cancelled");
+  }
+  @Override public void treeWillCollapse(TreeExpansionEvent e)
+      throws ExpandVetoException {
+    throw new ExpandVetoException(e, "Tree collapse cancelled");
+  }
+});
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+tree.addTreeWillExpandListener(object : TreeWillExpandListener() {
+  @Override
+  @Throws(ExpandVetoException::class)
+  fun treeWillExpand(e: TreeExpansionEvent) {
+    //throw new ExpandVetoException(e, "Tree expansion cancelled");
+  }
+  @Override
+  @Throws(ExpandVetoException::class)
+  fun treeWillCollapse(e: TreeExpansionEvent) {
+    throw ExpandVetoException(e, "Tree collapse cancelled")
+  }
+})
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+tree.addTreeWillExpandListener(object : TreeWillExpandListener {
+  @Throws(ExpandVetoException::class)
+  override fun treeWillExpand(e: TreeExpansionEvent) {
+    //throw new ExpandVetoException(e, "Tree expansion cancelled");
+  }
+  @Throws(ExpandVetoException::class)
+  override fun treeWillCollapse(e: TreeExpansionEvent) {
+    throw ExpandVetoException(e, "Tree collapse cancelled")
+  }
+})
+}}
+#twocolumn
 
 #twocolumn
 `Java`
@@ -390,55 +438,52 @@ import javax.swing.event.*
 import javax.swing.plaf.IconUIResource
 import javax.swing.tree.*
 
-fun makeUI(): JComponent {
-  val emptyIcon = EmptyIcon()
-  UIManager.put("Tree.expandedIcon",  IconUIResource(emptyIcon))
-  UIManager.put("Tree.collapsedIcon", IconUIResource(emptyIcon))
-
-  val tree = JTree().apply {
-    setEditable(true)
-    border = BorderFactory.createEmptyBorder(4, 4, 4, 4)
-    addTreeWillExpandListener(object: TreeWillExpandListener {
-      @Throws(ExpandVetoException::class)
-      override fun treeWillExpand(e: TreeExpansionEvent) {
-        //throw ExpandVetoException(e, "Tree expansion cancelled")
-      }
-      @Throws(ExpandVetoException::class)
-      override fun treeWillCollapse(e: TreeExpansionEvent) {
-        throw ExpandVetoException(e, "Tree collapse cancelled")
-      }
-    })
-  }
-
-  var row = 0;
-  while (row < tree.getRowCount()) {
-    tree.expandRow(row++);
-  }
-
-  return JPanel(GridLayout(1, 0)).apply {
-    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5))
-    add(JScrollPane(JTree()))
-    add(JScrollPane(tree))
-  }
+private fun makeUI(): Component = JPanel(GridLayout(1, 0, 5, 5)).apply {
+  setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5))
+  add(JScrollPane(JTree()))
+  add(JScrollPane(makeTree()))
 }
 
-class EmptyIcon: Icon {
-    override fun paintIcon(c: Component, g: Graphics , x: Int, y: Int) {
-      /* Empty icon */
+private fun makeTree(): JTree = JTree().apply {
+  setEditable(true)
+  setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4))
+  var row = 0
+  while (row < getRowCount()) {
+    expandRow(row++)
+  }
+  addTreeWillExpandListener(object : TreeWillExpandListener {
+    @Throws(ExpandVetoException::class)
+    override fun treeWillExpand(e: TreeExpansionEvent) {
+      //throw new ExpandVetoException(e, "Tree expansion cancelled");
     }
-    override fun getIconWidth():  Int = 0
-    override fun getIconHeight(): Int = 0
+    @Throws(ExpandVetoException::class)
+    override fun treeWillCollapse(e: TreeExpansionEvent) {
+      throw ExpandVetoException(e, "Tree collapse cancelled")
+    }
+  })
 }
 
 fun main(args: Array<String>) {
   EventQueue.invokeLater {
+    UIManager.put("swing.boldMetal", false)
+    val icon = EmptyIcon()
+    UIManager.put("Tree.expandedIcon", IconUIResource(icon))
+    UIManager.put("Tree.collapsedIcon", IconUIResource(icon))
     JFrame("kotlin swing").apply {
-      defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+      defaultCloseOperation = JFrame.EXIT_ON_CLOSE
       add(makeUI())
       size = Dimension(320, 240)
       setLocationRelativeTo(null)
       setVisible(true)
     }
+  }
+}
+
+internal class EmptyIcon : Icon {
+  override fun getIconWidth() : Int = 0
+  override fun getIconHeight() : Int = 0
+  override fun paintIcon(c: Component, g: Graphics, x: Int, y: Int) {
+    /* Empty icon */
   }
 }
 }}

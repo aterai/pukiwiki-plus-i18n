@@ -41,13 +41,16 @@ Action swapAction = new AbstractAction("JDesktopPane <-> JTabbedPane") {
 - `JInternalFrame`をタブに変換する
 -- `JDesktopPane#getAllFrames()`で取得した順番は、`JInternalFrame`がアイコン化されているなどの状態で変化するので、タイトルでソートしてから`JTabbedPane`に追加
 -- `JInternalFrame`自体はそのままで、`ContentPane`のみタブコンポーネントに変換する
--- 選択状態の`JInternalFrame`を`JDesktopPane#getSelectedFrame()`で検索し、変換先のタブも選択状態になるよう`JTabbedPane#setSelectedIndex(...)`で設定する
+-- 選択状態の`JInternalFrame`を`JDesktopPane#getSelectedFrame()`メソッドで検索し、変換先のタブも選択状態になるよう`JTabbedPane#setSelectedIndex(...)`メソッドで設定する
 - タブを`JInternalFrame`に変換する
 -- `JDesktopPane`には、位置やサイズ、アイコン化状態などを保存した状態で`JInternalFrame`が残っている
 --- `JTabbedPane`側ではタブの削除を許可していない
--- `JInternalFrame`のタイトルと同じタブのインデックスを`JTabbedPane#indexOfTab(String)`で検索し、そのコンポーネントを`ContentPane`として`JInternalFrame`に戻す
+-- `JInternalFrame`のタイトルと同じタブのインデックスを`JTabbedPane#indexOfTab(String)`メソッドで検索し、そのコンポーネントを`ContentPane`として`JInternalFrame`に戻す
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JDesktopPane.html#getSelectedFrame-- JDesktopPane#getSelectedFrame() (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#indexOfTab-java.lang.String- JTabbedPane#indexOfTab(String) (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment
