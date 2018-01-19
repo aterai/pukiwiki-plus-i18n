@@ -19,15 +19,15 @@ JFileChooser fileChooser = new JFileChooser() {
   @Override protected JDialog createDialog(Component parent) throws HeadlessException {
     JDialog dialog = super.createDialog(parent);
     dialog.setResizable(false);
-    //dialog.setMinimumSize(new Dimension(640, 480)); // JDK 6
-    //dialog.addComponentListener(new MinimumSizeAdapter());
+    // dialog.setMinimumSize(new Dimension(640, 480)); // JDK 6
+    // dialog.addComponentListener(new MinimumSizeAdapter());
     return dialog;
   }
 };
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JFileChooser`の`createDialog`メソッドをオーバーライドしてマウスでのリサイズ制限と、最小サイズの設定をテストすることができます。
+上記のサンプルでは、`JFileChooser#createDialog()`メソッドをオーバーライドしてマウスでのリサイズ制限と、最小サイズの設定をテストすることができます。
 
 `Windows`環境でも、`JDK 6`以上でオーバーライドした`createDialog`メソッド内で`JDialog#setMinimumSize(Dimension)`を使用すれば、最小サイズの設定が可能です。
 

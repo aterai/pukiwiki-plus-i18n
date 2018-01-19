@@ -77,52 +77,18 @@ pubdate: 2003-09-25
 
 - [[AntでPMDを実行する>Ant/PMD]]
 
+** AntでCheckstyleを実行する [#Checkstyle]
+
+- [[AntでCheckstyleを実行する>Ant/Checkstyle]]
+
 ** Antタスクの定義をスクリプト言語を使用して行う [#Scriptdef]
 スクリプト言語(`Javascript`)を使用して、`FTPS`(`File Transfer Protocol over SSL/TLS`)で通信する`Ant`タスクを定義します。
 
 - [[Antタスクの定義をスクリプト言語を使用して行う>Ant/Scriptdef]]
 
 * targetのサンプル [#target]
-** Checkstyleタスク [#Checkstyle]
-#code{{
-  <condition property="have.checkstyle">
-    <available file="${env.CHECKSTYLE_JAR}" />
-  </condition>
-  <target name="checkstyle" if="have.checkstyle">
-    <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
-            classpath="${env.CHECKSTYLE_JAR}" />
-    <mkdir dir="${build.reports}" />
-    <checkstyle config="${user.dir}/checks.xml" failOnViolation="false">
-      <formatter type="plain" />
-      <formatter type="xml" toFile="${build.reports}/checkstyle-result.xml" />
-      <fileset dir="${src.dir}">
-        <exclude name="**/module-info.java" />
-        <include name="**/*.java" />
-      </fileset>
-    </checkstyle>
-  </target>
-}}
-
-*** module-info.java [#vec7503a]
-- `8.4`では`Java 9`の`module-info.java`に未対応なので、`<exclude name="**/module-info.java" />`などで回避
- C:\temp\jst\all.xml:47: Unable to process files: [C:\...\src\java\module-info.java]
-
-*** Unable to create Root Module [#BuildFailed]
-`Checkstyle`のバージョン更新に伴うモジュールの廃止などの変更で、`config`ファイル(上記の例では`${user.dir}/checks.xml`)が不正になった場合などに発生するようです。
-
-- `8.2`
--- `remove FileContentsHolder module as FileContents object is available for filters on TreeWalker in TreeWalkerAudit Event . Author: Timur, Roman Ivanov #3573`
--- `<module name="FileContentsHolder" />`を削除する必要がある
--- `LeftCurlyCheck: clarify behavior of 'nlow' option after removal of 'maxLineLength'. Author: Roman Ivanov #3855`
--- `<property name="maxLineLength" value="100"/>`を削除する必要がある
-#code{{
-<module name="LeftCurly">
-    <property name="maxLineLength" value="100"/>
-</module>
-}}
-- `8.1`
--- `Make SuppressionCommentFilter and SuppressWithNearbyCommentFilter children of TreeWalker. Author: Timur #4714`
--- `<module name="SuppressionCommentFilter" />`を`<module name="TreeWalker">`の子要素になるよう移動%%削除%%する必要がある
+** Checkstyleタスク [#t74190c4]
+- [[AntでCheckstyleを実行する>Ant/Checkstyle]]に移動
 
 ** ErrorProneタスク [#ErrorProne]
 - [http://errorprone.info/ Error Prone]

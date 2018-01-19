@@ -27,9 +27,8 @@ textField4.addAncestorListener(new AncestorListener() {
 * 解説 [#explanation]
 上記のサンプルでは、`JOptionPane.showConfirmDialog`で表示する`JTextField`にデフォルトのフォーカスがあたるように設定しています。
 
-- 左上
--- デフォルト
-
+- 左上: `Default`
+-- デフォルトの`ConfirmDialog`の場合、初期フォーカスは入力欄ではなく`OK`ボタンにある
 #code{{
 int result = JOptionPane.showConfirmDialog(
     frame, textField, "Input Text",
@@ -39,10 +38,9 @@ if (result == JOptionPane.OK_OPTION) {
 }
 }}
 
-- 右上
+- 右上: `WindowListener`
 -- `JOptionPane#createDialog(...)`で`JDialog`を取得し、`WindowListener#windowOpened`で、`textField.requestFocusInWindow();`
 -- [[Windowを開いたときのフォーカスを指定>Swing/DefaultFocus]]など
-
 #code{{
 JOptionPane pane = new JOptionPane(
     textField, JOptionPane.PLAIN_MESSAGE,
@@ -64,9 +62,8 @@ if (result == JOptionPane.OK_OPTION) {
 }
 }}
 
-- 左下
+- 左下: `HierarchyListener`
 -- `textField`に`HierarchyListener`を追加し、`hierarchyChanged`が呼ばれたときに、`textField.requestFocusInWindow();`
-
 #code{{
 textField3.addHierarchyListener(new HierarchyListener() {
   @Override public void hierarchyChanged(HierarchyEvent e) {
@@ -88,7 +85,7 @@ if (result == JOptionPane.OK_OPTION) {
 }
 }}
 
-- 右下
+- 右下: `AncestorListener`
 -- `textField`に`addAncestorListener`を追加し、`ancestorAdded`が呼ばれたときに、`textField.requestFocusInWindow();`
 -- [https://community.oracle.com/thread/1354218 Swing - Input focus]
 

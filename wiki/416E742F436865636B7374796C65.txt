@@ -1,0 +1,104 @@
+---
+title: AntでCheckstyleを実行する
+author: aterai
+pubdate: 2018-01-16T19:15:58+09:00
+description: ソースコードを静的解析してコーディングルールの確認を行うCheckstyleをAntから実行するためのターゲットや、checks.xmlのサンプルなど。
+---
+#contents
+
+* 概要 [#summary]
+`Ant`から`Checkstyle`を実行してソースコードのコーディングルールをチェックします。
+
+* サンプルターゲット [#target]
+- `build.xml`に記述するターゲットサンプル
+
+#code{{
+  <condition property="have.checkstyle">
+    <available file="${env.CHECKSTYLE_HOME}" />
+  </condition>
+  <target name="checkstyle" if="have.checkstyle">
+    <path id="checkstyle.classpath">
+      <fileset dir="${env.CHECKSTYLE_HOME}">
+        <include name="*-all.jar" />
+      </fileset>
+    </path>
+    <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+             classpathref="checkstyle.classpath" />
+    <mkdir dir="${build.reports}" />
+    <checkstyle config="${sca.dir}/checks.xml" failOnViolation="false">
+      <formatter type="plain" />
+      <formatter type="xml" toFile="${build.reports}/checkstyle-result.xml" />
+      <fileset dir="${src.dir}" excludes="**/module-info.java" includes="**/*.java" />
+    </checkstyle>
+  </target>
+}}
+
+* 解説 [#explanation]
++ [https://sourceforge.net/projects/checkstyle/files/checkstyle/ checkstyle - Browse /checkstyle at SourceForge.net]からダウンロードした`checkstyle-x.x-all.jar`を環境変数`%CHECKSTYLE_HOME%`を設定した場所にコピー
++ 上記のような`checkstyle`ターゲットを`build.xml`に追加し、`ant checkstyle`で`checkstyle-result.xml`を生成、`jenkins`の`Checkstyle`プラグインなどで読み込む
++ チェックするルールをカスタマイズする場合は、任意の`${sca.dir}`ディレクトリ以下に`checks.xml`を記述し、これを`config`属性で参照する
+-- [http://checkstyle.sourceforge.net/google_style.html checkstyle – Google's Style]
+-- [http://checkstyle.sourceforge.net/sun_style.html checkstyle – Sun's Java Style]
+
+* メモ [#l35831ab]
+** module-info.java [#java9]
+- `8.4`では`Java 9`の`module-info.java`に未対応なので、`<exclude name="**/module-info.java" />`などで回避
+ C:\temp\jst\all.xml:47: Unable to process files: [C:\...\src\java\module-info.java]
+
+** Unable to create Root Module [#BuildFailed]
+- `Checkstyle`のバージョン更新に伴うモジュールの廃止などの変更で、`config`ファイル(上記の例では`${user.dir}/checks.xml`)が不正になったときに発生する場合がある
+
+*** `8.2` [#x784951f]
+- `remove FileContentsHolder module as FileContents object is available for filters on TreeWalker in TreeWalkerAudit Event . Author: Timur, Roman Ivanov #3573`
+- `<module name="FileContentsHolder" />`を削除する必要がある
+- `LeftCurlyCheck: clarify behavior of 'nlow' option after removal of 'maxLineLength'. Author: Roman Ivanov #3855`
+- `<property name="maxLineLength" value="100"/>`を削除する必要がある
+#code{{
+<module name="LeftCurly">
+    <property name="maxLineLength" value="100"/>
+</module>
+}}
+
+*** `8.1` [#eeda9083]
+- `Make SuppressionCommentFilter and SuppressWithNearbyCommentFilter children of TreeWalker. Author: Timur #4714`
+- `<module name="SuppressionCommentFilter" />`を`<module name="TreeWalker">`の子要素になるよう移動%%削除%%する必要がある
+
+* エラー [#ee5d9b99]
+** AvoidEscapedUnicodeCharacters [#h327989d]
+- `Checksytle 8.7`で、`c.getFontMetrics(c.getFont()).charWidth('あ');`のようなコードをチェックすると、`error Unable to process files`とエラーになる
+-- `Windows`環境で、ファイルのエンコーディングは`UTF-8`になっているため？
+-- `JTextField#setText("あああ")`など`String`は問題なし
+-- `width = c.getFontMetrics(c.getFont()).charWidth('\u3042');`にすれば問題ないが、`AvoidEscapedUnicodeCharacters`と警告される
+
+#code{{
+// @SuppressWarnings("AvoidEscapedUnicodeCharacters")
+@Override protected synchronized void damage(Rectangle r) {
+  if (Objects.nonNull(r)) {
+    JTextComponent c = getComponent();
+    x = r.x;
+    y = r.y;
+    // width = c.getFontMetrics(c.getFont()).charWidth('w');
+    // width = c.getFontMetrics(c.getFont()).charWidth('\u3042');
+    // Checksytle 8.7: error Unable to process files...
+    width = c.getFontMetrics(c.getFont()).charWidth('あ');
+    height = r.height;
+    c.repaint();
+  }
+}
+}}
+
+----
+- 以下のように`file.encoding`を指定すればエラーにならない
+-- `Ant`の`checkstyle`タスクでは`encoding`は指定できない？ので`ANT_OPTS`に`-Dfile.encoding=UTF-8`を設定する必要がある
+-- コマンドラインで`ant -Dfile.encoding=UTF-8 checkstyle`としても効果がない？
+
+ "$JAVA_HOME/bin/java" -Dfile.encoding=utf-8 -jar "$CHECKSTYLE_HOME/checkstyle-8.7-all.jar" -c ./checks.xml OverTypeMode/src/java/
+
+* 参考リンク [#reference]
+- [https://github.com/checkstyle/checkstyle checkstyle/checkstyle: Checkstyle]
+- [http://checkstyle.sourceforge.net/ checkstyle – Checkstyle]
+- [http://checkstyle.sourceforge.net/style_configs.html checkstyle – Style Configurations]
+
+* コメント [#comment]
+#comment
+#comment
