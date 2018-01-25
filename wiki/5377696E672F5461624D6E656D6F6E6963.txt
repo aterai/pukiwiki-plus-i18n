@@ -25,8 +25,7 @@ tab.setDisplayedMnemonicIndexAt(3, 0);
 また、タブタイトルの先頭文字(`B`)にアンダーラインが入るように`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドで設定しています。
 
 ----
-`JDK 6`以降でタブに`JComponent`を追加する場合、`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドでは`Mnemonic`にアンダーラインは引かれないので、追加したコンポーネント自体にアンダーラインを引くよう設定します。
-
+- `JDK 6`以降でタブに`JComponent`を追加する場合、`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドでは`Mnemonic`にアンダーラインは引かれないので、追加するコンポーネント側でアンダーラインを引くよう設定する
 #code{{
 int index = tab.getTabCount();
 String tabTitle = "label(0)";

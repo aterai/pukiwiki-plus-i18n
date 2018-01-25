@@ -1,0 +1,116 @@
+---
+category: swing
+folder: CaretColor
+title: JTextComponentのCaretの色を変更する
+tags: [Caret, JTextComponent, JTextField, JTextArea, JTextPane]
+author: aterai
+pubdate: 2018-01-22T15:56:54+09:00
+description: JTextFieldやJTextPaneなどのJTextComponentで、Caretの色を変更します。
+image: https://drive.google.com/uc?export=view&id=1u7eaiGMgpBZefGTMjAxkHBsxf29Fu-ZfbQ
+---
+* 概要 [#summary]
+`JTextField`や`JTextPane`などの`JTextComponent`で、`Caret`の色を変更します。
+
+#download(https://drive.google.com/uc?export=view&id=1u7eaiGMgpBZefGTMjAxkHBsxf29Fu-ZfbQ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+UIManager.put("TextArea.caretForeground", Color.ORANGE);
+JTextArea area = new JTextArea("TextArea.caretForeground: ORANGE");
+
+JTextField field = new JTextField("JTextField");
+field.setCaretColor(Color.RED);
+}}
+
+* 解説 [#explanation]
+- `JTextField`
+-- `setCaretColor(...)`メソッドで、`Caret`の色を変更
+--- `null`を設定すると、`JTextField`の文字色が`Caret`の色になる
+-- `IME`で変換中の`Caret`は、`setCaretColor(...)`での設定を無視して`JTextField`の文字色が`Caret`の色になる
+- `JTextArea`
+-- `UIManager.put("TextArea.caretForeground", Color.ORANGE)`で`Caret`の色を変更
+-- `IME`で変換中の`Caret`は、`setCaretColor(...)`での設定を無視して`JTextArea`の文字色が`Caret`の色になる
+- `JTextPane`
+-- `setCaretColor(null)`で、`Caret`の色を`null`に設定
+-- 上記のサンプルで`Caret`の色は、一行目の途中(二行目の`111`の幅まで？)まで赤、それ以外は黒になる
+-- `IME`で変換中の`Caret`は、`setCaretColor(...)`での設定を無視して`Graphics#setXORMode(...)`で反転した色が`Caret`の色になる
+--- 二行目では、行の背景色の緑の反転色のピンク、文字色の赤の反転色の水色になる？(`JTextComponent.ComposedTextCaret`を参照)
+#code{{
+//
+// Caret implementation for editing the composed text.
+//
+class ComposedTextCaret extends DefaultCaret implements Serializable {
+  Color bg;
+
+  //
+  // Get the background color of the component
+  //
+  public void install(JTextComponent c) {
+    super.install(c);
+
+    Document doc = c.getDocument();
+    if (doc instanceof StyledDocument) {
+      StyledDocument sDoc = (StyledDocument)doc;
+      Element elem = sDoc.getCharacterElement(c.composedTextStart.getOffset());
+      AttributeSet attr = elem.getAttributes();
+      bg = sDoc.getBackground(attr);
+    }
+
+    if (bg == null) {
+      bg = c.getBackground();
+    }
+  }
+
+  //
+  // Draw caret in XOR mode.
+  //
+  public void paint(Graphics g) {
+    if (isVisible()) {
+      try {
+        Rectangle r = component.modelToView(getDot());
+        g.setXORMode(bg);
+        g.drawLine(r.x, r.y, r.x, r.y + r.height - 1);
+        g.setPaintMode();
+      } catch (BadLocationException e) {
+        // can't render I guess
+        //System.err.println("Can't render cursor");
+      }
+    }
+  }
+
+  //
+  // If some area other than the composed text is clicked by mouse,
+  // issue endComposition() to force commit the composed text.
+  //
+  protected void positionCaret(MouseEvent me) {
+    JTextComponent host = component;
+    Point pt = new Point(me.getX(), me.getY());
+    int offset = host.viewToModel(pt);
+    int composedStartIndex = host.composedTextStart.getOffset();
+    if ((offset < composedStartIndex) ||
+        (offset > composedTextEnd.getOffset())) {
+      try {
+        // Issue endComposition
+        Position newPos = host.getDocument().createPosition(offset);
+        host.getInputContext().endComposition();
+
+        // Post a caret positioning runnable to assure that the positioning
+        // occurs *after* committing the composed text.
+        EventQueue.invokeLater(new DoSetCaretPosition(host, newPos));
+      } catch (BadLocationException ble) {
+        System.err.println(ble);
+      }
+    } else {
+      // Normal processing
+      super.positionCaret(me);
+    }
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setCaretColor-java.awt.Color- JTextComponent#setCaretColor(Color) (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

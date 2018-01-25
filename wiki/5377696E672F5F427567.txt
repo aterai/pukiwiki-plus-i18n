@@ -1,0 +1,319 @@
+---
+title: Swing Bug
+keywords: [Java, Swing]
+description: Swing関連で注目しているバグIDへのリンク、メモなど
+author: aterai
+pubdate: 2018-01-22
+---
+[[Swing]]関係で個人的に注目しているバグ`ID`へのリンクなどをメモしています。
+
+#contents
+
+* Swing関係のバグ [#bug]
+** Application uses higher CPU in 8u161/8u162 [#md4c2938]
+- [https://bugs.openjdk.java.net/browse/JDK-8195830 JDK-8195830 Application uses higher CPU in 8u161/8u162 - Java Bug System]
+-- via: [https://stackoverflow.com/questions/48339199/java-8u161-8u162-makes-swing-app-use-cpu Java 8u161/8u162 makes Swing app use CPU - Stack Overflow]
+
+** MetalLookAndFeelでのJComboBoxとJToolTip [#fc4b2abf]
+- ドロップダウンリストを開いた状態でツールチップが表示されると描画がおかしくなる場合がある
+-- `MetalLookAndFeel`のみ
+-- ドロップダウンリストが`HeavyWeightWindow`か`LightWeightWindow`かは無関係
+
+#img2(https://drive.google.com/uc?export=view&id=1l662LOjb0AFVh6F9lOSm78ZsXzJfuG0GDQ)
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class CustomJComboBoxTest2 {
+  public JComponent makeUI() {
+    JComboBox<String> box = new JComboBox<>();
+    box.addItem("Item 1");
+    box.addItem("Item 2");
+    box.setToolTipText("TooTip");
+
+    JPanel p = new JPanel(new BorderLayout());
+    p.setBorder(BorderFactory.createEmptyBorder(60, 20, 60, 20));
+    p.add(box);
+    return p;
+  }
+  public static void main(String... args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      f.getContentPane().add(new CustomJComboBoxTest2().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+}}
+
+** JToolBarに配置したJButtonのフォーカス描画 [#w21ce2da]
+- [https://stackoverflow.com/questions/37295099/decorating-a-rollover-toolbar-button-with-jlayer-paints-its-border#37295921 java - Decorating a rollover toolbar button with JLayer paints its border - Stack Overflow]
+-- `JButton`を`JLayer`でラップして`JToolBar`に追加すると、`JToolBar`用のフォーカス描画ではなく、デフォルトのフォーカス描画が適用されてしまう
+-- 回答されているように、`BasicToolBarUI#setBorderToRollover(...)`などが、`JLayer`を想定していない
+-- [[JLayerで隣接する別コンポーネント上に縁を描画>Swing/OverlapBorderPaintLayer]]のように、親の`JToolBar`に`JLayer`を設定し、`e.getComponent()`で`JButton`を取得して回避可能
+
+** NimbusLookAndFeelでのJComboBoxの推奨サイズ [#x115b70b]
+- [https://stackoverflow.com/questions/36274053/swing-jcombobox-bug-printing-dimension java - Swing (JComboBox) bug? printing dimension - Stack Overflow]
+-- `JComboBox`の時点と、`JFrame`に追加して`JFrame#pack()`もしくは`JFrame.setSize(...)`後で、`JComboBox`の推奨サイズ(幅)が異なる？
+-- `NimbusLookAndFeel`のみの現象？
+-- `setEditable(true)`にすると高さが異なる...
+- `JComboBox#getPreferredSize()`を呼ぶと項目の文字列長を検索して、`cachedMinimumSize`にサイズがキャッシュされる
+- `ArrowButton`の幅がデフォルト`16`と`JComboBox`用は`19`と異なる
+- `SynthArrowButton#getPreferredSize(JComponent)`で、`context.getStyle().getInt(context, "ArrowButton.size", 16);`が呼ばれている
+
+#code{{
+import java.awt.*;
+import javax.swing.*;
+
+public class NimbusComboBoxSizeTest {
+  public JComponent makeUI() {
+    String[] model = {"Average"};
+
+    JPanel p0 = new JPanel();
+    JComboBox<String> combo0 = new JComboBox<>(model);
+    p0.add(combo0);
+
+    JPanel p1 = new JPanel();
+    JComboBox<String> combo1 = new JComboBox<>(model);
+    p1.add(combo1);
+
+    Box box = Box.createVerticalBox();
+    box.add(p0);
+    box.add(p1);
+
+    EventQueue.invokeLater(() -> System.out.println("combo0: " + combo0.getPreferredSize()));
+    System.out.println("combo1: " + combo1.getPreferredSize());
+
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(box, BorderLayout.NORTH);
+
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(() -> createAndShowGUI());
+  }
+  public static void createAndShowGUI() {
+    try {
+      for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
+        if ("Nimbus".equals(laf.getName())) {
+          UIManager.setLookAndFeel(laf.getClassName());
+          UIDefaults d = UIManager.getLookAndFeelDefaults();
+          System.out.println("ArrowButton.size: " + d.getInt("ArrowButton.size"));
+          System.out.println("ComboBox.arrowButton.size: " + d.getInt("ComboBox:\"ComboBox.arrowButton\".size"));
+          //どちらかのコメントを外して値を揃えてやると、以下の現象は修正される？
+          //d.put("ComboBox:\"ComboBox.arrowButton\".size", 16);
+          //d.put("ArrowButton.size", 19);
+        }
+      }
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new NimbusComboBoxSizeTest().makeUI());
+    f.setSize(320, 240);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
+** 高解像度でJOptionPaneのアイコンが欠ける [#vfc496a6]
+- [https://stackoverflow.com/questions/30774828/bad-swing-ui-scaling-on-high-resolution-ms-surface java - Bad Swing UI scaling on high resolution (MS Surface) - Stack Overflow]
+-- `Surface Pro 3`でテキスト文字サイズを`150%`に設定し、`JOptionPane`を`WindowsLookAndFeel`で表示すると、アイコンが欠けるバグ？
+-- 以下のように`OptionPane.minimumSize`を設定しても解消しない
+-- レイアウトでおかしくなっているのではなく、取得するアイコン自体が欠けている？
+
+#code{{
+import java.awt.*;
+import javax.swing.*;
+
+public class OptionPaneResolutionTest {
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    try {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    Dimension defaultSize = UIManager.getDimension("OptionPane.minimumSize");
+    System.out.println("OptionPane.minimumSize default: " + defaultSize);
+    int sr = Toolkit.getDefaultToolkit().getScreenResolution();
+    float dpi = System.getProperty("os.name").startsWith("Windows") ? 96f : 72f;
+    float sot = sr / dpi;
+    System.out.format("%d%%%n", (int)(sot * 100));
+    Dimension mind = new Dimension((int)(defaultSize.width * sot),
+                                   (int)(defaultSize.height * sot));
+    System.out.println("OptionPane.minimumSize: " + mind);
+    UIManager.put("OptionPane.minimumSize", mind);
+
+    JOptionPane.showMessageDialog(null, "msg", "Information", JOptionPane.INFORMATION_MESSAGE);
+  }
+}
+}}
+
+** 親フレームのドラッグ中にJWindowでクラッシュ [#hed7be2e]
+- [https://stackoverflow.com/questions/30072883/java-swing-jwindow-application-crash Java Swing JWindow application crash - Stack Overflow]
+-- 親フレームのドラッグ中に？子`JWindow`が表示されると`JVM`が落ちる(`Windows 7 64bit JKD1.8.0_11`)。
+--[https://bugs.openjdk.java.net/browse/JDK-8079595?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel JDK-8079595 Resizing dialog which is JWindow parent makes JVM crash - Java Bug System]
+-- [http://hg.openjdk.java.net/jdk9/client/jdk/rev/b5125fa7ef4b jdk9/client/jdk: b5125fa7ef4b] 修正された模様
+
+#code{{
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Main2 {
+  private static Robot robot;
+  public static void main(String... args) throws Exception {
+    robot = new Robot();
+    robot.setAutoDelay(100);
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+    EventQueue.invokeAndWait(new Runnable() {
+      @Override public void run() {
+        Point pt = new Point(50, 10);
+        robot.mouseMove(pt.x, pt.y);
+        robot.mousePress(InputEvent.BUTTON1_MASK);
+        pt.translate(50, 50);
+        robot.mouseMove(pt.x, pt.y);
+        //robot.mouseRelease(InputEvent.BUTTON1_MASK);
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    final JFrame f = new JFrame();
+    f.add(new JLabel("Try JFrame draging 2sec"));
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.setSize(320, 240);
+    f.setVisible(true);
+    final JWindow w = new JWindow(f);
+    w.add(new JButton("button"));
+    w.pack();
+    Timer t = new Timer(2000, new ActionListener() {
+      @Override public void actionPerformed(ActionEvent e) {
+        w.setVisible(true);
+      }
+    });
+    t.setRepeats(false);
+    t.start();
+  }
+}
+}}
+
+** TimSortでレイアウトをソート中に例外発生 [#decaf774]
+- [https://stackoverflow.com/questions/16547365/swing-gui-flickering-white-error java - swing gui flickering white error - Stack Overflow]のサンプルを試していたら面白い挙動に遭遇。
+-- `JDK1.8.0_40`で(以前のソートを使用するように)修正された
+-- [https://bugs.openjdk.java.net/browse/JDK-8048887 JDK-8048887 SortingFocusTraversalPolicy throws IllegalArgumentException from the sort method]
+- `JDK1.7.0_21`
+-- IllegalArgumentException: Comparison method violates its general contract!
+ Exception in thread "AWT-EventQueue-0" java.lang.IllegalArgumentException: Comparison method violates its general contract!
+ 	at java.util.TimSort.mergeLo(TimSort.java:747)
+ 	at java.util.TimSort.mergeAt(TimSort.java:483)
+ 	at java.util.TimSort.mergeCollapse(TimSort.java:410)
+ 	at java.util.TimSort.sort(TimSort.java:214)
+ 	at java.util.TimSort.sort(TimSort.java:173)
+ 	at java.util.Arrays.sort(Arrays.java:659)
+ 	at java.util.Collections.sort(Collections.java:217)
+-- フレームのリサイズで上下左右に余白？
+- `JDK1.6.0_41`
+-- フレームのリサイズで右と下に余白？
+
+#code{{
+import java.awt.*;
+import javax.swing.*;
+
+public class Gui {
+  public JComponent makeUI() {
+    JPanel p = new JPanel(new GridLayout(22,12,10,10));
+    p.setBackground(Color.WHITE);
+    p.setBorder(BorderFactory.createLineBorder(Color.BLUE, 10));
+    for (int i = 0; i < 22; i++) {
+      for (int j = 0; j < 12; j++) {
+        JLabel label = new JLabel();
+        label.setBorder(BorderFactory.createLineBorder(Color.RED));
+        label.setBackground(Color.GRAY);
+        label.setOpaque(true);
+        //label.setPreferredSize(new Dimension(50, 50));
+        p.add(label);
+      }
+    }
+    return p;
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGUI();
+      }
+    });
+  }
+  public static void createAndShowGUI() {
+    JFrame f = new JFrame();
+    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    f.getContentPane().add(new Gui().makeUI());
+    f.setSize(320, 240);
+    //f.pack();
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
+  }
+}
+}}
+
+** WebStartでCPU 100% [#p32896ec]
+-`1.6.0_14`にすると、`web start`(`2`回目以降？) で`CPU 100%`になる？
+--自宅のPCでは再現しない。
+- [https://community.oracle.com/thread/1305835 Java Web Start & JNLP - BouncyCastle via Java Web Start 1.6.0_14]
+- [https://community.oracle.com/thread/1306088 Java Web Start & JNLP - Upgrade to 1.6.0_14 causing Webstart launched application to fail]
+-`JTableHeader` + `KeyEvent.VK_SPACE`
+`Windows XP`(日本語?)+`JDK 1.6.0_17`では、KBD{F8}キーで`JTableHeader`にフォーカスを移動して、KBD{SPACE}キーを押してもソートされない？
+以下のように設定しても、`KeyEvent.VK_SPACE`はうまくいかない。`KeyEvent.VK_F9`とかなら大丈夫。
+#code{{
+InputMap im = table.getTableHeader().getInputMap(
+    JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "toggleSortOrder");
+}}
+
+- 再現しなくなった
+
+// キーボードが壊れたのかもと思ったけど、`JDK 1.7.0`では、問題なく動作している？。暇なときに、`Bug Database`を調べること。追記:`IME`を変更したら再現しなくなった…。
+
+* 参考リンク [#reference]
+- [https://bugs.openjdk.java.net/browse/JDK-6723524 Bug ID: 6723524 Invalid background of components displayed in JTable in Nimbus L&F]
+- Release Fixed: 1.7.0 %%[https://bugs.openjdk.java.net/browse/JDK-6910490 Bug ID: 6910490 MatteBorder JScrollpane interaction]%%
+- [https://bugs.openjdk.java.net/browse/JDK-6612928 Bug ID: 6612928 Win32ShellFolder2 throws RejectedExecutionException on application exit]
+- [https://bugs.openjdk.java.net/browse/JDK-4280944 Bug ID: 4280944 Attributes on last newline character cause undesirable extra spacing.]
+- [https://bugs.openjdk.java.net/browse/JDK-6780505 Bug ID: 6780505 java.awt.Desktop.getDesktop().open() fails on shared files with white spaces]
+- [https://bugs.openjdk.java.net/browse/JDK-4777210 Bug ID: 4777210 setText causes deadlock in JFormattedTextField, JTextComponent]
+- [https://bugs.openjdk.java.net/browse/JDK-6937538 Bug ID: 6937538 Nimbus: JInternalFrame() causes exception if user UI installed]
+- Release Fixed: 1.4.0  %%[https://bugs.openjdk.java.net/browse/JDK-4463424 Bug ID: 4463424 LineBreakMeasurer inconsistent with TextLayout]%%
+- [https://bugs.openjdk.java.net/browse/JDK-6700748 Bug ID: 6700748 Cursor flickering during D&D when using CellRendererPane with validation]
+- [https://bugs.openjdk.java.net/browse/JDK-6723524 Bug ID: 6723524 Invalid background of components displayed in JTable in Nimbus L&F]
+- [https://bugs.openjdk.java.net/browse/JDK-4292511 Bug ID: 4292511 JTableHeader height determined by first column given HTML text]
+- [https://bugs.openjdk.java.net/browse/JDK-6826514 Bug ID: 6826514 SwingWorker: done() called before doInBackground() returns, when cancelled]
+- [https://bugs.openjdk.java.net/browse/JDK-6413228 Bug ID: 6413228 Many links broken with "?is-external=true".]
+- [https://bugs.openjdk.java.net/browse/JDK-4908277 Bug ID: 4908277 Animated GIF does not play inside JTable, customized TableCellRenderer]
+- Release Fixed: 1.7.0, 1.6.0_18 %%[https://bugs.openjdk.java.net/browse/JDK-4833524 Bug ID: 4833524 BasicTreeUI.isToggleSelectionEvent() does not properly handle popup triggers]%%
+- Release Fixed: 1.7.0, 1.6.0_18 %%[https://bugs.openjdk.java.net/browse/JDK-6840086 Bug ID: 6840086 JFileChooser lacks icons on top right when running on Windows 7]%%
+- [https://bugs.openjdk.java.net/browse/JDK-4765261 Bug ID: 4765261 JTextArea.append does not follow spec (it is not ThreadSafe)]
+- [https://bugs.openjdk.java.net/browse/JDK-4760477 Bug ID: 4760477 JTextArea.append(String) is not ThreadSafe]
+- Release Fixed: 1.7.0 %%[https://bugs.openjdk.java.net/browse/JDK-4765383 Bug ID: 4765383 JTextArea.append(String) not thread safe]%%
+- [https://bugs.openjdk.java.net/browse/JDK-7140863 Bug ID: 7140863 Lots of Japanese OpenType fonts do not render correctly]
+- [https://bugs.openjdk.java.net/browse/JDK-5036549 Bug ID: JDK-5036549 PopupMenu not adjusting its location correctly depending on taskbar's position.]
+
+* コメント [#comment]
+#comment
+#comment
