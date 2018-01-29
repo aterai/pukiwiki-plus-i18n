@@ -1,0 +1,240 @@
+---
+category: swing
+folder: CalendarViewTable
+title: JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する
+tags: [JTable, LocalDate, Locale, Calendar]
+author: aterai
+pubdate: 2018-01-29T14:57:32+09:00
+description: JTableに週の最初の曜日がLocaleに応じて変化するカレンダーを表示します。
+image: https://drive.google.com/uc?export=view&id=1jXZtiYFaA5ABWsdaRBnPUKqS2_VBDkFqQA
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2018/01/apply-localdate-considering-locale-to.html
+    lang: en
+---
+* 概要 [#summary]
+`JTable`に週の最初の曜日が`Locale`に応じて変化するカレンダーを表示します。
+
+#download(https://drive.google.com/uc?export=view&id=1jXZtiYFaA5ABWsdaRBnPUKqS2_VBDkFqQA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class CalendarViewTableModel<T extends LocalDate> extends DefaultTableModel {
+  private final LocalDate startDate;
+  private final WeekFields weekFields = WeekFields.of(Locale.getDefault());
+  public CalendarViewTableModel(T date) {
+    super();
+    LocalDate firstDayOfMonth = YearMonth.from(date).atDay(1);
+    int dowv = firstDayOfMonth.get(weekFields.dayOfWeek()) - 1;
+    startDate = firstDayOfMonth.minusDays(dowv);
+  }
+  @Override public Class<?> getColumnClass(int column) {
+    return LocalDate.class;
+  }
+  @Override public String getColumnName(int column) {
+    return weekFields.getFirstDayOfWeek().plus(column)
+      .getDisplayName(TextStyle.SHORT_STANDALONE, Locale.getDefault());
+  }
+  @Override public int getRowCount() {
+    return 6;
+  }
+  @Override public int getColumnCount() {
+    return 7;
+  }
+  @Override public Object getValueAt(int row, int column) {
+    return startDate.plusDays(row * getColumnCount() + column);
+  }
+  @Override public boolean isCellEditable(int row, int column) {
+    return false;
+  }
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、モデルに`Java 8`から`java.time`パッケージに追加された`LocalDate`を使用し、`JTable`に月のカレンダーを表示しています。
+
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/time/temporal/WeekFields.html#getFirstDayOfWeek-- WeekFields#getFirstDayOfWeek()]メソッドで`Locale`に応じた週の最初の曜日を取得して、`JTable`の`0`列目を設定
+-- 例: フランスと`ISO-8601`標準では月曜日が週の最初の曜日になる
+--- `java -Duser.language=fr -jar example.jar`
+
+#img2(https://drive.google.com/uc?export=view&id=1SmGpl6oxRwwb8tZM2Vc0C7oFS_UCT_Ck6Q)
+
+- 土曜と日曜の位置も`6`列目と`0`列目固定ではないので、以下のように`LocalDate.getDayOfWeek()`メソッドで曜日を確認してその背景色を変更する必要がある
+
+#code{{
+private class CalendarTableRenderer extends DefaultTableCellRenderer {
+  @Override public Component getTableCellRendererComponent(
+      JTable table, Object value, boolean selected, boolean focused,
+      int row, int column) {
+    super.getTableCellRendererComponent(table, value, selected, focused, row, column);
+    setHorizontalAlignment(SwingConstants.CENTER);
+    if (value instanceof LocalDate) {
+      LocalDate d = (LocalDate) value;
+      setText(String.valueOf(d.getDayOfMonth()));
+      if (YearMonth.from(d).equals(YearMonth.from(currentLocalDate))) {
+        setForeground(Color.BLACK);
+      } else {
+        setForeground(Color.GRAY);
+      }
+      DayOfWeek dow = d.getDayOfWeek();
+      if (d.isEqual(realLocalDate)) {
+        setBackground(new Color(220, 255, 220));
+      } else if (dow == DayOfWeek.SUNDAY) {
+        setBackground(new Color(255, 220, 220));
+      } else if (dow == DayOfWeek.SATURDAY) {
+        setBackground(new Color(220, 220, 255));
+      } else {
+        setBackground(Color.WHITE);
+      }
+    }
+    return this;
+  }
+}
+}}
+
+----
+- `JTable`ではなく、`JList`を使用すると週を跨いだ日付の範囲選択が可能
+
+#code{{
+import java.awt.*;
+import java.time.*;
+import java.time.format.*;
+import java.time.temporal.*;
+import java.util.*;
+import javax.swing.*;
+
+public class CalendarViewListTest {
+  private final JLabel monthLabel = new JLabel("", SwingConstants.CENTER);
+  private final JList<LocalDate> monthList = new JList<>();
+  private final LocalDate realLocalDate = LocalDate.now();
+  private LocalDate currentLocalDate;
+
+  public JComponent makeUI() {
+    Dimension size = new Dimension(40, 20);
+
+    monthList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+    monthList.setVisibleRowCount(6);
+    monthList.setFixedCellWidth(size.width);
+    monthList.setFixedCellHeight(size.height);
+    monthList.setCellRenderer(new CalendarTableRenderer<LocalDate>());
+    monthList.getSelectionModel().setSelectionMode(
+        ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+    Locale l = Locale.getDefault();
+    DefaultListModel<DayOfWeek> weekModel = new DefaultListModel<>();
+    DayOfWeek firstDayOfWeek = WeekFields.of(l).getFirstDayOfWeek();
+    for (int i = 0; i < 7; i++) {
+      weekModel.add(i, firstDayOfWeek.plus(i));
+    }
+    JList<DayOfWeek> header = new JList<>(weekModel);
+    header.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+    header.setVisibleRowCount(0);
+    header.setFixedCellWidth(size.width);
+    header.setFixedCellHeight(size.height);
+    header.setCellRenderer(new DefaultListCellRenderer() {
+      @Override public Component getListCellRendererComponent(
+          JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        super.getListCellRendererComponent(list, value, index, false, false);
+        setHorizontalAlignment(SwingConstants.CENTER);
+        if (value instanceof DayOfWeek) {
+          DayOfWeek dow = (DayOfWeek) value;
+          setText(dow.getDisplayName(TextStyle.SHORT_STANDALONE, l));
+          setBackground(new Color(220, 220, 220));
+        }
+        return this;
+      }
+    });
+    updateMonthView(realLocalDate);
+
+    JButton prev = new JButton("<");
+    prev.addActionListener(e -> updateMonthView(currentLocalDate.minusMonths(1)));
+
+    JButton next = new JButton(">");
+    next.addActionListener(e -> updateMonthView(currentLocalDate.plusMonths(1)));
+
+    JPanel monthPanel = new JPanel(new BorderLayout());
+    monthPanel.add(monthLabel);
+    monthPanel.add(prev, BorderLayout.WEST);
+    monthPanel.add(next, BorderLayout.EAST);
+
+    JScrollPane scroll = new JScrollPane(monthList);
+    scroll.setColumnHeaderView(header);
+    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+    Box box = Box.createVerticalBox();
+    box.add(monthPanel);
+    box.add(Box.createVerticalStrut(2));
+    box.add(scroll);
+
+    JPanel p = new JPanel();
+    p.add(box);
+    return p;
+  }
+  private void updateMonthView(LocalDate localDate) {
+    currentLocalDate = localDate;
+    monthLabel.setText(localDate.format(DateTimeFormatter.ofPattern("yyyy / MM")
+        .withLocale(Locale.getDefault())));
+    WeekFields weekFields = WeekFields.of(Locale.getDefault());
+    LocalDate firstDayOfMonth = localDate.with(TemporalAdjusters.firstDayOfMonth());
+    int dowv = firstDayOfMonth.get(weekFields.dayOfWeek()) - 1;
+    int vlen = 7 * 6;
+    LocalDate date = firstDayOfMonth.minusDays(dowv);
+    DefaultListModel<LocalDate> calendarModel = new DefaultListModel<>();
+    for (int i = 0; i < vlen; i++) {
+      calendarModel.add(i, date.plusDays(i));
+    }
+    monthList.setModel(calendarModel);
+  }
+  class CalendarTableRenderer<E extends LocalDate> implements ListCellRenderer<E> {
+    private final JLabel renderer = new JLabel("", SwingConstants.CENTER);
+    @Override public Component getListCellRendererComponent(
+        JList<? extends E> list, E value, int index,
+        boolean isSelected, boolean cellHasFocus) {
+      renderer.setOpaque(true);
+      if (value instanceof LocalDate) {
+        LocalDate d = (LocalDate) value;
+        renderer.setText(String.valueOf(d.getDayOfMonth()));
+        if (YearMonth.from(d).equals(YearMonth.from(currentLocalDate))) {
+          renderer.setForeground(Color.BLACK);
+        } else {
+          renderer.setForeground(Color.GRAY);
+        }
+        DayOfWeek dow = d.getDayOfWeek();
+        if (d.isEqual(realLocalDate)) {
+          renderer.setBackground(new Color(220, 255, 220));
+        } else if (dow == DayOfWeek.SUNDAY) {
+          renderer.setBackground(new Color(255, 220, 220));
+        } else if (dow == DayOfWeek.SATURDAY) {
+          renderer.setBackground(new Color(220, 220, 255));
+        } else {
+          renderer.setBackground(Color.WHITE);
+        }
+        if (isSelected) {
+          renderer.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        } else {
+          renderer.setBorder(BorderFactory.createEmptyBorder(0, 0, 1, 0));
+        }
+      }
+      return renderer;
+    }
+  }
+  public static void main(String[] args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      f.getContentPane().add(new CalendarViewListTest().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/time/temporal/WeekFields.html#getFirstDayOfWeek-- WeekFields#getFirstDayOfWeek() (Java Platform SE 8)]
+- [https://tips4java.wordpress.com/2015/04/22/local-date-combo/ Local Date Combo « Java Tips Weblog]
+
+* コメント [#comment]
+#comment
+#comment

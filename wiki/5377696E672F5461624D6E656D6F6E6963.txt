@@ -24,8 +24,9 @@ tab.setDisplayedMnemonicIndexAt(3, 0);
 上記のサンプルコードは、例えばタブタイトルの先頭文字が`B`のタブにKBD{Alt+B}でフォーカスが移動するように、`JTabbedPane#setMnemonicAt(...)`メソッドを使用して`Mnemonic`を設定しています。
 また、タブタイトルの先頭文字(`B`)にアンダーラインが入るように`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドで設定しています。
 
-----
-- `JDK 6`以降でタブに`JComponent`を追加する場合、`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドでは`Mnemonic`にアンダーラインは引かれないので、追加するコンポーネント側でアンダーラインを引くよう設定する
+- `JDK 6`以降でタブに`JComponent`を追加する場合
+-- `JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドでは`Mnemonic`にアンダーラインは引かれないので、追加するコンポーネント側でアンダーラインを引くための設定をする必要がある
+
 #code{{
 int index = tab.getTabCount();
 String tabTitle = "label(0)";

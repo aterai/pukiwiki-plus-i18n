@@ -31,7 +31,7 @@ private final JTable table = new JTable(100, 3) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JFrame`のリサイズに連動して`JTable`、`JTableHeader`もリサイズされた場合、最後の`TableColumn`が幅の変更をすべて吸収するように、`JTable#doLayout()`のオーバーライドや`JTableHeader.setResizingColumn(...)`の設定を行なっています。
+上記のサンプルでは、`JFrame`に連動して`JTable`と`JTableHeader`がリサイズされた場合、最後の`TableColumn`が幅の変更をすべて吸収するように、`JTable#doLayout()`のオーバーライドや`JTableHeader.setResizingColumn(...)`の設定を行なっています。
 
 - 注:
 -- `table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);`を設定しても、例えば親`JFrame`の幅が変更されて、`JTableHeader`自体がリサイズされた場合、すべての`TableColumn`の幅が均等に変化してしまう
