@@ -45,9 +45,8 @@ scrollbar.setUI(new WindowsScrollBarUI() {
 * 解説 [#explanation]
 上記のサンプルでは、`ScrollBarUI#paintTrack(...)`メソッドをオーバーライドして、`JTextArea`内の文字列の検索結果を縦の`JScrollBar`内部に描画しています。
 
-- 注:
--- `1`行分のハイライトの高さは`2px`で固定
--- 検索結果の位置は`JTextComponent#modelToView(Matcher#start());`を利用しているため、ハイライト対象の文字列が折り返しで`2`行になっても、ハイライトされるのは開始位置のある`1`行目のみ
+- `1`行分のハイライトの高さは`2px`で固定
+- 検索結果の位置は`JTextComponent#modelToView(Matcher#start());`を利用しているため、ハイライト対象の文字列が折り返しで`2`行になっても、ハイライトされるのは開始位置のある`1`行目のみ
 
 ----
 以下のような`Icon`を設定した`JLabel`を`JScrollPane#setRowHeaderView(...)`で追加する方法もあります。こちらは、縦`JScrollBar`に直接ハイライトを描画しないので、上下の増減ボタンは考慮せず、またノブの代わりに現在表示位置を示す領域を半透明で描画しています。
@@ -154,7 +153,9 @@ JScrollBar scrollBar = new JScrollBar(Adjustable.VERTICAL) {
 scroll.setVerticalScrollBar(scrollBar);
 }}
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [[JLabelとIconで作成した検索位置表示バーをマウスで操作する>Swing/ScrollBarSearchHighlighter]]
+
 * コメント [#comment]
 #comment
 - 行ヘッダーを使用したハイライトは`Java7`以降でのみ有効に機能するようです。 -- &user(読者); &new{2013-08-18 (日) 23:10:11};

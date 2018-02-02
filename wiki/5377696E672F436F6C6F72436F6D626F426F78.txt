@@ -86,17 +86,15 @@ class AlternateRowColorComboBox<E> extends JComboBox<E> {
 }}
 
 * 解説 [#explanation]
-`JComboBox`を編集可にした状態で、以下のように`List`部分、`Editor`部分に背景色を設定します。
+上記のサンプルでは、`JComboBox`を編集可にした状態で、以下のように`List`部分、`Editor`部分に行の奇数偶数で背景色を変更しています。
 
 - `List`部分
 -- `ListCellRenderer`を使用することで背景色を変更
 - `Editor`部分
 -- `getEditor().getEditorComponent()`で`JTextField`オブジェクトを取得して背景色を変更
 
-上記のサンプルでは、下の`JComboBox`で行の奇数偶数による背景色の変更を行っています。
-
 ----
-`GTKLookAndFeel`などで、うまく`Box`(`Editor`)部分の色を変更できない場合があるようです。
+- `GTKLookAndFeel`などで`Box`(`Editor`)部分の色を変更できない場合がある
 
 #ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJj4vDxSI/AAAAAAAAAUk/ZZtKylfc0k8/s800/ColorComboBox1.png)
 

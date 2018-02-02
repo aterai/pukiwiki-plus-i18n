@@ -15,6 +15,12 @@ image: https://lh5.googleusercontent.com/-hU9bkPgb4Q8/U10bg5XoDfI/AAAAAAAACEI/BJ
 
 * サンプルコード [#sourcecode]
 #code(link){{
+String HTML_TEXT = "<html><body>head<table id='log' border='1'></table>tail</body></html>";
+HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+JEditorPane editor = new JEditorPane();
+editor.setEditorKit(htmlEditorKit);
+editor.setText(HTML_TEXT);
+
 HTMLDocument doc = (HTMLDocument) editor.getDocument();
 Element element = doc.getElement("log");
 String ROW_TEXT = "<tr bgColor='%s'><td>%s</td><td>%s</td></tr>";
