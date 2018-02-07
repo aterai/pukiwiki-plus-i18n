@@ -18,9 +18,10 @@ image: https://drive.google.com/uc?export=view&id=1_8OMdhND7t1WDGW6aZl-xq9BV3ZUK
 public final LocalDate realLocalDate = LocalDate.now();
 public LocalDate currentLocalDate;
 public final Dimension size = new Dimension(40, 26);
-public final JLabel yearMonthLabel = new JLabel("", SwingConstants.CENTER);
-public final JList<LocalDate> monthList = new JList<LocalDate>(
-    new CalendarViewListModel(realLocalDate)) {
+
+//...
+JLabel yearMonthLabel = new JLabel("", SwingConstants.CENTER);
+JList<LocalDate> monthList = new JList<LocalDate>(new CalendarViewListModel(realLocalDate)) {
   @Override public void updateUI() {
     setCellRenderer(null);
     super.updateUI();

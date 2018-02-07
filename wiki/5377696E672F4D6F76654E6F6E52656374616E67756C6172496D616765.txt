@@ -15,13 +15,12 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTQKdiDk4I/AAAAAAAAAfI/tb
 
 * サンプルコード [#sourcecode]
 #code(link){{
-private JLabel makeLabelIcon(BufferedImage image) {
-  JLabel label = new JLabel(new ImageIcon(image)) {
-    @Override public boolean contains(int x, int y) {
-      return super.contains(x, y) && ((image.getRGB(x, y) >> 24) & 0xff) > 0;
-    }
-  };
-  //...
+BufferedImage image = ImageIO.read(getClass().getResource("duke.gif"));
+JLabel label = new JLabel(new ImageIcon(image)) {
+  @Override public boolean contains(int x, int y) {
+    return super.contains(x, y) && ((image.getRGB(x, y) >> 24) & 0xff) > 0;
+  }
+};
 }}
 
 * 解説 [#explanation]
