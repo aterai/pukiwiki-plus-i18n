@@ -23,8 +23,8 @@ booleanRenderer.putClientProperty("JComponent.sizeVariant", "mini");
 -- デフォルトは`regular`、その他は小さい順に`mini`, `small`, `large`が設定可能
 -- `JComponent#updateUI()`を実行しないと、更新されない
 --- このサンプルでは、`SwingUtilities.updateComponentTreeUI(window);`で実行
--- フォントがユーザー指定されている場合は、文字サイズは更新されない？
---- このサンプルでは、`updateUI()`の前に、フォントを`jc.setFont(new FontUIResource(jc.getFont()));`で`UIResource`化することで回避している
+-- コンポーネントにフォントがユーザ指定されている場合は、文字サイズは更新されない
+--- このサンプルでは、`updateUI()`の前に、フォントを`jc.setFont(new FontUIResource(jc.getFont()));`で`UIResource`化することで回避
 -- `JTable`の`BooleanRenderer`が二回目以降変更されない
 --- 初回の`JCheckBox booleanRenderer = (JCheckBox) table.getDefaultRenderer(Boolean.class); booleanRenderer.putClientProperty("JComponent.sizeVariant", "mini");`は、正常に動作しているように見える
 
