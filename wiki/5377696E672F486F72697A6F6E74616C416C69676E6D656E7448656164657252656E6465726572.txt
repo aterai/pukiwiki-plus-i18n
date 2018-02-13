@@ -75,7 +75,7 @@ table.getColumnModel().getColumn(2).setHeaderRenderer(
 }}
 
 ----
-- 以下の方法でも `0`列目だけ中央揃えになるが、初回が`WindowsLookAndFeel`などの`SystemLookAndFeel`の場合、`LookAndFeel`を変更すると`NullPointerException`が発生する
+- 以下の方法でも `0`列目だけ中央揃えになるが、初回が`WindowsLookAndFeel`などの`SystemLookAndFeel`の場合、あとで`LookAndFeel`を変更すると`NullPointerException`が発生する
 -- それ以外の場合でもヘッダの`LookAndFeel`が切り替わらない
 
 #code{{
