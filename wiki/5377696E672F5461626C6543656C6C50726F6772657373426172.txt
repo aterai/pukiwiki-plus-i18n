@@ -90,9 +90,9 @@ executor.execute(worker); //1.6.0_18
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`add`ボタンをクリックすると、`SwingWorker`を使用したダミータスクが起動し、その進捗状況がセル内の`JProgressBar`で表示されます。
+上記のサンプルでは、`add`ボタンをクリックすると、`SwingWorker`を使用したダミータスクが起動し、その進捗状況が`2`列目セル内の`JProgressBar`で表示されます。
 
-`ProgressRenderer`は`JProgressBar`を一つ持ち、ダミータスクが動いている間は、その`JProgressBar`に値を設定して描画用のコンポーネントとして返し、タスクが終了(またはキャンセル)されたら`JLabel`(自分自身、`DefaultTableCellRenderer`)に文字列を設定して返すようになっています。
+`ProgressRenderer`は`JProgressBar`を一つ持ち、ダミータスクが動いている間は、その`JProgressBar`に値を設定して描画用のコンポーネントとして返し、タスクが終了(またはキャンセル)されたら`JLabel`(自分自身、`DefaultTableCellRenderer`)に文字列を設定して返しています。
 
 ----
 - このサンプルでは、行番号をキーにしているため、例えばモデルから行を削除するときに実行中のタスクが手前の行などに存在する場合はエラーが発生する
