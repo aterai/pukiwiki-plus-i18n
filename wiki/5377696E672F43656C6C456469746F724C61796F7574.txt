@@ -108,7 +108,7 @@ class CustomCellEditor extends DefaultCellEditor {
 
 - `2`列目
 -- `DefaultCellEditor`を継承する`CustomComponentCellEditor2`を作成
--- `JTextField`をコンストラクタの引数にしているが、ダミー
+--- `JTextField`を`DefaultCellEditor`のコンストラクタの引数にしているが、ダミーで使用しない
 -- 実体は`JPanel`を継承する`CustomComponent`で、これをセルエディタとして表示
 -- `CustomComponent#processKeyBinding(...)`をオーバーライドして、キー入力開始時に`KeyboardFocusManager.getCurrentKeyboardFocusManager().redispatchEvent(field, e);`を呼び出している
 -- あとは、`0`列目の`CustomComponentCellEditor`と同様

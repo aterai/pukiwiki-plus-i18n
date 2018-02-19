@@ -21,7 +21,8 @@ hreflang:
 JFrame.setDefaultLookAndFeelDecorated(true);
 JFrame frame = new JFrame();
 //com.sun.awt.AWTUtilities.setWindowOpacity(frame, .5f);
-com.sun.awt.AWTUtilities.setWindowOpaque(frame, false);
+//com.sun.awt.AWTUtilities.setWindowOpaque(frame, false); //Java 6
+frame.setBackground(new Color(0x0, true));
 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 JPanel p = new JPanel();
 p.add(new JButton("JButton"));
