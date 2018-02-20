@@ -17,7 +17,7 @@ image: https://lh3.googleusercontent.com/-v3ugRz81Y0Q/UmPxM3SwOYI/AAAAAAAAB4Y/Pq
 #code(link){{
 class LinkCellList<E> extends JList<E> {
   private int prevIndex = -1;
-  public LinkCellList(ListModel<E> model) {
+  protected LinkCellList(ListModel<E> model) {
     super(model);
   }
   @Override public void updateUI() {
@@ -27,12 +27,13 @@ class LinkCellList<E> extends JList<E> {
     setSelectionBackground(null);
     super.updateUI();
     setFixedCellHeight(32);
-    setCellRenderer(new LinkCellRenderer<E>());
+    setCellRenderer(new LinkCellRenderer<>());
+    //TEST: putClientProperty("List.isFileList", Boolean.TRUE);
   }
   @Override protected void processMouseMotionEvent(MouseEvent e) {
     Point pt = e.getPoint();
     int i = locationToIndex(pt);
-    E s = ((ListModel<E>) getModel()).getElementAt(i);
+    E s = getModel().getElementAt(i);
     Component c = getCellRenderer().getListCellRendererComponent(
         this, s, i, false, false);
     Rectangle r = getCellBounds(i, i);
@@ -42,12 +43,10 @@ class LinkCellList<E> extends JList<E> {
     }
     prevIndex = i;
     pt.translate(-r.x, -r.y);
-    Component cmp = SwingUtilities.getDeepestComponentAt(c, pt.x, pt.y);
-    if (cmp == null) {
-      setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-    } else {
-      setCursor(cmp.getCursor());
-    }
+    setCursor(
+      Optional.ofNullable(SwingUtilities.getDeepestComponentAt(c, pt.x, pt.y))
+        .map(Component::getCursor)
+        .orElse(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)));
   }
 }
 }}
@@ -67,7 +66,9 @@ class LinkCellList<E> extends JList<E> {
 - `SwingUtilities.getDeepestComponentAt(...);`で描画用コンポーネントから変更した座標の下にある子コンポーネントを取得
 - 取得した子コンポーネントのカーソルを`JList`のカーソルとして設定
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+[[JListのセルレンダラーとして設定したJEditorPaneからHyperlinkEventを取得する>Swing/ListCellHyperlinkListener]]
+
 * コメント [#comment]
 #comment
 #comment
