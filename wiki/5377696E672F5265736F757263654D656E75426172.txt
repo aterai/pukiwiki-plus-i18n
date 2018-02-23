@@ -147,9 +147,7 @@ public Action[] defaultActions = {
 ----
 `JDK 1.6.0`なら、`native2ascii`で変換しなくても、リソースファイルのエンコードを指定して読み込むことが出来ます。
 
-- 参考
--- [http://d.hatena.ne.jp/shin/20090707/p4 Java 小ネタ千夜一夜 第13夜 Java SE 6はnative2ascii使わなくていいのはみんな知っていると思うが]
--- [http://docs.oracle.com/javase/jp/6/api/java/util/ResourceBundle.Control.html ResourceBundle.Control (Java Platform SE 6)]
+- 参考: [http://d.hatena.ne.jp/shin/20090707/p4 Java 小ネタ千夜一夜 第13夜 Java SE 6はnative2ascii使わなくていいのはみんな知っていると思うが]
 
 #code{{
 ResourceBundle res = ResourceBundle.getBundle(baseName, new ResourceBundle.Control() {
@@ -191,7 +189,9 @@ ResourceBundle res = ResourceBundle.getBundle(baseName, new ResourceBundle.Contr
 });
 }}
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/util/ResourceBundle.Control.html ResourceBundle.Control (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment
