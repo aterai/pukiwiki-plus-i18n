@@ -6,12 +6,12 @@ description: Rhino(またはNashorn)でgoogle-prettify.jsを実行し、ソー�
 ---
 #contents
 
-* 概要 [#p2b0d4da]
+* 概要 [#summary]
 `Rhino`(または`Nashorn`)で`google-prettify.js`を実行し、ソースコードをハイライト済みの`Html`ファイルに変換します。
 
 #ref(https://lh5.googleusercontent.com/-fBSp3mL32JA/T-4FRzdTzYI/AAAAAAAABOc/xDs9vq7gqLw/s800/GooglePrettifyRhinoTest.png)
 
-* サンプルコード [#s4b99359]
+* サンプルコード [#sourcecode]
 #code{{
 import java.awt.*;
 import java.awt.event.*;
@@ -132,7 +132,7 @@ public class GooglePrettifyRhinoTest {
 }
 }}
 
-* 解説 [#n146353c]
+* 解説 [#explanation]
 上記のサンプルでは、`new ScriptEngineManager().getEngineByName("JavaScript");`で取得した`JavaScript`エンジン(`Rhino`)に、`prettify.js`(`r120`) を読み込んで、`prettify.js`の`prettyPrintOne`メソッドを実行しています。
 
 `google sites`では、`css`ファイルも使用できないので、`replace("class=\"kwd\"", "style=\"color:#008\"");`のように、クラスをスタイルの色に全部置換しています。
@@ -285,14 +285,13 @@ __extend__(HTMLPreElement.prototype, {
 -- `arguments` : `cx.evaluateString(scope, "var arguments = [];", "arguments", 1, null);`などで空の配列を作成しておく？
 -- 何も言わずに落ちる : ????
 
-* 参考リンク [#z6fe58b9]
-- [https://docs.oracle.com/javase/jp/7/technotes/guides/scripting/programmer_guide/ Java スクリプトプログラマーズガイド]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/scripting/ Scripting for the Java Platform]
 - [https://github.com/google/code-prettify google/code-prettify: Automatically exported from code.google.com/p/google-code-prettify]
-- [http://www.mozilla.org/rhino/ Rhino - JavaScript for Java]
+- [https://developer.mozilla.org/ja/docs/Rhino Rhino | MDN]
 - [[JEditorPaneのHTMLEditorKitにCSSを適用>Swing/StyleSheet]]
-- [http://www.envjs.com/ Envjs - Bringing the Browser]
 
-* コメント [#q5757df6]
+* コメント [#comment]
 #comment
 - 新しい`prettify.js`(`prettify-1-Jun-2011.tar.bz2`、[https://github.com/google/code-prettify/blob/0b3341b3e9105ddaecf93cc632284f8db7994faf/src/prettify.js First pass at a way to dodge newline issues in IE.]の修正が入っているバージョン)では、`prettyPrintOne`の内部で`Document`型のオブジェクトが使用されるようになっているので`Rhino`だけ(`Envjs`とか使えば良さそうなんだけど…)では実行できない。このため上記のサンプルでは古い`prettify.js`([https://github.com/google/code-prettify/blob/f5ad44e3253f1bc8e288477a36b2ce5972e8e161/src/prettify.js Fixed prettyPrintOne by removing requirement that a job have a source node. Fixes issues 133 and 134.])を参照するように変更。 -- &user(aterai); &new{2012-03-09 (金) 16:58:03};
 - `JEditorPane`でのプレビューを追加。 -- &user(aterai); &new{2012-05-28 (月) 17:45:14};

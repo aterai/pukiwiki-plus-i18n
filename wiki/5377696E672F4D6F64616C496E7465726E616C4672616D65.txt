@@ -8,7 +8,7 @@ pubdate: 2007-10-15T13:16:07+09:00
 description: JInternalFrameをModalにして、他のJInternalFrameなどを操作できないようにブロックします。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTP9wW-lJI/AAAAAAAAAe0/xQ9vJrX3MuQ/s800/ModalInternalFrame.png
 hreflang:
-    href: http://java-swing-tips.blogspot.com/2008/10/modal-internal-frame.html
+    href: https://java-swing-tips.blogspot.com/2008/10/modal-internal-frame.html
     lang: en
 ---
 * 概要 [#summary]
@@ -140,7 +140,7 @@ optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
 
 - `JFrame`のメニューバーの`Mnemonic`もブロックできる
 -- `JRootPane`から取得した`LayeredPane`が非表示なので、その子コンポーネント(`JMenuBar`や`ContentPane`など)のキーイベントがすべて無効になる
--- [http://docs.oracle.com/javase/jp/6/api/javax/swing/JRootPane.html JRootPane (Java Platform SE 6)]の図にあるように、`GlassPane`は、`JRootPane`の最上位の子コンポーネントなので、`LayeredPane`を画像として表示している
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JRootPane.html JRootPane (Java Platform SE 8)]の図にあるように、`GlassPane`は、`JRootPane`の最上位の子コンポーネントなので、`LayeredPane`を画像として表示している
 - `JFrame`のシステムメニューはブロックできない
 - モーダルにした`JInternalFrame`のシステムメニューは表示されない
 -- ただし表示されないだけで、クリックしてからカーソル移動やダブルクリックなどが動いてしまう

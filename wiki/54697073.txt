@@ -173,7 +173,7 @@ public class EvenOddTest {
 
 * 正の数と負の数を反転 [#InvertSignedNumbers]
 - [https://community.oracle.com/thread/1253898 How do you Invert signed numbers? | Oracle Community]
-- [http://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.15.4 15.15.4. Unary Minus Operator - / Chapter 15. Expressions]
+- [https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.15.4 15.15.4. Unary Minus Operator - / Chapter 15. Expressions]
 
 #code{{
 public class InvertSignedNumbersTest {
@@ -287,7 +287,7 @@ public int compareTo(Object o) {
 }}
 
 * 無名匿名クラスとラムダ式の中でのthisキーワード [#LambdaThisReference]
-- [http://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.27.2 15.27.2. Lambda Body - Chapter 15. Expressions]
+- [https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.27.2 15.27.2. Lambda Body - Chapter 15. Expressions]
 -- via: [https://stackoverflow.com/questions/24202236/lambda-this-reference-in-java Lambda this reference in java - Stack Overflow]
 - [[Javaラムダ式メモ(Hishidama's Java8 Lambda Expression Memo)>http://www.ne.jp/asahi/hishidama/home/tech/java/lambda]]
 - 単純に無名匿名クラスをラムダ式に置き換えると、「`static`でないメソッド`getClass()`を`static`コンテキストから参照することはできません」とコンパイルエラーになる場合がある
@@ -297,7 +297,7 @@ MainPanel.java:43: error: non-static method getClass() cannot be referenced from
 }}
 -- 無名匿名クラス中の`this`キーワードは、無名匿名クラスのインスタンスを指すが、ラムダ式はラムダ式を定義したメソッドが属しているクラスのインスタンスを指すため
 - `this.getClass()`ではなく、`MainPanel.class.getClass()`のように`class`リテラルを使用して回避
--- [http://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.8.2 15.8.2. Class Literals - Chapter 15. Expressions]
+-- [https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.8.2 15.8.2. Class Literals - Chapter 15. Expressions]
 
 #code{{
 import java.awt.*;

@@ -87,21 +87,8 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 - `rulesets/java/basic.xml`などが非推奨になって、`category/java/bestpractices.xml`などが使用可能になった
 - キャッシュディレクトリの指定がない場合、警告されるようになった
 -- [https://pmd.github.io/pmd/pmd_userdocs_getting_started.html#incremental-analysis Getting Started | PMD Source Code Analyzer]
-- 以下のような`JDK 1.8.0`で有効な総称型の型引数の省略が誤判定されて、`Error while parsing ...`とエラーになる
--- `$PMD_HOME/bin/run.sh pmd -d example/MainPanel.java -R category/java/bestpractices.xml -language java -version 1.8`
--- `Cannot use '<>' with anonymous inner classes when running in JDK inferior to 9 mode!`
-#code{{
-// https://raw.githubusercontent.com/aterai/java-swing-tips/master/ComboBoxEditorVerifier/src/java/example/MainPanel.java
-private Component editorComponent;
-@Override public Component getEditorComponent() {
-  if (Objects.isNull(editorComponent)) {
-    JTextComponent tc = (JTextComponent) super.getEditorComponent();
-    editorComponent = new JLayer<>(tc, new ValidationLayerUI<>()); // `JDK 1.8.0`でもこの省略は有効
-    // editorComponent = new JLayer<JTextComponent>(tc, new ValidationLayerUI<>());
-  }
-  return editorComponent;
-}
-}}
+- %%以下のような`JDK 1.8.0`で有効な総称型の型引数の省略が誤判定されて、`Error while parsing ...`とエラーになる%%
+-- `6.1.0`で修正済み [https://github.com/pmd/pmd/issues/888 java ParseException occurs with valid '<>' in Java 1.8 mode · Issue #888 · pmd/pmd]
 
 ** PMD 5.1.3 [#se3b451a]
 - %%上記の誤検出は`pmd-bin-5.1.3-SNAPSHOT.zip`ですべて修正済み。ただし新規で今まで問題なかった以下のようなコードの`makeButton(Action action, String title)`が`UnusedPrivateMethod`となってしまう%% 修正済み

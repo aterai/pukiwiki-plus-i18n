@@ -146,7 +146,7 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 -- ファイル名にバージョンを付加して(`jnlp.versionEnabled`)、不必要なアップデートのチェックをしない
 - 参考:
 -- [https://docs.oracle.com/javase/tutorial/deployment/deploymentInDepth/avoidingUnnecessaryUpdateChecks.html Avoiding Unnecessary Update Checks (The Java™ Tutorials > Deployment > Deployment In-Depth)]
--- [http://docs.oracle.com/javase/jp/6/technotes/tools/share/pack200.html pack200 - JAR パックツール]
+-- [https://docs.oracle.com/javase/jp/6/technotes/tools/share/pack200.html pack200 - JAR パックツール]
 
 ----
 以下、[[Ant]]で`Pack200Task`を使用する場合のメモ
@@ -223,9 +223,9 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 
 * 参考リンク [#g131e2b0]
 - [http://java.sun.com/javase/6/docs/technotes/guides/javaws/ Java(TM) Web Start]
-- [http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/ Java(TM) Web Start(日本語)]
-- [http://docs.oracle.com/javase/jp/6/technotes/tools/index.html#security JDK の開発ツール#セキュリティーツール]
-- [http://docs.oracle.com/javase/jp/6/jre/api/javaws/jnlp/index.html javax.jnlp (JNLP API Reference 1.5)]
+- [https://docs.oracle.com/javase/jp/6/technotes/guides/javaws/ Java(TM) Web Start(日本語)]
+- [https://docs.oracle.com/javase/jp/6/technotes/tools/index.html#security JDK の開発ツール#セキュリティーツール]
+- [https://docs.oracle.com/javase/jp/6/jre/api/javaws/jnlp/index.html javax.jnlp (JNLP API Reference 1.5)]
 - [http://lopica.sourceforge.net/faq.html Unofficial Java Web Start/JNLP FAQ]
 ----
 - [https://community.oracle.com/community/developer/english/java/java_desktop/java_web_start_%26_jnlp Space: Java Web Start & JNLP | Oracle Forums]
@@ -249,11 +249,11 @@ RIGHT:[http://java.sun.com/products/javawebstart/ja/index_ja.html Java Web Start
 - メモ:[https://bugs.openjdk.java.net/browse/JDK-6943522 Bug ID: 6943522 Failed to launch any signed application on 6u19 when cache is disabled] -- &user(aterai); &new{2010-07-20 (火) 18:37:19};
 - リンク切れを修正。 -- &user(aterai); &new{2010-10-06 (水) 12:54:15};
 - いつもお世話になっております。単体SWINGでは-Djava.net.preferIPv4Stack=trueを付けると、PGMはうまく動きましたが、jnlpにどのように書けばいいかが判らなく、ご教示ください。<resources><property name="java.net.preferIPv4Stack" value="true"/>はだめみたいです。</resources>。いつもご教示、感謝しております。 -- &user(panda); &new{2011-12-05 (月) 16:02:29};
--- こんばんは。[http://docs.oracle.com/javase/7/docs/technotes/guides/javaws/developersguide/syntax.html#resources The following properties, as well as properties beginning with either "javaws." or "jnlp.", are considered "secure" and will be passed to the VM in this way:]、[http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/syntax.html 次のプロパティーは「安全」とみなされ、この方法で VM に渡されます。] …にある安全とみなされるプロパティに、java.net.preferIPv4Stack はないので、<security><all-permissions/></security>として、セキュリティ証明書でjarに署名する必要があるのかもしれません(試していないのでうまくいくか不明ですが)。   -- &user(aterai); &new{2011-12-05 (月) 17:27:46};
+-- こんばんは。[https://docs.oracle.com/javase/7/docs/technotes/guides/javaws/developersguide/syntax.html#resources The following properties, as well as properties beginning with either "javaws." or "jnlp.", are considered "secure" and will be passed to the VM in this way:]、[https://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/syntax.html 次のプロパティーは「安全」とみなされ、この方法で VM に渡されます。] …にある安全とみなされるプロパティに、java.net.preferIPv4Stack はないので、<security><all-permissions/></security>として、セキュリティ証明書でjarに署名する必要があるのかもしれません(試していないのでうまくいくか不明ですが)。   -- &user(aterai); &new{2011-12-05 (月) 17:27:46};
 -- あと、jnlpに記述する必要がないなら、コマンドラインから、javaws -verbose -J-Djava.net.preferIPv4Stack=true https://ateraimemo.com/swing/wipe/example.jnlp などとしてテストしてみるのもいいかもしれません。 -- &user(aterai); &new{2011-12-05 (月) 17:43:01};
 - ご教示、感謝します。方法１は実施しましたが、だめでした。方法２について、まだ理解していません。JWSにおいて、jnlpに書かない方法はありますか？また方法3として、JAVA　PGMに直接System.setProperty("java.net.preferIPv4Stack", "true");しましたが、IPv6を取ってきます。方法２について、もう少しご教示ください。 -- &user(panda); &new{2011-12-06 (火) 09:10:19};
 -- 方法１の補足ですが、例えば、C:\Users\%USERNAME%\AppData\LocalLow\Sun\Java\Deployment\deployment.properties ファイルなどに deployment.javaws.secure.properties=java.net.preferIPv4Stack を追加して、<property name="java.net.preferIPv4Stack" value="true"/>を安全であると許可してみるのはどうでしょうか？
---- [http://docs.oracle.com/javase/jp/6/technotes/guides/deployment/deployment-guide/jcp.html Java コントロールパネル]
+--- [https://docs.oracle.com/javase/jp/6/technotes/guides/deployment/deployment-guide/jcp.html Java コントロールパネル]
 --- [https://community.oracle.com/thread/1309656 How to enable IPV4 in JNLP file]
 
 -- 方法２がうまく動作するのなら、クライアントの環境変数 _JAVA_OPTIONS か、JAVA_TOOL_OPTIONS に、-Djava.net.preferIPv4Stack=true を追加するといいかもしれません。 -- &user(aterai); &new{2011-12-06 (火) 16:07:29};

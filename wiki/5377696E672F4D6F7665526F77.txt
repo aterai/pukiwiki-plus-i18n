@@ -107,7 +107,7 @@ cm.addColumnModelListener(new TableColumnModelListener() {
 }}
 
 - ご回答、ありがとうございました。列の幅を変更するため、`TableColumn c = cm.getColumn(i);・・・c.setPreferredWidth(int preferredWidth);`で行いましたが、例えば`c.setPreferredWidth(100)`にすると、`System.out.println(c.getHeaderValue()+": "+c.getWidth());`の結果は`75`が表示されます。見た目上も`100`ピクセルになっていません。確実に幅`100`ピクセルにするにはどうすれば良いでしょうか？ -- &user(Panda); &new{2011-03-02 (水) 14:10:35};
--- 列幅が自動調整される場合は、サイズ変更(デルタ)が有効な列に分散されます。このデルタの分散の詳細については、[http://docs.oracle.com/javase/jp/6/api/javax/swing/JTable.html#doLayout() JTable#doLayout() (Java Platform SE 6)]を参考にしてください。自動調整が`OFF`(`table.getAutoResizeMode()==AUTO_RESIZE_OFF`)の場合はデルタの分散を考慮する必要がないので、ある列の幅をぴったり`100px`にするのは簡単です(`TableColumn#setPreferredWidth(100)`とするだけで良い)。デフォルトの`AUTO_RESIZE_SUBSEQUENT_COLUMNS`の場合は、例えば以下のようにデルタの分散が`0`になるように？後の列も含めてサイズ調整しておく必要があります。 -- &user(aterai); &new{2011-03-02 (水) 18:05:29};
+-- 列幅が自動調整される場合は、サイズ変更(デルタ)が有効な列に分散されます。このデルタの分散の詳細については、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#doLayout-- JTable#doLayout() (Java Platform SE 8)]を参考にしてください。自動調整が`OFF`(`table.getAutoResizeMode()==AUTO_RESIZE_OFF`)の場合はデルタの分散を考慮する必要がないので、ある列の幅をぴったり`100px`にするのは簡単です(`TableColumn#setPreferredWidth(100)`とするだけで良い)。デフォルトの`AUTO_RESIZE_SUBSEQUENT_COLUMNS`の場合は、例えば以下のようにデルタの分散が`0`になるように？後の列も含めてサイズ調整しておく必要があります。 -- &user(aterai); &new{2011-03-02 (水) 18:05:29};
 
 #code{{
 import java.awt.*;

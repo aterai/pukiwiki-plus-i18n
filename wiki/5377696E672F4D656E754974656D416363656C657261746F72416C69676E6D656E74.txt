@@ -8,7 +8,7 @@ pubdate: 2013-09-30T05:06:53+09:00
 description: JMenuItemのAccelerator表示を右揃えに変更します。
 image: https://lh5.googleusercontent.com/-vl8nnt_tGvQ/UkhDq1YV-VI/AAAAAAAAB2o/B0-hGdv35Ns/s800/MenuItemAcceleratorAlignment.png
 hreflang:
-    href: http://java-swing-tips.blogspot.com/2014/10/jmenuitem-accelerator-text-alignment.html
+    href: https://java-swing-tips.blogspot.com/2014/10/jmenuitem-accelerator-text-alignment.html
     lang: en
 ---
 * 概要 [#summary]
@@ -128,7 +128,7 @@ private static JMenuItem makeMenuItem2(JMenuItem mi) {
 -- [https://bugs.openjdk.java.net/browse/JDK-6292739 Bug ID: JDK-6292739 Locale change at runtime doesn't affect text displayed for accelerator keys]
 - `JDK 1.7.0`から`Locale.getLocale()`が`Locale.JAPAN`などの場合、`KeyEvent#getKeyText(...)`で取得できる文字列が翻訳されている
 -- 例: `Space`が「スペース」
-- [http://docs.oracle.com/javase/jp/7/api/java/awt/event/KeyEvent.html#getKeyText(int) KeyEvent#getKeyText(int) (Java Platform SE 7)]では、「これらの文字列は`awt.properties`ファイルを変更することによりローカライズが可能です。」となっているが、`%JAVA_HOME%/jre/lib/rt.jar`内に`sun/awt/resources/awt.class`などの優先順位が高いクラスがあるため、`awt_ja.properties`などを作成しても読み込まれない
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/KeyEvent.html#getKeyText-int- KeyEvent#getKeyText(int) (Java Platform SE 8)]では、「これらの文字列は`awt.properties`ファイルを変更することによりローカライズが可能です。」となっているが、`%JAVA_HOME%/jre/lib/rt.jar`内に`sun/awt/resources/awt.class`などの優先順位が高いクラスがあるため、`awt_ja.properties`などを作成しても読み込まれない
 -- `-Xbootclasspath/p:`などで、`rt.jar`より先に以下のような`sun.awt.resources.awt_ja.class`を読み込むよう指定
 #code{{
 package sun.awt.resources;

@@ -88,7 +88,7 @@ textField.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("typed
 - ページの表示を高速化するために`CSS`などを弄ってみました。表示がおかしくなる場合は、KBD{Shift}+リロード(KBD{Shift+Ctrl+R})などで再読込してください。 -- &user(aterai); &new{2007-08-07 (火) 15:20:18};
 -ニ三日前から、サイト内検索が壊れていたのを修正しました。 -- &user(aterai); &new{2007-08-10 (金) 14:15:44};
 -てんぷらメモ参考にさせていただいております。ところで、全てのwebstartのサンプルをためしたわけではないのですが、こちらの環境で起動しないのものがありました。。。mac osxの環境でみています。 jnlpファイルには、<java version="1.5+" />とあったのですが、 <j2se version="1.5+" />ということはないでしょうか.... -- &user(nakawaka); &new{2007-08-18 (土) 01:50:03};
--どうも。ご指摘ありがとうございます。<java>が導入されたのは、6.0から([[JNLP ファイルの構文>http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/syntax.html]])みたいですね。このサイトでは1.5以上が対象なので、週明け頃に全部まとめて修正(<j2se>に戻す)しようと思っています。 -- &user(aterai); &new{2007-08-18 (土) 15:45:15};
+-どうも。ご指摘ありがとうございます。<java>が導入されたのは、6.0から([[JNLP ファイルの構文>https://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/syntax.html]])みたいですね。このサイトでは1.5以上が対象なので、週明け頃に全部まとめて修正(<j2se>に戻す)しようと思っています。 -- &user(aterai); &new{2007-08-18 (土) 15:45:15};
 -1.6が必要なサンプルの場合は<java>のままで、1.5以上が対象の場合は<j2se>タグに修正しました。 -- &user(aterai); &new{2007-08-20 (月) 16:55:44};
 -ありがとうございます！！早速、サンプルをためしていきたいと思います。 -- &user(nakawaka); &new{2007-08-20 (月) 23:35:04};
 -IBM developerWorks へのリンク切れを修正。 -- &user(aterai); &new{2007-12-21 (金) 21:44:45};
@@ -186,7 +186,7 @@ public class Test{
 -- このような現象を解消するには、<XXX>の内部をコメントアウトして、現在コメントアウトされている行を使うようにすると良いはず…です。 -- &user(aterai); &new{2009-08-17 (月) 18:37:03};
 -Swingでアプリを作る際、同じＤｉｒにiniファイルを置いて、設定など読み込みます。JavaWebStart化する時、iniファイルはサーバ上にあるため、読み込めません。Jnlpに記述以外、何か方法がありますか？paramが多すぎて、jnlpに書き切れません。ご教示ください。 -- &user(panda); &new{2010-05-25 (火) 11:22:29};
 --どんなparam?なのか分からないので、的外れかもしれませんが、iniファイルをソースコード(Hoge.java)と一緒にjarファイル内にアーカイブしておけば、Hoge.class.getResource("hoge.ini");など(参考: [[ClassLoaderでリソース(URL)を取得>Swing/ClassLoader]])で取得自体は簡単にできると思います。あとJavaの場合は、iniファイルではなく、[[Resourceファイルからメニューバーを生成>Swing/ResourceMenuBar]]のように.propertiesファイルを使う場合が多いので、そちらで検索すれば色々例が見つかるかもしれません。 -- &user(aterai); &new{2010-05-25 (火) 17:10:10};
---また、設定したいparamが、例えばユーザーが設定したWebStartアプリの起動位置、サイズなどの場合は、[[PersistenceService>http://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/examples.html#PersistenceService]]で読み込み、保存するのが便利です。 -- &user(aterai); &new{2010-05-25 (火) 17:33:37};
+--また、設定したいparamが、例えばユーザーが設定したWebStartアプリの起動位置、サイズなどの場合は、[[PersistenceService>https://docs.oracle.com/javase/jp/6/technotes/guides/javaws/developersguide/examples.html#PersistenceService]]で読み込み、保存するのが便利です。 -- &user(aterai); &new{2010-05-25 (火) 17:33:37};
 -早速のご回答、ありがとうございました。Hoge.class.getResource("hoge.ini");まではできましたが、そのhoge.iniファイルを開いて、中身を取り出す方法が判っていません。即ち、FileReaderを使って、jar:file:/C:/tmp/Hoge.jar!/example/hoge.iniを開く方法が判りません。もう少しご教示いただけませんか？大変お手数をおかけしました。 -- &user(panda); &new{2010-05-26 (水) 14:51:18};
 --以下、手抜きのサンプルですが、こんな感じでしょうか？ -- &user(aterai); &new{2010-05-26 (水) 17:41:02};
 #code{{
@@ -215,7 +215,7 @@ public class Hoge {
 }
 }}
 -こんにちは、オペレーティングシステムのデフォルトフォントを取得する方法がありますか？ -- &user(そうがい); &new{2010-06-05 (Sat) 16:03:09};
--- こんにちは。「システムのデフォルトフォント」が、Windowsで「画面のプロパティ」「デザイン」「詳細設定」などで設定されるフォントを指すのなら、以下の要領で取得できると思います。(参考: [[Windows デスクトップ関連のプロパティーのサポート>http://docs.oracle.com/javase/jp/6/technotes/guides/swing/1.4/w2k_props.html]]) -- &user(aterai); &new{2010-06-05 (土) 19:13:06};
+-- こんにちは。「システムのデフォルトフォント」が、Windowsで「画面のプロパティ」「デザイン」「詳細設定」などで設定されるフォントを指すのなら、以下の要領で取得できると思います。(参考: [[Windows デスクトップ関連のプロパティーのサポート>https://docs.oracle.com/javase/jp/6/technotes/guides/swing/1.4/w2k_props.html]]) -- &user(aterai); &new{2010-06-05 (土) 19:13:06};
 #code{{
 import java.awt.*;
 import java.awt.event.*;
@@ -272,7 +272,7 @@ table.scrollRectToVisible(table.getCellRect(i, 0, true)); //追加した行の0�
 -- `TableModel`がインタフェース、`AbstractTableModel`は文字道理、`TableModel`を`implements`する`Abstract`クラス(抽象クラス)です。これを継承して独自のモデルを作成する場合は、各データを配列やリストなどで保持するようし、`setValueAt(Object value, int row, int col)`などのメソッドを実装する必要があります。`DefaultTableModel`は、`AbstractTableModel`を継承し、`new Table()`で自動的に使用されるデフォルトの`TableModel`です。個人的には手っ取り早いので、`DefaultTableModel`をよく使用しています。詳しくは [https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#data How to Use Tables (Creating a Table Model)]が参考になります。 -- &user(aterai); &new{2013-01-29 (火) 14:34:54};
 -[[Swing/_JScrollPane]]に入れるべきサンプルを、なぜか[[Swing/_JProgressBar]]に挿入していたので修正。 -- &user(aterai); &new{2013-05-21 (火) 18:59:47};
 -いつもお世話になっております。C言語のヘッダーファイルの中で、#ifdef 開発環境の定数 #else 本番環境の定数 #endifと定義し、Makefileでは-Dオプションで、開発･本番の環境変数を切り替え、ソース（*.c）コンパイルできます。Javaではbuild.xmlどのように書けば、実現できますか？ご多忙の中、ご教示をお願いいたします。 -- &user(tiger); &new{2013-05-23 (木) 18:50:46};
--- こんにちは。本番環境でテスト用のメッセージを出力したくないなどの場合は、`Java`だと`Logging API` [http://docs.oracle.com/javase/jp/6/technotes/guides/logging/index.html Java ロギングテクノロジ]を使うのが一般的だと思います。どうしてもAntを使用するなら、[https://weblogs.java.net/blog/schaefa/archive/2005/01/how_to_do_condi.html How to do Conditional Compilation with Java | Java.net]のようにフィルタを使ってコメントアウトするのはどうでしょうか。[http://thumpsoftware.web.fc2.com/post/javacpp/ Javaにcpp（C/C++プリプロセッサ）を使ってみる]なども組み合わせられるかもしれません。 -- &user(aterai); &new{2013-05-24 (金) 14:17:11};
+-- こんにちは。本番環境でテスト用のメッセージを出力したくないなどの場合は、`Java`だと`Logging API` [https://docs.oracle.com/javase/jp/6/technotes/guides/logging/index.html Java ロギングテクノロジ]を使うのが一般的だと思います。どうしてもAntを使用するなら、[https://weblogs.java.net/blog/schaefa/archive/2005/01/how_to_do_condi.html How to do Conditional Compilation with Java | Java.net]のようにフィルタを使ってコメントアウトするのはどうでしょうか。[http://thumpsoftware.web.fc2.com/post/javacpp/ Javaにcpp（C/C++プリプロセッサ）を使ってみる]なども組み合わせられるかもしれません。 -- &user(aterai); &new{2013-05-24 (金) 14:17:11};
 -- あとでこのコメントは[[Ant]]に移動する予定です。 -- &user(aterai); &new{2013-05-24 (金) 14:18:20};
 -`new Font("Monospace", ...)`といったtypoがあったので、`Font.MONOSPACED`などの定数を使用するように修正。 -- &user(aterai); &new{2013-05-24 (金) 19:49:09};
 -メモ: `Adsense`を非同期のにしたら、`Opera 12.16`で読み込みが終わらない？ -- &user(aterai); &new{2013-07-21 (日) 02:47:12};

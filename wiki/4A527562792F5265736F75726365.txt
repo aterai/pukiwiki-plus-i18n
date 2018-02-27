@@ -141,7 +141,7 @@ require "jlfgr-1_0.jar"
 url = self.get_class.class_loader.get_resource "toolbarButtonGraphics/general/Copy24.gif"
 }}
 
-`JAR URL`構文を使ってエントリを取得する方法([http://docs.oracle.com/javase/jp/6/api/java/net/JarURLConnection.html JarURLConnection (Java Platform SE 6)])があるようです。
+`JAR URL`構文を使ってエントリを取得する方法([https://docs.oracle.com/javase/jp/8/docs/api/java/net/JarURLConnection.html JarURLConnection (Java Platform SE 8)])があるようです。
 
 #code{{
 url = java.net.URL.new "jar:file:jlfgr-1_0.jar!/toolbarButtonGraphics/general/Copy24.gif"
@@ -175,7 +175,7 @@ url = self.get_class.get_resource "test.png"
 以上、`Java`の場合とほとんど同じ方法が使えますが、ローカルにあるシステムリソースを取得したい場合、`JRuby`では先頭に`/`が付いた`ClassPath`からのエントリを使うほうが、すっきりうまくいきそうです。
 
 * 参考リンク [#x1f3d4a5]
-- [http://docs.oracle.com/javase/jp/6/technotes/guides/lang/resources.html 位置に依存しない方法でのリソースへのアクセス]
+- [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/lang/resources.html 位置に依存しない方法でのリソースへのアクセス]
 - [http://www.oki-osk.jp/esc/ruby/tut-08.html Ruby チュートリアル - 8. JRuby から Java へのアクセス]
 
 * コメント [#z74eaa06]

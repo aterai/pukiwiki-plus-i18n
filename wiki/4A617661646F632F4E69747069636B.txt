@@ -24,14 +24,14 @@ description: Java クラスドキュメントで翻訳元の英語版から修�
 -- `SwingConstants#HORIZONTAL`も同様
 
 ** getAlignmentY() [#ec1629bc]
-- http://docs.oracle.com/javase/8/docs/api/java/awt/Component.html
+- https://docs.oracle.com/javase/8/docs/api/java/awt/Component.html
 -- Ease-of-use constant for getAlignmentX.
 -- Ease-of-use constant for getAlignmentY().
 - 修正案
 -- ()を付ける方に揃える
 
 ** setAsksAllowsChildren [#ed45c143]
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/tree/DefaultTreeModel.html#setAsksAllowsChildren-boolean-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/DefaultTreeModel.html#setAsksAllowsChildren-boolean-
 -- If newvalue is true,
 - 修正案
 -- If newValue is true,
@@ -40,30 +40,30 @@ description: Java クラスドキュメントで翻訳元の英語版から修�
 --- https://docs.oracle.com/javase/jp/8/docs/api/java/net/URLConnection.html のgetLastModifedなど
 
 ** TableModelevent [#e8b81142]
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/event/TableModelEvent.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/event/TableModelEvent.html
 -- the TableModelevent can be used to specify the following types of changes:
 - 修正案
 -- the TableModelEvent can be used to specify the following types of changes:
 
 ** HTML.Attribute.id [#j0917455]
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/text/html/HTMLDocument.html#getElement-java.lang.String-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/text/html/HTMLDocument.html#getElement-java.lang.String-
 -- This is a convenience method for getElement(RootElement, HTML.Attribute.id, id). 
 - 修正案
 -- This is a convenience method for getElement(RootElement, HTML.Attribute.ID, id). 
 
 ** JMX Specification., [#xe79f485]
-- http://docs.oracle.com/javase/8/docs/api/java/lang/management/MemoryPoolMXBean.html
-//- http://docs.oracle.com/javase/8/docs/api/java/lang/management/ManagementFactory.html
+- https://docs.oracle.com/javase/8/docs/api/java/lang/management/MemoryPoolMXBean.html
+//- https://docs.oracle.com/javase/8/docs/api/java/lang/management/ManagementFactory.html
 -- JMX Specification.,
 
 ** TableModel#isCellEditable(...) [#m34adfd8]
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/table/TableModel.html#isCellEditable-int-int-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/table/TableModel.html#isCellEditable-int-int-
 -- Returns true if the cell at rowIndex and columnIndex is editable. Otherwise, setValueAt on the cell will not change the value of that cell.
 -- [https://bugs.openjdk.java.net/browse/JDK-4292804 Bug ID: 4292804 DefaultTableModel doc confusion between isCellEditable and setValueAt]
 --- DefaultTableModel は修正されている？、TableModel は関係ない？
 
 ** 文字化け？ [#j58229fa]
-- http://docs.oracle.com/javase/8/docs/technotes/guides/swing/1.4/w2k_props.html
+- https://docs.oracle.com/javase/8/docs/technotes/guides/swing/1.4/w2k_props.html
 -- "win.frame.textColor?????"
 -- 「メッセージボックスのフォントカラー」のプロパティー名が文字化け？
 -- http://java.sun.com/j2se/1.5.0/ja/docs/ja/guide/swing/1.4/w2k_props.html
@@ -87,25 +87,25 @@ String propnames[] = (String[])Toolkit.getDefaultToolkit().getDesktopProperty("w
 }}
 
 ** Dimension オブジェクト、寸法オブジェクト [#gfb4e02f]
-- http://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#getSize--
+- https://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#getSize--
 -- a Dimension object
 - https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Component.html#getSize--
 -- Dimension オブジェクト
 
-- http://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#getPreferredSize--
+- https://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#getPreferredSize--
 -- a dimension object
 - https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Component.html#getPreferredSize--
 -- 寸法オブジェクト
 
 ** Component.AccessibleAWTComponent.getAccessibleIndexInParent() [#n8ee376d]
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html
 -- Note: as of the Java 2 platform v1.3, it is recommended that developers call Component.AccessibleAWTComponent.getAccessibleIndexInParent() instead of using this method.
 
 コピペして、修正し忘れてるようで、注:が全部getAccessibleIndexInParentのものと同じになっている。
 
 * 1.8.0 で修正済み [#m9daeceb]
 ** Typo: agressively [#d899477e]
-- http://docs.oracle.com/javase/7/docs/api/javax/swing/UIManager.html
+- https://docs.oracle.com/javase/7/docs/api/javax/swing/UIManager.html
 -- agressively
 - 変更案
 -- aggressively
@@ -121,7 +121,7 @@ String propnames[] = (String[])Toolkit.getDefaultToolkit().getDesktopProperty("w
 この例だと、色をgetStringで取得しようとしているので、常に null になる。UIManager.get("Table.foreground") とか UIManager.getColor("Table.foreground") にした方がよさそう。
 
 ** class MyApp java.io.Serializable [#o8876b77]
-- http://docs.oracle.com/javase/7/docs/api/java/awt/Component.html
+- https://docs.oracle.com/javase/7/docs/api/java/awt/Component.html
 -- class MyApp java.io.Serializable
 - 変更案
 -- class MyApp implements  java.io.Serializable
@@ -130,17 +130,17 @@ String propnames[] = (String[])Toolkit.getDefaultToolkit().getDesktopProperty("w
 
 * Java 9 で修正済み [#ad8c34d4]
 ** Typo: any of of them [#wedb8a36]
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JLayer.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JLayer.html
 -- using any of of them will cause UnsupportedOperationException to be thrown,
 - 変更案
 -- using any of them will cause UnsupportedOperationException to be thrown,
 
 ** サンプルコードが一行になっている [#p188f78e]
-- http://docs.oracle.com/javase/8/docs/api/java/awt/BasicStroke.html
+- https://docs.oracle.com/javase/8/docs/api/java/awt/BasicStroke.html
 -- // sets the Graphics2D object's Transform attirbute g2d.scale(10, 10); // sets the Graphics2D object's Storoke attribute g2d.setStroke(new BasicStroke(1.5f));
 
 ** JSpinnerサンプルコード [#nc09884d]
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JSpinner.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JSpinner.html
 -- [https://bugs.openjdk.java.net/browse/JDK-5109918 JDK-5109918 Wrong documentation for JSpinner.DateEditor constructor - Java Bug System]
 
 - 余計な`{`がある。
@@ -153,7 +153,7 @@ String propnames[] = (String[])Toolkit.getDefaultToolkit().getDesktopProperty("w
 -- `((DefaultEditor)editor).getTextField().setValue(spinner.getValue();`
 
 ** dataModelとnewModel [#pb842784]
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html#setModel-javax.swing.table.TableModel-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html#setModel-javax.swing.table.TableModel-
 -- 引数のdataModelとnewModelが混ざっている？
 
 #code{{
@@ -166,7 +166,7 @@ IllegalArgumentException - newModel が null の場合
 }}
 
 ** Htmlの表がずれている [#p5e32821]
-- http://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#setFocusTraversalKeys-int-java.util.Set-
+- https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#setFocusTraversalKeys-int-java.util.Set-
 -- KeyboardFocusManager.DOWN_CYCLE_TRAVERSAL_KEYS,	1 つ下のフォーカストラバーサルサイクルに移動	none
 - [https://bugs.openjdk.java.net/browse/JDK-4470006 Bug ID: 4470006 Table shown for Traversal Keys in setDefaultFocusTraversalKeys() not proper]
 -- Submit Date 	14-JUN-2001

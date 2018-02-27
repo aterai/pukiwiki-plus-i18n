@@ -18,7 +18,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** SwingUtilities.getUnwrappedView(JViewport) [#l0d07bf2]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#getUnwrappedView-javax.swing.JViewport-
 -- そのような子孫が見つかった場合は、nullを返します。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html#getUnwrappedView-javax.swing.JViewport-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html#getUnwrappedView-javax.swing.JViewport-
 -- If such a descendant can not be found, null is returned.
 - 修正案
 -- そのような子孫が見つからない場合は、null を返します。
@@ -28,7 +28,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** クリップボード転送 [#efb8a224]
 - https://docs.oracle.com/javase/jp/8/docs/api/java/awt/image/RescaleOp.html
 -- 計算で求められたサンプル値は、転送先イメージの最小および最大にクリップボード転送されます。
-- http://docs.oracle.com/javase/8/docs/api/java/awt/image/RescaleOp.html
+- https://docs.oracle.com/javase/8/docs/api/java/awt/image/RescaleOp.html
 -- The scaled sample values are clipped to the minimum/maximum representable in the destination image.
 - 変更案
 -- 計算で求められたサンプル値は、転送先イメージの最小および最大でクリップされます。
@@ -41,7 +41,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- ENTERED 入力されたことを示すタイプです。
 -- EXITED 終了したことを示すタイプです。
 -- ACTIVATED アクティブになっていることを示すタイプです。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/event/HyperlinkEvent.EventType.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/event/HyperlinkEvent.EventType.html
 -- ENTERED Entered type.
 -- EXITED Exited type.
 -- ACTIVATED Activated type.
@@ -53,7 +53,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** このメソッドは推奨されません。 [#g401f3aa]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultListModel.html#getElementAt-int-
 -- 注: このメソッドは推奨されません。推奨されるメソッドはget(int)です。これは1.2のCollections Frameworkで定義されたListインタフェースを実装します。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/DefaultListModel.html#getElementAt-int-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/DefaultListModel.html#getElementAt-int-
 -- Note: Although this method is not deprecated, the preferred method to use is get(int), which implements the List interface defined in the 1.2 Collections framework. 
 - 変更案
 -- 推奨されるメソッドはget(int)ですが、このメソッドは非推奨ではありません。これは1.2のCollections Frameworkで定義されたListインタフェースを実装します。
@@ -64,7 +64,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** ノードハンドルを表示するかどうか [#sc591723]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#setShowsRootHandles-boolean-
 -- newValue - ルートハンドルを表示しない場合は true、そうでない場合はfalse
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setShowsRootHandles-boolean-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setShowsRootHandles-boolean-
 -- newValue - true if root handles should be displayed; otherwise, false
 - 変更案
 -- newValue - ルートハンドルを表示する場合は true、そうでない場合はfalse
@@ -72,10 +72,10 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- ルートノードのノードハンドル(`WindowsLookAndFeel`の場合は`+`,`-`アイコン)を表示するかどうかが、逆の意味に誤翻訳されている
 
 ** すべての親を展開し常に非表示にする [#sb661101]
-- http://docs.oracle.com/javase/jp/7/api/javax/swing/JTree.html#setExpandsSelectedPaths(boolean)
+- https://docs.oracle.com/javase/jp/7/api/javax/swing/JTree.html#setExpandsSelectedPaths(boolean)
 -- true の場合には、TreeSelectionModel または JTree が提供するカバーメソッドによりいつでも選択を変更でき、TreePath の親が展開され可視になります。 可視とは、JTree の可視矩形にかぎらず親パスが展開されている状態を意味します。
 -- false の場合、ノード選択を変更すると親はすべて展開されても可視にはなりません。選択モデルのパスを、すべての親を展開し常に非表示にする場合には便利です。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setExpandsSelectedPaths-boolean-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#setExpandsSelectedPaths-boolean-
 -- If true, any time the selection is changed, either via the TreeSelectionModel, or the cover methods provided by JTree, the TreePaths parents will be expanded to make them visible (visible meaning the parent path is expanded, not necessarily in the visible rectangle of the JTree).
 -- If false, when the selection changes the nodes parent is not made visible (all its parents expanded). This is useful if you wish to have your selection model maintain paths that are not always visible (all parents expanded).
 - 変更案
@@ -85,7 +85,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** 拡大縮小しているときに行う削除や追加 [#r1834970]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Highlighter.html#changeHighlight-java.lang.Object-int-int-
 -- このメソッドは、変更対象だけを扱って選択範囲を拡大縮小しているとき (マウスのドラッグ操作など) に行う削除や追加よりも効率的です。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/text/Highlighter.html#changeHighlight-java.lang.Object-int-int-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/text/Highlighter.html#changeHighlight-java.lang.Object-int-int-
 -- This may be more efficient than a remove/add when a selection is expanding/shrinking (such as a sweep with a mouse) by damaging only what changed.
 - 変更案
 -- このメソッドは、変更対象が選択範囲の拡大縮小(マウスのドラッグ操作など)だけのとき、削除や追加を行うよりも効率的です。
@@ -93,7 +93,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** そうでない場合は [#t4f1d21f]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
 -- そうでない場合は、指定されたすべての値が評価される
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
 -- If not supplied all values are evaluated
 - 変更案
 -- 指定しない場合、すべての値が評価される
@@ -101,7 +101,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** 追加することができます [#ua7619df]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/undo/UndoManager.html
 -- 次のコード例では、UndoManager を作成し、UndoableEditListener として JTextField に追加することができます。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/undo/UndoManager.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/undo/UndoManager.html
 -- The following examples creates an UndoManager and adds it as an UndoableEditListener to a JTextField:
 - 変更案
 -- 次のコード例では、UndoManager を作成し、これを UndoableEditListener として JTextField に追加しています。
@@ -109,7 +109,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 // ** 「food」は一致とは見なされません。 [#w9cbecb1]
 // - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
 // -- たとえば「^foo$」と指定した場合、「foo」と完全に一致する文字列のある行だけが含められます。「food」は一致とは見なされません。
-// - http://docs.oracle.com/javase/8/docs/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
+// - https://docs.oracle.com/javase/8/docs/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...-
 // -- For example, "^foo$" includes only rows whose string is exactly "foo" and not, for example, "food".
 // - 変更案
 // -- たとえば「^foo$」と指定した場合、「foo」と完全に一致する文字列の行だけが含まれ、「food」は含まれません。
@@ -117,7 +117,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** scrollRectToVisible と、指定されたセルの境界 [#y8118367]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#ensureIndexIsVisible-int-
 -- この処理により、scrollRectToVisible と、指定されたセルの境界が呼び出されます。このメソッドを有効にするには、JList が JViewport 内に存在する必要があります。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JList.html#ensureIndexIsVisible-int-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JList.html#ensureIndexIsVisible-int-
 -- This calls scrollRectToVisible with the bounds of the specified cell. For this method to work, the JList must be within a JViewport.
 - 変更案
 -- これは、指定されたセルの境界を引数にして、scrollRectToVisibleメソッドを呼びます。JList が JViewport 内に存在する場合のみ、このメソッドは有効です。
@@ -127,7 +127,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- 現在の選択範囲が新しいモードに対して有効でない場合は選択範囲を変更できます。
 -- たとえば、モードが SINGLE_TREE_SELECTION に変更したときに 3 つの TreePath が選択された場合、一つの TreePath だけを選択できます。
 -- どの TreePath を選択するかは使用する特定の実装によって決まります。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeSelectionModel.html#setSelectionMode-int-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreeSelectionModel.html#setSelectionMode-int-
 -- This may change the selection if the current selection is not valid for the new mode.
 -- For example, if three TreePaths are selected when the mode is changed to SINGLE_TREE_SELECTION, only one TreePath will remain selected.
 -- It is up to the particular implementation to decide what TreePath remains selected.
@@ -140,7 +140,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** DefaultTableCellRendererの「実装上の注意」 [#gb59ef4b]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/DefaultTableCellRenderer.html#override
 -- そのため、このクラスでは、validate、invalidate、revalidate、repaint、およびfirePropertyChangeの各メソッドは無操作になるようにオーバーライドされ、isOpaqueメソッドのみがパフォーマンスを向上させるためにオーバーライドされます。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/table/DefaultTableCellRenderer.html#override
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/table/DefaultTableCellRenderer.html#override
 -- So this class overrides the validate, invalidate, revalidate, repaint, and firePropertyChange methods to be no-ops and override the isOpaque method solely to improve performance.
 - 変更案
 -- そのため、このクラスは、 validate、invalidate、revalidate、repaint および firePropertyChange メソッドを何もしないようにオーバーライドし、単にパフォーマンスを向上させるために isOpaque メソッドをオーバーライドします。
@@ -149,7 +149,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 
 ** SwingUtilities.calculateInnerArea(...) [#b7a3a508]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#calculateInnerArea-javax.swing.JComponent-java.awt.Rectangle-
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html#calculateInnerArea-javax.swing.JComponent-java.awt.Rectangle-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html#calculateInnerArea-javax.swing.JComponent-java.awt.Rectangle-
 
 //修正済み
 //- r 内で指定された？
@@ -170,7 +170,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** JFormattedTextField により、 [#e5f1cea2]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JFormattedTextField.html
 -- JFormattedTextField により、フォーカスが失われた場合に実行するアクションの設定が可能になります。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JFormattedTextField.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JFormattedTextField.html
 -- JFormattedTextField allows configuring what action should be taken when focus is lost.
 - 変更案
 -- JFormattedTextField が、フォーカスを失ったときに実行するアクションを設定できます。
@@ -178,7 +178,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** JFormattedTextField により、その2 [#s3e659c5]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JFormattedTextField.html
 -- JFormattedTextField により、現在編集中の値が不正な場合でもフォーカスは移動が可能になります。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JFormattedTextField.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JFormattedTextField.html
 -- JFormattedTextField allows the focus to leave, even if the currently edited value is invalid.
 - 変更案
 -- JFormattedTextField は、現在編集中の値が不正な場合でも、フォーカスの移動が可能です。
@@ -186,7 +186,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** Desktop フォルダになります。 [#c1db2cf1]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/filechooser/FileSystemView.html#isParent-java.io.File-java.io.File-
 -- たとえば、フォルダは file.getParentFile() とは異なる Desktop フォルダになります。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/filechooser/FileSystemView.html#isParent-java.io.File-java.io.File-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/filechooser/FileSystemView.html#isParent-java.io.File-java.io.File-
 -- Folder could for example be the "Desktop" folder which is not the same as file.getParentFile().
 - 変更案???
 -- たとえば、folder が「デスクトップ」フォルダで、file.getParentFile() とは同じにならない場合があります。
@@ -194,7 +194,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** 'g' (ラテン小文字のG)が文字の例としてあげられます。 [#g6de2419]
 - https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Font.html
 -- 'g' (ラテン小文字のG)が文字の例としてあげられます。
-- http://docs.oracle.com/javase/8/docs/api/java/awt/Font.html
+- https://docs.oracle.com/javase/8/docs/api/java/awt/Font.html
 -- For example, 'g', LATIN SMALL LETTER G, is a character.
 - 変更案
 -- 例えば、「g」 (ラテン小文字の G) は文字です。
@@ -202,13 +202,13 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** 実装可能な？ [#t6b126fd]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/CellEditor.html
 -- すべての汎用エディタが実装可能なメソッドを定義します。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/CellEditor.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/CellEditor.html
 -- This interface defines the methods any general editor should be able to implement.
 
 ** 通常の使い方では、 [#f9d10277]
 - https://docs.oracle.com/javase/jp/8/docs/api/java/awt/GraphicsEnvironment.html#getAllFonts--
 -- 通常の使い方では、ユーザーは特定のフォントを選択できます。
-- http://docs.oracle.com/javase/8/docs/api/java/awt/GraphicsEnvironment.html#getAllFonts--
+- https://docs.oracle.com/javase/8/docs/api/java/awt/GraphicsEnvironment.html#getAllFonts--
 -- Typical usage would be to allow a user to select a particular font.
 - 変更案
 -- ユーザーに特定のフォントを選択させる場合に、よく使用されます。
@@ -216,7 +216,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** リスト選択の変更を待機する方法 [#l222135f]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html
 -- リスト選択の変更を待機する方法としては、JList に直接 ListSelectionListener を追加することをお勧めします。すると、JList が選択モデルの変更を待機し、変更があった場合にリスナーに通知を送るようになります。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JList.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JList.html
 -- The preferred way to listen for changes in list selection is to add ListSelectionListeners directly to the JList. JList then takes care of listening to the the selection model and notifying your listeners of change.
 - 変更案
 -- リスト選択の変更を監視する方法としては、JListに直接 ListSelectionListener を追加することをお勧めします。すると、JList が選択モデルの変更を監視し、変更を各リスナーに通知するようになります。
@@ -226,9 +226,9 @@ description: Java クラスドキュメントで修正した方が良さそう�
 // -- ドットを設定する Caret の前に呼び出されます。
 // - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/NavigationFilter.html#moveDot-javax.swing.text.NavigationFilter.FilterBypass-int-javax.swing.text.Position.Bias-
 // -- ドットを移動する Caret の前に呼び出されます。
-// - http://docs.oracle.com/javase/8/docs/api/javax/swing/text/NavigationFilter.html#setDot-javax.swing.text.NavigationFilter.FilterBypass-int-javax.swing.text.Position.Bias-
+// - https://docs.oracle.com/javase/8/docs/api/javax/swing/text/NavigationFilter.html#setDot-javax.swing.text.NavigationFilter.FilterBypass-int-javax.swing.text.Position.Bias-
 // -- Invoked prior to the Caret setting the dot.
-// - http://docs.oracle.com/javase/8/docs/api/javax/swing/text/NavigationFilter.html#moveDot-javax.swing.text.NavigationFilter.FilterBypass-int-javax.swing.text.Position.Bias-
+// - https://docs.oracle.com/javase/8/docs/api/javax/swing/text/NavigationFilter.html#moveDot-javax.swing.text.NavigationFilter.FilterBypass-int-javax.swing.text.Position.Bias-
 // --Invoked prior to the Caret moving the dot.
 //
 //  int dot 引数？
@@ -240,7 +240,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 // ** were [#c5dbc9c1]
 // - https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Component.html#transferFocus--
 // -- このコンポーネントがフォーカス所有者であるかのように、フォーカスを次のコンポーネントに転送します。
-// - http://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#transferFocus--
+// - https://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#transferFocus--
 // -- Transfers the focus to the next component, as though this Component were the focus owner.
 // - 変更案
 // -- フォーカスを次のコンポーネントに転送する際、このコンポーネントがフォーカス所有者だったように振る舞います。
@@ -248,7 +248,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** 可能な場所であればどこでも、 [#q0170e61]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/BorderFactory.html
 -- このファクトリは、可能な場所であればどこでも、共有された Border インスタンスへの参照を分配します。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/BorderFactory.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/BorderFactory.html
 -- Wherever possible, this factory will hand out references to shared Border instances.
 - 変更案
 -- 可能な限り、このファクトリは共有された Border インスタンスへの参照を渡します。
@@ -256,15 +256,15 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** 整列できます。 [#ee1172f3]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSplitPane.html
 -- 2 つの Component は、JSplitPane.HORIZONTAL_SPLIT を使って左右に、JSplitPane.VERTICAL_SPLIT を使って上下に整列できます。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JSplitPane.html
 -- The two Components in a split pane can be aligned left to right using JSplitPane.HORIZONTAL_SPLIT, or top to bottom using JSplitPane.VERTICAL_SPLIT.
 - 変更案
 -- 分割区画内の二つのコンポーネントは、JSplitPane.HORIZONTAL_SPLIT を使って左右に、JSplitPane.VERTICAL_SPLIT を使って上下に並べることができます。
 
 ** 含まれるコンポーネントは指定されます。 [#f95b80b7]
-- http://docs.oracle.com/javase/jp/6/api/java/awt/LayoutManager.html#preferredLayoutSize(java.awt.Container)
+- https://docs.oracle.com/javase/jp/6/api/java/awt/LayoutManager.html#preferredLayoutSize(java.awt.Container)
 -- 指定されたコンテナの推奨サイズの寸法を計算します。含まれるコンポーネントは指定されます。
-- http://docs.oracle.com/javase/6/docs/api/java/awt/LayoutManager.html#preferredLayoutSize(java.awt.Container)
+- https://docs.oracle.com/javase/6/docs/api/java/awt/LayoutManager.html#preferredLayoutSize(java.awt.Container)
 -- Calculates the preferred size dimensions for the specified container, given the components it contains.
 - 変更案
 -- 指定されたコンテナ(...)の推奨サイズの寸法を計算します。
@@ -272,7 +272,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** あとで [#p593531c]
 - https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#setMinimumSize-java.awt.Dimension-
 -- あとで setMinimumSize で指定された幅または高さよりも小さい状態で setSize メソッドまたは setBounds メソッドが呼び出されると、ウィンドウは minimumSize の値に合わせて自動的に大きくなります。
-- http://docs.oracle.com/javase/8/docs/api/java/awt/Window.html#setMinimumSize-java.awt.Dimension-
+- https://docs.oracle.com/javase/8/docs/api/java/awt/Window.html#setMinimumSize-java.awt.Dimension-
 -- If the setSize or setBounds methods are called afterwards with a width or height less than that specified by setMinimumSize the window is automatically enlarged to honor the minimumSize value.
 - 変更案
 -- setMinimumSize で指定された幅、または高さよりも小さい状態で、 setSize メソッド、または setBounds メソッドが呼び出されると、ウィンドウは minimumSize の値に合わせて自動的に大きくなります。
@@ -282,7 +282,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** point が存在する場合 [#f63aea30]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#rowAtPoint-java.awt.Point-
 -- point が存在する場合はその行のインデックス、結果が [0, getRowCount()-1] の範囲内にない場合は -1 を返します。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html#rowAtPoint-java.awt.Point-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html#rowAtPoint-java.awt.Point-
 -- Returns the index of the row that point lies in, or -1 if the result is not in the range [0, getRowCount()-1].
 - 変更案
 -- point がある行のインデックスを返します。もし、その結果が [0, getRowCount()-1] の範囲内にない場合は -1 を返します。
@@ -290,7 +290,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** performance、操作 [#hb7eea2c]
 - https://docs.oracle.com/javase/jp/8/docs/api/java/util/EnumSet.html
 -- このクラスの操作に必要な領域や時間は、従来のintベースの「ビット・フラグ」に対する高品質かつ型保証された代替として十分に使用可能です。
-- http://docs.oracle.com/javase/8/docs/api/java/util/EnumSet.html
+- https://docs.oracle.com/javase/8/docs/api/java/util/EnumSet.html
 -- The space and time performance of this class should be good enough to allow its use as a high-quality, typesafe alternative to traditional int-based "bit flags."
 - 変更案
 -- このクラスの領域や時間性能(パフォーマンス)は、従来の int ベースの「ビット・フラグ」と比較しても十分に高品質で、型保証された代替として使用可能です。
@@ -298,14 +298,14 @@ description: Java クラスドキュメントで修正した方が良さそう�
 ** アクセラレータの正しい文字 [#w8a3335d]
 - https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#getMenuShortcutKeyMask--
 -- Control キーがアクセラレータの正しい文字でない場合、ツールキットの実装はこのメソッドをオーバーライドします。
-- http://docs.oracle.com/javase/8/docs/api/java/awt/Toolkit.html#getMenuShortcutKeyMask--
+- https://docs.oracle.com/javase/8/docs/api/java/awt/Toolkit.html#getMenuShortcutKeyMask--
 -- Toolkit implementations should override this method if the Control key isn't the correct key for accelerators.
 - 変更案
 -- Control キーがアクセラレータキーでない場合、ツールキットの実装はこのメソッドをオーバーライドする必要があります。
 
 ** JEditorPane#scrollToReference(String) [#ub637410]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JEditorPane.html#scrollToReference-java.lang.String-
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JEditorPane.html#scrollToReference-java.lang.String-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JEditorPane.html#scrollToReference-java.lang.String-
 
 -- デフォルトでは、このメソッドは HTMLDocument 内での参照位置を認識しているだけです。
 -- By default, this method only knows how to locate a reference in an HTMLDocument.
@@ -328,7 +328,7 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- URLに対するUL.getRefメソッド
 
 ** 括弧と読点 [#f274a1eb]
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-java.lang.String-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-java.lang.String-
 -- When specifying a path, use the Internet-standard forward-slash ("/") as a separator. (The string is converted to an URL, so the forward-slash works on all systems.)
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ImageIcon.html#ImageIcon-java.lang.String-
 -- パスを指定するときは、区切り文字としてインターネット標準のスラッシュ (/) を使います。文字列は URL に変換され、スラッシュはすべてのシステムで使用されます。
@@ -336,14 +336,14 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- パスを指定するときは、区切り文字としてインターネット標準のスラッシュ (/) を使います(文字列は URL に変換されるので、スラッシュはすべてのシステムで動作します)。
 
 ** CSS プロパティー [#j45beda9]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/text/html/CSS.html
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/text/html/CSS.html
 -- バックグラウンド位置
 -- バックグラウンド
 -- テキスト装飾 (点滅やオーバーラインの例外を含む)
 -- 垂直配置 (スーパークラスだけ)
 -- テキストの配置 (中央揃え)
 -- 上部マージン
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/text/html/CSS.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/text/html/CSS.html
 -- background-position
 -- background
 -- text-decoration (with the exception of blink and overline)
@@ -355,17 +355,17 @@ description: Java クラスドキュメントで修正した方が良さそう�
 
 * 1.7.0で修正済み [#f5d9f622]
 ** 0 次の場合 [#mcd455bd]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/JTree.html#rowHeight
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/JTree.html#rowHeight
 -- 0 次の場合、レンダリングが各行の高さを決めます。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#rowHeight
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JTree.html#rowHeight
 -- If this is <= 0 the renderer determines the height for each row.
 - 変更案
 -- 0 以下の場合、レンダリングが各行の高さを決めます。
 
 ** 親を基準にして位置を指定 [#h52d649a]
-- http://docs.oracle.com/javase/jp/6/api/java/awt/Component.html#getBounds()
+- https://docs.oracle.com/javase/jp/6/api/java/awt/Component.html#getBounds()
 -- 境界はこのコンポーネントの幅、高さ、および親を基準にして位置を指定します。
-- http://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#getBounds--
+- https://docs.oracle.com/javase/8/docs/api/java/awt/Component.html#getBounds--
 --The bounds specify this component's width, height, and location relative to its parent.
 - 変更案
 -- 境界は、このコンポーネントの幅、高さ、および親からの相対位置を示します。
@@ -373,9 +373,9 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- 〃が境界として明示されます。
 
 ** ユーザーが入力した数値 [#bda2d0d2]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/JOptionPane.html#getInputValue()
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/JOptionPane.html#getInputValue()
 -- wantsInput が true の場合に、ユーザーが入力した数値を返します
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JOptionPane.html#getInputValue--
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JOptionPane.html#getInputValue--
 -- Returns the value the user has input, if wantsInput is true.
 - 変更案
 -- wantsInput が true の場合に、ユーザーが入力した値を返します。
@@ -383,9 +383,9 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- 数値と読点
 
 ** setUpdateSelectionOnSort [#bcd916b8]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/JTable.html#setUpdateSelectionOnSort(boolean)
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/JTable.html#setUpdateSelectionOnSort(boolean)
 -- policy.allowSystemProperty プロパティーのデフォルト値は true です。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html#setUpdateSelectionOnSort-boolean-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html#setUpdateSelectionOnSort-boolean-
 -- The default is true.
 - 変更案
 -- デフォルト値は true です。
@@ -394,10 +394,10 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- http://www.google.com/search?q=site:docs.oracle.com/javase/jp/6/+policy.allowSystemProperty
 
 ** 閉じ括弧と訳、具象実装 (たとえば、TableRowSorter を参照します。 [#vdd5abc8]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/DefaultRowSorter.html
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/DefaultRowSorter.html
 -- デフォルトの Comparator を検出するには、具象実装 (たとえば、TableRowSorter を参照します。
 -- デフォルトではソートは行われず (モデルと同様)、列はソート可能です。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/DefaultRowSorter.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/DefaultRowSorter.html
 -- To find the default Comparators, see the concrete implementation (for example, TableRowSorter).
 -- The default sort order is unsorted (the same as the model), and columns are sortable by default.
 - 変更案
@@ -405,44 +405,44 @@ description: Java クラスドキュメントで修正した方が良さそう�
 -- デフォルトのソート順序は「ソートなし (モデルと同じ順序)」、また、各列は「ソート可能」がデフォルトです。
 
 ** コンポーネントがデータ転送処理をサポートしていない場合は null が返されます。 [#de5d864d]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/JComponent.html#setTransferHandler(javax.swing.TransferHandler)
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/JComponent.html#setTransferHandler(javax.swing.TransferHandler)
 -- transferHandler プロパティーを設定します。コンポーネントがデータ転送処理をサポートしていない場合は null が返されます。
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JComponent.html#setTransferHandler-javax.swing.TransferHandler-
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JComponent.html#setTransferHandler-javax.swing.TransferHandler-
 -- Sets the transferHandler property, which is null if the component does not support data transfer operations.
 - 変更案
 -- transferHandler プロパティーを設定します(コンポーネントがデータ転送処理をサポートしない場合は、null を設定する)。
 
 ** コロンが抜けている？ [#ac6b496c]
-- http://docs.oracle.com/javase/jp/6/api/java/awt/Window.html
+- https://docs.oracle.com/javase/jp/6/api/java/awt/Window.html
 -- ウィンドウは、WindowEvents、WindowOpened、WindowClosed、WindowGainedFocus および WindowLostFocus を生成することができます。
-- http://docs.oracle.com/javase/8/docs/api/java/awt/Window.html
+- https://docs.oracle.com/javase/8/docs/api/java/awt/Window.html
 -- Windows are capable of generating the following WindowEvents: WindowOpened, WindowClosed, WindowGainedFocus, WindowLostFocus.
 - 変更案
 -- ウィンドウは、以下のウィンドウイベントを生成できます: WindowOpened、WindowClosed、WindowGainedFocus、WindowLostFocus
 -- ウィンドウは、WindowOpened、WindowClosed、WindowGainedFocus、および WindowLostFocus の WindowEvents を生成できます。
 - メモ
 -- `java.awt.Dialog`は、以下のようになっている
--- http://docs.oracle.com/javase/jp/6/api/java/awt/Dialog.html
+-- https://docs.oracle.com/javase/jp/6/api/java/awt/Dialog.html
 --- ダイアログは、WindowOpened、WindowClosing、WindowClosed、WindowActivated、WindowDeactivated、WindowGainedFocus、および WindowLostFocus の WindowEvents を生成できます。
 --- Dialogs are capable of generating the following WindowEvents: WindowOpened, WindowClosing, WindowClosed, WindowActivated, WindowDeactivated, WindowGainedFocus, WindowLostFocus.
 -- `java.awt.Frame`は、以下のようになっている
--- http://docs.oracle.com/javase/jp/6/api/java/awt/Frame.html
+-- https://docs.oracle.com/javase/jp/6/api/java/awt/Frame.html
 --- フレームは次の型の WindowEvent を生成できます。
 --- Frames are capable of generating the following types of WindowEvents:
 
 ** コロンのあとに例(数値)が重複して現れる [#uf0f875c]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/JSlider.html#getMinorTickSpacing()
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/JSlider.html#getMinorTickSpacing()
 -- 範囲が 0 ～ 50 のスライダで、小目盛りの間隔が 10 に設定されている場合は、0、10、20、30、40、50 の値の横に小目盛りが付けられます。0, 10, 20, 30, 40, 50.
-- http://docs.oracle.com/javase/6/docs/api/javax/swing/JSlider.html#getMinorTickSpacing()
+- https://docs.oracle.com/javase/6/docs/api/javax/swing/JSlider.html#getMinorTickSpacing()
 -- If you have a slider with a range from 0 to 50 and the minor tick spacing is set to 10, you will get minor ticks next to the following values: 0, 10, 20, 30, 40, 50.
 - メモ
 -- `setMinorTickSpacing`, `setMajorTickSpacing`, `getMajorTickSpacing`なども同様。
 
 ** 最後のサイズ変更できない Cursor [#vc4ce4ee]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/JInternalFrame.html#getLastCursor()
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/JInternalFrame.html#getLastCursor()
 -- setCursor メソッドによって設定された、サイズ変更できない最後の Cursor を返します。
 -- 最後のサイズ変更できない Cursor
-- http://docs.oracle.com/javase/6/docs/api/javax/swing/JInternalFrame.html#getLastCursor()
+- https://docs.oracle.com/javase/6/docs/api/javax/swing/JInternalFrame.html#getLastCursor()
 -- Returns the last Cursor that was set by the setCursor method that is not a resizable Cursor.
 -- the last non-resizable Cursor
 - 変更案
@@ -474,24 +474,24 @@ public void setCursor(Cursor cursor) {
 }}
 
 ** JPasswordField と JTextField [#zc2c325b]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/package-summary.html
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/package-summary.html
 -- JPasswordField は、1 行のテキストの編集を可能にする、軽量コンポーネントです。
 -- JTextField は、1 行のテキストの編集を可能にする軽量コンポーネントです。
-- http://docs.oracle.com/javase/6/docs/api/javax/swing/package-summary.html
+- https://docs.oracle.com/javase/6/docs/api/javax/swing/package-summary.html
 -- JPasswordField is a lightweight component that allows the editing of a single line of text where the view indicates something was typed, but does not show the original characters.
 -- JTextField is a lightweight component that allows the editing of a single line of text.
 - メモ
 -- `JPasswordField`の説明が途中で途切れて、`JTextField`の説明とほぼ同じになっている？
 
 ** 他は「copy」などのようにカギ括弧なのに、ここだけ、"link"？ [#n5f38393]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/TransferHandler.html#LINK
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/TransferHandler.html#LINK
 -- "link" の転送アクションを表す int です。
 
 ** 例を示します。 [#qbfbcc48]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/JTable.html
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/JTable.html
 -- RowSorter を直接設定します。例を示します。table.setRowSorter(new TableRowSorter(model)).
 -- autoCreateRowSorter プロパティーを true に設定し、JTable が自動的に RowSorter を作成するようにします。例を示します。setAutoCreateRowSorter(true).
-- http://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html
 -- Directly set the RowSorter. For example: table.setRowSorter(new TableRowSorter(model)).
 -- Set the autoCreateRowSorter property to true, so that the JTable creates a RowSorter for you. For example: setAutoCreateRowSorter(true).
 - 変更案
@@ -499,14 +499,14 @@ public void setCursor(Cursor cursor) {
 -- autoCreateRowSorter プロパティーを true に設定し、JTable が自動的に RowSorter を作成するようにします。例: table.setAutoCreateRowSorter(true);
 
 ** インタフェース Comparable<T> [#ieb7aac0]
-- http://docs.oracle.com/javase/jp/6/api/java/lang/Comparable.html
-- http://docs.oracle.com/javase/jp/1.5.0/api/java/lang/Comparable.html
+- https://docs.oracle.com/javase/jp/6/api/java/lang/Comparable.html
+- https://docs.oracle.com/javase/jp/1.5.0/api/java/lang/Comparable.html
 
 * 1.8.0で修正済み [#j5f1dec1]
 ** セキュリティーマネージャー、セキュリティマネージャ、セキュリティマネージャー [#q5d049c2]
-- http://docs.oracle.com/javase/jp/6/api/java/lang/Thread.html#getAllStackTraces()
+- https://docs.oracle.com/javase/jp/6/api/java/lang/Thread.html#getAllStackTraces()
 -- セキュリティーマネージャー
-- http://docs.oracle.com/javase/jp/6/api/java/lang/Thread.html#getContextClassLoader()
+- https://docs.oracle.com/javase/jp/6/api/java/lang/Thread.html#getContextClassLoader()
 -- セキュリティマネージャ
 
 検索すると両方大量にあるみたい。導入されたバージョンで、ルールが異なる？と思ったけど、同じ 1.5 でもセキュリティマネージャーがある。
@@ -518,16 +518,16 @@ public void setCursor(Cursor cursor) {
 追記: 1.8.0で、セキュリティ・マネージャに統一された。
 
 ** ユーザードロップアクション と ユーザドロップアクション [#ac8f2573]
-- http://docs.oracle.com/javase/jp/6/api/javax/swing/TransferHandler.TransferSupport.html
+- https://docs.oracle.com/javase/jp/6/api/javax/swing/TransferHandler.TransferSupport.html
 -- ユーザードロップアクション
-- http://docs.oracle.com/javase/jp/6/api/java/awt/dnd/DropTargetDragEvent.html
-- http://docs.oracle.com/javase/jp/6/api/java/awt/dnd/DropTargetDropEvent.html
+- https://docs.oracle.com/javase/jp/6/api/java/awt/dnd/DropTargetDragEvent.html
+- https://docs.oracle.com/javase/jp/6/api/java/awt/dnd/DropTargetDropEvent.html
 -- ユーザドロップアクション
 
 1.8.0では、ユーザー・ドロップ・アクションに統一されている
 
 ** Text、Number [#i4a44f68]
-- http://docs.oracle.com/javase/jp/6/api/java/text/SimpleDateFormat.html
+- https://docs.oracle.com/javase/jp/6/api/java/text/SimpleDateFormat.html
 -- Text
 -- Number
 - 変更案
@@ -538,15 +538,15 @@ Year、Month、General time zone などは年、月、一般的なタイムゾ�
 
 //* 1.8.0で未翻訳
 //** Attach API のAttach が添付 [#lf11bd88]
-//- http://docs.oracle.com/javase/jp/6/technotes/guides/attach/index.html
+//- https://docs.oracle.com/javase/jp/6/technotes/guides/attach/index.html
 //-- 添付
-//- http://docs.oracle.com/javase/6/docs/technotes/guides/attach/index.html
+//- https://docs.oracle.com/javase/6/docs/technotes/guides/attach/index.html
 //-- attach
 //
 //添付は、接続かアタッチに修正したほうが良さそう。
 //- 接続
-//-- http://docs.oracle.com/javase/jp/6/technotes/guides/
-//-- http://docs.oracle.com/javase/jp/6/jdk/api/attach/spec/index.html
+//-- https://docs.oracle.com/javase/jp/6/technotes/guides/
+//-- https://docs.oracle.com/javase/jp/6/jdk/api/attach/spec/index.html
 //- アタッチ
 //-- http://java.sun.com/javase/ja/6/webnotes/features.html
 
