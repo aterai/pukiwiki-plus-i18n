@@ -42,11 +42,11 @@ JTable table = new JTable(model) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、第`0`列目のみ選択・編集可能にし、残りの列はマウスクリックやカーソル移動などで選択できないように、`JTable#changeSelection(...)`、`JTable#changeSelection(...)`をオーバーライドしています。
+上記のサンプルでは、第`0`列目のみ選択・編集可能にし、残りの列はマウスクリックやカーソル移動などで選択できないように、`JTable#changeSelection(...)`、`JTable#changeSelection(...)`メソッドをオーバーライドしています。
 
-- `JTable#isCellEditable(...)`は、編集不可にするためにオーバーライド
+- `JTable#isCellEditable(...)`メソッドは、編集不可にするためにオーバーライド
 -- 選択不可で編集可能な列も設定可能
-- `JTable#prepareRenderer(...)`は、列を並べ替えた場合、フォーカスが選択不可の列に移動することを避けるためにオーバーライド
+- `JTable#prepareRenderer(...)`メソッドは、列を並べ替えた場合、フォーカスが選択不可の列に移動することを避けるためにオーバーライド
 -- `table.getTableHeader().setReorderingAllowed(false);`として列の並べ替えを禁止している場合は不要
 - メモ: `table.putClientProperty("Table.isFileList", Boolean.TRUE);`で、第`0`列目の文字列のみ選択可能になる
 -- [[JTableで文字列をクリックした場合だけセルを選択状態にする>Swing/TableFileList]]
