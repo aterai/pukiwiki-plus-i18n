@@ -1516,6 +1516,26 @@ fun main(args: Array<String>) {
 
 #twocolumn
 
+** 境界型パラメータ [#BoundedTypeParameter]
+- `IntelliJ`の自動変換で以下のような境界型パラメータをもつ`Java`クラスを変換し、`kotlinc`でコンパイルすると無駄な境界型パラメータが存在すると警告してくれる
+-- `warning: 'LocalDate' is a final type, and thus a value of the type parameter is predetermined`
+-- `LocalDate`クラスは`final`なので継承不可のため、境界型パラメータは無意味
+-- `Java`側を`class CalendarViewTableModel<T extends TemporalAdjuster> extends DefaultTableModel {`か、`class CalendarViewTableModel extends DefaultTableModel {`に修正する
+
+#twocolumn
+`Java`
+#code{{
+class CalendarViewTableModel<T extends LocalDate> extends DefaultTableModel {
+  public CalendarViewTableModel(T date) {
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+class CalendarViewTableModel<T : LocalDate> public constructor(date: T) : DefaultTableModel() {
+}}
+#twocolumn
+
 * コメント [#comment]
 #comment
 #comment
