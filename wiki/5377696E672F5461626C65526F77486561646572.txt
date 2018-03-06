@@ -74,9 +74,12 @@ class RowHeaderList<E> extends JList<E> {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JList`で作成した行ヘッダを`JScrollPane`に`setRowHeaderView`メソッドで追加しています。
+上記のサンプルでは、`JList`で作成した行ヘッダを`JScrollPane#setRowHeaderView(...)`メソッドで追加しています。
 
-表の余白などに色がついているのは、テストの名残です。特に意味は無いのですが、そのまま残しています。
+----
+// 表の余白などに色がついているのは、テストの名残です。特に意味は無いのですが、そのまま残しています。
+- `Corner`: `JScrollPane.html#setCorner(...)`で左上隅などにコンポーネントを設定しておらず、`JScrollPane`自体の背景色(赤)が表示されている
+- `Viewport`: `JTable`のセルが存在しない領域は、`JViewport`の背景色(緑)が表示されている
 
 #code{{
 rowHeader.setBackground(Color.BLUE);
@@ -85,7 +88,6 @@ scrollPane.getViewport().setBackground(Color.GREEN);
 }}
 
 * 参考リンク [#reference]
-//- [http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html JTable Examples]
 - [https://community.oracle.com/thread/1395446 Swing - excel styled table?]
 - [[JListのセルをカーソル移動でロールオーバー>Swing/RollOverListener]]
 
