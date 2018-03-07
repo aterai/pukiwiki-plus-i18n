@@ -30,6 +30,7 @@ JList<Contribution> weekList = new JList<Contribution>() {
 };
 //...
 private class ContributionListRenderer implements ListCellRenderer<Contribution> {
+  private final Icon emptyIcon = new ColorIcon(Color.WHITE);
   private final ListCellRenderer<? super Contribution> renderer
     = new DefaultListCellRenderer();
   @Override public Component getListCellRendererComponent(
@@ -38,10 +39,10 @@ private class ContributionListRenderer implements ListCellRenderer<Contribution>
     JLabel l = (JLabel) renderer.getListCellRendererComponent(
         list, null, index, isSelected, cellHasFocus);
     if (value.date.isAfter(currentLocalDate)) {
-      l.setIcon(new ColorIcon(Color.WHITE));
+      l.setIcon(emptyIcon);
       l.setToolTipText(null);
     } else {
-      l.setIcon(new ColorIcon(activityColors.get(value.activity)));
+      l.setIcon(activityIcons.get(value.activity));
       String actTxt = value.activity == 0 ? "No" : Objects.toString(value.activity);
       l.setToolTipText(actTxt + " contribution on " + value.date.toString());
     }
@@ -72,6 +73,7 @@ startDate = today.minusWeeks(WEEK_VIEW - 1).minusDays(dow);
 * 参考リンク [#reference]
 - [[JListで月のカーソルキー移動や、週を跨いた日付を範囲選択が可能なカレンダーを作成する>Swing/CalendarViewList]]
 -- こちらはセルが水平方向の次に垂直方向の順で並ぶ「ニュースペーパー・スタイル」レイアウトの`JList`で月カレンダーを表示
+- [https://harmoniccode.blogspot.jp/2017/10/friday-fun-xlviii-calendar-heatmap.html Harmonic Code: Friday Fun XLVIII - Calendar Heatmap]
 
 * コメント [#comment]
 #comment

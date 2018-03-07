@@ -43,9 +43,7 @@ tree.setCellRenderer(new DefaultTreeCellRenderer() {
 上記のサンプルでは、`NimbusLookAndFeel`がデフォルトで使用するセルレンダラーなどを空にした`UIDefaults`を`JTree`に設定し、選択時にノードのみ背景色で塗りつぶしを行うセルレンダラーを`JTree#setCellRenderer(...)`で設定して使用しています。
 
 ----
-- メモ
--- 親ノードの左に表示される三角のアイコン(`collapsedIcon`、`expandedIcon`)が選択されている場合の色を変更する方法がない？
-
+- 親ノードの左に表示される三角のアイコン(`collapsedIcon`、`expandedIcon`)が選択されている場合の色を変更する方法がない？
 #code{{
 UIDefaults def = new UIDefaults();
 def.put("Tree.selectionBackground", Color.WHITE);
