@@ -4,37 +4,15 @@ author: aterai
 pubdate: 2012-06-29
 description: Java SE 7 で追加されたSwing関係のクラスドキュメントを翻訳。
 ---
+* 概要 [#summary]
+`Java SE 7 API`の日本語ドキュメントがない時期に作成した`Swing`関係の`API`の翻訳メモです。
+
+- 現在は`Java SE 8`の日本語ドキュメント(`9`は機械翻訳版？)も存在するので、すでに不要
+
 #contents
 
-* 概要 [#z7536f0d]
-- Java SE 7 API の日本語ドキュメントがない時期に作成したSwing関係のAPIの翻訳メモ
--- Java SE 8 の日本語ドキュメントも存在するので、すでに不要
--- `SwingUtilities.getUnwrappedView(JViewport)`の誤訳の件は、[[日本語への翻訳>Javadoc/Japanese]]に移動
-
-//- Java SE 7 API のドキュメント翻訳プロジェクトについて
-//-- [http://yoshio3.com/2012/04/11/new-link-of-javase-api-reference/ 続：旧 Java SE API リファレンスへの新しいリンク先変更について « 寺田 佳央 – Yoshio Terada]から引用
-// また、Java SE 7 API のドキュメント翻訳プロジェクトにつきましては、諸事情がございまして、５月中旬位まで御待ち頂けませんでしょうか。５月中旬移行に本件についてのアップデートをさせて頂きたいと考えております。
-
-//-- 重箱の隅:「５月中旬%%移行%%以降」
-//上の翻訳プロジェクトはどうなるのか不明だし、個人的に興味があるというか必要なのは Swing 関係だけなので、「諸事情」などは無視して勝手(自分用だし)に翻訳することにしました。誤訳や、用語の一貫性などはあまり気にしていません。%%おかしな訳が気になる場合は、右上の「このページを編集する」から自由(適当)に修正してください。%% スパムが鬱陶しいので編集禁止にしました(2014-05-16)。
-
-//- Java SE 7 API 日本語版提供開始
-//-- [http://yoshio3.com/2013/05/14/ Ｊａｖａ ＳＥ７ＡＰＩ日本語版提供開始 | 寺田　佳央 - Yoshio Terada]から引用
-// 2013 年 5 月 14 日、日本オラクルより新しい発表を行います。本日 5 月 14 日に日本語版 Java SE API ドキュメントを正式公開しました。
-
-//-- 「５月中旬移行」の5月とは、一年後のことだったのか…。
-//-- %%翻訳されているクラスと英語のままのクラスの違いが分からない。javax.swing などは全て？未翻訳なので、パッケージによるのかと思ってたけど、以下みたいな例もあるので意味不明。%%
-//--- 翻訳済み https://docs.oracle.com/javase/jp/7/api/java/lang/Short.html
-//--- %%英語のまま https://docs.oracle.com/javase/jp/7/api/java/lang/Integer.html %% 翻訳済みになった
-
-//- %%徐々に更新していく方針らしいとのこと(ソースは見つからず)。%%残りも更新された。
-//-- [https://blogs.oracle.com/otnjp/entry/%e7%b6%9a_java_se_7%e3%81%ae%e6%97%a5%e6%9c%ac%e8%aa%9e%e3%83%89%e3%82%ad%e3%83%a5%e3%83%a1%e3%83%b3%e3%83%88%e3%81%8c%e5%85%ac%e9%96%8b%e3%81%95%e3%82%8c%e3%81%be%e3%81%97%e3%81%9f 続・Java SE 7の日本語ドキュメントが公開されました！ (Oracle Technology Network Japan Blog)]
-//このサイトのリンクをjavase/jp/6/apiからjavase/jp/7/apiに一括変更するのは、当面は行なわない予定。
-//-- Swing関係の API ドキュメントも翻訳されたようなので、Java SE API 6 の日本語版ではなく、英語版へのリンクになっている`JLayer`とか、`NimbusLookAndFeel`などから順次Java SE API 7 の日本語版の方に変更していく予定(2013-05-28)。
-//-- [https://docs.oracle.com/javase/tutorial/ The Java™ Tutorials]も全部翻訳([http://docs.oracle.com/cd/E26537_01/tutorial/index.html Javaチュートリアル])されたらリンクを変更する予定。
-
-* クラス [#w1bf0b2c]
-** JLayer [#gce3ad95]
+* クラス [#Class]
+** JLayer [#JLayer]
 - [https://docs.oracle.com/javase/7/docs/api/javax/swing/JLayer.html JLayer (Java Platform SE 7 )]
 - [https://docs.oracle.com/javase/jp/7/api/javax/swing/JLayer.html  JLayer (Java Platform SE 7 )]
 
@@ -60,7 +38,7 @@ description: Java SE 7 で追加されたSwing関係のクラスドキュメン�
 -- typo: any of of them
 - それらを使用すると、UnsupportedOperationExceptionが発生します。JLayerにコンポーネントを追加する場合は setView(Component) か setGlassPane(JPanel) を使用します。
 
-** LayerUI [#a013ac39]
+** LayerUI [#LayerUI]
 - [https://docs.oracle.com/javase/7/docs/api/javax/swing/plaf/LayerUI.html LayerUI (Java Platform SE 7 )]
 - [https://docs.oracle.com/javase/jp/7/api/javax/swing/plaf/LayerUI.html LayerUI (Java Platform SE 7 )]
 
@@ -76,7 +54,7 @@ description: Java SE 7 で追加されたSwing関係のクラスドキュメン�
 - The subclasses of LayerUI can either be stateless and shareable by multiple JLayers or not shareable.
 - LayerUIのサブクラスをステートレスにして複数JLayersで共有することも可能ですが、共有しなくても構いません。
 
-** SecondaryLoop [#nfd0cb3f]
+** SecondaryLoop [#SecondaryLoop]
 - [https://docs.oracle.com/javase/7/docs/api/java/awt/SecondaryLoop.html SecondaryLoop (Java Platform SE 7 )]
 - [https://docs.oracle.com/javase/jp/7/api/java/awt/SecondaryLoop.html SecondaryLoop (Java Platform SE 7 )]
 
@@ -113,15 +91,15 @@ description: Java SE 7 で追加されたSwing関係のクラスドキュメン�
 - The following example illustrates a simple use case of secondary loops:
 - 以下の例は、第二のループの単純な使用例を示しています:
 
-** StrokeBorder [#t74328b1]
+** StrokeBorder [#StrokeBorder]
 - [https://docs.oracle.com/javase/7/docs/api/javax/swing/border/StrokeBorder.html StrokeBorder (Java Platform SE 7 )]
 - [https://docs.oracle.com/javase/jp/7/api/javax/swing/border/StrokeBorder.html StrokeBorder (Java Platform SE 7 )]
 
 - A class which implements a border of an arbitrary stroke.
 - 任意のストロークのボーダーを実装するクラスです。
 
-* メソッド [#w75a7473]
-** SwingUtilities.getUnwrappedView(JViewport) [#qb42007e]
+* メソッド [#Method]
+** SwingUtilities.getUnwrappedView(JViewport) [#getUnwrappedView]
 - [https://docs.oracle.com/javase/7/docs/api/javax/swing/SwingUtilities.html#getUnwrappedView(javax.swing.JViewport) SwingUtilities.getUnwrappedView(JViewport)]
 -- the first JViewport's descendant which is not an instance of JLayer. If such a descendant can not be found, null is returned.
 - [https://docs.oracle.com/javase/jp/7/api/javax/swing/SwingUtilities.html#getUnwrappedView(javax.swing.JViewport) SwingUtilities.getUnwrappedView(JViewport)]
@@ -131,6 +109,6 @@ description: Java SE 7 で追加されたSwing関係のクラスドキュメン�
 - メモ
 -- `8`でも誤翻訳されたままになっている
 
-* コメント [#cd808963]
+* コメント [#comment]
 #comment
 #comment

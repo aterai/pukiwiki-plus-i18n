@@ -15,6 +15,11 @@ pubdate: 2018-01-22
 -- via: [https://stackoverflow.com/questions/48339199/java-8u161-8u162-makes-swing-app-use-cpu Java 8u161/8u162 makes Swing app use CPU - Stack Overflow]
 -- 例えば`JTextField`などに日本語を入力しようとして`IME`を切り替えると`CPU`を浪費する
 
+** 右Altキーが効かない [#g57772eb]
+- [https://bugs.openjdk.java.net/browse/JDK-8194873 JDK-8194873 right ALT key hotkeys no longer work in Swing components - Java Bug System]
+-- `Java 9`で右KBD{Alt}キーが効かなくなっている
+-- `Java 8`は問題なし
+
 ** MetalLookAndFeelでのJComboBoxとJToolTip [#fc4b2abf]
 - ドロップダウンリストを開いた状態でツールチップが表示されると描画がおかしくなる場合がある
 -- `MetalLookAndFeel`のみ

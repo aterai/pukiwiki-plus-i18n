@@ -37,7 +37,7 @@ Object o = combo.getAccessibleContext().getAccessibleChild(0);
 
 * 解説 [#explanation]
 - 上: `MetalComboBoxUI`
--- `UIManager.put("ComboBox.border", border)`などで、`Border`を変更しているが、これとは別に、`UI`で独自に余白？が描画される
+-- `UIManager.put("ComboBox.border", border)`などで、`Border`を変更しているが、これとは別に、`UI`で独自に余白が描画される
 -- `MetalComboBoxUI`独自の余白を消す場合は、`MetalTheme`を変更して`MetalLookAndFeel.getControlShadow()`を同色にするか、`MetalComboBoxUI#paintCurrentValueBackground(...)`をオーバーライドする必要がある
 - 中: `BasicComboBoxUI`
 -- `MetalComboBoxUI`などに存在する余白は消すことができるが、`ComboBox.buttonDarkShadow`が`ArrowButton`の三角とボタンの影に使用されているため、両方を一度に非表示にすることができない
@@ -68,7 +68,7 @@ combo.addMouseListener(new MouseAdapter() {
 }}
 
 ----
-[https://stackoverflow.com/questions/9322903/how-do-you-change-border-of-the-pop-up-section-of-a-jcombobox java - How do you change border of the pop up section of a JComboBox? - Stack Overflow] を参考にして、`JComboBox`から以下のように、`BasicComboPopup`を取得し、`MatteBorder`を設定
+[https://stackoverflow.com/questions/9322903/how-do-you-change-border-of-the-pop-up-section-of-a-jcombobox java - How do you change border of the pop up section of a JComboBox? - Stack Overflow] を参考に、`JComboBox`から以下のように`BasicComboPopup`を取得して`MatteBorder`を設定
 
 #code{{
 Object o = combo.getAccessibleContext().getAccessibleChild(0);
