@@ -1,0 +1,66 @@
+---
+category: swing
+folder: VisibleListSizeInScrollPane
+title: JListがJScrollPane内に組み込まれている場合のビューポートサイズを設定する
+tags: [JList, JScrollPane, JViewport, JScrollBar]
+author: aterai
+pubdate: 2018-03-12T18:30:26+09:00
+description: JScrollPane内に組み込まれたJListを表示するために必要なビューポートの推奨サイズを設定します。
+image: https://drive.google.com/uc?id=1ajnMnDLpv23H17jLK5NbcE3grdfYGTtWDg
+---
+* 概要 [#summary]
+`JScrollPane`内に組み込まれた`JList`を表示するために必要なビューポートの推奨サイズを設定します。
+
+#download(https://drive.google.com/uc?id=1ajnMnDLpv23H17jLK5NbcE3grdfYGTtWDg)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String[] model1 = IntStream.range(0, 20)
+    .mapToObj(Objects::toString)
+    .toArray(String[]::new);
+JList<String> list1 = new JList<>(model1);
+list1.setVisibleRowCount(visibleRowCount);
+list1.setPrototypeCellValue(prototypeCellValue);
+
+String[] model2 = {"looooooooooooooong"};
+JList<String> list2 = new JList<>(model2);
+list2.setVisibleRowCount(visibleRowCount);
+list2.setPrototypeCellValue(prototypeCellValue);
+
+JList<String> list3 = new JList<String>(model2) {
+  @Override public Dimension getPreferredScrollableViewportSize() {
+    Dimension d = super.getPreferredScrollableViewportSize();
+    d.width = 60;
+    return d;
+  }
+};
+list3.setVisibleRowCount(visibleRowCount);
+list3.setPrototypeCellValue(prototypeCellValue);
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、レイアウトの方向が`VERTICAL`に設定されている`JList`が`JScrollPane`に組み込まれている場合の表示サイズをテストしています。
+
+- 上段: プロトタイプアイテム`PrototypeCellValue`が`null`
+-- `PrototypeCellValue`が`null`で、`fixedCellWidth`と`fixedCellHeight`がデフォルトの`-1`
+-- 高さ: `JList#getVisibleRowCount()`と`fixedCellHeight`が`0`の以下なので代わりに固定値`16`を掛けた値と`JList#getInsets()`の`top`と`bottom`を足した値になる
+--- 水平`JScrollBar`の高さは推奨ビューポートの高さに含まれない
+-- 上段左と上段中の幅: それぞれモデル内で最大の幅を持つアイテムの幅が推奨ビューポートの幅になる
+-- 上段右の幅: `JList#getPreferredScrollableViewportSize()`をオーバーライドして固定値`60`を推奨ビューポートの幅に設定
+- 下段: プロトタイプアイテム`PrototypeCellValue`が設定済(`MMMMMMM`)
+-- `PrototypeCellValue`が存在し、`fixedCellWidth`と`fixedCellHeight`が`0`以上の値
+-- 高さ: `JList#getVisibleRowCount()`と`JList#getFixedCellHeight()`を掛けた値と`JList#getInsets()`の`top`と`bottom`を足した値になる
+-- 下段左の幅: `JList#setPrototypeCellValue(...)`で設定したプロトタイプアイテムの幅が推奨ビューポートの幅になる
+--- 垂直`JScrollBar`の幅は推奨ビューポートの幅に含まれない
+-- 下段中の幅: `JList#setPrototypeCellValue(...)`で設定したプロトタイプアイテムの幅が推奨ビューポートの幅になる
+-- 下段右の幅: `JList#getPreferredScrollableViewportSize()`をオーバーライドして固定値`60`を推奨ビューポートの幅に設定
+--- 別途`JList#setPrototypeCellValue(...)`で設定したアイテムの幅で文字列が省略されているが、その幅が`60`以上なので水平`JScrollBar`が表示されている
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#getPreferredScrollableViewportSize-- JList#getPreferredScrollableViewportSize() (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#setPrototypeCellValue-E- JList#setPrototypeCellValue(E) (Java Platform SE 8)]
+- [[JComboBoxのセルサイズを決定するためのプロトタイプ値を設定する>Swing/PrototypeDisplayValue]]
+
+* コメント [#comment]
+#comment
+#comment
