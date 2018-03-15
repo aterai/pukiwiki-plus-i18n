@@ -5,11 +5,12 @@ description: Swing関連で注目しているバグIDへのリンク、メモな
 author: aterai
 pubdate: 2018-01-22
 ---
+* 概要 [#summary]
 [[Swing]]関係で個人的に注目しているバグ`ID`へのリンクなどをメモしています。
 
 #contents
 
-* Swing関係のバグ [#bug]
+* 未修整 [#i2be5cf6]
 ** Application uses higher CPU in 8u161/8u162 [#md4c2938]
 - [https://bugs.openjdk.java.net/browse/JDK-8195830 JDK-8195830 Application uses higher CPU in 8u161/8u162 - Java Bug System]
 -- via: [https://stackoverflow.com/questions/48339199/java-8u161-8u162-makes-swing-app-use-cpu Java 8u161/8u162 makes Swing app use CPU - Stack Overflow]
@@ -169,6 +170,7 @@ public class OptionPaneResolutionTest {
 }
 }}
 
+* 修正済み [#q7527db1]
 ** 親フレームのドラッグ中にJWindowでクラッシュ [#hed7be2e]
 - [https://stackoverflow.com/questions/30072883/java-swing-jwindow-application-crash Java Swing JWindow application crash - Stack Overflow]
 -- 親フレームのドラッグ中に？子`JWindow`が表示されると`JVM`が落ちる(`Windows 7 64bit JKD1.8.0_11`)。
@@ -279,6 +281,7 @@ public class Gui {
 }
 }}
 
+* 再現不可 [#w730e56b]
 ** WebStartでCPU 100% [#p32896ec]
 -`1.6.0_14`にすると、`web start`(`2`回目以降？) で`CPU 100%`になる？
 --自宅のPCでは再現しない。

@@ -20,19 +20,24 @@ frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 frame.getContentPane().add(new MainPanel());
 frame.pack();
 frame.setLocationRelativeTo(null);
-//以下は自前で位置を計算する場合
-//Rectangle screen = frame.getGraphicsConfiguration().getBounds();
-//frame.setLocation(screen.x + screen.width  / 2 - frame.getSize().width  / 2,
-//                  screen.y + screen.height / 2 - frame.getSize().height / 2);
+// 以下は自前で位置を計算する場合
+// Rectangle screen = frame.getGraphicsConfiguration().getBounds();
+// frame.setLocation(screen.x + screen.width  / 2 - frame.getSize().width  / 2,
+//                   screen.y + screen.height / 2 - frame.getSize().height / 2);
 frame.setVisible(true);
 }}
 
 * 解説 [#explanation]
-`Window#setLocationRelativeTo(Component)`メソッドで、引数で指定した基準となるコンポーネントが`null`の場合、フレームは画面中央に表示されます。
+`Window#setLocationRelativeTo(Component)`メソッドで引数で指定した基準となるコンポーネントを`null`にした場合、`JFrame`は画面中央に配置されます。
 
-`JFrame#setLocation`メソッドなどで任意の位置を指定する場合は、フレームの左上隅座標を計算します。
-
-どちらも、フレームを`pack()`、もしくは`setSize(int, int)`でサイズを設定した後で実行するようにしてください。
+- `JFrame`の左上隅座標を計算して`JFrame#setLocation(...)`メソッドを使用し、`JFrame`を画面中央に配置する方法もある
+#code{{
+Rectangle screen = frame.getGraphicsConfiguration().getBounds();
+frame.setLocation(
+  screen.x + screen.width / 2 - frame.getSize().width / 2,
+  screen.y + screen.height / 2 - frame.getSize().height / 2);
+}}
+- どちらの場合も、フレームを`pack()`、もしくは`setSize(int, int)`で`JFrame`のサイズを設定した後で実行する必要がある
 
 * コメント [#comment]
 #comment

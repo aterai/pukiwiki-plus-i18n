@@ -53,10 +53,15 @@ class CalendarViewTableModel extends DefaultTableModel {
 上記のサンプルでは、`Java 8`から`java.time`パッケージに追加された`LocalDate`を`JTable`のモデルとして使用し、月のカレンダーを表示しています。
 
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/time/temporal/WeekFields.html#getFirstDayOfWeek-- WeekFields#getFirstDayOfWeek()]メソッドで`Locale`に応じた週の最初の曜日を取得して、`JTable`の`0`列目を設定
--- 例: フランスと`ISO-8601`標準では月曜日が週の最初の曜日になる
---- `java -Duser.language=fr -jar example.jar`
+-- 例: ロケールがフランスや`ISO-8601`標準では月曜日、アラビアなら土曜日が週の最初の曜日になる
 
+#twocolumn
+`java -Duser.language=fr -jar example.jar`
 #img2(https://drive.google.com/uc?id=1SmGpl6oxRwwb8tZM2Vc0C7oFS_UCT_Ck6Q)
+#twocolumn
+`java -Duser.language=ar -jar example.jar`
+#img2(https://4.bp.blogspot.com/-gR-ZIzebjI8/WpZl3xJH3wI/AAAAAAAAQMY/428-GXuyU-4pZu3CDVghkY19YPcRXfLAwCLcBGAs/s1600/CalendarViewTable2.png)
+#twocolumn
 
 - 土曜と日曜の位置も`6`列目と`0`列目固定ではないので、以下のように`LocalDate.getDayOfWeek()`メソッドで曜日を確認してその背景色を変更する必要がある
 

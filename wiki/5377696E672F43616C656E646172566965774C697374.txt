@@ -60,7 +60,7 @@ class CalendarViewListModel extends AbstractListModel<LocalDate> {
 * 解説 [#explanation]
 カレンダーの週や日付モデルは、[[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]とほぼ同じですが、上記のサンプルでは表示に`JTable`ではなく`JList`を使用しているため、左右カーソルキーでの週を跨いだ日付移動などが可能になっています。
 
-- `JList#setLayoutOrientation(JList.HORIZONTAL_WRAP)`を設定し、セルが水平方向の次に垂直方向の順で並ぶレイアウトを使用
+- `JList#setLayoutOrientation(JList.HORIZONTAL_WRAP)`を設定し、セルが水平方向の次に垂直方向の順で並ぶ「ニュースペーパー・スタイル」レイアウトを使用
 - セルサイズは、`JList#setFixedCellWidth(int)`と`JList#setFixedCellHeight(int)`メソッドで固定サイズを使用
 - 折り返しセル数は、`JList#setVisibleRowCount(int)`メソッドを使用して表示可能行数を設定することで指定
 -- `HORIZONTAL_WRAP`を指定した`JList`の場合、列数を指定した折り返しはできないため、`7`列`6`行の固定サイズのカレンダーで`JList#setVisibleRowCount(6)`を設定することで常に`7`日分の列を表示する

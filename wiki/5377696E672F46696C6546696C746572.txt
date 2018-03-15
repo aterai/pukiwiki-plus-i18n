@@ -32,27 +32,27 @@ fileChooser.addChoosableFileFilter(new FileFilter() {
 * 解説 [#explanation]
 上記のサンプルでは、フィルタを匿名インナークラスで書いていますが、複数のフィルタを追加する場合は、それぞれクラスを作ったほうがすっきり書けるかもしれません。
 
-`addChoosableFileFilter(FileFilter)`メソッドを使うと、そのフィルタが現在選択されているフィルタになります。例えば「すべてのファイル」をデフォルト(選択された状態)に戻したい場合は、以下のようにします。
-
-#code{{
-fileChooser.addChoosableFileFilter(myFilter);
-fileChooser.setFileFilter(fileChooser.getAcceptAllFileFilter());
-}}
+----
+- %%`addChoosableFileFilter(FileFilter)`メソッドを使うと、そのフィルタが現在選択されているフィルタになります。例えば「すべてのファイル」をデフォルト(選択された状態)に戻したい場合は、`JFileChooser#getAcceptAllFileFilter()`を再設定する%% -
+- `JDK 7`から`JFileChooser#addChoosableFileFilter(...)`内で`JFileChooser#setFileFilter(...)`を呼ばなくなった
+-- [https://bugs.openjdk.java.net/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]
 
 ----
-`JDK 6`では、新しく[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/filechooser/FileNameExtensionFilter.html javax.swing.filechooser.FileNameExtensionFilter]クラスが追加されており、拡張子で選択できるファイルフィルタを簡単に作成することが出来ます(参考: [http://d.hatena.ne.jp/nowokay/20070228#1172660818 JavaSE6の便利クラス - きしだのはてな])。
+- `JDK 6`では、新しく[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/filechooser/FileNameExtensionFilter.html javax.swing.filechooser.FileNameExtensionFilter]クラスが追加された
+-- [http://d.hatena.ne.jp/nowokay/20070228#1172660818 JavaSE6の便利クラス - きしだのはてな]
+-- 説明の後に可変長引数で拡張子を複数指定可能
+-- 拡張子に`.`ドットは不要で、大文字小文字も区別しない
 
 #code{{
-//FileNameExtensionFilter(String description, String... extensions)
+// FileNameExtensionFilter(String description, String... extensions)
 FileFilter filter = new FileNameExtensionFilter("JPEGファイル(*.jpg)", "jpg", "jpeg");
 fileChooser.addChoosableFileFilter(filter);
 }}
 
-上記のように説明の後に、可変長引数で拡張子を複数指定できます。ドットは必要なく、大文字小文字も区別されません。
-
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JFileChooser.html#addChoosableFileFilter-javax.swing.filechooser.FileFilter- JFileChooser#addChoosableFileFilter(...) (Java Platform SE 8)]
 - [https://bugs.openjdk.java.net/browse/JDK-6400960 Bug ID: 6400960 Swing File*Filters should extend java.io.File*Filters]
+- [https://bugs.openjdk.java.net/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]
 
 * コメント [#comment]
 #comment
@@ -60,5 +60,6 @@ fileChooser.addChoosableFileFilter(filter);
 -- 直しておきました。どもです。 -- &user(aterai); &new{2003-12-24 (水) 12:41:13};
 - `addChoosableFileFilter`を何度も呼ぶと最後に追加されたものがデフォルトになるが、例えば`2`番目に追加した`filter`を最後に再び追加すると`2`番目がデフォルトになる。 -- &user(Y); &new{2006-11-27 (月) 15:21:26};
 -- `addChoosableFileFilter(FileFilter)`は、その`FileFilter`がすでに含まれている場合は、`setFileFilter(FileFilter)`だけ実行するみたいですね。 -- &user(aterai); &new{2006-11-28 (火) 16:44:40};
+-- 追記: [https://bugs.openjdk.java.net/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]で、この動作は修正されたようです。 -- &user(aterai); &new{2018-03-13 (火) 20:46:52};
 
 #comment

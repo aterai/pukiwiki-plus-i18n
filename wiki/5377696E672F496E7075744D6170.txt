@@ -9,7 +9,7 @@ description: KBD{Esc}キーを押すと閉じるJDialogを作成します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOj22ObUI/AAAAAAAAAck/b5izKCmGkHk/s800/InputMap.png
 ---
 * 概要 [#summary]
-KBD{Esc}キーを押すと閉じる`JDialog`を作成します。大部分を[https://community.oracle.com/thread/1488562 Swing (Archive) - JDialog says ESC key is already registered--where?]から、そのまま引用しています。
+KBD{Esc}キーを押すと閉じる`JDialog`を作成します。[https://community.oracle.com/thread/1488562 Swing (Archive) - JDialog says ESC key is already registered--where?]からの引用です。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOj22ObUI/AAAAAAAAAck/b5izKCmGkHk/s800/InputMap.png)
 
@@ -28,7 +28,7 @@ dialog.getRootPane().getActionMap().put("close-it", act);
 }}
 
 * 解説 [#explanation]
-`JOptionPane.showMessageDialog()`メソッドなどで作成したダイアログは、KBD{Esc}キーを押すと閉じますが、デフォルトの`JDialog`の場合はそのような設定はされていません。`JDialog`でKBD{Esc}キーを押すと閉じるようにするには、`InputMap`などを使ってアクションを設定する必要があります。
+`JOptionPane.showMessageDialog()`メソッドなどで作成したダイアログは、KBD{Esc}キーを押すと閉じますが、デフォルトの`JDialog`の場合はそのような設定はされていません。`JDialog`でKBD{Esc}キーを押すと閉じるようにするには、`JDialog`から`InputMap`を取得して`Action`を設定する必要があります。
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1488562 Swing (Archive) - JDialog says ESC key is already registered--where?]
