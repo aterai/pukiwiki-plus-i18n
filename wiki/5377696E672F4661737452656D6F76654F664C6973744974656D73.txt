@@ -1,0 +1,99 @@
+---
+category: swing
+folder: FastRemoveOfListItems
+title: JListからの大量アイテム削除を高速化する
+tags: [JList, ListModel, AbstractListModel, DefaultListModel, SpringLayout]
+author: aterai
+pubdate: 2018-03-19T16:16:24+09:00
+description: JListのListModelからの大量のアイテムを高速に削除する方法をテストします。
+image: https://drive.google.com/uc?id=1w4uURJH6pPCGk68BT_XlCjxnZQlOxv1n7w
+---
+* 概要 [#summary]
+`JList`の`ListModel`からの大量のアイテムを高速に削除する方法をテストします。
+
+#download(https://drive.google.com/uc?id=1w4uURJH6pPCGk68BT_XlCjxnZQlOxv1n7w)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+private static <E> void move1(JList<E> from, JList<E> to) {
+  ListSelectionModel sm = from.getSelectionModel();
+  int[] selectedIndices = from.getSelectedIndices();
+
+  DefaultListModel<E> fromModel = (DefaultListModel<E>) from.getModel();
+  DefaultListModel<E> toModel = (DefaultListModel<E>) to.getModel();
+  List<E> unselectedValues = new ArrayList<>();
+  for (int i = 0; i < fromModel.getSize(); i++) {
+    if (!sm.isSelectedIndex(i)) {
+      unselectedValues.add(fromModel.getElementAt(i));
+    }
+  }
+  if (selectedIndices.length > 0) {
+    for (int i : selectedIndices) {
+      toModel.addElement(fromModel.get(i));
+    }
+    fromModel.clear();
+    unselectedValues.forEach(fromModel::addElement);
+  }
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、大量のアイテムをもつ`JList`を左右に配置し、選択アイテムを`>`、`<`ボタンで移動するテストを行っています。
+
+- `default remove`
+-- 移動元の`JList`で選択されているアイテムのインデックスを`JList#getSelectedIndices()`メソッドで取得
+-- 上で取得したインデックス配列を`for`でループし、移動元の`DefaultListModel`から`get(idx)`でアイテムを取得、これを移動先の`DefaultListModel`へ`addElement(...)`でコピー
+-- 上で取得したインデックス配列を`for`で末尾からループし、移動元の`DefaultListModel`から`remove(idx)`でアイテムを削除
+-- `DefaultListModel#remove(idx)`内で実行される`AbstractListModel#fireIntervalRemoved(...)`が遅いため、アイテムを大量に削除する場合非常に時間が掛かる
+-- `DefaultListModel#removeAllElements()`で全削除、`JList`の選択モードが`ListSelectionModel.MULTIPLE_INTERVAL_SELECTION`で`DefaultListModel#removeRange(...)`メソッドで範囲削除が可能な場合、`AbstractListModel#fireIntervalRemoved(...)`は最後に一回呼ばれるだけなので高速
+- `clear + addElement`
+-- 移動元の`JList`で選択されていないアイテムを別の`ArrayList`に保存
+-- 移動元の`JList`の選択インデックス配列を`for`ループで回して、移動元の`DefaultListModel`へ`addElement(...)`でコピー
+-- `DefaultListModel#clear()`で移動元の`JList`をクリア
+-- 保存していた未選択アイテムリストから移動元の`JList`にアイテムを復元
+-- `AbstractListModel#fireIntervalRemoved(...)`は`DefaultListModel#clear()`で一回呼ばれるだけなので高速
+- `addAll + remove`
+-- `AbstractListModel`を継承するリストモデルを作成
+-- `DefaultListModel`で使用している`Vector`ではなく、`ArrayList`をアイテムの保持に使用
+-- 選択アイテムのインデックス配列を引数にしてまとめて削除を実行するメソッドを追加
+--- `AbstractListModel#fireIntervalRemoved(...)`は最後に一回呼ばれるだけなので高速
+#code{{
+public void remove(int... selectedIndices) {
+  if (selectedIndices.length > 0) {
+    int max = selectedIndices.length - 1;
+    for (int i = max; i >= 0; i--) {
+      delegate.remove(selectedIndices[i]);
+    }
+    fireIntervalRemoved(this, selectedIndices[0], selectedIndices[max]);
+  }
+}
+}}
+
+----
+- `JTable`でも大量の行を高速に削除する場合は、同様の方法を取る必要がある
+#code{{
+List<Vector> unselectedRows = new ArrayList<>(model.getRowCount());
+ListSelectionModel sm = table.getSelectionModel();
+for (int i = 0; i < model.getRowCount(); i++) {
+  if (!sm.isSelectedIndex(i)) {
+    int idx = table.convertRowIndexToModel(i);
+    unselectedRows.add((Vector) model.getDataVector().get(idx));
+  }
+}
+model.setRowCount(0);
+unselectedRows.forEach(model::addRow);
+}}
+
+----
+- 左右の`JList`、中央の`JButton`の配置は、`SpringLayout`を使用してレイアウト
+-- [[SpringLayoutの使用>Swing/SpringLayout]]
+-- 左右の`JList`: 親パネルの幅の`40%`
+-- 中央の`JButton`を縦に配置した`Box.createVerticalBox()`: 親パネルの幅の`10%`
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultListModel.html DefaultListModel (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractListModel.html AbstractListModel (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment
