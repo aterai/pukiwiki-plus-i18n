@@ -22,7 +22,8 @@ class CheckBoxCellRenderer<E extends CheckBoxNode> extends JCheckBox
   implements ListCellRenderer<E>, MouseListener, MouseMotionListener {
   private int rollOverRowIndex = -1;
   @Override public Component getListCellRendererComponent(
-    JList<? extends E> list, E value, int index, boolean isSelected, boolean cellHasFocus) {
+        JList<? extends E> list, E value, int index,
+        boolean isSelected, boolean cellHasFocus) {
     this.setOpaque(true);
     if (isSelected) {
       this.setBackground(list.getSelectionBackground());
@@ -50,7 +51,8 @@ class CheckBoxCellRenderer<E extends CheckBoxNode> extends JCheckBox
       int index  = l.locationToIndex(p);
       if (index >= 0) {
         @SuppressWarnings("unchecked")
-        DefaultListModel<CheckBoxNode> m = (DefaultListModel<CheckBoxNode>) l.getModel();
+        DefaultListModel<CheckBoxNode> m =
+            (DefaultListModel<CheckBoxNode>) l.getModel();
         CheckBoxNode n = m.get(index);
         m.set(index, new CheckBoxNode(n.text, !n.selected));
         l.repaint(l.getCellBounds(index, index));

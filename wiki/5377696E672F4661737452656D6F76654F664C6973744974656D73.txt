@@ -28,7 +28,7 @@ private static <E> void move1(JList<E> from, JList<E> to) {
     }
   }
   if (selectedIndices.length > 0) {
-    for (int i : selectedIndices) {
+    for (int i: selectedIndices) {
       toModel.addElement(fromModel.get(i));
     }
     fromModel.clear();

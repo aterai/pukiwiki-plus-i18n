@@ -34,6 +34,7 @@ image: https://drive.google.com/uc?id=18sjCT2fx28w5llnXs5lk1cEYRFC5oawA4A
 - ストアなどに`0x800704fc`とエラーでログインできなくなると、`Microsoft Solitaire Collection`では「ネットワークに接続できません」とダイアログが表示されてログインができない
 
 ** クラッシュ [#crash]
+*** MoAppCrash [#MoAppCrash]
 - 一個イベントをクリアした後、アプリケーションがクラッシュ
 - クラッシュ後にそのイベントに入ると、エラーメッセージなどは表示されずいきなり落ちる
 - イベントカレンダーから別の日のイベントは参照できるが、クラッシュ当日のイベントはローディングアニメーション中に落ちる
@@ -44,13 +45,12 @@ image: https://drive.google.com/uc?id=18sjCT2fx28w5llnXs5lk1cEYRFC5oawA4A
 - 雪で自転車通勤できず、イベント開始時の`21`時頃に電車で`Android`版を使っていたときのイベントで落ちた？
 -- %%`Android`版とコンフリクトしている？%%
 -- %%`Android`版をアンインストールして様子見%%
--- `Android`版はインストールしていなくても発生(2018/02/11)
+-- `2018/02/11`: `Android`版はインストールしていなくても発生
 -- `Android`版はインストールしていないが、直前まで携帯を使用していたら発生、ルータ(`WiFi`)の設定が関係している？
 - 別アカウントを作成してログインするとクラッシュ前にクリアしたチャレンジがスキップされた状態でスタートし、全チャレンジクリア可能
 -- クラッシュしたアカウントでは壊れたデータがサーバーに残っているためか、別`PC`からそのイベントに入っても必ずクラッシュしてしまう
 - [https://answers.microsoft.com/en-us/windows/forum/games_windows_10/microsoft-solitaire-collection-events-crashing/4e0f0b17-bee8-4ff0-a52e-08bc2d2c794c Microsoft Solitaire Collection Events Crashing - Microsoft Community]と同じ症状
 - 「コントロールパネル、システムとセキュリティ、セキュリティとメンテナンス、信頼性履歴の表示」の「信頼性モニター」に、クラッシュログが残っている
-- `2018/03`: イベント中、数秒フリーズや警告なしにクラッシュは頻発(`combase.dll`ではなく`edgehtml.dll`)しているが連続クラッシュは発生せず、アプリを再度起動すればイベントに戻れる
 
 #code{{
 発生元
@@ -90,13 +90,21 @@ OS バージョン:	10.0.16299.2.0.0.256.48
 バケット ID:	130e3e3b05d4c5c6981e5ecea59ef59e (1737930747846522270)
 }}
 
+*** combase.dll [#combase]
 - `2018/03/17`: %%`edgehtml.dll`%% `combase.dll`がクラッシュしてイベントに入れなくなった
 -- `Android`版は問題なし
--- 別アカウントに切り替えても、クラッシュしてイベントに入れない
+-- 以前のクラッシュとは異なり、別アカウントに切り替えてもクラッシュしてイベントに入れない
 -- `PC`版は全ユーザーがプレイできない状態になっている？
+--- `Microsoft Community`や[https://community.microsoftcasualgames.com/ Home - Microsoft Casual Games]にも`Mar16`以降に大量の投稿がされているが公式の反応はなさそう？ (普段は`0`件なのに`Mar17`には`500`件以上投稿されているので全部は確認していない)
+-- `Facebook`の`Microsoft Solitaire Collection`のページで同様の症状を訴える多数のコメントがあり、修正中との公式コメント？がついている
+--- `2018/03/18 13:36`(日本時間？)に修正されたとの公式コメント、原因などは書かれていない
 
+*** edgehtml.dll [#edgehtml]
+- `2018/03`: `3`月に入ってから？イベント中、数秒フリーズや警告なしにクラッシュは頻発(`combase.dll`ではなく`edgehtml.dll`)しているが連続クラッシュは発生せず、アプリを再度起動すればイベントに戻れる
+
+*** XboxApp.exe [#XboxApp]
 - 信頼性モニターには、`Microsoft Solitaire Collection`と同時に`Xbox`のクラッシュログも残っている場合がある
-- 2018/02/23: `XboxApp.exe`が更新後、起動直後に落ちるようになった
+- `2018/02/23`: `XboxApp.exe`が更新後、起動直後に落ちるようになった
 -- `Microsoft Solitaire Collection`のイベントでは落ちていないが、アカウントの切り替えが不可になる
 -- `Surface Pro 3`環境でのみクラッシュし、別`PC`では問題なく動作している
 - `Windows 10`の「設定」、「アプリ」、「アプリと機能」で`Xbox`を選択し、「詳細オプション」の「リセット」ボタンで`Xbox`のクラッシュは発生しなくなった

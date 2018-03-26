@@ -38,12 +38,12 @@ tab.addChangeListener(new ChangeListener() {
 `JTabbedPane`に`ChangeListener`を追加し、条件によってタブの文字色を変更しています。
 
 - タブ文字色: `JTabbedPane#setForegroundAt(Color)`
--- `Look and Feel`に依存(`JDK 1.7.0`からドキュメントに記述されている)
+-- `Look and Feel`に依存(`JDK 1.7.0`からドキュメントに追記された)
 -- `Synth(Nimbus)LookAndFeel`などでは、`JTabbedPane#setForegroundAt(Color)`で変更することができない
 -- [https://bugs.openjdk.java.net/browse/JDK-6939001 Bug ID: 6939001 Nimbus: JTabbedPane setBackgroundAt and setForegroundAt have no effect]
 - タブ背景色: `JTabbedPane#setBackgroundAt(Color)`
-- `Look and Feel`に依存(`JDK 1.7.0`からドキュメントに記述されている)
-- `Windows XP`でタブの背景色を変更したい場合は、以下のように`System.setProperty("swing.noxp", "true")`とする必要がある
+-- `Look and Feel`に依存(`JDK 1.7.0`からドキュメントに追記された)
+-- `Windows XP`でタブの背景色を変更したい場合は、以下のように`System.setProperty("swing.noxp", "true")`とする必要がある
 
 #code{{
 public static void createAndShowGUI() {

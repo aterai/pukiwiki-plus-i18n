@@ -33,8 +33,20 @@ JLabel l1 = new JLabel("Timer Animated ToolTip") {
 };
 l1.setToolTipText("dummy");
 }}
+
 - 中
 -- `Animated GIF`ファイルを`JLabel#setIcon(Icon)`で設定し、`JToolTip`にその`JLabel`を追加
+#code{{
+JLabel l2 = new JLabel("Gif Animated ToolTip") {
+  @Override public JToolTip createToolTip() {
+    JToolTip tip = new AnimatedToolTip(
+        new JLabel("", new ImageIcon(url), SwingConstants.LEFT));
+    tip.setComponent(this);
+    return tip;
+  }
+};
+}}
+
 - 下
 -- `Animated GIF`ファイルを`<html>`タグを使って`setToolTipText(...)`メソッドで設定
 
