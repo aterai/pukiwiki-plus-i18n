@@ -76,7 +76,7 @@ startDate = today.minusWeeks(WEEK_VIEW - 1).minusDays(dow);
 -- `GridBagLayout`を使用する`JPanel`を適用
 -- セルと幅が同じで高さが`0`のダミーコンポーネント`Box.createHorizontalStrut(CELL_SIZE.width)`を作成し、ガイドグリッドとして`27`週分追加
 -- 前の週と月が異なる列に`gridwidth=3`の幅を占有する`JLabel`で月名を表示
---- 月内の週が`5`列になる場合でも月名`JLabel`は`3`列分のみ使用し、空列はガイドグリッドで幅を確保
+--- 月内の週が`4`列、`5`列になる場合でも月名`JLabel`は`3`列分のみ使用し、空列はガイドグリッドで幅を確保
 --- `27 - 3 + 1`列目以降は`3`列確保できないので、月が変わっても月名`JLabel`を表示しない
 
 * 参考リンク [#reference]

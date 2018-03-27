@@ -1520,6 +1520,7 @@ fun main(args: Array<String>) {
 - `IntelliJ`の自動変換で以下のような境界型パラメータをもつ`Java`クラスを変換し、`kotlinc`でコンパイルすると無駄な境界型パラメータが存在すると警告してくれる
 -- `warning: 'LocalDate' is a final type, and thus a value of the type parameter is predetermined`
 -- `LocalDate`クラスは`final`なので継承不可のため、境界型パラメータは無意味
+-- `ECJ`(`Eclipse Compiler for Java`)も`The type parameter T should not be bounded by the final type LocalDate. Final types cannot be further extended`と警告してくれる
 -- `Java`側を`class CalendarViewTableModel<T extends TemporalAdjuster> extends DefaultTableModel {`か、`class CalendarViewTableModel extends DefaultTableModel {`に修正する
 
 #twocolumn
