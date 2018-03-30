@@ -17,7 +17,7 @@ image: https://lh5.googleusercontent.com/-m8cdaUCibl0/TxPCZQMYqkI/AAAAAAAABH4/eA
 #code(link){{
 TreeModel model = tree.getModel();
 DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
-Enumeration e = root.breadthFirstEnumeration();
+Enumeration<?> e = root.breadthFirstEnumeration();
 while (e.hasMoreElements()) {
   DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.nextElement();
   textArea.append(node.toString() + "\n");
@@ -37,6 +37,14 @@ while (e.hasMoreElements()) {
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultMutableTreeNode.html#preorderEnumeration-- DefaultMutableTreeNode#preorderEnumeration()]
 -- 前順走査
 -- `JTree, colors, blue, violet, red, yellow, sports, basketball, soccer, ...`
+
+----
+- `DefaultMutableTreeNode#children()`や`DefaultMutableTreeNode#xxxxxEnumeration()`などの戻り値
+-- `Java 8`: `Enumeration`
+-- `Java 9`: `Enumeration<TreeNode>`
+--- [https://bugs.openjdk.java.net/browse/JDK-8043550 JDK-8043550 Fix raw and unchecked lint warnings in javax.swing.* - Java Bug System]
+-- `Java 11`: `Enumeration<? extends TreeNode>`になる予定
+--- [https://bugs.openjdk.java.net/browse/JDK-8058831 JDK-8058831 Consider changing return type of DefaultMutableTreeNode.children - Java Bug System]
 
 * 参考リンク [#reference]
 - [[JTreeのノードを検索する>Swing/SearchBox]]
