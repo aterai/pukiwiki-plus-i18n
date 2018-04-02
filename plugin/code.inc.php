@@ -31,12 +31,12 @@ function plugin_code_convert() {
             continue;
         }
         if (strpos($tmp, "lang-") >= 0) {
-            $buf .= $tmp . ' ';
+            $buf .= ' ' . $tmp;
         }
     }
-    if ($buf != '') {
-        $buf = ' ' + $buf.rtrim();
-    }
+//     if ($buf != '') {
+//         $buf = ' ' + $buf.rtrim();
+//     }
 
     //$pre = sprintf('<pre class="prettyprint' . $buf . '" itemscope="itemscope" itemtype="https://schema.org/Code"><code itemprop="sampleType" content="code snippet">%s</code></pre>', $str);
     $pre = sprintf('<pre class="prettyprint' . $buf . '"><code itemscope="itemscope" itemtype="https://schema.org/Code">%s</code></pre>', $str);

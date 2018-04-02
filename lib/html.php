@@ -183,6 +183,7 @@ function catbody($title, $page, $body)
             $withtitle = $newtitle." - ".$site_name;
         }
     } else {
+        $newtitle = $title;
         $withtitle = $title." - ".$page_title;
     }
     $head_tags[] = '<title>'.$withtitle.'</title>';
