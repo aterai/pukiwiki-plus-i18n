@@ -22,7 +22,7 @@ combo1.setRenderer(new DefaultListCellRenderer() {
   @Override public Component getListCellRendererComponent(
         JList<?> list, Object value, int index,
         boolean isSelected, boolean cellHasFocus) {
-    //XXX: String str = index < 0 ? "- Select Item -" : value.toString();
+    // XXX: String str = index < 0 ? "- Select Item -" : value.toString();
     String str = Objects.toString(value, "- Select Item -");
     super.getListCellRendererComponent(
         list, str, index, isSelected, cellHasFocus);
@@ -32,9 +32,12 @@ combo1.setRenderer(new DefaultListCellRenderer() {
 }}
 
 * 解説 [#explanation]
-- `DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドし、引数の値が`null`の場合のみ代わりにプレースホルダ文字列を表示するコンポーネントを返す
+上記のサンプルでは、`DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドし、引数の値が`null`の場合のみ代わりにプレースホルダ文字列を表示するコンポーネントを返すよう設定しています。
+
+リストセルレンダラーでプレースホルダ文字列を表示しているだけなので、`JComboBox`のモデルにはそれを含める必要がありません。
+
+- 注:
 -- インデックスが`-1`の場合にプレースホルダ文字列を表示するように設定すると、選択が変更できなくなる？
--- `JComboBox`のモデルにはプレースホルダ文字列を含める必要がない
 
 * 参考リンク [#reference]
 - [[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]

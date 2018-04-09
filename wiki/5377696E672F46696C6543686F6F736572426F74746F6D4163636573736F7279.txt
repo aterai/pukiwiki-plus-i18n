@@ -73,7 +73,7 @@ class EncodingFileChooserUI extends MetalFileChooserUI {
 --- [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]で、ラベルを検索して推奨サイズを取得しているが、もし`Encoding:`がこの最も長い文字列幅より長い場合は末尾が省略されてしまう
 - `JFileChooser#updateUI()`メソッドをオーバーライドして、`super.updateUI(); setUI(new EncodingFileChooserUI(this));`などを実行した場合、`AcceptAll`ファイルフィルタが重複追加されてしまう
 -- `setUI(...)`の後で`JFileChooser#resetChoosableFileFilters()`を実行するか、`super.updateUI()`を実行しないことで回避可能
---- 個別のファイルフィルタ追加などの設定は、`JFileChooser#updateUI()`メソッド内でおこなう
+--- 個別のファイルフィルタ追加などの設定は、`JFileChooser#updateUI()`メソッド内で実施する
 
 * 参考リンク [#reference]
 - [[JFileChooserに画像プレビューを追加>Swing/PreviewAccessory]]

@@ -114,7 +114,7 @@ class CheckBoxNodeEditor extends JCheckBox implements TreeCellEditor {
 }}
 
 * 解説 [#explanation]
-`JCheckBox`を継承する`TreeCellRenderer`、`TreeCellEditor`を作成して、`setEditable(true)`とした`JTree`に設定し、葉ノードをチェックできるようにしています。ノードがチェックされているかどうかといった状態の保存は、ノードのタイトル文字列と選択状態を保持する不変オブジェクトを`DefaultMutableTreeNode#setUserObject(Object)`メソッドで設定することで実行しています。
+上記のサンプルでは、`JCheckBox`を継承する`TreeCellRenderer`と`TreeCellEditor`を作成して、編集可`setEditable(true)`とした`JTree`に設定し、葉ノードをチェックできるように設定しています。ノードがチェックされているかどうかといった状態の保存は、ノードのタイトル文字列と選択状態を保持する不変オブジェクトを`DefaultMutableTreeNode#setUserObject(Object)`メソッドで設定することで実行しています。
 
 - 葉ノードだけ編集可能に制限するため、`TreeCellEditor#isCellEditable(EventObject)`でクリックしたノードが`TreeNode#isLeaf()`かどうかを判断
 -- [[JTreeの葉ノードだけ編集可能にする>Swing/LeafTreeCellEditor]]

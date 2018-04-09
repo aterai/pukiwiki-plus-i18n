@@ -33,7 +33,8 @@ slider.setUI(new MetalSliderUI() {
             slider.setValue(valueForXPosition(e.getX()));
             break;
           default:
-            throw new IllegalArgumentException("orientation must be one of: VERTICAL, HORIZONTAL");
+            throw new IllegalArgumentException(
+                "orientation must be one of: VERTICAL, HORIZONTAL");
           }
           super.mousePressed(e); //isDragging = true;
           super.mouseDragged(e);
@@ -55,8 +56,8 @@ slider.setUI(new MetalSliderUI() {
 -- ノブを直接クリックすると、ドラッグ可能
 -- ノブ以外の場所をクリックすると、タイマーでノブの幅ずつその方向に移動
 - 縦右、横下の`JSlider`:
--- クリックした位置までスライドし、続けてドラッグ可能
---- 目盛の間隔が広い場合、ノブがスナップされてマウスカーソルからはずれてしまい、続けてドラッグできない場合がある
+-- クリックした位置までスライドし、継続してドラッグ可能
+--- 目盛の間隔が広い場合、ノブがスナップされてマウスカーソルからはずれてしまい、継続してドラッグできない場合がある
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/518471/jslider-question-position-after-leftclick JSlider question: Position after leftclick - Stack Overflow]

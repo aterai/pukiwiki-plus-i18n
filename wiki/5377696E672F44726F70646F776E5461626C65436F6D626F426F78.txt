@@ -1,0 +1,135 @@
+---
+category: swing
+folder: DropdownTableComboBox
+title: JComboBoxのドロップダウンリストとしてJTableを使用する
+tags: [JComboBox , JTable, BasicComboPopup]
+author: aterai
+pubdate: 2018-04-02T17:25:49+09:00
+description: JComboBoxのドロップダウンリストとしてJListの代わりにJTableを使用します。
+image: https://drive.google.com/uc?id=170XdYlh7LDQaucke8xUxSSN1qlcPWcrGrw
+---
+* 概要 [#summary]
+`JComboBox`のドロップダウンリストとして`JList`の代わりに`JTable`を使用します。
+
+#download(https://drive.google.com/uc?id=170XdYlh7LDQaucke8xUxSSN1qlcPWcrGrw)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class DropdownTableComboBox<E extends Vector<Object>> extends JComboBox<E> {
+  protected final transient HighlightListener highlighter = new HighlightListener();
+  protected final JTable table = new JTable() {
+    @Override public Component prepareRenderer(
+          TableCellRenderer renderer, int row, int column) {
+      Component c = super.prepareRenderer(renderer, row, column);
+      c.setForeground(Color.BLACK);
+      if (highlighter.isHighlightableRow(row)) {
+        c.setBackground(new Color(255, 200, 200));
+      } else if (isRowSelected(row)) {
+        c.setBackground(Color.CYAN);
+      } else {
+        c.setBackground(Color.WHITE);
+      }
+      return c;
+    }
+    @Override public void updateUI() {
+      removeMouseListener(highlighter);
+      removeMouseMotionListener(highlighter);
+      super.updateUI();
+      addMouseListener(highlighter);
+      addMouseMotionListener(highlighter);
+      getTableHeader().setReorderingAllowed(false);
+    }
+  };
+  protected final List<E> list;
+
+  protected DropdownTableComboBox(List<E> list, DefaultTableModel model) {
+    super();
+    this.list = list;
+    table.setModel(model);
+    list.forEach(this::addItem);
+    list.forEach(model::addRow);
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    EventQueue.invokeLater(() -> {
+      setUI(new MetalComboBoxUI() {
+        @Override protected ComboPopup createPopup() {
+          return new ComboTablePopup(comboBox, table);
+        }
+      });
+      setEditable(false);
+    });
+  }
+  public List<Object> getSelectedRow() {
+    return list.get(getSelectedIndex());
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JList`ではなく`JTable`を使用する`BasicComboPopup`を作成
+-- `JTable`なので、ヘッダや複数列の設定などが可能
+- `MetalComboBoxUI#createPopup()`メソッドをオーバーライドして、`JComboBox`のドロップダウンリストとして設定
+-- ドロップダウンリストの幅は、`240px`固定
+--- [[JComboBoxのドロップダウンリスト幅を指定値以上に保つ>Swing/ComboPopupWidth]]
+
+#code{{
+class ComboTablePopup extends BasicComboPopup {
+  private final JTable table;
+  private final JScrollPane scroll;
+  protected ComboTablePopup(JComboBox<?> combo, JTable table) {
+    super(combo);
+    this.table = table;
+
+    ListSelectionModel sm = table.getSelectionModel();
+    sm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    sm.addListSelectionListener(e -> {
+      combo.setSelectedIndex(table.getSelectedRow());
+    });
+
+    combo.addItemListener(e -> {
+      if (e.getStateChange() == ItemEvent.SELECTED) {
+        setRowSelection(combo.getSelectedIndex());
+      }
+    });
+
+    table.addMouseListener(new MouseAdapter() {
+      @Override public void mousePressed(MouseEvent e) {
+        combo.setSelectedIndex(table.rowAtPoint(e.getPoint()));
+        setVisible(false);
+      }
+    });
+
+    scroll = new JScrollPane(table);
+    setBorder(BorderFactory.createEmptyBorder());
+  }
+  @Override public void show() {
+    if (isEnabled()) {
+      Insets ins = scroll.getInsets();
+      int tableh = table.getPreferredSize().height;
+      int headerh = table.getTableHeader().getPreferredSize().height;
+      scroll.setPreferredSize(new Dimension(
+          240, tableh + headerh + ins.top + ins.bottom));
+      super.removeAll();
+      super.add(scroll);
+      setRowSelection(comboBox.getSelectedIndex());
+      super.show(comboBox, 0, comboBox.getBounds().height);
+    }
+  }
+  private void setRowSelection(int index) {
+    if (index != -1) {
+      table.setRowSelectionInterval(index, index);
+      table.scrollRectToVisible(table.getCellRect(index, 0, true));
+    }
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [[JComboBoxのItemを左右にクリップして配置>Swing/ClippedLRComboBox]]
+- [[JTableのセルのハイライト>Swing/CellHighlight]]
+
+* コメント [#comment]
+#comment
+#comment

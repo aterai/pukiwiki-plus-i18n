@@ -51,16 +51,16 @@ for (c.gridx = 0; c.gridx <= WIDTH * XSIZE; c.gridx++) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`GridBagLayout`を使って、`JButton`をレンガ状に配置します。互い違いに二列ずつ占めるようにボタンを配置していますが、`<dummy-row>`が無い場合、うまくレンガ状にはなりません。
+上記のサンプルでは、`GridBagLayout`を使って、`JButton`をレンガ状に配置します。互い違いに`2`列ずつ占めるようにボタンを配置していますが、`<dummy-row>`が無い場合、うまくレンガ状にはなりません。
 
 以下、[https://community.oracle.com/thread/1357310 Swing - GridBagLayout to create a board]のDarryl.Burkeさんの投稿を引用
 
  A column (or row) in a GridBagLayout is not well defined unless there is at least one component which occupies only that column (or row). All your rows have components spanning 2 columns.
 
-列の基準となる行は、どこでも(先頭でも最後でも)構わないようです。
+列の基準となるガイド行は、どこでも(先頭でも最後でも)構わないようです。
 
 ----
-- 同様に、ダミーの幅を持つ行を作成して、`JButton`をキーボード風に配置
+- 同様に、ダミーの幅を持つガイド行を作成して、`JButton`をキーボード風に配置
 -- [https://stackoverflow.com/questions/24622279/laying-out-a-keyboard-in-swing java - Laying out a keyboard in Swing - Stack Overflow]
 
 #code{{
@@ -72,7 +72,7 @@ public class KeyboardTest {
   private static final String[][] keys = {
     {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"},
     {"Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\", ""},
-    {"Caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "Enter", ""},
+    {"Ctrl", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "Enter", ""},
     {"Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "", "\u2191"},
     {" ", " ", " ", "", "                         ", " ", "\u2190", "\u2193", "\u2192"}
   };
