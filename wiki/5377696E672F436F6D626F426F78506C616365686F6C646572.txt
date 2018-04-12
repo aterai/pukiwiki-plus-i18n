@@ -34,7 +34,7 @@ combo1.setRenderer(new DefaultListCellRenderer() {
 * 解説 [#explanation]
 上記のサンプルでは、`DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドし、引数の値が`null`の場合のみ代わりにプレースホルダ文字列を表示するコンポーネントを返すよう設定しています。
 
-リストセルレンダラーでプレースホルダ文字列を表示しているだけなので、`JComboBox`のモデルにはそれを含める必要がありません。
+リストセルレンダラーでプレースホルダ文字列を表示しているだけなので、`JComboBox`のモデル自体にそれを含める必要がありません。
 
 - 注:
 -- インデックスが`-1`の場合にプレースホルダ文字列を表示するように設定すると、選択が変更できなくなる？

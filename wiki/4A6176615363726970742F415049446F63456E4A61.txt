@@ -43,6 +43,14 @@ javascript:(function(){var l=location,m=l.href.match('^https?://(.+)((?:api|tech
 #gist(9755681)
 // javascript:(function(){var l=location,m=l.href.match("^(https?://)(.+)(api[^+]+|technotes[^+]+)");if(m)l.href=m[1]+'docs.oracle.com/javase/8/docs/'+decodeURIComponent(m[3]).replace(/\+.*$/,'').replace(/\[\]/g,':A').replace(/, |\(|\)/g,'-');}());
 
+** Java 8 [#q4946a52]
+- `Java 8`のドキュメントでは、各メソッドなどへのアンカーにある空白や`(,)`などが`-`に置換された
+-- 空白を`%20`などと`URL`エンコードする必要が無くなった
+
+** Java 10 [#e4ef8e23]
+- `Java 10`から`Java 8`以前の`(,)`(ただし空白は除く)なども使用可能に戻った
+-- 混在は不可
+
 * 参考リンク [#x4ed11a1]
 - http://java.net/projects/jdk-api-ja
 -- %%via: [http://blogs.sun.com/katakai/entry/jdk_japanese_docs_project_on JDK 日本語ドキュメントプロジェクト on java.net]%%
@@ -58,7 +66,7 @@ javascript:(function(){var l=location,m=l.href.match('^https?://(.+)((?:api|tech
 -- 配列は、`[]` [https://docs.oracle.com/javase/7/docs/api/java/awt/geom/AffineTransform.html#transform(double%5B%5D,%20int,%20double%5B%5D,%20int,%20int) %5B%5D]から[https://docs.oracle.com/javase/8/docs/api/java/awt/geom/AffineTransform.html#transform-double:A-int-double:A-int-int- :A]。 -- &user(aterai); &new{2014-03-24 (月) 20:00:03};
 -- メモ: [http://en.wikipedia.org/wiki/Template_talk:Javadoc:SE Need help in converting this template to Java 8] 仕様が見つからない・・・。 -- &user(aterai); &new{2014-03-24 (月) 21:04:40};
 
- //Java 8 用に、(、)、, 、[]だけ？対応
+ // Java 8 用に、(、)、, 、[]だけ？対応
  javascript:(function(){var l=location,m=l.href.match("^(https?://)(.+)(api[^+]+|technotes[^+]+)");if(m)l.href=m[1]+'docs.oracle.com/javase/8/docs/'+decodeURIComponent(m[3]).replace(/\+.*$/,'').replace(/\[\]/g,':A').replace(/, |\(|\)/g,'-');}());
 
 #comment

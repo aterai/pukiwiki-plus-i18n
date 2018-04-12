@@ -20,13 +20,14 @@ GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
 }}
 
 * 解説 [#explanation]
-- `1`: `JLabel#setFont`メソッドでフォントを設定して使用
+- `1`: `JLabel#setFont(...)`メソッドでフォントを設定して使用
 - `2`: 登録したフォントを`Html`タグで指定して使用
 -- `label.setText("<html><font size='+3' face='Burnstown Dam'>2: html,font,size,+3</font></html>");`
 - `3`: `StyleSheet`で`body`タグのフォントを設定して使用
 -- `styleSheet.addRule("body {font-size: 24pt; font-family: Burnstown Dam;}");`
-- `4`: `JTextPane#setFont`メソッドでフォントを設定して使用
+- `4`: `JTextPane#setFont(...)`メソッドでフォントを設定して使用
 -- `body`タグにデフォルトで指定されているフォントを無視して、`JTextPane`のデフォルトのフォントを使用したい場合は、`editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);`とする必要がある
+-- [[JEditorPaneに設定したフォントをHTMLテキストに適用する>Swing/HonorDisplayProperties]]
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/GraphicsEnvironment.html#registerFont-java.awt.Font- GraphicsEnvironment#registerFont(Font) (Java Platform SE 8)]
