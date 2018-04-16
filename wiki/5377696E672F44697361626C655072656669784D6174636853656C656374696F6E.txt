@@ -16,7 +16,8 @@ image: https://lh6.googleusercontent.com/-_wtzuIN_MvU/Tm2wga2X4hI/AAAAAAAABBs/dU
 * サンプルコード [#sourcecode]
 #code(link){{
 JList list = new JList() {
-  @Override public int getNextMatch(String prefix, int startIndex, Position.Bias bias) {
+  @Override public int getNextMatch(
+        String prefix, int startIndex, Position.Bias bias) {
     return -1;
   }
 };
@@ -30,7 +31,8 @@ JList list = new JList() {
 
 #code{{
 JTree tree = new JTree() {
-  @Override public TreePath getNextMatch(String prefix, int startingRow, Position.Bias bias) {
+  @Override public TreePath getNextMatch(
+        String prefix, int startingRow, Position.Bias bias) {
     return null;
   }
 };

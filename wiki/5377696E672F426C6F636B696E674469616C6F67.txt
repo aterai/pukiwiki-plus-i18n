@@ -35,13 +35,12 @@ dialog.setVisible(true);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、以下のような設定を行った`JDialog`を表示することで、親の`JFrame`のタイトルバー、閉じる、最大化、最小化ボタンを含めて一定時間入力不可にするテストを行っています。
+上記のサンプルでは、以下のような設定を行った`JDialog`を表示することで、親`JFrame`のタイトルバー、閉じる、最大化、最小化ボタンを含めて一定時間入力不可にするテストを行っています。
 
 - モーダル(`Dialog.ModalityType.DOCUMENT_MODAL`)な`JDialog`を作成
 - `dialog.setUndecorated(true)`でタイトルバーなどの装飾を非表示に設定
 - `JDialog`のカーソルを`Cursor.WAIT_CURSOR`に設定
 - `JDialog`の背景色を透明(完全に透明ではない)に設定
-
 - 注: このサンプルには`JDialog`の表示を途中で中断する方法がない
 
 * 参考リンク [#reference]
