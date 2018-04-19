@@ -10,12 +10,7 @@ pubdate: 2018-01-22
 
 #contents
 
-* 未修整 [#i2be5cf6]
-** Application uses higher CPU in 8u161/8u162 [#md4c2938]
-- [https://bugs.openjdk.java.net/browse/JDK-8195830 JDK-8195830 Application uses higher CPU in 8u161/8u162 - Java Bug System]
--- via: [https://stackoverflow.com/questions/48339199/java-8u161-8u162-makes-swing-app-use-cpu Java 8u161/8u162 makes Swing app use CPU - Stack Overflow]
--- 例えば`JTextField`などに日本語を入力しようとして`IME`を切り替えると`CPU`を浪費する
-
+* 未修正 [#NotFixedYet]
 ** 右Altキーが効かない [#g57772eb]
 - [https://bugs.openjdk.java.net/browse/JDK-8194873 JDK-8194873 right ALT key hotkeys no longer work in Swing components - Java Bug System]
 -- `Java 9`で右KBD{Alt}キーが効かなくなっている
@@ -25,38 +20,9 @@ pubdate: 2018-01-22
 - ドロップダウンリストを開いた状態でツールチップが表示されると描画がおかしくなる場合がある
 -- `MetalLookAndFeel`のみ
 -- ドロップダウンリストが`HeavyWeightWindow`か`LightWeightWindow`かは無関係
+- [[JComboBoxの各アイテムやArrowButtonにそれぞれToolTipTextを設定する>Swing/ToolTipInComboBox]]にソースコードは移動
 
 #img2(https://drive.google.com/uc?id=1l662LOjb0AFVh6F9lOSm78ZsXzJfuG0GDQ)
-
-#code{{
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-public class CustomJComboBoxTest2 {
-  public JComponent makeUI() {
-    JComboBox<String> box = new JComboBox<>();
-    box.addItem("Item 1");
-    box.addItem("Item 2");
-    box.setToolTipText("TooTip");
-
-    JPanel p = new JPanel(new BorderLayout());
-    p.setBorder(BorderFactory.createEmptyBorder(60, 20, 60, 20));
-    p.add(box);
-    return p;
-  }
-  public static void main(String... args) {
-    EventQueue.invokeLater(() -> {
-      JFrame f = new JFrame();
-      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      f.getContentPane().add(new CustomJComboBoxTest2().makeUI());
-      f.setSize(320, 240);
-      f.setLocationRelativeTo(null);
-      f.setVisible(true);
-    });
-  }
-}
-}}
 
 ** JToolBarに配置したJButtonのフォーカス描画 [#w21ce2da]
 - [https://stackoverflow.com/questions/37295099/decorating-a-rollover-toolbar-button-with-jlayer-paints-its-border#37295921 java - Decorating a rollover toolbar button with JLayer paints its border - Stack Overflow]
@@ -173,7 +139,15 @@ public class OptionPaneResolutionTest {
 ** 高解像度でIMEの候補表示位置がずれる [#o7e09fe6]
 - [https://bugs.openjdk.java.net/browse/JDK-8189687 JDK-8189687 Swing: Invalid position of candidate pop-up of InputMethod in Hi-DPI on Windows - Java Bug System]
 
-* 修正済み [#q7527db1]
+* 修正済み [#Fixed]
+** Application uses higher CPU in 8u161/8u162 [#md4c2938]
+- [https://bugs.openjdk.java.net/browse/JDK-8195830 JDK-8195830 Application uses higher CPU in 8u161/8u162 - Java Bug System]
+-- via: [https://stackoverflow.com/questions/48339199/java-8u161-8u162-makes-swing-app-use-cpu Java 8u161/8u162 makes Swing app use CPU - Stack Overflow]
+-- 例えば`JTextField`などに日本語を入力しようとして`IME`を切り替えると`CPU`を浪費する
+- `Java 10`での修正が`8u172`にもバックポートされた
+-- [https://bugs.openjdk.java.net/browse/JDK-8183504 JDK-8183504 8u131 Win 10, issue with wrong position of Sogou IME popup - Java Bug System]
+-- [https://bugs.openjdk.java.net/browse/JDK-8191889 JDK-8191889 8u131 Win 10, issue with wrong position of Sogou IME popup - Java Bug System]
+
 ** 親フレームのドラッグ中にJWindowでクラッシュ [#hed7be2e]
 - [https://stackoverflow.com/questions/30072883/java-swing-jwindow-application-crash Java Swing JWindow application crash - Stack Overflow]
 -- 親フレームのドラッグ中に？子`JWindow`が表示されると`JVM`が落ちる(`Windows 7 64bit JKD1.8.0_11`)。
@@ -284,7 +258,7 @@ public class Gui {
 }
 }}
 
-* 再現不可 [#w730e56b]
+* 再現不可 [#CannotReproduce]
 ** WebStartでCPU 100% [#p32896ec]
 -`1.6.0_14`にすると、`web start`(`2`回目以降？) で`CPU 100%`になる？
 --自宅のPCでは再現しない。

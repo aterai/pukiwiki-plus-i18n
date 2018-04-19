@@ -72,10 +72,10 @@ textPane.insertComponent(new JLabel(" TEST"));
 -- `textPane.insertComponent(new JSeparator(JSeparator.HORIZONTAL));`で水平`JSeparator`を追加
 - `MatteBorder1`
 -- `MatteBorder`を設定したテキスト無しの`JLabel`を追加
--- 最大サイズが(`JTextPane`の幅×`1`)になるよう、`JLabel#getMaximumSize()`をオーバーライド
+-- 最大サイズが(幅:`JTextPane#getWidth()`、高さ:`1px`)になるよう、`JLabel#getMaximumSize()`をオーバーライド
 - `MatteBorder2`
 -- `MatteBorder`を設定したテキスト無しの`JLabel`を追加
--- 推奨サイズと最大サイズが(`JTextPane`の幅×`1`)になるよう、`JLabel#getPreferredSize()`と`JLabel#getMaximumSize()`をオーバーライド
+-- 推奨サイズと最大サイズが(幅:`JTextPane#getWidth()`、高さ`1px`)になるよう、`JLabel#getPreferredSize()`と`JLabel#getMaximumSize()`をオーバーライド
 - `JSeparator.VERTICAL`
 -- `textPane.insertComponent(new JSeparator(JSeparator.VERTICAL));`で垂直`JSeparator`を追加
 -- `JSeparator#getPreferredSize()`、`JSeparator#getMaximumSize()`をオーバーライドしないと表示されない

@@ -27,8 +27,7 @@ class TabbedPaneWithCompBorder implements Border, MouseListener, SwingConstants 
     cbox.setFocusPainted(false);
     cbox.addMouseListener(new MouseAdapter() {
       @Override public void mouseClicked(MouseEvent me) {
-        JCheckBox cb = (JCheckBox) me.getSource();
-        cb.setSelected(!cb.isSelected());
+        ((AbstractButton) me.getComponent()).doClick();
       }
     });
   }
@@ -67,7 +66,7 @@ class TabbedPaneWithCompBorder implements Border, MouseListener, SwingConstants 
 * 解説 [#explanation]
 `JTabbedPane`の`Border`に`SwingUtilities.paintComponent(...)`メソッドを使って`JCheckBox`を描画しています。`JCheckBox`が`JTabbedPane`の子になってタブが増えないように、ダミーパネルを中間コンテナに指定しています。
 
-`JTabbedPane`で受け取ったマウスイベントを、`SwingUtilities.convertMouseEvent`メソッドを利用し、チェックボックス用に座標などを変換して送り出しています。
+`JTabbedPane`で受け取ったマウスイベントを、`SwingUtilities.convertMouseEvent(...)`メソッドを利用し、チェックボックス用に座標などを変換して送り出しています。
 
 ----
 タブとチェックボックスが重ならないように、フレームの最小サイズを設定しています。

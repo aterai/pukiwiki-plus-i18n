@@ -30,7 +30,7 @@ try {
 }}
 
 * 解説 [#explanation]
-`JDK 1.7.0`で`NimbusLookAndFeel`のパッケージが移動されて完全クラス名が変更されたので、`NimbusLookAndFeel`のインスタンスを生成して設定するのではなく、一旦`UIManager.getInstalledLookAndFeels()`で全`LookAndFeelInfo`を取得し、名前が`Nimbus`となっている`LookAndFeel`を検索してからその完全クラス名を取得しています。
+`JDK 1.7.0`で`NimbusLookAndFeel`のパッケージが移動されて完全クラス名が変更されたので、`JDK 1.6.0_10`との互換性を考慮する場合は、`NimbusLookAndFeel`のインスタンスを生成して設定するのではなく、一旦`UIManager.getInstalledLookAndFeels()`で全`LookAndFeelInfo`を取得し名前が`Nimbus`となっている`LookAndFeel`を検索してその完全クラス名を取得します。
 
 - `JDK 1.6.0_10`: `com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel`
 - `JDK 1.7.0`以降: `javax.swing.plaf.nimbus.NimbusLookAndFeel`

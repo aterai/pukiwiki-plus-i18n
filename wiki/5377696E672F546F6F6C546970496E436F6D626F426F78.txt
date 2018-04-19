@@ -45,7 +45,8 @@ class ToolTipLayerUI<V extends JComboBox> extends LayerUI<V> {
     }
     super.uninstallUI(c);
   }
-  @Override protected void processMouseMotionEvent(MouseEvent e, JLayer<? extends V> l) {
+  @Override protected void processMouseMotionEvent(
+        MouseEvent e, JLayer<? extends V> l) {
     JComboBox<?> c = l.getView();
     if (e.getComponent() instanceof JButton) {
       c.setToolTipText("JButton");
@@ -69,7 +70,7 @@ class ToolTipLayerUI<V extends JComboBox> extends LayerUI<V> {
 --- `LayerUI#processMouseMotionEvent(...)`をオーバーライドして、`JButton`上にマウスカーソルが入ったら`JButton#setToolTipText(...)`で`ToolTipText`を変更
 
 ----
-- `JComboBox`のドロップダウンリストを開いた状態でツールチップを表示すると描画がおかしくなる場合がある
+- `JComboBox`のドロップダウンリストを開いた状態でツールチップを表示すると描画が乱れる場合がある
 -- `MetalLookAndFeel`のみ
 -- ドロップダウンリストが`HeavyWeightWindow`か`LightWeightWindow`かは無関係
 
@@ -105,7 +106,9 @@ public class CustomJComboBoxTest2 {
 }
 }}
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/LayerUI.html#processMouseMotionEvent-java.awt.event.MouseEvent-javax.swing.JLayer- LayerUI#processMouseMotionEvent(MouseEvent, JLayer) (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment

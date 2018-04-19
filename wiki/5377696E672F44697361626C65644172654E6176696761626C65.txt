@@ -19,8 +19,15 @@ UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE);
 }}
 
 * 解説 [#explanation]
-- `WindowsLookAndFeel`の場合、`UIManager.getBoolean("MenuItem.disabledAreNavigable")`のデフォルトは`true`で、`Disabled`な`JMenuItem`でもハイライトが可能
-- `MetalLookAndFeel`の場合、`UIManager.getBoolean("MenuItem.disabledAreNavigable")`のデフォルトは`false`だが、`UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE)`とすれば、`Disabled`な`JMenuItem`でもハイライトが可能
+- `WindowsLookAndFeel`
+-- `UIManager.getBoolean("MenuItem.disabledAreNavigable")`のデフォルトは`true`
+-- `UIManager.put("MenuItem.disabledAreNavigable", ...)`で、`Disabled`な`JMenuItem`のハイライト可・不可を切替できる
+- `MetalLookAndFeel`
+-- `UIManager.getBoolean("MenuItem.disabledAreNavigable")`のデフォルトは`false`
+-- `UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE)`を設定すれば、`Disabled`な`JMenuItem`でもハイライトが可能
+- `NimbusLookAndFeel`
+-- `UIManager.getBoolean("MenuItem.disabledAreNavigable")`のデフォルトは`false`
+-- `UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE)`を設定しても、`Disabled`な`JMenuItem`をハイライト不可
 
 * 参考リンク [#reference]
 // - %%[http://weblogs.java.net/blog/joshy/archive/2006/08/windows_lf_bugs.html Windows L&F Bugs: Part 2 | Java.net]%%

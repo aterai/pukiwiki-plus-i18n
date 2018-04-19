@@ -44,7 +44,7 @@ p.add(box, BorderLayout.EAST);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、ドロップダウンリストの表示を無効にした`JComboBox`と`2`つの`ArrowButton`を組み合わせて、`JSpinner`風のコンポーネントを作成しています。`JComboBox`のセルレンダラーは`Html`タグが使用可能なので、各アイテムの文字色を`<font>`タグを使って変更しています。
+上記のサンプルでは、ドロップダウンリストの表示を無効にした`JComboBox`と`2`つの`ArrowButton`を組み合わせて、`JSpinner`風のコンポーネントを作成しています。`JComboBox`のセルレンダラーは`Html`タグが使用可能なので、各アイテムの文字列の一部を`<font>`タグを使って色変更しています。
 
 - `BasicComboBoxUI#createArrowButton()`メソッドをオーバーライドして、`JComboBox`の`ArrowButton`を非表示に設定
 -- [[JComboBoxのArrowButtonを隠す>Swing/HideComboArrowButton]]
@@ -55,15 +55,13 @@ p.add(box, BorderLayout.EAST);
 - ボタンをクリックしたままの場合、値変更が繰り返し実行されるリピート機能には未対応
 -- [[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]
 
-----
-- 以下は、`JSpinner`の`Editor`を`JFormattedTextField`から`JLabel`に変更する場合のサンプル
--- [[JSpinnerのエディタをJLabelに変更してHTMLを表示する>Swing/HtmlSpinnerEditor]]に移動
-
 * 参考リンク [#reference]
 - [[JComboBoxのArrowButtonを隠す>Swing/HideComboArrowButton]]
 - [[JTableを別コンポーネントから操作>Swing/SelectAllButton]]
 - [[JComponentのKeyBinding一覧を取得する>Swing/KeyBinding]]
 - [[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]
+- [[JSpinnerのエディタをJLabelに変更してHTMLを表示する>Swing/HtmlSpinnerEditor]]
+-- `JSpinner`の`Editor`を`JFormattedTextField`から`JLabel`に変更して同様の文字色変更を行うサンプル
 
 * コメント [#comment]
 #comment
