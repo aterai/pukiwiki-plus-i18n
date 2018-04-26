@@ -74,12 +74,12 @@ class WrappedLabel extends JLabel {
 
 * 解説 [#explanation]
 - 上: `JLabel`
--- デフォルトの`JLabel`で右側が`...`で省略されている
+-- デフォルトの`JLabel`で、折り返しせずに右側から`...`で省略
 - 中: `GlyphVector`
--- コンポーネントのサイズが変更されるたびに`GlyphVector`を更新して、文字列の折り返しを行っている
+-- コンテナのサイズが変更されるたびに`GlyphVector`を更新して、文字列の折り返しを実行
 -- 欧文などで合字(リガチャ)がある場合は、`GlyphVector gv = font.createGlyphVector(frc, str);`ではなく、[https://community.oracle.com/thread/1289266 GlyphVector bounds and kerning, ligatures | Oracle Forums]のように、`char[] chars = text.toCharArray(); GlyphVector gv = font.layoutGlyphVector(frc, chars, 0, chars.length, Font.LAYOUT_LEFT_TO_RIGHT);`とした方が良さそう
 - 下: `JTextArea`
--- `JLabel`の`Font`と背景色を同じものに設定した編集不可の`JTextArea`を`setLineWrap(true);`として、文字列の折り返しを行っている
+-- `JLabel`の`Font`と背景色を同じものに設定した編集不可の`JTextArea`を`setLineWrap(true);`として、文字列の折り返しを実行
 
 ----
 ラベルの幅ではなく、任意の場所で文字列を改行したい場合は、以下のように`JLabel`に`html`の`<br>`タグを利用したり、編集不可にした`JTextPane`、`JTextArea`などを使用します(参考: [[JTextPane、JLabelなどで複数行を表示>Swing/MultiLineLabel]])。

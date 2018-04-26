@@ -51,9 +51,9 @@ am.put("selectNextRow", new AbstractAction() {
 * 解説 [#explanation]
 上記のサンプルでは、カンマ区切りで入力したインデックスに対応する`JList`のアイテムを選択不可にすることができます。
 
-`JList`のアイテムの選択が可能か不可かはセルレンダラーの`ListCellRenderer#getListCellRendererComponent(...)`メソッド中で判断しています。インデックスが選択不可の場合、オリジナルのセルレンダラーから選択無し、フォーカス無しのコンポーネントを取得し、さらに`setEnabled(false)`として返しています。
-
-また、KBD{Up}KBD{Down}キーで`JList`のアイテムの選択を移動する場合、選択不可にしたアイテムを飛ばすように、`selectNextRow`などのアクションを変更しています。
+- `JList`のアイテムの選択可・不可は、セルレンダラーの`ListCellRenderer#getListCellRendererComponent(...)`メソッド中で判断する
+- インデックスが選択不可の場合、オリジナルのセルレンダラーから選択無し、フォーカス無しのコンポーネントを取得し、さらに`setEnabled(false)`として返す
+- KBD{Up}KBD{Down}キーで`JList`のアイテムの選択を移動する場合、選択不可にしたアイテムを飛ばすように、`selectNextRow`などのアクションを変更
 
 * 参考リンク [#reference]
 - [[JComboBoxのアイテムを選択不可にする>Swing/DisableItemComboBox]]

@@ -45,10 +45,9 @@ label.setComponentPopupMenu(popup);
 * 解説 [#explanation]
 上記のサンプルでは、`JPopupMenu#show(...)`メソッドをオーバーライドし、`JPopupMenu`の表示位置を調整することでコンポーネント(この場合`JLabel`)の表示領域内に`JPopupMenu`全体が収まるように設定しています。
 
-- 注:
-- 例えば親コンポーネントの右下で右クリックによる`JPopupMenu`の表示を行った場合、そのクリック位置に`JPopupMenu`の右下隅が重なるように表示される
--- `JPopupMenu`のサイズが親コンポーネントの表示上のサイズより大きくなる場合は考慮していない
---- 例えば`JPopupMenu`の高さが親コンポーネントの高さより高い場合、クリックした位置とは無関係に`JPopupMenu`の上辺が親コンポーネントの上辺と同じ位置になるよう表示される
+- 親コンポーネントの右下で右クリックによる`JPopupMenu`の表示を行った場合、そのクリック位置に`JPopupMenu`の右下隅が重なるように表示する
+- `JPopupMenu`のサイズが親コンポーネントの表示上のサイズより大きくなる場合は考慮していない
+-- `JPopupMenu`の高さが親コンポーネントの高さより高い場合、クリックした位置とは無関係に`JPopupMenu`の上辺が親コンポーネントの上辺と同じ位置になるよう表示する
 
 * 参考リンク [#reference]
 - [[TrayIconでJPopupMenuを使用する>Swing/TrayIconPopupMenu]]
