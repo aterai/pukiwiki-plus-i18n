@@ -39,11 +39,10 @@ private class TablePopupMenu extends JPopupMenu {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JScrollPane`に`setComponentPopupMenu(JPopupMenu)`メソッドで、ポップアップメニューを追加し、`JTable`の方は、`setInheritsPopupMenu(true)`とすることで、親の`JScrollPane`に設定したポップアップメニューを使用するようになっています。
-
-`JDK 1.5`では、`JViewport`も`setInheritsPopupMenu(true)`とする必要がありましたが、`JDK 1.6`ではデフォルトが変更されているようです。
+上記のサンプルでは、`JScrollPane`に`setComponentPopupMenu(JPopupMenu)`メソッドで、ポップアップメニューを追加し、`JTable`の方は、`setInheritsPopupMenu(true)`とすることで、親の`JScrollPane`に設定したポップアップメニューを使用するよう設定しています。
 
 ----
+- `JDK 1.5`では、`JViewport`も`setInheritsPopupMenu(true)`とする必要があったが、`JDK 1.6`ではデフォルトが変更されて不要になった
 - `JDK 1.6`では、`JTable`のヘッダも、`setInheritsPopupMenu(true)`で、`JScrollPane`からポップアップメニューを取得して表示可能
 -- %%`JDK 1.6` + `WindowsLookAndFeel`で、`JTableHeader`上にポップアップメニューを表示すると、以下のようにうまく再描画できない場合がある%% 修正済み
 + ヘッダを右クリックしながら、右端にドラッグ、ポップアップ表示
