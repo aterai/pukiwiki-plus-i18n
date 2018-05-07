@@ -1,0 +1,69 @@
+---
+category: swing
+folder: MenuArrowIcon
+title: JMenuのArrowIconを変更する
+tags: [JMenu, Icon, LookAndFeel]
+author: aterai
+pubdate: 2018-05-07T15:33:15+09:00
+description: JMenuの右端に表示されるArrowIconの形状や選択色などを変更します。
+image: https://drive.google.com/uc?id=1hLKnZ5Zcz3tP7v6YtwXYj0Gd8CKvno8r6w
+---
+* 概要 [#summary]
+`JMenu`の右端に表示される`ArrowIcon`の形状や選択色などを変更します。
+
+#download(https://drive.google.com/uc?id=1hLKnZ5Zcz3tP7v6YtwXYj0Gd8CKvno8r6w)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+UIManager.put("Menu.arrowIcon", new ArrowIcon());
+// ...
+class ArrowIcon implements Icon {
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    Graphics2D g2 = (Graphics2D) g.create();
+
+    if (c instanceof AbstractButton && ((AbstractButton) c).getModel().isSelected()) {
+      g2.setPaint(Color.WHITE);
+    } else {
+      g2.setPaint(Color.GRAY);
+    }
+
+    int w = getIconWidth() / 2;
+    Path2D p = new Path2D.Double();
+    p.moveTo(0, 0);
+    p.lineTo(w, w);
+    p.lineTo(0, getIconHeight());
+    p.closePath();
+
+    g2.translate(x, y);
+    g2.fill(p);
+    g2.dispose();
+  }
+  @Override public int getIconWidth() {
+    return 8;
+  }
+  @Override public int getIconHeight() {
+    return 8;
+  }
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、`UIManager.put("Menu.arrowIcon", new Icon() {...})`を使用して`JMenu`が使用する`ArrowIcon`を変更しています。
+
+- `Icon#paintIcon(...)`メソッドをオーバーライドし、`JMenu`が選択されている場合は色を変更
+#code{{
+if (c instanceof AbstractButton && ((AbstractButton) c).getModel().isSelected()) {
+  g2.setPaint(Color.WHITE);
+} else {
+  g2.setPaint(Color.GRAY);
+}
+}}
+- `WindowsLookAndFeel`で、`JMenu`が選択されてサブメニューが表示されたときに`ArrowIcon`と重ならないように、アイコンの右側に余白を設定
+- `NimbusLookAndFeel`では`UIManager.put("Menu.arrowIcon", new Icon() {...})`は無効、かつ`JMenuBar`に追加されている`JMenu`に`Menu.arrowIcon`が不正に表示されてしまう？
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicMenuItemUI.html#arrowIcon BasicMenuItemUI#arrowIcon (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment
