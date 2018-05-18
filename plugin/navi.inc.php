@@ -94,10 +94,12 @@ function plugin_navi_convert()
 			'next1'=>'',
 			'home' =>'',
 			'home1'=>'',
+			'prevhref' =>'',
+			'nexthref' =>'',
+			'homehref' =>'',
 		);
 
-		$pages = preg_grep('/^' . preg_quote($home, '/') .
-			'($|\/)/', auth::get_existpages());
+		$pages = preg_grep('/^' . preg_quote($home, '/') . '($|\/)/', auth::get_existpages());
 		if (PLUGIN_NAVI_EXCLUSIVE_REGEX != '') {
 			// If old PHP could use preg_grep(,,PREG_GREP_INVERT)...
 			$pages = array_diff($pages,
@@ -107,13 +109,19 @@ function plugin_navi_convert()
 		$pages   = array_unique($pages);
 		natcasesort($pages);
 		if ($reverse) $pages = array_reverse($pages);
-
+		$pages = array_values($pages);
 		$prev = $home;
-		foreach ($pages as $page) {
-			if ($page == $current) break;
+		$next = '';
+		foreach ($pages as $index=>$page) {
+			if ($page === $current) {
+				$next_key = $index + 1;
+				if (array_key_exists($next_key, $pages)) {
+					$next = $pages[$next_key];
+				}
+				break;
+			}
 			$prev = $page;
 		}
-		$next = current($pages);
 
 		$pos = strrpos($current, '/');
 		$up = '';

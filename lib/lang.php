@@ -112,7 +112,7 @@ function get_language($level = 0)
 	for($i=0; $i < $level; $i++){
 		if ($i == $level) return DEFAULT_LANG;
 		// 指定関数の実行
-		$_x = $obj_lng->$lng_func[$i]();
+		$_x = $obj_lng->{$lng_func[$i]}();
 		if (! is_array($_x)) continue;
 
 		foreach($_x as $_lang) {
