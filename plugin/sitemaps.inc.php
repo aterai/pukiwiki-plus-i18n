@@ -18,7 +18,6 @@ function plugin_sitemaps_action() {
     $date = $items = '';
 
     $array = array();
-    $array[] = '^.+%2F_.+$';
 
     $array[] = '.*ChangeLog.*';
     $array[] = '.*Questionnaire.*';
@@ -28,10 +27,8 @@ function plugin_sitemaps_action() {
     $array[] = '^ST.*';
     $array[] = '^JavaFX.*';
     $array[] = '^PukiWiki.*';
-    $array[] = '^Relaxer.*';
     $array[] = '^English.*';
 
-    $array[] = '^GaChk$';
     $array[] = '^aterai$';
     $array[] = '^terai$';
     $array[] = '^upk$';
@@ -40,10 +37,14 @@ function plugin_sitemaps_action() {
     $array[] = '^RSS$';
     $array[] = '^Nitpick$';
     $array[] = '^Popular$';
-    $array[] = '^Earphones$';
+
+    // $array[] = '^.+%2F_.+$';
+    // $array[] = '^Relaxer.*';
+    // $array[] = '^Earphones$';
+    // $array[] = '^GaChk$';
+    // $array[] = '^HighlightTextForeground$';
 
     $array[] = '^SwingTips$';
-    $array[] = '^HighlightTextForeground$';
 
     $array[] = '^Swing%2FAnchorSelection$';
     $array[] = '^Swing%2FAutoAdjustRowHeight$';

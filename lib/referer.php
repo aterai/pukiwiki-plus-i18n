@@ -51,7 +51,7 @@ function ref_save($page)
 	if (! is_writable(REFERER_DIR)) die('Permission denied to write: REFERER_DIR');
 
 	// Update referer data
-	if (ereg("[,\"\n\r]", $url))
+	if (preg_match("[,\"\n\r]", $url))
 		$url = '"' . str_replace('"', '""', $url) . '"';
 
 	$data  = ref_get_data($page, 3);
