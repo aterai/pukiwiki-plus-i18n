@@ -47,7 +47,7 @@ class TooltipList<E> extends JList<E> {
 - 中: `ListCellRenderer`
 -- `JList#getToolTipLocation()`をオーバーライドして、表示する`JToolTip`の原点を`JList#getCellBounds(int, int)`で取得したセル領域の左上に変更
 -- `JList#createToolTip()`をオーバーライドして、セルの描画に使用するセルレンダラー自体を`JToolTip`に追加
---- このため、対象セルが選択状態なら、`JToolTip`の背景色もそのセル選択色と同じになる
+--- このため、対象セルが選択状態の場合`JToolTip`の背景色もそのセル選択色と同じになる
 - 右: `Default`
 -- `JToolTip`の表示位置は、デフォルトのマウスカーソルの右下
 
