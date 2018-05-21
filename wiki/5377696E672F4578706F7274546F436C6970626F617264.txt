@@ -1,0 +1,86 @@
+---
+category: swing
+folder: ExportToClipboard
+title: JList間でのコピー＆ペーストによるアイテムの移動
+tags: [JList, TransferHandler, Clipboard, JPopupMenu]
+author: aterai
+pubdate: 2018-05-21T17:27:59+09:00
+description: JList間でコピー＆ペーストによるアイテムの複製・移動を行います。
+image: https://drive.google.com/uc?id=1wNH_7qaS-YirfMG-vli1p7sETt3v5oaciA
+---
+* 概要 [#summary]
+`JList`間でコピー＆ペーストによるアイテムの複製・移動を行います。
+
+#download(https://drive.google.com/uc?id=1wNH_7qaS-YirfMG-vli1p7sETt3v5oaciA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class ListPopupMenu extends JPopupMenu {
+  private final JMenuItem cutItem;
+  private final JMenuItem copyItem;
+  protected ListPopupMenu(JList<?> list) {
+    super();
+    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+    TransferHandler handler = list.getTransferHandler();
+    cutItem = add("cut");
+    cutItem.addActionListener(e -> {
+      handler.exportToClipboard(list, clipboard, TransferHandler.MOVE);
+    });
+    copyItem = add("copy");
+    copyItem.addActionListener(e -> {
+      handler.exportToClipboard(list, clipboard, TransferHandler.COPY);
+    });
+    add("paste").addActionListener(e -> {
+      handler.importData(list, clipboard.getContents(null));
+    });
+    addSeparator();
+    add("clearSelection").addActionListener(e -> list.clearSelection());
+  }
+  @Override public void show(Component c, int x, int y) {
+    if (c instanceof JList) {
+      boolean isSelected = !((JList<?>) c).isSelectionEmpty();
+      cutItem.setEnabled(isSelected);
+      copyItem.setEnabled(isSelected);
+      super.show(c, x, y);
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]を元にし、ドラッグ＆ドロップに加えてクリップボード経由でのアイテム移動や複製が可能になるような`ListItemTransferHandler`を作成して、`JList`に設定しています。
+
+- [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]では、`TransferHandler.TransferSupport#isDrop()`が`false`の場合はインポート不可(`TransferHandler#canImport(...) == false`)とし、また`ActionMap`でもキーボードによるコピーなどを無効に設定
+- このサンプルでは、`TransferHandler.TransferSupport#isDrop()`が`false`の場合は、以下のようにキーボード入力や`JPopupMenu`からのカット、コピー、ペーストと判断して、`JList#getSelectedIndex()`で取得した位置にアイテムを貼り込むように変更
+#code{{
+private static int getIndex(TransferHandler.TransferSupport info) {
+  JList<?> target = (JList<?>) info.getComponent();
+  int index; // = dl.getIndex();
+  if (info.isDrop()) { // Mouse Drag & Drop
+    System.out.println("Mouse Drag & Drop");
+    TransferHandler.DropLocation tdl = info.getDropLocation();
+    if (tdl instanceof JList.DropLocation) {
+      index = ((JList.DropLocation) tdl).getIndex();
+    } else {
+      index = target.getSelectedIndex();
+    }
+  } else { // Keyboard Copy & Paste
+    index = target.getSelectedIndex();
+  }
+  DefaultListModel<?> listModel = (DefaultListModel<?>) target.getModel();
+  // boolean insert = dl.isInsert();
+  int max = listModel.getSize();
+  // int index = dl.getIndex();
+  index = index < 0 ? max : index; // If it is out of range, it is appended to the end
+  index = Math.min(index, max);
+  return index;
+}
+}}
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/TransferHandler.TransferSupport.html#isDrop-- TransferHandler.TransferSupport#isDrop() (Java Platform SE 8)]
+- [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]
+
+* コメント [#comment]
+#comment
+#comment
