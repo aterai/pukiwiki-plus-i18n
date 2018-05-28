@@ -75,10 +75,9 @@ class ProgressCircleUI extends BasicProgressBarUI {
 
 表示上、中心から表示枠矩形の上辺中央を結ぶ線が弧の始角で、時計回り方向が増加を表すように`Arc2D`を作成しています。
 
-- 注:
--- 推奨サイズが常に正方形になるように、`BasicProgressBarUI#getPreferredSize(JComponent c)`メソッドをオーバーライドしているので、`JProgressBar`の方向設定(`SwingConstants.VERTICAL`,`SwingConstants.HORIZONTAL`)は無視される
--- 不確定状態の描画は未対応
---- `BasicProgressBarUI#paintDeterminate(...)`,`BasicProgressBarUI#paintIndeterminate(...)`メソッドはオーバーライドしていない
+- 推奨サイズが常に正方形になるように、`BasicProgressBarUI#getPreferredSize(JComponent c)`メソッドをオーバーライドしているので、`JProgressBar`の方向設定(`SwingConstants.VERTICAL`,`SwingConstants.HORIZONTAL`)は無視される
+- 不確定状態の描画は未対応
+-- `BasicProgressBarUI#paintDeterminate(...)`,`BasicProgressBarUI#paintIndeterminate(...)`メソッドはオーバーライドしていない
 
 * 参考リンク [#reference]
 - [[OverlayLayoutで複数のJButtonを重ねて複合ボタンを作成>Swing/CompoundButton]]

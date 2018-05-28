@@ -75,7 +75,7 @@ class TranslucentButton extends JButton {
 -- `setOpaque(false);`、`setContentAreaFilled(false);`などで、`JButton`自体は透明化
 -- タイトル`Icon`と文字列の`align`に、`top`、`middle`、`bottom`のどれを設定してもベースラインで揃わない
 -- サイズが固定
--- `MetalLookAndFeel`に変更しても、余計なフチが表示されない
+-- `MetalLookAndFeel`に変更しても、余計な`Border`が表示されない
 -- `Html`を使っているので`GTKLookAndFeel`で、`Pressed`時の文字色変更に対応していない
 
 #code{{
@@ -125,7 +125,7 @@ add(p);
 - 透明な`JButton`、全体を半透明な`Icon`
 -- `setOpaque(false);`, `setContentAreaFilled(false);`などを設定して`JButton`は透明にし、`JButton#paintComponent(...)`をオーバーライドして半透明の影などを描画
 -- %%`MetalLookAndFeel`で、余計なフチ？が表示される%%
--- `JButton#setBorderPainted(false);`で、フチを非表示にできる
+-- `JButton#setBorderPainted(false);`で、`Border`を非表示にできる
 -- `setBorder(BorderFactory.createEmptyBorder(2, 8, 2, 8));`で設定した余白は、`Icon`自体のサイズには含めないが、`Icon`の描画は使用する
 -- `JButton#setMargin(new Insets(2, 8, 2, 8));`が有効かどうかは、環境または`LookAndFeel`に依存する？
 
@@ -147,7 +147,7 @@ class TranslucentButtonIcon implements Icon {
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
     if (c instanceof AbstractButton) {
       AbstractButton b = (AbstractButton) c;
-      //XXX: Insets i = b.getMargin();
+      // XXX: Insets i = b.getMargin();
       Insets i = b.getBorder().getBorderInsets(b);
       int w = c.getWidth();
       int h = c.getHeight();
