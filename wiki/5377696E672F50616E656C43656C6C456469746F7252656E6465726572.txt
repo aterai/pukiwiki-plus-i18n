@@ -98,11 +98,11 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
 }}
 
 * 解説 [#explanation]
-- 左: `JPanel` + `JSpinner`
+- `0`列目: `JPanel` + `JSpinner`
 -- `TableCellEditor`, `TableCellRenderer`に`JSpinner`を配置した`JPanel`を使用
 -- `JPanel`に`GridBagLayout`を指定し、`insets = new Insets(0, 10, 0, 10)`、`fill = GridBagConstraints.HORIZONTAL`で余白を設定
 -- [[JTableのCellEditorに設定したJComboBoxに余白を追加する>Swing/ComboBoxCellEditorInsets]]
-- 右: `JPanel` + `JLabel` + `JButton`
+- `1`列目: `JPanel` + `JLabel` + `JButton`
 -- `TableCellEditor`, `TableCellRenderer`に`JLabel`と`2`つの`JButton`を配置した`JPanel`を使用
 -- `JPanel`には`FlowLayout`を指定
 --- カラム幅が狭くなって折り返しが発生してもセルの高さは変化しないので、コンポーネントが見切れてしまう
