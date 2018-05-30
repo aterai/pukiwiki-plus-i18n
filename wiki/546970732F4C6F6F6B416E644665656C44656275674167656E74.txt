@@ -6,7 +6,7 @@ description: SwingアプリケーションのLookAndFeelをagentを使って外�
 ---
 #contents
 
-* 概要 [#u5a5b58a]
+* 概要 [#summary]
 `Swing`アプリケーションの`LookAndFeel`を`agent`を使って外部から切り替えてデバッグします。
 
 - [https://ateraimemo.com/data/swing/lnfagent.jar lnfagent.jar]
@@ -14,7 +14,7 @@ description: SwingアプリケーションのLookAndFeelをagentを使って外�
 
 #ref(https://lh5.googleusercontent.com/_9Z4BYR88imo/TT_f_Hrp06I/AAAAAAAAAzQ/zeH8FoIfM4A/s800/LookAndFeelDebugAgent.png)
 
-* ソースコード [#n6f61d1b]
+* ソースコード [#sourcecode]
 #code{{
 package swinghelper;
 import java.awt.*;
@@ -95,7 +95,7 @@ public class LookAndFeelDebugAgent {
 }
 }}
 
-* 解説 [#rcf0b33c]
+* 解説 [#explanation]
 `Look And Feel`を切り替えるためのパネルが一緒に起動し、対象アプリケーションのソースコードを変更することなく、`LookAndFeel`の変更をテストすることが出来ます。
 
 `javaagent`を使うので、`JDK 1.6`以上で以下のように起動します。
@@ -104,7 +104,9 @@ public class LookAndFeelDebugAgent {
 java -javaagent:lnfagent.jar -jar example.jar
 }}
 
-//* 参考リンク
-* コメント [#ff4ef8a7]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/lang/instrument/package-summary.html java.lang.instrument (Java Platform SE 8)]
+
+* コメント [#comment]
 #comment
 #comment

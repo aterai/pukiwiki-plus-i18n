@@ -27,13 +27,13 @@ class SelectItemMenuListener implements PopupMenuListener {
 
 * 解説 [#explanation]
 - `Default`
--- `"123456"`を編集して`"a"`に変更し、ドロップダウンリストを開くと、`"123456"`が選択状態
+-- `"123456"`を編集して`"a"`に変更し、ドロップダウンリストを開くと、`"123456"`が選択状態になる
 - `popupMenuWillBecomeVisible`
--- `"123456"`を編集して`"a"`に変更し、ドロップダウンリストを開くと、`"a"`が選択状態
+-- `"123456"`を編集して`"a"`に変更し、ドロップダウンリストを開くと、`"a"`が選択状態になる
 -- `PopupMenuListener`を追加し、`popupMenuWillBecomeVisible(...)`メソッドで編集された文字列がドロップダウンリストに存在する場合は選択する
 -- ドロップダウンリストを開いたときに編集後の文字列がリストに存在しない場合は、選択状態はクリアされる
 - `+enterPressed Action`
--- `"123456"`を編集して`"123456a"`に変更しKBD{Enter}、次に文字列を`"a"`に変更してから、ドロップダウンリストを開くと、リストに`"123456a"`が追加され、`"a"`が選択状態
+-- `"123456"`を編集して`"123456a"`に変更しKBD{Enter}、次に文字列を`"a"`に変更してから、ドロップダウンリストを開くと、リストに`"123456a"`が追加され、`"a"`が選択状態になる
 -- KBD{Enter}キーを押した場合、アイテムを追加するアクションを`ActionMap`に追加
 #code{{
 Action defalutEnterPressedAction = getActionMap().get(ENTER_PRESSED);
@@ -59,7 +59,9 @@ Action a = new AbstractAction() {
 getActionMap().put(ENTER_PRESSED, a);
 }}
 
-//* 参考リンク [#reference]
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/PopupMenuListener.html#popupMenuWillBecomeVisible-javax.swing.event.PopupMenuEvent- PopupMenuListener#popupMenuWillBecomeVisible(...) (Java Platform SE 8)]
+
 * コメント [#comment]
 #comment
 #comment

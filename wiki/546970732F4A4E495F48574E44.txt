@@ -7,19 +7,19 @@ description: JNI(Java Native Interface)でJFrame(SunAwtFrame)のHWND(ウィン�
 #contents
 //[[コメント欄>Comments/Swing]]から移動
 
-* 概要 [#d54756f6]
+* 概要 [#summary]
 [http://www.telejapan.com/af/master/memo/memo_Java.html JNI Windowsでウィンドウハンドルを取得する - Memo of Master]の方法２を参考にして、`JNI`(`Java Native Interface`)で`JFrame`(`SunAwtFrame`)の`HWND`(ウィンドウハンドル)を取得します。
 
 - [https://ateraimemo.com/data/swing/hwndTest.zip hwndTest.zip(サンプル)]
 
 #ref(https://lh3.googleusercontent.com/-NNjiMJe_o94/TeSO493_q3I/AAAAAAAAA8k/KU8B7ms4SQE/s800/JNI_HWND.png)
 
-* 環境 [#q9fd6c07]
+* 環境 [#environments]
 - `Microsoft Windows XP [Version 5.1.2600]`
 - `JDK 1.6.0_04`
 - `Microsoft Visual Studio .NET 2003\vc7`
 
-* サンプルコード [#yfef3d00]
+* サンプルコード [#sourcecode]
 #code{{
 import java.awt.*;
 import javax.swing.*;
@@ -103,7 +103,7 @@ JNIEXPORT jint JNICALL Java_windowHandler_getHWND(
 }
 }}
 
-* 解説 [#gcd89e73]
+* 解説 [#explanation]
 以下のようにコンパイル、実行すると`JFrame`のタイルトバーに`HWND`が表示されます。
 
 #code{{
@@ -159,11 +159,11 @@ public class WComponentPeerTest {
 }
 }}
 
-* 参考リンク [#z82fc32a]
+* 参考リンク [#reference]
 - [http://www.telejapan.com/af/master/memo/memo_Java.html JNI Windowsでウィンドウハンドルを取得する - Memo of Master]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/jni/ JNI APIおよび開発者ガイド]
 
-* コメント [#h2768609]
+* コメント [#comment]
 #comment
 - `Win32`の`MS Visual C++`の`WndProc()`にコールバックされるメッセージを`JNI`で検出する掲載もあると助かります。 -- &user(Java, C, JNI どれも超初心者); &new{2011-07-29 (金) 22:06:11};
 -- `JNI`関係勉強しないとと思いながら最近はさっぱりです。どこかにサンプルがないか適当に検索してみたら、`JNA`に`WndProcCallbackListener`([https://stackoverflow.com/questions/4041174/create-a-native-windows-window-in-jna-and-some-getwindowlong-with-gwl-wndproc Create a native Windows window in JNA and some GetWindowLong with GWL_WNDPROC])というそれっぽいのがあるみたいです。 -- &user(aterai); &new{2011-08-01 (月) 15:30:50};
