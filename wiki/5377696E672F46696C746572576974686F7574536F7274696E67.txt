@@ -28,7 +28,7 @@ sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、行フィルタだけ利用して、行のソートは不可にしておきたいので、`TableRowSorter`に以下のような設定をしています。
+上記のサンプルでは、行のフィルタリングのみ有効にして行のソートは不可にしたいので、`TableRowSorter`に以下のような設定をしています。
 
 - `DefaultRowSorter#setRowFilter(RowFilter)`で偶数行だけ表示するフィルタを設定
 - `DefaultRowSorter#isSortable(int)`をオーバーライドして常に`false`を返す

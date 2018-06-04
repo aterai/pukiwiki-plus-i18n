@@ -5,10 +5,10 @@ author: aterai
 pubdate: 2014-09-28T01:50:02+09:00
 ---
 #contents
-* 概要 [#l2fe13c2]
+* 概要 [#summary]
 `Windows` + `Cygwin64` + `ruby 2.0.0`の環境で、`Jekyll`をインストールし`Markdown`記法のテキストから静的サイトを生成します。
 
-* インストール [#t4eb21f1]
+* インストール [#install]
 - `setup-x86_64.exe`から、`gcc-core`、`make`、`ruby`、`rubygems`、`ruby-devel`、`libffi-devel`、`openssh`、`openssl`、`git`をインストール
 - `~/.gemrc`を作成
 #code{{
@@ -77,7 +77,7 @@ Makefile:254: ターゲット 'stemmer.so' のレシピで失敗しました
 make: *** [stemmer.so] エラー 1
 }}
 
-* 実行 [#ydc8923b]
+* 実行 [#build]
 - `jekyll new my-awesome-site`で`my-awesome-site`ディレクトリを作成
 -- `/usr/share/rubygems/rubygems/core_ext/kernel_require.rb:55:in 'require': cannot load such file -- bigdecimal (LoadError)`とエラーになる場合
 --- `gem install bigdecimal`で`bigdecimal`をインストール
@@ -87,7 +87,7 @@ make: *** [stemmer.so] エラー 1
 -- `LoadError: cannot load such file -- json`とエラーになる場合
 --- `./my-awesome-site/Gemfile`ファイルに`gem 'json'`を一行追加
 
-* Jekyll で google-code-prettify [#dd21a813]
+* Jekyll で google-code-prettify [#codeprettify]
 - 参考: [http://fnordig.de/2011/09/02/kramdown-test/ fnordig.de]
 
 パーサーを`kramdown`にして、行頭タブ(`4`スペース)ブロックの直後に`{:class="prettyprint"}`、または`{:.prettyprint}`を追加
@@ -114,7 +114,7 @@ make: *** [stemmer.so] エラー 1
  <script src="{{ ASSET_PATH }}/js/prettify.js"></script>
  </body>
 
-* redcarpet [#u119a163]
+* redcarpet [#redcarpet]
 - `markdown`のパーサーを`redcarpet`に変更
 -- [https://github.com/mojombo/jekyll/wiki/Configuration Configuration ・ mojombo/jekyll Wiki ・ GitHub]
 -- [https://github.com/mrcaron/jekyll/commit/cf8fde495d1689c40b016c4155f4d48fe8377347 updated jekyll to latest RedCarpet version ・ cf8fde4 ・ mrcaron/jekyll ・ GitHub]
@@ -128,7 +128,9 @@ make: *** [stemmer.so] エラー 1
 - `no_intra_emphasis`
 -- `<pre><code>`の中でも、アンダーライン(例: `InputMap im = combobox.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);`)が、`<em>...</em>`に変換されるので、`no_intra_emphasis`で回避
 
-//* 参考リンク
-* コメント [#f75d3823]
+* 参考リンク [#reference]
+- [https://jekyllrb-ja.github.io/ Jekyll • シンプルで、ブログのような、静的サイト]
+
+* コメント [#comment]
 #comment
 #comment
