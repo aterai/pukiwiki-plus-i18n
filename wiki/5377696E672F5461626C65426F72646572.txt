@@ -1,0 +1,71 @@
+---
+category: swing
+folder: 
+title: JTableの本体、ヘッダ、親JScrollPeneなどにBorderを設定する
+tags: [JTable, Border, JTableHeader, JScrollPene]
+author: aterai
+pubdate: 2018-06-11T15:29:35+09:00
+description: JTableやその内部のJTableHeader、親のJScrollPeneやJViewportにそれぞれ異なるBorderを設定するテストを行います。
+image: https://drive.google.com/uc?id=1QoXjiHkRpuR6I_IrsTRbEOcVi3-02nmReg
+---
+* 概要 [#summary]
+`JTable`やその内部の`JTableHeader`、親の`JScrollPene`や`JViewport`にそれぞれ異なる`Border`を設定するテストを行います。
+
+#download(https://drive.google.com/uc?id=1QoXjiHkRpuR6I_IrsTRbEOcVi3-02nmReg)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTable table = new JTable(new DefaultTableModel(15, 3));
+table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 5, 0, 5, Color.ORANGE));
+table.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));
+
+JScrollPane scroll = new JScrollPane(table);
+scroll.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+scroll.setViewportBorder(BorderFactory.createLineBorder(Color.RED, 5));
+
+scroll.setBackground(Color.YELLOW);
+scroll.getViewport().setBackground(Color.PINK);
+table.setBackground(Color.WHITE);
+table.getTableHeader().setBackground(Color.MAGENTA);
+
+EventQueue.invokeLater(() -> {
+  JViewport vp = scroll.getColumnHeader();
+  vp.setOpaque(true);
+  vp.setBackground(Color.CYAN);
+});
+}}
+
+* 解説 [#explanation]
+- `GREEN`
+-- `JTable`自体に`JTable#setBorder(...)`で線幅`5`の`LineBorder`を設定
+-- セル内部で`LineBorder`が入り込んでしまう
+- `ORANGE`
+-- `JTableHeader`に`JTableHeader#setBorder(...)`で左右の幅`5`の`MatteBorder`を設定
+- `BLUE`
+-- 親`JScrollPane`に`JScrollPane#setBorder(...)`で線幅`5`の`LineBorder`を設定
+- `RED`
+-- 親`JScrollPane`の`JViewport`に`JScrollPane#setViewportBorder(...)`で線幅`5`の`LineBorder`を設定
+-- セルの縦罫線が`JTable`と`JTableHeader`でズレてしまう
+----
+- `YELLOW`
+-- 親`JScrollPane`の背景色
+-- `JScrollBar`が表示れる場合、その余白の背景色になる
+- `PINK`
+-- 親`JScrollPane`の中央`JViewport`の背景色
+- `WHITE`
+-- `JTable`の背景色
+- `MAGENTA`
+-- `JTableHrader`の背景色
+-- `WindowsLookAndFeel`の場合、ヘッダーセルの縦罫線なる？
+- `CYAN`
+-- 親`JScrollPane`の`ColumnHeader`用`JViewport`の背景色
+-- 列ヘッダをドラッグしたあとのヘッダ背景色になる
+
+* 参考リンク [#reference]
+- [[JTableに行ヘッダを追加>Swing/TableRowHeader]]
+
+* コメント [#comment]
+#comment
+#comment

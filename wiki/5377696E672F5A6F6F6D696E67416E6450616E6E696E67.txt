@@ -47,7 +47,8 @@ class ZoomAndPanHandler extends MouseAdapter {
     //Point p = e.getPoint();
     Point p = new Point(r.x + r.width / 2, r.y + r.height / 2);
     Point p1 = transformPoint(p);
-    double scale = dir > 0 ? 1 / ZOOM_MULTIPLICATION_FACTOR : ZOOM_MULTIPLICATION_FACTOR;
+    double scale = dir > 0 ? 1 / ZOOM_MULTIPLICATION_FACTOR
+                           : ZOOM_MULTIPLICATION_FACTOR;
     coordAndZoomTransform.scale(scale, scale);
     Point p2 = transformPoint(p);
     coordAndZoomTransform.translate(p2.getX() - p1.getX(), p2.getY() - p1.getY());

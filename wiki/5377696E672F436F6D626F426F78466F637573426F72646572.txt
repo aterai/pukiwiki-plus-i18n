@@ -58,6 +58,7 @@ JComboBox<String> combo3 = new JComboBox<String>(model) {
 -- `JComboBox#setFocusable(false)`で点線は非表示になるが、フォーカスが当たらなくなる
 - `setRenderer(...)`
 -- `DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドし、インデックスが`0`以下(`JComboBox`本体での内部アイテムの描画)の場合は空の`Border`を使用することで点線を非表示に設定
+-- `WindowsLookAndFeel`以外では、内部アイテムに`FocusBorder`は付かないのでこのセルレンダラーは適用しない
 -- フォーカスが当たっているかどうかが判別しづらくなる
 - `paintBorder(...)`
 -- 上記と同様のフォーカスがあっても点線を非表示にするセルレンダラーを適用
