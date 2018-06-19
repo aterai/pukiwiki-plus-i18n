@@ -12,7 +12,7 @@ image: https://drive.google.com/uc?id=18sjCT2fx28w5llnXs5lk1cEYRFC5oawA4A
 
 #img2(https://drive.google.com/uc?id=18sjCT2fx28w5llnXs5lk1cEYRFC5oawA4A)
 
-* エラー・バグ [#bug]
+* 不具合 [#bug]
 ** イベントのクリアタイムがおかしい [#k7dac62e]
 - `Windows 10 April 2018 Update`後？、イベントでチャレンジ終了後に表示されるタイムが不正確で速すぎる
 -- ランキング一覧で増加分を調べると、こちらは遅すぎる気がする
@@ -24,6 +24,11 @@ image: https://drive.google.com/uc?id=18sjCT2fx28w5llnXs5lk1cEYRFC5oawA4A
 -- `FreeCell`でも`Klondike`と同じように自動整理中でも時間が経過するようになった？
 -- 初回カード移動前でも時間が経過するようになった？ 
 -- `PC`版、タブレット版、携帯版で時間経過が異なる？
+- キャンセル後も時間経過が継続する
+-- 朝、何個目かのチャレンジに一度入ってキャンセル(カードは配られない)し、夜残りのチャレンジをすべてクリアしたら、最終タイムは`10`時間以上になっていた
+--- ちなみに、この`Solitaire`ワールドツアーの世界ランキングは総プレイヤー数約`39`万人中`65000`位程度だった
+--- 全チャレンジクリアしている人は`2`割以下？で結構少ないのかもしれない
+--- もしくは総プレイヤー数が、正確な総参加プレイヤー数ではないのかもしれない
 
 ** イベント中最小化で接続エラー [#z5c21f86]
 - `Windows 10 April 2018 Update`後？、イベントのチャレンジ実行中にジェスチャーミスなどでアプリが最小化されると、クリア後「インターネットに接続できない」とエラーになり、チャレンジをキャンセルするしかなくなる
@@ -44,7 +49,7 @@ image: https://drive.google.com/uc?id=18sjCT2fx28w5llnXs5lk1cEYRFC5oawA4A
 #img2(https://drive.google.com/uc?id=1I3bBEYrSta6KZZD2aPzlacsyjkmiAvDicg)
 
 ** インターネット接続の問題 [#j21975db]
-- `2018-05-13` エラーコード: `121003` と表示されてログインできない
+- `2018-05-13`: 「エラーコード: `121003`」と表示されてログインできない
 -- `Windows 10`、`Android`版の両方とも同じエラーになる
 -- 自分の環境では`21`時からのイベント前には接続できるようになったが、まだ接続できないユーザも多いようだ
 --- [https://answers.microsoft.com/en-us/windows/forum/games_windows_10/ms-solitaire-collection-error-code-121003/40214b83-2141-4482-8c9f-c0085a1eac2f Ms solitaire collection error code 121003 - Microsoft Community]
@@ -73,8 +78,8 @@ image: https://drive.google.com/uc?id=18sjCT2fx28w5llnXs5lk1cEYRFC5oawA4A
 ** ログインできない [#login]
 - ストアなどに`0x800704fc`とエラーでログインできなくなると、`Microsoft Solitaire Collection`では「ネットワークに接続できません」とダイアログが表示されてログインができない
 
-** クラッシュ [#crash]
-*** MoAppCrash [#MoAppCrash]
+* クラッシュ [#crash]
+** MoAppCrash [#MoAppCrash]
 - 一個イベントをクリアした後、アプリケーションがクラッシュ
 - クラッシュ後にそのイベントに入ると、エラーメッセージなどは表示されずいきなり落ちる
 - イベントカレンダーから別の日のイベントは参照できるが、クラッシュ当日のイベントはローディングアニメーション中に落ちる
@@ -130,7 +135,7 @@ OS バージョン:	10.0.16299.2.0.0.256.48
 バケット ID:	130e3e3b05d4c5c6981e5ecea59ef59e (1737930747846522270)
 }}
 
-*** combase.dll [#combase]
+** combase.dll [#combase]
 - `2018/03/17`: %%`edgehtml.dll`%% `combase.dll`がクラッシュしてイベントに入れなくなった
 -- `Android`版は問題なし
 -- 以前のクラッシュとは異なり、別アカウントに切り替えてもクラッシュしてイベントに入れない
@@ -139,10 +144,10 @@ OS バージョン:	10.0.16299.2.0.0.256.48
 -- `Facebook`の`Microsoft Solitaire Collection`のページで同様の症状を訴える多数のコメントがあり、修正中との公式コメント？がついている
 --- `2018/03/18 13:36`(日本時間？)に修正されたとの公式コメント、原因などは書かれていない
 
-*** edgehtml.dll [#edgehtml]
+** edgehtml.dll [#edgehtml]
 - `2018/03`: `3`月に入ってから？イベント中、数秒フリーズや警告なしにクラッシュは頻発(`combase.dll`ではなく`edgehtml.dll`)しているが連続クラッシュは発生せず、アプリを再度起動すればイベントに戻れる
 
-*** XboxApp.exe [#XboxApp]
+** XboxApp.exe [#XboxApp]
 - 信頼性モニターには、`Microsoft Solitaire Collection`と同時に`Xbox`のクラッシュログも残っている場合がある
 - `2018/02/23`: `XboxApp.exe`が更新後、起動直後に落ちるようになった
 -- `Microsoft Solitaire Collection`のイベントでは落ちていないが、アカウントの切り替えが不可になる
@@ -189,7 +194,7 @@ OS バージョン:	10.0.16299.2.0.0.256.48
 バケット ID:	9ad353ef8c14e3cc753e2ea21be1e53f (1530712197139916095)
 }}
 
-*** igd10iumd32.dll [#z9c017f0]
+** igd10iumd32.dll [#z9c017f0]
 - `Windows 10 April 2018 Update`以降？、`Surface pro 3`を電源に接続しないで`Solitaire`を起動すると、何も言わずに落ちるようになった
 
 #code{{
@@ -230,10 +235,6 @@ OS バージョン:	10.0.17134.2.0.0.256.48
 バケット ID:	62ca996dff81a7f641329cad36bd34f6 (1239225115241952502)
 }}
 
-** 広告が無限ループ [#advertisement]
-- 無限ループする動画広告がある？
--- 停止ボタンを見落としていた？
-
 * ゲームの種類 [#type]
 
 #twocolumn
@@ -269,11 +270,15 @@ OS バージョン:	10.0.17134.2.0.0.256.48
 - [[TriPeaks>Solitaire/TriPeaks]]に移動
 
 * イベント [#event]
-- `Solitaire` ワールドツアー (`Solitaire World Tour`)
+- `Solitaire`ワールドツアー (`Solitaire World Tour`)
 - 初級ストリート (`Easy Street`)
 - 動乱 (`Medium Mayhem`)
 - 険しい道 (`The Hard Road`)
 - (`Klondike` | `Spider` | `FreeCell` | `Pyramid` | `TriPeaks`) アドベンチャー
+- 総プレイヤー数は、各イベントで`30`万台後半が多い
+-- 初級ストリートで、`40`万人越えがある
+--- `2018-05-01`: `407,782`人
+--- `2018-05-21`(`NATIONAL SOLITAIRE DAY!`): `401,249`人
 
 ** カレンダー [#p0a87bc5]
 - `2018-05-21～22`のイベントがスキップされて？、`2018-05-22～23`に`NATIONAL SOLITAIRE DAY!`がイベントカレンダーに表示されている

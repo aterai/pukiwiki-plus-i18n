@@ -47,8 +47,7 @@ private static int[] getData(ImageIcon imageIcon, int w, int h) {
 
 比較結果は、 `MemoryImageSource`に格納し、`Component#createImage(ImageProducer)`で`Image`に変換しています。
 
-- メモ
--- `ImageIO.read(...)`で取得した`BufferedImage`から、`getRaster().getDataBuffer()`で`DataBuffer`を取り出すと、`DataBufferByte`になる？
+- `ImageIO.read(...)`で取得した`BufferedImage`から、`getRaster().getDataBuffer()`で`DataBuffer`を取り出すと、`DataBufferByte`になる？
 
 * 参考リンク [#reference]
 - [[MemoryImageSourceで配列から画像を生成>Swing/MemoryImageSource]]
