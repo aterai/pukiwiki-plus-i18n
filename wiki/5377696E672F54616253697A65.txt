@@ -31,7 +31,7 @@ textpane.getStyledDocument().setParagraphAttributes(0, l, attrs, false);
 }}
 
 * 解説 [#explanation]
-`JTextArea`は`setTabSize`メソッドでタブサイズを指定することができますが、`JTextPane`では、左揃えの`TabStop`で`TabSet`を作成しタブサイズを指定します。
+`JTextArea`では`JTextArea#setTabSize(...)`メソッドでタブサイズを指定することが可能ですが、`JTextPane`ではパラグラフ属性で左揃えの`TabStop`で`TabSet`を作成しタブサイズを指定する必要があります。
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/TabSet.html TabSet (Java Platform SE 8)]

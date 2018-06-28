@@ -41,11 +41,11 @@ table.getTableHeader().addMouseListener(new MouseAdapter() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、ヘッダをKBD{Shift}キーを押しながらマウスクリックしたときに`TableRowSorter#setSortKeys`メソッドを使ってソートキーを空にすることでソート無しの状態に戻す機能を追加しています。
+上記のサンプルでは、`TableHeader`をKBD{Shift}キーを押しながらマウスクリックしたときに`TableRowSorter#setSortKeys`メソッドを使ってソートキーを空にすることでソート無しの状態に戻す機能を追加しています。
 
 - 制限:
 -- ソートキーになっていないカラムヘッダをKBD{Shift}+クリックした場合でも、ソート状態をクリアする
--- %%行がソートされている場合は、ドラッグ&ドロップで行を入れ替え不可%% `D&D`機能は削除
+-- %%行がソートされている場合は、ドラッグ＆ドロップで行を入れ替え不可%% ドラッグ＆ドロップでの入れ替えは無効化
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSorterDemoProject/src/components/TableSorter.java TableSorter.java]

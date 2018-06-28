@@ -18,11 +18,13 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-private StringBuilder makeStarburstSvg(PathIterator pi, int sz, String style, String desc) {
+private StringBuilder makeStarburstSvg(
+      PathIterator pi, int sz, String style, String desc) {
   StringBuilder sb = new StringBuilder();
   sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
   //...
-  sb.append(String.format("<svg width=\"%d\" height=\"%d\" xmlns=\"%s\">%n", sz, sz, w3));
+  sb.append(String.format(
+      "<svg width=\"%d\" height=\"%d\" xmlns=\"%s\">%n", sz, sz, w3));
   sb.append(String.format("  <desc>%s</desc>%n", desc));
   sb.append("  <path d=\"");
   double[] c = new double[6];
@@ -33,10 +35,12 @@ private StringBuilder makeStarburstSvg(PathIterator pi, int sz, String style, St
       case PathIterator.SEG_LINETO:
         sb.append(String.format("L%.2f,%.2f ", c[0], c[1])); break;
       case PathIterator.SEG_QUADTO:
-        sb.append(String.format("Q%.2f,%.2f,%.2f,%.2f ", c[0], c[1], c[2], c[3]));
+        sb.append(String.format("Q%.2f,%.2f,%.2f,%.2f ",
+                                c[0], c[1], c[2], c[3]));
         break;
       case PathIterator.SEG_CUBICTO:
-        sb.append(String.format("C%.2f,%.2f,%.2f,%.2f,%.2f,%.2f ", c[0], c[1], c[2], c[3], c[4], c[5]));
+        sb.append(String.format("C%.2f,%.2f,%.2f,%.2f,%.2f,%.2f ",
+                                c[0], c[1], c[2], c[3], c[4], c[5]));
         break;
       case PathIterator.SEG_CLOSE:
         sb.append("Z");
@@ -51,8 +55,6 @@ private StringBuilder makeStarburstSvg(PathIterator pi, int sz, String style, St
 
 * 解説 [#explanation]
 上記のサンプルでは、`Shape`から`PathIterator`を取得し、そのパスを辿って`SVG`ファイルを生成しています。
-
-//- %%対応しているのは、`PathIterator.SEG_MOVETO`、`PathIterator.SEG_LINETO`のみ%%
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/geom/PathIterator.html PathIterator (Java Platform SE 8)]

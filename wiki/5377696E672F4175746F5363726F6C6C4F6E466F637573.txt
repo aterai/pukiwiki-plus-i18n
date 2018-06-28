@@ -24,14 +24,16 @@ IntStream.range(0, 20).forEach(i -> {
 box.add(Box.createVerticalGlue());
 box.setFocusCycleRoot(true);
 box.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
-  @Override public Component getComponentAfter(Container focusCycleRoot, Component aComponent) {
+  @Override public Component getComponentAfter(
+        Container focusCycleRoot, Component aComponent) {
     Component c = super.getComponentAfter(focusCycleRoot, aComponent);
     if (focusCycleRoot instanceof JComponent) {
       ((JComponent) focusCycleRoot).scrollRectToVisible(c.getBounds());
     }
     return c;
   }
-  @Override public Component getComponentBefore(Container focusCycleRoot, Component aComponent) {
+  @Override public Component getComponentBefore(
+        Container focusCycleRoot, Component aComponent) {
     Component c = super.getComponentBefore(focusCycleRoot, aComponent);
     if (focusCycleRoot instanceof JComponent) {
       ((JComponent) focusCycleRoot).scrollRectToVisible(c.getBounds());
