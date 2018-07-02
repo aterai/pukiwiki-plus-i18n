@@ -99,7 +99,7 @@ class ComponentIcon implements Icon {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`0`列目のセルの描画に、`JTable#getTableHeader()#getDefaultRenderer()`メソッドで取得したセルレンダラーを使用する`TableCellRenderer`を適用しています。
+上記のサンプルでは、`0`列目のセルに`JTable#getTableHeader()#getDefaultRenderer()`メソッドで取得したセルレンダラーを使用する`TableCellRenderer`を適用しています。
 
 - ソートアイコンが列ヘッダに表示されていても、行ヘッダには表示しない
 -- 引数の行と列を両方`-1`に設定して、`TableCellRenderer#getTableCellRendererComponent(...)`で描画用コンポーネント(`JLabel`)をヘッダセルレンダラーから取得
