@@ -41,7 +41,7 @@ tabbedPane.addMouseListener(new MouseAdapter() {
 - 中ボタンでクリック
 -- `MouseListener#mouseClicked(...)`内の場合、`MouseEvent#getButton()`で状態が変化したマウスボタンを取得し、それが第`2`ボタンかどうかで判断する
 -- `MouseListener#mousePressed(...)`内なら、`e.getModifiersEx() & InputEvent.getMaskForButton(2)`でフラグが立っているかどうかで判断可能
--- `MouseInfo.getNumberOfButtons()`メソッドで、 マウスのボタン数が`2`以下の場合は中ボタンは無い(未検証)と判断している
+-- `MouseInfo.getNumberOfButtons()`メソッドで取得されるマウスのボタン数が`2`以下の場合、中ボタンは無い(未検証)と判断している
 - 左ボタンでダブルクリック
 -- `MouseEvent#getClickCount()`が`2`、かつ`MouseEvent#getButton()`が第`1`ボタンの場合、タブを閉じる
 

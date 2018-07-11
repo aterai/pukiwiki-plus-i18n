@@ -29,7 +29,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTH67VnIQI/AAAAAAAAAR8/JM
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JPanel#setOpaque(false)`と背景を描画しないように設定したパネルで、`JPanel#paintComponent(Graphics)`メソッドをオーバーライドし、ここで`Image`を順番に並べて描画しています。
+上記のサンプルでは、`JPanel#setOpaque(false)`でパネルの背景を透過するように設定し、`JPanel#paintComponent(Graphics)`メソッドをオーバーライドしてこの内部で`Image`を順番に並べて描画しています。
 
 * 参考リンク [#reference]
 - [[TexturePaintを使って背景に画像を表示>Swing/TexturePaint]]

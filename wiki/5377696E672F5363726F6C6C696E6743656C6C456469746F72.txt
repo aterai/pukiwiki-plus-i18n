@@ -81,14 +81,14 @@ class TextAreaCellEditor extends JTextArea implements TableCellEditor {
 * 解説 [#explanation]
 上記のサンプルでは、`0`列目にデフォルトの`TableCellEditor(JTextField)`、`1`列目に`JTextArea`を継承した`TableCellEditor`を設定しています。
 
-- `TableCellEditor#isCellEditable`
+- `TableCellEditor#isCellEditable(...)`
 -- マウスのダブルクリックで編集開始
-- `TableCellEditor#getTableCellEditorComponent`
+- `TableCellEditor#getTableCellEditorComponent(...)`
 -- `JTextArea`に現在表示されているセル文字列をコピーし、戻り値の`Component`として、`JScrollPane`を返す
-- `TableCellEditor#isCellEditable`, `EventQueue.invokeLater`
+- `TableCellEditor#isCellEditable(...)`, `EventQueue.invokeLater(...)`
 -- キー入力で編集開始した場合、その入力を`JTextArea`の文字列末尾に追加
 -- [https://docs.oracle.com/javase/jp/8/docs/api/java/lang/Character.html#isUnicodeIdentifierStart-char- Character#isUnicodeIdentifierStart(char) (Java Platform SE 8)]
-- `TableCellEditor#getTableCellEditorComponent`, `EventQueue.invokeLater`
+- `TableCellEditor#getTableCellEditorComponent(...)`, `EventQueue.invokeLater(...)`
 -- `JTextArea`にフォーカスを移動し、`JTextArea`のキャレットも文字列末尾に移動
 
 * 参考リンク [#reference]

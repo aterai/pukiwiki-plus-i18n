@@ -60,9 +60,8 @@ class WhitespaceLabelView extends LabelView {
 * 解説 [#explanation]
 上記のサンプルでは、`LabelView`を継承し、`LabelView#paint`メソッドをオーバーライドして全角スペースやタブの場合だけ、それぞれの図形を描画しています。
 
-- 注: タブの表示図形は、`xyzzy`風だがドットの数は面倒なので適当
-
-この`LabelView`を使用する`EditorKit(ViewFactory)`の作成は、[[JEditorPaneで改行を表示>Swing/ParagraphMark]]と同様になっています。
+- タブ表示図形のドット数は適当(`4`タブの場合に`4`点表示している訳ではない)
+- `LabelView`を使用する`EditorKit(ViewFactory)`の作成方法は、[[JEditorPaneで改行を表示>Swing/ParagraphMark]]と同様
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1374478 Swing - JTextPane View Problem]

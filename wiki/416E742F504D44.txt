@@ -91,8 +91,8 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 -- `import java.time.format.*;`で、`LocalDate#format(...)`が誤って警告
 -- `import javax.swing.undo.*;`で、`UndoManager#undo()`が誤って警告
 
- // > pmd.bat -dir C:\tmp\pmd -R category/java/codestyle.xml/UnnecessaryFullyQualifiedName
- // C:\tmp\pmd\Test.java:9: Unnecessary use of fully qualified name 'Arrays.stream' due to existing import 'java.util.stream.*'
+ > pmd.bat -dir C:\tmp -R category/java/codestyle.xml/UnnecessaryFullyQualifiedName
+ C:\tmp\Test.java:9: Unnecessary use of fully qualified name 'Arrays.stream' due to existing import 'java.util.stream.*'
 
 #code{{
 import java.awt.Component;

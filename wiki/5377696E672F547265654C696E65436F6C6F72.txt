@@ -54,15 +54,15 @@ tree2.setUI(new BasicTreeUI() {
 }}
 
 * 解説 [#explanation]
-- `lineTypeDashed`
+- 左: `lineTypeDashed`
 -- `UIManager.put("Tree.lineTypeDashed", Boolean.TRUE);`を設定して接続線を点線に変更
 -- `UIManager.put("Tree.hash", Color.RED);`で線色を変更可能
-- `lineStyle`
+- 中: `lineStyle`
 -- `tree1.putClientProperty("JTree.lineStyle", "Horizontal");`を設定して親ノードの上下に水平線を表示するスタイルに変更
 --- 参考: [[JTreeのノード間の接続線のスタイルを変更する>Swing/TreeLineStyle]]
 -- `UIManager.put("Tree.line", Color.GREEN);`で水平線の線色を変更可能
 --- 接続線の線色には影響しない
-- `BasicTreeUI`
+- 右: `BasicTreeUI`
 -- `BasicTreeUI#paintHorizontalPartOfLeg(...)`、`BasicTreeUI#paintVerticalPartOfLeg(...)`をオーバーライドして、接続線の太さを変更
 -- 接続線の色は、`BasicTreeUI#getHashColor()`をオーバーライドして変更
 -- %%`UIManager.put("Tree.lineTypeDashed", Boolean.TRUE);`の設定などは無視される%%
