@@ -16,7 +16,7 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPsQMGUsI/AAAAAAAAAeY/B8
 * サンプルコード [#sourcecode]
 #code(link){{
 private Dimension getImageDimension(Image img) {
-  int id = 0;
+  int id = 0; // Get the images for the background (id == 0)
   MediaTracker tracker = new MediaTracker((Container) this);
   tracker.addImage(img, id);
   try {

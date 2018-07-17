@@ -24,8 +24,8 @@ menu.add(Box.createHorizontalStrut(200));
 -- `JMenu`に配置されたコンポーネントの最も大きな推奨サイズの幅から`JPopupMenu`の幅が決まる
 - `BoxHStrut`
 -- `Box.createHorizontalStrut(200)`で高さ`0`で任意の幅のコンポーネントを作成して`JMenu`に配置
--- このボックスの幅が`JPopupMenu`の最小幅になる
--- このボックスは`MenuElement`インタフェースに適合しないので、`JMenu#getSubElements()`などには含まれない
+-- この`Box`の幅が`JPopupMenu`の最小幅になる
+-- この`Box`は`MenuElement`インタフェースに適合しないので、`JMenu#getSubElements()`などには含まれない
 --- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JMenu.html#getSubElements-- JMenu#getSubElements() (Java Platform SE 8)]
 - `Override`
 -- `JMenu`に配置する`JMenuItem`の`getPreferredSize()`メソッドをオーバーライドして、任意の幅を返すように設定

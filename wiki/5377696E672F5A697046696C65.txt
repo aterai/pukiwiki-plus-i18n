@@ -1,0 +1,110 @@
+---
+category: swing
+folder: ZipFile
+title: JFileChooserで選択したzipファイルを展開する
+tags: [JFileChooser, File]
+author: aterai
+pubdate: 2018-07-16T21:06:51+09:00
+description: JFileChooserで選択したzipファイルを展開、またはディレクトリをzip圧縮します。
+image: https://drive.google.com/uc?export=view&id=11d4t5QVL41puZ84CA-a3BBWz6zx7_4dy1A
+---
+* 概要 [#summary]
+`JFileChooser`で選択した`zip`ファイルを展開、またはディレクトリを`zip`圧縮します。
+
+#download(https://drive.google.com/uc?export=view&id=11d4t5QVL41puZ84CA-a3BBWz6zx7_4dy1A)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JButton button1 = new JButton("unzip");
+button1.addActionListener(e -> {
+  String str = field.getText();
+  Path path = Paths.get(str);
+  if (str.isEmpty() || Files.notExists(path)) {
+    return;
+  }
+  String name = Objects.toString(path.getFileName());
+  int lastDotPos = name.lastIndexOf('.');
+  if (lastDotPos > 0) {
+    name = name.substring(0, lastDotPos);
+  }
+  Path destDir = path.resolveSibling(name);
+  try {
+    if (Files.exists(destDir)) {
+      String m = String.format(
+          "<html>%s already exists.<br>Do you want to overwrite it?",
+          destDir.toString());
+      int rv = JOptionPane.showConfirmDialog(
+          button1.getRootPane(), m, "Unzip", JOptionPane.YES_NO_OPTION);
+      if (rv != JOptionPane.YES_OPTION) {
+        return;
+      }
+    } else {
+      if (LOGGER.isLoggable(Level.INFO)) {
+        LOGGER.info("mkdir0: " + destDir.toString());
+      }
+      Files.createDirectories(destDir);
+    }
+    ZipUtil.unzip(path, destDir);
+  } catch (IOException ex) {
+    ex.printStackTrace();
+  }
+});
+// ...
+public static void unzip(Path zipFilePath, Path destDir) throws IOException {
+  try (ZipFile zipFile = new ZipFile(zipFilePath.toString())) {
+    Enumeration<? extends ZipEntry> e = zipFile.entries();
+    while (e.hasMoreElements()) {
+      ZipEntry zipEntry = e.nextElement();
+      String name = zipEntry.getName();
+      Path path = destDir.resolve(name);
+      if (name.endsWith("/")) { // if (Files.isDirectory(path)) {
+        log("mkdir1: " + path.toString());
+        Files.createDirectories(path);
+      } else {
+        Path parent = path.getParent();
+        if (Files.notExists(parent)) {
+          log("mkdir2: " + parent.toString());
+          Files.createDirectories(parent);
+        }
+        log("copy: " + path.toString());
+        Files.copy(zipFile.getInputStream(zipEntry),
+                   path, StandardCopyOption.REPLACE_EXISTING);
+      }
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Zip`
+-- `JFileChooser#setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)`を設定して、ディレクトリのみ表示する`JFileChooser`で`zip`圧縮する対象ディレクトリを選択
+-- `Files.walk(...)`で対象ディレクトリ内を検索し、パスを`ZipEntry`に変換して`ZipOutputStream`に追加、`Files.copy(...)`で書き出し
+#code{{
+public static void zip(Path srcDir, Path zip) throws IOException {
+  try (Stream<Path> s = Files.walk(srcDir).filter(Files::isRegularFile)) {
+    List<Path> files = s.collect(Collectors.toList());
+    try (ZipOutputStream zos = new ZipOutputStream(Files.newOutputStream(zip))) {
+      for (Path f: files) {
+        String relativePath = srcDir.relativize(f).toString();
+        ZipEntry ze = new ZipEntry(relativePath.replace('\\', '/'));
+        zos.putNextEntry(ze);
+        Files.copy(f, zos);
+      }
+    }
+  }
+}
+}}
+
+- `Unzip`
+-- `JFileChooser`で展開する`zip`ファイルを選択
+-- 対象ファイルを`ZipFile`に変換して、`ZipFile#entries()`で圧縮されているファイルの一覧を取得
+-- `Files.copy(zipFile.getInputStream(zipEntry), path, StandardCopyOption.REPLACE_EXISTING)`メソッドで展開
+--- `StandardCopyOption.REPLACE_EXISTING`オプションで同名ファイルは上書き
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/util/zip/ZipFile.html ZipFile (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/util/zip/ZipOutputStream.html ZipOutputStream (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment
