@@ -15,7 +15,7 @@ image: https://lh4.googleusercontent.com/-QqKPFV0ZzIc/TttWYFUshII/AAAAAAAABFk/6H
 
 * サンプルコード [#sourcecode]
 #code(link){{
-JCheckBoxMenuItem pinTabMenuItem = new JCheckBoxMenuItem(new AbstractAction("pin tab") {
+pinTabMenuItem = new JCheckBoxMenuItem(new AbstractAction("pin tab") {
   @Override public void actionPerformed(ActionEvent e) {
     JTabbedPane t = (JTabbedPane) getInvoker();
     JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();

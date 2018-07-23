@@ -15,8 +15,7 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRQXIAu4I/AAAAAAAAAg4/bh
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final ProgressMonitor monitor = new ProgressMonitor(
-    this, "message", "note", 0, 100);
+ProgressMonitor monitor = new ProgressMonitor(this, "message", "note", 0, 100);
 monitor.setProgress(0);
 worker = new SwingWorker<String, String>() {
   @Override public String doInBackground() {
@@ -34,7 +33,7 @@ worker = new SwingWorker<String, String>() {
     }
     return "Done";
   }
-  @Override protected void process(java.util.List<String> chunks) {
+  @Override protected void process(List<String> chunks) {
     for (String message : chunks) {
       monitor.setNote(message);
     }
@@ -53,10 +52,10 @@ worker = new SwingWorker<String, String>() {
         text = "Exception";
       }
     }
-    //System.out.println(text);
+    // System.out.println(text);
     area.append(text + "\n");
     area.setCaretPosition(area.getDocument().getLength());
-    //appendLine(text);
+    // appendLine(text);
   }
 };
 worker.addPropertyChangeListener(new ProgressListener(monitor));
