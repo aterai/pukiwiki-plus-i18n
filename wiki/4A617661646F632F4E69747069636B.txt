@@ -10,6 +10,20 @@ description: Java クラスドキュメントで、オリジナルの英語版�
 #contents
 
 * 未修正 [#Unresolved]
+** UIManager.getString("Table.foreground") [#be02be71]
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/UIManager.html
+-- UIManager.getString("Table.foreground")
+-- この例だと、色をgetStringで取得しようとしているので、常に null になる。UIManager.get("Table.foreground") とか UIManager.getColor("Table.foreground") にした方がよさそう。
+
+** UIManager [#q4536622]
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/UIManager.html
+-- Some look and feels may aggressively look up defaults, so that changing a default may not have an effect after installing the look and feel. Other look and feels may lazily access defaults so that a change to the defaults may effect an existing look and feel.
+- https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/UIManager.html
+-- 積極的にデフォルトを検索するLook & Feelもあれば(この場合、Look & Feelのインストール後にデフォルトに変更を加えても効果はない)、めったにデフォルトにアクセスしないLook & Feelもあります。(この場合、デフォルトの変更が既存のLook & Feelに影響を及ぼす)
+- 修正案？
+-- 積極的にデフォルトを検索するLookAndFeelなら、インストール後のデフォルト変更は効果があるような気がするのだが…、括弧内の説明が逆になっている？
+-- ついでに、日本語訳としては句点は閉じ括弧の後に移動した方が良さそう
+
 ** avadoc [#p9af4b61]
 - [https://docs.oracle.com/javase/9/javadoc/javadoc-command.htm#JSJAV-GUID-EAAAE17F-E540-42A0-B22B-4D2B2FD3E4D2 Javadoc Command]
 -- 最下部の例で、`javadoc`コマンドが`avadoc`になっている
@@ -121,16 +135,6 @@ String propnames[] = (String[])Toolkit.getDefaultToolkit().getDesktopProperty("w
 -- agressively
 - 変更案
 -- aggressively
-
-- メモ1
--- Some look and feels may agressively look up defaults, so that changing a default may not have an effect after installing the look and feel. Other look and feels may lazily access defaults so that a change to the defaults may effect an existing look and feel.
-
-この説明がよく分からない。逆のような気がするような、しないような…。
-
-- メモ2
--- UIManager.getString("Table.foreground")
-
-この例だと、色をgetStringで取得しようとしているので、常に null になる。UIManager.get("Table.foreground") とか UIManager.getColor("Table.foreground") にした方がよさそう。
 
 ** class MyApp java.io.Serializable [#o8876b77]
 - https://docs.oracle.com/javase/7/docs/api/java/awt/Component.html

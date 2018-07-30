@@ -1,0 +1,59 @@
+---
+category: swing
+folder: SyntaxHighlightingEditorPane
+title: JEditorPaneにソースコードをシンタックスハイライトして表示する
+tags: [JEditorPane, HTMLEditorKit, StyleSheet]
+author: aterai
+pubdate: 2018-07-30T03:56:00+09:00
+description: JEditorPaneのHTMLEditorKitにStyleSheetを設定して、ソースコードをシンタックスハイライト表示します。
+image: https://drive.google.com/uc?export=view&id=1b_texG1scFcKnOIcUNUHQPdquKal_Fu6OQ
+---
+* 概要 [#summary]
+`JEditorPane`の`HTMLEditorKit`に`StyleSheet`を設定して、ソースコードをシンタックスハイライト表示します。
+
+#download(https://drive.google.com/uc?export=view&id=1b_texG1scFcKnOIcUNUHQPdquKal_Fu6OQ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+private void loadFile(String path) {
+  try (Stream<String> lines = Files.lines(
+      Paths.get(path), Charset.forName("UTF-8"))) {
+    String txt = lines.map(s -> s.replace("&", "&amp;")
+                                 .replace("<", "&lt;")
+                                 .replace(">", "&gt;"))
+      .collect(Collectors.joining("\n"));
+    editor.setText("<pre>" + prettify(engine, txt) + "\n</pre>");
+  } catch (IOException ex) {
+    ex.printStackTrace();
+  }
+}
+private static String prettify(ScriptEngine engine, String src) {
+  try {
+    Object w = engine.get("window");
+    return (String) ((Invocable) engine).invokeMethod(
+        w, "prettyPrintOne", src);
+  } catch (ScriptException | NoSuchMethodException ex) {
+    ex.printStackTrace();
+    return "";
+  }
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、`ScriptEngine`で`google-prettify.js`を実行し、`Open`ボタンで選択したソースコードをハイライト済みの`HTML`テキストに変換して`JEditorPane`で表示しています。
+
+- `ScriptEngine`で`HTML`テキストに変換する前に、ソースコード中の`&`、`<`、`>`を文字実体参照に変換する必要がある
+- `HTMLEditorKit`の`CSS`で色は`3`桁表記(`color:#RGB`) には対応していないため、`6`桁表記(`color:#RRGGBB`)に変換して使用
+-- [https://github.com/google/code-prettify/blob/master/src/prettify.css code-prettify/prettify.css at master ・ google/code-prettify]
+-- 参考: [[JEditorPaneのHTMLEditorKitにCSSを適用>Swing/StyleSheet]]
+- [https://github.com/google/code-prettify/blob/0b3341b3e9105ddaecf93cc632284f8db7994faf/src/prettify.js First pass at a way to dodge newline issues in IE.]の修正以降の`prettify.js`では、`prettyPrintOne`の内部で`Document`型のオブジェクトが使用されるようになったので`ScriptEngine`(`Nashorn`)のみでは実行不可
+-- このため、このサンプルでは古いバージョンの`prettify.js`([https://github.com/google/code-prettify/blob/f5ad44e3253f1bc8e288477a36b2ce5972e8e161/src/prettify.js Fixed prettyPrintOne by removing requirement that a job have a source node. Fixes issues 133 and 134.])を添付して利用している
+-- [https://raw.githubusercontent.com/google/code-prettify/f5ad44e3253f1bc8e288477a36b2ce5972e8e161/src/prettify.js prettify.js(r120)]
+
+* 参考リンク [#reference]
+- [https://github.com/google/code-prettify google/code-prettify: Automatically exported from code.google.com/p/google-code-prettify]
+- [[Rhinoでgoogle-code-prettifyを実行する>Tips/GooglePrettifyRhino]]
+
+* コメント [#comment]
+#comment
+#comment

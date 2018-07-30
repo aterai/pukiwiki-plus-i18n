@@ -33,6 +33,8 @@ scroll2.getVerticalScrollBar().setModel(scroll1.getVerticalScrollBar().getModel(
 -- 左右の`JTable`で`RowSorter`と`SelectionModel`を共有
 - `JScrollPane`
 -- それぞれ内部に配置する`JTable`の高さは、常に同じになるので、`VerticalScrollBar`の`BoundedRangeModel`を共有
+- 制限
+-- 例えば左`JTable`のセルを選択して行選択を開始した場合、右`JTable`上でのドラッグには反応しない
 
 * 参考リンク [#reference]
 - [[JTableの列固定とソート>Swing/FixedColumnTableSorting]]
