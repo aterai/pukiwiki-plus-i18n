@@ -27,7 +27,7 @@ button.addHierarchyListener(new HierarchyListener() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、コンポーネント(`JButton`)に`HierarchyListener`を追加して、表示状態が切り替わった時の`isDisplayable`、`isShowing`、`isVisible`を調べています。
+上記のサンプルでは、コンポーネント(`JButton`)に`HierarchyListener`を追加して、表示状態などが切り替わった時の`isDisplayable`、`isShowing`、`isVisible`メソッドの戻り値を調べています。
 
 - 対象ボタンを作成してパネルに追加した状態で、`frame.setVisible(true)`を実行する前の場合:
 -- `isDisplayable`: `false`

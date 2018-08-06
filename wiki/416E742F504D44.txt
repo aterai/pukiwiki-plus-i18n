@@ -84,8 +84,8 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 
 * 更新履歴 [#c022c47d]
 ** PMD 6.5.0 [#d87ca01e]
-- `*`を使用したインポート文と同名のメソッドが存在すると、[https://pmd.github.io/pmd-6.5.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname UnnecessaryFullyQualifiedName]ルールで誤検出が発生する
--- [https://github.com/pmd/pmd/pull/1220 java Fix unnecessaryFQCN false positive with import-on-demand #1220]、`6.6.0`で修正される予定
+- %%`*`を使用したインポート文と同名のメソッドが存在すると、[https://pmd.github.io/pmd-6.5.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname UnnecessaryFullyQualifiedName]ルールで誤検出が発生する%%
+-- [https://github.com/pmd/pmd/pull/1220 java Fix unnecessaryFQCN false positive with import-on-demand #1220]、`6.6.0`で修正済
 - 例:
 -- `import java.util.stream.*;`で、`Arrays.stream(...)`が誤って警告
 -- `import java.time.format.*;`で、`LocalDate#format(...)`が誤って警告
