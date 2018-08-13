@@ -18,36 +18,76 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-private List<List<Integer>> rowAndCellHeightList= new ArrayList<>();
-private void adjustRowHeight(JTable table, int row, int column) {
-  //int cWidth = table.getTableHeader().getColumnModel().getColumn(column).getWidth();
-  //int cWidth = table.getCellRect(row, column, false).width; //セルの内余白は含めない
-  //setSize(new Dimension(cWidth, 1000)); //注目
-  setBounds(table.getCellRect(row, column, false)); //setSizeの代わりに、setBoundsでも可
-  //doLayout(); //必要なさそう
+class TextAreaCellRenderer extends JTextArea implements TableCellRenderer {
+  private final List<List<Integer>> cellHeights = new ArrayList<>();
 
-  int preferredHeight = getPreferredSize().height;
-  while (rowAndCellHeightList.size() <= row) {
-    rowAndCellHeightList.add(new ArrayList<Integer>(column));
+  @Override public void updateUI() {
+    super.updateUI();
+    setLineWrap(true);
+    setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+    setName("Table.cellRenderer");
   }
-  List<Integer> cellHeightList = rowAndCellHeightList.get(row);
-  while (cellHeightList.size() <= column) {
-    cellHeightList.add(0);
+  @Override public Component getTableCellRendererComponent(
+      JTable table, Object value, boolean isSelected, boolean hasFocus,
+      int row, int column) {
+    setFont(table.getFont());
+    setText(Objects.toString(value, ""));
+    adjustRowHeight(table, row, column);
+    return this;
   }
-  cellHeightList.set(column, preferredHeight);
-  //JDK 1.8.0: int max = cellHeightList.stream().max(Integer::compare).get();
-  int max = preferredHeight;
-  for (int h: cellHeightList) {
-    max = Math.max(h, max);
-  }
-  if (table.getRowHeight(row) != max) {
-    table.setRowHeight(row, max);
+
+/**
+ * Calculate the new preferred height for a given row,
+ * and sets the height on the table.
+ * http://blog.botunge.dk/post/2009/10/09/JTable-multiline-cell-renderer.aspx
+ */
+  private void adjustRowHeight(JTable table, int row, int column) {
+  // The trick to get this to work properly is to set the width of the column to
+  // the textarea. The reason for this is that getPreferredSize(), without a width
+  // tries to place all the text in one line.
+  // By setting the size with the with of the column,
+  // getPreferredSize() returnes the proper height which the row should have in
+  // order to make room for the text.
+  // int cWidth = table.getTableHeader().getColumnModel().getColumn(column).getWidth();
+  // int cWidth = table.getCellRect(row, column, false).width; //IntercellSpacingを無視
+  // setSize(new Dimension(cWidth, 1000));
+
+    setBounds(table.getCellRect(row, column, false)); // setSizeではなくsetBoundsでも可
+    // doLayout(); // 必要なさそう
+
+    int preferredHeight = getPreferredSize().height;
+    while (cellHeights.size() <= row) {
+      cellHeights.add(new ArrayList<>(column));
+    }
+    List<Integer> list = cellHeights.get(row);
+    while (list.size() <= column) {
+      list.add(0);
+    }
+    list.set(column, preferredHeight);
+    int max = list.stream().max(Integer::compare).get();
+    if (table.getRowHeight(row) != max) {
+      table.setRowHeight(row, max);
+    }
   }
 }
 }}
 
 * 解説 [#explanation]
 上記のサンプルでは、セルレンダラーに`setLineWrap(true)`を指定した`JTextArea`を使用し、カラムサイズの変更が実行されるたびに、その`JTextArea`の高さを取得し、`JTable#setRowHeight(int)`メソッドで各行の高さを更新しています。
+
+----
+- 上記の`TextAreaCellRenderer`を複数インスタンス生成して一つの`JTable`に設定すると正常に折り返しできなくなる
+-- セルの高さをキャッシュしている`cellHeights`を`static`にすれば解決するが、その場合複数の`JTable`に適用するとダメになる
+#code{{
+// NG
+table.getColumnModel().getColumn(0).setCellRenderer(new TextAreaCellRenderer());
+table.getColumnModel().getColumn(1).setCellRenderer(new TextAreaCellRenderer());
+
+// OK
+TableCellRenderer renderer = new TextAreaCellRenderer();
+table.getColumnModel().getColumn(0).setCellRenderer(renderer);
+table.getColumnModel().getColumn(1).setCellRenderer(renderer);
+}}
 
 * 参考リンク [#reference]
 - [http://blog.botunge.dk/post/2009/10/09/JTable-multiline-cell-renderer.aspx JTable multiline cell renderer]

@@ -1,0 +1,93 @@
+---
+category: swing
+folder: SynthLookAndFeel
+title: SynthのスタイルをXMLファイルで設定する
+tags: [SynthLookAndFeel, LookAndFeel]
+author: aterai
+pubdate: 2018-08-13T14:59:12+09:00
+description: SynthLookAndFeelのスタイルをXMLファイルで設定します。
+image: https://drive.google.com/uc?id=1yPNRdiUSVu_8dPLvMFdctKzE9Tnp-hSXDA
+---
+* 概要 [#summary]
+`SynthLookAndFeel`のスタイルを`XML`ファイルで設定します。
+
+#download(https://drive.google.com/uc?id=1yPNRdiUSVu_8dPLvMFdctKzE9Tnp-hSXDA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+Class<?> clz = MainPanel.class;
+try (InputStream is = clz.getResourceAsStream("button.xml")) {
+  SynthLookAndFeel synth = new SynthLookAndFeel();
+  synth.load(is, clz);
+  UIManager.setLookAndFeel(synth);
+} catch (IOException | ParseException | UnsupportedLookAndFeelException ex) {
+  ex.printStackTrace();
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、以下のような`XML`ファイルで`SynthLookAndFeel`のスタイルを設定しています。
+
+#code{{
+<synth>
+  <style id="default">
+    <font name="Dialog" size="16" /> 
+  </style>
+  <bind style="default" type="region" key=".*" />
+  <style id="ButtonTest">
+    <opaque value="true" />
+    <insets top="10" bottom="10" left="10" right="10" />
+    <state>
+      <font name="Verdana" size="24" />
+      <color type="BACKGROUND" value="#FF0000" />
+      <color type="TEXT_FOREGROUND" value="#000000" />
+    </state>
+    <state value="MOUSE_OVER">
+      <color type="BACKGROUND" value="ORANGE" />
+      <color type="TEXT_FOREGROUND" value="WHITE" />
+    </state>
+    <state value="PRESSED">
+      <color type="BACKGROUND" value="BLUE" />
+      <color type="TEXT_FOREGROUND" value="WHITE" />
+    </state>
+  </style>
+  <bind style="ButtonTest" type="region" key="button" />
+
+  <style id="greenButton">
+    <opaque value="true" />
+    <insets top="10" bottom="10" left="10" right="10" />
+    <state>
+      <font name="Verdana" size="24" />
+      <color type="BACKGROUND" value="GREEN" />
+      <color type="TEXT_FOREGROUND" value="#000000" />
+    </state>
+    <state value="MOUSE_OVER">
+      <color type="BACKGROUND" value="RED" />
+      <color type="TEXT_FOREGROUND" value="WHITE" />
+    </state>
+    <state value="PRESSED">
+      <color type="BACKGROUND" value="BLUE" />
+      <color type="TEXT_FOREGROUND" value="WHITE" />
+    </state>
+  </style>
+  <bind style="greenButton" type="name" key="green:[0-9]+" />
+</synth>
+}}
+
+`Synth`の`XML`ファイルの詳細(`DTD`など)は、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/synth/doc-files/synthFileFormat.html Synthのファイル形式]で参照できます。
+
+----
+- 特定のコンポーネントにスタイルを設定する場合は、`bind`要素の`type`属性に`key`ではなく`name`を設定して、`key`属性に対象コンポーネントに`Component#setName(...)`で設定された名前を正規表現で指定する
+-- 例: `<bind style="greenButton" type="name" key="green:[0-9]+" />`で名前が`button3.setName("green:3");`のような形式になっているコンポーネントに`greenButton`スタイルが適用される
+-- [https://www.ibm.com/developerworks/jp/java/library/j-synth/index.html 進歩したSynth - IBM developerWorks]について
+--- 「非`Swing`コンポーネントをペイントする」で`bind`要素の`type`属性に`key`ではなく`name`を設定した場合の説明があるが、`Java 8`のソースコード(`javax/swing/plaf/synth/DefaultSynthStyleFactory#getMatchingStyles(...)`)を確認した限りではコンポーネントのクラス名を対象にする機能は存在しない(`1.4`では可能だった？のかもしれない)
+> `<bind>`タグを`<bind style="mystyle" type="name" key="Custom.*"/>`に変更すると、`mystyle`スタイルを使うためには、クラス名が`Custom`で始まる全コンポーネント（例えば`CustomTextField`や`CustomLabel`など）を変更することになります。
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/synth.html The Synth Look and Feel (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
+- [https://www.ibm.com/developerworks/jp/java/library/j-synth/index.html 進歩したSynth]
+-- 現在は無効になっている「`<bind>`要素のクラス名関係」以外は正確で有用と思われる
+
+* コメント [#comment]
+#comment
+#comment

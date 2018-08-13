@@ -34,7 +34,6 @@ spinner03.setModel(new SpinnerNumberModel(20, 0, 59, 1) {
 -- `SpinnerNumberModel#getNextValue()`などが`null`になる場合、`SpinnerNumberModel#getMinimum()`で最小値を取得してループ
 - リスト: `SpinnerListModel`
 -- `SpinnerListModel#getNextValue()`などが`null`になる場合、`SpinnerListModel#getList()#get(0)`でリスト先頭の取得してループ
-
 #code{{
 spinner04.setModel(new SpinnerListModel(weeks) {
   @Override public Object getNextValue() {

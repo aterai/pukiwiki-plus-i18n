@@ -37,8 +37,11 @@ button2.addActionListener(e -> {
 -- 直接`JFileChooser`のウィンドウのアイコンを変更するメソッドはデフォルトでは存在しないので、`JFileChooser#createDialog(...)`メソッドをオーバーライドし、`JFileChooser`が使用する`JDialog`に別アイコンを設定
 -- `Window#setIconImage(Image)`でウィンドウアイコンを設定した場合、適当な大きさにリサイズされる
 -- 「適当な大きさ」は環境や表示スケールなどによって変化する？
-// --- 例: `Windows 10`で表示スケール`100%`の場合、`16x16`
-// --- 例: `Windows 10`で表示スケール`125%`の場合、`20x20`
+--- 例: `Windows 10`で表示スケール`100%`の場合のウィンドウアイコン: `16x16`
+--- 例: `Windows 10`で表示スケール`125%`の場合のウィンドウアイコン: `20x20`
+
+----
+- `JFrame.setDefaultLookAndFeelDecorated(true);`で、デフォルト`LookAndFeel`のウィンドウ修飾をタイトルバーに適用する場合、表示スケールに関係なくウィンドウアイコン`16x16`が適用される？
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/18224184/sizes-of-frame-icons-used-in-swing java - Sizes of frame icons used in Swing - Stack Overflow]

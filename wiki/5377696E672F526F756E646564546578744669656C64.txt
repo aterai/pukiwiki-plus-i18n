@@ -53,10 +53,7 @@ JTextField textField01 = new JTextField(20) {
 - 下
 -- `RoundedCornerBorder`を設定
 -- %%角を親コンポーネントの背景色で上書きしているので、背景が画像などの場合はその上に角が描画されてしまう%%
--- `JTextField`は透明にし、`RoundedCornerBorder`から取得した図形で背景色を描画するように修正
-//--RoundTextUIを作成して、JTextField#setUI(...)で設定
-//--参考: [https://community.oracle.com/thread/1500417 Swing - custom JTextField]
-
+-- `JTextField`の縁と背景を透明化し、`RoundedCornerBorder`から取得した図形を描画するように修正
 #code{{
 JTextField textField02 = new JTextField(20) {
   @Override protected void paintComponent(Graphics g) {

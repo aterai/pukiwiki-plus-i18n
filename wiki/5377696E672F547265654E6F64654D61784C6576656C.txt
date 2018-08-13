@@ -40,9 +40,8 @@ if (path.getPathCount() < 3) {
 * 解説 [#explanation]
 上記のサンプルでは、`TreePath#getPathCount()`、または`DefaultMutableTreeNode#getLevel()`メソッドを使用してノード階層の深さを取得し、指定したレベルを超えるノードを作成できないように制限しています。
 
-- メモ:
--- ルートパスの`TreePath#getPathCount()`は`1`、ルートノードの`DefaultMutableTreeNode#getLevel()`は`0`
--- `TreePath#getPathCount()`、`DefaultMutableTreeNode#getLevel()`の戻り値は、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#setRootVisible-boolean- JTree#setRootVisible(boolean)]で設定したルートノードの可視・不可視には依存しない
+- ルートパスの`TreePath#getPathCount()`は`1`、ルートノードの`DefaultMutableTreeNode#getLevel()`は`0`
+- `TreePath#getPathCount()`、`DefaultMutableTreeNode#getLevel()`の戻り値は、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#setRootVisible-boolean- JTree#setRootVisible(boolean)]で設定したルートノードの可視・不可視には依存しない
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/TreePath.html#getPathCount-- TreePath#getPathCount() (Java Platform SE 8)]
