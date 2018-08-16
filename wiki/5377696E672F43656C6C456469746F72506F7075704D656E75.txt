@@ -79,12 +79,11 @@ public static JPopupMenu installTextComponentPopupMenu(final JTextComponent tc) 
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTable`のセルエディタに、`Cut`、`Copy`、`Paste`、`Delete`、`Undo`、`Redo`を行う`JPopupMenu`を設定しています。
+上記のサンプルでは、`JTable`のセルエディタ内の文字列に対して、`Cut`、`Copy`、`Paste`、`Delete`、`Undo`、`Redo`を行うための`JPopupMenu`を設定しています。
 
 ----
-セルエディタとして使用する`JTextField`は、同一インスタンス使い回しているため、別セルでの編集が持ち越されないよう`AncestorListener`を使って表示されるたびに`UndoManager`を空(`UndoManager#discardAllEdits()`を呼び出す)にしています。
-
-もしくは、`DefaultCellEditor#isCellEditable(...)`などをオーバーライドしてリセットする方法もあります。
+- セルエディタとして使用する`JTextField`は、同一インスタンス使い回しているため、別セルでの編集が持ち越されないよう`AncestorListener`を使って表示されるたびに`UndoManager#discardAllEdits()`を呼び出してリセット
+-- もしくは、`DefaultCellEditor#isCellEditable(...)`などをオーバーライドしてリセット
 
 #code{{
 DefaultCellEditor ce = new DefaultCellEditor(new JTextField()) {

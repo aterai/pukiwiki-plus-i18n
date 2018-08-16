@@ -34,7 +34,7 @@ button2.addActionListener(e -> {
 - `default icon`
 -- デフォルトの`JFileChooser`のウィンドウアイコンは、親の`JFrame`のウィンドウアイコンが適用される
 - `makeImage(16, Color.WHITE)`
--- 直接`JFileChooser`のウィンドウのアイコンを変更するメソッドはデフォルトでは存在しないので、`JFileChooser#createDialog(...)`メソッドをオーバーライドし、`JFileChooser`が使用する`JDialog`に別アイコンを設定
+-- 直接`JFileChooser`のウィンドウアイコンを変更するメソッドはデフォルトでは存在しないので、`JFileChooser#createDialog(...)`メソッドをオーバーライドし、`JFileChooser`が使用する`JDialog`に別アイコンを設定
 -- `Window#setIconImage(Image)`でウィンドウアイコンを設定した場合、適当な大きさにリサイズされる
 -- 「適当な大きさ」は環境や表示スケールなどによって変化する？
 --- 例: `Windows 10`で表示スケール`100%`の場合のウィンドウアイコン: `16x16`

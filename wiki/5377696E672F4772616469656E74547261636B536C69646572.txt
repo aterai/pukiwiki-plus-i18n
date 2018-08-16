@@ -120,7 +120,8 @@ slider.setUI(new MetalSliderUI() {
 
       double x = (fillRight - fillLeft) / (double) (trackRight - trackLeft);
       g.setColor(getColorFromPallet(pallet, x));
-      g.fillRect(fillLeft + 1, fillTop + 1, fillRight - fillLeft, fillBottom - fillTop);
+      g.fillRect(fillLeft + 1, fillTop + 1,
+                 fillRight - fillLeft, fillBottom - fillTop);
     } else {
       g.setColor(controlShadow);
       g.fillRect(fillLeft, fillTop, fillRight - fillLeft, trackBottom - trackTop);
