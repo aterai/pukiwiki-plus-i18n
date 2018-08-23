@@ -53,7 +53,7 @@ class DragWindowListener extends MouseAdapter {
 
 上記のサンプルでは`JLabel`にリスナーを追加し、これを`JWindow`に追加することでドラッグ可能にしています。
 
-次に開く`setUndecorated(true)`した`JFrame`では、青いラベル部分をドラッグすることが出来ます。
+スプラッシュスクリーンの次に開く`JFrame`は、`JFrame#setUndecorated(true)`を設定してタイトルバーなどは非表示になっていますが、代わりに青いラベル部分がドラッグ可能です。
 
 ----
 - マルチディスプレイなどで、別画面に移動できないバグ？を修正
