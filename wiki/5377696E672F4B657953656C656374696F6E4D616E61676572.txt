@@ -1,0 +1,57 @@
+---
+category: swing
+folder: KeySelectionManager
+title: JComboBoxでキー入力による項目選択を無効にする
+tags: [JComboBox]
+author: aterai
+pubdate: 2018-08-27T16:10:35+09:00
+description: JComboBoxのドロップダウンリストで項目の先頭文字などがキー入力と一致する場合の項目選択を無効にします。
+image: https://drive.google.com/uc?id=114_GR1TDfMUrd7kaOi0H3VyK1g_fTZ60sQ
+---
+* 概要 [#summary]
+`JComboBox`のドロップダウンリストで項目の先頭文字などがキー入力と一致する場合の項目選択を無効にします。
+
+#download(https://drive.google.com/uc?id=114_GR1TDfMUrd7kaOi0H3VyK1g_fTZ60sQ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JComboBox<String> combo1 = new JComboBox<String>(makeModel()) {
+  @Override public boolean selectWithKeyChar(char keyChar) {
+    return false;
+  }
+};
+
+JComboBox<String> combo2 = new JComboBox<>(makeModel());
+combo2.setKeySelectionManager(new JComboBox.KeySelectionManager() {
+  // Java 10: @Override public int selectionForKey(char key, ComboBoxModel<?> model) {
+  @Override public int selectionForKey(char key, ComboBoxModel model) { // Java 9
+    return -1;
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `BasicComboBoxUI#DefaultKeySelectionManager`
+-- 編集不可に設定された`JComboBox`のデフォルト`KeySelectionManager`は、`BasicComboBoxUI#DefaultKeySelectionManager`
+--- 内部で`JList#getNextMatch(...)`メソッドを使用している
+-- `JComboBox#DefaultKeySelectionManager`も存在するが、`BasicComboBoxUI#DefaultKeySelectionManager`より低機能？
+--- `JList#getNextMatch(...)`を使用していない、`UIManager.get("ComboBox.timeFactor")`などが無効で二文字目以降の入力が無効など
+-- 編集可能な`JComboBox`で入力した文字列をドロップダウンリスト中での選択項目に設定する場合は、`KeySelectionManager`を使用できないので別途`PopupMenuListener`などを使って自前で選択を変更する必要がある
+--- 参考: [[JComboBoxで編集した文字列をドロップダウンリストで選択する>Swing/ComboBoxDropdownSelection]]
+--- 参考: [[JComboBoxで候補一覧を表示>Swing/ComboBoxSuggestion]]
+- `disable JComboBox#selectWithKeyChar(...)`
+-- `JComboBox#selectWithKeyChar(...)`をオーバーライドしてキー入力による項目選択を無効化
+--- `JComboBox#setKeySelectionManager(null)`を設定しても`JComboBox#selectWithKeyChar(...)`内で`JComboBox#DefaultKeySelectionManager`が復元されてしまうので、オーバーライドして常に`false`を返すよう設定
+- `disable KeySelectionManager#selectionForKey(...)`
+-- `KeySelectionManager#selectionForKey(...)`をオーバーライドしてキー入力による項目選択を無効化
+-- `Java 9`で`@Override public int selectionForKey(char key, ComboBoxModel<?> model) {`のようにオーバーライドすると以下のようなエラーになる
+ エラー: <anonymous example.MainPanel$2>はabstractでなく、KeySelectionManager内のabstractメソッドselectionForKey(char,ComboBoxModel)をオーバーライドしません
+         combo3.setKeySelectionManager(new JComboBox.KeySelectionManager() {
+                                                                           ^
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComboBox.KeySelectionManager.html JComboBox.KeySelectionManager (Java Platform SE 8)]
+- [[JListの先頭文字キー入力による検索選択を無効にする>Swing/DisablePrefixMatchSelection]]
+
+* コメント [#comment]
+#comment
+#comment

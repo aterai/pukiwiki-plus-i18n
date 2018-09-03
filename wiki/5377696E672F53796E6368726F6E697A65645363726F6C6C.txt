@@ -56,7 +56,7 @@ sp2.getViewport().addChangeListener(cl);
 上記のサンプルでは、一方のスクロールバーを移動させると、他方も同程度の割合で移動するように設定した`ChangeListener`を使用しています。
 
 ----
-内部コンポーネントのサイズが等しい場合は、それぞれの垂直・水平`JScrollBar`で使用する`BoundedRangeModel`を共有するだけで、スクロールを同期することができます。
+内部コンポーネントのサイズが等しい場合は、それぞれの垂直・水平`JScrollBar`で使用する`BoundedRangeModel`を共有するだけでスクロールの同期が可能です。
 
 #code{{
 sp2.getVerticalScrollBar().setModel(sp1.getVerticalScrollBar().getModel());

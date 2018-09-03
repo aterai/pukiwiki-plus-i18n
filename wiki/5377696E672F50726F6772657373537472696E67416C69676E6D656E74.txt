@@ -39,12 +39,11 @@ JProgressBar bar = new JProgressBar(model) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JProgressBar`のレイアウトを`BorderLayout`に変更し、水平方向の配置方法を設定した`JLabel`を追加することで、字揃えを変更しています。
+上記のサンプルでは、`JProgressBar`のレイアウトを`BorderLayout`に変更し、水平方向の配置方法を設定した`JLabel`を追加して字揃えを変更しています。
 
-- 注:
--- `JProgressBar#setStringPainted(true)`を同時に使用すると、`2`重に表示される
--- 進捗状況に応じた文字色の変化には対応していない
--- `NimbusLookAndFeel`の場合で、`TitledBorder`などを直接`JProgressBar`に設定しても、進捗文字列の垂直位置がずれない
+- `JProgressBar#setStringPainted(true)`を同時に使用すると、`2`重に表示される
+- 進捗状況に応じた文字色の変化には対応していない
+- `NimbusLookAndFeel`の場合で、`TitledBorder`などを直接`JProgressBar`に設定しても、進捗文字列の垂直位置がずれない
 
 * 参考リンク [#reference]
 - [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]

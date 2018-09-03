@@ -30,15 +30,16 @@ f.setDesktopIcon(new JInternalFrame.JDesktopIcon(f) {
 
 - `UIManager.put("DesktopIcon.width", DESKTOPICON_WIDTH);`
 -- `MetalLookAndFeel`、`WindowsLookAndFeel`などで、`JDesktopIcon`の幅を指定可能
--- `NimbusLookAndFeel`、`MotifLookAndFeel`では効果がない
+-- `NimbusLookAndFeel`、`MotifLookAndFeel`では無効
 - `Override: JInternalFrame.JDesktopIcon#getPreferredSize()`
 -- `JInternalFrame.JDesktopIcon#getPreferredSize()`メソッドをオーバーライドして、`LookAndFeel`に依存せずにサイズを変更
 -- `MotifLookAndFeel`の場合、タイトルバー状ではなくアイコン状なので、`new Dimension(64, 64 + 32)`を使用
-- メモ:
--- デフォルト状態の`NimbusLookAndFeel`で、`JDesktopIcon`の高さが`JInternalFrame`によって変化する？
---- 起動時からの`JInternalFrame`: `height=33`、後でボタンから追加した`JInternalFrame`: `height=27`
---- [https://bugs.openjdk.java.net/browse/JDK-7126823 JDK-7126823 JInternalFrame.getNormalBounds() returns bad value after iconify/deiconify - Java Bug System]
--- `DefaultDesktopManager#getBoundsForIconOf(...)`メソッドをオーバーライドしてサイズ変更%%することも可能だが、アイコンの位置を計算し直す必要がある%%
+
+----
+- デフォルト状態の`NimbusLookAndFeel`で、`JDesktopIcon`の高さが`JInternalFrame`によって変化する？
+-- 起動時からの`JInternalFrame`: `height=33`、後でボタンから追加した`JInternalFrame`: `height=27`
+-- [https://bugs.openjdk.java.net/browse/JDK-7126823 JDK-7126823 JInternalFrame.getNormalBounds() returns bad value after iconify/deiconify - Java Bug System]
+- `DefaultDesktopManager#getBoundsForIconOf(...)`メソッドをオーバーライドしてサイズ変更%%することも可能だが、アイコンの位置を計算し直す必要がある%%
 #code{{
 desktop.setDesktopManager(new DefaultDesktopManager() {
   @Override protected Rectangle getBoundsForIconOf(JInternalFrame f) {
@@ -48,7 +49,7 @@ desktop.setDesktopManager(new DefaultDesktopManager() {
   }
 });
 }}
--- `DefaultDesktopManager#getBoundsForIconOf(...)`メソッドをオーバーライドする方法もある
+- `DefaultDesktopManager#getBoundsForIconOf(...)`メソッドをオーバーライドする方法もある
 #code{{
 desktop.setDesktopManager(new DefaultDesktopManager() {
   @Override public void iconifyFrame(JInternalFrame f) {

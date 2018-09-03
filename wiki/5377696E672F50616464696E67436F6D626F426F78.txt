@@ -96,21 +96,18 @@ JComboBox<String> combo = new JComboBox<String>(model) {
 ////System.out.println(margin.toString());
 //editor.setMargin(margin);
 //}}
-//-追記
-//--無視されるのは、Basic L&F系(Windows L&Fなど)で、Synth L&F系(Nimbus, GTK L&Fなど)では上記の設定は有効になる？
-//--`1.6.0_10-beta-b13`では、 %%`BasicLookAndFeel`系は%% どちらも、`UIManager.put("ComboBox.padding", insets)`が使用できる？
+//- 追記
+//-- 無視されるのは、Basic L&F系(Windows L&Fなど)で、Synth L&F系(Nimbus, GTK L&Fなど)では上記の設定は有効になる？
+//-- `1.6.0_10-beta-b13`では、 %%`BasicLookAndFeel`系は%% どちらも、`UIManager.put("ComboBox.padding", insets)`が使用できる？
 
-%%その他にも、以下のように`UIManager`で余白を設定する方法もありますが、`LookAndFeel`によって対応が異なる？ようです。%% `ComboBox.padding`は無くなっている？
-
-`JComboBox`が編集可能の場合は、`ComboBox.editorBorder`が有効かもしれない。
-
+- %%その他にも、以下のように`UIManager`で余白を設定する方法もありますが、`LookAndFeel`によって対応が異なる？%% `ComboBox.padding`は無くなっている？
+-- `JComboBox`が編集可能の場合は、`ComboBox.editorBorder`が有効かもしれない
 #code{{
-//UIManager.put("ComboBox.padding", new InsetsUIResource(insets));
+// UIManager.put("ComboBox.padding", new InsetsUIResource(insets));
 UIManager.put("ComboBox.editorBorder", BorderFactory.createEmptyBorder(0, 5, 0, 0));
 }}
 
-%%上記のサンプルを、余白に色無しにして、`Ubuntu 7.04`(`GNOME 2.18.1`)、`JDK 1.6.0`で実行すると、以下のようになります。%%
-
+- %%上記のサンプルを、余白に色無しにして、`Ubuntu 7.04`(`GNOME 2.18.1`)、`JDK 1.6.0`で実行すると、以下のようになる%%
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQyV_2TnI/AAAAAAAAAgI/yqGoi_zqsgI/s800/PaddingComboBox1.png)
 
 ----

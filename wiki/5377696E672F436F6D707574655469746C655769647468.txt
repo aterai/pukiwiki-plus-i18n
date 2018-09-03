@@ -76,7 +76,7 @@ f.setDesktopIcon(new JInternalFrame.JDesktopIcon(f) {
 - `JInternalFrame.JDesktopIcon#getPreferredSize()`メソッドをオーバーライドし、`JInternalFrame`をアイコン化した場合の推奨サイズを変更
 -- [[JInternalFrameをアイコン化した場合のサイズを変更する>Swing/DesktopIconSize]]
 -- `JInternalFrame`のタイトル文字列を取得し、`SwingUtilities.computeStringWidth(...)`で文字列幅を計算する
---- `JInternalFrame`では`SwingUtilities2.stringWidth(...)`メソッドなどで省略された場合などを考慮しているが、このサンプルでは無視する
+--- デフォルトの`JInternalFrame`では`SwingUtilities2.stringWidth(...)`メソッドなどで省略された場合などを考慮しているが、このサンプルでは無視する
 -- `ClosableButton`、`MaximizableButton`、`IconifiableButton`などの合計幅を計算する
 --- `javax/swing/plaf/basic/BasicInternalFrameTitlePane.java`の`Handler#minimumLayoutSize(Container)`メソッドを参照して値を取得(`22` + `19` + `19` + `19`)
 --- `JButton`を計算して`getPreferredSize().width`を合計しても値が異なる？
