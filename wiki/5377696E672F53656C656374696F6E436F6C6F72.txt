@@ -29,7 +29,7 @@ area.setSelectionColor(new Color(0xC8_64_64_FF, true));
 - `JTextComponent#setSelectionColor`, `JTextComponent#setSelectedTextColor`
 -- 選択色、選択文字色を変更可能
 -- どちらも半透明色を使用可能
--- デフォルトでは、選択が一番手前に描画されるので、半透明にしておくと他の選択色とアルファで乗算されて表示される
+-- デフォルトでは、選択が一番手前に描画されるので、半透明にしておくと他の選択色とアルファ乗算されて表示される
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setSelectionColor-java.awt.Color- JTextComponent#setSelectionColor(Color)]では、「色に `null` を設定することは、`Color.white` を設定することと同じです。」となっているが、上記のサンプルで、`"setSelectionColor(#C86464FF)"`のチェックを外して`null`を設定すると、選択の描画が一行目とそれ以降で異なる
 - `HighlightPainter`
 -- ハイライトの背景色は設定可能だが、文字色を変更することはできない

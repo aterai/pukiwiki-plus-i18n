@@ -26,21 +26,21 @@ class LRItem {
     return "<html><table width='240'><tr><td align='left'>" + leftText +
     "</td><td align='right'>" + rightText + "</td></tr></table></html>";
   }
-  public String getLeftText()  { return leftText; }
+  public String getLeftText() { return leftText; }
   public String getRightText() { return rightText; }
-  public String toString()     { return getHtmlText(); }
+  public String toString() { return getHtmlText(); }
 }
 }}
 
 * 解説 [#explanation]
 `JComboBox`に`html`の`table`タグを使うことで、`Item`に設定した文字列を左右に振り分けています。
 
-- メモ:
--- `JComboBox`のリストにカラムを追加・削除することが簡単に可能
--- `JComboBox`のサイズ変更に未対応
+- `JComboBox`のリストにカラムを手軽に追加・削除可能
+- `JComboBox`のサイズ変更に未対応
 
 * 参考リンク [#reference]
 - [[JComboBoxのItemを左右にクリップして配置>Swing/ClippedLRComboBox]]
+-- セルレンダラーに`JLabel`とレイアウトマネージャを適用してカラムを生成
 
 * コメント [#comment]
 #comment

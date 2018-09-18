@@ -29,10 +29,10 @@ private final JTextArea textArea = new JTextArea(1, 1) {
     super.setText(t);
     try {
       setColumns(50);
-      // https://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html#modelToView-int-
+      // javax/swing/text/JTextComponent.html#modelToView-int-
       // i.e. layout cannot be computed until the component has been sized.
       // The component does not have to be visible or painted.
-      setSize(super.getPreferredSize()); //setSize: looks like ugly hack...
+      setSize(super.getPreferredSize()); // setSize: looks like ugly hack...
       System.out.println(super.getPreferredSize());
 
       Rectangle r = modelToView(t.length());

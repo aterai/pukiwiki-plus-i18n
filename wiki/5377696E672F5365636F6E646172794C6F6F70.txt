@@ -16,15 +16,16 @@ image: https://lh3.googleusercontent.com/-eAqnf0aNSsQ/VhrDDmUQQeI/AAAAAAAAODs/fw
 * サンプルコード [#sourcecode]
 #code(link){{
 layerUI.setInputBlock(true);
-final SecondaryLoop loop = Toolkit.getDefaultToolkit().getSystemEventQueue().createSecondaryLoop();
-Thread work = new Thread() {
+SecondaryLoop loop = Toolkit.getDefaultToolkit()
+                            .getSystemEventQueue().createSecondaryLoop();
+Thread worker = new Thread() {
   @Override public void run() {
     doInBackground();
     layerUI.setInputBlock(false);
     loop.exit();
   }
 };
-work.start();
+worker.start();
 loop.enter();
 }}
 

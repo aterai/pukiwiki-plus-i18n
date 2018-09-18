@@ -50,13 +50,13 @@ class ScrollBarOnHoverLayerUI extends LayerUI<JScrollPane> {
 - 上: `MouseListener`
 -- `JScrollPane`内部に配置した`JTextArea`に`MouseListener`を設定
 --- `JTextArea`上にマウスカーソルが入ったら`JScrollPane#setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);`で`JScrollBar`を表示
---- `JTextArea`上からマウスカーソルが出たら`JScrollPane#setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);`で`JScrollBar`を非表示
+--- `JTextArea`外にマウスカーソルが出たら`JScrollPane#setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);`で`JScrollBar`を非表示
 -- `JScrollBar`上にマウスカーソルが入ると、`JTextArea`からマウスカーソルが出たことになるので、カーソル表示などが点滅してしまう
 - 下: `JLayer`
 -- `JScrollPane`に`JLayer`を設定
 -- `JLayer#setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK);`を指定し、`JLayer`と''そのすべての下位オブジェクト''からのマウスイベントを`processMouseEvent(...)`メソッドで受け取るよう設定
 --- `JLayer`上にマウスカーソルが入ったら`JScrollPane#setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);`で`JScrollBar`を表示
---- `JLayer`上からマウスカーソルが出たら`JScrollPane#setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);`で`JScrollBar`を非表示
+--- `JLayer`外にマウスカーソルが出たら`JScrollPane#setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);`で`JScrollBar`を非表示
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JLayer.html#setLayerEventMask-long- JLayer#setLayerEventMask(long) (Java Platform SE 8)]

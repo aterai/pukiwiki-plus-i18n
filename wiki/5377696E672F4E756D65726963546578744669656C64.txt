@@ -40,7 +40,7 @@ spinner.setValue(5000);
 * 解説 [#explanation]
 - `1`:`JTextField` + `InputVerifier`
 -- [http://web.archive.org/web/20090831154020/http://java.sun.com/developer/JDCTechTips/2005/tt0518.html Validating with Input Verifiers]
--- `InputVerifier`を継承する`IntegerInputVerifier`を作成し、これを`JComponent#setInputVerifier`メソッドで設定
+-- `InputVerifier`を継承する`IntegerInputVerifier`を作成し、これを`JComponent#setInputVerifier(...)`メソッドで設定
 -- 別コンポーネントにフォーカスが移動するときに、数値かどうか評価する
 -- 数値以外、または結果が範囲外となる場合、テキストは変化せず`beep`音が鳴り、フォーカス移動がキャンセルされる
 
@@ -63,7 +63,7 @@ class IntegerInputVerifier extends InputVerifier {
 
 - `2`:`JTextField` + `Custom Document`
 -- [http://web.archive.org/web/20090831154020/http://java.sun.com/developer/JDCTechTips/2005/tt0518.html Validating with a Custom Document]
--- `PlainDocument`を継承する`IntegerDocument`を作成し、これを`JTextComponent#setDocument`メソッドで設定
+-- `PlainDocument`を継承する`IntegerDocument`を作成し、これを`JTextComponent#setDocument(...)`メソッドで設定
 -- キー入力、文字列のペーストが行われたときに、数値かどうか評価する
 -- 入力が数値以外、または結果が範囲外となる場合、`beep`音が鳴り、テキストは変化しない
 
@@ -121,7 +121,7 @@ class IntegerDocument extends PlainDocument {
 
 - `3`:`JTextField` + `DocumentFilter`
 -- [http://web.archive.org/web/20090831154020/http://java.sun.com/developer/JDCTechTips/2005/tt0518.html Validating with a Document Filter]
--- `DocumentFilter`を継承する`IntegerDocumentFilter`を作成し、これを`AbstractDocument#setDocumentFilter`メソッドで設定
+-- `DocumentFilter`を継承する`IntegerDocumentFilter`を作成し、これを`AbstractDocument#setDocumentFilter(...)`メソッドで設定
 -- キー入力、文字列のペーストが行われたときに、数値かどうか評価する
 -- 入力が数値以外、または結果が範囲外となる場合、`beep`音が鳴り、テキストは変化しない
 
@@ -169,7 +169,7 @@ class IntegerDocumentFilter extends DocumentFilter {
 
 - `4`:`JFormattedTextField` + `DefaultFormatterFactory`
 -- [https://docs.oracle.com/javase/tutorial/uiswing/components/formattedtextfield.html How to Use Formatted Text Fields]
--- `DefaultFormatterFactory`を継承する`NumberFormatterFactory`を作成し、これを`JFormattedTextField#setFormatterFactory`メソッドで設定
+-- `DefaultFormatterFactory`を継承する`NumberFormatterFactory`を作成し、これを`JFormattedTextField#setFormatterFactory(...)`メソッドで設定
 -- 別コンポーネントにフォーカスが移動するときに、数値かどうか評価する
 -- 数値以外の場合、テキストは以前の値に`Undo`される
 -- 数値が範囲外となる場合、最小値、または最大値に調整される

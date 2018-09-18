@@ -59,7 +59,7 @@ class HeaderRenderer implements TableCellRenderer {
 }}
 
 * 解説 [#explanation]
-`NimbusLookAndFeel`で[[JTableHeaderにJCheckBoxを追加してセルの値を切り替える>Swing/TableHeaderCheckBox]]のように`JCheckBox`をアイコン化し、これをヘッダセルレンダラーに`JLabel#setIcon(...)`を使用して設定すると、ソートアイコンの設定と干渉(ソートを使用しない場合でも)して意図した表示にならない場合があります。このサンプルでは、`HTML`フォーマットの`<input type='checkbox' />`タグを`JLabel#setText(...)`を使用して設定することでチェックボックスを表示しています。
+`NimbusLookAndFeel`で[[JTableHeaderにJCheckBoxを追加してセルの値を切り替える>Swing/TableHeaderCheckBox]]のように`JCheckBox`をアイコン化し、これをヘッダセルレンダラーに`JLabel#setIcon(...)`を使用して設定すると、ソートアイコンの設定と干渉(ソートを使用しない場合でも)して意図した表示にならない場合があります。このサンプルでは、代わりに`HTML`フォーマットの`<input type='checkbox'>`タグを`JLabel#setText(...)`メソッドで設定してチェックボックスを表示しています。
 
 - `<input>`要素の`checked`属性を使用して選択状態の`JCheckBox`を表示可能だが、`disabled`属性で無効状態にできない
 - 代わりに、`HTML`コンポーネントのレンダリングを行うコンポーネントを`JLabel`から取得し、その子要素から`JCheckBox`自体を取得して、直接`JCheckBox#setEnabled(...)`、`JCheckBox#setSelected(...)`で状態を変更

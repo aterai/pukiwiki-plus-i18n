@@ -66,10 +66,10 @@ private Action makeShowHideAction() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`LayoutManager#preferredLayoutSize(...)`をオーバーライドして子パネルの高さを更新することでアニメーションを行っています。
+上記のサンプルでは、`LayoutManager#preferredLayoutSize(...)`をオーバーライドして子パネルの高さを更新して展開アニメーションを表現しています。
 
 ----
-内部の`JTree`の高さを縮小せずに、重ねる状態で検索パネルを表示したい場合は、`BorderLayout`ではなく、`OverlayLayout`を[[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]のように使用する方法があります。
+内部の`JTree`の高さを縮小せずに重ねる状態で検索パネルを表示したい場合は、`BorderLayout`ではなく`OverlayLayout`を[[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]のように使用する方法があります。
 
 * 参考リンク [#reference]
 - [[JTreeのノードを検索する>Swing/SearchBox]]
