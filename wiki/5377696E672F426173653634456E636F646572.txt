@@ -1,0 +1,67 @@
+---
+category: swing
+folder: Base64Encoder
+title: Base64エンコーダを使用して画像を文字列に変換する
+tags: [Base64, ImageIcon, ImageIO]
+author: aterai
+pubdate: 2018-10-01T01:53:21+09:00
+description: Base64エンコーダで画像ファイルを文字列、デコーダで文字列をImageIconに変換します。
+image: https://drive.google.com/uc?export=view&id=1Q3H7o8qNXeAHstp2cSIgG5--D-bC41DgOA
+---
+* 概要 [#summary]
+`Base64`エンコーダで画像ファイルを文字列、デコーダで文字列を`ImageIcon`に変換します。
+
+#download(https://drive.google.com/uc?export=view&id=1Q3H7o8qNXeAHstp2cSIgG5--D-bC41DgOA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JButton encode = new JButton("encode");
+encode.addActionListener(e -> {
+  JFileChooser chooser = new JFileChooser();
+  chooser.addChoosableFileFilter(
+      new FileNameExtensionFilter("PNG (*.png)", "png"));
+  int retvalue = chooser.showOpenDialog(encode);
+  if (retvalue == JFileChooser.APPROVE_OPTION) {
+    Path path = chooser.getSelectedFile().toPath();
+    try {
+      textArea.setText(
+          Base64.getEncoder().encodeToString(Files.readAllBytes(path)));
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
+  }
+});
+
+JButton decode = new JButton("decode");
+decode.addActionListener(e -> {
+  String b64 = textArea.getText();
+  if (b64.isEmpty()) {
+    return;
+  }
+  try (InputStream is = new ByteArrayInputStream(
+          Base64.getDecoder().decode(b64.getBytes(StandardCharsets.ISO_8859_1)))) {
+    label.setIcon(new ImageIcon(ImageIO.read(is)));
+  } catch (IOException ex) {
+    ex.printStackTrace();
+  }
+});
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、`JDK 1.8.0`から導入された`Base64`クラスを使用して、画像ファイルの`Base64`形式文字列へのエンコードや、`Base64`形式文字列から`byte`配列へのデコードを行っています。
+
+- `encode`
+-- `JFileChooser`で選択した画像(`PNG`)ファイルを`Base64.Encoder`の`encodeToString(...)`メソッドで文字列に変換して`JTextArea`に設定
+-- ファイルの`byte[]`への変換には`Files.readAllBytes(...)`メソッドを使用
+- `decode`
+-- `JTextArea`から取得した文字列を`Base64.Decoder`の`decode(...)`メソッドで`byte`配列に変換、さらに`new ImageIcon(ImageIO.read(new ByteArrayInputStream(byte[])))`で`ImageIcon`に変換して`JLabel`に設定
+-- 文字列の`byte[]`への変換には`String#getBytes(StandardCharsets.ISO_8859_1)`メソッドを使用
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/util/Base64.html Base64 (Java Platform SE 8)]
+- [https://stackoverflow.com/questions/51103717/jeditorpane-content-type-for-html-embedded-base64-images java - JEditorPane Content Type for HTML Embedded Base64 Images - Stack Overflow]
+-- `<img src='data:image/png;base64,iVBOR...' />`のように`HTML`テキスト中に埋め込まれた`Base64`文字列を`JEditorPane`(`HTMLEditorKit`)で画像として表示するサンプルが回答されている
+
+* コメント [#comment]
+#comment
+#comment

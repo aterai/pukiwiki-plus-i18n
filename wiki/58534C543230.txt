@@ -125,7 +125,7 @@ set XSLT=C:/xslt/docx2xxx.xsl
 }}
 
 ** to演算子 [#y5a69778]
-`<xsl:for-each select="1 to $gridBefore">`のように、指定した回数でループすることが可能で、以下の例では`w:trPr/w:gridBefore`で指定された数だけ空の`td`を作成している。
+`<xsl:for-each select="1 to $gridBefore">`のように、指定した回数でのループが可能で、以下の例では`w:trPr/w:gridBefore`で指定された数だけ空の`td`を作成している。
 
 #code{{
   <xsl:template match="w:tr">
@@ -264,7 +264,7 @@ set XSLT=C:/xslt/docx2xxx.xsl
 }}
 
 ** シーケンスに要素が含まれているかをチェックする [#cd7d3228]
-- `XSLT 1.0`では一旦文字列にして`contains`関数などを使用する必要があったが、`XSLT 2.0`では、`=`でシーケンス内に要素が存在するかをチェックすることが可能
+- `XSLT 1.0`では一旦文字列にして`contains`関数などを使用する必要があったが、`XSLT 2.0`では、`=`でシーケンス内に要素が存在するかをチェックできる
 -- 参考: [https://stackoverflow.com/questions/4810872/how-to-check-if-a-value-is-in-a-sequence-of-values xml - How to check if a value is in a sequence of values? - Stack Overflow]
 -- `2 = (1 to 3):  <xsl:value-of select="2 = (1 to 3)" /> <!-- true -->`
 -- `7 = (8, 6, 4): <xsl:value-of select="7 = (8, 6, 4)" /> <!-- false -->`

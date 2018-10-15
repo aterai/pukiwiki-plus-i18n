@@ -24,8 +24,7 @@ table.setRowSorter(sorter);
 * 解説 [#explanation]
 `JDK 6`では、`JTable`に`TableRowSorter`を設定することで、カラムヘッダのクリックによる行ソートが行えます。
 
-以下のように、`JTable#autoCreateRowSorter(true)`メソッドを使用した場合も、`JTable`が自動的に`RowSorter`を作成して、ソートが出来るようになります。
-
+- 以下のように`JTable#autoCreateRowSorter(true)`メソッドを使用した場合も、`JTable`が自動的に`RowSorter`を作成してソートが可能になる
 #code{{
 JTable table = new JTable(model);
 table.setAutoCreateRowSorter(true);

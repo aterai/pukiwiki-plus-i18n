@@ -44,33 +44,35 @@ description: このサイトにあるサンプルの動作・テスト環境や�
  Copyright (C) 2016 Free Software Foundation, Inc.
  ライセンス GPLv3+: GNU GPL バージョン 3 またはそれ以降 <http://gnu.org/licenses/gpl.html>
  ...
- $ export JAVA_HOME="/usr/lib/jvm/jdk-10.0.2"
+ $ export JAVA_HOME="/usr/lib/jvm/jdk-11"
  $ "$JAVA_HOME/bin/java" -version
- openjdk version "10.0.2" 2018-07-17
- OpenJDK Runtime Environment 18.3 (build 10.0.2+13)
- OpenJDK 64-Bit Server VM 18.3 (build 10.0.2+13, mixed mode)
+ openjdk version "11" 2018-09-25
+ OpenJDK Runtime Environment 18.9 (build 11+28)
+ OpenJDK 64-Bit Server VM 18.9 (build 11+28, mixed mode)
 
-- `Ubuntu 12.04.5 LTS`
- $ lsb_release -a
- No LSB modules are available.
- Distributor ID: Ubuntu
- Description:    Ubuntu 12.04.5 LTS
- Release:        12.04
- Codename:       precise
- 
- $ echo $JAVA_HOME
- /usr/lib/jvm/jdk1.8.0_102
- 
- $ $JAVA_HOME/bin/java -version
- java version "1.8.0_102"
- Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
- Java HotSpot(TM) Client VM (build 25.102-b14, mixed mode)
+// - `Ubuntu 12.04.5 LTS`
+//  $ lsb_release -a
+//  No LSB modules are available.
+//  Distributor ID: Ubuntu
+//  Description:    Ubuntu 12.04.5 LTS
+//  Release:        12.04
+//  Codename:       precise
+//  
+//  $ echo $JAVA_HOME
+//  /usr/lib/jvm/jdk1.8.0_102
+//  
+//  $ $JAVA_HOME/bin/java -version
+//  java version "1.8.0_102"
+//  Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
+//  Java HotSpot(TM) Client VM (build 25.102-b14, mixed mode)
 
-** JDKのダウンロードについて [#jdk-download]
-- 最新の`JDK`をダウンロード
--- [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java SE Downloads]
-- 古いバージョンの`JDK`をダウンロード
--- [http://www.oracle.com/technetwork/java/archive-139210.html Oracle Java Archive]
+** OpenJDKのダウンロードについて [#openjdk-download]
+- 以下から`OpenJDK 11`をダウンロード
+-- [http://jdk.java.net/11/ JDK 11 GA Release]
+
+// - [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java SE Downloads]
+// - 古いバージョンの`JDK`をダウンロード
+// -- [http://www.oracle.com/technetwork/java/archive-139210.html Oracle Java Archive]
 
 * サイト内検索について [#search]
 - `search`プラグインを使った簡易検索

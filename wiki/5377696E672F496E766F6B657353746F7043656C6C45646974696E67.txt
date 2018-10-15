@@ -28,7 +28,7 @@ tree.setInvokesStopCellEditing(true);
 -- 編集に割り込みが発生した場合、`JTree#stopCellEditing()`が呼び出されてデータ変更が保存される
 
 ----
-ノード編集の割り込みイベントは、その`JTree`内の別のノードがクリックされた場合などに発生します。KBD{Tab}キーなどで`JTree`以外のコンポーネントにフォーカスが移動したり、親`Window`がフォーカスを失っても、割り込みは発生しないため、編集中の状態が維持され、再度`JTree`にフォーカスを戻せば編集を再開することができます。
+ノード編集の割り込みイベントは、その`JTree`内の別のノードがクリックされた場合などに発生します。KBD{Tab}キーなどで`JTree`以外のコンポーネントにフォーカスが移動したり、親`Window`がフォーカスを失っても、割り込みは発生しないため、編集中の状態が維持され、再度`JTree`にフォーカスを戻せば編集を再開できます。
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#setInvokesStopCellEditing-boolean- JTree#setInvokesStopCellEditing(boolean) (Java Platform SE 8)]

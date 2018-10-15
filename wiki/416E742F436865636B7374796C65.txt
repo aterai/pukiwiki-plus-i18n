@@ -34,11 +34,11 @@ description: ソースコードを静的解析してコーディングルール�
 }}
 
 * 解説 [#explanation]
-+ [https://sourceforge.net/projects/checkstyle/files/checkstyle/ checkstyle - Browse /checkstyle at SourceForge.net]からダウンロードした`checkstyle-x.x-all.jar`を環境変数`%CHECKSTYLE_HOME%`を設定した場所にコピー
++ [https://github.com/checkstyle/checkstyle/releases/ Releases · checkstyle/checkstyle]からダウンロードした`checkstyle-x.x-all.jar`を環境変数`%CHECKSTYLE_HOME%`を設定した場所にコピー
 + 上記のような`checkstyle`ターゲットを`build.xml`に追加し、`ant checkstyle`で`checkstyle-result.xml`を生成、`jenkins`の`Checkstyle`プラグインなどで読み込む
 + チェックするルールをカスタマイズする場合は、任意の`${sca.dir}`ディレクトリ以下に`checks.xml`を記述し、これを`config`属性で参照する
--- [http://checkstyle.sourceforge.net/google_style.html checkstyle – Google's Style]
--- [http://checkstyle.sourceforge.net/sun_style.html checkstyle – Sun's Java Style]
+-- [https://checkstyle.org/google_style.html checkstyle – Google's Style]
+-- [https://checkstyle.org/sun_style.html checkstyle – Sun's Java Style]
 
 * メモ [#l35831ab]
 ** module-info.java [#java9]
@@ -96,8 +96,8 @@ description: ソースコードを静的解析してコーディングルール�
 
 * 参考リンク [#reference]
 - [https://github.com/checkstyle/checkstyle checkstyle/checkstyle: Checkstyle]
-- [http://checkstyle.sourceforge.net/ checkstyle – Checkstyle]
-- [http://checkstyle.sourceforge.net/style_configs.html checkstyle – Style Configurations]
+- [https://checkstyle.org/ checkstyle – Checkstyle]
+- [https://checkstyle.org/style_configs.html checkstyle – Style Configurations]
 
 * コメント [#comment]
 #comment

@@ -140,14 +140,12 @@ class LockingGlassPane extends JComponent {
 }}
 
 ----
-`JDK 1.6.0`の場合、[https://tips4java.wordpress.com/2008/11/07/disabled-glass-pane/ Disabled Glass Pane « Java Tips Weblog]のようにキー入力を無効にするキーリスナーを追加する方法もあります。
-
-この方法は、`JDK 1.5.0`などの場合、`WindowsLookAndFeel`で、KBD{Alt}キーを押すとメニューバーにフォーカスが移ることがあります。
+- `JDK 1.6.0`の場合、[https://tips4java.wordpress.com/2008/11/07/disabled-glass-pane/ Disabled Glass Pane « Java Tips Weblog]のようにキー入力を無効にするキーリスナーを追加する方法もある
+-- この方法は、`JDK 1.5.0`などの場合、`WindowsLookAndFeel`で、KBD{Alt}キーを押すとメニューバーにフォーカスが移動する場合がある
 
 ----
-`JDK 1.7.0`の場合、`JLayer`などを使用することで、特定のコンポーネントだけ入力不可にしてカーソルを砂時計にするといった設定が簡単に出来るようになっています。
-
-- [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]] に移動
+- `JDK 1.7.0`の場合、`JLayer`などを使用することで、特定のコンポーネントだけ入力不可にしてカーソルを砂時計にすることが簡単に設定可能になった
+-- [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]] に移動
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1375257 Swing - How to display "Loading data..." to the user]

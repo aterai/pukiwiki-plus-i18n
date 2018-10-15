@@ -238,8 +238,8 @@ public class Foo {
 -- 上記のサンプルから、`targetjdk="${compile.source}"`を削除
 
 * 警告 [#h56d397b]
-** GodClass [#rf4a20bc]
-- [http://pmd.sourceforge.net/pmd-5.0.0/rules/java/design.html Ruleset: Design]
+** GodClass [#GodClass]
+- [https://pmd.github.io/pmd/pmd_rules_java_design.html#godclass GodClass - Design | PMD Source Code Analyzer]
 #code{{
 /**
   * Very high threshold for WMC (Weighted Method Count). See: Lanza.
@@ -264,8 +264,8 @@ if (wmcCounter >= WMC_VERY_HIGH && atfdCounter > FEW_THRESHOLD && tcc < ONE_THIR
 //...
 }}
 
-** SimplifiedTernary [#j7d4fe1d]
-- [http://pmd.sourceforge.net/snapshot/pmd-java/rules/java/basic.html PMD Java – Basic]
+** SimplifiedTernary [#SimplifiedTernary]
+- [https://pmd.github.io/pmd/pmd_rules_java_design.html#simplifiedternary SimplifiedTernary - Design | PMD Source Code Analyzer]
 #code{{
 public class SimplifiedTernaryTest {
   public static void main(String... args) {

@@ -124,7 +124,9 @@ public Action[] defaultActions = {
 };
 }}
 
-リソースファイルで日本語などをそのまま使用することは出来ないので、以下のように`ant`から`native2ascii`でユニコードエスケープしています。
+- %%リソースファイルで日本語などは使用不可のため、以下のように`ant`から`native2ascii`でユニコードエスケープする必要がある%% `JDK 1.6.0`で変更
+-- `JDK 1.5.0`で導入された`XML`に対応した`Properties`で代用する方法もある
+-- 参考: [http://www.javainthebox.net/laboratory/J2SE1.5/TinyTips/Properties/Properties.html J2SE 5.0 Tiger 虎の穴 Properties]
 
 #code{{
 <condition property="have.resources">
@@ -140,14 +142,9 @@ public Action[] defaultActions = {
 </target>
 }}
 
-`JDK 1.5.0`で導入された`XML`に対応した`Properties`で代用する方法もあります。
-
-- 参考: [http://www.javainthebox.net/laboratory/J2SE1.5/TinyTips/Properties/Properties.html J2SE 5.0 Tiger 虎の穴 Properties]
-
 ----
-`JDK 1.6.0`なら、`native2ascii`で変換しなくても、リソースファイルのエンコードを指定して読み込むことが出来ます。
-
-- 参考: [http://d.hatena.ne.jp/shin/20090707/p4 Java 小ネタ千夜一夜 第13夜 Java SE 6はnative2ascii使わなくていいのはみんな知っていると思うが]
+- `JDK 1.6.0`以降なら、`native2ascii`で変換しなくてもリソースファイルのエンコードを指定しての読み込みが可能
+-- 参考: [http://d.hatena.ne.jp/shin/20090707/p4 Java 小ネタ千夜一夜 第13夜 Java SE 6はnative2ascii使わなくていいのはみんな知っていると思うが]
 
 #code{{
 ResourceBundle res = ResourceBundle.getBundle(baseName, new ResourceBundle.Control() {

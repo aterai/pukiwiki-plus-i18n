@@ -67,7 +67,7 @@ int dow = today.get(weekFields.dayOfWeek()) - 1;
 startDate = today.minusWeeks(WEEK_VIEW - 1).minusDays(dow);
 }}
 - 表示される週は、約半年分の`27`週に設定
--- `JList`の`index = 0`となるセルの日付は、`27`週から今週の`1`週間分を引いた`26`週前を`today.minusWeeks(26)`で取得し、さらに今日が週の何番目かを引いて求めている
+-- `JList`の`index = 0`となるセルの日付は、`27`週から今週の`1`週間分を引いた`26`週前を`today.minusWeeks(26)`で取得し、さらに今日が週の何番目かを引き算して求める
 --- 週番号を`today.get(weekFields.dayOfWeek())`で取得すると最初の曜日が`1`から始まるので、これを`-1`して最初の曜日が`JList`の`0`行目からになるよう変更
 - ヒートマップは、テキストを空にして色アイコンを設定した`JLabel`を`ListCellRenderer#getListCellRendererComponent(...)`メソッドで返すことで表示
 -- 各日付の色は`4`段階のランダムで生成したダミー

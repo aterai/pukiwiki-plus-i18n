@@ -31,7 +31,10 @@ textpane.getStyledDocument().setParagraphAttributes(0, l, attrs, false);
 }}
 
 * 解説 [#explanation]
-`JTextArea`では`JTextArea#setTabSize(...)`メソッドでタブサイズを指定することが可能ですが、`JTextPane`ではパラグラフ属性で左揃えの`TabStop`で`TabSet`を作成しタブサイズを指定する必要があります。
+上記のサンプルでは、`JTextPane`から`StyledDocument`を取得し、`TabStop`から作成した`TabSet`をパラグラフ属性として追加することで、タブの幅を指定しています。
+
+- `JTextArea`では`JTextArea#setTabSize(...)`メソッドでタブサイズの指定が可能
+- `JTextPane`ではパラグラフ属性でタブサイズを指定する必要がある
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/TabSet.html TabSet (Java Platform SE 8)]

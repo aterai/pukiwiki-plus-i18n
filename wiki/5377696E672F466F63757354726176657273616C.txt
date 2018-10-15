@@ -54,19 +54,17 @@ frame.setFocusTraversalPolicy(policy);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`FocusTraversalPolicy`を使用することで、キー入力によるフォーカスの移動を制御しています。また、`JRadioButton`で以下のような`FocusTraversalPolicy`に切り替えることができます。
+上記のサンプルでは、`FocusTraversalPolicy`を使用してキー入力によるフォーカスの移動を制御しています。また、`JRadioButton`で以下のような`FocusTraversalPolicy`に切り替えが可能です。
 
 - `Default`
 -- `JPanel`のデフォルトは、`null`
--- 実際のキー入力によるフォーカスの移動には、このパネルの親(`JFrame`)に設定されている`FocusTraversalPolicy`が使用される
-
+-- 実際のキー入力によるフォーカスの移動には、このパネルの親(`JFrame`)に設定されている`FocusTraversalPolicy`を使用
 - `Custom`
 -- [https://www.ibm.com/developerworks/jp/java/library/j-mer07153/ Merlinの魔術: フォーカス、フォーカス、フォーカス]からの引用
 -- KBD{Tab}キーを押していくと、東西南北の順でボタンのフォーカスが移動(KBD{Shift+Tab}キーでは逆順)
 -- `4`つの`JButton`以外には、KBD{Tab}キーでフォーカスは移動しない
-
 - `Layout`
--- 以下のように`LayoutFocusTraversalPolicy`(`LayoutFocusTraversalPolicy`は`Swing`のデフォルト、`AWT`のデフォルトは`DefaultFocusTraversalPolicy`)の`accept`メソッドをオーバーライドして、中央の`JTextArea`(通常、`JTextArea`などから次のコンポーネントにフォーカス移動する場合は、KBD{Ctrl+Tab})が編集不可の場合は、これにKBD{Tab}キーなどでフォーカスが移動しないように設定している
+-- 以下のように`LayoutFocusTraversalPolicy`(`LayoutFocusTraversalPolicy`は`Swing`のデフォルト、`AWT`のデフォルトは`DefaultFocusTraversalPolicy`)の`accept`メソッドをオーバーライドして、中央の`JTextArea`(通常、`JTextArea`などから次のコンポーネントにフォーカス移動する場合は、KBD{Ctrl+Tab})が編集不可の場合は、これにKBD{Tab}キーなどでフォーカスが移動しないように設定
 
 #code{{
 frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {

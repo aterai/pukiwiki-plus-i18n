@@ -1,0 +1,68 @@
+---
+category: swing
+folder: ImageComparisonSplitPane
+title: JSplitPaneで画像を差分を比較表示する
+tags: [JSplitPane, Divider]
+author: aterai
+pubdate: 2018-10-08T18:38:30+09:00
+description: JSplitPaneに加工前の画像と加工後の画像を重ねて表示し、Dividerで表示範囲を変更してその差分を確認します。
+image: https://drive.google.com/uc?export=view&id=1BQoqm6sZEKeuDdnJ9jxCugkg6-CHyo1-Ag
+---
+* 概要 [#summary]
+`JSplitPane`に加工前の画像と加工後の画像を重ねて表示し、`Divider`で表示範囲を変更してその差分を確認します。
+
+#download(https://drive.google.com/uc?export=view&id=1BQoqm6sZEKeuDdnJ9jxCugkg6-CHyo1-Ag)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+ImageIcon icon = new ImageIcon(getClass().getResource("test.png"));
+
+Component beforeCanvas = new JComponent() {
+  @Override protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    int iw = icon.getIconWidth();
+    int ih = icon.getIconHeight();
+    g.drawImage(icon.getImage(), 0, 0, iw, ih, this);
+  }
+};
+split.setLeftComponent(beforeCanvas);
+
+Component afterCanvas = new JComponent() {
+  @Override protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    Graphics2D g2 = (Graphics2D) g.create();
+    int iw = icon.getIconWidth();
+    int ih = icon.getIconHeight();
+    if (check.isSelected()) {
+      g2.setColor(getBackground());
+      g2.setXORMode(Color.BLUE);
+    } else {
+      g2.setPaintMode();
+    }
+    Point pt = getLocation();
+    Insets ins = split.getBorder().getBorderInsets(split);
+    g2.translate(-pt.x + ins.left, 0);
+    g2.drawImage(icon.getImage(), 0, 0, iw, ih, this);
+    g2.dispose();
+  }
+};
+split.setRightComponent(afterCanvas);
+}}
+
+* 解説 [#explanation]
+- `JSplitPane`
+-- `JSplitPane#setContinuousLayout(true)`を設定して、`Divider`の移動に応じて子コンポーネントを連続的に再描画
+-- [[JSplitPaneでディバイダの移動を連続的に再描画>Swing/ContinuousLayout]]
+- 子`Component`
+-- それぞれ`Component#paintComponent(...)`をオーバーライドして、画像を描画
+-- `JSplitPane`の右に配置する`Component`は、親の`JSplitPane`からの相対位置を`Component#getLocation()`で取得し、その`x`座標分だけ左に移動した位置に画像を描画することで左`Component`に描画する画像との位置を揃える
+--- `JSplitPane`の内余白は考慮されないので注意
+-- 右`Component`の画像は`Graphics#setXORMode(Color.BLUE)`で`XOR`反転描画
+
+* 参考リンク [#reference]
+- [[JSplitPaneでディバイダの移動を連続的に再描画>Swing/ContinuousLayout]]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics.html#setXORMode-java.awt.Color- Graphics#setXORMode(Color) (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

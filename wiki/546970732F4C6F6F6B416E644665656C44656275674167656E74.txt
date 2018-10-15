@@ -96,10 +96,9 @@ public class LookAndFeelDebugAgent {
 }}
 
 * 解説 [#explanation]
-`Look And Feel`を切り替えるためのパネルが一緒に起動し、対象アプリケーションのソースコードを変更することなく、`LookAndFeel`の変更をテストすることが出来ます。
+アプリケーションと同時に`Look And Feel`を切り替えるための別パネルを起動して、対象アプリケーションのソースコードを変更することなく`LookAndFeel`の変更がテスト可能です。
 
-`javaagent`を使うので、`JDK 1.6`以上で以下のように起動します。
-
+- `javaagent`を使用するため、`JDK 1.6`以上で以下のように起動する
 #code{{
 java -javaagent:lnfagent.jar -jar example.jar
 }}

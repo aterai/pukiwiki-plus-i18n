@@ -27,8 +27,7 @@ g.drawImage(atOp.filter(bi, null), 0, 0, w, h, this);
 上記のサンプルでは、`AffineTransformOp#filter(...)`メソッドを使用して左右反転した`BufferedImage`を生成しています。
 
 ----
-以下のように上下反転した画像を描画する方法もあります。
-
+- 上下反転する場合の例:
 #code{{
 AffineTransform at = AffineTransform.getScaleInstance(1d, -1d);
 at.translate(0, -h);

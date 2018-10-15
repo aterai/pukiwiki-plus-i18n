@@ -47,13 +47,9 @@ editor2.setText("(\uD85B\uDE40) (\u26E40)\n(\uD842\uDF9F) (\u20B9F)");
 --- `JEditorPane` + `\u26E40`: `NG`
 
 ----
-`JTextComponent`とブラウザでサロゲートペアの表現が異なるようなので、これらの文字をどちらの環境でも正しく表示したい場合は、数値文字参照や`Unicode`エスケープは使用せず、ソースコードなどを`UTF-8`にしてそのまま𦹀や𠮟と書く(メモ帳などの対応済みエディタで)のがよさそうです。
-
-----
-`Windows 7`, `JDK 1.7.0_02`の環境では、`JTextComponent`からメモ帳などにサロゲートペアの文字をコピーペーストは可能ですが、逆にメモ帳やブラウザから`JTextComponent`にサロゲートペアの文字をコピーペーストすることができないようです。
-
-----
-`JTextComponent`(`Java 1.7.0`)は、異体字セレクタに対応してない
+- `JTextComponent`とブラウザでサロゲートペアの表現が異なるため、これらの文字をどちらの環境でも正しく表示したい場合は、数値文字参照や`Unicode`エスケープは使用せず、ソースコードなどを`UTF-8`にしてそのまま𦹀や𠮟と書く(メモ帳などの対応済みエディタで)ほうが良さそう
+- `Windows 7`, `JDK 1.7.0_02`の環境では、`JTextComponent`からメモ帳などにサロゲートペアの文字をコピーペーストは可能だが、逆にメモ帳やブラウザから`JTextComponent`にサロゲートペアの文字をコピーペーストは不可
+- `JTextComponent`(`Java 1.7.0`)は、異体字セレクタに対応してない
 -- フォントを`IVS`に対応している`IPAmj明朝`などに変更し、異体字セレクタ付き文字列のある`UTF-8`のテキストを`JTextArea`などに読み込んでも異体字セレクタが〓になる
 -- 数値文字参照、`Unicode`エスケープを使う方法でも〓になる
 -- [http://d.hatena.ne.jp/terazzo/20110115/1295047469 Java IVSの異体字を元の字と同一視して比較する - terazzoの日記]のように、`VS`を`UTF-16`に(例えば`U+E0101`を`\uDB40\uDD01`に)しても、`JTextComponent`では駄目
@@ -63,7 +59,7 @@ editor2.setText("(\uD85B\uDE40) (\u26E40)\n(\uD842\uDF9F) (\u20B9F)");
 -- `Adobe-Japan1 collection`: `小塚明朝 Pr6N`など
 -- `Hanyo-Denshi collection`: `IPAmj明朝`など
 
-//%%`小塚明朝 Pr6N`(メモ: `Pr6N`の`N`は`JIS2004`対応の意味で、`IVS`対応とは関係ないらしい)%%
+// %%`小塚明朝 Pr6N`(メモ: `Pr6N`の`N`は`JIS2004`対応の意味で、`IVS`対応とは関係ないらしい)%%
 
 ----
 - %%`Windows 10 64bit`、`JDK 1.8.0_112`、`小塚明朝 Pr6N R`(`KozMinPr6N-Regular.otf`)で、`Font.createFont(...)`を使って`Font`を作成すると`IllegalArgumentException`が発生する場合がある%%
