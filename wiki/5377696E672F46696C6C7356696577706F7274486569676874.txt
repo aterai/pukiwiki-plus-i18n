@@ -37,7 +37,7 @@ scroll.getViewport().setBackground(Color.GREEN);
 -- `JTable`の高さが`JViewport`の高さより小さい時は、両者が同じ高さになるように`JTable`が拡張される
 -- `JTable#setBackground(Color)`で設定した色(薄い黄色)が`JTable`下部の余白の背景色となる
 -- `JTable`自体が拡張されるため、余白部分を右クリックしてもポップアップメニューが表示される
---- 縦スクロールバーとテーブルヘッダで出来る余白(赤)などは`JScrollPane`なので、ポップアップメニューは無効
+--- 縦スクロールバーとテーブルヘッダで生成される余白(赤)などは`JScrollPane`なので、ポップアップメニューは無効
 -- 簡単に余白部分にドロップしたり、空の`JTable`にドロップが可能
 --- [[JTableの行をドラッグ＆ドロップ>Swing/DnDTable]]では、余白にドロップ出来ない
 --- [[Fileのドラッグ＆ドロップ>Swing/FileListFlavor]]では、`DropTarget`を`JTable`、`JViewport`の両方に設定する必要がある
@@ -48,7 +48,7 @@ scroll.getViewport().setBackground(Color.GREEN);
 #ref(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTMm5lGwGI/AAAAAAAAAZc/VWaIAURiCKk/s800/FillsViewportHeight1.png)
 
 - `scrollPane.setBackground(Color.RED);`
--- 縦スクロールバーとテーブルヘッダで出来る余白の色
+-- 縦スクロールバーとテーブルヘッダで生成される余白の色
 - `scrollPane.getViewport().setBackground(Color.GREEN);`
 -- 列をドラッグして移動する場合の隙間の色
 -- `JTable#setAutoResizeMode(JTable.AUTO_RESIZE_OFF)`としたときの右余白

@@ -46,10 +46,9 @@ class HandScrollListener extends MouseAdapter {
 }}
 
 * 解説 [#explanation]
-`JViewport`の原点(左上)をマウスの移動に応じて変更し、`JComponent#scrollRectToVisible`メソッドの引数として使用することで、覗き窓のスクロールを行っています。
+`JViewport`の原点(左上)をマウスの移動に応じて変更し、`JComponent#scrollRectToVisible`メソッドの引数として使用して覗き窓のスクロールを行っています。
 
-----
-`JComponent#scrollRectToVisible(...)`ではなく、`JViewport#setViewPosition(Point)`を使用すると、内部コンポーネントの外側に移動することができます。
+- `JComponent#scrollRectToVisible(...)`ではなく`JViewport#setViewPosition(Point)`を使用すると、内部コンポーネントの外側に移動可能
 
 * 参考リンク [#reference]
 - [[JScrollPaneのオートスクロール>Swing/AutoScroll]]

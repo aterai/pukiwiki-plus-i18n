@@ -49,7 +49,7 @@ am.put("selectNextRow", new AbstractAction() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、カンマ区切りで入力したインデックスに対応する`JList`のアイテムを選択不可にすることができます。
+上記のサンプルでは、`JList`中の指定したアイテムを選択不可に設定できます。
 
 - `JList`のアイテムの選択可・不可は、セルレンダラーの`ListCellRenderer#getListCellRendererComponent(...)`メソッド中で判断する
 - インデックスが選択不可の場合、オリジナルのセルレンダラーから選択無し、フォーカス無しのコンポーネントを取得し、さらに`setEnabled(false)`として返す
