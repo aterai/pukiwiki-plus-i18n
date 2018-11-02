@@ -6,10 +6,10 @@ description: Subantタスクを使って、一度に全部同じターゲット�
 ---
 #contents
 
-* 概要 [#s9662e80]
+* 概要 [#summary]
 `Subant`タスクを使って、一度に全部同じターゲットで子フォルダの`build.xml`を実行します。
 
-* サンプルbuild.xml [#eb647956]
+* サンプルbuild.xml [#target]
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="swingall" default="clean" basedir=".">
@@ -26,7 +26,7 @@ description: Subantタスクを使って、一度に全部同じターゲット�
 </project>
 }}
 
-* 解説 [#n229e4de]
+* 解説 [#explanation]
 このサイトの[[Java Swing Tips>Swing]]では、各`Tips`ごとにフォルダを作成してソースコードや`build.xml`を管理しています。このため、ソースを`xyzzy`の`gresreg`で一気に置換した場合(例えば`Logger.global.info`を`System.out.println`に全部変換など)、一度に全部同じターゲットを実行できるように、サンプルのような`build.xml`を作成しています。
 
 ----
@@ -47,6 +47,6 @@ description: Subantタスクを使って、一度に全部同じターゲット�
 
  ant -Dst=compile
 
-* コメント [#p654e4a0]
+* コメント [#comment]
 #comment
 #comment

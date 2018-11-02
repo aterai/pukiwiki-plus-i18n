@@ -6,10 +6,10 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 ---
 #contents
 
-* 概要 [#s4081d7a]
+* 概要 [#summary]
 `Ant`から`PMD`を実行します。
 
-* サンプルターゲット [#h0deaf72]
+* サンプルターゲット [#target]
 - `build.xml`に記述するターゲットサンプル
 #code{{
 <target name="pmd">
@@ -82,7 +82,7 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 -- `<formatter type="text" toConsole="false" />`は、`toFile or toConsole needs to be specified in Formatter`となって、`BUILD FAILED`
 - ファイルとコンソールの両方に出力する場合は、`formatter`を複数指定しなくてはならない？
 
-* 更新履歴 [#c022c47d]
+* 更新履歴 [#changelog]
 ** PMD 6.5.0 [#d87ca01e]
 - %%`*`を使用したインポート文と同名のメソッドが存在すると、[https://pmd.github.io/pmd-6.5.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname UnnecessaryFullyQualifiedName]ルールで誤検出が発生する%%
 -- [https://github.com/pmd/pmd/pull/1220 java Fix unnecessaryFQCN false positive with import-on-demand #1220]、`6.6.0`で修正済
@@ -237,7 +237,7 @@ public class Foo {
 - `Removed -targetjdk use -version {name} {version} instead`
 -- 上記のサンプルから、`targetjdk="${compile.source}"`を削除
 
-* 警告 [#h56d397b]
+* 警告 [#rules]
 ** GodClass [#GodClass]
 - [https://pmd.github.io/pmd/pmd_rules_java_design.html#godclass GodClass - Design | PMD Source Code Analyzer]
 #code{{

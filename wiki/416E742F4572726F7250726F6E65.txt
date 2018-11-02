@@ -1,0 +1,73 @@
+---
+title: AntでError Proneを使用する
+author: aterai
+pubdate: 2018-10-27T20:57:37+09:00
+description: AntでのJavaコードのコンパイラにコード解析を行うErrprProneを適用する方法など。
+---
+#contents
+
+* 概要 [#summary]
+`Ant`での`Java`コードコンパイルに`Error Prone`を使用して、ソースコード解析を強化します。
+
+* サンプルターゲット [#target]
+- 以下、[https://errorprone.info/docs/installation#ant Installation]に記述されている[https://github.com/google/error-prone/blob/master/examples/ant/build.xml build.xml]を参考に作成したターゲットのサンプル
+- 公式の`build.xml`をほぼ丸写しで動作可能だが、`2`つほど注意点がある
+-- `xmlns:unless="ant:unless"`をルート要素に追加する必要がある
+-- `<javaversion>`コンディションを使用しているので、`ant`は`1.10.2`以降を使用する必要がある
+--- [https://archive.apache.org/dist/ant/RELEASE-NOTES-1.10.2.html Release Notes of Apache Ant 1.10.2]
+--- `sdkman`で`ant`をインストールすると、`2018-10-27`現在の最新は`1.10.1`なのでエラーになる
+
+#code{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="example" default="compile" xmlns:unless="ant:unless">
+...
+  <path id="project.class.path">
+    <pathelement location="${build.dest}" />
+    <pathelement location="${java.home}/lib/javaws.jar" />
+    <pathelement path="${java.class.path}" />
+  </path>
+  <target name="errorprone" depends="prepare-src, prepare-resource, prepare-web">
+    <!-- using github.com/google/error-prone-javac is required when running on JDK 8 -->
+    <property name="javac.jar" location="${env.ERRORPRONE_HOME}/javac-9+181-r4173-1.jar"/>
+    <condition property="jdk9orlater">
+      <javaversion atleast="9"/>
+    </condition>
+    <path id="processorpath.ref">
+      <fileset dir="${env.ERRORPRONE_HOME}" includes="*.jar" />
+    </path>
+    <javac srcdir="${build.src}"
+           excludes="**/module-info.java"
+           includes="**/*.java"
+           destdir="${build.dest}"
+           encoding="${compile.encoding}"
+           debug="${compile.debug}"
+           optimize="${compile.optimize}"
+           deprecation="${compile.deprecation}"
+           fork="yes"
+           includeAntRuntime="no"
+           classpathref="project.class.path">
+      <compilerarg value="-J-Xbootclasspath/p:${javac.jar}" unless:set="jdk9orlater"/>
+      <compilerarg line="-XDcompilePolicy=simple"/>
+      <compilerarg value="-processorpath"/>
+      <compilerarg pathref="processorpath.ref"/>
+      <compilerarg value="-Xplugin:ErrorProne -Xep:DeadException:ERROR -Xep:CatchAndPrintStackTrace:OFF" />
+    </javac>
+  </target>
+}}
+
+* 解説 [#explanation]
++ [https://errorprone.info/docs/installation#ant Installation]に記述されている`error_prone_core-2.3.2-with-dependencies.jar`、`jFormatString-3.0.0.jar`、`javac-9+181-r4173-1.jar`をダウンロードし、適当な(例えば環境変数`ERRORPRONE_HOME`を設定した)場所に配置する
++ 上記のような`errorprone`ターゲットを`build.xml`に追加する、または`complie`ターゲットの`<javac>`を置き換えてコンパイルする
+
+----
+- 例えば`MultipleTopLevelClasses`をチェックしないように設定する場合は、以下のように`-Xep:MultipleTopLevelClasses:OFF`を引数に追加する
+-- `<compilerarg value="-Xplugin:ErrorProne -Xep:DeadException:ERROR -Xep:MultipleTopLevelClasses:OFF -Xep:CatchAndPrintStackTrace:OFF" />`
+-- [https://errorprone.info/docs/flags Command-line flags]
+
+* 参考リンク [#reference]
+- [https://errorprone.info/ Error Prone]
+- [https://github.com/google/error-prone google/error-prone: Catch common Java mistakes as compile-time errors]
+
+* コメント [#comment]
+#comment
+#comment

@@ -78,8 +78,14 @@ pubdate: 2003-09-25
 - [[AntでPMDを実行する>Ant/PMD]]
 
 ** AntでCheckstyleを実行する [#Checkstyle]
+`Ant`から`Checkstyle`を実行します。
 
 - [[AntでCheckstyleを実行する>Ant/Checkstyle]]
+
+** AntでのコンパイルにErrorProneを使用する [#ErrorProne]
+`Ant`でのコンパイルに`ErrorProne`を使用して、コードチェックを強化します。
+
+- [[AntでError Proneを使用する>Ant/ErrorProne]]
 
 ** Antタスクの定義をスクリプト言語を使用して行う [#Scriptdef]
 スクリプト言語(`Javascript`)を使用して、`FTPS`(`File Transfer Protocol over SSL/TLS`)で通信する`Ant`タスクを定義します。
@@ -87,73 +93,6 @@ pubdate: 2003-09-25
 - [[Antタスクの定義をスクリプト言語を使用して行う>Ant/Scriptdef]]
 
 * targetのサンプル [#target]
-** Checkstyleタスク [#t74190c4]
-- [[AntでCheckstyleを実行する>Ant/Checkstyle]]に移動
-
-** ErrorProneタスク [#ErrorProne]
-- [http://errorprone.info/ Error Prone]
--- [http://errorprone.info/docs/flags Command-line flags]
-
-#code{{
-<target name="errorprone" depends="prepare-src, prepare-resource, prepare-web">
-  <path id="errorprone.classpath">
-    <!-- 環境変数などでerror_prone_ant-x.x.x.jarのあるディレクトリを指定 -->
-    <fileset dir="${env.ERRORPRONE_HOME}">
-      <include name="*.jar" />
-    </fileset>
-  </path>
-  <componentdef name="errorprone" classname="com.google.errorprone.ErrorProneExternalCompilerAdapter"
-                classpathref="errorprone.classpath" />
-  <javac srcdir="${build.src}"
-         excludes="**/module-info.java"
-         includes="**/*.java"
-         destdir="${build.dest}"
-         encoding="${compile.encoding}"
-         debug="${compile.debug}"
-         optimize="${compile.optimize}"
-         deprecation="${compile.deprecation}"
-         includeAntRuntime="no"
-         fork="true"
-         classpathref="project.class.path">
-    <errorprone />
-    <compilerarg value="-Xlint:unchecked" />
-    <!-- MultipleTopLevelClassesのチェックを無視する例 -->
-    <compilerarg value="-Xep:MultipleTopLevelClasses:OFF" />
-  </javac>
-</target>
-}}
-
-- 上記の`componentdef`を使用する方法では、`Java 9`で`bootclasspath/p is no longer a supported option.`とエラーになる
-errorprone:
-    [javac] Compiling 2 source files to C:\Users\terai\jst\SelectionKeeper\target\classes
-    [javac] -Xbootclasspath/p is no longer a supported option.
-    [javac] Error: Could not create the Java Virtual Machine.
-    [javac] Error: A fatal exception has occurred. Program will exit.
-
-- ドキュメントにあるように、`javac`タスクで`compiler="com.google.errorprone.ErrorProneAntCompilerAdapter"`属性を追加使用するよう修正
-
-#code{{
-<target name="errorprone" depends="prepare-src, prepare-resource, prepare-web">
-  <javac srcdir="${build.src}"
-         includes="**/*.java"
-         destdir="${build.dest}"
-         encoding="${compile.encoding}"
-         debug="${compile.debug}"
-         optimize="${compile.optimize}"
-         deprecation="${compile.deprecation}"
-         includeAntRuntime="no"
-         compiler="com.google.errorprone.ErrorProneAntCompilerAdapter"
-         includeantruntime="false"
-         classpathref="project.class.path">
-    <compilerclasspath>
-      <fileset dir="${env.ERRORPRONE_HOME}" includes="*.jar" />
-    </compilerclasspath>
-    <compilerarg value="-Xlint:unchecked" />
-    <compilerarg value="-Xep:MultipleTopLevelClasses:OFF" />
-  </javac>
-</target>
-}}
-
 ** Scpタスク [#scp]
 #code{{
   <path id="jsch.path">

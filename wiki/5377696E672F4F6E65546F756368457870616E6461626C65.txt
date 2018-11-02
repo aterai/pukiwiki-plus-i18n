@@ -20,7 +20,7 @@ splitPane.setOneTouchExpandable(true);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JSplitPane#setOneTouchExpandable(true)`と設定することで、ディバイダに`JButton`が表示され、これらをクリックすることで`JSplitPane`を展開、収納することができます。
+上記のサンプルでは、`JSplitPane#setOneTouchExpandable(true)`を設定するとディバイダに`JButton`が表示され、これらをマウスでクリックすると`JSplitPane`の展開、収納ができます。
 
 - `Java 1.5`以降で`JSplitPane#setDividerLocation(0);`などとしてディバイダを収納状態にした場合、`JSplitPane`自体をリサイズすると収納されているコンポーネントの最小サイズ(`setMinimumSize`)まで展開される
 - 収納状態を維持したい場合、リフレクションを使って、`BasicSplitPaneUI#setKeepHidden(true)`メソッドを実行したり、`Divider`に表示されている`JButton`を取得実行する方法がある

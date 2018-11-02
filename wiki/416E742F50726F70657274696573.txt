@@ -6,11 +6,11 @@ description: エンコーディングなどを気にせずに使えるように�
 ---
 #contents
 
-* 概要 [#a4250645]
+* 概要 [#summary]
 エンコーディングなどを気にせずに使えるように、`Ant`で使用するプロパティファイルを`XML`にします。
 
-* サンプルbuild.xml、properties.xml [#p9021c24]
-** build.xml [#v1ae5fd1]
+* サンプルbuild.xml、properties.xml [#example]
+** build.xml [#build]
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="example" default="compile" basedir=".">
@@ -18,7 +18,7 @@ description: エンコーディングなどを気にせずに使えるように�
 ......
 }}
 
-** properties.xml [#vea0f1e4]
+** properties.xml [#properties]
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
@@ -41,13 +41,13 @@ description: エンコーディングなどを気にせずに使えるように�
 </project>
 }}
 
-* 解説 [#l533aab4]
+* 解説 [#explanation]
 `Ant`で環境に依存するプロパティなどを、`build.xml`から分離したい場合、`build.properties`といったファイルを作成して`import`する方法がありますが、プロパティの値に日本語が入っていると`native2ascii`する必要があり、すこし面倒です。
 
 上記のサンプルでは、`import`タスクを使って、`property`タスクだけ記述したビルドファイルを取り込むことで、`xml`ファイルをプロパティファイルとして代用しています。
 
 //* 参考リンク
-* コメント [#gec46f53]
+* コメント [#comment]
 #comment
 - メモ: `XmlProperty`タスクを使用する方法も調べること。 -- &user(aterai); &new{2007-10-19 (金) 16:13:57};
 

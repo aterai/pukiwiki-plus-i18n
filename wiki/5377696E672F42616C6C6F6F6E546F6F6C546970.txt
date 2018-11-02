@@ -76,7 +76,7 @@ class BalloonToolTip extends JToolTip {
 - `JToolTop`に`HierarchyListener`を追加し、その`JToolTop`が表示状態になった時、親が`JWindow`かどうかを調べてこれを透明に設定
 -- `JToolTop`が元`JFrame`外に表示される場合は、`HeavyWeightWindow`(`JWindow`)に配置して表示されるため、`JWindow`を透明にする必要がある
 -- `JToolTop`が元`JFrame`内に表示される場合は、その`JFrame`の`JLayeredPane`の`POPUP_LAYER`に`JToolTop`が描画されるので、`setOpaque(false)`な`JToolTop`の背景は描画されない
--- `JWindow#setShape(...)`で形状を変更することも可能だが、この場合フチを滑らかにすることが難しい
+-- `JWindow#setShape(...)`メソッドでも形状の変更が可能だが、この場合フチを滑らかにすることが難しい
 - `JList#createToolTip()`をオーバーライドし、通常の`JToolTip`の代わりに`BalloonToolTip`(上記の`JToolTip`)を作成して返すように設定
 
 #code{{

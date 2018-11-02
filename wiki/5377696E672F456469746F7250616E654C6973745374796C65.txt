@@ -39,7 +39,7 @@ styleSheet.addRule("ul{list-style-type:circle;margin:0px 20px;}");
 //styleSheet.addRule("ul{list-style-type:square;margin:0px 20px;}");
 //styleSheet.addRule("ul{list-style-type:decimal;margin:0px 20px;}");
 }}
--- `javax.swing.text.html.CSS`は、`a:hover`などの擬似クラス(`pseudo-classes`)や、`:before`などの擬似要素(`pseudo elements`)に対応していないので、以下のように`list-style-type:none`として`:before`で任意の文字を`bullet`に適用することができない
+-- `javax.swing.text.html.CSS`は、`a:hover`などの擬似クラス(`pseudo-classes`)や、`:before`などの擬似要素(`pseudo elements`)に対応していないので、以下のように`list-style-type:none`として`:before`で任意の文字を`bullet`に適用できない
 #code{{
 styleSheet.addRule("ul{list-style-type:none;margin:0px 20px;}");
 styleSheet.addRule("ul li:before{content:'\u00BB';}");

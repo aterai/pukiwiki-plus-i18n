@@ -1,0 +1,517 @@
+---
+title: JavaのSwingWorkerをKotlinのCoroutinesに置き換える
+author: aterai
+pubdate: 2018-10-31T17:13:03+09:00
+description: Java Swing の SwingWorker を Kotlin の Coroutines に置き換えるソースコードや build.gradle などのサンプル。
+---
+#contents
+
+* 概要 [#summary]
+[https://www.pushing-pixels.org/2018/08/07/replacing-swingworker-with-kotlin-coroutines.html Replacing SwingWorker with Kotlin coroutines ・ Pushing Pixels]を参考に、`Java Swing`の`SwingWorker`を`Kotlin`の`Coroutines`に置き換えるソースコードや`build.gradle`のサンプルなどについて記述、テストしています。
+
+* ビルト [#build]
+- 以下のバージョンを使用する`build.gradle`のサンプル
+-- `kotlin 1.3.0`
+-- `kotlinx.coroutines 1.0.0`
+
+#code{{
+group 'Example'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = 'ExampleKt'
+
+buildscript {
+  ext.kotlin_version = '1.3.0'
+  ext.coroutine_version = '1.0.0' // '0.30.2-eap13'
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+sourceCompatibility = 1.8
+compileKotlin {
+  kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+  kotlinOptions.jvmTarget = "1.8"
+}
+
+kotlin {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutine_version"
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+}}
+
+* サンプルコード [#sourcecode]
+** `Java`(`SwingWorker`) [#s48c74fa]
+#code{{
+import java.awt.*;
+import java.awt.geom.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Random;
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicProgressBarUI;
+
+public class MainPanel extends JPanel {
+  protected final JProgressBar progress1 = new JProgressBar() {
+    @Override public void updateUI() {
+      super.updateUI();
+      setUI(new ProgressCircleUI());
+      setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
+    }
+  };
+  protected final JProgressBar progress2 = new JProgressBar() {
+    @Override public void updateUI() {
+      super.updateUI();
+      setUI(new ProgressCircleUI());
+      setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
+    }
+  };
+  public MainPanel() {
+    super(new BorderLayout());
+    progress1.setForeground(new Color(0xAAFFAAAA));
+    progress2.setStringPainted(true);
+    progress2.setFont(progress2.getFont().deriveFont(24f));
+
+    JSlider slider = new JSlider();
+    slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);
+    progress1.setModel(slider.getModel());
+
+    JButton button = new JButton("start");
+    button.addActionListener(e -> {
+      JButton b = (JButton) e.getSource();
+      b.setEnabled(false);
+      SwingWorker<String, Void> worker = new BackgroundTask() {
+        @Override public void done() {
+          if (b.isDisplayable()) {
+            b.setEnabled(true);
+          }
+        }
+      };
+      worker.addPropertyChangeListener(new ProgressListener(progress2));
+      worker.execute();
+    });
+
+    JPanel p = new JPanel(new GridLayout(1, 2));
+    p.add(progress1);
+    p.add(progress2);
+
+    add(slider, BorderLayout.NORTH);
+    add(p);
+    add(button, BorderLayout.SOUTH);
+    setPreferredSize(new Dimension(320, 240));
+  }
+  public static void main(String... args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGui();
+      }
+    });
+  }
+  public static void createAndShowGui() {
+    try {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch (ClassNotFoundException | InstantiationException
+               | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+      ex.printStackTrace();
+    }
+    JFrame frame = new JFrame("@title@");
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.getContentPane().add(new MainPanel());
+    frame.pack();
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+  }
+}
+
+class ProgressCircleUI extends BasicProgressBarUI {
+  @Override public Dimension getPreferredSize(JComponent c) {
+    Dimension d = super.getPreferredSize(c);
+    int v = Math.max(d.width, d.height);
+    d.setSize(v, v);
+    return d;
+  }
+  @Override public void paint(Graphics g, JComponent c) {
+    // public void paintDeterminate(Graphics g, JComponent c) {
+    Insets b = progressBar.getInsets(); // area for border
+    int barRectWidth = progressBar.getWidth() - b.right - b.left;
+    int barRectHeight = progressBar.getHeight() - b.top - b.bottom;
+    if (barRectWidth <= 0 || barRectHeight <= 0) {
+      return;
+    }
+
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+    double degree = 360 * progressBar.getPercentComplete();
+    double sz = Math.min(barRectWidth, barRectHeight);
+    double cx = b.left + barRectWidth * .5;
+    double cy = b.top + barRectHeight * .5;
+    double or = sz * .5;
+    // double ir = or - 20;
+    double ir = or * .5; // .8;
+    Shape inner = new Ellipse2D.Double(cx - ir, cy - ir, ir * 2, ir * 2);
+    Shape outer = new Ellipse2D.Double(cx - or, cy - or, sz, sz);
+    Shape sector = new Arc2D.Double(cx - or, cy - or, sz, sz, 90 - degree, degree, Arc2D.PIE);
+
+    Area foreground = new Area(sector);
+    Area background = new Area(outer);
+    Area hole = new Area(inner);
+
+    foreground.subtract(hole);
+    background.subtract(hole);
+
+    // draw the track
+    g2.setPaint(new Color(0xDDDDDD));
+    g2.fill(background);
+
+    // draw the circular sector
+    // AffineTransform at = AffineTransform.getScaleInstance(-1.0, 1.0);
+    // at.translate(-(barRectWidth + b.left * 2), 0);
+    // AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(degree), cx, cy);
+    // g2.fill(at.createTransformedShape(area));
+    g2.setPaint(progressBar.getForeground());
+    g2.fill(foreground);
+    g2.dispose();
+
+    // Deal with possible text painting
+    if (progressBar.isStringPainted()) {
+      paintString(g, b.left, b.top, barRectWidth, barRectHeight, 0, b);
+    }
+  }
+}
+
+class BackgroundTask extends SwingWorker<String, Void> {
+  private final Random rnd = new Random();
+  @Override public String doInBackground() {
+    int current = 0;
+    int lengthOfTask = 100;
+    while (current <= lengthOfTask && !isCancelled()) {
+      try { // dummy task
+        Thread.sleep(rnd.nextInt(50) + 1);
+      } catch (InterruptedException ex) {
+        return "Interrupted";
+      }
+      setProgress(100 * current / lengthOfTask);
+      current++;
+    }
+    return "Done";
+  }
+}
+
+class ProgressListener implements PropertyChangeListener {
+  private final JProgressBar progressBar;
+  protected ProgressListener(JProgressBar progressBar) {
+    this.progressBar = progressBar;
+    this.progressBar.setValue(0);
+  }
+  @Override public void propertyChange(PropertyChangeEvent e) {
+    String strPropertyName = e.getPropertyName();
+    if ("progress".equals(strPropertyName)) {
+      progressBar.setIndeterminate(false);
+      int progress = (Integer) e.getNewValue();
+      progressBar.setValue(progress);
+    }
+  }
+}
+}}
+
+** `Kotlin`(`SwingWorker`版) [#xb3d6852]
+#code(lang-kotlin){{
+import java.awt.*
+import java.awt.geom.*
+import java.beans.PropertyChangeEvent
+import java.beans.PropertyChangeListener
+import java.util.Random
+import javax.swing.*
+import javax.swing.plaf.basic.BasicProgressBarUI
+
+private fun makeUI(): Component {
+  val progress = object : JProgressBar() {
+    override fun updateUI() {
+      super.updateUI()
+      setUI(ProgressCircleUI())
+      setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25))
+    }
+  }
+  val button = JButton("start")
+  button.addActionListener { e ->
+    val b = e.getSource() as JButton
+    b.setEnabled(false);
+    val worker = object : BackgroundTask() {
+      override fun done() {
+        if (b.isDisplayable()) {
+          b.setEnabled(true)
+        }
+      }
+    }
+    worker.addPropertyChangeListener(ProgressListener(progress))
+    worker.execute()
+  }
+
+  return JPanel(BorderLayout(5, 5)).apply {
+    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5))
+    add(progress)
+    add(button, BorderLayout.SOUTH)
+  }
+}
+
+fun main(args: Array<String>) {
+  EventQueue.invokeLater {
+    JFrame("kotlin swing").apply {
+      defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+      add(makeUI())
+      size = Dimension(320, 240)
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
+}
+
+internal class ProgressCircleUI : BasicProgressBarUI() {
+  override fun getPreferredSize(c: JComponent): Dimension {
+    val d = super.getPreferredSize(c)
+    val v = Math.max(d.width, d.height)
+    d.setSize(v, v)
+    return d;
+  }
+  override fun paint(g: Graphics, c: JComponent) {
+    val b = progressBar.getInsets(); // area for border
+    val barRectWidth = progressBar.getWidth() - b.right - b.left
+    val barRectHeight = progressBar.getHeight() - b.top - b.bottom
+    if (barRectWidth <= 0 || barRectHeight <= 0) {
+      return
+    }
+
+    val g2 = g.create() as Graphics2D
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+
+    val degree = 360 * progressBar.getPercentComplete()
+    val sz = 1.0 * Math.min(barRectWidth, barRectHeight)
+    val cx = b.left + barRectWidth * .5
+    val cy = b.top + barRectHeight * .5
+    val or = sz * .5
+    val ir = or * .5
+
+    val inner = Ellipse2D.Double(cx - ir, cy - ir, ir * 2, ir * 2)
+    val outer = Ellipse2D.Double(cx - or, cy - or, sz, sz)
+    val sector = Arc2D.Double(cx - or, cy - or, sz, sz, 90 - degree, degree, Arc2D.PIE)
+
+    val foreground = Area(sector)
+    val background = Area(outer)
+    val hole = Area(inner)
+
+    foreground.subtract(hole)
+    background.subtract(hole)
+
+    // draw the track
+    g2.setPaint(Color(0xDDDDDD))
+    g2.fill(background)
+
+    // draw the circular sector
+    g2.setPaint(progressBar.getForeground())
+    g2.fill(foreground)
+    g2.dispose()
+
+    // Deal with possible text painting
+    if (progressBar.isStringPainted()) {
+        paintString(g, b.left, b.top, barRectWidth, barRectHeight, 0, b)
+    }
+  }
+}
+
+open class BackgroundTask : SwingWorker<String, Void>() {
+    private val rnd = Random()
+    override fun doInBackground(): String {
+        var current = 0
+        val lengthOfTask = 100
+        while (current <= lengthOfTask && !isCancelled()) {
+            try { // dummy task
+                Thread.sleep(1L + rnd.nextInt(50))
+            } catch (ex: InterruptedException) {
+                return "Interrupted"
+            }
+            setProgress(100 * current / lengthOfTask)
+            current++
+        }
+        return "Done"
+    }
+}
+
+internal class ProgressListener constructor(private val progressBar: JProgressBar) : PropertyChangeListener {
+    init {
+        this.progressBar.setValue(0)
+    }
+    override fun propertyChange(e: PropertyChangeEvent) {
+        val strPropertyName = e.getPropertyName()
+        if ("progress".equals(strPropertyName)) {
+            progressBar.setIndeterminate(false)
+            val progress = e.getNewValue() as Int
+            progressBar.setValue(progress)
+        }
+    }
+}
+}}
+
+** `Kotlin`(`Coroutine`版) [#qe13c59c]
+#code(lang-kotlin){{
+import java.awt.*
+import java.awt.geom.Area
+import java.awt.geom.Arc2D
+import java.awt.geom.Ellipse2D
+import javax.swing.*
+import javax.swing.plaf.basic.BasicProgressBarUI
+
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.swing.*
+
+private fun makeUI(): Component {
+  val progress = object : JProgressBar() {
+    override fun updateUI() {
+      super.updateUI()
+      setUI(ProgressCircleUI())
+      border = BorderFactory.createEmptyBorder(25, 25, 25, 25)
+    }
+  }
+  val button = JButton("start")
+  button.addActionListener { e ->
+    GlobalScope.launch(Dispatchers.Swing) {
+      val b = e.source as JButton
+      b.isEnabled = false
+      val channel = Channel<Int>()
+      async {
+        var current = 0
+        val lengthOfTask = 100
+        while (current <= lengthOfTask) {
+          delay(20L)
+          channel.send(100 * current / lengthOfTask)
+          current++
+        }
+        // Close the channel as we're done processing
+        channel.close()
+      }
+      // The next loop keeps on going as long as the channel is not closed
+      for (y in channel) {
+        // println("Processing $y " + SwingUtilities.isEventDispatchThread())
+        progress.value = y
+      }
+      // status.text = "Done!"
+      // @Override public void done() {
+      if (b.isDisplayable) {
+        b.isEnabled = true
+      }
+    }
+  }
+  return JPanel(BorderLayout(5, 5)).apply {
+    border = BorderFactory.createEmptyBorder(5, 5, 5, 5)
+    add(progress)
+    add(button, BorderLayout.SOUTH)
+  }
+}
+
+fun main(args: Array<String>) {
+  EventQueue.invokeLater {
+    JFrame("kotlin swing").apply {
+      defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+      add(makeUI())
+      size = Dimension(320, 240)
+      setLocationRelativeTo(null)
+      isVisible = true
+    }
+  }
+}
+
+internal class ProgressCircleUI : BasicProgressBarUI() {
+  override fun getPreferredSize(c: JComponent): Dimension {
+    val d = super.getPreferredSize(c)
+    val v = Math.max(d.width, d.height)
+    d.setSize(v, v)
+    return d
+  }
+  override fun paint(g: Graphics, c: JComponent) {
+    val b = progressBar.insets // area for border
+    val barRectWidth = progressBar.width - b.right - b.left
+    val barRectHeight = progressBar.height - b.top - b.bottom
+    if (barRectWidth <= 0 || barRectHeight <= 0) {
+      return
+    }
+
+    val g2 = g.create() as Graphics2D
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+
+    val degree = 360 * progressBar.percentComplete
+    val sz = 1.0 * Math.min(barRectWidth, barRectHeight)
+    val cx = b.left + barRectWidth * .5
+    val cy = b.top + barRectHeight * .5
+    val or = sz * .5
+    val ir = or * .5
+
+    val inner = Ellipse2D.Double(cx - ir, cy - ir, ir * 2, ir * 2)
+    val outer = Ellipse2D.Double(cx - or, cy - or, sz, sz)
+    val sector = Arc2D.Double(cx - or, cy - or, sz, sz, 90 - degree, degree, Arc2D.PIE)
+
+    val foreground = Area(sector)
+    val background = Area(outer)
+    val hole = Area(inner)
+
+    foreground.subtract(hole)
+    background.subtract(hole)
+
+    // draw the track
+    g2.paint = Color(0xDDDDDD)
+    g2.fill(background)
+
+    // draw the circular sector
+    g2.paint = progressBar.foreground
+    g2.fill(foreground)
+    g2.dispose()
+
+    // Deal with possible text painting
+    if (progressBar.isStringPainted) {
+      paintString(g, b.left, b.top, barRectWidth, barRectHeight, 0, b)
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Java`版は[[JProgressBarの進捗状況を円形で表示する>Swing/ProgressCircle]]とほぼ同一なので、コンパイル、実行なども同様の方法で可能
+- `Kotlin`版の実行方法
+-- `OpenJDK 1.8.0_192`などをインストール
+-- `sdkman`などで`kotlin 1.3.0`、`gralde 4.10.2`などをインストール
+-- 適当なディレクトリを作成して、上記の`build.gradle`、`src/main/kotlin/Example.kt`を配置
+- 作成したディレクトリで、`gradle run`を実行
+
+* 参考リンク [#reference]
+- [https://www.pushing-pixels.org/2018/08/07/replacing-swingworker-with-kotlin-coroutines.html Replacing SwingWorker with Kotlin coroutines ・ Pushing Pixels]
+- [https://github.com/Kotlin/kotlinx.coroutines/blob/master/COMPATIBILITY.md#migration-to-100-version-with-kotlin-13 kotlinx.coroutines/COMPATIBILITY.md at master · Kotlin/kotlinx.coroutines]
+- [https://github.com/Kotlin/kotlinx.coroutines/blob/master/ui/coroutines-guide-ui.md kotlinx.coroutines/coroutines-guide-ui.md at master · Kotlin/kotlinx.coroutines]
+- [[JProgressBarの進捗状況を円形で表示する>Swing/ProgressCircle]]
+- [http://d.hatena.ne.jp/nowokay/20180809#1533777641 Project LoomでJavaでの継続(Continuation)を試す - きしだのはてな]
+
+* コメント [#comment]
+#comment
+#comment

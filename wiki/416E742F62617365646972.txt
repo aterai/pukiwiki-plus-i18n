@@ -6,10 +6,10 @@ description: basedirをカレントディレクトリ(Working directory, ${user.
 ---
 #contents
 
-* 概要 [#k5f41878]
+* 概要 [#summary]
 `basedir`をカレントディレクトリ(`Working directory`, `${user.dir}`)とは別の場所に指定して、`ant.bat`を実行します。
 
-* サンプル [#ca4676e6]
+* サンプル [#example]
 #code{{
 ## 子フォルダAuxiliaryLookAndFeelをbasedirにしてant findbugsを実行
 ant clean findbugs -Dbasedir=AuxiliaryLookAndFeel
@@ -49,7 +49,7 @@ for i in $(find . -maxdepth 1 -type d -name "A*"); do ant -f build.xml -Dbasedir
 </project>
 }}
 
-* 解説 [#mc94cc13]
+* 解説 [#explanation]
 `-Dbasedir=XXX`で、`basedir`を`XXX`に変更し、カレントディレクトリ(`${user.dir}`)にある`foo.xml`ビルドファイルの`findbugs`タスクを実行しています。
 
 - メモ
@@ -73,9 +73,9 @@ for i in $(find . -maxdepth 1 -type d -name "A*"); do ant -f build.xml -Dbasedir
   </target>
 }}
 
-* 参考リンク [#t060222e]
+* 参考リンク [#reference]
 - [https://stackoverflow.com/questions/1596318/find-working-directory-from-ant java - Find working directory from Ant - Stack Overflow]
 
-* コメント [#w3adfcb0]
+* コメント [#comment]
 #comment
 #comment

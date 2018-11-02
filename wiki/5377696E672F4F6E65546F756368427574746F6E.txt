@@ -45,7 +45,7 @@ for (Component c: divider.getComponents()) {
 -- `NimbusLookAndFeel`のデフォルトは、`30`になっているため、`JSplitPane.HORIZONTAL_SPLIT`で`Divider`の高さがそれ以下の場合は、`OneTouchButton`が表示できない
 - `OneTouchButton`の背景色
 -- `JButton#paint(...)`がオーバーライドされて、`oneTouchButton.getBackground()`の色で塗り潰されている(`oneTouchButton.setOpaque(false)`で透明にしても無意味)ので、`setBackground()`で、`Divider`の背景色と同じ色を設定
---- `OneTouchButton`の図形の色と形も、`JButton#paint(...)`の中で直接描画(`Color.BLACK`固定)されているので、簡単に変更することが出来ない(`BasicSplitPaneUI`や`BasicSplitPaneDivider`をオーバーライドする必要がある)
+--- `OneTouchButton`の色や形は`JButton#paint(...)`の中で直接描画(`Color.BLACK`固定)されているため変更しづらい(`BasicSplitPaneUI`や`BasicSplitPaneDivider`をオーバーライドする必要がある)
 -- `MetalLookAndFeel`、`NimbusLookAndFeel`では無効
 - `OneTouchButton`の中央揃え
 -- `UIManager.put("SplitPane.centerOneTouchButtons", true);`

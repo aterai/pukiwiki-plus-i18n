@@ -6,10 +6,10 @@ description: AntのScriptタスク中でif文を使った条件分岐を行う�
 ---
 #contents
 
-* 概要 [#xba3edcf]
+* 概要 [#summary]
 `Condition`タスク([[AntでConditionタスクを使った条件分岐を行う>Ant/Condition]])の条件が複雑になるようなら、以下のようにして`<script language="javascript">`タスクなどの中で`if`文を使う方法もあります。
 
-* サンプルターゲット [#j4c08ea7]
+* サンプルターゲット [#target]
 #code{{
 <target name="prepare-resource" depends="prepare">
   <script language="javascript"><![CDATA[
@@ -27,18 +27,18 @@ description: AntのScriptタスク中でif文を使った条件分岐を行う�
 </target>
 }}
 
-* 解説 [#sa8c81cb]
+* 解説 [#explanation]
 上記のサンプルでは、`Script`タスクで`Javascript`(`Rhino`)の`if`文を使用しています。
 - `res.dir`プロパティ(`build.xml`などで設定済み)で指定したディレクトリ(文字列)を、`project.getProperty("res.dir")`で取得
 - `importClass(java.io.File);`でインポートした`Java`の`File.class`を使って、存在するかどうかを判断
 -- `new File(project.getProperty("res.dir")).exists()`
 - 存在する場合は、`project.executeTarget("copy-resource");`で、`copy-resource`ターゲットを取得し、実行
 
-* 参考リンク [#nb826fd4]
-- [http://ant.apache.org/manual/Tasks/script.html Script Task]
-- [http://api.dpml.net/org/apache/ant/1.7.0/org/apache/tools/ant/Project.html Project (Apache Ant API) - Project]
-- [http://weblogs.java.net/blog/emcmanus/archive/2010/09/20/using-javascript-make-apache-ant-less-painful Using JavaScript to make Apache Ant less painful]
+* 参考リンク [#reference]
+- [https://ant.apache.org/manual/Tasks/script.html Script Task]
+- [https://ant.apache.org/manual/api/org/apache/tools/ant/Project.html Project (Apache Ant API)]
+// - [http://weblogs.java.net/blog/emcmanus/archive/2010/09/20/using-javascript-make-apache-ant-less-painful Using JavaScript to make Apache Ant less painful]
 
-* コメント [#e6d1dee4]
+* コメント [#comment]
 #comment
 #comment
