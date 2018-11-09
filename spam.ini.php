@@ -2414,7 +2414,7 @@ $blocklist['B-1'] = array(
 	'Forumprofi.de' => '#^(?:.*\.)?forumprofi[0-9]*\.de$#',
 	'ForumUp' => '#^^(?:.*\.)?forumup\.' .
 		'(?:at|be|ca|ch|co\.nz|co\.uk|co\.za|com|com\.au|com\.mx|cn|' .
-		'cz|de|dk|es|eu|fr|gr|hu|in|info|ir|it|jobs|jp|lt|' .
+		'cz|de|dk|es|fr|gr|hu|in|info|ir|it|jobs|jp|lt|' .
 		'lv|org|pl|name|net|nl|ro|ru|se|sk|tv|us|web\.tr)$#',
 	'*.fory.pl',
 	'fotolog.com',

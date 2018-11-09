@@ -10,13 +10,7 @@ function plugin_contents_convert() {
     }else{
         $type = htmlspecialchars(trim($aryargs[0]));
     }
-    if($type == 'amazon' ) {
-        $ad = <<<EOD
-<script type="text/javascript"><!--
-amazon_ad_tag = "teraixreajp-22";  amazon_ad_width = "180";  amazon_ad_height = "150";  amazon_ad_logo = "hide";  amazon_ad_link_target = "new";  amazon_ad_price = "retail";//--></script>
-<script type="text/javascript" src="http://www.assoc-amazon.jp/s/ads.js"></script>
-EOD;
-    }else if($type == 'none' ) {
+    if($type == 'none' ) {
         $ad = '';
     }else{
         $ad = <<<EOD

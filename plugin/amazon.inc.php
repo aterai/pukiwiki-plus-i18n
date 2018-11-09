@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////// 要変更箇所
 // テスト使用後はアマゾンアソシエイトとなり、rakujuku09-22 を自サイトのアソシエイト ID に変更のこと
 if (!defined('AMAZON_AID')) {
-	define('AMAZON_AID','teraixreajp-22');
+	define('AMAZON_AID','');
 }
 // 買物かごを使うには、さらに Web サービス契約を結び、自サイトの Developer's Token に変更すること
 if (!defined('AMAZON_DT')) {

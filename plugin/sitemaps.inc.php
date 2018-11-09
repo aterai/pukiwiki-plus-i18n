@@ -28,18 +28,18 @@ function plugin_sitemaps_action() {
     $array[] = '^JavaFX.*';
     $array[] = '^PukiWiki.*';
     $array[] = '^English.*';
+    $array[] = '^Relaxer.*';
 
     $array[] = '^aterai$';
     $array[] = '^terai$';
     $array[] = '^upk$';
     $array[] = '^Taka$';
     $array[] = '^xyzzy$';
-    $array[] = '^RSS$';
     $array[] = '^Nitpick$';
     $array[] = '^Popular$';
 
+    // $array[] = '^RSS$';
     // $array[] = '^.+%2F_.+$';
-    // $array[] = '^Relaxer.*';
     // $array[] = '^Earphones$';
     // $array[] = '^GaChk$';
     // $array[] = '^HighlightTextForeground$';
@@ -98,6 +98,22 @@ function plugin_sitemaps_action() {
 
 EOD;
     }
+
+    $items .= <<<EOD
+<url>
+  <loc>{$self}archive</loc>
+</url>
+<url>
+  <loc>{$self}categories</loc>
+</url>
+<url>
+  <loc>{$self}pages</loc>
+</url>
+<url>
+  <loc>{$self}tags</loc>
+</url>
+EOD;
+
     header("Content-type:text/xml;charset=utf-8"); 
     //header('Content-type: application/xml');
     print '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
