@@ -12,11 +12,577 @@ pubdate: 2017-05-31
 * 実行環境 [#s42e991c]
 - [https://sdkman.io/ SDKMAN! the Software Development Kit Manager]で`kotlin`をインストール可能
 
- $ curl -s "https://get.sdkman.io" | bash 
+ $ curl -s "https://get.sdkman.io" | bash
  $ sdk install kotlin
  $ kotlinc -version
- info: kotlinc-jvm 1.1.4-3 (JRE 1.8.0_141-b15)
+ info: kotlinc-jvm 1.3.0 (JRE 1.8.0_192-b12)
  $ kotlinc hello.kt -include-runtime -d hello.jar && "$JAVA_HOME/bin/java" -jar hello.jar
+
+* `IntelliJ`の自動変換 [#IntelliJ]
+- メニューの`Code`, `Convert Java File to Kotlin File`(KBD{Ctrl+Alt+Shift+K})で、`Java`のソースコードを`Ktolin`のソースコードに変換可能
+-- `Hoge.java`を変換すると`Hoge.kt`が生成されて、`Hoge.java`は削除されてしまうので注意が必要
+
+** 演算子の優先順位 [#precedence]
+- 以下のようなソースコードを`IntelliJ`で自動変換した場合、論理演算子の左シフト(`<<`)は`shl`に変換され、また`and`の優先順位が異なるので括弧が減る
+
+#twocolumn
+`Java`
+#code{{
+btn.setSelected((i & (1 << 2)) != 0);
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+btn.setSelected(i and (1 shl 2) != 0)
+// 時々？に誤変換される場合がある？
+// btn.setSelected(i and (1 shl 2 != 0))
+}}
+#twocolumn
+
+- `bitwise AND`(`and`の優先順位)
+-- [https://discuss.kotlinlang.org/t/bitwise-operators-are-not-in-the-precedence-table/2075 Bitwise operators are not in the precedence table - Support - Kotlin Discussions]
+-- [https://kotlinlang.org/docs/reference/grammar.html#precedence Kotlinの演算子優先順位表]
+--- [https://kotlinlang.org/docs/reference/basic-types.html#operations Basic Types: Numbers, Strings, Arrays - Kotlin Programming Language]
+--- `Kotlin`の`bitwise and`は`infix function`のため、`Equality`の`!=`より優先順位が高い
+-- `Java`の演算子優先順位表: [https://docs.oracle.com/javase/tutorial/java/nutsandbolts/operators.html Operators (The Java™ Tutorials > Learning the Java Language > Language Basics)]
+--- `Java`は逆で、`equality`(`==`, `!=`)のほうが`bitwise AND`(`&`)より優先順位が高い
+
+** 型パラメータ [#Arrays]
+- `IntelliJ`の自動変換では`Arrays.asList(...)`の型パラメータを自動的に変換してくれない
+-- `Arrays.<Component>asList(...)`と型パラメータを明示しても省略される
+-- `for (c in Arrays.asList(...)) {`に変換されて`error: none of the following functions can be called with the arguments supplied:`になる
+-- `for (c: Component in Arrays.asList<Component>(...)) {`、または`for (c in listOf<Component>(...)) {`などに手動で修正(`for (c: Component in Arrays<Component>.asList(...)) {`も可能？)
+- 型引数
+-- `Java`と`Kotlin`では型引数を付ける位置が異なるので注意
+
+-- `Java`: `Arrays.<Component>asList(...)`
+> [https://docs.oracle.com/javase/tutorial/java/generics/methods.html Generic Methods (The Java™ Tutorials > Learning the Java Language > Generics (Updated))]
+> For static generic methods, the type parameter section must appear ''before'' the method's return type.
+
+-- `Kotlin`: `Arrays.asList<Component>(...)`
+> [https://kotlinlang.org/docs/reference/generics.html Generics: in, out, where - Kotlin Programming Language]
+> To call a generic function, specify the type arguments at the call site ''after'' the name of the function:
+
+-- `Kotlin`で`Java`風に`for (c in Arrays.<Component>asList(...)) {`を使用すると、`error: expecting an element`とエラーになる
+
+#twocolumn
+`Java`
+#code{{
+Box box = Box.createVerticalBox();
+for (Component c: Arrays.<Component>asList(textField1, textField2, combo3, combo4)) {
+  box.add(c);
+  box.add(Box.createVerticalStrut(5));
+}
+// for (Component c: Arrays.asList(...)) { でも同じ変換結果になる
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+val box = Box.createVerticalBox()
+for (c in Arrays.asList(textField1, textField2, combo3, combo4)) {
+  box.add(c)
+  box.add(Box.createVerticalStrut(5))
+}
+// error: none of the following functions can be called with the arguments supplied:
+// public open fun add(p0: Component!): Component! defined in javax.swing.Box
+// public open fun add(p0: PopupMenu!): Unit defined in javax.swing.Box
+//             box.add(c)
+//                 ^
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+val box = Box.createVerticalBox()
+for (c in Arrays.asList<Component>(textField1, textField2, combo3, combo4)) {
+  box.add(c);
+  box.add(Box.createVerticalStrut(5));
+}
+// or:
+// for (c in listOf<Component>(textField1, textField2, combo3, combo4)) {
+// for (c in Arrays<Component>.asList(textField1, textField2, combo3, combo4)) {
+}}
+#twocolumn
+
+** 境界型パラメータ [#BoundedTypeParameter]
+- `IntelliJ`の自動変換で以下のような境界型パラメータをもつ`Java`クラスを変換し、`kotlinc`でコンパイルすると無駄な境界型パラメータが存在すると警告してくれる
+-- `warning: 'LocalDate' is a final type, and thus a value of the type parameter is predetermined`
+-- `LocalDate`クラスは`final`なので継承不可のため、境界型パラメータは無意味
+-- `ECJ`(`Eclipse Compiler for Java`)も`The type parameter T should not be bounded by the final type LocalDate. Final types cannot be further extended`と警告してくれる
+-- `Java`側を`class CalendarViewTableModel<T extends TemporalAdjuster> extends DefaultTableModel {`か、`class CalendarViewTableModel extends DefaultTableModel {`に修正する
+
+#twocolumn
+`Java`
+#code{{
+class CalendarViewTableModel<T extends LocalDate> extends DefaultTableModel {
+  public CalendarViewTableModel(T date) {
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+class CalendarViewTableModel<T : LocalDate> public constructor(date: T) : DefaultTableModel() {
+}}
+#twocolumn
+
+** クラスリテラル [#ClassLiterals]
+- クラスリテラル(Class Literals)の`JComboBox.class`は、`IntelliJ`の自動変換で`JComboBox<*>::class.java`に変換されるが、`JComboBox::class.java`に修正しないとエラーになる
+-- `Only classes are allowed on the left hand side of a class literal`
+- 逆に`Java`の`c instanceof JComboBox`を`Kotlin`に変換するときは、`c is JComboBox<*>`にしないとエラーになる
+-- `One type argument expected. Use 'JComboBox<*>' if you don't want to pass type arguments`
+
+#twocolumn
+
+`Java`
+#code{{
+enabledCheck.addActionListener(e -> {
+  Container c = SwingUtilities.getAncestorOfClass(JComboBox.class, this);
+  if (c instanceof JComboBox) {
+    JComboBox<?> combo = (JComboBox<?>) c;
+    ComboItem item = (ComboItem) combo.getItemAt(data.getIndex());
+    item.setEnabled(((JCheckBox) e.getSource()).isSelected());
+    editableCheck.setEnabled(item.isEnabled());
+    textField.setEnabled(item.isEnabled());
+  }
+});
+}}
+
+#twocolumn
+
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+enabledCheck.addActionListener({ e ->
+  val c = SwingUtilities.getAncestorOfClass(JComboBox<*>::class.java, this)
+  if (c is JComboBox<*>) {
+    val combo = c as JComboBox<*>
+    val item = combo.getItemAt(data.index) as ComboItem
+    item.isEnabled = (e.getSource() as JCheckBox).isSelected()
+    editableCheck.setEnabled(item.isEnabled)
+    textField.setEnabled(item.isEnabled)
+  }
+})
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+enabledCheck.addActionListener({ e ->
+  val c = SwingUtilities.getAncestorOfClass(JComboBox::class.java, this)
+  if (c is JComboBox<*>) {
+    val item = c.getItemAt(data.index) as ComboItem
+    item.isEnabled = (e.getSource() as JCheckBox).isSelected()
+    editableCheck.setEnabled(item.isEnabled)
+    textField.setEnabled(item.isEnabled)
+  }
+})
+}}
+
+#twocolumn
+
+** 型引数の省略 [#Diamond]
+- `Java 7`以降で可能なジェネリッククラスのコンストラクタ呼び出しに必要な型引数を省略する記法(`<>, diamond operator`)([https://docs.oracle.com/javase/tutorial/java/generics/types.html#diamond Generic Types (The Java™ Tutorials > Learning the Java Language > Generics (Updated))])は、`IntelliJ`の自動変換では正常に変換されない場合がある
+- 例えば、以下の`Java`コードの`renderer = new CheckBoxCellRenderer<>();`部分は、`renderer = CheckBoxCellRenderer<example.CheckBoxNode>()`に変換され、`Type mismatch: inferred type is CheckBoxCellRenderer<CheckBoxNode> but CheckBoxCellRenderer<E>? was expected`とエラーになる
+-- これを`renderer = CheckBoxCellRenderer<>()`と空にすると、今度は`Type expected`とエラーになる
+-- `Kotlin`には`<>, diamond operator`は存在せず？、型引数を省略したい場合は何も書く必要がない([https://kotlinlang.org/docs/reference/generics.html#generics Generics: in, out, where - Kotlin Programming Language])
+-- `renderer = CheckBoxCellRenderer<E>()`、または`renderer = CheckBoxCellRenderer()`にすれば正常に動作する
+-- 変換元の`Java`コードが`renderer = new CheckBoxCellRenderer<E>();`なら、`IntelliJ`の自動変換では`renderer = CheckBoxCellRenderer()`になり正常に動作する
+- `JList<CheckBoxNode> list2 = new CheckBoxList<>(model);`が、なぜか`val list2 = CheckBoxList<E>(model)`に変換されるバグも存在する？
+-- 正しく`val list2 = CheckBoxList<CheckBoxNode>(model)`に変換される場合もあるが、条件が不明
+-- どちらにしても、`val list2 = CheckBoxList(model)`には変換してくれない
+
+#twocolumn
+
+`Java`
+#code{{
+class CheckBoxList<E extends CheckBoxNode> extends JList<E> {
+  private transient CheckBoxCellRenderer<E> renderer;
+  protected CheckBoxList(ListModel<E> model) {
+    super(model);
+  }
+  @Override public void updateUI() {
+    setForeground(null);
+    setBackground(null);
+    setSelectionForeground(null);
+    setSelectionBackground(null);
+    removeMouseListener(renderer);
+    removeMouseMotionListener(renderer);
+    super.updateUI();
+    renderer = new CheckBoxCellRenderer<>();
+    setCellRenderer(renderer);
+    addMouseListener(renderer);
+    addMouseMotionListener(renderer);
+    putClientProperty("List.isFileList", Boolean.TRUE);
+  }
+  // ...
+}
+}}
+
+#twocolumn
+
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+internal class CheckBoxList<E : CheckBoxNode> protected constructor(model: ListModel<E>) : JList<E>(model) {
+  @Transient
+  private var renderer: CheckBoxCellRenderer<E>? = null
+
+  override fun updateUI() {
+    setForeground(null)
+    setBackground(null)
+    setSelectionForeground(null)
+    setSelectionBackground(null)
+    removeMouseListener(renderer)
+    removeMouseMotionListener(renderer)
+    super.updateUI()
+    renderer = CheckBoxCellRenderer<example.CheckBoxNode>()
+    // renderer = CheckBoxCellRenderer<CheckBoxNode>() // でもType mismatchでエラー
+    setCellRenderer(renderer)
+    addMouseListener(renderer)
+    addMouseMotionListener(renderer)
+    putClientProperty("List.isFileList", java.lang.Boolean.TRUE)
+  }
+  // ...
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+internal class CheckBoxList<E : CheckBoxNode> protected constructor(model: ListModel<E>) : JList<E>(model) {
+  @Transient
+  private var renderer: CheckBoxCellRenderer<E>? = null
+
+  override fun updateUI() {
+    setForeground(null)
+    setBackground(null)
+    setSelectionForeground(null)
+    setSelectionBackground(null)
+    removeMouseListener(renderer)
+    removeMouseMotionListener(renderer)
+    super.updateUI()
+    renderer = CheckBoxCellRenderer<E>()
+    // renderer = CheckBoxCellRenderer<>() // NG
+    // renderer = CheckBoxCellRenderer() // OK
+    setCellRenderer(renderer)
+    addMouseListener(renderer)
+    addMouseMotionListener(renderer)
+    putClientProperty("List.isFileList", java.lang.Boolean.TRUE)
+  }
+  // ...
+}
+}}
+
+#twocolumn
+
+** 匿名内部クラス [#AnonymousInnerClass]
+- %%`IntelliJ`の自動変換では`error: this class does not have a constructor tree.addTreeWillExpandListener(object : TreeWillExpandListener() {`とエラーになる%%
+-- `IntelliJ 2018.2.5`の自動変換では正しく変換されるようになっている
+- インターフェイスから匿名内部クラスのインスタンスを生成する場合は`()`は不要
+-- [https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions SAM Conversions - Calling Java from Kotlin - Kotlin Programming Language]
+-- `tree.addTreeWillExpandListener(object : TreeWillExpandListener() {`を`tree.addTreeWillExpandListener(object : TreeWillExpandListener {`に修正
+
+#twocolumn
+`Java`
+#code{{
+tree.addTreeWillExpandListener(new TreeWillExpandListener() {
+  @Override public void treeWillExpand(TreeExpansionEvent e)
+      throws ExpandVetoException {
+    //throw new ExpandVetoException(e, "Tree expansion cancelled");
+  }
+  @Override public void treeWillCollapse(TreeExpansionEvent e)
+      throws ExpandVetoException {
+    throw new ExpandVetoException(e, "Tree collapse cancelled");
+  }
+});
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+tree.addTreeWillExpandListener(object : TreeWillExpandListener() {
+  @Override
+  @Throws(ExpandVetoException::class)
+  fun treeWillExpand(e: TreeExpansionEvent) {
+    //throw new ExpandVetoException(e, "Tree expansion cancelled");
+  }
+  @Override
+  @Throws(ExpandVetoException::class)
+  fun treeWillCollapse(e: TreeExpansionEvent) {
+    throw ExpandVetoException(e, "Tree collapse cancelled")
+  }
+})
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+tree.addTreeWillExpandListener(object : TreeWillExpandListener {
+  @Throws(ExpandVetoException::class)
+  override fun treeWillExpand(e: TreeExpansionEvent) {
+    //throw new ExpandVetoException(e, "Tree expansion cancelled");
+  }
+  @Throws(ExpandVetoException::class)
+  override fun treeWillCollapse(e: TreeExpansionEvent) {
+    throw ExpandVetoException(e, "Tree collapse cancelled")
+  }
+})
+}}
+#twocolumn
+
+** メソッド参照 [#MethodReference]
+- `IntelliJ`の自動変換ではメソッド参照の変換が%%苦手？%% いくらか修正されている？
+-- `IntelliJ 2018.2.5`の自動変換では、`???`ではなく`Predicate<Component>`などに変換されるようになった
+
+#twocolumn
+`Java`
+#code{{
+public static Stream<TreeNode> children(TreeNode node) {
+  Class<TreeNode> clz = TreeNode.class;
+  return Collections.list((Enumeration<?>) node.children())
+    .stream().filter(clz::isInstance).map(clz::cast);
+}
+}}
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+fun children(node: TreeNode): Stream<TreeNode> {
+  val clz = TreeNode::class.java
+  return Collections.list(node.children() as Enumeration<*>)
+    .stream().filter(???({ clz!!.isInstance() })).map(clz!!.cast)
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+fun children(node: TreeNode): Stream<TreeNode> {
+  val clz = TreeNode::class.java
+  return Collections.list(node.children() as Enumeration<*>)
+    .stream().filter(clz::isInstance).map(clz::cast)
+    // .filterIsInstance(clz).stream()
+}
+}}
+
+`Kotlin`(手動修正): `Iterable<*>.filterIsInstance()`が便利
+#code(lang-kotlin){{
+fun children(node: TreeNode): List<TreeNode> {
+  return (node.children() as Enumeration<*>)
+    .toList().filterIsInstance(TreeNode::class.java)
+}
+}}
+#twocolumn
+
+- 例えば`.filter(Container.class::isInstance)`のようなメソッド参照を、`IntelliJ 2018.2.5`の自動変換では`.filter(Predicate<Component> { Container::class.java!!.isInstance(it) })`のように変換するようになった？が、`import`の追加は対応していない
+
+#twocolumn
+`Java`
+#code{{
+public static Stream<Component> stream(Container parent) {
+  return Stream.of(parent.getComponents())
+    .filter(Container.class::isInstance)
+    .map(c -> stream(Container.class.cast(c)))
+    .reduce(Stream.of(parent), Stream::concat);
+  }
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+// 自動的に以下のimportは生成されないのでunresolved referenceになる
+// import java.util.function.BinaryOperator
+// import java.util.function.Predicate
+fun stream(parent: Container): Stream<Component> {
+  return Stream.of(*parent.getComponents())
+    .filter(Predicate<Component> { Container::class.java!!.isInstance(it) })
+    .map({ c -> stream(Container::class.java!!.cast(c)) })
+    .reduce(Stream.of(parent), BinaryOperator<Stream<Component>> { a, b -> Stream.concat(a, b) })
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+import java.util.function.BinaryOperator
+import java.util.function.Predicate
+fun stream(parent: Container): Stream<Component> {
+  return Stream.of(*parent.getComponents())
+    .filter(Container::class.java::isInstance)
+    .map({ c -> stream(Container::class.java.cast(c)) })
+    // OK: .reduce(Stream.of(parent), BinaryOperator<Stream<Component>>{ a, b -> Stream.concat(a, b) })
+    // NG: .reduce(Stream.of(parent), Stream::concat)
+    .reduce(Stream.of<Component>(parent), { a, b -> Stream.concat<Component>(a, b) }) // OK
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+// Stream を Iterable に変換してしまう方法もある
+fun children(parent: Container): List<Component> {
+  return parent.getComponents().toList()
+    .filterIsInstance(Container::class.java)
+    .map { children(it) }
+    .fold(listOf<Component>(parent)) { a, b -> a + b }
+}
+// ...
+children(fileChooser1)
+  .filterIsInstance(JTable::class.java)
+  // .firstOrNull()?.apply(JTable::removeEditor)
+  .firstOrNull()?.let { table ->
+    println(table)
+    table.removeEditor()
+  }
+}}
+
+#twocolumn
+
+** メソッド参照(終端処理の戻り値) [#fd97ed55]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#add-java.awt.Component- Container#add(Component)]メソッドは戻り値として`Component`を返す
+-- `Java`の場合、終端処理の`forEach(p::add)`では戻り値を無視して`Container#add(Component)`をメソッド参照することが可能
+-- `Kotlin`の場合、`forEach(p::add)`とすると、`add`メソッドで引数が`Component!`、戻り値が`Unit`になるメソッドを探すためメソッド参照で以下のようなエラーになる
+--- [https://discuss.kotlinlang.org/t/function-reference-ignoring-the-returned-value/2442 Function reference: ignoring the returned value - Support - Kotlin Discussions]
+--- `map(p::add)`にすればエラーは回避できる
+
+ hello.kt:38:66: error: none of the following functions can be called with the arguments supplied:
+ public open fun add(p0: Component!): Component! defined in javax.swing.JPanel
+ public open fun add(p0: Component!, p1: Any!): Unit defined in javax.swing.JPanel
+ public open fun add(p0: Component!, p1: Any!, p2: Int): Unit defined in javax.swing.JPanel
+ public open fun add(p0: Component!, p1: Int): Component! defined in javax.swing.JPanel
+ public open fun add(p0: PopupMenu!): Unit defined in javax.swing.JPanel
+ public open fun add(p0: String!, p1: Component!): Component! defined in javax.swing.JPanel
+     listOf(button1, button2, button3, button4).forEach(p::add)
+                                                           ^
+
+#twocolumn
+`Java`
+#code{{
+JPanel p = new JPanel(new GridLayout(0, 1, 2, 2));
+Arrays.asList(button1, button2).forEach(p::add);
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+val p = JPanel(GridLayout(0, 1, 2, 2))
+Arrays.asList(button1, button2).forEach( ?? ? ({ p.add() }))
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+val p = JPanel(GridLayout(0, 1, 2, 2))
+listOf(button1, button2).forEach({ b -> p.add(b) })
+//or listOf(button1, button2).map(p::add)
+}}
+
+#twocolumn
+
+** BigDecimal [#zb932a10]
+- `IntelliJ`の自動変換では`error: unresolved reference: intValue`とエラーになるので、手動で`toInt()`に修正する必要がある
+
+#twocolumn
+`Java`
+#code{{
+double d = delta.y * GRAVITY;
+int ia = (int) d;
+int ib = (int) Math.floor(d);
+int ic = new BigDecimal(d).setScale(0, RoundingMode.DOWN).intValue();
+System.out.format("%d %d %d%n", ia, ib, ic);
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+val d = delta.y * GRAVITY
+val ia = d.toInt()
+val ib = Math.floor(d) as Int
+val ic = BigDecimal(d).setScale(0, RoundingMode.DOWN).intValue()
+System.out.format("%d %d %d%n", ia, ib, ic)
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+val d = delta.y * GRAVITY
+val ia = d.toInt()
+val ib = Math.floor(d).toInt()
+val ic = BigDecimal(d).setScale(0, RoundingMode.DOWN).toInt()
+println("${ia} ${ib} ${ic}")
+}}
+
+#twocolumn
+
+** Comparator [#Comparator]
+- `IntelliJ`の自動変換では`error: calls to static methods in Java interfaces are prohibited in JVM target 1.6. Recompile with '-jvm-target 1.8'`とエラーになる
+-- `kotlinc hello.kt -jvm-target 1.8 -include-runtime -d hello.jar`と`kotlinc`にオプションを追加
+- `IntelliJ`の自動変換では`error: using 'sort(kotlin.Comparator<in T> /* = java.util.Comparator<in T> */): Unit' is an error. Use sortWith(comparator) instead.`とエラーになる
+-- `list.sort(...)`を`list.sortWith(...)`に修正
+- `IntelliJ`の自動変換では`error: type inference failed: Not enough information to infer parameter T in fun <T : Any!> comparingInt(p0: ((T!) -> Int)!): Comparator<T!>!`とエラーになる
+-- `Comparator.comparingInt({ l -> l.get(0) })`を`Comparator.comparingInt<List<Int>>({ l -> l.get(0) })`に修正
+
+#twocolumn
+`Java`
+#code{{
+import java.util.*;
+public class SortTest {
+  public static void main(String[] args) {
+    List<List<Integer>> list = Arrays.asList(
+      Arrays.asList(15, 20, 35),
+      Arrays.asList(30, 45, 72),
+      Arrays.asList(15, 20, 31),
+      Arrays.asList(27, 33, 59),
+      Arrays.asList(27, 35, 77));
+    list.sort(Comparator.<List<Integer>>comparingInt(l -> l.get(0))
+      .thenComparingInt(l -> l.get(1))
+      .thenComparingInt(l -> l.get(2))
+      .reversed());
+    System.out.println(list);
+  }
+}
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+fun main(args: Array<String>) {
+  val list = Arrays.asList(
+    Arrays.asList(15, 20, 35),
+    Arrays.asList(30, 45, 72),
+    Arrays.asList(15, 20, 31),
+    Arrays.asList(27, 33, 59),
+    Arrays.asList(27, 35, 77))
+  list.sort(Comparator.comparingInt({ l -> l.get(0) })
+    .thenComparingInt({ l -> l.get(1) })
+    .thenComparingInt({ l -> l.get(2) })
+    .reversed())
+  System.out.println(list)
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+fun main(args: Array<String>) {
+  val list = Arrays.asList(
+    Arrays.asList(15, 20, 35),
+    Arrays.asList(30, 45, 72),
+    Arrays.asList(15, 20, 31),
+    Arrays.asList(27, 33, 59),
+    Arrays.asList(27, 35, 77))
+  list.sortWith(Comparator.comparingInt<List<Int>>({ l -> l.get(0) })
+    .thenComparingInt({ l -> l.get(1) })
+    .thenComparingInt({ l -> l.get(2) })
+    .reversed())
+  System.out.println(list)
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+fun main(args: Array<String>) {
+  val list = listOf<List<Int>>(
+    listOf(15, 20, 35),
+    listOf(30, 45, 72),
+    listOf(15, 20, 31),
+    listOf(27, 33, 59),
+    listOf(27, 35, 77))
+  val l = list.sortedWith(compareBy({ it.get(0) }, { it.get(1) }, { it.get(2) })).reversed()
+  println(l)
+}
+}}
+
+#twocolumn
 
 * Swing + Kotlin サンプル [#swing]
 ** JTable [#JTable]
@@ -311,354 +877,7 @@ fun main(args: Array<String>) {
 }}
 #twocolumn
 
-** インターフェイス、匿名内部クラス、throws [#tb58a862]
-- `IntelliJ`の自動変換では`error: this class does not have a constructor tree.addTreeWillExpandListener(object : TreeWillExpandListener() {`とエラーになる
-- インターフェイスから匿名内部クラスのインスタンスを生成する場合は`()`は不要
--- [https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions SAM Conversions - Calling Java from Kotlin - Kotlin Programming Language]
--- `tree.addTreeWillExpandListener(object : TreeWillExpandListener() {`を`tree.addTreeWillExpandListener(object : TreeWillExpandListener {`に修正
-
-#twocolumn
-`Java`
-#code{{
-tree.addTreeWillExpandListener(new TreeWillExpandListener() {
-  @Override public void treeWillExpand(TreeExpansionEvent e)
-      throws ExpandVetoException {
-    //throw new ExpandVetoException(e, "Tree expansion cancelled");
-  }
-  @Override public void treeWillCollapse(TreeExpansionEvent e)
-      throws ExpandVetoException {
-    throw new ExpandVetoException(e, "Tree collapse cancelled");
-  }
-});
-}}
-
-#twocolumn
-`Kotlin`(自動変換)
-#code(lang-kotlin){{
-tree.addTreeWillExpandListener(object : TreeWillExpandListener() {
-  @Override
-  @Throws(ExpandVetoException::class)
-  fun treeWillExpand(e: TreeExpansionEvent) {
-    //throw new ExpandVetoException(e, "Tree expansion cancelled");
-  }
-  @Override
-  @Throws(ExpandVetoException::class)
-  fun treeWillCollapse(e: TreeExpansionEvent) {
-    throw ExpandVetoException(e, "Tree collapse cancelled")
-  }
-})
-}}
-
-`Kotlin`(手動修正)
-#code(lang-kotlin){{
-tree.addTreeWillExpandListener(object : TreeWillExpandListener {
-  @Throws(ExpandVetoException::class)
-  override fun treeWillExpand(e: TreeExpansionEvent) {
-    //throw new ExpandVetoException(e, "Tree expansion cancelled");
-  }
-  @Throws(ExpandVetoException::class)
-  override fun treeWillCollapse(e: TreeExpansionEvent) {
-    throw ExpandVetoException(e, "Tree collapse cancelled")
-  }
-})
-}}
-#twocolumn
-
-#twocolumn
-`Java`
-#code{{
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.plaf.IconUIResource;
-import javax.swing.tree.*;
-
-public class ThrowsExample {
-  public JComponent makeUI() {
-    JPanel p = new JPanel(new GridLayout(1, 0, 5, 5));
-    p.add(new JScrollPane(new JTree()));
-    p.add(new JScrollPane(makeTree()));
-    p.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-    return p;
-  }
-  private static JTree makeTree() {
-    Icon icon = new EmptyIcon();
-    UIManager.put("Tree.expandedIcon",  new IconUIResource(icon));
-    UIManager.put("Tree.collapsedIcon", new IconUIResource(icon));
-
-    JTree tree = new JTree();
-    tree.setEditable(true);
-    tree.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-    int row = 0;
-    while (row < tree.getRowCount()) {
-      tree.expandRow(row++);
-    }
-    tree.addTreeWillExpandListener(new TreeWillExpandListener() {
-      @Override public void treeWillExpand(TreeExpansionEvent e)
-          throws ExpandVetoException {
-        //throw new ExpandVetoException(e, "Tree expansion cancelled");
-      }
-      @Override public void treeWillCollapse(TreeExpansionEvent e)
-          throws ExpandVetoException {
-        throw new ExpandVetoException(e, "Tree collapse cancelled");
-      }
-    });
-    return tree;
-  }
-  public static void main(String[] args) {
-    EventQueue.invokeLater(() -> {
-      JFrame f = new JFrame();
-      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      f.getContentPane().add(new ThrowsExample().makeUI());
-      f.setSize(320, 240);
-      f.setLocationRelativeTo(null);
-      f.setVisible(true);
-    });
-  }
-}
-
-class EmptyIcon implements Icon {
-  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
-    /* Empty icon */
-  }
-  @Override public int getIconWidth() {
-    return 0;
-  }
-  @Override public int getIconHeight() {
-    return 0;
-  }
-}
-}}
-#twocolumn
-`Kotlin`
-#code(lang-kotlin){{
-import java.awt.*
-import javax.swing.*
-import javax.swing.event.*
-import javax.swing.plaf.IconUIResource
-import javax.swing.tree.*
-
-private fun makeUI(): Component = JPanel(GridLayout(1, 0, 5, 5)).apply {
-  setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5))
-  add(JScrollPane(JTree()))
-  add(JScrollPane(makeTree()))
-}
-
-private fun makeTree(): JTree = JTree().apply {
-  setEditable(true)
-  setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4))
-  var row = 0
-  while (row < getRowCount()) {
-    expandRow(row++)
-  }
-  addTreeWillExpandListener(object : TreeWillExpandListener {
-    @Throws(ExpandVetoException::class)
-    override fun treeWillExpand(e: TreeExpansionEvent) {
-      //throw new ExpandVetoException(e, "Tree expansion cancelled");
-    }
-    @Throws(ExpandVetoException::class)
-    override fun treeWillCollapse(e: TreeExpansionEvent) {
-      throw ExpandVetoException(e, "Tree collapse cancelled")
-    }
-  })
-}
-
-fun main(args: Array<String>) {
-  EventQueue.invokeLater {
-    UIManager.put("swing.boldMetal", false)
-    val icon = EmptyIcon()
-    UIManager.put("Tree.expandedIcon", IconUIResource(icon))
-    UIManager.put("Tree.collapsedIcon", IconUIResource(icon))
-    JFrame("kotlin swing").apply {
-      defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-      add(makeUI())
-      size = Dimension(320, 240)
-      setLocationRelativeTo(null)
-      setVisible(true)
-    }
-  }
-}
-
-internal class EmptyIcon : Icon {
-  override fun getIconWidth() : Int = 0
-  override fun getIconHeight() : Int = 0
-  override fun paintIcon(c: Component, g: Graphics, x: Int, y: Int) {
-    /* Empty icon */
-  }
-}
-}}
-#twocolumn
-
-** Optional [#Optional]
-- `Optional#orElse(...)`は、`let {...} ?: ...`に変換
--- `Integer stepSize = Optional.ofNullable(stepSizeMap.get(calendarField)).orElse(1);`
--- `val stepSize = stepSizeMap.get(calendarField).let { it } ?: 1`
-- 例えば`SpinnerDateModel#getNextValue(...)`メソッドを`override fun getNextValue(): Object = Calendar.getInstance().apply { ...`のように変換すると、`error: type mismatch: inferred type is Date! but Object was expected`とエラーになる
-- `override fun getNextValue(): Any = Calendar.getInstance().apply { ...`と`Any`を使用するようオーバーライドする必要がある
-- `Date!`は、`Date`もしくは`Date?`の意味
--- [http://kotlinlang.org/docs/reference/java-interop.html#null-safety-and-platform-types Calling Java from Kotlin - Kotlin Programming Language]
--- `T! means "T or T?"`
-
-#twocolumn
-`Java`
-#code{{
-import java.awt.*;
-import java.text.*;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.text.*;
-
-public class OptionalExample {
-  private JComponent makeUI() {
-    SimpleDateFormat format = new SimpleDateFormat(
-        "mm:ss, SSS", Locale.getDefault());
-    DefaultFormatterFactory factory = new DefaultFormatterFactory(
-        new DateFormatter(format));
-
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.HOUR_OF_DAY, 0);
-    calendar.clear(Calendar.MINUTE);
-    calendar.clear(Calendar.SECOND);
-    calendar.clear(Calendar.MILLISECOND);
-    Date d = calendar.getTime();
-
-    JSpinner sp1 = new JSpinner(new SpinnerDateModel(
-        d, null, null, Calendar.SECOND));
-    JSpinner.DefaultEditor ed1 = (JSpinner.DefaultEditor) sp1.getEditor();
-    ed1.getTextField().setFormatterFactory(factory);
-
-    HashMap<Integer, Integer> stepSizeMap = new HashMap<>();
-    stepSizeMap.put(Calendar.HOUR_OF_DAY, 1);
-    stepSizeMap.put(Calendar.MINUTE,      1);
-    stepSizeMap.put(Calendar.SECOND,      30);
-    stepSizeMap.put(Calendar.MILLISECOND, 500);
-
-    JSpinner sp2 = new JSpinner(new SpinnerDateModel(
-        d, null, null, Calendar.SECOND) {
-      @Override public Object getPreviousValue() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(getDate());
-        Integer calendarField = getCalendarField();
-        Integer stepSize = Optional.ofNullable(
-            stepSizeMap.get(calendarField)).orElse(1);
-        cal.add(calendarField, -stepSize);
-        return cal.getTime();
-      }
-      @Override public Object getNextValue() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(getDate());
-        Integer calendarField = getCalendarField();
-        Integer stepSize = Optional.ofNullable(
-            stepSizeMap.get(calendarField)).orElse(1);
-        cal.add(calendarField, stepSize);
-        return cal.getTime();
-      }
-    });
-    JSpinner.DefaultEditor ed2 = (JSpinner.DefaultEditor) sp2.getEditor();
-    ed2.getTextField().setFormatterFactory(factory);
-
-    JPanel p = new JPanel();
-    p.add(sp1);
-    p.add(sp2);
-    return p;
-  }
-  public static void main(String... args) {
-    EventQueue.invokeLater(() -> {
-      JFrame f = new JFrame();
-      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      f.getContentPane().add(new OptionalExample().makeUI());
-      f.setSize(320, 240);
-      f.setLocationRelativeTo(null);
-      f.setVisible(true);
-    });
-  }
-}
-}}
-#twocolumn
-`Kotlin`
-#code(lang-kotlin){{
-import java.awt.*
-import java.text.*
-import java.util.*
-import javax.swing.*
-import javax.swing.text.*
-
-fun makeUI(): JComponent {
-  val format = SimpleDateFormat("mm:ss, SSS", Locale.getDefault())
-  val factory = DefaultFormatterFactory(DateFormatter(format))
-
-  val calendar = Calendar.getInstance().apply {
-    set(Calendar.HOUR_OF_DAY, 0)
-    clear(Calendar.MINUTE)
-    clear(Calendar.SECOND)
-    clear(Calendar.MILLISECOND)
-  }
-  val d = calendar.getTime()
-
-  val sp1 = JSpinner(SpinnerDateModel(d, null, null, Calendar.SECOND))
-  val ed1 = sp1.getEditor()
-  if (ed1 is JSpinner.DefaultEditor) {
-    ed1.getTextField().setFormatterFactory(factory)
-  }
-
-  val stepSizeMap: HashMap<Int, Int> = hashMapOf(
-      Calendar.HOUR_OF_DAY to 1,
-      Calendar.MINUTE      to 1,
-      Calendar.SECOND      to 30,
-      Calendar.MILLISECOND to 500)
-
-  val sp2 = JSpinner(object: SpinnerDateModel(d, null, null, Calendar.SECOND) {
-    override fun getPreviousValue(): Any = Calendar.getInstance().apply {
-      time = getDate()
-      val stepSize = stepSizeMap.get(calendarField).let { it } ?: 1
-      add(calendarField, -stepSize)
-    }.getTime()
-    override fun getNextValue(): Any = Calendar.getInstance().apply {
-        setTime(getDate())
-        val stepSize = stepSizeMap.get(calendarField).let { it } ?: 1
-        add(calendarField, stepSize)
-    }.getTime()
-  })
-  val ed2 = sp2.getEditor()
-  if (ed2 is JSpinner.DefaultEditor) {
-    ed2.getTextField().setFormatterFactory(factory)
-  }
-
-  return JPanel().apply {
-    add(sp1)
-    add(sp2)
-  }
-}
-
-fun main(args: Array<String>) {
-  EventQueue.invokeLater {
-    JFrame("kotlin swing").apply {
-      defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
-      add(makeUI())
-      size = Dimension(320, 240)
-      setLocationRelativeTo(null)
-      setVisible(true)
-    }
-  }
-}
-}}
-#twocolumn
-
-** 演算子の優先順位[#precedence]
-- 論理演算子: 左シフト
--- `Java`: `buttons[0].setSelected((i & (1 << 2) ) != 0);`
--- `Kotlin`: `buttons[0].setSelected(i and (1 shl 2) != 0)`
---- `IntelliJ`の自動変換では括弧が減る(`and`の優先順位が異なる？)
---- `IntelliJ`の自動変換では時々`buttons[0].setSelected(i and (1 shl 2 != 0) )`に誤変換される？
-- `bitwise AND`(`and`の優先順位)
--- [https://discuss.kotlinlang.org/t/bitwise-operators-are-not-in-the-precedence-table/2075 Bitwise operators are not in the precedence table - Support - Kotlin Discussions]
--- [https://kotlinlang.org/docs/reference/grammar.html#precedence Kotlinの演算子優先順位表]
---- [https://kotlinlang.org/docs/reference/basic-types.html#operations Basic Types: Numbers, Strings, Arrays - Kotlin Programming Language]
---- `Kotlin`の`bitwise and`は`infix function`のため、`Equality`の`!=`より優先順位が高い
--- `Java`の演算子優先順位表: [https://docs.oracle.com/javase/tutorial/java/nutsandbolts/operators.html Operators (The Java™ Tutorials > Learning the Java Language > Language Basics)]
---- `Java`は逆で、`equality`(`==`, `!=`)のほうが`bitwise AND`(`&`)より優先順位が高い
-
-----
+** TableCellEditor [#TableCellEditor]
 - `extends`, `implements`
 -- `IntelliJ`の自動変換では勝手に`open`は付けないようなので、以下のようなエラーが出る場合は、`internal class CheckBoxesPanel : JPanel() {`を`open class CheckBoxesPanel : JPanel() {`に修正する
 #code{{
@@ -942,66 +1161,9 @@ internal class CheckBoxesEditor : AbstractCellEditor(), TableCellEditor {
 }}
 #twocolumn
 
-** Arrays.asList(...) [#vbc11c20]
-- `IntelliJ`の自動変換では`Arrays.asList(...)`の型パラメータを自動的に変換してくれない
--- `Arrays.<Component>asList(...)`と型パラメータを明示しても省略される
--- `for (c in Arrays.asList(...)) {`に変換されて`error: none of the following functions can be called with the arguments supplied:`になる
--- `for (c: Component in Arrays.asList<Component>(...)) {`、または`for (c in listOf<Component>(...)) {`などに手動で修正(`for (c: Component in Arrays<Component>.asList(...)) {`も可能？)
-- 型引数
--- `Java`と`Kotlin`では型引数を付ける位置が異なるので注意
-
--- `Java`: `Arrays.<Component>asList(...)`
-> [https://docs.oracle.com/javase/tutorial/java/generics/methods.html Generic Methods (The Java™ Tutorials > Learning the Java Language > Generics (Updated))]
-> For static generic methods, the type parameter section must appear ''before'' the method's return type.
-
--- `Kotlin`: `Arrays.asList<Component>(...)`
-> [https://kotlinlang.org/docs/reference/generics.html Generics: in, out, where - Kotlin Programming Language]
-> To call a generic function, specify the type arguments at the call site ''after'' the name of the function:
-
--- `Kotlin`で`Java`風に`for (c in Arrays.<Component>asList(...)) {`を使用すると、`hello.kt:97:26: error: expecting an element`とエラーになる
-
-#twocolumn
-`Java`
-#code{{
-Box box = Box.createVerticalBox();
-for (Component c: Arrays.<Component>asList(textField1, textField2, combo3, combo4)) {
-  box.add(c);
-  box.add(Box.createVerticalStrut(5));
-}
-// for (Component c: Arrays.asList(...)) { でも同じ変換結果になる
-}}
-
-#twocolumn
-`Kotlin`(自動変換)
-#code(lang-kotlin){{
-val box = Box.createVerticalBox()
-for (c in Arrays.asList(textField1, textField2, combo3, combo4)) {
-  box.add(c)
-  box.add(Box.createVerticalStrut(5))
-}
-// hello.kt:100:17: error: none of the following functions can be called with the arguments supplied:
-// public open fun add(p0: Component!): Component! defined in javax.swing.Box
-// public open fun add(p0: PopupMenu!): Unit defined in javax.swing.Box
-//             box.add(c)
-//                 ^
-}}
-
-`Kotlin`(手動修正)
-#code(lang-kotlin){{
-val box = Box.createVerticalBox()
-for (c in Arrays.asList<Component>(textField1, textField2, combo3, combo4)) {
-  box.add(c);
-  box.add(Box.createVerticalStrut(5));
-}
-// or:
-// for (c in listOf<Component>(textField1, textField2, combo3, combo4)) {
-// for (c in Arrays<Component>.asList(textField1, textField2, combo3, combo4)) {
-}}
-#twocolumn
-
-** JTree, ActionListener [#SAM]
+** ActionListener [#SAM]
 - `IntelliJ`の自動変換では`ActionListener`などの関数型インターフェースのラムダ式をうまく変換できない場合がある
--- %%`AbstractCellEditor#stopCellEditing()`は`boolean`を返すので%%`error: type mismatch: inferred type is (???) -> Boolean but ActionListener? was expected`とエラーになる
+-- `AbstractCellEditor#stopCellEditing()`は`boolean`を返すので、`error: type mismatch: inferred type is (???) -> Boolean but ActionListener? was expected`とエラーになる
 - [https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions SAM Conversions - Calling Java from Kotlin - Kotlin Programming Language]
 
 #twocolumn
@@ -1322,218 +1484,158 @@ internal class CheckBoxNode public constructor(val text: String, val selected: B
 }}
 #twocolumn
 
-** メソッド参照 [#MethodReference]
-- `IntelliJ`の自動変換ではメソッド参照の変換が苦手？
+** Optional [#Optional]
+- `Optional#orElse(...)`は、`let {...} ?: ...`に変換
+-- `Integer stepSize = Optional.ofNullable(stepSizeMap.get(calendarField)).orElse(1);`
+-- `val stepSize = stepSizeMap.get(calendarField).let { it } ?: 1`
+- 例えば`SpinnerDateModel#getNextValue(...)`メソッドを`override fun getNextValue(): Object = Calendar.getInstance().apply { ...`のように変換すると、`error: type mismatch: inferred type is Date! but Object was expected`とエラーになる
+- `override fun getNextValue(): Any = Calendar.getInstance().apply { ...`と`Any`を使用するようオーバーライドする必要がある
+- `Date!`は、`Date`もしくは`Date?`の意味
+-- [http://kotlinlang.org/docs/reference/java-interop.html#null-safety-and-platform-types Calling Java from Kotlin - Kotlin Programming Language]
+-- `T! means "T or T?"`
 
 #twocolumn
 `Java`
 #code{{
-public static Stream<TreeNode> children(TreeNode node) {
-  Class<TreeNode> clz = TreeNode.class;
-  return Collections.list((Enumeration<?>) node.children())
-    .stream().filter(clz::isInstance).map(clz::cast);
-}
-}}
-#twocolumn
-`Kotlin`(自動変換)
-#code(lang-kotlin){{
-fun children(node: TreeNode): Stream<TreeNode> {
-  val clz = TreeNode::class.java
-  return Collections.list(node.children() as Enumeration<*>)
-    .stream().filter(???({ clz!!.isInstance() })).map(clz!!.cast)
-}
-}}
-
-`Kotlin`(手動修正)
-#code(lang-kotlin){{
-fun children(node: TreeNode): Stream<TreeNode> {
-  val clz = TreeNode::class.java
-  return Collections.list(node.children() as Enumeration<*>)
-    .stream().filter(clz::isInstance).map(clz::cast)
-    // .filterIsInstance(clz).stream()
-}
-}}
-
-`Kotlin`(手動修正): `filterIsInstance`が便利
-#code(lang-kotlin){{
-fun children(node: TreeNode): List<TreeNode> {
-  return (node.children() as Enumeration<*>)
-    .toList().filterIsInstance(TreeNode::class.java)
-}
-}}
-#twocolumn
-
-- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#add-java.awt.Component- Container#add(Component)]メソッドは戻り値として`Component`を返す
--- `Java`の場合、終端処理の`forEach(p::add)`では戻り値を無視して`Container#add(Component)`をメソッド参照することが可能
--- `Kotlin`の場合、`forEach(p::add)`とすると、`add`メソッドで引数が`Component!`、戻り値が`Unit`になるメソッドを探すためメソッド参照で以下のようなエラーになる
---- [https://discuss.kotlinlang.org/t/function-reference-ignoring-the-returned-value/2442 Function reference: ignoring the returned value - Support - Kotlin Discussions]
---- `map(p::add)`にすればエラーは回避できる
-
- hello.kt:38:66: error: none of the following functions can be called with the arguments supplied:
- public open fun add(p0: Component!): Component! defined in javax.swing.JPanel
- public open fun add(p0: Component!, p1: Any!): Unit defined in javax.swing.JPanel
- public open fun add(p0: Component!, p1: Any!, p2: Int): Unit defined in javax.swing.JPanel
- public open fun add(p0: Component!, p1: Int): Component! defined in javax.swing.JPanel
- public open fun add(p0: PopupMenu!): Unit defined in javax.swing.JPanel
- public open fun add(p0: String!, p1: Component!): Component! defined in javax.swing.JPanel
-     listOf(button1, button2, button3, button4).forEach(p::add)
-                                                           ^
-
-#twocolumn
-`Java`
-#code{{
-JPanel p = new JPanel(new GridLayout(0, 1, 2, 2));
-Arrays.asList(button1, button2).forEach(p::add);
-}}
-
-#twocolumn
-`Kotlin`(自動変換)
-#code(lang-kotlin){{
-val p = JPanel(GridLayout(0, 1, 2, 2))
-Arrays.asList(button1, button2).forEach( ?? ? ({ p.add() }))
-}}
-
-`Kotlin`(手動修正)
-#code(lang-kotlin){{
-val p = JPanel(GridLayout(0, 1, 2, 2))
-listOf(button1, button2).forEach({ b -> p.add(b) })
-//or listOf(button1, button2).map(p::add)
-}}
-
-#twocolumn
-
-** BigDecimal [#zb932a10]
-- `IntelliJ`の自動変換では`error: unresolved reference: intValue`とエラーになるので、手動で`toInt()`に修正する必要がある
-
-#twocolumn
-`Java`
-#code{{
-double d = delta.y * GRAVITY;
-int ia = (int) d;
-int ib = (int) Math.floor(d);
-int ic = new BigDecimal(d).setScale(0, RoundingMode.DOWN).intValue();
-System.out.format("%d %d %d%n", ia, ib, ic);
-}}
-
-#twocolumn
-`Kotlin`(自動変換)
-#code(lang-kotlin){{
-val d = delta.y * GRAVITY
-val ia = d.toInt()
-val ib = Math.floor(d) as Int
-val ic = BigDecimal(d).setScale(0, RoundingMode.DOWN).intValue()
-System.out.format("%d %d %d%n", ia, ib, ic)
-}}
-
-`Kotlin`(手動修正)
-#code(lang-kotlin){{
-val d = delta.y * GRAVITY
-val ia = d.toInt()
-val ib = Math.floor(d).toInt()
-val ic = BigDecimal(d).setScale(0, RoundingMode.DOWN).toInt()
-println("${ia} ${ib} ${ic}")
-}}
-
-#twocolumn
-
-** Comparator [#Comparator]
-- `IntelliJ`の自動変換では`error: calls to static methods in Java interfaces are prohibited in JVM target 1.6. Recompile with '-jvm-target 1.8'`とエラーになる
--- `kotlinc hello.kt -jvm-target 1.8 -include-runtime -d hello.jar`と`kotlinc`にオプションを追加
-- `IntelliJ`の自動変換では`error: using 'sort(kotlin.Comparator<in T> /* = java.util.Comparator<in T> */): Unit' is an error. Use sortWith(comparator) instead.`とエラーになる
--- `list.sort(...)`を`list.sortWith(...)`に修正
-- `IntelliJ`の自動変換では`error: type inference failed: Not enough information to infer parameter T in fun <T : Any!> comparingInt(p0: ((T!) -> Int)!): Comparator<T!>!`とエラーになる
--- `Comparator.comparingInt({ l -> l.get(0) })`を`Comparator.comparingInt<List<Int>>({ l -> l.get(0) })`に修正
-
-#twocolumn
-`Java`
-#code{{
+import java.awt.*;
+import java.text.*;
 import java.util.*;
-public class SortTest {
-  public static void main(String[] args) {
-    List<List<Integer>> list = Arrays.asList(
-      Arrays.asList(15, 20, 35),
-      Arrays.asList(30, 45, 72),
-      Arrays.asList(15, 20, 31),
-      Arrays.asList(27, 33, 59),
-      Arrays.asList(27, 35, 77));
-    list.sort(Comparator.<List<Integer>>comparingInt(l -> l.get(0))
-      .thenComparingInt(l -> l.get(1))
-      .thenComparingInt(l -> l.get(2))
-      .reversed());
-    System.out.println(list);
+import javax.swing.*;
+import javax.swing.text.*;
+
+public class OptionalExample {
+  private JComponent makeUI() {
+    SimpleDateFormat format = new SimpleDateFormat(
+        "mm:ss, SSS", Locale.getDefault());
+    DefaultFormatterFactory factory = new DefaultFormatterFactory(
+        new DateFormatter(format));
+
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
+    calendar.clear(Calendar.MINUTE);
+    calendar.clear(Calendar.SECOND);
+    calendar.clear(Calendar.MILLISECOND);
+    Date d = calendar.getTime();
+
+    JSpinner sp1 = new JSpinner(new SpinnerDateModel(
+        d, null, null, Calendar.SECOND));
+    JSpinner.DefaultEditor ed1 = (JSpinner.DefaultEditor) sp1.getEditor();
+    ed1.getTextField().setFormatterFactory(factory);
+
+    HashMap<Integer, Integer> stepSizeMap = new HashMap<>();
+    stepSizeMap.put(Calendar.HOUR_OF_DAY, 1);
+    stepSizeMap.put(Calendar.MINUTE,      1);
+    stepSizeMap.put(Calendar.SECOND,      30);
+    stepSizeMap.put(Calendar.MILLISECOND, 500);
+
+    JSpinner sp2 = new JSpinner(new SpinnerDateModel(
+        d, null, null, Calendar.SECOND) {
+      @Override public Object getPreviousValue() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getDate());
+        Integer calendarField = getCalendarField();
+        Integer stepSize = Optional.ofNullable(
+            stepSizeMap.get(calendarField)).orElse(1);
+        cal.add(calendarField, -stepSize);
+        return cal.getTime();
+      }
+      @Override public Object getNextValue() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getDate());
+        Integer calendarField = getCalendarField();
+        Integer stepSize = Optional.ofNullable(
+            stepSizeMap.get(calendarField)).orElse(1);
+        cal.add(calendarField, stepSize);
+        return cal.getTime();
+      }
+    });
+    JSpinner.DefaultEditor ed2 = (JSpinner.DefaultEditor) sp2.getEditor();
+    ed2.getTextField().setFormatterFactory(factory);
+
+    JPanel p = new JPanel();
+    p.add(sp1);
+    p.add(sp2);
+    return p;
+  }
+  public static void main(String... args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      f.getContentPane().add(new OptionalExample().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
   }
 }
 }}
-
 #twocolumn
-`Kotlin`(自動変換)
+`Kotlin`
 #code(lang-kotlin){{
-fun main(args: Array<String>) {
-  val list = Arrays.asList(
-    Arrays.asList(15, 20, 35),
-    Arrays.asList(30, 45, 72),
-    Arrays.asList(15, 20, 31),
-    Arrays.asList(27, 33, 59),
-    Arrays.asList(27, 35, 77))
-  list.sort(Comparator.comparingInt({ l -> l.get(0) })
-    .thenComparingInt({ l -> l.get(1) })
-    .thenComparingInt({ l -> l.get(2) })
-    .reversed())
-  System.out.println(list)
+import java.awt.*
+import java.text.*
+import java.util.*
+import javax.swing.*
+import javax.swing.text.*
+
+fun makeUI(): JComponent {
+  val format = SimpleDateFormat("mm:ss, SSS", Locale.getDefault())
+  val factory = DefaultFormatterFactory(DateFormatter(format))
+
+  val calendar = Calendar.getInstance().apply {
+    set(Calendar.HOUR_OF_DAY, 0)
+    clear(Calendar.MINUTE)
+    clear(Calendar.SECOND)
+    clear(Calendar.MILLISECOND)
+  }
+  val d = calendar.getTime()
+
+  val sp1 = JSpinner(SpinnerDateModel(d, null, null, Calendar.SECOND))
+  val ed1 = sp1.getEditor()
+  if (ed1 is JSpinner.DefaultEditor) {
+    ed1.getTextField().setFormatterFactory(factory)
+  }
+
+  val stepSizeMap: HashMap<Int, Int> = hashMapOf(
+      Calendar.HOUR_OF_DAY to 1,
+      Calendar.MINUTE      to 1,
+      Calendar.SECOND      to 30,
+      Calendar.MILLISECOND to 500)
+
+  val sp2 = JSpinner(object: SpinnerDateModel(d, null, null, Calendar.SECOND) {
+    override fun getPreviousValue(): Any = Calendar.getInstance().apply {
+      time = getDate()
+      val stepSize = stepSizeMap.get(calendarField).let { it } ?: 1
+      add(calendarField, -stepSize)
+    }.getTime()
+    override fun getNextValue(): Any = Calendar.getInstance().apply {
+        setTime(getDate())
+        val stepSize = stepSizeMap.get(calendarField).let { it } ?: 1
+        add(calendarField, stepSize)
+    }.getTime()
+  })
+  val ed2 = sp2.getEditor()
+  if (ed2 is JSpinner.DefaultEditor) {
+    ed2.getTextField().setFormatterFactory(factory)
+  }
+
+  return JPanel().apply {
+    add(sp1)
+    add(sp2)
+  }
 }
-}}
 
-`Kotlin`(手動修正)
-#code(lang-kotlin){{
 fun main(args: Array<String>) {
-  val list = Arrays.asList(
-    Arrays.asList(15, 20, 35),
-    Arrays.asList(30, 45, 72),
-    Arrays.asList(15, 20, 31),
-    Arrays.asList(27, 33, 59),
-    Arrays.asList(27, 35, 77))
-  list.sortWith(Comparator.comparingInt<List<Int>>({ l -> l.get(0) })
-    .thenComparingInt({ l -> l.get(1) })
-    .thenComparingInt({ l -> l.get(2) })
-    .reversed())
-  System.out.println(list)
+  EventQueue.invokeLater {
+    JFrame("kotlin swing").apply {
+      defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+      add(makeUI())
+      size = Dimension(320, 240)
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
 }
-}}
-
-`Kotlin`(手動修正)
-#code(lang-kotlin){{
-fun main(args: Array<String>) {
-  val list = listOf<List<Int>>(
-    listOf(15, 20, 35),
-    listOf(30, 45, 72),
-    listOf(15, 20, 31),
-    listOf(27, 33, 59),
-    listOf(27, 35, 77))
-  val l = list.sortedWith(compareBy({ it.get(0) }, { it.get(1) }, { it.get(2) })).reversed()
-  println(l)
-}
-}}
-
-#twocolumn
-
-** 境界型パラメータ [#BoundedTypeParameter]
-- `IntelliJ`の自動変換で以下のような境界型パラメータをもつ`Java`クラスを変換し、`kotlinc`でコンパイルすると無駄な境界型パラメータが存在すると警告してくれる
--- `warning: 'LocalDate' is a final type, and thus a value of the type parameter is predetermined`
--- `LocalDate`クラスは`final`なので継承不可のため、境界型パラメータは無意味
--- `ECJ`(`Eclipse Compiler for Java`)も`The type parameter T should not be bounded by the final type LocalDate. Final types cannot be further extended`と警告してくれる
--- `Java`側を`class CalendarViewTableModel<T extends TemporalAdjuster> extends DefaultTableModel {`か、`class CalendarViewTableModel extends DefaultTableModel {`に修正する
-
-#twocolumn
-`Java`
-#code{{
-class CalendarViewTableModel<T extends LocalDate> extends DefaultTableModel {
-  public CalendarViewTableModel(T date) {
-}}
-
-#twocolumn
-`Kotlin`(自動変換)
-#code(lang-kotlin){{
-class CalendarViewTableModel<T : LocalDate> public constructor(date: T) : DefaultTableModel() {
 }}
 #twocolumn
 

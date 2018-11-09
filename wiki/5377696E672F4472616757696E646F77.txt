@@ -51,13 +51,13 @@ class DragWindowListener extends MouseAdapter {
 * 解説 [#explanation]
 `JWindow`や、`setUndecorated(true)`した`JFrame`のようにタイトルバーのないフレームをマウスのドラッグで移動します。実際は`JWindow`自体にリスナーを設定するのではなく、子コンポーネントに`MouseMotionListener`などを追加しています。
 
-上記のサンプルでは`JLabel`にリスナーを追加し、これを`JWindow`に追加することでドラッグ可能にしています。
+上記のサンプルでは`JLabel`にリスナーを追加し、これを`JWindow`に配置してドラッグ可能にしています。
 
 スプラッシュスクリーンの次に開く`JFrame`は、`JFrame#setUndecorated(true)`を設定してタイトルバーなどは非表示になっていますが、代わりに青いラベル部分がドラッグ可能です。
 
 ----
 - マルチディスプレイなどで、別画面に移動できないバグ？を修正
--- ただし、`Web Start`の`SandBox`内では、以前と同じく画面の外に移動することができない？
+-- ただし、`Web Start`の`SandBox`内では、以前と同じく画面の外までは移動不可？
 --- `JNLP`のセキュリティに`all-permissions`を設定する必要がある
 - `Swing Tutorial`の [https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html#FrameDemo2 FrameDemo2]で試しても、同様？
 -- `Look and feel decorated`: 画面外に移動不可

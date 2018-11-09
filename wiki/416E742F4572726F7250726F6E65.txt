@@ -13,7 +13,7 @@ description: AntでのJavaコードのコンパイラにコード解析を行う
 - 以下、[https://errorprone.info/docs/installation#ant Installation]に記述されている[https://github.com/google/error-prone/blob/master/examples/ant/build.xml build.xml]を参考に作成したターゲットのサンプル
 - 公式の`build.xml`をほぼ丸写しで動作可能だが、`2`つほど注意点がある
 -- `xmlns:unless="ant:unless"`をルート要素に追加する必要がある
--- `<javaversion>`コンディションを使用しているので、`ant`は`1.10.2`以降を使用する必要がある
+-- `<javaversion>`コンディションを使用しているので、`ant`は`1.10.2`以上を使用する必要がある
 --- [https://archive.apache.org/dist/ant/RELEASE-NOTES-1.10.2.html Release Notes of Apache Ant 1.10.2]
 --- `sdkman`で`ant`をインストールすると、`2018-10-27`現在の最新は`1.10.1`なのでエラーになる
 
