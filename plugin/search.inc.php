@@ -290,7 +290,16 @@ function plugin_search_do_search($word, $type = 'AND', $non_format = FALSE)
 	$session = & $_SESSION;
 	$retval = array();
 
+
+    $session['search'] = array();
 	$session_value = & $session['search'];
+
+    $session_value[] = 'pages';
+    $session_value[] = 'total_pages';
+    $session_value[] = 'found_pages';
+    $session_value[] = 'type';
+    $session_value[] = 'time';
+
 	$pages         = & $session_value['pages'];
 	$total_pages   = & $session_value['total_pages'];
 	$found_pages   = & $session_value['found_pages'];

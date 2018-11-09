@@ -26,7 +26,7 @@ function plugin_tags_inline() {
     }
 return <<<EOD
 <ul class="tag_box inline">
-<li><i class="glyphicon-tags"></i></li>
+<li><i class="glyphicon-tags" aria-hidden="true"></i></li>
 $buf
 </ul>
 EOD;

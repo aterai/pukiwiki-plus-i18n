@@ -33,7 +33,7 @@ function plugin_header_convert() {
             $tags_buf = $tags_buf . '<li><a href="/tags.html#' . $tag . '-ref" rel="tag"><span itemprop="keywords">' . $tag . '</span></a></li>';
         }
         if ($tags_buf != '') {
-            $tags_buf = '<ul class="tag_box inline"><li><span class="glyphicon-tags"></span></li>' . $tags_buf . '</ul>';
+            $tags_buf = '<ul class="tag_box inline"><li><span class="glyphicon-tags" aria-hidden="true"></span></li>' . $tags_buf . '</ul>';
         }
     }
 
@@ -42,7 +42,7 @@ function plugin_header_convert() {
         $lng = $frontmatter['hreflang']['lang'];
         //$hrf = $frontmatter['hreflang']['href'];
         $hrf = preg_replace("/^https?:/", "", $frontmatter['hreflang']['href']);
-        $hreflang = '<ul class="tag_box inline"><li><span class="glyphicon-list-alt"></span></li><li><a rel="alternate" hreflang="' . $lng . '" href="' . $hrf . '">' . $lng . '</a></li></ul>';
+        $hreflang = '<ul class="tag_box inline"><li><span class="glyphicon-list-alt" aria-hidden="true"></span></li><li><a rel="alternate" hreflang="' . $lng . '" href="' . $hrf . '">' . $lng . '</a></li></ul>';
     }
 
     $time  = $is_read ? get_filetime($_page) : 0;

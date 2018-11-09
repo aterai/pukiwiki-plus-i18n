@@ -53,9 +53,9 @@ EOD;
 <div class="row">
 <div class="col-md-5 col-xs-12">
 <ul class="list-group">
-<li class="list-group-item"><a href="$jar" class="btn btn-block btn-danger"  download="example.jar"><span class="glyphicon glyphicon-save icon-white"></span> Runnable JARファイル <small>example.jar</small></a></li>
-<li class="list-group-item"><a href="$zip" class="btn btn-block btn-success" download="src.zip"><span class="glyphicon glyphicon-cloud-download icon-white"></span> ソースコード <small>src.zip</small></a></li>
-<li class="list-group-item"><a href="$git" class="btn btn-block btn-info"><span class="glyphicon glyphicon-import icon-white"></span> リポジトリ <small>repository</small></a></li>
+<li class="list-group-item"><a href="$jar" class="btn btn-block btn-danger"  download="example.jar"><span class="glyphicon glyphicon-save icon-white" aria-hidden="true"></span> Runnable JARファイル <small>example.jar</small></a></li>
+<li class="list-group-item"><a href="$zip" class="btn btn-block btn-success" download="src.zip"><span class="glyphicon glyphicon-cloud-download icon-white" aria-hidden="true"></span> ソースコード <small>src.zip</small></a></li>
+<li class="list-group-item"><a href="$git" class="btn btn-block btn-info"><span class="glyphicon glyphicon-import icon-white" aria-hidden="true"></span> リポジトリ <small>repository</small></a></li>
 </ul>
 <figure>$imgpath</figure>
 </div>
