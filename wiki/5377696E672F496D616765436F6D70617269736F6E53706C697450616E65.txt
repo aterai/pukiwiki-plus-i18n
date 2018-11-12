@@ -62,9 +62,13 @@ split.setRightComponent(afterCanvas);
 --- `JSplitPane`の内余白は考慮されないので注意
 -- 右`Component`の画像は`Graphics#setXORMode(Color.BLUE)`で`XOR`反転描画
 
+----
+- 注: `JSplitPane`のリサイズは考慮していない
+
 * 参考リンク [#reference]
 - [[JSplitPaneでディバイダの移動を連続的に再描画>Swing/ContinuousLayout]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics.html#setXORMode-java.awt.Color- Graphics#setXORMode(Color) (Java Platform SE 8)]
+- [[JSplitPaneのDividerを円形半透明のつまみに変更して中央に配置する>Swing/TranslucentThumbDivider]]
 
 * コメント [#comment]
 #comment

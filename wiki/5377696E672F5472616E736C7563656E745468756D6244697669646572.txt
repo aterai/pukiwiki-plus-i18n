@@ -1,0 +1,123 @@
+---
+category: swing
+folder: TranslucentThumbDivider
+title: JSplitPaneのDividerを円形半透明のつまみに変更して中央に配置する
+tags: [JSplitPane, Divider, JLayer]
+author: aterai
+pubdate: 2018/11/12T16:03:00+09:00
+description: JSplitPaneの元のDividerを非表示に設定し、代わりにJLayerを使って半透明の円形つまみを作成して中央に配置します。
+image: https://drive.google.com/uc?id=1a-kjbBV4L-gJzGRMBijfxYxSJhiZBppZHg
+---
+* 概要 [#summary]
+`JSplitPane`の元の`Divider`を非表示に設定し、代わりに`JLayer`を使って半透明の円形つまみを作成して中央に配置します。
+
+#download(https://drive.google.com/uc?id=1a-kjbBV4L-gJzGRMBijfxYxSJhiZBppZHg)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class DividerLocationDragLayerUI extends LayerUI<JSplitPane> {
+  private static final int R = 25;
+  private final Point startPt = new Point();
+  private final Cursor dc = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+  private final Cursor wc = Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR);
+  private final Ellipse2D thumb = new Ellipse2D.Double();
+  private int dividerLocation;
+  private boolean isDragging;
+  private boolean isEnter;
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK
+          | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    if ((isEnter || isDragging) && c instanceof JLayer) {
+      updateThumbLocation(((JLayer<?>) c).getView(), thumb);
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setPaint(new Color(255, 100, 100, 100));
+      g2.fill(thumb);
+      g2.dispose();
+    }
+  }
+  @Override protected void processMouseEvent(
+      MouseEvent e, JLayer<? extends JSplitPane> l) {
+    JSplitPane splitPane = l.getView();
+    switch (e.getID()) {
+    case MouseEvent.MOUSE_ENTERED:
+      isEnter = true;
+      break;
+    case MouseEvent.MOUSE_EXITED:
+      isEnter = false;
+      break;
+    case MouseEvent.MOUSE_RELEASED:
+      isDragging = false;
+      break;
+    case MouseEvent.MOUSE_PRESSED:
+      Component c = e.getComponent();
+      if (isDraggableComponent(splitPane, c)) {
+        Point pt = SwingUtilities.convertPoint(c, e.getPoint(), splitPane);
+        isDragging = thumb.contains(pt);
+        startPt.setLocation(SwingUtilities.convertPoint(c, e.getPoint(), splitPane));
+        dividerLocation = splitPane.getDividerLocation();
+      }
+      break;
+    default:
+      break;
+    }
+    splitPane.repaint();
+  }
+  @Override protected void processMouseMotionEvent(
+      MouseEvent e, JLayer<? extends JSplitPane> l) {
+    JSplitPane splitPane = l.getView();
+    Component c = e.getComponent();
+    Point pt = SwingUtilities.convertPoint(c, e.getPoint(), splitPane);
+    if (e.getID() == MouseEvent.MOUSE_MOVED) {
+      splitPane.setCursor(thumb.contains(e.getPoint()) ? wc : dc);
+    } else if (isDragging && isDraggableComponent(splitPane, c)
+               && e.getID() == MouseEvent.MOUSE_DRAGGED) {
+      int delta = splitPane.getOrientation() == JSplitPane.HORIZONTAL_SPLIT
+          ? pt.x - startPt.x : pt.y - startPt.y;
+      splitPane.setDividerLocation(Math.max(0, dividerLocation + delta));
+    }
+  }
+  private static boolean isDraggableComponent(JSplitPane splitPane, Component c) {
+    return Objects.equals(splitPane, c)
+      || Objects.equals(splitPane, SwingUtilities.getUnwrappedParent(c));
+  }
+  private static void updateThumbLocation(Component c, Ellipse2D thumb) {
+    if (c instanceof JSplitPane) {
+      JSplitPane splitPane = (JSplitPane) c;
+      int pos = splitPane.getDividerLocation();
+      if (splitPane.getOrientation() == JSplitPane.HORIZONTAL_SPLIT) {
+        thumb.setFrame(pos - R, splitPane.getHeight() / 2 - R, R + R, R + R);
+      } else {
+        thumb.setFrame(splitPane.getWidth() / 2 - R, pos - R, R + R, R + R);
+      }
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JSplitPane#setDividerSize(0)`で`Divider`を非表示に設定
+-- [[JSplitPaneのDividerをマウスで移動できないように設定する>Swing/FixedDividerSplitPane]]
+- `JLayer`を使用して、半透明の円形つまみを作成して`Divider`の中央に配置
+-- [[JSplitPaneでドラッグ中のDividerの背景色を設定する>Swing/DividerDraggingColor]]でも`Divider`の色を半透明などに変更可能だが、`JSplitPane#setContinuousLayout(false)`の場合のみ有効なので、このサンプルでは使用できない
+
+* 参考リンク [#reference]
+- [[JSplitPaneで画像を差分を比較表示する>Swing/ImageComparisonSplitPane]]
+
+* コメント [#comment]
+#comment
+#comment
