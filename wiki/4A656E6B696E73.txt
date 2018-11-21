@@ -10,6 +10,19 @@ pubdate: 2017-06-02
 `Jenkins`の設定、トラブルに関するメモなどを記述しています。
 
 * トラブル [#wf632491]
+** JellyTagException [#pd1dc370]
+- 2018-11-20: プラグインをアップデートすると`Jenkins`の画面全体にスタックトレース(何故か右から左に文字が流れている)が表示かつ断続的にリロードされてなにも操作できなくなる
+#code{{
+org.apache.commons.jelly.JellyTagException: jar:file:/.../jenkins/war/WEB-INF/lib/jenkins-core-2.152.jar!/lib/layout/hasPermission.jelly:35:20: <d:invokeBody> com/trilead/ssh2/crypto/Base64
+...
+}}
+
+- [https://groups.google.com/forum/#!topic/jenkinsci-users/WcUOsjVhgNc Jenkins shows exception after plugin updates - Google グループ]
+- [https://issues.jenkins-ci.org/browse/JENKINS-54686 JENKINS-54686 Use trilead-api plugin instead trilead-ssh2 from core - Jenkins JIRA]
+- `ssh-slaves-1.29.0`プラグインが原因らしいので、これをロールバック(`plugins/ssh-slaves.jpi`を削除して`plugins/ssh-slaves.bak`(`1.28.1`)を`ssh-slaves.jpi`にリネーム)すると正常に動作するようになった
+- 修正された`ssh-slaves-1.29.1`でも発生する環境がある？ようなので、当面は`ssh-slaves-1.28.1`を使用するのが安全かもしれない
+-- `CentOS release 6.10` + `Jenkins ver. 2.138.3`で試した場合、`ssh-slaves-1.29.1`は正常に動作している
+
 ** GIT_ASKPASS credentials [#zb68dbf4]
 - `Jenkins`が`git`コマンドを使用するとき、資格情報が入力されるのを待ち続けてタイムアウトしてしまう場合がある
 #code{{

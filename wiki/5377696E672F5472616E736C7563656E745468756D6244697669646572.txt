@@ -115,6 +115,43 @@ class DividerLocationDragLayerUI extends LayerUI<JSplitPane> {
 - `JLayer`を使用して、半透明の円形つまみを作成して`Divider`の中央に配置
 -- [[JSplitPaneでドラッグ中のDividerの背景色を設定する>Swing/DividerDraggingColor]]でも`Divider`の色を半透明などに変更可能だが、`JSplitPane#setContinuousLayout(false)`の場合のみ有効なので、このサンプルでは使用できない
 
+----
+- 画像を左上ではなく`JSplitPane`の中央に表示したい場合の例:
+
+#code{{
+Component beforeCanvas = new JComponent() {
+  @Override protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    int iw = icon.getIconWidth();
+    int ih = icon.getIconHeight();
+    Dimension dim = split.getSize();
+    int x = (dim.width - iw) / 2;
+    int y = (dim.height - ih) / 2;
+    g.drawImage(icon.getImage(), x, y, iw, ih, this);
+  }
+};
+split.setLeftComponent(beforeCanvas);
+
+Component afterCanvas = new JComponent() {
+  @Override protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    Graphics2D g2 = (Graphics2D) g.create();
+    int iw = destination.getWidth(this);
+    int ih = destination.getHeight(this);
+    Point pt = getLocation();
+    Insets ins = split.getBorder().getBorderInsets(split);
+    g2.translate(-pt.x + ins.left, 0);
+
+    Dimension dim = split.getSize();
+    int x = (dim.width - iw) / 2;
+    int y = (dim.height - ih) / 2;
+    g2.drawImage(destination, x, y, iw, ih, this);
+    g2.dispose();
+  }
+};
+split.setRightComponent(afterCanvas);
+}}
+
 * 参考リンク [#reference]
 - [[JSplitPaneで画像を差分を比較表示する>Swing/ImageComparisonSplitPane]]
 

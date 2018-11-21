@@ -2,7 +2,7 @@
 category: swing
 folder: GeneralPath
 title: GeneralPathなどで星型図形を作成する
-tags: [GeneralPath, Path2D, Polygon, Icon, AffineTransform]
+tags: [GeneralPath, Path2D, Polygon, Icon, AffineTransform, Font]
 author: aterai
 pubdate: 2009-02-09T18:26:33+09:00
 description: GeneralPathなどを使って星型の図形をパネルに描画したり、アイコンを作成します。
@@ -89,15 +89,15 @@ class StarIcon2 implements Icon {
 - 上段、中
 -- `Polygon`を使用して星型図形を作成
 - 上段、右
--- フォントから星型(`★="\u2605"`)のアウトラインを取得して描画
+-- `Font`から星型文字★(`U+2605`)のアウトラインを取得して描画
 - 下段、左
 -- `10`個の頂点を予め計算して`GeneralPath`で星型を作成
 -- [http://gihyo.jp/dev/serial/01/javafx/0009?page=2 ついにベールを脱いだJavaFX：第9回 アニメーションを用いてより魅力的に［応用編］｜gihyo.jp … 技術評論社] を参考
 - 下段、中
--- `Path2D.Double`で、星型図形を作成しアイコンを作成
+-- `Icon#paintIcon(...)`メソッドをオーバーライドして`Path2D.Double`で星型図形を描画
 -- 外側の円の半径は、`40px`
 - 下段、右
--- `Path2D.Double`で、星型図形を作成しアイコンを作成
+-- `Icon#paintIcon(...)`メソッドをオーバーライドして`Path2D.Double`で星型図形を描画
 -- 外側の円の半径は、`40px`、内側の円の半径は、`20px`
 
 * 参考リンク [#reference]

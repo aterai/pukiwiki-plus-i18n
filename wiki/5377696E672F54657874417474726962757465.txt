@@ -21,17 +21,17 @@ attrs.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_DOTTED);
 textField.setFont(font.deriveFont(attrs));
 //...
 enum UnderlineStyle {
-    UNDERLINE_OFF(-1),
-    UNDERLINE_LOW_DASHED(TextAttribute.UNDERLINE_LOW_DASHED),
-    UNDERLINE_LOW_DOTTED(TextAttribute.UNDERLINE_LOW_DOTTED),
-    UNDERLINE_LOW_GRAY(TextAttribute.UNDERLINE_LOW_GRAY),
-    UNDERLINE_LOW_ONE_PIXEL(TextAttribute.UNDERLINE_LOW_ONE_PIXEL),
-    UNDERLINE_LOW_TWO_PIXEL(TextAttribute.UNDERLINE_LOW_TWO_PIXEL),
-    UNDERLINE_ON(TextAttribute.UNDERLINE_ON);
-    public final int style;
-    private UnderlineStyle(int style) {
-        this.style = style;
-    }
+  UNDERLINE_OFF(-1),
+  UNDERLINE_LOW_DASHED(TextAttribute.UNDERLINE_LOW_DASHED),
+  UNDERLINE_LOW_DOTTED(TextAttribute.UNDERLINE_LOW_DOTTED),
+  UNDERLINE_LOW_GRAY(TextAttribute.UNDERLINE_LOW_GRAY),
+  UNDERLINE_LOW_ONE_PIXEL(TextAttribute.UNDERLINE_LOW_ONE_PIXEL),
+  UNDERLINE_LOW_TWO_PIXEL(TextAttribute.UNDERLINE_LOW_TWO_PIXEL),
+  UNDERLINE_ON(TextAttribute.UNDERLINE_ON);
+  public final int style;
+  private UnderlineStyle(int style) {
+    this.style = style;
+  }
 }
 }}
 

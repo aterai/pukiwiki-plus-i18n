@@ -49,14 +49,16 @@ class FileGroupComparator extends DefaultFileComparator {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTable`に`Drag & Drop`で追加したファイルやディレクトリを以下の`3`種のモードでソートが可能です。
+上記のサンプルでは、`JTable`に`Drag & Drop`で追加したファイルやディレクトリを以下の`3`種類の`Comparator`でソートが可能です。
 
 - `Default`
--- `File#getName()`で取得できる`String`などのデフォルトで比較
+-- `File#getName()`で取得したファイル名`String`で比較
 - `Directory < File`
--- 「ディレクトリ < ファイル」となる`Comparator`を設定
+-- ファイル名より先に「ディレクトリ < ファイル」で比較する`Comparator`を設定
 - `Group Sorting`
 -- 昇順の場合は「ディレクトリ < ファイル」、降順の場合は、「ディレクトリ > ファイル」として、常にディレクトリが優先される`Comparator`を設定
+-- ディレクトリ同士、ファイル同士の場合は、ファイル名で比較する
+-- `ls`コマンドの`--group-directories-first`オプションを付けた状態と同じソート
 
 * 参考リンク [#reference]
 - [[JTreeのソート>Swing/SortTree]]

@@ -108,7 +108,7 @@ private void initTargetLine(Point p) {
 - アイテムを複数選択した状態でドラッグすると`Exception`が発生する不具合を修正しました。 -- &user(aterai); &new{2006-06-27 (火) 16:34:22};
 - ドラッグ中マウスが`JList`の外に出た場合、カーソルを変更するように変更しました。 -- &user(aterai); &new{2007-04-02 (月) 16:26:22};
 - `JTabbedPane`に`JList`を追加し、タブを二つ作りました。`JList`の項目を他のタブへ`D&D`すると、`mouseReleased`メソッドが反応しないのですが、どうすれば回避できますでしょうか。 -- &user(sao); &new{2007-09-22 (土) 14:57:27};
--- %%削除しました `src2.zip`%% を作って`XP`+`JDK 1.6.0_02`で試してみたのですが、`JList`の項目を他のタブへ`D&D`出来ないようです。環境が違うのかな？ -- &user(aterai); &new{2007-09-22 (土) 16:16:29};
+-- %%削除しました `src2.zip`%% を作って`XP`+`JDK 1.6.0_02`で試してみたのですが、`JList`の項目を他のタブへの`D&D`が不可のようです。環境が違うのかな？ -- &user(aterai); &new{2007-09-22 (土) 16:16:29};
 - ぉー！ファイル、わざわざありがとうございます！自分なりに頑張ってます。私がやりたのは`JList`の項目をタブへ`D&D`して項目に書かれている内容を他のタブ(の持ってる`JList`)へ渡したいんです。現状は、`2`つ以上の項目なら渡せて、`1`つだとエラーがでてしまいます。よくわかっていないまま進めてるので、全然わからないです（汗） -- &user(sao); &new{2007-09-27 (木) 20:03:38};
 -- あ、`src2.zip`は的外れでしたね。このページの`DnDList`を`JTabbedPane`に入れて、項目をタブタイトルにドロップすると`Exception`の発生するバグがあるのかも？と勘違いしていました。このページのサンプルを改造するなら、`src2.zip`ではなく、[https://ateraimemo.com/swing/dropontabtitle/src.zip こちらのソース(名前を変更しました)]、チュートリアルなら[https://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#DragListDemo Drag and Drop and Data Transfer: Examples (The Java™ Tutorials > Creating a GUI with Swing > Drag and Drop and Data Transfer)]が参考になるかも。 -- &user(aterai); &new{2007-09-28 (金) 02:24:23};
 - `src3`ありがとうございます☆軽快に動きますね！すごく！`src3`ですが、`DnDList`に`setEnabled(true);`を追加しました。が、まったくわからず…思いのほか、`2`項目以上の`D&D`って難しいですネ(汗 -- &user(sao); &new{2007-09-28 (金) 17:50:42};

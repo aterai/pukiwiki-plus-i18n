@@ -108,7 +108,7 @@ for (c in Arrays.asList<Component>(textField1, textField2, combo3, combo4)) {
 ** 境界型パラメータ [#BoundedTypeParameter]
 - `IntelliJ`の自動変換で以下のような境界型パラメータをもつ`Java`クラスを変換し、`kotlinc`でコンパイルすると無駄な境界型パラメータが存在すると警告してくれる
 -- `warning: 'LocalDate' is a final type, and thus a value of the type parameter is predetermined`
--- `LocalDate`クラスは`final`なので継承不可のため、境界型パラメータは無意味
+-- `LocalDate`クラスは`final`で継承不可のため、境界型パラメータは無意味
 -- `ECJ`(`Eclipse Compiler for Java`)も`The type parameter T should not be bounded by the final type LocalDate. Final types cannot be further extended`と警告してくれる
 -- `Java`側を`class CalendarViewTableModel<T extends TemporalAdjuster> extends DefaultTableModel {`か、`class CalendarViewTableModel extends DefaultTableModel {`に修正する
 
@@ -127,9 +127,11 @@ class CalendarViewTableModel<T : LocalDate> public constructor(date: T) : Defaul
 #twocolumn
 
 ** クラスリテラル [#ClassLiterals]
-- クラスリテラル(Class Literals)の`JComboBox.class`は、`IntelliJ`の自動変換で`JComboBox<*>::class.java`に変換されるが、`JComboBox::class.java`に修正しないとエラーになる
+- 総称型を持つクラスのクラスリテラル(`Class Literals`)を`IntelliJ`で自動変換すると失敗する場合がある
+-- 例えば`JComboBox.class`は`IntelliJ`の自動変換で`JComboBox<*>::class.java`に変換されるが、`JComboBox::class.java`に修正しないとコンパイルエラーになる
 -- `Only classes are allowed on the left hand side of a class literal`
 - 逆に`Java`の`c instanceof JComboBox`を`Kotlin`に変換するときは、`c is JComboBox<*>`にしないとエラーになる
+-- こちらは`IntelliJ`の自動変換で正常に変換可能
 -- `One type argument expected. Use 'JComboBox<*>' if you don't want to pass type arguments`
 
 #twocolumn
@@ -432,7 +434,7 @@ children(fileChooser1)
 
 ** メソッド参照(終端処理の戻り値) [#fd97ed55]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#add-java.awt.Component- Container#add(Component)]メソッドは戻り値として`Component`を返す
--- `Java`の場合、終端処理の`forEach(p::add)`では戻り値を無視して`Container#add(Component)`をメソッド参照することが可能
+-- `Java`の場合、終端処理の`forEach(p::add)`では戻り値を無視して`Container#add(Component)`のメソッド参照が可能
 -- `Kotlin`の場合、`forEach(p::add)`とすると、`add`メソッドで引数が`Component!`、戻り値が`Unit`になるメソッドを探すためメソッド参照で以下のようなエラーになる
 --- [https://discuss.kotlinlang.org/t/function-reference-ignoring-the-returned-value/2442 Function reference: ignoring the returned value - Support - Kotlin Discussions]
 --- `map(p::add)`にすればエラーは回避できる

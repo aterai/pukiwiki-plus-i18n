@@ -20,13 +20,13 @@ table.setUpdateSelectionOnSort(true);
 
 * 解説 [#explanation]
 - `UpdateSelectionOnSort`
--- ソート後の選択状態は、`JTable#setUpdateSelectionOnSort`メソッドで切り替えることが可能
+-- ソート後の選択状態は、`JTable#setUpdateSelectionOnSort(boolean)`メソッドで切り替えることが可能
 -- `setUpdateSelectionOnSort(true)`
 --- ソート前と、「同じ内容の行」が選択された状態になる(デフォルト)
 -- `setUpdateSelectionOnSort(false)`
 --- ソート前と、「表示上同じ行」が選択された状態になる
 - `ClearSelectionOnSort`
--- メソッドが用意されているわけではないので、選択状態をクリアする場合は、`TableRowSorter#toggleSortOrder(int)`をオーバーライドしたり、以下のように`JTableHeader`に`MouseListener`を追加して、`table.clearSelection()`する必要がある
+-- ソート後に選択状態をクリアする場合は`TableRowSorter#toggleSortOrder(int)`をオーバーライドしたり、以下のように`JTableHeader`に`MouseListener`を追加して`table.clearSelection()`を実行する必要がある
 -- チェックなし
 --- 選択状態を維持(デフォルト)
 -- チェックあり
