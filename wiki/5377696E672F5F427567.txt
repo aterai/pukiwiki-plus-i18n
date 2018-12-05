@@ -1,5 +1,5 @@
 ---
-title: Swing Bug
+title: Swing Bugs
 keywords: [Java, Swing]
 description: Swing関連で注目しているバグIDへのリンク、メモなど
 author: aterai
@@ -275,30 +275,32 @@ im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "toggleSortOrder");
 
 - 再現しなくなった
 
-// キーボードが壊れたのかもと思ったけど、`JDK 1.7.0`では、問題なく動作している？。暇なときに、`Bug Database`を調べること。追記:`IME`を変更したら再現しなくなった…。
-
 * 参考リンク [#reference]
-- [https://bugs.openjdk.java.net/browse/JDK-6723524 Bug ID: 6723524 Invalid background of components displayed in JTable in Nimbus L&F]
-- Release Fixed: 1.7.0 %%[https://bugs.openjdk.java.net/browse/JDK-6910490 Bug ID: 6910490 MatteBorder JScrollpane interaction]%%
-- [https://bugs.openjdk.java.net/browse/JDK-6612928 Bug ID: 6612928 Win32ShellFolder2 throws RejectedExecutionException on application exit]
-- [https://bugs.openjdk.java.net/browse/JDK-4280944 Bug ID: 4280944 Attributes on last newline character cause undesirable extra spacing.]
-- [https://bugs.openjdk.java.net/browse/JDK-6780505 Bug ID: 6780505 java.awt.Desktop.getDesktop().open() fails on shared files with white spaces]
-- [https://bugs.openjdk.java.net/browse/JDK-4777210 Bug ID: 4777210 setText causes deadlock in JFormattedTextField, JTextComponent]
-- [https://bugs.openjdk.java.net/browse/JDK-6937538 Bug ID: 6937538 Nimbus: JInternalFrame() causes exception if user UI installed]
-- Release Fixed: 1.4.0  %%[https://bugs.openjdk.java.net/browse/JDK-4463424 Bug ID: 4463424 LineBreakMeasurer inconsistent with TextLayout]%%
-- [https://bugs.openjdk.java.net/browse/JDK-6700748 Bug ID: 6700748 Cursor flickering during D&D when using CellRendererPane with validation]
-- [https://bugs.openjdk.java.net/browse/JDK-6723524 Bug ID: 6723524 Invalid background of components displayed in JTable in Nimbus L&F]
-- [https://bugs.openjdk.java.net/browse/JDK-4292511 Bug ID: 4292511 JTableHeader height determined by first column given HTML text]
-- [https://bugs.openjdk.java.net/browse/JDK-6826514 Bug ID: 6826514 SwingWorker: done() called before doInBackground() returns, when cancelled]
-- [https://bugs.openjdk.java.net/browse/JDK-6413228 Bug ID: 6413228 Many links broken with "?is-external=true".]
-- [https://bugs.openjdk.java.net/browse/JDK-4908277 Bug ID: 4908277 Animated GIF does not play inside JTable, customized TableCellRenderer]
-- Release Fixed: 1.7.0, 1.6.0_18 %%[https://bugs.openjdk.java.net/browse/JDK-4833524 Bug ID: 4833524 BasicTreeUI.isToggleSelectionEvent() does not properly handle popup triggers]%%
-- Release Fixed: 1.7.0, 1.6.0_18 %%[https://bugs.openjdk.java.net/browse/JDK-6840086 Bug ID: 6840086 JFileChooser lacks icons on top right when running on Windows 7]%%
-- [https://bugs.openjdk.java.net/browse/JDK-4765261 Bug ID: 4765261 JTextArea.append does not follow spec (it is not ThreadSafe)]
-- [https://bugs.openjdk.java.net/browse/JDK-4760477 Bug ID: 4760477 JTextArea.append(String) is not ThreadSafe]
-- Release Fixed: 1.7.0 %%[https://bugs.openjdk.java.net/browse/JDK-4765383 Bug ID: 4765383 JTextArea.append(String) not thread safe]%%
-- [https://bugs.openjdk.java.net/browse/JDK-7140863 Bug ID: 7140863 Lots of Japanese OpenType fonts do not render correctly]
-- [https://bugs.openjdk.java.net/browse/JDK-5036549 Bug ID: JDK-5036549 PopupMenu not adjusting its location correctly depending on taskbar's position.]
+** 未修整、重複？ [#w96f7a6e]
+- [https://bugs.openjdk.java.net/browse/JDK-6723524 JDK-6723524 Invalid background of components displayed in JTable in Nimbus L&F]
+- [https://bugs.openjdk.java.net/browse/JDK-6612928 JDK-6612928 Win32ShellFolder2 throws RejectedExecutionException on application exit]
+- [https://bugs.openjdk.java.net/browse/JDK-4280944 JDK-4280944 Attributes on last newline character cause undesirable extra spacing.]
+- [https://bugs.openjdk.java.net/browse/JDK-6780505 JDK-6780505 java.awt.Desktop.getDesktop().open() fails on shared files with white spaces]
+- [https://bugs.openjdk.java.net/browse/JDK-4777210 JDK-4777210 setText causes deadlock in JFormattedTextField, JTextComponent]
+- [https://bugs.openjdk.java.net/browse/JDK-6937538 JDK-6937538 Nimbus: JInternalFrame() causes exception if user UI installed]
+- [https://bugs.openjdk.java.net/browse/JDK-6700748 JDK-6700748 Cursor flickering during D&D when using CellRendererPane with validation]
+- [https://bugs.openjdk.java.net/browse/JDK-6723524 JDK-6723524 Invalid background of components displayed in JTable in Nimbus L&F]
+- [https://bugs.openjdk.java.net/browse/JDK-4292511 JDK-4292511 JTableHeader height determined by first column given HTML text]
+- [https://bugs.openjdk.java.net/browse/JDK-6826514 JDK-6826514 SwingWorker: done() called before doInBackground() returns, when cancelled]
+- [https://bugs.openjdk.java.net/browse/JDK-4908277 JDK-4908277 Animated GIF does not play inside JTable, customized TableCellRenderer]
+- [https://bugs.openjdk.java.net/browse/JDK-4765261 JDK-4765261 JTextArea.append does not follow spec (it is not ThreadSafe)]
+- [https://bugs.openjdk.java.net/browse/JDK-4760477 JDK-4760477 JTextArea.append(String) is not ThreadSafe]
+- [https://bugs.openjdk.java.net/browse/JDK-7140863 JDK-7140863 Lots of Japanese OpenType fonts do not render correctly]
+- [https://bugs.openjdk.java.net/browse/JDK-5036549 JDK-5036549 PopupMenu not adjusting its location correctly depending on taskbar's position.]
+- [https://bugs.openjdk.java.net/browse/JDK-6603771 JDK-6603771 Nimbus L&F: Ctrl+F7 keybinding for JInternal Frame throws a NPE. - Java Bug System]
+
+** 修正済み [#f5441365]
+- Release Fixed: 1.4.0  %%[https://bugs.openjdk.java.net/browse/JDK-4463424 JDK-4463424 LineBreakMeasurer inconsistent with TextLayout]%%
+- Release Fixed: 1.6.0 %%[https://bugs.openjdk.java.net/browse/JDK-6413228 JDK-6413228 Many links broken with "?is-external=true".]%%
+- Release Fixed: 1.7.0 %%[https://bugs.openjdk.java.net/browse/JDK-6910490 JDK-6910490 MatteBorder JScrollpane interaction]%%
+- Release Fixed: 1.7.0 %%[https://bugs.openjdk.java.net/browse/JDK-4765383 JDK-4765383 JTextArea.append(String) not thread safe]%%
+- Release Fixed: 1.7.0, 1.6.0_18 %%[https://bugs.openjdk.java.net/browse/JDK-4833524 JDK-4833524 BasicTreeUI.isToggleSelectionEvent() does not properly handle popup triggers]%%
+- Release Fixed: 1.7.0, 1.6.0_18 %%[https://bugs.openjdk.java.net/browse/JDK-6840086 JDK-6840086 JFileChooser lacks icons on top right when running on Windows 7]%%
 
 * コメント [#comment]
 #comment
