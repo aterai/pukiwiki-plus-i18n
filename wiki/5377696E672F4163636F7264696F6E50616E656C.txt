@@ -83,7 +83,7 @@ abstract class AbstractExpansionPanel extends JPanel {
 * 解説 [#explanation]
 各パネルに配置されたタイトルラベルがクリックされた場合、`JPanel#setVisible(boolean)`メソッドを使って、パネルの表示・非表示を切り替えています。
 
-また、パネルを非表示にするだけでは、その高さが変更されないので、以下のように、`JPanel#getPreferredSize()`もオーバーライドしています。
+また、パネルを非表示にするだけではその高さが更新されないので、以下のように`JPanel#getPreferredSize()`メソッドもオーバーライドしています。
 
 #code{{
 @Override public Dimension getPreferredSize() {

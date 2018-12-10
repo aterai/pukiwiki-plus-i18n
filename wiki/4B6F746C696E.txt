@@ -2,7 +2,7 @@
 keywords: [Kotlin, Swing, Java]
 description: KotlinでSwingコンポーネントを使用するサンプルと、Javaからの変換に関するメモなど
 author: aterai
-pubdate: 2017-05-31
+pubdate: 2017-05-31T18:35:21+09:00
 ---
 #contents
 
@@ -323,6 +323,62 @@ tree.addTreeWillExpandListener(object : TreeWillExpandListener {
   @Throws(ExpandVetoException::class)
   override fun treeWillCollapse(e: TreeExpansionEvent) {
     throw ExpandVetoException(e, "Tree collapse cancelled")
+  }
+})
+}}
+#twocolumn
+
+** ラベル付きReturn [#ReturnAtLabels]
+- 匿名内部クラスから`return`で抜ける`Java`コードを`IntelliJ`の自動変換で変換すると、`unresolved reference: @decode`とエラーになる`Kotlin`コードに変換される場合がある
+-- 以下のような変換例の場合、`return@decode.addActionListener`を`return@addActionListener`のようにメソッド名のみのラベルに変更する必要がある
+-- [https://kotlinlang.org/docs/reference/returns.html#return-at-labels Returns and Jumps: break and continue - Kotlin Programming Language]
+
+#twocolumn
+`Java`
+#code{{
+JButton decode = new JButton("decode");
+decode.addActionListener(e -> {
+  String b64 = textArea.getText();
+  if (b64.isEmpty()) {
+    return;
+  }
+  try (InputStream is = ...) {
+    label.setIcon(new ImageIcon(ImageIO.read(is)));
+  } catch (IOException ex) {
+    ex.printStackTrace();
+  }
+});
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+val decode = JButton("decode")
+decode.addActionListener({ e ->
+  val b64 = textArea.getText()
+  if (b64.isEmpty()) {
+    return@decode.addActionListener
+  }
+  try {
+    // ...
+  } catch (ex: IOException) {
+    ex.printStackTrace()
+  }
+})
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+val decode = JButton("decode")
+decode.addActionListener({ e ->
+  val b64 = textArea.getText()
+  if (b64.isEmpty()) {
+    return@addActionListener
+  }
+  try {
+    // ...
+  } catch (ex: IOException) {
+    ex.printStackTrace()
   }
 })
 }}
