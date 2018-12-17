@@ -528,7 +528,47 @@ listOf(button1, button2).forEach({ b -> p.add(b) })
 
 #twocolumn
 
-** BigDecimal [#zb932a10]
+** コンストラクタ参照 [#ConstructorReferences]
+- `IntelliJ`の自動変換ではコンストラクタ参照がうまく変換できない場合がある
+-- 例えば`Stream.of("A", "B", "C").map(JToggleButton::new)`が`Stream.of("A", "B", "C").map(Function<String, JToggleButton> { JToggleButton(it) })`に変換されて、以下のようなエラーになる
+
+ e: App.kt: (13, 34): Interface Function does not have constructors
+ e: App.kt: (13, 82): Unresolved reference: it
+ e: App.kt: (13, 89): Cannot choose among the following candidates without completing type inference:
+ @HidesMembers public inline fun <T> Iterable<???>.forEach(action: (???) -> Unit): Unit defined in kotlin.collections
+ @HidesMembers public inline fun <K, V> Map<out ???, ???>.forEach(action: (Map.Entry<???, ???>) -> Unit): Unit defined in kotlin.collections
+ e: App.kt: (13, 99): Cannot infer a type for this parameter. Please specify it explicitly.
+
+-- `::JToggleButton`に修正すればエラーを回避可能
+--- [https://kotlinlang.org/docs/reference/reflection.html#constructor-references Constructor References - Reflection - Kotlin Programming Language]
+
+#twocolumn
+`Java`
+#code{{
+Stream.of("A", "B", "C").map(JToggleButton::new).forEach(r -> {
+  p.add(r);
+  bg.add(r);
+});
+}}
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+Stream.of("A", "B", "C").map(Function<String, JToggleButton> { JToggleButton(it) }).forEach({ r ->
+  p.add(r)
+  bg.add(r)
+})
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+Stream.of("A", "B", "C").map(::JToggleButton).forEach({ r ->
+  p.add(r)
+  bg.add(r)
+})
+}}
+#twocolumn
+
+** BigDecimal [#BigDecimal]
 - `IntelliJ`の自動変換では`error: unresolved reference: intValue`とエラーになるので、手動で`toInt()`に修正する必要がある
 
 #twocolumn
@@ -638,6 +678,29 @@ fun main(args: Array<String>) {
   val l = list.sortedWith(compareBy({ it.get(0) }, { it.get(1) }, { it.get(2) })).reversed()
   println(l)
 }
+}}
+
+#twocolumn
+
+** 16進数数値リテラル内のアンダースコア [#UnderscoresInHexadecimalNumericLiterals]
+- `IntelliJ`の自動変換では、頭に`0x`を付けて`16`進数表記した数値リテラルにアンダースコアを付けると、`IDE Fatal Errors`になり変換できない
+-- `IntelliJ`で自動変換できないだけで、`Kotlin`で`16`進数表記の数値にアンダースコアを付けても問題なく動作可能
+-- アンダースコアがなければ、`16`進数表記でも問題なく`IntelliJ`で自動変換可能
+-- 例1: `new Color(0xEE_EE_EE)`は、`IntelliJ`の自動変換では`java.lang.NumberFormatException: For input string: "E_EE_EE"`とエラーになる
+-- 例2: `new Color(0x64_88_AA_AA, true)`は、`IntelliJ`の自動変換では`java.lang.NumberFormatException: For input string: "64_8"`とエラーになる
+
+#twocolumn
+`Java`
+#code{{
+editor1.setSelectionColor(new Color(0x64_88_AA_AA, true)); // IntelliJで自動変換できない
+editor2.setSelectionColor(new Color(0x6488AAAA, true)); // IntelliJで自動変換可能
+}}
+
+#twocolumn
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+editor1.setSelectionColor(Color(0x64_88_AA_AA, true)) // 問題なし
+editor2.setSelectionColor(Color(0x6488AAAA, true)) // 問題なし
 }}
 
 #twocolumn

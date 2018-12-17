@@ -66,7 +66,7 @@ setDummyText(editor1);
 - スタイルシートで`line-height`を指定しても反映されない
 -- `line-height`は、モデル化されているが、現在は描画されない
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/CSS.html 対応しているCSSプロパティ一覧 - CSS (Java Platform SE 8)]
-- ブロックレベルで一行だけ固定の行間が指定したい場合は、`margin-bottom`が使用可能
+- ブロックレベルで`1`行だけ固定の行間を指定したい場合は`margin-bottom`が使用可能
 #code{{
 StyleSheet styleSheet = new StyleSheet();
 styleSheet.addRule("body {font-size: 24pt; line-height: 2.0}");

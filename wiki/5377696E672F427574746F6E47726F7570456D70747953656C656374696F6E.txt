@@ -9,7 +9,7 @@ description: ButtonGroup内のボタンが1つも選択されていない状態�
 image: https://drive.google.com/uc?id=1EFXEFMWUlrctxFnVQEQbK1zeW3wSIhoROw
 ---
 * 概要 [#summary]
-`ButtonGroup`内のボタンが1つも選択されていない状態かどうかを確認します。
+`ButtonGroup`内のボタンが`1`つも選択されていない状態かどうかを確認します。
 
 #download(https://drive.google.com/uc?id=1EFXEFMWUlrctxFnVQEQbK1zeW3wSIhoROw)
 
@@ -32,7 +32,7 @@ button.addActionListener(e -> {
 * 解説 [#explanation]
 上記のサンプルでは、`ButtonGroup`内のボタンが`1`つも選択されていない状態かどうかを`ButtonModel#getSelection()`メソッドが`null`を返すかどうかで確認しています。
 
-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ButtonGroup.html#getSelection-- ButtonGroup##getSelection() (Java Platform SE 8)]には、「選択されたボタンのモデルを返します。」と`1`つも選択されていない状態で何が返されるかは記述されていない
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ButtonGroup.html#getSelection-- ButtonGroup#getSelection() (Java Platform SE 8)]には、「選択されたボタンのモデルを返します。」と`1`つも選択されていない状態で何が返されるかは記述されていない
 -- `ButtonModel`のソースコードではその場合、`null`が返る実装になっている
 
 * 参考リンク [#reference]
