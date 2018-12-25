@@ -85,12 +85,12 @@ description: スクリプト言語(Javascript)を使用して、FTPS(File Transf
           print("FTP server refused connection.");
           System.exit(1);
         }
-        ftps.setBufferSize(1000);
+        // ftps.setBufferSize(1048576);
         if (!ftps.login(username, password)) {
           print("FTP server refused connection.");
         } else {
           print("Remote system is " + ftps.getSystemName());
-          //ftps.setFileType(FTP.BINARY_FILE_TYPE);
+          ftps.setFileType(org.apache.commons.net.ftp.FTP.BINARY_FILE_TYPE);
           ftps.enterLocalPassiveMode();
           var filesets = elements.get("fileset");
           for (i = 0; i < filesets.size(); i++) {
@@ -101,13 +101,13 @@ description: スクリプト言語(Javascript)を使用して、FTPS(File Transf
             var files = scanner.getIncludedFiles();
             for(j = 0; j < files.length; j++) {
               var filename = files[j];
-                var local = new java.io.File(basedir, filename);
-                print("file: " + local);
-                var input = new java.io.FileInputStream(local);
-                ftps.storeFile(remotedir + filename, input);
-                input.close();
-              }
+              var local = new java.io.File(basedir, filename);
+              print("file: " + local);
+              var input = new java.io.FileInputStream(local);
+              ftps.storeFile(remotedir + filename, input);
+              input.close();
             }
+          }
         }
         ftps.logout();
       } catch (ex) {
@@ -127,6 +127,7 @@ description: スクリプト言語(Javascript)を使用して、FTPS(File Transf
 * 参考リンク [#reference]
 - [https://ant.apache.org/manual/Tasks/scriptdef.html Scriptdef Task]
 - [https://svn.apache.org/repos/asf/commons/proper/net/tags/NET_2_2/src/main/java/examples/ftp/FTPSExample.java FTPSClientExample.java]
+- [https://stackoverflow.com/questions/3145768/transfer-raw-binary-with-apache-commons-net-ftpclient java - Transfer raw binary with apache commons-net FTPClient? - Stack Overflow]
 
 * コメント [#comment]
 #comment

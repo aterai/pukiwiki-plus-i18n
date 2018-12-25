@@ -1764,6 +1764,52 @@ fun main(args: Array<String>) {
 - [https://www.pushing-pixels.org/2018/08/07/replacing-swingworker-with-kotlin-coroutines.html Replacing SwingWorker with Kotlin coroutines ・ Pushing Pixels]を参考に、%%`SwingWorker`を`kotlin-coroutines`に置き換えるテストをしているが、`unresolved reference`になる%% `kotlin 1.3.0`、`kotlinx.coroutines 1.0.0`で動作確認
 - [[JavaのSwingWorkerをKotlinのCoroutinesに置き換える>Kotlin/Coroutines]]に移動
 
+** JComponent#updateUI() [#updateUI]
+- `Swing`コンポーネントの`UI`プロパティを、現在の`LookAndFeel`で設定されている値にリセットする`updateUI()`メソッドは、コンストラクタから呼び出されるので、インスタンス変数が初期化されるまえに実行されることがある
+- このため、`Kotlin`のコードに変換した`updateUI()`メソッド内で`null`チェックを行うと、不要な`null`チェックをしているとか、`!= null`が常に`true`であると警告される
+- `null`チェックを外すと`NullPointerException`になる
+- `Optional`や`Objects.nonNull(...)`で、警告をごまかす方法もある
+
+#twocolumn
+`Java`
+#code{{
+public final class MainPanel extends JPanel {
+  private final JSpinner spinner = new JSpinner();
+  @Override public void updateUI() {
+    super.updateUI();
+    Long lv = Optional.ofNullable(spinner)
+        .map(s -> (Long) s.getModel().getValue())
+        .orElse(1000L);
+    // Long lv = spinner != null ? (Long) spinner.getModel().getValue() : 1000L;
+    // ...
+  }
+}}
+#twocolumn
+`Kotlin`
+#code(lang-kotlin){{
+class MainPanel : JPanel(BorderLayout()) {
+  private val spinner = JSpinner()
+  override fun updateUI() {
+    super.updateUI()
+    val lv = Optional.ofNullable(spinner)
+        .map { it.getModel().getValue() }
+        .orElse(1000L)
+
+    // Unnecessary safe call on a non-null receiver of type JSpinner
+    // val lv = spinner
+    //     ?.let { it.getModel().getValue() }
+    //     ?: 1000L
+
+    // NullPointerException
+    // val lv = spinner.getModel().getValue()
+
+    // Condition 'spinner != null' is always 'true'
+    // val lv = if (spinner != null) spinner.getModel().getValue() else 1000L
+  }
+}}
+#twocolumn
+
+
 * コメント [#comment]
 #comment
 #comment

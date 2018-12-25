@@ -173,7 +173,7 @@ private static Color getColorFromPallet(int[] pallet, float x) {
   int i = (int) (pallet.length * x);
   int max = pallet.length-1;
   int index = i < 0 ? 0 : i > max ? max : i;
-  int pix = pallet[index] & 0x00ffffff | (0x64 << 24);
+  int pix = pallet[index] & 0x00_FF_FF_FF | (0x64 << 24);
   return new Color(pix, true);
 }
 }}
