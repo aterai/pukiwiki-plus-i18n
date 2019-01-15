@@ -13,7 +13,7 @@ description: Javascriptで、Java API Docの「日本語、英語」を切り替
 - `Java API JP<>EN`
 
 #code{{
-javascript:(function(){var l=location,m=l.href.match('^https?://(.+)((?:api|technotes)[^+]+)'),n=m[1].match('/([6-8])/');if(m)l.href='https://docs.oracle.com/javase/'+(/\/jp\//.test(m[1])?n[1]+'/docs':n[1]==8?'jp/'+n[1]+'/docs':'jp/'+n[1])+'/'+m[2];}());
+javascript:(function(){var%20l=location,m=l.href.match('^https?://(.+)((?:api|technotes)[^+]+)'),n=m[1].match('/([0-9]+)/');if(m)l.href='https://docs.oracle.com/javase/'+(/\/jp\//.test(m[1])?n[1]+'/docs':parseInt(n[1])>=8?'jp/'+n[1]+'/docs':'jp/'+n[1])+'/'+m[2];}());
 }}
 
 * 解説 [#j41ed46f]
@@ -51,6 +51,48 @@ javascript:(function(){var l=location,m=l.href.match('^https?://(.+)((?:api|tech
 ** Java 10 [#e4ef8e23]
 - `Java 10`から`Java 8`以前の`(,)`(ただし空白は除く)なども使用可能に戻った
 -- 混在は不可
+
+* 一覧 [#ed06c777]
+** 英語版 [#r25e2ede]
+- https://docs.oracle.com/en/java/javase/11/
+- https://docs.oracle.com/javase/10/
+- https://docs.oracle.com/javase/9/
+- https://docs.oracle.com/javase/8/
+- https://docs.oracle.com/javase/7/
+- https://docs.oracle.com/javase/6/docs/
+
+----
+- `Java 11`から`en/java`が追加されている
+-- https://docs.oracle.com/javase/11/ は https://docs.oracle.com/en/java/javase/11/ にリダイレクトされる
+-- https://docs.oracle.com/jp/java/javase/11/ は`404`
+
+** 日本語版 [#y7fcedd1]
+- https://docs.oracle.com/javase/jp/11/
+- https://docs.oracle.com/javase/jp/10/
+- https://docs.oracle.com/javase/jp/9/
+- https://docs.oracle.com/javase/jp/8/
+- https://docs.oracle.com/javase/jp/7/
+- https://docs.oracle.com/javase/jp/6/
+
+* API Documentation の例 [#eb272225]
+** 英語版 [#i0aec398]
+- https://docs.oracle.com/en/java/javase/11/docs/api/java.desktop/java/awt/Color.html
+- https://docs.oracle.com/javase/10/docs/api/java/awt/Color.html
+- https://docs.oracle.com/javase/9/docs/api/java/awt/Color.html
+- https://docs.oracle.com/javase/8/docs/api/java/awt/Color.html
+- https://docs.oracle.com/javase/7/docs/api/java/awt/Color.html
+- https://docs.oracle.com/javase/6/docs/api/java/awt/Color.html
+
+----
+- https://docs.oracle.com/javase/11/docs/api/java.desktop/java/awt/Color.html はリダイレクトされず`404`になる
+
+** 日本語版 [#v64a28b0]
+- https://docs.oracle.com/javase/jp/11/docs/api/java.desktop/java/awt/Color.html
+- https://docs.oracle.com/javase/jp/10/docs/api/java/awt/Color.html
+- https://docs.oracle.com/javase/jp/9/docs/api/java/awt/Color.html
+- https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Color.html
+- https://docs.oracle.com/javase/jp/7/api/java/awt/Color.html
+- https://docs.oracle.com/javase/jp/6/api/java/awt/Color.html
 
 * 参考リンク [#x4ed11a1]
 - http://java.net/projects/jdk-api-ja

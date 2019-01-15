@@ -52,7 +52,7 @@ class ShrinkLabel extends JLabel {
 
 * 解説 [#explanation]
 - `JTabbedPane#setTabComponentAt(...)`メソッドで、タブコンポーネントとして`JLabel`を設定
-- `JLabel#getPreferredSize()`をオーバーライドして、選択されていない場合はその推奨サイズを縮小
+- `JLabel#getPreferredSize()`をオーバーライドして、選択されていない場合はその`JLabel`の推奨サイズを縮小
 -- 選択されている場合は、`super.getPreferredSize()`で元のサイズを返す
 - `JTabbedPane`に`ChangeListener`を追加し、タブ選択が変更されたらすべてのタブコンポーネントの選択状態(推奨サイズ)を更新
 - タブの配置が左右の場合は、選択されたタブの幅のみ変更しても意味がないのでこの処理は実行しない

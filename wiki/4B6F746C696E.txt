@@ -705,6 +705,26 @@ editor2.setSelectionColor(Color(0x6488AAAA, true)) // 問題なし
 
 #twocolumn
 
+** @SuppressWarnings [#SuppressWarnings]
+- `IntelliJ`の自動変換では、`@SuppressWarnings("unchecked")`などは削除されるので、`Unchecked cast: WatchEvent<*>! to WatchEvent<Path>`と警告される
+-- 手動で`@Suppress("UNCHECKED_CAST")`などを付ける必要がある
+
+#twocolumn
+`Java`
+#code{{
+@SuppressWarnings("unchecked")
+WatchEvent<Path> ev = (WatchEvent<Path>) event;
+}}
+
+#twocolumn
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+@Suppress("UNCHECKED_CAST")
+val ev = event as WatchEvent<Path>
+}}
+
+#twocolumn
+
 * Swing + Kotlin サンプル [#swing]
 ** JTable [#JTable]
 - `Class<?>`は%%`Class<Any>`か`Class<Object>`？%%、`Class<*>`か`Class<out Any>`に変換した方が良いかもしれない

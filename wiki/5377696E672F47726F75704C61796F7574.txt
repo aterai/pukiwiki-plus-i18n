@@ -15,7 +15,7 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTNn9AdVUI/AAAAAAAAAbE/yO
 
 * サンプルコード [#sourcecode]
 #code(link){{
-//GroupLayout
+// GroupLayout
 JPanel p1 = new JPanel();
 p1.setBorder(BorderFactory.createTitledBorder("GroupLayout"));
 GroupLayout layout = new GroupLayout(p1);
@@ -42,23 +42,23 @@ layout.setVerticalGroup(vGroup);
 #code{{
 //GridBagLayout
 JPanel p2 = new JPanel(new GridBagLayout());
-Border inside  = BorderFactory.createEmptyBorder(10, 5 + 2, 10, 10 + 2);
+Border inside = BorderFactory.createEmptyBorder(10, 5 + 2, 10, 10 + 2);
 Border outside = BorderFactory.createTitledBorder("GridBagLayout");
 p2.setBorder(BorderFactory.createCompoundBorder(outside, inside));
 GridBagConstraints c = new GridBagConstraints();
 c.gridheight = 1;
 
-c.gridx   = 0;
-c.insets  = new Insets(5, 5, 5, 0);
-c.anchor  = GridBagConstraints.WEST;
-c.gridy   = 0; p2.add(label3, c); //p2.add(new JLabel("一度だけのaddで"), c);
-c.gridy   = 1; p2.add(label4, c); //p2.add(new JLabel("いいのは利点かも"), c);
+c.gridx = 0;
+c.insets = new Insets(5, 5, 5, 0);
+c.anchor = GridBagConstraints.WEST;
+c.gridy = 0; p2.add(label3, c); // p2.add(new JLabel("一度だけのaddで"), c);
+c.gridy = 1; p2.add(label4, c); // p2.add(new JLabel("いいのは利点かも"), c);
 
-c.gridx   = 1;
+c.gridx = 1;
 c.weightx = 1.0;
-c.fill    = GridBagConstraints.HORIZONTAL;
-c.gridy   = 0; p2.add(tf3, c);
-c.gridy   = 1; p2.add(tf4, c);
+c.fill = GridBagConstraints.HORIZONTAL;
+c.gridy = 0; p2.add(tf3, c);
+c.gridy = 1; p2.add(tf4, c);
 }}
 
 * 解説 [#explanation]
