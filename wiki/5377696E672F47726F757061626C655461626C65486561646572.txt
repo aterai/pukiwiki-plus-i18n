@@ -64,7 +64,7 @@ class GroupableTableHeader extends JTableHeader {
 - %%[http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html オリジナル]%%からの主な変更点:
 -- ヘッダセルと本体セルがずれてしまうので、`header.getColumnModel().getColumnMargin()`で取得した余白を無視
 -- グループ化設定の保持に、`Vector`ではなく`ArrayList`を使用
--- グループ化設定がない場合は、`null`ではなく`Collections.emptyList()`を返す
+-- グループ化しない場合は、`null`ではなく`Collections.emptyList()`を返す
 -- `BasicTableHeaderUI`からコピーしている各`private`メソッドを最新版に更新
 
 * 参考リンク [#reference]

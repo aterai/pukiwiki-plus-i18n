@@ -18,14 +18,14 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-class TextOverfloFadeTabbedPane extends ClippedTitleTabbedPane {
+class TextOverflowFadeTabbedPane extends ClippedTitleTabbedPane {
   @Override public void insertTab(
         String title, Icon icon, Component component, String tip, int index) {
     super.insertTab(title, icon, component, Objects.toString(tip, title), index);
     JPanel p = new JPanel(new BorderLayout(2, 0));
     p.setOpaque(false);
     p.add(new JLabel(icon), BorderLayout.WEST);
-    p.add(new TextOverfloFadeLabel(title));
+    p.add(new TextOverflowFadeLabel(title));
     setTabComponentAt(index, p);
   }
 }

@@ -51,6 +51,8 @@ description: AntでのJavaコードのコンパイラにコード解析を行う
       <compilerarg value="-processorpath"/>
       <compilerarg pathref="processorpath.ref"/>
       <compilerarg value="-Xplugin:ErrorProne -Xep:DeadException:ERROR -Xep:CatchAndPrintStackTrace:OFF" />
+      <compilerarg value="-J-Dfile.encoding=UTF-8" />
+      <!-- compilerarg value="-J-Dsun.jnu.encoding=UTF-8" / -->
     </javac>
   </target>
 }}
@@ -63,6 +65,32 @@ description: AntでのJavaコードのコンパイラにコード解析を行う
 - 例えば`MultipleTopLevelClasses`をチェックしないように設定する場合は、以下のように`-Xep:MultipleTopLevelClasses:OFF`を引数に追加する
 -- `<compilerarg value="-Xplugin:ErrorProne -Xep:DeadException:ERROR -Xep:MultipleTopLevelClasses:OFF -Xep:CatchAndPrintStackTrace:OFF" />`
 -- [https://errorprone.info/docs/flags Command-line flags]
+
+** 文字化け [#t71a6b89]
+- 環境変数`ANT_OPTS`などに`-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8`を設定しても`cygwin`の`bash`(`Character set`は`UTF-8`)で文字化けする
+-- `PMD`などの出力は正常
+-- `javac`タスクの`encoding`を指定しても効果なし
+
+ errorprone:
+     [javac] Compiling 1 source file to C:\jst\ComboBoxItemCopy\target\classes
+     [javac] C:\jst\ComboBoxItemCopy\target\src\example\MainPanel.java:105: �x��:[CatchAndPrintStackTrace] Logging or 
+ rethrowing exceptions should usually be preferred to catching and calling printStackTrace
+     [javac]       ex.printStackTrace();
+     [javac]       ^
+     [javac]     (see https://errorprone.info/bugpattern/CatchAndPrintStackTrace)
+     [javac] �x��1��
+
+- `javac`タスクの子要素に`<compilerarg value="-J-Dfile.encoding=UTF-8" />`を追加すると文字化けは解消された
+-- コンソール出力には`<compilerarg value="-J-Dsun.jnu.encoding=UTF-8" />`が効きそうだが、なぜか効果なし
+
+ errorprone:
+     [javac] Compiling 1 source file to C:\jst\ComboBoxItemCopy\target\classes
+     [javac] C:\jst\ComboBoxItemCopy\target\src\example\MainPanel.java:105: 警告:[CatchAndPrintStackTrace] 
+ Logging or rethrowing exceptions should usually be preferred to catching and calling printStackTrace
+     [javac]       ex.printStackTrace();
+     [javac]       ^
+     [javac]     (see https://errorprone.info/bugpattern/CatchAndPrintStackTrace)
+     [javac] 警告1個
 
 * 参考リンク [#reference]
 - [https://errorprone.info/ Error Prone]

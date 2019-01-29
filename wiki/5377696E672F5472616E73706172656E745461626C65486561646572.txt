@@ -59,6 +59,10 @@ scroll.getColumnHeader().setOpaque(false);
 scroll.getColumnHeader().setBackground(alphaZero);
 }}
 
+-- レンダラーとして使用している`JCheckBox`の揃えを`updateUI()`メソッドをオーバーライドして`setHorizontalAlignment(SwingConstants.CENTER);`で中央に変更していたが、効かなくなっている？
+--- 何時からなのか不明
+--- `getTableCellRendererComponent(...)`中で`setHorizontalAlignment(SwingConstants.CENTER);`を毎回設定して回避
+
 * 参考リンク [#reference]
 - [[JTableを半透明にする>Swing/TransparentTable]]
 - [[JTableHeaderを非表示にする>Swing/RemoveTableHeader]]

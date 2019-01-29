@@ -1,0 +1,105 @@
+---
+category: swing
+folder: SwappingSplitPane
+title: JSplitPaneに設定した子コンポーネントの位置を入れ替える
+tags: [JSplitPane]
+author: aterai
+pubdate: 2019-01-21T00:29:34+09:00
+description: JSplitPaneに設定した子コンポーネントの位置と余分なスペースの配分率を入れ替えます。
+image: https://drive.google.com/uc?export=view&id=1TMNOHO7KVS63zeFEW4xasYw5TX-ZNqTL9w
+---
+* 概要 [#summary]
+`JSplitPane`に設定した子コンポーネントの位置と余分なスペースの配分率を入れ替えます。
+
+#download(https://drive.google.com/uc?export=view&id=1TMNOHO7KVS63zeFEW4xasYw5TX-ZNqTL9w)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JButton button = new JButton("swap");
+button.setFocusable(false);
+button.addActionListener(e -> {
+  Component left = sp.getLeftComponent();
+  Component right = sp.getRightComponent();
+
+  // sp.removeAll(); // Divider is also removed
+  sp.remove(left);
+  sp.remove(right);
+  // or:
+  // sp.setLeftComponent(null);
+  // sp.setRightComponent(null);
+
+  sp.setLeftComponent(right);
+  sp.setRightComponent(left);
+
+  sp.setResizeWeight(1d - sp.getResizeWeight());
+  if (check.isSelected()) {
+    sp.setDividerLocation(sp.getDividerLocation());
+  }
+});
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、水平分割した`JSplitPane`の左右に配置したコンポーネントを入れ替え可能に設定しています。
+
+- すでに`JSplitPane`に配置されているコンポーネントを別の位置に配置すると例外が発生するため、一旦`JSplitPane`から削除する必要がある
+- `JSplitPane#removeAll()`を使用するとディバイダも削除されてしまう
+- `JSplitPane#remove(Component)`、または`JSplitPane#setLeftComponent(null)`などで削除する
+- ディバイダの位置を入れ替え前と同じ場所に保つ場合、`JSplitPane#setResizeWeight(...)`メソッドで余分なスペースの配分率の入れ替えと、`JSplitPane#setDividerLocation(...)`メソッドで位置の再設定が必要になる
+
+----
+- `GridLayout`を設定した`JPanel`などの場合は、以下のように`Container#setComponentZOrder(...)`メソッドでコンポーネントの位置の入れ替えが可能
+
+#code{{
+import java.awt.*;
+import java.awt.event.HierarchyEvent;
+import javax.swing.*;
+
+public class GridLayoutSwapTest {
+  public Component makeUI() {
+
+    JTable table = new JTable(6, 3);
+    // TEST:
+    table.addHierarchyListener(e -> {
+      System.out.println(e.getChangeFlags());
+      if ((e.getChangeFlags() & HierarchyEvent.HIERARCHY_CHANGED) != 0) {
+        System.out.println("JTable HIERARCHY_CHANGED " + e.getChangeFlags());
+      }
+    });
+
+    JPanel p = new JPanel(new GridLayout(1, 0));
+    p.setBorder(BorderFactory.createTitledBorder("GridLayout(1, 0)"));
+    p.add(new JScrollPane(table));
+    p.add(new JScrollPane(new JTree()));
+    // p.add(new JScrollPane(new JTextArea("JTextArea")));
+
+    JButton button = new JButton("swap");
+    button.setFocusable(false);
+    button.addActionListener(e -> {
+      p.setComponentZOrder(p.getComponent(p.getComponentCount() - 1), 0);
+      p.revalidate();
+    });
+
+    JPanel panel = new JPanel(new BorderLayout());
+    panel.add(p);
+    panel.add(button, BorderLayout.SOUTH);
+    return panel;
+  }
+  public static void main(String... args) {
+    EventQueue.invokeLater(() -> {
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      f.getContentPane().add(new GridLayoutSwapTest().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/4871874/java-problem-with-jsplitpane swing - java: Problem with JSplitpane - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

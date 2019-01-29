@@ -19,7 +19,8 @@ JButton button3 = new JButton("JTable tooltips");
 button3.addActionListener(e -> {
   JFileChooser chooser = new JFileChooser();
   Optional.ofNullable(chooser.getActionMap().get("viewTypeDetails"))
-    .ifPresent(a -> a.actionPerformed(null));
+    .ifPresent(a -> a.actionPerformed(
+      new ActionEvent(e.getSource(), e.getID(), "viewTypeDetails")));
   stream(chooser)
     .filter(JTable.class::isInstance)
     .map(JTable.class::cast)

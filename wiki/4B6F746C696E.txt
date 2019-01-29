@@ -5,7 +5,7 @@ author: aterai
 pubdate: 2017-05-31T18:35:21+09:00
 ---
 #contents
-
+ラベル付きReturn
 * 概要 [#summary]
 `Kotlin`で`Swing`コンポーネントを使用するサンプルと、`Java`からの変換に関するメモです。
 
@@ -381,6 +381,66 @@ decode.addActionListener({ e ->
     ex.printStackTrace()
   }
 })
+}}
+#twocolumn
+
+** tryの戻り値 [#TryExpression]
+- `Optional.map(...)`などから`return`で戻り値を返す`Java`コードを`IntelliJ`の自動変換で変換すると、`Return`のラベルがエラーになる`Kotlin`コードに変換される場合がある
+- `Kotlin`では`try`は式で戻り値を持つことが可能なので、ラベル付き`Return`は不要
+- [https://kotlinlang.org/docs/reference/exceptions.html#try-is-an-expression Try is an expression - Exceptions: try, catch, finally, throw, Nothing - Kotlin Programming Language]
+
+#twocolumn
+`Java`
+#code{{
+private static TexturePaint makeImageTexture() {
+  BufferedImage bi = Optional.ofNullable(A.class.getResource("a.png"))
+      .map(url -> {
+        try {
+          return ImageIO.read(url);
+        } catch (IOException ex) {
+          return makeMissingImage();
+        }
+      }).orElseGet(() -> makeMissingImage());
+  return new TexturePaint(bi, new Rectangle(bi.getWidth(), bi.getHeight()));
+}
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+private fun makeImageTexture(): TexturePaint {
+  val bi = Optional.ofNullable(A::class.java!!.getResource("a.png")).map({ url ->
+    try {
+      return@Optional.ofNullable(A.class. getResource "a.png").map ImageIO . read url
+    } catch (ex: IOException) {
+      return@Optional.ofNullable(A.class. getResource "a.png").map makeMissingImage ()
+    }
+  }).orElseGet({ makeMissingImage() })
+  return TexturePaint(bi, Rectangle(bi.getWidth(), bi.getHeight()))
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+private fun makeImageTexture(): TexturePaint {
+  val bi = Optional.ofNullable(A::class.java.getResource("a.png"))
+      .map { url ->
+        try {
+          ImageIO.read(url)
+        } catch (ex: IOException) {
+          makeMissingImage()
+        }
+      }.orElseGet { makeMissingImage() }
+  // Example without using Optional
+  // val bi = A::class.java.getResource("a.png")?.let {
+  //   try {
+  //     ImageIO.read(it)
+  //   } catch (ex: IOException) {
+  //     makeMissingImage()
+  //   }
+  // } ?: makeMissingImage()
+  return TexturePaint(bi, Rectangle(bi.getWidth(), bi.getHeight()))
+}
 }}
 #twocolumn
 
@@ -1809,6 +1869,7 @@ public final class MainPanel extends JPanel {
 #code(lang-kotlin){{
 class MainPanel : JPanel(BorderLayout()) {
   private val spinner = JSpinner()
+  private val spinner: JSpinner? = JSpinner()
   override fun updateUI() {
     super.updateUI()
     val lv = Optional.ofNullable(spinner)
@@ -1825,6 +1886,9 @@ class MainPanel : JPanel(BorderLayout()) {
 
     // Condition 'spinner != null' is always 'true'
     // val lv = if (spinner != null) spinner.getModel().getValue() else 1000L
+
+    // private val spinner: JSpinner? = JSpinner() なら(他の個所もspinner?にすれば)以下でOK
+    // val lv = spinner?.getModel()?.getValue() ?: 1000L
   }
 }}
 #twocolumn

@@ -20,7 +20,7 @@ hreflang:
 #code(link){{
 private void loadFile(String path) {
   try (Stream<String> lines = Files.lines(
-      Paths.get(path), Charset.forName("UTF-8"))) {
+      Paths.get(path), StandardCharsets.UTF_8)) {
     String txt = lines.map(s -> s.replace("&", "&amp;")
                                  .replace("<", "&lt;")
                                  .replace(">", "&gt;"))
