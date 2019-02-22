@@ -18,20 +18,20 @@ description: Java Swing の SwingWorker を Kotlin の Coroutines に置き換�
 group 'Example'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
+// apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
 mainClassName = 'ExampleKt'
 
 buildscript {
-  ext.kotlin_version = '1.3.0'
-  ext.coroutine_version = '1.0.0' // '0.30.2-eap13'
+  // ext.kotlin_version = '1.3.0'
+  // ext.coroutine_version = '1.0.0' // '0.30.2-eap13'
   repositories {
     mavenCentral()
   }
   dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:latest.release"
   }
 }
 
@@ -48,9 +48,9 @@ kotlin {
     mavenCentral()
   }
   dependencies {
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutine_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutine_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:latest.release"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:latest.release"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:latest.release"
   }
 }
 
@@ -59,7 +59,7 @@ repositories {
 }
 
 dependencies {
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:latest.release"
 }
 }}
 
@@ -91,7 +91,7 @@ public class MainPanel extends JPanel {
   };
   public MainPanel() {
     super(new BorderLayout());
-    progress1.setForeground(new Color(0xAAFFAAAA));
+    progress1.setForeground(new Color(0xAAFFAAAA, true));
     progress2.setStringPainted(true);
     progress2.setFont(progress2.getFont().deriveFont(24f));
 

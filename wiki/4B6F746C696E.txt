@@ -168,7 +168,7 @@ enabledCheck.addActionListener({ e ->
 
 `Kotlin`(手動修正)
 #code(lang-kotlin){{
-enabledCheck.addActionListener({ e ->
+enabledCheck.addActionListener {
   val c = SwingUtilities.getAncestorOfClass(JComboBox::class.java, this)
   if (c is JComboBox<*>) {
     val item = c.getItemAt(data.index) as ComboItem
@@ -176,7 +176,7 @@ enabledCheck.addActionListener({ e ->
     editableCheck.setEnabled(item.isEnabled)
     textField.setEnabled(item.isEnabled)
   }
-})
+}
 }}
 
 #twocolumn
@@ -370,7 +370,7 @@ decode.addActionListener({ e ->
 `Kotlin`(手動修正)
 #code(lang-kotlin){{
 val decode = JButton("decode")
-decode.addActionListener({ e ->
+decode.addActionListener {
   val b64 = textArea.getText()
   if (b64.isEmpty()) {
     return@addActionListener
@@ -380,7 +380,7 @@ decode.addActionListener({ e ->
   } catch (ex: IOException) {
     ex.printStackTrace()
   }
-})
+}
 }}
 #twocolumn
 
@@ -518,9 +518,10 @@ fun stream(parent: Container): Stream<Component> {
 import java.util.function.BinaryOperator
 import java.util.function.Predicate
 fun stream(parent: Container): Stream<Component> {
-  return Stream.of(*parent.getComponents())
+  // return Stream.of(*parent.getComponents())
+  return Arrays.asList(parent.getComponents())
     .filter(Container::class.java::isInstance)
-    .map({ c -> stream(Container::class.java.cast(c)) })
+    .map { c -> stream(Container::class.java.cast(c)) }
     // OK: .reduce(Stream.of(parent), BinaryOperator<Stream<Component>>{ a, b -> Stream.concat(a, b) })
     // NG: .reduce(Stream.of(parent), Stream::concat)
     .reduce(Stream.of<Component>(parent), { a, b -> Stream.concat<Component>(a, b) }) // OK
@@ -582,7 +583,7 @@ Arrays.asList(button1, button2).forEach( ?? ? ({ p.add() }))
 `Kotlin`(手動修正)
 #code(lang-kotlin){{
 val p = JPanel(GridLayout(0, 1, 2, 2))
-listOf(button1, button2).forEach({ b -> p.add(b) })
+listOf(button1, button2).forEach { b -> p.add(b) }
 //or listOf(button1, button2).map(p::add)
 }}
 
@@ -621,10 +622,10 @@ Stream.of("A", "B", "C").map(Function<String, JToggleButton> { JToggleButton(it)
 
 `Kotlin`(手動修正)
 #code(lang-kotlin){{
-Stream.of("A", "B", "C").map(::JToggleButton).forEach({ r ->
+Stream.of("A", "B", "C").map(::JToggleButton).forEach { r ->
   p.add(r)
   bg.add(r)
-})
+}
 }}
 #twocolumn
 
@@ -718,9 +719,9 @@ fun main(args: Array<String>) {
     Arrays.asList(15, 20, 31),
     Arrays.asList(27, 33, 59),
     Arrays.asList(27, 35, 77))
-  list.sortWith(Comparator.comparingInt<List<Int>>({ l -> l.get(0) })
-    .thenComparingInt({ l -> l.get(1) })
-    .thenComparingInt({ l -> l.get(2) })
+  list.sortWith(Comparator.comparingInt<List<Int>> { l -> l.get(0) }
+    .thenComparingInt { l -> l.get(1) }
+    .thenComparingInt { l -> l.get(2) }
     .reversed())
   System.out.println(list)
 }
@@ -761,6 +762,26 @@ editor2.setSelectionColor(new Color(0x6488AAAA, true)); // IntelliJで自動変�
 #code(lang-kotlin){{
 editor1.setSelectionColor(Color(0x64_88_AA_AA, true)) // 問題なし
 editor2.setSelectionColor(Color(0x6488AAAA, true)) // 問題なし
+}}
+
+#twocolumn
+
+** int、Int、UInt [#u8a99b06]
+- `Java`では例えば`-1`を`0xFFFFFFFF`のような`16`進数表記でも表現可能だが、`Kotlin`では`error: the integer literal does not conform to the expected type Int`とエラーになるため、`IntelliJ`の自動変換ではマイナス付の表記に自動変換される
+- [https://stackoverflow.com/questions/47462793/java-integer-max-value-vs-kotlin-int-max-value Java Integer.MAX_VALUE vs Kotlin Int.MAX_VALUE - Stack Overflow]
+
+#twocolumn
+`Java`
+#code{{
+Color argb = new Color(0xffaabbcc, true);
+Color rgb = new Color(0xaabbcc);
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+val argb = Color(-0x554434, true)
+val rgb = Color(0xaabbcc)
 }}
 
 #twocolumn
@@ -1686,9 +1707,9 @@ internal class CheckBoxNode public constructor(val text: String, val selected: B
 #twocolumn
 
 ** Optional [#Optional]
-- `Optional#orElse(...)`は、`let {...} ?: ...`に変換
+- `Optional#orElse(...)`は、`let {...} ?: ...`に変換可能
 -- `Integer stepSize = Optional.ofNullable(stepSizeMap.get(calendarField)).orElse(1);`
--- `val stepSize = stepSizeMap.get(calendarField).let { it } ?: 1`
+-- `val stepSize = stepSizeMap.get(calendarField) ?: 1`
 - 例えば`SpinnerDateModel#getNextValue(...)`メソッドを`override fun getNextValue(): Object = Calendar.getInstance().apply { ...`のように変換すると、`error: type mismatch: inferred type is Date! but Object was expected`とエラーになる
 - `override fun getNextValue(): Any = Calendar.getInstance().apply { ...`と`Any`を使用するようオーバーライドする必要がある
 - `Date!`は、`Date`もしくは`Date?`の意味

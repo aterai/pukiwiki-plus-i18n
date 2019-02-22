@@ -10,9 +10,9 @@ description: JRubyからリソース(URL)のエントリを取得する方法を
 * 概要 [#b0558335]
 以下、`JRuby`からリソース(`URL`)のエントリを取得して`Swing`で使う方法をテストしています。
 
-- [http://d.hatena.ne.jp/aterai/20071106 2007-11-06 - てんぷらメモ@はてな]から、こちらに移動
+// - [http://d.hatena.ne.jp/aterai/20071106 2007-11-06 - てんぷらメモ@はてな]から、こちらに移動
 
-* サンプルコード [#da146249]
+* サンプルコード [#sourcecode]
 - https://ateraimemo.com/data/jruby/resources.rb
 -- 画像は適当に用意してください。
 
@@ -82,7 +82,7 @@ end
 java.awt.EventQueue.invokeLater r
 }}
 
-** URLからImageIconを生成 [#m3e2dbf6]
+** URLからImageIconを生成 [#URL]
 `JRuby`で、カレントディレクトリにあるリソース(`test.png`)を使用する場合は、以下のようにファイル名で、`Swing`の`ImageIcon`を生成することができます。
 
 #code{{
@@ -97,7 +97,7 @@ url = java.net.URL.new "https://ateraimemo.com/data/swing/screenshots.png"
 icon = javax.swing.ImageIcon.new url
 }}
 
-* 位置に依存しない方法でリソースにアクセスしてImageIconを生成 [#x3d74df5]
+* 位置に依存しない方法でリソースにアクセスしてImageIconを生成 [#CLASSPATH]
 次に、ローカルにあるリソースを使う方法を試してみます。
 
 このとき位置に依存しない方法でリソースへアクセスするため、クラスパスをルートとするエントリで`URL`を生成します。`jruby.bat`では、クラスパスに環境変数`CLASSPATH`を使用するようなので、カレントディレクトリにクラスパスを通し、そこに`test.png`を置いて実行します。
@@ -117,7 +117,7 @@ icon = javax.swing.ImageIcon.new url
 `JRuby`からでも、この方法でリソース(`URL`)を取得することができました。
 - 注: `self.get_class.get_resource`の`get`を省略不可
 
-* jar(zip)アーカイブ内にあるリソースからImageIconを生成 [#waa13e2c]
+* jar(zip)アーカイブ内にあるリソースからImageIconを生成 [#JAR]
 同じ方法で、`jar`(`zip`)アーカイブ内にあるリソースを取得する方法を確認します。
 
 クラスパスを`jar`(`zip`)アーカイブに通せば、その中にあるリソースへのエントリを与えることで、ディレクトリなどにあるリソースと同様に`URL`を取得することができます。例えば、[http://java.sun.com/developer/techDocs/hi/repository/ Java look and feel Graphics Repository]にある、`jlfgr-1_0.jar`をダウンロードして、そのまま展開せずにカレントディレクトリに置き、`/toolbarButtonGraphics/general/Copy24.gif`を利用します。
@@ -147,7 +147,7 @@ url = self.get_class.class_loader.get_resource "toolbarButtonGraphics/general/Co
 url = java.net.URL.new "jar:file:jlfgr-1_0.jar!/toolbarButtonGraphics/general/Copy24.gif"
 }}
 
-* 位置に依存しない方法でリソースにアクセスしてImageIconを生成2 [#cbe0e109]
+* 位置に依存しない方法でリソースにアクセスしてImageIconを生成2 [#getResource]
 最後に、`url = this.getClass().getResource("test.png");`と、相対パス風に先頭に`/`が無いエントリを与えた場合の方法を試します。
 
 頭に`/`が無い場合、クラスファイルと同じディレクトリ階層にリソースをおくと便利になるように、`getClass().getResource()メソッド`は、`.`を`/`に変換された、`modified_package_name`が名前(`test.png`)の前に補完されます。
@@ -171,13 +171,13 @@ url = self.get_class.get_resource "test.png"
 
 と`URL`が取得できます。
 
-* まとめ [#h6359289]
+* まとめ [#summary]
 以上、`Java`の場合とほとんど同じ方法が使えますが、ローカルにあるシステムリソースを取得したい場合、`JRuby`では先頭に`/`が付いた`ClassPath`からのエントリを使うほうが、すっきりうまくいきそうです。
 
-* 参考リンク [#x1f3d4a5]
+* 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/lang/resources.html 位置に依存しない方法でのリソースへのアクセス]
 - [http://www.oki-osk.jp/esc/ruby/tut-08.html Ruby チュートリアル - 8. JRuby から Java へのアクセス]
 
-* コメント [#z74eaa06]
+* コメント [#comment]
 #comment
 #comment

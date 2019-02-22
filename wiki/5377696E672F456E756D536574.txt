@@ -21,7 +21,7 @@ hreflang:
 enum Permissions { EXECUTE, WRITE, READ; }
 
 Object[][] data = {
-  {"owner", EnumSet.of(Permissions.READ, Permissions.WRITE, Permissions.EXECUTE)},
+  {"owner", EnumSet.allOf(Permissions.class)},
   {"group", EnumSet.of(Permissions.READ)},
   {"other", EnumSet.noneOf(Permissions.class)}
 };

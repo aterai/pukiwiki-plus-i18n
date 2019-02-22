@@ -1,0 +1,75 @@
+---
+category: swing
+folder: VisibilityOfTab
+title: JTabbedPaneのスクロールレイアウトポリシーですべてのタブが非表示にならないよう設定する
+tags: [JTabbedPane, JViewport]
+author: aterai
+pubdate: 2019-02-04T15:52:56+09:00
+description: JTabbedPaneをスクロールタブレイアウトポリシーにしたとき、すべてのタブが非表示になる状態を回避するための方法をテストしています。
+image: https://drive.google.com/uc?id=1nbZldZvy1sewRvGKvkWQ79-msQqacTj9Iw
+---
+* 概要 [#summary]
+`JTabbedPane`をスクロールタブレイアウトポリシーにしたとき、すべてのタブが非表示になる状態を回避するための方法をテストしています。
+
+#download(https://drive.google.com/uc?id=1nbZldZvy1sewRvGKvkWQ79-msQqacTj9Iw)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTabbedPane tabs = new JTabbedPane() {
+  @Override public void removeTabAt(int index) {
+    if (getTabCount() > 0) {
+      setSelectedIndex(0);
+      super.removeTabAt(index);
+      setSelectedIndex(index - 1);
+    } else {
+      super.removeTabAt(index);
+    }
+  }
+};
+tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+tabs.addTab("00000000", new JLabel("0"));
+tabs.addTab("11111111", new JLabel("1"));
+tabs.addTab("22222222", new JLabel("2"));
+tabs.addTab("33333333", new JLabel("3"));
+tabs.addTab("44444444", new JLabel("4"));
+tabs.addTab("55555555", new JLabel("5"));
+tabs.addTab("66666666", new JLabel("6"));
+tabs.addTab("77777777", new JLabel("7"));
+tabs.addTab("88888888", new JLabel("8"));
+tabs.addTab("99999999", new JLabel("9"));
+// TEST: tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+tabs.setSelectedIndex(tabs.getTabCount() - 1);
+// TEST: tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+// // TEST:
+// EventQueue.invokeLater(() -> {
+//   tabs.setSelectedIndex(tabs.getTabCount() - 1);
+//   // tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+// });
+}}
+
+* 解説 [#explanation]
+- 上段
+-- `JTabbedPane.SCROLL_TAB_LAYOUT`を設定した`JTabbedPane`
+-- `JTabbedPane`を表示状態である親コンポーネントに配置していない状態で末尾のタブを選択状態に設定しているため、このサンプルでは`9`のタブのみが表示されている
+--- `EventQueue.invokeLater(...)`などを使用してすでに表示された親コンポーネントに配置された後で`JTabbedPane#setSelectedIndex(...)`を使用すれば回避可能
+--- その場合は、`5`から`9`のタブが表示状態になる
+-- タブを追加した後で、`JTabbedPane#setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT)`に変更すると`0`から`4`のタブが表示状態になる
+--- ただしその後に`tabs.setSelectedIndex(tabs.getTabCount() - 1)`で末尾のタブを選択すると`9`のタブのみが表示状態になる
+-- `9`のタブのみが表示されている状態でその末尾の`9`のタブを削除すると、すべてのタブが非表示状態になる
+- 中段
+-- `JTabbedPane#removeTabAt(...)`をオーバーライドし、タブの削除前に一旦先頭タブを選択、タブ削除、末尾タブを選択するとこで上記のようなすべてのタブが非表示状態になることを回避
+--- 非表示状態のタブを`TabbedPane.setSelectedIndex(...)`で選択しても表示状態にならない？
+-- `WindowsLookAndFeel`で末尾タブが選択されると上記のスクリーンショットのようにタブ右端がスクロールボタンに掛かって途切れたような表示になる場合がある(`MetalLookAndFeel`などでは発生しない)
+- 下段
+-- `JTabbedPane#removeTabAt(...)`をオーバーライドし、タブの削除前に一旦先頭タブまでスクロール、タブ削除、末尾タブまでスクロールするとこで上記のようなすべてのタブが非表示状態になることを回避
+-- スクロールしているだけなので、タブの選択状態は変化しない
+-- スクロールは、コンポーネント名が`TabbedPane.scrollableViewport(...)`の`JViewport`を取得して`JComponent#scrollRectToVisible(...)`メソッドを使用
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのTabAreaをスクロール>Swing/ScrollTabToVisible]]
+- [[JComponentの表示状態>Swing/ShowingDisplayableVisible]]
+- [https://stackoverflow.com/questions/54461567/scroll-remaining-tabs-to-visible-after-tab-removal-from-a-scroll-tab-layout-jtab java - Scroll remaining tabs to visible after tab removal from a SCROLL_TAB_LAYOUT JTabbedPane - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

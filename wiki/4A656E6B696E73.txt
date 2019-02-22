@@ -10,6 +10,16 @@ pubdate: 2017-06-02T13:06:40+09:00
 `Jenkins`の設定、トラブルに関するメモなどを記述しています。
 
 * トラブル [#wf632491]
+** Git plugin 変更履歴がすべて「%B」 [#c8ef7a52]
+- 2019-02-01: `Jenkins ver. 2.150.2`で変更履歴のメッセージがすべて`%B`になってしまう？
+-- `2.163`では発生していないが、これは無関係かも？
+-- コミットメッセージに日本語は入っていないので、文字化けではないはず
+-- `Git client plugin`を`3.0.0rc`から`2.7.6`、`Git plugin`を`4.0.0rc`から`3.9.2`にダウングレードすることで一応は回復した
+-- `CentOS release 6.10`にインストールされている`git`のバージョンを`1.7.1`から`2.1.8`に上げたら`Git client plugin`を`3.0.0rc`、`Git plugin`を`4.0.0rc`に更新しても問題なく更新履歴が表示されるようになった
+-- メモ: [https://issues.jenkins-ci.org/browse/JENKINS-53004 JENKINS-53004 checkout fails due to issue with JGit 5.0.2 (in 3.0.0.beta-5) - Jenkins JIRA]
+
+#img2(https://drive.google.com/uc?id=1fZOX2scyAp3r3CcH35KKm5O4tQXtxBKDcQ)
+
 ** JellyTagException [#pd1dc370]
 - 2018-11-20: プラグインをアップデートすると`Jenkins`の画面全体にスタックトレース(何故か右から左に文字が流れている)が表示かつ断続的にリロードされてなにも操作できなくなる
 #code{{

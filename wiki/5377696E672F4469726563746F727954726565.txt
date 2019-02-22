@@ -25,7 +25,7 @@ class FolderSelectionListener implements TreeSelectionListener {
     final DefaultMutableTreeNode node =
       (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
     final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-    //final TreePath path = e.getPath();
+    // final TreePath path = e.getPath();
 
     if (!node.isLeaf()) return;
     final File parent = (File) node.getUserObject();
@@ -46,7 +46,7 @@ class FolderSelectionListener implements TreeSelectionListener {
           node.add(new DefaultMutableTreeNode(file));
         }
         model.nodeStructureChanged(node);
-        //tree.expandPath(path);
+        // tree.expandPath(path);
       }
     };
     worker.execute();
@@ -57,8 +57,7 @@ class FolderSelectionListener implements TreeSelectionListener {
 * 解説 [#explanation]
 このサンプルでは、[https://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]のディレクトリ表示部分を抜き出して、ルートパーティション(`Windows`の場合、`Desktop`フォルダ)をルートノードにして`JTree`で表示しています。
 
-- 注:
--- クリックされたノードがディレクトリの場合、子ファイルの検索と`JTree`へのそれらの追加を`SwingWorker`を使用して別スレッドで実行するよう変更
+- クリックされたノードがディレクトリの場合、子ファイルの検索と`JTree`へのそれらの追加を`SwingWorker`を使用して別スレッドで実行するよう変更
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/filechooser/FileSystemView.html FileSystemView (Java Platform SE 8)]

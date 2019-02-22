@@ -5,11 +5,11 @@ author: aterai
 pubdate: 2012-07-19
 ---
 #contents
-* 概要 [#h838d289]
+* 概要 [#summary]
 - このページは`JRuby`で作成した`Swing`を使用するサンプルの一覧です。
 //-- [[JRuby+Swing - てんぷらメモ@はてな>http://d.hatena.ne.jp/aterai/searchdiary?word=%2a%5bJRuby%5d]]から移動。
 
-** 環境変数 [#y31154ab]
+** 環境変数 [#JRUBY_HOME]
 環境変数`JAVA_HOME`, `JRUBY_HOME`を設定し、パスを通しておく。
  > set JAVA_HOME=C:\Program Files\Java\jdk1.7.0_04
  > set JRUBY_HOME=C:\jruby-1.7.0
@@ -17,8 +17,8 @@ pubdate: 2012-07-19
  > jruby -version
  jruby 1.7.0 (1.9.3p203) 2012-10-22 ff1ebbe on Java HotSpot(TM) 64-Bit Server VM 1.7.0_09-b05 [Windows 7-amd64]
 
-* Swing + JRuby サンプル [#f4745b09]
-** EDT で起動(JFrameを表示) [#y2f124bd]
+* Swing + JRuby サンプル [#sourcecode]
+** EDT で起動(JFrameを表示) [#JFrame]
 - `Swing`のコンポーネントは`Event Dispatch Thread`上で扱う必要があるので、以下のサンプルでは、`self`が`java.lang.Runnable`の`run`メソッドを実装し、`java.awt.EventQueue.invokeLater`で実行している
 - `require "java"`より`include Java`が良い？
 - %%`import`より`java_import javax.swing.JLabel`が良い？%%
@@ -26,17 +26,17 @@ pubdate: 2012-07-19
 
 #gist(6579373)
 
-** 例外処理の記述方法(SystemLookAndFeelの設定) [#ef47fd0c]
+** 例外処理の記述方法(SystemLookAndFeelの設定) [#Exception]
 - `SystemLookAndFeel`を設定する際の例外処理を、`begin rescue`で記述する
 
 #gist(6579399)
 
-** クラスの継承(JPanelを継承) [#ga5f4479]
+** クラスの継承(JPanelを継承) [#extend]
 - `class MainPanel < JPanel`
 
 #gist(6579429)
 
-** 無名インナークラス(JButtonにActionListenerを追加) [#vc5b32ac]
+** 無名インナークラス(JButtonにActionListenerを追加) [#AnonymousClasses]
 - リスナーを`JButton`に設定し、クリックすると`JTextField`に文字を追加
 -- [http://jira.codehaus.org/browse/JRUBY-903 #JRUBY-903 Java interface modules - jira.codehaus.org]
 -- [http://jira.codehaus.org/browse/JRUBY-991 #JRUBY-991 Auto java interface coercion for vanilla ruby objects - jira.codehaus.org]
@@ -47,7 +47,7 @@ pubdate: 2012-07-19
 
 #gist(6579457)
 
-** インタフェースの実装(MouseListenerを追加) [#sbceeeb6]
+** インタフェースの実装(MouseListenerを追加) [#Interface]
 - `java_implements`はもう使用できない？
 -- 代わりに: `class MainPanel < JPanel; include MouseListener`
 -- カンマ区切りで複数指定しても可: `class MainPanel < JPanel; include MouseListener, ActionListener`
@@ -56,7 +56,7 @@ pubdate: 2012-07-19
 
 #gist(6579526)
 
-** オーバーライドしたメソッドでsuperクラスのメソッドを呼び出すと例外が発生する [#l5cc4e22]
+** オーバーライドしたメソッドでsuperクラスのメソッドを呼び出すと例外が発生する [#Override]
  Exception in thread "AWT-EventQueue-0" org.jruby.exceptions.RaiseException: (NoMethodError) undefined method `paintComponent' for nil:NilClass
 
 - 参考: [http://markmail.org/message/oxpqjwpfo74fdr3j Re jruby-user Error when calling protected method paintComponent in Java Swing superclass - Bill Dortch - org.codehaus.jruby.user - MarkMail]
@@ -67,12 +67,12 @@ pubdate: 2012-07-19
 
 #gist(6579618)
 
-** 配列(JTableに行追加) [#x41f0fcd]
+** 配列(JTableに行追加) [#Array]
 - `["No.", "Name", "Path"].to_java`で`ruby`の配列を`java`の配列に変換して、`JTable`の行を追加
 
 #gist(6579639)
 
-** protected なメソッドをオーバーライドして使用 [#ye59d71e]
+** protected なメソッドをオーバーライドして使用 [#protected]
 - `protected`なメソッドをオーバーライドして使用できなかった
 -- `JRuby 1.2.0`で修正？
 --- [http://jira.codehaus.org/browse/JRUBY-2861 JRUBY-2861 Cannot call super inside a method that overrides a protected method on Java base class]
@@ -86,7 +86,7 @@ pubdate: 2012-07-19
 ** JRubyでリソース(URL)のエントリを取得してSwingで使用する [#cd7f9169]
 - [[JRubyでリソース(URL)のエントリを取得してSwingで使用する>JRuby/Resource]]
 
-** ソースコードの文字コード(エンコーディング) [#k09b3d13]
+** ソースコードの文字コード(エンコーディング) [#encoding]
 - `1.7.0`以前？は、`*.rb`の文字コードは`UTF-8`固定だった？
 - `1.7.0`から？は、ソースコードの先頭にマジックコメント
 -- [http://d.hatena.ne.jp/Artisan/20110409/1302326813 Ruby1.9にしたら invalid multibyte char (US-ASCII) - 屑プログラマの憂鬱]
@@ -119,12 +119,12 @@ end
 java.awt.EventQueue.invoke_later self
 }}
 
-* その他、JRuby + One-Liner などのサンプル [#j67b4b82]
+* その他、JRuby + One-Liner などのサンプル [#OneLiner]
 
-** JRuby One-Liner で、UIManagerのDefaults.keySetを一覧表示する [#zdaf3499]
+** JRuby One-Liner で、UIManagerのDefaults.keySetを一覧表示する [#UIManager]
  > jruby -rjava -e "javax.swing.UIManager.lookAndFeelDefaults.keySet.each{|o| puts o}"
 
-** One-Liner での文字コード [#ze146211]
+** One-Liner での文字コード [#CodePoint]
  > chcp
  現在のコード ページ: 932
 
@@ -142,7 +142,7 @@ java.awt.EventQueue.invoke_later self
 
 - 参考: [http://jp.rubyist.net/magazine/?0025-Ruby19_m17n Rubyist Magazine - Ruby M17N の設計と実装]
 
-** Unixtimeをiso8601形式の文字列に変換 [#x2a16868]
+** Unixtimeをiso8601形式の文字列に変換 [#TIME]
  > jruby -pe "gsub(/^[0-9]+/) {|x| Time.at(x.to_i)}" cache/recent.dat
  2014-09-08 14:31:51 +0900       JRuby/PukiWiki2Markdown
  ...
@@ -150,7 +150,7 @@ java.awt.EventQueue.invoke_later self
  2014-09-08T14:31:51+09:00       JRuby/PukiWiki2Markdown
  ...
 
-** JRuby 1.7.0.preview1 でArgumentErrorが発生する場合 [#n2494e41]
+** JRuby 1.7.0.preview1 でArgumentErrorが発生する場合 [#ArgumentError]
 - `JRuby 1.7.0.preview1`で以下のような`ArgumentError`が発生する場合、`-J-Dfile.encoding=UTF-8`を指定？
 -- `set LANG=ja_JP.UTF-8`は、`JRuby`では効果がない？
 -- %% `-J-Dfile.encoding=UTF-8`は`-E UTF-8`と同じ？%%
@@ -191,7 +191,7 @@ lines = src.rstrip.split(/\r?\n/).map {|line| line.chomp }
  wiki/2011-07-18-swing-listmouseselection.markdown
  ...
 
-** JRuby で PukiWiki のファイル名をデコード [#v3f63eba]
+** JRuby で PukiWiki のファイル名をデコード [#PukiWikiFileName]
 - 参考: [http://homepage1.nifty.com/~tetsu/ruby/cmd/ll.html Ruby: ll (ls -l) command (Japanese)]
 
 #code{{
@@ -209,24 +209,24 @@ end
  > ls *.txt | jruby decode.rb
  > ls *.txt | jruby -pe "$_.gsub!(/[A-F\d]{2}/) {|x| [x.hex].pack('C*')}"
 
-** JRuby で PukiWiki のファイル名にエンコード [#h1c5ccdd]
+** JRuby で PukiWiki のファイル名にエンコード [#PukiWikiFileEncode]
  > jruby -pe 'gsub(/^([0-9]+)\t(.+)$/){[$1,$2.gsub(/./){|x|x.ord.to_s(16).upcase}].join("\t")}' cache/recent.dat
 
-** PukiWiki形式のテキストをMarkdown形式のファイルに変換する [#ce127298]
+** PukiWiki形式のテキストをMarkdown形式のファイルに変換する [#PukiWikiMarkdown]
 [[PukiWiki形式のテキストをMarkdown形式のファイルに変換する>JRuby/PukiWiki2Markdown]]に移動
 
-** PukiWiki形式のテキストをWiki形式(Google Project Hosting)のファイルに変換する [#xc0d624b]
-- [[PukiWiki形式のテキストをMarkdown形式のファイルに変換する>JRuby/PukiWiki2Markdown]]を改変して、`PukiWiki`形式のテキストファイルを、`Google Project Hosting`の`Wiki`形式ファイルに変換
+// ** PukiWiki形式のテキストをWiki形式(Google Project Hosting)のファイルに変換する [#xc0d624b]
+// - [[PukiWiki形式のテキストをMarkdown形式のファイルに変換する>JRuby/PukiWiki2Markdown]]を改変して、`PukiWiki`形式のテキストファイルを、`Google Project Hosting`の`Wiki`形式ファイルに変換
+// 
+//  jruby -E UTF-8 p2w.rb ./wiki ../java-swing-tips-wiki
+// 
+// - [https://ateraimemo.com/data/jruby/p2w.rb  p2w.rb]
+// -- https://code.google.com/p/java-swing-tips/w/list
+// -- [http://code.google.com/p/support/wiki/WikiSyntax WikiSyntax - support - The reference to the wiki syntax for Google Code projects - User support for Google Project Hosting - Google Project Hosting]
+// -- どちらも`Wiki`なので、変換はとても簡単
+// -- `ArrowButton`, `BorderFactory`などが自動リンクになってしまう
 
- jruby -E UTF-8 p2w.rb ./wiki ../java-swing-tips-wiki
-
-- [https://ateraimemo.com/data/jruby/p2w.rb  p2w.rb]
--- https://code.google.com/p/java-swing-tips/w/list
--- [http://code.google.com/p/support/wiki/WikiSyntax WikiSyntax - support - The reference to the wiki syntax for Google Code projects - User support for Google Project Hosting - Google Project Hosting]
--- どちらも`Wiki`なので、変換はとても簡単
--- `ArrowButton`, `BorderFactory`などが自動リンクになってしまう
-
-** PukiWikiのbackupファイルから、公開日時を取得する [#h6552595]
+** PukiWikiのbackupファイルから、公開日時を取得する [#PukiWikiBkup]
 - `PukiWiki`の`backup`フォルダ以下にある`.gz`ファイルから、そのファイルの公開日時を取得する
 -- 一行目から`Unixtime`を取得しているだけなので、履歴が`$maxage`を超えている場合は不正確になる
 
@@ -252,11 +252,11 @@ Dir::foreach(path) do |f|
 end
 }}
 
-* リンク [#f74d094d]
+* 参考リンク [#reference]
 - [http://www.rubyinside.com/jruby-swt-future-cross-platform-ruby-desktop-app-development-298.html JRuby + SWT = Future Cross Platform Ruby Desktop App Development?]
 -- `JRuby` + `SWT`サンプル
 -- via [http://www.javalobby.org/java/forums/t84113.html:title=Frankengui? Using SWT and Ruby for your GUIs]
 
-* コメント [#id3843ca]
+* コメント [#comment]
 #comment
 #comment

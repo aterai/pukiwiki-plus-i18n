@@ -55,10 +55,11 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRw-M85QI/AAAAAAAAAhs/BF
 * 解説 [#explanation]
 上記のサンプルでは、ツールバーやポップアップメニューから、移動、リサイズ可能な`JTable`や`JTree`を`JLayeredPane`(`JLayeredPane`のデフォルトレイアウトマネージャは`null`)に追加できます。
 
-リサイズボーダーの描画などは、[http://www.jroller.com/santhosh/entry/resizable_components Resizable Components - Santhosh Kumar's Weblog]から、マウスのドラッグによる移動、リサイズの最大値、最小値の制限などは、`%JAVA_HOME%/src/javax/swing/plaf/basic/BasicInternalFrameUI.java`からの引用です。
+- リサイズボーダーの描画などは、[http://www.jroller.com/santhosh/entry/resizable_components Resizable Components - Santhosh Kumar's Weblog]を参考
+- マウスのドラッグによる移動、リサイズの最大値、最小値の制限などは、`%JAVA_HOME%/src/javax/swing/plaf/basic/BasicInternalFrameUI.java`からの引用
 
 ----
-`JDK1.5`では、`JLayeredPane#setComponentPopupMenu`を使う場合、以下のようにダミーのマウスリスナーなどを追加しておく必要があります。
+- `JDK1.5`では、`JLayeredPane#setComponentPopupMenu`を使う場合、以下のようにダミーのマウスリスナーなどを追加しておく必要がある
 
 #code{{
 layer.setComponentPopupMenu(new MyPopupMenu());
@@ -66,7 +67,7 @@ layer.addMouseListener(new MouseAdapter() {});
 }}
 
 ----
-`JDK1.6`では、背面にある`JTable`のヘッダが前面にロールオーバーしてしまいます。
+- `JDK1.6`では、背面にある`JTable`のヘッダが前面にロールオーバーする場合がある
 
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRzAZnaVI/AAAAAAAAAhw/t9TWz3YYv6U/s800/ResizableComponents1.png)
 
