@@ -95,11 +95,11 @@ private static AbstractButton makeButton(String title, Action action) {
 --- [[OverlayLayoutの使用>Swing/OverlayLayout]]
 --- レイアウトマネージャーは`GridBagLayout`を使用し、追加する`JButton`は左右は右端、上下は中央になるよう設定
 --- [[GridBagLayoutの使用>Swing/GridBagLayout]]
-- `JPanel`
+- `JPanel`(`JMenuItem`内に右揃えで配置)
 -- レイアウトを`GridLayout`に変更して同じサイズの`JButton`を複数配置
 -- `JPanel#getMaximumSize()`をオーバーライドして、`JPanel#getPreferredSize()`と同じサイズを返すよう変更
 -- [[JButtonの高さを変更せずに幅を指定>Swing/ButtonWidth]]
-- `JButton`
+- `JButton`(`JPanel`内に`3`個同幅で配置)
 -- `DefaultEditorKit.CopyAction()`などで、`Action`を設定
 -- 左右両端に配置された`JButton`のフチのラウンドなどは、`Icon`を生成して描画
 --- [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]

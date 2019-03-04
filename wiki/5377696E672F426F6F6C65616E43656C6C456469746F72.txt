@@ -30,7 +30,7 @@ JTable table = new JTable(model) {
 
 * 解説 [#explanation]
 - 上: デフォルト
--- セルをクリックして編集状態になると`CellEditor`として、背景色が白の`JCheckBox`が表示される
+-- セルをクリックして編集状態になると`CellEditor`として、背景色が`JTable`と同じ白色になった`JCheckBox`が表示される
 - 下: `JTable#getSelectionBackground()`
 -- `BooleanCellEditor`として使用する`JCheckBox`の背景色が常に`JTable#getSelectionBackground()`になるように`JTable#prepareEditor(...)`メソッドをオーバーライド
 

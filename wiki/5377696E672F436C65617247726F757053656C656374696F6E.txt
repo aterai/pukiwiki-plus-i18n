@@ -15,19 +15,20 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTJDUnsHFI/AAAAAAAAATw/gk
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final ButtonGroup bg = new ButtonGroup();
-List<? extends AbstractButton> l = new ArrayList<>();
-l.add(new JRadioButton("RadioButton1"));
-l.add(new JRadioButton("RadioButton2"));
-l.add(new JToggleButton(icon));
+List<? extends AbstractButton> l = Arrays.asList(
+  new JRadioButton("RadioButton1"),
+  new JRadioButton("RadioButton2"),
+  new JToggleButton(icon));
+ButtonGroup bg = new ButtonGroup();
 for (AbstractButton b: l) {
-  bg.add(b); add(b);
+  bg.add(b);
+  add(b);
 }
-add(new JButton(new AbstractAction("clearSelection") {
-  @Override public void actionPerformed(ActionEvent e) {
-    bg.clearSelection();
-  }
-}));
+
+JButton button = new JButton("clearSelection");
+button.addActionListener(e -> {
+  bg.clearSelection();
+});
 }}
 
 * 解説 [#explanation]

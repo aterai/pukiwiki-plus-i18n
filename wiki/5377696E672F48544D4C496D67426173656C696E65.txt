@@ -77,9 +77,9 @@ protected void setPropertiesFromAttributes() {
   //...
 }}
 - 下
--- `ImageView#getAlignment(...)`をオーバーライドして、`vertical-align`を直接指定する`HTMLFactory`を作成し、`HTMLEditorKit#getViewFactory()`で使用するよう設定
+-- `ImageView#getAlignment(...)`メソッドをオーバーライドして、`vertical-align`を直接指定する`HTMLFactory`を作成し、`HTMLEditorKit#getViewFactory()`メソッドで使用するよう設定
 -- 上記のサンプルでは、画像サイズをデフォルトフォントのサイズと同じに設定し、ベースラインも同じ値を使用するよう固定している
--- デフォルトの`HTMLEditorKit`のフォントとは異なるフォントが使用される？
+// -- デフォルトの`HTMLEditorKit`のフォントとは異なるフォントが使用される？
 
 * 参考リンク [#reference]
 - [https://bugs.openjdk.java.net/browse/JDK-5094219 JDK-5094219 JEditorPane doesn't recognize CSS vertical-align property - Java Bug System]
