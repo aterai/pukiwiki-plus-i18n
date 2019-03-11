@@ -21,6 +21,7 @@ pubdate: 2017-05-31T18:35:21+09:00
 * `IntelliJ`の自動変換 [#IntelliJ]
 - メニューの`Code`, `Convert Java File to Kotlin File`(KBD{Ctrl+Alt+Shift+K})で、`Java`のソースコードを`Ktolin`のソースコードに変換可能
 -- `Hoge.java`を変換すると`Hoge.kt`が生成されて、`Hoge.java`は削除されてしまうので注意が必要
+- `File`メニュー、`Project Structure`パネルの`Project SDK`が`<No SDK>`になっていると、`@Override`が`override`に変換されない場合がある
 
 ** 演算子の優先順位 [#precedence]
 - 以下のようなソースコードを`IntelliJ`で自動変換した場合、論理演算子の左シフト(`<<`)は`shl`に変換され、また`and`の優先順位が異なるので括弧が減る
