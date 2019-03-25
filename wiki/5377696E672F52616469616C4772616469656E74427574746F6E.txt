@@ -1,0 +1,80 @@
+---
+category: swing
+folder: RadialGradientButton
+title: JButtonのホバーエフェクトを円放射状グラデーションで表現する
+tags: [JButton, RadialGradientPaint, Animation, Graphics]
+author: aterai
+pubdate: 2019-03-18T18:04:38+09:00
+description: JButtonのホバーエフェクトとして円放射状グラデーションのアニメーションを実行します。
+image: https://drive.google.com/uc?id=1Qz_LOeUGxuzVCL6hdpYVyJF44f442OzRmA
+---
+* 概要 [#summary]
+`JButton`のホバーエフェクトとして円放射状グラデーションのアニメーションを実行します。
+
+#download(https://drive.google.com/uc?id=1Qz_LOeUGxuzVCL6hdpYVyJF44f442OzRmA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+protected void update() {
+  if (!getBounds().equals(base)) {
+    base = getBounds();
+    int w = getWidth();
+    int h = getHeight();
+    if (w > 0 && h > 0) {
+      buf = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+    }
+    shape = new RoundRectangle2D.Double(
+      0, 0, w - 1, h - 1, ARC_WIDTH, ARC_HEIGHT);
+  }
+  if (buf == null) {
+    return;
+  }
+
+  Graphics2D g2 = buf.createGraphics();
+  g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                      RenderingHints.VALUE_ANTIALIAS_ON);
+  Color c1 = new Color(0x00_F7_23_59, true);
+  Color c2 = new Color(0x64_44_05_F7, true);
+
+  g2.setComposite(AlphaComposite.Clear);
+  g2.fillRect(0, 0, getWidth(), getHeight());
+
+  g2.setComposite(AlphaComposite.Src);
+  g2.setPaint(new Color(getModel().isArmed() ? 0xFF_AA_AA : 0xF7_23_59));
+  g2.fill(shape);
+
+  if (radius > 0) {
+    int cx = pt.x - radius;
+    int cy = pt.y - radius;
+    int r2 = radius + radius;
+    float[] dist = { 0f, 1f };
+    Color[] colors = { c2, c1 };
+    g2.setPaint(new RadialGradientPaint(pt, r2, dist, colors));
+    g2.setComposite(AlphaComposite.SrcAtop);
+    // g2.setClip(shape);
+    g2.fill(new Ellipse2D.Double(cx, cy, r2, r2));
+  }
+  g2.dispose();
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、`JButton#paintComponent(...)`メソッドをオーバーライドして角丸矩形の`JButton`を描画し、ホバーエフェクトとして`Timer`で半径が増減する`Ellipse2D`図形を`RadialGradientPaint`で塗りつぶしています。
+
+- 上: `setClip`
+-- `Graphics2D#setClip(...)`メソッドで円放射状グラデーションを描画する範囲を`JButton`の角丸矩形に制限
+-- `JButton`をクリックした場合などに、角丸矩形の縁にジャギーが発生する場合がある？
+- 下: `BufferedImage`
+-- `BufferedImage`に`JButton`の背景やホバーエフェクトをソフトクリッピング効果でブレンド処理されるよう描画
+--- 参考: [https://community.oracle.com/blogs/campbell/2006/07/19/java-2d-trickery-soft-clipping campbell: Java 2D Trickery: Soft Clipping Blog | Oracle Community]
+--- 参考: [[Windowの縁をソフトクリッピングでなめらかにする>Swing/SoftClippedWindow]]
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/RadialGradientPaint.html RadialGradientPaint (Java Platform SE 8)]
+- [https://blog.prototypr.io/stunning-hover-effects-with-css-variables-f855e7b95330 Stunning hover effects with CSS variables – Prototypr]
+-- via: [https://coliss.com/articles/build-websites/operation/css/css-hover-effects-with-css-variables.html &#91;CSS&#93;実装がこれなら思っていたより簡単！グラデーションが変化する美しいエフェクトを実装するスタイルシート | コリス]
+-- ボタンやグラデーションの色などを参考
+
+* コメント [#comment]
+#comment
+#comment

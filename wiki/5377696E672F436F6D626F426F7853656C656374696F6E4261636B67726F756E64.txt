@@ -70,7 +70,7 @@ JComboBox<String> combo2 = new JComboBox<String>(model) {
 -- 参考: [[JComboBoxの文字色を変更する>Swing/ComboBoxForegroundColor]]
 -- `DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドして選択背景色と選択文字色を変更
 -- `JComboBox`本体のフォーカス時の`Border`(`WindowsLookAndFeel`の場合は`WindowsBorders.DashedBorder`)が非表示になる
---- 回避方法: セルの描画を`DefaultListCellRenderer`を継承するレンダラーではなく、`JComboBox#getRenderer()`で取得した`LookAndFeel`デフォルトのレンダラーに移譲するなどの方法がある
+--- 回避方法: セルの描画を`DefaultListCellRenderer`を継承するレンダラーではなく、`JComboBox#getRenderer()`で取得した`LookAndFeel`のデフォルトセルレンダラーに移譲するなどの方法がある
 #code{{
 JComboBox<String> combo3 = new JComboBox<String>(model) {
   @Override public void updateUI() {

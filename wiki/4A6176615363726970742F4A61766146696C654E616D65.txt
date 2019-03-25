@@ -6,15 +6,15 @@ description: JavaScriptでソースコードからJavaのファイル名を取�
 ---
 #contents
 
-* 概要 [#ve7c744d]
-- `pre`タグで囲まれたソースコードなどから、`public class`などを検索して、`Java`のファイル名を取得するテスト。
+* 概要 [#summary]
+- `pre`タグで囲まれたソースコードなどから、`public class`などを検索して`Java`のファイル名を取得するテスト
 -- [[JavaScriptでpreタグで囲まれたソースコードをtextareaにコピーする>JavaScript/pre2textarea]] で`pre`内のコードを`textarea`に変換する代わりに、直接名前付きで保存できるようにするために使用することを想定
 -- [https://ateraimemo.com/JavaScript/pre2textarea.html#ua1c0148 ローカルにドロップして保存(ファイル名付き)]
 - 使用方法
--- ユーザー`JavaScript`フォルダにコピー [https://ateraimemo.com/data/javascript/java_file_name.user.js java_file_name.user.js]
+-- ユーザー`JavaScript`フォルダにコピー: [https://ateraimemo.com/data/javascript/java_file_name.user.js java_file_name.user.js]
 -- `pre`要素をダブルクリックすると、検索した`Java`のファイル名を表示
 
-* ソースコード [#d2ebc1c2]
+* ソースコード [#sourcecode]
 #code{{
 (function() {
   function getFileName(code) {
@@ -37,13 +37,13 @@ description: JavaScriptでソースコードからJavaのファイル名を取�
 }());
 }}
 
-* Bookmarklet版 [#g50b36cd]
+* Bookmarklet版 [#bookmarklet]
 - 名前
 -- `java_file_name`
 - アドレス(`YUI Compressor`で圧縮)
  javascript:(function(){function c(h){var g=h.match(/public(?:\s|final)+(?:class|interface|enum)\s+([^<{\s]+)/m);return(g?g[1]:"Unknown")+".java"}function d(g){var h=document.createElement("div");h.innerHTML=g.innerHTML.replace(/<br[ \/]*>/ig,"\n").replace(/<.*?>/mg,"");return h.childNodes[0].nodeValue.replace(/\xA0/g," ")}var e=function(g){alert(c(d(this)))},f=document.getElementsByTagName("pre"),b=0,a=f.length;for(;b<a;b++){f[b].addEventListener("dblclick",e,false)}}());
 
-* 制限 [#db6ab432]
+* 制限 [#limitation]
 - 対象は`Java`のファイル名のみ
 - 字句解析は行わない
 - `public`なクラスなどが存在しない場合には未対応
@@ -77,7 +77,7 @@ function getFileName(code) {
 }
 }}
 
-* テスト用のサンプルソースコード [#oa0a9909]
+* テスト用のサンプルソースコード [#test]
 #code{{
 import java.awt.*;
 import java.awt.event.*;
@@ -184,7 +184,7 @@ Serializable {
 }
 }}
 
-//* 参考リンク
-* コメント [#af6e4bf0]
+// * 参考リンク [#reference]
+* コメント [#comment]
 #comment
 #comment

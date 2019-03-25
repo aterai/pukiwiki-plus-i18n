@@ -15,12 +15,13 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRr3AzfQI/AAAAAAAAAhk/mf
 
 * サンプルコード [#sourcecode]
 #code(link){{
-//列の入れ替えを禁止
+// 列の入れ替えを禁止
 table.getTableHeader().setReorderingAllowed(false);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTableHeader#setReorderingAllowed(false)`を実行して、マウスドラッグによる列の入れ替えを禁止しています。`JTable#setDragEnabled(...)`は自動ドラッグ処理用のメソッドなので、列の入れ替えには関係ありません。
+- `JTableHeader#setReorderingAllowed(false)`を設定して、マウスドラッグによる列の入れ替えを禁止
+-- `JTable#setDragEnabled(...)`は自動ドラッグ処理用のメソッドで、列の入れ替えには無関係
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/JTableHeader.html#setReorderingAllowed-boolean- JTableHeader#setReorderingAllowed(boolean) (Java Platform SE 8)]

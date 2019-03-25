@@ -7,7 +7,7 @@ description: Htmlのtable要素をCSV、TSVに変換するBookmarklet
 ---
 #contents
 
-* 概要 [#k7558714]
+* 概要 [#summary]
 `Html`の`<table>`要素を`CSV`(`character-separated values`)に変換する`Bookmarklet`です。`colspan`、`rowspan`で結合するセルがある場合は、同文字列を挿入しています。
 
 - 区切り文字はタブ(`TSV`)
@@ -20,10 +20,10 @@ description: Htmlのtable要素をCSV、TSVに変換するBookmarklet
 - `<capthion>`は無視
 - `<colgroup>`の`span`属性には未対応
 
-* ソースコード [#sc8e81f4]
+* ソースコード [#sourcecode]
 #gist(5441202)
 
-* Bookmarklet [#ab91c304]
+* Bookmarklet [#bookmarklet]
 - 名前(任意)
 -- `table2csv`
 - アドレス(`YUI Compressor`で圧縮)
@@ -35,13 +35,13 @@ description: Htmlのtable要素をCSV、TSVに変換するBookmarklet
 - アドレス(テスト用に[https://ateraimemo.com/data/javascript/table2csv.min.js table2csv.min.js]を読み込む)
  javascript:(function(){var s=document.createElement('script');s.charset='UTF-8';s.src='https://ateraimemo.com/data/javascript/table2csv.min.js?'+(new Date()).getTime();document.body.appendChild(s)}());
 
-* ユーザースクリプト、拡張機能 [#oa746aa1]
+* ユーザースクリプト、拡張機能 [#userjs]
 - `FireFox`
 -- `Greasmonkey`などのユーザースクリプトとして`table2csv.user.js`をドロップして追加
 - `Chorme`など
 -- `dev`版などで拡張機能タブに`table2csv.user.js`をドロップして追加
 
-* テスト用table [#tab5af2e]
+* テスト用table [#test]
 - `rowspan`, `colspan`
 -- `Bookmarklet`を実行、または拡張機能として追加した後、以下の表をダブルクリックすると`CSV`文字列に変換
 |CENTER:100|CENTER:100|CENTER:100|CENTER:100|c
@@ -62,11 +62,11 @@ description: Htmlのtable要素をCSV、TSVに変換するBookmarklet
 ||||||||BGCOLOR(white):|c
 |>|>|>|>|>|>|>|CENTER:footer|f
 
-* 参考リンク [#dc357958]
+* 参考リンク [#reference]
 - [http://marklets.com/CSV+from+HTML+tables.aspx CSV from HTML tables Bookmarklet | Bookmarklet Search Engine]
 - [http://www.codekeep.net/snippets/ec9f4704-b88a-486a-98f9-896de6afb021.aspx CodeKeep Snippet : Convert html table to csv (JavaScript)]
 
-* コメント [#pfe243fb]
+* コメント [#comment]
 #comment
 - 表計算ソフトなどの場合は、`<table>`タグをコピペするだけで`span`を考慮した表の取込みが出来るので、このスクリプトを使って`CSV`,`TSV`に変換して読み込む意味はあまりないかも。ただ、自分の使いたいソフトには、`Html`での`<table>`取り込み機能がないが、`csv`を読み込んで表にする機能があり、また連続する同文字列セルの結合が可能なので作成してみました。取り込み作業は終わったのでもう必要ないけど、せっかくなので公開しておきます。 -- &user(aterai); &new{2012-07-24 (火) 17:59:18};
 - `innerText`ではなく`innerHTML.replace(/<.*?>/mg, "")`を使用して、`FireFox`でも動作するように修正。 -- &user(aterai); &new{2012-07-27 (金) 14:49:37};

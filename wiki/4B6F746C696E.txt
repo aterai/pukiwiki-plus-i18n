@@ -10,7 +10,7 @@ pubdate: 2017-05-31T18:35:21+09:00
 `Kotlin`で`Swing`コンポーネントを使用するサンプルと、`Java`からの変換に関するメモです。
 
 * 実行環境 [#s42e991c]
-- [https://sdkman.io/ SDKMAN! the Software Development Kit Manager]で`kotlin`をインストール可能
+- [https://sdkman.io/ SDKMAN! the Software Development Kit Manager]で`kotlin`のインストールが可能
 
  $ curl -s "https://get.sdkman.io" | bash
  $ sdk install kotlin
@@ -19,7 +19,7 @@ pubdate: 2017-05-31T18:35:21+09:00
  $ kotlinc hello.kt -include-runtime -d hello.jar && "$JAVA_HOME/bin/java" -jar hello.jar
 
 * `IntelliJ`の自動変換 [#IntelliJ]
-- メニューの`Code`, `Convert Java File to Kotlin File`(KBD{Ctrl+Alt+Shift+K})で、`Java`のソースコードを`Ktolin`のソースコードに変換可能
+- メニューの`Code`, `Convert Java File to Kotlin File`(KBD{Ctrl+Alt+Shift+K})で、`Java`のソースコードを`Kotlin`のソースコードに変換可能
 -- `Hoge.java`を変換すると`Hoge.kt`が生成されて、`Hoge.java`は削除されてしまうので注意が必要
 - `File`メニュー、`Project Structure`パネルの`Project SDK`が`<No SDK>`になっていると、`@Override`が`override`に変換されない場合がある
 

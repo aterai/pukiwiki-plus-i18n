@@ -49,8 +49,7 @@ class DividerLocationDragLayerUI extends LayerUI<JSplitPane> {
         && e.getID() == MouseEvent.MOUSE_DRAGGED) {
       Point pt = SwingUtilities.convertPoint(c, e.getPoint(), splitPane);
       int delta = splitPane.getOrientation() == JSplitPane.HORIZONTAL_SPLIT
-                  ? pt.x - startPt.x
-                  : pt.y - startPt.y;
+          ? pt.x - startPt.x : pt.y - startPt.y;
       splitPane.setDividerLocation(Math.max(0, dividerLocation + delta));
     }
   }

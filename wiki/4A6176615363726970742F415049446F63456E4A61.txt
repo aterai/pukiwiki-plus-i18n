@@ -6,17 +6,17 @@ description: Javascriptで、Java API Docの「日本語、英語」を切り替
 ---
 #contents
 
-* 概要 [#j3d7e5b3]
+* 概要 [#summary]
 `Java`の`API`ドキュメントをブックマークレットを使って、日本語と英語で切り替えます。
 
-* サンプルコード [#ufcab025]
+* サンプルコード [#sourcecode]
 - `Java API JP<>EN`
 
 #code{{
 javascript:(function(){var%20l=location,m=l.href.match('^https?://(.+)((?:api|technotes)[^+]+)'),n=m[1].match('/([0-9]+)/');if(m)l.href='https://docs.oracle.com/javase/'+(/\/jp\//.test(m[1])?n[1]+'/docs':parseInt(n[1])>=8?'jp/'+n[1]+'/docs':'jp/'+n[1])+'/'+m[2];}());
 }}
 
-* 解説 [#j41ed46f]
+* 解説 [#explanation]
 適当に(`Java API Doc JP<->EN`とか)を名前を設定し、アドレスに上記の一行を貼り込んだブックマークを作成して使用します。例えば英語版の`Javadoc`を表示中にこのブックマークをクリックすると日本語版の`Javadoc`に移動することができます(逆も可能)。
 
 - `/jp/6/`と`/6/docs/`を切り替えているだけなので、フレーム有りでは`URL`が以下のような形式の場合のみ有効
@@ -31,7 +31,7 @@ javascript:(function(){var%20l=location,m=l.href.match('^https?://(.+)((?:api|te
 -- %%JavaDoc の翻訳などに関する修正提案などは http://java.net/projects/jdk-api-ja/ にメールするのが良さそう%% もう活動していないかも？
 --- via: [https://blogs.oracle.com/katakai/entry/jdk_japanese_docs_project_on JDK 日本語ドキュメントプロジェクト on java.net (Masaki Katakai's Weblog)])
 
-* 変更履歴 [#yd6fdea5]
+* 変更履歴 [#changelog]
 - `http`から`https?`に修正
 - `technotes`に対応
 - %%webnotes対応%% あまり使用しないので削除
@@ -44,11 +44,11 @@ javascript:(function(){var%20l=location,m=l.href.match('^https?://(.+)((?:api|te
 #gist(9755681)
 // javascript:(function(){var l=location,m=l.href.match("^(https?://)(.+)(api[^+]+|technotes[^+]+)");if(m)l.href=m[1]+'docs.oracle.com/javase/8/docs/'+decodeURIComponent(m[3]).replace(/\+.*$/,'').replace(/\[\]/g,':A').replace(/, |\(|\)/g,'-');}());
 
-** Java 8 [#q4946a52]
+** Java 8 [#java8]
 - `Java 8`のドキュメントでは、各メソッドなどへのアンカーにある空白や`(,)`などが`-`に置換された
 -- 空白を`%20`などと`URL`エンコードする必要が無くなった
 
-** Java 10 [#e4ef8e23]
+** Java 10 [#java10]
 - `Java 10`から`Java 8`以前の`(,)`(ただし空白は除く)なども使用可能に戻った
 -- 混在は不可
 
@@ -94,13 +94,13 @@ javascript:(function(){var%20l=location,m=l.href.match('^https?://(.+)((?:api|te
 - https://docs.oracle.com/javase/jp/7/api/java/awt/Color.html
 - https://docs.oracle.com/javase/jp/6/api/java/awt/Color.html
 
-* 参考リンク [#x4ed11a1]
+* 参考リンク [#reference]
 - http://java.net/projects/jdk-api-ja
 -- %%via: [http://blogs.sun.com/katakai/entry/jdk_japanese_docs_project_on JDK 日本語ドキュメントプロジェクト on java.net]%%
 -- %%java.net に繋がらないけど、まだ今はメンテナンス中？ それとも遅いだけ？%%
 - [http://d.hatena.ne.jp/ymorimo/20070719/1184847240 ymorimoの日記 - Googleの日本語と英語を切り替え]
 
-* コメント [#pcd07d68]
+* コメント [#comment]
 #comment
 - 日本語版は docs.oracle.com/javase/jp/6/ を見るように変更 -- &user(aterai); &new{2012-04-11 (水) 19:15:42};
 - %%googleなどの検索エンジンのキャッシュから移動できるように変更（検索結果に表示された java.sun.com のドキュメントが、http://www.oracle.com/technetwork/java/index.html に転送されてしまうようになったので） -- &user(aterai); &new{2012-09-18 (火) 22:59:31};%%

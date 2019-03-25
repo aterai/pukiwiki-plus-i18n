@@ -55,9 +55,9 @@ int getWordStart(JTextComponent c, int offs) throws BadLocationException {
 
 - `Default`
 -- `_`、`-`は、単語区切りにならず、`AA-BB_CC`は一つの単語として選択される
--- 単語選択アクションは、クリックした位置から単語の先頭、末尾を探す方法として、`javax.swint.text.Utilities`の`getWordEnd(...)`と`getWordEnd(...)`メソッドを使用している
+-- 単語選択アクションは、クリックした位置から単語の先頭と末尾を探す方法として`javax.swint.text.Utilities`の`getWordEnd(...)`と`getWordEnd(...)`メソッドを使用している
 - `Break words: _ and -`
--- `_`と`-`を、単語区切りに追加し、`AA-BB_CC`の`BB`上でダブルクリックすると`BB`のみ選択される
+-- `_`と`-`を単語区切りに追加し、`AA-BB_CC`の`BB`上でダブルクリックすると`BB`のみ選択されるよう変更
 -- `javax.swint.text.Utilities`の`getWordEnd(...)`と`getWordEnd(...)`メソッドをコピーし、`BreakIterator.getWordInstance(c.getLocale())`で見つけた単語内に`_`か`-`が存在するか再度検索するよう改変
 
 * 参考リンク [#reference]

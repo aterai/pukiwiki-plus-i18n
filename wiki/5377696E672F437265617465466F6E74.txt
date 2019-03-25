@@ -5,11 +5,11 @@ title: Fontをファイルから取得
 tags: [Font, JTextArea]
 author: aterai
 pubdate: 2005-03-07T02:07:13+09:00
-description: 独自フォント(mona.ttf)をファイルから読み込み、ASCII artを表示します。
+description: TrueTypeフォントをファイルから読み込み、ASCII artを表示します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKOUJYB7I/AAAAAAAAAVo/K2rl3dXD4ic/s800/CreateFont.png
 ---
 * 概要 [#summary]
-独自フォント(`mona.ttf`)をファイルから読み込み、`ASCII art`を表示します。
+`TrueType`フォントをファイルから読み込み、`ASCII art`を表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKOUJYB7I/AAAAAAAAAVo/K2rl3dXD4ic/s800/CreateFont.png)
 
@@ -49,7 +49,7 @@ Font makeFont(URL url) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`Font.createFont(...)`メソッドでフォントを作成しています。
+上記のサンプルでは、`Font.createFont(...)`メソッドで`.ttf`ファイルからフォントを作成しています。
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Font.html#createFont-int-java.io.File- Font (Java Platform SE 8)]

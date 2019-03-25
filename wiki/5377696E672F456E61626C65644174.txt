@@ -15,24 +15,13 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTMLdSGopI/AAAAAAAAAYw/aR
 
 * サンプルコード [#sourcecode]
 #code(link){{
-// checkbox.addItemListener(new ItemListener() {
-//   @Override public void itemStateChanged(ItemEvent e) {
-//     if (e.getStateChange() == ItemEvent.SELECTED) {
-//       tab.setEnabledAt(1, true);
-//     } else if (e.getStateChange() == ItemEvent.DESELECTED) {
-//       tab.setEnabledAt(1, false);
-//     }
-//   }
-// });
 checkbox.addItemListener(e -> {
-  tab.setEnabledAt(1, e.getStateChange() == ItemEvent.SELECTED);
+  tabs.setEnabledAt(1, e.getStateChange() == ItemEvent.SELECTED);
 });
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、チェックボックスを使って詳細設定タブが選択できるかどうかを切り替えることができます。
-
-タブが選択できるかどうかは、`JTabbedPane#setEnabledAt(...)`メソッドで設定します。
+上記のサンプルでは、`JTabbedPane#setEnabledAt(...)`メソッドを使用して「詳細設定」タブの選択可・不可を切り替えています。
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setEnabledAt-int-boolean- JTabbedPane#setEnabledAt(int, boolean) (Java Platform SE 8)]

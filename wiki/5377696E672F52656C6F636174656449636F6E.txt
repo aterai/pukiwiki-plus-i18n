@@ -9,7 +9,7 @@ description: JDesktopPaneのサイズが変更されたとき、アイコン化�
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRm01W30I/AAAAAAAAAhc/eBhL-DDKkSo/s800/RelocatedIcon.png
 ---
 * 概要 [#summary]
-`JDesktopPane`のサイズが変更されたとき、アイコン化している`JInternalFrame`の再配置を行います。[https://bugs.openjdk.java.net/browse/JDK-4765256 Bug ID: 4765256 REGRESSION: Icons in JDesktopPane not repositioned when pane is resized]からソースコードの大部分を引用しています。
+`JDesktopPane`のサイズが変更されたとき、アイコン化している`JInternalFrame`の再配置を行います。[https://bugs.openjdk.java.net/browse/JDK-4765256 &#91;JDK-4765256&#93; REGRESSION: Icons in JDesktopPane not repositioned when pane is resized - Java Bug System]からソースコードの大部分を引用しています。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRm01W30I/AAAAAAAAAhc/eBhL-DDKkSo/s800/RelocatedIcon.png)
 
@@ -50,17 +50,17 @@ private void doReIconify(JDesktopPane desktopPane) {
 `GTKLookAndFeel`の場合、アイコンを移動することは出来ないので、このサンプルには意味がありません。
 
 * 参考リンク [#reference]
-- [https://bugs.openjdk.java.net/browse/JDK-4765256 Bug ID: 4765256 REGRESSION: Icons in JDesktopPane not repositioned when pane is resized]
+- [https://bugs.openjdk.java.net/browse/JDK-4765256 &#91;JDK-4765256&#93; REGRESSION: Icons in JDesktopPane not repositioned when pane is resized - Java Bug System]
 -- via: [https://community.oracle.com/thread/1374482 Swing - JInternalFrame - iconify in a JDesktopPane]
-- [https://bugs.openjdk.java.net/browse/JDK-4110799 Bug ID: 4110799 JInternalFrame icon position unchanged w/ resize]
+- [https://bugs.openjdk.java.net/browse/JDK-4110799 &#91;JDK-4110799&#93; JInternalFrame icon position unchanged w/ resize - Java Bug System]
 -- [http://d.hatena.ne.jp/tori31001/20060901 JInternalFrameは最初にアイコン化しておかないと位置が更新されない]
 -- [[JInternalFrameを一番手前に表示>Swing/LayeredPane]]
 
 * コメント [#comment]
 #comment
-- [https://bugs.openjdk.java.net/browse/JDK-6647340 Bug ID: 6647340 Minimized JInternalFrame icons appear in incorrect positions if the main frame is resized] `1.7.0 b38`で修正済み。 -- &user(aterai); &new{2008-12-10 (水) 21:27:26};
+- [https://bugs.openjdk.java.net/browse/JDK-6647340 &#91;JDK-6647340&#93; Minimized JInternalFrame icons appear in incorrect positions if the main frame is resized - Java Bug System]は、`1.7.0 b38`で修正済み。 -- &user(aterai); &new{2008-12-10 (水) 21:27:26};
 - `Windows7` + `WindowsLookAndFeel`で`JDesktopPane`の背景が黒になる: [https://bugs.openjdk.java.net/browse/JDK-7012008 Bug ID: JDK-7012008 JDesktopPane - Wrong background color with Win7+WindowsLnf] -- &user(aterai); &new{2011-10-04 (火) 16:58:32};
-//[https://bugs.openjdk.java.net/browse/JDK-7012008 JDK-7012008 JDesktopPane - Wrong background color with Win7+WindowsLnf - Java Bug System]
-//[https://bugs.openjdk.java.net/browse/JDK-7008416 Bug ID: 7008416 JDesktopPane - Wrong background color with Win7+WindowsLnf] -- &user(aterai); &new{2011-10-04 (火) 16:58:32};
+// [https://bugs.openjdk.java.net/browse/JDK-7012008 JDK-7012008 JDesktopPane - Wrong background color with Win7+WindowsLnf - Java Bug System]
+// [https://bugs.openjdk.java.net/browse/JDK-7008416 Bug ID: 7008416 JDesktopPane - Wrong background color with Win7+WindowsLnf] -- &user(aterai); &new{2011-10-04 (火) 16:58:32};
 
 #comment

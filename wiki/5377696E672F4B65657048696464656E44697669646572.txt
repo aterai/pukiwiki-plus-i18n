@@ -37,7 +37,7 @@ smax.setModel(selectMaxModel);
 * 解説 [#explanation]
 - `Min:DividerLocation, Max:DividerLocation`
 -- `JSplitPane#setDividerLocation(...)`メソッドで`Divider`の位置を設定
--- `JSplitPane`のリサイズで収納状態が解除される
+-- `JSplitPane`のリサイズで収納状態が解除されてしまう
 #code{{
 panel.add(new JButton(new AbstractAction("Min:DividerLocation") {
   @Override public void actionPerformed(ActionEvent e) {
@@ -48,7 +48,7 @@ panel.add(new JButton(new AbstractAction("Min:DividerLocation") {
 
 - `Min:Action, Max:Action`
 -- `JSplitPane`の`ActionMap`から`selectMax`アクションなどを取得し実行
--- `JSplitPane`のリサイズで収納状態が解除される
+-- `JSplitPane`のリサイズで収納状態が解除されてしまう
 #code{{
 panel.add(new JButton(new AbstractAction("Max:Action") {
   @Override public void actionPerformed(final ActionEvent e) {
@@ -69,8 +69,9 @@ panel.add(new JButton(new AbstractAction("Max:Action") {
 -- `JSplitPane`がリサイズされても収納状態は維持される
 
 ----
-- メモ: [https://bugs.openjdk.java.net/browse/JDK-5006095 Bug ID: 5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5]のサンプルコード
--- 収納状態を維持するために`BasicSplitPaneUI#setKeepHidden(true)`メソッドをリフレクションを使って実行する方法もある
+- 収納状態を維持するために`BasicSplitPaneUI#setKeepHidden(true)`メソッドをリフレクションを使って実行する方法もある
+-- [https://bugs.openjdk.java.net/browse/JDK-5006095 JDK-5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5 - Java Bug System]のサンプルコード
+
 #code{{
 try {
   splitPane.setDividerLocation(0);
@@ -84,7 +85,7 @@ try {
 }}
 
 * 参考リンク [#reference]
-- [https://bugs.openjdk.java.net/browse/JDK-5006095 Bug ID: 5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5]
+- [https://bugs.openjdk.java.net/browse/JDK-5006095 JDK-5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5 - Java Bug System]
 - [[JSplitPaneのディバイダを展開、収納する>Swing/OneTouchExpandable]]
 
 * コメント [#comment]
