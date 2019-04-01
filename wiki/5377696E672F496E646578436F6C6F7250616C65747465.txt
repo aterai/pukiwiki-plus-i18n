@@ -1,0 +1,75 @@
+---
+category: swing
+folder: IndexColorPalette
+title: JListにGIF画像のカラーパレットを表示する
+tags: [JList, Graphics]
+author: aterai
+pubdate: 2019-04-01T15:11:33+09:00
+description: JListを使用してGIF画像のカラーパレットと透過色を一覧表示します。
+image: https://drive.google.com/uc?id=1xXlbmf0ZmYgNPhj4n4jd4mIkFUjPZAnkSQ
+---
+* 概要 [#summary]
+`JList`を使用して`GIF`画像のカラーパレットと透過色を一覧表示します。
+
+#download(https://drive.google.com/uc?id=1xXlbmf0ZmYgNPhj4n4jd4mIkFUjPZAnkSQ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class PaletteListModel extends AbstractListModel<IndexedColor> {
+  private final transient IndexColorModel model;
+
+  protected PaletteListModel(IndexColorModel model) {
+    super();
+    this.model = model;
+  }
+
+  @Override public int getSize() {
+    return model.getMapSize();
+  }
+
+  @Override public IndexedColor getElementAt(int index) {
+    boolean isTrans = index == model.getTransparentPixel();
+    return new IndexedColor(index, new Color(model.getRGB(index)), isTrans);
+  }
+}
+// ...
+Image makeTestImage(DataBuffer dataBuffer, ColorModel colorModel, int w, int h, int transIdx) {
+  // DataBufferByte dataBufferByte = null;
+  // if (dataBuffer instanceof DataBufferByte) {
+  //   dataBufferByte = (DataBufferByte) dataBuffer;
+  // } else {
+  //   System.out.println("No DataBufferByte");
+  // }
+  // byte data[] = dataBufferByte.getData();
+  BufferedImage buf = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+  for (int y = 0; y < h; y++) {
+    for (int x = 0; x < w; x++) {
+      int arrayIndex = x + y * w;
+      // int colorIndex = Byte.toUnsignedInt(data[arrayIndex]);
+      int colorIndex = dataBuffer.getElem(arrayIndex);
+      if (transIdx == colorIndex) {
+        buf.setRGB(x, y, Color.RED.getRGB()); // 0xFF_FF_00_00);
+      } else {
+        buf.setRGB(x, y, colorModel.getRGB(colorIndex));
+      }
+    }
+  }
+  return buf;
+}
+}}
+
+* 解説 [#explanation]
+- 左: オリジナルの`GIF`形式画像
+- 右: 透過色(クロマキー)を`Color.RED`で塗りつぶした画像
+- 下: `GIF`形式画像からカラーパレットを取得してセルが水平方向の次に垂直方向の順で並ぶ「ニュースペーパー・スタイル」レイアウトの`JList`に表示
+-- カラーパレットは`IndexColorModel`から取得可能
+--- `IndexColorModel`は、`BufferedImage#getColorModel()`で取得可能
+-- 透過色が存在する場合は、セルのフチを赤に設定
+--- `IndexColorModel#getTransparentPixel()`で透過色のインデックスを取得可能
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/21754795/getting-pixels-color-index-from-tiff-with-palette java - Getting pixels color index from TIFF with palette - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

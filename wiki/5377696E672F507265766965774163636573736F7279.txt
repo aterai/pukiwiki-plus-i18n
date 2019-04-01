@@ -95,9 +95,9 @@ class ImagePreview extends JComponent implements PropertyChangeListener {
 }}
 
 * 解説 [#explanation]
-上記のファイルチューザーでは、画像ファイルを選択すると、そのプレビューが表示されます。プレビューコンポーネントは、`JFileChooser#setAccessory(JComponent)`メソッドで、ファイルチューザーに追加しています。
-
-プレビュー側でファイルの選択、解除などのイベントを受け取るために、`PropertyChangeListener`を実装する必要があります。
+- `JFileChooser`のファイルリストで画像ファイルを選択すると、そのプレビューを`JFileChooser`内に表示する
+- プレビュー表示に使用するコンポーネント(`JLabel`)は`JFileChooser#setAccessory(JComponent)`メソッドで追加
+- プレビューコンポーネントは`PropertyChangeListener`を実装してファイルの選択、解除などのイベントを受け取る
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html How to Use File Choosers (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]

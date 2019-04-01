@@ -30,9 +30,7 @@ private static enum SortAlgorithms {
     return description;
   }
 }
-private final JComboBox<? extends Enum> algorithmsChoices = new JComboBox<>(SortAlgorithms.values());
-//private final JComboBox<Enum> algorithmsChoices = new JComboBox<>(SortAlgorithms.values());
-//private final JComboBox<SortAlgorithms> algorithmsChoices = new JComboBox<>(SortAlgorithms.values());
+JComboBox<SortAlgorithms> algorithmsChoices = new JComboBox<>(SortAlgorithms.values());
 }}
 
 * 解説 [#explanation]

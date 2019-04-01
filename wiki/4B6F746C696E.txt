@@ -49,6 +49,44 @@ btn.setSelected(i and (1 shl 2) != 0)
 -- `Java`の演算子優先順位表: [https://docs.oracle.com/javase/tutorial/java/nutsandbolts/operators.html Operators (The Java™ Tutorials > Learning the Java Language > Language Basics)]
 --- `Java`は逆で、`equality`(`==`, `!=`)のほうが`bitwise AND`(`&`)より優先順位が高い
 
+** シフト論理演算子 [#shrshl]
+- 論理演算子を`IntelliJ`で自動変換した場合、括弧の対応がおかしくなる場合がある？
+
+#twocolumn
+`Java`
+#code{{
+@Override public int filterRGB(int x, int y, int argb) {
+  int r = (int) Math.min(0xFF, ((argb >> 16) & 0xFF) * SCALE);
+  int g = (int) Math.min(0xFF, ((argb >> 8) & 0xFF) * SCALE);
+  int b = (int) Math.min(0xFF, (argb & 0xFF) * SCALE);
+  return (argb & 0xFF000000) | (r << 16) | (g << 8) | b;
+}
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+// - 0xFF が 0xFFf と float に変換される？
+// - Math.min の括弧がおかしくなっている？
+override fun filterRGB(x: Int, y: Int, argb: Int): Int {
+  val r = Math.min(0xFFf, (argb shr 16 and 0xFF) * SCALE).toInt()
+  val g = Math.min(0xFFf, (argb shr 8 and 0xFF) * SCALE).toInt()
+  val b = Math.min(0xFFf, (argb and 0xFF) * SCALE).toInt()
+  return argb and -0x1000000 or (r shl 16) or (g shl 8) or b
+}
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+override fun filterRGB(x: Int, y: Int, argb: Int): Int {
+  val r = Math.min(0xFF, ((argb shr 16 and 0xFF) * SCALE).toInt())
+  val g = Math.min(0xFF, ((argb shr 8 and 0xFF) * SCALE).toInt())
+  val b = Math.min(0xFF, ((argb and 0xFF) * SCALE).toInt())
+  return argb and -0x1000000 or (r shl 16) or (g shl 8) or b
+}
+}}
+#twocolumn
+
 ** 型パラメータ [#Arrays]
 - `IntelliJ`の自動変換では`Arrays.asList(...)`の型パラメータを自動的に変換してくれない
 -- `Arrays.<Component>asList(...)`と型パラメータを明示しても省略される
@@ -805,6 +843,23 @@ WatchEvent<Path> ev = (WatchEvent<Path>) event;
 val ev = event as WatchEvent<Path>
 }}
 
+#twocolumn
+
+** セーフキャスト [#SafeCast]
+- `IntelliJ`の自動変換では、`instanceof`と三項演算子を使った`Java`コードはセーフキャスト演算子`as?`(`safe cast operator`)を使ったコードになる
+-- [https://kotlinlang.org/docs/reference/typecasts.html#safe-nullable-cast-operator "Safe" (nullable) cast operator - Type Checks and Casts: 'is' and 'as' - Kotlin Programming Language]
+
+#twocolumn
+`Java`
+#code{{
+Set<?> f = v instanceof Set ? (Set<?>) v : EnumSet.noneOf(Permissions.class);
+}}
+
+#twocolumn
+`Kotlin`
+#code(lang-kotlin){{
+val f = v as? Set<*> ?: EnumSet.noneOf(Permissions::class.java)
+}}
 #twocolumn
 
 * Swing + Kotlin サンプル [#swing]
