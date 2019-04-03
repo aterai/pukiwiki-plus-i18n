@@ -7,7 +7,7 @@ description: JavaScriptでソースコードからJavaのファイル名を取�
 #contents
 
 * 概要 [#summary]
-- `pre`タグで囲まれたソースコードなどから、`public class`などを検索して`Java`のファイル名を取得するテスト
+- `pre`タグで囲まれたソースコードなどから、`public class`を検索して`Java`のファイル名を取得する
 -- [[JavaScriptでpreタグで囲まれたソースコードをtextareaにコピーする>JavaScript/pre2textarea]] で`pre`内のコードを`textarea`に変換する代わりに、直接名前付きで保存できるようにするために使用することを想定
 -- [https://ateraimemo.com/JavaScript/pre2textarea.html#ua1c0148 ローカルにドロップして保存(ファイル名付き)]
 - 使用方法
@@ -46,8 +46,8 @@ description: JavaScriptでソースコードからJavaのファイル名を取�
 * 制限 [#limitation]
 - 対象は`Java`のファイル名のみ
 - 字句解析は行わない
-- `public`なクラスなどが存在しない場合には未対応
-- 以下の様なコメントは考慮していない
+- `public`なクラスが存在しない場合には未対応
+- 以下の様な形式のコメントは考慮しない
 -- `public /* comment */ class Main {...}`
 
 #code{{
@@ -131,8 +131,8 @@ public interface CloseableTabbedPaneListener extends EventListener {
 }}
 
 #code{{
-//aaaaaaaaaaa
-//bbbbbbb
+// aaaaaaaaaaa
+// bbbbbbb
 public enum Flip {
     NONE, VERTICAL, HORIZONTAL
 }
@@ -180,7 +180,7 @@ public interface CloseableTabbedPaneListener extends EventListener {
 #code{{
 public class HashMapComboBoxModel<K, V> extends AbstractListModel<K> implements MutableComboBoxModel<K>, 
 Serializable {
-  //@Override ...
+  // @Override ...
 }
 }}
 

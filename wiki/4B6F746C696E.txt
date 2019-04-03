@@ -845,6 +845,9 @@ val ev = event as WatchEvent<Path>
 
 #twocolumn
 
+* 手動修正が不要な`IntelliJ`の自動変換 [#PerfectConversion]
+- `IntelliJ`の自動変換で変換後の手動修正が不要なケースのメモ
+
 ** セーフキャスト [#SafeCast]
 - `IntelliJ`の自動変換では、`instanceof`と三項演算子を使った`Java`コードはセーフキャスト演算子`as?`(`safe cast operator`)を使ったコードになる
 -- [https://kotlinlang.org/docs/reference/typecasts.html#safe-nullable-cast-operator "Safe" (nullable) cast operator - Type Checks and Casts: 'is' and 'as' - Kotlin Programming Language]
@@ -859,6 +862,31 @@ Set<?> f = v instanceof Set ? (Set<?>) v : EnumSet.noneOf(Permissions.class);
 `Kotlin`
 #code(lang-kotlin){{
 val f = v as? Set<*> ?: EnumSet.noneOf(Permissions::class.java)
+}}
+#twocolumn
+
+** 明示的に外側のクラス名で修飾されたthis [#NestedInnerClassThis]
+- 明示的に`this`を外側のクラス名で修飾した`Java`コードは`IntelliJ`の自動変換で`@label`で修飾されたコードになる
+-- [https://kotlinlang.org/docs/reference/this-expressions.html This expressions - Kotlin Programming Language]
+
+#twocolumn
+`Java`
+#code{{
+class FileListTable extends JTable {
+  private class RubberBandingListener extends MouseAdapter {
+    @Override public void mousePressed(MouseEvent e) {
+      FileListTable table = FileListTable.this
+      // ...
+}}
+
+#twocolumn
+`Kotlin`
+#code(lang-kotlin){{
+class FileListTable(model: TableModel) : JTable(model) {
+  private inner class RubberBandingListener : MouseAdapter() {
+    override fun mousePressed(e: MouseEvent) {
+      val table = this@FileListTable
+      // ...
 }}
 #twocolumn
 
@@ -1990,7 +2018,9 @@ class MainPanel : JPanel(BorderLayout()) {
 }}
 #twocolumn
 
-* 手動変換 [#l4531741]
+* 手動変換 [#ManualConversion]
+- `IntelliJ`の自動変換で正常に変換されるが、手動修正でもっと短い`Kotlin`コードに変換が可能なケースのメモ
+
 ** IntStream [#IntStream]
 - `java.util.stream.IntStream`は`IntRange`に置換可能
 
@@ -2088,7 +2118,6 @@ colHead?.takeIf { it.isVisible() }?.let {
 }
 }}
 #twocolumn
-
 
 ** Optional.orElse(...) [#elvis]
 - `Optional.orElse(...)`などは、エルビス演算子`?:`に置換可能

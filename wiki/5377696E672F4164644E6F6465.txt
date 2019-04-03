@@ -27,8 +27,8 @@ class TreePopupMenu extends JPopupMenu {
           (DefaultMutableTreeNode) path.getLastPathComponent();
         DefaultMutableTreeNode child  = new DefaultMutableTreeNode("New");
         model.insertNodeInto(child, parent, parent.getChildCount());
-        //parent.add(child);
-        //model.reload(); //= model.nodeStructureChanged(parent);
+        // parent.add(child);
+        // model.reload(); //= model.nodeStructureChanged(parent);
         tree.expandPath(path);
       }
     });
@@ -38,7 +38,7 @@ class TreePopupMenu extends JPopupMenu {
         DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
         DefaultMutableTreeNode node =
           (DefaultMutableTreeNode) path.getLastPathComponent();
-        //if (path.getParentPath() != null) {
+        // if (path.getParentPath() != null) {
         if (!node.isRoot()) {
           model.removeNodeFromParent(node);
         }
@@ -57,7 +57,7 @@ class TreePopupMenu extends JPopupMenu {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JPopupMenu`を使って、選択したノードに子ノードの追加、削除、名前変更ができます。
+上記のサンプルでは、`JPopupMenu`を使用して選択したノードに対して子ノードの追加、削除、名前変更ができます。
 
 - 追加
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeModel.html#insertNodeInto-javax.swing.tree.MutableTreeNode-javax.swing.tree.MutableTreeNode-int- DefaultTreeModel#insertNodeInto(...)]メソッドを使用して、ノードを追加
@@ -70,9 +70,9 @@ class TreePopupMenu extends JPopupMenu {
 -- [[JTreeのノード編集をPopupからのみに制限する>Swing/StartEditingPopupMenu]]と同じ
 #code{{
 model.valueForPathChanged(path, str);
-//もしくは、
-//leaf.setUserObject(str);
-//model.nodeChanged(leaf);
+// もしくは、
+// leaf.setUserObject(str);
+// model.nodeChanged(leaf);
 }}
 
 * 参考リンク [#reference]

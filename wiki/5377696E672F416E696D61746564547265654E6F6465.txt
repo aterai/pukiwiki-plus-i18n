@@ -16,7 +16,7 @@ image: https://lh3.googleusercontent.com/-U9WtOD4nOug/V3AE4msfadI/AAAAAAAAOcY/VD
 * サンプルコード [#sourcecode]
 #code(link){{
 TreePath path = new TreePath(s1.getPath());
-//Wastefulness: icon.setImageObserver((ImageObserver) tree);
+// Wastefulness: icon.setImageObserver((ImageObserver) tree);
 icon.setImageObserver(new ImageObserver() {
   @Override public boolean imageUpdate(Image img, int infoflags, int x, int y, int w, int h) {
     if (!tree.isShowing()) {
