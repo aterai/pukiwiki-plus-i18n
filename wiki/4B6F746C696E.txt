@@ -425,61 +425,55 @@ decode.addActionListener {
 
 ** tryの戻り値 [#TryExpression]
 - `Optional.map(...)`などから`return`で戻り値を返す`Java`コードを`IntelliJ`の自動変換で変換すると、`Return`のラベルがエラーになる`Kotlin`コードに変換される場合がある
+-- `@Optional.ofNullable(getClass().getResource("unkaku_w.png")).map`がラベルになっている？
 - `Kotlin`では`try`は式で戻り値を持つことが可能なので、ラベル付き`Return`は不要
 - [https://kotlinlang.org/docs/reference/exceptions.html#try-is-an-expression Try is an expression - Exceptions: try, catch, finally, throw, Nothing - Kotlin Programming Language]
 
 #twocolumn
 `Java`
 #code{{
-private static TexturePaint makeImageTexture() {
-  BufferedImage bi = Optional.ofNullable(A.class.getResource("a.png"))
-      .map(url -> {
-        try {
-          return ImageIO.read(url);
-        } catch (IOException ex) {
-          return makeMissingImage();
-        }
-      }).orElseGet(() -> makeMissingImage());
-  return new TexturePaint(bi, new Rectangle(bi.getWidth(), bi.getHeight()));
-}
+BufferedImage bi = Optional.ofNullable(getClass().getResource("unkaku_w.png"))
+    .map(url -> {
+      try {
+        return ImageIO.read(url);
+      } catch (IOException ex) {
+        return makeMissingImage();
+      }
+    }).orElseGet(() -> makeMissingImage());
 }}
 
 #twocolumn
 `Kotlin`(自動変換)
 #code(lang-kotlin){{
-private fun makeImageTexture(): TexturePaint {
-  val bi = Optional.ofNullable(A::class.java!!.getResource("a.png")).map({ url ->
-    try {
-      return@Optional.ofNullable(A.class. getResource "a.png").map ImageIO . read url
-    } catch (ex: IOException) {
-      return@Optional.ofNullable(A.class. getResource "a.png").map makeMissingImage ()
-    }
-  }).orElseGet({ makeMissingImage() })
-  return TexturePaint(bi, Rectangle(bi.getWidth(), bi.getHeight()))
-}
+val bi = Optional.ofNullable(javaClass.getResource("unkaku_w.png")).map({ url ->
+  try {
+    return@Optional.ofNullable(getClass().getResource("unkaku_w.png")).map ImageIO . read url
+  } catch (ex: IOException) {
+    return@Optional.ofNullable(getClass().getResource("unkaku_w.png")).map makeMissingImage ()
+  }
+}).orElseGet({ makeMissingImage() })
 }}
 
 `Kotlin`(手動修正)
 #code(lang-kotlin){{
-private fun makeImageTexture(): TexturePaint {
-  val bi = Optional.ofNullable(A::class.java.getResource("a.png"))
-      .map { url ->
-        try {
-          ImageIO.read(url)
-        } catch (ex: IOException) {
-          makeMissingImage()
-        }
-      }.orElseGet { makeMissingImage() }
-  // Example without using Optional
-  // val bi = A::class.java.getResource("a.png")?.let {
-  //   try {
-  //     ImageIO.read(it)
-  //   } catch (ex: IOException) {
-  //     makeMissingImage()
-  //   }
-  // } ?: makeMissingImage()
-  return TexturePaint(bi, Rectangle(bi.getWidth(), bi.getHeight()))
-}
+val bi = Optional.ofNullable(javaClass.getResource("unkaku_w.png")).map { url ->
+  try {
+    ImageIO.read(url)
+  } catch (ex: IOException) {
+    makeMissingImage()
+  }
+}.orElseGet { makeMissingImage() }
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+val bi = javaClass.getResource("unkaku_w.png")?.let {
+  try {
+    ImageIO.read(it)
+  } catch (ex: IOException) {
+    makeMissingImage()
+  }
+} ?: makeMissingImage()
 }}
 #twocolumn
 
@@ -805,7 +799,7 @@ editor2.setSelectionColor(Color(0x6488AAAA, true)) // 問題なし
 
 #twocolumn
 
-** int、Int、UInt [#u8a99b06]
+** int、Int [#IntegerLiteral]
 - `Java`では例えば`-1`を`0xFFFFFFFF`のような`16`進数表記でも表現可能だが、`Kotlin`では`error: the integer literal does not conform to the expected type Int`とエラーになるため、`IntelliJ`の自動変換ではマイナス付の表記に自動変換される
 - [https://stackoverflow.com/questions/47462793/java-integer-max-value-vs-kotlin-int-max-value Java Integer.MAX_VALUE vs Kotlin Int.MAX_VALUE - Stack Overflow]
 
@@ -821,6 +815,13 @@ Color rgb = new Color(0xaabbcc);
 #code(lang-kotlin){{
 val argb = Color(-0x554434, true)
 val rgb = Color(0xaabbcc)
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+// LongからIntに変換する方法もある
+val argb = Color(0xff_aa_bb_cc.toInt(), true)
+println(argb == Color(-0x554434, true)) // true
 }}
 
 #twocolumn
