@@ -18,8 +18,7 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUbGVPssI/AAAAAAAAAmA/dP
 TableColumnModel tcm = table.getColumnModel();
 tcm.getColumn(1).setCellRenderer(new TestRenderer());
 tcm.getColumn(2).setCellRenderer(new TextAreaCellRenderer());
-}}
-#code{{
+// ...
 class TextAreaCellRenderer extends JTextArea implements TableCellRenderer {
   TextAreaCellRenderer() {
     super();
@@ -39,8 +38,7 @@ class TextAreaCellRenderer extends JTextArea implements TableCellRenderer {
     return this;
   }
 }
-}}
-#code{{
+// ...
 class TestRenderer extends MyJLabel implements TableCellRenderer {
   public TestRenderer() {
     super();
@@ -57,7 +55,7 @@ class TestRenderer extends MyJLabel implements TableCellRenderer {
       setForeground(table.getForeground());
       setBackground(table.getBackground());
     }
-    //setHorizontalAlignment((value instanceof Number) ? RIGHT : LEFT);
+    // setHorizontalAlignment((value instanceof Number) ? RIGHT : LEFT);
     setFont(table.getFont());
     setText((value == null) ? "" : value.toString());
     return this;
@@ -67,14 +65,14 @@ class MyJLabel extends JLabel {
   private GlyphVector gvtext;
   public MyJLabel() {super();}
   @Override protected void paintComponent(Graphics g) {
-    //super.paintComponent(g);
+    // super.paintComponent(g);
     Graphics2D g2 = (Graphics2D) g;
-    //......
+    // ...
     g2.drawGlyphVector(gvtext,
                        getInsets().left,
                        getFont().getSize()+getInsets().top);
   }
-  //......
+  // ...
 }
 }}
 

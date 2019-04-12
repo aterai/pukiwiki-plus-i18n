@@ -12,8 +12,9 @@ description: スクリプト言語(Javascript)を使用して、FTPS(File Transf
 * サンプルコード [#target]
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="example" default="ftp" basedir=".">
+<project name="example" default="ftps" basedir=".">
   <property environment="env" />
+<!--
   <target name="ftp">
     <echo message="ftp" />
     <property name="ftp.userid" value="${env.FTP_USERID}" />
@@ -39,7 +40,7 @@ description: スクリプト言語(Javascript)を使用して、FTPS(File Transf
       <fileset refid="ftp.upload.fileset" />
     </ftp>
   </target>
-
+-->
   <target name="ftps">
     <echo message="ftps" />
     <property name="ftp.userid" value="${env.FTP_USERID}" />

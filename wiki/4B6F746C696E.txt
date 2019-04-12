@@ -2021,6 +2021,7 @@ class MainPanel : JPanel(BorderLayout()) {
 
 * 手動変換 [#ManualConversion]
 - `IntelliJ`の自動変換で正常に変換されるが、手動修正でもっと短い`Kotlin`コードに変換が可能なケースのメモ
+-- `java.util.*`のクラスを使用している箇所は変換可能な場合が多い
 
 ** IntStream [#IntStream]
 - `java.util.stream.IntStream`は`IntRange`に置換可能
@@ -2149,6 +2150,20 @@ fun children(parent: Container): List<Component> = parent.getComponents()
     .filterIsInstance(Container::class.java)
     .map { children(it) }
     .fold(listOf<Component>(parent), { a, b -> a + b })
+}}
+#twocolumn
+
+** Collections.nCopies(...).joinToString(...) [#repeat]
+- `CharSequence#repeat(n)`で`n`回繰り返した文字列を生成可能
+-- [https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/repeat.html repeat - Kotlin Programming Language]
+
+#twocolumn
+#code(lang-kotlin){{
+val text = Collections.nCopies(2000, "aaaaaaaaaaaaa").joinToString("\n")
+}}
+#twocolumn
+#code(lang-kotlin){{
+val text = "aaaaaaaaaaaaa\n".repeat(2000)
 }}
 #twocolumn
 

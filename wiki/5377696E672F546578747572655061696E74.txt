@@ -15,11 +15,12 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTVUeXC5lI/AAAAAAAAAnc/CW
 
 * サンプルコード [#sourcecode]
 #code(link){{
-BufferedImage bi = null;
+BufferedImage bi;
 try {
   bi = ImageIO.read(getClass().getResource("16x16.png"));
-} catch (IOException ioe) {
-  ioe.printStackTrace();
+} catch (IOException ex) {
+  ex.printStackTrace();
+  bi = makeMissingImage();
 }
 texture = new TexturePaint(bi, new Rectangle(bi.getWidth(), bi.getHeight()));
 panel = new JPanel() {

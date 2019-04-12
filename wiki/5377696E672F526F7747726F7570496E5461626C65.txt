@@ -73,7 +73,7 @@ class RowDataRenderer implements TableCellRenderer {
 -- セルレンダラーで、第`0`列目に`RowData.getGroup()`の値、第`1`列目に`RowData.getName()`の値、第`2`列目に`RowData.getCount()`の値を表示するよう設定
 - `RowDataRenderer`
 -- `JTable`の第`0`列目で、表示上の直上のセルと`RowData.getGroup()`で取得した値が同一の場合、その値ではなく空白文字を表示するよう設定
---- 注: 表示上の`0`行目に直上のセルは存在しないので、常にそのまま`RowData.getGroup()`の値を表示する
+--- 表示上の`0`行目には直上セルは存在しないので、常にそのまま`RowData.getGroup()`の値を表示する
 - `TableRowSorter`
 -- ソートでグループ化が変化しないように、グループ化しない第`1`列目と第`2`列目は、まず第`0`列目をソートしてからその列の比較を行う以下のような`Comparator`を使用する
 #code{{
