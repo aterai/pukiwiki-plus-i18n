@@ -25,7 +25,7 @@ public class SortButtonRenderer extends JButton implements TableCellRenderer {
       button.getModel().setEnabled(false);
       return button;
     }
-    //......
+    // ...
 
 private final HashMap dmap = new HashMap();
 public boolean isEnabledAt(int col) {
@@ -54,7 +54,7 @@ private class MouseHandler extends MouseAdapter {
     int viewColumn = columnModel.getColumnIndexAtX(e.getX());
     int column = columnModel.getColumn(viewColumn).getModelIndex();
     // ここを変更
-    if (isSortableIndex(column)) { //column != -1 ) {
+    if (isSortableIndex(column)) { // column != -1 ) {
       int status = getSortingStatus(column);
       if (!e.isControlDown()) {
         cancelSorting();

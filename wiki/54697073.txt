@@ -262,7 +262,7 @@ public int compareTo(Object o) {
 }}
 
 - 以下のように`Objects.compare(...)`を使用すると、テーブルモデルの値に`null`が存在する場合、ソートで`NullPointerException`が発生する
-- [http://www.ne.jp/asahi/hishidama/home/tech/java/comparator.html#nulls Java Comparatorメモ(Hishidama's Java Comparator Memo)]を参考に、`Comparator.nullsFirst(comparator)`と合わせて使用すれば、`NullPointerException`は発生しない
+- [https://www.ne.jp/asahi/hishidama/home/tech/java/comparator.html#nulls Java Comparatorメモ(Hishidama's Java Comparator Memo)]を参考に、`Comparator.nullsFirst(comparator)`と合わせて使用すれば、`NullPointerException`は発生しない
 
 #code{{
 //@see https://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSorterDemoProject/src/components/TableSorter.java
@@ -291,7 +291,7 @@ public int compareTo(Object o) {
 * 無名匿名クラスとラムダ式の中でのthisキーワード [#LambdaThisReference]
 - [https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.27.2 15.27.2. Lambda Body - Chapter 15. Expressions]
 -- via: [https://stackoverflow.com/questions/24202236/lambda-this-reference-in-java Lambda this reference in java - Stack Overflow]
-- [[Javaラムダ式メモ(Hishidama's Java8 Lambda Expression Memo)>http://www.ne.jp/asahi/hishidama/home/tech/java/lambda]]
+- [https://www.ne.jp/asahi/hishidama/home/tech/java/lambda Javaラムダ式メモ(Hishidama's Java8 Lambda Expression Memo)]
 - 単純に無名匿名クラスをラムダ式に置き換えると、「`static`でないメソッド`getClass()`を`static`コンテキストから参照することはできません」とコンパイルエラーになる場合がある
 #code{{
 MainPanel.java:43: error: non-static method getClass() cannot be referenced from a static context

@@ -454,7 +454,7 @@ val bi = Optional.ofNullable(javaClass.getResource("unkaku_w.png")).map({ url ->
 }).orElseGet({ makeMissingImage() })
 }}
 
-`Kotlin`(手動修正)
+`Kotlin`(手動修正1)
 #code(lang-kotlin){{
 val bi = Optional.ofNullable(javaClass.getResource("unkaku_w.png")).map { url ->
   try {
@@ -465,7 +465,7 @@ val bi = Optional.ofNullable(javaClass.getResource("unkaku_w.png")).map { url ->
 }.orElseGet { makeMissingImage() }
 }}
 
-`Kotlin`(手動修正)
+`Kotlin`(手動修正2)
 #code(lang-kotlin){{
 val bi = javaClass.getResource("unkaku_w.png")?.let {
   try {
@@ -474,6 +474,14 @@ val bi = javaClass.getResource("unkaku_w.png")?.let {
     makeMissingImage()
   }
 } ?: makeMissingImage()
+}}
+
+`Kotlin`(手動修正3)
+#code(lang-kotlin){{
+// runCatching関数でResultを取得するようtry-catchを置き換える
+val bi = runCatching {
+  ImageIO.read(javaClass.getResource("unkaku_w.png"))
+}.getOrNull() ?: makeMissingImage()
 }}
 #twocolumn
 

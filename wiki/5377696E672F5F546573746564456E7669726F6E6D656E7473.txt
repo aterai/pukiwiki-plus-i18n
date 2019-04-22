@@ -29,51 +29,23 @@ description: このサイトにあるサンプルの動作・テスト環境や�
 * 動作環境 [#environments]
 このサイトにあるサンプルコードは、主に以下の環境で開発と動作確認を行っています。
 
-- `Windows 10 64bit`
- >ver
- Microsoft Windows [Version 10.0.16299.371]
- 
- >"%JAVA_HOME%\bin\java" -version
- java version "1.8.0_202"
- Java(TM) SE Runtime Environment (build 1.8.0_202-b08)
- Java HotSpot(TM) 64-Bit Server VM (build 25.202-b08, mixed mode)
-
 - `Windows 10 64bit` + `Cygwin x86_64`
  $ bash -version
  GNU bash, バージョン 4.4.12(3)-release (x86_64-unknown-cygwin)
  Copyright (C) 2016 Free Software Foundation, Inc.
  ライセンス GPLv3+: GNU GPL バージョン 3 またはそれ以降 <http://gnu.org/licenses/gpl.html>
  ...
- $ export JAVA_HOME="/usr/lib/jvm/jdk-11.0.1"
  $ "$JAVA_HOME/bin/java" -version
- openjdk version "11.0.2" 2018-10-16
- OpenJDK Runtime Environment 18.9 (build 11.0.2+7)
- OpenJDK 64-Bit Server VM 18.9 (build 11.0.2+7, mixed mode)
-
-// - `Ubuntu 12.04.5 LTS`
-//  $ lsb_release -a
-//  No LSB modules are available.
-//  Distributor ID: Ubuntu
-//  Description:    Ubuntu 12.04.5 LTS
-//  Release:        12.04
-//  Codename:       precise
-//  
-//  $ echo $JAVA_HOME
-//  /usr/lib/jvm/jdk1.8.0_102
-//  
-//  $ $JAVA_HOME/bin/java -version
-//  java version "1.8.0_102"
-//  Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
-//  Java HotSpot(TM) Client VM (build 25.102-b14, mixed mode)
+ openjdk version "1.8.0_212"
+ OpenJDK Runtime Environment Corretto-8.212.04.1 (build 1.8.0_212-b04)
+ OpenJDK 64-Bit Server VM Corretto-8.212.04.1 (build 25.212-b04, mixed mode)
 
 ** OpenJDKのダウンロードについて [#openjdk-download]
+- [https://sdkman.io/ SDKMAN! the Software Development Kit Manager]
+-- `sdk install java [version]`などでインストール可能
 - [http://jdk.java.net/11/ JDK 11 GA Release]
 - [https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/what-is-corretto-8.html What Is Amazon Corretto 8? - Amazon Corretto 8]
 -- `Swing`も問題なく動作可能
-
-// - [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java SE Downloads]
-// - 古いバージョンの`JDK`をダウンロード
-// -- [http://www.oracle.com/technetwork/java/archive-139210.html Oracle Java Archive]
 
 * サイト内検索について [#search]
 - `search`プラグインを使った簡易検索

@@ -25,13 +25,22 @@ tree = new JTree() {
     return Objects.toString(o, "getToolTipText");
   }
 };
-//tree.setCellRenderer(new MyTreeCellRenderer(tree.getCellRenderer()));
+// tree.setCellRenderer(new MyTreeCellRenderer(tree.getCellRenderer()));
 ToolTipManager.sharedInstance().registerComponent(tree);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTree#getToolTipText(MouseEvent)`をオーバーライドして`JToolTip`を表示しています。以下のようなセルレンダラーを使用する方法もあります。
+上記のサンプルでは、`JTree#getToolTipText(MouseEvent)`メソッドをオーバーライドして`JToolTip`で表示する文字列を変更しています。
 
+ツールチップ表示を有効にするには、`JTree`オブジェクトを`ToolTipManager`に登録するか、`JTree#setToolTipText(...)`メソッドで`null`以外を指定しておく必要があります。
+
+#code{{
+ToolTipManager.sharedInstance().registerComponent(tree);
+// tree.setToolTipText("dummy");
+}}
+
+----
+- セルレンダラーを使用する別方法
 #code{{
 class MyTreeCellRenderer implements TreeCellRenderer {
   private final TreeCellRenderer renderer;
@@ -47,13 +56,6 @@ class MyTreeCellRenderer implements TreeCellRenderer {
     return c;
   }
 }
-}}
-
-どちらの方法を使う場合でも、`JTree`オブジェクトを`ToolTipManager`に登録する(もしくは、`JTree#setToolTipText`メソッドで`null`以外を指定しておく)必要があります。
-
-#code{{
-ToolTipManager.sharedInstance().registerComponent(tree);
-//tree.setToolTipText("dummy");
 }}
 
 * 参考リンク [#reference]
