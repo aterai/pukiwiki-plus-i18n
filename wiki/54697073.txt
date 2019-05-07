@@ -385,6 +385,78 @@ class Task extends SwingWorker<Void, Void> {
 }
 }}
 
+* Launch Single-File Source-Code Programs [#JEP330]
+- `Java 11`では、`1`つの`.java`ファイルを`java`コマンドで実行可能になった
+- 例えば以下のようなコードを`./TreeRootVisible/src/java/example/MainPanel.java`に生成した場合、`package`は考慮しなくても実行可能:
+
+#code{{
+package example;
+
+import java.awt.*;
+import javax.swing.*;
+
+public final class MainPanel extends JPanel {
+  private MainPanel() {
+    super(new BorderLayout());
+
+    JTree tree = new JTree();
+    tree.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    tree.setRootVisible(false);
+
+    JCheckBox check = new JCheckBox("JTree#setRootVisible(...)");
+    check.addActionListener(e -> tree.setRootVisible(((JCheckBox) e.getSource()).isSelected()));
+
+    add(check, BorderLayout.NORTH);
+    add(new JScrollPane(tree));
+    setPreferredSize(new Dimension(320, 240));
+  }
+
+  public static void main(String... args) {
+    EventQueue.invokeLater(new Runnable() {
+      @Override public void run() {
+        createAndShowGui();
+      }
+    });
+  }
+
+  public static void createAndShowGui() {
+    try {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+      ex.printStackTrace();
+      Toolkit.getDefaultToolkit().beep();
+    }
+    JFrame frame = new JFrame("@title@");
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.getContentPane().add(new MainPanel());
+    frame.pack();
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+  }
+}
+}}
+
+#code{{
+> sdk use java 11.0.3-amzn
+> cd ./TreeRootVisible/src/java/example/
+> java MainPanel.java # OK
+> cd ..
+> java example/MainPanel.java # OK
+}}
+
+- 画像などのリソースを`.java`ファイルと同じディレクトリに配置し、`ImageIcon icon = new ImageIcon(getClass().getResource("test.png"));`で参照する場合:
+
+#code{{
+> sdk use java 11.0.3-amzn
+> cd ./Zoom/src/java/example/
+> ls
+MainPanel.java  test.png
+> java MainPanel.java # NG
+Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
+> cd ..
+> java example/MainPanel.java # OK
+}}
+
 * コメント [#comment]
 #comment
 - [[Nitpick]]を[[Javadoc]]以下に分割して移動。 -- &user(aterai); &new{2011-11-11 (金) 16:57:12};
@@ -392,3 +464,5 @@ class Task extends SwingWorker<Void, Void> {
 - `JRuby`関係のメモを[[JRuby]]に移動。 -- &user(aterai); &new{2011-11-11 (金) 16:57:12};
 
 #comment
+
+}}

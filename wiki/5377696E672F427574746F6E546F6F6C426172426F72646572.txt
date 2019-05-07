@@ -27,7 +27,7 @@ UIManager.put("Button.toolBarBorderBackground", Color.GREEN);
 -- `MetalLookAndFeel`を適用した`JToolBar`に配置した`JToggleButton`などの縁の背景色を設定可能
 -- ボタンが選択、またはロールオーバー状態の場合、縁の背景色はそれぞれの`Foreground`色で塗りつぶされる
 -- `JToggleButton`と`JButton`には有効、`JCheckBox`と`JRadioButton`には無効
--- ボタンに独自の縁が設定されている場合、この設定はそのボタンに対して影響しない
+-- ボタンに独自の縁(`UIResource`を実装していない)が設定されている場合、この設定はそのボタンに対して影響しない
  
 * 参考リンク [#reference]
 - [[JToolBarのロールオーバー状態を設定する>Swing/RolloverModeToolBar]]

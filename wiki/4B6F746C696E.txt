@@ -807,6 +807,44 @@ editor2.setSelectionColor(Color(0x6488AAAA, true)) // 問題なし
 
 #twocolumn
 
+** プライマリコンストラクタでのプロパティ定義 [#PrimaryConstructor]
+- `Java`のクラスで変数宣言にコメントが付いている場合、`IntelliJ`の自動変換ではそのコメントがプライマリコンストラクタの引数でのプロパティ定義にそのままコピーされてしまう場合がある
+-- たとえば以下の例では、` // = table.getTableHeader();`が`class RowHeaderRenderer<E>(private val header: JTableHeader // = table.getTableHeader();) : JLabel(), ...`とプライマリコンストラクタのプロパティ定義に入り込んでそれ以降がコメントアウトされてしまうため、コンパイルエラーになる
+
+#twocolumn
+`Java`
+#code{{
+class RowHeaderRenderer<E> extends JLabel implements ListCellRenderer<E> {
+  private final JTableHeader header; // = table.getTableHeader();
+
+  public RowHeaderRenderer(JTableHeader header) {
+    super();
+    this.header = header;
+    this.setOpaque(true);
+    // ...
+}}
+
+#twocolumn
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+inner class RowHeaderRenderer<E>(private val header: JTableHeader // = table.getTableHeader();) : JLabel(), ListCellRenderer<E> {
+
+  init {
+    this.setOpaque(true)
+    // ...
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+inner class RowHeaderRenderer<E>(private val header: JTableHeader) : JLabel(), ListCellRenderer<E> {
+
+  init {
+    this.setOpaque(true)
+    // ...
+}}
+
+#twocolumn
+
 ** int、Int [#IntegerLiteral]
 - `Java`では例えば`-1`を`0xFFFFFFFF`のような`16`進数表記でも表現可能だが、`Kotlin`では`error: the integer literal does not conform to the expected type Int`とエラーになるため、`IntelliJ`の自動変換ではマイナス付の表記に自動変換される
 - [https://stackoverflow.com/questions/47462793/java-integer-max-value-vs-kotlin-int-max-value Java Integer.MAX_VALUE vs Kotlin Int.MAX_VALUE - Stack Overflow]
@@ -2027,6 +2065,20 @@ class MainPanel : JPanel(BorderLayout()) {
 }}
 #twocolumn
 
+** JComponent#createUI(...) [#createUI]
+- `Kotlin 1.3.21`では`@JvmStatic`を付けて`static`なメソッドを上書き不可
+- [https://youtrack.jetbrains.com/issue/KT-12993 "Accidental override" reported when a @JvmStatic method in a Kotlin class has the same signature as a static method in a Java base class : KT-12993]
+-- via: [https://stackoverflow.com/questions/44607112/kotlin-jvmstatic-and-accidental-override-in-a-companion-object swing - Kotlin @JvmStatic and accidental override in a companion object - Stack Overflow]
+- たとえば`BasicComboBoxUI`を継承する独自`UI`を作成するために、`static`な`createUI(...)`メソッドを上書きする必要があるが、`@JvmStatic fun createUI(c: JComponent): ComponentUI {`は、以下のようにエラーになる
+
+#code{{
+e: C:\kst\SearchBarLayoutComboBox\src\main\kotlin\example\BasicSearchBarComboBoxUI.kt: (189, 5): Accidental override: The following declarations have the same JVM signature (createUI(Ljavax/swing/JComponent;)Ljavax/swing/plaf/ComponentUI;):
+    fun createUI(p0: JComponent!): ComponentUI! defined in javax.swing.plaf.basic.BasicComboBoxUI
+    fun createUI(c: JComponent?): ComponentUI defined in example.BasicSearchBarComboBoxUI
+}}
+
+- 現状では`createUI(...)`を使用せず`updateUI()`をオーバーライドして直接独自`UI`を設定するなどで回避するしかない？
+
 * 手動変換 [#ManualConversion]
 - `IntelliJ`の自動変換で正常に変換されるが、手動修正でもっと短い`Kotlin`コードに変換が可能なケースのメモ
 -- `java.util.*`のクラスを使用している箇所は変換可能な場合が多い
@@ -2043,6 +2095,20 @@ val indices = IntStream.range(0, l.getModel().getSize())
 #code(lang-kotlin){{
 val indices = (0 until l.getModel().getSize())
     .filter { rb.intersects(l.getCellBounds(it, it)) }.toIntArray()
+}}
+#twocolumn
+
+** Random [#random]
+- `java.util.Random`は`1.3`から`IntRange.ramdom()`などに置換可能
+-- [https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/random.html random - Kotlin Programming Language]
+
+#twocolumn
+#code(lang-kotlin){{
+val lengthOfTask = 10 + Random().nextInt(50)
+}}
+#twocolumn
+#code(lang-kotlin){{
+val lengthOfTask = (10..60).random()
 }}
 #twocolumn
 
