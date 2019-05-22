@@ -56,11 +56,13 @@ class HighlightCursorTextArea extends JTextArea {
 - `JTextArea#paintComponent(...)`をオーバーライドするとき、カーソルのある行を塗りつぶしてから`super.paintComponent(g)`を実行
 
 ----
-[https://community.oracle.com/thread/1364121 Swing - Stretching background colour across whole JTextPane for one line of text] の Darryl.Burke さんのコード(以下に部分コピー)のように、`BasicTextPaneUI#paintBackground`をオーバーライドするシンプルな方法もあります。
+- [https://community.oracle.com/thread/1364121 Swing - Stretching background colour across whole JTextPane for one line of text]の Darryl.Burke さんのコードのように`BasicTextPaneUI#paintBackground(...)`メソッドをオーバーライドする方法もある
 
 #code{{
-//JTextPane textPane = new JTextPane();
-//textPane.setUI(new LineHighlightTextPaneUI(textPane));
+// https://community.oracle.com/thread/1364121
+// Swing - Stretching background colour across whole JTextPane for one line of text
+// JTextPane textPane = new JTextPane();
+// textPane.setUI(new LineHighlightTextPaneUI(textPane));
 class LineHighlightTextPaneUI extends BasicTextPaneUI {
   private final JTextPane tc;
   public LineHighlightTextPaneUI(JTextPane t) {
@@ -86,7 +88,7 @@ class LineHighlightTextPaneUI extends BasicTextPaneUI {
 }
 }}
 
-これらの方法なら、`JTextEditor`や`JTextPane`で行の高さが異なる場合でも、うまくハイライトできるようです。
+- この場合、`JTextEditor`や`JTextPane`で行の高さが異なる場合でもハイライト可能
 
 #ref(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTPTaywxYI/AAAAAAAAAdw/RIlfRHiC-JY/s800/LineHighlighter1.png)
 

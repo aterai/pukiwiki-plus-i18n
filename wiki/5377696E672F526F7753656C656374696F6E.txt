@@ -26,7 +26,7 @@ table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
     changeInfoPanel((sc == 1) ? getInfo() : " ");
   }
 });
-//...
+// ...
 private String getInfo() {
   int index = table.convertRowIndexToModel(table.getSelectedRow());
   String str = (String) model.getValueAt(index, 0);

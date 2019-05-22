@@ -18,23 +18,21 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final JList = new JList();
-final ListCellRenderer r = list.getCellRenderer();
-final Vector disableIndexSet = new Vector();
-initDisableIndex(disableIndexSet);
-list.setCellRenderer(new ListCellRenderer() {
-  @Override public Component getListCellRendererComponent(JList list, Object value,
-                   int index, boolean isSelected, boolean cellHasFocus) {
+JList<String> list = new JList<>(model);
+list.setCellRenderer(new DefaultListCellRenderer() {
+  @Override public Component getListCellRendererComponent(
+      JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
     Component c;
-    if (disableIndexSet.contains(Integer.valueOf(index))) {
-      c = r.getListCellRendererComponent(list, value, index, false, false);
+    if (disableIndexSet.contains(index)) {
+      c = super.getListCellRendererComponent(list, value, index, false, false);
       c.setEnabled(false);
     } else {
-      c = r.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+      c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
     }
     return c;
   }
 });
+
 ActionMap am = list.getActionMap();
 am.put("selectNextRow", new AbstractAction() {
   @Override public void actionPerformed(ActionEvent ae) {

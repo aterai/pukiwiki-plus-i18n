@@ -18,8 +18,9 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-class DropdownTableComboBox<E extends Vector<Object>> extends JComboBox<E> {
+class DropdownTableComboBox<E extends List<Object>> extends JComboBox<E> {
   protected final transient HighlightListener highlighter = new HighlightListener();
+
   protected final JTable table = new JTable() {
     @Override public Component prepareRenderer(
           TableCellRenderer renderer, int row, int column) {
@@ -34,6 +35,7 @@ class DropdownTableComboBox<E extends Vector<Object>> extends JComboBox<E> {
       }
       return c;
     }
+
     @Override public void updateUI() {
       removeMouseListener(highlighter);
       removeMouseMotionListener(highlighter);
@@ -50,7 +52,8 @@ class DropdownTableComboBox<E extends Vector<Object>> extends JComboBox<E> {
     this.list = list;
     table.setModel(model);
     list.forEach(this::addItem);
-    list.forEach(model::addRow);
+    // list.forEach(model::addRow);
+    list.forEach(v -> model.addRow(v.toArray(new Object[0])));
   }
 
   @Override public void updateUI() {
@@ -81,6 +84,7 @@ class DropdownTableComboBox<E extends Vector<Object>> extends JComboBox<E> {
 class ComboTablePopup extends BasicComboPopup {
   private final JTable table;
   private final JScrollPane scroll;
+
   protected ComboTablePopup(JComboBox<?> combo, JTable table) {
     super(combo);
     this.table = table;

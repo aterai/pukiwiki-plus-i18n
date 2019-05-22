@@ -34,10 +34,12 @@ table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(combo));
 }}
 
 * 解説 [#explanation]
-- `Default`: デフォルトの`JComboBox`でセルエディタを作成し、そのセルで`mousePressed(...)`イベントが発生:
+- `Default`
+-- デフォルトの`JComboBox`でセルエディタを作成し、そのセルで`mousePressed(...)`イベントが発生する
 -- 別の列のフォーカスが存在する、または全セルにフォーカスが存在しない場合、ドロップダウンリストが表示される
 -- 同じ列にフォーカスが存在する場合、選択状態になる(ドロップダウンリストは表示されない)
-- `setEnabled`: 動作を統一するために、初回は常に選択状態になるように設定する:
+- `setEnabled`
+-- 動作を統一するために、初回は常に選択状態になるように設定する
 -- `BasicComboPopup.Handler#mousePressed(...)`で、マウス左ボタンで`JComboBox#isEnabled()==true`の場合は、`BasicComboPopup#togglePopup()`が実行される
 -- そのため、セルエディタとして設定する`JComboBox`に`AncestorListener`を追加
 -- 編集開始で`JTable`にこのセルエディタが追加され、`AncestorListener#ancestorAdded(...)`が発生するが、`JComboBox#setEnabled(false)`として、`BasicComboPopup#togglePopup()`が実行されないようにブロック

@@ -21,6 +21,7 @@ class ColorRadioButton extends JRadioButton {
   private static final Color selectedColor = Color.RED;
   private static final Color rolloverColor = Color.BLUE;
   private static final int iconSize = 16;
+
   @Override protected void fireStateChanged() {
     ButtonModel model = getModel();
     if (!model.isEnabled()) {
@@ -36,17 +37,14 @@ class ColorRadioButton extends JRadioButton {
     }
     super.fireStateChanged();
   }
-//...
+  // ...
 }}
 
 * 解説 [#explanation]
 上記のサンプルでは、`JRadioButton`が選択やロールオーバーした時の文字色をマウスリスナーではなく`AbstractButton#fireStateChanged()`メソッドをオーバーライドして変更しています。
 
-アイコンは、`setPressedIcon`、`setSelectedIcon`、`setRolloverIcon`メソッドなどが用意されているので、これを使用しています。
-
-----
-以下のような、`ChangeListener`を使用する方法もあります。
-
+- 文字色ではなくアイコンを変更する場合は、`setPressedIcon(...)`、`setSelectedIcon(...)`、`setRolloverIcon(...)`メソッドが使用可能
+- 以下のような`ChangeListener`を使用する方法もある
 #code{{
 radioButton.addChangeListener(new ChangeListener() {
   @Override public void stateChanged(ChangeEvent e) {

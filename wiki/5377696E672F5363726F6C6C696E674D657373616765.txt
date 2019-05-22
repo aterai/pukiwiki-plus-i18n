@@ -46,10 +46,10 @@ class MarqueePanel extends JComponent implements ActionListener {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`GlyphVector`や`LineMetrics`から、テキストの`VisualBounds`や`Ascent`を取得して、文字列を描画する位置などを計算しています。
+上記のサンプルでは、`GlyphVector`や`LineMetrics`からテキストの`VisualBounds`や`Ascent`を取得して文字列を描画する位置などを計算しています。
 
-以下のように`TextLayout`を使用する方法もあります。
-
+----
+- 以下のように`TextLayout`を使用する方法もある
 #code{{
 TextLayout tl = new TextLayout(text, font, frc);
 Rectangle2D b = tl.getBounds();

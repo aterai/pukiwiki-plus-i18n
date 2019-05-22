@@ -94,7 +94,8 @@ class TableRowTransferHandler extends TransferHandler {
       }
       for (int i = 0; i < values.length; i++) {
         int idx = index++;
-        model.insertRow(idx, (Vector) values[i]);
+        // model.insertRow(idx, (Vector<?>) values[i]);
+        model.insertRow(i, ((List<?>) o).toArray(new Object[0]));
         target.getSelectionModel().addSelectionInterval(idx, idx);
       }
       return true;

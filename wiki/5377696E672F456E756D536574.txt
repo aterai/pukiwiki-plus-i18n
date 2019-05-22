@@ -26,7 +26,7 @@ Object[][] data = {
   {"other", EnumSet.noneOf(Permissions.class)}
 };
 
-//...
+// ...
 class CheckBoxesEditor extends CheckBoxesPanel implements TableCellEditor {
   @Override public Object getCellEditorValue() {
     Set<Permissions> f = EnumSet.noneOf(Permissions.class);
@@ -35,7 +35,7 @@ class CheckBoxesEditor extends CheckBoxesPanel implements TableCellEditor {
     if (buttons[2].isSelected()) f.add(Permissions.EXECUTE);
     return f;
   }
-  //...
+  // ...
 }}
 
 * 解説 [#explanation]

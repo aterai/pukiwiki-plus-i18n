@@ -60,12 +60,12 @@ class RegexDateFilter extends RowFilter<TableModel, Integer> {
 #code{{
 //@see javax/swing/RowFilter.java
 public static abstract class Entry<M, I> {
-  //...
+  // ...
   public String getStringValue(int index) {
     Object value = getValue(index);
     return (value == null) ? "" : value.toString();
   }
-  //...
+  // ...
 }}
 -- 例: `12`ではすべての行が非表示だが、`Dec`では`2`行表示される
 - `new RowFilter()`
@@ -75,7 +75,7 @@ public static abstract class Entry<M, I> {
 //@see javax/swing/JTable.java
 static class DateRenderer extends DefaultTableCellRenderer.UIResource {
   public void setValue(Object value) {
-    //...
+    // ...
     DateFormat formatter = DateFormat.getDateInstance();
     setText((value == null) ? "" : formatter.format(value));
   }

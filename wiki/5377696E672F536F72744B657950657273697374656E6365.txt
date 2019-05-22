@@ -21,7 +21,7 @@ try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStrea
     RowSorter.SortKey.class,
     new DefaultPersistenceDelegate(new String[] {"column", "sortOrder"}));
   xe.writeObject(table.getRowSorter().getSortKeys());
-//...
+// ...
 }}
 
 * 解説 [#explanation]

@@ -1,0 +1,96 @@
+---
+category: swing
+folder: AboveCellTreeToolTips
+title: JTreeのノードセル上にJToolTipを重ねて表示する
+tags: [JToolTip, JTree]
+author: aterai
+pubdate: 2019-05-20T15:44:11+09:00
+description: JTreeのノードからアイコンやテキストを取得してJToolTipを生成し、それをノードセル上に重ねて表示します。
+image: https://drive.google.com/uc?id=1tZNDwTfyPmQ6OctKkz3Badsbl0DSSO6L1A
+---
+* 概要 [#summary]
+`JTree`のノードからアイコンやテキストを取得して`JToolTip`を生成し、それをノードセル上に重ねて表示します。
+
+#download(https://drive.google.com/uc?id=1tZNDwTfyPmQ6OctKkz3Badsbl0DSSO6L1A)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class TooltipTree extends JTree {
+  protected final JLabel label = new JLabel() {
+    @Override public Dimension getPreferredSize() {
+      Dimension d = super.getPreferredSize();
+      d.height = getRowHeight();
+      return d;
+    }
+  };
+
+  protected TooltipTree(TreeModel model) {
+    super(model);
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    // setRowHeight(24);
+    setCellRenderer(new TooltipTreeCellRenderer());
+  }
+
+  @Override public Point getToolTipLocation(MouseEvent e) {
+    Point p = e.getPoint();
+    int i = getRowForLocation(p.x, p.y);
+    Rectangle cellBounds = getRowBounds(i);
+    if (i >= 0 && Objects.nonNull(cellBounds) && cellBounds.contains(p.x, p.y)) {
+      TreeSelectionModel tsm = getSelectionModel();
+      Object node = getPathForRow(i).getLastPathComponent();
+      // System.out.println(node);
+      boolean hasFocus = hasFocus() && tsm.getLeadSelectionRow() == i;
+      boolean isLeaf = getModel().isLeaf(node);
+      TreeCellRenderer r = getCellRenderer();
+      Component tcr = r.getTreeCellRendererComponent(
+          this, node, isRowSelected(i), isExpanded(i), isLeaf, i, hasFocus);
+      if (tcr instanceof JComponent
+          && Objects.nonNull(((JComponent) tcr).getToolTipText())) {
+        Point pt = cellBounds.getLocation();
+        Insets ins = label.getInsets();
+        pt.translate(-ins.left, -ins.top);
+        label.setIcon(new RendererIcon(tcr, cellBounds));
+        return pt;
+      }
+    }
+    return null;
+  }
+
+  @Override public JToolTip createToolTip() {
+    JToolTip tip = new JToolTip() {
+      @Override public Dimension getPreferredSize() {
+        return label.getPreferredSize();
+      }
+    };
+    tip.setBorder(BorderFactory.createEmptyBorder());
+    tip.setLayout(new BorderLayout());
+    tip.setComponent(this);
+    tip.add(label);
+    return tip;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Draw directly above the cell`
+-- `JTree`のノードセル上に重ねて`JToolTip`を表示
+-- `JTree#getRowBounds(int index)`メソッドで取得した領域上に`JToolTip`を表示する
+--- `TreeCellRenderer`からノードアイコンを含めて`JToolTip`を生成
+-- 参考: [[JListのセル上にToolTipを表示する>Swing/ToolTipOnCellBounds]]
+-- `WindowsLookAndFeel`以外で動作しない？
+-- 葉ノードから親ノードにマウスカーソルを移動したとき、`JToolTip`の内容が変更されない場合がある？
+--- 再現する条件がまだはっきりしない
+- `Default location`
+-- デフォルト位置に`JToolTip`を表示
+-- 参考: [[JTreeのToolTipsを表示>Swing/TreeToolTips]]
+
+* 参考リンク [#reference]
+- [[JTreeのToolTipsを表示>Swing/TreeToolTips]]
+- [[JListのセル上にToolTipを表示する>Swing/ToolTipOnCellBounds]]
+
+* コメント [#comment]
+#comment
+#comment

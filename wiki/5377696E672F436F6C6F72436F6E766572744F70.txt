@@ -55,7 +55,7 @@ class MyGrayFilter extends RGBImageFilter {
     return (argb & 0xFF_00_00_00) | (m << 16) | (m << 8) | m;
   }
 }
-//...
+// ...
 ImageProducer ip = new FilteredImageSource(img.getSource(), new MyGrayFilter());
 icon2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(ip));
 }}

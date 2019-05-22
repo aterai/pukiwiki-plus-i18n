@@ -32,8 +32,8 @@ button.addActionListener(e -> {
 * 解説 [#explanation]
 上記のサンプルでは、`ButtonGroup`内のボタンが`1`つも選択されていない状態かどうかを`ButtonModel#getSelection()`メソッドが`null`を返すかどうかで確認しています。
 
-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ButtonGroup.html#getSelection-- ButtonGroup#getSelection() (Java Platform SE 8)]には、「選択されたボタンのモデルを返します。」と`1`つも選択されていない状態で何が返されるかは記述されていない
--- `ButtonModel`のソースコードではその場合、`null`が返る実装になっている
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ButtonGroup.html#getSelection-- ButtonGroup#getSelection()]メソッドのドキュメントには「選択されたボタンのモデルを返します。」とだけ解説されており、`1`つも選択されていない場合はで何が返されるかは記述されていない
+-- `ButtonModel`のソースコードではその場合`null`が返る実装になっている
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ButtonGroup.html#getSelection-- ButtonGroup#getSelection() (Java Platform SE 8)]

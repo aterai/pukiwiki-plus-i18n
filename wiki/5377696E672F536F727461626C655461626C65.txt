@@ -24,42 +24,27 @@ class SortableTableModel extends DefaultTableModel {
     fireTableDataChanged();
   }
 }
-class ColumnComparator implements Comparator {
-  final protected int index;
-  final protected boolean ascending;
-  public ColumnComparator(int index, boolean ascending) {
+
+class ColumnComparator implements Comparator<Object>, Serializable {
+  private static final long serialVersionUID = 1L;
+  protected final int index;
+  protected final boolean ascending;
+
+  protected ColumnComparator(int index, boolean ascending) {
     this.index = index;
     this.ascending = ascending;
   }
-  public int compare(Object one, Object two) {
-    if (one instanceof Vector && two instanceof Vector) {
-      Object oOne = ((Vector) one).elementAt(index);
-      Object oTwo = ((Vector) two).elementAt(index);
-      if (oOne == null && oTwo == null) {
-        return 0;
-      } else if (oOne == null) {
-        return ascending ? -1 :  1;
-      } else if (oTwo == null) {
-        return ascending ?  1 : -1;
-      } else if (oOne instanceof Comparable && oTwo instanceof Comparable) {
-        Comparable cOne = (Comparable) oOne;
-        Comparable cTwo = (Comparable) oTwo;
-        return ascending ? cOne.compareTo(cTwo) : cTwo.compareTo(cOne);
-      }
+
+  @SuppressWarnings("unchecked")
+  @Override public int compare(Object one, Object two) {
+    if (one instanceof List && two instanceof List) {
+      Comparable<Object> o1 = (Comparable<Object>) ((List<Object>) one).get(index);
+      Comparable<Object> o2 = (Comparable<Object>) ((List<Object>) two).get(index);
+      int c = Objects.compare(
+          o1, o2, Comparator.nullsFirst(Comparator.<Comparable<Object>>naturalOrder()));
+      return c * (ascending ? 1 : -1);
     }
-    return 1;
-  }
-  public int compare(Number o1, Number o2) {
-    double n1 = o1.doubleValue();
-    double n2 = o2.doubleValue();
-    if (n1 < n2) {
-      return -1;
-    } else if (n1 > n2) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
+    return 0;
 }
 }}
 

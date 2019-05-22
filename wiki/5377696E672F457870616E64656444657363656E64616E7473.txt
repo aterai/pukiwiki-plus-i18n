@@ -43,12 +43,12 @@ expandedState = tree.getExpandedDescendants(rootPath);
 try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(xmlFile)))) {
   xe.writeObject(tree);
   //xe.close();
-  //...
+  // ...
 
   //ObjectOutputStreamの場合は、選択状態、展開状態なども保存、復元可能
   ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
   oos.writeObject(tree);
-  //...
+  // ...
 }}
 
 * 参考リンク [#reference]

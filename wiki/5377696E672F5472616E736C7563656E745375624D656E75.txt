@@ -85,7 +85,7 @@ class TransparentMenu extends JMenu {
 
 #code{{
 PopupFactory.setSharedInstance(new TranslucentPopupFactory());
-//...
+// ...
 class TranslucentPopupFactory extends PopupFactory {
   @Override public Popup getPopup(Component owner, Component contents, int x, int y)
                                                    throws IllegalArgumentException {
@@ -138,7 +138,7 @@ class TranslucentPopupMenu extends JPopupMenu {
     super.show(c, x, y);
   }
   @Override protected void paintComponent(Graphics g) {
-//...
+// ...
 }}
 
 * 参考リンク [#reference]

@@ -31,7 +31,7 @@ JList<Contribution> weekList = new JList<Contribution>() {
     setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
   }
 };
-//...
+// ...
 private class ContributionListRenderer implements ListCellRenderer<Contribution> {
   private final Icon emptyIcon = new ColorIcon(Color.WHITE);
   private final ListCellRenderer<? super Contribution> renderer
@@ -61,7 +61,7 @@ private class ContributionListRenderer implements ListCellRenderer<Contribution>
 - `WeekFields#getFirstDayOfWeek()`メソッドで`Locale`に応じた週の最初の曜日を取得して、`JList`の`0`行目を設定
 #code{{
 public static final int WEEK_VIEW = 27;
-//...
+// ...
 WeekFields weekFields = WeekFields.of(Locale.getDefault());
 int dow = today.get(weekFields.dayOfWeek()) - 1;
 startDate = today.minusWeeks(WEEK_VIEW - 1).minusDays(dow);

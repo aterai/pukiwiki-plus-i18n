@@ -20,7 +20,7 @@ public static Stream<Component> stream(Container parent) {
     .filter(Container.class::isInstance).map(c -> stream(Container.class.cast(c)))
     .reduce(Stream.of(parent), Stream::concat);
 }
-//...
+// ...
 stream(chooser)
   .filter(JTable.class::isInstance).map(JTable.class::cast)
   .findFirst()

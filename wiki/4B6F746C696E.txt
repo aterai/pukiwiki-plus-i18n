@@ -21,6 +21,7 @@ pubdate: 2017-05-31T18:35:21+09:00
 * `IntelliJ`の自動変換 [#IntelliJ]
 - メニューの`Code`, `Convert Java File to Kotlin File`(KBD{Ctrl+Alt+Shift+K})で、`Java`のソースコードを`Kotlin`のソースコードに変換可能
 -- `Hoge.java`を変換すると`Hoge.kt`が生成されて、`Hoge.java`は削除されてしまうので注意が必要
+--- `Undo`(KBD{Ctrl+Z})で変換は取り消されて削除された`Java`ファイルは復活する
 - `File`メニュー、`Project Structure`パネルの`Project SDK`が`<No SDK>`になっていると、`@Override`が`override`に変換されない場合がある
 
 ** 演算子の優先順位 [#precedence]
@@ -892,6 +893,66 @@ val ev = event as WatchEvent<Path>
 
 #twocolumn
 
+** 二次元配列 [#TwoDimensionalArray]
+- `IntelliJ`の自動変換で二次元配列をクローンするコードを変換した場合、`Type mismatch: inferred type is Array<Int?> but Array<Int> was expected`のようなエラーになる場合がある
+-- [https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html Array - Kotlin Programming Language]
+-- `Array`のコンストラクタで第二引数の`init`関数を使用して初期値を指定するなどの修正が必要
+
+#twocolumn
+
+`Java`
+#code{{
+private final Integer[][] mask;
+@SuppressWarnings("PMD.UseVarargs")
+protected SudokuCellRenderer(Integer[][] src) {
+  super();
+  Integer[][] dest = new Integer[src.length][src[0].length];
+  for (int i = 0; i < src.length; i++) {
+    System.arraycopy(src[i], 0, dest[i], 0, src[0].length);
+  }
+  this.mask = dest;
+}
+}}
+
+#twocolumn
+
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+private val mask: Array<Array<Int>>
+init {
+  val dest = Array<Array<Int>>(src.size) { arrayOfNulls(src[0].size) }
+  for (i in src.indices) {
+    System.arraycopy(src[i], 0, dest[i], 0, src[0].size)
+  }
+  this.mask = dest
+}
+}}
+
+`Kotlin`(手動修正1)
+#code(lang-kotlin){{
+private val mask: Array<Array<Int?>>
+init {
+  val dest = Array<Array<Int?>>(src.size) { arrayOfNulls(src[0].size) }
+  // もしくはval mask: Array<Array<Int>>のままで、適当なInt値で初期化
+  // val dest = Array(src.size, { Array(src[0].size, { 0 }) }) // 0で初期化
+  for (i in src.indices) {
+    System.arraycopy(src[i], 0, dest[i], 0, src[0].size)
+  }
+  this.mask = dest
+}
+}}
+
+`Kotlin`(手動修正2)
+#code(lang-kotlin){{
+private val mask: Array<Array<Int>>
+init {
+  // System.arraycopyなどは使用せず、コピー元の二次元配列を参照して初期化
+  this.mask = Array(src.size, { i -> Array(src[i].size, { j -> src[i][j] }) })
+}
+}}
+
+#twocolumn
+
 * 手動修正が不要な`IntelliJ`の自動変換 [#PerfectConversion]
 - `IntelliJ`の自動変換で変換後の手動修正が不要なケースのメモ
 
@@ -1263,7 +1324,7 @@ internal class CheckBoxesRenderer : CheckBoxesPanel(), TableCellRenderer {
 companion object {
   protected val TITLES = arrayOf("r", "w", "x")
 }
-//...
+// ...
 MainPanel.kt:45:5: error: property must be initialized or be abstract
     var buttons: Array<JCheckBox>
     ^
@@ -1543,7 +1604,7 @@ internal class CheckBoxesEditor : AbstractCellEditor(), TableCellEditor {
 `Java`
 #code{{
 protected ActionListener handler;
-//...
+// ...
 handler = e -> stopCellEditing();
 }}
 
@@ -1551,7 +1612,7 @@ handler = e -> stopCellEditing();
 `Kotlin`(自動変換)
 #code(lang-kotlin){{
 protected var handler: ActionListener? = null
-//...
+// ...
 handler = { e -> stopCellEditing() }
 // error: type mismatch: inferred type is (???) -> Boolean but ActionListener? was expected
 //             handler = { e -> stopCellEditing() }
@@ -1564,7 +1625,7 @@ handler = { e -> stopCellEditing() }
 `Kotlin`(手動修正)
 #code(lang-kotlin){{
 protected var handler: ActionListener? = null
-//...
+// ...
 handler = ActionListener { stopCellEditing() }
 // or:
 handler = object: ActionListener {
@@ -1588,7 +1649,7 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor {
   @Override public Object getCellEditorValue() {
     return new CheckBoxNode(checkBox.getText(), checkBox.isSelected());
   }
-  //...
+  // ...
 }}
 
 #twocolumn

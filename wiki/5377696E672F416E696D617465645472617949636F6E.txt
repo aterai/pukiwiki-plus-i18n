@@ -35,7 +35,7 @@ animator = new Timer(100, new ActionListener() {
 * コメント [#comment]
 #comment
 - `animated gif`が使用できればより簡単だと思うが、作った`Gif`が悪いのか、環境のせいなのか、残像がでてしまう。 -- &user(aterai); &new{2007-02-05 (月) 19:00:34};
--- メモ: [https://bugs.openjdk.java.net/browse/JDK-6453582 Bug ID: 6453582 Animation gif too fast] -- &user(aterai); &new{2007-04-19 (木) 21:11:50};
+-- メモ: [https://bugs.openjdk.java.net/browse/JDK-6453582 &#91;JDK-6453582&#93; Animation gif too fast - Java Bug System] -- &user(aterai); &new{2007-04-19 (木) 21:11:50};
 -- 上のバグ？でウェイトが効かずに残像が残っていたのではなく、前のコマがそのまま残して透過色(背景色)でクリアしないタイプ？のアニメ`GIF`になっていた。[http://homepage3.nifty.com/furumizo/giamd.htm Giam]を使って、全コマの消去方法を「背景色で塗りつぶす」に変更したファイルを使用すると、正常に描画されるようになった。 -- &user(aterai); &new{2007-04-19 (木) 22:04:52};
 
 #comment

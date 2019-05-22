@@ -145,11 +145,11 @@ public class GooglePrettifyRhinoTest {
 
 #code{{
 import org.mozilla.javascript.*;
-//...
+// ...
 String txt = src.getText();
 txt = txt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
 txt = txt.replace("\n", "<br />");
-//...
+// ...
 public static String prettifyOne(String txt) {
   txt = txt.replace("\n", "<br />"); //???
   String str = "";

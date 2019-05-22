@@ -22,7 +22,7 @@ public final LocalDate realLocalDate = LocalDate.now();
 public LocalDate currentLocalDate;
 public final Dimension size = new Dimension(40, 26);
 
-//...
+// ...
 JLabel yearMonthLabel = new JLabel("", SwingConstants.CENTER);
 JList<LocalDate> monthList = new JList<LocalDate>(new CalendarViewListModel(realLocalDate)) {
   @Override public void updateUI() {
@@ -37,7 +37,7 @@ JList<LocalDate> monthList = new JList<LocalDate>(new CalendarViewListModel(real
   }
 };
 
-//...
+// ...
 class CalendarViewListModel extends AbstractListModel<LocalDate> {
   public static final int ROW_COUNT = 6;
   private final LocalDate startDate;

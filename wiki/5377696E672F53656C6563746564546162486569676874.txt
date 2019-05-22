@@ -67,7 +67,7 @@ private final JComboBox<TabPlacements> comboBox =
     new JComboBox<>(TabPlacements.values());
 private final JTabbedPane tabbedPane = new JTabbedPane(
     JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-//...
+// ...
 comboBox.addItemListener(new ItemListener() {
   @Override public void itemStateChanged(ItemEvent e) {
     if (e.getStateChange() == ItemEvent.SELECTED) {

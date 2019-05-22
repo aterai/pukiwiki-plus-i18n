@@ -24,6 +24,7 @@ class RandomDissolve extends JComponent implements ActionListener {
   private boolean mode = true;
   private int currentStage;
   private int[] src, dst, step;
+
   public RandomDissolve(BufferedImage i1, BufferedImage i2) {
     super();
     this.image1 = i1;
@@ -31,6 +32,7 @@ class RandomDissolve extends JComponent implements ActionListener {
     this.srcimg = copyImage(mode ? image2 : image1);
     animator = new Timer(10, this);
   }
+
   public boolean nextStage() {
     if (currentStage > 0) {
       currentStage = currentStage - 1;
@@ -44,6 +46,7 @@ class RandomDissolve extends JComponent implements ActionListener {
       return false;
     }
   }
+
   private BufferedImage copyImage(final BufferedImage image) {
     int w = image.getWidth();
     int h = image.getHeight();
@@ -53,11 +56,13 @@ class RandomDissolve extends JComponent implements ActionListener {
     g.dispose();
     return result;
   }
+
   private int[] getData(BufferedImage image) {
     WritableRaster wr = image.getRaster();
     DataBufferInt dbi = (DataBufferInt) wr.getDataBuffer();
     return dbi.getData();
   }
+
   public void animationStart() {
     currentStage = STAGES;
     srcimg = copyImage(mode ? image2 : image1);
@@ -71,6 +76,7 @@ class RandomDissolve extends JComponent implements ActionListener {
     }
     animator.start();
   }
+
   @Override protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D) g.create();
@@ -79,6 +85,7 @@ class RandomDissolve extends JComponent implements ActionListener {
     g2d.drawImage(srcimg, 0, 0, srcimg.getWidth(), srcimg.getHeight(), this);
     g2d.dispose();
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     if (nextStage()) {
       repaint();
@@ -90,7 +97,7 @@ class RandomDissolve extends JComponent implements ActionListener {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`BufferedImage`から`WritableRaster`を取得し、元画像と次の画像のコピーから、`int`配列をそれぞれ用意しています。元画像の配列を次の画像のピクセルでランダムに置き換えて、これを再描画することで画像の切り替えを行っています。
+上記のサンプルでは、`BufferedImage`から`WritableRaster`を取得し、元画像と次の画像のコピーから`int`配列をそれぞれ用意しています。元画像の配列を次の画像のピクセルでランダムに置き換えて、これを再描画することで画像の切り替えを行っています。
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1270228 Java 2D - random pixelwise fading ?]

@@ -33,15 +33,14 @@ table.setModel(new DefaultTableModel());
 }}
 
 ----
-`DefaultTableModel`を継承していない場合は、モデルに以下の要領(詳細は`DefaultTableModel.java`のソースを参照)で行を全削除するメソッドを実装します。
-
+- `DefaultTableModel`を継承していない場合は、モデルに以下の要領(詳細は`DefaultTableModel.java`のソースを参照)で行を全削除するメソッドを実装する必要がある
 #code{{
 public void clear() {
-  //以下のdataVectorは実装に合わせて変更する
+  // 以下のdataVectorは実装に合わせて変更する
   int size = dataVector.size();
   dataVector.clear();
   fireTableRowsDeleted(0, size - 1);
-  //fireTableDataChanged();
+  // fireTableDataChanged();
 }
 }}
 

@@ -15,7 +15,10 @@ image: https://lh3.googleusercontent.com/-sydiHRbXRzw/VLvNhDDXdlI/AAAAAAAANvI/Qe
 
 * サンプルコード [#sourcecode]
 #code(link){{
-((DefaultRowSorter) table.getRowSorter()).setSortsOnUpdates(true);
+RowSorter<? extends TableModel> rs = table.getRowSorter();
+if (rs instanceof DefaultRowSorter) {
+  ((DefaultRowSorter<?, ?>) rs).setSortsOnUpdates(true);
+}
 }}
 
 * 解説 [#explanation]

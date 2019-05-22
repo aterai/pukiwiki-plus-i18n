@@ -42,7 +42,7 @@ class ProgressRenderer extends DefaultTableCellRenderer {
 }}
 #code{{
 private final Executor executor = Executors.newCachedThreadPool();
-//...
+// ...
 final int rowNumber = model.getRowCount();
 SwingWorker<Integer, Integer> worker = new SwingWorker<Integer, Integer>() {
   private int sleepDummy = new Random().nextInt(100) + 1;
