@@ -30,7 +30,7 @@ private TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model
 private Box box = Box.createHorizontalBox();
 
 private void initLinkBox(final int itemsPerPage, final int currentPageIndex) {
-  //assert currentPageIndex > 0;
+  // assert currentPageIndex > 0;
   sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
     @Override
     public boolean include(Entry<? extends TableModel, ? extends Integer> entry) {
@@ -45,9 +45,9 @@ private void initLinkBox(final int itemsPerPage, final int currentPageIndex) {
     startPageIndex = 1;
   }
 
-//#if 0 //BUG
-  //int maxPageIndex = (model.getRowCount() / itemsPerPage) + 1;
-//#else
+// #if 0 //BUG
+  // int maxPageIndex = (model.getRowCount() / itemsPerPage) + 1;
+// #else
   /* "maxPageIndex" gives one blank page if the module of the division is not zero.
    *   pointed out by erServi
    * e.g. rowCount=100, maxPageIndex=100
@@ -55,7 +55,7 @@ private void initLinkBox(final int itemsPerPage, final int currentPageIndex) {
   int rowCount = model.getRowCount();
   int v = rowCount % itemsPerPage == 0 ? 0 : 1;
   int maxPageIndex = rowCount / itemsPerPage + v;
-//#endif
+// #endif
   int endPageIndex = currentPageIndex + LR_PAGE_SIZE - 1;
   if (endPageIndex > maxPageIndex) {
     endPageIndex = maxPageIndex;
@@ -63,8 +63,8 @@ private void initLinkBox(final int itemsPerPage, final int currentPageIndex) {
 
   box.removeAll();
   if (startPageIndex >= endPageIndex) {
-    //if I only have one page, Y don't want to see pagination buttons
-    //suggested by erServi
+    // if I only have one page, Y don't want to see pagination buttons
+    // suggested by erServi
     return;
   }
 

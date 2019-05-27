@@ -37,7 +37,7 @@ btn.setSelected((i & (1 << 2)) != 0);
 `Kotlin`(自動変換)
 #code(lang-kotlin){{
 btn.setSelected(i and (1 shl 2) != 0)
-// 時々？に誤変換される場合がある？
+// 時々？以下のように誤変換される場合がある？？？
 // btn.setSelected(i and (1 shl 2 != 0))
 }}
 #twocolumn

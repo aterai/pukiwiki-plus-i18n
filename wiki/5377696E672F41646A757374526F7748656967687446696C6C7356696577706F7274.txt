@@ -21,20 +21,24 @@ hreflang:
 JTable table = new JTable(model) {
   int prevHeight = -1;
   int prevCount = -1;
-  public void updateRowsHeight(JViewport vport) {
+
+  private void updateRowsHeight(JViewport vport) {
     int height = vport.getExtentSize().height;
     int rowCount = getModel().getRowCount();
-    int defautlRowHeight = height / rowCount;
-    if ((height != prevHeight || rowCount != prevCount) && defautlRowHeight > 0) {
-      int over = height - rowCount * defautlRowHeight;
+    int defaultRowHeight = height / rowCount;
+    if ((height != prevHeight || rowCount != prevCount) && defaultRowHeight > 0) {
+      // int remainder = height - rowCount * defaultRowHeight;
+      int remainder = height % rowCount;
       for (int i = 0; i < rowCount; i++) {
-        int a = over-- > 0 ? i == rowCount - 1 ? over : 1 : 0;
-        setRowHeight(i, defautlRowHeight + a);
+        int a = remainder > 0 ? i == rowCount - 1 ? remainder : 1 : 0;
+        setRowHeight(i, defaultRowHeight + a);
+        remainder--;
       }
     }
     prevHeight = height;
     prevCount = rowCount;
   }
+
   @Override public void doLayout() {
     super.doLayout();
     Container p = SwingUtilities.getAncestorOfClass(JViewport.class, this);
@@ -46,14 +50,14 @@ JTable table = new JTable(model) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JViewport`のサイズまで`JTable`の各セルを`GridLayout`風に同比率で拡大縮小するよう`JTable#doLayout()`をオーバーライドしています。
+上記のサンプルでは、`JViewport`のサイズまで`JTable`の各セルを`GridLayout`風に同比率で拡大縮小するよう`JTable#doLayout()`メソッドをオーバーライドしています。
 
 - 余白(高さ方向)の調整
--- `JViewport`の高さが変更されたり、行数の増減が発生した場合、行の高さを`JTable#setRowHeight(...)`で設定し直すことで、`JViewport`に余白が生成されないように調整
+-- `JViewport`の高さが変更されたり行数の増減が発生した場合、各行の高さを`JTable#setRowHeight(...)`で設定し直すことで、`JViewport`に余白が生成されないように調整
 
 ----
 - `JScrollPane`の高さだけ変更した場合、`JTable#doLayout()`が呼び出されなくなった？
--- `JTable#setFillsViewportHeight(true)`を設定しても高さの縮小で`JTable#doLayout()`が呼び出されない
+-- `JTable#setFillsViewportHeight(true)`を設定しても高さの拡大縮小で`JTable#doLayout()`が呼び出されない
 -- `JScrollPane`に`ComponentListener`を追加して回避
 #code{{
 scroll.addComponentListener(new ComponentAdapter() {
@@ -68,6 +72,7 @@ scroll.addComponentListener(new ComponentAdapter() {
 
 * 参考リンク [#reference]
 - [[JTableの行の高さを変更する>Swing/FishEyeTable]]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setRowHeight-int-int- JTable#setRowHeight(int, int) (Java Platform SE 8)]
 
 * コメント [#comment]
 #comment
