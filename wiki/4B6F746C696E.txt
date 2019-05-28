@@ -2078,9 +2078,8 @@ fun main(args: Array<String>) {
 - [[JavaのSwingWorkerをKotlinのCoroutinesに置き換える>Kotlin/Coroutines]]に移動
 
 ** JComponent#updateUI() [#updateUI]
-- `Swing`コンポーネントの`UI`プロパティを、現在の`LookAndFeel`で設定されている値にリセットする`updateUI()`メソッドは、コンストラクタから呼び出されるので、インスタンス変数が初期化されるまえに実行されることがある
-- このため、`Kotlin`のコードに変換した`updateUI()`メソッド内で`null`チェックを行うと、不要な`null`チェックをしているとか、`!= null`が常に`true`であると警告される
-- `null`チェックを外すと`NullPointerException`になる
+- `Swing`コンポーネントの`UI`プロパティを現在の`LookAndFeel`で設定されている値にリセットする`updateUI()`メソッドは、コンストラクタから呼び出されるのでインスタンス変数が初期化される前に実行されることがある
+- このため、`Kotlin`のコードに変換した`updateUI()`メソッド内で`null`チェックを行うと不要な`null`チェックをしているとか、`!= null`が常に`true`であると警告されるが、これに従って`null`チェックを外すと`NullPointerException`が発生する
 - `Optional`や`Objects.nonNull(...)`で、警告をごまかす方法もある
 
 #twocolumn
@@ -2299,6 +2298,37 @@ val text = Collections.nCopies(2000, "aaaaaaaaaaaaa").joinToString("\n")
 #twocolumn
 #code(lang-kotlin){{
 val text = "aaaaaaaaaaaaa\n".repeat(2000)
+}}
+#twocolumn
+
+** 複数行文字列 [#StringLiterals]
+- 複数行文字列は三重引用符`"""`を使って生成可能
+-- [https://kotlinlang.org/docs/reference/basic-types.html#string-literals String Literals - Basic Types: Numbers, Strings, Arrays - Kotlin Programming Language]
+
+#twocolumn
+#code(lang-kotlin){{
+// private String makeTestHtml() {
+//   return String.join("\n", strarray);
+// }
+// を自動変換すると以下のようなコードになる
+private fun makeTestHtml(): String {
+  return arrayOf(
+    "<html><body>",
+    "<div>2222222222</div>",
+    "</body></html>").joinToString("\n")
+}
+}}
+
+#twocolumn
+#code(lang-kotlin){{
+// が、三重引用符で囲めば改行などをエスケープシーケンスで記入する必要はない
+private fun makeTestHtml() = """
+  <html>
+    <body>
+      <div>2222222222</div>
+    </body>
+  </html>
+"""
 }}
 #twocolumn
 
