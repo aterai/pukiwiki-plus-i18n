@@ -49,6 +49,15 @@ class ImageLoadSynchronouslyHTMLEditorKit extends HTMLEditorKit {
 -- `HTMLEditorKit#getViewFactory()`と`ViewFactory#create(Element)`をオーバーライドし、`ImageView`に`setLoadsSynchronously(true)`を設定することで画像の読み込みを同期的に行う
 -- スクリーンショットに画像がすべてロードされた状態で表示される
 
+----
+- `JDK 11.0.2`、`JDK 8.0.202`から`ImageView`に`setLoadsSynchronously(true)`を設定すると画像が表示されなくなってしまった
+-- [https://bugs.openjdk.java.net/browse/JDK-8223384 &#91;JDK-8223384&#93; ImageView incorrectly calculates size when synchronously loaded - Java Bug System]
+-- `OracleJDK`でも`OpenJDK`でも同じ状況
+- `JDK 11.0.1`では正常に画像が表示される
+ openjdk version "11.0.1" 2018-10-16
+ OpenJDK Runtime Environment 18.9 (build 11.0.1+13)
+ OpenJDK 64-Bit Server VM 18.9 (build 11.0.1+13, mixed mode)
+
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/ImageView.html#setLoadsSynchronously-boolean- ImageView#setLoadsSynchronously(boolean) (Java Platform SE 8)]
 - [https://community.oracle.com/thread/1353113 setAsynchronousLoadPriority on JTextPane does not seem to work in 1.6 | Oracle Community]

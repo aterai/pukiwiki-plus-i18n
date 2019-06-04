@@ -26,11 +26,11 @@ slider.setUI(new MetalSliderUI() {
           super.mouseDragged(e);
           return;
         }
-        //case SwingConstants.HORIZONTAL:
+        // case SwingConstants.HORIZONTAL:
         int halfThumbWidth = thumbRect.width / 2;
         final int trackLength = trackRect.width;
-        final int trackLeft   = trackRect.x - halfThumbWidth;
-        final int trackRight  = trackRect.x + trackRect.width - 1 + halfThumbWidth;
+        final int trackLeft = trackRect.x - halfThumbWidth;
+        final int trackRight = trackRect.x + trackRect.width - 1 + halfThumbWidth;
         int xPos = e.getX();
         int snappedPos = xPos;
         if (xPos <= trackLeft) {
@@ -38,22 +38,24 @@ slider.setUI(new MetalSliderUI() {
         } else if (xPos >= trackRight) {
           snappedPos = trackRight;
         } else {
-          //int tickSpacing = slider.getMajorTickSpacing();
-          //float actualPixelsForOneTick = trackLength * tickSpacing / (float) slider.getMaximum();
+          // int tickSpacing = slider.getMajorTickSpacing();
+          // float actualPixelsForOneTick =
+          //     trackLength * tickSpacing / (float) slider.getMaximum();
 
           // a problem if you choose to set a negative MINIMUM for the JSlider;
           // the calculated drag-positions are wrong.
           // Fixed by bobndrew:
           int possibleTickPositions = slider.getMaximum() - slider.getMinimum();
           int tickSpacing = (slider.getMinorTickSpacing() == 0)
-                      ? slider.getMajorTickSpacing()
-                      : slider.getMinorTickSpacing();
-          float actualPixelsForOneTick = trackLength * tickSpacing / (float) possibleTickPositions;
+              ? slider.getMajorTickSpacing()
+              : slider.getMinorTickSpacing();
+          float actualPixelsForOneTick =
+              trackLength * tickSpacing / (float) possibleTickPositions;
           xPos -= trackLeft;
           snappedPos = (int) (Math.round(
-            xPos / actualPixelsForOneTick) * actualPixelsForOneTick + .5) + trackLeft;
+              xPos / actualPixelsForOneTick) * actualPixelsForOneTick + .5) + trackLeft;
           offset = 0;
-          //System.out.println(snappedPos);
+          // System.out.println(snappedPos);
         }
         e.translatePoint(snappedPos - e.getX(), 0);
         super.mouseDragged(e);
@@ -65,7 +67,7 @@ slider.setUI(new MetalSliderUI() {
 
 * 解説 [#explanation]
 - 上: `Default SnapToTicks`
--- `slider.setSnapToTicks(true);`としているので、マウスをリリースした時点で、ノブを置いた位置にもっとも近い目盛にスナップされる
+-- `slider.setSnapToTicks(true);`としているので、マウスをリリースした時点でノブを置いた位置にもっとも近い目盛にスナップされる
 - 下: `Custom SnapToTicks`
 -- `TrackListener#mouseDragged`をオーバーライドして、マウスでドラッグ中でもカーソルからもっとも近い目盛にスナップされる
 

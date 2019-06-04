@@ -196,27 +196,16 @@ class PrintGlassPane extends JPanel {
 - メモ: [http://weblogs.java.net/blog/alexfromsun/archive/2008/01/ Alexander Potochkin's Blog: Disabling Swing Containers, the final solution?]のサンプルでは、`Mnemonic`もちゃんとブロックできているようなので、「あとで調べる & 参考にする」こと。 -- &user(aterai); &new{2008-01-25 (金) 17:28:21};
 - `Mnemonic`を数字キー(KBD{1}, KBD{2}, KBD{3})に変更 -- &user(aterai); &new{2008-04-25 (金) 20:51:49};
 - すべての`Mnemonic`を一時的に無効化したい場合に、`UIManager.java`の`private static final String disableMnemonicKey = "swing.disablenavaids";`は使えない？ 以下のように`KeyboardFocusManager.setCurrentKeyboardFocusManager(...)`を使用してKBD{Alt}キーなどを無視することも可能だが、もっと簡単な方法を調査中。 -- &user(aterai); &new{2013-05-09 (木) 11:46:38};
-
 #code{{
-KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 KeyboardFocusManager.setCurrentKeyboardFocusManager(new DefaultKeyboardFocusManager() {
-  @Override public boolean dispatchEvent(AWTEvent e) {
-    if (e instanceof KeyEvent) {
-      KeyEvent ke = (KeyEvent) e;
-      if ((ke.getModifiers() & InputEvent.ALT_DOWN_MASK) != 0) {
-        System.out.println("----\n" + ke);
-        return false;
-      }
+  @Override public boolean dispatchKeyEvent(KeyEvent e) {
+    if ((e.getModifiersEx() & InputEvent.ALT_DOWN_MASK) != 0) {
+      // System.out.println(e);
+      return false;
     }
-    return super.dispatchEvent(e);
+    return super.dispatchKeyEvent(e);
   }
 });
-JComboBox<String> combo = new JComboBox<>(new String[] {"Banana", "Apple", "Pear", "Grape"});
-combo.setEditable(true);
-
-JOptionPane.showInternalMessageDialog(
-  desktop, combo, "modal1", JOptionPane.INFORMATION_MESSAGE);
-KeyboardFocusManager.setCurrentKeyboardFocusManager(manager);
 }}
 
 - メモ: [https://bugs.openjdk.java.net/browse/JDK-6921687 JDK-6921687 Mnemonic disappears after repeated attempts to open menu items using mnemonics - Java Bug System] -- &user(aterai); &new{2015-03-24 (火) 21:23:15};

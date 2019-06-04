@@ -11,6 +11,14 @@ pubdate: 2018-01-22T16:28:08+09:00
 #contents
 
 * 未修正 [#NotFixedYet]
+** 1.8.0_212 からImageView#setLoadsSynchronously(...)の設定で画像がJEditorPaneに表示されない [#he9725ec]
+- `JDK 11.0.2`、`JDK 8.0.202`から`ImageView`に`setLoadsSynchronously(true)`を設定すると画像が表示されなくなってしまった
+- `JDK 11.0.1`、`JDK 8.0.202`では正常に画像が表示される
+-- [[JEditorPaneに読み込んだHTMLを画像に変換する>Swing/LoadsSynchronously]]
+-- [https://bugs.openjdk.java.net/browse/JDK-8223384 &#91;JDK-8223384&#93; ImageView incorrectly calculates size when synchronously loaded - Java Bug System]
+-- `OracleJDK`でも`OpenJDK`でも同じ状況
+- [https://bugs.openjdk.java.net/browse/JDK-8208638 &#91;JDK-8208638&#93; Instead of circle rendered in appl window, but ellipse is produced JEditor Pane - Java Bug System]のリグレッション？
+
 ** OpenJDK Corretto 1.8.0_212 で図形の描画が崩壊する [#wb9bc344]
 - `Corretto 1.8.0_212`(`Windows 10`環境)でソフトクリッピング効果を使用すると描画がおかしくなる？
  openjdk version "1.8.0_212"
@@ -288,49 +296,29 @@ public class Gui {
 }
 }}
 
-* 再現不可 [#CannotReproduce]
-** WebStartでCPU 100% [#p32896ec]
--`1.6.0_14`にすると、`web start`(`2`回目以降？) で`CPU 100%`になる？
---自宅のPCでは再現しない。
-- [https://community.oracle.com/thread/1305835 Java Web Start & JNLP - BouncyCastle via Java Web Start 1.6.0_14]
-- [https://community.oracle.com/thread/1306088 Java Web Start & JNLP - Upgrade to 1.6.0_14 causing Webstart launched application to fail]
--`JTableHeader` + `KeyEvent.VK_SPACE`
-`Windows XP`(日本語?)+`JDK 1.6.0_17`では、KBD{F8}キーで`JTableHeader`にフォーカスを移動して、KBD{SPACE}キーを押してもソートされない？
-以下のように設定しても、`KeyEvent.VK_SPACE`はうまくいかない。`KeyEvent.VK_F9`とかなら大丈夫。
-#code{{
-InputMap im = table.getTableHeader().getInputMap(
-    JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "toggleSortOrder");
-}}
-
-- 再現しなくなった
-
 * 参考リンク [#reference]
-** 未修整、重複？ [#w96f7a6e]
-- [https://bugs.openjdk.java.net/browse/JDK-6723524 JDK-6723524 Invalid background of components displayed in JTable in Nimbus L&F]
-- [https://bugs.openjdk.java.net/browse/JDK-6612928 JDK-6612928 Win32ShellFolder2 throws RejectedExecutionException on application exit]
-- [https://bugs.openjdk.java.net/browse/JDK-4280944 JDK-4280944 Attributes on last newline character cause undesirable extra spacing.]
-- [https://bugs.openjdk.java.net/browse/JDK-6780505 JDK-6780505 java.awt.Desktop.getDesktop().open() fails on shared files with white spaces]
-- [https://bugs.openjdk.java.net/browse/JDK-4777210 JDK-4777210 setText causes deadlock in JFormattedTextField, JTextComponent]
-- [https://bugs.openjdk.java.net/browse/JDK-6937538 JDK-6937538 Nimbus: JInternalFrame() causes exception if user UI installed]
-- [https://bugs.openjdk.java.net/browse/JDK-6700748 JDK-6700748 Cursor flickering during D&D when using CellRendererPane with validation]
-- [https://bugs.openjdk.java.net/browse/JDK-6723524 JDK-6723524 Invalid background of components displayed in JTable in Nimbus L&F]
-- [https://bugs.openjdk.java.net/browse/JDK-4292511 JDK-4292511 JTableHeader height determined by first column given HTML text]
-- [https://bugs.openjdk.java.net/browse/JDK-6826514 JDK-6826514 SwingWorker: done() called before doInBackground() returns, when cancelled]
-- [https://bugs.openjdk.java.net/browse/JDK-4908277 JDK-4908277 Animated GIF does not play inside JTable, customized TableCellRenderer]
-- [https://bugs.openjdk.java.net/browse/JDK-4765261 JDK-4765261 JTextArea.append does not follow spec (it is not ThreadSafe)]
-- [https://bugs.openjdk.java.net/browse/JDK-4760477 JDK-4760477 JTextArea.append(String) is not ThreadSafe]
-- [https://bugs.openjdk.java.net/browse/JDK-7140863 JDK-7140863 Lots of Japanese OpenType fonts do not render correctly]
-- [https://bugs.openjdk.java.net/browse/JDK-5036549 JDK-5036549 PopupMenu not adjusting its location correctly depending on taskbar's position.]
-- [https://bugs.openjdk.java.net/browse/JDK-6603771 JDK-6603771 Nimbus L&F: Ctrl+F7 keybinding for JInternal Frame throws a NPE. - Java Bug System]
+** 未修正 [#w96f7a6e]
+- [https://bugs.openjdk.java.net/browse/JDK-4280944 &#91;JDK-4280944&#93; Attributes on last newline character cause undesirable extra spacing. - Java Bug System]
+- [https://bugs.openjdk.java.net/browse/JDK-4292511 &#91;JDK-4292511&#93; JTableHeader height determined by first column given HTML text - Java Bug System]
+- [https://bugs.openjdk.java.net/browse/JDK-4765261 &#91;JDK-4765261&#93; JTextArea.append does not follow spec (it is not ThreadSafe) - Java Bug System]
+- [https://bugs.openjdk.java.net/browse/JDK-5036549 &#91;JDK-5036549&#93; PopupMenu not adjusting its location correctly depending on taskbar's position. - Java Bug System]
+- [https://bugs.openjdk.java.net/browse/JDK-6603771 &#91;JDK-6603771&#93; Nimbus L&F: Ctrl+F7 keybinding for JInternal Frame throws a NPE. - Java Bug System]
+- [https://bugs.openjdk.java.net/browse/JDK-6612928 &#91;JDK-6612928&#93; Win32ShellFolder2 throws RejectedExecutionException on application exit - Java Bug System]
+- [https://bugs.openjdk.java.net/browse/JDK-6700748 &#91;JDK-6700748&#93; Cursor flickering during D&D when using CellRendererPane with validation - Java Bug System]
+- [https://bugs.openjdk.java.net/browse/JDK-6723524 &#91;JDK-6723524&#93; Invalid background of components displayed in JTable in Nimbus L&F - Java Bug System]
+- [https://bugs.openjdk.java.net/browse/JDK-6723524 &#91;JDK-6723524&#93; Invalid background of components displayed in JTable in Nimbus L&F - Java Bug System]
+- [https://bugs.openjdk.java.net/browse/JDK-6780505 &#91;JDK-6780505&#93; java.awt.Desktop.getDesktop().open() fails on shared files with white spaces - Java Bug System]
+- [https://bugs.openjdk.java.net/browse/JDK-6826514 &#91;JDK-6826514&#93; SwingWorker: done() called before doInBackground() returns, when cancelled - Java Bug System]
 
-** 修正済み [#f5441365]
-- Release Fixed: 1.4.0  %%[https://bugs.openjdk.java.net/browse/JDK-4463424 JDK-4463424 LineBreakMeasurer inconsistent with TextLayout]%%
-- Release Fixed: 1.6.0 %%[https://bugs.openjdk.java.net/browse/JDK-6413228 JDK-6413228 Many links broken with "?is-external=true".]%%
-- Release Fixed: 1.7.0 %%[https://bugs.openjdk.java.net/browse/JDK-6910490 JDK-6910490 MatteBorder JScrollpane interaction]%%
-- Release Fixed: 1.7.0 %%[https://bugs.openjdk.java.net/browse/JDK-4765383 JDK-4765383 JTextArea.append(String) not thread safe]%%
-- Release Fixed: 1.7.0, 1.6.0_18 %%[https://bugs.openjdk.java.net/browse/JDK-4833524 JDK-4833524 BasicTreeUI.isToggleSelectionEvent() does not properly handle popup triggers]%%
-- Release Fixed: 1.7.0, 1.6.0_18 %%[https://bugs.openjdk.java.net/browse/JDK-6840086 JDK-6840086 JFileChooser lacks icons on top right when running on Windows 7]%%
+** 修正済み [#ReleaseFixed]
+- Release Fixed: 1.4.0  %%[https://bugs.openjdk.java.net/browse/JDK-4463424 &#91;JDK-4463424&#93; LineBreakMeasurer inconsistent with TextLayout - Java Bug System]%%
+- Release Fixed: 1.6.0 %%[https://bugs.openjdk.java.net/browse/JDK-6413228 &#91;JDK-6413228&#93; Many links broken with "?is-external=true". - Java Bug System]%%
+- Release Fixed: 1.7.0 %%[https://bugs.openjdk.java.net/browse/JDK-6910490 &#91;JDK-6910490&#93; MatteBorder JScrollpane interaction - Java Bug System]%%
+- Release Fixed: 1.7.0 %%[https://bugs.openjdk.java.net/browse/JDK-4765383 &#91;JDK-4765383&#93; JTextArea.append(String) not thread safe - Java Bug System]%%
+- Release Fixed: 1.7.0, 1.6.0_18 %%[https://bugs.openjdk.java.net/browse/JDK-4833524 &#91;JDK-4833524&#93; BasicTreeUI.isToggleSelectionEvent() does not properly handle popup triggers - Java Bug System]%%
+- Release Fixed: 1.7.0, 1.6.0_18 %%[https://bugs.openjdk.java.net/browse/JDK-6840086 &#91;JDK-6840086&#93; JFileChooser lacks icons on top right when running on Windows 7 - Java Bug System]%%
+- Release Fixed: 1.6.0_21 %%[https://bugs.openjdk.java.net/browse/JDK-6631956 &#91;JDK-6631956&#93; Nimbus: ClassCastException when running with MultiLookAndFeel - Java Bug System]%%
+- 修正されているようだがクローズされていない %%[https://bugs.openjdk.java.net/browse/JDK-7140863 &#91;JDK-7140863&#93; Lots of Japanese OpenType fonts do not render correctly - Java Bug System]%%
 
 * コメント [#comment]
 #comment
