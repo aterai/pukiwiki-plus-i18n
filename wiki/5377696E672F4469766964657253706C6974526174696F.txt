@@ -49,14 +49,14 @@ class SplitPaneWrapper extends JPanel {
 }}
 
 * 解説 [#explanation]
-- `JSplitPane#setResizeWeight(0d)`なので、`JFrame`をマウスでリサイズしても上コンポーネントの高さが維持される
-- `JSplitPane`をラップする`JPanel`の`doLayout()`メソッドをオーバーライドして、最大化、通常化の前後で上下コンポーネントの高さの比率を維持する
+- `MAXIMIZED_BOTH: keep the same splitting ratio`が未選択の場合:
+-- `JSplitPane#setResizeWeight(0d)`に設定されているので、`JFrame`をマウスでリサイズしても上コンポーネントの高さが維持される
+- `MAXIMIZED_BOTH: keep the same splitting ratio`が選択されている場合:
+-- `JSplitPane`をラップする`JPanel`の`doLayout()`メソッドをオーバーライドして、最大化、通常化の前後で上下コンポーネントの高さの比率を維持する
 -- `EventQueue.invokeLater(...)`を使って、後で`JSplitPane#setDividerLocation(int)`でディバイダの位置を調節
 -- デフォルト(`MAXIMIZED_BOTH: keep the same splitting ratio`チェックボックスのチェックを外している状態):
 --- 例えば、最大化後にディバイダをすこし上に移動して`JFrame`を元に戻す(縮小)と、上コンポーネントの方が下コンポーネントより高くなる
-
-----
-`JSplitPane#setDividerLocation(double)`は、内部で`JSplitPane#setDividerLocation(int)`を呼び出しているが、その変換の際に値を切り捨てているので、上記のサンプルでは最大化、元に戻す(縮小)を行なっても、同じ値になるように四捨五入するよう変更している。
+-- `JSplitPane#setDividerLocation(double)`は、内部で`JSplitPane#setDividerLocation(int)`を呼び出しているが、その変換の際に値を切り捨てているので、このサンプルでは最大化、元に戻す(縮小)を行なっても、同じ値になるように四捨五入するよう変更している
 
 * 参考リンク [#reference]
 - [[JSplitPaneを等分割する>Swing/DividerLocation]]

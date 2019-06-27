@@ -37,6 +37,8 @@ pubdate: 2018-01-22T16:28:08+09:00
 -- 切り抜き図形の幅を`32`の倍数以外にすると発生しない(高さは無関係？)
 -- 上記スクリーンショットの抜け部分のサイズは`32px`
 -- [https://github.com/corretto/corretto-8/issues/127 Java2D rendering may break when using soft clipping effects · Issue #127 · corretto/corretto-8]、`8u222`で修正される予定
+- [https://bugs.openjdk.java.net/browse/JDK-8225065 &#91;JDK-8225065&#93; Revert 8221166 (8u backport of 8048782) - Java Bug System]のリバートで`OpenJDK`でも`8u222`で修正される模様
+-- `8u222`で修正される予定だった[https://github.com/corretto/corretto-8/pull/94 Backport JDK-8048782: OpenJDK: PiscesCache : xmax/ymax rounding up can cause RasterFormatException by sci-aws · Pull Request #94 · corretto/corretto-8]の修正が`corretto-8`では`8u212`に紛れ込んでいた？ということなのかも？？？
 
 - `Corretto 11.0.3`では正常
  openjdk version "11.0.3" 2019-04-16 LTS

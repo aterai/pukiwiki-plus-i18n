@@ -340,14 +340,12 @@ tree.addTreeWillExpandListener(new TreeWillExpandListener() {
 `Kotlin`(自動変換)
 #code(lang-kotlin){{
 tree.addTreeWillExpandListener(object : TreeWillExpandListener() {
-  @Override
   @Throws(ExpandVetoException::class)
-  fun treeWillExpand(e: TreeExpansionEvent) {
-    //throw new ExpandVetoException(e, "Tree expansion cancelled");
+  override fun treeWillExpand(e: TreeExpansionEvent) {
+    // throw new ExpandVetoException(e, "Tree expansion cancelled");
   }
-  @Override
   @Throws(ExpandVetoException::class)
-  fun treeWillCollapse(e: TreeExpansionEvent) {
+  override fun treeWillCollapse(e: TreeExpansionEvent) {
     throw ExpandVetoException(e, "Tree collapse cancelled")
   }
 })
@@ -358,7 +356,7 @@ tree.addTreeWillExpandListener(object : TreeWillExpandListener() {
 tree.addTreeWillExpandListener(object : TreeWillExpandListener {
   @Throws(ExpandVetoException::class)
   override fun treeWillExpand(e: TreeExpansionEvent) {
-    //throw new ExpandVetoException(e, "Tree expansion cancelled");
+    // throw new ExpandVetoException(e, "Tree expansion cancelled");
   }
   @Throws(ExpandVetoException::class)
   override fun treeWillCollapse(e: TreeExpansionEvent) {
@@ -995,6 +993,24 @@ class FileListTable(model: TableModel) : JTable(model) {
     override fun mousePressed(e: MouseEvent) {
       val table = this@FileListTable
       // ...
+}}
+#twocolumn
+
+** enumを参照等価性で比較する [#ReferentialEquality]
+- %%最近？の%%`IntelliJ`の自動変換では、列挙子(`enum`)の比較を`===`演算子に変換する
+-- %%以前は`==`演算子に変換していた？？？%%
+-- [https://kotlinlang.org/docs/reference/equality.html Equality - Kotlin Programming Language]
+
+#twocolumn
+`Java`
+#code{{
+checkBox.setSelected(node.getStatus() == Status.SELECTED);
+}}
+
+#twocolumn
+`Kotlin`
+#code(lang-kotlin){{
+checkBox.setSelected(it.status === Status.SELECTED)
 }}
 #twocolumn
 
@@ -2269,7 +2285,8 @@ val lv = spinner?.getModel()?.getValue() ?: 1000L
 #twocolumn
 
 ** Stream [#List]
-- `Stream`は、`List`に置換可能な場合が多い
+- `Stream`は、`List`(`Iterable`)に置換可能な場合が多い
+- 配列も`Iterable`なので`Stream`にする必要はあまりない
 
 #twocolumn
 #code(lang-kotlin){{
@@ -2284,6 +2301,41 @@ fun children(parent: Container): List<Component> = parent.getComponents()
     .filterIsInstance(Container::class.java)
     .map { children(it) }
     .fold(listOf<Component>(parent), { a, b -> a + b })
+}}
+#twocolumn
+
+** Stream.reduce(...) [#reduce]
+- 初期値有りの`Stream#reduce(T identity, BinaryOperator<T> accumulator)`は、`Iterable<T>.fold(initial: R, operation: (acc: R, T) -> R)`に置換可能
+
+#twocolumn
+#code(lang-kotlin){{
+// // Java
+// int max = group.stream()
+//     .map(AlignedLabel::getSuperPreferredWidth)
+//     .reduce(0, Integer::max);
+val max = group.stream()
+    .map(Function<AlignedLabel, Int> { it.getSuperPreferredWidth() })
+    .reduce(0, BinaryOperator<Int> { a, b -> Integer.max(a, b) })
+}}
+#code(lang-kotlin){{
+val max = group.stream()
+    .map { it.getSuperPreferredWidth() }
+    .reduce(0, Integer::max)
+}}
+#twocolumn
+#code(lang-kotlin){{
+val max = group
+    .map { it.getSuperPreferredWidth() }
+    .fold(0) { a, b -> maxOf(a, b) }
+}}
+
+#code(lang-kotlin){{
+val max = group.map { it.getSuperPreferredWidth() }.fold(0, ::maxOf)
+}}
+
+#code(lang-kotlin){{
+// この例だとIntなのでmax()とエルビス演算子`?:`が使用可能
+val max = group.map { it.getSuperPreferredWidth() }.max() ?: 0
 }}
 #twocolumn
 
@@ -2329,6 +2381,32 @@ private fun makeTestHtml() = """
     </body>
   </html>
 """
+}}
+#twocolumn
+
+** Comparator.comparing(...).thenComparing(...) [#thenComparing]
+- 複数キーでソートする`Comparator<T>`は、`Java`では`Comparator.comparing(Function<? super T,? extends U> keyExtractor).thenComparing(Function<? super T,? extends U> keyExtractor)`で作成可能
+- `Kotlin`では`compareBy(vararg selectors: (T) -> Comparable<*>?)`や`Comparator<T>.thenBy(...)`で同等の`Comparator<T>`が作成可能
+-- [https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.comparisons/index.html kotlin.comparisons - Kotlin Programming Language]
+
+#twocolumn
+#code(lang-kotlin){{
+// val tnc = Comparator.comparing(Function<DefaultMutableTreeNode, Boolean> { it.isLeaf() })
+val tnc = Comparator.comparing<DefaultMutableTreeNode, Boolean> { it.isLeaf() }
+    .thenComparing { n -> n.getUserObject().toString() }
+val children = parent.children().toList()
+    .filterIsInstance(DefaultMutableTreeNode::class.java)
+    .sortedWith(tnc)
+}}
+
+#twocolumn
+#code(lang-kotlin){{
+val tnc = compareBy<DefaultMutableTreeNode> { it.isLeaf() }
+    .thenBy { it.getUserObject().toString() }
+val children = parent.children().toList()
+    .filterIsInstance(DefaultMutableTreeNode::class.java)
+    .sortedWith(tnc)
+    // .sortedWith(compareBy(DefaultMutableTreeNode::isLeaf, { it.getUserObject().toString() }))
 }}
 #twocolumn
 

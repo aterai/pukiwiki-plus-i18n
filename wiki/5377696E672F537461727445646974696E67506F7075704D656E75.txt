@@ -5,14 +5,14 @@ title: JTreeのノード編集をPopupからのみに制限する
 tags: [JTree, JPopupMenu, TreeCellEditor, JOptionPane]
 author: aterai
 pubdate: 2010-04-19T13:46:44+09:00
-description: JTreeのノード編集を、マウスクリックではなく、Popupからのみに制限します。
+description: JTreeのノード編集をマウスクリックではなくPopupからのみに制限します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTy9Cda5I/AAAAAAAAAlA/6uCGiCD2iGY/s800/StartEditingPopupMenu.png
 hreflang:
     href: https://java-swing-tips.blogspot.com/2013/03/jtree-node-edit-only-from-jpopupmenu.html
     lang: en
 ---
 * 概要 [#summary]
-`JTree`のノード編集を、マウスクリックではなく、`Popup`からのみに制限します。
+`JTree`のノード編集をマウスクリックではなく`Popup`からのみに制限します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTTy9Cda5I/AAAAAAAAAlA/6uCGiCD2iGY/s800/StartEditingPopupMenu.png)
 
@@ -23,20 +23,21 @@ tree.setCellEditor(new DefaultTreeCellEditor(
   @Override public boolean isCellEditable(EventObject e) {
     return !(e instanceof MouseEvent) && super.isCellEditable(e);
   }
-//@Override protected boolean canEditImmediately(EventObject e) {
-////((MouseEvent) e).getClickCount() > 2
-//  return (e instanceof MouseEvent) ? false : super.canEditImmediately(e);
-//}
+
+  // @Override protected boolean canEditImmediately(EventObject e) {
+  //   // ((MouseEvent) e).getClickCount() > 2
+  //   return (e instanceof MouseEvent) ? false : super.canEditImmediately(e);
+  // }
 });
 tree.setEditable(true);
 tree.setComponentPopupMenu(new TreePopupMenu());
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`DefaultTreeCellEditor#isCellEditable`メソッドをオーバーライドした`CellEditor`を設定することで、ノードをマウスでクリックしても編集開始できないように制限しています。
+上記のサンプルでは、`DefaultTreeCellEditor#isCellEditable`メソッドをオーバーライドした`CellEditor`を設定することでノードをマウスでクリックしても編集開始できないように制限しています。
 
 ----
-編集開始のためのポップアップメニューは、以下のような`2`種類を用意しています。
+編集開始のためのポップアップメニューは以下のような`2`種類を用意しています。
 
 - `JTree#startEditingAtPath`メソッドを使用する
 - `JOptionPane`を表示して編集する
@@ -63,17 +64,18 @@ public TreePopupMenu() {
         DefaultMutableTreeNode leaf = (DefaultMutableTreeNode) node;
         textField.setText(leaf.getUserObject().toString());
         int result = JOptionPane.showConfirmDialog(
-          tree, textField, "Rename",
-          JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            tree, textField, "Rename",
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
           String str = textField.getText();
-          if (!str.trim().isEmpty())
+          if (!str.trim().isEmpty()) {
             ((DefaultTreeModel) tree.getModel()).valueForPathChanged(path, str);
+          }
         }
       }
     }
   }));
-// ...
+  // ...
 }}
 
 * 参考リンク [#reference]

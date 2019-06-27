@@ -36,14 +36,13 @@ class HeaderRenderer extends JCheckBox implements TableCellRenderer {
         int mci = table.convertColumnIndexToModel(vci);
         if (mci == targetColumnIndex) {
           TableColumn column = columnModel.getColumn(vci);
-          Object v = column.getHeaderValue();
-          boolean b = Status.DESELECTED.equals(v);
+          boolean b = column.getHeaderValue() == Status.DESELECTED;
           TableModel m = table.getModel();
           for (int i = 0; i < m.getRowCount(); i++) {
             m.setValueAt(b, i, mci);
           }
           column.setHeaderValue(b ? Status.SELECTED : Status.DESELECTED);
-          //header.repaint();
+          // header.repaint();
         }
       }
     });

@@ -22,7 +22,8 @@ combo.setRenderer(new DefaultListCellRenderer() {
     if (value instanceof JSeparator) {
       return (Component) value;
     } else {
-      return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+      return super.getListCellRendererComponent(
+          list, value, index, isSelected, cellHasFocus);
     }
   }
 });
@@ -46,6 +47,7 @@ combo.setModel(model);
 - `DefaultComboBoxModel`
 -- `JSeparator`が選択された場合は何もしないよう、`setSelectedItem`メソッドをオーバーライド
 
+----
 `DefaultComboBoxModel#setSelectedItem`メソッドをオーバーライドする代わりに、以下のように`JSeparator`が選択された場合はひとつ前の`Item`に戻すような`ItemListener`を追加しても同様になります。
 
 #code{{

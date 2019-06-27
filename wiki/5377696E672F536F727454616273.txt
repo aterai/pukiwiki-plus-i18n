@@ -17,24 +17,29 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTe98QmaI/AAAAAAAAAkc/w7
 #code(link){{
 class SortAction extends AbstractAction {
   @Override public void actionPerformed(ActionEvent e) {
-    JTabbedPane tabbedPane = (JTabbedPane) getInvoker();
-    List<ComparableTab> list = IntStream.range(0, tabbedPane.getTabCount())
-      .mapToObj(i -> new ComparableTab(tabbedPane.getTitleAt(i), tabbedPane.getComponentAt(i)))
-      .sorted(Comparator.comparing(ComparableTab::getTitle)).collect(Collectors.toList());
-    tabbedPane.removeAll();
-    list.forEach(c -> tabbedPane.addTab(c.getTitle(), c.getComponent()));
+    JTabbedPane tabs = (JTabbedPane) getInvoker();
+    List<ComparableTab> list = IntStream.range(0, tabs.getTabCount())
+      .mapToObj(i -> new ComparableTab(tabs.getTitleAt(i), tabs.getComponentAt(i)))
+      .sorted(Comparator.comparing(ComparableTab::getTitle))
+      .collect(Collectors.toList());
+    tabs.removeAll();
+    list.forEach(c -> tabs.addTab(c.getTitle(), c.getComponent()));
   }
 }
+
 class ComparableTab {
   private final String title;
   private final Component comp;
+
   protected ComparableTab(String title, Component comp) {
     this.title = title;
     this.comp  = comp;
   }
+
   public String getTitle() {
     return title;
   }
+
   public Component getComponent() {
     return comp;
   }
@@ -42,11 +47,13 @@ class ComparableTab {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、以下の手順でタブのソートを行っています。タブを追加、削除、ダブルクリックで名前変更などが可能なので、確認してみてください。
+上記のサンプルでは、タブを追加、削除、ダブルクリックで名前変更してタブタイトルでのソートがテスト可能です。
 
-- ソートしたタブのリストを作成
-- `JTabbedPane`から一旦タブをすべて削除
-- ソート済みのリストから`JTabbedPane`にタブを戻す
+タブのソートは以下の手順で実行しています。
+
++ ソートしたタブのリストを作成
++ `JTabbedPane`から一旦タブをすべて削除
++ ソート済みのリストから`JTabbedPane`にタブを戻す
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#removeAll-- JTabbedPane#removeAll() (Java Platform SE 8)]

@@ -43,15 +43,15 @@ class URLRenderer extends DefaultTableCellRenderer
     String str = SwingUtilities.layoutCompoundLabel(
       this,
       this.getFontMetrics(this.getFont()),
-      value.toString(), //this.getText(),
+      value.toString(), // this.getText(),
       this.getIcon(),
       this.getVerticalAlignment(),
       this.getHorizontalAlignment(),
       this.getVerticalTextPosition(),
       this.getHorizontalTextPosition(),
       lrect,
-      irect, //icon
-      trect, //text
+      irect, // icon
+      trect, // text
       this.getIconTextGap());
 
     if (!table.isEditing() && this.row == row && this.col == column) {
@@ -60,7 +60,7 @@ class URLRenderer extends DefaultTableCellRenderer
       setText("<html><font color='blue'>" + str);
     } else {
       setText(str);
-      //setText(value.toString());
+      // setText(value.toString());
     }
     return this;
   }

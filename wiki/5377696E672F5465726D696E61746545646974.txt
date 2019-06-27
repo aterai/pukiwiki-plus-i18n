@@ -23,9 +23,9 @@ table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 
 - `terminateEditOnFocusLost`
 -- `table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);`を設定
--- 同じフレームを親に持つコンポーネントにフォーカスが移動したとき、編集が確定する
--- 別フレームのコンポーネントにフォーカスが移動しても編集中のまま
--- ヘッダをクリック、入れ替え、サイズ変更すると、編集はキャンセルされる
+-- 同じフレームを親に持つコンポーネントにフォーカスが移動したとき編集が確定する
+-- 別フレームのコンポーネントにフォーカスが移動しても編集中の状態が継続する
+-- ヘッダをクリックしたり、列の入れ替え、サイズ変更を実行すると編集はキャンセルされる
 - `DefaultCellEditor:focusLost`
 -- `DefaultCellEditor`からエディタコンポーネントを取得してこれに`FocusListener`を設定し、セルが編集中なら`table.getCellEditor().stopCellEditing();`を実行
 -- 別フレームのコンポーネントにフォーカスが移動したときも、編集が確定する
@@ -47,7 +47,7 @@ dce.getComponent().addFocusListener(new FocusAdapter() {
 - `TableHeader:mousePressed`
 -- `TableHeader`に`MouseListener`を設定して、セルが編集中なら`table.getCellEditor().stopCellEditing();`
 を実行
--- ヘッダをクリックしたとき、編集が確定する
+-- ヘッダをクリックしたとき編集が確定する
 -- `JDK 1.7.0`では、このような`MouseListener`を`TableHeader`に設定しなくても、編集が確定するように修正済み
 -- [https://bugs.openjdk.java.net/browse/JDK-4330950 Bug ID: 4330950 Lost newly entered data in the cell when resizing column width]
 #code{{

@@ -54,15 +54,15 @@ class PressAndHoldHandler extends AbstractAction implements MouseListener {
   }
   private List<MenuContext> makeMenuList() {
     return Arrays.asList(
-      new MenuContext("BLACK",   Color.BLACK),
-      new MenuContext("BLUE",  　Color.BLUE),
-      new MenuContext("CYAN",  　Color.CYAN),
-      new MenuContext("GREEN",   Color.GREEN),
+      new MenuContext("BLACK", Color.BLACK),
+      new MenuContext("BLUE", Color.BLUE),
+      new MenuContext("CYAN", Color.CYAN),
+      new MenuContext("GREEN", Color.GREEN),
       new MenuContext("MAGENTA", Color.MAGENTA),
-      new MenuContext("ORANGE",  Color.ORANGE),
-      new MenuContext("PINK",  　Color.PINK),
-      new MenuContext("RED",   　Color.RED),
-      new MenuContext("YELLOW",  Color.YELLOW));
+      new MenuContext("ORANGE", Color.ORANGE),
+      new MenuContext("PINK", Color.PINK),
+      new MenuContext("RED", Color.RED),
+      new MenuContext("YELLOW", Color.YELLOW));
   }
   @Override public void actionPerformed(ActionEvent e) {
     System.out.println("actionPerformed");
@@ -97,8 +97,8 @@ class PressAndHoldHandler extends AbstractAction implements MouseListener {
 
 * 解説 [#explanation]
 - 長押し
--- ボタンクリックが`1000`ミリ秒以上継続されると、`JRadioButton`を配置した`JPopupMenu`を表示
---- `JPopupMenu`のレイアウトを`pop.setLayout(new GridLayout(0, 3))`で変更し、`JRadioButton`を`3`列並べて表示
+-- ボタンクリックが`1000`ミリ秒以上継続すると`JRadioButton`を配置した`JPopupMenu`を表示
+--- `JPopupMenu`のレイアウトを`pop.setLayout(new GridLayout(0, 3))`で変更し`JRadioButton`を`3`列並べて表示
 - シングルクリック
 -- 現在選択されている`JRadioButton`の色をコンソールに出力
 
