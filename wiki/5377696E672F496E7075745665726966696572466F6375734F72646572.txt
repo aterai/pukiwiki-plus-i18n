@@ -29,7 +29,7 @@ textField.setInputVerifier(new InputVerifier() {
     System.out.println("shouldYieldFocus");
     if (isAllValid()) {
       button.setEnabled(true);
-      //EventQueue.invokeLater(() -> button.requestFocusInWindow());
+      // EventQueue.invokeLater(() -> button.requestFocusInWindow());
     } else {
       button.setEnabled(false);
     }
@@ -60,7 +60,7 @@ setFocusCycleRoot(true);
 - `InputVerifier#shouldYieldFocus(...)`や`FocusListener#focusLost(...)`で、`JButton#setEnabled(true)`としても、フォーカスは`JButton`に移動しない(初めて`JButton`がクリック可能になったときは、先頭の`JCheckBox`にフォーカスが移動する)
 -- これらの実行より先に`LayoutFocusTraversalPolicy#getComponentAfter(...)`で、次にフォーカスが移動するコンポーネントが決定されるため、この時点で`JButton#setEnabled(true)`になっていない`JButton`はスキップされる
 - 回避方法:
--- `InputVerifier#shouldYieldFocus(...)`や`FocusListener#focusLost(...)`内で、`EventQueue.invokeLater(() -> button.requestFocusInWindow() );`などを実行し、一番後でフォーカスを強制的に`JButton`に移動する
+-- `InputVerifier#shouldYieldFocus(...)`や`FocusListener#focusLost(...)`内で`EventQueue.invokeLater(() -> button.requestFocusInWindow() );`などを実行し、一番後でフォーカスを強制的に`JButton`に移動する
 -- または、`LayoutFocusTraversalPolicy#getComponentAfter(...)`をオーバーライドして、事前に`JButton#setEnabled(true)`を実行する
 
 * 参考リンク [#reference]
