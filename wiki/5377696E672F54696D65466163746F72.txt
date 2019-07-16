@@ -23,7 +23,8 @@ UIManager.put("Tree.timeFactor", 1000L);
 
 * 解説 [#explanation]
 上記のサンプルでは、`JComboBox`、`JList`、`JTree`、`JFileChooser`の詳細ビュー(`JTable`)で、キー入力による先頭文字検索に使用する複数キー入力遅延時間を設定するテストが実行可能です。
-`ComboBox.timeFactor`タブ内の`JSpinner`で遅延時間(ミリ秒)を設定し、`LookAndFeel`を変更すると(例えば`BasicTreeUI#installDefaults()`メソッドが実行されると)その時間が設定されます。
+
+`ComboBox.timeFactor`タブ内の`JSpinner`で遅延時間(ミリ秒)を設定してから`LookAndFeel`を変更(例えば`BasicTreeUI#installDefaults()`メソッドを実行)するとその時間が設定されます。
 
 - `ComboBox.timeFactor`
 -- 編集不可の`JComboBox`で先頭文字列検索に使用するキー入力遅延時間を設定可能

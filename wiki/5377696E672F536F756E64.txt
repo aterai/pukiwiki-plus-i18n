@@ -16,16 +16,30 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTj2hYTjI/AAAAAAAAAko/8d
 * サンプルコード [#sourcecode]
 #code(link){{
 URL url = getClass().getResource("notice1.wav");
-AudioInputStream sound = AudioSystem.getAudioInputStream(url);
-AudioFormat format = sound.getFormat();
-DataLine.Info di = new DataLine.Info(Clip.class, format);
-Clip clip = (Clip) AudioSystem.getLine(di);
-clip.open(sound);
-clip.start();
+try (AudioInputStream sound = AudioSystem.getAudioInputStream(url);
+     Clip clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, sound.getFormat()))) {
+  SecondaryLoop loop = Toolkit.getDefaultToolkit().getSystemEventQueue().createSecondaryLoop();
+  clip.addLineListener(e -> {
+    LineEvent.Type t = e.getType();
+    if (Objects.equals(t, LineEvent.Type.STOP) || Objects.equals(t, LineEvent.Type.CLOSE)) {
+      loop.exit();
+    }
+  });
+  clip.open(sound);
+  clip.start();
+  loop.enter();
+} catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+  ex.printStackTrace();
+  Toolkit.getDefaultToolkit().beep();
+}
 }}
 
 * 解説 [#explanation]
 `AudioSystem`を使用すれば、`WAVE`、`AU`、`AIFF`、`SND`形式のサウンドファイルが演奏可能です。
+
+- `AudioInputStream`や`Clip`を`AutoCloseable`で自動的に開放するため`try-with-resources`ブロックで作成
+- 演奏開始後に`SecondaryLoop`で現在のスレッドをブロックし新しいセカンダリイベントループで演奏継続
+- 演奏終了イベントを`LineListener`で受け取るとセカンダリイベントループを終了して現在のスレッドに戻り`close()`が自動的に実行される
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/sound/sampled/AudioSystem.html AudioSystem (Java Platform SE 8)]

@@ -52,8 +52,7 @@ list.addMouseListener(new MouseAdapter() {
 上記のサンプルでは、`JList`に設定した`MouseListener`のクリックイベントをその`ListCellRenderer`として使用している`JEditorPane`に`dispatchEvent`で転送し、`HyperlinkListener`でリンククリックイベントが取得できるように設定しています。
 
 - `MouseEvent`は、そのクリック位置を`JList`から`JEditorPane`相対に変更する必要がある
--- %%`SwingUtilities.convertMouseEvent(list, e, editor)`ではうまく変換できないので、自前で位置を変換し、`new MouseEvent(...)`でイベントを作り直している%%
--- `SwingUtilities.convertMouseEvent(list, e, editor)`でマウスイベントのソースをセルエディタに変換し、座標は`MouseEvent#translatePoint(...)`メソッドを使用してセルエディタ相対に変換
+- `SwingUtilities.convertMouseEvent(list, e, editor)`でマウスイベントのソースをセルエディタに変換し、座標は`MouseEvent#translatePoint(...)`メソッドを使用してセルエディタ相対に変換
 
 * 参考リンク [#reference]
 - [[JListのセル中に配置したコンポーネント毎にカーソルを変更する>Swing/CursorOfCellComponent]]

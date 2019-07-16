@@ -807,8 +807,9 @@ editor2.setSelectionColor(Color(0x6488AAAA, true)) // 問題なし
 #twocolumn
 
 ** プライマリコンストラクタでのプロパティ定義 [#PrimaryConstructor]
-- `Java`のクラスで変数宣言にコメントが付いている場合、`IntelliJ`の自動変換ではそのコメントがプライマリコンストラクタの引数でのプロパティ定義にそのままコピーされてしまう場合がある
--- たとえば以下の例では、` // = table.getTableHeader();`が`class RowHeaderRenderer<E>(private val header: JTableHeader // = table.getTableHeader();) : JLabel(), ...`とプライマリコンストラクタのプロパティ定義に入り込んでそれ以降がコメントアウトされてしまうため、コンパイルエラーになる
+- %%`Java`のクラスで変数宣言にコメントが付いている場合、`IntelliJ`の自動変換ではそのコメントがプライマリコンストラクタの引数でのプロパティ定義にそのままコピーされてしまう場合がある%%
+-- %%たとえば以下の例では、` // = table.getTableHeader();`が`class RowHeaderRenderer<E>(private val header: JTableHeader // = table.getTableHeader();) : JLabel(), ...`とプライマリコンストラクタのプロパティ定義に入り込んでそれ以降がコメントアウトされてしまうため、コンパイルエラーになる%%
+-- コメントの末尾で改行が入るよう修正された
 
 #twocolumn
 `Java`
@@ -824,7 +825,7 @@ class RowHeaderRenderer<E> extends JLabel implements ListCellRenderer<E> {
 }}
 
 #twocolumn
-`Kotlin`(自動変換)
+`Kotlin`(旧自動変換)
 #code(lang-kotlin){{
 inner class RowHeaderRenderer<E>(private val header: JTableHeader // = table.getTableHeader();) : JLabel(), ListCellRenderer<E> {
 
@@ -833,9 +834,10 @@ inner class RowHeaderRenderer<E>(private val header: JTableHeader // = table.get
     // ...
 }}
 
-`Kotlin`(手動修正)
+`Kotlin`(新自動変換)
 #code(lang-kotlin){{
-inner class RowHeaderRenderer<E>(private val header: JTableHeader) : JLabel(), ListCellRenderer<E> {
+inner class RowHeaderRenderer<E>(private val header: JTableHeader // = table.getTableHeader();
+) : JLabel(), ListCellRenderer<E> {
 
   init {
     this.setOpaque(true)

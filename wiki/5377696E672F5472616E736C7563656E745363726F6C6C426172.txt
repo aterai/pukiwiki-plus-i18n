@@ -62,25 +62,20 @@ public JComponent makeTranslucentScrollBar(JComponent c) {
     }
   });
   scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
-    private final Color defaultColor  = new Color(220, 100, 100, 100);
+    private final Color defaultColor = new Color(220, 100, 100, 100);
     private final Color draggingColor = new Color(200, 100, 100, 100);
     private final Color rolloverColor = new Color(255, 120, 100, 100);
-    private final Dimension d = new Dimension();
+
     @Override protected JButton createDecreaseButton(int orientation) {
-      return new JButton() {
-        @Override public Dimension getPreferredSize() {
-          return d;
-        }
-      };
+      return new ZeroSizeButton();
     }
+
     @Override protected JButton createIncreaseButton(int orientation) {
-      return new JButton() {
-        @Override public Dimension getPreferredSize() {
-          return d;
-        }
-      };
+      return new ZeroSizeButton();
     }
-    @Override protected void paintTrack(Graphics g, JComponent c, Rectangle r) {}
+
+    @Override protected void paintTrack(Graphics g, JComponent c, Rectangle r) { /* empty */ }
+
     @Override protected void paintThumb(Graphics g, JComponent c, Rectangle r) {
       Color color;
       JScrollBar sb = (JScrollBar) c;
@@ -102,9 +97,10 @@ public JComponent makeTranslucentScrollBar(JComponent c) {
       g2.drawRect(r.x, r.y, r.width - 1, r.height - 1);
       g2.dispose();
     }
+
     @Override protected void setThumbBounds(int x, int y, int width, int height) {
       super.setThumbBounds(x, y, width, height);
-      //scrollbar.repaint(x, 0, width, scrollbar.getHeight());
+      // scrollbar.repaint(x, 0, width, scrollbar.getHeight());
       scrollbar.repaint();
     }
   });
@@ -113,27 +109,23 @@ public JComponent makeTranslucentScrollBar(JComponent c) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JScrollBar`の増減ボタンのサイズを`0x0`で非表示、トラックを透明、つまみを半透明にして、`JViewport`内部に配置しています。
+上記のサンプルでは、`JScrollBar`の増減ボタンのサイズを非表示、トラックを透明、つまみを半透明にして、`JViewport`内部に配置しています。
 
 - `ScrollPaneLayout#layoutContainer(...)`をオーバーライドして、`JScrollBar`を`JViewport`の内部にオーバーラップするように配置
 -- `scrollPane.setComponentZOrder(...)`で、`JScrollBar`と`JViewport`の`Z`軸の順序を変更
 - `BasicScrollBarUI#createDecreaseButton()`、`BasicScrollBarUI#createIncreaseButton()`をオーバーライドして増減ボタンのサイズを`0`に設定
+-- [[JScrollBarのArrowButtonを非表示にする>Swing/ArrowButtonlessScrollBar]]
 - `BasicScrollBarUI#paintTrack()`をオーバーライドしてトラックを非表示
 -- トラックにつまみの残像が残るので、`BasicScrollBarUI#setThumbBounds`をオーバーライドして`JScrollBar`全体を再描画
 - `BasicScrollBarUI#paintThumb()`をオーバーライドして半透明のつまみを描画
-
-- 注:
--- %%`WindowsLookAndFeel`などでつまみの描画がチラつく？%%
--- %%`JTextArea`などをこのサンプルの`JViewport`に配置すると、`Caret`の点滅や、文字列の選択などでつまみの描画が乱れる%%
--- %%`JList`などの選択でも、つまみの描画が乱れる%%
---- %%`ListSelectionListener`や、`FocusListener`を追加して再描画することで回避%%
--- `JScrollPane#isOptimizedDrawingEnabled()`が`false`を返すようにオーバーライドすることで回避
+- つまみ描画のチラつき防止のため、`JScrollPane#isOptimizedDrawingEnabled()`が`false`を返すようにオーバーライド
 -- このサンプルでは、横スクロールバーの表示、カラムヘッダの表示に未対応
 --- [[JScrollBarをJTable上に重ねて表示するJScrollPaneを作成する>Swing/OverlappedScrollBar]]
 
 * 参考リンク [#reference]
 - [http://www.oracle.com/technetwork/java/painting-140037.html "Optimized" Drawing - Painting in AWT and Swing]
 - [[JScrollBarをJTable上に重ねて表示するJScrollPaneを作成する>Swing/OverlappedScrollBar]]
+- [[JScrollBarのArrowButtonを非表示にする>Swing/ArrowButtonlessScrollBar]]
 
 * コメント [#comment]
 #comment

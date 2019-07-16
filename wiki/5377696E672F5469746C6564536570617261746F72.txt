@@ -61,9 +61,10 @@ class TitledSeparator extends JLabel {
         Point2D start = new Point2D.Float();
         Point2D end   = new Point2D.Float(width, 0);
         float[] dist  = {0f, 1f};
-        Color ec = Optional.ofNullable(getBackground()).orElse(UIManager.getColor("Panel.background"));
+        Color ec = Optional.ofNullable(getBackground())
+                           .orElse(UIManager.getColor("Panel.background"));
         Color sc = Optional.ofNullable(target).orElse(ec);
-        painter1 = new LinearGradientPaint(start, end, dist, new Color[] {sc.darker(),   ec});
+        painter1 = new LinearGradientPaint(start, end, dist, new Color[] {sc.darker(), ec});
         painter2 = new LinearGradientPaint(start, end, dist, new Color[] {sc.brighter(), ec});
       }
       int h = getIconHeight() / 2;
@@ -90,7 +91,7 @@ class TitledSeparator extends JLabel {
 - 上
 -- タイトルの垂直位置をデフォルトの`TitledBorder.DEFAULT_POSITION`にして、`Separator`上に重なるように表示
 -- `Java 1.6.0`では、タイトルの上に`Separator`が表示される場合がある？(`1.7.0`では正常)
--- 注: 垂直方向は未対応
+-- 垂直方向は未対応
 - 中
 -- タイトルの垂直位置が上(`TitledBorder.ABOVE_TOP`)で、`Separator`の上に表示
 - 下
