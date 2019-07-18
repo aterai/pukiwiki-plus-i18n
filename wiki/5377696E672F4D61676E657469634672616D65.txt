@@ -26,7 +26,7 @@ class MagneticDesktopManager extends DefaultDesktopManager {
       JDesktopPane desktop = (JDesktopPane) c;
       int e = x;
       int n = y;
-      int w = desktop.getSize().width  - frame.getSize().width  - e;
+      int w = desktop.getSize().width - frame.getSize().width - e;
       int s = desktop.getSize().height - frame.getSize().height - n;
       if (isNear(e) || isNear(n) || isNear(w) || isNear(s)) {
         super.dragFrame(frame, getX(e, w), getY(n, s));
@@ -48,7 +48,7 @@ class MagneticDesktopManager extends DefaultDesktopManager {
 }}
 
 * 解説 [#explanation]
-`DesktopManager#dragFrame(JInternalFrame,int,int)`メソッドをオーバーライドすることで`JInternalFrame`の位置を調整しています。上記のサンプルでは、`JDesktopPane`と`JInternalFrame`の距離が`10px`以下になった場合、それぞれ吸着するよう設定しています。
+`DesktopManager#dragFrame(JInternalFrame,int,int)`メソッドをオーバーライドすることで`JInternalFrame`の配置座標を調整しています。上記のサンプルでは、`JDesktopPane`と`JInternalFrame`の距離が`10px`以下になった場合、それぞれの辺が吸着するよう設定しています。
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultDesktopManager.html#dragFrame-javax.swing.JComponent-int-int- DefaultDesktopManager#dragFrame(...) (Java Platform SE 8)]

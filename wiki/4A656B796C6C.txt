@@ -12,17 +12,8 @@ pubdate: 2014-09-28T01:50:02+09:00
 - `setup-x86_64.exe`から、`gcc-core`、`make`、`ruby`、`rubygems`、`ruby-devel`、`libffi-devel`、`openssh`、`openssl`、`git`をインストール
 - `~/.gemrc`を作成
 #code{{
----
-gem: "--no-ri --no-rdoc --user-install"
-:benchmark: false
-:verbose: true
-:backtrace: true
-:update_sources: true
-:bulk_threshold: 1000
-:sources:
-- http://gemcutter.org
-- http://gems.rubyforge.org/
-- http://gems.github.com
+install: --no-document
+update: --no-document
 }}
 
 - `gem`でインストール
