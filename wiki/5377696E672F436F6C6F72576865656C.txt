@@ -78,7 +78,7 @@ g2.dispose();
 --- `SIZE`を`192`、`224`、`256`、`288`、`320`などの`32`の倍数にすると描画が壊れる
 --- `RenderingHints.KEY_ANTIALIASING`を使用しなければ発生しない
 --- [https://github.com/corretto/corretto-8/pull/94 Backport JDK-8048782: OpenJDK: PiscesCache : xmax/ymax rounding up can cause RasterFormatException by sci-aws · Pull Request #94 · corretto/corretto-8]が原因？なら`1.8.0_222`で修正される予定だが、%%すこし違うような気もする...%% これに関連したリグレッションだった模様
--- [https://github.com/corretto/corretto-8/issues/127 Java2D rendering may break when using soft clipping effects · Issue #127 · corretto/corretto-8]で報告済み、`1.8.0_222`で修正される予定
+-- [https://github.com/corretto/corretto-8/issues/127 Java2D rendering may break when using soft clipping effects · Issue #127 · corretto/corretto-8]で報告済み、`1.8.0_222`で修正済み%%される予定%%
 -- 参考元の[https://javagraphics.blogspot.com/2007/04/jcolorchooser-making-alternative.html Colors: a Color Dialog | Java Graphics]では、外周のピクセルに直接アンチエイリアスを実施しているので上記のバグは発生しない
 #code{{
 // antialias

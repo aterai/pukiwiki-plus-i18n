@@ -35,7 +35,7 @@ tree3.setCellEditor(new DefaultTreeCellEditor(tree3, renderer3));
 
 * 解説 [#explanation]
 - 左
--- `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`をオーバーライドし、内部で`setIcon(icon)`メソッドを使用してノードアイコンを変更
+-- `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`をオーバーライド、また内部で`setIcon(icon)`メソッドを使用してノードアイコンを変更
 -- ノード編集中はデフォルトのアイコンが表示される
 - 中
 -- `DefaultTreeCellRenderer#setOpenIcon(...)`、`DefaultTreeCellRenderer#setClosedIcon(...)`、`DefaultTreeCellRenderer#setLeafIcon(...)`メソッドを使用してアイコンを変更した`TreeCellRenderer`を`JTree#setCellRenderer(...)`メソッドで設定

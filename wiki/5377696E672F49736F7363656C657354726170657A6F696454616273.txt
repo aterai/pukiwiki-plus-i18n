@@ -24,7 +24,7 @@ class IsoscelesTrapezoidTabbedPaneUI extends BasicTabbedPaneUI {
   private final Color tabBackgroundColor = Color.LIGHT_GRAY;
   private final Color tabBorderColor = Color.GRAY;
 
-  @Override protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) { //NOPMD
+  @Override protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) {
     int tabCount = tabPane.getTabCount();
 
     Rectangle iconRect = new Rectangle(),
@@ -47,8 +47,8 @@ class IsoscelesTrapezoidTabbedPaneUI extends BasicTabbedPaneUI {
       paintTab(g, tabPlacement, rects, selectedIndex, iconRect, textRect);
     }
   }
-  @Override protected void paintTabBorder(
-      Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
+  @Override protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex,
+      int x, int y, int w, int h, boolean isSelected) {
     // Do nothing
   }
   @Override protected void paintFocusIndicator(
@@ -65,10 +65,11 @@ class IsoscelesTrapezoidTabbedPaneUI extends BasicTabbedPaneUI {
     g2.drawLine(selRect.x - ADJ2 + 1, y, selRect.x + selRect.width + ADJ2 - 1, y);
     g2.dispose();
   }
-  @Override protected void paintTabBackground(
-      Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
+  @Override protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex,
+        int x, int y, int w, int h, boolean isSelected) {
     Graphics2D g2 = (Graphics2D) g.create();
-    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        RenderingHints.VALUE_ANTIALIAS_ON);
     int textShiftOffset = isSelected ? 0 : 1;
 
     Rectangle clipRect = g2.getClipBounds();

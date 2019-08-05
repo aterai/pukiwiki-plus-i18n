@@ -1,0 +1,76 @@
+---
+category: swing
+folder: CellEditorInputVerifier
+title: JTableのセルエディタへの入力を検証する
+tags: [JTable, CellEditor, InputVerifier, DocumentFilter, JFormattedTextField]
+author: aterai
+pubdate: 2019-08-05T16:10:21+09:00
+description: JTableのセルエディタへの入力が妥当かをInputVerifierなどを使用して検証します。
+image: https://drive.google.com/uc?id=1a1Hfeov5wRU2B59t5ea3zVRm8m-6PkLW
+---
+* 概要 [#summary]
+`JTable`のセルエディタへの入力が妥当かを`InputVerifier`などを使用して検証します。
+
+#download(https://drive.google.com/uc?id=1a1Hfeov5wRU2B59t5ea3zVRm8m-6PkLW)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+TableModel model = new DefaultTableModel(columnNames, 10) {
+  @Override public Class<?> getColumnClass(int column) {
+    return Integer.class;
+  }
+};
+JTable table = new JTable(model) {
+  @Override public Component prepareEditor(TableCellEditor editor, int row, int column) { 
+    Component c = super.prepareEditor(editor, row, column);
+    ((JComponent) c).setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    return c;
+  }
+};
+
+JTextField textField2 = new JTextField();
+textField2.setInputVerifier(new IntegerInputVerifier());
+table.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(textField2) {
+  @Override public boolean stopCellEditing() {
+    JComponent editor = (JComponent) getComponent();
+    boolean isEditValid = editor.getInputVerifier().verify(editor);
+    editor.setBorder(isEditValid ? BorderFactory.createEmptyBorder(1, 1, 1, 1)
+                                 : BorderFactory.createLineBorder(Color.RED));
+    return isEditValid && super.stopCellEditing();
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- デフォルトの`JTable.NumberEditor`(`JTable.GenericEditor`を継承)を使用
+-- 数値以外を入力し、KBD{Enter}やKBD{Tab}キーで編集確定を実行するとエディタの縁が赤くなりフォーカス移動がキャンセルされる
+- `DocumentFilter`
+-- セルエディタに数値以外の入力を禁止する`DocumentFilter`を`AbstractDocument#setDocumentFilter(...)`でメソッドで設定し、TableColumn#setCellEditor(...)で`1`列目のセルエディタとして設定
+- `InputVerifier`
+-- セルエディタに`InputVerifier`を設定し、TableColumn#setCellEditor(...)で`2`列目のセルエディタとして設定
+-- KBD{Enter}やKBD{Tab}キーで編集確定する`CellEditor#stopCellEditing()`メソッドを実行したとき、自然数、または空文字以外が入力されている場合はエディタの縁を赤くし、フォーカス移動がキャンセルする
+- `JFormattedTextField`
+-- セルエディタに`JFormattedTextField`を設定し、TableColumn#setCellEditor(...)で`3`列目のセルエディタとして設定
+-- KBD{Tab}キーで編集確定する`CellEditor#stopCellEditing()`メソッドを実行したとき、数値以外が入力されている場合はエディタの縁を赤くし、フォーカス移動がキャンセルする
+--- デフォルトの`JFormattedTextField`の場合、KBD{Enter}キーの入力で`JFormattedTextField`側の`InputMap`で定義されたアクションでフォーカス移動がキャンセルされ、`CellEditor#stopCellEditing()`は実行されないのでエディタの縁は変化しない
+
+----
+- KBD{ESC}でセルエディタの編集をキャンセルしたときエディタの縁が赤のまま残ってしまう場合があるので、`JTable#prepareEditor(...)`メソッドをオーバーライドして縁を初期化
+#code{{
+JTable table = new JTable(model) {
+  @Override public Component prepareEditor(TableCellEditor editor, int row, int column) { 
+    Component c = super.prepareEditor(editor, row, column);
+    ((JComponent) c).setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    return c;
+  }
+};
+}}
+
+* 参考リンク [#reference]
+- [[JTextFieldの入力を数値に制限する>Swing/NumericTextField]]
+- [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
+
+* コメント [#comment]
+#comment
+#comment

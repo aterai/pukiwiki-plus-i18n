@@ -63,9 +63,11 @@ class CompoundButton extends JButton {
         }
         g2.dispose();
       }
+
       @Override public int getIconWidth()  {
         return dim.width;
       }
+
       @Override public int getIconHeight() {
         return dim.height;
       }
@@ -75,9 +77,11 @@ class CompoundButton extends JButton {
     setBackground(new Color(250, 250, 250));
     initShape();
   }
+
   @Override public Dimension getPreferredSize() {
     return dim;
   }
+
   protected void initShape() {
     if (!getBounds().equals(base)) {
       base = getBounds();
@@ -96,16 +100,19 @@ class CompoundButton extends JButton {
       }
     }
   }
+
   private void paintFocusAndRollover(Graphics2D g2, Color color) {
-    g2.setPaint(new GradientPaint(0, 0, color,
-                    getWidth() - 1, getHeight() - 1, color.brighter(), true));
+    g2.setPaint(new GradientPaint(
+        0, 0, color, getWidth() - 1, getHeight() - 1, color.brighter(), true));
     g2.fill(shape);
     g2.setColor(getBackground());
   }
+
   @Override protected void paintComponent(Graphics g) {
     initShape();
     super.paintComponent(g);
   }
+
   @Override protected void paintBorder(Graphics g) {
     Graphics2D g2 = (Graphics2D) g.create();
     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -114,8 +121,9 @@ class CompoundButton extends JButton {
     g2.draw(shape);
     g2.dispose();
   }
+
   @Override public boolean contains(int x, int y) {
-    //initShape();
+    // initShape();
     return shape.contains(x, y);
   }
 }
@@ -126,15 +134,15 @@ class CompoundButton extends JButton {
 -- [[JButtonの形を変更>Swing/RoundButton]]を使って、幅高さの半分の直径をもつ円ボタンを作成
 -- `JButton#contains(...)`をオーバーライドして、図形内のみマウスカーソルが反応するように変更
 - 扇形ボタン
--- 東西南北に`4`つ配置するので、内角は`90`度、始角はそれぞれ、`45`、`135`、`225`、`-45`度で`Arc2D`を作成
--- これらの`Arc2D`から上記の円形ボタンの領域を取り去って扇形に変形(`Area#subtract(Area)`を使用)
+-- 東西南北に`4`つ配置するので、内角は`90`度、始角はそれぞれ`45`、`135`、`225`、`-45`度で`Arc2D`を作成
+-- これらの`Arc2D`から`Area#subtract(Area)`メソッドを使用して上記の円形ボタンの領域を除去し扇形に変形
 --- [[Mouseで画像を移動、回転>Swing/MouseDrivenImageRotation]]
 -- `JButton#contains(...)`をオーバーライドして、図形内のみマウスカーソルが反応するように変更
 - 複合ボタン
--- `5`つのボタンを、`OverlayLayout`を設定した`JPanel`に配置
--- `JPanel#getPreferredSize()`をオーバーライドして、サイズが`5`つのボタンと同じになるように設定
+-- `5`つのボタンを`OverlayLayout`を設定した`JPanel`に配置
+-- `JPanel#getPreferredSize()`をオーバーライドして、サイズが`5`つのボタンですべて同じになるよう設定
 --- [[OverlayLayoutの使用>Swing/OverlayLayout]]
--- これらの`5`つのボタンはクリック可能な領域が重なることはないので、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#isOptimizedDrawingEnabled-- JComponent#isOptimizedDrawingEnabled()]メソッドをオーバーライドしなくても良い
+-- これらの`5`つのボタンはクリック可能な領域が重なることはないので、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#isOptimizedDrawingEnabled-- JComponent#isOptimizedDrawingEnabled()]メソッドをオーバーライドする必要はない
 
 * 参考リンク [#reference]
 - [[OverlayLayoutの使用>Swing/OverlayLayout]]

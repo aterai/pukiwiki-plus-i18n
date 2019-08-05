@@ -18,6 +18,61 @@ pubdate: 2017-05-31T18:35:21+09:00
  info: kotlinc-jvm 1.3.0 (JRE 1.8.0_192-b12)
  $ kotlinc hello.kt -include-runtime -d hello.jar && "$JAVA_HOME/bin/java" -jar hello.jar
 
+** Gradle [#gradle]
+- [https://kotlinlang.org/docs/reference/using-gradle.html Using Gradle - Kotlin Programming Language]
+- [https://github.com/Kotlin/kotlin-examples/tree/master/gradle/hello-world kotlin-examples/gradle/hello-world at master · Kotlin/kotlin-examples]
+-- 上記のサンプル`build.gradle`が参考になる
+- [https://medium.com/@preslavrachev/kotlin-basics-create-executable-kotlin-jars-using-gradle-d17e9a8384b9 Kotlin Basics: Create Executable Kotlin JARs, using Gradle]
+-- `jar`作成は同じくこちらの方法が使用可能
+
+#code{{
+buildscript {
+  ext.kotlin_version = 'latest.release'
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+// group 'KotlinSwingTips'
+// version '1.0-SNAPSHOT'
+
+mainClassName = 'example.AppKt'
+
+defaultTasks 'run'
+
+repositories {
+  mavenCentral()
+  jcenter()
+}
+
+dependencies {
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  testCompile 'junit:junit:4.11'
+  testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+
+sourceCompatibility = 1.8
+
+compileKotlin {
+  kotlinOptions.jvmTarget = "$sourceCompatibility"
+}
+
+compileTestKotlin {
+  kotlinOptions.jvmTarget = "$sourceCompatibility"
+}
+
+jar {
+  manifest { attributes 'Main-Class': "$mainClassName" }
+  from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+}}
+
 * `IntelliJ`の自動変換 [#IntelliJ]
 - メニューの`Code`, `Convert Java File to Kotlin File`(KBD{Ctrl+Alt+Shift+K})で、`Java`のソースコードを`Kotlin`のソースコードに変換可能
 -- `Hoge.java`を変換すると`Hoge.kt`が生成されて、`Hoge.java`は削除されてしまうので注意が必要

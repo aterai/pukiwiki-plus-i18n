@@ -30,7 +30,7 @@ tabbedPane.setModel(new DefaultSingleSelectionModel() {
 
 * 解説 [#explanation]
 - デフォルト
--- タブ切替時に`JTextField`にフォーカスが存在する場合はその`InputVerifier`で検証が実行されるが、入力が無効の場合でもタブの移動は実行される
+-- タブ切替時に`JTextField`にフォーカスが存在する場合はその`InputVerifier`で妥当性の検証が実行されるが、入力が無効の場合でもタブの移動は実行されてしまう
 -- [https://bugs.openjdk.java.net/browse/JDK-4403182 Bug ID: JDK-4403182 InputVerifier failed on JTabbedPane & JMenuBar]
 - `override SingleSelectionModel#setSelectedIndex(int): true`
 -- `DefaultSingleSelectionModel#setSelectedIndex(int)`をオーバーライドした`SingleSelectionModel`を`JTabbedPane`に設定

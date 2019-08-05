@@ -42,7 +42,7 @@ add(new JCheckBox(new AbstractAction("setShowHorizontalLines") {
 }}
 
 * 解説 [#explanation]
-`JTable`の罫線を非表示にしてもセルの内余白が`0`でない場合、セル選択でその内余白分の塗り残しが発生し、セルが分割されているような表示になります。上記のサンプルでは、`JTable#setShowVerticalLines(boolean)`などと一緒に、`JTable#setIntercellSpacing(Dimension)`で余白を`0`に切り替えています。
+`JTable`の罫線を非表示にしてもセルの内余白が`0`でない場合、セル選択でその内余白分の塗り残しが発生し、セルが分割されているような表示になります。上記のサンプルでは、`JTable#setShowVerticalLines(boolean)`メソッドなどと合わせて`JTable#setIntercellSpacing(Dimension)`メソッドを使用しセルの内余白を`0`に切り替えています。
 
 - 罫線の設定
 -- `JTable#setShowVerticalLines(boolean);`

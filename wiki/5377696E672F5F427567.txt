@@ -11,53 +11,6 @@ pubdate: 2018-01-22T16:28:08+09:00
 #contents
 
 * 未修正 [#NotFixedYet]
-** 1.8.0_212 からImageView#setLoadsSynchronously(...)の設定で画像がJEditorPaneに表示されない [#he9725ec]
-- `JDK 11.0.2`、`JDK 8.0.202`から`ImageView`に`setLoadsSynchronously(true)`を設定すると画像が表示されなくなってしまった
-- `JDK 11.0.1`、`JDK 8.0.202`では正常に画像が表示される
--- [[JEditorPaneに読み込んだHTMLを画像に変換する>Swing/LoadsSynchronously]]
--- [https://bugs.openjdk.java.net/browse/JDK-8223384 &#91;JDK-8223384&#93; ImageView incorrectly calculates size when synchronously loaded - Java Bug System]
--- `OracleJDK`でも`OpenJDK`でも同じ状況
-- [https://bugs.openjdk.java.net/browse/JDK-8208638 &#91;JDK-8208638&#93; Instead of circle rendered in appl window, but ellipse is produced JEditor Pane - Java Bug System]のリグレッション？
-
-** OpenJDK Corretto 1.8.0_212 で図形の描画が崩壊する [#wb9bc344]
-- `Corretto 1.8.0_212`(`Windows 10`環境)でソフトクリッピング効果を使用すると描画がおかしくなる？
- openjdk version "1.8.0_212"
- OpenJDK Runtime Environment Corretto-8.212.04.2 (build 1.8.0_212-b04)
- OpenJDK 64-Bit Server VM Corretto-8.212.04.2 (build 25.212-b04, mixed mode)
-
-#img2(https://drive.google.com/uc?id=1UmzUcA-QK_mtJAYvjvDn5-qoud7PfOWO_Q)
-
-- 以下もおそらく同原因
--- [[Windowの縁をソフトクリッピングでなめらかにする>Swing/SoftClippedWindow]]
--- [[JPanelに色相環を描画する>Swing/ColorWheel]]
--- [[JSpinnerの表記を16進数にする>Swing/HexFormatterSpinner]]
--- [[Fontを回転する>Swing/TransformedShape]]
-
-- %%[https://docs.oracle.com/javase/jp/8/docs/technotes/guides/2d/flags.html Java 2Dテクノロジのシステム・プロパティ]などを変更して調査しているがまだ原因不明%%
--- 切り抜き図形の幅を`32`の倍数以外にすると発生しない(高さは無関係？)
--- 上記スクリーンショットの抜け部分のサイズは`32px`
--- [https://github.com/corretto/corretto-8/issues/127 Java2D rendering may break when using soft clipping effects · Issue #127 · corretto/corretto-8]、`8u222`で修正される予定
-- [https://bugs.openjdk.java.net/browse/JDK-8225065 &#91;JDK-8225065&#93; Revert 8221166 (8u backport of 8048782) - Java Bug System]のリバートで`OpenJDK`でも`8u222`で修正される模様
--- `8u222`で修正される予定だった[https://github.com/corretto/corretto-8/pull/94 Backport JDK-8048782: OpenJDK: PiscesCache : xmax/ymax rounding up can cause RasterFormatException by sci-aws · Pull Request #94 · corretto/corretto-8]の修正が`corretto-8`では`8u212`に紛れ込んでいた？ということなのかも？？？
-
-- `Corretto 11.0.3`では正常
- openjdk version "11.0.3" 2019-04-16 LTS
- OpenJDK Runtime Environment Corretto-11.0.3.7.1 (build 11.0.3+7-LTS)
- OpenJDK 64-Bit Server VM Corretto-11.0.3.7.1 (build 11.0.3+7-LTS, mixed mode)
-
-- `AdoptOpenJDK 1.8.0_212`では正常
- openjdk version "1.8.0_212"
- OpenJDK Runtime Environment (AdoptOpenJDK)(build 1.8.0_212-b03)
- OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)
-
-** MetalLookAndFeelでのJComboBoxとJToolTip [#fc4b2abf]
-- ドロップダウンリストを開いた状態でツールチップが表示されると描画がおかしくなる場合がある
--- `MetalLookAndFeel`のみ
--- ドロップダウンリストが`HeavyWeightWindow`か`LightWeightWindow`かは無関係
-- [[JComboBoxの各アイテムやArrowButtonにそれぞれToolTipTextを設定する>Swing/ToolTipInComboBox]]にソースコードは移動
-
-#img2(https://drive.google.com/uc?id=1l662LOjb0AFVh6F9lOSm78ZsXzJfuG0GDQ)
-
 ** JToolBarに配置したJButtonのフォーカス描画 [#w21ce2da]
 - [https://stackoverflow.com/questions/37295099/decorating-a-rollover-toolbar-button-with-jlayer-paints-its-border#37295921 java - Decorating a rollover toolbar button with JLayer paints its border - Stack Overflow]
 -- `JButton`を`JLayer`でラップして`JToolBar`に追加すると、`JToolBar`用のフォーカス描画ではなく、デフォルトのフォーカス描画が適用されてしまう
@@ -174,6 +127,54 @@ public class OptionPaneResolutionTest {
 - [https://bugs.openjdk.java.net/browse/JDK-8189687 JDK-8189687 Swing: Invalid position of candidate pop-up of InputMethod in Hi-DPI on Windows - Java Bug System]
 
 * 修正済み [#Fixed]
+** 1.8.0_212 からImageView#setLoadsSynchronously(...)の設定で画像がJEditorPaneに表示されない [#he9725ec]
+- `JDK 11.0.2`、`JDK 8.0.202`から`ImageView`に`setLoadsSynchronously(true)`を設定すると画像が表示されなくなってしまった
+- `JDK 11.0.1`、`JDK 8.0.202`では正常に画像が表示される
+- `JDK 8.0.222`では修正されている
+-- [[JEditorPaneに読み込んだHTMLを画像に変換する>Swing/LoadsSynchronously]]
+-- [https://bugs.openjdk.java.net/browse/JDK-8223384 &#91;JDK-8223384&#93; ImageView incorrectly calculates size when synchronously loaded - Java Bug System]
+-- `OracleJDK`でも`OpenJDK`でも同じ状況
+- [https://bugs.openjdk.java.net/browse/JDK-8208638 &#91;JDK-8208638&#93; Instead of circle rendered in appl window, but ellipse is produced JEditor Pane - Java Bug System]のリグレッション？
+
+** OpenJDK Corretto 1.8.0_212 で図形の描画が崩壊する [#wb9bc344]
+- `Corretto 1.8.0_212`(`Windows 10`環境)でソフトクリッピング効果を使用すると描画がおかしくなる？
+ openjdk version "1.8.0_212"
+ OpenJDK Runtime Environment Corretto-8.212.04.2 (build 1.8.0_212-b04)
+ OpenJDK 64-Bit Server VM Corretto-8.212.04.2 (build 25.212-b04, mixed mode)
+
+#img2(https://drive.google.com/uc?id=1UmzUcA-QK_mtJAYvjvDn5-qoud7PfOWO_Q)
+
+- 以下もおそらく同原因
+-- [[Windowの縁をソフトクリッピングでなめらかにする>Swing/SoftClippedWindow]]
+-- [[JPanelに色相環を描画する>Swing/ColorWheel]]
+-- [[JSpinnerの表記を16進数にする>Swing/HexFormatterSpinner]]
+-- [[Fontを回転する>Swing/TransformedShape]]
+
+- %%[https://docs.oracle.com/javase/jp/8/docs/technotes/guides/2d/flags.html Java 2Dテクノロジのシステム・プロパティ]などを変更して調査しているがまだ原因不明%%
+-- 切り抜き図形の幅を`32`の倍数以外にすると発生しない(高さは無関係？)
+-- 上記スクリーンショットの抜け部分のサイズは`32px`
+-- [https://github.com/corretto/corretto-8/issues/127 Java2D rendering may break when using soft clipping effects · Issue #127 · corretto/corretto-8]、`8u222`で修正済み %%される予定%%
+- [https://bugs.openjdk.java.net/browse/JDK-8225065 &#91;JDK-8225065&#93; Revert 8221166 (8u backport of 8048782) - Java Bug System]のリバートで`OpenJDK`でも`8u222`で修正済み %%される模様%%
+-- `8u222`で修正される予定だった[https://github.com/corretto/corretto-8/pull/94 Backport JDK-8048782: OpenJDK: PiscesCache : xmax/ymax rounding up can cause RasterFormatException by sci-aws · Pull Request #94 · corretto/corretto-8]の修正が`corretto-8`では`8u212`に紛れ込んでいた？ということなのかも？？？
+
+- `Corretto 11.0.3`では正常
+ openjdk version "11.0.3" 2019-04-16 LTS
+ OpenJDK Runtime Environment Corretto-11.0.3.7.1 (build 11.0.3+7-LTS)
+ OpenJDK 64-Bit Server VM Corretto-11.0.3.7.1 (build 11.0.3+7-LTS, mixed mode)
+
+- `AdoptOpenJDK 1.8.0_212`では正常
+ openjdk version "1.8.0_212"
+ OpenJDK Runtime Environment (AdoptOpenJDK)(build 1.8.0_212-b03)
+ OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)
+
+** MetalLookAndFeelでのJComboBoxとJToolTip [#fc4b2abf]
+- ドロップダウンリストを開いた状態でツールチップが表示されると描画がおかしくなる場合がある
+-- `MetalLookAndFeel`のみ
+-- ドロップダウンリストが`HeavyWeightWindow`か`LightWeightWindow`かは無関係
+- [[JComboBoxの各アイテムやArrowButtonにそれぞれToolTipTextを設定する>Swing/ToolTipInComboBox]]にソースコードは移動
+
+#img2(https://drive.google.com/uc?id=1l662LOjb0AFVh6F9lOSm78ZsXzJfuG0GDQ)
+
 ** 右Altキーが効かない [#g57772eb]
 - [https://bugs.openjdk.java.net/browse/JDK-8194873 JDK-8194873 right ALT key hotkeys no longer work in Swing components - Java Bug System]
 -- `Java 9`で右KBD{Alt}キーが効かなくなっている
