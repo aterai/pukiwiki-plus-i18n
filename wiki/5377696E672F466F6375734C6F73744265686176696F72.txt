@@ -21,14 +21,14 @@ try {
   ftf.setFormatterFactory(new DefaultFormatterFactory(formatter));
   ftf.setFocusLostBehavior(JFormattedTextField.COMMIT)
 } catch (ParseException ex) {
-    ex.printStackTrace();
+  ex.printStackTrace();
 }
 }}
 
 * 解説 [#explanation]
 - `JFormattedTextField.COMMIT_OR_REVERT`
 -- `JFormattedTextField`のデフォルト
--- フォーカスが失われたとき、正当な値の場合は値を確定し、不当な値の場合は前回値に戻す
+-- フォーカスが失われたとき、正当な値の場合は値を確定し不当な値の場合は前回値に戻す
 - `JFormattedTextField.REVERT`
 -- フォーカスが失われたとき、常に前回値に戻す
 -- 編集を確定するには`JFormattedTextField#commitEdit()`を自前で呼ぶか、`DefaultFormatter#setCommitsOnValidEdit(true)`と設定(文字列が編集されるたびに`commitEdit`が自動的に呼び出される)する必要がある

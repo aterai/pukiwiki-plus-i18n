@@ -20,15 +20,15 @@ public static JFrame createFrame(String title) {
   JFrame frame = new JFrame((title == null) ? "Frame #" + number : title);
   frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
   number++;
-//frame.addWindowListener(new WindowAdapter() {
-//  @Override public void windowClosing(WindowEvent e) {
-//    number--;
-//    if (number == 0) {
-//      JFrame f = (JFrame) e.getSource();
-//      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//    }
-//  }
-//});
+  // frame.addWindowListener(new WindowAdapter() {
+  //   @Override public void windowClosing(WindowEvent e) {
+  //   number--;
+  //     if (number == 0) {
+  //       JFrame f = (JFrame) e.getSource();
+  //       f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+  //     }
+  //   }
+  // });
   return frame;
 }
 }}
@@ -37,7 +37,7 @@ public static JFrame createFrame(String title) {
 上記のサンプルでは、すべての`JFrame`に`setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)`を設定しているため、`Java VM`内で最後の表示可能な`Window`が破棄されると`VM`が終了します。
 
 ----
-[https://www.pushing-pixels.org/2008/01/14/when-dispose_on_close-met-webstart.html When DISPOSE_ON_CLOSE met WebStart]によると、`Web Start`で実行する場合は`DISPOSE_ON_CLOSE`ではなく、`EXIT_ON_CLOSE`を使っておいた方が良さそうです。このため、上記のサンプルでは、解説とは異なり、コメントアウトしたコードで終了するようになっています。
+[https://www.pushing-pixels.org/2008/01/14/when-dispose_on_close-met-webstart.html When DISPOSE_ON_CLOSE met WebStart]によると、`Web Start`で実行する場合は`DISPOSE_ON_CLOSE`ではなく`EXIT_ON_CLOSE`を使っておいた方が良さそうです。このため、上記のサンプルでは解説とは異なりコメントアウトしたコードで終了するようになっています。
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/doc-files/AWTThreadIssues.html AWT のスレッドの問題  (Java Platform SE 8)]

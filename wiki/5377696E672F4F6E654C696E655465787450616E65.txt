@@ -17,8 +17,7 @@ image: https://lh4.googleusercontent.com/-jckifA3Ym6c/UYZlsvWPTqI/AAAAAAAABrY/ER
 #code(link){{
 JTextPane textPane = new JTextPane() {
   @Override public void scrollRectToVisible(Rectangle rect) {
-    int r = getBorder().getBorderInsets(this).right;
-    rect.grow(r, 0);
+    rect.grow(getInsets().right, 0);
     super.scrollRectToVisible(rect);
   }
 };

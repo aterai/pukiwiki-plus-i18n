@@ -150,25 +150,29 @@ description: Java クラスドキュメントで、修正した方が良さそ�
 - メモ
 -- `firePropertyChange(String propertyName, boolean oldValue, boolean newValue)`は、何もしないようにオーバーライドされるけど、`firePropertyChange(String propertyName, Object oldValue, Object newValue)`は、完全に何もしないようにはならない？
 
-** SwingUtilities.calculateInnerArea(...) [#b7a3a508]
+** SwingUtilities.calculateInnerArea(...) [#calculateInnerArea]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#calculateInnerArea-javax.swing.JComponent-java.awt.Rectangle-
 - https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html#calculateInnerArea-javax.swing.JComponent-java.awt.Rectangle-
 
-//修正済み
-//- r 内で指定された？
-//-- r 内で指定されたコンポーネントの内部ペイント領域の位置とサイズを格納し、r を返します。
-//-- Stores the position and size of the inner painting area of the specified component in r and returns r.
-//-- 指定されたコンポーネントの内部ペイント領域の位置とサイズを r に格納し、r を返します。
+// 修正済み
+// - r 内で指定された？
+// -- r 内で指定されたコンポーネントの内部ペイント領域の位置とサイズを格納し、r を返します。
+// -- Stores the position and size of the inner painting area of the specified component in r and returns r.
+// -- 指定されたコンポーネントの内部ペイント領域の位置とサイズを r に格納し、r を返します。
 
-- (イン・セット)の位置
+- (イン・セット)の位置がおかしい(Java 11 では修正済み)
 -- 位置とサイズは、コンポーネントの境界を示し、ボーダー領域を含まないように調整されます (イン・セット)。
 -- The position and size specify the bounds of the component, adjusted so as not to include the border area (the insets).
--- 位置とサイズは、コンポーネントの境界を示し、ボーダー領域(インセット)を含まないように調整されます。
+--- 修正案: 位置とサイズはコンポーネントの境界を示し、ボーダー領域(インセット)を含まないように調整されます。
 
-- このメソッドが？
--- c - 対象の JComponent。このメソッドが null を返す場合は null
+- このメソッドが？(Java 11 では修正済み)
 -- c - the JComponent in question; if null, this method returns null
--- c - 対象の JComponent。null の場合、このメソッドは null を返す
+-- c - 対象の JComponent。このメソッドが null を返す場合は null
+--- 修正案: c - 対象の JComponent。null の場合、このメソッドは null を返す
+- nullだけでは意味不明(Java 11 でも未修正)
+-- r - the Rectangle instance to be modified; may be null
+-- r - 変更されるRectangleのインスタンス。null
+--- 修正案: r - 変更されるRectangleのインスタンス。nullを許容する
 
 ** JFormattedTextField により、 [#e5f1cea2]
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JFormattedTextField.html

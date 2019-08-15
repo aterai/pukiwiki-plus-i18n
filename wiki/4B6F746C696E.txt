@@ -24,6 +24,9 @@ pubdate: 2017-05-31T18:35:21+09:00
 -- 上記のサンプル`build.gradle`が参考になる
 - [https://medium.com/@preslavrachev/kotlin-basics-create-executable-kotlin-jars-using-gradle-d17e9a8384b9 Kotlin Basics: Create Executable Kotlin JARs, using Gradle]
 -- `jar`作成は同じくこちらの方法が使用可能
+-- [https://kotlinlang.org/docs/reference/using-gradle.html#configuring-dependencies Configuring Dependencies - Using Gradle - Kotlin Programming Language]
+--- `kotlin-stdlib`の場合`Java 6`以上が対象になるので、`Java 7`で導入された`AutoCloseable`で`use`を使用すると`@InlineOnly public inline fun <T : Closeable?, R> ???.use(block: (???) -> ???): ??? defined in kotlin.io`とコンパイルエラーになる
+--- `kotlin-stdlib-jdk7`か`kotlin-stdlib-jdk8`を使用すれば回避可能
 
 #code{{
 buildscript {
@@ -52,7 +55,8 @@ repositories {
 }
 
 dependencies {
-  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  // compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
   testCompile 'junit:junit:4.11'
   testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 }
@@ -724,8 +728,8 @@ Stream.of("A", "B", "C").map(::JToggleButton).forEach { r ->
 }}
 #twocolumn
 
-** BigDecimal [#BigDecimal]
-- `IntelliJ`の自動変換では`error: unresolved reference: intValue`とエラーになるので、手動で`toInt()`に修正する必要がある
+** Number#intValue() [#intValue]
+- `Number#intValue()`を`IntelliJ`で自動変換すると`intValue()`がそのまま使用されるが、コンパイルすると`error: unresolved reference: intValue`とエラーになるので手動で`toInt()`などを使用するよう修正する必要がある
 
 #twocolumn
 `Java`

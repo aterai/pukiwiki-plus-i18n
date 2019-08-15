@@ -34,8 +34,8 @@ combo1.setRenderer(new DefaultListCellRenderer() {
 * 解説 [#explanation]
 上記のサンプルでは、編集不可の`JComboBox`にアイテムが選択されていない場合はヒントとしてプレースホルダ文字列を表示するリストセルレンダラーを設定しています。
 
-- リストセルレンダラーは、`DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドし、引数の`value`が`null`の場合のみヒントを表示するコンポーネントを返すよう設定
--- 注: 引数の`Object value`が`null`の場合ではなく、リストの`index`が`-1`の場合にヒント文字列を表示するように設定すると、マウスクリックなどで選択が変更できなくなる？
+- リストセルレンダラーは`DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドし、引数の`value`が`null`の場合のみヒントを表示するコンポーネントを返すよう設定
+-- 注: 引数の`Object value`が`null`の場合ではなく、リストの`index`が`-1`の場合にヒント文字列を表示するように設定すると、マウスクリックで`JComboBox`の選択状態を変更できなくなる？
 - リストセルレンダラーでヒントを表示しているだけなので、`JComboBox`のモデル自体にプレースホルダ文字列を含める必要がない
 
 * 参考リンク [#reference]

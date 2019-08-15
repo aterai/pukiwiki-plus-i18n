@@ -18,7 +18,7 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTQqzbG85I/AAAAAAAAAf8/GA
 JButton b1 = new JButton();
 JButton b2 = new JButton();
 b1.setLayout(new OverlayLayout(b1));
-Insets i = b1.getBorder().getBorderInsets(b1);
+Insets i = b1.getInsets();
 b1.setBorder(BorderFactory.createEmptyBorder(i.top, i.left, i.bottom, 4));
 b1.setAction(new AbstractAction("OverlayLayoutButton") {
   @Override public void actionPerformed(ActionEvent e) {

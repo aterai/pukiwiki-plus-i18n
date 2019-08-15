@@ -16,18 +16,6 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TavH8_fQKAI/AAAAAAAAA5s/My
 * サンプルコード [#sourcecode]
 #code(link){{
 class ClearSelectionListener extends MouseAdapter {
-  private static void clearSelectionAndFocus(JList list) {
-    list.clearSelection();
-    list.getSelectionModel().setAnchorSelectionIndex(-1);
-    list.getSelectionModel().setLeadSelectionIndex(-1);
-  }
-  private static boolean contains(JList list, Point pt) {
-    for (int i = 0; i < list.getModel().getSize(); i++) {
-      Rectangle r = list.getCellBounds(i, i);
-      if (r.contains(pt)) return true;
-    }
-    return false;
-  }
   private boolean startOutside = false;
   @Override public void mousePressed(MouseEvent e) {
     JList list = (JList) e.getSource();
@@ -36,9 +24,11 @@ class ClearSelectionListener extends MouseAdapter {
       clearSelectionAndFocus(list);
     }
   }
+
   @Override public void mouseReleased(MouseEvent e) {
     startOutside = false;
   }
+
   @Override public void mouseDragged(MouseEvent e) {
     JList list = (JList) e.getSource();
     if (contains(list, e.getPoint())) {
@@ -46,6 +36,20 @@ class ClearSelectionListener extends MouseAdapter {
     } else if (startOutside) {
       clearSelectionAndFocus(list);
     }
+  }
+
+  private static void clearSelectionAndFocus(JList list) {
+    list.clearSelection();
+    list.getSelectionModel().setAnchorSelectionIndex(-1);
+    list.getSelectionModel().setLeadSelectionIndex(-1);
+  }
+
+  private static boolean contains(JList list, Point pt) {
+    for (int i = 0; i < list.getModel().getSize(); i++) {
+      Rectangle r = list.getCellBounds(i, i);
+      if (r.contains(pt)) return true;
+    }
+    return false;
   }
 }
 }}
