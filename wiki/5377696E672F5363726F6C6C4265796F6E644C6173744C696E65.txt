@@ -1,0 +1,44 @@
+---
+category: swing
+folder: ScrollBeyondLastLine
+title: JTextAreaの最終行を超えてスクロール可能にする
+tags: [JScrollPane, JTextArea, JViewport]
+author: aterai
+pubdate: 2019-08-19T00:02:28+09:00
+description: JTextAreaの高さを拡張し、その最終行を超えてスクロール可能になるよう設定します。
+image: https://drive.google.com/uc?id=1_1B-E0sbvJ_4AiKUHMQMXYRsmUodk-BB
+---
+* 概要 [#summary]
+`JTextArea`の高さを拡張し、その最終行を超えてスクロール可能になるよう設定します。
+
+#download(https://drive.google.com/uc?id=1_1B-E0sbvJ_4AiKUHMQMXYRsmUodk-BB)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTextArea textArea = new JTextArea() {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    Container c = SwingUtilities.getAncestorOfClass(JScrollPane.class, this);
+    if (c instanceof JScrollPane && isEditable()) {
+      Rectangle r = ((JScrollPane) c).getViewportBorderBounds();
+      d.height += r.height - getRowHeight() - getInsets().bottom;
+    }
+    return d;
+  }
+};
+}}
+
+* 解説 [#explanation]
+- デフォルトではテキストの最終行までが`JTextArea`の推奨サイズとなり、その最終行までがスクロール可能領域となる
+-- メモ帳やブラウザなどの動作と同じ
+- `JTextArea#getPreferredSize()`メソッドをオーバーライドし、`JViewport`の高さから`JTextArea`の一行分を除いた高さを拡張し、最終行が表示上の先頭行になるまでスクロール可能に設定
+-- 上記のサンプルでは`JTextArea`が編集可能の場合、最終行を超えてスクロール可能に設定している
+-- 多くのテキストエディタのデフォルト？
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/32679335/java-jtextarea-allow-scrolling-beyond-end-of-text swing - Java JTextArea allow scrolling beyond end of text - Stack Overflow]
+- [[JTextAreaに行番号を表示>Swing/LineNumber]]
+
+* コメント [#comment]
+#comment
+#comment

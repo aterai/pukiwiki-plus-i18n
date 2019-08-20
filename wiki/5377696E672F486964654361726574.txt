@@ -24,11 +24,11 @@ textArea.setCaret(new DefaultCaret() {
 
 * 解説 [#explanation]
 - `Hide Caret`
--- `DefaultCaret#isVisible()`が常に`false`を返すようにオーバーライドした`Caret`を`JTextArea`に設定することで非表示にする
+-- `DefaultCaret#isVisible()`が常に`false`を返すようにオーバーライドした`Caret`を`JTextArea`に設定することで非表示化
 -- `JTextArea#setCaret(null)`のように`null`を設定すると、`NullPointerException`が発生する
 -- `textArea.getCaret().deinstall(textArea)`を実行すると、カーソルキーの移動などで`NullPointerException`が発生する
 - `Hide Highlighter`
--- `JTextArea#setHighlighter(null)`のように`null`を設定することで、選択ハイライトを非表示にする
+-- `JTextArea#setHighlighter(null)`のように`null`を設定して選択ハイライトを非表示にする
 - `Editable`
 -- `JTextArea#setEditable(false)`を設定すると編集不可になり、選択は可能だが`Caret`は非表示になる
 - `Editable`

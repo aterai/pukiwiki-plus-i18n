@@ -35,6 +35,7 @@ class URLRenderer extends DefaultTableCellRenderer implements MouseInputListener
     }
     return this;
   }
+
   @Override public void mouseMoved(MouseEvent e) {
     JTable table = (JTable) e.getSource();
     Point pt = e.getPoint();
@@ -46,12 +47,14 @@ class URLRenderer extends DefaultTableCellRenderer implements MouseInputListener
     }
     table.repaint();
   }
+
   @Override public void mouseExited(MouseEvent e)  {
     JTable table = (JTable) e.getSource();
     row = -1;
     col = -1;
     table.repaint();
   }
+
   @Override public void mouseClicked(MouseEvent e) {
     JTable table = (JTable) e.getSource();
     Point pt = e.getPoint();
@@ -68,15 +71,19 @@ class URLRenderer extends DefaultTableCellRenderer implements MouseInputListener
       }
     }
   }
+
   @Override public void mouseDragged(MouseEvent e) {}
+
   @Override public void mouseEntered(MouseEvent e) {}
+
   @Override public void mousePressed(MouseEvent e) {}
+
   @Override public void mouseReleased(MouseEvent e) {}
 }
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTable`のセル内にリンクを表現するために、`html`タグを使って文字列を修飾するセルレンダラーを作成して使用しています。
+上記のサンプルでは、`JTable`のセル内にリンクを表現するために`html`タグを使って文字列を修飾するセルレンダラーを作成して使用しています。
 
 #code{{
 URLRenderer renderer = new URLRenderer();
