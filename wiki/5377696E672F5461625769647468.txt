@@ -16,17 +16,18 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTVAYay_fI/AAAAAAAAAm8/1g
 * サンプルコード [#sourcecode]
 #code(link){{
 tabbedPane.setUI(new BasicTabbedPaneUI() {
-  @Override protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
-    return Math.max(MIN_TAB_WIDTH, super.calculateTabWidth(tabPlacement, tabIndex, metrics));
+  @Override
+  protected int calculateTabWidth(int placement, int index, FontMetrics metrics) {
+    return Math.max(MIN_TAB_WIDTH, super.calculateTabWidth(placement, index, metrics));
   }
 });
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`BasicTabbedPaneUI`の`calculateTabWidth`メソッドをオーバーライドして、`JTabbedPane`のタブ幅がタイトル文字列の長さにかかわらず一定以上になるように設定しています。
+上記のサンプルでは、`BasicTabbedPaneUI`の`calculateTabWidth`メソッドをオーバーライドして`JTabbedPane`のタブ幅がタイトル文字列の長さにかかわらず一定以上になるように設定しています。
 
 - タイトル文字列が短くても、最低`MIN_TAB_WIDTH(100px)`のタブ幅を維持する
-- タブ列が`2`段以上になると、指定されたタブ幅を維持できない場合がある
+- タブランが`2`列以上になると、指定されたタブ幅を維持できない場合がある
 
 ----
 以下のように、`html`タグを使ってタブ幅を固定する方法もあります。
