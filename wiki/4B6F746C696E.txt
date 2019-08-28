@@ -83,6 +83,22 @@ jar {
 --- `Undo`(KBD{Ctrl+Z})で変換は取り消されて削除された`Java`ファイルは復活する
 - `File`メニュー、`Project Structure`パネルの`Project SDK`が`<No SDK>`になっていると、`@Override`が`override`に変換されない場合がある
 
+** Improved Java to Kotlin converter [#ba11f89c]
+- [https://blog.jetbrains.com/kotlin/2019/08/kotlin-1-3-50-released/ Kotlin 1.3.50 released | Kotlin Blog]
+> In the future, the new converter is going to become the default one. In this release, it’s available for preview. To turn it on, specify the `Use New J2K (experimental)` flag in settings.
+
+- `Kotlin 1.3.50`で`IntelliJ IDEA`の`Convert Java File to Kotlin File`(KBD{Ctrl+Alt+Shift+K})が実験的に改良されている
+-- `Use New J2K(experimental)`フラグで試用可能になるが、設定を`J2K`で検索しても見つからない
+-- `Settings`ダイアログ→`Languages & Frameworks`→`Use New Java to Kotlin Converter`にチェックを入れる必要がある
+-- `Kotlin Plugin`を`1.4.31-release-IJ2019.2-1`から`1.3.50-release-IJ2019.2-1`にすると`Use New Java to Kotlin Converter`にチェックをしているかどうかに関わらず、`KotlinNullPointerException`で変換に失敗する場合がある？
+--- [https://youtrack.jetbrains.com/issue/KT-33431 KotlinNullPointerException on J2K convertion of constructor reference as Function type argument : KT-33431]
+#code{{
+kotlin.KotlinNullPointerException at org.jetbrains.kotlin.idea.actions.JavaToKotlinAction.actionPerformed(JavaToKotlinAction.kt:221)
+...
+}}
+
+- クリップボード経由の変換は`1.3.50-release-IJ2019.2-1`でもエラーにならず実行可能
+
 ** 演算子の優先順位 [#precedence]
 - 以下のようなソースコードを`IntelliJ`で自動変換した場合、論理演算子の左シフト(`<<`)は`shl`に変換され、また`and`の優先順位が異なるので括弧が減る
 
@@ -96,7 +112,8 @@ btn.setSelected((i & (1 << 2)) != 0);
 `Kotlin`(自動変換)
 #code(lang-kotlin){{
 btn.setSelected(i and (1 shl 2) != 0)
-// 時々？以下のように誤変換される場合がある？？？
+// 以下のように誤変換される場合がある？？？
+// 再現しないので勘違いかもしれない
 // btn.setSelected(i and (1 shl 2 != 0))
 }}
 #twocolumn
@@ -109,43 +126,43 @@ btn.setSelected(i and (1 shl 2) != 0)
 -- `Java`の演算子優先順位表: [https://docs.oracle.com/javase/tutorial/java/nutsandbolts/operators.html Operators (The Java™ Tutorials > Learning the Java Language > Language Basics)]
 --- `Java`は逆で、`equality`(`==`, `!=`)のほうが`bitwise AND`(`&`)より優先順位が高い
 
-** シフト論理演算子 [#shrshl]
-- 論理演算子を`IntelliJ`で自動変換した場合、括弧の対応がおかしくなる場合がある？
-
-#twocolumn
-`Java`
-#code{{
-@Override public int filterRGB(int x, int y, int argb) {
-  int r = (int) Math.min(0xFF, ((argb >> 16) & 0xFF) * SCALE);
-  int g = (int) Math.min(0xFF, ((argb >> 8) & 0xFF) * SCALE);
-  int b = (int) Math.min(0xFF, (argb & 0xFF) * SCALE);
-  return (argb & 0xFF000000) | (r << 16) | (g << 8) | b;
-}
-}}
-
-#twocolumn
-`Kotlin`(自動変換)
-#code(lang-kotlin){{
-// - 0xFF が 0xFFf と float に変換される？
-// - Math.min の括弧がおかしくなっている？
-override fun filterRGB(x: Int, y: Int, argb: Int): Int {
-  val r = Math.min(0xFFf, (argb shr 16 and 0xFF) * SCALE).toInt()
-  val g = Math.min(0xFFf, (argb shr 8 and 0xFF) * SCALE).toInt()
-  val b = Math.min(0xFFf, (argb and 0xFF) * SCALE).toInt()
-  return argb and -0x1000000 or (r shl 16) or (g shl 8) or b
-}
-}}
-
-`Kotlin`(手動修正)
-#code(lang-kotlin){{
-override fun filterRGB(x: Int, y: Int, argb: Int): Int {
-  val r = Math.min(0xFF, ((argb shr 16 and 0xFF) * SCALE).toInt())
-  val g = Math.min(0xFF, ((argb shr 8 and 0xFF) * SCALE).toInt())
-  val b = Math.min(0xFF, ((argb and 0xFF) * SCALE).toInt())
-  return argb and -0x1000000 or (r shl 16) or (g shl 8) or b
-}
-}}
-#twocolumn
+// ** シフト論理演算子 [#shrshl]
+// - 論理演算子を`IntelliJ`で自動変換した場合、括弧の対応がおかしくなる場合がある？
+//
+// #twocolumn
+// `Java`
+// #code{{
+// @Override public int filterRGB(int x, int y, int argb) {
+//   int r = (int) Math.min(0xFF, ((argb >> 16) & 0xFF) * SCALE);
+//   int g = (int) Math.min(0xFF, ((argb >> 8) & 0xFF) * SCALE);
+//   int b = (int) Math.min(0xFF, (argb & 0xFF) * SCALE);
+//   return (argb & 0xFF000000) | (r << 16) | (g << 8) | b;
+// }
+// }}
+//
+// #twocolumn
+// `Kotlin`(自動変換)
+// #code(lang-kotlin){{
+// // - 0xFF が 0xFFf と float に変換される？
+// // - Math.min の括弧がおかしくなっている？
+// override fun filterRGB(x: Int, y: Int, argb: Int): Int {
+//   val r = Math.min(0xFFf, (argb shr 16 and 0xFF) * SCALE).toInt()
+//   val g = Math.min(0xFFf, (argb shr 8 and 0xFF) * SCALE).toInt()
+//   val b = Math.min(0xFFf, (argb and 0xFF) * SCALE).toInt()
+//   return argb and -0x1000000 or (r shl 16) or (g shl 8) or b
+// }
+// }}
+//
+// `Kotlin`(手動修正)
+// #code(lang-kotlin){{
+// override fun filterRGB(x: Int, y: Int, argb: Int): Int {
+//   val r = Math.min(0xFF, ((argb shr 16 and 0xFF) * SCALE).toInt())
+//   val g = Math.min(0xFF, ((argb shr 8 and 0xFF) * SCALE).toInt())
+//   val b = Math.min(0xFF, ((argb and 0xFF) * SCALE).toInt())
+//   return argb and -0x1000000 or (r shl 16) or (g shl 8) or b
+// }
+// }}
+// #twocolumn
 
 ** 型パラメータ [#Arrays]
 - `IntelliJ`の自動変換では`Arrays.asList(...)`の型パラメータを自動的に変換してくれない
@@ -729,7 +746,8 @@ Stream.of("A", "B", "C").map(::JToggleButton).forEach { r ->
 #twocolumn
 
 ** Number#intValue() [#intValue]
-- `Number#intValue()`を`IntelliJ`で自動変換すると`intValue()`がそのまま使用されるが、コンパイルすると`error: unresolved reference: intValue`とエラーになるので手動で`toInt()`などを使用するよう修正する必要がある
+- %%`Number#intValue()`を`IntelliJ`で自動変換すると`intValue()`がそのまま使用されるが、コンパイルすると`error: unresolved reference: intValue`とエラーになるので手動で`toInt()`などを使用するよう修正する必要がある%%
+-- `1.4.31-release-IJ2019.2-1`の自動変換では`toInt()`になる
 
 #twocolumn
 `Java`
