@@ -246,6 +246,7 @@ class CalendarViewTableModel<T : LocalDate> public constructor(date: T) : Defaul
 - 総称型を持つクラスのクラスリテラル(`Class Literals`)を`IntelliJ`で自動変換すると失敗する場合がある
 -- 例えば`JComboBox.class`は`IntelliJ`の自動変換で`JComboBox<*>::class.java`に変換されるが、`JComboBox::class.java`に修正しないとコンパイルエラーになる
 -- `Only classes are allowed on the left hand side of a class literal`
+-- [https://youtrack.jetbrains.com/issue/KT-15791 J2K converts class literals including redundant generic <*> : KT-15791]
 - 逆に`Java`の`c instanceof JComboBox`を`Kotlin`に変換するときは、`c is JComboBox<*>`にしないとエラーになる
 -- こちらは`IntelliJ`の自動変換で正常に変換可能
 -- `One type argument expected. Use 'JComboBox<*>' if you don't want to pass type arguments`

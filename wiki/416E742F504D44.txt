@@ -132,7 +132,7 @@ import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 
 public final class MenuBarFactoryTest {
-  public static JMenuBar makeManuBar() {
+  public static JMenuBar makeMenuBar() {
     JMenuBar mb = new JMenuBar();
     mb.add(makeFileMenu());
     return mb;
@@ -183,7 +183,7 @@ public final class MenuBarFactoryTest {
   public static void createAndShowGUI() {
     JFrame f = new JFrame();
     f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    f.setJMenuBar(makeManuBar());
+    f.setJMenuBar(makeMenuBar());
     f.setSize(320, 240);
     f.setLocationRelativeTo(null);
     f.setVisible(true);

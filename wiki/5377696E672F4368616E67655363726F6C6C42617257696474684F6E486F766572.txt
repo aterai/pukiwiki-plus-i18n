@@ -1,0 +1,140 @@
+---
+category: swing
+folder: ChangeScrollBarWidthOnHover
+title: JScrollBar上にマウスカーソルが入ったらその幅を拡張する
+tags: [JScrollBar, JScrollPane, JLayer, LayoutManager, Animation]
+author: aterai
+pubdate: 2019-09-02T18:04:32+09:00
+description: JScrollBar上へのマウスカーソルの出入りをJLayerで取得してその幅を拡大・縮小します。
+image: https://drive.google.com/uc?id=1BAF8wRV7pfhmJTBiE9_cun0SbMVR2XFQ
+---
+* 概要 [#summary]
+`JScrollBar`上へのマウスカーソルの出入りを`JLayer`で取得してその幅を拡大・縮小します。
+
+#download(https://drive.google.com/uc?id=1BAF8wRV7pfhmJTBiE9_cun0SbMVR2XFQ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JScrollPane scroll = new JScrollPane(makeList());
+scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+JPanel controls = new JPanel();
+Timer animator = new Timer(10, e -> controls.revalidate());
+controls.setLayout(new BorderLayout(0, 0) {
+  private int controlsWidth = MIN_WIDTH;
+
+  @Override public Dimension preferredLayoutSize(Container target) {
+    Dimension ps = super.preferredLayoutSize(target);
+    int controlsPreferredWidth = ps.width;
+    if (animator.isRunning()) {
+      if (willExpand) {
+        if (controls.getWidth() < controlsPreferredWidth) {
+          controlsWidth += 1;
+        }
+      } else {
+        if (controls.getWidth() > MIN_WIDTH) {
+          controlsWidth -= 1;
+        }
+      }
+      if (controlsWidth <= MIN_WIDTH) {
+        controlsWidth = MIN_WIDTH;
+        animator.stop();
+      } else if (controlsWidth >= controlsPreferredWidth) {
+        controlsWidth = controlsPreferredWidth;
+        animator.stop();
+      }
+    }
+    ps.width = controlsWidth;
+    return ps;
+  }
+});
+controls.add(scroll.getVerticalScrollBar());
+
+JPanel p = new JPanel(new BorderLayout());
+p.add(controls, BorderLayout.EAST);
+p.add(scroll);
+
+JPanel pp = new JPanel(new GridLayout(1, 2));
+pp.add(new JLayer<>(p, new LayerUI<JPanel>() {
+  private boolean isDragging;
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK
+                                      | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseMotionEvent(MouseEvent e, JLayer<? extends JPanel> l) {
+    int id = e.getID();
+    Component c = e.getComponent();
+    if (c instanceof JScrollBar && id == MouseEvent.MOUSE_DRAGGED) {
+      isDragging = true;
+    }
+  }
+
+  @Override protected void processMouseEvent(MouseEvent e, JLayer<? extends JPanel> l) {
+    if (e.getComponent() instanceof JScrollBar) {
+      switch (e.getID()) {
+      case MouseEvent.MOUSE_ENTERED:
+        if (!animator.isRunning() && !isDragging) {
+          willExpand = true;
+          animator.setInitialDelay(0);
+          animator.start();
+        }
+        break;
+      case MouseEvent.MOUSE_EXITED:
+        if (!animator.isRunning() && !isDragging) {
+          willExpand = false;
+          animator.setInitialDelay(500);
+          animator.start();
+        }
+        break;
+      case MouseEvent.MOUSE_RELEASED:
+        isDragging = false;
+        if (!animator.isRunning() && !e.getComponent().getBounds().contains(e.getPoint())) {
+          willExpand = false;
+          animator.setInitialDelay(500);
+          animator.start();
+        }
+        break;
+      default:
+        break;
+      }
+      l.getView().repaint();
+    }
+  }
+}));
+pp.add(new JLayer<>(makeTranslucentScrollBar(makeList()), new ScrollBarOnHoverLayerUI()));
+}}
+
+* 解説 [#explanation]
+- 左
+-- `JPanel`に`JScrollPane`と縦`JScrollBar`を分けて配置
+-- `JPanel`に縦`JScrollBar`の幅を`Timer`を使用して拡大・縮小するレイアウトマネージャを設定
+--- [[LayoutManagerを使ってパネルの展開アニメーションを行う>Swing/LayoutAnimation]]
+-- `JPanel`を`JLayer`でラップし、縦`JScrollBar`へのマウスカーソルの出入りなどを検知
+--- `MouseEvent.MOUSE_ENTERED`、`MouseEvent.MOUSE_EXITED`で出入りを検知して`Timer`を起動する
+--- ただし、マウスドラッグ中の場合でも`MouseEvent.MOUSE_ENTERED`、`MouseEvent.MOUSE_EXITED`イベントが発生するので、`MouseEvent.MOUSE_DRAGGED`中は`Timer`を起動しない
+--- `MouseEvent.MOUSE_RELEASED`イベントが発生したとき、縦`JScrollBar`内にマウスカーソルがある場合は`Timer`を起動しない(幅を拡大した状態を維持する)
+-- 縦`JScrollBar`の幅を縮小する場合、`500`ミリ秒ウェイトを入れてすぐに`Timer`を起動しないよう設定
+- 右
+-- 縦`JScrollBar`の矢印ボタンを非表示に設定
+--- [[JScrollBarのArrowButtonを非表示にする>Swing/ArrowButtonlessScrollBar]]
+-- マウスカーソルの出入りで縦`JScrollBar`の色と幅を変更
+--- [[JScrollBarをJTable上に重ねて表示するJScrollPaneを作成する>Swing/OverlappedScrollBar]]
+
+* 参考リンク [#reference]
+- [[JScrollPane上にマウスカーソルが存在する場合のみJScrollBarを表示する>Swing/ScrollBarOnHover]]
+
+* コメント [#comment]
+#comment
+#comment
