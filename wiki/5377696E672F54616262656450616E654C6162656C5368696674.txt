@@ -20,11 +20,11 @@ UIManager.put("TabbedPane.labelShift", 1);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`Java 1.6.0`？から導入された`TabbedPane.selectedLabelShift`と`TabbedPane.labelShift`を使用して`JTabbedPane`のタブテキストシフト量を変更するテストが可能です。
+上記のサンプルでは、`Java 1.6.0`から導入された`TabbedPane.selectedLabelShift`と`TabbedPane.labelShift`を使用して`JTabbedPane`の選択状態タブのテキストシフト量を変更するテストが可能です。
 
-テキストだけではなく、タブアイコンや`JTabbedPane#setTabComponentAt(...)`で設定したタブコンポーネントも同様にシフトします。
+テキストだけではなくタブアイコンや`JTabbedPane#setTabComponentAt(...)`で設定したタブコンポーネントも同様にシフトします。
 
-移動方向はマイナスでタブの外側、プラスでタブの内側になり、例えばデフォルトのタブ位置(`JTabbedPane.TOP`)の場合はマイナスで上方向、プラスで下方向にシフトします。
+移動方向はマイナスでタブの外側、プラスでタブの内側になり、例えばタブ位置がデフォルトの`JTabbedPane.TOP`の場合はマイナスで上方向、プラスで下方向にシフトします。
 
 - `TabbedPane.selectedLabelShift`
 -- 選択状態タブのテキストシフト量

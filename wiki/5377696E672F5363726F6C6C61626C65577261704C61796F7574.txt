@@ -1,0 +1,89 @@
+---
+category: swing
+folder: ScrollableWrapLayout
+title: JPanelの子コンポーネントを水平方向で折り返す
+tags: [JPanel, FlowLayout, JScrollPane, LayoutManager]
+author: aterai
+pubdate: 2019-09-09T15:09:05+09:00
+description: JPanelに配置した子コンポーネントを水平方向で折り返し、またそれらの水平間隔を動的に均等になるよう拡大します。
+image: https://drive.google.com/uc?id=1Dnd-KMM4YnctkKvawDVGeCtPqD1fZfEO
+---
+* 概要 [#summary]
+`JPanel`に配置した子コンポーネントを水平方向で折り返し、またそれらの水平間隔を動的に均等になるよう拡大します。
+
+#download(https://drive.google.com/uc?id=1Dnd-KMM4YnctkKvawDVGeCtPqD1fZfEO)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class ScrollableWrapLayout extends FlowLayout {
+  private final int fixedHorizontalGap;
+
+  protected ScrollableWrapLayout(int align, int hgap, int vgap) {
+    super(align, hgap, vgap);
+    fixedHorizontalGap = hgap;
+  }
+
+  private int getPreferredHorizontalGap(Container target) {
+    Insets insets = target.getInsets();
+    int columns = 0;
+    int width = target.getWidth();
+    if (target.getParent() instanceof JViewport) {
+      width = target.getParent().getBounds().width;
+    }
+    width -= insets.left + insets.right + fixedHorizontalGap * 2;
+    for (int i = 0; i < target.getComponentCount(); i++) {
+      Component m = target.getComponent(i);
+      if (m.isVisible()) {
+        Dimension d = m.getPreferredSize();
+        if (width - d.width - fixedHorizontalGap < 0) {
+          columns = i;
+          break;
+        }
+        width -= d.width + fixedHorizontalGap;
+      }
+    }
+    return fixedHorizontalGap + width / columns;
+  }
+
+  @Override public void layoutContainer(Container target) {
+    setHgap(getPreferredHorizontalGap(target));
+    super.layoutContainer(target);
+  }
+
+  @Override public Dimension preferredLayoutSize(Container target) {
+    Dimension dim = super.preferredLayoutSize(target);
+    synchronized (target.getTreeLock()) {
+      if (target.getParent() instanceof JViewport) {
+        dim.width = target.getParent().getBounds().width;
+        for (int i = 0; i < target.getComponentCount(); i++) {
+          Component m = target.getComponent(i);
+          if (m.isVisible()) {
+            Dimension d = m.getPreferredSize();
+            dim.height = Math.max(dim.height, d.height + m.getY());
+          }
+        }
+      }
+      return dim;
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- 上: `JPanel + FlowLayout`
+-- デフォルトの`JPanel`に`FlowLayout`を設定して`JScrollPane`に配置
+-- 水平方向に`JPanel`が拡張されて水平`ScrollBar`が表示される
+- 下: `ScrollableWrapPanel + ScrollableWrapLayout`
+-- `JPanel`に`Scrollable`を実装する`ScrollableWrapPanel`を作成し、これに`FlowLayout#preferredLayoutSize(...)`などをオーバーライドする`ScrollableWrapLayout`を設定して`JScrollPane`に配置
+-- `ScrollableWrapPanel`の子コンポーネント間の水平間隔を親のリサイズに応じて動的・均等に拡大するよう`FlowLayout#layoutContainer(...)`メソッドをオーバーライド
+--- 最小値は初期水平間隔
+--- 子コンポーネントはすべて同じ推奨サイズと想定
+
+* 参考リンク [#reference]
+- [[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]
+-- 子コンポーネントのレイアウト方法は`JList.HORIZONTAL_WRAP`を使用する場合と水平間隔以外はほぼ同じになる
+- [https://tips4java.wordpress.com/2008/11/06/wrap-layout/ Wrap Layout « Java Tips Weblog]
+
+* コメント [#comment]
+#comment
+#comment

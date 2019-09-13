@@ -53,52 +53,43 @@ pubdate: 2006-01-29
 //- 2014/11末現在、アクセス数などは以前の水準に戻っている
 
 * 調整中のネタ帳 [#memo]
-- JList ニュースペーパースタイル sort
-- Java 9 AWT, Swing 新機能
--- [https://docs.oracle.com/javase/jp/9/docs/api/java/awt/Desktop.html#moveToTrash-java.io.File- Desktop#moveToTrash(File) (Java SE 9 & JDK 9)]
--- [https://docs.oracle.com/javase/jp/9/docs/api/java/awt/Taskbar.html Taskbar (Java SE 9 & JDK 9)]
-[https://docs.oracle.com/javase/jp/9/docs/api/javax/swing/filechooser/FileSystemView.html#isLink-java.io.File- FileSystemView#isLink(File) (Java SE 9 & JDK 9)]
-- JColorChooser pallet save load XMLEncoder
-- CubeEffect
--- [https://java.net/projects/animatingcardlayout Animatingcardlayout — Project Kenai]
--- [http://www.kawa.net/works/js/animation/cube-e.html (JavaScript) Animation.Cube - Rotating Cube Animation Effect]
--- http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=36768&forum=12&7
--- [https://jogl-demos.dev.java.net/ jogl-demos:]
--- [http://programamemo2.blogspot.com/2008/06/image-processing.html プログラマメモ2: Image Processing 台形変形への道 - へたれなので。]
--- [http://www.javaworld.com/javaworld/jw-03-2008/jw-03-opensourcejava-animatingcardlayout.html Open source Java projects: AnimatingCardLayout - JavaWorld]
--- [https://animatingcardlayout.dev.java.net/ animatingcardlayout: ホーム]
-- BufferedImage#getScaledInstance - 1
-- File createTempFile
-- File getTotalSpace, getFreeSpace, getUsableSpace
-- Font CID Cmap
-- Font `Font#canDisplay(...)` ゲタ文字 
+** JComponent [#r1b7cfa9]
 - JButton background color
+- JButton margin
+- JColorChooser pallet save load XMLEncoder
 - JComboBox search highlight
 - JComboBox tooltips right side
 - JDesktopPane JInternalFrame Tab Loop
-- JEditorPane [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/HTMLDocument.html#getIterator-javax.swing.text.html.HTML.Tag- HTMLDocument#getIterator]
 - JEditorPane HTML Image Lazy loading
+- JEditorPane [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/HTMLDocument.html#getIterator-javax.swing.text.html.HTML.Tag- HTMLDocument#getIterator]
 - JFrame Window#isActive()
+- JFrame global focus
 - JFrame translate Image
 - JLabel String width Unicode
 - JList ListCellRenderer html performance
-- JMenuBar 全体スライドメニュー
+- JList newspaper style sort and rename
+- JMenuBar Slide in/out animation
 - JMenuItem JPopupMenu JButton Drag
 - JOptionPane KeyEventDispatcher
 - JOptionPane scroll
-- JPasswordField Formatter and password char
+- JPasswordField Focus Blur effect transparent
+- JPasswordField Formatter and password last char
 - JProgressBar Bootstrap center string
+- JProgressBar Meter fan shape
 - JRadioButton + JTextField
 - JScrollBar BlockIncrement
-- JScrollPane Map View sub view MiniMap
 - JScrollPane VetoableChangeListener
-- JScrollPane 縦パネルリスト drag and drop
 - JSlider JToggleButton OnOffToggleButton slider
+- JSlider Sound MIDI seekbar
+- JSlider status Range restriction
 - JSpinner multiple line
 - JSplitPane show hide tab
 - JTabbedPane ScrollButton Layout
 - JTabbedPane Tearaway tabs
+- JTabbedPane content Rounded corners like nimbus
 - JTabbedPane tab height animation
+- JTabbedPane tabarea resize mouse drag
+- JTable CellEditor JComboBox Auto Complete
 - JTable Cells with rouded corners in JTable
 - JTable VerticalTableHeader
 - JTable cell Editable and auto completion JComboBox suggest in TableCell
@@ -111,12 +102,36 @@ pubdate: 2006-01-29
 - JTextPane Parallax
 - JToolBar target JLayer
 - JToolBar transparent top
+- JToolTip html Link selection click
+- JToolTip speech Balloon tooltip left center right
 - JTooltip JWindow Focus Drag
 - JTree JList(1.8.0) Nimbus Selection Rectangle
 - JTree Table
 - JTree under Node only sort
+
+** その他 [#tc45a351]
+- File createTempFile
+- File getTotalSpace, getFreeSpace, getUsableSpace
+- Font CID Cmap
+- Font `Font#canDisplay(...)` ゲタ文字
+- LocalDate DateFormatter sample
 - Shape Line Animation
 - UIDefaults ProxyLazyValue
+- Image `BufferedImage#getScaledInstance() - 1`
+
+** Java 9 AWT, Swing 新機能 [#a1caf2c7]
+- [https://docs.oracle.com/javase/jp/9/docs/api/java/awt/Desktop.html#moveToTrash-java.io.File- Desktop#moveToTrash(File) (Java SE 9 & JDK 9)]
+- [https://docs.oracle.com/javase/jp/9/docs/api/java/awt/Taskbar.html Taskbar (Java SE 9 & JDK 9)]
+[https://docs.oracle.com/javase/jp/9/docs/api/javax/swing/filechooser/FileSystemView.html#isLink-java.io.File- FileSystemView#isLink(File) (Java SE 9 & JDK 9)]
+
+** CubeEffect [#k3a71776]
+- [https://java.net/projects/animatingcardlayout Animatingcardlayout — Project Kenai]
+- [http://www.kawa.net/works/js/animation/cube-e.html (JavaScript) Animation.Cube - Rotating Cube Animation Effect]
+- http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=36768&forum=12&7
+- [https://jogl-demos.dev.java.net/ jogl-demos:]
+- [http://programamemo2.blogspot.com/2008/06/image-processing.html プログラマメモ2: Image Processing 台形変形への道 - へたれなので。]
+- [http://www.javaworld.com/javaworld/jw-03-2008/jw-03-opensourcejava-animatingcardlayout.html Open source Java projects: AnimatingCardLayout - JavaWorld]
+- [https://animatingcardlayout.dev.java.net/ animatingcardlayout: ホーム]
 
 * Java 9 [#java9]
 - [[Swing/AuxiliaryLookAndFeel]]

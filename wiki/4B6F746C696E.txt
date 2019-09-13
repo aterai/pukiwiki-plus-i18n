@@ -603,7 +603,7 @@ fun children(node: TreeNode): List<TreeNode> {
 }}
 #twocolumn
 
-- 例えば`.filter(Container.class::isInstance)`のようなメソッド参照を、`IntelliJ 2018.2.5`の自動変換では`.filter(Predicate<Component> { Container::class.java!!.isInstance(it) })`のように変換するようになった？が、`import`の追加は対応していない
+- 例えば`.filter(Container.class::isInstance)`のようなメソッド参照を、`IntelliJ 2018.2.5`の自動変換では`.filter(Predicate<Component> { Container::class.java!!.isInstance(it) })`のように変換可能になった%%？が、`import`の追加は対応していない%%
 
 #twocolumn
 `Java`
@@ -2487,6 +2487,42 @@ val children = parent.children().toList()
     .filterIsInstance(DefaultMutableTreeNode::class.java)
     .sortedWith(tnc)
     // .sortedWith(compareBy(DefaultMutableTreeNode::isLeaf, { it.getUserObject().toString() }))
+}}
+#twocolumn
+
+** filterIsInstance [#filterIsInstance]
+#twocolumn
+
+#code(lang-kotlin){{
+// Only classes are allowed on the left hand side of a class literal
+// とエラーになる
+listOf(c0, c1, c2, c3)
+  .mapNotNull { it.getModel() }
+  .filterIsInstance(MutableComboBoxModel<String>::class.java)
+  .forEach { it.insertElementAt(str, it.getSize()) }
+}}
+
+#code(lang-kotlin){{
+// Type mismatch. でエラーになる
+listOf(c0, c1, c2, c3)
+  .mapNotNull { it.getModel() }
+  .filterIsInstance(MutableComboBoxModel::class.java)
+  .forEach { it.insertElementAt(str, it.getSize()) }
+}}
+
+#twocolumn
+#code(lang-kotlin){{
+// reified type parameter を使用する
+listOf(c0, c1, c2, c3)
+  .mapNotNull { it.getModel() }
+  .filterIsInstance<MutableComboBoxModel<String>>()
+  .forEach { it.insertElementAt(str, it.getSize()) }
+}}
+
+#code(lang-kotlin){{
+listOf(c0, c1, c2, c3)
+  .mapNotNull { it.getModel() as? MutableComboBoxModel<String> }
+  .forEach { it.insertElementAt(str, it.getSize()) }
 }}
 #twocolumn
 

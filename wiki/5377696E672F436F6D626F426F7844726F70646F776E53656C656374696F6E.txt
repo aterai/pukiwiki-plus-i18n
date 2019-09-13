@@ -36,7 +36,7 @@ class SelectItemMenuListener implements PopupMenuListener {
 -- `"123456"`を編集して`"123456a"`に変更しKBD{Enter}、次に文字列を`"a"`に変更してから、ドロップダウンリストを開くと、リストに`"123456a"`が追加され、`"a"`が選択状態になる
 -- KBD{Enter}キーを押した場合、アイテムを追加するアクションを`ActionMap`に追加
 #code{{
-Action defalutEnterPressedAction = getActionMap().get(ENTER_PRESSED);
+Action defaultEnterPressedAction = getActionMap().get(ENTER_PRESSED);
 Action a = new AbstractAction() {
   @Override public void actionPerformed(ActionEvent e) {
     boolean isPopupVisible = isPopupVisible();
@@ -52,7 +52,7 @@ Action a = new AbstractAction() {
       setSelectedIndex(0);
       setPopupVisible(isPopupVisible);
     } else {
-      defalutEnterPressedAction.actionPerformed(e);
+      defaultEnterPressedAction.actionPerformed(e);
     }
   }
 };

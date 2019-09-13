@@ -44,8 +44,8 @@ JSlider slider2 = new JSlider(0, 100, 0) {
 -- `JSlider`にフォーカスが移動すると、`WindowsLookAndFeel`のデフォルトでは目盛りなどを含む領域に黒色で点線の`FocusBorder`が描画される
 --- `MotifLookAndFeel`の場合は、赤色の実線
 --- `MetalLookAndFeel`、`NimbusLookAndFeel`の場合は、`Thumb`の描画が変化する
-- `Override SilderUI#paintFocus(...)`
--- `BasicSilderUI#paintFocus(...)`をオーバーライドして`FocusBorder`を非表示に設定
+- `Override SliderUI#paintFocus(...)`
+-- `BasicSliderUI#paintFocus(...)`をオーバーライドして`FocusBorder`を非表示に設定
 -- `UIManager.put("Slider.focus", UIManager.get("Slider.background"));`として`FocusBorder`の色を背景色と同じにしてすべての`JSlider`の`FocusBorder`を非表示にする方法もある
 -- 点線を非表示にする代わりに`FocusListener`を追加してフォーカスがある場合は背景色を変更
 --- `WindowsLookAndFeel`で`MetalLookAndFeel`などのようにフォーカスありで`Thumb`の描画を変更するのはすこし面倒
