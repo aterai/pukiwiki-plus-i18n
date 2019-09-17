@@ -15,12 +15,13 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTTK5HPd3I/AAAAAAAAAj8/qh
 
 * サンプルコード [#sourcecode]
 #code(link){{
-class SliderRednerer extends JSlider implements TableCellRenderer {
-  public SliderRednerer() {
+class SliderRenderer extends JSlider implements TableCellRenderer {
+  public SliderRenderer() {
     super();
     setName("Table.cellRenderer");
     setOpaque(true);
   }
+
   @Override public Component getTableCellRendererComponent(JTable table,
       Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     Integer i = (Integer) value;
@@ -28,9 +29,10 @@ class SliderRednerer extends JSlider implements TableCellRenderer {
     setValue(i.intValue());
     return this;
   }
+
   //Overridden for performance reasons. ---->
   @Override public void firePropertyChange(String p, boolean ov, boolean nv) {}
-// ...
+  // ...
 }}
 
 #code{{
