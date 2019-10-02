@@ -42,7 +42,8 @@ public class MoveImportDirTask extends Task {
 
   public void execute() throws BuildException {
     if (m_sourceDirectory == null || !m_sourceDirectory.exists()) {
-      throw new BuildException("Source directory not found (src attribute): " + m_sourceDirectory);
+      String msg = "Source directory not found (src attribute): " + m_sourceDirectory;
+      throw new BuildException(msg);
     }
     if (m_destinationDirectory == null) {
       throw new BuildException("Destination directory not set (dest attribute)");
@@ -104,7 +105,7 @@ public class MoveImportDirTask extends Task {
 - [[アーカイブのダウンロード>https://ateraimemo.com/data/ant/importdir.zip]]
 
 * 解説 [#explanation]
-上記のサンプルは、`java`ファイルを`import`に対応するディレクトリに移動するプラグインです。何処かで(失念)拾ってきたサンプルを改造して作ったものです。マニュアルの[http://ant.apache.org/manual/develop.html Developing with Ant(Writing Your Own Task)]なども参考にしてください。
+上記のサンプルは、`java`ファイルを`import`に対応するディレクトリに移動するプラグインです。何処かで(失念)拾ってきたサンプルを改造して作ったものです。マニュアルの[https://ant.apache.org/manual/develop.html Developing with Ant(Writing Your Own Task)]なども参考にしてください。
 
 生成された`jar`ファイルを`%ANT_HOME%\lib`に置き、以下の要領でタスクを定義します。
 
@@ -118,7 +119,7 @@ public class MoveImportDirTask extends Task {
 }}
 
 * 参考リンク [#reference]
-- [http://ant.apache.org/manual/develop.html Developing with Ant(Writing Your Own Task)]
+- [https://ant.apache.org/manual/develop.html Developing with Ant(Writing Your Own Task)]
 
 * コメント [#comment]
 #comment

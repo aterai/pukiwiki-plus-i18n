@@ -15,9 +15,9 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTST-FvjRI/AAAAAAAAAik/Zb
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(model);
-final Set<RowFilter<? super TestModel, ? super Integer>> filters = new HashSet<>(2);
-final RowFilter<TableModel, Integer> filter1 = new RowFilter<TableModel, Integer>() {
+TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(model);
+Collection<RowFilter<? super TestModel, ? super Integer>> filters = new HashSet<>(2);
+RowFilter<TableModel, Integer> filter1 = new RowFilter<TableModel, Integer>() {
   @Override public boolean include(
       Entry<? extends TableModel, ? extends Integer> entry) {
     TableModel model = entry.getModel();
@@ -25,7 +25,7 @@ final RowFilter<TableModel, Integer> filter1 = new RowFilter<TableModel, Integer
     return !t.getComment().trim().isEmpty();
   }
 };
-final RowFilter<TableModel, Integer> filter2 = new RowFilter<TableModel, Integer>() {
+RowFilter<TableModel, Integer> filter2 = new RowFilter<TableModel, Integer>() {
   @Override public boolean include(
       Entry<? extends TableModel, ? extends Integer> entry) {
     return entry.getIdentifier() % 2 == 0;

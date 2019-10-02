@@ -1,0 +1,43 @@
+---
+category: swing
+folder: PadTabRun
+title: JTabbedPaneがタブラップレイアウトの場合そのタブランの余りを詰めて解消する
+tags: [JTabbedPane, LookAndFeel]
+author: aterai
+pubdate: 2019-09-23T19:36:37+09:00
+description: JTabbedPaneがタブラップレイアウトの場合、そのタブランの余りを詰めて解消する方法を変更します。
+image: https://drive.google.com/uc?id=16w9tOv2cQhjbkk-yBea87POsQDqMNPUs
+---
+* 概要 [#summary]
+`JTabbedPane`がタブラップレイアウトの場合、そのタブランの余りを詰めて解消する方法を変更します。
+
+#download(https://drive.google.com/uc?id=16w9tOv2cQhjbkk-yBea87POsQDqMNPUs)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+tabbedPane.setUI(new MetalTabbedPaneUI() {
+  @Override protected boolean shouldPadTabRun(int tabPlacement, int run) {
+    // BasicTabbedPaneUI: return runCount > 1;
+    // MetalTabbedPaneUI: return runCount > 1 && run < runCount - 1;
+    return false;
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `default`
+-- デフォルトのタブラン余り詰め方法は`LookAndFeel`に依存する
+-- `MetalLookAndFeel`の場合、最後のタブラン以外で余り詰めを実行する
+-- その他の`BasicLookAndFeel`を継承する`LookAndFeel`の場合、タブランが複数行になると余り詰めを実行する
+- `shouldPadTabRun: false`
+-- `BasicTabbedPaneUI#shouldPadTabRun(...)`メソッドをオーバーライドし、常に余り詰めを実行しない
+- `shouldPadTabRun: true`
+-- `BasicTabbedPaneUI#shouldPadTabRun(...)`メソッドをオーバーライドし、常に余り詰めを実行する
+-- タブランが一行になってもタブ幅に応じて余り詰めが実行される
+
+* 参考リンク [#reference]
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicTabbedPaneUI.html#shouldPadTabRun-int-int- BasicTabbedPaneUI (Java Platform SE 8 )]
+
+* コメント [#comment]
+#comment
+#comment

@@ -27,7 +27,9 @@ UIManager.put("TabbedPane.focus",                 Color.WHITE);
 UIManager.put("TabbedPane.contentAreaColor",      Color.WHITE);
 UIManager.put("TabbedPane.selected",              Color.WHITE);
 UIManager.put("TabbedPane.selectHighlight",       Color.WHITE);
-UIManager.put("TabbedPane.borderHightlightColor", Color.WHITE);
+// UIManager.put("TabbedPane.borderHighlightColor",  Color.WHITE);
+// Maybe typo but defined in MetalTabbedPaneUI
+UIManager.put("TabbedPane.borderHightlightColor",  Color.WHITE);
 }}
 
 * 解説 [#explanation]
@@ -37,6 +39,7 @@ UIManager.put("TabbedPane.borderHightlightColor", Color.WHITE);
 - `JPanel`タブ内に配置されている`JCheckBox`で、`JTabbedPane`を不透明に設定可能
 - `JPanel`タブ内に配置されている`JComboBox`で、`TabbedPane.tabAreaBackground`などのキーを指定し、その色の変更が可能
 - タブ文字色は、`JTabbedPane#setForegroundAt(...)`メソッドを使用して切り替え可能
+- `TabbedPane.borderHightlightColor`は`TabbedPane.borderHighlightColor`の書き間違いだと思うが、現状(`Java 11`で確認)の`MetalTabbedPaneUI`では`TabbedPane.borderHightlightColor`が定義されているため、こちらで色変更が可能になっている
 
 * 参考リンク [#reference]
 - [[JTabbedPaneの選択文字色を変更>Swing/ColorTab]]

@@ -32,7 +32,7 @@ class ListItemTransferHandler extends TransferHandler {
   @Override protected Transferable createTransferable(JComponent c) {
     source = (JList<?>) c;
     indices = source.getSelectedIndices();
-    List<?> transferedObjects = source.getSelectedValuesList();
+    List<?> transferredObjects = source.getSelectedValuesList();
     return new Transferable() {
       @Override public DataFlavor[] getTransferDataFlavors() {
         return new DataFlavor[] {localObjectFlavor};
@@ -43,7 +43,7 @@ class ListItemTransferHandler extends TransferHandler {
       @Override public Object getTransferData(DataFlavor flavor)
           throws UnsupportedFlavorException, IOException {
         if (isDataFlavorSupported(flavor)) {
-          return transferedObjects;
+          return transferredObjects;
         } else {
           throw new UnsupportedFlavorException(flavor);
         }

@@ -21,7 +21,7 @@ private final JPanel controls = new JPanel(new BorderLayout(5, 5) {
   private int controlsHeight;
   private int controlsPreferredHeight;
   @Override public Dimension preferredLayoutSize(Container target) {
-    //synchronized (target.getTreeLock()) {
+    // synchronized (target.getTreeLock()) {
     Dimension ps = super.preferredLayoutSize(target);
     controlsPreferredHeight = ps.height;
     if (animator != null) {
@@ -66,10 +66,9 @@ private Action makeShowHideAction() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`LayoutManager#preferredLayoutSize(...)`をオーバーライドして子パネルの高さを更新して展開アニメーションを表現しています。
+上記のサンプルでは、`LayoutManager#preferredLayoutSize(...)`メソッドをオーバーライドして子パネルの高さを更新し展開アニメーションを表現しています。
 
-----
-内部の`JTree`の高さを縮小せずに重ねる状態で検索パネルを表示したい場合は、`BorderLayout`ではなく`OverlayLayout`を[[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]のように使用する方法があります。
+- 内部の`JTree`の高さを縮小せずに重ねる状態で検索パネルを表示する場合は、`BorderLayout`ではなく`OverlayLayout`を[[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]のように使用する方法がある
 
 * 参考リンク [#reference]
 - [[JTreeのノードを検索する>Swing/SearchBox]]
