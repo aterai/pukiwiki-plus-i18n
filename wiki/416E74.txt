@@ -11,7 +11,7 @@ pubdate: 2003-09-25
 このページでは、`Java`ベースのビルドツールである`Ant`の使い方についてメモしています。
 
 * インストールと環境変数の設定 [#environments]
-[http://ant.apache.org/ Apache Ant - Welcome]などからダウンロードしたアーカイブを展開して、そこを環境変数`ANT_HOME`に設定します。「システムのプロパティ→詳細設定→環境変数」で、`ANT_HOME`を新規作成、もしくは編集してください。
+[https://ant.apache.org/ Apache Ant - Welcome]などからダウンロードしたアーカイブを展開して、そこを環境変数`ANT_HOME`に設定します。「システムのプロパティ→詳細設定→環境変数」で、`ANT_HOME`を新規作成、もしくは編集してください。
 
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQsClLJ428I/AAAAAAAAAs0/B0-VGelgHu4/s800/ant_home.png)
 
@@ -163,8 +163,6 @@ pubdate: 2003-09-25
  ant -e -f "c:\hoge\build.xml"
 
 ** `build.xml`ファイル [#buildxml]
-ネットを検索すれば、いろんな`build.xml`が見つかるので、まずはその中からサンプルを選び、[http://ant.apache.org/manual/index.html マニュアル]([http://www.jajakarta.org/ant/ant-1.6.1/docs/ja/manual/index.html 日本語訳])を見ながら修正すると、手っ取り早く作成することができます。
-
 - `build.xml`と`build.properties`のサンプル
 -- https://ateraimemo.com/data/ant/build.zip
 -- この`build.zip`ファイルには、ソースコードのほかに、`build.xml`と`build.properties`を添付しています。`build.properties`は、環境依存しそうな記述を`build.xml`から抜き出したプロパティファイルです。[http://www.jdom.org/ JDOM]などから拾ってきた記述を追加、編集したりして作成しています。実際に使用する場合は、`build.properties`ファイルを環境に合わせて編集してください。そのまま使用する場合は、`build.xml`を展開し、`src/java`フォルダ以下にソースコード(`Shift_JIS`)を置いてください。
@@ -174,9 +172,8 @@ pubdate: 2003-09-25
 -- このサイトの[[Java Swing Tips>Swing]]のサンプルに添付されている`build.xml`はすべて同一です。こちらは、「`build.xml`と`build.properties`のサンプル」とは違い、ソースコードは`UTF-8`で、`build.properties`ではなく、`xml`ファイル(`properties.xml`)をプロパティファイルとして使用しています。
 
 * 参考リンク [#reference]
-- [http://ant.apache.org/ Apache Ant]
-- [http://ant.apache.org/manual/index.html Apache Ant Manual]
-- [http://amateras.sourceforge.jp/cgi-bin/fswiki/wiki.cgi/free?page=xyzzy xyzzy Antモード]
+- [https://ant.apache.org/ Apache Ant]
+- [https://ant.apache.org/manual/index.html Apache Ant Manual]
 
 * コメント [#comment]
 #comment

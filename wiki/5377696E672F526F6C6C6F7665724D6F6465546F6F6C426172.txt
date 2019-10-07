@@ -23,9 +23,9 @@ toolbar.setRollover(true);
 * 解説 [#explanation]
 - `JToolBar#setRollover(true)`
 -- ロールオーバーが有効になる
--- `LookAndFeel`によっては、この設定は無視される
+-- この設定は`LookAndFeel`の実装に依存し、無視される場合がある
 --- 例えば`NimbusLookAndFeel`は常にロールオーバーが有効
---- `WindowsLookAndFeel`などの初期状態では、`JToolBar#isRollover()`メソッドは`false`を返すのに動作は`true`を設定した場合と同じになってしまう？
+--- `WindowsLookAndFeel`の初期状態では、`JToolBar#isRollover()`メソッドは`false`を返すのに動作は`true`を設定した場合と同じになる
 -- `JToggleButton`自体に`AbstractButton#setRolloverEnabled(false)`を設定してもロールオーバー表示が実行される
 -- `LookAndFeel`依存の描画で`JToggleButton`に`AbstractButton#setContentAreaFilled(false)`を設定するとボタンが選択されているか判別不可になる場合がある
 - `JToolBar#setRollover(false)`
