@@ -48,7 +48,7 @@ private static Box setLeftIcon(JTextComponent label, ImageIcon icon) {
   label.setMinimumSize(label.getPreferredSize());
 
   JLabel l = new JLabel(icon);
-  l.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+  l.setCursor(Cursor.getDefaultCursor());
   Box box = Box.createHorizontalBox();
   box.add(l);
   box.add(Box.createHorizontalStrut(2));

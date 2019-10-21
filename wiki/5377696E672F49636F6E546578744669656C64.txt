@@ -24,7 +24,7 @@ Insets m = field.getMargin();
 field.setMargin(new Insets(m.top, m.left + w, m.bottom, m.right));
 
 JLabel label = new JLabel(image);
-label.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+label.setCursor(Cursor.getDefaultCursor());
 label.setBorder(null);
 label.setBounds(m.left, m.top, w, h);
 
@@ -47,7 +47,7 @@ field.add(label);
 -- [[JButtonなどの高さを変更せずに幅を指定>Swing/ButtonWidth]]
 #code{{
 final JLabel label2 = new JLabel(image);
-label2.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+label2.setCursor(Cursor.getDefaultCursor());
 label2.setBorder(BorderFactory.createEmptyBorder());
 JTextField field2 = new JTextField("ccccccccccccccccccccccccccc") {
   @Override public void updateUI() {

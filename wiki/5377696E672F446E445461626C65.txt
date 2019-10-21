@@ -137,7 +137,7 @@ class DnDTable extends JTable implements DragGestureListener, Transferable {
         e.dropComplete(false);
       }
       e.dropComplete(false);
-      setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+      setCursor(Cursor.getDefaultCursor());
       targetIndex = -1;
       repaint();
     }

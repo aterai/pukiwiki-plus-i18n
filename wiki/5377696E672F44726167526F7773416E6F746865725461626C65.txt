@@ -85,7 +85,7 @@ class TableRowTransferHandler extends TransferHandler {
       index = max;
     }
     addIndex = index;
-    target.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    target.setCursor(Cursor.getDefaultCursor());
     try {
       Object[] values =
         (Object[]) info.getTransferable().getTransferData(localObjectFlavor);
@@ -110,7 +110,7 @@ class TableRowTransferHandler extends TransferHandler {
   }
   private void cleanup(JComponent c, boolean remove) {
     if (remove && indices != null) {
-      c.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+      c.setCursor(Cursor.getDefaultCursor());
       DefaultTableModel model = (DefaultTableModel) ((JTable) c).getModel();
       if (addCount > 0) {
         for (int i = 0; i < indices.length; i++) {

@@ -17,12 +17,13 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNJ5XQrjI/AAAAAAAAAaU/lv
 #code(link){{
 private void updateFont(final Font font) {
   FontUIResource fontUIResource = new FontUIResource(font);
-  for (Map.Entry<?, ?> entry: UIManager.getDefaults().entrySet()) {
-    if (entry.getKey().toString().toLowerCase().endsWith("font")) {
-      UIManager.put(entry.getKey(), fontUIResource);
+  // for (Map.Entry<?, ?> entry: UIManager.getDefaults().entrySet()) {
+  UIManager.getLookAndFeelDefaults().forEach((key, value) -> {
+    if (key.toString().toLowerCase(Locale.ENGLISH).endsWith("font")) {
+      UIManager.put(key, fontResource);
     }
-  }
-  //SwingUtilities.updateComponentTreeUI(this);
+  });
+  // SwingUtilities.updateComponentTreeUI(this);
   recursiveUpdateUI(this);
   frame.pack();
 }
@@ -53,12 +54,11 @@ UIManager.put("Table.font", new FontUIResource(font));
 - 各コンポーネントのキーは、`UIManager`から`UIDefaults`のキー一覧が作成可能
 #code{{
 // キー一覧の作成例
-import java.util.Map;
 import javax.swing.UIManager;
+
 class Test {
   public static void main(String[] args) {
-    for (Map.Entry<?, ?> entry: UIManager.getDefaults().entrySet())
-      System.out.println(entry.getKey());
+    UIManager.getLookAndFeelDefaults().forEach((key, value) -> System.out.println(key));
   }
 }
 }}

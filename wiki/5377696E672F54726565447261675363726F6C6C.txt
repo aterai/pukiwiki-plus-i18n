@@ -16,7 +16,7 @@ image: https://lh3.googleusercontent.com/-8b-0M5bS9Tw/Tvf_XhVVreI/AAAAAAAABHU/Bd
 * サンプルコード [#sourcecode]
 #code(link){{
 class DragScrollListener extends MouseAdapter {
-  private Cursor defCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+  private Cursor defCursor = Cursor.getDefaultCursor();
   private Cursor hndCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
   private Point pp = new Point();
   @Override public void mouseDragged(MouseEvent e) {

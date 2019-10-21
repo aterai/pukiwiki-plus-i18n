@@ -19,7 +19,7 @@ class TableTouchScreenHandler extends MouseAdapter implements ListSelectionListe
   public static final int VELOCITY = 5;
   public static final int DELAY = 10;
   public static final double GRAVITY = .95;
-  private final Cursor dc = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+  private final Cursor dc = Cursor.getDefaultCursor();
   private final Cursor hc = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
   private final Timer scroller;
   private final Point startPt = new Point();

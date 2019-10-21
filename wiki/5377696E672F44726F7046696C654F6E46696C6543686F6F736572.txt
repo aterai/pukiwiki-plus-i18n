@@ -1,0 +1,91 @@
+---
+category: swing
+folder: DropFileOnFileChooser
+title: JFileChooserにTransferHandlerを設定してFileをドロップ可能にする
+tags: [JFileChooser, TransferHandler, File, DragAndDrop]
+author: aterai
+pubdate: 2019-10-21T16:31:38+09:00
+description: JFileChooserにTransferHandlerを設定してFileやDirectoryをドロップ可能にします。
+image: https://drive.google.com/uc?id=1NA-vGQgCHGvMjG9nrxYwpTVuYCIgeFFZ
+---
+* 概要 [#summary]
+`JFileChooser`に`TransferHandler`を設定して`File`や`Directory`をドロップ可能にします。
+
+#download(https://drive.google.com/uc?id=1NA-vGQgCHGvMjG9nrxYwpTVuYCIgeFFZ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+chooser.setTransferHandler(new FileChooserTransferHandler());
+// ...
+class FileChooserTransferHandler extends TransferHandler {
+  @Override public boolean canImport(TransferSupport support) {
+    boolean canDrop = support.isDataFlavorSupported(DataFlavor.javaFileListFlavor);
+    boolean isTarget = support.getComponent() instanceof JFileChooser;
+    return support.isDrop() && canDrop && isTarget; // && !isMultiSelection;
+  }
+
+  @Override public boolean importData(TransferSupport support) {
+    try {
+      JFileChooser fc = (JFileChooser) support.getComponent();
+      List<?> list = (List<?>) support.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+      File[] files = new File[list.size()];
+      for (int i = 0; i < list.size(); i++) {
+        files[i] = (File) list.get(i);
+      }
+      if (fc.isMultiSelectionEnabled()) {
+        fc.setSelectedFiles(files);
+      } else {
+        File f = files[0];
+        if (f.isDirectory()) {
+          fc.setCurrentDirectory(f);
+        } else {
+          fc.setSelectedFile(f);
+        }
+      }
+      return true;
+    } catch (IOException | UnsupportedFlavorException ex) {
+      return false;
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- `JFileChooser`の`JTextField`に文字列がドロップ可能だが、ファイルはドロップ不可
+- `TransferHandler`
+-- `JFileChooser`内の`JTable`、`JList`、`JTextField`以外にファイルをドロップ可能にする`TransferHandler`を設定
+-- `JFileChooser#setMultiSelectionEnabled(true)`の場合、選択された複数ファイル(ディレクトリを除く)のファイル名が`JTextField`に表示される
+-- `JFileChooser#setMultiSelectionEnabled(false)`の場合、選択された複数ファイルの先頭ファイルがドロップの対象になる
+--- ドロップの対象ファイルがディレクトリの場合、`JFileChooser#setCurrentDirectory(dir)`でカレントディレクトリを変更
+--- ドロップの対象ファイルがファイルの場合、`JFileChooser#setSelectedFile(file)`で選択ファイルを変更
+
+----
+- 以下のように`TransferHandler#canImport(...)`をオーバーライドして複数ファイルが選択されている場合はドロップを拒否すると、`InvalidDnDOperationException: No drop current`が発生する？
+
+#code{{
+class FileChooserTransferHandler extends TransferHandler {
+  @Override public boolean canImport(TransferSupport support) {
+    boolean canDrop = support.isDataFlavorSupported(DataFlavor.javaFileListFlavor);
+    boolean isTarget = support.getComponent() instanceof JFileChooser;
+    boolean isMultiSelection = true;
+    if (isTarget && canDrop) {
+      try {
+        JFileChooser fc = (JFileChooser) support.getComponent();
+        // XXX: java.awt.dnd.InvalidDnDOperationException: No drop current
+        List<?> list = (List<?>) support.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+        isMultiSelection = list.size() != 1;
+      } catch (IOException | UnsupportedFlavorException ex) {
+        ex.printStackTrace();
+      }
+    }
+    return support.isDrop() && canDrop && isTarget && !isMultiSelection;
+  }
+}}
+
+* 参考リンク [#reference]
+- [[JFileChooserを開いた時のカレントディレクトリを設定する - Java Swing Tips>https://ateraimemo.com/Swing/FileChooserCurrentDirectory]]
+
+* コメント [#comment]
+#comment
+#comment
