@@ -56,9 +56,6 @@ class CellIconTransferHandler extends TransferHandler {
   }
   @SuppressWarnings("unchecked")
   @Override public boolean importData(TransferHandler.TransferSupport info) {
-    if (!canImport(info)) {
-      return false;
-    }
     JList l = (JList) info.getComponent();
     try {
       Object o = info.getTransferable().getTransferData(localObjectFlavor);
