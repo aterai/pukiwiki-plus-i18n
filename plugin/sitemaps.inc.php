@@ -29,6 +29,7 @@ function plugin_sitemaps_action() {
     $array[] = '^PukiWiki.*';
     $array[] = '^English.*';
     $array[] = '^Relaxer.*';
+    $array[] = '^Bicycle.*';
 
     $array[] = '^aterai$';
     $array[] = '^terai$';
@@ -37,6 +38,7 @@ function plugin_sitemaps_action() {
     $array[] = '^xyzzy$';
     $array[] = '^Nitpick$';
     $array[] = '^Popular$';
+    $array[] = '^_Bug$';
 
     // $array[] = '^RSS$';
     // $array[] = '^.+%2F_.+$';
@@ -56,6 +58,7 @@ function plugin_sitemaps_action() {
     $array[] = '^Swing%2FTabWithCloseButtoun$';
     $array[] = '^Swing%2F_Hacks$';
     $array[] = '^Swing%2F_ScreenShots$';
+    $array[] = '^Swing%2FSwing%2F';
 
     $array[] = '^Subversion%2FSubclipse$';
     $array[] = '^Subversion%2FeSvn$';

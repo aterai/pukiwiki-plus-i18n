@@ -11,6 +11,6 @@ function plugin_user_inline() {
     //<a itemprop="creator" itemscope="itemscope" itemtype="https://schema.org/Person"><span itemprop="name">$buf</span></a>
     //<span itemprop="name" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="http://ateraimemo.com/:Users/$name.html"><span itemprop="name">$name</span></a></span>
 return <<<EOD
-<span itemprop="creator" itemscope="itemscope" itemtype="https://schema.org/Person"><span itemprop="name">$name</span></span>
+<span itemprop="creator" itemscope="itemscope" itemtype="https://schema.org/Person">$name</span>
 EOD;
 }

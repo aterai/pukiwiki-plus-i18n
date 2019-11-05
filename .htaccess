@@ -41,6 +41,10 @@ RewriteCond %{REQUEST_FILENAME}\.gz -s
 RewriteRule ^.+$ %{REQUEST_URI}.gz
 </FilesMatch>
 
+<Files ~ "\.(jnlp|java|rb|bat)$">
+  Header set X-Robots-Tag "noindex"
+</Files>
+
 <files *.js.gz>
 AddType "text/javascript; charset=UTF-8" .gz
 </files>
