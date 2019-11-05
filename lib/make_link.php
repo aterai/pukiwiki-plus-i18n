@@ -59,7 +59,7 @@ class InlineConverter
 				'note',          // Footnotes
 				'url',           // URLs
 				'url_interwiki', // URLs (interwiki definition)
-				'mailto',        // mailto: URL schemes
+				// 'mailto',        // mailto: URL schemes
 				'interwikiname', // InterWikiName
 				'autoalias',     // AutoAlias(cjk,other)
 				'autolink',      // AutoLink(cjk,other)
@@ -371,7 +371,7 @@ class Link_url extends Link
  (?:>|:)
 )?
 (                 # (3) url
- (?:(?:https?|ftp|news):\/\/|mailto:)[\w\/\@\$()!?&%#:;.,~'=*+-]+
+ (?:(?:https?|ftp|news):\/\/)[\w\/\@\$()!?&%#:;.,~'=*+-]+ # (?:(?:https?|ftp|news):\/\/|mailto:)[\w\/\@\$()!?&%#:;.,~'=*+-]+
 )
 (?($s1)\]\])      # close bracket
 EOD;

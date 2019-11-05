@@ -201,7 +201,7 @@ function plugin_comment_convert()
 // 	}
     global $script, $title;
 
-    $page_url = "'.$script.$title.'.html";
+    $page_url = $script . $title . ".html";
     static $times = 0;
     $times++;
     if ($times == 1) {
@@ -214,12 +214,12 @@ function plugin_comment_convert()
 <div id="disqus_thread"></div>
 <script>
 var disqus_config = function () {
-this.page.url = $page_url;
-this.page.identifier = $title;
+this.page.url = '$page_url';
+this.page.identifier = '$title';
 };
 (function() { // DON'T EDIT BELOW THIS LINE
 var d = document, s = d.createElement('script');
-s.src = '//javaswingtips.disqus.com/embed.js';
+s.src = 'https://javaswingtips.disqus.com/embed.js';
 s.setAttribute('data-timestamp', +new Date());
 (d.head || d.body).appendChild(s);
 })();
