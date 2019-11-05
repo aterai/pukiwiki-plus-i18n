@@ -1,0 +1,70 @@
+---
+category: swing
+folder: CarouselCardLayout
+title: CardLayoutの前後のカードを左右に表示する
+tags: [CardLayout, JPanel, LayoutManager]
+author: aterai
+pubdate: 2019-11-04T01:52:24+09:00
+description: CardLayoutを設定したContainerからカレントカードの前後に存在するカードを取得し、半透明でカレントカードの左右に表示します。
+image: https://drive.google.com/uc?id=1P9cXLzg4aUWv4LS9XptuChDgsprRayp5
+---
+* 概要 [#summary]
+`CardLayout`を設定した`Container`からカレントカードの前後に存在するカードを取得し、半透明でカレントカードの左右に表示します。
+
+#download(https://drive.google.com/uc?id=1P9cXLzg4aUWv4LS9XptuChDgsprRayp5)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+CardLayout cardLayout = new CardLayout(50, 5);
+
+JPanel cards = new JPanel(cardLayout) {
+  @Override protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    for (Component c: getComponents()) {
+      if (c.isVisible()) {
+        paintSideComponents(g, getComponentZOrder(c));
+        return;
+      }
+    }
+  }
+
+  private void paintSideComponents(Graphics g, int current) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setComposite(AlphaComposite.SrcOver.derive(.5f));
+    Insets insets = getInsets();
+    int hgap = cardLayout.getHgap();
+    int vgap = cardLayout.getVgap();
+    int cw = getWidth() - (hgap * 2 + insets.left + insets.right);
+    // int ch = getHeight() - (vgap * 2 + insets.top + insets.bottom);
+    int gap = 10;
+    int nc = getComponentCount();
+
+    g2.translate(hgap + insets.left - cw - gap, vgap + insets.top);
+    Component prev = getComponent(current > 0 ? current - 1 : nc - 1);
+    prev.print(g2);
+
+    g2.translate((cw + gap) * 2, 0);
+    Component next = getComponent((current + 1) % nc);
+    next.print(g2);
+
+    g2.dispose();
+  }
+};
+}}
+
+* 解説 [#explanation]
+- `Container#getComponents()`メソッドで`CardLayout`を設定したコンテナ内の全コンポーネントを取得
+- `Component#isVisible()`が`true`になるコンポーネントが現在表示されているカードになる
+- `Container#getComponentZOrder(c)`メソッドでカレントカードのコンポーネントの配置番号を取得
+-- 前のカードコンポーネントは`Container#getComponent(current > 0 ? current - 1 : getComponentCount() - 1)`で取得可能
+-- 後のカードコンポーネントは`Container#getComponent( (current + 1) % getComponentCount() )`で取得可能
+- `CardLayout#setHgap(int hgap)`などで設定したコンポーネント間の水平方向の間隔上に前後のカードを`Component#print()`メソッドで描画
+-- 描画位置は、`Graphics#translate(...)`を使用して移動
+
+* 参考リンク [#reference]
+- [[GridLayoutとJScrollPaneを使ったグリッド単位での表示切り替え>Swing/GridScrollAnimation]]
+- [https://tips4java.wordpress.com/2008/10/31/card-layout-focus/ Card Layout Focus « Java Tips Weblog]
+
+* コメント [#comment]
+#comment
+#comment
