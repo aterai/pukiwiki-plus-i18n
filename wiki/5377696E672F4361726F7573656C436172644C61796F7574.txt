@@ -57,7 +57,7 @@ JPanel cards = new JPanel(cardLayout) {
 - `Component#isVisible()`が`true`になるコンポーネントが現在表示されているカードになる
 - `Container#getComponentZOrder(c)`メソッドでカレントカードのコンポーネントの配置番号を取得
 -- 前のカードコンポーネントは`Container#getComponent(current > 0 ? current - 1 : getComponentCount() - 1)`で取得可能
--- 後のカードコンポーネントは`Container#getComponent( (current + 1) % getComponentCount() )`で取得可能
+-- 後のカードコンポーネントは`Container#getComponent((current + 1) % getComponentCount() )`で取得可能
 - `CardLayout#setHgap(int hgap)`などで設定したコンポーネント間の水平方向の間隔上に前後のカードを`Component#print()`メソッドで描画
 -- 描画位置は、`Graphics#translate(...)`を使用して移動
 
