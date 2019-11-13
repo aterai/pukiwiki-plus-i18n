@@ -82,6 +82,8 @@ jar {
 -- `Hoge.java`を変換すると`Hoge.kt`が生成されて、`Hoge.java`は削除されてしまうので注意が必要
 --- `Undo`(KBD{Ctrl+Z})で変換は取り消されて削除された`Java`ファイルは復活する
 - `File`メニュー、`Project Structure`パネルの`Project SDK`が`<No SDK>`になっていると、`@Override`が`override`に変換されない場合がある
+- `Ktolin`プロジェクトを作成して適当な`App.kt`を作成し、そこに`Java`のソースコードをコピー・ペーストすると自動変換可能
+-- KBD{Ctrl+Alt+Shift+K}でファイル変換するより高機能？
 
 ** Improved Java to Kotlin converter [#ba11f89c]
 - [https://blog.jetbrains.com/kotlin/2019/08/kotlin-1-3-50-released/ Kotlin 1.3.50 released | Kotlin Blog]
@@ -1027,6 +1029,61 @@ init {
   // System.arraycopyなどは使用せず、コピー元の二次元配列を参照して初期化
   this.mask = Array(src.size, { i -> Array(src[i].size, { j -> src[i][j] }) })
 }
+}}
+
+#twocolumn
+
+** Ellipse2D.Double [#Double]
+- `IntelliJ`の自動変換で`Ellipse2D.Double`と`kotlin.Double`競合する場合がある？
+-- 再現できなくなった
+
+#twocolumn
+
+`Java`
+#code{{
+import java.awt.geom.Ellipse2D;
+
+enum ButtonLocation {
+  CENTER(0d),
+  NORTH(45d),
+  EAST(135d),
+  SOUTH(225d),
+  WEST(-45d);
+  private final double degree;
+  ButtonLocation(double degree) {
+    this.degree = degree;
+  }
+
+  public double getStartAngle() {
+    return degree;
+  }
+}
+// ...
+Shape inner = new Ellipse2D.Double(xx, xx, ww, ww);
+}}
+
+#twocolumn
+
+`Kotlin`(自動変換)
+#code(lang-kotlin){{
+import java.awt.geom.Ellipse2D.Double
+
+enum class ButtonLocation(val startAngle: kotlin.Double) {
+  CENTER(0.0), NORTH(45.0), EAST(135.0), SOUTH(225.0), WEST(-45.0);
+}
+// ...
+val inner: Shape = Double(xx, xx, ww, ww)
+}}
+
+`Kotlin`(手動修正)
+#code(lang-kotlin){{
+import java.awt.geom.Ellipse2D
+
+enum class ButtonLocation(val startAngle: Double) {
+  CENTER(0.0), NORTH(45.0), EAST(135.0), SOUTH(225.0), WEST(-45.0);
+}
+
+val inner: Shape = Ellipse2D.Double(xx, xx, ww, ww)
 }}
 
 #twocolumn

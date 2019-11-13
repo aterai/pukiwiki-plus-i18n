@@ -20,6 +20,9 @@ pubdate: 2003-09-25
 RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the JFC and Swing (The Java™ Tutorials)]
 
 * 新着記事 [#whatsnew]
+- 2019011-11
+#swingdescription(Swing/FocusDashedRectGap,JButtonなどの点線によるフォーカス描画の内余白を変更する,WindowsLookAndFeelなどを適用したJButtonで描画される点線によるフォーカス矩形の内余白を変更します。,https://drive.google.com/uc?id=1l5MNuTp7CTOcdF6t6zeqccxU2fJtnU6V)
+
 - 2019-11-04
 #swingdescription(Swing/CarouselCardLayout,CardLayoutの前後のカードを左右に表示する,CardLayoutを設定したContainerからカレントカードの前後に存在するカードを取得し、半透明でカレントカードの左右に表示します。,https://drive.google.com/uc?id=1P9cXLzg4aUWv4LS9XptuChDgsprRayp5)
 
@@ -28,9 +31,6 @@ RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About th
 
 - 2019-10-21
 #swingdescription(Swing/DropFileOnFileChooser,JFileChooserにTransferHandlerを設定してFileをドロップ可能にする,JFileChooserにTransferHandlerを設定してFileやDirectoryをドロップ可能にします。,https://drive.google.com/uc?id=1NA-vGQgCHGvMjG9nrxYwpTVuYCIgeFFZ)
-
-- 2019-10-14
-#swingdescription(Swing/MenuCancelMode,JMenuから開いたJPopupMenuをキャンセルした場合の動作を変更する,JMenuから開いたJPopupMenuをキャンセルした場合、カレントのサブメニューから閉じるか、すべてのメニューツリーを閉じるかを設定します。,https://drive.google.com/uc?id=1KMgWDSQkZS95tcgDW87x4bzZd4_M3mdV)
 
 ** 更新履歴 [#changelog]
 - [https://ateraimemo.com/archive.html Archive]
@@ -50,7 +50,7 @@ RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About th
 - [[JTextComponent(20)>Swing/_JTextComponent]]
 -- [[JTextArea(24)>Swing/_JTextArea]]
 -- [[JTextPane JEditorPane(33)>Swing/_JTextPane]]
-- [[JButton AbstractButton(30)>Swing/_JButton]]
+- [[JButton AbstractButton(31)>Swing/_JButton]]
 -- [[JCheckBox JCheckBoxMenuItem(23)>Swing/_JCheckBox]]
 -- [[JRadioButton JToggleButton ButtonGroup(14)>Swing/_JRadioButton]]
 - [[JComboBox(60)>Swing/_JComboBox]]
@@ -77,8 +77,8 @@ RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About th
 - [[Graphics(44)>Swing/_Graphics]]
 - [[LayoutManager(44)>Swing/_Layout]]
 - [[Animation(36)>Swing/_Animation]]
-- [[Hyperlink Html(35)>Swing/_Hyperlink]]
-- [[Focus(32)>Swing/_Focus]]
+- [[Hyperlink Html(36)>Swing/_Hyperlink]]
+- [[Focus(33)>Swing/_Focus]]
 - [[Drag & Drop(31)>Swing/_DnD]]
 - [[Border(30)>Swing/_Border]]
 - [[LookAndFeel(23)>Swing/_LookAndFeel]]
@@ -94,7 +94,7 @@ RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About th
 - [[JDK 6, 7 での Swing 新機能(35)>Swing/_JDK6]]
 
 ** `Screenshot` [#screenshot]
-- [https://drive.google.com/drive/folders/1ZiLGUiAv4olCMNUvlTWhkfrTCezfC6pa?usp=sharing スクリーンショット一覧(812)]
+- [https://drive.google.com/drive/folders/1ZiLGUiAv4olCMNUvlTWhkfrTCezfC6pa?usp=sharing スクリーンショット一覧(813)]
 
 #twocolumn
 
@@ -123,6 +123,8 @@ RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About th
 このサイトにあるサンプルの、動作・テスト環境や、`JDK`のダウンロード、利用方法、質問、不具合報告についてお願いなどを記述しています。
 
 - [[動作環境、サンプルの実行方法などについて>Swing/_TestedEnvironments]]
+- `Windows 10`の高解像度環境で`Swing`アプリのスケールがおかしくなる場合の対処方法
+-- [https://superuser.com/questions/988379/how-do-i-run-java-apps-upscaled-on-a-high-dpi-display windows 10 - How do I run Java apps upscaled on a high-DPI display? - Super User]
 
 このサイトのサンプルの不具合ではなく`Swing`自体の不具合のメモは、以下にまとめています。
 
