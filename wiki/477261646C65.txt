@@ -25,18 +25,33 @@ pubdate: 2016-12-13T13:37:28+09:00
 #code{{
 description 'Java Swing Tips'
 
-//allprojects と subprojects の使い分け方が良く分かっていない...
 allprojects {
   apply {
     plugin 'java'
     plugin 'application'
+    plugin 'pmd'
+    plugin 'checkstyle'
+  }
+
+  repositories {
+    mavenCentral()
+    jcenter()
   }
 
   def defaultEncoding = 'UTF-8'
   [compileJava, compileTestJava]*.options*.encoding = defaultEncoding
 
-  repositories {
-    jcenter()
+  pmd {
+    consoleOutput = true
+    ignoreFailures = true
+    incrementalAnalysis = true
+    ruleSetFiles = files("${rootProject.projectDir}/ruleset.xml")
+    ruleSets = [] // ruleSetFiles のみを使用する場合は ruleSets を空にする必要がある
+  }
+
+  checkstyle {
+    ignoreFailures = true
+    configFile = file("${rootProject.projectDir}/checks.xml")
   }
 }
 
@@ -45,12 +60,12 @@ subprojects {
     main {
       //デフォルトプロジェクトレイアウトでは src/main/java
       java { srcDir 'src/java' }
-      //デフォルトプロジェクトレイアウトは src/main/resources
+      //デフォルトプロジェクトレイアウトでは src/main/resources
       resources { srcDir 'src/java' }
     }
   }
 
-  def config = new ConfigSlurper().parse(new File("${project.projectDir}/config.gradle").toURL())
+  ext.config = new ConfigSlurper().parse(new File("${project.projectDir}/config.gradle").toURL())
 
   mainClassName = config.main.class
 
@@ -61,7 +76,7 @@ subprojects {
 
   // In this section you declare the dependencies for your production and test code
   dependencies {
-    compile fileTree(dir: "${project.projectDir}/lib", include: '*.jar')
+    implementation fileTree(dir: "${project.projectDir}/lib", include: '*.jar')
   }
 
   version = config.version
@@ -73,45 +88,25 @@ subprojects {
                  'Class-Path': config.runtime.classpath
     }
   }
-
-  apply {
-    plugin 'pmd'
-    plugin 'checkstyle'
-    plugin 'findbugs'
-  }
-  pmd {
-    ignoreFailures = true
-    consoleOutput = true
-    ruleSetFiles = files("${rootProject.projectDir}/ruleset.xml")
-    ruleSets = []
-  }
-  checkstyleMain {
-    ignoreFailures = true
-    configFile = file("${rootProject.projectDir}/checkstyle.xml")
-  }
-  findbugs {
-    ignoreFailures = true
-    excludeFilter = file("${rootProject.projectDir}/excludefilter.xml")
-  }
 }
 }}
 
 - `settings.gradle`
 
 #code{{
-//サブプロジェクトとしてAccordionPanel～ZoomingAndPanningを追加
-//700ほど追加すると重い...
+// サブプロジェクトとしてAccordionPanel～ZoomingAndPanningを追加
+// 700ほど追加すると重い...
 file('.').eachDirMatch(~/[a-zA-Z]+/) {
-    include it.name
+  include it.name
 }
 }}
 
 - `AccordionPanel`～`ZoomingAndPanning`以下に`config.gradle`
 
 #code{{
-vendor  = 'Java Swing Tips - https://ateraimemo.com/'
-version = '1.0.0'
-year    = '2003-2016'
+vendor = 'Java Swing Tips - https://ateraimemo.com/'
+version '1.0-SNAPSHOT'
+year = '2003-2019'
 
 main.class = 'example.MainPanel'
 runtime.classpath = '.'
@@ -171,7 +166,7 @@ runtime.classpath = '.'
 
 - サブプロジェクトディレクトリを指定して実行
 
- $ gradle clean run -q --project-dir ZoomingAndPanning
+ $ gradle clean run -q --project-dir ZoomingAndPanning/
 
 * 参考リンク [#reference]
 - [http://gradle.monochromeroad.com/docs/userguide/userguide.html Gradle User Guide]
