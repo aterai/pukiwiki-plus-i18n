@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name        <table> to CSV
-// @namespace   http://ateraimemo.com/
+// @namespace   https://ateraimemo.com/
 // @include     http://*
 // @description Html table -> CSV(textarea)
 // @grant       none
 // @version     1.0.6
 // ==/UserScript==
-//- [JavaScriptでHtmlのtable要素をCSVに変換する](http://ateraimemo.com/JavaScript/table2csv.html)
+//- [JavaScriptでHtmlのtable要素をCSVに変換する](https://ateraimemo.com/JavaScript/table2csv.html)
 (function() {
   function table2csv(table) {
     var tr = table.getElementsByTagName('tr'), i, j, k, l, xoff, text, cells, td, array = [], lenr = tr.length, lenc;

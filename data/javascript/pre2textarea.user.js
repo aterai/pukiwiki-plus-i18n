@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        <pre> to <textarea>
-// @namespace   http://ateraimemo.com/
+// @namespace   https://ateraimemo.com/
 // @include     http://*
 // @include     https://*
 // @exclude     http://*.google.*
