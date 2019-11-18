@@ -17,11 +17,17 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPdRLH4_I/AAAAAAAAAeA/tZ
 #code(link){{
 //JFileChooser.setDefaultLocale(Locale.ENGLISH);
 fileChooser.setLocale((Locale) combo.getSelectedItem());
-fileChooser.updateUI();
+SwingUtilities.updateComponentTreeUI(fileChooser);
 }}
 
 * 解説 [#explanation]
 上記のサンプルでは、`JFileChooser`のタイトル、ボタンのラベルなどを指定した`Locale`に対応した文字列に変更するテストができます。
+
+- `ファイルのタイプ(T): JComboBox`の「すべてのファイル」などは更新されない
+-- `java -Duser.language=fr -jar example.jar`で起動すると`Locale`を変更しても`Tous les fichiers`から変化しない
+- 詳細表示`JTable`のヘッダは更新されない
+-- `JDK 8`では`java -Duser.language=fr -jar example.jar`で起動しても「名前、サイズ、項目の種類、更新日時」など`OS`が使用しているロケール？から文字列が取得される？
+-- `JDK 13`では`java -Duser.language=fr -jar example.jar`で起動すると`Locale`を変更しても「`Nom, Taille, ...`」から変化しない
 
 * 参考リンク [#reference]
 - [https://bugs.openjdk.java.net/browse/JDK-6606475 Bug ID: 6606475 JComponent.setDefaultLocale(Locale.ENGLISH) useless if def locale is non-english]
