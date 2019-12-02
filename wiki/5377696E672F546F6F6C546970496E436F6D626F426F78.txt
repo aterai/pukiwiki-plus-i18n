@@ -70,7 +70,7 @@ class ToolTipLayerUI<V extends JComboBox> extends LayerUI<V> {
 --- `LayerUI#processMouseMotionEvent(...)`をオーバーライドして、`JButton`上にマウスカーソルが入ったら`JButton#setToolTipText(...)`で`ToolTipText`を変更
 
 ----
-- `JComboBox`のドロップダウンリストを開いた状態でツールチップを表示すると描画が乱れる場合がある
+- `JComboBox`にフォーカスが存在する状態でドロップダウンリストを開き(`ArrowButton`をマウスクリックではなく、`JComboBox`本体をマウスクリック、またはKBD{Space}キーを使用)ツールチップを表示すると描画が乱れる場合がある
 -- `MetalLookAndFeel`のみ
 -- ドロップダウンリストが`HeavyWeightWindow`か`LightWeightWindow`かは無関係
 

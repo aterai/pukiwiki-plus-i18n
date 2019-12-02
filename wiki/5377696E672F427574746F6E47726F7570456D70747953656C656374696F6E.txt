@@ -15,17 +15,13 @@ image: https://drive.google.com/uc?id=1EFXEFMWUlrctxFnVQEQbK1zeW3wSIhoROw
 
 * サンプルコード [#sourcecode]
 #code(link){{
+ButtonGroup bg = new ButtonGroup();
+
 button.addActionListener(e -> {
   String txt = Optional.ofNullable(bg.getSelection())
     .map(b -> String.format("\"%s\" isSelected.", b.getActionCommand()))
     .orElse("Please select one of the option above.");
   label.setText(txt);
-  // ButtonModel bm = bg.getSelection();
-  // if (bm != null) {
-  //   label.setText(String.format("\"%s\" isSelected.", bm.getActionCommand()));
-  // } else {
-  //   label.setText("Please select one of the option above.");
-  // }
 });
 }}
 

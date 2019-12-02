@@ -20,15 +20,15 @@ Graphics2D g2 = bi.createGraphics();
 g2.setPaint(Color.RED);
 g2.drawOval(8, 8, 16, 16);
 g2.dispose();
-label.setCursor(getToolkit().createCustomCursor(bi,　new Point(16,　16),　"oval"));
+button.setCursor(getToolkit().createCustomCursor(bi,　new Point(16,　16),　"oval"));
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`Toolkit#createCustomCursor(...)`メソッドを使用して以下のような`BufferedImage`からカーソルオブジェクトを作成しています。
+上記のサンプルでは、サイズが`32x32`の`BufferedImage`から`Toolkit#createCustomCursor(...)`メソッドを使用してホットスポットはその`BufferedImage`の中心に設定したカーソルオブジェクトを作成しています。
 
-- サイズ: `32x32`
-- 図形: 直径`16`の円
-- ホットスポット: 円の中心
+- `String`: `BufferedImage`に文字を描画
+- `drawOval`: `BufferedImage`に円を描画
+- `paintIcon`: `BufferedImage`に`Icon`を描画
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#createCustomCursor-java.awt.Image-java.awt.Point-java.lang.String- Toolkit#createCustomCursor(...) (Java Platform SE 8)]

@@ -1,0 +1,59 @@
+---
+category: swing
+folder: EnableToolTipMode
+title: JToolTipの表示をウィンドウが非アクティブな場合でも有効にする
+tags: [JToolTip, ToolTipManager, UIManager]
+author: aterai
+pubdate: 2019-12-02T14:46:11+09:00
+description: JToolTipの表示モードをすべてのウィンドウで有効にする、またはアクティブなウィンドウのみに限定するで切り替えます。
+image: https://drive.google.com/uc?id=1Fpl-P9uPOWTn4O-9Xy0pbWKQZIevg_VT
+---
+* 概要 [#summary]
+`JToolTip`の表示モードをすべてのウィンドウで有効にする、またはアクティブなウィンドウのみに限定するで切り替えます。
+
+#download(https://drive.google.com/uc?id=1Fpl-P9uPOWTn4O-9Xy0pbWKQZIevg_VT)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+private static final String TOOLTIP_MODE = "ToolTipManager.enableToolTipMode";
+// ...
+String allWindows = "allWindows";
+JRadioButton radio1 = new JRadioButton(allWindows, Objects.equals(allWindows, mode));
+radio1.setToolTipText("ToolTip: " + allWindows);
+radio1.addItemListener(e -> UIManager.put(TOOLTIP_MODE, allWindows));
+
+String activeApplication = "activeApplication";
+JRadioButton radio2 = new JRadioButton(activeApplication, Objects.equals(activeApplication, mode));
+radio2.setToolTipText("ToolTip: " + activeApplication);
+radio2.addItemListener(e -> UIManager.put(TOOLTIP_MODE, activeApplication));
+}}
+
+* 解説 [#explanation]
+- `allWindows`
+-- `JFrame`などのウィンドウがアクティブかどうかにかかわらず、ツールチップは有効
+-- デフォルトはこの`allWindows`で`BasicLookAndFeel`などの初期値
+- `activeApplication`
+-- `JFrame`などのウィンドウがアクティブな場合のみ、ツールチップは有効
+-- `MetalLookAndFeel`と`WindowsLookAndFeel`の初期値
+
+----
+- ツールチップを表示する前に`ToolTipManager#showTipWindow()`で毎回`UIManager.getString("ToolTipManager.enableToolTipMode")`が`activeApplication`かを確認しているので、値の変更はすぐに有効になる
+- `activeApplication`かどうかを確認しているだけなので、`null`などを設定するとデフォルトの`allWindows`になる
+
+#code{{
+// @see javax/swing/ToolTipManager.java
+String mode = UIManager.getString("ToolTipManager.enableToolTipMode");
+if ("activeApplication".equals(mode)) {
+  KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+  if (kfm.getFocusedWindow() == null) {
+    return;
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [https://bugs.openjdk.java.net/browse/JDK-6529793 &#91;JDK-6529793&#93; Swing's default behavior should be to display tooltips when window lacks focus. - Java Bug System]
+
+* コメント [#comment]
+#comment
+#comment

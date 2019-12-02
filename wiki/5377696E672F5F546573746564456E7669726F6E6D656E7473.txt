@@ -40,6 +40,41 @@ description: このサイトにあるサンプルの動作・テスト環境や�
  OpenJDK Runtime Environment Corretto-8.222.10.3 (build 1.8.0_222-b10)
  OpenJDK 64-Bit Server VM Corretto-8.222.10.3 (build 25.222-b10, mixed mode)
 
+** `Windows 10`で`Swing`アプリケーションのスケール・フォントサイズがおかしくなる [#b18868b2]
+- `Windows 10`の高解像度環境で`Swing`アプリのスケールがおかしくなる場合の対処方法
+-- [https://superuser.com/questions/988379/how-do-i-run-java-apps-upscaled-on-a-high-dpi-display windows 10 - How do I run Java apps upscaled on a high-DPI display? - Super User]
+- 高解像度でフォントが小さすぎる、または表示スケールが`100%`でも`JDK`を更新するとフォントが以前より大きくなるなどの現状が発生する場合、`java -jar example.jar -Dsun.java2d.uiScale.enabled=false`などで回避可能？
+-- [https://intellij-support.jetbrains.com/hc/en-us/articles/115001260010-Troubleshooting-IDE-scaling-DPI-issues-on-Windows Troubleshooting IDE scaling (DPI) issues on Windows – IDEs Support (IntelliJ Platform) | JetBrains]
+- `file.encoding`の設定で使用するフォントが変化する？
+-- たとえば[[JTextAreaのCaretを変更してマウスのダブルクリックによる単語選択の動作を変更する>Swing/ContinuouslySelectWords]]の`jar`ファイルを`Windows 10`環境で実行するとデフォルトの`Windows-31J`では`MSゴシック`が使用されるが、`UTF-8`にすると日本語は`MSゴシック`だがアルファベットは`Courier New`？になる
+
+#twocolumn
+- `java.exe -Dfile.encoding=Windows-31J -jar example.jar`
+#img2(https://drive.google.com/uc?id=1O1N1ZcEKZi7XbOU5jOojctlGn3hY5MJ7)
+#twocolumn
+- `java.exe -Dfile.encoding=UTF-8 -jar example.jar`
+#img2(https://drive.google.com/uc?id=1DZZjQgnedLylrIsWY_CRCh_QQcyJ8wnR)
+#twocolumn
+
+ Microsoft Windows [Version 10.0.18362.418]
+ 
+ openjdk version "1.8.0_232"
+ OpenJDK Runtime Environment Corretto-8.232.09.1 (build 1.8.0_232-b09)
+ OpenJDK 64-Bit Server VM Corretto-8.232.09.1 (build 25.232-b09, mixed mode)
+
+- `%JAVA_HOME%\jre\lib\fontconfig.properties.src`で`sequence.monospaced.windows-31j`だけ`japanese,alphabetic`の順になっているので正しい動作だが、`%JAVA_HOME%\jre\lib\fontconfig.properties.src`は以前から変更されていないので`Courier New`フォントが`Windows Update`か何か(`ClearType`？)で更新されたのかもしれない？
+
+ monospaced.plain.alphabetic=Courier New
+ monospaced.plain.japanese=MS Gothic
+ ...
+ sequence.allfonts.UTF-8.ja=alphabetic,japanese,devanagari,dingbats,symbol
+ ...
+ sequence.serif.windows-31j=alphabetic,japanese,dingbats,symbol
+ sequence.sansserif.windows-31j=alphabetic,japanese,dingbats,symbol
+ sequence.monospaced.windows-31j=japanese,alphabetic,dingbats,symbol
+ sequence.dialog.windows-31j=alphabetic,japanese,dingbats,symbol
+ sequence.dialoginput.windows-31j=alphabetic,japanese,dingbats,symbol
+
 ** OpenJDKのダウンロードについて [#openjdk-download]
 - [https://sdkman.io/ SDKMAN! the Software Development Kit Manager]
 -- `sdk install java [version]`などでインストール可能
