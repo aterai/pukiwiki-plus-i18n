@@ -21,8 +21,9 @@ fileChooser.addChoosableFileFilter(new FileFilter() {
     if (file.isDirectory()) {
       return true;
     }
-    return file.getName().toLowerCase().endsWith(".jpg");
+    return file.getName().toLowerCase(Locale.ENGLISH).endsWith(".jpg");
   }
+
   @Override public String getDescription() {
     return "JPEGファイル(*.jpg)";
   }
@@ -30,12 +31,23 @@ fileChooser.addChoosableFileFilter(new FileFilter() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、フィルタを匿名インナークラスで書いていますが、複数のフィルタを追加する場合は、それぞれクラスを作ったほうがすっきり書けるかもしれません。
+上記のサンプルでは、`JFileChooser#addChoosableFileFilter(FileFilter)`メソッドを使用して拡張子がたとえば`.jpg`のファイルのみを表示する`FileFilter`を追加設定しています。
 
 ----
 - %%`addChoosableFileFilter(FileFilter)`メソッドを使うと、そのフィルタが現在選択されているフィルタになります。例えば「すべてのファイル」をデフォルト(選択された状態)に戻したい場合は、`JFileChooser#getAcceptAllFileFilter()`を再設定する%% -
 - `JDK 7`から`JFileChooser#addChoosableFileFilter(...)`内で`JFileChooser#setFileFilter(...)`を呼ばなくなった
 -- [https://bugs.openjdk.java.net/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]
+
+----
+- `java.awt.FileDialog`は以下のように`java.io.FilenameFilter`を使用する
+-- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/FileDialog.html#setFilenameFilter-java.io.FilenameFilter- FileDialog#setFilenameFilter(FilenameFilter) (Java Platform SE 8)]
+-- `JFileChooser`に`java.io.FilenameFilter`は設定不可
+
+#code{{
+FileDialog fd = new FileDialog(frame, "title");
+FilenameFilter filter = (dir, file) -> file.toLowerCase(Locale.ENGLISH).endsWith(".jpg");
+fd.setFilenameFilter(filter);
+}}
 
 ----
 - `JDK 6`では、新しく[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/filechooser/FileNameExtensionFilter.html javax.swing.filechooser.FileNameExtensionFilter]クラスが追加された

@@ -42,6 +42,7 @@ class CompoundTreeCellRenderer extends DefaultTreeCellRenderer {
     wrap.add(text);
     p.add(wrap);
   }
+
   @Override public Component getTreeCellRendererComponent(
       JTree tree, Object value, boolean selected, boolean expanded,
       boolean leaf, int row, boolean hasFocus) {
@@ -65,7 +66,10 @@ class CompoundTreeCellRenderer extends DefaultTreeCellRenderer {
 
     return p;
   }
-  @Override public void paint(Graphics g) {}
+
+  @Override public void paint(Graphics g) {
+    /* empty */
+  }
 }
 }}
 
