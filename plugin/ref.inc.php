@@ -388,7 +388,7 @@ function plugin_ref_body($args)
 // 				$params['_body'] = '<a href="' . $url . '" title="keitai">[PHOTO:' . $title . ']</a>';
 // 			}
 // 		} else {
-			$params['_body'] = '<img src="' . $url . '" class="img-responsive" itemprop="image" alt="' . $title . '" title="' . $title . '" ' . $info . '/>';
+			$params['_body'] = '<img src="' . $url . '" class="img-fluid" itemprop="image" alt="' . $title . '" title="' . $title . '" ' . $info . '/>';
 			if (! $params['nolink'] && $url2)
 				$params['_body'] = '<a href="' . $url2 . '" title="' . $title . '">' . $params['_body'] . '</a>';
 // 		}

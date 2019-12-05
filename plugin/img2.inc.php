@@ -9,7 +9,7 @@ function plugin_img2_convert() {
     $path = func_get_args();
     if (func_num_args() == 2) {
         $image = htmlspecialchars(trim($path[0]));
-        $imgpath = '<img src="' . $image . '" class="img-responsive" itemprop="image" />';
+        $imgpath = '<img src="' . $image . '" class="img-fluid" itemprop="image" />';
         $link = htmlspecialchars(trim($path[1]));
         $url = get_script_uri() . $link . '.html';
         return <<<EOD
@@ -17,7 +17,7 @@ function plugin_img2_convert() {
 EOD;
     } else {
         $image = htmlspecialchars(trim($path[0]));
-        $imgpath = '<img src="' . $image . '" class="img-responsive" itemprop="image" />';
+        $imgpath = '<img src="' . $image . '" class="img-fluid" itemprop="image" />';
         return <<<EOD
 <p>$imgpath</p>
 EOD;
