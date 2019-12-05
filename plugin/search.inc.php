@@ -219,7 +219,7 @@ function plugin_search_display_format($highlight, $id = '', $start = 0, $len = 1
 
 		if ($found_pages>$len) {
 			$_total = ceil($found_pages / $len);
-			$retval .= '<nav itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement"><ul class="pagination">';
+			$retval .= '<nav aria-label="Page navigation example" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement"><ul class="pagination flex-wrap">';
 			
 			if($start>0) {
 				// Add Prev link
@@ -270,9 +270,9 @@ function plugin_search_makelink($id, $word, $start, $len, $label, $title, $now =
 	$s_label = htmlspecialchars($label);
 
 	if( $now!=='' && $start == $now ) {
-		$body = '<li class="active"><span " title="' . $title . '"><strong>' . $s_label . '</strong></span></li>';
+		$body = '<li class="page-item active"><a class="page-link" href="#"><span title="' . $title . '"><strong>' . $s_label . '</strong></span> <span class="sr-only">(current)</span></a></li>';
 	} else {
-		$body = '<li><a href="' . get_script_uri() . '?cmd=search&id=' . $r_id .
+		$body = '<li class="page-item"><a class="page-link" href="' . get_script_uri() . '?cmd=search&id=' . $r_id .
 				'&word=' . $r_word . '&start=' . $r_start . '&len=' . $r_len .
 				'" title="' . $title . '">' . $s_label . '</a></li>';
 	}

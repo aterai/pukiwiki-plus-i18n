@@ -23,12 +23,10 @@ function plugin_search_form_convert() {
 // <script async defer type="text/javascript" src="http://www.google.co.jp/coop/cse/brand?form=cse-search-box&amp;lang="></script>
     $url = get_script_uri(); // . '?' .  rawurlencode($vars['page']); // . $name;
     return <<<EOD
-<form action="$url?cmd=search" method="post" role="search" class="navbar-form navbar-right">
- <div class="form-group">
+<form class="form-inline my-2 my-lg-0" action="$url?cmd=search" method="post" role="search">
   <input type="hidden" name="encode_hint" value="ぷ" />
-  <input type="text" name="word" value="" placeholder="サイト内検索" size="24" class="form-control search-query" />
-  <button type="submit" class="btn btn-default">Search</button>
- </div>
+  <input class="form-control mr-sm-2" type="search" name="word" value="" placeholder="サイト内検索" aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 </form>
 EOD;
 }

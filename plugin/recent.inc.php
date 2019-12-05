@@ -139,11 +139,11 @@ function plugin_recent_action()
 	$script = get_script_uri();
 	if($prev_lines > 0)
 	{
-		$prev_link = "<a href=\"$script?plugin=recent" . "&amp;offset=$prev_offset&amp;lines=$prev_lines\" >«</a>";
+		$prev_link = "<a class=\"page-link\" href=\"$script?plugin=recent" . "&amp;offset=$prev_offset&amp;lines=$prev_lines\" aria-label=\"Previous\"><span aria-hidden=\"true\">«</span></a>";
 	}
 	if($next_lines > 0)
 	{
-		$next_link = "<a href=\"$script?plugin=recent" . "&amp;offset=$next_offset&amp;lines=$next_lines\" >»</a>";
+		$next_link = "<a class=\"page-link\" href=\"$script?plugin=recent" . "&amp;offset=$next_offset&amp;lines=$next_lines\" aria-label=\"Next\"><span aria-hidden=\"true\">»</span></a>";
 	}
 	if($total_page > 1)
 	{
@@ -153,11 +153,11 @@ function plugin_recent_action()
 			$page_num = $i + 1;
 			if($i!=$now_page)
 			{
-				$page_link .= "<li><a href=\"$script?plugin=recent" . "&amp;offset=$page_offset&amp;lines=$lines\">$page_num</a></li>";
+				$page_link .= "<li><a class=\"page-link\" href=\"$script?plugin=recent" . "&amp;offset=$page_offset&amp;lines=$lines\">$page_num</a></li>";
 			}
 			else
 			{
-				$page_link .= "<li class=\"active\"><a href=\"#\">$page_num</a></li>";
+				$page_link .= "<li class=\"page-item active\" aria-current=\"page\"><a class=\"page-link\" href=\"#\">$page_num <span class=\"sr-only\">(current)</span></a></li>";
 			}
 			$i++;
 // 			if($i<$total_page)
@@ -168,15 +168,14 @@ function plugin_recent_action()
 	}
 	$body .= <<<EOD
 <hr class="full_hr" />
-<nav itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
-<ul class="pagination pagination-sm">
-<li class="previous">$prev_link</li>
-$page_link
-<li class="next">$next_link</li>
-</ul>
+<nav aria-label="Page navigation example" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
+  <ul class="pagination flex-wrap">
+    <li class="page-item">$prev_link</li>
+    $page_link
+    <li class="page-item">$next_link</li>
+  </ul>
 </nav>
 EOD;
-
 	return array('msg' => $header, 'body' => $body);
 }
 
