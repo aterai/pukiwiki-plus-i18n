@@ -22,12 +22,12 @@ frame.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
 }}
 
 * 解説 [#explanation]
-`JFrame#setIconImage(Image)`メソッドを使用して、タイトルバーなどにあるフレームのアイコンを変更しています。
+`JFrame#setIconImage(Image)`メソッドを使用してタイトルバーなどに表示されるフレームアイコンを変更しています。
 
 - `null`
 -- デフォルトのアイコンが表示される
 - `new ImageIcon("").getImage();`
--- `JDK 1.5`では、アイコン非表示、`JDK 1.6`からは、デフォルトのアイコンが表示される
+-- `JDK 1.5`では、アイコン非表示、`JDK 1.6`からはデフォルトのアイコンが表示される
 -- `Web Start`で起動した場合、`AccessControlException: access denied ("java.io.FilePermission" "" "read")`が発生
 - `new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);`
 -- サイズが`1x1`で、透明な`Image`を表示

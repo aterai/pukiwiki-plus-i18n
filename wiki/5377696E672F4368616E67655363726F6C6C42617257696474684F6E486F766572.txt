@@ -121,11 +121,11 @@ pp.add(new JLayer<>(makeTranslucentScrollBar(makeList()), new ScrollBarOnHoverLa
 -- `JPanel`に`JScrollPane`と縦`JScrollBar`を分けて配置
 -- `JPanel`に縦`JScrollBar`の幅を`Timer`を使用して拡大・縮小するレイアウトマネージャを設定
 --- [[LayoutManagerを使ってパネルの展開アニメーションを行う>Swing/LayoutAnimation]]
--- `JPanel`を`JLayer`でラップし、縦`JScrollBar`へのマウスカーソルの出入りなどを検知
+-- `JPanel`を`JLayer`でラップして縦`JScrollBar`へのマウスカーソルの出入りなどを検知
 --- `MouseEvent.MOUSE_ENTERED`、`MouseEvent.MOUSE_EXITED`で出入りを検知して`Timer`を起動する
---- ただし、マウスドラッグ中の場合でも`MouseEvent.MOUSE_ENTERED`、`MouseEvent.MOUSE_EXITED`イベントが発生するので、`MouseEvent.MOUSE_DRAGGED`中は`Timer`を起動しない
---- `MouseEvent.MOUSE_RELEASED`イベントが発生したとき、縦`JScrollBar`内にマウスカーソルがある場合は`Timer`を起動しない(幅を拡大した状態を維持する)
--- 縦`JScrollBar`の幅を縮小する場合、`500`ミリ秒ウェイトを入れてすぐに`Timer`を起動しないよう設定
+--- ただし、マウスドラッグ中の場合でも`MouseEvent.MOUSE_ENTERED`、`MouseEvent.MOUSE_EXITED`イベントが発生するので`MouseEvent.MOUSE_DRAGGED`中は`Timer`を起動しない
+--- `MouseEvent.MOUSE_RELEASED`イベントが発生したとき縦`JScrollBar`内にマウスカーソルがある場合は`Timer`を起動しない(幅を拡大した状態を維持する)
+-- 縦`JScrollBar`の幅を縮小する場合`500`ミリ秒ウェイトを入れてすぐに`Timer`を起動しないよう設定
 - 右:
 -- 縦`JScrollBar`の矢印ボタンを非表示に設定
 --- [[JScrollBarのArrowButtonを非表示にする>Swing/ArrowButtonlessScrollBar]]

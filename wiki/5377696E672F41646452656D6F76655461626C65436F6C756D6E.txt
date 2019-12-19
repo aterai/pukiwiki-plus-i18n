@@ -1,0 +1,90 @@
+---
+category: swing
+folder: AddRemoveTableColumn
+title: JTableHeaderに追加された各TableColumnの表示・非表示を切り替える
+tags: [JTable, JTableHeader, TableColumn, TableColumnModel, JPopupMenu, JCheckBoxMenuItem]
+author: aterai
+pubdate: 2019-12-16T16:53:12+09:00
+description: JTableHeaderのTableColumnが表示・非表示状態かをJCheckBoxMenuItemを使用して切り替えます。
+image: https://drive.google.com/uc?id=1s7b9r9oP8o0El5Ti3e1xM84anoj5r_Te
+---
+* 概要 [#summary]
+`JTableHeader`の`TableColumn`が表示・非表示状態かを`JCheckBoxMenuItem`を使用して切り替えます。
+
+#download(https://drive.google.com/uc?id=1s7b9r9oP8o0El5Ti3e1xM84anoj5r_Te)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class TableHeaderPopupMenu extends JPopupMenu {
+  protected TableHeaderPopupMenu(JTable table) {
+    super();
+    TableColumnModel columnModel = table.getColumnModel();
+    List<TableColumn> list = Collections.list(columnModel.getColumns());
+    list.forEach(tableColumn -> {
+      String name = Objects.toString(tableColumn.getHeaderValue());
+      // System.out.format("%s - %s%n", name, tableColumn.getIdentifier());
+      JCheckBoxMenuItem item = new JCheckBoxMenuItem(name, true);
+      item.addItemListener(e -> {
+        if (((AbstractButton) e.getItemSelectable()).isSelected()) {
+          columnModel.addColumn(tableColumn);
+        } else {
+          columnModel.removeColumn(tableColumn);
+        }
+        updateMenuItems(columnModel);
+      });
+      add(item);
+    });
+  }
+
+  @Override public void show(Component c, int x, int y) {
+    if (c instanceof JTableHeader) {
+      JTableHeader header = (JTableHeader) c;
+      JTable table = header.getTable();
+      header.setDraggedColumn(null);
+      header.repaint();
+      table.repaint();
+      updateMenuItems(header.getColumnModel());
+      super.show(c, x, y);
+    }
+  }
+
+  private void updateMenuItems(TableColumnModel columnModel) {
+    boolean isOnlyOneMenu = columnModel.getColumnCount() == 1;
+    if (isOnlyOneMenu) {
+      stream(this).map(MenuElement::getComponent).forEach(mi ->
+          mi.setEnabled(!(mi instanceof AbstractButton)
+                        || !((AbstractButton) mi).isSelected()));
+    } else {
+      stream(this).forEach(me -> me.getComponent().setEnabled(true));
+    }
+  }
+
+  private static Stream<MenuElement> stream(MenuElement me) {
+    return Stream.of(me.getSubElements())
+      .flatMap(m -> Stream.concat(Stream.of(m), stream(m)));
+  }
+}
+}}
+
+* 解説 [#explanation]
+- 初期状態では`TableModel`から生成された`TableColumn`がすべて表示されている
+-- `JCheckBoxMenuItem`もすべて選択状態になる
+- `JCheckBoxMenuItem`で選択解除されたら`TableColumnModel#removeColumn(TableColumn)`メソッドで`TableColumn`を非表示
+-- `TableColumnModel`から列は削除されて`JTableHeader`からは非表示になるが、`TableModel`のその列はそのまま残っている
+-- `TableColumn`がすべて非表示にならないよう、`JPopupMenu`を開くときなどにその列数をチェックして`JCheckBoxMenuItem`の選択可・不可を切り替えている
+- `JCheckBoxMenuItem`で選択設定されたら`TableColumnModel#addColumn(TableColumn)`メソッドで`TableColumn`を表示
+-- `TableColumnModel`に列は追加されて`JTableHeader`にも表示されるが、`TableModel`は初期状態から変化しない
+
+----
+- `Java 9`以上で`UIManager.put("CheckBoxMenuItem.doNotCloseOnMouseClick", true);`を設定し、`JPopupMenu`を開いたまま現在選択状態の`TableColumn`を`JCheckBoxMenuItem`で非表示に切り替えると`ArrayIndexOutOfBoundsException`が発生する
+-- `PopupMenuListener`を`JPopupMenu`に追加、または`JPopupMenu#show(...)`メソッドをオーバーライドして`JTableHeader.setDraggedColumn(null);`で選択状態をクリアすることで回避可能
+
+* 参考リンク [#reference]
+- [[JTableHeaderにJPopupMenuを追加してソート>Swing/RowSorterPopupMenu]]
+- [[JCheckBoxMenuItemをクリックしてもJPopupMenuを閉じないように設定する>Swing/StayOpenCheckBoxMenuItem]]
+- [[JTableのColumn名を変更する>Swing/EditColumnName]]
+- [https://tips4java.wordpress.com/2011/05/08/table-column-manager/ Table Column Manager « Java Tips Weblog]
+
+* コメント [#comment]
+#comment
+#comment

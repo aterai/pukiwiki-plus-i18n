@@ -35,9 +35,9 @@ JTabbedPane tabbedPane = new JTabbedPane() {
 * 解説 [#explanation]
 - 上: `Default`
 -- `MetalLookAndFeel`以外の`LookAndFeel`では`JTabbedPane`が`WRAP_TAB_LAYOUT`で複数のランにタブをラップするレイアウトモードの場合、選択されたタブがタブコンテンツに接地するようランの回転が発生する
--- `MetalLookAndFeel`の場合、`MetalTabbedPaneUI.TabbedPaneLayout#rotateTabRuns(int tabPlacement, int selectedRun)`メソッドがオーバーライドされて空になっているため、タブ・ランの回転は発生しない
+-- `MetalLookAndFeel`の場合、`MetalTabbedPaneUI.TabbedPaneLayout#rotateTabRuns(int tabPlacement, int selectedRun)`メソッドがオーバーライドされて空(なにも実行しない)になっているため、タブ・ランの回転は発生しない
 -- `MetalTabbedPaneUI#shouldRotateTabRuns(int tabPlacement, int selectedRun)`が常に`false`を返すよう設定されているが引数が`2`つあるこのメソッドは他では全く使用されておらず、`BasicTabbedPaneUI#shouldRotateTabRuns(int tabPlacement)`メソッドがオーバーライドされていないので無意味
---- 少なくとも`Java 5`以前が存在するコピペミスのバグ？(`@Override`を使用できれば発覚していたはず)
+--- 少なくとも`Java 5`以前から存在するコピペミスのバグ？かも(`@Override`が使用可能なら発覚していたはず)
 - 下: `Override BasicTabbedPaneUI#shouldRotateTabRuns(...)`
 -- `BasicTabbedPaneUI#shouldRotateTabRuns(int tabPlacement)`メソッドをオーバーライドして常に`false`を返すよう設定し、タブ・ランの回転を無効化
 -- `UIManager.put("TabbedPane.tabRunOverlay", 0);`を設定してタブ・ランの重なりを除去

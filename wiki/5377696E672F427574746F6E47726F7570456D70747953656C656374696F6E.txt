@@ -15,8 +15,16 @@ image: https://drive.google.com/uc?id=1EFXEFMWUlrctxFnVQEQbK1zeW3wSIhoROw
 
 * サンプルコード [#sourcecode]
 #code(link){{
-ButtonGroup bg = new ButtonGroup();
+ButtonGroup bg = new ToggleButtonGroup();
+JPanel p = new JPanel();
+Stream.of("A", "B", "C").map(JToggleButton::new).forEach(r -> {
+  r.setActionCommand(r.getText());
+  p.add(r);
+  bg.add(r);
+});
 
+JLabel label = new JLabel();
+JButton button = new JButton("check");
 button.addActionListener(e -> {
   String txt = Optional.ofNullable(bg.getSelection())
     .map(b -> String.format("\"%s\" isSelected.", b.getActionCommand()))

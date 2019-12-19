@@ -29,13 +29,18 @@ private class TablePopupMenu extends JPopupMenu {
   }
 
   @Override public void show(Component c, int x, int y) {
-    JTableHeader h = (JTableHeader) c;
-    int i = h.columnAtPoint(new Point(x, y));
-    i = h.getTable().convertColumnIndexToModel(i);
-    for (SortAction a: actions) {
-      a.setIndex(i);
+    if (c instanceof JTableHeader) {
+      JTableHeader header = (JTableHeader) c;
+      JTable table = header.getTable();
+      header.setDraggedColumn(null);
+      header.repaint();
+      table.repaint();
+      int i = table.convertColumnIndexToModel(header.columnAtPoint(new Point(x, y)));
+      if (i >= 0) {
+        actions.forEach(a -> a.setIndex(i));
+        super.show(c, x, y);
+      }
     }
-    super.show(c, x, y);
   }
 }
 
@@ -63,23 +68,28 @@ private class SortAction extends AbstractAction {
 上記のサンプルでは、マウスカーソルの下にある`JTableHeader`カラムをクリック(`WindowsLookAndFeel`:右クリック)して`JPopupMenu`を表示し、昇順か降順の`JMenuItem`を指定してのソートが可能になっています。デフォルトのカラム左クリックによるソートは`TableRowSorter#toggleSortOrder(...)`をオーバーライドして無効にしています。
 
 ----
-ソートしたあとで`JTableHeader`のフォーカスペイントをクリアするために以下のような`PopupMenuListener`を追加しています。
+- %%ソートに`JTableHeader`のフォーカスペイントをクリアするために以下のような`PopupMenuListener`を追加%%
+- 列を右クリックで表示範囲外までドラッグしてからリリースしてポップアップを開くと描画が乱れるので、`JPopupMenu#show(...)`をオーバーライドしてドラッグ状態の解消、ヘッダ、テーブルの再描画を実行
+-- `PopupMenuListener`を利用する場合は`popupMenuWillBecomeInvisible`ではなく`popupMenuWillBecomeVisible`でも同様の処理を行う
 
 #code{{
 JPopupMenu pop = new TablePopupMenu();
 final JTableHeader header = table.getTableHeader();
 header.setComponentPopupMenu(pop);
 pop.addPopupMenuListener(new PopupMenuListener() {
-  @Override public void popupMenuCanceled(PopupMenuEvent e) {}
-
-  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-    // System.out.println("popupMenuWillBecomeInvisible");
+  @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
     header.setDraggedColumn(null);
-    // header.setResizingColumn(null);
     header.repaint();
+    header.getTable().repaint();
   }
 
-  @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
+  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+    // header.setDraggedColumn(null);
+    header.repaint();
+    header.getTable().repaint();
+  }
+
+  @Override public void popupMenuCanceled(PopupMenuEvent e) {}
 });
 }}
 

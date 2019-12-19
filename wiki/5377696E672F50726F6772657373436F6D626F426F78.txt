@@ -24,6 +24,7 @@ class ProgressCellRenderer extends DefaultListCellRenderer {
       return ProgressCellRenderer.this.getPreferredSize();
     }
   };
+
   @Override public Component getListCellRendererComponent(
       JList list, Object value, int index,
       boolean isSelected, boolean cellHasFocus) {
@@ -37,6 +38,7 @@ class ProgressCellRenderer extends DefaultListCellRenderer {
         list, value, index, isSelected, cellHasFocus);
     }
   }
+
   @Override public void updateUI() {
     super.updateUI();
     if (bar != null) {
@@ -47,10 +49,10 @@ class ProgressCellRenderer extends DefaultListCellRenderer {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`index`が`-1`(アイテムリストのインデックスではない)の場合、`JProgressBar`を返すリストセルレンダラーを`JComboBox`に設定して進捗を表示しています。
+上記のサンプルでは、`index`が`-1`(アイテムリストのインデックスではない)の場合は`JProgressBar`を返すリストセルレンダラーを`JComboBox`に設定して進捗を表示しています。
 
 ----
-ロードボタンが押されたら、以下のような`SwingWorker`で`JComboBox`にアイテムを追加しています。
+ロードボタンが押されたら以下のような`SwingWorker`で`JComboBox`にアイテムを追加しています。
 
 #code{{
 button = new JButton(new AbstractAction("load") {
@@ -60,21 +62,18 @@ button = new JButton(new AbstractAction("load") {
     combo.removeAllItems();
     worker = new SwingWorker<String, String>() {
       private int max = 30;
-      @Override public String doInBackground() {
+      @Override public String doInBackground() throws InterruptedException {
         int current = 0;
         while (current <= max && !isCancelled()) {
-          try {
-            Thread.sleep(50);
-            //setProgress(100 * current / max);
-            count = 100 * current / max;
-            publish("test: "+current);
-          } catch (Exception ie) {
-            return "Exception";
-          }
+          Thread.sleep(50);
+          // setProgress(100 * current / max);
+          count = 100 * current / max;
+          publish("test: "+current);
           current++;
         }
         return "Done";
       }
+
       @Override protected void process(List<String> chunks) {
         DefaultComboBoxModel m = (DefaultComboBoxModel) combo.getModel();
         for (String s: chunks) {
@@ -83,6 +82,7 @@ button = new JButton(new AbstractAction("load") {
         combo.setSelectedIndex(-1);
         combo.repaint();
       }
+
       @Override public void done() {
         String text = null;
         if (!isCancelled()) {

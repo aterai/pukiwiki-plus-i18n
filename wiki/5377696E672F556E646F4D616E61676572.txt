@@ -26,17 +26,19 @@ private static void initUndoRedo(JTextComponent tc) {
   imap.put(KeyStroke.getKeyStroke(
     KeyEvent.VK_Y, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "redo");
 }
+
 private static class UndoAction extends AbstractAction {
   private final UndoManager undoManager;
   public UndoAction(UndoManager manager) {
     super("undo");
     this.undoManager = manager;
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     try {
       undoManager.undo();
-    } catch (CannotUndoException cue) {
-      //cue.printStackTrace();
+    } catch (CannotUndoException ex) {
+      // ex.printStackTrace();
       Toolkit.getDefaultToolkit().beep();
     }
   }
@@ -46,8 +48,8 @@ private static class UndoAction extends AbstractAction {
 * 解説 [#explanation]
 `Document#addUndoableEditListener(UndoManager)`メソッドを使用して`JTextField`に`UndoManager`を追加し、以下のキー入力で`Undo`、`Redo`が実行できるように設定しています。
 
-- `Undo` : KBD{Ctrl+Z}
-- `Redo` : KBD{Ctrl+Y}
+- `Undo`: KBD{Ctrl+Z}
+- `Redo`: KBD{Ctrl+Y}
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/generaltext.html#undo Implementing Undo and Redo (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]

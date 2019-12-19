@@ -38,9 +38,9 @@ label.addFocusListener(new FocusAdapter() {
 -- `JTextArea`にフォーカスが当たったとき`JTextArea#setRows(...)`で行数を拡張、外れたときに一行に縮小
 -- 複数行分の文字列が入力されている状態で一行に縮小した場合、`JScrollPane`のスクロールボタンが表示される
 - 下: `JLabel` + `JTextArea` + `CardLayout` + `FocusListener`
--- フォーカス可能に設定した`JLabel`に`JTextField`の文字色、背景色などを設定し、フォーカス状態が変更されたとき`CardLayout`でこれを`JTextArea`と切り替えることで拡張縮小を実行
+-- フォーカス可能に設定した`JLabel`に`JTextField`の文字色、背景色などを設定し、フォーカス状態が変更されたとき`CardLayout`でこれを`JTextArea`と切り替えることで拡張・縮小を実行
 -- 複数行分の文字列が入力されている状態で一行に縮小した場合、`JLabel`のデフォルトの切り詰めで末尾が`...`に置換表示される
--- `JLabel`が空の場合、その高さが`0`になってしまうので、その場合は空白文字を追加することで回避
+-- `JLabel`のテキストを無しにすると高さが`0`になってしまうので、空白文字を追加することで回避
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/42847168/it-is-posible-to-expand-a-jtextarea-or-jtextpane-by-clicking-on-it java - It is posible to expand a JTextArea or JTextPane by clicking on it? - Stack Overflow]

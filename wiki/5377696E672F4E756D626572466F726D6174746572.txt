@@ -23,16 +23,16 @@ if (formatter instanceof DefaultFormatter) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`DefaultFormatter#setAllowsInvalid(false)`などを設定した`DefaultFormatterFactory`を作成して、`JSpinner`から取得した`JFormattedTextField`に`setFormatterFactory`で追加しています。
+上記のサンプルでは、`DefaultFormatter#setAllowsInvalid(false)`などを設定した`DefaultFormatterFactory`を作成して、`JSpinner`から取得した`JFormattedTextField`に`setFormatterFactory(...)`メソッドで追加しています。
 
 - 上
 -- `SpinnerNumberModel`を設定した通常の`JSpinner`
--- 別コンポーネントにフォーカスが移動するときに、値が有効か無効かを判断
+-- 別コンポーネントにフォーカスが移動するときに値が有効か無効かを判断
 - 中
 -- `SpinnerNumberModel`を設定し、数値以外の無効な文字入力ができないようにした`JSpinner`
 - 下
 -- `SpinnerNumberModel`を設定した通常の`JSpinner`
--- 別コンポーネントにフォーカスが移動するときに、値が有効か無効かを判断
+-- 別コンポーネントにフォーカスが移動するときに値が有効か無効かを判断
 -- 無効な値の場合は、背景色を変更
 
 #code{{
@@ -46,12 +46,15 @@ private static JSpinner makeSpinner2(SpinnerNumberModel m) {
     @Override public void changedUpdate(DocumentEvent e) {
       updateEditValid();
     }
+
     @Override public void insertUpdate(DocumentEvent e) {
       updateEditValid();
     }
+
     @Override public void removeUpdate(DocumentEvent e) {
       updateEditValid();
     }
+
     private void updateEditValid() {
       EventQueue.invokeLater(new Runnable() {
         @Override public void run() {
@@ -85,8 +88,8 @@ private static DefaultFormatterFactory makeFFactory(final SpinnerNumberModel m) 
       throw new ParseException("xxx", 0);
     }
   };
-  //editFormatter.setAllowsInvalid(false);
-  //editFormatter.setCommitsOnValidEdit(true);
+  // editFormatter.setAllowsInvalid(false);
+  // editFormatter.setCommitsOnValidEdit(true);
   editFormatter.setValueClass(Long.class);
   return new DefaultFormatterFactory(displayFormatter, displayFormatter, editFormatter);
 }

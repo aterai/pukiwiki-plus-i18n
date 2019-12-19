@@ -35,12 +35,12 @@ slider.setLabelTable(labelTable);
 
 * 解説 [#explanation]
 - `Default`
--- 最小`0`、最大`10000`で作成した`JSlider`のラベルを、その`1/100`で表示
--- 各ラベルの文字数が変更されても、その幅が更新されないので、目盛り中央に数字(文字列)が配置されない
--- `NimbusLookAndFeel`などで、最大値の`100`が見切れて、`10`までしか表示されない
+-- 最小`0`、最大`10000`で作成した`JSlider`のラベルをその`1/100`で表示
+-- 各ラベルの文字数が変更されてもその幅が更新されないので、目盛り中央に数字(文字列)が配置されない
+-- `NimbusLookAndFeel`などで最大値の`100`が見切れて`10`までしか表示されない
 - `JSlider#updateLabelUIs()`
--- `1/100`に変更後、`JSlider#updateLabelUIs()`を実行して、ラベルを更新する
--- `JSlider#updateLabelUIs()`は、`protected`なので、内部でこれを呼び出している`JSlider#setLabelTable(...)`を実行する
+-- `1/100`に変更後、`JSlider#updateLabelUIs()`を実行してラベルを更新する
+-- `JSlider#updateLabelUIs()`は`protected`なので内部でこれを呼び出している`JSlider#setLabelTable(...)`を実行する
 -- `JSlider#updateUI()`内でも`JSlider#updateLabelUIs()`を呼び出しているので、代わりに`SwingUtilities.updateComponentTreeUI(slider);`を実行しても可
 
 * 参考リンク [#reference]

@@ -20,7 +20,7 @@ pubdate: 2017-05-31T18:35:21+09:00
 
 ** Gradle [#gradle]
 - [https://kotlinlang.org/docs/reference/using-gradle.html Using Gradle - Kotlin Programming Language]
-- [https://github.com/Kotlin/kotlin-examples/tree/master/gradle/hello-world kotlin-examples/gradle/hello-world at master · Kotlin/kotlin-examples]
+- [https://github.com/Kotlin/kotlin-examples/tree/master/gradle/hello-world kotlin-examples/gradle/hello-world at master ・ Kotlin/kotlin-examples]
 -- 上記のサンプル`build.gradle`が参考になる
 - [https://medium.com/@preslavrachev/kotlin-basics-create-executable-kotlin-jars-using-gradle-d17e9a8384b9 Kotlin Basics: Create Executable Kotlin JARs, using Gradle]
 -- `jar`作成は同じくこちらの方法が使用可能
@@ -55,10 +55,10 @@ repositories {
 }
 
 dependencies {
-  // compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-  testCompile 'junit:junit:4.11'
-  testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+  // implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+  testImplementation 'junit:junit:4.11'
+  testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 }
 
 sourceCompatibility = 1.8
@@ -73,7 +73,7 @@ compileTestKotlin {
 
 jar {
   manifest { attributes 'Main-Class': "$mainClassName" }
-  from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+  from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 }}
 
@@ -100,6 +100,7 @@ kotlin.KotlinNullPointerException at org.jetbrains.kotlin.idea.actions.JavaToKot
 }}
 
 - クリップボード経由の変換は`1.3.50-release-IJ2019.2-1`でもエラーにならず実行可能
+- 以下のほとんどが`Use New J2K(experimental)`をオンにすると修正されている
 
 ** 演算子の優先順位 [#precedence]
 - 以下のようなソースコードを`IntelliJ`で自動変換した場合、論理演算子の左シフト(`<<`)は`shl`に変換され、また`and`の優先順位が異なるので括弧が減る
@@ -166,8 +167,8 @@ btn.setSelected(i and (1 shl 2) != 0)
 // }}
 // #twocolumn
 
-** 型パラメータ [#Arrays]
-- `IntelliJ`の自動変換では`Arrays.asList(...)`の型パラメータを自動的に変換してくれない
+** 型パラメータ(修正済) [#Arrays]
+- 修正済 %%`IntelliJ`の自動変換では`Arrays.asList(...)`の型パラメータを自動的に変換してくれない%%
 -- `Arrays.<Component>asList(...)`と型パラメータを明示しても省略される
 -- `for (c in Arrays.asList(...)) {`に変換されて`error: none of the following functions can be called with the arguments supplied:`になる
 -- `for (c: Component in Arrays.asList<Component>(...)) {`、または`for (c in listOf<Component>(...)) {`などに手動で修正(`for (c: Component in Arrays<Component>.asList(...)) {`も可能？)
@@ -244,8 +245,8 @@ class CalendarViewTableModel<T : LocalDate> public constructor(date: T) : Defaul
 }}
 #twocolumn
 
-** クラスリテラル [#ClassLiterals]
-- 総称型を持つクラスのクラスリテラル(`Class Literals`)を`IntelliJ`で自動変換すると失敗する場合がある
+** クラスリテラル(修正済) [#ClassLiterals]
+- 修正済 %%総称型を持つクラスのクラスリテラル(`Class Literals`)を`IntelliJ`で自動変換すると失敗する場合がある%%
 -- 例えば`JComboBox.class`は`IntelliJ`の自動変換で`JComboBox<*>::class.java`に変換されるが、`JComboBox::class.java`に修正しないとコンパイルエラーになる
 -- `Only classes are allowed on the left hand side of a class literal`
 -- [https://youtrack.jetbrains.com/issue/KT-15791 J2K converts class literals including redundant generic <*> : KT-15791]
@@ -300,8 +301,8 @@ enabledCheck.addActionListener {
 
 #twocolumn
 
-** 型引数の省略 [#Diamond]
-- `Java 7`以降で可能なジェネリッククラスのコンストラクタ呼び出しに必要な型引数を省略する記法(`<>, diamond operator`)([https://docs.oracle.com/javase/tutorial/java/generics/types.html#diamond Generic Types (The Java™ Tutorials > Learning the Java Language > Generics (Updated))])は、`IntelliJ`の自動変換では正常に変換されない場合がある
+** 型引数の省略(修正済) [#Diamond]
+- 修正済 %%`Java 7`以降で可能なジェネリッククラスのコンストラクタ呼び出しに必要な型引数を省略する記法(`<>, diamond operator`)([https://docs.oracle.com/javase/tutorial/java/generics/types.html#diamond Generic Types (The Java™ Tutorials > Learning the Java Language > Generics (Updated))])は、`IntelliJ`の自動変換では正常に変換されない場合がある%%
 - 例えば、以下の`Java`コードの`renderer = new CheckBoxCellRenderer<>();`部分は、`renderer = CheckBoxCellRenderer<example.CheckBoxNode>()`に変換され、`Type mismatch: inferred type is CheckBoxCellRenderer<CheckBoxNode> but CheckBoxCellRenderer<E>? was expected`とエラーになる
 -- これを`renderer = CheckBoxCellRenderer<>()`と空にすると、今度は`Type expected`とエラーになる
 -- `Kotlin`には`<>, diamond operator`は存在せず？、型引数を省略したい場合は何も書く必要がない([https://kotlinlang.org/docs/reference/generics.html#generics Generics: in, out, where - Kotlin Programming Language])
@@ -570,7 +571,7 @@ val bi = runCatching {
 #twocolumn
 `Java`
 #code{{
-public static Stream<TreeNode> children(TreeNode node) {
+public static Stream<TreeNode> descendants(TreeNode node) {
   Class<TreeNode> clz = TreeNode.class;
   return Collections.list((Enumeration<?>) node.children())
     .stream().filter(clz::isInstance).map(clz::cast);
@@ -579,7 +580,7 @@ public static Stream<TreeNode> children(TreeNode node) {
 #twocolumn
 `Kotlin`(自動変換)
 #code(lang-kotlin){{
-fun children(node: TreeNode): Stream<TreeNode> {
+fun descendants(node: TreeNode): Stream<TreeNode> {
   val clz = TreeNode::class.java
   return Collections.list(node.children() as Enumeration<*>)
     .stream().filter(???({ clz!!.isInstance() })).map(clz!!.cast)
@@ -588,7 +589,7 @@ fun children(node: TreeNode): Stream<TreeNode> {
 
 `Kotlin`(手動修正)
 #code(lang-kotlin){{
-fun children(node: TreeNode): Stream<TreeNode> {
+fun descendants(node: TreeNode): Stream<TreeNode> {
   val clz = TreeNode::class.java
   return Collections.list(node.children() as Enumeration<*>)
     .stream().filter(clz::isInstance).map(clz::cast)
@@ -598,7 +599,7 @@ fun children(node: TreeNode): Stream<TreeNode> {
 
 `Kotlin`(手動修正): `Iterable<*>.filterIsInstance()`が便利
 #code(lang-kotlin){{
-fun children(node: TreeNode): List<TreeNode> {
+fun descendants(node: TreeNode): List<TreeNode> {
   return (node.children() as Enumeration<*>)
     .toList().filterIsInstance(TreeNode::class.java)
 }
@@ -650,14 +651,14 @@ fun stream(parent: Container): Stream<Component> {
 `Kotlin`(手動修正)
 #code(lang-kotlin){{
 // Stream を Iterable に変換してしまう方法もある
-fun children(parent: Container): List<Component> {
+fun descendants(parent: Container): List<Component> {
   return parent.getComponents().toList()
     .filterIsInstance(Container::class.java)
-    .map { children(it) }
+    .map { descendants(it) }
     .fold(listOf<Component>(parent)) { a, b -> a + b }
 }
 // ...
-children(fileChooser1)
+descendants(fileChooser1)
   .filterIsInstance(JTable::class.java)
   // .firstOrNull()?.apply(JTable::removeEditor)
   .firstOrNull()?.let { table ->
@@ -2434,10 +2435,34 @@ fun stream(parent: Container): Stream<Component> = Arrays.stream(parent.getCompo
 }}
 #twocolumn
 #code(lang-kotlin){{
-fun children(parent: Container): List<Component> = parent.getComponents()
+fun descendants(parent: Container): List<Component> = parent.getComponents()
     .filterIsInstance(Container::class.java)
-    .map { children(it) }
+    .map { descendants(it) }
     .fold(listOf<Component>(parent), { a, b -> a + b })
+}}
+#twocolumn
+
+** Stream.flatMap(...) [#flatMap]
+- `Stream#flatMap(Function<? super T,? extends Stream<? extends R>> mapper)`はそのまま`Iterable<T>.flatMap(transform: (T) -> Iterable<R>)`に置換可能
+
+#twocolumn
+#code(lang-kotlin){{
+// // Java
+// private Stream<MenuElement> descendants(MenuElement me) {
+//   return Stream.of(me.getSubElements())
+//     .flatMap(m -> Stream.concat(Stream.of(m), descendants(m)));
+// }
+fun descendants(me: MenuElement): Stream<MenuElement> {
+  return Stream.of(*me.subElements)
+    .flatMap { Stream.concat(Stream.of(it), descendants(it)) }
+}
+}}
+
+#twocolumn
+#code(lang-kotlin){{
+// StreamではなくIterableが使用可能
+private fun descendants(me: MenuElement): List<MenuElement> =
+  me.getSubElements().flatMap { listOf(it) + descendants(it) }
 }}
 #twocolumn
 

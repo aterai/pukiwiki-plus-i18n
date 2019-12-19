@@ -16,7 +16,7 @@ image: https://lh5.googleusercontent.com/-IPUQvbcJ2NM/TsjbIEMsMeI/AAAAAAAABE8/Fg
 * サンプルコード [#sourcecode]
 #code(link){{
 public JComponent makePanel(JComponent m, JComponent c) {
-  int ir = 20; //inset.right
+  int ir = 20; // inset.right
   int ch = c.getPreferredSize().height / 2;
   Border ib = BorderFactory.createEmptyBorder(0, 0, ch, 0);
   Border eb = BorderFactory.createEtchedBorder();
@@ -50,10 +50,10 @@ public JComponent makePanel(JComponent m, JComponent c) {
 }}
 
 * 解説 [#explanation]
-- 中央に表示するコンポーネントに、右下に配置するコンポーネントと同じ高さの`EtchedBorder`を設定
-- `SpringLayout`を設定した`JLayeredPane`の`DEFAULT_LAYER`上に中央に表示するコンポーネント、`DEFAULT_LAYER + 1`上に右下に配置するコンポーネントを追加
-- `SpringLayout.Constraints`を設定して、中央に表示するコンポーネントは親の`JLayeredPane`のサイズとおなじになるように、右下に配置するコンポーネントは右下になるようにレイアウト
--- 右下に配置するコンポーネントと親の`JLayeredPane`の右端同士は、固定で`20px`
+- 中央に表示するコンポーネントに右下に配置するコンポーネントと同じ高さの`EtchedBorder`を設定
+- `SpringLayout`を設定した`JLayeredPane`の`DEFAULT_LAYER`上に中央に表示するコンポーネントを追加、また`DEFAULT_LAYER + 1`上に右下に配置するコンポーネントを追加
+- `SpringLayout.Constraints`を設定して、中央に表示するコンポーネントは親の`JLayeredPane`のサイズとおなじになるようにレイアウト、また右下に配置するコンポーネントは右下になるようにレイアウト
+-- 右下に配置するコンポーネントと親の`JLayeredPane`の右端同士は固定で`20px`
 
 * 参考リンク [#reference]
 - [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]
