@@ -123,8 +123,13 @@ public class OptionPaneResolutionTest {
 }
 }}
 
-** 高解像度でIMEの候補表示位置がずれる [#o7e09fe6]
-- [https://bugs.openjdk.java.net/browse/JDK-8189687 JDK-8189687 Swing: Invalid position of candidate pop-up of InputMethod in Hi-DPI on Windows - Java Bug System]
+** MetalLookAndFeelでのJComboBoxとJToolTip [#fc4b2abf]
+- ドロップダウンリストを開いた状態でツールチップが表示されると描画がおかしくなる場合がある
+-- `MetalLookAndFeel`のみ
+-- ドロップダウンリストが`HeavyWeightWindow`か`LightWeightWindow`かは無関係
+- [[JComboBoxの各アイテムやArrowButtonにそれぞれToolTipTextを設定する>Swing/ToolTipInComboBox]]にソースコードは移動
+
+#img2(https://drive.google.com/uc?id=1l662LOjb0AFVh6F9lOSm78ZsXzJfuG0GDQ)
 
 * 修正済み [#Fixed]
 ** 1.8.0_212 からImageView#setLoadsSynchronously(...)の設定で画像がJEditorPaneに表示されない [#he9725ec]
@@ -167,19 +172,15 @@ public class OptionPaneResolutionTest {
  OpenJDK Runtime Environment (AdoptOpenJDK)(build 1.8.0_212-b03)
  OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)
 
-** MetalLookAndFeelでのJComboBoxとJToolTip [#fc4b2abf]
-- ドロップダウンリストを開いた状態でツールチップが表示されると描画がおかしくなる場合がある
--- `MetalLookAndFeel`のみ
--- ドロップダウンリストが`HeavyWeightWindow`か`LightWeightWindow`かは無関係
-- [[JComboBoxの各アイテムやArrowButtonにそれぞれToolTipTextを設定する>Swing/ToolTipInComboBox]]にソースコードは移動
-
-#img2(https://drive.google.com/uc?id=1l662LOjb0AFVh6F9lOSm78ZsXzJfuG0GDQ)
-
 ** 右Altキーが効かない [#g57772eb]
 - [https://bugs.openjdk.java.net/browse/JDK-8194873 JDK-8194873 right ALT key hotkeys no longer work in Swing components - Java Bug System]
 -- `Java 9`で右KBD{Alt}キーが効かなくなっている
 --- `Java 8`は問題なし
 --- `Java 11`で修正済み
+
+** 高解像度でIMEの候補表示位置がずれる [#o7e09fe6]
+- [https://bugs.openjdk.java.net/browse/JDK-8189687 JDK-8189687 Swing: Invalid position of candidate pop-up of InputMethod in Hi-DPI on Windows - Java Bug System]
+-- `Java 11`で修正済み
 
 ** Application uses higher CPU in 8u161/8u162 [#md4c2938]
 - [https://bugs.openjdk.java.net/browse/JDK-8195830 JDK-8195830 Application uses higher CPU in 8u161/8u162 - Java Bug System]

@@ -63,6 +63,7 @@ description: このサイトにあるサンプルの動作・テスト環境や�
  OpenJDK 64-Bit Server VM Corretto-8.232.09.1 (build 25.232-b09, mixed mode)
 
 - `%JAVA_HOME%\jre\lib\fontconfig.properties.src`で`sequence.monospaced.windows-31j`だけ`japanese,alphabetic`の順になっているので正しい動作だが、`%JAVA_HOME%\jre\lib\fontconfig.properties.src`は以前から変更されていないので`Courier New`フォントが`Windows Update`か何か(`ClearType`？)で更新されたのかもしれない？
+- フォントが変化していないなら、レンダラーが更新されたことが影響している？
 
  monospaced.plain.alphabetic=Courier New
  monospaced.plain.japanese=MS Gothic
