@@ -18,6 +18,8 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTR9UHQaAI/AAAAAAAAAiA/_K
 class RippleBorder extends EmptyBorder {
   private final Timer animator;
   private final JComponent comp;
+  private float count = 1f;
+
   public RippleBorder(JComponent c, int width) {
     super(width, width, width, width);
     this.comp = c;
@@ -32,12 +34,13 @@ class RippleBorder extends EmptyBorder {
         comp.setForeground(Color.RED);
         animator.start();
       }
+
       @Override public void mouseExited(MouseEvent e) {
         comp.setForeground(Color.BLACK);
       }
     });
   }
-  private float count = 1f;
+
   @Override public void paintBorder(Component c, Graphics g, int x, int y, int w, int h) {
     if (!animator.isRunning()) {
       super.paintBorder(c, g, x, y, w, h);

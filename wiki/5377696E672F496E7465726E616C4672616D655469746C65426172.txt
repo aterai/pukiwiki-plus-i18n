@@ -18,7 +18,7 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final JInternalFrame internal = new JInternalFrame("@title@");
+JInternalFrame internal = new JInternalFrame("@title@");
 BasicInternalFrameUI ui = (BasicInternalFrameUI) internal.getUI();
 Component title = ui.getNorthPane();
 for (MouseMotionListener l: title.getListeners(MouseMotionListener.class)) {
@@ -32,7 +32,7 @@ p.add(new JScrollPane(new JTree()));
 p.add(new JButton(new AbstractAction("close") {
   @Override public void actionPerformed(ActionEvent e) {
     Window w = SwingUtilities.windowForComponent((Component) e.getSource());
-    //w.dispose();
+    // w.dispose();
     w.getToolkit().getSystemEventQueue().postEvent(
       new WindowEvent(w, WindowEvent.WINDOW_CLOSING));
   }
@@ -41,24 +41,22 @@ internal.getContentPane().add(p);
 internal.setVisible(true);
 
 KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-focusManager.addPropertyChangeListener(new PropertyChangeListener() {
-  @Override public void propertyChange(PropertyChangeEvent e) {
-    String prop = e.getPropertyName();
-    if ("activeWindow".equals(prop)) {
-      try {
-        internal.setSelected(e.getNewValue() != null);
-      } catch (PropertyVetoException ex) {
-        ex.printStackTrace();
-      }
+focusManager.addPropertyChangeListener(e -> {
+  String prop = e.getPropertyName();
+  if ("activeWindow".equals(prop)) {
+    try {
+      internal.setSelected(Objects.nonNull(e.getNewValue()));
+    } catch (PropertyVetoException ex) {
+      throw new IllegalStateException(ex);
     }
   }
 });
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JInternalFrame`のタイトルバーを使用することで、タイトルバーに閉じるボタンのないフレームを作成しています。
+上記のサンプルでは、`JInternalFrame`のタイトルバーを使用することでタイトルバーに閉じるボタンのないフレームを作成しています。
 
-- `JFrame#setUndecorated(true)`で、`JFrame`のタイトルバーなどを非表示
+- `JFrame#setUndecorated(true)`で`JFrame`のタイトルバーなどを非表示
 - `BasicInternalFrameUI#getNorthPane()`で`JInternalFrame`のタイトルバーを取得
 -- 元の`MouseMotionListener`を削除
 -- `JInternalFrame`をドラッグすると親の`JFrame`が移動する`MouseMotionListener`を追加

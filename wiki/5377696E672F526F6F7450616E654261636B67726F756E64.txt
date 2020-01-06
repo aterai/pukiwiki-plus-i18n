@@ -18,7 +18,7 @@ image: https://lh6.googleusercontent.com/-2HEcpl-4XqA/UOmSieyPnxI/AAAAAAAABaI/KB
 JFrame frame = new JFrame("@title@") {
   @Override protected JRootPane createRootPane() {
     JRootPane rp = new JRootPane() {
-      //private final TexturePaint texture = makeCheckerTexture();
+      // private final TexturePaint texture = makeCheckerTexture();
       @Override protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
@@ -26,6 +26,7 @@ JFrame frame = new JFrame("@title@") {
         g2.fillRect(0, 0, getWidth(), getHeight());
         g2.dispose();
       }
+
       @Override public void updateUI() {
         super.updateUI();
         BufferedImage bi = makeBufferedImage("test.jpg");
@@ -36,9 +37,9 @@ JFrame frame = new JFrame("@title@") {
     return rp;
   }
 };
-//frame.getRootPane().setBackground(Color.BLUE);
-//frame.getLayeredPane().setBackground(Color.GREEN);
-//frame.getContentPane().setBackground(Color.RED);
+// frame.getRootPane().setBackground(Color.BLUE);
+// frame.getLayeredPane().setBackground(Color.GREEN);
+// frame.getContentPane().setBackground(Color.RED);
 ((JComponent) frame.getContentPane()).setOpaque(false);
 frame.setJMenuBar(createMenubar());
 frame.getContentPane().add(new MainPanel());

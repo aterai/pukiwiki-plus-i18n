@@ -21,6 +21,7 @@ class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
     super();
     this.windowState = windowState;
   }
+
   @Override public WindowAdapter doInBackground() {
     PersistenceService ps;
     BasicService bs;
@@ -122,10 +123,6 @@ class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
 -- または、`XMLEncoder#setExceptionListener(...)`で、何もしない`ExceptionListener`を設定し、警告を捨ててしまう
 
 #code{{
-//package example;
-//-*- mode:java; encoding:utf-8 -*-
-// vim:set fileencoding=utf-8:
-//@homepage@
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
@@ -167,7 +164,7 @@ public class MainPanel extends JPanel {
     try (XMLDecoder d = new XMLDecoder(new BufferedInputStream(
         new FileInputStream(PROPERTIES_XML)))) {
       frame = (JFrame) d.readObject();
-      //d.close();
+      // d.close();
     } catch (Exception ex) {
       ex.printStackTrace();
     }
@@ -187,12 +184,12 @@ public class MainPanel extends JPanel {
             new FileOutputStream(file)))) {
           xe.setExceptionListener(new ExceptionListener() {
             @Override public void exceptionThrown(Exception exception) {
-              //XXX:
+              // XXX:
               exception.printStackTrace();
             }
           });
           xe.writeObject(frame);
-          //xe.flush(); xe.close();
+          // xe.flush(); xe.close();
         } catch (Exception ex) {
           ex.printStackTrace();
         }

@@ -36,7 +36,7 @@ private static JComponent makeBreadcrumbList(int overlap, List<String> list) {
 上記のサンプルでは、`FlowLayout`の水平間隔にマイナスの値(`px`)を指定して、各コンポーネントがその分重なるように設定しています。このため、左側の`JRadioButton`の下に右側の`JRadioButton`が配置されている状態になっています。各`JRadioButton`自体は重なっていますが、描画とマウスクリックは重ならないように以下の設定を追加しています。
 
 - 描画
--- 矢羽型のアイコンを設定、このアイコン以外は、`setContentAreaFilled(false);`などで透明化
+-- 矢羽型のアイコンを設定し、このアイコン以外は`setContentAreaFilled(false);`などで透明化
 - マウスクリック
 -- `JRadioButton#contains(...)`をオーバーライドして、上記の矢羽図形の外では反応しないよう設定
 

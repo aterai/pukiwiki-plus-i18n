@@ -31,18 +31,20 @@ JTable table = new JTable(data, columnNames) {
     int mr = convertRowIndexToModel(row);
     return getModel().getValueAt(mr, mc).getClass();
   }
+
   @Override public TableCellRenderer getCellRenderer(int row, int column) {
-    //editingClass = null;
+    // editingClass = null;
     if (convertColumnIndexToModel(column) == 1) {
-      //System.out.println("getCellRenderer");
+      // System.out.println("getCellRenderer");
       return getDefaultRenderer(getClassAt(row, column));
     } else {
       return super.getCellRenderer(row, column);
     }
   }
+
   @Override public TableCellEditor getCellEditor(int row, int column) {
     if (convertColumnIndexToModel(column) == 1) {
-      //System.out.println("getCellEditor");
+      // System.out.println("getCellEditor");
       editingClass = getClassAt(row, column);
       return getDefaultEditor(editingClass);
     } else {
@@ -50,14 +52,15 @@ JTable table = new JTable(data, columnNames) {
       return super.getCellEditor(row, column);
     }
   }
+
   // https://stackoverflow.com/questions/1464691/property-list-gui-component-in-swing
   // This method is also invoked by the editor when the value in the editor
   // component is saved in the TableModel. The class was saved when the
   // editor was invoked so the proper class can be created.
   @Override public Class getColumnClass(int column) {
-    //return editingClass != null ? editingClass : super.getColumnClass(column);
+    // return editingClass != null ? editingClass : super.getColumnClass(column);
     if (convertColumnIndexToModel(column) == 1) {
-      //System.out.println("getColumnClass");
+      // System.out.println("getColumnClass");
       return editingClass;
     } else {
       return super.getColumnClass(column);
@@ -66,24 +69,24 @@ JTable table = new JTable(data, columnNames) {
 };
 table.setAutoCreateRowSorter(true);
 table.setDefaultRenderer(Color.class, new ColorRenderer());
-table.setDefaultEditor(Color.class,   new ColorEditor());
-table.setDefaultEditor(Date.class,    new DateEditor());
+table.setDefaultEditor(Color.class, new ColorEditor());
+table.setDefaultEditor(Date.class, new DateEditor());
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTable#getCellRenderer(...)`、`JTable#getCellEditor(...)`をオーバーライドして、実際のモデル値からクラスを取得し、そのクラスに応じて行ごとに使用するセルレンダラー、セルエディタを変更しています。
+上記のサンプルでは、`JTable#getCellRenderer(...)`、`JTable#getCellEditor(...)`をオーバーライドして実際のモデル値からクラスを取得し、そのクラスに応じて行ごとに使用するセルレンダラー、セルエディタを変更しています。
 
 - セルレンダラー
--- `String`クラスと`Date`クラスは、デフォルトの`DefaultTableCellRenderer`を使用
--- `Integer`クラスと`Double`クラスは、デフォルトの`JTable$NumberRenderer`を使用
--- `Color`クラスは、アイコンで色を表示するセルレンダラーを作成して`Table#setDefaultRenderer(Color.class, new ColorRenderer())`で設定
+-- `String`クラスと`Date`クラスはデフォルトの`DefaultTableCellRenderer`を使用
+-- `Integer`クラスと`Double`クラスはデフォルトの`JTable$NumberRenderer`を使用
+-- `Color`クラスはアイコンで色を表示するセルレンダラーを作成して`Table#setDefaultRenderer(Color.class, new ColorRenderer())`で設定
 - セルエディタ
--- `String`クラスは、デフォルトの`JTable$GenericEditor`を使用
--- `Integer`クラスと`Double`クラスは、デフォルトの`JTable$NumberEditor`を使用
--- `Boolean`クラスは、デフォルトの`JTable$BooleanEditor`を使用
--- `Date`クラスは、`JSpinner`でセルエディタを作成して`JTable#setDefaultEditor(Class, TableCellEditor)`で設定
+-- `String`クラスはデフォルトの`JTable$GenericEditor`を使用
+-- `Integer`クラスと`Double`クラスはデフォルトの`JTable$NumberEditor`を使用
+-- `Boolean`クラスはデフォルトの`JTable$BooleanEditor`を使用
+-- `Date`クラスは`JSpinner`でセルエディタを作成して`JTable#setDefaultEditor(Class, TableCellEditor)`で設定
 --- 参考: [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
--- `Color`クラスは、`JColorChooser`を開く`JButton`でセルエディタを作成して`JTable#setDefaultEditor(Class, TableCellEditor)`で設定
+-- `Color`クラスは`JColorChooser`を開く`JButton`でセルエディタを作成して`JTable#setDefaultEditor(Class, TableCellEditor)`で設定
 --- 参考: [https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html#TableDialogEditDemo TableDialogEditDemo]
 ----
 - `JTable#getColumnClass(int)`メソッドの引数は列のみのため、`1`列目の場合は`JTable#getCellEditor(...)`で取得したクラスを返すようにオーバーライド
