@@ -45,7 +45,7 @@ exit.addActionListener(new ActionListener() {
   @Override public void actionPerformed(ActionEvent e) {
     tray.remove(icon);
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    //frame.dispose();
+    // frame.dispose();
     frame.getToolkit().getSystemEventQueue().postEvent(
       new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
   }
@@ -61,10 +61,10 @@ try {
 `TrayIcon`に`MouseListener`を追加し、マウスでダブルクリックした場合の動作を変更します。
 
 - 左ボタンでダブルクリック
--- フレームが非表示の場合は、再表示
+-- フレームが非表示の場合は再表示
 - 左ボタンでシングルクリック
 -- フレームが表示、または最小化されている場合、元のサイズに戻して最前面に表示
--- フレームが非表示の場合は、なにもしない
+-- フレームが非表示の場合はなにもしない
 - 中ボタンでクリック
 -- なにもしない
 - 右ボタンでクリック

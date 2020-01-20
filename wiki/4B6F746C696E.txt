@@ -447,7 +447,8 @@ tree.addTreeWillExpandListener(object : TreeWillExpandListener {
 #twocolumn
 
 ** ラベル付きReturn [#ReturnAtLabels]
-- 匿名内部クラスから`return`で抜ける`Java`コードを`IntelliJ`の自動変換で変換すると、`unresolved reference: @decode`とエラーになる`Kotlin`コードに変換される場合がある
+- %%匿名内部クラスから`return`で抜ける`Java`コードを`IntelliJ`の自動変換で変換すると、`unresolved reference: @decode`とエラーになる`Kotlin`コードに変換される場合がある%%
+-- `IntelliJ 2018.2.5`の自動変換では正しく変換されるようになっている
 -- 以下のような変換例の場合、`return@decode.addActionListener`を`return@addActionListener`のようにメソッド名のみのラベルに変更する必要がある
 -- [https://kotlinlang.org/docs/reference/returns.html#return-at-labels Returns and Jumps: break and continue - Kotlin Programming Language]
 
@@ -865,7 +866,8 @@ fun main(args: Array<String>) {
 #twocolumn
 
 ** 16進数数値リテラル内のアンダースコア [#UnderscoresInHexadecimalNumericLiterals]
-- `IntelliJ`の自動変換では、頭に`0x`を付けて`16`進数表記した数値リテラルにアンダースコアを付けると、`IDE Fatal Errors`になり変換できない
+- %%`IntelliJ`の自動変換では、頭に`0x`を付けて`16`進数表記した数値リテラルにアンダースコアを付けると、`IDE Fatal Errors`になり変換できない%%
+-- `IntelliJ 2018.2.5`の自動変換では、前処理でアンダースコアを除去？して正しく変換されるようになっている
 -- `IntelliJ`で自動変換できないだけで、`Kotlin`で`16`進数表記の数値にアンダースコアを付けても問題なく動作可能
 -- アンダースコアがなければ、`16`進数表記でも問題なく`IntelliJ`で自動変換可能
 -- 例1: `new Color(0xEE_EE_EE)`は、`IntelliJ`の自動変換では`java.lang.NumberFormatException: For input string: "E_EE_EE"`とエラーになる
@@ -2292,6 +2294,226 @@ e: C:\kst\SearchBarLayoutComboBox\src\main\kotlin\example\BasicSearchBarComboBox
 }}
 
 - 現状では`createUI(...)`を使用せず`updateUI()`をオーバーライドして直接独自`UI`を設定するなどで回避するしかない？
+
+** DefaultTreeCellEditor [#DefaultTreeCellEditor]
+- `JTree.startEditingAtPath(...)`メソッドを実行すると以下のような`IllegalArgumentException`が発生する場合がある
+-- このメソッドを辿ると`BasicTreeUI`内でイベントを`null`で`TreeCellEditor#isCellEditable(event)`を呼び出している箇所がある
+-- その為、`DefaultTreeCellEditor#isCellEditable(e: EventObject)`のオーバーライドは`DefaultTreeCellEditor#isCellEditable(e: EventObject?)`に変更する必要がある
+
+#code{{
+Exception in thread "AWT-EventQueue-0" java.lang.IllegalArgumentException: Parameter specified as non-null is null: method example.MainPanel$1.isCellEditable, parameter e
+	at example.MainPanel$1.isCellEditable(App.kt)
+	at javax.swing.plaf.basic.BasicTreeUI.startEditing(BasicTreeUI.java:2129)
+	at javax.swing.plaf.basic.BasicTreeUI.startEditingAtPath(BasicTreeUI.java:620)
+	at javax.swing.JTree.startEditingAtPath(JTree.java:2405)
+	at example.TreePopupMenu$1.actionPerformed(App.kt:49)
+}}
+
+#twocolumn
+`Kotlin` 自動変換
+#code{{
+import java.awt.* // ktlint-disable no-wildcard-imports
+import java.awt.event.MouseEvent
+import java.util.EventObject
+import javax.swing.* // ktlint-disable no-wildcard-imports
+import javax.swing.event.AncestorEvent
+import javax.swing.event.AncestorListener
+import javax.swing.tree.DefaultMutableTreeNode
+import javax.swing.tree.DefaultTreeCellEditor
+import javax.swing.tree.DefaultTreeCellRenderer
+import javax.swing.tree.TreePath
+
+class MainPanel : JPanel(BorderLayout()) {
+  init {
+    val tree = JTree()
+    tree.cellEditor = object : DefaultTreeCellEditor(tree, tree.cellRenderer as? DefaultTreeCellRenderer) {
+      override fun isCellEditable(e: EventObject) = e !is MouseEvent && super.isCellEditable(e)
+    }
+    tree.isEditable = true
+    tree.componentPopupMenu = TreePopupMenu()
+    add(JScrollPane(tree))
+    preferredSize = Dimension(320, 240)
+  }
+}
+
+class TreePopupMenu : JPopupMenu() {
+  private var path: TreePath? = null
+  private val editItem: JMenuItem
+  private val editDialogItem: JMenuItem
+
+  override fun show(c: Component, x: Int, y: Int) {
+    (c as? JTree)?.also { tree ->
+      val tsp = tree.selectionPaths
+      path = tree.getPathForLocation(x, y)
+      val isEditable = tsp != null && tsp.size == 1 && tsp[0] == path
+      editItem.isEnabled = isEditable
+      editDialogItem.isEnabled = isEditable
+      super.show(c, x, y)
+    }
+  }
+
+  init {
+    val field = JTextField()
+    field.addAncestorListener(FocusAncestorListener())
+    editItem = add("Edit")
+    editItem.addActionListener {
+      path?.also {
+        (invoker as? JTree)?.startEditingAtPath(it)
+      }
+    }
+    editDialogItem = add("Edit Dialog")
+    editDialogItem.addActionListener {
+      (path?.lastPathComponent as? DefaultMutableTreeNode)?.also { node ->
+        field.text = node.userObject.toString()
+        (invoker as? JTree)?.also { tree ->
+          val ret = JOptionPane.showConfirmDialog(
+            tree, field, "Rename", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE
+          )
+          if (ret == JOptionPane.OK_OPTION) {
+            tree.model.valueForPathChanged(path, field.text)
+          }
+        }
+      }
+    }
+    add("dummy")
+  }
+}
+
+class FocusAncestorListener : AncestorListener {
+  override fun ancestorAdded(e: AncestorEvent) {
+    e.component.requestFocusInWindow()
+  }
+
+  override fun ancestorMoved(e: AncestorEvent) {
+    /* not needed */
+  }
+
+  override fun ancestorRemoved(e: AncestorEvent) {
+    /* not needed */
+  }
+}
+
+fun main() {
+  EventQueue.invokeLater {
+    runCatching {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
+    }.onFailure {
+      it.printStackTrace()
+      Toolkit.getDefaultToolkit().beep()
+    }
+    JFrame().apply {
+      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+      getContentPane().add(MainPanel())
+      pack()
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
+}
+}}
+#twocolumn
+`Kotlin` 手動修正
+#code(lang-kotlin){{
+import java.awt.* // ktlint-disable no-wildcard-imports
+import java.awt.event.MouseEvent
+import java.util.EventObject
+import javax.swing.* // ktlint-disable no-wildcard-imports
+import javax.swing.event.AncestorEvent
+import javax.swing.event.AncestorListener
+import javax.swing.tree.DefaultMutableTreeNode
+import javax.swing.tree.DefaultTreeCellEditor
+import javax.swing.tree.DefaultTreeCellRenderer
+import javax.swing.tree.TreePath
+
+class MainPanel : JPanel(BorderLayout()) {
+  init {
+    val tree = JTree()
+    tree.cellEditor = object : DefaultTreeCellEditor(tree, tree.cellRenderer as? DefaultTreeCellRenderer) {
+      override fun isCellEditable(e: EventObject) = e !is MouseEvent && super.isCellEditable(e)
+    }
+    tree.isEditable = true
+    tree.componentPopupMenu = TreePopupMenu()
+    add(JScrollPane(tree))
+    preferredSize = Dimension(320, 240)
+  }
+}
+
+class TreePopupMenu : JPopupMenu() {
+  private var path: TreePath? = null
+  private val editItem: JMenuItem
+  private val editDialogItem: JMenuItem
+
+  override fun show(c: Component, x: Int, y: Int) {
+    (c as? JTree)?.also { tree ->
+      val tsp = tree.selectionPaths
+      path = tree.getPathForLocation(x, y)
+      val isEditable = tsp != null && tsp.size == 1 && tsp[0] == path
+      editItem.isEnabled = isEditable
+      editDialogItem.isEnabled = isEditable
+      super.show(c, x, y)
+    }
+  }
+
+  init {
+    val field = JTextField()
+    field.addAncestorListener(FocusAncestorListener())
+    editItem = add("Edit")
+    editItem.addActionListener {
+      path?.also {
+        (invoker as? JTree)?.startEditingAtPath(it)
+      }
+    }
+    editDialogItem = add("Edit Dialog")
+    editDialogItem.addActionListener {
+      (path?.lastPathComponent as? DefaultMutableTreeNode)?.also { node ->
+        field.text = node.userObject.toString()
+        (invoker as? JTree)?.also { tree ->
+          val ret = JOptionPane.showConfirmDialog(
+            tree, field, "Rename", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE
+          )
+          if (ret == JOptionPane.OK_OPTION) {
+            tree.model.valueForPathChanged(path, field.text)
+          }
+        }
+      }
+    }
+    add("dummy")
+  }
+}
+
+class FocusAncestorListener : AncestorListener {
+  override fun ancestorAdded(e: AncestorEvent) {
+    e.component.requestFocusInWindow()
+  }
+
+  override fun ancestorMoved(e: AncestorEvent) {
+    /* not needed */
+  }
+
+  override fun ancestorRemoved(e: AncestorEvent) {
+    /* not needed */
+  }
+}
+
+fun main() {
+  EventQueue.invokeLater {
+    runCatching {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
+    }.onFailure {
+      it.printStackTrace()
+      Toolkit.getDefaultToolkit().beep()
+    }
+    JFrame().apply {
+      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+      getContentPane().add(MainPanel())
+      pack()
+      setLocationRelativeTo(null)
+      setVisible(true)
+    }
+  }
+}
+}}
+#twocolumn
 
 * 手動変換 [#ManualConversion]
 - `IntelliJ`の自動変換で正常に変換されるが、手動修正でもっと短い`Kotlin`コードに変換が可能なケースのメモ

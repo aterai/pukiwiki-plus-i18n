@@ -19,16 +19,18 @@ hreflang:
 * サンプルコード [#sourcecode]
 #code(link){{
 public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI {
+  protected boolean isEditable = true;
   public static javax.swing.plaf.ComponentUI createUI(JComponent c) {
     return new BasicSearchBarComboBoxUI();
   }
-  protected boolean isEditable = true;
+
   @Override protected void installDefaults() {
     super.installDefaults();
-    //comboBox.setEditable(true);
+    // comboBox.setEditable(true);
     comboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
-    //comboBox.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+    // comboBox.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
   }
+
   @Override protected LayoutManager createLayoutManager() {
     return new LayoutManager() {
       @Override public void addLayoutComponent(String name, Component comp) {}
@@ -63,7 +65,7 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI {
             break;
           }
         }
-        //= (JButton) cb.getComponent(3);
+        // = (JButton) cb.getComponent(3);
         if (loupeButton != null) {
           Insets loupeInsets = loupeButton.getInsets();
           loupeWidth = loupeButton.getPreferredSize().width +
@@ -72,7 +74,7 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI {
                                 insets.top, loupeWidth, buttonHeight);
         }
         JTextField editor = (JTextField) cb.getEditor().getEditorComponent();
-        //JTextField editor = (JTextField) cb.getComponent(1);
+        // JTextField editor = (JTextField) cb.getComponent(1);
         if (editor != null) {
           editor.setBounds(insets.left + buttonWidth, insets.top,
                width  - (insets.left + insets.right + buttonWidth + loupeWidth),
@@ -81,23 +83,20 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI {
       }
     };
   }
-// ...
+  // ...
 }}
 
 * 解説 [#explanation]
 上記のサンプルでは、`JComboBox`が使用する`LayoutManager`を以下のように変更しています。
 
-- 元の`ArrowButton`は、左側に移動
+- `ArrowButton`は右側から左側に移動
 -- `JComboBox#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);`とした場合のコードを流用
 -- 検索サイトのアイコンと下向きの三角の二つを表示するように設定
 - `LoupeButton`として新たに`JButton`を追加し、右側に配置
 - 常に編集可能として`JTextField`を中央に配置
-
-----
-ポップアップを表示、選択しても`JTextField`が変更されないようにしています。
-
-- `JComboBox#putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);`として、カーソル移動で変更されないように設定
-- 選択されても`PopupMenuListener`で`setText(...)`し直すように設定
+- ポップアップを表示、選択しても`JTextField`が変更されないように設定
+-- `JComboBox#putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);`として、カーソル移動で変更されないように設定
+-- 選択されても`PopupMenuListener`で`setText(...)`し直すように設定
 
 #code{{
 protected PopupMenuListener createPopupMenuListener() {

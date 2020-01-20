@@ -24,9 +24,7 @@ im.put(tab, im.get(enter));
 * 解説 [#explanation]
 上記のサンプルでは、チェックボックスでKBD{Tab}キーでのフォーカスの移動(セル毎に移動)が、KBD{Enter}キーと同じ(行毎に移動)になるように切り替えています。
 
-----
-逆遷移のKBD{Shift+Tab}などに対応する場合は、修飾子を`0`ではなく、`InputEvent.SHIFT_DOWN_MASK`にした`KeyStroke`を`InputMap`に設定します。
-
+- 逆遷移のKBD{Shift+Tab}などに対応する場合は、修飾子を`0`ではなく`InputEvent.SHIFT_DOWN_MASK`にした`KeyStroke`を`InputMap`に設定する
 #code{{
 KeyStroke stab = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, InputEvent.SHIFT_DOWN_MASK);
 KeyStroke senter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.SHIFT_DOWN_MASK);

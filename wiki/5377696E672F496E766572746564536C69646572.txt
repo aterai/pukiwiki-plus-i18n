@@ -22,9 +22,9 @@ slider.setInverted(true);
 上記のサンプルでは、`JSlider#setInverted(true)`で、値や目盛りの表示位置を反転しています。
 
 - `JSlider#setInverted(true)`は、言語に依存する方向設定の`setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`と同時に指定可能
--- `SwingConstants.HORIZONTAL`の場合、両方指定すると元に戻る
--- `SwingConstants.VERTICAL`の場合、`JSlider#setInverted(true)`で上最小、下最大に変化し、`setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`で目盛りの位置が右から左に変化する
-- 範囲の塗り潰しが可能な`MetalLookAndFeel`の場合、これも反転する
+-- `SwingConstants.HORIZONTAL`の場合、両方指定すると表示は元に戻る
+-- `SwingConstants.VERTICAL`の場合、`JSlider#setInverted(true)`で上方向が最小値・下方向が最大値に変化し、`setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`で目盛りの位置が右側から左側に変化する
+- 範囲の塗り潰しが可能な`MetalLookAndFeel`の場合、その範囲も反転する
 - 縦の`JSlider`で`ComponentOrientation.RIGHT_TO_LEFT`、`WindowsLookAndFeel`を設定した場合、ノブのフォーカスが描画されない
 
 * 参考リンク [#reference]

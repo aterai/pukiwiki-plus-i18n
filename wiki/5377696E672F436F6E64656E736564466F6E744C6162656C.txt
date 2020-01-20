@@ -25,12 +25,12 @@ textArea.setFont(font);
 
 * 解説 [#explanation]
 - 上: `JTextArea(condensed: 0.9)`
--- `90%`の変形をかけた長体のフォントを作成し、`JTextArea`に設定
+-- 水平比率`90%`の変形をかけた長体フォントを作成して`JTextArea`に設定
 - 中: `GlyphVector(condensed: 0.9)`
--- `90%`の変形をかけた長体のフォントを作成し、その`Font`から`FontMetrics`、`GlyphVector`を生成して文字列を描画
+-- 水平比率`90%`の変形をかけた長体フォントを作成し、その`Font`から`FontMetrics`、`GlyphVector`を生成して文字列を描画
 -- 一文字ごとに変形する場合は、`GlyphVector#setGlyphTransform(idx, affineTransform)`を使用する方法もある
 - 下: `LineBreakMeasurer(condensed: 0.9)`
--- `90%`の変形をかけた長体のフォントを作成し、その`Font`を`AttributedString#addAttribute(TextAttribute.FONT, font)`で属性付き文字列に設定
+-- 水平比率`90%`の変形をかけた長体フォントを作成して`AttributedString#addAttribute(TextAttribute.FONT, font)`メソッドで属性付き文字列に設定
 -- `LineBreakMeasurer`、`TextLayout`で属性付き文字列を描画
 
 * 参考リンク [#reference]

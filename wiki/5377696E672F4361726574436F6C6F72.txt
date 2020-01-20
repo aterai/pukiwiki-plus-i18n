@@ -24,16 +24,16 @@ field.setCaretColor(Color.RED);
 
 * 解説 [#explanation]
 - `JTextField`
--- `setCaretColor(...)`メソッドで、`Caret`の色を変更
---- `null`を設定すると、`JTextField`の文字色が`Caret`の色になる
--- `IME`で変換中の`Caret`は、`setCaretColor(...)`での設定を無視して`JTextField`の文字色が`Caret`の色になる
+-- `setCaretColor(...)`メソッドで`Caret`の色を変更
+--- `null`を設定すると`JTextField`の文字色が`Caret`の色になる
+-- `IME`で変換中の`Caret`は`setCaretColor(...)`での設定を無視して`JTextField`の文字色が`Caret`の色になる
 - `JTextArea`
 -- `UIManager.put("TextArea.caretForeground", Color.ORANGE)`で`Caret`の色を変更
--- `IME`で変換中の`Caret`は、`setCaretColor(...)`での設定を無視して`JTextArea`の文字色が`Caret`の色になる
+-- `IME`で変換中の`Caret`は`setCaretColor(...)`での設定を無視して`JTextArea`の文字色が`Caret`の色になる
 - `JTextPane`
--- `setCaretColor(null)`で、`Caret`の色を`null`に設定
+-- `setCaretColor(null)`で`Caret`の色を`null`に設定
 -- 上記のサンプルで`Caret`の色は、一行目の途中(二行目の`111`の幅まで？)まで赤、それ以外は黒になる
--- `IME`で変換中の`Caret`は、`setCaretColor(...)`での設定を無視して`Graphics#setXORMode(...)`で反転した色が`Caret`の色になる
+-- `IME`で変換中の`Caret`は`setCaretColor(...)`での設定を無視して`Graphics#setXORMode(...)`で反転した色が`Caret`の色になる
 --- 二行目では、行の背景色の緑の反転色のピンク、文字色の赤の反転色の水色になる？(`JTextComponent.ComposedTextCaret`を参照)
 #code{{
 //
