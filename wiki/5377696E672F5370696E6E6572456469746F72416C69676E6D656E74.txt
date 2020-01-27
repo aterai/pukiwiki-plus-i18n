@@ -1,0 +1,79 @@
+---
+category: swing
+folder: SpinnerEditorAlignment
+title: JSpinnerのエディタの字揃えを変更する
+tags: [JSpinner, UIManager, LookAndFeel]
+author: aterai
+pubdate: 2020-01-27T18:24:59+09:00
+description: JSpinnerのJSpinner.DefaultEditorに適用する字揃えを変更します。
+image: https://drive.google.com/uc?id=1BaBJZRpqnXT9rQAEs-72Ds38UaSekO7V
+---
+* 概要 [#summary]
+`JSpinner`の`JSpinner.DefaultEditor`に適用する字揃えを変更します。
+
+#download(https://drive.google.com/uc?id=1BaBJZRpqnXT9rQAEs-72Ds38UaSekO7V)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// UIManager.put("Spinner.editorAlignment", SwingConstants.CENTER);
+// System.out.println(UIManager.get("Spinner.editorAlignment"));
+
+JRadioButton r1 = new JRadioButton("LEADING");
+JRadioButton r2 = new JRadioButton("CENTER");
+JRadioButton r3 = new JRadioButton("TRAILING");
+ItemListener il = e -> {
+  int alignment;
+  if (e.getItemSelectable() == r1) {
+    alignment = SwingConstants.LEADING;
+  } else if (e.getItemSelectable() == r2) {
+    alignment = SwingConstants.CENTER;
+  } else {
+    alignment = SwingConstants.TRAILING;
+  }
+  UIManager.put("Spinner.editorAlignment", alignment);
+  SwingUtilities.updateComponentTreeUI(this);
+};
+ButtonGroup bg = new ButtonGroup();
+Box box = Box.createHorizontalBox();
+for (JRadioButton r: Arrays.asList(r1, r2, r3)) {
+   r.addItemListener(il);
+   bg.add(r);
+   box.add(r);
+}
+
+List<String> weeks = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Sat");
+JSpinner spinner0 = new JSpinner(new SpinnerListModel(weeks));
+
+Date date = new Date();
+JSpinner spinner1 = new JSpinner(new SpinnerDateModel(date, date, null, Calendar.DAY_OF_MONTH));
+spinner1.setEditor(new JSpinner.DateEditor(spinner1, "yyyy/MM/dd"));
+// JTextField field = ((JSpinner.DefaultEditor) spinner1.getEditor()).getTextField();
+// field.setHorizontalAlignment(SwingConstants.TRAILING);
+
+JSpinner spinner2 = new JSpinner(new SpinnerNumberModel(5, 0, 10, 1));
+// JTextField text = ((JSpinner.DefaultEditor) spinner2.getEditor()).getTextField();
+// text.setHorizontalAlignment(SwingConstants.LEADING);
+}}
+
+* 解説 [#explanation]
+- `UIManager.put("Spinner.editorAlignment", SwingConstants.CENTER)`などで`JSpinner`のエディタの字揃えをまとめて変更可能
+-- `SwingUtilities.updateComponentTreeUI(spinner)`などで`UI`プロパティを初期化するまでこの変更は反映されない
+- `Spinner.editorAlignment`の初期値は`LookAndFeel`に依存する
+-- `GTKLookAndFeel`の初期値は`JTextField.LEADING`
+-- `BasicLookAndFeel`や`WindowsLookAndFeel`の初期値は`JTextField.TRAILING`
+- `JSpinner`のエディタに固有の字揃えが設定されている場合がある
+-- `SpinnerListModel`のエディタは`Spinner.editorAlignment`の字揃えに従う
+-- `SpinnerDateModel`の`JSpinner.DateEditor`はフォーマッタを設定すると`Spinner.editorAlignment`の字揃えに従わずに`JTextField.LEADING`になる？
+-- `SpinnerNumberModel`の`JSpinner.NumberEditor`はコンストラクタで`setHorizontalAlignment(JTextField.RIGHT)`が設定されている
+- 個別の`JSpinner`の`JSpinner.DefaultEditor`から`JTextField`を取得して水平方向の揃えを直接変更する方法もある
+#code{{
+JTextField field = ((JSpinner.DefaultEditor) spinner1.getEditor()).getTextField();
+field.setHorizontalAlignment(SwingConstants.CENTER);
+}}
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSpinner.DefaultEditor.html JSpinner.DefaultEditor (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment
