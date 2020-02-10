@@ -25,16 +25,20 @@ JLabel l5 = new JustifiedLabel("チーム出塁率");
 class JustifiedLabel extends JLabel {
   private GlyphVector gvtext;
   private int prevWidth = -1;
+
   public JustifiedLabel() {
     this(null);
   }
+
   public JustifiedLabel(String str) {
     super(str);
   }
+
   @Override public void setText(String text) {
     super.setText(text);
     prevWidth = -1;
   }
+
   @Override protected void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g.create();
     Insets ins = getInsets();
@@ -54,6 +58,7 @@ class JustifiedLabel extends JLabel {
     }
     g2.dispose();
   }
+
   private GlyphVector getJustifiedGlyphVector(
       int width, String str, Font font, FontRenderContext frc) {
     GlyphVector gv = font.createGlyphVector(frc, str);
@@ -79,23 +84,16 @@ class JustifiedLabel extends JLabel {
 }}
 
 * 解説 [#explanation]
-`JLabel`の文字揃えは、デフォルトが左揃えで、その他に右揃え、中央揃えがあります。両端揃え(文字の均等割り付け)は存在しないので、上記のサンプルでは、`JustifiedLabel`(幅が足りない場合などは、通常の`JLabel`と同様に`...`で省略)を作成して使用しています。
+`JLabel`の文字揃えは、デフォルトが左揃えで、その他に右揃え、中央揃えがあります。両端揃え(文字の均等割り付け)は存在しないので、上記のサンプルでは`JustifiedLabel`(幅が足りない場合などは通常の`JLabel`と同様に`...`で省略)を作成して使用しています。
 
 ----
 - `JTextPane`に挿入、一文字の場合などのテスト
 
 #code{{
-//package example;
-//-*- mode:java; encoding:utf-8 -*-
-// vim:set fileencoding=utf-8:
-//@homepage@
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.font.*;
 import java.awt.geom.*;
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.text.*;
 
 public class JustifiedLabelDemo {
   public JComponent makeUI() {
@@ -113,14 +111,12 @@ public class JustifiedLabelDemo {
     textPane.replaceSelection(": 555\n");
     return new JScrollPane(textPane);
   }
+
   public static void main(String[] args) {
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        createAndShowGUI();
-      }
-    });
+    EventQueue.invokeLater(JustifiedLabelDemo::createAndShowGui);
   }
-  public static void createAndShowGUI() {
+
+  public static void createAndShowGui() {
     UIManager.put("swing.boldMetal", Boolean.FALSE);
     JFrame f = new JFrame();
     f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -130,52 +126,60 @@ public class JustifiedLabelDemo {
     f.setVisible(true);
   }
 }
+
 class JustifiedLabel extends JLabel {
-  private GlyphVector gvtext;
-  private int prev_width = -1;
+  private GlyphVector gvText;
+  private int prevWidth = -1;
+
   public JustifiedLabel() {
     this(null);
   }
+
   public JustifiedLabel(String str) {
     super(str);
     Dimension d = getPreferredSize();
     int baseline = getBaseline(d.width, d.height);
     setAlignmentY(baseline / (float) d.height);
   }
+
   @Override public Dimension getMinimumSize() {
     return getPreferredSize();
   }
+
   @Override public Dimension getPreferredSize() {
     Dimension d = super.getPreferredSize();
     d.width = getWidth();
     return d;
   }
+
   @Override public int getWidth() {
     return 120;
   }
+
   @Override protected void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
     Insets i = getInsets();
     int w = getWidth() - i.left - i.right;
-    if (w != prev_width) {
-      gvtext = getJustifiedGlyphVector(getText(), getFont(), g2.getFontRenderContext());
-      prev_width = w;
+    if (w != prevWidth) {
+      gvText = getJustifiedGlyphVector(getText(), getFont(), g2.getFontRenderContext());
+      prevWidth = w;
     }
-    if (gvtext != null) {
-      g2.drawGlyphVector(gvtext, i.left, i.top + getFont().getSize());
+    if (gvText != null) {
+      g2.drawGlyphVector(gvText, i.left, i.top + getFont().getSize2D());
     } else {
       super.paintComponent(g);
     }
   }
+
   private GlyphVector getJustifiedGlyphVector(String str, Font font, FontRenderContext frc) {
     GlyphVector gv = font.createGlyphVector(frc, str);
     Rectangle2D r = gv.getVisualBounds();
-    float jwidth = (float) getWidth();
-    float vwidth = (float) r.getWidth();
-    if (jwidth < vwidth) return null;
+    float width = (float) getWidth();
+    float viewWidth = (float) r.getWidth();
+    if (width < viewWidth) return null;
     int num = gv.getNumGlyphs();
-    float xx = (jwidth - vwidth) / (float) (num - 1);
-    float xpos = num == 1 ? (jwidth - vwidth) * .5f : 0f;
+    float xx = (width - viewWidth) / (float) (num - 1);
+    float xpos = num == 1 ? (width - viewWidth) * .5f : 0f;
     Point2D gmPos = new Point2D.Double(0d, 0d);
     if (num == 1) System.out.println(gmPos);
     for (int i = 0; i < num; i++) {

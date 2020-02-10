@@ -1,0 +1,84 @@
+---
+category: swing
+folder: SelectableToolTip
+title: JToolTipの文字列を選択・コピー可能にする
+tags: [JToolTip, JPopupMenu, JEditorPane]
+author: aterai
+pubdate: 2020-02-03T17:37:47+09:00
+description: JToolTipの代わりにJPopupMenuを表示し、その内部に配置したコンポーネントのクリックや文字列の選択・コピーを可能にします。
+image: https://drive.google.com/uc?id=1gSgkKvGUaTX9rESzzcCHyhNRREYr22cq
+---
+* 概要 [#summary]
+`JToolTip`の代わりに`JPopupMenu`を表示し、その内部に配置したコンポーネントのクリックや文字列の選択・コピーを可能にします。
+
+#download(https://drive.google.com/uc?id=1gSgkKvGUaTX9rESzzcCHyhNRREYr22cq)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JEditorPane hint = new JEditorPane();
+hint.setEditorKit(new HTMLEditorKit());
+hint.setEditable(false);
+hint.setOpaque(false);
+
+JCheckBox check = new JCheckBox();
+check.setOpaque(false);
+
+JPanel panel = new JPanel(new BorderLayout());
+panel.add(hint);
+panel.add(check, BorderLayout.EAST);
+
+JPopupMenu popup = new JPopupMenu();
+popup.add(new JScrollPane(panel));
+popup.setBorder(BorderFactory.createEmptyBorder());
+
+JEditorPane editor = new JEditorPane() {
+  @Override public JToolTip createToolTip() {
+    JToolTip tip = super.createToolTip();
+    tip.addHierarchyListener(e -> {
+      if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0
+            && e.getComponent().isShowing()) {
+        panel.setBackground(tip.getBackground());
+        popup.show(tip, 0, 0);
+      }
+    });
+    return tip;
+  }
+};
+editor.setEditorKit(new HTMLEditorKit());
+editor.setText(HTML_TEXT);
+editor.setEditable(false);
+editor.addHyperlinkListener(e -> {
+  JEditorPane editorPane = (JEditorPane) e.getSource();
+  if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+    JOptionPane.showMessageDialog(editorPane, "You click the link with the URL " + e.getURL());
+  } else if (e.getEventType() == HyperlinkEvent.EventType.ENTERED) {
+    editorPane.setToolTipText("");
+    Optional.ofNullable(e.getSourceElement())
+        .map(elem -> (AttributeSet) elem.getAttributes().getAttribute(HTML.Tag.A))
+        .ifPresent(attr -> {
+          String title = Objects.toString(attr.getAttribute(HTML.Attribute.TITLE));
+          String url = Objects.toString(e.getURL());
+          // String url = Objects.toString(attr.getAttribute(HTML.Attribute.HREF));
+          hint.setText(String.format("<html>%s: <a href='%s'>%s</a>", title, url, url));
+          popup.pack();
+        });
+  } else if (e.getEventType() == HyperlinkEvent.EventType.EXITED) {
+    editorPane.setToolTipText(null);
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `JComponent#createToolTip()`メソッドをオーバーライドし、`JToolTip`に`HierarchyListener`を追加
+- `JToolTip`が表示状態になったらその`JToolTip`を親にして`JPopupMenu`を表示
+-- `JToolTip`は`JPopupMenu`の背後に隠れている
+-- `JPopupMenu`には`JMenuItem`ではなく`JEditorPane`と`JCheckBox`を配置した`JPanel`を追加している
+- マウスカーソルを移動して親の`JToolTip`が非表示になっても`JPopupMenu`は閉じないので、内部の`JCheckBox`をクリックしたり`JEditorPane`の文字列を選択しKBD{Ctrl-C}などでコピー可能
+-- 通常の`JPopupMenu`なので親`JFrame`などをクリックしてフォーカスが移動すると非表示になる
+
+* 参考リンク [#reference]
+- [https://coderanch.com/t/538128/java/JButtons-JTooltip JButtons inside JTooltip (Swing / AWT / SWT forum at Coderanch)]
+
+* コメント [#comment]
+#comment
+#comment

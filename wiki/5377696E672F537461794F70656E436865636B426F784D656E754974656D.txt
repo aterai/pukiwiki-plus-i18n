@@ -40,7 +40,7 @@ popup.add(new JCheckBoxMenuItem("keeping open #2") {
     super.updateUI();
     setUI(new BasicCheckBoxMenuItemUI() {
       @Override protected void doClick(MenuSelectionManager msm) {
-        //super.doClick(msm);
+        // super.doClick(msm);
         System.out.println("MenuSelectionManager: doClick");
         menuItem.doClick(0);
       }
