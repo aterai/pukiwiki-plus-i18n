@@ -32,6 +32,7 @@ class ButtonCellEditor extends AbstractCellEditor implements TreeCellEditor {
       stopCellEditing();
     });
   }
+
   @Override public Component getTreeCellEditorComponent(
       JTree tree, Object value, boolean isSelected, boolean expanded,
       boolean leaf, int row) {
@@ -39,9 +40,11 @@ class ButtonCellEditor extends AbstractCellEditor implements TreeCellEditor {
         tree, value, true, expanded, leaf, row, true);
     return panel.remakePanel(c);
   }
+
   @Override public Object getCellEditorValue() {
     return panel.renderer.getText();
   }
+
   @Override public boolean isCellEditable(EventObject e) {
     Object source = e.getSource();
     if (!(source instanceof JTree) || !(e instanceof MouseEvent)) {
@@ -83,11 +86,11 @@ class ButtonCellEditor extends AbstractCellEditor implements TreeCellEditor {
 上記のサンプルでは、`3`つの`JButton`と`JLabel`を継承する`DefaultTreeCellRenderer`を`FlowLayout`で配置する`JPanel`を`2`つ作成し、それぞれを`JTree`のセルエディタとセルレンダラーとして設定しています。
 
 - セルレンダラーの`JButton`は表示にのみ使用するめ、`ActionListener`などは設定しない
-- セルエディタの`JButton`には、`JTree`のノードが編集可能になって自身がクリックされたときに実行する`ActionListener`を設定
--- この`ActionListener`が実行されたあと、`AbstractCellEditor#stopCellEditing()`を実行して`JTree`のノード編集を終了する
+- セルエディタの`JButton`には`JTree`のノードが編集可能になって自身がクリックされたときに実行する`ActionListener`を設定
+-- この`ActionListener`が実行されたあと`AbstractCellEditor#stopCellEditing()`を実行して`JTree`のノード編集を終了する
 -- `JTree`のノード編集を終了しないと、編集中のノードの各ボタンにフォーカスが描画されたり、別ノードのボタンを`2`回クリックしないとそのボタンのイベントが実行できない
 - `TreeCellEditor#isCellEditable(...)`をオーバーライドし、マウスで各`JButton`の表示領域がクリックされた場合のみ編集可能に設定
--- `JButton`の表示領域がクリックされたかどうかの判断は、編集開始前なのでセルエディタではなくセルレンダラー内を`SwingUtilities.getDeepestComponentAt(...)`で検索して`JButton`が返されるかを調査している
+-- `JButton`の表示領域がクリックされたかどうかの判断は編集開始前なのでセルエディタではなく、セルレンダラー内を`SwingUtilities.getDeepestComponentAt(...)`で検索して`JButton`が返されるかを調査している
 - 編集中のノードの`JButton`のみマウスでクリック可能
 
 * 参考リンク [#reference]

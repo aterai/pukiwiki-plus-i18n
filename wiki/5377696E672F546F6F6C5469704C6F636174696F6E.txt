@@ -45,10 +45,10 @@ private void updateTipText(MouseEvent e) {
 
 * 解説 [#explanation]
 - 左クリックしてドラッグ
--- `JWindow`に、`JToolTip`を追加して、`Window#setLocation()`で移動
--- テキスト文字数が変更された場合のみ、`JWindow#pack()`を呼び出してサイズを更新
+-- `JWindow`に`JToolTip`を追加し、`Window#setLocation()`メソッドで移動
+-- テキスト文字数が変更された場合のみ`JWindow#pack()`メソッドを呼び出してサイズを更新
 - 左クリック以外でドラッグ
--- `PopupFactory#getPopup()`で座標を指定した、`Popup`を取得し表示
+-- `PopupFactory#getPopup()`で`Popup`を取得して表示
 -- `Popup`の位置が変更できずこれを再作成しているため、親フレームの外に`JToolTip`が表示される場合は非表示に設定
 --- フレーム外では`HeavyWeight`の`JWindow`で`JToolTip`が表示されるため、再作成すると表示がチラついてしまう
 

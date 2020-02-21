@@ -28,6 +28,7 @@ class TreeComboBox<E extends TreeNode> extends JComboBox<E> {
       }
     }
   };
+
   private final Action down = new AbstractAction() {
     @Override public void actionPerformed(ActionEvent e) {
       int si = getSelectedIndex();
@@ -39,6 +40,7 @@ class TreeComboBox<E extends TreeNode> extends JComboBox<E> {
       }
     }
   };
+
   @Override public void updateUI() {
     super.updateUI();
     ListCellRenderer<? super E> renderer = getRenderer();
@@ -72,6 +74,7 @@ class TreeComboBox<E extends TreeNode> extends JComboBox<E> {
       im.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, 0), "selectNext3");
     });
   }
+
   @Override public void setPopupVisible(boolean v) {
     if (!v && isNotSelectableIndex) {
       isNotSelectableIndex = false;
@@ -79,6 +82,7 @@ class TreeComboBox<E extends TreeNode> extends JComboBox<E> {
       super.setPopupVisible(v);
     }
   }
+
   @Override public void setSelectedIndex(int index) {
     TreeNode node = getItemAt(index);
     if (Objects.nonNull(node) && node.isLeaf()) {
@@ -97,6 +101,93 @@ class TreeComboBox<E extends TreeNode> extends JComboBox<E> {
 -- [[JComboBoxのアイテムを選択不可にする>Swing/DisableItemComboBox]]
 - 第`0`レベルのルートノードは非表示で、第`1`レベルノードのインデントは`0`に設定
 - 第`2`レベル以降の子ノードのインデントは`BorderFactory.createEmptyBorder(1, indent + 1, 1, 1)`で設定
+
+----
+- `TreeCellRenderer`を使用してノードアイコンなどを表示する場合のサンプル
+
+#code{{
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeCellRenderer;
+
+public final class TreeComboBoxTest {
+  private Component makeUI() {
+    DefaultMutableTreeNode root = (DefaultMutableTreeNode) new JTree().getModel().getRoot();
+    JPanel p = new JPanel(new BorderLayout());
+    p.add(new TreeComboBox(root), BorderLayout.NORTH);
+    p.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    return p;
+  }
+
+  public static void main(String[] args) {
+    EventQueue.invokeLater(() -> {
+      try {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      } catch(Exception ex) {
+        throw new IllegalArgumentException(ex);
+      }
+      JFrame f = new JFrame();
+      f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      f.getContentPane().add(new TreeComboBoxTest().makeUI());
+      f.setSize(320, 240);
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    });
+  }
+}
+
+class TreeComboBox extends JComboBox<DefaultMutableTreeNode> {
+  public TreeComboBox(DefaultMutableTreeNode root) {
+    super();
+    DefaultComboBoxModel<DefaultMutableTreeNode> m = new DefaultComboBoxModel<>();
+    Collections.list((Enumeration<?>) root.preorderEnumeration()).stream()
+        .filter(DefaultMutableTreeNode.class::isInstance)
+        .map(DefaultMutableTreeNode.class::cast)
+        .filter(n -> !n.isRoot())
+        .forEach(m::addElement);
+    setModel(m);
+  }
+
+  @Override
+  public void updateUI() {
+    super.updateUI();
+    JTree dummyTree = new JTree();
+    TreeCellRenderer renderer = dummyTree.getCellRenderer();
+    ListCellRenderer<? super DefaultMutableTreeNode> r = getRenderer();
+    setRenderer((list, value, index, isSelected, cellHasFocus) -> {
+      Component c = r.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+      if (value == null) {
+        return c;
+      }
+      if (index < 0) {
+        String txt = Arrays.stream(value.getPath())
+            .filter(DefaultMutableTreeNode.class::isInstance)
+            .map(DefaultMutableTreeNode.class::cast)
+            .filter(n -> !n.isRoot())
+            .map(Objects::toString)
+            .collect(Collectors.joining(" / "));
+        ((JLabel) c).setText(txt);
+        return c;
+      } else {
+        boolean leaf = value.isLeaf();
+        JLabel l = (JLabel) renderer.getTreeCellRendererComponent(
+            dummyTree, value, isSelected, true, leaf, index, false);
+        int childIndent = UIManager.getInt("Tree.leftChildIndent") +
+                          UIManager.getInt("Tree.rightChildIndent");
+        int indent = Math.max(0, value.getLevel() - 1) * childIndent;
+        l.setBorder(BorderFactory.createEmptyBorder(1, indent + 1, 1, 1));
+        return l;
+      }
+    });
+  }
+}
+}}
 
 * 参考リンク [#reference]
 - [http://www.jroller.com/santhosh/entry/tree_inside_jcombobox Tree inside JComboBox - Santhosh Kumar's Weblog]

@@ -23,6 +23,7 @@ class HorizontalAlignmentHeaderRenderer implements TableCellRenderer {
   public HorizontalAlignmentHeaderRenderer(int horizontalAlignment) {
     this.horizontalAlignment = horizontalAlignment;
   }
+
   @Override public Component getTableCellRendererComponent(
       JTable table, Object value, boolean isSelected,
       boolean hasFocus, int row, int column) {
@@ -39,7 +40,6 @@ class HorizontalAlignmentHeaderRenderer implements TableCellRenderer {
 - `Test1`:
 -- `JTableHeader`から、`DefaultRenderer`を取得し、`setHorizontalAlignment`メソッドで字揃えを設定
 -- すべての列の字揃えが変更される
-
 #code{{
 ((JLabel) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 }}
@@ -47,7 +47,6 @@ class HorizontalAlignmentHeaderRenderer implements TableCellRenderer {
 - `Test2`:
 -- `DefaultTableCellRenderer`を継承するレンダラーを設定
 -- `LookAndFeel`の色などが表示されない？
-
 #code{{
 table.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
   @Override public Component getTableCellRendererComponent(
@@ -64,7 +63,6 @@ table.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
 - `Test3`:
 -- `TableCellRenderer#getTableCellRendererComponent(...)`メソッド内で、デフォルトのヘッダセルレンダラーを取得し、字揃えを設定
 -- 上記の`HorizontalAlignmentHeaderRenderer`を全ての列に設定
-
 #code{{
 table.getColumnModel().getColumn(0).setHeaderRenderer(
     new HorizontalAlignmentHeaderRenderer(SwingConstants.LEFT));
@@ -85,8 +83,8 @@ try {
   e.printStackTrace();
 }
 // ...
-final TableCellRenderer renderer = table.getTableHeader().getDefaultRenderer();
-//table.getColumnModel().getColumn(0).setHeaderRenderer(new TableCellRenderer() {
+TableCellRenderer renderer = table.getTableHeader().getDefaultRenderer();
+// table.getColumnModel().getColumn(0).setHeaderRenderer(new TableCellRenderer() {
 table.getTableHeader().setDefaultRenderer(new TableCellRenderer() {
   @Override public Component getTableCellRendererComponent(JTable table, Object value,
           boolean isSelected, boolean hasFocus, int row, int column) {
