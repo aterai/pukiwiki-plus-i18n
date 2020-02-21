@@ -40,7 +40,6 @@ html,body{height:100%;margin:0}
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
 a:visited{color:#a63d21}
 h1,h2,h3,h4{color:#246230}
-kbd{background-color:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,0.196),0px 0 0 2px #fff inset;color:#333;display:inline-block;font-size:.9em;line-height:1.5;margin:0 .1em;padding:.1em .6em;text-shadow:0 1px 0 #fff;vertical-align:middle;white-space:nowrap}
 code,pre{overflow:auto;white-space:pre-wrap;word-wrap:break-word}
 pre>code{font-family:'Bitstream Vera Sans Mono','DejaVu Sans Mono',Monaco,Menlo,Consolas,monospace;display:block}
 pre{background-color:#f0fff8}
@@ -111,16 +110,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li class="nav-item" itemprop="name"><a class="nav-link" itemprop="url" href="https://ateraimemo.com/Kotlin.html">Kotlin</a></li>
       <li class="nav-item" itemprop="name"><a class="nav-link" itemprop="url" href="https://ateraimemo.com/Ant.html">Ant</a></li>
       <li class="nav-item" itemprop="name"><a class="nav-link" itemprop="url" href="https://ateraimemo.com/Gradle.html">Gradle</a></li>
-      <li class="nav-item" itemprop="name"><a class="nav-link" itemprop="url" href="https://ateraimemo.com/XSLT20.html">XSLT 2.0</a></li>
       <li class="nav-item" itemprop="name"><a class="nav-link" itemprop="url" href="https://ateraimemo.com/Jekyll.html">Jekyll</a></li>
       <li class="nav-item" itemprop="name"><a class="nav-link" itemprop="url" href="https://ateraimemo.com/Jenkins.html">Jenkins</a></li>
       <li class="nav-item" itemprop="name"><a class="nav-link" itemprop="url" href="https://ateraimemo.com/JavaScript.html">JavaScript</a></li>
+      <li class="nav-item" itemprop="name"><a class="nav-link" itemprop="url" href="https://ateraimemo.com/JRuby.html">JRuby</a></li>
+      <li class="nav-item" itemprop="name"><a class="nav-link" itemprop="url" href="https://ateraimemo.com/Subversion.html">Subversion</a></li>
+      <li class="nav-item" itemprop="name"><a class="nav-link" itemprop="url" href="https://ateraimemo.com/XSLT20.html">XSLT 2.0</a></li>
       <li class="nav-item dropdown" itemprop="name">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Others</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" itemprop="url" href="https://ateraimemo.com/JRuby.html">JRuby</a>
-          <a class="dropdown-item" itemprop="url" href="https://ateraimemo.com/Subversion.html">Subversion</a>
-          <div class="dropdown-divider"></div>
           <a class="dropdown-item" itemprop="url" href="https://ateraimemo.com/SurfacePro3.html">Surface Pro 3</a>
           <a class="dropdown-item" itemprop="url" href="https://ateraimemo.com/Solitaire.html">Solitaire</a>
         </div>
@@ -159,7 +157,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="push"></div>
 </div><!-- /.wrap -->
 <footer class="footer text-center" itemscope="itemscope" itemtype="https://schema.org/WPFooter">
-<p>© 2019 <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="https://ateraimemo.com/:Users/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="https://github.com/miko2u/pukiwiki-plus-i18n" target="_blank" rel="noopener">PukiWiki Plus!</a> and <a href="https://github.com/plusjade/jekyll-bootstrap/" target="_blank" rel="noopener">Jekyll Bootstrap</a></p>
+<p>©2020 <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="https://ateraimemo.com/:Users/aterai.html"><span itemprop="familyName">TERAI</span> <span itemprop="givenName">Atsuhiro</span></a></span> with help from <a href="https://github.com/miko2u/pukiwiki-plus-i18n" target="_blank" rel="noopener">PukiWiki Plus!</a> and <a href="https://github.com/plusjade/jekyll-bootstrap/" target="_blank" rel="noopener">Jekyll Bootstrap</a></p>
 </footer>
 </body>
 </html>
