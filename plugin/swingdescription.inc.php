@@ -23,7 +23,7 @@ function plugin_swingdescription_convert() {
 <div class="card mb-3" style="max-width:728px;">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <a class="img-thumbnail" href="$paurl" title="$page"><img src="$ssurl" itemprop="image" alt="thumbnail" /></a>
+      <a class="card-img" href="$paurl" title="$page"><img src="$ssurl" itemprop="image" alt="thumbnail" /></a>
     </div>
     <div class="col-md-8">
       <div class="card-body">
