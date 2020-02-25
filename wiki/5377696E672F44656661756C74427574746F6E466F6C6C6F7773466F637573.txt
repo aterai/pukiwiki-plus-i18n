@@ -1,0 +1,52 @@
+---
+category: swing
+folder: DefaultButtonFollowsFocus
+title: DefaultButtonをフォーカスが存在するJButtonに設定する
+tags: [JButton, Focus, JRootPane]
+author: aterai
+pubdate: 2020-02-24T18:13:51+09:00
+description: DefaultButtonではないJButtonにフォーカスが存在する場合、そのJButtonがDefaultButtonとしてふるまうよう設定します。
+image: https://drive.google.com/uc?id=1psyQVTV93zuNxaZxHISe8XkyPWTPAS7Z
+---
+* 概要 [#summary]
+`DefaultButton`ではない`JButton`にフォーカスが存在する場合、その`JButton`が`DefaultButton`としてふるまうよう設定します。
+
+#download(https://drive.google.com/uc?id=1psyQVTV93zuNxaZxHISe8XkyPWTPAS7Z)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String KEY = "Button.defaultButtonFollowsFocus";
+Box box = Box.createHorizontalBox();
+box.setBorder(BorderFactory.createTitledBorder(KEY));
+JRadioButton r1 = new JRadioButton("TRUE");
+JRadioButton r2 = new JRadioButton("FALSE");
+if (UIManager.getBoolean(KEY)) {
+  r1.setSelected(true);
+} else {
+  r2.setSelected(true);
+}
+ButtonGroup bg = new ButtonGroup();
+ActionListener al = e -> UIManager.put(KEY, r1.equals(e.getSource()));
+Arrays.asList(r1, r2).forEach(r -> {
+  r.addActionListener(al);
+  bg.add(r);
+  box.add(r);
+});
+}}
+
+* 解説 [#explanation]
+- `UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE)`
+-- デフォルトボタンではない`JButton`にフォーカスがある場合、KBD{Enter}キー入力でデフォルトボタンではなく現在フォーカスが存在する`JButton`がクリックされる
+-- たとえば上記のサンプルでデフォルトボタンを`Button1`、現在のフォーカスを`Button2`に設定してKBD{Enter}キーを入力すると`Button2`がクリックされて`Beep`音が鳴る
+-- `WindowsLookAndFeel`のデフォルト
+- `UIManager.put("Button.defaultButtonFollowsFocus", Boolean.FALSE)`
+-- デフォルトボタンではない`JButton`にフォーカスが存在する場合でも、KBD{Enter}キー入力で常にデフォルトボタンがクリックされる
+-- たとえば上記のサンプルでデフォルトボタンを`Button1`、現在のフォーカスを`Button2`に設定してKBD{Enter}キーを入力すると`Button1`がクリックされて`Beep`音は鳴らない
+
+* 参考リンク [#reference]
+- [https://tips4java.wordpress.com/2008/10/25/enter-key-and-button/ Enter Key and Button « Java Tips Weblog]
+- [[DefaultButtonの設定>Swing/DefaultButton]]
+
+* コメント [#comment]
+#comment
+#comment
