@@ -19,16 +19,16 @@ slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);`を使用して、つまみの形状を目盛り表示ありの場合に使用する矢印型に変更しています。
+上記のサンプルでは、`slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE)`を使用して、つまみの形状を目盛り表示ありの場合に使用する矢印型に変更しています。
 
-- 矢印型に変化するかどうかは、`LookAndFeel`に依存する
--- `NimbusLookAndFeel`では、目盛り表示ありの場合でも矢印型にはならないが、`Slider.paintThumbArrowShape`で三角形になる
+- 矢印型に変化するかどうかは`LookAndFeel`に依存する
+-- `NimbusLookAndFeel`では目盛り表示ありの場合でも矢印型にはならないが、`Slider.paintThumbArrowShape`で三角形になる
 - `WindowsLookAndFeel`でつまみが小さすぎる場合に使用可
--- `slider.putClientProperty("Slider.minimumHorizontalSize", new Dimension(30, 30));`を設定してもサイズは変化しない
-- `slider.setPaintTicks(true);`だけ使用する場合と異なり、目盛り表示領域の余白がない
+-- `slider.putClientProperty("Slider.minimumHorizontalSize", new Dimension(30, 30))`を設定してもサイズは変化しない
+- `slider.setPaintTicks(true)`だけ使用する場合と異なり、目盛り表示領域の余白がない
 
 ----
-- `Windows 10` + `JDK 1.8.0_121` + `WindowsLookAndFeel`では、縦スライダーのつまみが横スライダーのものと同じになるが、これが仕様かどうかは不明
+- `Windows 10` + `JDK 1.8.0_121` + `WindowsLookAndFeel`では縦スライダーのつまみが横スライダーのものと同じになるが、これが仕様かどうかは不明
 #img2(https://drive.google.com/uc?id=1xuLzkJTiLR-9QmqY2vbBvNNXrE9F9oEOPg)
 
 * 参考リンク [#reference]

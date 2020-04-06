@@ -9,7 +9,7 @@ description: BorderにJCheckBoxやJButtonなどを配置します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKEdJmyzI/AAAAAAAAAVY/FTQKJ7__MnE/s800/ComponentTitledBorder.png
 ---
 * 概要 [#summary]
-`Border`に`JCheckBox`や`JButton`などを配置します。[http://www.jroller.com/page/santhosh Santhosh Kumar's Weblog]の[http://www.jroller.com/page/santhosh?entry=component_titled_border ComponentTitledBorder]を利用しています。
+`Border`に`JCheckBox`や`JButton`などを配置します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKEdJmyzI/AAAAAAAAAVY/FTQKJ7__MnE/s800/ComponentTitledBorder.png)
 
@@ -23,8 +23,6 @@ l1.setBorder(new ComponentTitledBorder(c, l1, eb));
 }}
 
 * 解説 [#explanation]
-上記のサンプルは、[http://www.jroller.com/page/santhosh Santhosh Kumar's Weblog]の[http://www.jroller.com/page/santhosh?entry=component_titled_border ComponentTitledBorder]を参考にして作成しています。
-
 `SwingUtilities.paintComponent`で`Border`にコンポーネントを描画しているため、`JComboBox`などが選択されてもイベントが伝わりません。このため`ComponentTitledBorder`では、マウスリスナーを設定して`Component#dispatchEvent`メソッドで描画しているコンポーネントにマウスイベントを転送しています。
 
 #code{{
@@ -37,6 +35,7 @@ l1.setBorder(new ComponentTitledBorder(c, l1, eb));
 
 * 参考リンク [#reference]
 - [http://www.jroller.com/page/santhosh?entry=component_titled_border ComponentTitledBorder]
+-- 参考にしていた[http://www.jroller.com/page/santhosh Santhosh Kumar's Weblog]に接続できなくなっている
 - [[Borderの右下にJComponentを配置>Swing/RightAlignComponentBorder]]
 - [[TitledBorderにタイトル文字列までの内余白を設定する>Swing/TitledBorderHorizontalInsetOfText]]
 

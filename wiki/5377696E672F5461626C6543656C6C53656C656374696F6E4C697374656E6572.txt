@@ -66,7 +66,7 @@ abstract class AbstractTableCellSelectionListener implements ListSelectionListen
 --- アンカーインデックス、リードインデックスを取得する場合は、`ListSelectionModel#getAnchorSelectionIndex()`と`ListSelectionModel#getLeadSelectionIndex()`を使用する
 - `changeSelection`
 -- `JTable#changeSelection(...)`メソッドをオーバーライドして選択セル情報を書き出す
--- 範囲選択中(`ListSelectionEvent#getValueIsAdjusting()`)を除外していないため、マウスでドラッグされたセル情報などもすべて書き出している
+-- 範囲選択中(`ListSelectionEvent#getValueIsAdjusting()`)を除外していないため、マウスでドラッグされたセル情報などもすべて書き出される
 
 * 参考リンク [#reference]
 - [[JTableで行を選択>Swing/RowSelection]]

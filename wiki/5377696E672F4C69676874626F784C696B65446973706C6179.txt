@@ -42,6 +42,7 @@ class LightboxGlassPane extends JPanel {
     @Override public void mouseClicked(MouseEvent me) {
       me.getComponent().setVisible(false);
     }
+
     @Override public void hierarchyChanged(HierarchyEvent e) {
       if ((e.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED) != 0
           && !e.getComponent().isDisplayable() && animator != null) {
@@ -49,6 +50,7 @@ class LightboxGlassPane extends JPanel {
       }
     }
   }
+
   @Override public void setVisible(boolean isVisible) {
     boolean oldVisible = isVisible();
     super.setVisible(isVisible);
@@ -75,6 +77,7 @@ class LightboxGlassPane extends JPanel {
     }
     animatedIcon.setRunning(isVisible);
   }
+
   @Override protected void paintComponent(Graphics g) {
     JRootPane rootPane = getRootPane();
     if (rootPane != null) {

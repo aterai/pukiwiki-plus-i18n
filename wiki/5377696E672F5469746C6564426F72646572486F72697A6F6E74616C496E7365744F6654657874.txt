@@ -28,14 +28,14 @@ protected static final int TEXT_INSET_H = 10; // 5px;
 * 解説 [#explanation]
 - `override TitledBorder#paintBorder(...)`
 -- `TitledBorder#paintBorder(...)`をオーバーライドして、ボーダーの描画位置を`10px`右に移動
--- タイトル文字列までの内余白は変化しない、また中身のコンポーネントは移動しないのでボーダーと重なる
+-- タイトル文字列までの内余白は変化せず、また中身のコンポーネントは移動しないのでボーダーと重なる
 - `override TitledBorder#getBorderInsets(...)`
 -- `TitledBorder#getBorderInsets(...)`をオーバーライドして、ボーダーの左内余白を`10px`増加
 -- タイトル文字列までの内余白は変化しないが、中身のコンポーネントが`10px`右に移動する
 - `ComponentTitledBorder + EmptyBorder`
--- 文字列ではなく、`JLabel`をタイトルとして描画する`ComponentTitledBorder`を使用し、`JLabel`の描画開始位置を`10px`右に移動
+-- 文字列ではなく`JLabel`をタイトルとして描画する`ComponentTitledBorder`を使用し、`JLabel`の描画開始位置を`10px`右に移動
 --- 参考: [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]
--- タイトル文字列までの`10px`の内余白にボーダーが描画され、タイトルに使用する`JLabel`に設定した`EmptyBorder`分の`5px`は空白になり、合計`15px`の内余白が生成される
+-- タイトル文字列までの`10px`の内余白にボーダーが描画され、タイトルに使用する`JLabel`に設定した`EmptyBorder`分の`5px`は空白になり合計`15px`の内余白が生成される
 - `TitledBorder2: copied from TitledBorder`
 -- 内余白の設定が外部から変更できないので、`TitledBorder`を全てコピーして`TEXT_SPACING`と`TEXT_INSET_H`の値だけ変更
 -- `TEXT_INSET_H`を`2px`から`10px`に変更したため、ボーダーからタイトル文字列までの間に`10px`の内余白が生成される

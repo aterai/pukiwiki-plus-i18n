@@ -22,7 +22,7 @@ combo1.setRenderer(new DefaultListCellRenderer() {
   @Override public Component getListCellRendererComponent(
         JList<?> list, Object value, int index,
         boolean isSelected, boolean cellHasFocus) {
-    // XXX: String str = index < 0 ? "- Select Item -" : value.toString();
+    // ???: String str = index < 0 ? "- Select Item -" : value.toString();
     String str = Objects.toString(value, "- Select Item -");
     super.getListCellRendererComponent(
         list, str, index, isSelected, cellHasFocus);
@@ -34,8 +34,8 @@ combo1.setRenderer(new DefaultListCellRenderer() {
 * 解説 [#explanation]
 上記のサンプルでは、編集不可の`JComboBox`にアイテムが選択されていない場合にヒントとしてプレースホルダ文字列を表示するリストセルレンダラーを設定しています。
 
-- リストセルレンダラーは`DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドし、引数の`value`が`null`の場合のみヒントを表示するコンポーネントを返すよう設定
--- 引数の`Object value`が`null`の場合ではなくリストの`index`が`-1`の場合にヒント文字列を表示するように設定すると、マウスクリックで`JComboBox`の選択状態を変更できなくなる？
+- `DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドし、引数の`value`が`null`である場合のみヒント文字列を表示するよう設定
+-- 引数の`Object value`が`null`の場合ではなくリストの`index`が`-1`の場合にヒント文字列を表示すると、マウスクリックで`JComboBox`の選択状態が変更不可になる？
 - リストセルレンダラー側でヒント文字列を表示しているため、`JComboBox`のモデル側にプレースホルダ文字列を含めるなどの変更が不要
 
 * 参考リンク [#reference]

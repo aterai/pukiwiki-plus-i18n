@@ -34,16 +34,19 @@ class SimpleSyntaxDocument extends DefaultStyledDocument {
     StyleConstants.setForeground(addStyle("green", normal), Color.GREEN);
     StyleConstants.setForeground(addStyle("blue",  normal), Color.BLUE);
   }
+
   @Override public void insertString(int offset, String str, AttributeSet a)
         throws BadLocationException {
     super.insertString(offset, str, a);
     processChangedLines(offset, str.length());
   }
+
   @Override public void remove(int offset, int length)
         throws BadLocationException {
     super.remove(offset, length);
     processChangedLines(offset, 0);
   }
+
   private void processChangedLines(int offset, int length)
         throws BadLocationException {
     Element root = getDefaultRootElement();
@@ -53,6 +56,7 @@ class SimpleSyntaxDocument extends DefaultStyledDocument {
       applyHighlighting(line);
     }
   }
+
   private void applyHighlighting(int line) throws BadLocationException {
     Element root = getDefaultRootElement();
     int startOffset   = root.getElement(line).getStartOffset();
@@ -65,6 +69,7 @@ class SimpleSyntaxDocument extends DefaultStyledDocument {
     setCharacterAttributes(startOffset, lineLength, normal, true);
     checkForTokens(startOffset, endOffset);
   }
+
   private void checkForTokens(int startOffset, int endOffset)
         throws BadLocationException {
     int index = startOffset;
@@ -79,6 +84,7 @@ class SimpleSyntaxDocument extends DefaultStyledDocument {
       index = getOtherToken(index, endOffset);
     }
   }
+
   private int getOtherToken(int startOffset, int endOffset)
         throws BadLocationException {
     int endOfToken = startOffset + 1;
@@ -95,6 +101,7 @@ class SimpleSyntaxDocument extends DefaultStyledDocument {
     }
     return endOfToken + 1;
   }
+
   protected boolean isDelimiter(String character) {
     return Character.isWhitespace(
         character.charAt(0)) || OPERANDS.indexOf(character) != -1;

@@ -19,6 +19,7 @@ JTable table = new JTable(model) {
   private boolean isColumnSelectable(int column) {
     return convertColumnIndexToModel(column) == 0;
   }
+
   @Override public void changeSelection(
       int rowIndex, int columnIndex, boolean toggle, boolean extend) {
     if (!isColumnSelectable(columnIndex)) {
@@ -26,9 +27,11 @@ JTable table = new JTable(model) {
     }
     super.changeSelection(rowIndex, columnIndex, toggle, extend);
   }
+
   @Override public boolean isCellEditable(int row, int column) {
     return isColumnSelectable(column);
   }
+
   @Override public Component prepareRenderer(
       TableCellRenderer renderer, int row, int column) {
     if (isColumnSelectable(column)) {
@@ -44,10 +47,10 @@ JTable table = new JTable(model) {
 * 解説 [#explanation]
 上記のサンプルでは、第`0`列目のみ選択・編集可能にし、残りの列はマウスクリックやカーソル移動などで選択できないように、`JTable#changeSelection(...)`、`JTable#changeSelection(...)`メソッドをオーバーライドしています。
 
-- `JTable#isCellEditable(...)`メソッドは、編集不可にするためにオーバーライド
+- `JTable#isCellEditable(...)`メソッドをオーバーライドして編集不可に設定
 -- 選択不可で編集可能な列も設定可能
-- `JTable#prepareRenderer(...)`メソッドは、列を並べ替えた場合、フォーカスが選択不可の列に移動することを避けるためにオーバーライド
--- `table.getTableHeader().setReorderingAllowed(false);`として列の並べ替えを禁止している場合は不要
+- `JTable#prepareRenderer(...)`メソッドをオーバーライドして、列を並べ替えたときにフォーカスが選択不可の列に移動しないよう設定
+-- `table.getTableHeader().setReorderingAllowed(false)`などで列の並べ替えを禁止している場合は不要
 - メモ: `table.putClientProperty("Table.isFileList", Boolean.TRUE);`で、第`0`列目の文字列のみ選択可能になる
 -- [[JTableで文字列をクリックした場合だけセルを選択状態にする>Swing/TableFileList]]
 

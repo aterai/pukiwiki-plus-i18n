@@ -22,10 +22,10 @@ model.setAsksAllowsChildren(true);
 * 解説 [#explanation]
 - 左: `DefaultTreeModel#setAsksAllowsChildren(false)`
 -- デフォルト
--- `DefaultMutableTreeNode`が親ノード(`DefaultMutableTreeNode#getAllowsChildren() == true`)であっても、子として葉ノードがひとつも存在しない場合、そのアイコンは葉ノードアイコンになる
+-- `DefaultMutableTreeNode`が親ノード(`DefaultMutableTreeNode#getAllowsChildren() == true`)であっても子として葉ノードがひとつも存在しない場合、そのアイコンは葉ノードアイコンになる
 -- `JTree`に`TreeWillExpandListener`を追加し、この親ノード(葉ノードが存在しない)をマウスでクリックしても`treeWillExpand(...)`は発生しない
-- 右: `DefaultTreeModel#setAsksAllowsChildren(true)` (チェックボックスで選択した場合)
--- `DefaultMutableTreeNode`が親ノード(`DefaultMutableTreeNode#getAllowsChildren() == true`)の場合、子として葉ノードが存在するかどうかにかかわらず、そのアイコンは親ノードアイコンになる
+- 右: `DefaultTreeModel#setAsksAllowsChildren(true)`(チェックボックスで選択した場合)
+-- `DefaultMutableTreeNode`が親ノード(`DefaultMutableTreeNode#getAllowsChildren() == true`)の場合、子として葉ノードが存在するかどうかにかかわらずそのアイコンは親ノードアイコンになる
 -- `JTree`に`TreeWillExpandListener`を追加し、この親ノード(葉ノードが存在しない)をクリックすると`treeWillExpand(...)`が発生する
 --- このタイミングで後からこの親ノードに子ノードを追加するといった処理が可能になる
 

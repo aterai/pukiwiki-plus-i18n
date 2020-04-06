@@ -43,6 +43,7 @@ class MultiColumnCellRenderer extends JPanel implements ListCellRenderer {
     this.add(leftLabel);
     this.add(rightLabel, BorderLayout.EAST);
   }
+
   @Override public Component getListCellRendererComponent(
       JList list, Object value, int index,
       boolean isSelected, boolean cellHasFocus) {
@@ -65,10 +66,12 @@ class MultiColumnCellRenderer extends JPanel implements ListCellRenderer {
     }
     return this;
   }
+
   @Override public Dimension getPreferredSize() {
     Dimension d = super.getPreferredSize();
     return new Dimension(0, d.height);
   }
+
   @Override public void updateUI() {
     super.updateUI();
     this.setName("List.cellRenderer");
@@ -77,7 +80,7 @@ class MultiColumnCellRenderer extends JPanel implements ListCellRenderer {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JLabel`を二つ並べた`JPanel`をレンダラーにすることで、`Item`に設定した文字列を左右に表示しています。このため文字列が`JLabel`の推奨サイズより長い場合、自動的にクリップされます。
+上記のサンプルでは、`JLabel`を二つ並べた`JPanel`をレンダラーにすることで`Item`に設定した文字列を左右に表示しています。このため文字列が`JLabel`の推奨サイズより長い場合、自動的にクリップされます。
 
 * 参考リンク [#reference]
 - [[JComboBoxのItemを左右に配置>Swing/LRComboBox]]

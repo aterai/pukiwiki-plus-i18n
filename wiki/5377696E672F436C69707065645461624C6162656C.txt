@@ -22,9 +22,11 @@ class ClippedTitleTabbedPane extends JTabbedPane {
   public ClippedTitleTabbedPane() {
     super();
   }
+
   public ClippedTitleTabbedPane(int tabPlacement) {
     super(tabPlacement);
   }
+
   private Insets getTabInsets() {
     Insets i = UIManager.getInsets("TabbedPane.tabInsets");
     if (i != null) {
@@ -36,6 +38,7 @@ class ClippedTitleTabbedPane extends JTabbedPane {
       return style.getInsets(context, null);
     }
   }
+
   private Insets getTabAreaInsets() {
     Insets i = UIManager.getInsets("TabbedPane.tabAreaInsets");
     if (i != null) {
@@ -47,6 +50,7 @@ class ClippedTitleTabbedPane extends JTabbedPane {
       return style.getInsets(context, null);
     }
   }
+
   @Override public void doLayout() {
     int tabCount  = getTabCount();
     if (tabCount == 0) return;
@@ -79,6 +83,7 @@ class ClippedTitleTabbedPane extends JTabbedPane {
     }
     super.doLayout();
   }
+
   @Override public void insertTab(
       String title, Icon icon, Component component, String tip, int index) {
     super.insertTab(title, icon, component, tip == null ? title : tip, index);

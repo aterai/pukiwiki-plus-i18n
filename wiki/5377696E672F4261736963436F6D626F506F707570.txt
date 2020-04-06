@@ -22,6 +22,7 @@ class EditorComboPopup extends BasicComboPopup {
     super(cb);
     this.textArea = textArea;
   }
+
   @Override protected void installListListeners() {
     super.installListListeners();
     listener = new MouseAdapter() {
@@ -40,6 +41,7 @@ class EditorComboPopup extends BasicComboPopup {
       list.addMouseListener(listener);
     }
   }
+
   @Override public void uninstallingUI() {
     if (Objects.nonNull(listener)) {
       list.removeMouseListener(listener);
@@ -47,6 +49,7 @@ class EditorComboPopup extends BasicComboPopup {
     }
     super.uninstallingUI();
   }
+
   @Override public boolean isFocusable() {
     return true;
   }
@@ -54,11 +57,12 @@ class EditorComboPopup extends BasicComboPopup {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、KBD{Shift+Tab}でポップアップメニューが表示され、KBD{Up}, KBD{Down}キーで移動、KBD{Enter}で`JTextPane`のカーソルの後に選択された文字列が入力されます。
+上記のサンプルでは、KBD{Shift+Tab}でポップアップメニューが表示され、KBD{Up}・KBD{Down}キーで移動、KBD{Enter}で`JTextPane`のカーソルの後に選択された文字列が入力されます。
 
 `JComboBox`のポップアップ部分の`UI`を表現する`BasicComboPopup`を利用することで、スクロールバーをもつポップアップメニューを実現しています。
 
-フォーカスを取得して、キー入力で選択を変更できるように、`BasicComboPopup#isFocusable`メソッドをオーバーライドしています。また、`BasicComboPopup#show`したあと、`BasicComboPopup#requestFocusInWindow`する必要があります。
+- フォーカスを取得してキー入力で選択を変更できるように`BasicComboPopup#isFocusable`メソッドをオーバーライド
+-- `BasicComboPopup#show()`を実行した後`BasicComboPopup#requestFocusInWindow()`を呼びだす必要がある
 
 ----
 - %%`JFrame`から、ポップアップメニューがはみ出す(親`Window`が`HeavyWeightWindow`になる)場合、カーソルキーなどで、アイテムが移動選択できないバグがある%%

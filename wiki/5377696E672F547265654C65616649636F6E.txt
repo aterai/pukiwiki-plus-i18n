@@ -31,6 +31,8 @@ folderCheck.addActionListener(new ActionListener() {
 }}
 
 * 解説 [#explanation]
+以下のメソッドを使用してデフォルトアイコンと空アイコン(もしくは`null`)を設定し、表示非表示を切り替えています。
+
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html#setOpenIcon-javax.swing.Icon- DefaultTreeCellRenderer#setOpenIcon(Icon)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html#getDefaultOpenIcon-- DefaultTreeCellRenderer#getDefaultOpenIcon()]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html#setClosedIcon-javax.swing.Icon- DefaultTreeCellRenderer#setClosedIcon(Icon)]
@@ -38,11 +40,8 @@ folderCheck.addActionListener(new ActionListener() {
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html#setLeafIcon-javax.swing.Icon- DefaultTreeCellRenderer#setLeafIcon(Icon)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html#getDefaultLeafIcon-- DefaultTreeCellRenderer#getDefaultLeafIcon()]
 
-上記のメソッドを使用して、デフォルトアイコンと空アイコン(もしくは`null`)を設定し、表示非表示を切り替えています。
-
 ----
-各アイコンの幅が変化するため、表示を切り替えた後で以下のようにすべてのノードを再評価しています。
-
+- 各アイコンの幅が変化するため、表示を切り替えた後ですべてのノードを再評価する必要がある
 #code{{
 private static void allNodesChanged(JTree tree) {
   DefaultTreeModel model = (DefaultTreeModel) tree.getModel();

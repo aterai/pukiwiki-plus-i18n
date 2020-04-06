@@ -60,10 +60,10 @@ private void deleteActionPerformed(ActionEvent evt) {
 上記のサンプルでは、`javax.swing.Timer`を使用して徐々に行の高さを拡大、または縮小することで、追加と削除のアニメーションを行っています。
 
 - 行の追加アニメーション
--- 高さ`0`の行を追加したあと、`JTable#setRowHeight(int, int)`メソッドを使用してその高さをデフォルトの高さになるまで拡大
+-- 高さ`0`の行を追加したあと`JTable#setRowHeight(int, int)`メソッドを使用してその高さをデフォルトの高さになるまで拡大
 - 行の削除アニメーション
--- 選択された行の高さを、`JTable#setRowHeight(int, int)`メソッドを使用して縮小
--- 高さが一定以下になったら、その行を削除
+-- 選択された行の高さを`JTable#setRowHeight(int, int)`メソッドを使用して縮小
+-- 高さが一定以下になったらその行を削除
 
 * 参考リンク [#reference]
 - [[JTableの行を追加、削除>Swing/AddRow]]

@@ -36,7 +36,7 @@ JPanel panel1 = new JPanel() {
         return r.contains(e.getPoint()) ? title : null;
       }
     }
-    return null; //super.getToolTipText(e);
+    return null; // super.getToolTipText(e);
   }
 };
 panel1.setBorder(BorderFactory.createTitledBorder("aaaaa...aaaaa"));
@@ -48,10 +48,10 @@ panel1.setToolTipText("JPanel: dummy");
 -- ダミーの`JLabel`に`TitledBorder`のフォントや文字列を設定して、その幅を`getPreferredSize()`で取得
 --- `TitledBorder`が内部で使用している`JLabel`は`private`なのでアクセスできない
 -- ダミー`JLabel`の幅が`TitledBorder`を設定した`JPanel`の幅より長い場合、文字列が省略されていると判断する
--- 上記に加えて、マウスカーソルが`TitledBorder`の余白内(位置が`TOP`の場合)に存在する場、`TitledBorder#getTitle()`で取得したタイトルを返すことで、`JToolTip`を表示する
+-- 上記に加えてマウスカーソルが`TitledBorder`の余白内(位置が`TOP`の場合)に存在する場、`TitledBorder#getTitle()`で取得したタイトルを返すことで`JToolTip`を表示する
 - 制限:
--- このサンプルは、タイトルの位置が`TOP`の場合のみに対応
--- タイトルに`html`タグを使用して、省略ではなく折り返しが発生する場合には未対応
+-- このサンプルはタイトルの位置が`TOP`の場合のみに対応
+-- タイトルに`html`タグを使用して省略ではなく折り返しが発生する場合には未対応
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#getToolTipText-java.awt.event.MouseEvent- JComponent#getToolTipText(MouseEvent) (Java Platform SE 8)]

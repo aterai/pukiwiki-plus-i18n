@@ -29,9 +29,11 @@ UIManager.put("CheckBoxMenuItem.checkIcon", new Icon() {
     g2.fillOval(0, 2, 10, 10);
     g2.dispose();
   }
+
   @Override public int getIconWidth()  {
     return 14;
   }
+
   @Override public int getIconHeight() {
     return 14;
   }
@@ -40,7 +42,8 @@ menu.add(new JCheckBoxMenuItem("checkIcon test"));
 }}
 
 * 解説 [#explanation]
-`JCheckBox`のチェックアイコンは、`JCheckBox#setIcon(Icon)`メソッドで変更可能ですが、`JCheckBoxMenuItem`はチェックアイコンとは別のアイコンが設定されているので、`UIManager.put("CheckBoxMenuItem.checkIcon", icon);`を使用する必要があります。
+- `JCheckBox`のチェックアイコンは、`JCheckBox#setIcon(Icon)`メソッドで変更可能
+- `JCheckBoxMenuItem`はチェックアイコンとは別のアイコンが設定されているため、`setIcon(Icon)`メソッドではなく`UIManager.put("CheckBoxMenuItem.checkIcon", icon)`を使用する必要がある
 
 ----
 - `NimbusLookAndFeel`などで`JCheckBoxMenuItem`のチェックアイコンを変更する
@@ -53,7 +56,7 @@ import javax.swing.*;
 import com.sun.java.swing.*;
 import com.sun.java.swing.plaf.nimbus.*;
 // JDK 1.7
-//import javax.swing.plaf.nimbus.*;
+// import javax.swing.plaf.nimbus.*;
 
 class NimbusCheckIconTest {
   public JMenuBar createMenuBar() {
@@ -104,6 +107,7 @@ class NimbusCheckIconTest {
     f.setLocationRelativeTo(null);
     f.setVisible(true);
   }
+
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
@@ -112,6 +116,7 @@ class NimbusCheckIconTest {
     });
   }
 }
+
 // copy: CheckBoxMenuItemPainter.java
 class MyCheckBoxMenuItemPainter extends AbstractRegionPainter {
   static final int CHECKICON_ENABLED_SELECTED   = 6;
@@ -126,6 +131,7 @@ class MyCheckBoxMenuItemPainter extends AbstractRegionPainter {
     this.ctx = new AbstractRegionPainter.PaintContext(
       new Insets(5, 5, 5, 5), new Dimension(9, 10), false, null, 1.0, 1.0);
   }
+
   @Override protected void doPaint(Graphics2D g, JComponent c,
                                    int width, int height, Object[] eckey) {
     switch (state) {
@@ -143,21 +149,26 @@ class MyCheckBoxMenuItemPainter extends AbstractRegionPainter {
       break;
     }
   }
+
   @Override protected final PaintContext getPaintContext() {
     return ctx;
   }
+
   private void paintcheckIconEnabled(Graphics2D g) {
     g.setPaint(Color.GREEN);
     g.drawOval(0, 0, 10, 10);
   }
+
   private void paintcheckIconMouseOver(Graphics2D g) {
     g.setPaint(Color.PINK);
     g.drawOval(0, 0, 10, 10);
   }
+
   private void paintcheckIconEnabledAndSelected(Graphics2D g) {
     g.setPaint(Color.ORANGE);
     g.fillOval(0, 0, 10, 10);
   }
+
   private void paintcheckIconSelectedAndMouseOver(Graphics2D g) {
     g.setPaint(Color.CYAN);
     g.fillOval(0, 0, 10, 10);

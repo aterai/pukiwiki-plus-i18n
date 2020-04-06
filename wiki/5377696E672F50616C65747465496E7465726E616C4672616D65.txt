@@ -25,9 +25,9 @@ desktop.add(palette, JDesktopPane.PALETTE_LAYER);
 }}
 
 * 解説 [#explanation]
-- `JInternalFrame#putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);`で、パレット化
+- `JInternalFrame#putClientProperty("JInternalFrame.isPalette", Boolean.TRUE)`で、パレット化
 -- `MetalLookAndFeel`でのみ有効
-- `JDesktopPane#add(palette, JDesktopPane.PALETTE_LAYER);`でパレットレイヤーに追加
+- `JDesktopPane#add(palette, JDesktopPane.PALETTE_LAYER)`でパレットレイヤーに追加
 -- パレットレイヤーは、デフォルトレイヤー(`JDesktopPane.DEFAULT_LAYER`)の一つ上のレイヤーで、常にその下のレイヤーに配置れさたコンポーネントより上に表示される
 - パレット化した`JInternalFrame`をデフォルトではマウス操作でアイコン化することはできない？
 -- `JInternalFrame#setIcon(boolean)`メソッドを使用すればアイコン化することは可能

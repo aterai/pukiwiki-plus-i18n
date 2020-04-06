@@ -20,18 +20,18 @@ KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocus
 Set<AWTKeyStroke> forwardKeys = new HashSet<>(
     focusManager.getDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
 forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
-forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,  0));
+forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
 focusManager.setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardKeys);
 
 Set<AWTKeyStroke> backwardKeys = new HashSet<>(
     focusManager.getDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));
 backwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
-backwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_UP,   0));
+backwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
 focusManager.setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, backwardKeys);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、デフォルトのフォーカストラバーサルキー(KBD{Tab}, KBD{Shift+Tab})に加えて、上下左右の矢印キーでもフォーカス移動できるように設定しています。
+上記のサンプルでは、デフォルトのフォーカストラバーサルキー(KBD{Tab}、KBD{Shift+Tab})に加えて、上下左右の矢印キーでもフォーカス移動できるように設定しています。
 
 - `KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS`
 -- `KeyEvent.VK_RIGHT`, `KeyEvent.VK_DOWN`
@@ -45,7 +45,7 @@ focusManager.setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSA
 Set<AWTKeyStroke> forwardKeys = new HashSet<>(
     frame.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
 forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
-forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,  0));
+forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
 frame.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardKeys);
 }}
 

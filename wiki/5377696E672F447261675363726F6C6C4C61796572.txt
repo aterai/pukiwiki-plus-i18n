@@ -17,6 +17,7 @@ image: https://lh5.googleusercontent.com/-5zBF0JOr6kM/UfuiEj7Do7I/AAAAAAAABxg/7t
 #code(link){{
 class DragScrollLayerUI extends LayerUI<JScrollPane> {
   private final Point pp = new Point();
+
   @Override public void installUI(JComponent c) {
     super.installUI(c);
     if (c instanceof JLayer) {
@@ -24,12 +25,14 @@ class DragScrollLayerUI extends LayerUI<JScrollPane> {
           AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
     }
   }
+
   @Override public void uninstallUI(JComponent c) {
     if (c instanceof JLayer) {
       ((JLayer) c).setLayerEventMask(0);
     }
     super.uninstallUI(c);
   }
+
   @Override protected void processMouseEvent(
       MouseEvent e, JLayer<? extends JScrollPane> l) {
     Component c = e.getComponent();
@@ -42,6 +45,7 @@ class DragScrollLayerUI extends LayerUI<JScrollPane> {
       pp.setLocation(cp);
     }
   }
+
   @Override protected void processMouseMotionEvent(
       MouseEvent e, JLayer<? extends JScrollPane> l) {
     Component c = e.getComponent();

@@ -19,6 +19,7 @@ class DownAction extends AbstractAction {
   public DownAction(String str) {
     super(str);
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     downActionPerformed(e);
   }
@@ -80,7 +81,7 @@ public void showRowPop(MouseEvent e) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`DefaultTableModel#moveRow(...)`メソッドを使用して、選択した行を上下に動かしています。KBD{Shift}キーを押しながら、ツールバーの移動ボタンを押すとそれぞれ、先頭、末尾に移動します。
+上記のサンプルでは、`DefaultTableModel#moveRow(...)`メソッドを使用して選択した行を上下に動かしています。KBD{Shift}キーを押しながらツールバーの移動ボタンを押すとそれぞれ、先頭、末尾に移動します。
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/DefaultTableModel.html#moveRow-int-int-int- DefaultTableModel#moveRow(int, int, int) (Java Platform SE 8)]

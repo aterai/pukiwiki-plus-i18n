@@ -24,6 +24,7 @@ class EncodingFileChooserUI extends MetalFileChooserUI {
   protected EncodingFileChooserUI(JFileChooser filechooser) {
     super(filechooser);
   }
+
   @Override public void installComponents(JFileChooser fc) {
     super.installComponents(fc);
     JPanel bottomPanel = getBottomPanel();
@@ -64,16 +65,16 @@ class EncodingFileChooserUI extends MetalFileChooserUI {
 * 解説 [#explanation]
 - `JFileChooser#setAccessory(JComponent)`を使用すると`JFileChooser`の右側にコンポーネントが追加されるので、横長のコンポーネントを追加すると`JFileChooser`全体の幅が広がってしまう
 -- [[JFileChooserに画像プレビューを追加>Swing/PreviewAccessory]]
-- `BasicFileChooserUI#getBottomPanel()`メソッドでファイル名入力欄、ファイルフィルタ、ボタンなどを格納している下部パネルを取得し、「ファイルのタイプ(`T`)」パネルとボタンパネルの間に、`JComboBox`のような横長のコンポーネントを設定した別パネルを追加
+- `BasicFileChooserUI#getBottomPanel()`メソッドでファイル名入力欄、ファイルフィルタ、ボタンなどを格納している下部パネルを取得し、「ファイルのタイプ(`T`)」パネルとボタンパネルの間に`JComboBox`のような横長のコンポーネントを設定した別パネルを追加
 -- `MetalFileChooserUI`の場合、`2`番目の`filesOfTypePanel`の直後になるよう`bottomPanel.add(Box.createRigidArea(vstrut5), 3); bottomPanel.add(encodingPanel, 4)`で追加
 --- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#add-java.awt.Component-int- Container#add(Component, int) (Java Platform SE 8)] 
 -- `BasicFileChooserUI#getBottomPanel()`で取得できる`JPanel`内のレイアウトは、`LookAndFeel`ごとに大きく異なるため同じ方法は使用できない
 --- 例えば`WindowsLookAndFeel`では`BoxLayout.LINE_AXIS`、`MetalLookAndFeel`では`BoxLayout.Y_AXIS`
--- `MetalFileChooserUI`では、`JLabel`を継承する`AlignedLabel`で最も長い文字列幅から推奨サイズを揃えているが、`private`のため、このサンプルでは使用できない
---- [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]で、ラベルを検索して推奨サイズを取得しているが、もし`Encoding:`がこの最も長い文字列幅より長い場合は末尾が省略されてしまう
-- `JFileChooser#updateUI()`メソッドをオーバーライドして、`super.updateUI(); setUI(new EncodingFileChooserUI(this));`などを実行した場合、`AcceptAll`ファイルフィルタが重複追加されてしまう
+-- `MetalFileChooserUI`では`JLabel`を継承する`AlignedLabel`で最も長い文字列幅から推奨サイズを揃えているが、`private`のためこのサンプルでは使用できない
+--- [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]でラベルを検索して推奨サイズを取得しているが、もし`Encoding:`がこの最も長い文字列幅より長い場合は末尾が省略されてしまう
+- `JFileChooser#updateUI()`メソッドをオーバーライドして`super.updateUI(); setUI(new EncodingFileChooserUI(this));`などを実行した場合、`AcceptAll`ファイルフィルタが重複追加されてしまう
 -- `setUI(...)`の後で`JFileChooser#resetChoosableFileFilters()`を実行するか、`super.updateUI()`を実行しないことで回避可能
---- 個別のファイルフィルタ追加などの設定は、`JFileChooser#updateUI()`メソッド内で実施する
+--- 個別のファイルフィルタ追加などの設定は`JFileChooser#updateUI()`メソッド内で実施する
 
 * 参考リンク [#reference]
 - [[JFileChooserに画像プレビューを追加>Swing/PreviewAccessory]]

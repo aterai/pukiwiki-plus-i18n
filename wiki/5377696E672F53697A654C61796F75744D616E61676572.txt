@@ -57,8 +57,8 @@ Stream.of("b1", "b2", "b3").forEach(s -> {
 -- `JToggleButton#getPreferredSize(...)`をオーバーライドし、自身が選択されているかどうかで推奨サイズを変更
 - `Override FlowLayout#layoutContainer(...)`
 -- `FlowLayout#layoutContainer(...)`をオーバーライドし、子コンポーネントである`JToggleButton`が選択されているかどうかで表示サイズを変更
---- `LayoutManager`内なので、`JToggleButton#setSize(...)`が使用可能
---- `LayoutManager`以外での、`setSize(...)`、`setPreferredSize(...)`、`setMaximumSize`などの使用は非推奨
+--- `LayoutManager`内なので`JToggleButton#setSize(...)`が使用可能
+--- `LayoutManager`以外での`setSize(...)`、`setPreferredSize(...)`、`setMaximumSize`などの使用は非推奨
 --- [http://stackoverflow.com/questions/7229226/should-i-avoid-the-use-of-setpreferredmaximumminimumsize-methods-in-java-swi Should I avoid the use of set(Preferred|Maximum|Minimum)Size methods in Java Swing? - Stack Overflow]
 
 * 参考リンク [#reference]
