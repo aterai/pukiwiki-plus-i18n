@@ -37,6 +37,7 @@ JScrollPane scroll2 = new JScrollPane(textArea2) {
 - 左: `JTextArea#setMargin(Insets)`
 -- `JTextArea`に`setMargin(Insets)`で余白を設定
 -- 行変更などのカーソル移動で先頭や末尾の余白分まではスクロールされず、上記のスクリーンショットのように余白が見えない状態になる場合がある
+--- `Java 8`では再現しない？
 - 右: `JScrollPane#setViewportBorder(...)`
 -- `JTextArea#setMargin(new Insets(0, 0, 0, 1))`で`JTextArea`自体の余白を変更
 --- %%すべて`0`の場合、一番長い行の末尾で`Caret`が表示されない%% `Java 9`で修正済み

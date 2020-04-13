@@ -9,7 +9,7 @@ description: JTreeのノードをドラッグ＆ドロップで移動します�
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTLofRhAtI/AAAAAAAAAX4/d1C6sFO5s4g/s800/DnDTree.png
 ---
 * 概要 [#summary]
-`JTree`のノードをドラッグ＆ドロップで移動します。[http://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks #26: DnD JTree]のソースコードを参考にしています。
+`JTree`のノードをドラッグ＆ドロップで移動します。[https://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks #26: DnD JTree]のソースコードを参考にしています。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTLofRhAtI/AAAAAAAAAX4/d1C6sFO5s4g/s800/DnDTree.png)
 
@@ -19,7 +19,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTLofRhAtI/AAAAAAAAAX4/d1
   DataFlavor[] f = dtde.getCurrentDataFlavors();
   boolean isDataFlavorSupported = f[0].getHumanPresentableName().equals(NAME);
   if (!isDataFlavorSupported) {
-    //サポートしないDataFlavor(例えばデスクトップからファイルなど)
+    // サポートしないDataFlavor(例えばデスクトップからファイルなど)
     rejectDrag(dtde);
     return;
   }
@@ -27,34 +27,35 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTLofRhAtI/AAAAAAAAAX4/d1
   Point pt = dtde.getLocation();
   TreePath path = getPathForLocation(pt.x, pt.y);
   if (path == null) {
-    //ノード以外の場所(例えばJTreeの余白など)
+    // ノード以外の場所(例えばJTreeの余白など)
     rejectDrag(dtde);
     return;
   }
-  //Object draggingObject;
-  //try {
-  //  draggingObject = dtde.getTransferable().getTransferData(localObjectFlavor);
-  //} catch (Exception ex) {
-  //  rejectDrag(dtde);
-  //  return;
-  //}
+  // Object draggingObject;
+  // try {
+  //   draggingObject = dtde.getTransferable().getTransferData(localObjectFlavor);
+  // } catch (Exception ex) {
+  //   rejectDrag(dtde);
+  //   return;
+  // }
   Object draggingObject = getSelectionPath().getLastPathComponent();
   MutableTreeNode draggingNode = (MutableTreeNode) draggingObject;
   DefaultMutableTreeNode targetNode = (DefaultMutableTreeNode) path.getLastPathComponent();
   DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) targetNode.getParent();
   while (parentNode != null) {
     if (draggingNode.equals(parentNode)) {
-      //親ノードを子ノードにドロップしようとしている
+      // 親ノードを子ノードにドロップしようとしている
       rejectDrag(dtde);
       return;
     }
     parentNode = (DefaultMutableTreeNode) parentNode.getParent();
   }
-  //dropTargetNode は、描画用(Rectangle2D、Line)のflag
+  // dropTargetNodeは描画用(Rectangle2D、Line)のflag
   dropTargetNode = targetNode;
   dtde.acceptDrag(dtde.getDropAction());
   repaint();
 }
+
 private void rejectDrag(DropTargetDragEvent dtde) {
   dtde.rejectDrag();
   dropTargetNode = null; // dropTargetNode(flag)をnullにして
@@ -63,7 +64,7 @@ private void rejectDrag(DropTargetDragEvent dtde) {
 }}
 
 * 解説 [#explanation]
-[http://www.oreilly.co.jp/books/4873112788/ HACK #26: DnD JTree]から以下の動作を変更しています。
+[https://www.oreilly.co.jp/books/4873112788/ HACK #26: DnD JTree]から以下の動作を変更しています。
 
 - ルートノードのドラッグを禁止
 - 自ノードから自ノードへのドラッグ＆ドロップを禁止
@@ -78,11 +79,11 @@ private void rejectDrag(DropTargetDragEvent dtde) {
 -- 兄弟ノードの末尾に直接ドラッグ＆ドロップできない
 -- それらの親ノードにドロップすると兄弟ノードの一番最後に追加される
 -- [https://bugs.openjdk.java.net/browse/JDK-8129830 JDK-8129830 JTree drag/drop on lower half of last child of container incorrect - Java Bug System]
---- `Java 9`で修正された
+--- `Java 9`で修正済み
 
 * 参考リンク [#reference]
-- [http://www.oreilly.co.jp/books/4873112788/ HACK #26: DnD JTree]
-- [http://www.javaworld.com/javaworld/javatips/jw-javatip114.html Java Tip 114: Add ghosted drag images to your JTrees - Java World]
+- [https://www.oreilly.co.jp/books/4873112788/ HACK #26: DnD JTree]
+- [https://www.javaworld.com/article/2077478/java-tip-114--add-ghosted-drag-images-to-your-jtrees.html Java Tip 114: Add ghosted drag images to your JTrees | Java World]
 - [http://www.java2s.com/Code/Java/Swing-JFC/DnDdraganddropJTreecode.htm DnD (drag and drop)JTree code : Tree : Swing JFC : Java examples (example source code) Organized by topic]
 
 * コメント [#comment]
