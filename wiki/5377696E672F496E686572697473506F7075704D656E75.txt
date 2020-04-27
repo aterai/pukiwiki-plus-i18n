@@ -17,20 +17,22 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOe9ph-LI/AAAAAAAAAcc/iw
 #code(link){{
 JScrollPane scroll = new JScrollPane(table);
 scroll.setComponentPopupMenu(new TablePopupMenu());
-//scroll.getViewport().setInheritsPopupMenu(true); // JDK 1.5
+// scroll.getViewport().setInheritsPopupMenu(true); // JDK 1.5
 table.setInheritsPopupMenu(true);
-//table.getTableHeader().setInheritsPopupMenu(true);
-}}
-#code{{
+// table.getTableHeader().setInheritsPopupMenu(true);
+
+// ...
 private class TablePopupMenu extends JPopupMenu {
   private final Action deleteAction = new DeleteAction("delete", null);
   private final Action createAction = new CreateAction("add", null);
+
   public TablePopupMenu() {
     super();
     add(createAction);
     addSeparator();
     add(deleteAction);
   }
+
   @Override public void show(Component c, int x, int y) {
     deleteAction.setEnabled(table.getSelectedRowCount() > 0);
     super.show(c, x, y);
@@ -39,12 +41,12 @@ private class TablePopupMenu extends JPopupMenu {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JScrollPane`に`setComponentPopupMenu(JPopupMenu)`メソッドで、ポップアップメニューを追加し、`JTable`の方は、`setInheritsPopupMenu(true)`とすることで、親の`JScrollPane`に設定したポップアップメニューを使用するよう設定しています。
+上記のサンプルでは、`JScrollPane`に`setComponentPopupMenu(JPopupMenu)`メソッドでポップアップメニューを追加し、`JTable`側には`setInheritsPopupMenu(true)`とすることで親の`JScrollPane`に設定したポップアップメニューを使用するよう設定しています。
 
 ----
-- `JDK 1.5`では、`JViewport`も`setInheritsPopupMenu(true)`とする必要があったが、`JDK 1.6`ではデフォルトが変更されて不要になった
-- `JDK 1.6`では、`JTable`のヘッダも、`setInheritsPopupMenu(true)`で、`JScrollPane`からポップアップメニューを取得して表示可能
--- %%`JDK 1.6` + `WindowsLookAndFeel`で、`JTableHeader`上にポップアップメニューを表示すると、以下のようにうまく再描画できない場合がある%% 修正済み
+- `JDK 1.5`では`JViewport`も`setInheritsPopupMenu(true)`とする必要があったが、`JDK 1.6`ではデフォルトが変更されて不要になった
+- `JDK 1.6`では`JTable`のヘッダも`setInheritsPopupMenu(true)`で、`JScrollPane`からポップアップメニューを取得して表示可能
+-- %%`JDK 1.6` + `WindowsLookAndFeel`で`JTableHeader`上にポップアップメニューを表示すると、以下のようにうまく再描画できない場合がある%% 修正済み
 + ヘッダを右クリックしながら、右端にドラッグ、ポップアップ表示
 + KBD{Esc}キーで、ポップアップ非表示
 + ヘッダ上で右クリック、ポップアップ、KBD{Esc}キー

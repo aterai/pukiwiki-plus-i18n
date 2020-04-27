@@ -1,0 +1,62 @@
+---
+category: swing
+folder: OptionPaneBackground
+title: JOptionPaneの背景色を変更する
+tags: [JOptionPane, JPanel]
+author: aterai
+pubdate: 2020-04-27T18:44:33+09:00
+description: JOptionPaneで使用されている子JPanelをすべて透明化して背景色を指定した色に変更します。
+image: https://drive.google.com/uc?id=1jUaaox2WyFYAqVow6MbfH7o9rGY-7WqC
+---
+* 概要 [#summary]
+`JOptionPane`で使用されている子`JPanel`をすべて透明化して背景色を指定した色に変更します。
+
+#download(https://drive.google.com/uc?id=1jUaaox2WyFYAqVow6MbfH7o9rGY-7WqC)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+UIManager.put("OptionPane.background", Color.LIGHT_GRAY);
+String txt = "<html>JOptionPane:<br><li>messageArea<li>realBody<li>separator<li>body<li>buttonArea";
+String title = "Title";
+int type = JOptionPane.WARNING_MESSAGE;
+
+JLabel label = new JLabel(txt);
+label.addHierarchyListener(e -> {
+  Component c = e.getComponent();
+  if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0 && c.isShowing()) {
+    stream(SwingUtilities.getAncestorOfClass(JOptionPane.class, c))
+        .filter(JPanel.class::isInstance)
+        .map(JPanel.class::cast) // TEST: .peek(cc -> System.out.println(cc.getName()))
+        .forEach(p -> p.setOpaque(false));
+  }
+});
+
+JButton b2 = new JButton("background");
+b2.addActionListener(e -> JOptionPane.showMessageDialog(b2.getRootPane(), label, title, type));
+}}
+
+* 解説 [#explanation]
+- `default`
+-- `UIManager.put("OptionPane.background", Color.LIGHT_GRAY)`で`JOptionPane`の背景色を変更
+-- `JOptionPane`で使用されている子`JPanel`が不透明のため、フチの色のみ変更される
+- `background`
+-- `UIManager.put("OptionPane.background", Color.LIGHT_GRAY)`で`JOptionPane`の背景色を変更
+-- メッセージ用コンポーネントに`HierarchyListener`を追加して`JOptionPane`のオープンイベントを取得
+-- `JOptionPane`が表示状態になったらその子`JPanel`を検索し、すべて`setOpaque(false)`で透明化
+-- デフォルトの`JOptionPane`は以下の名前の`5`つの`JPanel`で構成されている
+--- `OptionPane.messageArea`
+--- `OptionPane.realBody`
+--- `OptionPane.separator`
+--- `OptionPane.body`
+--- `OptionPane.buttonArea`
+- `override`
+-- `JOptionPane.paintComponent(...)`をオーバーライドして背景を任意の`Texture`に変更
+-- `JOptionPane`の子`JPanel`を検索し、すべて`setOpaque(false)`で透明化
+
+* 参考リンク [#reference]
+- [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]
+- [https://stackoverflow.com/questions/61252239/joptionpane-background-color/61264104 java - JOptionPane Background Color - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

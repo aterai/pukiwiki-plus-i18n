@@ -15,22 +15,32 @@ image: https://lh4.googleusercontent.com/--XCIC-Dhgwk/UU8M_ixmZeI/AAAAAAAABoU/aX
 
 * サンプルコード [#sourcecode]
 #code(link){{
-UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE);
+// UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE);
+String key = "MenuItem.disabledAreNavigable";
+boolean b = UIManager.getBoolean(key);
+System.out.println(key + ": " + b);
+JCheckBox check = new JCheckBox(key, b) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setSelected(UIManager.getLookAndFeelDefaults().getBoolean(key));
+    UIManager.put(key, isSelected());
+  }
+};
+check.addActionListener(e -> UIManager.put(key, ((JCheckBox) e.getSource()).isSelected()));
 }}
 
 * 解説 [#explanation]
 - `WindowsLookAndFeel`
 -- `UIManager.getLookAndFeelDefaults().getBoolean("MenuItem.disabledAreNavigable")`の初期値は`true`
--- `UIManager.put("MenuItem.disabledAreNavigable", ...)`で、`Disabled`な`JMenuItem`をハイライトするかどうかを切替可能
+-- `UIManager.put("MenuItem.disabledAreNavigable", ...)`で`Disabled`な`JMenuItem`をハイライトするかどうかを切替可能
 - `MetalLookAndFeel`
 -- `UIManager.getLookAndFeelDefaults().getBoolean("MenuItem.disabledAreNavigable")`の初期値は`false`
--- `UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE)`を設定すれば、`Disabled`な`JMenuItem`でもハイライトが可能
+-- `UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE)`を設定すれば`Disabled`な`JMenuItem`でもハイライトが可能
 - `NimbusLookAndFeel`
 -- `UIManager.getLookAndFeelDefaults().getBoolean("MenuItem.disabledAreNavigable")`の初期値は`false`
--- `UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE)`を設定しても、`Disabled`な`JMenuItem`をハイライト不可
+-- `UIManager.put("MenuItem.disabledAreNavigable", Boolean.TRUE)`を設定しても`Disabled`な`JMenuItem`をハイライト不可
 
 * 参考リンク [#reference]
-// - %%[http://weblogs.java.net/blog/joshy/archive/2006/08/windows_lf_bugs.html Windows L&F Bugs: Part 2 | Java.net]%%
 - [https://bugs.openjdk.java.net/browse/JDK-4515765 JDK-4515765 Win L&F: Disabled menu items should show highlight - Java Bug System]
 - [https://bugs.openjdk.java.net/browse/JDK-6325555 JDK-6325555 Only Partial Fix in for 4515765 in B53 Swing PIT - Java Bug System]
 

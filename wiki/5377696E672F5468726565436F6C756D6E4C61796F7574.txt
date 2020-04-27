@@ -105,13 +105,13 @@ leftConstraints.setHeight(height);
 rightConstraints.setHeight(height);
 centerConstraints.setHeight(height);
 }}
--- [[JListからの大量アイテム削除を高速化する>Swing/FastRemoveOfListItems]]も`SpringLayout`を使用しているが、`3`列の幅をすべてパーセントで指定しており、中央の幅は固定ではない
+-- [[JListからの大量アイテム削除を高速化する>Swing/FastRemoveOfListItems]]も`SpringLayout`を使用しているが、`3`列の幅をすべてパーセントで指定しており中央の幅は固定ではない
 -- 参考: [https://stackoverflow.com/questions/49978526/java-swing-how-to-make-jlists-resize-properly-when-gridbaglayout-column-is-set/50009817#50009817 Java Swing: How to make JLists resize properly when GridBagLayout column is set to grow, ignoring the JList's item widths? - Stack Overflow]のVGRさんの回答が`SpringLayout`を使用して同様のレイアウトを実現している
 --- 中央幅の固定と高さの設定方法が少し異なる
 - `BorderLayout`
--- `BorderLayout#layoutContainer(...)`をオーバーライドして、親コンポーネントの幅が変更されたら、中央は常に幅固定、左右は均等に水平引き伸ばしを行う
+-- `BorderLayout#layoutContainer(...)`をオーバーライドして、親コンポーネントの幅が変更されたら中央は常に幅固定、左右は均等に水平引き伸ばしを行う
 -- デフォルトの`BorderLayout`は`3`列レイアウトの場合、左右は常に推奨サイズの幅で固定、中央は水平・垂直両方向に引き伸ばし
--- 上下配置、`ComponentOrientation`などは考慮していない
+-- 上下配置や`ComponentOrientation`などは考慮していない
 
 * 参考リンク [#reference]
 - [[JListからの大量アイテム削除を高速化する>Swing/FastRemoveOfListItems]]

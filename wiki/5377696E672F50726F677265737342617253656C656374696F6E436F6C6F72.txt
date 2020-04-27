@@ -28,6 +28,7 @@ progressBar2.setUI(new BasicProgressBarUI() {
   @Override protected Color getSelectionForeground() {
     return Color.PINK;
   }
+
   @Override protected Color getSelectionBackground() {
     return Color.BLUE;
   }
@@ -41,8 +42,8 @@ progressBar2.setUI(new BasicProgressBarUI() {
 -- 背景色: `ProgressBar.background`
 -- 進捗状況で塗り潰された場合の文字色: `ProgressBar.selectionForeground`
 -- 進捗状況の塗り潰し色: `ProgressBar.selectionBackground`
--- `NimbusLookAndFeel`では、すべて無効
--- `WindowsLookAndFeel`では、`ProgressBar.background`が無効
+-- `NimbusLookAndFeel`ではすべて無効
+-- `WindowsLookAndFeel`では`ProgressBar.background`が無効
 - 下: `BasicProgressBarUI`
 -- 文字色: `JProgressBar#setForeground(Color)`で設定
 -- 背景色: `JProgressBar#setBackground(Color)`で設定

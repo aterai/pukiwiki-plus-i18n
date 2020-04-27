@@ -48,8 +48,8 @@ private static <E> void move1(JList<E> from, JList<E> to) {
 
 - `default remove`(`5000`件)
 -- 移動元の`JList`で選択されているアイテムのインデックスを`JList#getSelectedIndices()`メソッドで取得
--- 上で取得したインデックス配列を`for`でループし、移動元の`DefaultListModel`から`get(idx)`でアイテムを取得、これを移動先の`DefaultListModel`へ`addElement(...)`でコピー
--- 上で取得したインデックス配列を`for`で末尾からループし、移動元の`DefaultListModel`から`remove(idx)`でアイテムを削除
+-- このインデックス配列を`for`文でループして移動元の`DefaultListModel`から`get(idx)`でアイテムを取得し、これを移動先の`DefaultListModel`へ`addElement(...)`メソッドでコピー
+-- このインデックス配列を`for`文で末尾からループし、移動元の`DefaultListModel`から`remove(idx)`でアイテムを削除
 -- `DefaultListModel#remove(idx)`内で実行される`AbstractListModel#fireIntervalRemoved(...)`が遅いため、アイテムを大量に削除する場合非常に時間が掛かる
 -- `DefaultListModel#removeAllElements()`で全削除、`JList`の選択モードが`ListSelectionModel.MULTIPLE_INTERVAL_SELECTION`で`DefaultListModel#removeRange(...)`メソッドで範囲削除が可能な場合、`AbstractListModel#fireIntervalRemoved(...)`は最後に一回呼ばれるだけなので高速
 - `clear + addElement`(`20000`件)

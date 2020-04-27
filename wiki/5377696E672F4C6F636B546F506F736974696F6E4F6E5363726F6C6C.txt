@@ -1,0 +1,64 @@
+---
+category: swing
+folder: LockToPositionOnScroll
+title: JListのスクロールをセルユニット単位にするかを変更する
+tags: [JList, JScrollPane, UIManager, LookAndFeel]
+author: aterai
+pubdate: 2020-04-20T03:08:08+09:00
+description: JListのスクロールバーをマウスでドラッグした場合、セルの上辺を固定したユニット単位のスクロールかなめらなかにスクロールするかを設定します。
+image: https://drive.google.com/uc?id=1KPtadNNLz1TOn7yjo-C8DpG6NuDpw-Od
+---
+* 概要 [#summary]
+`JList`のスクロールバーをマウスでドラッグした場合、セルの上辺を固定したユニット単位のスクロールかなめらなかにスクロールするかを設定します。
+
+#download(https://drive.google.com/uc?id=1KPtadNNLz1TOn7yjo-C8DpG6NuDpw-Od)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String key = "List.lockToPositionOnScroll";
+// UIManager.put(key, Boolean.FALSE);
+
+DefaultListModel<String> model = new DefaultListModel<>();
+IntStream.range(0, 1000).mapToObj(Objects::toString).forEach(model::addElement);
+JList<String> list = new JList<String>(model) {
+  @Override public void updateUI() {
+    setCellRenderer(null);
+    super.updateUI();
+    ListCellRenderer<? super String> renderer = getCellRenderer();
+    setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
+      Component c = renderer.getListCellRendererComponent(
+          list, value, index, isSelected, cellHasFocus);
+      if (isSelected) {
+        c.setForeground(list.getSelectionForeground());
+        c.setBackground(list.getSelectionBackground());
+      } else {
+        c.setForeground(list.getForeground());
+        c.setBackground(index % 2 == 0 ? EVEN_BACKGROUND : list.getBackground());
+      }
+      return c;
+    });
+  }
+};
+list.setFixedCellHeight(64);
+
+JCheckBox check = new JCheckBox(key, UIManager.getBoolean(key));
+check.addActionListener(e -> UIManager.put(key, ((JCheckBox) e.getSource()).isSelected()));
+}}
+
+* 解説 [#explanation]
+- `WindowsLookAndFeel`
+-- デフォルトは`UIManager.getBoolean("List.lockToPositionOnScroll")　== Boolean.TRUE`でセルの上辺を固定したユニット単位のスクロール
+-- ホイールスクロールや矢印ボタンのクリック、カーソルキーなどのスクロールは`List.lockToPositionOnScroll`の設定は影響しない
+--- [[JScrollPaneのスクロール量を変更>Swing/ScrollIncrement]]
+- `BasicLookAndFeel`
+-- デフォルトは`UIManager.getBoolean("List.lockToPositionOnScroll")　== Boolean.FALSE`でなめらかにスクロール
+-- `MetalLookAndFeel`は`UIManager.put("List.lockToPositionOnScroll", Boolean.TRUE)`を設定するとスクロールバーのマウスドラッグでもユニット単位のスクロールが可能
+- `NumbusLookAndFeel`
+-- `List.lockToPositionOnScroll`の設定は影響せず、スクロールバーのマウスドラッグはなめらかでもセルの上辺を固定したユニット単位のスクロールではなく、ホイールスクロールや矢印ボタンのクリックと同じスクロールになる
+
+* 参考リンク [#reference]
+- [[JScrollPaneのスクロール量を変更>Swing/ScrollIncrement]]
+
+* コメント [#comment]
+#comment
+#comment
