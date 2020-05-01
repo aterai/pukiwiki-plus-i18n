@@ -19,6 +19,7 @@ class TooltipList<E> extends JList<E> {
   public TooltipList(ListModel<E> m) {
     super(m);
   }
+
   @Override public Point getToolTipLocation(MouseEvent event) {
     Point pt = null;
     if (event != null) {
@@ -43,17 +44,16 @@ class TooltipList<E> extends JList<E> {
 
 * 解説 [#explanation]
 - 左: `CellBounds`
--- `JList#getToolTipLocation()`をオーバーライドして、表示する`JToolTip`の原点を`JList#getCellBounds(int, int)`で取得したセル領域の左上に変更
+-- `JList#getToolTipLocation()`をオーバーライドして表示する`JToolTip`の原点を`JList#getCellBounds(int, int)`で取得したセル領域の左上に変更
 - 中: `ListCellRenderer`
--- `JList#getToolTipLocation()`をオーバーライドして、表示する`JToolTip`の原点を`JList#getCellBounds(int, int)`で取得したセル領域の左上に変更
--- `JList#createToolTip()`をオーバーライドして、セルの描画に使用するセルレンダラー自体を`JToolTip`に追加
+-- `JList#getToolTipLocation()`をオーバーライドして表示する`JToolTip`の原点を`JList#getCellBounds(int, int)`で取得したセル領域の左上に変更
+-- `JList#createToolTip()`をオーバーライドしてセルの描画に使用するセルレンダラー自体を`JToolTip`に追加
 --- このため、対象セルが選択状態の場合`JToolTip`の背景色もそのセル選択色と同じになる
 - 右: `Default`
 -- `JToolTip`の表示位置は、デフォルトのマウスカーソルの右下
 
 ----
-セル内に文字列が収まっているかどうかは、以下のようなセルレンダラーを使用して判定しています。
-
+- セル内に文字列が収まっているかどうかは、以下のようなセルレンダラーを使用して判定可能
 #code{{
 class TooltipListCellRenderer extends DefaultListCellRenderer {
   @Override public Component getListCellRendererComponent(

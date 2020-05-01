@@ -37,10 +37,10 @@ IntStream.range(0, BIT_LENGTH).forEach(i -> {
 
 * 解説 [#explanation]
 - `JCheckBox`の選択状態を`BitSet`で管理
-- `UndoManager`を使用したアンドゥ・リドゥは、[[JCheckBoxの選択状態をBigIntegerで記憶し、UndoManagerを使用して元に戻したりやり直したりする>Swing/UndoRedoCheckBoxes]]と同じ
-- `JCheckBox`がクリックされて値が変化した場合、`BitSet`内のビットを`2`進数の形で`JLabel`に表示
--- `BitSet#toLongArray()`を使用しているので、`Long.MAX_VALUE`より`2`進数での桁数が大きくなる場合は注意が必要
--- `BitSet#toLongArray()`が返す`long`配列は、`0`から`63`ビットが存在すればインデックス`0`、`64`から`127`ビットが存在すればインデックス`1`と続く
+- `UndoManager`を使用したアンドゥ・リドゥは[[JCheckBoxの選択状態をBigIntegerで記憶し、UndoManagerを使用して元に戻したりやり直したりする>Swing/UndoRedoCheckBoxes]]と同じ
+- `JCheckBox`がクリックされて値が変化した場合`BitSet`内のビットを`2`進数の形で`JLabel`に表示
+-- `BitSet#toLongArray()`を使用しているので`Long.MAX_VALUE`より`2`進数での桁数が大きくなる場合は注意が必要
+-- `BitSet#toLongArray()`が返す`long`配列は`0`から`63`ビットが存在すればインデックス`0`、`64`から`127`ビットが存在すればインデックス`1`と続く
 --- 参考: [https://stackoverflow.com/questions/37170363/bitset-tostring-and-valueof-are-difficult-to-understand java - BitSet toString() and valueOf() are difficult to understand - Stack Overflow]
 -- `BitSet`内のビットが全て空の場合、`bitSet.toLongArray().length`は`0`となり、`bitSet.toLongArray()[0]`は`ArrayIndexOutOfBoundsException`になる
 -- `bitSet.toLongArray()[0]`に`0`から`63`ビットのすべてにフラグが立った`long`値`lv`が入っている場合、符号ビットにもフラグが立った状態なので`Long.toString(lv, 2)`は`-1L`になる
