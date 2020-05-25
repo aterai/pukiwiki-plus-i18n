@@ -26,6 +26,7 @@ class PluginCellEditor extends DefaultCellEditor {
     super(comboBox);
     panel = new PluginPanel(comboBox);
   }
+
   @Override public Component getTreeCellEditorComponent(
       JTree tree, Object value, boolean selected, boolean expanded,
       boolean leaf, int row) {
@@ -34,6 +35,7 @@ class PluginCellEditor extends DefaultCellEditor {
     this.node = node;
     return panel;
   }
+
   @Override public Object getCellEditorValue() {
     Object o = super.getCellEditorValue();
     if (node == null) {
@@ -45,6 +47,7 @@ class PluginCellEditor extends DefaultCellEditor {
     n.setSelectedPluginIndex(m.getIndexOf(o));
     return n;
   }
+
   @Override public boolean isCellEditable(EventObject e) {
     Object source = e.getSource();
     if (!(source instanceof JTree) || !(e instanceof MouseEvent)) {
@@ -72,6 +75,7 @@ class PluginCellEditor extends DefaultCellEditor {
     }
     return delegate.isCellEditable(e);
   }
+
   private void showComboPopup(final JTree tree, final MouseEvent me) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {

@@ -16,9 +16,9 @@ image: https://drive.google.com/uc?id=1NedWhPhVuMDTwrHRaFdW-YXZjdH-019yuw
 * サンプルコード [#sourcecode]
 #code(link){{
 public static Stream<Component> stream(Container parent) {
-  return Arrays.stream(parent.getComponents())
-    .filter(Container.class::isInstance).map(c -> stream(Container.class.cast(c)))
-    .reduce(Stream.of(parent), Stream::concat);
+  return Stream.of(parent.getComponents())
+      .filter(Container.class::isInstance).map(c -> stream((Container) c))
+      .reduce(Stream.of(parent), Stream::concat);
 }
 // ...
 stream(chooser)

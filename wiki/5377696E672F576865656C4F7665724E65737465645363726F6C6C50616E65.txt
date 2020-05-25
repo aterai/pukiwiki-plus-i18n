@@ -25,12 +25,14 @@ class WheelScrollLayerUI extends LayerUI<JScrollPane> {
       ((JLayer) c).setLayerEventMask(AWTEvent.MOUSE_WHEEL_EVENT_MASK);
     }
   }
+
   @Override public void uninstallUI(JComponent c) {
     if (c instanceof JLayer) {
       ((JLayer) c).setLayerEventMask(0);
     }
     super.uninstallUI(c);
   }
+
   @Override protected void processMouseWheelEvent(
       MouseWheelEvent e, JLayer<? extends JScrollPane> l) {
     Component c = e.getComponent();

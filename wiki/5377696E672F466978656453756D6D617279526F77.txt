@@ -16,15 +16,15 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTM63Y0s8I/AAAAAAAAAZ8/o3
 * サンプルコード [#sourcecode]
 #code(link){{
 public JTable makeTable() {
-  final JTable table = new JTable(model);
-  final RowFilter<TableModel, Integer> filter = new RowFilter<>() {
+  JTable table = new JTable(model);
+  RowFilter<TableModel, Integer> filter = new RowFilter<>() {
     @Override public boolean include(
       Entry<? extends TableModel, ? extends Integer> entry) {
       int i0 = table.convertRowIndexToView(entry.getIdentifier());
       return i0 != 0;
     }
   };
-  final TableRowSorter<TableModel> s = new TableRowSorter<TableModel>(model) {
+  TableRowSorter<TableModel> s = new TableRowSorter<TableModel>(model) {
     @Override public void toggleSortOrder(int column) {
       RowFilter<? super TableModel, ? super Integer> f = getRowFilter();
       setRowFilter(null);
@@ -33,7 +33,7 @@ public JTable makeTable() {
     }
   };
   s.setRowFilter(filter);
-  //s.setSortsOnUpdates(true);
+  // s.setSortsOnUpdates(true);
   s.toggleSortOrder(1);
   table.setRowSorter(s);
 

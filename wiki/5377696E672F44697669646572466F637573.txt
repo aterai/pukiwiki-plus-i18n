@@ -1,0 +1,54 @@
+---
+category: swing
+folder: DividerFocus
+title: JSplitPaneのDividerをマウスクリックで選択状態にする
+tags: [JSplitPane]
+author: aterai
+pubdate: 2020-05-11T17:50:27+09:00
+description: JSplitPaneのDividerをマウスでクリックしたとき選択状態になるよう設定します。
+image: https://drive.google.com/uc?id=1KMTrAVDblIUSfTjTvu0s_fBYMckaaF9Z
+---
+* 概要 [#summary]
+`JSplitPane`の`Divider`をマウスでクリックしたとき選択状態になるよう設定します。
+
+#download(https://drive.google.com/uc?id=1KMTrAVDblIUSfTjTvu0s_fBYMckaaF9Z)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JSplitPane splitPane = new JSplitPane();
+Container divider = ((BasicSplitPaneUI) splitPane.getUI()).getDivider();
+divider.addMouseListener(new MouseAdapter() {
+  @Override public void mousePressed(MouseEvent e) {
+    super.mousePressed(e);
+    splitPane.requestFocusInWindow();
+    // or
+    // Action startResize = splitPane.getActionMap().get("startResize");
+    // startResize.actionPerformed(new ActionEvent(
+    //     splitPane, ActionEvent.ACTION_PERFORMED, "startResize"));
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- デフォルトの`JSplitPane`では`Divider`をクリックしてもフォーカス移動は発生しない
+-- KBD{F8}キーを押して`startResize`アクションを実行しないと`Divider`は選択状態にならず、カーソルキーでの`Divider`移動は不可
+-- `JSplitPane`とその子コンポーネントがすべてフォーカス不可の場合、`Divider`を選択状態にすることはできない
+--- `JSplitPane#setFocusable(true)`を設定すればKBD{Tab}キーなどで`Divider`を選択状態にできる
+- `Divider.addMouseListener`
+-- `BasicSplitPaneUI#getDivider()`で取得した`Divider`に`MouseListener`を設定して、クリックされたら親の`JSplitPane`にフォーカスを移動することで`Divider`を選択状態にする
+-- `Container`である`Divider`に`requestFocusInWindow()`を実行することは可能だが、これを実行しても`Divider`は選択状態にならない
+--- `JSplitPane`とその子コンポーネントがすべてフォーカス不可でも`Divider`を選択状態にできる
+
+----
+- メモ: カーソルキーによる`Divider`の移動量を変更したい
+-- `BasicSplitPaneUI.KEYBOARD_DIVIDER_MOVE_OFFSET`が定義されているがどこからも使用されていない？
+-- `BasicSplitPaneUI#getKeyboardMoveIncrement()`メソッドが存在してマジックナンバーで`3`が返される
+--- これをオーバーライドして移動量を変更したいが、パッケージプライベートなので利用しづらい
+
+* 参考リンク [#reference]
+- [[JSplitPaneのDividerをマウスで移動できないように設定する>Swing/FixedDividerSplitPane]]
+
+* コメント [#comment]
+#comment
+#comment

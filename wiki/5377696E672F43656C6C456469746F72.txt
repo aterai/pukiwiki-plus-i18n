@@ -23,19 +23,19 @@ JTable table = new JTable(new DefaultTableModel() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルは、以下の`3`種類の設定で、セルを編集不可にする方法をテストしています。
+上記のサンプルは、以下の`3`種類の設定でセルを編集不可にする方法をテストしています。
 
 - `Override TableModel#isCellEditable(...) { return false; }`
--- テーブルモデルの`TableModel#isCellEditable()`メソッドが常に`false`を返すようにオーバーライドして、すべてのセルを編集不可に設定
+-- テーブルモデルの`TableModel#isCellEditable()`メソッドが常に`false`を返すようにオーバーライドしてすべてのセルを編集不可に設定
 -- `JTable#isCellEditable()`メソッドをオーバーライドする方法もある
---- この場合、例えば同じ`TableModel`を使用する`2`つの`JTable`で、片方だけ編集不可にする設定が可能
+--- この場合、例えば同じ`TableModel`を使用する`2`つの`JTable`で片方だけ編集不可にする設定が可能
 - `JTable#setDefaultEditor(Object.class, null);`
--- 各カラムにセルエディタを設定しない、かつ`Object.class`が使用するデフォルトセルエディタを`null`にすることで、すべてのセルを編集不可にする
+-- 各カラムにセルエディタを設定しない、かつ`Object.class`が使用するデフォルトセルエディタを`null`にすることですべてのセルを編集不可にする
 #code{{
 table.setDefaultEditor(Object.class, null);
 }}
 - `JTable#setEnabled(false)`
--- `JTable#setEnabled(false)`で、セルや行の選択なども含めて、すべてのセルでの編集を禁止する
+-- `JTable#setEnabled(false)`でセルや行の選択なども含めてすべてのセルでの編集を禁止する
 #code{{
 table.setEnabled(false);
 }}

@@ -34,6 +34,7 @@ JComboBox<String> combo3 = new JComboBox<String>(model) {
       });
     }
   }
+
   @Override protected void paintBorder(Graphics g) {
     super.paintBorder(g);
     if (isFocusOwner() && !isPopupVisible() && isWindowsLnF()) {
@@ -43,6 +44,7 @@ JComboBox<String> combo3 = new JComboBox<String>(model) {
       g2.dispose();
     }
   }
+
   private boolean isWindowsLnF() {
     return getUI().getClass().getName().contains("WindowsComboBoxUI");
   }
@@ -52,7 +54,7 @@ JComboBox<String> combo3 = new JComboBox<String>(model) {
 * 解説 [#explanation]
 - `default`
 -- デフォルトの`WindowsLookAndFeel`で編集不可の`JComboBox`にフォーカスがある場合、内部アイテム(セルレンダラー内部)に点線の`FocusBorder`が表示される
--- 点線と文字列の間隔が近く？、若干うるさい感じがする
+-- 点線と文字列の間隔が近く？若干うるさい感じがする
 --- 参考: [[JTreeのノードの文字列に余白を追加>Swing/TreeCellMargin]]
 - `setFocusable(false)`
 -- `JComboBox#setFocusable(false)`で点線は非表示になるが、フォーカスが当たらなくなる
@@ -62,10 +64,10 @@ JComboBox<String> combo3 = new JComboBox<String>(model) {
 -- フォーカスが当たっているかどうかが判別しづらくなる
 - `paintBorder(...)`
 -- 上記と同様のフォーカスがあっても点線を非表示にするセルレンダラーを適用
--- `JComboBox#paintBorder(...)`をオーバーライドして、別途`JComboBox`本体に`FocusBorder`を描画
+-- `JComboBox#paintBorder(...)`をオーバーライドして別途`JComboBox`本体に`FocusBorder`を描画
 
 ----
-- メモ: `WindowsLookAndFeel`でも`UIManager.put("ComboBox.border", ...)`で`JComboBox`本体の`Border`を変更することは可能だが、内部アイテムに適用される`Border`を変更する方法は現状では存在しない？
+- `WindowsLookAndFeel`でも`UIManager.put("ComboBox.border", ...)`で`JComboBox`本体の`Border`を変更することは可能だが、内部アイテムに適用される`Border`を変更する方法は現状では存在しない？
 
 #code{{
 UIManager.put("ComboBox.border", new LineBorder(Color.GRAY.brighter()) {
