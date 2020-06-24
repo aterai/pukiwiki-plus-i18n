@@ -37,10 +37,10 @@ JComboBox<String> combo1 = new JComboBox<String>(makeModel()) {
 
 * 解説 [#explanation]
 - 上:
--- `UIManager.put(...)`で背景色などを変更し、`BasicComboBoxUI`を設定した`JComboBox`
+-- `UIManager.put(...)`で`JComboBox`の背景色などを変更し、`BasicComboBoxUI`を設定
 - 中:
--- 上の`JComboBox`から、`getAccessibleContext().getAccessibleChild(0)`で`BasicComboPopup`を取得し、角丸の`Border`を設定
--- `JComboBox`に`PopupMenuListener`を追加し、ドロップダウンリストが`JFrame`の外側にはみ出す(`HeavyWeightContainer`の`JWindow`に`JPopupMenu`が配置されている)場合は、`JWindow`の背景を透明化して角丸部分を非表示に設定
+-- 上の`JComboBox`から`getAccessibleContext().getAccessibleChild(0)`で`BasicComboPopup`を取得し角丸の`Border`を設定
+-- `JComboBox`に`PopupMenuListener`を追加しドロップダウンリストが`JFrame`の外側にはみ出す(`HeavyWeightContainer`の`JWindow`に`JPopupMenu`が配置されている)場合は、`JWindow`の背景を透明化して角丸部分を非表示に設定
 - 下:
 -- 中の`JComboBox`と同様に`BasicComboPopup`を取得し、下辺のみ角丸の`Border`を設定(`JComboBox`自体には上辺のみ角丸の`Border`を設定)
 -- `ArrowButton`を変更

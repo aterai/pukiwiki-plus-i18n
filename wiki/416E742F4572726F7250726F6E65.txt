@@ -66,6 +66,24 @@ description: AntでのJavaコードのコンパイラにコード解析を行う
 -- `<compilerarg value="-Xplugin:ErrorProne -Xep:DeadException:ERROR -Xep:MultipleTopLevelClasses:OFF -Xep:CatchAndPrintStackTrace:OFF" />`
 -- [https://errorprone.info/docs/flags Command-line flags]
 
+** Error Prone 2.4.0 [#md1bf1ec]
+- `Ant` + `Error Prone 2.4.0`で以下のような例外が発生する？
+-- [https://www.threeten.org/threeten-extra/ ThreeTen-Extra - Home]の`Releases`、`Download`から`threeten-extra-1.5.0.jar`をダウンロードしてクラスパス(上記の`build.xml`の場合`${env.ERRORPRONE_HOME}`に設定したディレクトリ)に配置すれば解消する
+
+ An unhandled exception was thrown by the Error Prone static analysis plugin.
+    [javac]      Please report this at https://github.com/google/error-prone/issues/new and include the following:
+    [javac]
+    [javac]      error-prone version: 2.4.0
+    [javac]      BugPattern: (see stack trace)
+    [javac]      Stack Trace:
+    [javac]      java.lang.NoClassDefFoundError: org/threeten/extra/AmPm
+    [javac]     at com.google.errorprone.bugpatterns.time.FromTemporalAccessor.<clinit>(FromTemporalAccessor.java:103)
+    [javac]     at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+    [javac]     at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+    [javac]     at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+    [javac]     at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+    [javac]     at com.google.errorprone.scanner.ScannerSupplierImpl.instantiateChecker(ScannerSupplierImpl.java:84)
+
 ** 文字化け [#t71a6b89]
 - 環境変数`ANT_OPTS`などに`-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8`を設定しても`cygwin`の`bash`(`Character set`は`UTF-8`)で文字化けする
 -- `PMD`などの出力は正常

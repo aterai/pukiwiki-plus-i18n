@@ -18,6 +18,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJ8wQD77I/AAAAAAAAAVM/Ad
 class WidePopupMenuListener implements PopupMenuListener {
   private static final int POPUP_MIN_WIDTH = 300;
   private boolean adjusting;
+
   @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
     JComboBox combo = (JComboBox) e.getSource();
     Dimension size = combo.getSize();
@@ -32,7 +33,9 @@ class WidePopupMenuListener implements PopupMenuListener {
     combo.setSize(size);
     adjusting = false;
   }
+
   @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
+
   @Override public void popupMenuCanceled(PopupMenuEvent e) {}
 }
 }}

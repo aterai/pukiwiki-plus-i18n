@@ -31,22 +31,21 @@ class ButtonsPanel extends JPanel {
     }
   }
 }
-}}
-#code{{
+
 class ButtonsRenderer extends ButtonsPanel
                       implements TableCellRenderer {
   public ButtonsRenderer() {
     super();
     setName("Table.cellRenderer");
   }
+
   @Override public Component getTableCellRendererComponent(JTable table,
         Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     setBackground(isSelected?table.getSelectionBackground():table.getBackground());
     return this;
   }
 }
-}}
-#code{{
+
 class ButtonsEditor extends ButtonsPanel
                     implements TableCellEditor {
   public ButtonsEditor(final JTable table) {
@@ -89,14 +88,17 @@ class ButtonsEditor extends ButtonsPanel
       }
     });
   }
+
   @Override public Component getTableCellEditorComponent(JTable table,
         Object value, boolean isSelected, int row, int column) {
     this.setBackground(table.getSelectionBackground());
     return this;
   }
+
   @Override public Object getCellEditorValue() {
     return "";
   }
+
   // Copied from AbstractCellEditor
   // protected EventListenerList listenerList = new EventListenerList();
   transient protected ChangeEvent changeEvent = null;
@@ -107,12 +109,12 @@ class ButtonsEditor extends ButtonsPanel
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`CellRenderer`用と`CellEditor`用に、`JButton`を`2`つ配置した`JPanel`をそれぞれ作成しています。`CellRenderer`用の`JButton`は表示のみに使用するため、`Action`を設定するのは`CellEditor`用の`JButton`のみです。
+上記のサンプルでは、`CellRenderer`用と`CellEditor`用に`JButton`を`2`つ配置した`JPanel`をそれぞれ作成しています。`CellRenderer`用の`JButton`は表示のみに使用するため`Action`を設定するのは`CellEditor`用の`JButton`のみです。
 
 ----
-- `LookAndFeel`などが更新されたら、`JTable#updateUI()`メソッド内で`SwingUtilities#updateRendererOrEditorUI()`メソッドを呼び出すなどして、各セルレンダラーやセルエディタ(これらは`JTable`の子コンポーネントではないので)を更新
--- `AbstractCellEditor`を継承するセルエディタは、`Component`も`DefaultCellEditor`も継承していないので、`LookAndFeel`を変更しても追従しない
--- そのため、`JTable#updateUI()`をオーバーライドして、セルエディタ自体を再作成するなどの対応が必要
+- `LookAndFeel`などが更新されたら`JTable#updateUI()`メソッド内で`SwingUtilities#updateRendererOrEditorUI()`メソッドを呼び出すなどして各セルレンダラーやセルエディタ(これらは`JTable`の子コンポーネントではないので)を更新
+-- `AbstractCellEditor`を継承するセルエディタは`Component`も`DefaultCellEditor`も継承していないので`LookAndFeel`を変更しても追従しない
+-- そのため`JTable#updateUI()`をオーバーライドしてセルエディタ自体を再作成するなどの対応が必要
 - このサンプルでは、`Component`を継承(`TableCellEditor`を実装)するセルエディタを作成し、`AbstractCellEditor`から必要なメソッドをコピーして回避している
 
 #code{{

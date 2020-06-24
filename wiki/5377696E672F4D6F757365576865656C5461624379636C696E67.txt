@@ -1,0 +1,70 @@
+---
+category: swing
+folder: MouseWheelTabCycling
+title: JTabbedPaneのタブ選択をマウスホイールで変更する
+tags: [JTabbedPane, MouseWheelListener, ActionMap]
+author: aterai
+pubdate: 2020-06-15T02:56:24+09:00
+description: JTabbedPaneのタブ選択をマウスホイールの上下回転で変更します。
+image: https://drive.google.com/uc?id=1o0WYONVZxnE60UMRtEN7JBE5NOsbpwTI
+---
+* 概要 [#summary]
+`JTabbedPane`のタブ選択をマウスホイールの上下回転で変更します。
+
+#download(https://drive.google.com/uc?id=1o0WYONVZxnE60UMRtEN7JBE5NOsbpwTI)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+private static JTabbedPane makeWheelTabbedPane() {
+  return new JTabbedPane(SwingConstants.TOP, JTabbedPane.SCROLL_TAB_LAYOUT) {
+    private transient MouseWheelListener handler;
+
+    @Override public void updateUI() {
+      removeMouseWheelListener(handler);
+      super.updateUI();
+      handler = e -> {
+        JTabbedPane source = (JTabbedPane) e.getComponent();
+        if (!getTabAreaBounds(source).contains(e.getPoint())) {
+          return;
+        }
+        double dir = (e.isControlDown() ? -1 : 1) * e.getPreciseWheelRotation();
+        String key = dir > 0 ? "navigateNext" : "navigatePrevious";
+        ActionEvent ae = new ActionEvent(
+          source, ActionEvent.ACTION_PERFORMED, "", e.getWhen(), e.getModifiersEx());
+        source.getActionMap().get(key).actionPerformed(ae);
+        // int idx = source.getSelectedIndex() + (int) dir;
+        // if (idx < 0) {
+        //   idx = source.getTabCount() - 1;
+        // } else if (idx >= source.getTabCount()) {
+        //   idx = 0;
+        // }
+        // source.setSelectedIndex(idx);
+      };
+      addMouseWheelListener(handler);
+    }
+  };
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、`JTabbedPane`に上方向のホイール回転で前のタブ、下方向のホイール回転で次のタブを選択する`MouseWheelListener`を追加しています。
+
+- マウスカーソルがタブエリア上にある場合のみホイール回転でタブ選択を変更
+-- カーソルキーによるタブ選択移動とは異なり、タブにフォーカスがない場合でもマウスカーソルがタブエリア上に存在すればタブ選択を変更可能
+-- 参考: [[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]
+- KBD{Ctrl}キーを押しながらホイール回転で逆方向にタブ選択を移動する
+- `JTabbedPane`の`ActionMap`から`navigateNext`、`navigatePrevious`アクションを取得してホイール回転の方向に応じて`actionPerformed`メソッドを実行
+-- このため末尾タブから先頭、または先頭タブから末尾へのタブ選択移動が可能
+-- また`JTabbedPane#setEnabledAt(index, false)`で選択不可にしたタブは自動的にスキップする
+--- `JTabbedPane#setSelectedIndex(index)`を使用すると選択不可にしたタブも選択されてしまう
+-- `navigateNext|navigatePrevious`アクションはカーソルキーに割り当てられている`navigateRight|navigateLeft|navigateUp|navigateDown`とは異なりタブ配置位置に依存せずにタブ選択の変更が可能
+--- たとえば`SCROLL_TAB_LAYOUT`レイアウトでタブ配置位置が`TOP`の`JTabbedPane`の場合、左右カーソルキーでタブ選択は変更可能だが上下キーは無反応
+--- `WRAP_TAB_LAYOUT`レイアウトでタブ配置位置が`TOP`の`JTabbedPane`の場合、左右カーソルキーでタブ選択は同一ラン内でタブ選択が変更可能(先頭から末尾へのループなどは不可)、上下キーは上下のタブランへの移動になる
+
+* 参考リンク [#reference]
+- [[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]
+- [[JTabbedPaneのTabAreaをスクロール>Swing/ScrollTabToVisible]]
+
+* コメント [#comment]
+#comment
+#comment

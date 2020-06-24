@@ -17,10 +17,12 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMX06FjXI/AAAAAAAAAZE/mm
 #code(link){{
 class FadeImage extends JComponent implements ActionListener {
   private int alpha = 10;
+
   public FadeImage() {
     super();
     setBackground(Color.BLACK);
   }
+
   @Override protected void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g.create();
     g2.setPaint(getBackground());
@@ -36,9 +38,11 @@ class FadeImage extends JComponent implements ActionListener {
     g2.drawImage(icon, null, 0, 0);
     g2.dispose();
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     repaint();
   }
+
   private AlphaComposite makeAlphaComposite(float alpha) {
     return AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
   }

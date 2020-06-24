@@ -38,13 +38,14 @@ private final JMenuItem editItem1 = new JMenuItem(
 
 * 解説 [#explanation]
 - `Edit: setHeaderValue`
--- `TableColumn#getHeaderValue()`でカラム名を取得して、`TableColumn#setHeaderValue(String)`で変更
--- カラムモデルの`ColumnIdentifier`は、変更されない
+-- `TableColumn#getHeaderValue()`でカラム名を取得して`TableColumn#setHeaderValue(String)`メソッドで変更
+-- カラムモデルの`ColumnIdentifier`は変更されない
 - `Edit: setColumnIdentifiers`
--- `DefaultTableModel#setColumnIdentifiers(Object[])`でモデルの列識別子を置き換え、`JTableHeader`を作り直しているため、列の入れ替えなどは初期化される
--- ドラッグ中のカラムが存在する状態で、`DefaultTableModel#setColumnIdentifiers(Object[])`を実行すると、`ArrayIndexOutOfBoundsException: -1`が発生する
---- このサンプルでは、`JTableHeader#setDraggedColumn(null);`で、ドラッグ中のカラムをクリアしている
---- `DefaultTableModel#setColumnIdentifiers(Object[])`を使用する場合は、`table.getTableHeader().setReorderingAllowed(false);`でドラッグによる列の順序変更を禁止しておいた方が良さそう
+-- `DefaultTableModel#setColumnIdentifiers(Object[])`メソッドでモデルの列識別子を変更
+-- `JTableHeader`を再作成することになるため列の入れ替えなどは初期化される
+-- ドラッグ中のカラムが存在する状態で`DefaultTableModel#setColumnIdentifiers(Object[])`を実行すると`ArrayIndexOutOfBoundsException: -1`が発生する
+--- このサンプルでは、`JTableHeader#setDraggedColumn(null)`でドラッグ中のカラムをクリアしている
+--- `DefaultTableModel#setColumnIdentifiers(Object[])`を使用する場合は、`table.getTableHeader().setReorderingAllowed(false)`でドラッグによる列の順序変更を禁止しておいた方が良さそう
 #code{{
 private final JMenuItem editItem2 = new JMenuItem(
         new AbstractAction("Edit: setColumnIdentifiers") {
