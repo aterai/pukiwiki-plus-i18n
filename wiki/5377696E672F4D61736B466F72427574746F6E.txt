@@ -26,10 +26,12 @@ tabbedPane.addMouseListener(new MouseAdapter() {
       tabbedPane.remove(idx);
     }
   }
+
   @Override public void mousePressed(MouseEvent e) {
     System.out.println("BUTTON2 mousePressed: "
       + Objects.toString((e.getModifiersEx() & InputEvent.getMaskForButton(2)) != 0));
   }
+
   @Override public void mouseReleased(MouseEvent e) {
     System.out.println("BUTTON2 mouseReleased: "
       + Objects.toString((e.getModifiersEx() & InputEvent.getMaskForButton(2)) != 0));
@@ -39,8 +41,8 @@ tabbedPane.addMouseListener(new MouseAdapter() {
 
 * 解説 [#explanation]
 - 中ボタンでクリック
--- `MouseListener#mouseClicked(...)`内の場合、`MouseEvent#getButton()`で状態が変化したマウスボタンを取得し、それが第`2`ボタンかどうかで判断する
--- `MouseListener#mousePressed(...)`内なら、`e.getModifiersEx() & InputEvent.getMaskForButton(2)`でフラグが立っているかどうかで判断可能
+-- `MouseListener#mouseClicked(...)`内の場合、`MouseEvent#getButton()`で状態が変化したマウスボタンを取得しそれが第`2`ボタンかどうかで判断する
+-- `MouseListener#mousePressed(...)`内なら`e.getModifiersEx() & InputEvent.getMaskForButton(2)`でフラグが立っているかどうかで判断可能
 -- `MouseInfo.getNumberOfButtons()`メソッドで取得されるマウスのボタン数が`2`以下の場合、中ボタンは無い(未検証)と判断している
 - 左ボタンでダブルクリック
 -- `MouseEvent#getClickCount()`が`2`、かつ`MouseEvent#getButton()`が第`1`ボタンの場合、タブを閉じる
