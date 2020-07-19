@@ -15,7 +15,21 @@ image: https://drive.google.com/uc?id=12DSo9IIp_Ah9F2FlvkEjjREEwZXyNNLWhA
 
 * サンプルコード [#sourcecode]
 #code(link){{
-UIManager.put("OptionPane.isYesLast", Boolean.TRUE);
+private static final String KEY = "OptionPane.isYesLast";
+
+JButton defaultButton = new JButton(KEY + ": false(default)");
+defaultButton.addActionListener(e -> {
+  UIManager.put("OptionPane.isYesLast", Boolean.FALSE);
+  String str = JOptionPane.showInputDialog(getRootPane(), KEY + ": false");
+  log.setText(str);
+});
+
+JButton yesLastButton = new JButton(KEY + ": true");
+yesLastButton.addActionListener(e -> {
+  UIManager.put("OptionPane.isYesLast", Boolean.TRUE);
+  String str = JOptionPane.showInputDialog(getRootPane(), KEY + ": true");
+  log.setText(str);
+});
 }}
 
 * 解説 [#explanation]

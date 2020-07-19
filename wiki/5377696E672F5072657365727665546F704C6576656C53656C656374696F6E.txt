@@ -15,7 +15,19 @@ image: https://drive.google.com/uc?id=1T6g79tQY4xA9kVjE53DiRWGIfHgIQs6p
 
 * サンプルコード [#sourcecode]
 #code(link){{
-UIManager.put("Menu.preserveTopLevelSelection", Boolean.TRUE);
+// UIManager.put("Menu.preserveTopLevelSelection", Boolean.TRUE);
+String key = "Menu.preserveTopLevelSelection";
+Boolean b = UIManager.getBoolean(key);
+System.out.println(key + ": " + b);
+JCheckBox preserveTopLevelSelectionCheck = new JCheckBox(key, b) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setSelected(UIManager.getLookAndFeelDefaults().getBoolean(key));
+    UIManager.put(key, isSelected());
+  }
+};
+preserveTopLevelSelectionCheck.addActionListener(e ->
+    UIManager.put(key, ((JCheckBox) e.getSource()).isSelected()));
 }}
 
 * 解説 [#explanation]
