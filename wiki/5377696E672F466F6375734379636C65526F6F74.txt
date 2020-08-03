@@ -21,13 +21,13 @@ p1.add(new JTextField(16));
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、各`JPanel`がそれぞれフォーカストラバーサルサイクルのルートコンテナになるように設定しています。
+上記のサンプルでは、以下の`JPanel`がそれぞれフォーカストラバーサルサイクルのルートコンテナになるように設定しています。
 
 - 左`JPanel`
--- `setFocusCycleRoot(true);`
+-- `setFocusCycleRoot(true)`
 - 右`JPanel`
--- `setFocusCycleRoot(true);`
--- `setFocusTraversalPolicyProvider(true);`
+-- `setFocusCycleRoot(true)`
+-- `setFocusTraversalPolicyProvider(true)`
 -- 順方向キーボードトラバーサルとリバースキーボードトラバーサルを入れ替え
 
 * 参考リンク [#reference]

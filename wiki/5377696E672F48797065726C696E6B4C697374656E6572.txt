@@ -41,10 +41,8 @@ editorPane.addHyperlinkListener(new HyperlinkListener() {
 * 解説 [#explanation]
 上記のサンプルでは、`JEditorPane`(`HTMLEditorKit`,編集不可)に挿入したタグ`<a href='...'>...</a>`のクリックなどを受け取る`HyperlinkListener`を追加しています。
 
-----
-以下のように、`JButton`などのコンポーネントをアンカータグの代わりに使用する方法もあります。
-
-- `JEditorPane`に`JButton`で作成したリンクを追加
+- 以下のように、`JButton`などのコンポーネントをアンカータグの代わりに使用する方法もある
+-- `JEditorPane`に`JButton`で作成したリンクを追加
 -- 編集可の`JEditorPane`で使用可能
 -- リンク文字列の部分選択が不可
 -- %%ベースラインが揃わない%% `JComponent#setAlignmentY(...)`でテキストベースラインに揃えることが可能

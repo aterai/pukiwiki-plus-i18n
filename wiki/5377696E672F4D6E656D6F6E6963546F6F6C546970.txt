@@ -17,6 +17,7 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTP7StneAI/AAAAAAAAAew/Rw
 #code(link){{
 class MnemonicToolTip extends JToolTip {
   private final JLabel mnemonicLabel = new JLabel();
+
   public MnemonicToolTip() {
     super();
     setLayout(new BorderLayout());
@@ -24,6 +25,7 @@ class MnemonicToolTip extends JToolTip {
     mnemonicLabel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
     add(mnemonicLabel, BorderLayout.EAST);
   }
+
   @Override public Dimension getPreferredSize() {
     Dimension d = super.getPreferredSize();
     if (mnemonicLabel.isVisible()) {
@@ -31,6 +33,7 @@ class MnemonicToolTip extends JToolTip {
     }
     return d;
   }
+
   @Override public void setComponent(JComponent c) {
     if (c instanceof AbstractButton) {
       AbstractButton b = (AbstractButton) c;

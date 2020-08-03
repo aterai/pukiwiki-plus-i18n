@@ -36,7 +36,7 @@ private void append(String str, boolean flg) {
 上記のサンプルでは、以下の手順で`JTextPane`にスタイルを設定した文字列を追加しています。
 
 - `JTextPane`から`StyledDocument`を取得
-- 予め設定しておいたエラー表示用の文字属性スタイルを`StyledDocument#getStyle("error")`で取得
+- 予め設定しておいたエラー表示用の文字属性スタイルを`StyledDocument#getStyle("error")`メソッドで取得
 - このスタイルと文字列と合わせて`Document#insertString(...)`メソッドで挿入
 
 * 参考リンク [#reference]

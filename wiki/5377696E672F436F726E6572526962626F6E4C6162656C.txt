@@ -1,0 +1,107 @@
+---
+category: swing
+folder: CornerRibbonLabel
+title: JLabelの隅に斜めに回転した文字列とリボンと重ねて表示する
+tags: [JLabel, AffineTransform]
+author: aterai
+pubdate: 2020-08-03T14:31:02+09:00
+description: JLabelの右上隅に斜め45度に回転した文字列とリボンと重ねて表示します。
+image: https://drive.google.com/uc?id=1AbO4jLsaajRhg6M5GuBlsdZg6BIg3Abn
+---
+* 概要 [#summary]
+`JLabel`の右上隅に斜め`45`度に回転した文字列とリボンと重ねて表示します。
+
+#download(https://drive.google.com/uc?id=1AbO4jLsaajRhg6M5GuBlsdZg6BIg3Abn)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class BadgeLabel extends JLabel {
+  private final Color ribbonColor = new Color(0xAA_FF_64_00, true);
+  private final String ribbonText;
+
+  protected BadgeLabel(Icon image) {
+    super(image);
+    this.ribbonText = null;
+  }
+
+  protected BadgeLabel(Icon image, String ribbonText) {
+    super(image);
+    this.ribbonText = ribbonText;
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+    setVerticalAlignment(SwingConstants.CENTER);
+    setVerticalTextPosition(SwingConstants.BOTTOM);
+    setHorizontalAlignment(SwingConstants.CENTER);
+    setHorizontalTextPosition(SwingConstants.CENTER);
+  }
+
+  @Override protected void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.setPaint(Color.WHITE);
+    g2.fill(getShape());
+    super.paintComponent(g);
+
+    if (ribbonText != null) {
+      Dimension d = getSize();
+      float fontSize = 10f;
+      int cx = (d.width - (int) fontSize) / 2;
+      double theta = Math.toRadians(45d);
+
+      Font font = g2.getFont().deriveFont(fontSize);
+      g2.setFont(font);
+      FontRenderContext frc = new FontRenderContext(null, true, true);
+
+      Shape ribbon = new Rectangle2D.Double(cx, -fontSize, d.width, fontSize);
+      AffineTransform at = AffineTransform.getRotateInstance(theta, cx, 0);
+      g2.setPaint(ribbonColor);
+      g2.fill(at.createTransformedShape(ribbon));
+
+      TextLayout tl = new TextLayout(ribbonText, font, frc);
+      g2.setPaint(Color.WHITE);
+      Rectangle2D r = tl.getOutline(null).getBounds2D();
+      double dx = cx + (d.width - cx) / Math.sqrt(2d) - r.getWidth() / 2d;
+      double dy = fontSize / 2d + r.getY();
+      AffineTransform tx = AffineTransform.getTranslateInstance(dx, dy);
+      Shape s = tl.getOutline(tx);
+      g2.fill(at.createTransformedShape(s));
+    }
+    g2.dispose();
+  }
+
+  @Override public boolean isOpaque() {
+    return false;
+  }
+
+  protected Shape getShape() {
+    Dimension d = getSize();
+    double r = d.width / 2d;
+    return new RoundRectangle2D.Double(
+        0d, 0d, d.width - 1d, d.height - 1d, r, r);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JLabel`
+-- `JLabel#isOpaque()`をオーバーライドして透明化
+-- `JLabel#paintComponent(...)`をオーバーライドして背景用のラウンド矩形、`JLabel`の元アイコン、右上隅のリボン、リボン文字列の順に描画
+- リボン
+-- `JLabel`の`x`軸中央、-リボンの高さを原点に矩形を作成
+-- リボン矩形の左下を原点に`Math.toRadians(45d)`回転
+- リボン文字列
+-- `TextLayout.getOutline()`メソッドで文字列を`Shape`に変換
+--- 参考: [[Fontを回転する>Swing/TransformedShape]]
+-- 文字列の`Shape`をその左下を原点に`Math.toRadians(45d)`回転
+
+* 参考リンク [#reference]
+- [[Fontを回転する>Swing/TransformedShape]]
+- [[JLabel内のアイコンにJLayerを使用してバッジを表示する>Swing/NotificationBadge]]
+
+* コメント [#comment]
+#comment
+#comment

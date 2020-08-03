@@ -28,7 +28,7 @@ class ListItemTransferHandler extends TransferHandler {
     Point pt;
     if (compact) {
       int w = source.getFixedCellWidth();
-      int h = source.getFixedCellHeight() - 20; //TODO
+      int h = source.getFixedCellHeight() - 20; // TODO: 20 ???
       setDragImage(createCompactDragImage(source, w, h));
       pt = new Point(w / 2, h);
     } else {
@@ -38,8 +38,9 @@ class ListItemTransferHandler extends TransferHandler {
     if (pt != null) {
       setDragImageOffset(pt);
     }
-    return TransferHandler.MOVE; //TransferHandler.COPY_OR_MOVE;
+    return TransferHandler.MOVE; // TransferHandler.COPY_OR_MOVE;
   }
+
   private static BufferedImage createDragImage(JList source) {
     int w = source.getWidth();
     int h = source.getHeight();
@@ -56,6 +57,7 @@ class ListItemTransferHandler extends TransferHandler {
     g.dispose();
     return bi;
   }
+
   private BufferedImage createCompactDragImage(JList source, int w, int h) {
     BufferedImage br = null;
     if (w > 0 && h > 0) {
@@ -91,11 +93,11 @@ class ListItemTransferHandler extends TransferHandler {
 * 解説 [#explanation]
 - `CompactDragImageMode`: `false`
 -- `JList`のサイズで`BufferedImage`を作成し、これに選択したリストアイテムのみドラッグイメージとして位置を変更せずに描画
--- オフセットは、`JList#getMousePosition()`メソッドで取得したドラッグ開始位置を設定
+-- オフセットは`JList#getMousePosition()`メソッドで取得したドラッグ開始位置を設定
 - `CompactDragImageMode`: `true`
 -- 複数アイコンを選択してドラッグする場合のゴーストイメージをコンパクト化した独自画像に変更
 -- `JList`のリストアイテムの固定サイズ(リストアイテム一個分)で`BufferedImage`を作成し、これに選択されたリストアイテムの最初のイメージと選択数を設定した`JLabel`を描画
--- オフセットは、作成したドラッグイメージの底辺中央付近を設定
+-- オフセットは作成したドラッグイメージの底辺中央付近を設定
 
 * 参考リンク [#reference]
 - [[JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え>Swing/DragSelectDropReordering]]

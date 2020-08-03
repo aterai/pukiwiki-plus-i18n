@@ -1,0 +1,74 @@
+---
+category: swing
+folder: ColorUniversalDesignCalendar
+title: JTableで作成したカレンダーの日付を囲み数字にする
+tags: [JLabel, JTable]
+author: aterai
+pubdate: 2020-07-27T14:26:21+09:00
+description: JTableで作成したカレンダーの日付が休日の場合はJLabelで作成した囲み数字に変更します。
+image: https://drive.google.com/uc?id=1IB7S5IsGExXoSW_OMAlD3EDmmjUWGsjN
+---
+* 概要 [#summary]
+`JTable`で作成したカレンダーの日付が休日の場合は`JLabel`で作成した囲み数字に変更します。
+
+#download(https://drive.google.com/uc?id=1IB7S5IsGExXoSW_OMAlD3EDmmjUWGsjN)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class EnclosedLabel extends JLabel {
+  protected EnclosedLabel() {
+    super("", SwingConstants.CENTER);
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    setBorder(BorderFactory.createEmptyBorder(2, 0, 3, 1));
+  }
+
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.width = 18;
+    return d;
+  }
+
+  @Override protected void paintComponent(Graphics g) {
+    if (!Objects.equals(getBackground(), Color.WHITE)) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setPaint(getBackground());
+      g2.fill(getShape());
+      g2.dispose();
+    }
+    super.paintComponent(g);
+  }
+
+  protected Shape getShape() {
+    Dimension d = getSize();
+    if (Objects.equals(getBackground(), Color.BLUE)) {
+      return new Ellipse2D.Double(0d, 0d, d.width - 1d, d.height - 1d);
+    } else {
+      return new RoundRectangle2D.Double(0d, 0d, d.width - 1d, d.height - 1d, 5d, 5d);
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、`JTable`で作成したカレンダーの日付が日曜または祝日の場合は`CUD(Color Universal Design)`を考慮してラウンド矩形などで囲んだ数字(`JLabel`で作成)に変更しています。
+
+- 日曜、祝日
+-- `RoundRectangle2D`で`JLabel`の背景を黒塗りした日付を表示
+-- `Adobe-Japan1`の文字コレクションには`aalt`異体字でラウンド矩形の囲み数字が存在するが、`Swing`コンポーネントでは`CID`でグリフを取得できないので利用不可
+-- 祝日は日本の`2020`年`7`月のみ対応
+- 土曜
+-- `Ellipse2D`で`JLabel`の背景を塗りつぶして日付を丸付き数字で表示
+-- `Unicode`には①から㊿までの白丸数字のコードポイントは用意されているが、黒丸数字は⓴までなのでカレンダーの日付にはそのまま利用しづらい
+
+* 参考リンク [#reference]
+- [https://note.com/ogf4s2lks/n/n8d84452c36cd シャニマスのチェックボックスから見る色弱者の世界｜謝罪Ｐ｜note]
+- [[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]
+- [[JLabel内のアイコンにJLayerを使用してバッジを表示する>Swing/NotificationBadge]]
+
+* コメント [#comment]
+#comment
+#comment
