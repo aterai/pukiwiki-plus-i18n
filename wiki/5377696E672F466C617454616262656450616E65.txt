@@ -37,11 +37,13 @@ JTabbedPane tabs = new JTabbedPane() {
           Rectangle iconRect, Rectangle textRect, boolean isSelected) {
         // Do not paint anything
       }
+
       @Override protected void paintTabBorder(
           Graphics g, int tabPlacement, int tabIndex,
           int x, int y, int w, int h, boolean isSelected) {
         // Do not paint anything
       }
+
       @Override  protected void paintTabBackground(
           Graphics g, int tabPlacement, int tabIndex,
           int x, int y, int w, int h, boolean isSelected) {
@@ -62,12 +64,12 @@ JTabbedPane tabs = new JTabbedPane() {
 
 - `TabbedPane.selectedLabelShift`と`TabbedPane.labelShift`を`0`にして選択時の文字列シフトを無効化
 -- 参考: [https://bugs.openjdk.java.net/browse/JDK-7010561 JDK-7010561 Tab text position with Synth based LaF is different to Java 5/6 - Java Bug System]
-- `JTabbedPane#setOpaque(true)`と`TabbedPane.tabAreaBackground`を設定して、タブエリアの背景色を変更
-- `BasicTabbedPaneUI#paintFocusIndicator(...)`メソッドをオーバーライドして、フォーカスの点線を非表示
-- `BasicTabbedPaneUI#paintTabBorder(...)`メソッドをオーバーライドして、タブの縁を非表示
-- `BasicTabbedPaneUI#paintTabBackground(...)`メソッドをオーバーライドして、タブの背景を塗りつぶす
--- 例えば`JTabbedPane#setTabPlacement(SwingConstants.LEFT)`でタブエリアが左にある場合、タブの左側に`1px`の隙間ができる
--- `UIManager.put("TabbedPane.tabAreaInsets", new Insets(0, 0, 0, 0));`で除去できた
+- `JTabbedPane#setOpaque(true)`と`TabbedPane.tabAreaBackground`を設定してタブエリアの背景色を変更
+- `BasicTabbedPaneUI#paintFocusIndicator(...)`メソッドをオーバーライドしてフォーカスの点線を非表示
+- `BasicTabbedPaneUI#paintTabBorder(...)`メソッドをオーバーライドしてタブの縁を非表示
+- `BasicTabbedPaneUI#paintTabBackground(...)`メソッドをオーバーライドしてタブの背景を塗りつぶす
+-- %%例えば`JTabbedPane#setTabPlacement(SwingConstants.LEFT)`でタブエリアが左にある場合、タブの左側に`1px`の隙間ができる%%
+-- `UIManager.put("TabbedPane.tabAreaInsets", new Insets(0, 0, 0, 0));`で除去可能
 -- %%`TabbedPane.selectedLabelShift`または`TabbedPane.labelShift`のデフォルト値が決め打ちで入っている？%%
 -- %%このサンプルでは左に`1px`タブ領域を拡大して対応%%
 - タブコンテンツの縁飾りを無くす場合は、`UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));`などが使用可能

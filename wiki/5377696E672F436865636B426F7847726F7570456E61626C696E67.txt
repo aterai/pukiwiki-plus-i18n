@@ -1,0 +1,89 @@
+---
+category: swing
+folder: CheckBoxGroupEnabling
+title: JCheckBoxをグループでまとめて有効化する
+tags: [JCheckBox, JTree, TreeModel]
+author: aterai
+pubdate: 2021-01-04T20:28:21+09:00
+description: TreeModelから親JCheckBoxと子JCheckBoxのグループを作成し、親JCheckBoxが選択されている場合のみ子JCheckBoxのグループを有効化します。
+image: https://drive.google.com/uc?id=1t8K1EM6LtL0qO4ZXhONIZNp-Bu4l9u2v
+---
+* 概要 [#summary]
+`TreeModel`から親`JCheckBox`と子`JCheckBox`のグループを作成し、親`JCheckBox`が選択されている場合のみ子`JCheckBox`のグループを有効化します。
+
+#download(https://drive.google.com/uc?id=1t8K1EM6LtL0qO4ZXhONIZNp-Bu4l9u2v)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class CheckBoxStatusUpdateListener implements TreeModelListener {
+  private boolean adjusting;
+
+  @Override public void treeNodesChanged(TreeModelEvent e) {
+    if (adjusting) {
+      return;
+    }
+    adjusting = true;
+
+    DefaultTreeModel model = (DefaultTreeModel) e.getSource();
+    Object[] children = e.getChildren();
+    boolean isOnlyOneNodeSelected = Objects.nonNull(children) && children.length == 1;
+    Object current = isOnlyOneNodeSelected ? children[0] : model.getRoot();
+    if (current instanceof DefaultMutableTreeNode) {
+      DefaultMutableTreeNode node = (DefaultMutableTreeNode) current;
+      CheckBoxNode c = (CheckBoxNode) node.getUserObject();
+      for (Object child : e.getChildren()) {
+        updateAllChildrenUserObject((DefaultMutableTreeNode) child, c.selected);
+      }
+      model.nodeChanged((DefaultMutableTreeNode) e.getTreePath().getLastPathComponent());
+    }
+    adjusting = false;
+  }
+
+  private void updateAllChildrenUserObject(DefaultMutableTreeNode parent, boolean enabled) {
+    // Java 9: Collections.list(parent.breadthFirstEnumeration()).stream()
+    Collections.list((Enumeration<?>) parent.breadthFirstEnumeration()).stream()
+        .filter(DefaultMutableTreeNode.class::isInstance)
+        .map(DefaultMutableTreeNode.class::cast)
+        .filter(node -> !Objects.equals(parent, node))
+        .forEach(node -> {
+          CheckBoxNode check = (CheckBoxNode) node.getUserObject();
+          node.setUserObject(new CheckBoxNode(check.text, check.selected, enabled));
+        });
+  }
+
+  @Override public void treeNodesInserted(TreeModelEvent e) {
+    /* not needed */
+  }
+
+  @Override public void treeNodesRemoved(TreeModelEvent e) {
+    /* not needed */
+  }
+
+  @Override public void treeStructureChanged(TreeModelEvent e) {
+    /* not needed */
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Box`
+-- `Box.createVerticalBox()`で作成した垂直`Box`に`JCheckBox`を配置して作成
+-- フォルダノードを親`JCheckBox`、葉ノードを子`JCheckBox`のグループとして作成
+-- 子`JCheckBox`は`Box.createHorizontalBox()`に`Box.createHorizontalStrut((DefaultMutableTreeNode#getLevel() - 1) * 16))`で作成したインデントと合わせて追加してから垂直`Box`に配置
+-- 親`JCheckBox`に`ActionListener`を追加し、選択状態で子`JCheckBox`のグループの有効化・無効化を切り替える
+--- どの親`JCheckBox`の子`JCheckBox`かは`DefaultMutableTreeNode#children()`で名前を取得して検索しているので、同名ノードが存在すると正しく動作しない
+- `JTree`
+-- `TreeCellRenderer`と`TreeCellEditor`で`JCheckBox`を使用するよう設定
+--- [[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]]
+-- `TreeWillExpandListener`を追加してノードの折り畳みを無効化
+--- [[JTreeのノードを折り畳み不可に設定する>Swing/TreeNodeCollapseVeto]]
+-- `TreeModelListener`を追加してフォルダノードから作成した親`JCheckBox`の選択状態が変更されたら葉ノードから作成された子`JCheckBox`の有効化・無効化を切り替える
+-- 孫ノードから作成された`JCheckBox`の有効化・無効化は考慮していない
+
+* 参考リンク [#reference]
+- [[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]]
+- [[JTreeのノードを折り畳み不可に設定する>Swing/TreeNodeCollapseVeto]]
+
+* コメント [#comment]
+#comment
+#comment

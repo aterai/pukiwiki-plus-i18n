@@ -15,9 +15,9 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTMLdSGopI/AAAAAAAAAYw/aR
 
 * サンプルコード [#sourcecode]
 #code(link){{
-checkbox.addItemListener(e -> {
-  tabs.setEnabledAt(1, e.getStateChange() == ItemEvent.SELECTED);
-});
+JCheckBox check = new JCheckBox("Enable Advanced");
+check.addActionListener(e ->
+    tabs.setEnabledAt(tgtIndex, ((JCheckBox) e.getSource()).isSelected()));
 }}
 
 * 解説 [#explanation]

@@ -1,0 +1,78 @@
+---
+category: swing
+folder: ToolBarBorder
+title: JToolBarのドラッグアイコンを変更する
+tags: [JToolBar, Border, Icon]
+author: aterai
+pubdate: 2021-05-17T01:12:41+09:00
+description: JToolBarが移動可能な場合にBorderとして表示されるドラッグアイコンを変更します。
+image: https://drive.google.com/uc?id=1o41A_5z8emvRi_r9364CLZDTcnC3I0ia
+---
+* 概要 [#summary]
+`JToolBar`が移動可能な場合に`Border`として表示されるドラッグアイコンを変更します。
+
+#download(https://drive.google.com/uc?id=1o41A_5z8emvRi_r9364CLZDTcnC3I0ia)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class ToolBarDragBorder extends MetalBorders.ToolBarBorder {
+  private static final Icon DRAG_ICON = new ToolBarDragIcon();
+
+  @Override public void paintBorder(Component c, Graphics g, int x, int y, int w, int h) {
+    if (!(c instanceof JToolBar)) {
+      return;
+    }
+    JToolBar tb = (JToolBar) c;
+    if (tb.isFloatable()) {
+      if (tb.getOrientation() == HORIZONTAL) {
+        int cy = (h - DRAG_ICON.getIconHeight()) / 2;
+        DRAG_ICON.paintIcon(c, g, x, y + cy);
+      } else { // vertical
+        super.paintBorder(c, g, x, y, w, h);
+      }
+    }
+  }
+}
+
+class ToolBarDragIcon implements Icon {
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.translate(x, y);
+    g2.setPaint(Color.GRAY);
+    int x2 = getIconWidth() / 2 - 1;
+    int y2 = getIconHeight() / 2 - 1;
+    g2.fillRect(x2, y2 - 6, 2, 2);
+    g2.fillRect(x2, y2 - 2, 2, 2);
+    g2.fillRect(x2, y2 + 2, 2, 2);
+    g2.fillRect(x2, y2 + 6, 2, 2);
+    g2.dispose();
+  }
+
+  @Override public int getIconWidth() {
+    return 14;
+  }
+
+  @Override public int getIconHeight() {
+    return 16;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- 下:
+-- デフォルト
+-- ツールバーのドラッグ用アイコンは`LookAndFeel`依存
+-- `UIManager.put("ToolBar.border", ...)`などで変更可能
+-- `WindowsLookAndFeel`では`JToolBar`の余白をどこでもドラッグして移動可能だが、`MetalLookAndFeel`ではドラッグ用アイコン上のみドラッグ可能
+--- ただしそのドラッグ可能領域の幅は`MetalToolBarUI.MetalDockingListener`で`14px`にハードコーディングされているため、`MetalBorders.ToolBarBorder#getBorderInsets(...)`を変更しても領域の幅などは更新されない
+- 上:
+-- `MetalBorders.ToolBarBorder`の`paintBorder(...)`メソッドをオーバーライドしてツールバーの方向が水平の場合、ドラッグ用の独自アイコン(`4`点)を描画
+-- `JToolBar#getComponentOrientation()#isLeftToRight() == false`の場合に未対応
+-- ツールバーの方向が垂直の場合は元の`MetalLookAndFeel`の`ToolBarBorder`を使用
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/metal/MetalBorders.ToolBarBorder.html MetalBorders.ToolBarBorder (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

@@ -1,0 +1,61 @@
+---
+category: swing
+folder: DesktopPaneDragMode
+title: JDesktopPaneに適用するドラッグスタイルを変更する
+tags: [JDesktopPane, JInternalFrame]
+author: aterai
+pubdate: 2020-10-05T01:11:41+09:00
+description: JDesktopPaneのドラッグスタイルを継続的描画モードとアウトライン描画モードで切り替えます。
+image: https://drive.google.com/uc?id=1PMtf908TaQMVs_TVQ9xci89wlx7f7dda
+---
+* 概要 [#summary]
+`JDesktopPane`のドラッグスタイルを継続的描画モードとアウトライン描画モードで切り替えます。
+
+#download(https://drive.google.com/uc?id=1PMtf908TaQMVs_TVQ9xci89wlx7f7dda)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JDesktopPane desktop = new JDesktopPane();
+// @see javax/swing/DefaultDesktopManager.java setupDragMode(...)
+// desktop.putClientProperty("JDesktopPane.dragMode", "faster");
+// desktop.putClientProperty("JDesktopPane.dragMode", "outline");
+
+JRadioButton r1 = new JRadioButton("LIVE_DRAG_MODE", true);
+r1.addItemListener(e -> {
+  if (e.getStateChange() == ItemEvent.SELECTED) {
+    desktop.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
+  }
+});
+
+JRadioButton r2 = new JRadioButton("OUTLINE_DRAG_MODE");
+r2.addItemListener(e -> {
+  if (e.getStateChange() == ItemEvent.SELECTED) {
+    desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `LIVE_DRAG_MODE`
+-- `JInternalFrame`の移動、リサイズを継続的に描画する
+-- `MetalLookAndFeel`、`WindowsLookAdnFeel`、`NimbusLookAndFeel`などのデフォルト
+- `OUTLINE_DRAG_MODE`
+-- `JInternalFrame`の移動、リサイズをアウトラインのみ描画する
+-- `MotifLookAndFeel`はこの`OUTLINE_DRAG_MODE`のみが有効で、`LIVE_DRAG_MODE`を設定しても無効
+
+----
+- `JDesktopPane#putClientProperty("JDesktopPane.dragMode", "outline")`などでドラッグスタイルを変更する方法もある
+-- `JDesktopPane`の親`Window`が透明の場合は`DEFAULT_DRAG_MODE`で`JDesktopPane#getClientProperty("JDesktopPane.dragMode")`の値は無効
+-- `JDesktopPane#getClientProperty("JDesktopPane.dragMode")`が`outline`の場合は`OUTLINE_DRAG_MODE`
+-- `JDesktopPane#getClientProperty("JDesktopPane.dragMode")`が`faster`の場合は`FASTER_DRAG_MODE`
+--- リサイズの場合`DEFAULT_DRAG_MODE`と`FASTER_DRAG_MODE`の処理は同一
+--- ドラッグの場合`FASTER_DRAG_MODE`は`JDesktopPane`の親`Window`が透明なので再描画範囲を限定して高速化
+-- `JDesktopPane#getClientProperty("JDesktopPane.dragMode")`がその他の`null`などの場合は`JDesktopPane#getDragMode()`に従う
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/tutorial/uiswing/components/internalframe.html How to Use Internal Frames (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JDesktopPane.html#setDragMode-int- JDesktopPane#setDragMode(...) (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

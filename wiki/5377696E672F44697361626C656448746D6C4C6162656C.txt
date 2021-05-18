@@ -53,19 +53,17 @@ editor1.setEditable(false);
 -- `Html`タグを使った`JEditorPane`
 -- 無効化するとすべての文字色が変化
 -- 以下のようにして`JLabel`と同じフォントを使用するように設定
-
 #code{{
 editor2.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 editor2.setFont(UIManager.getFont("Label.font"));
 }}
 
-----
-`Html`レンダリングを無効化してタグを文字列として表示する場合は、[[JLabelなどのHtmlレンダリングを無効化>Swing/HtmlDisable]]を参考にしてください。
-
 * 参考リンク [#reference]
 - [https://bugs.openjdk.java.net/browse/JDK-4783068 JDK-4783068 Components with HTML text should gray out the text when disabled - Java Bug System]
 - [https://community.oracle.com/thread/1377943 Swing - JLabel with html tag can not be disabled or setForegroud?!]
 - [[Hyperlinkを、JLabel、JButton、JEditorPaneで表示>Swing/HyperlinkLabel]]
+- [[JLabelなどのHtmlレンダリングを無効化>Swing/HtmlDisable]]
+-- `Html`レンダリングを無効化してタグを文字列として表示する場合のサンプル
 
 * コメント [#comment]
 #comment

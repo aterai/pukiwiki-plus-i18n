@@ -9,62 +9,15 @@ pubdate: 2006-01-29
 
 #contents
 
-//* google八分メモ [#k1042248]
-//- 状況
-//-- `2014/08`中頃からハブられている模様
-//--- `2014/09`中頃、何日か復活してたけど、また駄目になる
-//-- ウェブマスターツールには特にメッセージ無し
-//- 対策(効果なし？)
-//-- 新着RSS用に更新してた「はてな」を非公開
-//-- 一覧やタグページを`<meta name="robots" content="NOINDEX,FOLLOW" />`に
-//-- `sitemap`を分割
-//-- コメントをDISQUSに移行
-//--- コメントユーザーページへの`404`ページを作成しない
-//-- `schema.org`でマークアップ
-//-- `xrea.jp`自体がペナルティを受けていると考えたほうが良さそう
-//--- 他のサイト(`*.xrea.jp`)でも、同じ症状(タイトルで検索しても上位に表示されない)が確認できる？
-//
-//- あとは、googleへの依存を極力減らす方向で(下の方は難航しそうだけど)
-//-- google codeから、GitHubへリポジトリを移行
-//-- google サイト内検索を削除
-//-- google 検索を使用しない(Opera developers の speed dial で検索エンジンが変更できない？？？)
-//-- 実行中: gmail から移行
-//--- outlook にほぼ移行完了
-//-- 未実行: google ドライブから移行
-//-- 未実行: picasa から移行
-//-- 未実行: Chrome アンインストール
-//--- FireFox、Opera 12、Opera developers にほぼ移行完了
-//-- google 日本語入力アンインストール(まれによくフリーズするようになったので)
-//-- 未実行: google Analytics から移行
-//-- 未実行: google AdSenseから移行
-//-- 未実行: bloggerから移行
-//
-//** さくらレンタルサーバ(+独自ドメイン)に移行(2014/11/01) [#gc4ed6c9]
-//- PHP設定の編集
-// date.timezone = Asia/Tokyo
-// zlib.output_compression=On
-
-//- .htaccess で301リダイレクト
-// RewriteEngine on
-// RewriteBase /
-// RewriteCond %{http_host} ^terai\.xrea\.jp
-// RewriteRule ^(.*)$ https://ateraimemo.com/$1 [R=301,L]
-//
-//- 2014/11末現在、アクセス数などは以前の水準に戻っている
-
 * 調整中のネタ帳 [#memo]
 ** JComponent [#r1b7cfa9]
-- JButton background color
 - JColorChooser pallet save load XMLEncoder
-- JComboBox search highlight
 - JComboBox tooltips right side
 - JEditorPane HTML Image Lazy loading
 - JFrame [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#isActive-- Window#isActive()]
 - JFrame global focus
-- JFrame translate Image
 - JLabel String width Unicode
 - JList ListCellRenderer html performance
-- JList newspaper style CellEditor
 - JMenuBar Slide in/out animation
 - JMenuItem JPopupMenu JButton Drag
 - JOptionPane KeyEventDispatcher
@@ -76,7 +29,6 @@ pubdate: 2006-01-29
 - JRadioButton + JTextField
 - JScrollBar BlockIncrement
 - JScrollPane VetoableChangeListener
-- JSlider JToggleButton OnOffToggleButton slider
 - JSlider Sound MIDI seekbar
 - JSlider status Range restriction
 - JSpinner multiple line
@@ -110,14 +62,10 @@ pubdate: 2006-01-29
 - File createTempFile
 - File getTotalSpace, getFreeSpace, getUsableSpace
 - Font CID Cmap
-- Font [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Font.html#canDisplay-int- Font#canDisplay(...)]
 - LocalDate DateFormatter sample
 - MetalTheme Arrow Color
-- Shape Line Animation
 - UIDefaults ProxyLazyValue
 - Image `BufferedImage#getScaledInstance() - 1`
-- Graphics XORMode
-- Badges Icon JLayer
 
 ** Java 9 AWT, Swing 新機能 [#a1caf2c7]
 - [https://docs.oracle.com/javase/jp/9/docs/api/java/awt/Desktop.html#moveToTrash-java.io.File- Desktop#moveToTrash(File) (Java SE 9 & JDK 9)]

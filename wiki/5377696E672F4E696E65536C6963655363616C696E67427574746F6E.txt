@@ -49,7 +49,7 @@ class NineSliceScalingIcon implements Icon {
                         RenderingHints.VALUE_ANTIALIAS_ON);
     Insets i = cmp instanceof Container ? ((Container) cmp).getInsets()
                                         : new Insets(0, 0, 0, 0);
-    //g2.translate(x, y); //1.8.0: work fine?
+    // g2.translate(x, y); // 1.8.0: work fine?
     int iw = image.getWidth(cmp);
     int ih = image.getHeight(cmp);
     width  = cmp.getWidth() - i.left - i.right;
@@ -83,7 +83,7 @@ class NineSliceScalingIcon implements Icon {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`BufferedImage#getSubimage(...)`メソッドで元画像を`9`分割し、`4`隅はサイズ変更なし、上下辺は幅のみ拡大縮小、左右辺は高さのみ拡大縮小、中央は幅高さが拡大縮小可能になるように、`Graphics#drawImage(...)`メソッドのスケーリングを利用して描画しています。
+上記のサンプルでは、`BufferedImage#getSubimage(...)`メソッドで元画像を`9`分割し、`4`隅はサイズ変更なし、上下辺は幅のみ拡大縮小、左右辺は高さのみ拡大縮小、中央は幅高さが拡大縮小可能になるように`Graphics#drawImage(...)`メソッドのスケーリングを利用して描画しています。
 
 - `4`隅などの固定サイズ
 -- `leftw`: 左側、上下隅の幅

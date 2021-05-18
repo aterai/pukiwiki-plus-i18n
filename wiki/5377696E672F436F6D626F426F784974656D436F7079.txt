@@ -33,6 +33,7 @@ int modifiers = InputEvent.CTRL_DOWN_MASK;
 KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_C, modifiers);
 InputMap im = combo1.getInputMap(JComponent.WHEN_FOCUSED);
 im.put(keyStroke, COPY_KEY);
+
 JPopupMenu popup = new JPopupMenu();
 popup.add(COPY_KEY).addActionListener(e -> {
   Object o = popup.getInvoker();
@@ -53,7 +54,7 @@ combo1.setComponentPopupMenu(popup);
 - `Default:`
 -- デフォルトでは編集不可の`JComboBox`にKBD{Ctrl+C}などのキー入力でのコピー機能はない
 - `Editable: false, JPopupMenu, Ctrl+C`
--- 編集不可の`JComboBox`に`ActionMap`、`InputMap`を使用してKBD{Ctrl+C}キーで現在選択中のアイテム文字列をコピー可能に設定
+-- 編集不可の`JComboBox`に`ActionMap`と`InputMap`を使用してKBD{Ctrl+C}キーで現在選択中のアイテム文字列をコピー可能に設定
 -- `JComboBox#setComponentPopupMenu(...)`で`ActionMap`に追加したコピーイベントを呼び出せるよう設定
 --- `JComboBox`のボタン上で`JPopupMenu`を呼び出すと`JPopupMenu#getInvoker()`で`JButton`が返るので注意が必要
 - `Editable: true, JPopupMenu, Ctrl+C`

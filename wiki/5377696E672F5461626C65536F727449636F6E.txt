@@ -15,19 +15,22 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUsaUYVkI/AAAAAAAAAmc/34
 
 * サンプルコード [#sourcecode]
 #code(link){{
-Icon emptyIcon = new Icon() {
-  @Override public void paintIcon(Component c, Graphics g, int x, int y) {}
+class EmptyIcon implements Icon {
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    /* Empty icon */
+  }
 
-  @Override public int getIconWidth(){
+  @Override public int getIconWidth() {
     return 0;
   }
 
   @Override public int getIconHeight() {
     return 0;
   }
-};
-UIManager.put("Table.ascendingSortIcon", new IconUIResource(emptyIcon));
-UIManager.put("Table.descendingSortIcon", new IconUIResource(emptyIcon));
+}
+// ...
+UIManager.put("Table.ascendingSortIcon", new IconUIResource(new EmptyIcon()));
+UIManager.put("Table.descendingSortIcon", new IconUIResource(new EmptyIcon()));
 }}
 
 * 解説 [#explanation]

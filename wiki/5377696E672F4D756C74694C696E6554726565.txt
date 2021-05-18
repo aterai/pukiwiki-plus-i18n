@@ -33,6 +33,7 @@ class MultiLineCellRenderer extends JPanel implements TreeCellRenderer {
     add(icon, BorderLayout.WEST);
     add(text);
   }
+
   @Override public Component getTreeCellRendererComponent(
       JTree tree, Object value, boolean isSelected, boolean expanded,
       boolean leaf, int row, boolean hasFocus) {
@@ -56,14 +57,13 @@ class MultiLineCellRenderer extends JPanel implements TreeCellRenderer {
     icon.setBackground(bColor);
     return this;
   }
+
   @Override public void updateUI() {
     super.updateUI();
     renderer = new DefaultTreeCellRenderer();
   }
 }
-}}
 
-#code{{
 class CellTextArea2 extends JTextArea {
   @Override public Dimension getPreferredSize() {
     Dimension d = new Dimension(10, 10);
@@ -74,6 +74,7 @@ class CellTextArea2 extends JTextArea {
       d.height, getRows() * getRowHeight() + i.top + i.bottom);
     return d;
   }
+
   @Override public void setText(String str) {
     super.setText(str);
     FontMetrics fm = getFontMetrics(getFont());
@@ -108,9 +109,8 @@ class CellTextArea2 extends JTextArea {
 -- `Html`タグを使用し、`<br>`で改行
 -- `parent.add(new DefaultMutableTreeNode("<html>blue<br>blue, blue"));`
 - `TextAreaRenderer`
--- `JTextArea`をノードタイトルの表示に使用する`TreeCellRenderer`を作成し、`\n`で改行
+-- `JTextArea`をノードタイトルの表示に使用する`TreeCellRenderer`を作成して`\n`で改行
 -- `parent.add(new DefaultMutableTreeNode("blue\nblue, blue"));`
-- 注:
 -- `JTree#getRowHeight()`の初期値は`LookAndFeel`で異なり、例えば`WindowsLookAndFeel`の場合`0`以下ではない
 
 * 参考リンク [#reference]

@@ -15,23 +15,26 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTLyb41hvI/AAAAAAAAAYI/uo
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final String href = "https://ateraimemo.com/";
-//final DataFlavor uriflavor = new DataFlavor(String.class, "text/uri-list");
-final DataFlavor uriflavor = DataFlavor.stringFlavor;
+String href = "https://ateraimemo.com/";
+// DataFlavor uriflavor = new DataFlavor(String.class, "text/uri-list");
+DataFlavor uriflavor = DataFlavor.stringFlavor;
 JButton b = new JButton(href);
 b.setTransferHandler(new TransferHandler("text") {
   @Override public boolean canImport(JComponent c, DataFlavor[] flavors) {
     return flavors.length > 0 && flavors[0].equals(uriflavor);
   }
+
   @Override public Transferable createTransferable(JComponent c) {
     return new Transferable() {
       @Override public Object getTransferData(DataFlavor flavor) {
-        //System.out.println(flavor.getMimeType());
+        // System.out.println(flavor.getMimeType());
         return href;
       }
+
       @Override public DataFlavor[] getTransferDataFlavors() {
         return new DataFlavor[] {uriflavor};
       }
+
       @Override public boolean isDataFlavorSupported(DataFlavor flavor) {
         return flavor.equals(uriflavor);
       }

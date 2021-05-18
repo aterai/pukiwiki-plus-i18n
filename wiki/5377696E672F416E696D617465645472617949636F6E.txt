@@ -15,7 +15,7 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHtWabBgI/AAAAAAAAARk/J0
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final TrayIcon icon = new TrayIcon(imglist[0], "TRAY", popup);
+TrayIcon icon = new TrayIcon(imglist[0], "TRAY", popup);
 animator = new Timer(100, new ActionListener() {
   private int idx = 0;
   @Override public void actionPerformed(ActionEvent e) {
@@ -26,7 +26,7 @@ animator = new Timer(100, new ActionListener() {
 }}
 
 * 解説 [#explanation]
-`16x16`の画像を`3`パターン用意し、これを`JDK 6`で追加された`TrayIcon#setImage(Image)`メソッドを使って切り替えることでトレイアイコンのアニメーションを行っています。
+上記のサンプルでは、`16x16`の画像を`3`パターン用意しこれを`JDK 6`で追加された`TrayIcon#setImage(Image)`メソッドを使って切り替えることでトレイアイコンのアニメーションを行っています。
 
 * 参考リンク [#reference]
 - [[SystemTrayにアイコンを表示>Swing/SystemTray]]

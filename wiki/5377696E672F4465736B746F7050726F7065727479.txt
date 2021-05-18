@@ -18,18 +18,17 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKxXuJ4EI/AAAAAAAAAWg/ut
 Toolkit.getDefaultToolkit().addPropertyChangeListener(
     "awt.multiClickInterval", new PropertyChangeListener() {
   @Override public void propertyChange(PropertyChangeEvent e) {
-    System.out.println("----\n"+e.getPropertyName());
+    System.out.println("----\n" + e.getPropertyName());
     System.out.println(Toolkit.getDefaultToolkit().getDesktopProperty(e.getPropertyName()));
   }
 });
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`Toolkit`に`PropertyChangeListener`を追加して、ダブルクリックの速度と、`Windows`環境での画面の配色(画面のプロパティ、デザイン、配色の規定(青)、オリーブグリーン、シルバー)の変更を監視しています。
+上記のサンプルでは、`Toolkit`に`PropertyChangeListener`を追加してダブルクリックの速度と`Windows`環境での画面の配色(画面のプロパティ、デザイン、配色の規定(青)、オリーブグリーン、シルバー)の変更を監視しています。
 
-その他のサポートされている`Windows`デスクトップ関連のプロパティー一覧は、以下のようにして取得できます。
-
-- [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/swing/1.4/w2k_props.html Windowsデスクトップ関連のプロパティのサポート]
+- その他のサポートされている`Windows`デスクトップ関連のプロパティー一覧は、以下で取得可能
+-- [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/swing/1.4/w2k_props.html Windowsデスクトップ関連のプロパティのサポート]
 
 #code{{
 import java.awt.*;

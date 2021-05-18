@@ -19,6 +19,7 @@ DefaultTableModel model = new DefaultTableModel(data, columnNames) {
   @Override public Class<?> getColumnClass(int column) {
     return getValueAt(0, column).getClass();
   }
+
   @Override public void setValueAt(Object v, int row, int column) {
     if (v instanceof Boolean) {
       for (int i = 0; i < getRowCount(); i++) {
@@ -34,9 +35,9 @@ DefaultTableModel model = new DefaultTableModel(data, columnNames) {
 * 解説 [#explanation]
 上記のサンプルでは、`2`列目のカラムクラスを`Boolean`に設定し、`JRadioButton`を継承するセルレンダラー、セルエディタを使って`Boolean`値の表示と編集を行っています。
 
-- セルレンダラーとセルエディタの`JRadioButton`は、行数分ではなく描画用にそれぞれ一つだけ作成して使用
-- `ButtonGroup`を使用しても、`JTable`の列内に配置された`JRadioButton`の一つだけを選択状態にする制限は適用不可
-- 代わりに、ある`2`列目セルの値を`TRUE`にすると、ほかの行の`2`列目セルの値がすべて`FALSE`になるよう、`TableModel#setValueAt(...)`メソッドをオーバーライド
+- セルレンダラーとセルエディタの`JRadioButton`は行数分ではなく描画用にそれぞれ一つだけ作成して使用
+- `ButtonGroup`を使用しても`JTable`の列内に配置された`JRadioButton`の一つだけを選択状態にする制限は適用不可
+- 代わりに`2`列目の指定したセルの値を`true`にすると残りの行の`2`列目セルの値がすべて`false`になるよう`TableModel#setValueAt(...)`メソッドをオーバーライド
 
 * 参考リンク [#reference]
 - [[JTableのセル中にJRadioButtonを配置>Swing/RadioButtonsInTableCell]]

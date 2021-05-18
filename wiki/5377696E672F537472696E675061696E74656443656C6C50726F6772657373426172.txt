@@ -106,7 +106,7 @@ class ProgressRenderer extends DefaultTableCellRenderer {
 
 - 進捗状況文字列は「現在値/最大値」の形式で表示するため、この`2`つの値を保持する`ProgressValue`オブジェクトを作成して`SwingWorker#publish(...)`メソッドで`JTable`のモデルに設定
 - `TableCellRenderer`はモデルから取得した`ProgressValue`オブジェクトから以下の`3`つの値を`JProgressBar`に設定し、セルの描画用コンポーネントとして使用
--- `JProgressBar#setMaximum(int)`(最大値は、各行ごとにランダムなので)で最大値を設定
+-- `JProgressBar#setMaximum(int)`(最大値は各行ごとにランダムなので)で最大値を設定
 -- `JProgressBar#setValue(int)`で現在値を設定
 -- 上記の値から生成した進捗状況文字列を`JProgressBar#setString(String)`で設定
 

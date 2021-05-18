@@ -1,0 +1,42 @@
+---
+category: swing
+folder: TranslucentLabelForeground
+title: JLabelのテキスト色を半透明にする
+tags: [JLabel]
+author: aterai
+pubdate: 2020-11-30T01:19:16+09:00
+description: JLabelのテキスト色、背景色を半透明に設定する方法をテストします。
+image: https://drive.google.com/uc?id=1LUNZmwOOoppxlc-taPMMAlp4u2U9SjtD
+---
+* 概要 [#summary]
+`JLabel`のテキスト色、背景色を半透明に設定する方法をテストします。
+
+#download(https://drive.google.com/uc?id=1LUNZmwOOoppxlc-taPMMAlp4u2U9SjtD)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JLabel label1 = new JLabel("ABC", SwingConstants.CENTER);
+label1.setForeground(new Color(0x64_FF_AA_AA, true));
+label1.setBackground(new Color(0x64_64_C8));
+label1.setFont(new Font(Font.MONOSPACED, Font.BOLD, 140));
+
+String style = "color:rgba(255,170,170,0.4);font-size:140pt";
+JLabel label2 = new JLabel(String.format("<html><span style='%s'>ABC", style));
+label2.setBackground(new Color(0x64_64_C8));
+label2.setHorizontalAlignment(SwingConstants.CENTER);
+}}
+
+* 解説 [#explanation]
+- 一行目
+-- `JLabel#setForeground(...)`メソッドでテキスト色に半透明色を設定
+-- 親の`JPanel`までテキスト色を透過させる場合は`JLabel#setOpaque(true)`でコンポーネントの背景を透明化(描画しない)する、または`JLabel#setBackground(...)`メソッドで透明・半透明の背景色を設定する必要がある
+- 二行目
+-- `<html>`タグを使用して`CSS`で`color:rgba(255,170,170,0.4);`のようにテキスト色を設定しても半透明にならない
+-- [https://github.com/openjdk/jdk/pull/1158 8256019: JLabel HTML text does not support translucent text colors by prsadhuk · Pull Request #1158 · openjdk/jdk]で修正される予定
+
+* 参考リンク [#reference]
+- [https://github.com/openjdk/jdk/pull/1158 8256019: JLabel HTML text does not support translucent text colors by prsadhuk · Pull Request #1158 · openjdk/jdk]
+
+* コメント [#comment]
+#comment
+#comment

@@ -112,7 +112,7 @@ class SpinnerLocalDateTimeModel extends AbstractSpinnerModel implements Serializ
 
 * 解説 [#explanation]
 - 上: `SpinnerDateModel`
--- `Calendar`などを使用して開始日、終了日を生成し、`SpinnerDateModel`を作成して`JSpinner`に設定
+-- `Calendar`などを使用して開始日、終了日を生成し`SpinnerDateModel`を作成して`JSpinner`に設定
 #code{{
 Calendar cal = Calendar.getInstance();
 cal.clear(Calendar.MILLISECOND);
@@ -128,6 +128,7 @@ JSpinner spinner1 = new JSpinner(new SpinnerDateModel(
     date, start, end, Calendar.DAY_OF_MONTH));
 }}
 -- 参考: [[JSpinnerで日付を設定>Swing/SpinnerDateModel]]
+
 - 下: `SpinnerLocalDateTimeModel`
 -- 内部で`Date`ではなく`LocalDateTime`を使用する`SpinnerLocalDateTimeModel`(`AbstractSpinnerModel`を継承)を作成
 #code{{
@@ -183,9 +184,9 @@ class LocalDateTimeEditor extends JSpinner.DefaultEditor {
     }
 
     @Override public String valueToString(Object value) throws ParseException {
-      //System.out.println(value.getClass().getName());
+      // System.out.println(value.getClass().getName());
       if (value instanceof TemporalAccessor) {
-        //return ((LocalDateTime) value).format(dateTimeFormatter);
+        // return ((LocalDateTime) value).format(dateTimeFormatter);
         return dateTimeFormatter.format((TemporalAccessor) value);
       } else {
         return "";
@@ -193,12 +194,12 @@ class LocalDateTimeEditor extends JSpinner.DefaultEditor {
     }
 
     @Override public Object stringToValue(String text) throws ParseException {
-      //System.out.println("stringToValue:" + text);
+      // System.out.println("stringToValue:" + text);
       try {
-        //LocalDateTime value = LocalDate.parse(text, dateTimeFormatter).atStartOfDay();
+        // LocalDateTime value = LocalDate.parse(text, dateTimeFormatter).atStartOfDay();
         TemporalAccessor ta = dateTimeFormatter.parse(text);
         ChronoLocalDateTime<?> value = model.getLocalDateTime();
-        //@see https://tips4java.wordpress.com/2015/04/09/temporal-spinners/
+        // @see https://tips4java.wordpress.com/2015/04/09/temporal-spinners/
         for (ChronoField field : ChronoField.values()) {
           if (field.isSupportedBy(value) && ta.isSupported(field)) {
             value = field.adjustInto(value, ta.getLong(field));

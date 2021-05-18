@@ -39,7 +39,6 @@ ToolTipManager.sharedInstance().registerComponent(tree);
 // tree.setToolTipText("dummy");
 }}
 
-----
 - セルレンダラーを使用する別方法
 #code{{
 class MyTreeCellRenderer implements TreeCellRenderer {
@@ -47,6 +46,7 @@ class MyTreeCellRenderer implements TreeCellRenderer {
   public MyTreeCellRenderer(TreeCellRenderer renderer) {
     this.renderer = renderer;
   }
+
   @Override public Component getTreeCellRendererComponent(
         JTree tree, Object value, boolean isSelected,
         boolean expanded, boolean leaf, int row, boolean hasFocus) {

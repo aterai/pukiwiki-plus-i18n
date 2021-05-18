@@ -25,9 +25,7 @@ am.put(DefaultEditorKit.pasteAction, beep);
 * 解説 [#explanation]
 上記のサンプルでは、`JTextField`の`ActionMap`から、コピーなどの`Action`を取得し、これらをビープ音を鳴らす`DefaultEditorKit.BeepAction()`に置き換えています。
 
-----
-以下のように`copy`メソッドなどをオーバーライドする方法もあります。
-
+- 以下のように`copy`メソッドなどをオーバーライドする方法もある
 #code{{
 JTextField field = new JTextField() {
   @Override public void copy() {

@@ -38,6 +38,7 @@ class TestRenderer extends Box implements TableCellRenderer {
     add(textLabel);
     add(Box.createHorizontalGlue());
   }
+
   @Override public Component getTableCellRendererComponent(JTable table,
       Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     textLabel.setText(Objects.toString(value, ""));
@@ -63,15 +64,17 @@ class TestRenderer extends Box implements TableCellRenderer {
     iconLabel.setIcon(isSelected?sicon:nicon);
     return this;
   }
+
   private static class SelectedImageFilter extends RGBImageFilter {
     public SelectedImageFilter() {
       canFilterIndexColorModel = false;
     }
+
     @Override public int filterRGB(int x, int y, int argb) {
-      //Color color = new Color(argb, true);
-      //float[] array = new float[4];
-      //color.getComponents(array);
-      //return new Color(array[0] * .5f, array[1] * .5f, array[2], array[3]).getRGB();
+      // Color color = new Color(argb, true);
+      // float[] array = new float[4];
+      // color.getComponents(array);
+      // return new Color(array[0] * .5f, array[1] * .5f, array[2], array[3]).getRGB();
       int r = (argb >> 16) & 0xFF;
       int g = (argb >>  8) & 0xFF;
       return (argb & 0xFF_00_00_FF) | ((r >> 1) << 16) | ((g >> 1) << 8);
@@ -83,17 +86,17 @@ class TestRenderer extends Box implements TableCellRenderer {
 * 解説 [#explanation]
 `Windows Explorer`(ファイルシステム・エクスプローラ)の詳細表示風にするため、以下のような設定をしています。
 
-- セル間の罫線を非表示(`JTable#setShowHorizontalLines`, `JTable#setShowVerticalLines`)
+- セル間の罫線を非表示(`JTable#setShowHorizontalLines`、`JTable#setShowVerticalLines`)
 - ひとつのセルの中でアイコンと文字列を表示するセルレンダラーを作成
-- フォーカスが`JTable`に無い場合、選択されたセルの背景色をパネルの背景色に変更
+- フォーカスが`JTable`に無い場合選択されたセルの背景色をパネルの背景色に変更
 
-このレンダラーでは、アイコンと文字列を別々の`JLabel`で作成して並べることで、`JList#putClientProperty("List.isFileList", Boolean.TRUE)`した場合のように、フォーカスはセルではなく文字列だけに点線で掛かるようになっています。
+このレンダラーではアイコンと文字列を別々の`JLabel`で作成して並べることで`JList#putClientProperty("List.isFileList", Boolean.TRUE)`した場合のようにフォーカスはセルではなく文字列だけに点線で掛かるようになっています。
 
-選択時にはセル全体の背景色を変更するのではなく、文字列を表示している`JLabel`の背景色を変更し、その`PreferredSize`を文字列の長さまで縮小して右側に余白を作成しています。
+選択時にはセル全体の背景色を変更するのではなく文字列を表示している`JLabel`の背景色を変更しその`PreferredSize`を文字列の長さまで縮小して右側に余白を作成しています。
 
 - `Windows Explorer`との相違点
--- アイコンと文字列以外の場所(セル内)をクリックしても、選択できてしまう
---- `WindowsLookAndFeel`での`JFileChooser`は、`JTable.putClientProperty("Table.isFileList", Boolean.TRUE)`を使用？
+-- アイコンと文字列以外の場所(セル内)をクリックしても選択できてしまう
+--- `WindowsLookAndFeel`での`JFileChooser`は`JTable.putClientProperty("Table.isFileList", Boolean.TRUE)`を使用？
 --- [[JTableで文字列をクリックした場合だけセルを選択状態にする>Swing/TableFileList]]
 -- マウスドラッグによる範囲指定で選択できない
 --- [[JTableで文字列をクリックした場合だけセルを選択状態にする>Swing/TableFileList]]

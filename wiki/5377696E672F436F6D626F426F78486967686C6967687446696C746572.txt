@@ -1,0 +1,75 @@
+---
+category: swing
+folder: ComboBoxHighlightFilter
+title: JComboBoxのリストアイテムをHighlighterで強調表示する
+tags: [JComboBox, ListCellRenderer, Highlighter, TableCellRenderer, JTextField, Pattern, Matcher]
+author: aterai
+pubdate: 2021-02-01T01:11:16+09:00
+description: JComboBoxのセルレンダラーにJTextFieldを使用して、エディタで入力中の文字列とマッチするリストアイテム内の文字列をハイライト表示します。
+image: https://drive.google.com/uc?id=1FjuhJPu1Jn_OKtfkldsPN1t5ElhgLJot
+---
+* 概要 [#summary]
+`JComboBox`のセルレンダラーに`JTextField`を使用して、エディタで入力中の文字列とマッチするリストアイテム内の文字列をハイライト表示します。
+
+#download(https://drive.google.com/uc?id=1FjuhJPu1Jn_OKtfkldsPN1t5ElhgLJot)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+Highlighter.HighlightPainter highlightPainter =
+    new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+JComboBox<String> combo = new JComboBox<String>(model) {
+  @Override public void updateUI() {
+    super.updateUI();
+    JTextField field = new JTextField(" ");
+    field.setOpaque(true);
+    field.setBorder(BorderFactory.createEmptyBorder());
+    ListCellRenderer<? super String> renderer = getRenderer();
+    setRenderer((list, value, index, isSelected, cellHasFocus) -> {
+      String pattern = ((JTextField) getEditor().getEditorComponent()).getText();
+      if (index >= 0 && !pattern.isEmpty()) {
+        Highlighter highlighter = field.getHighlighter();
+        highlighter.removeAllHighlights();
+        String txt = Objects.toString(value, "");
+        field.setText(txt);
+        addHighlight(highlighter, Pattern.compile(pattern).matcher(txt));
+        field.setBackground(isSelected ? new Color(0xAA_64_AA_FF, true) : Color.WHITE);
+        return field;
+      }
+      return renderer.getListCellRendererComponent(
+          list, value, index, isSelected, cellHasFocus);
+    });
+  }
+
+  private void addHighlight(Highlighter highlighter, Matcher matcher) {
+    int pos = 0;
+    try {
+      while (matcher.find(pos) && !matcher.group().isEmpty()) {
+        int start = matcher.start();
+        int end = matcher.end();
+        highlighter.addHighlight(start, end, highlightPainter);
+        pos = end;
+      }
+    } catch (BadLocationException ex) {
+      // should never happen
+      RuntimeException wrap = new StringIndexOutOfBoundsException(ex.offsetRequested());
+      wrap.initCause(ex);
+      throw wrap;
+    }
+  }
+};
+}}
+
+* 解説 [#explanation]
+- `JComboBox`を編集可能に設定し、そのエディタで入力中の文字列から`Pattern`を生成
+- `ListCellRenderer`でリストアイテム文字列を上記のパターンで検索
+-- 一致する場合は`JTextField#getHighlighter().addHighlight(...)`でハイライトを追加した`JTextField`をセルレンダラーコンポーネントとして返す
+-- 一致しない場合はデフォルトの`JLabel`をセルレンダラーコンポーネントとして返す
+
+* 参考リンク [#reference]
+- [[JTableの検索結果をRowFilterとHighlighterで強調表示する>Swing/TableHighlightRegexFilter]]
+- [[JComboBoxで候補一覧を表示>Swing/ComboBoxSuggestion]]
+-- `JComboBox`のリストアイテムのフィルタリングは、このリンク先のサンプルとほぼ同じものを使用
+
+* コメント [#comment]
+#comment
+#comment

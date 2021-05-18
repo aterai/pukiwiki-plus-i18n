@@ -30,7 +30,7 @@ loop.enter();
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、[[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]と同様の`JLayer`を使用して任意のコンポーネントへの入力可不可を切り替えていますが、`SwingWorker`を使用するのではなく、`SecondaryLoop`を使用して、バックグラウンドで処理を実行している間でも、イベント・ディスパッチ・スレッドをブロックしないようにしています。
+上記のサンプルでは、[[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]と同様の`JLayer`を使用して任意のコンポーネントへの入力可不可を切り替えていますが、`SwingWorker`を使用するのではなく`SecondaryLoop`を使用してバックグラウンドで処理を実行している間でもイベント・ディスパッチ・スレッドをブロックしないようにしています。
 
 * 参考リンク [#reference]
 - [http://sellmic.com/blog/2012/02/29/hidden-java-7-features-secondaryloop/ Hidden Java 7 Features – SecondaryLoop @ sellmic.com]

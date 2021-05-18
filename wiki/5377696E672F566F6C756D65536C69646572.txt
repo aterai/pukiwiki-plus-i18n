@@ -22,6 +22,7 @@ class TriangleSliderUI extends MetalSliderUI {
     g2.fillOval(thumbRect.x, thumbRect.y, thumbRect.width, thumbRect.height);
     g2.dispose();
   }
+
   @Override public void paintTrack(Graphics g) {
     int cx, cy, cw, ch;
     int pad;
@@ -48,10 +49,10 @@ slider2.setForeground(Color.BLUE);
 --- `paintTrack(Graphics)`メソッドをオーバーライドしてトラックの形と色を変更
 -- 注: 垂直方向には未対応
 - 下:
--- `JSlider#setForeground(Color)`で、目盛の色を青に変更
+-- `JSlider#setForeground(Color)`メソッドで目盛の色を青に変更
 -- `MetalSliderUI`を継承する`SliderUI`を作成
 --- `paintHorizontalLabel(Graphics, int, Component)`メソッドをオーバーライドし目盛を緑色に変更
--- 目盛の色は、[[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]でも変更可能
+-- 目盛の色は[[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]でも変更可能
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1375990 Swing - Problem in changing forground color of JSlider!!]

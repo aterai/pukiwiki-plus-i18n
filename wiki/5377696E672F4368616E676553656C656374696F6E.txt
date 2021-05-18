@@ -20,8 +20,9 @@ p.add(new JButton(new AbstractAction("changeSelection") {
     int row = Integer.parseInt(rowField.getValue().toString());
     int col = Integer.parseInt(colField.getValue().toString());
     table.changeSelection(row, col, toggle.isSelected(), extend.isSelected());
-    //table.changeSelection(row, table.convertColumnIndexToModel(col),
-    //                      toggle.isSelected(), extend.isSelected());
+    // table.changeSelection(
+    //     row, table.convertColumnIndexToModel(col),
+    //     toggle.isSelected(), extend.isSelected());
     table.requestFocusInWindow();
     table.repaint();
   }
@@ -29,7 +30,7 @@ p.add(new JButton(new AbstractAction("changeSelection") {
 }}
 
 * 解説 [#explanation]
-`JTable#changeSelection(...)`メソッドは、`toggle`と`extend`の`2`つのフラグで、セルの選択状態を以下のように変更できます。
+`JTable#changeSelection(...)`メソッドは、`toggle`と`extend`の`2`つのフラグでセルの選択状態を以下のように変更できます。
 
 - `toggle`:`false`、`extend`:`false`
 -- 既存の選択をクリアし、新しいセルが確実に選択されるようにする
@@ -41,7 +42,7 @@ p.add(new JButton(new AbstractAction("changeSelection") {
 -- アンカーの選択状態を、そのアンカーと指定されたセル間のすべてのセルに適用する
 
 ----
-- `toggle`、`extend`の状態を変えて、実際に選択状態の変化をテスト可能
+- `toggle`、`extend`の状態を変えて実際に選択状態の変化をテスト可能
 - アンカーや選択状態、列の入れ替えなどを行って`changeSelection(...)`による変更もテスト可能
 
 * 参考リンク [#reference]

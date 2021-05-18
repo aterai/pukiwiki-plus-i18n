@@ -23,7 +23,7 @@ item3.setEnabled(false);
 // item3.setDisabledIcon(HSTRUT);
 item3.add(new JMenuItem("JMenuItem(disabled) with JMenuItem", HSTRUT) {
   @Override public boolean contains(int x, int y) {
-    return false; //disable mouse events
+    return false; // disable mouse events
   }
 });
 }}
@@ -38,11 +38,11 @@ item3.add(new JMenuItem("JMenuItem(disabled) with JMenuItem", HSTRUT) {
 -- 余白を設定した`JLabel`を使用
 -- 余白の幅は`LookAndFeel`に依存(`LookAndFeel`依存の幅を取得する方法がない？)
 - `JPanel with JMenuItem`
--- `MenuElement`ではない透明な`JPanel`に、`JComponent#contains()`メソッドをオーバーライドしてマウスクリックを無効にした`JMenuItem`を追加
+-- `MenuElement`ではない透明な`JPanel`に`JComponent#contains()`メソッドをオーバーライドしてマウスクリックを無効にした`JMenuItem`を追加
 - `JMenuItem(disabled) with JMenuItem`
--- `JMenuItem.setEnabled(false);`とした空の`JMenuItem`に、`JComponent#contains()`メソッドをオーバーライドしてマウスクリックを無効にした`JMenuItem`を追加
+-- `JMenuItem.setEnabled(false);`とした空の`JMenuItem`に`JComponent#contains()`メソッドをオーバーライドしてマウスクリックを無効にした`JMenuItem`を追加
 
-メモ:
+----
 - `JMenu`にアイコン用の余白がない`MetalLookAndFeel`などにアイコンが設定された`JMenuItem`が存在する場合、幅のみのアイコンを設定する必要がある
 - `MetalLookAndFeel`の場合、文字列もアイコンも存在しない`JMenuItem`は他の`JMenuItem`と高さが異なる(幅ゼロ空白文字`\u200B`で回避)
 - `NimbusLookAndFeel`の`JPanel`は、デフォルトでは背景が不透明
@@ -50,7 +50,7 @@ item3.add(new JMenuItem("JMenuItem(disabled) with JMenuItem", HSTRUT) {
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/38360595/jlabel-with-icon-in-jpopupmenu-doesnt-follow-other-jmenuitem-alignment java - JLabel with icon in JPopupMenu doesn't follow other JMenuItem alignment - Stack Overflow]
 - [https://bugs.openjdk.java.net/browse/JDK-8152981 JDK-8152981 Double icons with JMenuItem setHorizontalTextPosition on Win 10 - Java Bug System]
-- [[CheckBoxMenuItemのチェックアイコンの位置を調整する>Swing/AfterCheckIconGap]]
+- [[JCheckBoxMenuItemのチェックアイコンの位置を調整する>Swing/AfterCheckIconGap]]
 -- `Java 8`？では、`CheckBoxMenuItem.afterCheckIconGap`や`CheckBoxMenuItem.minimumTextOffset`などが追加されているため、揃えやすくなった
 
 * コメント [#comment]

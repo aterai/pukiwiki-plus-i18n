@@ -27,6 +27,7 @@ class EmptySelectionRenderer implements ListCellRenderer {
   public EmptySelectionRenderer(ListCellRenderer renderer) {
     this.renderer = renderer;
   }
+
   @Override public Component getListCellRendererComponent(
                      JList list, Object value, int index,
                      boolean isSelected, boolean cellHasFocus) {
@@ -38,7 +39,7 @@ class EmptySelectionRenderer implements ListCellRenderer {
 
 * 解説 [#explanation]
 - 左
--- `JList#setEnabled(false)`で編集不可にしているため、アイテムの選択も不可
+-- `JList#setEnabled(false)`で編集不可にしているためアイテムの選択も不可になる
 -- 文字色が薄くなる
 - 中
 -- `JList#setFocusable(false)`でフォーカス無し、かつ`ListSelectionModel#isSelectedIndex(...)`が常に`false`なセレクションモデルを使用して選択不可に設定
@@ -46,52 +47,52 @@ class EmptySelectionRenderer implements ListCellRenderer {
 -- 常に各セルを選択状態でもフォーカスも無いものとして描画するセルレンダラーを使用して選択不可に見せかける
 
 ----
-`LookAndFeel`が`Nimbus`の場合、編集不可にした`JList`の文字色を以下のような方法で変更できます。
+- `LookAndFeel`が`Nimbus`の場合編集不可にした`JList`の文字色を以下のような方法で変更可能
 
 #code{{
+// package example;
+
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.plaf.*;
-public class DisabledTextForegroundList {
+
+public class MainPanel {
   public JComponent makeUI() {
-    JList list = new JList(makeTestModel());
-    //list.putClientProperty("Nimbus.Overrides", d);
-    //list.putClientProperty("Nimbus.Overrides.InheritDefaults", false);
+    JList<String> list = new JList<>(makeTestModel());
+    // list.putClientProperty("Nimbus.Overrides", d);
+    // list.putClientProperty("Nimbus.Overrides.InheritDefaults", false);
     list.setEnabled(false);
     JSplitPane p = new JSplitPane();
-    p.setLeftComponent(new JScrollPane(new JList(makeTestModel())));
+    p.setLeftComponent(new JScrollPane(new JList<>(makeTestModel())));
     p.setRightComponent(new JScrollPane(list));
     p.setResizeWeight(.5);
     return p;
   }
-  private static ListModel makeTestModel() {
-    DefaultListModel m = new DefaultListModel();
-    m.addElement("aaaaaaaaaaaa"); m.addElement("bbbbb");
+
+  private static ListModel<String> makeTestModel() {
+    DefaultListModel<String> m = new DefaultListModel<>();
+    m.addElement("1234567890");
+    m.addElement("aaa");
     return m;
   }
+
   public static void main(String[] args) {
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        createAndShowGUI();
-      }
-    });
+    EventQueue.invokeLater(MainPanel::createAndShowGUI);
   }
+
   public static void createAndShowGUI() {
     try {
-      for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels())
-        if ("Nimbus".equals(laf.getName()))
-          UIManager.setLookAndFeel(laf.getClassName());
-      //UIDefaults d = new UIDefaults();
+      UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+      // UIDefaults d = new UIDefaults();
       UIDefaults d = UIManager.getLookAndFeelDefaults();
       d.put("List:\"List.cellRenderer\"[Disabled].textForeground",
-            new ColorUIResource(Color.RED));
+          new ColorUIResource(Color.RED));
     } catch (Exception e) {
       e.printStackTrace();
     }
     JFrame f = new JFrame();
     f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    f.getContentPane().add(new DisabledTextForegroundList().makeUI());
+    f.getContentPane().add(new MainPanel().makeUI());
     f.setSize(320, 240);
     f.setLocationRelativeTo(null);
     f.setVisible(true);

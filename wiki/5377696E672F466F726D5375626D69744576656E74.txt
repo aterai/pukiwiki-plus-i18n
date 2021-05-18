@@ -50,7 +50,7 @@ editor.addHyperlinkListener(e -> {
 -- [https://stackoverflow.com/questions/27131420/making-hyperlinklistener-work-with-jeditorpane-nullpointerexception java - Making HyperlinkListener Work with JeditorPane NullPointerException - Stack Overflow]
 - フォームの送信データは`java -Dfile.encoding=UTF-8 ...`などで指定したファイルエンコーディングに基づいてパーセントエンコーディングされている
 -- このサンプルではファイルエンコーディングを`UTF-8`に設定しているが、日本語Windows環境のデフォルトでは`Shift_JIS`(`windows-31j`)のためその範囲外の文字は文字化けする
-- `application/x-www-form-urlencoded`形式でパーセントエンコーディングされているので、半角スペースは`%20`ではなく`+`に符号化されている
+- `application/x-www-form-urlencoded`形式でパーセントエンコーディングされているので半角スペースは`%20`ではなく`+`になっている
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/FormSubmitEvent.html FormSubmitEvent (Java Platform SE 8)]

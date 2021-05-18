@@ -19,15 +19,18 @@ hreflang:
 * サンプルコード [#sourcecode]
 #code(link){{
 private final ImageProducer ip = orgIcon.getImage().getSource();
+
 private static ImageIcon makeStarImageIcon(
     ImageProducer ip, float rf, float gf, float bf) {
   return new ImageIcon(Toolkit.getDefaultToolkit().createImage(
     new FilteredImageSource(ip, new SelectedImageFilter(rf, gf, bf))));
 }
+
 class SelectedImageFilter extends RGBImageFilter {
   private final float rf;
   private final float gf;
   private final float bf;
+
   protected SelectedImageFilter(float rf, float gf, float bf) {
     super();
     this.rf = Math.min(1f, rf);
@@ -35,6 +38,7 @@ class SelectedImageFilter extends RGBImageFilter {
     this.bf = Math.min(1f, bf);
     canFilterIndexColorModel = false;
   }
+
   @Override public int filterRGB(int x, int y, int argb) {
     int r = (int) (((argb >> 16) & 0xFF) * rf);
     int g = (int) (((argb >>  8) & 0xFF) * gf);

@@ -1,0 +1,62 @@
+---
+category: swing
+folder: ArrowLines
+title: JPanelに矢印付きの直線を描画する
+tags: [JPanel, Path2D, AffineTransform]
+author: aterai
+pubdate: 2020-09-14T01:14:39+09:00
+description: JPanel上にPath2Dを使用して作成した矢印付きの直線を描画します。
+image: https://drive.google.com/uc?id=1VDPfzAYOCu-8IfK1RdpFDm7SLdSrGH-E
+---
+* 概要 [#summary]
+`JPanel`上に`Path2D`を使用して作成した矢印付きの直線を描画します。
+
+#download(https://drive.google.com/uc?id=1VDPfzAYOCu-8IfK1RdpFDm7SLdSrGH-E)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class Arrow {
+  private final Point start = new Point();
+  private final Point end = new Point();
+  private final Path2D arrowHead;
+
+  protected Arrow(Point start, Point end) {
+    this.start.setLocation(start);
+    this.end.setLocation(end);
+    arrowHead = makeArrowHead(new Dimension(8, 8));
+  }
+
+  protected Path2D makeArrowHead(Dimension size) {
+    Path2D path = new Path2D.Double();
+    double t = size.height;
+    double w = size.width * .5;
+    path.moveTo(0d, -w);
+    path.lineTo(t, 0d);
+    path.lineTo(0d, w);
+    path.closePath();
+    return path;
+  }
+
+  public void draw(Graphics2D g2) {
+    g2.drawLine(start.x, start.y, end.x, end.y);
+    arrowHead.transform(AffineTransform.getRotateInstance(
+        end.getX() - start.getX(), end.getY() - start.getY()));
+    arrowHead.transform(AffineTransform.getTranslateInstance(
+        end.getX(), end.getY()));
+    g2.fill(arrowHead);
+    g2.draw(arrowHead);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- 矢印として座標原点上に底辺の中央が配置される二等辺三角形を`Path2D`で作成
+- 直線の始点と終点から回転ペクトルを計算して`AffineTransform.getRotateInstance(double vecx, double vecy)`で`AffineTransform`オブジェクトを作成し、`Path2D#transform(AffineTransform)`で矢印を座標原点を中心に回転
+- `AffineTransform.getTranslateInstance(end.getX(), end.getY())`で`AffineTransform`オブジェクトを作成し、`Path2D#transform(AffineTransform)`で直線の終点まで矢印を移動
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/2027613/how-to-draw-a-directed-arrow-line-in-java drawing - How to draw a directed arrow line in Java? - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

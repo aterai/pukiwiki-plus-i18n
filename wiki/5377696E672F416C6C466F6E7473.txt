@@ -20,15 +20,15 @@ Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 
 * 解説 [#explanation]
 上記のサンプルでは、`GraphicsEnvironment#getAllFonts()`メソッドを使って、この環境で利用可能なフォントの一覧を取得しています。
-このメソッドは、ユーザーに特定のフォントを選択させる場合に、よく使用されます。
+このメソッドは、ユーザーに特定のフォントを選択させる場合によく使用されます。
 
 - `family`
--- `getFamily()`で、`Font`のファミリ名
--- `Font#getFontName()`で取得できるのは、フォントフェース名
+-- `getFamily()`で`Font`のファミリ名
+-- `Font#getFontName()`で取得できるのはフォントフェース名
 --- `family` + `style`になっている場合が多い？
 --- ベンダーによって結構バラバラ？
 - `name`
--- `getName()`で、`Font`の論理名
+-- `getName()`で`Font`の論理名
 - `postscript name`
 -- `Font`のポストスクリプト名
 

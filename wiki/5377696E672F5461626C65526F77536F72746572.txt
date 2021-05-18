@@ -5,11 +5,11 @@ title: TableRowSorterでJTableのソート
 tags: [JTable, TableRowSorter, JTableHeader]
 author: aterai
 pubdate: 2007-02-12T18:36:03+09:00
-description: JDK 6で導入された、TableRowSorterを利用して、JTableの行を降順、昇順にソートします。
+description: JDK 6で導入されたTableRowSorterを利用してJTableの行を降順、昇順にソートします。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUnbg2jyI/AAAAAAAAAmU/-7yjlGSjBmo/s800/TableRowSorter.png
 ---
 * 概要 [#summary]
-`JDK 6`で導入された、`TableRowSorter`を利用して、`JTable`の行を降順、昇順にソートします。
+`JDK 6`で導入された`TableRowSorter`を利用して`JTable`の行を降順、昇順にソートします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUnbg2jyI/AAAAAAAAAmU/-7yjlGSjBmo/s800/TableRowSorter.png)
 
@@ -22,7 +22,7 @@ table.setRowSorter(sorter);
 }}
 
 * 解説 [#explanation]
-`JDK 6`では、`JTable`に`TableRowSorter`を設定することで、カラムヘッダのクリックによる行ソートが行えます。
+`JDK 6`では`JTable`に`TableRowSorter`を設定することでカラムヘッダのクリックによる行ソートが行えます。
 
 - 以下のように`JTable#autoCreateRowSorter(true)`メソッドを使用した場合も、`JTable`が自動的に`RowSorter`を作成してソートが可能になる
 #code{{
@@ -31,16 +31,19 @@ table.setAutoCreateRowSorter(true);
 }}
 
 ----
-`TableRowSorter`のデフォルトでは、ヘッダクリックで(降順、昇順)とソートが切り替わり、`TableSorter.java`のように(降順、昇順、初期状態)ではなくなっています。上記のサンプルでは、下のボタンをクリックすると、`DefaultRowSorter#setSortKeys(List)`に`null`を代入することで初期状態に戻るようにしています。
-
-- `SwingLabs`の`JXTable`のように「KBD{Shift}+ヘッダクリック」で初期状態
+- `TableRowSorter`のデフォルトではヘッダクリックで(降順、昇順)とソートが切り替わり、`TableSorter.java`のように(降順、昇順、初期状態)ではなくなっている
+-- このページのサンプルでは`BorderLayout.SOUTH`に配置したボタンをクリックすると`DefaultRowSorter#setSortKeys(List)`に`null`を代入することで初期状態に戻るよう設定している
+- `SwingLabs`の`JXTable`のように「KBD{Shift}+ヘッダクリック」で初期状態に戻す
 -- [[TableRowSorterのSortKeysをクリアする>Swing/ClearSortingState]]
 - `TableSorter.java`のようにヘッダクリックで降順、昇順、初期状態とループ
 -- [[TableRowSorterのソートをヘッダクリックで昇順、降順、初期状態に変更>Swing/TriStateSorting]]
 
 ----
-%%第二キーを使ったソートは`TableRowSorter`版では存在しない?ようなので、`TableSorter.java`を使う場合もまだあるかもしれません。%% 複数キーを使ったソートも可能です(ページ下部にあるsyoさんのコメントを参照)。デフォルトではソートキーは`3`つで、ヘッダにマークが表示されるのは最新のソートキーのみですが、クリックした順に保持されるようです。詳しくはドキュメントや[http://syo.cocolog-nifty.com/freely/2006/08/table_616d.html Tableの内容をソート]などを参照してください。
-
+- %%第二キーを使ったソートは`TableRowSorter`版では存在しない?ため`TableSorter.java`を使う場合もまだあるかもしれない。%%
+- `TableRowSorter`でも`TableSorter.java`と同様に複数キーを使ったソートが可能
+-- ページ下部にあるsyoさんのコメントを参照
+- デフォルトではソートキーは`3`つでヘッダにマークが表示されるのは最新のソートキーのみだがクリックした順に保持される
+-- 参考: [http://syo.cocolog-nifty.com/freely/2006/08/table_616d.html Tableの内容をソート]
 - [https://tips4java.wordpress.com/2010/08/29/multisort-table-header-cell-renderer/ Multisort Table Header Cell Renderer « Java Tips Weblog]
 -- 第二キー以下を薄く表示するサンプルがある
 - [[JTableの複数キーを使ったソートをヘッダに表示する>Swing/MultisortHeaderRenderer]]
@@ -55,17 +58,18 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
+
 public class RowSorterTest extends JPanel {
   public RowSorterTest() {
     super(new BorderLayout());
     final DefaultTableModel model = new DefaultTableModel(null, new String[] {"A", "B", "C"});
     JTable table = new JTable(model);
     TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-    //table.setRowSorter(sorter); // OK
+    // table.setRowSorter(sorter); // OK
     model.addRow(new String[] {"aa", "bb", "cc"});
     model.addRow(new String[] {"dd", "ee", "ff"});
     table.setRowSorter(sorter); // IndexOutOfBoundsException: Invalid range
-    //model.fireTableDataChanged(); // <----
+    // model.fireTableDataChanged(); // <----
     add(new JButton(new AbstractAction("model.addRow(...); -> IndexOutOfBoundsException") {
       @Override public void actionPerformed(ActionEvent e) {
         model.addRow(new String[] {"gg", "hh", "ii"});
@@ -73,11 +77,13 @@ public class RowSorterTest extends JPanel {
     }), BorderLayout.SOUTH);
     add(new JScrollPane(table));
   }
+
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() { createAndShowGUI(); }
     });
   }
+
   public static void createAndShowGUI() {
     JFrame frame = new JFrame("Test");
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

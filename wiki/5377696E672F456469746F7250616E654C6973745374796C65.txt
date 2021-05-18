@@ -27,24 +27,24 @@ styleSheet.addRule(String.format("ul{list-style-image:url(%s);margin:0px 20px;}"
 * 解説 [#explanation]
 - 上: `Default`
 - 下: `ul{list-style-image:url(bullet.png);}`
--- `CSS`の`list-style-image`プロパティを使って、`bullet`を画像に変更
--- `AlignmentY`を設定しても行揃えが中央にならないので、画像の下に余白を追加
+-- `CSS`の`list-style-image`プロパティを使用して`bullet`を画像に変更
+-- `AlignmentY`を設定しても行揃えが中央にならないので画像の下に余白を追加
 -- `ul`のマージンも`margin:0px 20px;`に変更
 
-- メモ
--- `javax.swing.text.html.CSS`は、`list-style-type`プロパティも対応しているので、`circle`, `square`, `decimal`などが`bullet`として使用可能(サイズは固定)
+----
+- `javax.swing.text.html.CSS`は`list-style-type`プロパティも対応しているので`circle`、`square`、`decimal`などが`bullet`として使用可能(サイズは固定)
 #code{{
 styleSheet.addRule("ul{list-style-type:circle;margin:0px 20px;}");
-//styleSheet.addRule("ul{list-style-type:disc;margin:0px 20px;}");
-//styleSheet.addRule("ul{list-style-type:square;margin:0px 20px;}");
-//styleSheet.addRule("ul{list-style-type:decimal;margin:0px 20px;}");
+// styleSheet.addRule("ul{list-style-type:disc;margin:0px 20px;}");
+// styleSheet.addRule("ul{list-style-type:square;margin:0px 20px;}");
+// styleSheet.addRule("ul{list-style-type:decimal;margin:0px 20px;}");
 }}
--- `javax.swing.text.html.CSS`は、`a:hover`などの擬似クラス(`pseudo-classes`)や、`:before`などの擬似要素(`pseudo elements`)に対応していないので、以下のように`list-style-type:none`として`:before`で任意の文字を`bullet`に適用できない
+- `javax.swing.text.html.CSS`は`a:hover`などの擬似クラス(`pseudo-classes`)や`:before`などの擬似要素(`pseudo elements`)に対応していないので、以下のように`list-style-type:none`として`:before`で任意の文字を`bullet`に適用できない
 #code{{
 styleSheet.addRule("ul{list-style-type:none;margin:0px 20px;}");
 styleSheet.addRule("ul li:before{content:'\u00BB';}");
 }}
--- `javax.swing.text.html.StyleSheet.ListPainter#drawShape(...)`などをオーバーライドできれば直接`bullet`の形やサイズを変更できそうだが、コンストラクタがパッケージプライベートのため変更不可
+- `javax.swing.text.html.StyleSheet.ListPainter#drawShape(...)`などをオーバーライドできれば直接`bullet`の形やサイズを変更できそうだが、コンストラクタがパッケージプライベートのため変更不可
 
 * 参考リンク [#reference]
 - [[JEditorPaneのHTMLEditorKitにCSSを適用>Swing/StyleSheet]]

@@ -32,6 +32,7 @@ protected final void addActionPerformed() {
       }
       c.forEach(v -> model.setValueAt(v, key, 2));
     }
+
    @Override protected void done() {
       if (!isDisplayable()) {
         System.out.println("done: DISPOSE_ON_CLOSE");
@@ -64,12 +65,12 @@ protected final void addActionPerformed() {
 上記のサンプルでは、`Executors.newSingleThreadExecutor()`で作成した単一スレッド用の`executor`を使用して順番に一つづ`SwingWorker`を実行しています。
 
 ----
-- `Executors.newSingleThreadExecutor()`で生成される`ExecutorService`は、`Executors.newFixedThreadPool(1)`のものとほぼ同じ
+- `Executors.newSingleThreadExecutor()`で生成される`ExecutorService`は`Executors.newFixedThreadPool(1)`のものとほぼ同じ
 -- [https://stackoverflow.com/questions/21300924/difference-between-executors-newfixedthreadpool1-and-executors-newsinglethread java - Difference between Executors.newFixedThreadPool(1) and Executors.newSingleThreadExecutor() - Stack Overflow]
 -- [https://torutk.hatenablog.jp/entry/20130824/p1 Executors.newSingleThreadExecutor()が返すもの - torutkのブログ]
 
 ----
-- デフォルトの`SwingWorker`は、`10`個のワーカ・スレッドを同時に実行可能
+- デフォルトの`SwingWorker`は`10`個のワーカ・スレッドを同時に実行可能
 -- [https://community.oracle.com/thread/1364600 Swing - Maximum number of SwingWorker objects in a Swing app?]
 #code{{
 public abstract class SwingWorker<T, V> implements RunnableFuture<T> {

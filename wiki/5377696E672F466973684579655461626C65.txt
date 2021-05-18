@@ -26,16 +26,20 @@ hreflang:
   initRowHeight(prev_height, row);
   prev_row = row;
 }
+
 public void initRowHeight(int height, int ccRow) {
-  int rd2      = (fishEyeRowList.size() - 1) / 2;
+  int rd2 = (fishEyeRowList.size() - 1) / 2;
   int rowCount = getModel().getRowCount();
-  int view_rc  = getViewableColoredRowCount(ccRow);
-  int view_h   = 0; for (int i = 0; i < view_rc; i++) view_h += fishEyeRowHeightList.get(i);
-  int rest_rc  = rowCount - view_rc;
-  int rest_h   = height - view_h;
+  int view_rc = getViewableColoredRowCount(ccRow);
+  int view_h = 0;
+  for (int i = 0; i < view_rc; i++) {
+    view_h += fishEyeRowHeightList.get(i);
+  }
+  int rest_rc = rowCount - view_rc;
+  int rest_h = height - view_h;
   int rest_rh  = rest_h / rest_rc; rest_rh = rest_rh > 0 ? rest_rh : 1;
-  int a        = rest_h - rest_rh * rest_rc;
-  int index    = -1;
+  int a = rest_h - rest_rh * rest_rc;
+  int index = -1;
   for (int i = -rd2; i < rowCount; i++) {
     int crh;
     if (ccRow - rd2 <= i && i <= ccRow + rd2) {

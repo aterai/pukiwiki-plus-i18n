@@ -26,6 +26,7 @@ class RubberBandSelectionList<E extends ListItem> extends JList<E> {
   public RubberBandSelectionList(ListModel<E> model) {
     super(model);
   }
+
   @Override public void updateUI() {
     setSelectionForeground(null);
     setSelectionBackground(null);
@@ -56,6 +57,7 @@ class RubberBandSelectionList<E extends ListItem> extends JList<E> {
     polygonColor = r > g ? r > b ? new Color(r, 0, 0) : new Color(0, 0, b)
                          : g > b ? new Color(0, g, 0) : new Color(0, 0, b);
   }
+
   @Override protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     if (renderer != null && renderer.polygon != null) {
@@ -72,14 +74,12 @@ class RubberBandSelectionList<E extends ListItem> extends JList<E> {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JList`にマウスリスナーを設定して、ドラッグに応じた矩形を描画しています。
+上記のサンプルでは、`JList`にマウスリスナーを設定してドラッグに応じた矩形を描画しています。
 
-`JList`内のアイテムの配置は、`JList#setLayoutOrientation(JList.HORIZONTAL_WRAP)`メソッドを使っているため、水平方向での整列になります。
-
-----
-- ラバーバンド矩形内部に重なるアイテムアイコンを検索し、それを`JList#setSelectedIndices(int[])`で選択状態に変更
--- %%選択範囲が矩形にならずに直線になっている場合は、別途その直線と交差するアイテムを選択%% `Polygon`ではなく、`Path2D`を使用することでこれを回避
--- `JDK 1.8.0`以降なら、以下を`l.setSelectedIndices(IntStream.range(0, l.getModel().getSize()).filter(i -> p.intersects(l.getCellBounds(i, i))).toArray());`で置き換え可能
+- `JList`内のアイテムの配置は`JList#setLayoutOrientation(JList.HORIZONTAL_WRAP)`メソッドを使っているため水平方向で整列される
+- ラバーバンド矩形内部に重なるアイテムアイコンを検索しそれを`JList#setSelectedIndices(int[])`で選択状態に変更
+-- %%選択範囲が矩形にならずに直線になっている場合は別途その直線と交差するアイテムを選択%% `Polygon`ではなく`Path2D`を使用することでこれを回避
+-- `JDK 1.8.0`以降なら以下を`l.setSelectedIndices(IntStream.range(0, l.getModel().getSize()).filter(i -> p.intersects(l.getCellBounds(i, i))).toArray());`で置き換え可能
 
 #code{{
 private int[] getIntersectsIcons(JList l, Shape p) {

@@ -39,7 +39,6 @@ col.setMaxWidth(50);
 ----
 - カラム幅を`0`に固定して非表示する方法もある
 -- 一時的にカラムを非表示にしたいが、`JTable#removeColumn(TableColumn)`、`JTable#addColumn(TableColumn)`、`JTable#moveColumn(TableColumn)`などで元の位置に戻すのが面倒な場合に使用できるが、KBD{Tab}キーなどによるフォーカス移動が不正になってしまう
-
 #code{{
 TableColumn col = table.getColumnModel().getColumn(1);
 col.setMinWidth(0);
@@ -47,10 +46,8 @@ col.setMaxWidth(0);
 }}
 
 ----
-各カラムの幅を固定するのではなく、`JTable`を`2`つ使用して(`model`は`1`つ)あるカラムを常に表示(スクロールで隠れないよう固定)する場合は、[https://tips4java.wordpress.com/2008/11/05/fixed-column-table/ Fixed Column Table ≪ Java Tips Weblog]や、[[JTableの列固定とソート>Swing/FixedColumnTableSorting]]などを参照してください。
-
-----
-カラムの位置を固定してドラッグなどでの移動を禁止したい場合は、[[JTableのヘッダ入れ替えを禁止>Swing/Reordering]]を参照してください。
+- 各カラムの幅を固定するのではなく`JTable`を`2`つ使用して(`model`は`1`つ)あるカラムを常に表示(スクロールで隠れないよう固定)する場合は、[https://tips4java.wordpress.com/2008/11/05/fixed-column-table/ Fixed Column Table ≪ Java Tips Weblog]や、[[JTableの列固定とソート>Swing/FixedColumnTableSorting]]などを参照
+- カラムの位置を固定してドラッグなどでの移動を禁止したい場合は[[JTableのヘッダ入れ替えを禁止>Swing/Reordering]]を参照
 
 * 参考リンク [#reference]
 //- [http://access1.sun.com/FAQSets/FixedColumnExample.java.html Fixed Column Example]

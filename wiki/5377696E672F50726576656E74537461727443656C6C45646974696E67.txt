@@ -24,11 +24,11 @@ ce.setClickCountToStart(Integer.MAX_VALUE);
 * 解説 [#explanation]
 - `default`(上記のサンプルでのデフォルト)
 -- `0`列目だけ`TableModel#isCellEditable()`が`false`を返すように設定
--- `JTable#isCellEditable()`メソッドをオーバーライドする場合は、列の入れ替えに注意
+-- `JTable#isCellEditable()`メソッドをオーバーライドする場合は列の入れ替えに注意が必要
 - `prevent KeyStroke autoStartsEdit`
--- `table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`で、キー入力(KBD{F2}は除く)によるセルの編集開始を禁止
+-- `table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`でキー入力(KBD{F2}は除く)によるセルの編集開始を禁止
 - `prevent mouse from starting edit`
--- `DefaultCellEditor#setClickCountToStart`に大きな値を設定して、事実上マウスクリックによる編集開始を禁止
+-- `DefaultCellEditor#setClickCountToStart`に大きな値を設定して事実上マウスクリックによる編集開始を禁止
 - `start cell editing only F2`
 -- 上二つを設定して、セルの編集はKBD{F2}キーでのみ開始可能になるよう設定
 - `isCellEditable return false`

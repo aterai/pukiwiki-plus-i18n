@@ -34,23 +34,20 @@ icon2 = new ImageIcon(destination);
 上記のサンプルでは、各`JLabel`をクリックで`Icon`として表示されている元画像とグレースケール画像を切り替えています。
 
 ----
-以下のように`GrayFilter.createDisabledImage(...)`を使った場合よりきれいに変換できるようです。
-
+- 以下のように`GrayFilter.createDisabledImage(...)`を使った場合よりきれいに変換可能
 #code{{
 icon2 = new ImageIcon(GrayFilter.createDisabledImage(img));
 }}
 
-----
-`GrayFilter`の代わりに、以下のような`RGBImageFilter`を継承したフィルタを使う方法もあります。
-
+- `GrayFilter`の代わりに以下のような`RGBImageFilter`を継承したフィルタを使う方法もある
 #code{{
 class MyGrayFilter extends RGBImageFilter {
   public int filterRGB(int x, int y, int argb) {
-    //int a = (argb >> 24) & 0xFF;
+    // int a = (argb >> 24) & 0xFF;
     int r = (argb >> 16) & 0xFF;
     int g = (argb >>  8) & 0xFF;
     int b = (argb      ) & 0xFF;
-    //http://ofo.jp/osakana/cgtips/grayscale.phtml
+    // http://ofo.jp/osakana/cgtips/grayscale.phtml
     int m = (2 * r + 4 * g + b) / 7; //NTSC Coefficients
     return (argb & 0xFF_00_00_00) | (m << 16) | (m << 8) | m;
   }
@@ -60,8 +57,8 @@ ImageProducer ip = new FilteredImageSource(img.getSource(), new MyGrayFilter());
 icon2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(ip));
 }}
 
-----
-`BufferedImage.TYPE_BYTE_GRAY`で、`BufferedImage`を作成して複写してもグレースケールに変換できますが、透過色を使用している場合はすこし注意が必要なようです(参考: [https://community.oracle.com/thread/1373262 Swing - Color to Grayscale to Binary])。
+- `BufferedImage.TYPE_BYTE_GRAY`で`BufferedImage`を作成して複写してもグレースケールに変換可能だが、透過色を使用している場合は注意が必要
+-- 参考: [https://community.oracle.com/thread/1373262 Swing - Color to Grayscale to Binary]
 
 #code{{
 BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_GRAY);

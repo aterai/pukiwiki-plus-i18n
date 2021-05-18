@@ -33,7 +33,9 @@ JTabbedPane tabs = new JTabbedPane() {
 * 解説 [#explanation]
 上記のサンプルでは、`JDK 6`で追加された`JTabbedPane`のタブにコンポーネントを配置する機能を使用して`JCheckBox`を各タブの内部に追加しています。
 
-直接`JCheckBox`を`JTabbedPane#setTabComponentAt(...)`で追加するのではなく、タブタイトルを`JLabel`に分離し、チェックアイコンのみの`JCheckBox`と合わせて`JPanel`に配置して使用しています。このため、タブタイトル文字列をクリックしても`JCheckBox`のチェック状態は変化せず(この`JLabel`はクリックイベントを処理しない)、タブの切り替えが実行されます。
+- タブタイトル文字列を`JCheckBox#setText(...)`で設定した`JCheckBox`を`JTabbedPane#setTabComponentAt(...)`で追加するのではなく、タブタイトル用の`JLabel`とチェックアイコンのみの`JCheckBox`に分割して`JPanel`に配置
+- タブタイトル文字列用の`JLabel`はクリックイベントを処理しないよう設定
+- このためタブタイトルをクリックしても別コンポーネントである`JCheckBox`のチェック状態は変化せずタブの切り替えが実行される
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setTabComponentAt-int-java.awt.Component- JTabbedPane#setTabComponentAt(...) (Java Platform SE 8)]

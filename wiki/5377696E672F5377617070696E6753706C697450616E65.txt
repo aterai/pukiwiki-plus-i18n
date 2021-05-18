@@ -47,11 +47,11 @@ button.addActionListener(e -> {
 - すでに`JSplitPane`に配置されているコンポーネントを別の位置に配置すると例外が発生するため、一旦`JSplitPane`から削除する必要がある
 - `JSplitPane#removeAll()`を使用するとディバイダも削除されてしまう
 - `JSplitPane#remove(Component)`、または`JSplitPane#setLeftComponent(null)`などで削除する
-- ディバイダの位置を入れ替え前と同じ場所に保つ場合、`JSplitPane#setResizeWeight(...)`メソッドで余分なスペースの配分率の入れ替えと、`JSplitPane#setDividerLocation(...)`メソッドで位置の再設定が必要になる
+- ディバイダの位置を入れ替え前と同じ場所に保つ場合、`JSplitPane#setResizeWeight(...)`メソッドで余分なスペースの配分率の入れ替えと`JSplitPane#setDividerLocation(...)`メソッドで位置の再設定が必要になる
 
 ----
 - `GridLayout`を設定した`JPanel`などの場合は、以下のように`Container#setComponentZOrder(...)`メソッドでコンポーネントの位置の入れ替えが可能
--- サンプルコードは、[[JPanelに追加したコンポーネントの順序を変更する>Swing/ComponentZOrder]]に移動
+-- サンプルコードは[[JPanelに追加したコンポーネントの順序を変更する>Swing/ComponentZOrder]]に移動
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/4871874/java-problem-with-jsplitpane swing - java: Problem with JSplitpane - Stack Overflow]

@@ -59,24 +59,25 @@ f.setDesktopIcon(new JInternalFrame.JDesktopIcon(f) {
     }
     return d;
   }
-//   private void testWidth() {
-//     Dimension dim = getLayout().minimumLayoutSize(this);
-//     System.out.println("minimumLayoutSize: " + dim.width);
-//
-//     int buttonsW = SwingUtils.stream(this)
-//         .filter(AbstractButton.class::isInstance)
-//         .mapToInt(c -> c.getPreferredSize().width)
-//         .sum();
-//     System.out.println("Total width of all buttons: " + buttonsW);
-//   }
+
+  // private void testWidth() {
+  //   Dimension dim = getLayout().minimumLayoutSize(this);
+  //   System.out.println("minimumLayoutSize: " + dim.width);
+  //
+  //   int buttonsW = SwingUtils.stream(this)
+  //       .filter(AbstractButton.class::isInstance)
+  //       .mapToInt(c -> c.getPreferredSize().width)
+  //       .sum();
+  //   System.out.println("Total width of all buttons: " + buttonsW);
+  // }
 });
 }}
 
 * 解説 [#explanation]
-- `JInternalFrame.JDesktopIcon#getPreferredSize()`メソッドをオーバーライドし、`JInternalFrame`をアイコン化した場合の推奨サイズを変更
+- `JInternalFrame.JDesktopIcon#getPreferredSize()`メソッドをオーバーライドし`JInternalFrame`をアイコン化した場合の推奨サイズを変更
 -- [[JInternalFrameをアイコン化した場合のサイズを変更する>Swing/DesktopIconSize]]
--- `JInternalFrame`のタイトル文字列を取得し、`SwingUtilities.computeStringWidth(...)`で文字列幅を計算する
---- デフォルトの`JInternalFrame`では`SwingUtilities2.stringWidth(...)`メソッドなどで省略された場合などを考慮しているが、このサンプルでは無視する
+-- `JInternalFrame`のタイトル文字列を取得し`SwingUtilities.computeStringWidth(...)`で文字列幅を計算する
+--- デフォルトの`JInternalFrame`では`SwingUtilities2.stringWidth(...)`メソッドなどで省略された場合などを考慮しているがこのサンプルでは無視する
 -- `ClosableButton`、`MaximizableButton`、`IconifiableButton`などの合計幅を計算する
 --- `javax/swing/plaf/basic/BasicInternalFrameTitlePane.java`の`Handler#minimumLayoutSize(Container)`メソッドを参照して値を取得(`22` + `19` + `19` + `19`)
 --- `JButton`を計算して`getPreferredSize().width`を合計しても値が異なる？
@@ -84,7 +85,7 @@ f.setDesktopIcon(new JInternalFrame.JDesktopIcon(f) {
 --- `super.getPreferredSize()`の値が初回とそれ以降で変化するため、このサンプルでは高さに固定値を使用
 - `DefaultDesktopManager#iconifyFrame(JInternalFrame)`メソッドをオーバーライドして、`JInternalFrame`をアイコン化した場合の実サイズを変更
 - 注:
--- このサンプルは`NimbusLookAndFeel`のみ対応で、`WindowsLookAndFeel`などには未対応
+-- このサンプルは`NimbusLookAndFeel`のみ対応で`WindowsLookAndFeel`などには未対応
 
 * 参考リンク [#reference]
 - [[JInternalFrameをアイコン化した場合のサイズを変更する>Swing/DesktopIconSize]]

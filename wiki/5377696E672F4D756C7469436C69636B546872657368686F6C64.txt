@@ -23,9 +23,9 @@ button.setMultiClickThreshhold(500);
 
 - `0`: 通常の`JButton`のデフォルトは`0`ミリ秒
 -- ボタンを連打してもその回数分`JInternalFrame`が生成される
-- `500`: `JOptionPane`などのオプションボタンは、`500`ミリ秒がデフォルト
+- `500`: `JOptionPane`などのオプションボタンは`500`ミリ秒がデフォルト
 -- `UIManager.getInt("OptionPane.buttonClickThreshhold")`で取得できる値は`LookAndFeel`に依存する？
--- `500`ミリ秒より短い間隔でボタンを連打しても、後続のイベントは無視されるため`JInternalFrame`は最初の一つしか生成されない
+-- `500`ミリ秒より短い間隔でボタンを連打しても後続のイベントは無視されるため`JInternalFrame`は最初の一つしか生成されない
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#setMultiClickThreshhold-long- AbstractButton#setMultiClickThreshhold(long) (Java Platform SE 8)]

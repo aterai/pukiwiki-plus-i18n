@@ -16,8 +16,8 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRa2rE0nI/AAAAAAAAAhI/A6
 * サンプルコード [#sourcecode]
 #code(link){{
 class ColorRadioButton extends JRadioButton {
-  private static final Color defaultColor  = Color.BLACK;
-  private static final Color pressedColor  = Color.GREEN;
+  private static final Color defaultColor = Color.BLACK;
+  private static final Color pressedColor = Color.GREEN;
   private static final Color selectedColor = Color.RED;
   private static final Color rolloverColor = Color.BLUE;
   private static final int iconSize = 16;
@@ -43,7 +43,7 @@ class ColorRadioButton extends JRadioButton {
 * 解説 [#explanation]
 上記のサンプルでは、`JRadioButton`が選択やロールオーバーした時の文字色をマウスリスナーではなく`AbstractButton#fireStateChanged()`メソッドをオーバーライドして変更しています。
 
-- 文字色ではなくアイコンを変更する場合は、`setPressedIcon(...)`、`setSelectedIcon(...)`、`setRolloverIcon(...)`メソッドが使用可能
+- 文字色ではなくアイコンを変更する場合は`setPressedIcon(...)`、`setSelectedIcon(...)`、`setRolloverIcon(...)`メソッドが使用可能
 - 以下のような`ChangeListener`を使用する方法もある
 #code{{
 radioButton.addChangeListener(new ChangeListener() {

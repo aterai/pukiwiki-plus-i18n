@@ -15,18 +15,18 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVl25jXSI/AAAAAAAAAn4/-g
 
 * サンプルコード [#sourcecode]
 #code(link){{
-JLabel l1 = new JLabel("JLabelを使ってツールチップにアイコン") {
+JLabel l1 = new JLabel("Icon") {
   @Override public JToolTip createToolTip() {
-    final JLabel iconlabel = new JLabel(icon);
+    JLabel iconlabel = new JLabel(icon);
     iconlabel.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
     LookAndFeel.installColorsAndFont(
         iconlabel, "ToolTip.background", "ToolTip.foreground", "ToolTip.font");
     JToolTip tip = new JToolTip() {
       @Override public Dimension getPreferredSize() {
-        //https://community.oracle.com/thread/2199222
         return getLayout().preferredLayoutSize(this);
       }
-      @Override public void setTipText(final String tipText) {
+
+      @Override public void setTipText(String tipText) {
         String oldValue = iconlabel.getText();
         iconlabel.setText(tipText);
         firePropertyChange("tiptext", oldValue, tipText);
@@ -39,9 +39,8 @@ JLabel l1 = new JLabel("JLabelを使ってツールチップにアイコン") {
   }
 };
 l1.setToolTipText("Test1");
-}}
-#code{{
-JLabel l2 = new JLabel("MatteBorderでツールチップにアイコン") {
+
+JLabel l2 = new JLabel("MatteBorder") {
   @Override public JToolTip createToolTip() {
     JToolTip tip = new JToolTip() {
       @Override public Dimension getPreferredSize() {
@@ -61,17 +60,16 @@ JLabel l2 = new JLabel("MatteBorderでツールチップにアイコン") {
   }
 };
 l2.setToolTipText("Test2");
-}}
-#code{{
-JLabel l3 = new JLabel("htmlタグでツールチップにアイコン");
-l3.setToolTipText("<html><img src='" + url + "'>テスト</img></html>");
+
+JLabel l3 = new JLabel("html");
+l3.setToolTipText("<html><img src='" + url + "'>test</img></html>");
 }}
 
 * 解説 [#explanation]
 - 上: `ToolTip icon using JLabel`
 -- `JToolTip`にアイコンを設定した`JLabel`を追加
 - 中: `ToolTip icon using MatteBorder`
--- アイコンを表示する`MatteBorder`を`JToolTip`に設定するよう、`createToolTip`メソッドをオーバーライド
+-- アイコンを表示する`MatteBorder`を`JToolTip`に設定するよう`createToolTip`メソッドをオーバーライド
 - 下: `ToolTip icon using HTML tags`
 -- `html`の`img`タグを`setToolTipText`メソッドに使用してアイコンを表示
 

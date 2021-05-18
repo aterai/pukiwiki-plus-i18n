@@ -33,9 +33,9 @@ class SortableTableColumnModel extends DefaultTableColumnModel {
 * 解説 [#explanation]
 上記のサンプルでは、`DefaultTableColumnModel`の`protected Vector<TableColumn> tableColumns`を`TableColumn`のモデル・インデックス(`TableColumn#getModelIndex()`メソッドで取得可能)で直接ソートすることで入れ替え前の初期状態を復元しています。
 
-- `tableColumns`は`protected`なのでソートは`DefaultTableColumnModel`を継承するクラス内で実行する
+- `tableColumns`メソッドは`protected`なので、ソートは`DefaultTableColumnModel`を継承するクラス内で実行する
 -- `JTable#createDefaultColumnModel()`をオーバーライドしてこの`TableColumnModel`を使用する
--- ソート後、`fireColumnMoved(...)`で`TableColumn`の移動を通知し、再描画を実行する必要がある
+-- ソート後`fireColumnMoved(...)`で`TableColumn`の移動を通知し、再描画を実行する必要がある
 - 直接`tableColumns`をソートするのではなく、以下のように`TableColumnModel#moveColumn(...)`メソッドなどを使用してソートする方法もある
 
 #code{{

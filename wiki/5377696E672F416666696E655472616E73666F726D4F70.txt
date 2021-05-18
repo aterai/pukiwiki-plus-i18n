@@ -15,12 +15,23 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHczsN2NI/AAAAAAAAARM/D8
 
 * サンプルコード [#sourcecode]
 #code(link){{
-int w = bi.getWidth(this);
-int h = bi.getHeight(this);
+String path = "example/test.jpg";
+ClassLoader cl = Thread.currentThread().getContextClassLoader();
+BufferedImage img = Optional.ofNullable(cl.getResource(path)).map(url -> {
+  try (InputStream s = url.openStream()) {
+    return ImageIO.read(s);
+  } catch (IOException ex) {
+    return makeMissingImage();
+  }
+}).orElseGet(MainPanel::makeMissingImage);
+
+// ...
+int w = img.getWidth(this);
+int h = img.getHeight(this);
 AffineTransform at = AffineTransform.getScaleInstance(-1d, 1d);
 at.translate(-w, 0);
 AffineTransformOp atOp = new AffineTransformOp(at, null);
-g.drawImage(atOp.filter(bi, null), 0, 0, w, h, this);
+g.drawImage(atOp.filter(img, null), 0, 0, w, h, this);
 }}
 
 * 解説 [#explanation]
@@ -30,7 +41,7 @@ g.drawImage(atOp.filter(bi, null), 0, 0, w, h, this);
 #code{{
 AffineTransform at = AffineTransform.getScaleInstance(1d, -1d);
 at.translate(0, -h);
-g2.drawImage(bi, at, this);
+g2.drawImage(img , at, this);
 }}
 
 * 参考リンク [#reference]

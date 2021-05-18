@@ -1,0 +1,51 @@
+---
+category: swing
+folder: Tracking
+title: Fontにトラッキングを設定して文字列幅を詰めて描画する
+tags: [Font, TextAttribute, JLabel]
+author: aterai
+pubdate: 2020-08-17T00:41:09+09:00
+description: Fontに負のトラッキング値(字送り、文字間)を設定して文字列幅を縮小して描画します。
+image: https://drive.google.com/uc?id=1KrgIAqBBGNrvhJlqL9rWcKfeuNkTCktC
+---
+* 概要 [#summary]
+`Font`に負のトラッキング値(字送り、文字間)を設定して文字列幅を縮小して描画します。
+
+#download(https://drive.google.com/uc?id=1KrgIAqBBGNrvhJlqL9rWcKfeuNkTCktC)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+protected Shape getTextShape(Graphics2D g2) {
+  String txt = getText();
+  Map<TextAttribute, Object> attr = new ConcurrentHashMap<>();
+  attr.put(TextAttribute.TRACKING, -.1f);
+  Font font = txt.length() < 3 ? g2.getFont() : g2.getFont().deriveFont(attr);
+  FontRenderContext frc = g2.getFontRenderContext();
+  return new TextLayout(txt, font, frc).getOutline(null);
+}
+}}
+
+* 解説 [#explanation]
+- `Default (0)`
+-- トラッキング値のデフォルト値は`0`
+- `TRACKING_TIGHT (-.04f)`
+-- 密なトラッキング値で実際の値は`-0.04f`
+- `TRACKING_LOOSE (.04f)`
+-- 疎なトラッキング値で実際の値は`0.04f`
+- `Scaled along the X axis direction: 0.95`
+-- `3`文字以上の場合`AffineTransform.getScaleInstance(.95, 1d)`で文字幅に`95%`の長体をかけたフォントを`Font#deriveFont(AffineTransform)`で複製して使用
+-- 参考: [[Fontに長体をかけてJTextAreaで使用する>Swing/CondensedFontLabel]]、[[JLabel内のアイコンにJLayerを使用してバッジを表示する>Swing/NotificationBadge]]
+- `Tracking: -0.1`
+-- `3`文字以上の場合`Map#put(TextAttribute.TRACKING, -.1f)`で字送りを`10%`詰めたフォントを`Font#deriveFont(Map<? extends Attribute, ?>)`で複製して使用
+--- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/TextAttribute.html#TRACKING TextAttribute.TRACKING (Java Platform SE 8)]のドキュメントには「トラッキング値の範囲は通常`-0.1`から`0.3`で、この範囲外の値は一般的に望ましない」と記述されている
+-- `TextAttribute.KERNING`を`TextAttribute.KERNING_ON`にして文字詰めする方法もあるが、フォントに欧文ペアカーニング情報が含まれていない場合は効果がない
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/TextAttribute.html#TRACKING TextAttribute.TRACKING (Java Platform SE 8)]
+- [[Fontに長体をかけてJTextAreaで使用する>Swing/CondensedFontLabel]]
+- [[JLabel内のアイコンにJLayerを使用してバッジを表示する>Swing/NotificationBadge]]
+- [https://stackoverflow.com/questions/27419036/java-2d-drawstring-irregular-letter-spacing swing - Java 2d drawString irregular letter spacing - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

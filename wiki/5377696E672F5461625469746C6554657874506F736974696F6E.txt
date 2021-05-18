@@ -17,12 +17,12 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTU96IMXGI/AAAAAAAAAm4/Ly
 #code(link){{
 tabbedPane.addTab(title, c);
 JLabel label = new JLabel(title, icon, SwingConstants.CENTER);
-//label.setVerticalAlignment(SwingConstants.CENTER);
+// label.setVerticalAlignment(SwingConstants.CENTER);
 label.setVerticalTextPosition(SwingConstants.BOTTOM);
-//label.setHorizontalAlignment(SwingConstants.CENTER);
+// label.setHorizontalAlignment(SwingConstants.CENTER);
 label.setHorizontalTextPosition(SwingConstants.CENTER);
-//Dimension dim = label.getPreferredSize();
-//label.setPreferredSize(new Dimension(60, dim.height));
+// Dimension dim = label.getPreferredSize();
+// label.setPreferredSize(new Dimension(60, dim.height));
 tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, label);
 }}
 
@@ -36,7 +36,7 @@ tabs.addTab(makeTitle("Title","a32x32.png"), new JLabel("a"));
 tabs.addTab(makeTitle("Help", "b32x32.png"), new JLabel("b"));
 // ...
 private String makeTitle(String t, String p) {
-  return "<html><center><img src='"+getClass().getResource(p)+"'/><br/>"+t;
+  return "<html><center><img src='" + getClass().getResource(p) + "'/><br/>" + t;
 }
 }}
 

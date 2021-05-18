@@ -20,9 +20,11 @@ class BGFocusListener implements FocusListener {
   protected BGFocusListener(Color color) {
     this.color = color;
   }
+
   @Override public void focusGained(FocusEvent e) {
     e.getComponent().setBackground(color);
   }
+
   @Override public void focusLost(FocusEvent e) {
     e.getComponent().setBackground(UIManager.getColor("TextField.background"));
   }

@@ -25,6 +25,7 @@ class ProgressRenderer extends DefaultTableCellRenderer {
     setOpaque(true);
     b.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
   }
+
   @Override public Component getTableCellRendererComponent(JTable table, Object value,
       boolean isSelected, boolean hasFocus, int row, int column) {
     Integer i = (Integer) value;
@@ -39,11 +40,10 @@ class ProgressRenderer extends DefaultTableCellRenderer {
     return this;
   }
 }
-}}
-#code{{
+
 private final Executor executor = Executors.newCachedThreadPool();
 // ...
-final int rowNumber = model.getRowCount();
+int rowNumber = model.getRowCount();
 SwingWorker<Integer, Integer> worker = new SwingWorker<Integer, Integer>() {
   private int sleepDummy = new Random().nextInt(100) + 1;
   private int lengthOfTask = 120;
@@ -61,12 +61,14 @@ SwingWorker<Integer, Integer> worker = new SwingWorker<Integer, Integer>() {
     }
     return sleepDummy * lengthOfTask;
   }
+
   @Override protected void process(List<Integer> chunks) {
     for (Integer value: chunks) {
       model.setValueAt(value, rowNumber, 2);
     }
-    //model.fireTableCellUpdated(rowNumber, 2);
+    // model.fireTableCellUpdated(rowNumber, 2);
   }
+
   @Override protected void done() {
     String text = null;
     int i = -1;
@@ -85,24 +87,20 @@ SwingWorker<Integer, Integer> worker = new SwingWorker<Integer, Integer>() {
   }
 };
 model.addTest(new Test("example", 0), worker);
-executor.execute(worker); //1.6.0_18
-//worker.execute(); //1.6.0_21
+executor.execute(worker); // 1.6.0_18
+// worker.execute(); //1.6.0_21
 }}
 
 * 解説 [#explanation]
 上記のサンプルでは、`add`ボタンをクリックすると、`SwingWorker`を使用したダミータスクが起動し、その進捗状況が`2`列目セル内の`JProgressBar`で表示されます。
 
-`ProgressRenderer`は`JProgressBar`を一つ持ち、ダミータスクが動いている間は、その`JProgressBar`に値を設定して描画用のコンポーネントとして返し、タスクが終了(またはキャンセル)されたら`JLabel`(自分自身、`DefaultTableCellRenderer`)に文字列を設定して返しています。
-
-----
+- `ProgressRenderer`は`JProgressBar`を一つ持ち、ダミータスクが動いている間はその`JProgressBar`に値を設定して描画用のコンポーネントとして返す
+- タスクが終了(またはキャンセル)されたら`JLabel`(自分自身、`DefaultTableCellRenderer`)に文字列を設定して返す
 - このサンプルでは、行番号をキーにしているため、例えばモデルから行を削除するときに実行中のタスクが手前の行などに存在する場合はエラーが発生する
 -- これを回避するため、実際には行の削除を実行せず、フィルタを使って行を非表示に設定する
 -- 参考: [[RowFilterでJTableの行をフィルタリング>Swing/RowFilter]]
-
-----
-- メモ
+- `SwingWorker`スレッドの同時実行上限は`10`で固定
 -- [https://community.oracle.com/thread/1364600 Swing - Maximum number of SwingWorker objects in a Swing app?]
-
 #code{{
 public abstract class SwingWorker<T, V> implements RunnableFuture<T> {
   /**

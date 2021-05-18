@@ -32,7 +32,7 @@ button.setHideActionText(false);
 
 - `JButton#setHideActionText(false)`を設定した状態で`Action`を変更した場合、そのアクション名やアイコンなどは`JButton`に適用されない
 -- `JButton.setText(...)`、`JButton.setIcon(...)`の設定が優先される
-- `JButton#setHideActionText(false)`を設定した状態でも、`Action`を`null`(初期状態)に変更すると`JButton`のテキストやアイコンはクリアされてしまう
+- `JButton#setHideActionText(false)`を設定した状態でも`Action`を`null`(初期状態)に変更すると`JButton`のテキストやアイコンはクリアされてしまう
 - アクションから名前とアイコンが適用された状態で`JButton#setHideActionText(false)`を実行した場合、`JButton`のテキストはクリアされるがアイコンは変化しない
 -- `JButton.setText(...)`、`JButton.setIcon(...)`で設定している場合も同様に`JButton`のテキストはクリアされるが、アイコンは変化しない
 - `JButton#setHideActionText(...)`の状態に`JButton.setText(...)`、`JButton.setIcon(...)`は依存しない

@@ -26,6 +26,7 @@ private static JMenuItem makeEditMenuItem(final JComponent edit) {
       d.height = Math.max(edit.getPreferredSize().height, d.height);
       return d;
     }
+
     @Override protected void fireStateChanged() {
       setForeground(Color.BLACK);
       super.fireStateChanged();
@@ -45,6 +46,7 @@ private static JMenuItem makeEditMenuItem(final JComponent edit) {
 
   return item;
 }
+
 private static JPanel makeEditButtonBar(List<AbstractButton> list) {
   int size = list.size();
   JPanel p = new JPanel(new GridLayout(1, size, 0, 0)) {
@@ -60,6 +62,7 @@ private static JPanel makeEditButtonBar(List<AbstractButton> list) {
   p.setOpaque(false);
   return p;
 }
+
 private static AbstractButton makeButton(String title, Action action) {
   JButton b = new JButton(action);
   b.addActionListener(new ActionListener() {
@@ -87,21 +90,21 @@ private static AbstractButton makeButton(String title, Action action) {
 
 * 解説 [#explanation]
 - `JMenuItem`
--- `JMenuItem#getPreferredSize()`をオーバーライドして、挿入する`JButton`を考慮したサイズを返すように変更
--- `JMenuItem`自体は、選択不可になるように`JMenuItem#setEnabled(false)`を設定
---- `JMenuItem#setEnabled(false)`の状態でも文字色は常に黒になるように、`JMenuItem#fireStateChanged`をオーバーライドして`setForeground(Color.BLACK);`を設定
+-- `JMenuItem#getPreferredSize()`をオーバーライドして挿入する`JButton`を考慮したサイズを返すように変更
+-- `JMenuItem`自体は選択不可になるように`JMenuItem#setEnabled(false)`を設定
+--- `JMenuItem#setEnabled(false)`の状態でも文字色は常に黒になるように`JMenuItem#fireStateChanged`をオーバーライドして`setForeground(Color.BLACK);`を設定
 --- [[JRadioButtonの文字色を変更>Swing/RadioButtonTextColor]]
--- `JMenuItem`にレイアウトを設定し、`JMenuItem#add(...)`で`JButton`を配置した`JPanel`を追加
+-- `JMenuItem`にレイアウトを設定し`JMenuItem#add(...)`で`JButton`を配置した`JPanel`を追加
 --- [[OverlayLayoutの使用>Swing/OverlayLayout]]
 --- レイアウトマネージャーは`GridBagLayout`を使用し、追加する`JButton`は左右は右端、上下は中央になるよう設定
 --- [[GridBagLayoutの使用>Swing/GridBagLayout]]
 - `JPanel`(`JMenuItem`内に右揃えで配置)
 -- レイアウトを`GridLayout`に変更して同じサイズの`JButton`を複数配置
--- `JPanel#getMaximumSize()`をオーバーライドして、`JPanel#getPreferredSize()`と同じサイズを返すよう変更
+-- `JPanel#getMaximumSize()`をオーバーライドして`JPanel#getPreferredSize()`と同じサイズを返すよう変更
 -- [[JButtonの高さを変更せずに幅を指定>Swing/ButtonWidth]]
 - `JButton`(`JPanel`内に`3`個同幅で配置)
--- `DefaultEditorKit.CopyAction()`などで、`Action`を設定
--- 左右両端に配置された`JButton`のフチのラウンドなどは、`Icon`を生成して描画
+-- `DefaultEditorKit.CopyAction()`などで`Action`を設定
+-- 左右両端に配置された`JButton`のフチのラウンドなどは`Icon`を生成して描画
 --- [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]
 
 * 参考リンク [#reference]

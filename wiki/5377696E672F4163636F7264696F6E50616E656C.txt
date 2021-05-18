@@ -26,7 +26,7 @@ abstract class AbstractExpansionPanel extends JPanel {
     label = new JLabel("\u25BC " + title) {
       @Override protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
-        //Insets ins = getInsets();
+        // Insets ins = getInsets();
         g2.setPaint(new GradientPaint(
             50, 0, Color.WHITE, getWidth(), getHeight(),
             new Color(200, 200, 255)));
@@ -53,6 +53,7 @@ abstract class AbstractExpansionPanel extends JPanel {
     panel.setBorder(border);
     add(panel);
   }
+
   @Override public Dimension getPreferredSize() {
     Dimension d = label.getPreferredSize();
     if (panel.isVisible()) {
@@ -60,17 +61,19 @@ abstract class AbstractExpansionPanel extends JPanel {
     }
     return d;
   }
+
   @Override public Dimension getMaximumSize() {
     Dimension d = getPreferredSize();
     d.width = Short.MAX_VALUE;
     return d;
   }
+
   protected void initPanel() {
     panel.setVisible(!panel.isVisible());
     label.setText(String.format(
         "%s %s", panel.isVisible() ? "\u25B3" : "\u25BC", title));
     revalidate();
-    //fireExpansionEvent();
+    // fireExpansionEvent();
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
         panel.scrollRectToVisible(panel.getBounds());
@@ -83,8 +86,7 @@ abstract class AbstractExpansionPanel extends JPanel {
 * 解説 [#explanation]
 各パネルに配置されたタイトルラベルがクリックされた場合、`JPanel#setVisible(boolean)`メソッドを使って、パネルの表示・非表示を切り替えています。
 
-また、パネルを非表示にするだけではその高さが更新されないので、以下のように`JPanel#getPreferredSize()`メソッドもオーバーライドしています。
-
+- パネルを非表示にするだけではその高さが更新されないので以下のように`JPanel#getPreferredSize()`メソッドもオーバーライド
 #code{{
 @Override public Dimension getPreferredSize() {
   Dimension d = label.getPreferredSize();
@@ -95,12 +97,12 @@ abstract class AbstractExpansionPanel extends JPanel {
 }
 }}
 
-----
-[http://common.l2fprod.com/ L2FProd.com - Common Components] にある`JTaskPane`で、アニメーション付きのパネルの展開や折り畳みが可能です。ソースも公開されているので、`com.l2fprod.common.swing.JCollapsiblePane`などが参考になります。
-
 * 参考リンク [#reference]
 - [[JPanelの展開と折り畳み>Swing/ExpandablePanel]]
 - [[BoxLayoutでリスト状に並べる>Swing/ComponentList]]
+- [http://common.l2fprod.com/ L2FProd.com - Common Components]
+-- `JTaskPane`でアニメーション付きのパネルの展開や折り畳みが可能
+-- ソースも公開されているので`com.l2fprod.common.swing.JCollapsiblePane`などが参考になる
 - [[JTreeのノードを検索する>Swing/SearchBox]]
 -- 展開アニメーションのサンプル
 

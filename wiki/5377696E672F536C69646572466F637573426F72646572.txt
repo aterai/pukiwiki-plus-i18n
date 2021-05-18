@@ -17,18 +17,22 @@ image: https://drive.google.com/uc?id=1zvmXqQPcE3P84DbjDk0vFmBympd7es24Gw
 #code(link){{
 JSlider slider2 = new JSlider(0, 100, 0) {
   private transient FocusListener listener;
+
   @Override public void updateUI() {
     removeFocusListener(listener);
     super.updateUI();
     if (getUI() instanceof WindowsSliderUI) {
       setUI(new WindowsSliderUI(this) {
-        @Override public void paintFocus(Graphics g) {}
+        @Override public void paintFocus(Graphics g) {
+          /* empty paint */
+        }
       });
       Color bgc = getBackground();
       listener = new FocusListener() {
         @Override public void focusGained(FocusEvent e) {
           setBackground(bgc.brighter());
         }
+
         @Override public void focusLost(FocusEvent e) {
           setBackground(bgc);
         }
@@ -43,7 +47,7 @@ JSlider slider2 = new JSlider(0, 100, 0) {
 - `Default`
 -- `JSlider`にフォーカスが移動すると、`WindowsLookAndFeel`のデフォルトでは目盛りなどを含む領域に黒色で点線の`FocusBorder`が描画される
 --- `MotifLookAndFeel`の場合は、赤色の実線
---- `MetalLookAndFeel`、`NimbusLookAndFeel`の場合は、`Thumb`の描画が変化する
+--- `MetalLookAndFeel`、`NimbusLookAndFeel`の場合は`Thumb`の描画が変化する
 - `Override SliderUI#paintFocus(...)`
 -- `BasicSliderUI#paintFocus(...)`をオーバーライドして`FocusBorder`を非表示に設定
 -- `UIManager.put("Slider.focus", UIManager.get("Slider.background"));`として`FocusBorder`の色を背景色と同じにしてすべての`JSlider`の`FocusBorder`を非表示にする方法もある

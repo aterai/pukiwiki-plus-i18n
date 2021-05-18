@@ -28,12 +28,13 @@ iframe.addPropertyChangeListener(e -> {
 }}
 
 * 解説 [#explanation]
-`InternalFrameListener`で、閉じるボタン、最小化(アイコン化)ボタン、最小化(アイコン化)からの復元などのイベントを取得できますが、最大化ボタン、最大化からの復元ボタンをクリックした場合などのイベントは取得できないので、`PropertyChangeListener`を利用して、このイベントを取得します。
-
-- 最大化ボタンをクリック
--- プロパティ名: `JInternalFrame.IS_MAXIMUM_PROPERTY`で値が`Boolean.TRUE`のイベントが発生
-- 最大化からの復元ボタンをクリック
--- プロパティ名: `JInternalFrame.IS_MAXIMUM_PROPERTY`で値が`Boolean.FALSE`のイベントが発生
+- `InternalFrameListener`で閉じるボタン、最小化(アイコン化)ボタン、最小化(アイコン化)からの復元などのイベントを取得可能
+-- 最大化ボタン、最大化からの復元ボタンをクリックした場合などのイベントが取得できない
+- `PropertyChangeListener`で最大化ボタン、最大化からの復元ボタンのクリックイベントを取得可能
+-- 最大化ボタンをクリック
+--- プロパティ名: `JInternalFrame.IS_MAXIMUM_PROPERTY`で値が`Boolean.TRUE`のイベントが発生
+-- 最大化からの復元ボタンをクリック
+--- プロパティ名: `JInternalFrame.IS_MAXIMUM_PROPERTY`で値が`Boolean.FALSE`のイベントが発生
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/events/internalframelistener.html How to Write an Internal Frame Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]

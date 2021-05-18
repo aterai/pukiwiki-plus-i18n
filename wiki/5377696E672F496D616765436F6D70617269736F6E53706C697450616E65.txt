@@ -54,17 +54,17 @@ split.setRightComponent(afterCanvas);
 
 * 解説 [#explanation]
 - `JSplitPane`
--- `JSplitPane#setContinuousLayout(true)`を設定して、`Divider`の移動に応じて子コンポーネントを連続的に再描画
+-- `JSplitPane#setContinuousLayout(true)`を設定して`Divider`の移動に応じて子コンポーネントを連続的に再描画
 -- [[JSplitPaneでディバイダの移動を連続的に再描画>Swing/ContinuousLayout]]
 - 子`Component`
 -- それぞれ`Component#paintComponent(...)`をオーバーライドして、画像を描画
--- `JSplitPane`の右に配置する`Component`は、親の`JSplitPane`からの相対位置を`Component#getLocation()`で取得し、その`x`座標分だけ左に移動した位置に画像を描画することで左`Component`に描画する画像との位置を揃える
+-- `JSplitPane`の右に配置する`Component`は親の`JSplitPane`からの相対位置を`Component#getLocation()`で取得し、その`x`座標分だけ左に移動した位置に画像を描画することで左`Component`に描画する画像との位置を揃える
 --- `JSplitPane`の内余白は考慮されないので注意
 -- 右`Component`の画像は`Graphics#setXORMode(Color.BLUE)`で`XOR`反転描画
 
 ----
-- 注: `JSplitPane`のリサイズは考慮していない
--- リサイズ可で、画像を`JSplitPane`の中央に表示するサンプルは[[JSplitPaneのDividerを円形半透明のつまみに変更して中央に配置する>Swing/TranslucentThumbDivider]]に移動
+- このサンプルでは`JSplitPane`のリサイズは考慮していない
+-- リサイズ可で画像を`JSplitPane`の中央に表示するサンプルは[[JSplitPaneのDividerを円形半透明のつまみに変更して中央に配置する>Swing/TranslucentThumbDivider]]に移動
 
 * 参考リンク [#reference]
 - [[JSplitPaneでディバイダの移動を連続的に再描画>Swing/ContinuousLayout]]

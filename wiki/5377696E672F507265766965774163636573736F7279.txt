@@ -19,18 +19,20 @@ fileChooser = new JFileChooser();
 fileChooser.setAccessory(new ImagePreview(fileChooser));
 // ...
 
-//https://docs.oracle.com/javase/tutorial/uiswing/examples/components/FileChooserDemo2Project/src/components/ImagePreview.java
+// https://docs.oracle.com/javase/tutorial/uiswing/examples/components/FileChooserDemo2Project/src/components/ImagePreview.java
 class ImagePreview extends JComponent implements PropertyChangeListener {
-  private static final int PREVIEW_WIDTH  = 90;
+  private static final int PREVIEW_WIDTH = 90;
   private static final int PREVIEW_MARGIN = 5;
   private ImageIcon thumbnail;
   private File file;
+
   public ImagePreview(JFileChooser fc) {
     super();
     setPreferredSize(new Dimension(PREVIEW_WIDTH + PREVIEW_MARGIN * 2, 50));
     fc.addPropertyChangeListener(this);
-    //setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, SystemColor.inactiveCaption));
+    // setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, SystemColor.inactiveCaption));
   }
+
   private void loadImage() {
     if (file == null) {
       thumbnail = null;
@@ -38,11 +40,11 @@ class ImagePreview extends JComponent implements PropertyChangeListener {
     }
     ImageIcon tmpIcon = new ImageIcon(file.getPath());
     if (tmpIcon.getIconWidth() > PREVIEW_WIDTH) {
-      //Image img = tmpIcon.getImage().getScaledInstance(PREVIEW_WIDTH, -1, Image.SCALE_DEFAULT);
-      //The Perils of Image.getScaledInstance() | Java.net
-      //ttp://today.java.net/pub/a/today/2007/04/03/perils-of-image-getscaledinstance.html
-      //The Perils of Image.getScaledInstance() Blog | Oracle Community
-      //https://community.oracle.com/docs/DOC-983611
+      // Image img = tmpIcon.getImage().getScaledInstance(PREVIEW_WIDTH, -1, Image.SCALE_DEFAULT);
+      // The Perils of Image.getScaledInstance() | Java.net
+      // http://today.java.net/pub/a/today/2007/04/03/perils-of-image-getscaledinstance.html
+      // The Perils of Image.getScaledInstance() Blog | Oracle Community
+      // https://community.oracle.com/docs/DOC-983611
       float scale = PREVIEW_WIDTH / (float) tmpIcon.getIconWidth();
       int newW = (int) (tmpIcon.getIconWidth()  * scale);
       int newH = (int) (tmpIcon.getIconHeight() * scale);
@@ -57,6 +59,7 @@ class ImagePreview extends JComponent implements PropertyChangeListener {
       thumbnail = tmpIcon;
     }
   }
+
   @Override public void propertyChange(PropertyChangeEvent e) {
     boolean update = false;
     String prop = e.getPropertyName();
@@ -75,6 +78,7 @@ class ImagePreview extends JComponent implements PropertyChangeListener {
       }
     }
   }
+
   @Override protected void paintComponent(Graphics g) {
     if (thumbnail == null) {
       loadImage();

@@ -16,8 +16,8 @@ image: https://lh5.googleusercontent.com/-VsQ_pmP_GKM/VAM3IR6IvyI/AAAAAAAACMI/97
 * サンプルコード [#sourcecode]
 #code(link){{
 class HtmlTableTransferHandler extends TransferHandler {
-  //@see javax/swing/plaf/basic/
-  //     BasicTableUI.TableTransferHandler#createTransferable(JComponent)
+  // @see javax/swing/plaf/basic/
+  //      BasicTableUI.TableTransferHandler#createTransferable(JComponent)
   @Override protected Transferable createTransferable(JComponent c) {
     if (c instanceof JTable) {
       JTable table = (JTable) c;
@@ -49,7 +49,7 @@ class HtmlTableTransferHandler extends TransferHandler {
         }
       }
 
-      //if (rows == null || cols == null || rows.length == 0 || cols.length == 0) {
+      // if (rows == null || cols == null || rows.length == 0 || cols.length == 0) {
       if (cols == null || rows.length == 0 || cols.length == 0) {
         return null;
       }
@@ -64,7 +64,7 @@ class HtmlTableTransferHandler extends TransferHandler {
         for (int col = 0; col < cols.length; col++) {
           Object obj = table.getValueAt(rows[row], cols[col]);
           String val = Objects.toString(obj, "") + "\t";
-            //.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+            // .replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
           plainBuf.append(val);
 
           if (obj instanceof Date) {
@@ -92,6 +92,7 @@ class HtmlTableTransferHandler extends TransferHandler {
 
     return null;
   }
+
   @Override public int getSourceActions(JComponent c) {
     return TransferHandler.COPY;
   }

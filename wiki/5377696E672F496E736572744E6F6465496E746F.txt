@@ -17,14 +17,14 @@ image: https://lh3.googleusercontent.com/-siBaGX1oXx8/Uu8JPWZaA7I/AAAAAAAAB_Y/fz
 #code(link){{
 DefaultTreeModel model1 = (DefaultTreeModel) tree1.getModel();
 DefaultMutableTreeNode parent1 = (DefaultMutableTreeNode) model1.getRoot();
-DefaultMutableTreeNode child1  = new DefaultMutableTreeNode(date);
+DefaultMutableTreeNode child1 = new DefaultMutableTreeNode(date);
 parent1.add(child1);
 model1.reload(parent1);
 tree1.scrollPathToVisible(new TreePath(child1.getPath()));
 
 DefaultTreeModel model2 = (DefaultTreeModel) tree2.getModel();
 DefaultMutableTreeNode parent2 = (DefaultMutableTreeNode) model2.getRoot();
-DefaultMutableTreeNode child2  = new DefaultMutableTreeNode(date);
+DefaultMutableTreeNode child2 = new DefaultMutableTreeNode(date);
 model2.insertNodeInto(child2, parent2, parent2.getChildCount());
 tree2.scrollPathToVisible(new TreePath(child2.getPath()));
 }}
@@ -33,13 +33,13 @@ tree2.scrollPathToVisible(new TreePath(child2.getPath()));
 上記のサンプルでは、`add`ボタンのクリックで左右の`JTree`のルートノードの子ノード末尾に新規ノードを追加し、それぞれの描画などをテストできます。
 
 - 左: `p.add(c) & m.reload(p)`
--- `DefaultMutableTreeNode#add(...)`メソッドを使用して、親ノードの末尾に子ノードを追加
+-- `DefaultMutableTreeNode#add(...)`メソッドを使用して親ノードの末尾に子ノードを追加
 --- 追加する子ノードが親ノードを持つ場合、その親子関係は削除される(子ノードが持つ親ノードはひとつのみ)
 -- `DefaultTreeModel#reload(...)`、または`DefaultTreeModel#nodeStructureChanged(DefaultMutableTreeNode)`でモデルに更新を通知
 --- 兄弟ノードの展開状態などがすべて閉じた状態にリセットされてしまう
 - 右: `m.insertNodeInto(c, p, p.size)`
--- `DefaultTreeModel#insertNodeInto(...)`メソッドを使用して、子ノードを親ノードの指定した位置に挿入
---- 内部で、`nodesWereInserted(...)`メソッドが呼び出され、適切なイベントが生成されるので、他のノードの展開状態などは維持される
+-- `DefaultTreeModel#insertNodeInto(...)`メソッドを使用して子ノードを親ノードの指定した位置に挿入
+--- 内部で、`nodesWereInserted(...)`メソッドが呼び出され適切なイベントが生成されるので他のノードの展開状態などは維持される
 
 * 参考リンク [#reference]
 - [[JTreeのノード追加、削除>Swing/AddNode]]

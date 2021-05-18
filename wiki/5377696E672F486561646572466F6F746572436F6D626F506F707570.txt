@@ -1,0 +1,72 @@
+---
+category: swing
+folder: HeaderFooterComboPopup
+title: JComboBoxのドロップダウンリストにヘッダ・フッタを追加する
+tags: [JComboBox, BasicComboPopup, JMenuItem]
+author: aterai
+pubdate: 2021-02-08T00:33:27+09:00
+description: JComboBoxのドロップダウンリストにJLabelのヘッダとJMenuItemのフッタを追加します。
+image: https://drive.google.com/uc?id=1EnxytV3-0UkzPYBy4iSqtRw6thFCOI5B
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2021/03/add-header-and-footer-in-jcombobox.html
+    lang: en
+---
+* 概要 [#summary]
+`JComboBox`のドロップダウンリストに`JLabel`のヘッダと`JMenuItem`のフッタを追加します。
+
+#download(https://drive.google.com/uc?id=1EnxytV3-0UkzPYBy4iSqtRw6thFCOI5B)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class HeaderFooterComboPopup extends BasicComboPopup {
+  protected transient JLabel header;
+  protected transient JMenuItem footer;
+
+  public HeaderFooterComboPopup(JComboBox combo) {
+    super(combo);
+  }
+
+  @Override protected void configurePopup() {
+    super.configurePopup();
+    configureHeader();
+    configureFooter();
+    add(header, 0);
+    add(footer);
+  }
+
+  protected void configureHeader() {
+    header = new JLabel("History");
+    header.setBorder(BorderFactory.createEmptyBorder(4, 5, 4, 0));
+    header.setMaximumSize(new Dimension(Short.MAX_VALUE, 20));
+    header.setAlignmentX(1f);
+  }
+
+  protected void configureFooter() {
+    int modifiers = InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK;
+    footer = new JMenuItem("Show All Bookmarks");
+    footer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, modifiers));
+    footer.addActionListener(e -> {
+      Window w = SwingUtilities.getWindowAncestor(getInvoker());
+      JOptionPane.showMessageDialog(w, "Bookmarks");
+    });
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `BasicComboPopup`のデフォルトレイアウトマネージャーは垂直`BoxLayout`
+-- `BasicComboPopup#configurePopup()`をオーバーライドしてドロップダウンリストとして使用される`JScrollPane`のほかにコンポーネントを追加可能
+- ヘッダとして`JLabel`を`Container#add(label, 0)`で`BasicComboPopup`の先頭に追加
+-- `JLabel`を`BoxLayout`に左揃えで追加する場合`JComponent#setMaximumSize(...)`での最大サイズ、`JComponent#setAlignmentX(...)`で`x`軸揃えの設定が必要
+-- 参考: [[BoxLayoutでリスト状に並べる>Swing/ComponentList]]
+- フッタとして`JMenuItem`を`BasicComboPopup`の末尾に追加
+-- `JButton`を使用する場合マウスクリックでイベントが実行できない
+-- `JMenuItem`を使用すればマウスクリック後にイベントが実行され、`Accelerator`などの設定も可能
+
+* 参考リンク [#reference]
+- [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
+- [[BoxLayoutでリスト状に並べる>Swing/ComponentList]]
+
+* コメント [#comment]
+#comment
+#comment

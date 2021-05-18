@@ -19,13 +19,13 @@ hreflang:
 * サンプルコード [#sourcecode]
 #code(link){{
 public static JPopupMenu installTextComponentPopupMenu(final JTextComponent tc) {
-  final UndoManager manager = new UndoManager();
-  final Action undoAction   = new UndoAction(manager);
-  final Action redoAction   = new RedoAction(manager);
-  final Action cutAction    = new DefaultEditorKit.CutAction();
-  final Action copyAction   = new DefaultEditorKit.CopyAction();
-  final Action pasteAction  = new DefaultEditorKit.PasteAction();
-  final Action deleteAction = new AbstractAction("delete") {
+  UndoManager manager = new UndoManager();
+  Action undoAction   = new UndoAction(manager);
+  Action redoAction   = new RedoAction(manager);
+  Action cutAction    = new DefaultEditorKit.CutAction();
+  Action copyAction   = new DefaultEditorKit.CopyAction();
+  Action pasteAction  = new DefaultEditorKit.PasteAction();
+  Action deleteAction = new AbstractAction("delete") {
     @Override public void actionPerformed(ActionEvent e) {
       ((JTextComponent) getInvoker()).replaceSelection(null);
     }
@@ -35,7 +35,9 @@ public static JPopupMenu installTextComponentPopupMenu(final JTextComponent tc) 
       manager.discardAllEdits();
       tc.requestFocusInWindow();
     }
+
     @Override public void ancestorMoved(AncestorEvent e) {}
+
     @Override public void ancestorRemoved(AncestorEvent e) {}
   });
   tc.getDocument().addUndoableEditListener(manager);
@@ -58,10 +60,12 @@ public static JPopupMenu installTextComponentPopupMenu(final JTextComponent tc) 
 
   popup.addPopupMenuListener(new PopupMenuListener() {
     @Override public void popupMenuCanceled(PopupMenuEvent e) {}
+
     @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
       undoAction.setEnabled(true);
       redoAction.setEnabled(true);
     }
+
     @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
       JPopupMenu pop = (JPopupMenu) e.getSource();
       JTextField field = (JTextField) pop.getInvoker();
@@ -83,7 +87,7 @@ public static JPopupMenu installTextComponentPopupMenu(final JTextComponent tc) 
 
 ----
 - セルエディタとして使用する`JTextField`は、同一インスタンス使い回しているため、別セルでの編集が持ち越されないよう`AncestorListener`を使って表示されるたびに`UndoManager#discardAllEdits()`を呼び出してリセット
--- もしくは、`DefaultCellEditor#isCellEditable(...)`などをオーバーライドしてリセット
+-- もしくは`DefaultCellEditor#isCellEditable(...)`などをオーバーライドしてリセット
 
 #code{{
 DefaultCellEditor ce = new DefaultCellEditor(new JTextField()) {

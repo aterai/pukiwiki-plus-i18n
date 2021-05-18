@@ -33,12 +33,12 @@ tab = new JTabbedPane() {
 }}
 
 * 解説 [#explanation]
-`JTabbedPane#paintComponent`メソッドをオーバーライドして、タブコンポーネントの右側の余白に文字列を描画しています。
+`JTabbedPane#paintComponent(...)`メソッドをオーバーライドして、タブコンポーネントの右側の余白に文字列を描画しています。
 
-右端に十分な余白が無く、文字列を描画するとタブ上に重なってしまう場合は、最後のタブの横から文字列を描画するようになっています。
+右端に十分な余白が無く文字列を描画するとタブ上に重なってしまう場合は、最後のタブの横から文字列を描画するようになっています。
 
 ----
-`JDK 1.7.0`以降なら、`JLayer`を使用する方法もあります。
+- `JDK 1.7.0`以降の場合`JLayer`を使用してラベルを描画する方法もある
 
 #code{{
 import java.awt.*;
@@ -54,6 +54,7 @@ public class TopRightCornerLabelLayerUITest {
     p.add(new JLayer<JComponent>(tabs, new TopRightCornerLabelLayerUI()));
     return p;
   }
+
   private static void createAndShowUI() {
     JFrame f = new JFrame();
     f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -62,6 +63,7 @@ public class TopRightCornerLabelLayerUITest {
     f.setLocationRelativeTo(null);
     f.setVisible(true);
   }
+
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
@@ -70,6 +72,7 @@ public class TopRightCornerLabelLayerUITest {
     });
   }
 }
+
 class TopRightCornerLabelLayerUI extends LayerUI<JComponent> {
   private JLabel l = new JLabel("A Label at right corner");
   private JPanel rubberStamp = new JPanel();

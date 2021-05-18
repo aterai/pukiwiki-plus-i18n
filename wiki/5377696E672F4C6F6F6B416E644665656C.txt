@@ -37,6 +37,7 @@ public JMenuItem createLafMenuItem(JMenu menu, String label, String laf) {
   mi.setEnabled(isAvailableLookAndFeel(laf));
   return mi;
 }
+
 protected static boolean isAvailableLookAndFeel(String laf) {
   try {
     Class lnfClass = Class.forName(laf);
@@ -46,6 +47,7 @@ protected static boolean isAvailableLookAndFeel(String laf) {
     return false;
   }
 }
+
 // ...
 private class ChangeLookAndFeelAction extends AbstractAction {
   private final String laf;
@@ -53,10 +55,12 @@ private class ChangeLookAndFeelAction extends AbstractAction {
     super("ChangeTheme");
     this.laf = laf;
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     setLookAndFeel(laf);
   }
 }
+
 private void setLookAndFeel(String laf) {
   if (currentLookAndFeel.equals(laf)) return;
   currentLookAndFeel = laf;
@@ -71,28 +75,17 @@ private void setLookAndFeel(String laf) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`metal`、`motif`、`windows`などの`LookAndFeel`を予め用意しておき、`isAvailableLookAndFeel(...)`メソッドで、それらが実行した環境で使用できるかを調べてメニューの選択可・不可を変更しています。
+上記のサンプルでは、`metal`、`motif`、`windows`などの`LookAndFeel`を予め用意しておき、`isAvailableLookAndFeel(...)`メソッドでそれらが実行した環境で使用できるかを調べてメニューの選択可・不可を変更しています。
 
-`Look and Feel`を切り替えて各種コンポーネントの表示などを比較したい場合は、`%JAVA_HOME%/demo/jfc/SwingSet2/SwingSet2.jar`が便利です。
-
-----
-`SwingSet3`では、`UIManager.getInstalledLookAndFeels()`メソッドを使って利用可能な`LookAndFeel`の一覧を取得し、これをメニューに表示しているようです。
-
-- [[LookAndFeelの一覧を取得する>Swing/InstalledLookAndFeels]]
-
-----
-`java.exe`などのコマンドオプションでデフォルトの`Look and Feel`を変更する場合は以下のように指定します。
-
+- `Look and Feel`を切り替えて各種コンポーネントの表示などを比較したい場合は`%JAVA_HOME%/demo/jfc/SwingSet2/SwingSet2.jar`が便利
+- `SwingSet3`では`UIManager.getInstalledLookAndFeels()`メソッドを使って利用可能な`LookAndFeel`の一覧を取得しこれをメニューに表示している
+-- [[LookAndFeelの一覧を取得する>Swing/InstalledLookAndFeels]]
+- `java.exe`などのコマンドオプションでデフォルトの`Look and Feel`を変更する場合は以下のように指定する
  java.exe -Dswing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel App
 
-----
-`%JAVA_HOME%/lib`以下に`swing.properties`を作ってデフォルトの`Look and Feel`を指定する方法もあります。
-
-- [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html#properties Specifying the Look and Feel: swing.properties File]
-
-----
-`SystemLookAndFeel`を使用する場合は、`UIManager.getSystemLookAndFeelClassName()`でその実装クラス名を取得して設定します。
-
+- `%JAVA_HOME%/lib`以下に`swing.properties`を作ってデフォルトの`Look and Feel`を指定する方法もある
+-- [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html#properties Specifying the Look and Feel: swing.properties File]
+- `SystemLookAndFeel`を使用する場合は`UIManager.getSystemLookAndFeelClassName()`でその実装クラス名を取得して設定する
 #code{{
 try {
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -101,12 +94,10 @@ try {
 }
 }}
 
-%%`Ubuntu(GNOME)`で、上記のようにシステム`LookAndFeel`を指定すると、`NullPointerException`が発生する場合は、直前に`UIManager.getInstalledLookAndFeels()`を呼んでおくと回避できるようです。%%
-
-- [http://blogs.sun.com/katakai/entry/omegat_in_mdi_mode JDK1.6 で使うと JDK 側のバグ (6389282) に引っかかってしまうのか NPE]
-- [http://blogs.sun.com/katakai/entry/bad_issue_for_swing_gtk Java6 の痛いバグ… NetBeans デスクトップアプリが Linux で動かず… - Masaki Katakai's Weblog]
-- `6u10`で修正済
+- %%`Ubuntu(GNOME)`で上記のようにシステム`LookAndFeel`を指定すると`NullPointerException`が発生する場合は、直前に`UIManager.getInstalledLookAndFeels()`を呼んでおくと回避可能%% `6u10`で修正済
 -- [https://bugs.openjdk.java.net/browse/JDK-6389282 Bug ID: 6389282 NPE in GTKLookAndFeel.initSystemColorDefaults() on mustang when remote X11 displaying.]
+// -- [http://blogs.sun.com/katakai/entry/omegat_in_mdi_mode JDK1.6 で使うと JDK 側のバグ (6389282) に引っかかってしまうのか NPE]
+// -- [http://blogs.sun.com/katakai/entry/bad_issue_for_swing_gtk Java6 の痛いバグ… NetBeans デスクトップアプリが Linux で動かず… - Masaki Katakai's Weblog]
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html How to Set the Look and Feel]

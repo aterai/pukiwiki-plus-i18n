@@ -52,7 +52,7 @@ public class TestJLayeredPane1 extends JFrame {
   public TestJLayeredPane1() {
     super("TestJLayeredPane1");
 
-    //背景画像
+    // 背景画像
     Image img = null;
     File f = new File(BG_IMG);
     if (f.isFile()) {
@@ -73,6 +73,7 @@ public class TestJLayeredPane1 extends JFrame {
 
   int[] colors = { 0xDD_DD_DD, 0xAA_AA_FF, 0xFF_AA_AA, 0xAA_FF_AA, 0xFF_FF_AA, 0xFF_AA_FF, 0xAA_FF_FF };
 
+// ...
   Color getColor(int i, float f) {
     int b = (int) ((i & 0xFF) * f);
     i = i >> 8;
@@ -103,7 +104,7 @@ public class TestJLayeredPane1 extends JFrame {
     Border border = BorderFactory.createLineBorder(col, 1);
     p.setBorder(border);
 
-    //ウインド移動用の処理
+    // ウインド移動用の処理
     DragMouseListener li = new DragMouseListener(p);
     p.addMouseListener(li);
     p.addMouseMotionListener(li);
@@ -115,7 +116,7 @@ public class TestJLayeredPane1 extends JFrame {
     return p;
   }
 
-  //タイトル部分のマウスクリックでパネルを最上位にもってくる。ドラッグで移動。
+  // タイトル部分のマウスクリックでパネルを最上位にもってくる。ドラッグで移動。
   class DragMouseListener implements MouseListener, MouseMotionListener {
     Point origin;
     JPanel panel;
@@ -123,15 +124,17 @@ public class TestJLayeredPane1 extends JFrame {
     DragMouseListener(JPanel p) {
       panel = p;
     }
+
     @Override public void mousePressed(MouseEvent e) {
       origin = new Point(e.getX(), e.getY());
-      //選択された部品を上へ
+      // 選択された部品を上へ
       layerPane.moveToFront(panel);
     }
+
     @Override public void mouseDragged(MouseEvent e) {
       if (origin == null) return;
 
-      //ずれた分だけ JPanel を移動させる
+      // ずれた分だけ JPanel を移動させる
       int dx = e.getX() - origin.x;
       int dy = e.getY() - origin.y;
       Point p = panel.getLocation();
@@ -145,7 +148,7 @@ public class TestJLayeredPane1 extends JFrame {
     @Override public void mouseMoved(MouseEvent e) {}
   }
 
-  //背景画像を描画する JLayeredPane
+  // 背景画像を描画する JLayeredPane
   class BGImageLayeredPane extends JLayeredPane {
     BGImageLayeredPane() {}
 

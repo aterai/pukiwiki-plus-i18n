@@ -19,6 +19,7 @@ class RunAction extends AbstractAction {
   public RunAction() {
     super("Load");
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     runButton.setEnabled(false);
     textArea.setText("");
@@ -52,6 +53,7 @@ private class MonitorTask extends Task {
   public MonitorTask(ProgressMonitorInputStream pmis, Charset cs, int length) {
     super(pmis, cs, length);
   }
+
   @Override protected void process(List<Chunk> chunks) {
     for (Chunk c : chunks) {
       textArea.append(c.line + "\n");
@@ -59,6 +61,7 @@ private class MonitorTask extends Task {
     }
     textArea.setCaretPosition(textArea.getDocument().getLength());
   }
+
   @Override public void done() {
     runButton.setEnabled(true);
     String text = null;
@@ -85,6 +88,7 @@ private static class Task extends SwingWorker<String, Chunk> {
     this.cs = cs;
     this.length = length;
   }
+
   @Override public String doInBackground() {
     String ret = "Done";
     try (Scanner scanner = new Scanner(
@@ -116,14 +120,14 @@ private static class Task extends SwingWorker<String, Chunk> {
 * 解説 [#explanation]
 上記のサンプルでは、`URLConnection`から開いた`InputStream`に`ProgressMonitorInputStream`をラップして、ファイルのダウンロード進捗状態を`ProgressMonitor`で表示しています。
 
-- `ProgressMonitorInputStream`の使用する`ProgressMonitor`の最大値は、ファイルサイズ(バイト)
--- `ProgressMonitorInputStream`がデフォルトで設定する最大値は、`InputStream#available()`の値
--- この値がダウンロード中のストリームの合計バイト数を返す訳ではないので、これを最大値のままにしておくと、`ProgressMonitor`が表示されない、またはすぐ閉じてしまう
+- `ProgressMonitorInputStream`の使用する`ProgressMonitor`の最大値はファイルサイズ(バイト)
+-- `ProgressMonitorInputStream`がデフォルトで設定する最大値は`InputStream#available()`の値
+-- この値がダウンロード中のストリームの合計バイト数を返す訳ではないので、これを最大値のままにしておくと`ProgressMonitor`が表示されない、またはすぐ閉じてしまう
 -- `URLConnection#getContentLength()`で取得したバイト数を`ProgressMonitor#setMaximum(...)`で設定
-- `1`行ずつ`JTextArea`に文字列として読み込ませるために、`InputStreamReader`を使用しているので、エンコードを`URLConnection#getContentEncoding()`や`URLConnection#getContentType()`などで取得
--- 何パーセント読み込んだかを`ProgressMonitor#setNote(...)`で表示する場合は、`1`行が何バイトかを`String#getBytes(Charset)`で取得して計算
+- `1`行ずつ`JTextArea`に文字列として読み込ませるために`InputStreamReader`を使用しているので、エンコーディングを`URLConnection#getContentEncoding()`や`URLConnection#getContentType()`などで取得
+-- 何パーセント読み込んだかを`ProgressMonitor#setNote(...)`で表示する場合は`1`行が何バイトかを`String#getBytes(Charset)`で取得して計算
 -- 注: 改行は`LF`のみの`1`バイトであると決め打ちしている
--- 進捗を表示する前に`ProgressMonitor#setNote("dummy note");`としておかないと、`Note`に使用する`JLabel`が`null`のままで表示されない、またはレイアウトがおかしくなる
+-- 進捗を表示する前に`ProgressMonitor#setNote("dummy note");`としておかないと`Note`に使用する`JLabel`が`null`のままで表示されない、またはレイアウトがおかしくなる
 
 * 参考リンク [#reference]
 - [[ProgressMonitorがダイアログを表示するまでの待ち時間>Swing/MillisToDecideToPopup]]

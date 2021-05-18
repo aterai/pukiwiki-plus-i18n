@@ -15,7 +15,7 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTUOdUT3wI/AAAAAAAAAls/N2
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final JButton b = new ToolBarButton(icon);
+JButton b = new ToolBarButton(icon);
 b.addActionListener(new ActionListener() {
   @Override public void actionPerformed(ActionEvent e) {
     tabs.addTab("qwerqwer", new JLabel("yetyet"));
@@ -23,7 +23,7 @@ b.addActionListener(new ActionListener() {
 });
 tabs = new ClippedTitleTabbedPane() {
   @Override public void updateUI() {
-    UIManager.put("TabbedPane.tabAreaInsets", null); //uninstall
+    UIManager.put("TabbedPane.tabAreaInsets", null); // uninstall
     super.updateUI();
     setAlignmentX(Component.LEFT_ALIGNMENT);
     setAlignmentY(Component.TOP_ALIGNMENT);
@@ -41,11 +41,10 @@ JPanel p = new JPanel();
 p.setLayout(new OverlayLayout(p));
 p.add(button);
 p.add(tabs);
-}}
+// ...
 
-#code{{
-//Insets ti = UIManager.getInsets("TabbedPane.tabInsets");
-//Insets ai = UIManager.getInsets("TabbedPane.tabAreaInsets");
+// Insets ti = UIManager.getInsets("TabbedPane.tabInsets");
+// Insets ai = UIManager.getInsets("TabbedPane.tabAreaInsets");
 public Insets getButtonPaddingTabAreaInsets(JButton b, Insets ti, Insets ai) {
   FontMetrics fm = b.getFontMetrics(b.getFont());
   int tih = b.getPreferredSize().height - fm.getHeight() - ti.top - ti.bottom - ai.bottom;
@@ -58,19 +57,19 @@ public Insets getButtonPaddingTabAreaInsets(JButton b, Insets ti, Insets ai) {
 
 - タブエリアの左上にあるボタンをクリックするとタブが追加する
 - メニューからすべてのタブを削除する
-- タブエリアに余裕がある場合は`80px`、無い場合は(タブエリアの幅/タブ数)と、常にタブ幅は一定
--- 折り返しや、スクロールが発生するとレイアウトが崩れることを防ぐための設定
+- タブエリアに余裕がある場合は`80px`、無い場合は(タブエリアの幅/タブ数)と常にタブ幅は一定
+-- 折り返しやスクロールが発生するとレイアウトが崩れることを防ぐための設定
 
-コンポーネントの追加には、以下の方法を使用しています(比較: [[JTabbedPaneの余白にJCheckBoxを配置>Swing/TabbedPaneWithCheckBox]])。
-
-- ボタンの幅だけ、`tabAreaInsets`の左余白を拡大する
--- `UIManager.getInsets("TabbedPane.tabAreaInsets")`などを使用するため、`Synth`など(`GTK`, `Nimbus`)の`LookAndFeel`には対応していない
+- 以下の手順でコンポーネントの追加を実行
+-- [[JTabbedPaneの余白にJCheckBoxを配置>Swing/TabbedPaneWithCheckBox]]
+- ボタンの幅だけ`tabAreaInsets`の左余白を拡大する
+-- `UIManager.getInsets("TabbedPane.tabAreaInsets")`などを使用するため`Synth`など(`GTK`, `Nimbus`)の`LookAndFeel`には対応していない
 -- [https://bugs.openjdk.java.net/browse/JDK-6634504 Nimbus L&F: java.lang.NullPointer Exception throws when extended BaseUI Components]
-- `OverlayLayout`で、`JButton`と`JTabbedPane`(上で作った余白に)を重ねて表示
--- このため、`JTabbedPane.TOP`にしか対応していない
+- `OverlayLayout`で`JButton`と`JTabbedPane`(上で作った余白に)を重ねて表示
+-- このため`JTabbedPane.TOP`にしか対応していない
 
 ----
-- `JTabbedPane`の左端ではなく、右端に`JButton`を配置するサンプル
+- `JTabbedPane`の左端ではなく右端に`JButton`を配置するサンプル
 
 #code{{
 import java.awt.*;
@@ -94,6 +93,7 @@ public class TabbedPaneWithButtonTest {
     p.add(tabs);
     return p;
   }
+
   public static void main(String[] args) {
     EventQueue.invokeLater(() -> {
       try {

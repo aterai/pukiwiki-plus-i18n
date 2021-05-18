@@ -28,6 +28,7 @@ class DragHandler extends MouseAdapter {
   public DragHandler() {
     window.setBackground(new Color(0x0, true));
   }
+
   @Override public void mousePressed(MouseEvent e) {
     JComponent parent = (JComponent) e.getComponent();
     if (parent.getComponentCount() <= 1) {
@@ -36,6 +37,7 @@ class DragHandler extends MouseAdapter {
     }
     startPt = e.getPoint();
   }
+
   @Override public void mouseDragged(MouseEvent e) {
     Point pt = e.getPoint();
     JComponent parent = (JComponent) e.getComponent();
@@ -153,11 +155,11 @@ class DragHandler extends MouseAdapter {
 上記のサンプルでは、`JToolBar`に`MouseListener`と`MouseMotionListener`を追加して、`JLabel`に配置したアイコンを並べ替えています。
 
 - ドラッグされて移動対象になった`JLabel`(アイコン)は親`JToolBar`から削除され、透明な別`JWindow`に移動
--- `JWindow`なので、元のフレームの外側でも表示可能
+-- `JWindow`なので元のフレームの外側でも表示可能
 - ドロップする位置に`JWindow`が移動してきた場合、`JToolBar`に`Box.createHorizontalStrut(24);`で作成したアイコンと同じ幅の`Box`を配置
-- `JLabel`がドロップされるとダミーの`Box`は削除され、`JLabel`と入れ替え
+- `JLabel`がドロップされるとダミーの`Box`は削除され`JLabel`と入れ替わる
 -- `JWindow`は非表示に設定
--- `JToolBar`以外の場所にドロップされた場合は、ドラッグ前の位置に`JLabel`を戻す
+-- `JToolBar`以外の場所にドロップされた場合はドラッグ前の位置に`JLabel`を戻す
 
 ----
 - 制限

@@ -75,9 +75,9 @@ class DropdownTableComboBox<E extends List<Object>> extends JComboBox<E> {
 
 * 解説 [#explanation]
 - `JList`ではなく`JTable`を使用する`BasicComboPopup`を作成
--- `JTable`なので、ヘッダや複数列の設定などが可能
-- `MetalComboBoxUI#createPopup()`メソッドをオーバーライドして、`JComboBox`のドロップダウンリストとして設定
--- ドロップダウンリストの幅は、`240px`固定
+-- `JTable`なのでヘッダや複数列の設定などが可能
+- `MetalComboBoxUI#createPopup()`メソッドをオーバーライドして`JComboBox`のドロップダウンリストとして設定
+-- ドロップダウンリストの幅は`240px`固定
 --- [[JComboBoxのドロップダウンリスト幅を指定値以上に保つ>Swing/ComboPopupWidth]]
 
 #code{{
@@ -111,6 +111,7 @@ class ComboTablePopup extends BasicComboPopup {
     scroll = new JScrollPane(table);
     setBorder(BorderFactory.createEmptyBorder());
   }
+
   @Override public void show() {
     if (isEnabled()) {
       Insets ins = scroll.getInsets();
@@ -124,6 +125,7 @@ class ComboTablePopup extends BasicComboPopup {
       super.show(comboBox, 0, comboBox.getBounds().height);
     }
   }
+
   private void setRowSelection(int index) {
     if (index != -1) {
       table.setRowSelectionInterval(index, index);

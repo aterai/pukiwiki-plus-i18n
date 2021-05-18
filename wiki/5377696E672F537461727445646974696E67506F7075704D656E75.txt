@@ -37,10 +37,7 @@ tree.setComponentPopupMenu(new TreePopupMenu());
 上記のサンプルでは、`DefaultTreeCellEditor#isCellEditable`メソッドをオーバーライドした`CellEditor`を設定することでノードをマウスでクリックしても編集開始できないように制限しています。
 
 ----
-編集開始のためのポップアップメニューは以下のような`2`種類を用意しています。
-
-- `JTree#startEditingAtPath`メソッドを使用する
-- `JOptionPane`を表示して編集する
+- `JTree#startEditingAtPath`メソッドを使用して`TreeCellEditor`で編集する方法と、`JOptionPane`を開いて編集する方法の二種類をメニューに追加
 -- 入力された文字列を`DefaultTreeModel#valueForPathChanged`メソッドで`JTree`に反映
 #code{{
 public TreePopupMenu() {

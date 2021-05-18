@@ -23,6 +23,7 @@ JTable table1 = new JTable(model) {
     }
     super.changeSelection(rowIndex, columnIndex, toggle, extend);
   }
+
   @Override public Component prepareRenderer(
       TableCellRenderer renderer, int row, int column) {
     if (convertColumnIndexToModel(column) != 0) {
@@ -31,12 +32,13 @@ JTable table1 = new JTable(model) {
     }
     return super.prepareRenderer(renderer, row, column);
   }
+
   //TEST:
-  //@Override public Component prepareEditor(TableCellEditor editor, int row, int column) {
-  //  Component c = super.prepareEditor(editor, row, column);
-  //  c.setBackground(getBackground());
-  //  return c;
-  //}
+  // @Override public Component prepareEditor(TableCellEditor editor, int row, int column) {
+  //   Component c = super.prepareEditor(editor, row, column);
+  //   c.setBackground(getBackground());
+  //   return c;
+  // }
 };
 
 JTable table2 = new JTable(model) {
@@ -60,10 +62,10 @@ table2.getColumnModel().setSelectionModel(new DefaultListSelectionModel() {
 上記のサンプルでは、`JTable#changeSelection(...)`をオーバーライドするなどの方法で、`0`列目以外を編集は可能、ただし選択は不可となるように設定しています。
 
 - 上: `Override JTable#prepareRenderer(...)`
--- `JTable#prepareRenderer(...)`をオーバーライドし、`0`列目以外は選択状態を描画しないように設定
--- `Boolean`のデフォルトセルエディタ(`JCheckBox`)の背景色を修正していないので、クリック時に選択されたように見えてしまう場合がある(KBD{Ctrl+A}などで全選択した後など)
+-- `JTable#prepareRenderer(...)`をオーバーライドし`0`列目以外は選択状態を描画しないように設定
+-- `Boolean`のデフォルトセルエディタ(`JCheckBox`)の背景色を修正していないのでクリック時に選択されたように見えてしまう場合がある(KBD{Ctrl+A}などで全選択した後など)
 - 下: `table.setCellSelectionEnabled(true);` + `Override ListSelectionModel#isSelectedIndex(...)`
--- カラムモデルに`ListSelectionModel#isSelectedIndex(...)`をオーバーライドした`ListSelectionModel`を設定し、`0`列目以外は選択されないように設定
+-- カラムモデルに`ListSelectionModel#isSelectedIndex(...)`をオーバーライドした`ListSelectionModel`を設定し`0`列目以外は選択されないように設定
 
 * 参考リンク [#reference]
 - [[JTableで選択可能な列を制限する>Swing/ColumnSelectability]]

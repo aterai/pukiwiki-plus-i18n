@@ -1,0 +1,68 @@
+---
+category: swing
+folder: ShowPopupOnNavigation
+title: JComboBoxのドロップダウンリストを上矢印キーでも開くよう設定する
+tags: [JComboBox, LookAndFeel, InputMap]
+author: aterai
+pubdate: 2021-04-05T00:02:26+09:00
+description: JComboBoxにフォーカスがある場合下矢印キーだけではなく上矢印キーでもドロップダウンリストを開くよう設定します。
+image: https://drive.google.com/uc?id=1BL5XXUe_94Ivcqyzfx8mJbhRgpboDdpz
+---
+* 概要 [#summary]
+`JComboBox`にフォーカスがある場合下矢印キーだけではなく上矢印キーでもドロップダウンリストを開くよう設定します。
+
+#download(https://drive.google.com/uc?id=1BL5XXUe_94Ivcqyzfx8mJbhRgpboDdpz)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+private static final String SHOW_POPUP_NAVI = "ComboBox.showPopupOnNavigation";
+
+JLabel help = new JLabel("This setting only responds to the upwards arrow key↑");
+help.setAlignmentX(0f);
+
+JCheckBox check = new JCheckBox(SHOW_POPUP_NAVI);
+check.setFocusable(false);
+check.addActionListener(e -> UIManager.put(SHOW_POPUP_NAVI, check.isSelected()));
+
+JComboBox<String> combo = new JComboBox<String>(makeModel()) {
+  @Override public void updateUI() {
+    super.updateUI();
+    boolean flg = UIManager.getLookAndFeelDefaults().getBoolean(SHOW_POPUP_NAVI);
+    UIManager.put(SHOW_POPUP_NAVI, flg);
+    check.setSelected(flg);
+  }
+};
+combo.setSelectedIndex(5);
+combo.setAlignmentX(0f);
+}}
+
+* 解説 [#explanation]
+- `ComboBox.showPopupOnNavigation`: `false`
+-- デフォルト
+-- `JComboBox`にフォーカスが存在する状態で上矢印キーKBD{↑}を入力してもドロップダウンリストは開かない
+-- 下矢印キーKBD{↓}を入力すれば`ComboBox.showPopupOnNavigation`に無関係にドロップダウンリストが開く
+- `ComboBox.showPopupOnNavigation`: `true`
+-- `JComboBox`にフォーカスが存在する状態で上矢印キーKBD{↑}を入力すると下矢印キーKBD{↓}と同様にドロップダウンリストが開く
+
+----
+- `selectPrevious`
+-- `ComboBox.showPopupOnNavigation`の設定は`selectPrevious`アクション内でのみ使用されるため、`MetalLookAndFeel`や`MotifLookAndFeel`でのみ有効
+- `selectPrevious2`
+-- `ComboBox.showPopupOnNavigation`の設定は`selectPrevious2`アクションでは参照されないため、`WindowsLookAndFeel`や`NimbusLookAndFeel`では無効
+-- `selectPrevious2`アクションでは`JComboBox`が編集不可の場合は上矢印キーでドロップダウンリストは開かず選択アイテムが移動する
+--- 編集不可の`JComboBox`でドロップダウンリストをキー入力で開く場合はKBD{F4}、KBD{Alt+↑}キーなどを使用する
+-- `selectPrevious2`アクションでは`JComboBox`が編集可能の場合は上矢印キーでドロップダウンリストが開き選択アイテムは移動しない
+--- ドロップダウンリストが開いた状態で上矢印キーを入力すると選択アイテムが移動する
+- `selectNext2`
+-- `selectNext2`アクションでは`JComboBox`が編集不可の場合は下矢印キーでドロップダウンリストは開かず選択アイテムが移動する
+--- 編集不可の`JComboBox`でドロップダウンリストをキー入力で開く場合はKBD{F4}、KBD{Alt+↓}キーなどを使用する
+-- `selectNext2`アクションでは`JComboBox`が編集可能、または`JTable`のセルエディタになっている場合は下矢印キーでドロップダウンリストが開く
+
+* 参考リンク [#reference]
+- [[JComboBoxのItem選択をループ>Swing/LoopComboBox]]
+- [[JComboBoxの値をMouseWheelで変更>Swing/WheelCombo]]
+-- `Windows 10`などのデフォルトではマウスホイールでも上下矢印キーと同様の動きをするが、`WindowsLookAndFeel`のデフォルトでは`JComboBox`の選択値をマウスホイールで変更できない
+
+* コメント [#comment]
+#comment
+#comment

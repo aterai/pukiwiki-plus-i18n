@@ -23,28 +23,37 @@ class CopyOnSelectListener extends MouseAdapter implements CaretListener, KeyLis
   private boolean shiftActive;
   private int dot;
   private int mark;
+
   @Override public final void caretUpdate(CaretEvent e) {
     if (!dragActive) {
       fire(e.getSource());
     }
   }
+
   @Override public final void mousePressed(MouseEvent e) {
     dragActive = true;
   }
+
   @Override public final void mouseReleased(MouseEvent e) {
     dragActive = false;
     fire(e.getSource());
   }
+
   @Override public void keyPressed(KeyEvent e) {
     shiftActive = (e.getModifiersEx() & KeyEvent.SHIFT_DOWN_MASK) != 0;
   }
+
   @Override public void keyReleased(KeyEvent e) {
     shiftActive = (e.getModifiersEx() & KeyEvent.SHIFT_DOWN_MASK) != 0;
     if (!shiftActive) {
       fire(e.getSource());
     }
   }
-  @Override public void keyTyped(KeyEvent e) { /* empty */ }
+
+  @Override public void keyTyped(KeyEvent e) {
+    /* empty */
+  }
+
   private void fire(Object c) {
     if (c instanceof JTextComponent) {
       JTextComponent tc = (JTextComponent) c;
@@ -54,9 +63,9 @@ class CopyOnSelectListener extends MouseAdapter implements CaretListener, KeyLis
       if (d != m && (dot != d || mark != m)) {
         String str = tc.getSelectedText();
         if (Objects.nonNull(str)) {
-          //StringSelection data = new StringSelection(str);
-          //Toolkit tk = Toolkit.getDefaultToolkit();
-          //tk.getSystemClipboard().setContents(data, data);
+          // StringSelection data = new StringSelection(str);
+          // Toolkit tk = Toolkit.getDefaultToolkit();
+          // tk.getSystemClipboard().setContents(data, data);
           tc.copy();
         }
       }
@@ -71,13 +80,13 @@ class CopyOnSelectListener extends MouseAdapter implements CaretListener, KeyLis
 上記のサンプルでは、マウス操作を使って文字列を選択する場合、選択文字列を自動的にクリップボードにコピーするリスナーを`JTextArea`に設定しています。
 
 - マウスのドラッグで文字列選択:
--- マウスドラッグ終了後に、クリップボードへ選択されている文字列をコピー
+-- マウスドラッグ終了後クリップボードへ選択されている文字列をコピー
 - KBD{Shift}+カーソルキーによる文字列選択:
--- KBD{Shift}キーをリリース後、クリップボードへ選択されている文字列をコピー
+-- KBD{Shift}キーをリリース後クリップボードへ選択されている文字列をコピー
 - KBD{Shift}+マウスクリックによる文字列選択:
--- マウスリリース後、クリップボードへ選択されている文字列をコピー
+-- マウスリリース後クリップボードへ選択されている文字列をコピー
 - マウスのダブルクリックによる文字列選択:
--- ダブルクリック終了後、クリップボードへ選択されている文字列をコピー
+-- ダブルクリック終了後クリップボードへ選択されている文字列をコピー
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#copy-- JTextComponent#copy() (Java Platform SE 8)]

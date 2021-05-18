@@ -60,7 +60,7 @@ class ArrowButtonlessScrollBarUI extends BasicScrollBarUI {
 - 左: `ArrowButton`有り(デフォルト)
 -- `UIManager.put("ScrollBar.width", 10);`で`JScrollBar`の幅を変更
 -- `ArrowButton`のアイコンサイズは変更されず？、微妙にずれてしまう
--- `UIManager.put("ScrollBar.thumbHeight", 20);`は、`GTKLookAndFeel`、`SynthLookAndFeel`(`NimbusLookAndFeel`)でのみ有効？
+-- `UIManager.put("ScrollBar.thumbHeight", 20);`は`GTKLookAndFeel`、`SynthLookAndFeel`(`NimbusLookAndFeel`)でのみ有効？
 --- `UIManager.put("ArrowButton.size", 8);`などを設定しても変化しない？
 - 右: `ArrowButton`無し
 -- `BasicScrollBarUI#createDecreaseButton(...)`、`BasicScrollBarUI#createIncreaseButton(...)`メソッドをオーバーライドしてサイズ`0`の`JButton`を適用

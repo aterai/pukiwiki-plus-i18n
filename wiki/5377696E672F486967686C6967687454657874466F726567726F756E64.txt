@@ -43,10 +43,9 @@ scrollToCenter(textPane, hh.getStartOffset());
 * 解説 [#explanation]
 上記のサンプルでは、[[JTextAreaでハイライト付き検索を行う>Swing/HighlightSearch]]で使用したコードに、以下のような変更を追加することで検索結果のハイライト表示と文字色変更を同時に行っています。
 
-- %%`StyledDocument`にスタイル名`regular`で`Style`を追加%%
 - `StyledDocument`にスタイル名`highlight-text-foreground`で文字色のみデフォルトから変更した`Style`を追加
-- 検索結果のハイライト(背景)と同時に、`StyledDocument#getStyle("highlight-text-foreground")`で取得した`Style`を`StyledDocument#setCharacterAttributes(...)`で、上書き追加
--- 現在の対象になっている検索結果以外は、`StyledDocument#getStyle("highlight-text-foreground")`の`Style`で文字色を元に元に戻す
+- 検索結果のハイライト(背景)と同時に`StyledDocument#getStyle("highlight-text-foreground")`で取得した`Style`を`StyledDocument#setCharacterAttributes(...)`で上書き追加
+-- 現在の対象になっている検索結果以外は`StyledDocument#getStyle("highlight-text-foreground")`の`Style`で文字色を元に元に戻す
 
 * 参考リンク [#reference]
 - [[JTextAreaでハイライト付き検索を行う>Swing/HighlightSearch]]

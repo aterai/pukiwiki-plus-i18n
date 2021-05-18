@@ -35,9 +35,11 @@ public class AuxiliaryWindowsComboBoxUI extends WindowsComboBoxUI {
   public static ComponentUI createUI(JComponent c) {
     return new AuxiliaryWindowsComboBoxUI();
   }
+
   @Override protected ComboPopup createPopup() {
     return new BasicComboPopup2(comboBox);
   }
+
   @Override public void addEditor() {
     removeEditor();
     ComboBoxEditor cbe = comboBox.getEditor();
@@ -52,21 +54,25 @@ public class AuxiliaryWindowsComboBoxUI extends WindowsComboBoxUI {
       }
     }
   }
+
   //Override all UI-specific methods your UI classes inherit.
   @Override public void removeEditor() {}
+
   @Override protected void configureEditor() {}
+
   @Override protected void unconfigureEditor() {}
+
   @Override public void update(Graphics g, JComponent c) {}
+
   @Override public void paint(Graphics g, JComponent c) {}
   // ...
 }}
 
-- 注:
--- `LookAndFeel`を`Nimbus`にすると`ClassCastException`が発生する
---- [https://bugs.openjdk.java.net/browse/JDK-6631956 &#91;JDK-6631956&#93; Nimbus: ClassCastException when running with MultiLookAndFeel - Java Bug System]
--- `UIManager.addPropertyChangeListener(new PropertyChangeListener() {...});`を追加して、`WindowsLookAndFeel`以外の場合は、`UIManager.removeAuxiliaryLookAndFeel(auxLookAndFeel);`
--- 編集可能な`JComboBox`の場合、`NullPointerException`が発生する
---- `WindowsComboBoxUI#addEditor()`をオーバーライド
+- `LookAndFeel`を`Nimbus`にすると`ClassCastException`が発生する
+-- [https://bugs.openjdk.java.net/browse/JDK-6631956 &#91;JDK-6631956&#93; Nimbus: ClassCastException when running with MultiLookAndFeel - Java Bug System]
+- `UIManager.addPropertyChangeListener(new PropertyChangeListener() {...});`を追加して、`WindowsLookAndFeel`以外の場合は、`UIManager.removeAuxiliaryLookAndFeel(auxLookAndFeel);`
+- 編集可能な`JComboBox`の場合、`NullPointerException`が発生する
+-- `WindowsComboBoxUI#addEditor()`をオーバーライド
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/multi/doc-files/multi_tsc.html 多重Look & Feelの使用]

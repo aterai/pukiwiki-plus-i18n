@@ -27,8 +27,14 @@ combo.addAncestorListener(new AncestorListener() {
       }
     });
   }
-  @Override public void ancestorRemoved(AncestorEvent e) {}
-  @Override public void ancestorMoved(AncestorEvent e) {}
+
+  @Override public void ancestorRemoved(AncestorEvent e) {
+    System.out.println("ancestorRemoved");
+  }
+
+  @Override public void ancestorMoved(AncestorEvent e) {
+    System.out.println("ancestorMoved");
+  }
 });
 table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(combo));
 }}
@@ -39,11 +45,11 @@ table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(combo));
 -- 別の列のフォーカスが存在する、または全セルにフォーカスが存在しない場合、ドロップダウンリストが表示される
 -- 同じ列にフォーカスが存在する場合、選択状態になる(ドロップダウンリストは表示されない)
 - `setEnabled`
--- 動作を統一するために、初回は常に選択状態になるように設定する
--- `BasicComboPopup.Handler#mousePressed(...)`で、マウス左ボタンで`JComboBox#isEnabled()==true`の場合は、`BasicComboPopup#togglePopup()`が実行される
+-- 動作を統一するために初回は常に選択状態になるように設定する
+-- `BasicComboPopup.Handler#mousePressed(...)`がマウス左ボタンで`JComboBox#isEnabled()==true`の場合は、`BasicComboPopup#togglePopup()`が実行される
 -- そのため、セルエディタとして設定する`JComboBox`に`AncestorListener`を追加
--- 編集開始で`JTable`にこのセルエディタが追加され、`AncestorListener#ancestorAdded(...)`が発生するが、`JComboBox#setEnabled(false)`として、`BasicComboPopup#togglePopup()`が実行されないようにブロック
--- `EventQueue.invokeLater(...)`を使用して、マウス操作による一連のイベントの最後に`JComboBox#setEnabled(true)`を設定し、すでに編集開始状態にある同セルをもう一度押すとドロップダウンリストが表示されるように設定
+-- 編集開始で`JTable`にこのセルエディタが追加されて`AncestorListener#ancestorAdded(...)`が発生するが、`JComboBox#setEnabled(false)`として`BasicComboPopup#togglePopup()`が実行されないようにブロック
+-- `EventQueue.invokeLater(...)`を使用してマウス操作による一連のイベントの最後に`JComboBox#setEnabled(true)`を設定し、すでに編集開始状態にある同セルをもう一度押すとドロップダウンリストが表示されるように設定
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/34284553/jtable-with-jcombobox-editor-handle-mouse-clicks java - JTable with JCombobox editor: handle mouse clicks - Stack Overflow]

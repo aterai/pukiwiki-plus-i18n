@@ -28,11 +28,13 @@ class URILabel extends JLabel {
     });
   }
 }
-}}
 
-#code{{
+// ...
+
 JButton button = new JButton(a);
 button.setUI(LinkViewButtonUI.createUI(button));
+
+// ...
 
 class LinkViewButtonUI extends BasicButtonUI {
   private final static LinkViewButtonUI linkViewButtonUI = new LinkViewButtonUI();
@@ -55,15 +57,15 @@ class LinkViewButtonUI extends BasicButtonUI {
     g.setFont(f);
     FontMetrics fm = c.getFontMetrics(f);
     // ...
-}}
+  }
+}
 
-#code{{
 JEditorPane editor = new JEditorPane(
     "text/html", "<html><a href='" + MYSITE + "'>" + MYSITE + "</a>");
 editor.setOpaque(false);
-//editor.setBackground(getBackground());
-//editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
-editor.setEditable(false); //REQUIRED
+// editor.setBackground(getBackground());
+// editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+editor.setEditable(false); // REQUIRED
 editor.addHyperlinkListener(new HyperlinkListener() {
   @Override public void hyperlinkUpdate(HyperlinkEvent e) {
     if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
@@ -80,7 +82,7 @@ editor.addHyperlinkListener(new HyperlinkListener() {
 -- `JLabel`に`MouseListener`を設定
 -- リンクの表示には`<a>`タグを使用
 - `JButton` + `ButtonUI`
--- `JButton`に、文字の描画を変更する`ButtonUI`を設定
+-- `JButton`に文字の描画を変更する`ButtonUI`を設定
 --- `Rollover`: アンダーライン
 --- `Pressed`: 黒
 - `JEditorPane` + `HyperlinkListener`

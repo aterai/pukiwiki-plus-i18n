@@ -1,0 +1,96 @@
+---
+category: swing
+folder: QuadrantRotateIcon
+title: Iconを指定した数の四分円だけ回転して表示する
+tags: [Icon, JLabel, AffineTransform]
+author: aterai
+pubdate: 2020-10-19T03:14:22+09:00
+description: Iconを指定した数の四分円(90度)だけ回転してJLabelに配置します。
+image: https://drive.google.com/uc?id=1pAW3bfWkPq_I3DJciSJtYVB31En8TJH3
+---
+* 概要 [#summary]
+`Icon`を指定した数の四分円(`90`度)だけ回転して`JLabel`に配置します。
+
+#download(https://drive.google.com/uc?id=1pAW3bfWkPq_I3DJciSJtYVB31En8TJH3)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+enum QuadrantRotate {
+  CLOCKWISE(1),
+  HORIZONTAL_FLIP(2),
+  COUNTER_CLOCKWISE(-1);
+  private final int numquadrants;
+  QuadrantRotate(int numquadrants) {
+    this.numquadrants = numquadrants;
+  }
+
+  public int getNumQuadrants() {
+    return numquadrants;
+  }
+}
+
+class QuadrantRotateIcon implements Icon {
+  private final QuadrantRotate rotate;
+  private final Icon icon;
+
+  protected QuadrantRotateIcon(Icon icon, QuadrantRotate rotate) {
+    this.icon = icon;
+    this.rotate = rotate;
+  }
+
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    int w = icon.getIconWidth();
+    int h = icon.getIconHeight();
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.translate(x, y);
+    switch (rotate) {
+      case CLOCKWISE:
+        g2.translate(h, 0);
+        break;
+      case HORIZONTAL_FLIP:
+        g2.translate(w, h);
+        break;
+      case COUNTER_CLOCKWISE:
+        g2.translate(0, w);
+        break;
+      default:
+        throw new AssertionError("Unknown QuadrantRotateIcon");
+    }
+    g2.transform(
+        AffineTransform.getQuadrantRotateInstance(rotate.getNumQuadrants()));
+    icon.paintIcon(c, g2, 0, 0);
+    g2.dispose();
+  }
+
+  @Override public int getIconWidth() {
+    return rotate == QuadrantRotate.HORIZONTAL_FLIP
+        ? icon.getIconWidth() : icon.getIconHeight();
+  }
+
+  @Override public int getIconHeight() {
+    return rotate == QuadrantRotate.HORIZONTAL_FLIP
+        ? icon.getIconHeight() : icon.getIconWidth();
+  }
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは`Java 1.6`で追加された`AffineTransform.getQuadrantRotateInstance(...)`メソッドを使用して`90°`単位で回転した`Icon`を作成しています。
+
+- `Default: 0`
+-- 回転なしのアイコン
+- `CLOCKWISE`: `90`(時計回りに`1`四分円、`90`度回転)
+-- 左上を原点に`90`度回転し元`Icon`の高さだけ`X`軸プラス方向に移動
+- `HORIZONTAL_FLIP`: `180`(時計回りに`2`四分円、`180`度回転)
+-- 上下反転と同等
+- `COUNTER_CLOCKWISE`: `-90`(反時計回りに`1`四分円、`-90`度回転)
+-- 左上を原点に`270`度回転し、元`Icon`の幅だけ`Y`軸プラス方向に移動
+
+* 参考リンク [#reference]
+- [[Iconを回転する>Swing/RotatedIcon]]からこちらに移動
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/geom/AffineTransform.html#getQuadrantRotateInstance-int- AffineTransform#getQuadrantRotateInstance(int) (Java Platform SE 8)]
+-- 四分円(回転させる`90`度の弧)の数は負で指定しても可
+
+* コメント [#comment]
+#comment
+#comment

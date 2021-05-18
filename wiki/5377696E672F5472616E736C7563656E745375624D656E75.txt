@@ -16,11 +16,12 @@ image: https://lh5.googleusercontent.com/-MKRZgWcSrRw/UIT3NRGfX9I/AAAAAAAABUk/fO
 * サンプルコード [#sourcecode]
 #code(link){{
 class TransparentMenu extends JMenu {
+  private JPopupMenu popupMenu;
   public TransparentMenu(String title) {
     super(title);
   }
+
   // https://bugs.openjdk.java.net/browse/JDK-4688783
-  private JPopupMenu popupMenu;
   private void ensurePopupMenuCreated() {
     if (popupMenu == null) {
       this.popupMenu = new TranslucentPopupMenu();
@@ -28,15 +29,18 @@ class TransparentMenu extends JMenu {
       popupListener = createWinListener(popupMenu);
     }
   }
+
   @Override public JPopupMenu getPopupMenu() {
     ensurePopupMenuCreated();
     return popupMenu;
   }
+
   @Override public JMenuItem add(JMenuItem menuItem) {
     ensurePopupMenuCreated();
     menuItem.setOpaque(false);
     return popupMenu.add(menuItem);
   }
+
   @Override public Component add(Component c) {
     ensurePopupMenuCreated();
     if (c instanceof JComponent) {
@@ -45,10 +49,12 @@ class TransparentMenu extends JMenu {
     popupMenu.add(c);
     return c;
   }
+
   @Override public void addSeparator() {
     ensurePopupMenuCreated();
     popupMenu.addSeparator();
   }
+
   @Override public void insert(String s, int pos) {
     if (pos < 0) {
       throw new IllegalArgumentException("index less than zero.");
@@ -56,6 +62,7 @@ class TransparentMenu extends JMenu {
     ensurePopupMenuCreated();
     popupMenu.insert(new JMenuItem(s), pos);
   }
+
   @Override public JMenuItem insert(JMenuItem mi, int pos) {
     if (pos < 0) {
       throw new IllegalArgumentException("index less than zero.");
@@ -64,6 +71,7 @@ class TransparentMenu extends JMenu {
     popupMenu.insert(mi, pos);
     return mi;
   }
+
   @Override public void insertSeparator(int index) {
     if (index < 0) {
       throw new IllegalArgumentException("index less than zero.");
@@ -71,6 +79,7 @@ class TransparentMenu extends JMenu {
     ensurePopupMenuCreated();
     popupMenu.insert(new JPopupMenu.Separator(), index);
   }
+
   @Override public boolean isPopupMenuVisible() {
     ensurePopupMenuCreated();
     return popupMenu.isVisible();

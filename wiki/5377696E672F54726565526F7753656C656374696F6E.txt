@@ -39,6 +39,7 @@ class RowSelectionTree extends JTree {
       g.drawRect(0, r.y, getWidth() - 1, r.height - 1);
     }
   }
+
   @Override public void updateUI() {
     removeFocusListener(handler);
     super.updateUI();
@@ -49,6 +50,7 @@ class RowSelectionTree extends JTree {
         }
         return null;
       }
+
       private Rectangle getPathBounds(
           TreePath path, Insets insets, Rectangle bounds) {
         Rectangle rect = treeState.getBounds(path, bounds);
@@ -64,6 +66,7 @@ class RowSelectionTree extends JTree {
     setCellRenderer(handler);
     setOpaque(false);
   }
+
   static class Handler extends DefaultTreeCellRenderer implements FocusListener {
     @Override public Component getTreeCellRendererComponent(
         JTree tree, Object value, boolean selected, boolean expanded,
@@ -74,9 +77,11 @@ class RowSelectionTree extends JTree {
       l.setOpaque(true);
       return l;
     }
+
     @Override public void focusGained(FocusEvent e) {
       e.getComponent().repaint();
     }
+
     @Override public void focusLost(FocusEvent e) {
       e.getComponent().repaint();
     }
@@ -89,12 +94,12 @@ class RowSelectionTree extends JTree {
 -- `MetalLookAndFeel`などでは、選択でノードの背景色が変化
 - 右: `JTree`ノードを行選択に変更
 -- `NimbusLookAndFeel`風に行全体を選択状態の背景色で描画
--- `BasicTreeUI#getPathBounds(...)`をオーバーライドして、ノードではなく、行のクリックで選択可能に変更
+-- `BasicTreeUI#getPathBounds(...)`をオーバーライドしてノードではなく行のクリックで選択可能に変更
 -- `JTree`の背景を`setOpaque(false)`で透明(非描画)にし、`JTree#paintComponent(...)`をオーバーライドして選択された行を背景色で描画
--- 不透明にした`TreeCellRenderer`を使用して、ノードの選択色を`JTree#paintComponent(...)`の背景色と同じものに変更
+-- 不透明にした`TreeCellRenderer`を使用してノードの選択色を`JTree#paintComponent(...)`の背景色と同じものに変更
 -- 別コンポーネントにフォーカスが移動した場合、`LeadSelection`の`Border`を描画しない(選択背景色で上書き)ように設定
---- デフォルトではノードのみ再描画されるので、`FocusListener`を追加して、`JTree`全体を再描画
---- `UIManager.put("Tree.repaintWholeRow", Boolean.TRUE);`を設定することでも回避可能
+--- デフォルトではノードのみ再描画されるので、`FocusListener`を追加して`JTree`全体を再描画
+--- `UIManager.put("Tree.repaintWholeRow", Boolean.TRUE)`を設定することでも回避可能
 
 * 参考リンク [#reference]
 - [http://krdlab.hatenablog.com/entry/20071209/1197143960 JTable でセルのないところに行っぽい表示を出せますか？ - KrdLab's blog]

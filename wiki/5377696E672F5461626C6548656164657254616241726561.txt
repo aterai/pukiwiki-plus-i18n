@@ -26,14 +26,13 @@ class TableHeaderTabbedPane extends JPanel {
 
   public TableHeaderTabbedPane() {
     super(new BorderLayout());
-
     int left  = 1;
     int right = 3;
     tabPanel.setBorder(BorderFactory.createEmptyBorder(1, left, 0, right));
     contentsPanel.setBorder(BorderFactory.createEmptyBorder(4, left, 2, right));
 
     JTable table = new JTable(new DefaultTableModel(null, new String[] {}));
-    //table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    // table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     header = table.getTableHeader();
     model = (TableColumnModel) header.getColumnModel();
 
@@ -60,12 +59,13 @@ class TableHeaderTabbedPane extends JPanel {
     };
     vp.setView(table);
     sp.setViewport(vp);
-    //JPanel wrapPanel = new JPanel(new BorderLayout(0, 0));
-    //wrapPanel.add(sp);
-    //add(wrapPanel, BorderLayout.NORTH);
+    // JPanel wrapPanel = new JPanel(new BorderLayout(0, 0));
+    // wrapPanel.add(sp);
+    // add(wrapPanel, BorderLayout.NORTH);
     add(sp, BorderLayout.NORTH);
     add(contentsPanel);
   }
+
   public void addTab(final String title, final Component comp) {
     contentsPanel.add(comp, title);
     TableColumn tc = new TableColumn(
@@ -77,6 +77,7 @@ class TableHeaderTabbedPane extends JPanel {
       selectedColumn = title;
     }
   }
+
   private class MouseInputHandler extends MouseAdapter {
     @Override public void mousePressed(MouseEvent e) {
       JTableHeader header = (JTableHeader) e.getComponent();
@@ -88,29 +89,34 @@ class TableHeaderTabbedPane extends JPanel {
       cardLayout.show(contentsPanel, (String) title);
       selectedColumn = title;
     }
+
     @Override public void mouseEntered(MouseEvent e) {
       updateRolloverColumn(e);
     }
+
     @Override public void mouseMoved(MouseEvent e) {
       updateRolloverColumn(e);
     }
+
     @Override public void mouseDragged(MouseEvent e) {
       rolloverColumn = -1;
       updateRolloverColumn(e);
     }
+
     @Override public void mouseExited(MouseEvent e) {
-      //int oldRolloverColumn = rolloverColumn;
+      // int oldRolloverColumn = rolloverColumn;
       rolloverColumn = -1;
     }
-    //@see BasicTableHeaderUI.MouseInputHandler
+
+    // @see BasicTableHeaderUI.MouseInputHandler
     private void updateRolloverColumn(MouseEvent e) {
       if (Objects.isNull(header.getDraggedColumn())
           && header.contains(e.getPoint())) {
         int col = header.columnAtPoint(e.getPoint());
         if (col != rolloverColumn) {
-          //int oldRolloverColumn = rolloverColumn;
+          // int oldRolloverColumn = rolloverColumn;
           rolloverColumn = col;
-          //rolloverColumnUpdated(oldRolloverColumn, rolloverColumn);
+          // rolloverColumnUpdated(oldRolloverColumn, rolloverColumn);
         }
       }
     }
@@ -121,12 +127,12 @@ class TableHeaderTabbedPane extends JPanel {
 * 解説 [#explanation]
 このサンプルでは、`CardLayout`と`JTableHeader`を使用して、コンテナの切り替えを行う`JTabbedPane`風のコンポーネントを作成しています。
 
-- `JTableHeader`は、空の`JTable`を作成してそこから取得
+- `JTableHeader`は空の`JTable`を作成してそこから取得
 -- `new JTableHeader(TableColumnModel cm)`より簡単なため
-- `JScrollPane`にサイズ`0`の`JViewport`を設定し、上記の`JTable`を追加
--- 直接`JTableHeader`を追加すると、うまくリサイズできない？
-- `JTableHeader`に`MouseListener`を追加し、`TableColumn`(タブとして代用)がクリックされると、そのタイトル文字列を引数にして`CardLayout#show(...)`を実行してコンテナの切り替えを行う
-- `JTableHeader`デフォルト機能であるドラッグ＆ドロップによる入れ替えや、ヘッダ(タブ)幅のリサイズが利用可能
+- `JScrollPane`にサイズ`0`の`JViewport`を設定し上記の`JTable`を追加
+-- 直接`JTableHeader`を追加するとうまくリサイズできない？
+- `JTableHeader`に`MouseListener`を追加し、`TableColumn`(タブとして代用)がクリックされるとそのタイトル文字列を引数にして`CardLayout#show(...)`を実行してコンテナの切り替えを行う
+- `JTableHeader`デフォルト機能であるドラッグ＆ドロップによる入れ替えやヘッダ(タブ)幅のリサイズが利用可能
 
 * 参考リンク [#reference]
 - [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]

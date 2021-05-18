@@ -1,0 +1,62 @@
+---
+category: swing
+folder: CenteredMultiRowCellEditor
+title: JTextPaneで中央揃え、行折返し可能なリストセルエディタを作成する
+tags: [JTextPane, JList, JWindow]
+author: aterai
+pubdate: 2021-03-01T00:02:34+09:00
+description: JTextPaneで中央揃え、行折返し可能なエディタを作成し、JFrameに追加してリストセルの編集に使用します。
+image: https://drive.google.com/uc?id=1rvx8N6fXs-31JKGBXFSd18bMepyvmIqN
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2021/02/create-jlist-heavyweight-cell-editor.html
+    lang: en
+---
+* 概要 [#summary]
+`JTextPane`で中央揃え、行折返し可能なエディタを作成し、`JWindow`に追加してリストセルの編集に使用します。
+
+#download(https://drive.google.com/uc?id=1rvx8N6fXs-31JKGBXFSd18bMepyvmIqN)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class WrapLabelView extends LabelView {
+  protected WrapLabelView(Element element) {
+    super(element);
+  }
+
+  @Override public float getMinimumSpan(int axis) {
+    switch (axis) {
+      case View.X_AXIS:
+        return 0;
+      case View.Y_AXIS:
+        return super.getMinimumSpan(axis);
+      default:
+        throw new IllegalArgumentException("Invalid axis: " + axis);
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JTextArea`
+-- `JTextArea#setLineWrap(true)`で行折返しが設定可能
+-- デフォルト左揃え、`JTextArea#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`で右揃えは可能だが、中央揃えは設定不可
+--- `javax.swing.text.WrappedPlainView.WrappedLine`クラスなどがパッケージプライベートなのでカスタマイズしづらい
+- `JTextPane`
+-- 行折返し設定が存在しないので、折り返し可能な`LabelView`を作成、使用する`EditorKit`を設定する必要がある
+--- [https://stackoverflow.com/questions/30590031/jtextpane-line-wrap-behavior java - JTextPane line wrap behavior - Stack Overflow]
+-- 中央揃えは本文のパラグラフ属性に`StyleConstants.ALIGN_CENTER`を設定することで実現可能
+#code{{
+StyledDocument doc = textPane.getStyledDocument();
+SimpleAttributeSet center = new SimpleAttributeSet();
+StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+doc.setParagraphAttributes(0, doc.getLength(), center, false);
+}}
+
+* 参考リンク [#reference]
+- [[JTextAreaとJFrameで幅固定、文字列の折り返し、親枠外まで高さ拡大可能なセルエディタを作成する>Swing/LineWrapListEditor]]
+- [https://stackoverflow.com/questions/30590031/jtextpane-line-wrap-behavior java - JTextPane line wrap behavior - Stack Overflow]
+- [[JWindow内にフォーカス可能なコンポーネントを配置する>Swing/JWindowFocus]]
+
+* コメント [#comment]
+#comment
+#comment

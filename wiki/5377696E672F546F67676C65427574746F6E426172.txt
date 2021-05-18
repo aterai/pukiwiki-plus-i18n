@@ -23,7 +23,6 @@ class ToggleButtonBarCellIcon implements Icon {
   private static final Color BR = new Color(0f, 0f, 0f, .2f);
   private static final Color ST = new Color(1f, 1f, 1f, .4f);
   private static final Color SB = new Color(1f, 1f, 1f, .1f);
-
   private Color ssc;
   private Color bgc;
 
@@ -90,9 +89,11 @@ class ToggleButtonBarCellIcon implements Icon {
 
     g2.dispose();
   }
+
   @Override public int getIconWidth()  {
     return 80;
   }
+
   @Override public int getIconHeight() {
     return 20;
   }
@@ -107,7 +108,7 @@ class ToggleButtonBarCellIcon implements Icon {
 -- `GridLayout`の水平間隔なども`0`にして隙間ができないように配置
 - 最初の`JRadioButton`は左、最後の`JRadioButton`は右の角を丸める
 -- 参考: [[JComboBoxの角を丸める>Swing/RoundedComboBox]]
--- 角を丸めた時に背景色を描画しないようにするため、`JRadioButton#setContentAreaFilled(false)`を設定して描画をすべてアイコンで行う
+-- 角を丸めた時に背景色を描画しないようにするため`JRadioButton#setContentAreaFilled(false)`を設定して描画をすべてアイコンで行う
 
 * 参考リンク [#reference]
 - [http://weboook.blog22.fc2.com/blog-entry-342.html 簡単、きれい！RGBaカラーを使って横メニューを作ってみる｜Webpark]

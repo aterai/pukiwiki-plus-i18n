@@ -28,8 +28,8 @@ EventQueue.invokeLater(new Runnable() {
 
 - `JFrame#pack()`や`JFrame#setSize(int, int)`などが実行されて親コンポーネントのサイズが決定した後に`JSplitPane#setDividerLocation(...)`メソッドを実行しないと効果がない
 - ディバイダ自身の幅(`JSplitPane#getDividerSize()`)は含まれない
-- 内部では、切り捨てで`JSplitPane#setDividerLocation(int)`を使用: [[JSplitPaneのDividerの位置を最大化後に変更する>Swing/DividerSplitRatio]]
-- `JSplitPane#setResizeWeight(double)`を使用し、`JSplitPane`内に配置したコンポーネント(`JScrollPane`)の余ったスペースの配分が同じになるよう設定してディバイダを中央に配置する方法もある
+- 内部では切り捨てで`JSplitPane#setDividerLocation(int)`を使用: [[JSplitPaneのDividerの位置を最大化後に変更する>Swing/DividerSplitRatio]]
+- `JSplitPane#setResizeWeight(double)`を使用して`JSplitPane`内に配置したコンポーネント(`JScrollPane`)の余ったスペース配分を同じにすることでディバイダを中央に配置する方法もある
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSplitPane.html#setDividerLocation-double- JSplitPane#setDividerLocation(double) (Java Platform SE 8)]

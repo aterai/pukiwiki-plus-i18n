@@ -1,0 +1,51 @@
+---
+category: swing
+folder: MinimumThumbRatio
+title: JScrollBarのKnobの最小サイズをJScrollPaneのサイズ相対に変更する
+tags: [JScrollBar, JScrollPane]
+author: aterai
+pubdate: 2020-11-16T02:40:38+09:00
+description: JScrollBarのKnobの最小サイズを固定値ではなく、JScrollPaneのサイズ相対になるよう設定します。
+image: https://drive.google.com/uc?id=1I8jjLmU0nT0Rj2Gf8l9Z2X7nhKvlPKfz
+---
+* 概要 [#summary]
+`JScrollBar`の`Knob`の最小サイズを固定値ではなく、`JScrollPane`のサイズ相対になるよう設定します。
+
+#download(https://drive.google.com/uc?id=1I8jjLmU0nT0Rj2Gf8l9Z2X7nhKvlPKfz)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JScrollPane scroll = new JScrollPane(textArea);
+scroll.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setUI(new MetalScrollBarUI() {
+      @Override protected Dimension getMinimumThumbSize() {
+        Dimension d = super.getMinimumThumbSize();
+        Rectangle r = SwingUtilities.calculateInnerArea(scroll, null);
+        d.height = Math.max(d.height, r.height / 12);
+        return d;
+      }
+    });
+    putClientProperty("JScrollBar.fastWheelScrolling", Boolean.TRUE);
+  }
+});
+}}
+
+* 解説 [#explanation]
+- 左: `default`
+-- `UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32))`でノブの最小サイズを設定
+--- `BasicLookAndFeel`、`NimbusLookAndFeel`で有効
+-- `MetalLookAndFeel`の場合、たとえば縦`JScrollBar`は`UIManager.getInt("ScrollBar.width")`の値が高さの最小サイズになる
+-- `WindowsLookAndFeel`(`Windows 10`)の場合`OS`(レジストリ)の設定が優先される？
+-- [[JScrollBarのKnobの最小サイズを設定する>Swing/MinimumThumbSize]]
+- 右: `override getMinimumThumbSize()`
+-- `BasicScrollBarUI#getMinimumThumbSize()`をオーバーライドして最小値を指定
+-- このサンプルでは`JScrollBar`のノブの最小サイズは可変で`JScrollPane`の高さの`1/12`になるよう設定
+
+* 参考リンク [#reference]
+- [[JScrollBarのKnobの最小サイズを設定する>Swing/MinimumThumbSize]]
+
+* コメント [#comment]
+#comment
+#comment

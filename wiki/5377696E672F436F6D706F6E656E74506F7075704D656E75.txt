@@ -17,8 +17,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKBw4_YtI/AAAAAAAAAVU/J_
 #code(link){{
 JTextArea textArea = new JTextArea("ComponentPopupMenu Test");
 textArea.setComponentPopupMenu(new TextComponentPopupMenu());
-}}
-#code{{
+
 class TextComponentPopupMenu extends JPopupMenu {
   private final Action cutAction = new DefaultEditorKit.CutAction();
   private final Action copyAction = new DefaultEditorKit.CopyAction();
@@ -42,15 +41,16 @@ class TextComponentPopupMenu extends JPopupMenu {
         ((JTextComponent) getInvoker()).selectAll();
       }
     });
-    //ActionMap am = textArea.getActionMap();
-    //add(cutAction = am.get("cut-to-clipboard"));
-    //add(copyAction = am.get("copy-to-clipboard"));
-    //add(am.get("paste-from-clipboard"));
-    //addSeparator();
-    //add(deleteAction = am.get("delete-next"));
-    //addSeparator();
-    //add(am.get("select-all"));
+    // ActionMap am = textArea.getActionMap();
+    // add(cutAction = am.get("cut-to-clipboard"));
+    // add(copyAction = am.get("copy-to-clipboard"));
+    // add(am.get("paste-from-clipboard"));
+    // addSeparator();
+    // add(deleteAction = am.get("delete-next"));
+    // addSeparator();
+    // add(am.get("select-all"));
   }
+
   @Override public void show(Component c, int x, int y) {
     JTextComponent textArea = (JTextComponent) c;
     boolean flg = textArea.getSelectedText() != null;
@@ -65,26 +65,24 @@ class TextComponentPopupMenu extends JPopupMenu {
 * 解説 [#explanation]
 上記のサンプルでは、`JTextArea`に`setComponentPopupMenu(JPopupMenu)`メソッドで、ポップアップメニューを追加しています。
 
-`JDK 1.5`でこのメソッドが追加されたため、各コンポーネントにマウスリスナーを設定して、`e.isPopupTrigger()`でポップアップを表示するクリックかを判断するといったコードを書く必要が無くなりました。
-
-ポップアップメニューを表示するときに、コンポーネントの状態(例えば`JTable`や`JList`などでの行選択の有無や、テキストが選択されてるかとどうかなどの条件)で、メニューが実行可か不可かを変更したい場合は、`JPopupMenu#show(Component, int, int)`メソッドをオーバーライドして使用します。
-
-このサンプルでは、テキストが選択されている場合だけ、カット、コピー、削除メニューが有効になるよう設定しています。
+- `JDK 1.5`でこのメソッドが追加されたため、各コンポーネントにマウスリスナーを設定して`e.isPopupTrigger()`でポップアップを表示するクリックの判断が不要になった
+- ポップアップメニューを表示するときにコンポーネントの状態(例えば`JTable`や`JList`などでの行選択の有無や、テキストが選択されてるかとどうかなどの条件)でメニューが実行可か不可かを変更したい場合は、`JPopupMenu#show(Component, int, int)`メソッドをオーバーライドして使用可能
+- このサンプルではテキストが選択されている場合だけカット、コピー、削除メニューが有効になるよう設定
 
 ----
-`JPopupMenu#show(Component, int, int)`のオーバーライドではなく、`PopupMenuListener`を使用する方法もあります。
+- `JPopupMenu#show(Component, int, int)`のオーバーライドではなく、`PopupMenuListener`を使用する方法もある
 
 #code{{
 JPopupMenu popup = new JPopupMenu();
-final Action cutAction = new DefaultEditorKit.CutAction();
-final Action copyAction = new DefaultEditorKit.CopyAction();
-final Action pasteAction = new DefaultEditorKit.PasteAction();
-final Action deleteAction = new AbstractAction("delete") {
+Action cutAction = new DefaultEditorKit.CutAction();
+Action copyAction = new DefaultEditorKit.CopyAction();
+Action pasteAction = new DefaultEditorKit.PasteAction();
+Action deleteAction = new AbstractAction("delete") {
   @Override public void actionPerformed(ActionEvent e) {
     ((JTextComponent) getInvoker()).replaceSelection(null);
   }
 };
-final Action selectAllAction = new AbstractAction("select all") {
+Action selectAllAction = new AbstractAction("select all") {
   @Override public void actionPerformed(ActionEvent e) {
     JPopupMenu p = (JPopupMenu) e.getSource();
     ((JTextComponent) p.getInvoker()).selectAll();

@@ -57,7 +57,7 @@ class RegexDateFilter extends RowFilter<TableModel, Integer> {
 -- フィルタをクリア
 - `RowFilter.regexFilter`
 -- `RowFilter.regexFilter(txt)`を設定
--- 以下のように`RowFilter.regexFilter`では`Date#toString()`メソッドが使用され、セルに表示されている文字列ではフィルタリングされない
+-- 以下のように`RowFilter.regexFilter`では`Date#toString()`メソッドが使用されるため、セルに表示中の文字列ではフィルタリングされない
 #code{{
 // @see javax/swing/RowFilter.java
 public static abstract class Entry<M, I> {
@@ -68,7 +68,7 @@ public static abstract class Entry<M, I> {
   }
   // ...
 }}
--- 例: `12`ではすべての行が非表示だが、`Dec`では`2`行表示される
+-- 例: `12`ではすべての行が非表示だが`Dec`では`2`行表示される
 - `new RowFilter()`
 -- `RowFilter<TableModel, Integer>`を継承するフィルタを作成して設定
 -- このフィルタでは以下のように`DateRenderer`が表示に使用しているデフォルトの`DateFormat`を使用して`Date`を文字列に変換してフィルタリングを行う

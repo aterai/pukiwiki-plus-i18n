@@ -1,0 +1,65 @@
+---
+category: swing
+folder: MenuLocation
+title: JMenuから開くJPopupMenuの位置を変更する
+tags: [JMenu, JPopupMenu, JMenuBar]
+author: aterai
+pubdate: 2021-03-29T01:29:30+09:00
+description: JMenuを選択して開くJPopupMenuが親ウィンドウ内に表示されるよう位置を変更します。
+image: https://drive.google.com/uc?id=1Q6GqbhFRGHceMYa29cpE4fGNEfOwcA05
+---
+* 概要 [#summary]
+`JMenu`を選択して開く`JPopupMenu`が親ウィンドウ内に表示されるよう位置を変更します。
+
+#download(https://drive.google.com/uc?id=1Q6GqbhFRGHceMYa29cpE4fGNEfOwcA05)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JMenu menu = new JMenu(key) {
+  @Override public void setPopupMenuVisible(boolean b) {
+    if (isTopLevelMenu()) {
+      Point p = getLocation();
+      Rectangle r = getRootPane().getBounds();
+      Dimension d1 = getPopupMenu().getPreferredSize();
+      if (p.x + d1.width > r.width) {
+        Dimension d2 = getPreferredSize();
+        setMenuLocation(d2.width - d1.width, d2.height);
+      }
+    }
+    super.setPopupMenuVisible(b);
+  }
+};
+}}
+
+* 解説 [#explanation]
+- `JMenu`が`JMenuBar`に配置された`TopLevelMenu`で`JMenu`を選択して表示される`JPopupMenu`が親`Window`領域外に配置される場合、オーバーライドした`JMenu#setPopupMenuVisible(...)`内で`JMenu#setMenuLocation(...)`を使用して親`Window`領域内に収まるよう`JPopupMenu`の位置を変更
+- `TopLevelMenu`の場合の`JPopupMenu`の表示位置オフセットは`UIManager.put("Menu.menuPopupOffsetX", offset)`、`UIManager.put("Menu.menuPopupOffsetY", offset)`で変更可能
+- `TopLevelMenu`ではない場合の`JPopupMenu`の表示位置オフセットは`UIManager.put("Menu.submenuPopupOffsetX", offset)`、`UIManager.put("Menu.submenuPopupOffsetY", offset)`で変更可能
+- `JMenu`が`TopLevelMenu`ではなくサブメニューの場合、同じくオーバーライドした`JMenu#setPopupMenuVisible(...)`内で`JMenu#setMenuLocation(...)`を使用して親`JPopupMenu`と同じ位置に同じサイズで`JPopupMenu`を表示するよう位置を変更
+-- `WindowsLookAndFeel`の場合親`JPopupMenu`のハイライトが手前に残る場合がある？
+-- テストとして`JMenu`内にカーソルが入ったときではなくクリックイベントで`JPopupMenu`を開閉するよう`JMenu#setDelay(...)`に`100`秒の遅延時間を設定しているがおそらく修正が必要になりそう
+
+#code{{
+JMenu menu = new JMenu(title) {
+  @Override public void setPopupMenuVisible(boolean b) {
+    JPopupMenu popup = getPopupMenu();
+    popup.setPopupSize(getParent().getPreferredSize());
+    Point p = getLocation();
+    setMenuLocation(-p.x, -p.y);
+    super.setPopupMenuVisible(b);
+  }
+
+  @Override public JMenuItem add(JMenuItem item) {
+    item.setMaximumSize(new Dimension(Short.MAX_VALUE, item.getPreferredSize().height));
+    return super.add(item);
+  }
+};
+}}
+
+* 参考リンク [#reference]
+- [[JPopupMenuの表示を親コンポーネント領域内のみに制限する>Swing/AdjustPopupLocation]]
+- [[JPopupMenuの最小幅を設定する>Swing/PopupMenuWidth]]
+
+* コメント [#comment]
+#comment
+#comment

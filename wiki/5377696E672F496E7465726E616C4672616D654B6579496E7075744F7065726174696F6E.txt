@@ -27,15 +27,15 @@ im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, modifiers), "shrinkRight");
 - `move`: `ctrl pressed F7`
 -- KBD{Ctrl+F7}で、現在フォーカスが存在する`JInternalFrame`をカーソルキーで移動可能なモードになる
 -- `JInternalFrame`を完全に`JDesktopPane`の範囲外にカーソルキーで移動は不可
--- アイコン化したフレームを移動可能な`WindowsLookAndFeel`などの場合でも、カーソルキーでのアイコン移動は不可
+-- アイコン化したフレームを移動可能な`WindowsLookAndFeel`などの場合でもカーソルキーでのアイコン移動は不可
 -- KBD{ESC}で移動モードは解除可能
 --- 別`JInternalFrame`に選択が移動した場合も解除になる
 - `resize`: `ctrl pressed F8`
--- KBD{Ctrl+F8}で、現在フォーカスが存在する`JInternalFrame`をカーソルキーでリサイズ可能なモードになる
--- マウスによるリサイズが不可の場合でも、カーソルキーでのリサイズは可能
+-- KBD{Ctrl+F8}で現在フォーカスが存在する`JInternalFrame`をカーソルキーでリサイズ可能なモードになる
+-- マウスによるリサイズが不可の場合でもカーソルキーでのリサイズは可能
 -- デフォルトでは拡大のみ可能で縮小`Action`にはキー入力が割り当てられていないため、このサンプルではKBD{Ctrl+UP}などで`JInternalFrame`の上辺を縮小方向にリサイズ可能になるよう設定している
---- `JInternalFrame`ではなく、`JDesktopPane`の`InputMap`に設定を追加する必要がある
--- `NimbusLookAndFeel`では、カーソルキーによるリサイズで`NullPointerException`が発生する
+--- `JInternalFrame`ではなく`JDesktopPane`の`InputMap`に設定を追加する必要がある
+-- `NimbusLookAndFeel`ではカーソルキーによるリサイズで`NullPointerException`が発生する
 --- `1.8.0_192`、`11.0.1`ともにエラーになる
 
 #code{{

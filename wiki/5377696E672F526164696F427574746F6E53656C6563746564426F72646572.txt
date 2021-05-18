@@ -1,0 +1,72 @@
+---
+category: swing
+folder: RadioButtonSelectedBorder
+title: JRadioButtonのデフォルトアイコンをサムネイルに変更する
+tags: [JRadioButton, Icon, Border]
+author: aterai
+pubdate: 2020-12-21T01:53:05+09:00
+description: JRadioButtonのデフォルトラジオボタンを画像のサムネイル、選択状態ボタンをそのサムネイル上にフチを描画したアイコンに変更します。
+image: https://drive.google.com/uc?id=1r29AzJE-F52kpvdKYV58sSzCCdJONkLv
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2020/12/use-thumbnail-as-default-icon-for.html
+    lang: en
+---
+* 概要 [#summary]
+`JRadioButton`のデフォルトラジオボタンを画像のサムネイル、選択状態ボタンをそのサムネイル上にフチを描画したアイコンに変更します。
+
+#download(https://drive.google.com/uc?id=1r29AzJE-F52kpvdKYV58sSzCCdJONkLv)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class SelectedIcon implements Icon {
+  private final Icon icon;
+  private final Color color;
+
+  protected SelectedIcon(Icon icon, Color color) {
+    this.icon = icon;
+    this.color = color;
+  }
+
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.translate(x, y);
+    icon.paintIcon(c, g2, 0, 0);
+    Path2D triangle = new Path2D.Double();
+    triangle.moveTo(getIconWidth(), getIconHeight() / 2d);
+    triangle.lineTo(getIconWidth(), getIconHeight());
+    triangle.lineTo(getIconWidth() - getIconHeight() / 2d, getIconHeight());
+    triangle.closePath();
+
+    g2.setPaint(color);
+    g2.fill(triangle);
+    g2.setStroke(new BasicStroke(3f));
+    g2.drawRect(0, 0, getIconWidth(), getIconHeight());
+    g2.setPaint(Color.WHITE);
+    Font f = g2.getFont();
+    g2.drawString("?", getIconWidth() - f.getSize(), getIconHeight() - 3);
+    g2.dispose();
+  }
+
+  @Override public int getIconWidth() {
+    return icon.getIconWidth();
+  }
+
+  @Override public int getIconHeight() {
+    return icon.getIconHeight();
+  }
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは`JRadioButton`のデフォルトラジオボタンを`ColorIcon`や`ImageIcon`に変更し、テキストをそのアイコンの下に配置してサムネイル風に表示するよう設定しています。
+選択状態ボタンもデフォルトラジオボタンとして設定したアイコンの上に選択状態を示すフチを描画するアイコンを`JRadioButton#setSelectedIcon(...)`メソッドで設定します。
+
+* 参考リンク [#reference]
+- [[JRadioButtonの文字色を変更>Swing/RadioButtonTextColor]]
+- [https://help.vivaldi.com/ja/show-on-first-page-ja/browser-themes/ テーマ | Vivaldi Browser Help]
+-- ブラウザの`Vivaldi`のテーマ設定画面を参考にしている
+
+* コメント [#comment]
+#comment
+#comment

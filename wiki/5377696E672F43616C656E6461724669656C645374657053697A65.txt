@@ -45,8 +45,8 @@ JSpinner spinner2 = new JSpinner(new SpinnerDateModel(d, null, null, Calendar.SE
 
 * 解説 [#explanation]
 - `Calendar.MINUTE`や`Calendar.SECOND`などの各日付フィールドごとに増加、減少のステップサイズを指定した`HashMap`を作成
-- `SpinnerDateModel#getNextValue()`と`SpinnerDateModel#getPreviousValue()`の内部で、この`HashMap`を参照して`JSpinner`のスピンボタンなどでの値変更に利用
--- 上記のサンプルでは、秒フィールドにカーソルがある場合は`30`秒、ミリ秒の場合は`500`ミリ秒、マッピングされていないフィールドの場合は`1`ずつ増減
+- `SpinnerDateModel#getNextValue()`と`SpinnerDateModel#getPreviousValue()`の内部でこの`HashMap`を参照して`JSpinner`のスピンボタンなどでの値変更に利用
+-- 上記のサンプルでは秒フィールドにカーソルがある場合は`30`秒、ミリ秒の場合は`500`ミリ秒、マッピングされていないフィールドの場合は`1`ずつ増減
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SpinnerDateModel.html#getNextValue-- SpinnerDateModel#getNextValue() (Java Platform SE 8)]

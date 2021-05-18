@@ -24,7 +24,7 @@ class TransparentHeader extends JLabel implements TableCellRenderer {
       BorderFactory.createEmptyBorder(2, 2, 1, 2));
   private final Color alphaZero = new Color(0x0, true);
   @Override public Component getTableCellRendererComponent(
-        JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+      JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     this.setText(Objects.toString(value, ""));
     this.setHorizontalAlignment(SwingConstants.CENTER);
     this.setOpaque(false);
@@ -38,17 +38,17 @@ class TransparentHeader extends JLabel implements TableCellRenderer {
 
 * 解説 [#explanation]
 - `JTableHeader`
--- `JTableHeader`とヘッダセルレンダラーの両方を、`setOpaque(false)`, 背景色: `Color(0x0, true)`と設定
-- `JTable`, `JScrollPane`(`Viewport`, `ColumnHeader`)も`setOpaque(false)`, 背景色: `Color(0x0, true)`と設定
--- 背景パターンは、`JScrollPane#paintComponent(...)`をオーバーライドして描画
---- [[JTableを半透明にする>Swing/TransparentTable]]は、`JViewport#paintComponent(...)`をオーバーライド
+-- `JTableHeader`とヘッダセルレンダラーの背景を透明:`setOpaque(false)`、かつ背景色:`Color(0x0, true)`に設定
+- `JTable`、`JScrollPane`(`Viewport`、`ColumnHeader`)の背景も透明:`setOpaque(false)`、かつ背景色:`Color(0x0, true)`に設定
+-- 背景パターンは`JScrollPane#paintComponent(...)`をオーバーライドして描画
+--- [[JTableを半透明にする>Swing/TransparentTable]]は`JViewport#paintComponent(...)`をオーバーライド
 - `VerticalLine`
--- セル間の垂直線を非表示: `table.setShowVerticalLines(false);`
--- セル間の幅を`0`にして、選択時に罫線のあとが表示されないように設定: `table.setIntercellSpacing(new Dimension(0, 1));`
+-- セル間の垂直線を`table.setShowVerticalLines(false)`で非表示に設定 
+-- セル間の幅を`table.setIntercellSpacing(new Dimension(0, 1))`で`0`に設定して選択時に罫線の跡を非表示化
 - `Boolean.class`の`DefaultRenderer`
 -- 透明化した`BooleanCellRenderer`や`BooleanCellEditor`を設定
 - 注:
--- `ColumnHeader`には、`scroll.setColumnHeader(new JViewport());`とダミーの`JViewport`を設定しておかないと、`NullPointerException`が発生する
+-- `ColumnHeader`には、`scroll.setColumnHeader(new JViewport())`とダミーの`JViewport`を設定しておかないと`NullPointerException`が発生する
 #code{{
 scroll.setOpaque(false);
 scroll.setBackground(alphaZero);
@@ -59,9 +59,9 @@ scroll.getColumnHeader().setOpaque(false);
 scroll.getColumnHeader().setBackground(alphaZero);
 }}
 
--- レンダラーとして使用している`JCheckBox`の揃えを`updateUI()`メソッドをオーバーライドして`setHorizontalAlignment(SwingConstants.CENTER);`で中央に変更していたが、効かなくなっている？
+-- レンダラーとして使用している`JCheckBox`の揃えを`updateUI()`メソッドをオーバーライドして`setHorizontalAlignment(SwingConstants.CENTER)`で中央に変更していたが無効になっている？
 --- 何時からなのか不明
---- `getTableCellRendererComponent(...)`中で`setHorizontalAlignment(SwingConstants.CENTER);`を毎回設定して回避
+--- `getTableCellRendererComponent(...)`中で`setHorizontalAlignment(SwingConstants.CENTER)`を毎回設定して回避
 
 * 参考リンク [#reference]
 - [[JTableを半透明にする>Swing/TransparentTable]]

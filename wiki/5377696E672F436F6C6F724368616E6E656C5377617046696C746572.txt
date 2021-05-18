@@ -43,7 +43,7 @@ class BlockedColorLayerUI extends LayerUI<JProgressBar> {
 
       Image image = c.createImage(
         new FilteredImageSource(bi.getSource(), new RedGreenChannelSwapFilter()));
-      //BUG: cause an infinite repaint loop: g.drawImage(image, 0, 0, c);
+      // BUG: cause an infinite repaint loop: g.drawImage(image, 0, 0, c);
       g.drawImage(image, 0, 0, null);
     } else {
       super.paint(g, c);
@@ -63,15 +63,15 @@ class RedGreenChannelSwapFilter extends RGBImageFilter {
 
 * 解説 [#explanation]
 - `setStringPainted(true)`: 上
--- デフォルトの`JProgressBar`に、`JProgressBar#setStringPainted(true)`を設定
+-- デフォルトの`JProgressBar`に`JProgressBar#setStringPainted(true)`を設定
 - `setStringPainted(true)`: 下
 -- `JProgressBar#setStringPainted(true)`を設定
--- チェックボックスが選択された場合、`JProgressBar#setForeground(Color)`で色を変更
+-- チェックボックスが選択された場合`JProgressBar#setForeground(Color)`で色を変更
 - `setStringPainted(false)`: 上
 -- デフォルトの`JProgressBar`
 - `setStringPainted(false)`: 下
--- チェックボックスが選択された場合、`JLayer`を使って色を変更
---- `Windows 7`での中断状態風に、緑を赤に入れ替えるため、`RGBImageFilter#filterRGB(...)`をオーバーライド
+-- チェックボックスが選択された場合`JLayer`を使って色を変更
+--- `Windows 7`での中断状態風に緑を赤に入れ替えるため`RGBImageFilter#filterRGB(...)`をオーバーライド
 
 * 参考リンク [#reference]
 - [[RGBImageFilterでアイコンの色調を変更>Swing/RatingLabel]]

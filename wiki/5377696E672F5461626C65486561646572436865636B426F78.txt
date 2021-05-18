@@ -22,6 +22,7 @@ enum Status { SELECTED, DESELECTED, INDETERMINATE }
 class HeaderRenderer extends JCheckBox implements TableCellRenderer {
   private final JLabel label = new JLabel("Check All");
   private final int targetColumnIndex;
+
   public HeaderRenderer(JTableHeader header, int index) {
     super((String) null);
     this.targetColumnIndex = index;
@@ -47,6 +48,7 @@ class HeaderRenderer extends JCheckBox implements TableCellRenderer {
       }
     });
   }
+
   @Override public Component getTableCellRendererComponent(
         JTable tbl, Object val, boolean isS, boolean hasF, int row, int col) {
     TableCellRenderer r = tbl.getTableHeader().getDefaultRenderer();
@@ -80,19 +82,25 @@ class HeaderRenderer extends JCheckBox implements TableCellRenderer {
     return l;
   }
 }
+
 class ComponentIcon implements Icon {
   private final JComponent cmp;
+
   public ComponentIcon(JComponent cmp) {
     this.cmp = cmp;
   }
+
   @Override public int getIconWidth() {
     return cmp.getPreferredSize().width;
   }
+
   @Override public int getIconHeight() {
     return cmp.getPreferredSize().height;
   }
+
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
-    SwingUtilities.paintComponent(g, cmp, c.getParent(), x, y, getIconWidth(), getIconHeight());
+    SwingUtilities.paintComponent(
+        g, cmp, c.getParent(), x, y, getIconWidth(), getIconHeight());
   }
 }
 }}
@@ -101,16 +109,17 @@ class ComponentIcon implements Icon {
 上記のサンプルでは、`JCheckBox`のアイコンを作成し、これを`TableCellRenderer`(=`JLabel`)に`setIcon(...)`メソッドで設定しています。
 
 - `JCheckBox`をアイコン化しているので、これをクリックしてもイベントは発生しない
--- 代わりにヘッダ自体に`MouseListener`を追加し、マウスクリックイベントが発生するとアイコンの入れ替えることで、チェック状態の表示を更新する
-- `LookAndFeel`によっては、`TableCellRenderer`のソートアイコンと競合する場合がある
+-- 代わりにヘッダ自体に`MouseListener`を追加し、マウスクリックイベントが発生するとアイコンの入れ替えることでチェック状態の表示を更新する
+- `LookAndFeel`によっては`TableCellRenderer`のソートアイコンと競合する場合がある
 
 ----
 - `JTable`のモデルの更新
 -- `JTable`のセル中にある`JCheckBox`が全てチェックされた場合、ヘッダの`JCheckBox`もチェックされる
 -- `JTable`のセル中にある`JCheckBox`のチェックが全てクリアされた場合、ヘッダの`JCheckBox`のチェックもクリアされる
 -- `JTable`のセル中にある`JCheckBox`でチェックの有無が混在している場合、ヘッダの`JCheckBox`は薄くチェックされた状態(`setEnabled(false)`で`setSelected(true)`)になる
-- 注:
--- このサンプルでは、行の追加、削除を考慮していない
+
+----
+- このサンプルでは行の追加、削除を考慮していない
 -- 行の追加、削除に対応したサンプルは、[[JTableのモデルが変更されたことをイベントで受け取る>Swing/TableModelEvent]]に移動
 
 * 参考リンク [#reference]

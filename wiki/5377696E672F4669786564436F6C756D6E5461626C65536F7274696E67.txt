@@ -63,7 +63,7 @@ add(scroll);
 
 * 解説 [#explanation]
 左の固定テーブル(`fixedTable`)と、右のテーブル(`table`)に同じ`RowSorter`を設定することで、列固定表でもソートできるようにしています。
-ただし、上記のサンプルでは、ソート中に行の追加を行うと例外が発生するので、追加の前に`sorter.setSortKeys(null);`で`SortKeys`をクリアしています。
+ただし、上記のサンプルではソート中に行の追加を行うと例外が発生するので、追加の前に`sorter.setSortKeys(null);`で`SortKeys`をクリアしています。
 
 #code{{
 add(new JButton(new AbstractAction("add") {
@@ -79,16 +79,14 @@ add(new JButton(new AbstractAction("add") {
 }}
 
 ----
-%%行を追加したとき、うまく描画されない場合があるので、以下のような`JPanel`をラッパーとして使用しています。%%
-
+- %%行を追加したとき描画が乱れる場合があるので、以下のような`JPanel`をラッパーとして使用%%
 - 以下を取り違えていたため、描画がおかしくなっていた
 -- `JScrollPane#setRowHeaderView(Component)`
 -- `JScrollPane#setRowHeader(JViewport)`
 
 ----
-固定列でキーボードなどによるスクロールに対応するために以下のような`ChangeListener`を追加しています。
-
-- 参考: [https://tips4java.wordpress.com/2008/11/05/fixed-column-table/ Fixed Column Table ≪ Java Tips Weblog]
+- 固定列でキーボードなどによるスクロールに対応するため、以下のような`ChangeListener`を追加
+-- 参考: [https://tips4java.wordpress.com/2008/11/05/fixed-column-table/ Fixed Column Table ≪ Java Tips Weblog]
 
 #code{{
 scroll.getRowHeader().addChangeListener(new ChangeListener() {

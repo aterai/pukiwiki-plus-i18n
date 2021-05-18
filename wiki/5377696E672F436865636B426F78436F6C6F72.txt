@@ -41,9 +41,11 @@ class CheckBoxIcon2 implements Icon {
     }
     g2.dispose();
   }
+
   @Override public int getIconWidth() {
     return orgIcon.getIconWidth();
   }
+
   @Override public int getIconHeight() {
     return orgIcon.getIconHeight();
   }
@@ -54,15 +56,15 @@ class CheckBoxIcon2 implements Icon {
 - `Default`
 -- デフォルトの`JCheckBox`
 - `WindowsIconFactory`
--- `com/sun/java/swing/plaf/windows/WindowsIconFactory.java`から、`XP`スタイルではない場合のアイコンをコピーし、一部色などを変更
+-- `com/sun/java/swing/plaf/windows/WindowsIconFactory.java`から`XP`スタイルではない場合のアイコンをコピーし、一部色などを変更
 - `CheckBox.icon+RED`
--- `UIManager.getIcon("CheckBox.icon")`で取得したオリジナルのアイコンを、アルファ値を設定した色で上書きし、✔マークも色を変えて塗り潰し
--- チェックの形は`WindowsIconFactory`からコピーしているので、別の`LookAndFeel`では枠からはみ出してしまう
+-- `UIManager.getIcon("CheckBox.icon")`で取得したオリジナルのアイコンをアルファ値を設定した色で上書きし、✔マークも色を変えて塗り潰し
+-- チェックの形は`WindowsIconFactory`からコピーしているので`WindowsLookAndFeel`以外では枠からはみ出してしまう
 - `MetalCheckBoxIcon+GRAY`
 -- `javax.swing.plaf.metal.MetalCheckBoxIcon`をアルファ値を設定した色で上書き
 
 ----
-`Windows XP`スタイル以外を使用する環境で色を変更する場合は、以下のような方法もあります。
+- `Windows XP`スタイル以外を使用する環境で色を変更する場合は以下のような方法もある
 
 #code{{
 System.setProperty("swing.noxp", "true");

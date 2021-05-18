@@ -32,9 +32,9 @@ try {
 * 解説 [#explanation]
 上記のサンプルでは、[[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]]などで使用しているチェックボックス付き`JTree`を、そのチェック状態も含めて永続化を行っています。
 
-- `JTree`の`DefaultTreeModel`や`DefaultMutableTreeNode`は、デフォルトで`XMLEncoder`に対応
+- `JTree`の`DefaultTreeModel`や`DefaultMutableTreeNode`はデフォルトで`XMLEncoder`に対応
 - `UserObject`として名前とチェック状態を保持する`CheckBoxNode`クラスは`XMLEncoder`に未対応なので、`DefaultPersistenceDelegate`で書き出し保存するプロパティを指定
-- チェック状態を表す`Status`は列挙型(`Enum`)で作成しているため、`XMLEncoder`はデフォルトで永続化に対応
+- チェック状態を表す`Status`は列挙型(`Enum`)で作成しているため`XMLEncoder`はデフォルトで永続化に対応
 -- `public`なクラスにしておく必要がある
 - 親ノードなどのチェック状態を更新する`TreeModelListener`は永続化していないので、`XMLDecoder`で`DefaultTreeModel`を復元後に再度`addTreeModelListener(...)`で設定し直す必要がある
 

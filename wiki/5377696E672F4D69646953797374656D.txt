@@ -16,7 +16,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTP2Xw5rXI/AAAAAAAAAeo/3v
 * サンプルコード [#sourcecode]
 #code(link){{
 URL url = getClass().getResource("Mozart_toruko_k.mid");
-final Sequencer sequencer;
+Sequencer sequencer;
 try {
   Sequence s = MidiSystem.getSequence(url);
   sequencer  = MidiSystem.getSequencer();
@@ -27,7 +27,7 @@ try {
   return;
 }
 startButton = new JButton(new AbstractAction("start") {
-  @Override public void actionPerformed(ActionEvent ae) {
+  @Override public void actionPerformed(ActionEvent e) {
     sequencer.start();
   }
 });

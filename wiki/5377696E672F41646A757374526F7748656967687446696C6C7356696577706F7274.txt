@@ -53,7 +53,7 @@ JTable table = new JTable(model) {
 上記のサンプルでは、`JViewport`のサイズまで`JTable`の各セルを`GridLayout`風に同比率で拡大縮小するよう`JTable#doLayout()`メソッドをオーバーライドしています。
 
 - 余白(高さ方向)の調整
--- `JViewport`の高さが変更されたり行数の増減が発生した場合、各行の高さを`JTable#setRowHeight(...)`で設定し直すことで、`JViewport`に余白が生成されないように調整
+-- `JViewport`の高さが変更されたり行数の増減が発生した場合、各行の高さを`JTable#setRowHeight(...)`で設定し直すことで`JViewport`に余白が生成されないように調整
 
 ----
 - `JScrollPane`の高さだけ変更した場合、`JTable#doLayout()`が呼び出されなくなった？

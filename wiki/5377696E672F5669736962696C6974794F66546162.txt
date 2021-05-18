@@ -52,8 +52,8 @@ tabs.setSelectedIndex(tabs.getTabCount() - 1);
 -- `JTabbedPane.SCROLL_TAB_LAYOUT`を設定した`JTabbedPane`
 -- `JTabbedPane`を表示状態である親コンポーネントに配置していない状態で末尾のタブを選択状態に設定しているため、このサンプルでは`9`のタブのみが表示されている
 --- `EventQueue.invokeLater(...)`などを使用してすでに表示された親コンポーネントに配置された後で`JTabbedPane#setSelectedIndex(...)`を使用すれば回避可能
---- その場合は、`5`から`9`のタブが表示状態になる
--- タブを追加した後で、`JTabbedPane#setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT)`に変更すると`0`から`4`のタブが表示状態になる
+--- その場合は`5`から`9`のタブが表示状態になる
+-- タブを追加した後で`JTabbedPane#setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT)`に変更すると`0`から`4`のタブが表示状態になる
 --- ただしその後に`tabs.setSelectedIndex(tabs.getTabCount() - 1)`で末尾のタブを選択すると`9`のタブのみが表示状態になる
 -- `9`のタブのみが表示されている状態でその末尾の`9`のタブを削除すると、すべてのタブが非表示状態になる
 - 中段

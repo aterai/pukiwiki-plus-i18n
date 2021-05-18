@@ -29,6 +29,7 @@ class MarqueePanel extends JComponent implements ActionListener {
     LineMetrics lm = font.getLineMetrics(text, frc);
     yy = lm.getAscent() / 2f + (float) gv.getVisualBounds().getY();
   }
+
   @Override protected void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
     int cw = getWidth();
@@ -39,6 +40,7 @@ class MarqueePanel extends JComponent implements ActionListener {
     g2.drawGlyphVector(gv, cw - xx, ch / 2f - yy);
     xx = (cw + gv.getVisualBounds().getWidth() - xx > 0) ? xx + 2f : 0f;
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     repaint();
   }

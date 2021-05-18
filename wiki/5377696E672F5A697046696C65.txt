@@ -81,7 +81,7 @@ public static void unzip(Path zipFilePath, Path destDir) throws IOException {
 * 解説 [#explanation]
 - `Zip`
 -- `JFileChooser#setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)`を設定して、ディレクトリのみ表示する`JFileChooser`で`zip`圧縮する対象ディレクトリを選択
--- `Files.walk(...)`で対象ディレクトリ内を検索し、パスを`ZipEntry`に変換して`ZipOutputStream`に追加、`Files.copy(...)`で書き出し
+-- `Files.walk(...)`で対象ディレクトリ内を検索しパスを`ZipEntry`に変換して`ZipOutputStream`に追加、`Files.copy(...)`で書き出し
 #code{{
 public static void zip(Path srcDir, Path zip) throws IOException {
   try (Stream<Path> s = Files.walk(srcDir).filter(Files::isRegularFile)) {
@@ -100,7 +100,7 @@ public static void zip(Path srcDir, Path zip) throws IOException {
 
 - `Unzip`
 -- `JFileChooser`で展開する`zip`ファイルを選択
--- 対象ファイルを`ZipFile`に変換して、`ZipFile#entries()`で圧縮されているファイルの一覧を取得
+-- 対象ファイルを`ZipFile`に変換して`ZipFile#entries()`で圧縮されているファイルの一覧を取得
 -- `Files.copy(zipFile.getInputStream(zipEntry), path, StandardCopyOption.REPLACE_EXISTING)`メソッドで展開
 --- `StandardCopyOption.REPLACE_EXISTING`オプションで同名ファイルは上書き
 

@@ -49,10 +49,10 @@ table.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(textFiel
 -- セルエディタに数値以外の入力を禁止する`DocumentFilter`を`AbstractDocument#setDocumentFilter(...)`でメソッドで設定し、TableColumn#setCellEditor(...)で`1`列目のセルエディタとして設定
 - `InputVerifier`
 -- セルエディタに`InputVerifier`を設定し、TableColumn#setCellEditor(...)で`2`列目のセルエディタとして設定
--- KBD{Enter}やKBD{Tab}キーで編集確定する`CellEditor#stopCellEditing()`メソッドを実行したとき、自然数、または空文字以外が入力されている場合はエディタの縁を赤くし、フォーカス移動がキャンセルする
+-- KBD{Enter}やKBD{Tab}キーで編集確定する`CellEditor#stopCellEditing()`メソッドを実行したとき自然数、または空文字以外が入力されている場合はエディタの縁を赤に変更してフォーカス移動をキャンセルする
 - `JFormattedTextField`
 -- セルエディタに`JFormattedTextField`を設定し、TableColumn#setCellEditor(...)で`3`列目のセルエディタとして設定
--- KBD{Tab}キーで編集確定する`CellEditor#stopCellEditing()`メソッドを実行したとき、数値以外が入力されている場合はエディタの縁を赤くし、フォーカス移動がキャンセルする
+-- KBD{Tab}キーで編集確定する`CellEditor#stopCellEditing()`メソッドを実行したとき、数値以外が入力されている場合はエディタの縁を赤に変更してフォーカス移動をキャンセルする
 --- デフォルトの`JFormattedTextField`の場合、KBD{Enter}キーの入力で`JFormattedTextField`側の`InputMap`で定義されたアクションでフォーカス移動がキャンセルされ、`CellEditor#stopCellEditing()`は実行されないのでエディタの縁は変化しない
 
 ----

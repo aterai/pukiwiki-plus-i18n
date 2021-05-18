@@ -36,8 +36,8 @@ public void addComp(final JComponent comp) {
 * 解説 [#explanation]
 上記のサンプルでは、`Box.createVerticalBox()`で作成した`Box`にコンポーネントを追加してリスト状に並べています。
 
-- 各コンポーネントの高さは変化せず、幅だけフレームサイズに追従するように`JComponent#setMaximumSize(...)`を設定
-- 各コンポーネントの高さの合計がフレームの高さより小さい場合は、下部に余白が生成されるよう末尾に`Box.createVerticalGlue()`を追加
+- 各コンポーネントの高さは変化せず幅だけフレームサイズに追従するように`JComponent#setMaximumSize(...)`を設定
+- 各コンポーネントの高さの合計がフレームの高さより小さい場合は下部に余白が生成されるよう末尾に`Box.createVerticalGlue()`を追加
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/Box.html Box (Java Platform SE 8)]

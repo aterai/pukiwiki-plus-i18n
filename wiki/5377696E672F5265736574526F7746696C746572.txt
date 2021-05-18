@@ -18,13 +18,13 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final RowFilter<TableModel, Integer> filter = new RowFilter<TableModel, Integer>() {
+RowFilter<TableModel, Integer> filter = new RowFilter<TableModel, Integer>() {
   @Override public boolean include(Entry<? extends TableModel, ? extends Integer> entry) {
     int vidx = table.convertRowIndexToView(entry.getIdentifier());
     return vidx < USER_SPECIFIED_NUMBER_OF_ROWS;
   }
 };
-final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
+TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
   @Override public void toggleSortOrder(int column) {
     if (check.isSelected()) {
       RowFilter<? super TableModel, ? super Integer> f = getRowFilter();
@@ -41,7 +41,7 @@ sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.DESCENDING))
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、☑ `viewRowIndex<5`をチェックすると、ソート状態とは無関係に表示上の`0`から`4`行目までの`5`行のみ表示されるフィルタが掛かります。
+上記のサンプルでは、☑ `viewRowIndex<5`をチェックするとソート状態とは無関係に表示上の`0`から`4`行目までの`5`行のみ表示されるフィルタが掛かります。
 
 - `Custom Sorting`チェック無し
 -- ☑ `viewRowIndex<5`のフィルタで`AA-ee`が表示されている場合、`String`列で昇順から降順にソートすると`ee-AA`となる
@@ -50,7 +50,7 @@ sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.DESCENDING))
 --- `toggleSortOrder`メソッドをオーバーライドして、一旦`TableRowSorter#setRowFilter(null)`を実行して`RowFilter`を解除してから昇順から降順にソート`OO-KK-AA`、その後再び`RowFilter`を設定するので`OO-KK`が表示される
 
 ----
-以下は、`toggleSortOrder`メソッドをオーバーライドし、すべての行が変更されている可能性があることをリスナーに通知してから、もう一度ソートのやり直しを行う方法です。
+以下は、`toggleSortOrder`メソッドをオーバーライドしすべての行が変更されている可能性があることをリスナーに通知してからもう一度ソートのやり直しを行う方法です。
 
 #code{{
 TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
@@ -58,8 +58,8 @@ TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
     super.toggleSortOrder(column);
     if (check.isSelected()) {
       model.fireTableDataChanged();
-      //??? allRowsChanged();
-      //modelRowCount = getModelWrapper().getRowCount();
+      // ??? allRowsChanged();
+      // modelRowCount = getModelWrapper().getRowCount();
       sort();
     }
   }

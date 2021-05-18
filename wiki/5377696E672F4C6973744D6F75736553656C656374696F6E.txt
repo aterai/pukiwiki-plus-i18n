@@ -41,11 +41,11 @@ JList list = new JList(model) {
 
 * 解説 [#explanation]
 - 左: `Default`
--- KBD{Ctrl}キーを押しながらマウスクリックで複数選択可能
+-- KBD{Ctrl}キーを押しながらマウスクリックでリストアイテムの複数選択が可能
 - 中: `MouseEvent`
--- `JList#processMouseEvent`, `JList#processMouseMotionEvent`をオーバーライドして、常にKBD{Ctrl}キーが押されている状態に設定
+-- `JList#processMouseEvent`、`JList#processMouseMotionEvent`をオーバーライドして常にKBD{Ctrl}キーが押されている状態に設定
 -- マウスでアイテムをドラッグしても選択状態は変化しない
--- `JList`の空白部分をクリックした場合、アイテムの選択状態は変更せず(`MouseEvent#consume()`)、フォーカスだけ`JList`に移動
+-- `JList`の空白部分をクリックした場合、アイテムの選択状態は変更せず(`MouseEvent#consume()`)フォーカスだけ`JList`に移動
 -- 参考: [https://community.oracle.com/thread/1351452 Swing - JList where mouse click acts like ctrl-mouse click]
 
 #code{{
@@ -53,6 +53,7 @@ JList list = new JList(model) {
   @Override protected void processMouseMotionEvent(MouseEvent e) {
     super.processMouseMotionEvent(convertMouseEvent(e));
   }
+
   @Override protected void processMouseEvent(MouseEvent e) {
     if (e.getID() == MouseEvent.MOUSE_PRESSED &&
         !getCellBounds(0, getModel().getSize() - 1).contains(e.getPoint())) {
@@ -62,15 +63,16 @@ JList list = new JList(model) {
       super.processMouseEvent(convertMouseEvent(e));
     }
   }
+
   private MouseEvent convertMouseEvent(MouseEvent e) {
-    //Swing - JList where mouse click acts like ctrl-mouse click
-    //https://community.oracle.com/thread/1351452
+    // Swing - JList where mouse click acts like ctrl-mouse click
+    // https://community.oracle.com/thread/1351452
     return new MouseEvent(
         (Component) e.getSource(),
         e.getID(), e.getWhen(),
-        //e.getModifiers() | InputEvent.CTRL_MASK,
-        //select multiple objects in OS X: Command+click
-        //pointed out by nsby
+        // e.getModifiers() | InputEvent.CTRL_MASK,
+        // select multiple objects in OS X: Command+click
+        // pointed out by nsby
         e.getModifiers() | Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(),
         e.getX(), e.getY(),
         e.getXOnScreen(), e.getYOnScreen(),
@@ -82,8 +84,8 @@ JList list = new JList(model) {
 }}
 
 - 右: `SelectionInterval`
--- `JList#setSelectionInterval`をオーバーライドして、ひとつのアイテムのセルを選択した場合は、`JList#addSelectionInterval`、`JList#removeSelectionInterval`を使用するように変更
--- マウスでアイテム上をドラッグすると、選択状態になる
+-- `JList#setSelectionInterval`をオーバーライドしてひとつのアイテムのセルを選択した場合、`JList#addSelectionInterval`、`JList#removeSelectionInterval`を使用するように変更
+-- マウスでアイテム上をドラッグすると選択状態になる
 -- ひとつのアイテムのセル内でのドラッグでは、選択状態を変更しない
 -- 参考: [https://community.oracle.com/thread/1351452#5694413 Swing - Re: JList where mouse click acts like ctrl-mouse click]
 -- `JList`の空白部分をクリックした場合、アイテムの選択状態をすべてクリア([[JListの選択を解除>Swing/ClearSelection]])

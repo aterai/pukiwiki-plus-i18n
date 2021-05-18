@@ -33,7 +33,7 @@ JSpinner spinner4 = new JSpinner(model) {
 
 * 解説 [#explanation]
 - `default`
--- `JSpinner`の`BasicArrowButton`は、幅は`16px`固定、高さは`JSpinner`の高さの半分が推奨サイズになっている
+-- `JSpinner`の`BasicArrowButton`の推奨サイズは幅が`16px`で固定、高さは`JSpinner`の高さの半分
 - `Spinner.arrowButtonSize`
 -- `UIManager.put("Spinner.arrowButtonSize", new Dimension(60, 0));`などで幅を指定可能(高さの指定は無視される)
 -- 幅固定の`BasicArrowButton`を使用する`MetalLookAndFeel`や`MotifLookAndFeel`などでは無効
@@ -43,7 +43,7 @@ JSpinner spinner4 = new JSpinner(model) {
 - `setLayout`
 -- `LayoutManager#layoutContainer(...)`メソッドをオーバーライドして`ArrowButton`の幅を推奨サイズを無視して変更
 -- `LookAndFeel`に関係なく幅を変更可能
-- `setPreferredSize`での幅変更と合わせて、`JSpinner`のフォントサイズを変更して`ArrowButton`の高さも変更
+- `setPreferredSize`での幅変更と合わせて`JSpinner`のフォントサイズを変更して`ArrowButton`の高さも変更
 
 * 参考リンク [#reference]
 - [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]

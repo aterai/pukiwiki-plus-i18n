@@ -1,0 +1,104 @@
+---
+category: swing
+folder: ResizeRowHeightByDragging
+title: JTableの行の高さをマウスドラッグで変更する
+tags: [JTable, JLayer]
+author: aterai
+pubdate: 2021-03-15T01:13:19+09:00
+description: JLayerを使用してJTableの行の高さをマウスでドラッグして変更可能にします。
+image: https://drive.google.com/uc?id=13pGaQRMVHPUjiHSb-vmtYiQP14rpzJ6Y
+---
+* 概要 [#summary]
+`JLayer`を使用して`JTable`の行の高さをマウスでドラッグして変更可能にします。
+
+#download(https://drive.google.com/uc?id=13pGaQRMVHPUjiHSb-vmtYiQP14rpzJ6Y)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class RowHeightResizeLayer extends LayerUI<JScrollPane> {
+  private static final int MIN_ROW_HEIGHT = 16;
+  private static final Cursor RESIZE_CURSOR = Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR);
+  private int mouseYOffset;
+  private int resizingRow = -1;
+  private Cursor otherCursor = RESIZE_CURSOR;
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseEvent(MouseEvent e, JLayer<? extends JScrollPane> l) {
+    Component c = e.getComponent();
+    if (c instanceof JTable) {
+      JTable table = (JTable) c;
+      resizingRow = getResizeTargetRow(table, e.getPoint());
+      if (e.getID() == MouseEvent.MOUSE_PRESSED && resizingRow >= 0) {
+        mouseYOffset = e.getY() - table.getRowHeight(resizingRow);
+        e.consume();
+      }
+    }
+  }
+
+  @Override protected void processMouseMotionEvent(MouseEvent e, JLayer<? extends JScrollPane> l) {
+    Component c = e.getComponent();
+    if (!(c instanceof JTable)) {
+      return;
+    }
+    JTable table = (JTable) c;
+    if (e.getID() == MouseEvent.MOUSE_MOVED) {
+      boolean isResizing = RESIZE_CURSOR.equals(table.getCursor());
+      int row = getResizeTargetRow(table, e.getPoint());
+      if (row >= 0 != isResizing) {
+        Cursor tmp = table.getCursor();
+        table.setCursor(otherCursor);
+        otherCursor = tmp;
+      }
+    } else if (e.getID() == MouseEvent.MOUSE_DRAGGED && resizingRow >= 0) {
+      int newHeight = e.getY() - mouseYOffset;
+      if (newHeight > MIN_ROW_HEIGHT) {
+        table.setRowHeight(resizingRow, newHeight);
+      }
+      e.consume();
+    }
+  }
+
+  private int getResizeTargetRow(JTable table, Point p) {
+    int row = table.rowAtPoint(p);
+    int col = table.columnAtPoint(p);
+    Rectangle r = table.getCellRect(row, col, false);
+    r.grow(0, -2);
+    if (r.contains(p)) {
+      return -1;
+    }
+    return p.y < r.getCenterY() ? row - 1 : row;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JTable`の各行の高さは`JTable#setRowHeight(row, height)`で設定可能
+-- [[JTableの行の高さを変更する>Swing/FishEyeTable]]
+- `JTable`に直接`MouseMotionListener`と`MouseListener`を追加して行の高さを変更する方法もある
+-- [https://stackoverflow.com/questions/4387995/adjusting-individual-row-height-using-cursor-on-jtable java - Adjusting individual row height using cursor on JTable - Stack Overflow]
+-- この場合高さ変更のドラッグ方向によってセル選択状態などが変化する場合がある
+- `JTable`の親`JScrollPane`に`JLayer`を設定して`JTable`へのマウスイベントを取得し、高さ変更のドラッグ中は`MouseEvent#consume()`を実行して`JTable`へのマウスイベントを消費し、セルの選択状態が変化しないよう設定
+-- `JTableHeader`の高さも同様の`JLayer`でリサイズ可能だが拡大するときにフォーカスの描画が乱れる場合がある
+-- `Excel`風に現在の行の高さを表示したい場合は`JToolTip`が[[TableColumnのリサイズ中にその幅をJToolTipで表示する>Swing/ColumnWidthTooltip]]のように使用可能
+-- 列幅のリサイズと同様に`JTable`外の`JTableHeader`領域などにドラッグしてもリサイズを継続するよう修正
+
+* 参考リンク [#reference]
+- [[JTableの行の高さを変更する>Swing/FishEyeTable]]
+- [https://stackoverflow.com/questions/4387995/adjusting-individual-row-height-using-cursor-on-jtable java - Adjusting individual row height using cursor on JTable - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

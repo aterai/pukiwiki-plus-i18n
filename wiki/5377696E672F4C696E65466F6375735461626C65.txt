@@ -30,9 +30,11 @@ class DotBorder extends EmptyBorder {
   protected DotBorder(int top, int left, int bottom, int right) {
     super(top, left, bottom, right);
   }
+
   @Override public boolean isBorderOpaque() {
     return true;
   }
+
   @Override public void paintBorder(
       Component c, Graphics g, int x, int y, int w, int h) {
     Graphics2D g2 = (Graphics2D) g.create();
@@ -58,9 +60,9 @@ class DotBorder extends EmptyBorder {
 }}
 
 * 解説 [#explanation]
-通常の`JTable`では、`JTable#setRowSelectionAllowed(true)`を設定すると選択状態は一行ごとになりますが、フォーカスはセル単位で描画されます。上記のサンプルでは、セルレンダラーの描画メソッド内で`JTable#getSelectionModel()#getLeadSelectionIndex()`を使用してフォーカスが存在するセルを取得し、独自ラベルを使って最初と最後のセルの垂直の点線、途中のセルの水平点線を追加することでフォーカスが一行全体に適用されているように見せています。
-
-カラム幅を変更するなどの操作を行ってもセル上下の水平点線のつなぎ目でドットが重ならないようにするため、偶数奇数ドット目のどちらで始まっているかを判断して開始位置のオフセットを決定しています。
+- デフォルトの`JTable`では`JTable#setRowSelectionAllowed(true)`を設定すると選択状態は一行ごとになるが、フォーカスはセル単位で描画される
+- 上記のサンプルではセルレンダラーの描画メソッド内で`JTable#getSelectionModel()#getLeadSelectionIndex()`を使用してフォーカスが存在するセルを取得し、独自ラベルを使って最初と最後のセルの垂直の点線、途中のセルの水平点線を追加することでフォーカスが一行全体に適用されているように見せている
+-- カラム幅を変更するなどの操作を行ってもセル上下の水平点線のつなぎ目でドットが重ならないようにするため、偶数奇数ドット目のどちらで始まっているかを判断して開始位置のオフセットを決定する
 
 * 参考リンク [#reference]
 - [[JTableの次行にTabキーでフォーカスを移動>Swing/SelectNextRow]]

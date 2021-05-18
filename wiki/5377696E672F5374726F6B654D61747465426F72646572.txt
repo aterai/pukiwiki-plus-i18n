@@ -25,6 +25,7 @@ class StrokeMatteBorder extends EmptyBorder {
     this.stroke = stroke;
     this.paint = paint;
   }
+
   @Override public void paintBorder(Component c, Graphics g,
                                     int x, int y, int width, int height) {
     float size = stroke.getLineWidth();
@@ -60,10 +61,10 @@ class StrokeMatteBorder extends EmptyBorder {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`MatteBorder`の飾り縁のように、指定されたインセット、色、`BasicStroke`で描画する`Border`を使用して、全体の罫線が点線で描画される表を作成しています。
+上記のサンプルでは、`MatteBorder`の飾り縁のように指定されたインセット、色、`BasicStroke`で描画する`Border`を使用して、全体の罫線が点線で描画される表を作成しています。
 
-- `JLabel`で作成した各セルに、右下辺を黒い点線で描画するボーダーを設定
-- これらのセルを`GridBagLayout`で配置した`JPanel`に、上左辺を赤い点線で描画するボーダーを設定
+- `JLabel`で作成した各セルに右下辺を黒い点線で描画するボーダーを設定
+- これらのセルを`GridBagLayout`で配置した`JPanel`に上左辺を赤い点線で描画するボーダーを設定
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/border/StrokeBorder.html StrokeBorder (Java Platform SE 8)]

@@ -22,6 +22,7 @@ JCheckBox checkBox = new JCheckBox("TriState JCheckBox") {
     public void setIcon(Icon icon) {
       this.icon = icon;
     }
+
     @Override public void actionPerformed(ActionEvent e) {
       JCheckBox cb = (JCheckBox) e.getSource();
       if (!cb.isSelected()) {
@@ -32,6 +33,7 @@ JCheckBox checkBox = new JCheckBox("TriState JCheckBox") {
       }
     }
   }
+
   @Override public void updateUI() {
     final Icon oi = getIcon();
     removeActionListener(listener);
@@ -66,9 +68,11 @@ class IndeterminateIcon implements Icon {
     g2.fillRect(a, (h - b) / 2, w - a - a, b);
     g2.dispose();
   }
+
   @Override public int getIconWidth() {
     return icon.getIconWidth();
   }
+
   @Override public int getIconHeight() {
     return icon.getIconHeight();
   }
@@ -80,9 +84,9 @@ class IndeterminateIcon implements Icon {
 
 - `JCheckBox#getIcon()`が`null`の場合、チェックボックスは不定状態であると判定
 - 横棒の色は`UIManager.getColor("CheckBox.foreground");`を使用しているが、`LookAndFeel`によっては無意味
-- [[JTableHeaderにJCheckBoxを追加してセルの値を切り替える>Swing/TableHeaderCheckBox]]で使用すると、`NimbusLookAndFeel`でアイコンと文字列のベースラインがずれる？
+- [[JTableHeaderにJCheckBoxを追加してセルの値を切り替える>Swing/TableHeaderCheckBox]]で使用すると`NimbusLookAndFeel`でアイコンと文字列のベースラインがずれる？
 -- 文字列も`ImageIcon`にして回避
-- `NimbusLookAndFeel`で、不定状態アイコンのフォーカスやロールオーバーが表示されない
+- `NimbusLookAndFeel`で不定状態アイコンのフォーカスやロールオーバーが表示されない
 
 * 参考リンク [#reference]
 - [https://www.javaspecialists.eu/archive/Issue145.html JavaSpecialists 145 - TristateCheckBox Revisited]

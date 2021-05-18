@@ -26,21 +26,21 @@ area.setSelectionColor(new Color(0xC8_64_64_FF, true));
 * 解説 [#explanation]
 上記のサンプルでは、`JEditorPane`の選択色などを半透明化して、ハイライトや`CSS`での背景色変更と組み合わせた場合のテストをしています。
 
-- `JTextComponent#setSelectionColor`, `JTextComponent#setSelectedTextColor`
+- `JTextComponent#setSelectionColor`、`JTextComponent#setSelectedTextColor`
 -- 選択色、選択文字色を変更可能
 -- どちらも半透明色を使用可能
--- デフォルトでは、選択が一番手前に描画されるので、半透明にしておくと他の選択色とアルファ乗算されて表示される
--- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setSelectionColor-java.awt.Color- JTextComponent#setSelectionColor(Color)]では、「色に `null` を設定することは、`Color.white` を設定することと同じです。」となっているが、上記のサンプルで、`"setSelectionColor(#C86464FF)"`のチェックを外して`null`を設定すると、選択の描画が一行目とそれ以降で異なる
+-- デフォルトでは選択矩形が一番手前に描画されるので、半透明にしておくと他の選択色とアルファ乗算されて表示される
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setSelectionColor-java.awt.Color- JTextComponent#setSelectionColor(Color)]では「色に`null`を設定することは、`Color.white`を設定することと同じです。」となっているが、上記のサンプルで`"setSelectionColor(#C86464FF)"`のチェックを外して`null`を設定すると選択の描画が一行目とそれ以降で異なる
 - `HighlightPainter`
 -- ハイライトの背景色は設定可能だが、文字色を変更することはできない
 -- 背景色を半透明にすることは可能
--- デフォルトのハイライトの設定(`DefaultHighlighter#setDrawsLayeredHighlights(true)`)では、文字列の選択描画より手前にハイライトの矩形が表示される
+-- デフォルトのハイライトの設定(`DefaultHighlighter#setDrawsLayeredHighlights(true)`)では文字列の選択描画より手前にハイライト矩形が表示される
 --- [[DefaultHighlighterの描画方法を変更する>Swing/DrawsLayeredHighlights]]
 - `StyleSheet`
 -- [[JEditorPaneのHTMLEditorKitにCSSを適用>Swing/StyleSheet]]
--- `styleSheet.addRule(".highlight {color: blue; background: #FF5533; opacity: 0.5;}");`などで、文字色、背景色を変更可能
--- デフォルトの`HTMLEditorKit`は`CSS`の`opacity: 0.5`、`background: rgba(255,100,100,0.6);`などに未対応で、半透明化は不可
-- 文字列選択の描画や、ハイライトの矩形より奥に描画される
+-- `styleSheet.addRule(".highlight {color: blue; background: #FF5533; opacity: 0.5;}")`などで文字色、背景色を変更可能
+-- デフォルトの`HTMLEditorKit`は`CSS`の`opacity: 0.5`、`background: rgba(255,100,100,0.6)`などに未対応で、半透明化は不可
+- 文字列選択の描画やハイライト矩形より奥に描画される
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setSelectionColor-java.awt.Color- JTextComponent#setSelectionColor(Color) (Java Platform SE 8)]

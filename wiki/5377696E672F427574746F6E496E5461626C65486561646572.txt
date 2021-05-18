@@ -57,7 +57,9 @@ hreflang:
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTableHeader`の各カラムにマウスカーソルがある場合、`HeaderRenderer#getTableCellRendererComponent(...)`内で、右端に`JButton`を追加表示しています。ボタンがクリックされたときに開く`JPopupMenu`は、`JTableHeader`に追加したマウスリスナーでクリックされた座標を取得して表示しています。
+- `JTableHeader`の各カラムにマウスカーソルがある場合、`HeaderRenderer#getTableCellRendererComponent(...)`内で右端に`JButton`を追加表示
+-- この`JButton`がクリックされると`JPopupMenu`を開く
+-- `JPopupMenu`の表示位置は`JTableHeader`に追加した`MouseListener`で取得して設定
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/TableColumnModel.html#getColumnIndexAtX-int- TableColumnModel#getColumnIndexAtX(int) (Java Platform SE 8)]

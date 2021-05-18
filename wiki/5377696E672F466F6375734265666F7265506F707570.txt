@@ -19,12 +19,14 @@ class TextComponentPopupMenu extends JPopupMenu {
   private final Action cutAction = new DefaultEditorKit.CutAction();
   private final Action copyAction = new DefaultEditorKit.CopyAction();
   private final Action pasteAction = new DefaultEditorKit.PasteAction();
+
   protected TextComponentPopupMenu() {
     super();
     add(cutAction);
     add(copyAction);
     add(pasteAction);
   }
+
   @Override public void show(Component c, int x, int y) {
     System.out.println(c.getClass().getName() + ": " + c.getName());
     if (c instanceof JTextComponent) {
@@ -46,13 +48,13 @@ class TextComponentPopupMenu extends JPopupMenu {
 * 解説 [#explanation]
 - `Default setComponentPopupMenu`
 -- `JTextField#setComponentPopupMenu(...)`で`JTextField`に`JPopupMenu`を設定
--- 別の`JTextComponent`にフォーカスがある状態で、この`JTextField`内を右クリックして`JPopupMenu`を表示してもフォーカスは前の`JTextComponent`に残る
--- `new DefaultEditorKit.PasteAction()`で生成した貼り込みアクションなどは、フォーカスのある`JTextComponent`に対して実行されるので、前の`JTextComponent`に文字列が張り込まれる
+-- 別の`JTextComponent`にフォーカスがある状態でこの`JTextField`内を右クリックして`JPopupMenu`を表示してもフォーカスは前の`JTextComponent`に残る
+-- `new DefaultEditorKit.PasteAction()`で生成した貼り込みアクションなどはフォーカスのある`JTextComponent`に対して実行されるので、前の`JTextComponent`に文字列が張り込まれる
 - `Override JPopupMenu#show(...)`
 -- `JTextField#setComponentPopupMenu(...)`で`JTextField`に`JPopupMenu`を設定
 -- `JPopupMenu#show(...)`をオーバーライドして`JPopupMenu`を開く前に`Component#requestFocusInWindow()`メソッドを実行し、この`JTextField`にフォーカスを移動する
 --- `PopupMenuListener#popupMenuWillBecomeVisible(...)`、または`MouseListener#mousePressed(...)`をオーバーライドする方法でも構わない
--- フォーカス移動と合わせて、`JTextField`内を右クリックして`JPopupMenu`を開く場合は内部の文字列を全選択する処理を追加
+-- フォーカス移動と合わせて`JTextField`内を右クリックして`JPopupMenu`を開く場合は内部の文字列を全選択する処理を追加
 
 ----
 - `JPopupMenu does not open???`

@@ -36,10 +36,10 @@ button1.addActionListener(e -> {
 * 解説 [#explanation]
 - `default`
 -- `JFileChooser`の詳細表示モード(`JTable`)でファイルをマウスのダブルクリックで選択してダイアログを閉じた場合、次回`JFileChooser`を再表示するとファイル名セルの編集状態が継続している場合がある
--- 再現が不安定？なので、仕様ではなくバグなのかもしれない
+-- 再現が不安定？なので仕様ではなくバグなのかもしれない
 - `removeEditor`
 -- `JFileChooser`を表示する前に子`JTable`を検索して`JTable#removeEditor()`メソッドを実行し、セルエディタを除去
--- `sun.swing.FilePane#cancelEdit()`メソッドが内部で`detailsTable.getCellEditor().cancelCellEditing();`を実行して編集状態を解除しているが、プライベートなので使用しづらい
+-- `sun.swing.FilePane#cancelEdit()`メソッドが内部で`detailsTable.getCellEditor().cancelCellEditing();`を実行して編集状態を解除しているがプライベートなので使用しづらい
 
 * 参考リンク [#reference]
 - [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]

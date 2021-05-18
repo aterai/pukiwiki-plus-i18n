@@ -31,12 +31,14 @@ JTextArea textArea = new JTextArea() {
     }
     super.copy();
   }
+
   @Override public void cut() {
     if (cs != null) {
       cs.setContents(new StringSelection(getSelectedText()));
     }
     super.cut();
   }
+
   @Override public void paste() {
     if (cs != null) {
       Transferable tr = cs.getContents();
@@ -55,12 +57,12 @@ JTextArea textArea = new JTextArea() {
 }}
 
 * 解説 [#explanation]
-`Java Web Start`から起動された制限付きのランタイム内で動作中するアプリケーションからは、システム全体の共有クリップボードにアクセスできないので、`ServiceManager`から`ClipboardService`を取得し、コピー、ペースト、カットなどでセキュリティ警告ダイアログを表示して、ユーザーにアクセス許可を求めます。
+`Java Web Start`から起動された制限付きのランタイム内で動作中するアプリケーションからはシステム全体の共有クリップボードにアクセスできないので、`ServiceManager`から`ClipboardService`を取得し、コピー、ペースト、カットなどでセキュリティ警告ダイアログを表示して、ユーザーにアクセス許可を求めます。
 
 - アプリケーションのクリップボードするカット
--- セキュリティ警告で`OK`、取り消しのどちらを選択しても、`JTextArea`の選択文字列はカットされ、アプリケーションのクリップボードは上書きされる
+-- セキュリティ警告で`OK`、取り消しのどちらを選択しても`JTextArea`の選択文字列はカットされアプリケーションのクリップボードは上書きされる
 - システム全体の共有クリップボードするカット
--- セキュリティ警告で`OK`を選択するとシステム全体の共有クリップボードは上書きされ、取り消しを選択すると上書きされない
+-- セキュリティ警告で`OK`を選択するとシステム全体の共有クリップボードは上書きされ取り消しを選択すると上書きされない
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/javaws/developersguide/examples.html#ClipboardService ClipboardService サービスの使い方 - JNLP API の使用例]

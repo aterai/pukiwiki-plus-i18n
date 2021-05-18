@@ -21,8 +21,9 @@ class VerticalTitledBorder extends TitledBorder {
     super(title);
     this.label = new JLabel(title);
     this.label.setOpaque(true);
-    //this.label.putClientProperty(BasicHTML.propertyKey, null);
+    // this.label.putClientProperty(BasicHTML.propertyKey, null);
   }
+
   @Override public void paintBorder(
       Component c, Graphics g, int x, int y, int width, int height) {
     Border border = getBorder();
@@ -39,7 +40,7 @@ class VerticalTitledBorder extends TitledBorder {
       int borderH = height - edge - edge;
 
       int labelH = size.height;
-      int labelW = height - insets.top - insets.bottom; //TEST: - (edge * 8);
+      int labelW = height - insets.top - insets.bottom; // TEST: - (edge * 8);
       if (labelW > size.width) {
         labelW = size.width;
       }
@@ -54,7 +55,7 @@ class VerticalTitledBorder extends TitledBorder {
       Graphics2D g2 = (Graphics2D) g.create();
       g2.translate(0, (height + labelW) / 2);
       g2.rotate(Math.toRadians(-90));
-      //or: g2.transform(AffineTransform.getQuadrantRotateInstance(-1));
+      // or: g2.transform(AffineTransform.getQuadrantRotateInstance(-1));
       label.setSize(labelW, labelH);
       label.paint(g2);
       g2.dispose();
@@ -62,6 +63,7 @@ class VerticalTitledBorder extends TitledBorder {
       super.paintBorder(c, g, x, y, width, height);
     }
   }
+
   @Override public Insets getBorderInsets(Component c, Insets insets) {
     Border border = getBorder();
     insets = getBorderInsets(border, c, insets);
@@ -81,7 +83,7 @@ class VerticalTitledBorder extends TitledBorder {
     return insets;
   }
 
-  //Copied from TitledBorder
+  // Copied from TitledBorder
   private Color getColor(Component c) {
     Color color = getTitleColor();
     if (color != null) {
@@ -93,15 +95,17 @@ class VerticalTitledBorder extends TitledBorder {
     }
     return (c != null) ? c.getForeground() : null;
   }
+
   private JLabel getLabel(Component c) {
     this.label.setText(getTitle());
     this.label.setFont(getFont(c));
     this.label.setForeground(getColor(c));
     this.label.setComponentOrientation(c.getComponentOrientation());
     this.label.setEnabled(c.isEnabled());
-    this.label.setBackground(c.getBackground()); //???
+    this.label.setBackground(c.getBackground()); // ???
     return this.label;
   }
+
   private static Insets getBorderInsets(
       Border border, Component c, Insets insets) {
     if (border == null) {
@@ -121,9 +125,9 @@ class VerticalTitledBorder extends TitledBorder {
 * 解説 [#explanation]
 - 左
 -- `TitledBorder`のデフォルト(上)
--- `Java 7`から文字列が`Border`の幅より長い場合、`...`で省略されるようになった
+-- `Java 7`から文字列が`Border`の幅より長い場合`...`で省略されるようになった
 - 中
--- `TitledBorder#paintBorder(...)`などをオーバーライドして、タイトルを左側に縦表示
+-- `TitledBorder#paintBorder(...)`などをオーバーライドしてタイトルを左側に縦表示
 - 右
 -- `TitledBorder`と`VerticalTitledBorder`の組み合わせ
 

@@ -15,42 +15,45 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNE9BAwqI/AAAAAAAAAaM/57
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final JButton nb = new JButton("NORTH");
-final JButton sb = new JButton("SOUTH");
-final JButton wb = new JButton("WEST");
-final JButton eb = new JButton("EAST");
+JButton nb = new JButton("NORTH");
+JButton sb = new JButton("SOUTH");
+JButton wb = new JButton("WEST");
+JButton eb = new JButton("EAST");
 add(new JScrollPane(textarea));
 add(nb, BorderLayout.NORTH);
 add(sb, BorderLayout.SOUTH);
 add(wb, BorderLayout.WEST);
 add(eb, BorderLayout.EAST);
+
 FocusTraversalPolicy policy = new FocusTraversalPolicy() {
-  //private final List<Component> order = Arrays.asList(
-  //    new Component[] {eb, wb, sb, nb});
   private final List<? extends Component> order = Arrays.asList(eb, wb, sb, nb);
   @Override public Component getFirstComponent(Container focusCycleRoot) {
     return order.get(0);
   }
+
   @Override public Component getLastComponent(Container focusCycleRoot) {
     return order.get(order.size() - 1);
   }
+
   @Override public Component getComponentAfter(
       Container focusCycleRoot, Component aComponent) {
     int i = order.indexOf(aComponent);
     return order.get((i + 1) % order.size());
   }
+
   @Override public Component getComponentBefore(
       Container focusCycleRoot, Component aComponent) {
     int i = order.indexOf(aComponent);
     return order.get((i - 1 + order.size()) % order.size());
   }
+
   @Override public Component getDefaultComponent(Container focusCycleRoot) {
     return order.get(0);
   }
 };
 frame.setFocusTraversalPolicy(policy);
-//setFocusTraversalPolicyProvider(true);
-//setFocusTraversalPolicy(policy);
+// setFocusTraversalPolicyProvider(true);
+// setFocusTraversalPolicy(policy);
 }}
 
 * 解説 [#explanation]
@@ -58,13 +61,13 @@ frame.setFocusTraversalPolicy(policy);
 
 - `Default`
 -- `JPanel`のデフォルトは、`null`
--- 実際のキー入力によるフォーカスの移動には、このパネルの親(`JFrame`)に設定されている`FocusTraversalPolicy`を使用
+-- 実際のキー入力によるフォーカスの移動にはこのパネルの親(`JFrame`)に設定されている`FocusTraversalPolicy`を使用
 - `Custom`
 -- [https://www.ibm.com/developerworks/jp/java/library/j-mer07153/ Merlinの魔術: フォーカス、フォーカス、フォーカス]からの引用
--- KBD{Tab}キーを押していくと、東西南北の順でボタンのフォーカスが移動(KBD{Shift+Tab}キーでは逆順)
--- `4`つの`JButton`以外には、KBD{Tab}キーでフォーカスは移動しない
+-- KBD{Tab}キーを押していくと東西南北の順でボタンのフォーカスが移動(KBD{Shift+Tab}キーでは逆順)
+-- `4`つの`JButton`以外にはKBD{Tab}キーでフォーカスは移動しない
 - `Layout`
--- 以下のように`LayoutFocusTraversalPolicy`(`LayoutFocusTraversalPolicy`は`Swing`のデフォルト、`AWT`のデフォルトは`DefaultFocusTraversalPolicy`)の`accept`メソッドをオーバーライドして、中央の`JTextArea`(通常、`JTextArea`などから次のコンポーネントにフォーカス移動する場合は、KBD{Ctrl+Tab})が編集不可の場合は、これにKBD{Tab}キーなどでフォーカスが移動しないように設定
+-- 以下のように`LayoutFocusTraversalPolicy`(`LayoutFocusTraversalPolicy`は`Swing`のデフォルト、`AWT`のデフォルトは`DefaultFocusTraversalPolicy`)の`accept`メソッドをオーバーライドして中央の`JTextArea`(通常`JTextArea`などから次のコンポーネントにフォーカス移動する場合はKBD{Ctrl+Tab})が編集不可の場合は、これにKBD{Tab}キーなどでフォーカスが移動しないように設定
 
 #code{{
 frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {

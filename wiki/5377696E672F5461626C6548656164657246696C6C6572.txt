@@ -70,10 +70,10 @@ class TableHeaderFillerLayerUI extends LayerUI<JScrollPane> {
 * 解説 [#explanation]
 - 上: デフォルト
 -- `AUTO_RESIZE_OFF`を設定し、列幅の自動調整を無効にした`JTable`
-- 下: TableHeaderFiller
--- `AUTO_RESIZE_OFF`を設定し、列幅の自動調整を無効にした`JTable`で`JTableHeader`に余白が発生する場合、そこにダミーのヘッダ列を描画
--- ダミーヘッダの描画には、`JLayer`を使用
--- `JLayer`は`JTable`や`JTableHeader`ではなく、親の`JScrollPane`に設定
+- 下: `TableHeaderFiller`
+-- `AUTO_RESIZE_OFF`を設定し列幅の自動調整を無効にした`JTable`で`JTableHeader`に余白が発生する場合、そこにダミーのヘッダ列を描画
+-- ダミーヘッダの描画には`JLayer`を使用
+-- `JLayer`は`JTable`や`JTableHeader`ではなく親の`JScrollPane`に設定
 -- `JLayer`でダミーヘッダへの`MouseEvent`などは無効化、`JTableHeader`がリサイズされて`ComponentEvent`が発生した場合は`LayerUI#processComponentEvent(...)`をオーバーライドしてダミーヘッダの幅を更新
 
 * 参考リンク [#reference]

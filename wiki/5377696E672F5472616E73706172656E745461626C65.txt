@@ -42,7 +42,7 @@ scroll.getViewport().setBackground(alphaZero);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JViewport`と`JTable`のそれぞれに`setOpaque(false)`, `setBackground(new Color(0x0, true));`と設定することで、透明な`JTable`を作成しています。テクスチャ画像は`JViewport`の`paintComponent(...)`メソッドをオーバーライドして表示しています。
+上記のサンプルでは、`JViewport`と`JTable`のそれぞれに`setOpaque(false)`、`setBackground(new Color(0x0, true));`と設定することで透明な`JTable`を作成しています。テクスチャ画像は`JViewport`の`paintComponent(...)`メソッドをオーバーライドして表示しています。
 
 ----
 - `JTable`の`CellEditor`は`JTable#prepareEditor(...)`をオーバーライドして、以下のように設定
@@ -52,7 +52,7 @@ scroll.getViewport().setBackground(alphaZero);
 --- 常に`setBackground(JTable#getSelectionBackground());`
 
 ----
-- `JTable`の背景色にアルファ値を設定して透過性を持たせた場合、デフォルトの`BooleanRenderer`では色が濃くなる(`2`重に描画されてしまう)ので、`paintComponent(...)`メソッドを以下のようにオーバーライドして回避
+- `JTable`の背景色にアルファ値を設定して透過性を持たせた場合、デフォルトの`BooleanRenderer`では色が濃くなる(`2`重に描画されてしまう)ので`paintComponent(...)`メソッドを以下のようにオーバーライドして回避
 
 #code{{
 class TranslucentBooleanRenderer extends JCheckBox implements TableCellRenderer {
@@ -62,6 +62,7 @@ class TranslucentBooleanRenderer extends JCheckBox implements TableCellRenderer 
     setHorizontalAlignment(SwingConstants.CENTER);
     setBorderPainted(true);
   }
+
   @Override public Component getTableCellRendererComponent(
       JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     setHorizontalAlignment(SwingConstants.CENTER);
@@ -82,6 +83,7 @@ class TranslucentBooleanRenderer extends JCheckBox implements TableCellRenderer 
     }
     return this;
   }
+
   @Override protected void paintComponent(Graphics g) {
     if (!isOpaque()) {
       g.setColor(getBackground());

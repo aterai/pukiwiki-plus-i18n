@@ -30,6 +30,7 @@ private void loadFile(String path) {
     ex.printStackTrace();
   }
 }
+
 private static String prettify(ScriptEngine engine, String src) {
   try {
     Object w = engine.get("window");
@@ -45,8 +46,8 @@ private static String prettify(ScriptEngine engine, String src) {
 * 解説 [#explanation]
 上記のサンプルでは、`ScriptEngine`で`google-prettify.js`を実行し、`Open`ボタンで選択したソースコードをハイライト済みの`HTML`テキストに変換して`JEditorPane`で表示しています。
 
-- `ScriptEngine`で`HTML`テキストに変換する前に、ソースコード中の`&`、`<`、`>`を文字実体参照に変換する必要がある
-- `HTMLEditorKit`の`CSS`で色は`3`桁表記(`color:#RGB`) には対応していないため、`6`桁表記(`color:#RRGGBB`)に変換して使用
+- `ScriptEngine`で`HTML`テキストに変換する前にソースコード中の`&`、`<`、`>`を文字実体参照に変換する必要がある
+- `HTMLEditorKit`の`CSS`で色は`3`桁表記(`color:#RGB`) には対応していないため`6`桁表記(`color:#RRGGBB`)に変換して使用
 -- [https://github.com/google/code-prettify/blob/master/src/prettify.css code-prettify/prettify.css at master ・ google/code-prettify]
 -- 参考: [[JEditorPaneのHTMLEditorKitにCSSを適用>Swing/StyleSheet]]
 - [https://github.com/google/code-prettify/blob/0b3341b3e9105ddaecf93cc632284f8db7994faf/src/prettify.js First pass at a way to dodge newline issues in IE.]の修正以降の`prettify.js`では、`prettyPrintOne`の内部で`Document`型のオブジェクトが使用されるようになったので`ScriptEngine`(`Nashorn`)のみでは実行不可

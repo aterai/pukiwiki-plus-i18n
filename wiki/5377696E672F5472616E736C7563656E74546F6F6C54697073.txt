@@ -77,7 +77,7 @@ class BalloonToolTip extends JToolTip {
 * 解説 [#explanation]
 - 半透明化と形状の変更
 -- `JToolTip`自体は`setOpaque(false)`で透明化し、別途`JToolTip#paintComponent(...)`をオーバーライドして吹き出し図形を半透明色で描画
--- `JToolTip`が対象コンポーネントの親`JFrame`外に表示される場合は、`JToolTip`の親`JWindow`を`setBackground(new Color(0x0, true)))`で完全透明化
+-- `JToolTip`が対象コンポーネントの親`JFrame`外に表示される場合は`JToolTip`の親`JWindow`を`setBackground(new Color(0x0, true)))`で完全透明化
 - 表示位置の変更
 -- `JList#getToolTipLocation(...)`をオーバーライドして、マウスカーソルの下側ではなく対象セルの真上に`JToolTip`が表示されるよう位置を調整
 #code{{
@@ -98,7 +98,6 @@ class BalloonToolTip extends JToolTip {
   Point p = e.getPoint();
   int i = locationToIndex(p);
   Rectangle rect = getCellBounds(i, i);
-
   String toolTipText = getToolTipText(e);
   if (Objects.nonNull(toolTipText)) {
     JToolTip tip = createToolTip();

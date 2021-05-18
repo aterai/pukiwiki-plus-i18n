@@ -24,6 +24,7 @@ class TextAreaCellRenderer extends JTextArea implements TableCellRenderer {
     super();
     setLineWrap(true);
   }
+
   @Override public Component getTableCellRendererComponent(
         JTable table, Object value, boolean isSelected, boolean hasFocus,
         int row, int column) {
@@ -45,6 +46,7 @@ class TestRenderer extends MyJLabel implements TableCellRenderer {
     setOpaque(true);
     setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
   }
+
   @Override public Component getTableCellRendererComponent(
         JTable table, Object value, boolean isSelected, boolean hasFocus,
         int row, int column) {
@@ -61,9 +63,13 @@ class TestRenderer extends MyJLabel implements TableCellRenderer {
     return this;
   }
 }
+
 class MyJLabel extends JLabel {
   private GlyphVector gvtext;
-  public MyJLabel() {super();}
+  public MyJLabel() {
+    super();
+  }
+
   @Override protected void paintComponent(Graphics g) {
     // super.paintComponent(g);
     Graphics2D g2 = (Graphics2D) g;
@@ -78,11 +84,11 @@ class MyJLabel extends JLabel {
 
 * 解説 [#explanation]
 - `0`列目
--- デフォルトの`JLabel`を継承する`DefaultTableCellRenderer`を使用し、超過分は`...`で省略
+-- デフォルトの`JLabel`を継承する`DefaultTableCellRenderer`を使用し超過分は`...`で省略
 - `1`列目
--- [[文字列の折り返し>Swing/GlyphVector]]で作成した`JLabel`を継承するレンダラーを使って、セル幅に合わせて折り返し
+-- [[文字列の折り返し>Swing/GlyphVector]]で作成した`JLabel`を継承するレンダラーを使ってセル幅に合わせて折り返し
 - `2`列目
--- `JTextArea`を継承する`TableCellRenderer`を作成し、`JTextArea#setLineWrap(boolean)`メソッドを使用して折り返しを有効化
+-- `JTextArea`を継承する`TableCellRenderer`を作成し`JTextArea#setLineWrap(boolean)`メソッドを使用して折り返しを有効化
 
 * 参考リンク [#reference]
 - [[TableCellRendererでセルの背景色を変更>Swing/StripeTable]]

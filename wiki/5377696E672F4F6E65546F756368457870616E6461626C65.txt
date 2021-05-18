@@ -23,14 +23,14 @@ splitPane.setOneTouchExpandable(true);
 上記のサンプルでは、`JSplitPane#setOneTouchExpandable(true)`を設定するとディバイダに`JButton`が表示され、これらをマウスでクリックすると`JSplitPane`の展開、収納ができます。
 
 - `Java 1.5`以降で`JSplitPane#setDividerLocation(0);`などとしてディバイダを収納状態にした場合、`JSplitPane`自体をリサイズすると収納されているコンポーネントの最小サイズ(`setMinimumSize`)まで展開される
-- 収納状態を維持したい場合、リフレクションを使って、`BasicSplitPaneUI#setKeepHidden(true)`メソッドを実行したり、`Divider`に表示されている`JButton`を取得実行する方法がある
+- 収納状態を維持したい場合、リフレクションを使って`BasicSplitPaneUI#setKeepHidden(true)`メソッドを実行したり`Divider`に表示されている`JButton`を取得実行する方法がある
 -- [https://bugs.openjdk.java.net/browse/JDK-5006095 Bug ID: 5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5]
 -- [[JSplitPaneの収納状態を維持する>Swing/KeepHiddenDivider]]
-- KBD{HOME}キーやKBD{END}キー(KBD{F8}キーなどで`Divider`にフォーカスを移動した状態で)を押して展開、収納する方法では、`Divider`中の`JButton`を押して展開、収納した場合と動作が異なる
+- KBD{HOME}キーやKBD{END}キー(KBD{F8}キーなどで`Divider`にフォーカスを移動した状態で)を押して展開、収納する方法では`Divider`中の`JButton`を押して展開、収納した場合と動作が異なる
 -- KBD{HOME}キー、KBD{END}キーで展開、収納
 --- 前回の状態に一旦戻らずに展開、収納される
---- `JSplitPane`自体をリサイズすると、収納されているコンポーネントの最小サイズ(`setMinimumSize`)まで勝手に展開される
---- `JSplitPane#getActionMap()#get("selectMin")`などで取得できる`Action`では、`setKeepHidden(boolean)`が使われていない
+--- `JSplitPane`自体をリサイズすると収納されているコンポーネントの最小サイズ(`setMinimumSize`)まで自動的に展開される
+--- `JSplitPane#getActionMap()#get("selectMin")`などで取得できる`Action`では`setKeepHidden(boolean)`が使われていない
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSplitPane.html#setOneTouchExpandable-boolean- JSplitPane#setOneTouchExpandable(boolean) (Java Platform SE 8)]

@@ -44,7 +44,7 @@ private static JComboBox<Icon> makeComboBox1(ComboBoxModel<Icon> model, Icon pro
 - `PreferredSize`
 -- `JComboBox#getPreferredSize()`をオーバーライドして`JComboBox`の幅をセルサイズの`3`倍になるよう変更
 -- `ComboPopup#getList()`でドロップダウンリストに配置される`JList`を取得してセルの配置方法を`HORIZONTAL_WRAP`に変更
---- `JList`の下側に余計な余白が生成されてしまう？
+--- %%`JList`の下側に余計な余白が生成されてしまう？%%
 -- `JComboBox#setMaximumRowCount(3)`、`JList#setVisibleRowCount(3)`で`3`行のセルを表示するよう変更
 --- 片方だけ設定するとスクロールバーが表示されたり、余計な余白ができる場合がある
 -- `JComboBox#setPrototypeDisplayValue(...)`、`JList#setFixedCellWidth(...)`、`JList#setFixedCellHeight(...)`でセルサイズを変更
@@ -53,8 +53,8 @@ private static JComboBox<Icon> makeComboBox1(ComboBoxModel<Icon> model, Icon pro
 -- `JComboBox#getPreferredSize()`をオーバーライドして`JComboBox`の幅をセルサイズと矢印ボタンの合計になるよう変更
 --- このサンプルで使用している矢印ボタンの幅は`20px`固定
 -- `PopupMenuListener`を追加してドロップダウンリストを開く直前だけ`JComboBox`の幅をセルサイズの`3`倍になるよう変更
--- `JList`の下側に余計な余白が生成されてしまうことを防ぐため`ListCellRenderer`を変更
---- デフォルトセルレンダラーの`Border`余白の合計分(`(top:1 + bottom:1) * 行:3 = 6px`)だけ高くなっている
+-- `JList`の下側に余計な余白が生成されてしまうことを防ぐため以下のように`ListCellRenderer`を変更
+--- デフォルトセルレンダラーの`Border`余白の合計分(`(top:1 + bottom:1) * 行:3 = 6px`)だけ高くなることが原因だった
 
 #code{{
 private static JComboBox<Icon> makeComboBox2(ComboBoxModel<Icon> model, Icon proto) {

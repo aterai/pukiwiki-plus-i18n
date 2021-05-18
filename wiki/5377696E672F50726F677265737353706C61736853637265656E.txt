@@ -96,6 +96,7 @@ public class ProgressSplashScreenTest {
       createAndShowGUI();
     });
   }
+
   public static void createAndShowGUI() {
     JFrame frame = new JFrame();
     JDialog splashScreen  = new JDialog(
@@ -123,7 +124,7 @@ public class ProgressSplashScreenTest {
           int lengthOfTask = 120;
           while (current <= lengthOfTask && !isCancelled()) {
             try {
-              Thread.sleep(50); //dummy
+              Thread.sleep(50); // dummy
             } catch (InterruptedException ie) {
               ie.printStackTrace();
               return null;
@@ -167,6 +168,7 @@ public class ProgressSplashScreenTest {
     worker.execute();
   }
 }
+
 class SplashScreenIcon implements Icon {
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
     Graphics2D g2 = (Graphics2D) g.create();

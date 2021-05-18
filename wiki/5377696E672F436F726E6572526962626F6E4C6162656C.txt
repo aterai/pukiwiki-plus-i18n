@@ -7,6 +7,9 @@ author: aterai
 pubdate: 2020-08-03T14:31:02+09:00
 description: JLabelの右上隅に斜め45度に回転した文字列とリボンと重ねて表示します。
 image: https://drive.google.com/uc?id=1AbO4jLsaajRhg6M5GuBlsdZg6BIg3Abn
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2020/08/overlap-jlabel-with-ribbon-and-slanted.html
+    lang: en
 ---
 * 概要 [#summary]
 `JLabel`の右上隅に斜め`45`度に回転した文字列とリボンと重ねて表示します。
@@ -91,7 +94,7 @@ class BadgeLabel extends JLabel {
 -- `JLabel#isOpaque()`をオーバーライドして透明化
 -- `JLabel#paintComponent(...)`をオーバーライドして背景用のラウンド矩形、`JLabel`の元アイコン、右上隅のリボン、リボン文字列の順に描画
 - リボン
--- `JLabel`の`x`軸中央、-リボンの高さを原点に矩形を作成
+-- 親`JLabel`の`x`軸中央付近にリボンの左下が配置されるように矩形を作成
 -- リボン矩形の左下を原点に`Math.toRadians(45d)`回転
 - リボン文字列
 -- `TextLayout.getOutline()`メソッドで文字列を`Shape`に変換

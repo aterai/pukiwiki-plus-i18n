@@ -15,9 +15,9 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKL-SYs6I/AAAAAAAAAVk/pX
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final JSplitPane leftPane   = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-final JSplitPane rightPane  = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-final JSplitPane centerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+JSplitPane leftPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+JSplitPane rightPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+JSplitPane centerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
 leftPane.setTopComponent(new JScrollPane(new JTextArea("aaaaaaa")));
 leftPane.setBottomComponent(new JScrollPane(new JTextArea("bbbb")));
@@ -48,10 +48,10 @@ rightPane.addPropertyChangeListener(pcl);
 * 解説 [#explanation]
 上記のサンプルでは、各`JSplitPane`に`JSplitPane#setContinuousLayout(true)`を設定し、ディバイダの移動に応じて子コンポーネントを連続的に再描画しています。
 
-- `JSplitPane`を`3`つ使用し、`4`つに分割された領域を表示
+- `JSplitPane`を`3`つ使用し`4`つに分割された領域を表示
 - 左右に配置されたディバイダがマウスのドラッグに同期して移動するように以下を設定
--- 片方のディバイダが上下移動したら、残りも移動するように`PropertyChangeListener`を追加
--- `JSplitPane#setContinuousLayout(true)`として、移動を連続的に再描画
+-- 片方のディバイダが上下移動したら残りも移動するように`PropertyChangeListener`を追加
+-- `JSplitPane#setContinuousLayout(true)`として移動を連続的に再描画
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSplitPane.html#setContinuousLayout-boolean- JSplitPane#setContinuousLayout(boolean) (Java Platform SE 8)]

@@ -44,7 +44,7 @@ class FocusCaret extends DefaultCaret {
 - `FocusCaret`
 -- `DefaultCaret#focusLost(...)`をオーバーライドし、フォーカスがなくなっても`DefaultCaret#setSelectionVisible(true)`を実行して選択状態ハイライトを表示状態に戻す
 -- `DefaultCaret#getSelectionPainter()`をオーバーライドし、フォーカスがない場合のハイライト色を変更
--- `DefaultCaret#focusGained(...)`をオーバーライドし、フォーカスがこのキャレットのコンポーネントに移動すると一旦ハイライトを削除してデフォルトのハイライト色を元に戻し、あらためて選択状態ハイライトを表示状態にする
+-- `DefaultCaret#focusGained(...)`をオーバーライドしてフォーカスがこのキャレットのコンポーネントに移動すると、一旦ハイライトを削除してデフォルトのハイライト色を元に戻しあらためて選択状態ハイライトを表示状態にする
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/18237317/how-to-retain-selected-text-in-jtextfield-when-focus-lost java - How to retain selected text in JTextField when focus lost? - Stack Overflow]

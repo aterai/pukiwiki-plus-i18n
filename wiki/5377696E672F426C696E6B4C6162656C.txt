@@ -23,9 +23,9 @@ timer.start();
 }}
 
 * 解説 [#explanation]
-`javax.swing.Timer`を使って、`JLabel`にテキスト文字列と空文字列を交互に設定することで点滅を表現しています。
+`javax.swing.Timer`を使って`JLabel`にテキスト文字列と空文字列を交互に設定することで点滅を表現しています。
 
-新しい`java.util.Timer`は汎用的で多くの機能を持っていますが、`Swing`などの`GUI`コンポーネントを更新する場合はアクションが`EDT`(イベント・ディスパッチ・スレッド)で実行される`javax.swing.Timer`を使用します。
+- `Swing`などの`GUI`コンポーネントを更新する場合、汎用的で多機能な`java.util.Timer`はでなくアクションが`EDT`(イベント・ディスパッチ・スレッド)で実行される`javax.swing.Timer`を使用する必要がある
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/Timer.html Timer (Java Platform SE 8)]

@@ -23,8 +23,7 @@ class ReIconifyDesktopManager extends DefaultDesktopManager {
     jif.getDesktopIcon().setBounds(r);
   }
 }
-}}
-#code{{
+
 private void doReIconify(JDesktopPane desktopPane) {
   DesktopManager dm = desktopPane.getDesktopManager();
   if (dm instanceof ReIconifyDesktopManager) {
@@ -41,13 +40,13 @@ private void doReIconify(JDesktopPane desktopPane) {
 * 解説 [#explanation]
 上記のサンプルでは、`JDesktopPane`がリサイズされた場合、以下のような手順で再配置を行っています。
 
-+ アイコン化した`JInternalFrame`を一旦、元のサイズと位置に復元
++ アイコン化した`JInternalFrame`を一旦元のサイズと位置に復元
 + アイコン化した場合の位置を再計算
 + 再びアイコン化
 + 再計算した位置への移動
 
 ----
-`GTKLookAndFeel`の場合、アイコンを移動することは出来ないので、このサンプルには意味がありません。
+- `GTKLookAndFeel`を使用する場合、アイコンの移動自体がデフォルトでは不可なのでこの設定は無意味になる
 
 * 参考リンク [#reference]
 - [https://bugs.openjdk.java.net/browse/JDK-4765256 &#91;JDK-4765256&#93; REGRESSION: Icons in JDesktopPane not repositioned when pane is resized - Java Bug System]

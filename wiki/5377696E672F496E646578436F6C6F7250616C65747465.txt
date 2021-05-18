@@ -64,8 +64,8 @@ Image makeTestImage(
 - 右: 透過色(クロマキー)を`Color.RED`で塗りつぶした画像
 - 下: `GIF`形式画像からカラーパレットを取得してセルが水平方向の次に垂直方向の順で並ぶ「ニュースペーパー・スタイル」レイアウトの`JList`に表示
 -- カラーパレットは`IndexColorModel`から取得可能
---- `IndexColorModel`は、`BufferedImage#getColorModel()`で取得可能
--- 透過色が存在する場合は、セルのフチを赤に設定
+--- `IndexColorModel`は`BufferedImage#getColorModel()`で取得可能
+-- 透過色が存在する場合はセルのフチを赤に設定
 --- `IndexColorModel#getTransparentPixel()`で透過色のインデックスを取得可能
 
 * 参考リンク [#reference]

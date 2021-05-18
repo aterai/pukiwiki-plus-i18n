@@ -24,12 +24,15 @@ public class JTabbedPaneWithCloseIcons extends JTabbedPane {
       }
     });
   }
+
   public void addTab(String title, Component component) {
     this.addTab(title, component, null);
   }
+
   public void addTab(String title, Component component, Icon extraIcon) {
     super.addTab(title, new CloseTabIcon(extraIcon), component);
   }
+
   private void tabClicked(MouseEvent e) {
     int index = getUI().tabForCoordinate(this, e.getX(), e.getY());
     if (index < 0) {

@@ -25,7 +25,7 @@ while (st.hasMoreTokens()) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTextArea#getText()`ですべてのテキストを取得し、`StringTokenizer`を使って行毎に分解しています。`returnDelims`フラグが`false`なので、トークンが空行になることはありません。
+上記のサンプルでは、`JTextArea#getText()`ですべてのテキストを取得してから`StringTokenizer`を使って行毎に分解しています。`returnDelims`フラグが`false`なのでトークンが空行になることはありません。
 
 ----
 - `String#split(...)`を使用する場合

@@ -17,6 +17,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOmfktdJI/AAAAAAAAAco/gB
 #code(link){{
 private ButtonGroup lookAndFeelRadioGroup;
 private String lookAndFeel;
+
 protected JMenu createLookAndFeelMenu() {
   JMenu menu = new JMenu("LookAndFeel");
   lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
@@ -26,6 +27,7 @@ protected JMenu createLookAndFeelMenu() {
   }
   return menu;
 }
+
 protected JRadioButtonMenuItem createLookAndFeelItem(String lafName, String lafClassName) {
   JRadioButtonMenuItem lafItem = new JRadioButtonMenuItem();
   lafItem.setSelected(lafClassName.equals(lookAndFeel));
@@ -45,6 +47,7 @@ protected JRadioButtonMenuItem createLookAndFeelItem(String lafName, String lafC
   lookAndFeelRadioGroup.add(lafItem);
   return lafItem;
 }
+
 public void setLookAndFeel(String lookAndFeel) throws ClassNotFoundException,
       InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
   String oldLookAndFeel = this.lookAndFeel;
@@ -55,6 +58,7 @@ public void setLookAndFeel(String lookAndFeel) throws ClassNotFoundException,
     firePropertyChange("lookAndFeel", oldLookAndFeel, lookAndFeel);
   }
 }
+
 private void updateLookAndFeel() {
   for (Window window: Window.getWindows()) {
     SwingUtilities.updateComponentTreeUI(window);

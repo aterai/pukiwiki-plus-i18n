@@ -1,0 +1,126 @@
+---
+category: swing
+folder: JWindowFocus
+title: JWindow内にフォーカス可能なコンポーネントを配置する
+tags: [JWindow, Focus, JFrame, JPopupMenu]
+author: aterai
+pubdate: 2021-02-22T08:23:09+09:00
+description: JWindowや装飾なしのJFrame、JPopupMenuなどにフォーカス可能なコンポーネントを配置するテストを実行します。
+image: https://drive.google.com/uc?id=1tjnD9mtXy7CD07S9aW8kNU7FyC25yk00
+---
+* 概要 [#summary]
+`JWindow`や装飾なしの`JFrame`、`JPopupMenu`などにフォーカス可能なコンポーネントを配置するテストを実行します。
+
+#download(https://drive.google.com/uc?id=1tjnD9mtXy7CD07S9aW8kNU7FyC25yk00)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JButton button4 = new JButton("JWindow(owner)");
+button4.addActionListener(e -> {
+  JButton b = (JButton) e.getSource();
+  resetEditor(editor, b);
+  Point p = b.getLocation();
+  p.y += b.getHeight();
+  SwingUtilities.convertPointToScreen(p, b.getParent());
+  Window window = new JWindow(SwingUtilities.getWindowAncestor(b));
+  window.setFocusableWindowState(true);
+  window.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+  // window.setAlwaysOnTop(true);
+  window.add(editor);
+  window.pack();
+  window.setLocation(p);
+  window.setVisible(true);
+  editor.requestFocusInWindow();
+});
+}}
+
+* 解説 [#explanation]
+- `JPopupMenu`
+-- `JPopupMenu`内にフォーカス可能なコンポーネントとして`JTextArea`を配置
+-- 親`JFrame`のタイトルバーなどをクリックすると自動的に`JPopupMenu`が非表示になる
+-- `JPopupMenu`内に配置した子コンポーネントの`JTextArea`から`JPopupMenu`が開けない
+-- 親`JFrame`内にポップアップする`LightWeightPopup`で`JPopupMenu#pack()`を実行すると子の`JTextArea`からフォーカスが移動してしまうので`JTextArea#requestFocusInWindow()`で再設定する必要がある
+-- 親`JFrame`外にポップアップする`HeavyWeightPopup`で`JPopupMenu#pack()`を実行すると一瞬親`JFrame`タイトルバーの描画などが乱れる
+
+#code{{
+button1.addActionListener(e -> {
+  JButton b = (JButton) e.getSource();
+  resetEditor(editor, b);
+  JPopupMenu popup = new JPopupMenu();
+  popup.setBorder(BorderFactory.createEmptyBorder());
+  popup.add(editor);
+  popup.pack();
+  Point p = b.getLocation();
+  p.y += b.getHeight();
+  popup.show(this, p.x, p.y);
+  editor.requestFocusInWindow();
+});
+}}
+
+- `JFrame#setUndecorated(true)`
+-- `JFrame#setUndecorated(true)`でタイトルバーなどの装飾を非表示にした`JFrame`にフォーカス可能なコンポーネントとして`JTextArea`を配置
+-- 親`JFrame`がアクティブ`Window`でなくなるためグローバルフォーカスが外れて親`JFrame`のタイトルバーの描画などが変化する
+-- `JTextArea`外をクリックして編集終了と合わせて`JFrame`を閉じる場合、親`JFrame`に`MouseListener`や`ComponentListener`を追加する必要がある
+--- 親`JFrame`のタイトルバーをクリックしてもそのイベントを取得する方法がない？ため、その動作で`JTextArea`を閉じることができない
+
+#code{{
+JButton button2 = new JButton("JFrame#setUndecorated(true)");
+button2.addActionListener(e -> {
+  JButton b = (JButton) e.getSource();
+  resetEditor(editor, b);
+  JFrame window = new JFrame();
+  window.setUndecorated(true);
+  // window.setAlwaysOnTop(true);
+  window.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+  window.add(editor);
+  window.pack();
+  Point p = b.getLocation();
+  p.y += b.getHeight();
+  SwingUtilities.convertPointToScreen(p, b.getParent());
+  window.setLocation(p);
+  window.setVisible(true);
+  editor.requestFocusInWindow();
+});
+}}
+
+- `JWindow()`
+-- `JWindow`にフォーカス可能なコンポーネントとして`JTextArea`を配置
+-- 親`JFrame`を指定していないので非表示の`JFrame`が親フレームになり、`JWindow`に配置したコンポーネントがフォーカスを取得できない
+--- [https://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html How to Use the Focus Subsystem (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Other Swing Features)]
+-- `JWindow#setFocusableWindowState(true)`を指定しても効果がない？
+-- 非表示の`JFrame`が別途表示された後(このサンプルでは`button2`や`button4`が実行された後)ならマウスで`JTextArea`の文字列を選択することなどが可能になる
+
+#code{{
+JButton button3 = new JButton("JWindow()");
+button3.addActionListener(e -> {
+  JButton b = (JButton) e.getSource();
+  resetEditor(editor, b);
+  Window window = new JWindow();
+  window.setFocusableWindowState(true);
+  // window.setAlwaysOnTop(true);
+  window.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+  window.add(editor);
+  window.pack();
+  Point p = b.getLocation();
+  p.y += b.getHeight();
+  SwingUtilities.convertPointToScreen(p, b.getParent());
+  window.setLocation(p);
+  window.setVisible(true);
+  editor.requestFocusInWindow();
+});
+}}
+
+- `JWindow(owner)`
+-- 表示中の親`JFrame`を所有フレームにして`JWindow`を作成し、これにフォーカス可能なコンポーネントとして`JTextArea`を配置
+-- 親`JFrame`がアクティブ`Window`のままになるのでそのタイトルバーの描画などは変化しない
+-- `JTextArea`外をクリックして編集終了と合わせて`JWindow`を閉じる場合、親`JFrame`に`MouseListener`や`ComponentListener`を追加する必要がある
+--- 装飾なしの`JFrame`と同様に親`JFrame`のタイトルバーをクリックしてもそのイベントを取得する方法がない？ため、その動作で`JTextArea`を閉じることができない
+-- `JWindow#setAlwaysOnTop(true)`を設定していると別アプリケーションのウィンドウが重なってもその手前にセルエディタが表示されることになるので、代わりに`Window#setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE)`を設定して回避
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html How to Use the Focus Subsystem (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Other Swing Features)]
+- [[JTextAreaとJFrameで幅固定、文字列の折り返し、親枠外まで高さ拡大可能なセルエディタを作成する>Swing/LineWrapListEditor]]
+
+* コメント [#comment]
+#comment
+#comment

@@ -38,13 +38,13 @@ protected static void searchTree(
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、選択された`JTree`のノード以下に、検索文字列と一致するノードがあれば、`JTree#addSelectionPath(TreePath)`メソッドで選択するようになっています。
+上記のサンプルでは、選択された`JTree`のノード以下に検索文字列と一致するノードがあれば、`JTree#addSelectionPath(TreePath)`メソッドで選択しています。
 
 ----
-[https://community.oracle.com/thread/1357454 Swing - how to get everything in DefaultTreeNode]のAndre_Uhresさんの投稿のように、`TreeModel`を使って検索する方法もあります。
+- [https://community.oracle.com/thread/1357454 Swing - how to get everything in DefaultTreeNode]のAndre_Uhresさんの投稿のように`TreeModel`を使って検索する方法もある
 
 #code{{
-//<blockquote cite="https://community.oracle.com/thread/1357454">
+// <blockquote cite="https://community.oracle.com/thread/1357454">
 public void traverse(JTree tree) {
   TreeModel model = tree.getModel();
   Object root;
@@ -55,6 +55,7 @@ public void traverse(JTree tree) {
     System.out.println("Tree is empty.");
   }
 }
+
 protected void walk(TreeModel model, Object o) {
   int cc = model.getChildCount(o);
   for (int i = 0; i < cc; i++) {
@@ -67,13 +68,12 @@ protected void walk(TreeModel model, Object o) {
     }
   }
 }
-//</blockquote>
+// </blockquote>
 }}
 
 ----
-以下は、`DefaultMutableTreeNode#depthFirstEnumeration()`を使用して、`bananas`を検索しています。
-
-- [[JTreeのノードを走査する>Swing/TraverseAllNodes]]
+- 以下は`DefaultMutableTreeNode#depthFirstEnumeration()`を使用して`bananas`を検索
+-- [[JTreeのノードを走査する>Swing/TraverseAllNodes]]
 
 #code{{
 TreeModel model = tree.getModel();

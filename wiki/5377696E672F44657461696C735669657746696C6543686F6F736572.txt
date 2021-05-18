@@ -26,10 +26,10 @@ Optional.ofNullable(chooser.getActionMap().get(cmd))
 }}
 
 * 解説 [#explanation]
-[https://stackoverflow.com/questions/16292502/how-can-i-start-the-jfilechooser-in-the-details-view java - How can I start the JFileChooser in the Details view? - Stack Overflow]で紹介されている`ActionMap`から`viewTypeDetails`アクションを取得する方法が最も簡単に`DetailsView`(詳細)に切り替え可能です。
+- [https://stackoverflow.com/questions/16292502/how-can-i-start-the-jfilechooser-in-the-details-view java - How can I start the JFileChooser in the Details view? - Stack Overflow]で紹介されている`ActionMap`から`viewTypeDetails`アクションを取得して`DetailsView`(詳細)に切り替え
 
 #code{{
-//@see javax/swing/plaf/basic/BasicFileChooserUI.java
+// @see javax/swing/plaf/basic/BasicFileChooserUI.java
 ActionMap map = new ActionMapUIResource();
 Action refreshAction = new UIAction(FilePane.ACTION_REFRESH) {
   public void actionPerformed(ActionEvent e) {
@@ -41,21 +41,20 @@ map.put(FilePane.ACTION_CANCEL, getCancelSelectionAction());
 map.put(FilePane.ACTION_REFRESH, refreshAction);
 map.put(FilePane.ACTION_CHANGE_TO_PARENT_DIRECTORY, getChangeToParentDirectoryAction());
 
-//sun.swing.FilePane.ACTION_APPROVE_SELECTION = "approveSelection";
-//sun.swing.FilePane.ACTION_CANCEL            = "cancelSelection";
-//sun.swing.FilePane.ACTION_EDIT_FILE_NAME    = "editFileName";
-//sun.swing.FilePane.ACTION_REFRESH           = "refresh";
-//sun.swing.FilePane.ACTION_CHANGE_TO_PARENT_DIRECTORY = "Go Up";
-//sun.swing.FilePane.ACTION_NEW_FOLDER        = "New Folder";
-//sun.swing.FilePane.ACTION_VIEW_LIST         = "viewTypeList";
-//sun.swing.FilePane.ACTION_VIEW_DETAILS      = "viewTypeDetails";
+// sun.swing.FilePane.ACTION_APPROVE_SELECTION = "approveSelection";
+// sun.swing.FilePane.ACTION_CANCEL            = "cancelSelection";
+// sun.swing.FilePane.ACTION_EDIT_FILE_NAME    = "editFileName";
+// sun.swing.FilePane.ACTION_REFRESH           = "refresh";
+// sun.swing.FilePane.ACTION_CHANGE_TO_PARENT_DIRECTORY = "Go Up";
+// sun.swing.FilePane.ACTION_NEW_FOLDER        = "New Folder";
+// sun.swing.FilePane.ACTION_VIEW_LIST         = "viewTypeList";
+// sun.swing.FilePane.ACTION_VIEW_DETAILS      = "viewTypeDetails";
 }}
 
-----
-`JFileChooser`の子で`UIManager.getIcon("FileChooser.detailsViewIcon")`アイコンが設定されている`JToggleButton`を検索、`doClick()`することで、`List`から`DetailsView`(詳細)に切り替える方法もあります。
+- `JFileChooser`の子で`UIManager.getIcon("FileChooser.detailsViewIcon")`アイコンが設定されている`JToggleButton`を検索、`doClick()`することで`List`から`DetailsView`(詳細)に切り替え
 
 #code{{
-//searchAndClick(chooser, UIManager.getIcon("FileChooser.detailsViewIcon"));
+// searchAndClick(chooser, UIManager.getIcon("FileChooser.detailsViewIcon"));
 private static boolean searchAndClick(Container parent, Icon icon) {
   for (Component c:parent.getComponents()) {
     if (c instanceof JToggleButton && ((JToggleButton) c).getIcon() == icon) {
@@ -71,8 +70,7 @@ private static boolean searchAndClick(Container parent, Icon icon) {
 }
 }}
 
-----
-警告されますが、以下のように`sun.swing.FilePane#setViewType(sun.swing.FilePane.VIEWTYPE_DETAILS)`メソッドを使用する方法もあります。
+- 警告されるが以下のように`sun.swing.FilePane#setViewType(sun.swing.FilePane.VIEWTYPE_DETAILS)`メソッドを使用する方法もある
 
 #code{{
 FilePane filePane = (FilePane) findChildComponent(chooser, FilePane.class);

@@ -28,24 +28,17 @@ class HeaderRenderer implements TableCellRenderer {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`0`番目のカラムヘッダだけフォントを変更しています。`JTableHeader`のセルを修飾する場合も`JTable`中のセルの場合と同様に、`TableCellRenderer`を実装したセルレンダラーが使用可能です。
+上記のサンプルでは、`0`番目のカラムヘッダだけフォントを変更しています。`JTableHeader`のセルを修飾する場合も`JTable`中のセルの場合と同様に`TableCellRenderer`を実装したセルレンダラーが使用可能です。
 
-サンプルのセルレンダラーは、`TableCellRenderer#getTableCellRendererComponent(...)`メソッドの中で、委譲しているヘッダのデフォルトのレンダラーから描画に使用するコンポーネント(`JLabel`)を取得し、そのラベルのフォントだけ`JLabel#setFont(...)`メソッドで置き換えています。
+サンプルのセルレンダラーは、`TableCellRenderer#getTableCellRendererComponent(...)`メソッドの中で委譲しているヘッダのデフォルトのレンダラーから描画に使用するコンポーネント(`JLabel`)を取得し、そのラベルのフォントだけ`JLabel#setFont(...)`メソッドで置き換えています。
 
-同様の方法で、文字色、背景色、ボーダー、文字の中央揃え、右揃えなども変更できます。
-
-- 字揃えを変更する場合の注意点: [[JTableHeaderの字揃えを変更>Swing/HorizontalAlignmentHeaderRenderer]]
-
-----
-コメントで&user(いつも見てます);さんが指摘しているように、以下の様に`JTableHeader#setFont()`メソッドを使用すると、全カラムヘッダのフォントを指定できます。
-
+- 同様の方法で文字色、背景色、ボーダー、文字の中央揃え、右揃えなども変更可能
+-- 字揃えを変更する場合の注意点: [[JTableHeaderの字揃えを変更>Swing/HorizontalAlignmentHeaderRenderer]]
+- コメントで&user(いつも見てます);さんが指摘しているように、`JTableHeader#setFont()`メソッドを使用すると全カラムヘッダのフォントを指定可能
 #code{{
 table.getTableHeader().setFont(font);
 }}
-
-----
-すべての`JTable`のヘッダを同じフォントや文字色で変更する場合は、以下のように`UIManager`を使用する方法もあります。
-
+- すべての`JTable`のヘッダを同じフォントや文字色で変更する場合は、以下のように`UIManager`を使用する方法もある
 #code{{
 UIManager.put("TableHeader.font", new FontUIResource(font));
 }}

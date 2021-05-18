@@ -28,6 +28,7 @@ class ImageCaptionLabel extends JLabel implements HierarchyListener {
       super.paintComponent(g);
     }
   };
+
   public ImageCaptionLabel(String caption, Icon image) {
     setIcon(image);
     toolBox.setFloatable(false);
@@ -36,7 +37,7 @@ class ImageCaptionLabel extends JLabel implements HierarchyListener {
     toolBox.setForeground(Color.WHITE);
     toolBox.setBorder(BorderFactory.createEmptyBorder(2, 4, 4, 4));
 
-    //toolBox.setLayout(new BoxLayout(toolBox, BoxLayout.X_AXIS));
+    // toolBox.setLayout(new BoxLayout(toolBox, BoxLayout.X_AXIS));
     toolBox.add(Box.createGlue());
     toolBox.add(makeToolButton("ATTACHMENT_16x16-32.png"));
     toolBox.add(Box.createHorizontalStrut(2));
@@ -46,9 +47,11 @@ class ImageCaptionLabel extends JLabel implements HierarchyListener {
       @Override public void mouseEntered(MouseEvent e) {
         dispatchMouseEvent(e);
       }
+
       @Override public void mouseExited(MouseEvent e) {
         dispatchMouseEvent(e);
       }
+
       private void dispatchMouseEvent(MouseEvent e) {
         Component src = e.getComponent();
         Component tgt = ImageCaptionLabel.this;
@@ -60,11 +63,11 @@ class ImageCaptionLabel extends JLabel implements HierarchyListener {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、以下のリンクの方法を合わせて使用し、画像アイコンを表示した`JLabel`に半透明にした`JToolBar`を追加しています。
+上記のサンプルでは、以下のリンクの方法を合わせて使用して画像アイコンを表示した`JLabel`に半透明にした`JToolBar`を追加しています。
 
-- `JToolBar`本体の透明化は、[[JMenuBarの背景に画像を表示する>Swing/MenuBarBackground]]
-- `JToolBar`内部に配置する`JButton`の透明化は、[[JButtonの描画>Swing/ButtonPainted]]
-- `JToolBar`の表示・非表示アニメーションは、[[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]
+- `JToolBar`本体の透明化は[[JMenuBarの背景に画像を表示する>Swing/MenuBarBackground]]
+- `JToolBar`内部に配置する`JButton`の透明化は[[JButtonの描画>Swing/ButtonPainted]]
+- `JToolBar`の表示・非表示アニメーションは[[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]
 
 * 参考リンク [#reference]
 - [[JMenuBarの背景に画像を表示する>Swing/MenuBarBackground]]

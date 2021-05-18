@@ -25,12 +25,12 @@ progress.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 - `Orientation`: `SwingConstants.HORIZONTAL`
 -- 水平スクロールバーの場合、`JProgressBar#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`で右から左に進捗方向を変更可能
 -- `JProgressBar`には[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSlider.html#setInverted-boolean- JSlider#setInverted(boolean)]のようなメソッドは用意されていない
--- `JProgressBar#setStringPainted(true)`で進捗文字列を表示した場合、`JProgressBar#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`に設定していても、`%100`ではなく`100%`と表示される
+-- `JProgressBar#setStringPainted(true)`で進捗文字列を表示した場合、`JProgressBar#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`に設定していても`%100`ではなく`100%`と表示される
 - `Orientation`: `SwingConstants.VERTICAL`
 -- 左から`1`番目: デフォルトの垂直スクロールバー
 -- 左から`2`番目: デフォルトの進捗文字列を表示した垂直スクロールバー
 -- 左から`3`番目: `JProgressBar#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`を設定した垂直スクロールバー
---- 上から下には進捗方向を変更不可で、この設定は無視される
+--- 上から下には進捗方向を変更不可でこの設定は無視される
 -- 右から`2`番目: `JProgressBar#paintComponent(...)`をオーバーライドして表示を上下反転した垂直スクロールバー
 --- 進捗文字列も上下反転してしまう
 #code{{
@@ -49,9 +49,9 @@ progress7.setStringPainted(true);
 
 -- 右から`1`番目: `JLayer`で表示を上下反転した垂直スクロールバー
 --- `JProgressBar#paintComponent(...)`をオーバーライドした場合と同様に進捗文字列も上下反転してしまう
---- [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]のように、別の`JLabel`などで進捗文字列を描画すれば回避可能
+--- [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]のように別の`JLabel`などで進捗文字列を描画すれば回避可能
 - その他
--- 以下のようにノブやメモリを非表示、かつ操作不可に設定し、`JSlider#setInverted(true)`で描画を反転した、`JSlider`で代用する方法もある
+-- 以下のようにノブやメモリを非表示、かつ操作不可に設定し`JSlider#setInverted(true)`で描画を反転した`JSlider`で代用する方法もある
 --- [[JSliderのスタイルを変更する>Swing/GradientTrackSlider]]
 --- [[MouseListenerなどを削除してコンポーネントの入力操作を制限する>Swing/UninstallListeners]]
 --- [[JSliderの順序を反転>Swing/InvertedSlider]]

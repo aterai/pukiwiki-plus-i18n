@@ -16,21 +16,21 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJP6CTKHI/AAAAAAAAAUE/aD
 * サンプルコード [#sourcecode]
 #code(link){{
 class URLRenderer extends DefaultTableCellRenderer
-                  implements MouseListener, MouseMotionListener {
+    implements MouseListener, MouseMotionListener {
   private static Rectangle lrect = new Rectangle();
   private static Rectangle irect = new Rectangle();
   private static Rectangle trect = new Rectangle();
   private int row = -1;
   private int col = -1;
-  @Override public Component getTableCellRendererComponent(JTable table, Object value,
-                           boolean isSelected, boolean hasFocus,
-                           int row, int column) {
+  @Override public Component getTableCellRendererComponent(
+      JTable table, Object value, boolean isSelected,
+      boolean hasFocus, int row, int column) {
     super.getTableCellRendererComponent(table, value, isSelected, false, row, column);
 
     int mw = table.getColumnModel().getColumnMargin();
     int rh = table.getRowMargin();
-    int w  = table.getColumnModel().getColumn(column).getWidth();
-    int h  = table.getRowHeight(row);
+    int w = table.getColumnModel().getColumn(column).getWidth();
+    int h = table.getRowHeight(row);
 
     Insets i = this.getInsets();
     lrect.x = i.left;
@@ -69,11 +69,11 @@ class URLRenderer extends DefaultTableCellRenderer
 
 * 解説 [#explanation]
 - 上
--- `setText("<html><font color='blue'>"+str);`で文字列に下線を引く
+-- `setText("<html><font color='blue'>"+str);`メソッドを使用して文字列に下線を引く
 -- 文字列は省略されない
 - 下
 -- `SwingUtilities.layoutCompoundLabel(...)`メソッドを使用して文字列をセル幅分のみに省略
--- `setText("<html><font color='blue'>"+clippedTxt);`で省略済みの文字列に下線を引く
+-- `setText("<html><font color='blue'>"+clippedTxt);`メソッドを使用して省略済みの文字列に下線を引く
 
 * 参考リンク [#reference]
 - [[JTableのセルにHyperlinkを表示>Swing/HyperlinkInTableCell]]

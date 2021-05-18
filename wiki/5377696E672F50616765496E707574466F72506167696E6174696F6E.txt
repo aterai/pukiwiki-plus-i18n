@@ -31,6 +31,7 @@ worker = new SwingWorker<String, List<Object[]>>() {
     }
     return "Done";
   }
+
   private int makeRowListAndPublish(int current, int size) {
     try {
       Thread.sleep(500); // dummy
@@ -46,6 +47,7 @@ worker = new SwingWorker<String, List<Object[]>>() {
     publish(result);
     return j;
   }
+
   @Override protected void process(List<List<Object[]>> chunks) {
     for (List<Object[]> list : chunks) {
       for (Object[] o : list) {
@@ -56,6 +58,7 @@ worker = new SwingWorker<String, List<Object[]>>() {
     maxPageIndex = (rowCount / itemsPerPage) + (rowCount % itemsPerPage == 0 ? 0 : 1);
     initFilterAndButton();
   }
+
   @Override public void done() {
     String text = null;
     if (isCancelled()) {
@@ -72,6 +75,7 @@ worker = new SwingWorker<String, List<Object[]>>() {
   }
 };
 worker.execute();
+
 // ...
 private static final int itemsPerPage = 100;
 private int maxPageIndex;
@@ -98,7 +102,7 @@ private void initFilterAndButton() {
 上記のサンプルでは、[[RowFilterでJTableのページ分割>Swing/TablePagination]]に以下の変更を追加しています。
 
 - `JTextField`に数値を入力して指定ページにジャンプ可能
-- `First(|<)`, `Prev(<)`, `Next(>)`, `Last(>|)`に`JRadioButton`ではなく、`JButton`を使用
+- `First(|<)`、`Prev(<)`、`Next(>)`、`Last(>|)`などのリンクに`JRadioButton`ではなく`JButton`を使用
 - `SwingWorker`を使ってページ単位での逐次読み込み(最大ページの表示を更新)
 
 ----
@@ -113,6 +117,7 @@ class LoadTask extends SwingWorker<String, List<Object[]>> {
     this.max = max;
     this.itemsPerPage = itemsPerPage;
   }
+
   @Override public String doInBackground() {
     File file = new File("C:/Users/(name)/AppData/Roaming/Mozilla/Firefox/Profiles/xx.default/places.sqlite");
     String db = "jdbc:sqlite:/" + file.getAbsolutePath();
@@ -140,6 +145,7 @@ class LoadTask extends SwingWorker<String, List<Object[]>> {
     }
     return "Done";
   }
+
   private int load(Statement stat, int current, int limit) throws SQLException {
     List<Object[]> result = new ArrayList<>(limit);
     String q = String.format("select * from moz_bookmarks limit %d offset %d", limit, current - 1);

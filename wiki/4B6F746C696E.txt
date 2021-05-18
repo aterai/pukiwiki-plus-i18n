@@ -400,6 +400,7 @@ internal class CheckBoxList<E : CheckBoxNode> protected constructor(model: ListM
 - インターフェイスから匿名内部クラスのインスタンスを生成する場合は`()`は不要
 -- [https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions SAM Conversions - Calling Java from Kotlin - Kotlin Programming Language]
 -- `tree.addTreeWillExpandListener(object : TreeWillExpandListener() {`を`tree.addTreeWillExpandListener(object : TreeWillExpandListener {`に修正
+- `kotlin 1.4.0`から`kotlin`のインターフェイスでもラムダでの記述も可能になった
 
 #twocolumn
 `Java`
@@ -2829,6 +2830,46 @@ listOf(c0, c1, c2, c3)
   .forEach { it.insertElementAt(str, it.getSize()) }
 }}
 #twocolumn
+
+** Functional (SAM) interfaces [#FunctionalInterfaces]
+- `kotlin 1.4.0`から`Kotlin`インターフェイスでも`SAM`(`Single Abstract Method`)変換を利用可能になったが、まだ`IntelliJ`の自動変換では`Functional interfaces`ではなく普通の`interfaces`に変換されるのでこれを使用する場合は手動で置換する必要がある
+-- [https://kotlinlang.org/docs/reference/fun-interfaces.html Functional interfaces (SAM interfaces) - Kotlin Programming Language]
+
+#twocolumn
+#code(lang-kotlin){{
+interface ExpansionListener : EventListener {
+   fun expansionStateChanged(e: ExpansionEvent)
+ }
+}
+// ...
+p.addExpansionListener(object : ExpansionListener {
+  override fun expansionStateChanged(e: ExpansionEvent) {
+    (e.source as? Component)?.also {
+      // ...
+    }
+  }
+})
+}}
+
+#twocolumn
+#code(lang-kotlin){{
+fun interface ExpansionListener : EventListener {
+   fun expansionStateChanged(e: ExpansionEvent)
+ }
+}
+// ...
+p.addExpansionListener { e ->
+  (e.source as? Component)?.also {
+    // ...
+  }
+}
+}}
+#twocolumn
+
+* Jetpack Compose for Desktop [#t9efb999]
+- [https://www.jetbrains.com/lp/compose/ Compose for Desktop UI Framework | JetBrains: Developer Tools for Professionals and Teams]
+-- via: [https://www.publickey1.jp/blog/20/kotlinuicompose_for_desktopwinmaclinuxjetbrains.html Kotlin用デスクトップUIライブラリ「Compose for Desktop」が登場、Win/Mac/Linuxアプリ開発対応。JetBrains － Publickey]
+-- あとで調べる
 
 * コメント [#comment]
 #comment

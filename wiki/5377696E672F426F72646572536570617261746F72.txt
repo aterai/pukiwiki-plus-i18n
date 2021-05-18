@@ -20,14 +20,14 @@ JSeparator sep = new JSeparator();
 ListCellRenderer lcr = combobox.getRenderer();
 combobox.setRenderer(new ListCellRenderer() {
   @Override public Component getListCellRendererComponent(
-               JList list, Object value, int index,
-               boolean isSelected, boolean cellHasFocus) {
+        JList list, Object value, int index,
+        boolean isSelected, boolean cellHasFocus) {
     MyItem item = (MyItem) value;
     JLabel label = (JLabel) lcr.getListCellRendererComponent(
-                    list, item, index, isSelected, cellHasFocus);
+        list, item, index, isSelected, cellHasFocus);
     if (item.hasSeparator()) {
       label.setBorder(
-             BorderFactory.createMatteBorder(1, 0, 0, 0, Color.GRAY));
+          BorderFactory.createMatteBorder(1, 0, 0, 0, Color.GRAY));
     } else {
       label.setBorder(BorderFactory.createEmptyBorder());
     }
@@ -40,22 +40,24 @@ model.addElement(new MyItem("eeeeeeeee", true));
 model.addElement(new MyItem("bbb12"));
 combobox.setModel(model);
 combobox.setEditable(true);
-}}
+// ...
 
-#code{{
 class MyItem {
   private final String  item;
   private final boolean flag;
   public MyItem(String str) {
     this(str, false);
   }
+
   public MyItem(String str, boolean flg) {
     item = str;
     flag = flg;
   }
+
   @Override public String toString() {
     return item;
   }
+
   public boolean hasSeparator() {
     return flag;
   }
@@ -73,14 +75,14 @@ class MyItem {
 #code{{
 combobox.setRenderer(new ListCellRenderer() {
   @Override public Component getListCellRendererComponent(
-               JList list, Object value, int index,
-               boolean isSelected, boolean cellHasFocus) {
+        JList list, Object value, int index,
+        boolean isSelected, boolean cellHasFocus) {
     MyItem item = (MyItem) value;
     JLabel label = (JLabel) lcr.getListCellRendererComponent(
-                    list, item, index, isSelected, cellHasFocus);
+        list, item, index, isSelected, cellHasFocus);
     if (index != -1 && item.hasSeparator()) {
       label.setBorder(
-             BorderFactory.createMatteBorder(1, 0, 0, 0, Color.GRAY));
+          BorderFactory.createMatteBorder(1, 0, 0, 0, Color.GRAY));
     } else {
       label.setBorder(BorderFactory.createEmptyBorder());
     }

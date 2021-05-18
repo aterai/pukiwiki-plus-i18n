@@ -46,11 +46,11 @@ class ScrollPaneLayerUI extends LayerUI<JScrollPane> {
 }}
 
 * 解説 [#explanation]
-- `JScrollPane`に`JLayer`を設定し、コンテンツである`JEditorPane`の右側が非表示になっていることを示唆するために`JViewport`の右端に影を描画する
--- コンテンツが`JViewport`の幅より小さい場合や、`JViewport`の表示領域がコンテンツの右端まで到達している場合は影を描画しない
--- コンテンツの右側が非表示になっているかどうかは、`JScrollPane#getHorizontalScrollBar()#getModel()`で`BoundedRangeModel`を取得し、`m.getValue() + m.getExtent() < m.getMaximum()`かで判断
+- `JScrollPane`に`JLayer`を設定しコンテンツである`JEditorPane`の右側が非表示になっていることを示唆するために`JViewport`の右端に影を描画する
+-- コンテンツが`JViewport`の幅より小さい場合や`JViewport`の表示領域がコンテンツの右端まで到達している場合は影を描画しない
+-- コンテンツの右側が非表示になっているかどうかは`JScrollPane#getHorizontalScrollBar()#getModel()`で`BoundedRangeModel`を取得し`m.getValue() + m.getExtent() < m.getMaximum()`かで判断
 --- 水平スクロールバーが`ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER`で非表示の場合も判別可能
--- 影の描画位置は垂直・水平スクロールバーの表示・非表示に影響されないよう、`JScrollPane#getViewportBorderBounds()`メソッドで`JViewport`のボーダーの境界を取得して決定する
+-- 影の描画位置は垂直・水平スクロールバーの表示・非表示に影響されないよう`JScrollPane#getViewportBorderBounds()`メソッドで`JViewport`のボーダーの境界を取得して決定する
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JScrollPane.html#getViewportBorderBounds-- JScrollPane#getViewportBorderBounds() (Java Platform SE 8)]

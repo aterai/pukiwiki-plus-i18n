@@ -18,11 +18,12 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-//menuItem.setMnemonic(KeyEvent.VK_1);
+// menuItem.setMnemonic(KeyEvent.VK_1);
 class ModalInternalFrameAction1 extends AbstractAction {
   public ModalInternalFrameAction1(String label) {
     super(label);
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     setJMenuEnabled(false);
     JOptionPane.showInternalMessageDialog(
@@ -30,9 +31,8 @@ class ModalInternalFrameAction1 extends AbstractAction {
     setJMenuEnabled(true);
   }
 }
-}}
-#code{{
-//menuItem.setMnemonic(KeyEvent.VK_2);
+
+// menuItem.setMnemonic(KeyEvent.VK_2);
 class ModalInternalFrameAction2 extends AbstractAction {
   private final JPanel glass = new MyGlassPane();
   public ModalInternalFrameAction2(String label) {
@@ -45,6 +45,7 @@ class ModalInternalFrameAction2 extends AbstractAction {
     glass.setVisible(false);
     desktop.add(glass, JLayeredPane.MODAL_LAYER);
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     setJMenuEnabled(false);
     glass.setVisible(true);
@@ -54,17 +55,17 @@ class ModalInternalFrameAction2 extends AbstractAction {
     setJMenuEnabled(true);
   }
 }
-}}
-#code{{
-//menuItem.setMnemonic(KeyEvent.VK_3);
-//Creating Modal Internal Frames -- Approach 1 and Approach 2
-//http://web.archive.org/web/20090803142839/http://java.sun.com/developer/JDCTechTips/2001/tt1220.html
+
+// menuItem.setMnemonic(KeyEvent.VK_3);
+// Creating Modal Internal Frames -- Approach 1 and Approach 2
+// http://web.archive.org/web/20090803142839/http://java.sun.com/developer/JDCTechTips/2001/tt1220.html
 class ModalInternalFrameAction3 extends AbstractAction {
   private final JPanel glass = new PrintGlassPane();
   public ModalInternalFrameAction3(String label) {
     super(label);
     glass.setVisible(false);
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     JOptionPane optionPane = new JOptionPane();
     JInternalFrame modal = optionPane.createInternalFrame(desktop, "modal3");
@@ -87,31 +88,31 @@ class ModalInternalFrameAction3 extends AbstractAction {
 }}
 
 * 解説 [#explanation]
-- KBD{Alt+1}: `JOptionPane.showInternalMessageDialog`メソッドを使用して、簡単なメッセージを表示する`Modal`な`Dialog`を`JDesktopPane`内に表示
--- `JButton`のマウスクリックは無効になるが、`Mnemonic`が無効にならない
+- KBD{Alt+1}: `JOptionPane.showInternalMessageDialog`メソッドを使用して簡単なメッセージを表示する`Modal`な`Dialog`を`JDesktopPane`内に表示
+-- `JButton`のマウスクリックは無効になるが`Mnemonic`が無効にならない
 --- KBD{Alt+B}でボタンを押すことが出来てしまう
 --- `Mnemonic`を設定したコンポーネントは`setEnabled(false)`とする必要がある
--- `Mnemonic`を`JMenu`に設定していると`setEnabled(false)`としても、KBD{Alt}キーに反応する
+-- `Mnemonic`を`JMenu`に設定していると`setEnabled(false)`としてもKBD{Alt}キーに反応する
 --- 追記: [https://bugs.openjdk.java.net/browse/JDK-6921687 JDK-6921687 Mnemonic disappears after repeated attempts to open menu items using mnemonics - Java Bug System]で修正されそう？
---- この`InternalMessageDialog`を表示している間は、`JMenuBar`をダミーと入れ替えて無効化
--- この`InternalMessageDialog`を閉じない限り、アプリケーションをKBD{Alt+F4}などで閉じることは出来ない
+--- この`InternalMessageDialog`を表示している間は`JMenuBar`をダミーと入れ替えて無効化
+-- この`InternalMessageDialog`を閉じない限りアプリケーションをKBD{Alt+F4}などで閉じることは出来ない
 -- `InternalMessageDialog`のシステムメニュー(左上のアイコンをクリックすると表示される)がマウスで操作不可能
 -- `JToolTip`は正常
---- `showInternalMessageDialog(...)`メソッド内で、`pane.putClientProperty(PopupFactory_FORCE_HEAVYWEIGHT_POPUP, Boolean.TRUE)`(`JDK 1.6.0`の場合の`Key`は、`PopupFactory.forceHeavyWeightPopupKey`) されているため、`JComboBox`などのドロップダウンメニューも正常
+--- `showInternalMessageDialog(...)`メソッド内で、`pane.putClientProperty(PopupFactory_FORCE_HEAVYWEIGHT_POPUP, Boolean.TRUE)`(`JDK 1.6.0`の場合の`Key`は`PopupFactory.forceHeavyWeightPopupKey`) されているため、`JComboBox`などのドロップダウンメニューも正常
 
 - KBD{Alt+2}: KBD{Alt+1}と同様に`JOptionPane.showInternalMessageDialog`メソッドを使用し、かつ半透明な`GlassPane`を`JLayeredPane.MODAL_LAYER`に追加
--- 動作、制限などは、KBD{Alt+2}の`InternalMessageDialog`と同じ
+-- 動作、制限などはKBD{Alt+2}の`InternalMessageDialog`と同じ
 -- `JDesktopPane`内にマスクが掛かる
 
-- KBD{Alt+3}: `JFrame`に半透明な`GlassPane`を追加し、そこに`JInternalFrame`を追加することで`Modal`に設定
+- KBD{Alt+3}: `JFrame`に半透明な`GlassPane`を追加しそこに`JInternalFrame`を追加することで`Modal`に設定
 -- `JFrame`内全体(`JMenuBar`なども含む)にマスクが掛かる
 -- `InternalMessageDialog`のシステムメニューが自身のレイヤーより奥に表示されるため、アイコン(`JLabel`)をクリックしても反応しないようにリスナーを除去
--- `JComboBox`を`InternalMessageDialog`に追加すると、そのドロップダウンメニューが裏に表示される
--- この`InternalMessageDialog`を開いていても、アプリケーションをKBD{Alt+F4}などで閉じることが出来てしまう
+-- `JComboBox`を`InternalMessageDialog`に追加するとそのドロップダウンメニューが裏に表示される
+-- この`InternalMessageDialog`を開いていてもアプリケーションをKBD{Alt+F4}などで閉じることが出来てしまう
 
 ----
-- KBD{Alt+3}の方法で、`InternalOptionDialog`に`JComboBox`を追加する場合、ドロップダウンメニューを正しく表示させるには、リフレクションを使って`ClientProperty`を設定するしかない？
--- `JInternalFrame#putClientProperty(PopupFactory_FORCE_HEAVYWEIGHT_POPUP, Boolean.TRUE)`とすれば、システムメニューも正常に表示されるが、`JOptionPane.showInternalXXXDialog`では、なぜか`JOptionPane`に設定するようになっている(`JInternalFrame`は使い回ししているから？)
+- KBD{Alt+3}の方法で、`InternalOptionDialog`に`JComboBox`を追加する場合、ドロップダウンメニューを正しく表示させるにはリフレクションを使って`ClientProperty`を設定するしかない？
+-- `JInternalFrame#putClientProperty(PopupFactory_FORCE_HEAVYWEIGHT_POPUP, Boolean.TRUE)`とすればシステムメニューも正常に表示されるが、`JOptionPane.showInternalXXXDialog`ではなぜか`JOptionPane`に設定するようになっている(`JInternalFrame`は使い回ししているから？)
 
 #code{{
 JInternalFrame modal = optionPane.createInternalFrame(desktop, "modal3");
@@ -122,7 +123,7 @@ try {
   if (System.getProperty("java.version").startsWith("1.6.0")) {
     Class clazz = Class.forName("javax.swing.PopupFactory");
     field = clazz.getDeclaredField("forceHeavyWeightPopupKey");
-  } else { //1.7.0, 1.8.0
+  } else { // 1.7.0, 1.8.0
     Class clazz = Class.forName("javax.swing.ClientPropertyKey");
     field = clazz.getDeclaredField("PopupFactory_FORCE_HEAVYWEIGHT_POPUP");
   }
@@ -136,11 +137,10 @@ optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
 }}
 
 ----
-[http://weblogs.java.net/blog/alexfromsun/archive/2008/01/ Alexander Potochkin's Blog: Disabling Swing Containers, the final solution?]を参考に(`paint`ではなく、`print`が使用されている)して、`GlassPane`を以下のように修正すると、上記のサンプルのKBD{Alt+3}(KBD{Alt+2}の場合は、描画が乱れる)は、`Mnemonic`もうまくブロックできるようです。
-
+- [http://weblogs.java.net/blog/alexfromsun/archive/2008/01/ Alexander Potochkin's Blog: Disabling Swing Containers, the final solution?]を参考に(`paint`ではなく`print`が使用されている)して`GlassPane`を以下のように修正すると、上記のサンプルのKBD{Alt+3}(KBD{Alt+2}の場合描画が乱れる)は`Mnemonic`もうまくブロックできるようになる
 - `JFrame`のメニューバーの`Mnemonic`もブロックできる
 -- `JRootPane`から取得した`LayeredPane`が非表示なので、その子コンポーネント(`JMenuBar`や`ContentPane`など)のキーイベントがすべて無効になる
--- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JRootPane.html JRootPane (Java Platform SE 8)]の図にあるように、`GlassPane`は、`JRootPane`の最上位の子コンポーネントなので、`LayeredPane`を画像として表示している
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JRootPane.html JRootPane (Java Platform SE 8)]の図にあるように、`GlassPane`は`JRootPane`の最上位の子コンポーネントなので`LayeredPane`を画像として表示している
 - `JFrame`のシステムメニューはブロックできない
 - モーダルにした`JInternalFrame`のシステムメニューは表示されない
 -- ただし表示されないだけで、クリックしてからカーソル移動やダブルクリックなどが動いてしまう
@@ -154,6 +154,7 @@ class PrintGlassPane extends JPanel {
     super((LayoutManager) null);
     setOpaque(false);
   }
+
   @Override public void setVisible(boolean isVisible) {
     boolean oldVisible = isVisible();
     super.setVisible(isVisible);
@@ -162,10 +163,11 @@ class PrintGlassPane extends JPanel {
       rootPane.getLayeredPane().setVisible(!isVisible);
     }
   }
+
   @Override protected void paintComponent(Graphics g) {
     JRootPane rootPane = SwingUtilities.getRootPane(this);
     if (rootPane != null) {
-      //http://weblogs.java.net/blog/alexfromsun/archive/2008/01/
+      // http://weblogs.java.net/blog/alexfromsun/archive/2008/01/
       // it is important to call print() instead of paint() here
       // because print() doesn't affect the frame's double buffer
       rootPane.getLayeredPane().print(g);
@@ -178,9 +180,8 @@ class PrintGlassPane extends JPanel {
 }}
 
 ----
-`JDK 6`の場合、[https://tips4java.wordpress.com/2008/11/07/disabled-glass-pane/ Disabled Glass Pane « Java Tips Weblog]のようにキー入力を無効にするキーリスナーを追加する方法もあります。
-
-この方法は、`JDK 5`などの場合、`WindowsLookAndFeel`で、KBD{Alt}キーを押すとメニューバーにフォーカスが移ることがあります。
+- `JDK 6`の場合、[https://tips4java.wordpress.com/2008/11/07/disabled-glass-pane/ Disabled Glass Pane « Java Tips Weblog]のようにキー入力を無効にするキーリスナーを追加する方法もある
+-- `JDK 5`などの場合、`WindowsLookAndFeel`でKBD{Alt}キーを押すとメニューバーにフォーカスが移動してしまう
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JOptionPane.html#showInternalMessageDialog-java.awt.Component-java.lang.Object- JOptionPane#showInternalMessageDialog(...) (Java Platform SE 8)]

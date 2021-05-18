@@ -1,0 +1,68 @@
+---
+category: swing
+folder: LocalDateFilter
+title: JTableにLocalDataのフィルタリングを実行するRowFilterを設定する
+tags: [JTable, RowFilter, TableRowSorter]
+author: aterai
+pubdate: 2020-09-07T19:23:43+09:00
+description: JTableの列にLocalDataを追加したカレンダーを作成し、指定した期間でその日付をフィルタリングするRowFilterを設定します。
+image: https://drive.google.com/uc?id=1eyfSFqFMOcxpCq2TfIRgKNkAKgei4BME
+---
+* 概要 [#summary]
+`JTable`の列に`LocalData`を追加したカレンダーを作成し、指定した期間でその日付をフィルタリングする`RowFilter`を設定します。
+
+#download(https://drive.google.com/uc?id=1eyfSFqFMOcxpCq2TfIRgKNkAKgei4BME)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+public RowFilter<TableModel, Integer> makeRowFilter(String selected) {
+  switch (selected) {
+    case "within 3 days before":
+      return new LocalDateFilter(realLocalDate.minusDays(3).plusDays(1), realLocalDate, 0);
+    case "within 1 week before":
+      return new LocalDateFilter(realLocalDate.minusWeeks(1).plusDays(1), realLocalDate, 0);
+    case "1 week before and after":
+      return new LocalDateFilter(realLocalDate.minusDays(3), realLocalDate.plusDays(3), 0);
+    case "within 1 week after":
+      return new LocalDateFilter(realLocalDate, realLocalDate.plusWeeks(1).minusDays(1), 0);
+    default:
+      return null;
+  }
+}
+
+class LocalDateFilter extends RowFilter<TableModel, Integer> {
+  private final LocalDate startDate;
+  private final LocalDate endDate;
+  private final int column;
+
+  protected LocalDateFilter(LocalDate startDate, LocalDate endDate, int column) {
+    super();
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.column = column;
+  }
+
+  @Override public boolean include(Entry<? extends TableModel, ? extends Integer> entry) {
+    Object v = entry.getModel().getValueAt(entry.getIdentifier(), column);
+    if (v instanceof LocalDate) {
+      LocalDate date = (LocalDate) v;
+      return !(startDate.isAfter(date) || endDate.isBefore(date));
+    }
+    return false;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `0`列目に`LocalData`を使用する月カレンダーを`JTable`で作成
+- `0`列目が`LocalData`の場合、指定した開始日と終了日の間に存在する日付だけ表示する`RowFilter`を作成して`TableRowSorter`に設定
+-- `LocalData`ではなく`java.util.Date`を使用する場合は、`RowFilter`にデフォルトで用意されている[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.html#dateFilter-javax.swing.RowFilter.ComparisonType-java.util.Date-int...- RowFilter#dateFilter(RowFilter.ComparisonType, Date, int...)]が使用可能
+- フィルタリングのリセットには`TableRowSorter.setRowFilter(null)`を使用
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/63701193/how-can-i-use-rowfilter-datefilter-on-localdate-columns java - How can i use RowFilter.dateFilter on LocalDate columns - Stack Overflow]
+- [[JTableのセルに設定した日付をRegexFilterでフィルタリングする>Swing/RegexDateFilter]]
+
+* コメント [#comment]
+#comment
+#comment

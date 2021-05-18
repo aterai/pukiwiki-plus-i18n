@@ -21,7 +21,7 @@ try {
 } catch (Exception e) {
   e.printStackTrace();
 }
-//XXX: JFrame frame = new JFrame();
+// XXX: JFrame frame = new JFrame();
 frame.setUndecorated(true);
 
 JRootPane root = frame.getRootPane();
@@ -31,11 +31,11 @@ Component c = layeredPane.getComponent(1);
 if (c instanceof JComponent) {
   JComponent orgTitlePane = (JComponent) c;
   orgTitlePane.setVisible(false);
-  //layeredPane.remove(orgTitlePane);
+  // layeredPane.remove(orgTitlePane);
 }
-//JComponent dummyTitlePane = new JLabel();
-//layeredPane.add(dummyTitlePane, JLayeredPane.FRAME_CONTENT_LAYER);
-//dummyTitlePane.setVisible(true);
+// JComponent dummyTitlePane = new JLabel();
+// layeredPane.add(dummyTitlePane, JLayeredPane.FRAME_CONTENT_LAYER);
+// dummyTitlePane.setVisible(true);
 
 JPanel p = new JPanel(new BorderLayout());
 p.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -60,7 +60,7 @@ frame.getContentPane().add(p);
 
 ----
 - `MetalLookAndFeel`のみ`LookAndFeel#getSupportsWindowDecorations()`は`true`を返す
--- `LookAndFeel`を変更する場合は、`ContentPane`以下から更新することで、`JRootPane#setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);`が無効にならないようにする必要がある
+-- `LookAndFeel`を変更する場合は、`ContentPane`以下から更新することで`JRootPane#setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);`が無効にならないようにする必要がある
 #code{{
 for (Window window: Window.getWindows()) {
   if (window instanceof RootPaneContainer) {

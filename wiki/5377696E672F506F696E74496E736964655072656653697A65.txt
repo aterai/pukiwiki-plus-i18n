@@ -18,7 +18,7 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-//@see SwingUtilities2.pointOutsidePrefSize(...)
+// @see SwingUtilities2.pointOutsidePrefSize(...)
 private static boolean pointInsidePrefSize(JTable table, Point p) {
   int row = table.rowAtPoint(p);
   int col = table.columnAtPoint(p);
@@ -33,10 +33,11 @@ private static boolean pointInsidePrefSize(JTable table, Point p) {
   cellBounds.translate(i.left, i.top);
   return cellBounds.contains(p);
 }
-private boolean isRollover = false;
+
 private static boolean isURLColumn(JTable table, int column) {
   return column >= 0 && table.getColumnClass(column).equals(URL.class);
 }
+
 @Override public void mouseMoved(MouseEvent e) {
   JTable table = (JTable) e.getSource();
   Point pt = e.getPoint();
@@ -63,6 +64,7 @@ private static boolean isURLColumn(JTable table, int column) {
   // <<<<
   //table.repaint();
 }
+
 @Override public void mouseExited(MouseEvent e)  {
   JTable table = (JTable) e.getSource();
   if (isURLColumn(table, col)) {
@@ -72,6 +74,7 @@ private static boolean isURLColumn(JTable table, int column) {
     isRollover = false;
   }
 }
+
 @Override public void mouseClicked(MouseEvent e) {
   JTable table = (JTable) e.getSource();
   Point pt = e.getPoint();
@@ -90,7 +93,7 @@ private static boolean isURLColumn(JTable table, int column) {
 }}
 
 * 解説 [#explanation]
-`SwingUtilities2.pointOutsidePrefSize(...)`を参考にして、セルの表示に使用するコンポーネント(`JLabel`)の推奨サイズの範囲内にカーソルがあるかどうかを比較するメソッドを作成しています。`JTable`に追加した`MouseListener`でこれを使用し、`URL`の文字列を`Hover`状態に変更するか、またはクリックされたかなどを判断しています。
+`SwingUtilities2.pointOutsidePrefSize(...)`を参考にして、セルの表示に使用するコンポーネント(`JLabel`)の推奨サイズの範囲内にカーソルがあるかどうかを比較するメソッドを作成しています。`JTable`に追加した`MouseListener`でこれを使用し、`URL`の文字列を`Hover`状態に変更するかまたはクリックされたかなどを判断しています。
 
 * 参考リンク [#reference]
 - [[JTableのセルにHyperlinkを表示>Swing/HyperlinkInTableCell]]

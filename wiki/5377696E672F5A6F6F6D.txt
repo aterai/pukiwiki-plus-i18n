@@ -27,12 +27,14 @@ class ZoomImage extends JPanel {
     iw = image.getWidth(this);
     ih = image.getHeight(this);
   }
+
   @Override public void updateUI() {
     removeMouseWheelListener(handler);
     super.updateUI();
     handler = e -> changeScale(e.getWheelRotation());
     addMouseWheelListener(handler);
   }
+
   @Override protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     Graphics2D g2 = (Graphics2D) g.create();
@@ -40,10 +42,12 @@ class ZoomImage extends JPanel {
     g2.drawImage(image, 0, 0, iw, ih, this);
     g2.dispose();
   }
+
   public void initScale() {
     scale = 1d;
     repaint();
   }
+
   public void changeScale(int iv) {
     scale = Math.max(.05, Math.min(5d, scale - iv * .05));
     repaint();

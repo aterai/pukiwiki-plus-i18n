@@ -26,6 +26,8 @@ public class SortButtonRenderer extends JButton implements TableCellRenderer {
       return button;
     }
     // ...
+  }
+}
 
 private final HashMap dmap = new HashMap();
 public boolean isEnabledAt(int col) {
@@ -42,10 +44,8 @@ public boolean isEnabledAt(int col) {
 * 解説 [#explanation]
 サンプルでは、`0`列目のカラムヘッダを常に選択不可に、`3`列目はチェックボックスで選択できるかどうかを切り替えるようにしています。
 
-`HashMap`に選択不可にするカラムヘッダを設定し、レンダラーがヘッダを描画するときにそれを`setEnabled(false)`しています。
-
-`TableSorter.java`を使用してソートしている場合は、`TableSorter`のインナークラスの`MouseHandler`を、例えば以下のように変更すると、任意のカラムをクリックしてもソートされなくなります。
-
+- `HashMap`に選択不可にするカラムヘッダを設定してレンダラーがヘッダを描画するときにそれを`setEnabled(false)`に変更
+- `TableSorter.java`を使用してソートしている場合は、`TableSorter`のインナークラスの`MouseHandler`を例えば以下のように変更すると任意のカラムがクリックしてもソート不可になる
 #code{{
 private class MouseHandler extends MouseAdapter {
   @Override public void mouseClicked(MouseEvent e) {
@@ -68,8 +68,8 @@ private class MouseHandler extends MouseAdapter {
 }}
 
 ----
-`JDK 1.6.0`で導入された、`TableRowSorter`を使っている場合は、ソート不可にするカラムを`DefaultRowSorter#setSortable(int, boolean)`で指定し、表示を以下のようなレンダラーで切り替えます(参考: [[TableRowSorterでJTableのソート>Swing/TableRowSorter]])。
-
+- `JDK 1.6.0`で導入された`TableRowSorter`を使用する場合、`DefaultRowSorter#setSortable(int, boolean)`でソート不可にするカラムを指定可能
+-- ソート不可の列の表示は以下のようなレンダラーで切り替え可能(参考: [[TableRowSorterでJTableのソート>Swing/TableRowSorter]])
 #code{{
 final JTableHeader hd = table.getTableHeader();
 final TableCellRenderer headerRenderer = hd.getDefaultRenderer();

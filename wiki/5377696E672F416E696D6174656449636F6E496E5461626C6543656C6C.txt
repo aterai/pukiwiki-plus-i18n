@@ -21,7 +21,7 @@ icon.setImageObserver(new ImageObserver() {
   // @see http://www2.gol.com/users/tame/swing/examples/SwingExamples.html
   @Override public boolean imageUpdate(
       Image img, int infoflags, int x, int y, int w, int h) {
-    //@see javax.swing.JLabel#imageUpdate(...)
+    // @see javax.swing.JLabel#imageUpdate(...)
     if (!table.isShowing()) {
       return false;
     }
@@ -37,7 +37,7 @@ icon.setImageObserver(new ImageObserver() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、%%[http://www2.gol.com/users/tame/swing/examples/SwingExamples.html AnimatedIconTableExample.java]%%を参考にして、`Animated GIF`ファイルから作成した`ImageIcon`に、`setImageObserver(ImageObserver)`を設定しています。直接`JTable`を`ImageObserver`として設定するとすべてのセルが再描画されて無駄なので、`JTable#getCellRect(row, col, false)`で対象セルのみ`repaint`するようにしています。
+上記のサンプルでは、%%[http://www2.gol.com/users/tame/swing/examples/SwingExamples.html AnimatedIconTableExample.java]%%を参考にして、`Animated GIF`ファイルから作成した`ImageIcon`に`setImageObserver(ImageObserver)`を設定しています。直接`JTable`を`ImageObserver`として設定するとすべてのセルが再描画されて無駄なので、`JTable#getCellRect(row, col, false)`で対象セルのみ`repaint`するよう制限しています。
 
 - %%[http://www2.gol.com/users/tame/swing/examples/SwingExamples.html AnimatedIconTableExample.java]%%からの変更点
 -- `JTable#isShowing(...)==false`で、非表示の場合は`JTable#repaint(...)`しない

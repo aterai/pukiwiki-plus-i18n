@@ -25,6 +25,7 @@ DropTargetListener dtl = new DropTargetAdapter() {
     }
     dtde.rejectDrag();
   }
+
   @Override public void drop(DropTargetDropEvent dtde) {
     try {
       if (dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
@@ -54,43 +55,11 @@ new DropTarget(table, DnDConstants.ACTION_COPY, dtl, true);
 * 解説 [#explanation]
 上記のサンプルでは、`Windows`のファイルエクスプローラなどからファイルを選択(複数選択可)、ドラッグ、`JTable`上にドロップで、ファイル名などを一覧表示できます。
 
-ドロップされた`DataFlavor`が、`DataFlavor.javaFileListFlavor`の場合だけ、これをファイルとして処理する`DropTargetListener`を作成しています。
+ドロップされた`DataFlavor`が`DataFlavor.javaFileListFlavor`の場合のみ、これをファイルとして処理する`DropTargetListener`を作成しています。
 
 ----
-`JDK 1.6.0`以降なら、以下のような`TransferHandler`を作成して使用する方法もあります。
-
-- [[JTableでファイルとディレクトリを別々にソート>Swing/FileDirectoryComparator]]
-
-#code{{
-table.setDropMode(DropMode.INSERT_ROWS);
-table.setTransferHandler(new FileTransferHandler());
-}}
-
-#code{{
-class FileTransferHandler extends TransferHandler {
-  @Override public boolean importData(TransferSupport support) {
-    try {
-      if (canImport(support)) {
-        JTable table = (JTable) support.getComponent();
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        for (Object o: (List) support.getTransferable().getTransferData(DataFlavor.javaFileListFlavor)) {
-          if (o instanceof File) {
-            File f= (File) o;
-            model.addRow(new Object[] { f, f.length(), f.getAbsolutePath() });
-          }
-        }
-        return true;
-      }
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-    return false;
-  }
-  @Override public boolean canImport(TransferSupport support) {
-    return support.isDataFlavorSupported(DataFlavor.javaFileListFlavor);
-  }
-}
-}}
+- `JDK 1.6.0`以降では以下のような`TransferHandler`が使用可能
+-- [[JTableでファイルとディレクトリを別々にソート>Swing/FileDirectoryComparator]]に移動
 
 * 参考リンク [#reference]
 - [http://www5.big.or.jp/~tera/Labo/Java2/j2dnd.html Java2: WindowsからのDrag and Drop]

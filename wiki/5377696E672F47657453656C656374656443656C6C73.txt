@@ -31,10 +31,10 @@ toggle.addActionListener(e -> {
 上記のサンプルでは、`JTable#getSelectedRows()`メソッドですべての選択行インデックス、`JTable#getSelectedColumns()`メソッドですべての選択列インデックスを取得し、`2`重`for`ループで処理することで選択されたすべてのセルに対して値の変更を行っています。
 
 ----
-KBD{Shift}キーを押しながらの範囲選択、KBD{Ctrl}キーを押しながらの連続選択でセルの値が変更されないよう、以下のように`DefaultCellEditor#isCellEditable()`メソッドをオーバーライドしています。
+- KBD{Shift}キーを押しながらの範囲選択やKBD{Ctrl}キーを押しながらの連続選択でセルの値が変更されないようにする場合、以下のように`DefaultCellEditor#isCellEditable()`メソッドをオーバーライドする必要がある
 
 #code{{
-@see JTable.BooleanEditor
+// @see JTable.BooleanEditor
 class BooleanEditor extends DefaultCellEditor {
   protected BooleanEditor() {
     super(new JCheckBox());

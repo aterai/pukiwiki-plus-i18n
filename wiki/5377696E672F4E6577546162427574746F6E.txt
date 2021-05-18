@@ -24,9 +24,11 @@ class TabLayout implements LayoutManager, Serializable {
   @Override public void addLayoutComponent(String name, Component comp) {
     /* not needed */
   }
+
   @Override public void removeLayoutComponent(Component comp) {
     /* not needed */
   }
+
   @Override public Dimension preferredLayoutSize(Container parent) {
     synchronized (parent.getTreeLock()) {
       Insets insets = parent.getInsets();
@@ -56,8 +58,8 @@ class TabLayout implements LayoutManager, Serializable {
       if (ncomponents == 0) {
         return;
       }
-      //int nrows = 1;
-      //boolean ltr = parent.getComponentOrientation().isLeftToRight();
+      // int nrows = 1;
+      // boolean ltr = parent.getComponentOrientation().isLeftToRight();
       Insets insets = parent.getInsets();
       int ncols = ncomponents - 1;
       int lastw = parent.getComponent(ncomponents - 1).getPreferredSize().width;
@@ -74,6 +76,7 @@ class TabLayout implements LayoutManager, Serializable {
       }
     }
   }
+
   @Override public String toString() {
     return getClass().getName();
   }
@@ -85,10 +88,10 @@ class TabLayout implements LayoutManager, Serializable {
 
 - 最後のタブ(タブ追加ボタン)の幅は常に固定
 - 最後のタブの高さがタブエリアの高さ
-- タブエリアの幅に余裕がある場合は、各タブ幅は`100px`で一定
-- タブエリアの幅に余裕がない場合は、各タブ幅は均等
-- タブを削除した場合、先頭タブにフォーカスが移動する
-- 左の`JButton`(ダミー)は、タブエリアをラップする`JPanel(BorderLayout)`の`BorderLayout.WEST`に配置
+- タブエリアの幅に余裕がある場合は各タブ幅は`100px`で一定
+- タブエリアの幅に余裕がない場合は各タブ幅は均等
+- タブを削除した場合先頭タブにフォーカスが移動する
+- 左の`JButton`(ダミー)はタブエリアをラップする`JPanel(BorderLayout)`の`BorderLayout.WEST`に配置
 - アイコンはランダム
 
 * 参考リンク [#reference]

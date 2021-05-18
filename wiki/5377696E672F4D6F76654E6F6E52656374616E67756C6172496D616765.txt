@@ -24,8 +24,8 @@ JLabel label = new JLabel(new ImageIcon(image)) {
 }}
 
 * 解説 [#explanation]
-- `JLabel#contains(int, int)`メソッドをオーバーライドし、与えられた座標にある画像の色成分が透明の場合は、`false`を返すように設定
-- 画像の透明部分は`JLabel`に含まれないことになり、`JLabel`に設定した`MouseListener`などに反応しない
+- `JLabel#contains(int, int)`メソッドをオーバーライドして与えられた座標にある画像の色成分が透明の場合は`false`を返すように設定
+- 画像の透明部分は`JLabel`に含まれないことになり`JLabel`に設定した`MouseListener`などに反応しない
 - 非矩形画像の不透明部分だけがマウスでドラッグ可能になる
 
 * 参考リンク [#reference]

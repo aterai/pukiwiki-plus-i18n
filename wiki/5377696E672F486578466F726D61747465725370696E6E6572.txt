@@ -50,19 +50,15 @@ private static DefaultFormatterFactory makeFFactory() {
 * 解説 [#explanation]
 上記のサンプルでは、`DefaultFormatter#stringToValue(String)`と`DefaultFormatter#valueToString(Object)`をオーバーライドして、`0x0`から`0x10FFFF`(`Character.MAX_CODE_POINT`)までの整数を`16`進数で表示する`Formatter`を作成して`JSpinner`に設定しています。
 
-----
-`JSpinner`から取得した数値(コードポイント)から文字を生成する時、サロゲートペアなどの基本多言語面(`BMP`)外に対応するために、[https://docs.oracle.com/javase/tutorial/i18n/text/usage.html Sample Usage (The Java™ Tutorials > Internationalization > Working with Text)]を参考にして、以下のような方法を使用しています。
-
+- [https://moji.or.jp/mojikiban/font/ IPAmj明朝]と[https://moji.or.jp/ipafont/ IPAex明朝]フォントがインストールされている場合、その文字の形の違いが比較可能
+- `JSpinner`から取得した数値(コードポイント)から文字を生成する時、サロゲートペアなどの基本多言語面(`BMP`)外に対応する必要がある
+-- [https://docs.oracle.com/javase/tutorial/i18n/text/usage.html Sample Usage (The Java™ Tutorials > Internationalization > Working with Text)]
 #code{{
 int code = ((Integer) spinner.getValue()).intValue();
-//char[] ca = Character.toChars(code);
+// char[] ca = Character.toChars(code);
 String str = new String(Character.toChars(code));
 }}
 
-----
-[http://mojikiban.ipa.go.jp/download.html IPAmj明朝]と[http://ipafont.ipa.go.jp/ IPAex明朝]フォントがインストールされている場合、その文字の形の違いを比較できます。
-
-----
 - %%`8.0.212-amzn`で実行するとゲタ文字や一部の表示が壊れる？%%
 - `8.0.222-amzn`で修正済み
 -- `11.0.3-amzn`は正常
@@ -70,8 +66,8 @@ String str = new String(Character.toChars(code));
 
 * 参考リンク [#reference]
 - [[Fontのアウトラインを取得して文字列の内部を修飾する>Swing/LineSplittingLabel]]
-- [http://mojikiban.ipa.go.jp/1300.html IPAmj明朝フォント | 文字情報基盤整備事業]
-- [http://ipafont.ipa.go.jp/ IPAexフォント/IPAフォント]
+- [https://moji.or.jp/mojikiban/font/ IPAmj明朝フォント | 一般社団法人 文字情報技術促進協議会]
+- [https://moji.or.jp/ipafont/ IPAexフォントおよびIPAフォントについて | 一般社団法人 文字情報技術促進協議会]
 - [http://f.hatena.ne.jp/NAOI/20130411131759 IPAmj明朝とIPAex明朝で形の違う字 NAOI's fotolife - 20130411131759]
 
 * コメント [#comment]

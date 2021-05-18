@@ -43,6 +43,7 @@ private static void configureUI() {
   d.put("TabbedPane:TabbedPaneTab[Selected].backgroundPainter",                   selectedTabPainter);
   d.put("TabbedPane:TabbedPaneTab[Pressed+Selected].backgroundPainter",           selectedTabPainter);
 }
+
 public static void createAndShowGUI() {
   try {
     for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
@@ -62,6 +63,7 @@ public static void createAndShowGUI() {
   frame.setLocationRelativeTo(null);
   frame.setVisible(true);
 }
+
 private static class TabPainter implements Painter<JComponent> {
   private final Color color;
   private final boolean selected;
@@ -69,6 +71,7 @@ private static class TabPainter implements Painter<JComponent> {
     this.selected = selected;
     this.color = selected ? Color.WHITE : Color.ORANGE;
   }
+
   @Override public void paint(Graphics2D g, JComponent c, int width, int height) {
     int a = selected ? OVERPAINT : 0;
     int r = 6;
@@ -91,6 +94,7 @@ private static class TabPainter implements Painter<JComponent> {
     g2.dispose();
   }
 }
+
 private static class TabAreaPainter implements Painter<JComponent> {
   @Override public void paint(Graphics2D g, JComponent c, int w, int h) {
     Graphics2D g2 = (Graphics2D) g.create(0, 0, w, h);
@@ -110,6 +114,7 @@ private static class TabAreaPainter implements Painter<JComponent> {
     g2.dispose();
   }
 }
+
 private static class TabContentPainter implements Painter<JComponent> {
   @Override public void paint(Graphics2D g, JComponent c, int w, int h) {
     Graphics2D g2 = (Graphics2D) g.create(0, 0, w, h);
@@ -136,18 +141,20 @@ private static class TabContentPainter implements Painter<JComponent> {
 上記のサンプルでは、`NimbusLookAndFeel`の`UIDefaults`にタブ、タブ領域、コンテンツ領域などを描画する独自の縁や背景色の`Painter`を設定するテストを行っています。例えば選択タブの`Color.GREEN`、タブ領域の`Color.CYAN`をコンテンツ領域と同じ`Color.WHITE`に変更すると、選択タブとコンテンツ領域が一体になったスタイルを作成できます。
 
 - `TabbedPaneTabArea`
--- タブを配置するエリアで、このサンプルでは下部背景を`Color.CYAN`、下部縁を`Color.RED`で描画する`Painter`を設定
+-- タブを配置するエリア
+-- このサンプルでは下部背景を`Color.CYAN`、下部縁を`Color.RED`で描画する`Painter`を設定
 --- 下部の領域は、タブエリア下部の高さ`OVERPAINT`で、`TabbedPane:TabbedPaneTabArea.contentMargins`の`bottom`と同じに設定
 --- 縁は上辺のみラウンド表示されるように`RoundRectangle2D`をクリップ
 -- 一番最初に描画される
 - `TabbedPaneContent`
--- コンテンツを配置するエリアで、このサンプルでは背景を`Color.WHITE`、縁を`Color.ORANGE`で描画する`Painter`を設定
+-- コンテンツを配置するエリア
+-- このサンプルでは背景を`Color.WHITE`、縁を`Color.ORANGE`で描画する`Painter`を設定
 --- 縁は下辺のみラウンド表示されるように`RoundRectangle2D`をクリップ
 -- 一番最後に描画される
 - `TabbedPaneTab`
 -- タブを描画する`Painter`を設定
 -- 選択されたタブを描画する場合は、クリップ領域の高さを`OVERPAINT`だけ拡大(タブエリアの下部を上書き)
---- 縁に影を設定し、タブエリアの下部にはみ出す部分は、`Color.GREEN`の矩形で塗り潰している
+--- 縁に影を設定しタブエリアの下部にはみ出す部分は`Color.GREEN`の矩形で塗り潰している
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/35622718/how-to-achieve-four-side-shadow-effect-for-tabbedpane-in-java-swing How to achieve four side shadow effect for TabbedPane in Java swing? - Stack Overflow]

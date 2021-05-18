@@ -131,16 +131,16 @@ class CompoundButton extends JButton {
 
 * 解説 [#explanation]
 - 円形ボタン
--- [[JButtonの形を変更>Swing/RoundButton]]を使って、幅高さの半分の直径をもつ円ボタンを作成
--- `JButton#contains(...)`をオーバーライドして、図形内のみマウスカーソルが反応するように変更
+-- [[JButtonの形を変更>Swing/RoundButton]]を使って幅高さの半分の直径をもつ円ボタンを作成
+-- `JButton#contains(...)`をオーバーライドして図形内のみマウスカーソルが反応するように変更
 - 扇形ボタン
--- 東西南北に`4`つ配置するので、内角は`90`度、始角はそれぞれ`45`、`135`、`225`、`-45`度で`Arc2D`を作成
+-- 東西南北に`4`つ配置するので内角は`90`度、始角はそれぞれ`45`、`135`、`225`、`-45`度で`Arc2D`を作成
 -- これらの`Arc2D`から`Area#subtract(Area)`メソッドを使用して上記の円形ボタンの領域を除去し扇形に変形
 --- [[Mouseで画像を移動、回転>Swing/MouseDrivenImageRotation]]
--- `JButton#contains(...)`をオーバーライドして、図形内のみマウスカーソルが反応するように変更
+-- `JButton#contains(...)`をオーバーライドして図形内のみマウスカーソルが反応するように変更
 - 複合ボタン
 -- `5`つのボタンを`OverlayLayout`を設定した`JPanel`に配置
--- `JPanel#getPreferredSize()`をオーバーライドして、サイズが`5`つのボタンですべて同じになるよう設定
+-- `JPanel#getPreferredSize()`をオーバーライドしてサイズが`5`つのボタンですべて同じになるよう設定
 --- [[OverlayLayoutの使用>Swing/OverlayLayout]]
 -- これらの`5`つのボタンはクリック可能な領域が重なることはないので、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#isOptimizedDrawingEnabled-- JComponent#isOptimizedDrawingEnabled()]メソッドをオーバーライドする必要はない
 

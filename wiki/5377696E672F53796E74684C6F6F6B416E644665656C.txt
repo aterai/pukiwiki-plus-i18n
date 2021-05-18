@@ -74,10 +74,8 @@ try (InputStream is = clz.getResourceAsStream("button.xml")) {
 </synth>
 }}
 
-`Synth`の`XML`ファイルの詳細(`DTD`など)は、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/synth/doc-files/synthFileFormat.html Synthのファイル形式]で参照できます。
-
-----
-- 特定のコンポーネントにスタイルを設定する場合は、`bind`要素の`type`属性に`key`ではなく`name`を設定して、`key`属性に対象コンポーネントに`Component#setName(...)`で設定された名前を正規表現で指定する
+- `Synth`の`XML`ファイルの詳細(`DTD`など)は、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/synth/doc-files/synthFileFormat.html Synthのファイル形式]で参照可能
+- 特定のコンポーネントにスタイルを設定する場合は、`bind`要素の`type`属性に`key`ではなく`name`を設定して`key`属性に対象コンポーネントに`Component#setName(...)`で設定された名前を正規表現で指定する
 -- 例: `<bind style="greenButton" type="name" key="green:[0-9]+" />`で名前が`button3.setName("green:3");`のような形式になっているコンポーネントに`greenButton`スタイルが適用される
 -- [https://www.ibm.com/developerworks/jp/java/library/j-synth/index.html 進歩したSynth - IBM developerWorks]について
 --- 「非`Swing`コンポーネントをペイントする」で`bind`要素の`type`属性に`key`ではなく`name`を設定した場合の説明があるが、`Java 8`のソースコード(`javax/swing/plaf/synth/DefaultSynthStyleFactory#getMatchingStyles(...)`)を確認した限りではコンポーネントのクラス名を対象にする機能は存在しない(`1.4`では可能だった？のかもしれない)

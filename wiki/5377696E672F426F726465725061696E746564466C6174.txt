@@ -31,14 +31,14 @@ box1.add(c1);
 }}
 
 * 解説 [#explanation]
-- `setBorderPainted: false`: `JCheckBox`自体の縁を描画しない
--- `setBorderPaintedFlat: false`: `JCheckBox`のチェックアイコンの縁を`LookAndFeel`のデフォルトで描画する
+- `setBorderPainted(false)`: `JCheckBox`自体の縁を描画しない
+-- `setBorderPaintedFlat(false)`: `JCheckBox`のチェックアイコンの縁を`LookAndFeel`のデフォルトで描画する
 --- `WindowsClassicLookAndFeel`や`MotifLookAndFeel`のデフォルトの縁は、立体的な描画になる
 --- `WindowsLookAndFeel`のデフォルトの縁は、フラットな描画になるのでこのプロパティの影響を受けない
--- `setBorderPaintedFlat: true`: `JCheckBox`のチェックアイコンの縁をフラットな描画にする
+-- `setBorderPaintedFlat(true)`: `JCheckBox`のチェックアイコンの縁をフラットな描画にする
 --- `NimbusLookAndFeel`のデフォルトの縁は、立体的な描画になるのでこのプロパティの影響を受けない
 --- `MetalLookAndFeel`の縁は常にフラットで内側は立体的だがこのプロパティで内側の描画までフラットにはならない
-- `setBorderPainted: true`: `JCheckBox`自体の縁を描画する
+- `setBorderPainted(true)`: `JCheckBox`自体の縁を描画する
 -- `WindowsLookAndFeel`などのデフォルトは`false`
 -- `NimbusLookAndFeel`では効果がない
 -- `JCheckBox#setBorderPaintedFlat(...)`には影響しない

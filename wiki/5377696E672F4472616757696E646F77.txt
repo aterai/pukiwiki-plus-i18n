@@ -26,13 +26,15 @@ public void createSplashScreen(String path) {
   splashScreen.pack();
   splashScreen.setLocationRelativeTo(null);
 }
+
 class DragWindowListener extends MouseAdapter {
   private final Point startPt = new Point();
-  //private Point  loc;
   private Window window;
+
   @Override public void mousePressed(MouseEvent me) {
     startPt.setLocation(me.getPoint());
   }
+
   @Override public void mouseDragged(MouseEvent me) {
     if (window == null) {
       window = SwingUtilities.windowForComponent(me.getComponent());
@@ -40,24 +42,25 @@ class DragWindowListener extends MouseAdapter {
     Point eventLocationOnScreen = me.getLocationOnScreen();
     window.setLocation(eventLocationOnScreen.x - startPt.x,
                        eventLocationOnScreen.y - startPt.y);
-    //loc = window.getLocation(loc);
-    //int x = loc.x - start.getX() + me.getX();
-    //int y = loc.y - start.getY() + me.getY();
-    //window.setLocation(x, y);
+    // loc = window.getLocation(loc);
+    // int x = loc.x - start.getX() + me.getX();
+    // int y = loc.y - start.getY() + me.getY();
+    // window.setLocation(x, y);
   }
 }
 }}
 
 * 解説 [#explanation]
-`JWindow`や、`setUndecorated(true)`した`JFrame`のようにタイトルバーのないフレームをマウスのドラッグで移動します。実際は`JWindow`自体にリスナーを設定するのではなく、子コンポーネントに`MouseMotionListener`などを追加しています。
+`JWindow`や`setUndecorated(true)`した`JFrame`のようにタイトルバーのないフレームをマウスのドラッグで移動します。実際は`JWindow`自体にリスナーを設定するのではなく子コンポーネントに`MouseMotionListener`などを追加しています。
 
 上記のサンプルでは`JLabel`にリスナーを追加し、これを`JWindow`に配置してドラッグ可能にしています。
 
-スプラッシュスクリーンの次に開く`JFrame`は、`JFrame#setUndecorated(true)`を設定してタイトルバーなどは非表示になっていますが、代わりに青いラベル部分がドラッグ可能です。
+- スプラッシュスクリーンの次に開く`JFrame`は`JFrame#setUndecorated(true)`を設定してタイトルバーなどは非表示
+- 代わりに青いラベル部分をドラッグ可能に設定
 
 ----
-- マルチディスプレイなどで、別画面に移動できないバグ？を修正
--- ただし、`Web Start`の`SandBox`内では、以前と同じく画面の外までは移動不可？
+- マルチディスプレイなどで別画面に移動できないバグ？を修正
+-- ただし`Web Start`の`SandBox`内では以前と同じく画面の外までは移動不可？
 --- `JNLP`のセキュリティに`all-permissions`を設定する必要がある
 - `Swing Tutorial`の [https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html#FrameDemo2 FrameDemo2]で試しても、同様？
 -- `Look and feel decorated`: 画面外に移動不可

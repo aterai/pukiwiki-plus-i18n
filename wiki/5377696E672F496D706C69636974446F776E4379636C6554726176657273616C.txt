@@ -27,10 +27,10 @@ p.setFocusTraversalPolicy(ftp);
 
 - `SortingFocusTraversalPolicy#setImplicitDownCycleTraversal(true)`
 -- デフォルト
--- デフォルトフォーカスの`JCheckBox`から、KBD{Tab}キーで子パネル内の`JTextArea`にダウンサイクルでフォーカスが移動可能
+-- デフォルトフォーカスの`JCheckBox`からKBD{Tab}キーで子パネル内の`JTextArea`にダウンサイクルでフォーカスが移動可能
 - `SortingFocusTraversalPolicy#setImplicitDownCycleTraversal(false)`
--- 子パネルが`setFocusCycleRoot(true)`の場合、デフォルトフォーカスの`JCheckBox`からKBD{Tab}キーを押すと、これを飛ばして`JButton`にフォーカスが移動
--- 子パネルが`setFocusCycleRoot(false)`の場合、デフォルトフォーカスの`JCheckBox`からKBD{Tab}キーを押すと、`JTextArea`にフォーカスが移動
+-- 子パネルが`setFocusCycleRoot(true)`の場合、デフォルトフォーカスの`JCheckBox`からKBD{Tab}キーを押すとこれを飛ばして`JButton`にフォーカスが移動
+-- 子パネルが`setFocusCycleRoot(false)`の場合、デフォルトフォーカスの`JCheckBox`からKBD{Tab}キーを押すと`JTextArea`にフォーカスが移動
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SortingFocusTraversalPolicy.html#setImplicitDownCycleTraversal-boolean- SortingFocusTraversalPolicy#setImplicitDownCycleTraversal(boolean) (Java Platform SE 8)]

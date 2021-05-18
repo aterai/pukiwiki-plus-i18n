@@ -36,7 +36,7 @@ parseButton.addActionListener(e -> {
 上記のサンプルは、`Locale.US`の日付文字列を`SimpleDateFormat#parse(...)`メソッドを使用して一旦`Date`に変換し、`DateFormat#format(...)`メソッドでデフォルトロケール`TimeZone`のフォーマットスタイルに変換しています。
 
 - `dateFormat.setTimeZone(TimeZone.getTimeZone("JST"))`のような`3`文字のタイムゾーン`ID`の使用は非推奨
-- `Java 1.7.0`からタイムゾーンのパターン文字として`X`を使用すると、`ISO 8601`形式に変換可能になった
+- `Java 1.7.0`からタイムゾーンのパターン文字`X`で`ISO 8601`形式に変換可能になった
 -- `X`: `+09`
 -- `XX`: `+0900`
 -- `XXX`: `+09:00`

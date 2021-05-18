@@ -27,11 +27,12 @@ class ImageLoadSynchronouslyHTMLEditorKit extends HTMLEditorKit {
       }
     };
   }
-  //@Override public Document createDefaultDocument() {
-  //  Document doc = super.createDefaultDocument ();
-  //  ((HTMLDocument) doc).setAsynchronousLoadPriority(-1);
-  //  return doc;
-  //}
+
+  // @Override public Document createDefaultDocument() {
+  //   Document doc = super.createDefaultDocument ();
+  //   ((HTMLDocument) doc).setAsynchronousLoadPriority(-1);
+  //   return doc;
+  // }
 }
 }}
 
@@ -40,11 +41,11 @@ class ImageLoadSynchronouslyHTMLEditorKit extends HTMLEditorKit {
 
 - `default`タブ
 -- デフォルトの`HTMLEditorKit`を使用
--- `<img>`タグの画像が非同期で読み込まれるため、スクリーンショットは文字のみ表示される
--- 文書の末尾までスクロールした後で、画像のサイズが決まる
+-- `<img>`タグの画像が非同期で読み込まれるためスクリーンショットは文字のみ表示される
+-- 文書の末尾までスクロールした後で画像のサイズが決まる
 - `<img width='%d' ...`タブ
 -- デフォルトの`HTMLEditorKit`を使用
--- `<img>`タグに予めサイズを属性で指定しているので、スクリーンショット全体のサイズや、スクロールは正常だが、スクリーンショットに画像は表示されない
+-- `<img>`タグに予めサイズを属性で指定しているのでスクリーンショット全体のサイズや、スクロールは正常だがスクリーンショットに画像は表示されない
 - `LoadsSynchronously`タブ
 -- `HTMLEditorKit#getViewFactory()`と`ViewFactory#create(Element)`をオーバーライドし、`ImageView`に`setLoadsSynchronously(true)`を設定することで画像の読み込みを同期的に行う
 -- スクリーンショットに画像がすべてロードされた状態で表示される

@@ -16,7 +16,9 @@ image: https://lh3.googleusercontent.com/-fJbneWE3WB4/TpLGoNbk1TI/AAAAAAAABDk/GJ
 * サンプルコード [#sourcecode]
 #code(link){{
 class DisableInputLayerUI extends LayerUI<JPanel> {
+  private static final String CMD_REPAINT = "repaint";
   private boolean isRunning;
+
   @Override public void paint(Graphics g, JComponent c) {
     super.paint(g, c);
     if (!isRunning) {
@@ -28,6 +30,7 @@ class DisableInputLayerUI extends LayerUI<JPanel> {
     g2.fillRect(0, 0, c.getWidth(), c.getHeight());
     g2.dispose();
   }
+
   @Override public void installUI(JComponent c) {
     super.installUI(c);
     if (c instanceof JLayer) {
@@ -40,18 +43,20 @@ class DisableInputLayerUI extends LayerUI<JPanel> {
           | AWTEvent.FOCUS_EVENT_MASK | AWTEvent.COMPONENT_EVENT_MASK);
     }
   }
+
   @Override public void uninstallUI(JComponent c) {
     if (c instanceof JLayer) {
       ((JLayer) c).setLayerEventMask(0);
     }
     super.uninstallUI(c);
   }
+
   @Override public void eventDispatched(AWTEvent e, JLayer<? extends JPanel> l) {
     if (isRunning && e instanceof InputEvent) {
       ((InputEvent) e).consume();
     }
   }
-  private static final String CMD_REPAINT = "repaint";
+
   public void start() {
     if (isRunning) {
       return;
@@ -59,10 +64,12 @@ class DisableInputLayerUI extends LayerUI<JPanel> {
     isRunning = true;
     firePropertyChange(CMD_REPAINT, false, true);
   }
+
   public void stop() {
     isRunning = false;
     firePropertyChange(CMD_REPAINT, true, false);
   }
+
   @Override public void applyPropertyChange(PropertyChangeEvent pce, JLayer<? extends JPanel> l) {
     String cmd = pce.getPropertyName();
     if (CMD_REPAINT.equals(cmd)) {
@@ -79,7 +86,7 @@ class DisableInputLayerUI extends LayerUI<JPanel> {
 - 入力禁止中に半透明グレー表示
 -- `LayerUI<JPanel>#paint(...)`をオーバーライドして表示を変更
 - マウス、キー入力の禁止
--- `LayerUI<JPanel>#eventDispatched(...)`をオーバーライドして、`((InputEvent) e).consume()`を使用し、イベントを消費
+-- `LayerUI<JPanel>#eventDispatched(...)`をオーバーライドして`((InputEvent) e).consume()`を使用しイベントを消費
 - マウスカーソルを砂時計に変更
 -- `Cursor.WAIT_CURSOR`を設定した`GlassPane`の表示を切り替える
 

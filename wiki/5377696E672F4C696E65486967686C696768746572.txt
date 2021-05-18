@@ -36,6 +36,7 @@ class HighlightCursorTextArea extends JTextArea {
     caret.setBlinkRate(getCaret().getBlinkRate());
     setCaret(caret);
   }
+
   @Override protected void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
     Insets i = getInsets();
@@ -53,7 +54,7 @@ class HighlightCursorTextArea extends JTextArea {
 
 - `Viewport`の色を`scroll.getViewport().setBackground(Color.WHITE)`に変更
 - `JTextArea#setOpaque(false)`で透明に設定
-- `JTextArea#paintComponent(...)`をオーバーライドするとき、カーソルのある行を塗りつぶしてから`super.paintComponent(g)`を実行
+- `JTextArea#paintComponent(...)`のオーバーライドでカーソルのある行を塗りつぶしてから`super.paintComponent(g)`を実行
 
 ----
 - [https://community.oracle.com/thread/1364121 Swing - Stretching background colour across whole JTextPane for one line of text]の Darryl.Burke さんのコードのように`BasicTextPaneUI#paintBackground(...)`メソッドをオーバーライドする方法もある
@@ -73,6 +74,7 @@ class LineHighlightTextPaneUI extends BasicTextPaneUI {
       }
     });
   }
+
   @Override public void paintBackground(Graphics g) {
     super.paintBackground(g);
     try {

@@ -16,20 +16,21 @@ image: https://lh3.googleusercontent.com/-Ckc4ZMaD6-8/VPzorX2t8MI/AAAAAAAAN0A/XS
 * サンプルコード [#sourcecode]
 #code(link){{
 private Dimension defaultSize = new Dimension(320, 240);
-private Dimension preferredSize;
-public static float getSizeOfText() {
+private Dimension dpiPreferredSize;
+public static float getDpiScaling() {
   int sr = Toolkit.getDefaultToolkit().getScreenResolution();
   float dpi = System.getProperty("os.name").startsWith("Windows") ? 96f : 72f;
   return sr / dpi;
 }
+
 @Override public Dimension getPreferredSize() {
   if (preferredSize == null) {
-    float sot = getSizeOfText();
-    preferredSize = new Dimension((int) (defaultSize.width * sot),
-                                  (int) (defaultSize.height * sot));
+    float sot = getDpiScaling();
+    dpiPreferredSize= new Dimension((int) (defaultSize.width * sot),
+                                    (int) (defaultSize.height * sot));
   }
-  System.out.println(preferredSize);
-  return preferredSize;
+  setPreferredSize(dpiPreferredSize);
+  return dpiPreferredSize;
 }
 }}
 

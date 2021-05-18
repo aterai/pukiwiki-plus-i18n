@@ -51,10 +51,10 @@ class BottomInsetEditorKit extends StyledEditorKit {
 #code{{
 SimpleAttributeSet a = new SimpleAttributeSet();
 StyleConstants.setLineSpacing(a, .5f);
-//StyleConstants.setSpaceAbove(a, 5f);
-//StyleConstants.setSpaceBelow(a, 5f);
-//StyleConstants.setLeftIndent(a, 5f);
-//StyleConstants.setRightIndent(a, 5f);
+// StyleConstants.setSpaceAbove(a, 5f);
+// StyleConstants.setSpaceBelow(a, 5f);
+// StyleConstants.setLeftIndent(a, 5f);
+// StyleConstants.setRightIndent(a, 5f);
 editor1.setParagraphAttributes(a, true);
 setDummyText(editor1);
 }}
@@ -71,7 +71,7 @@ setDummyText(editor1);
 StyleSheet styleSheet = new StyleSheet();
 styleSheet.addRule("body {font-size: 24pt; line-height: 2.0}");
 styleSheet.addRule(".test {margin-bottom: 2pt; padding-bottom: 1px; }");
-//XXX: styleSheet.addRule("span {color: white; display:inline-block; margin-bottom: 10pt;}");
+// XXX: styleSheet.addRule("span {color: white; display:inline-block; margin-bottom: 10pt;}");
 HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
 htmlEditorKit.setStyleSheet(styleSheet);
 editor1.setEditorKit(htmlEditorKit);

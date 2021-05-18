@@ -18,9 +18,11 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIyAIY_mI/AAAAAAAAATU/Go
 class CentredBackgroundBorder implements Border {
   private final Insets insets = new Insets(0, 0, 0, 0);
   private final BufferedImage image;
+
   public CentredBackgroundBorder(BufferedImage image) {
     this.image = image;
   }
+
   @Override public void paintBorder(
       Component c, Graphics g, int x, int y, int width, int height) {
     int cx = x + (width - image.getWidth()) / 2;
@@ -29,9 +31,11 @@ class CentredBackgroundBorder implements Border {
     g2.drawRenderedImage(image, AffineTransform.getTranslateInstance(cx, cy));
     g2.dispose();
   }
+
   @Override public Insets getBorderInsets(Component c) {
     return insets;
   }
+
   @Override public boolean isBorderOpaque() {
     return true;
   }
@@ -41,15 +45,14 @@ class CentredBackgroundBorder implements Border {
 * 解説 [#explanation]
 上記のサンプルでは、以下のようにして`JTextArea`の背景に画像を表示しています。
 
-- 画像を中央に表示するようにした`Border`を作成し、これを`Viewport`の`Border`として設定
+- 画像を中央に表示するようにした`Border`を作成してこれを`Viewport`の`Border`として設定
 - `Viewport`に追加した`JTextArea`の背景を透明化
 #code{{
 textarea.setOpaque(false);
 textarea.setBackground(new Color(0x0, true)));
 }}
 
-----
-`Border`を使って背景に画像を表示する方法は、`JDesktopPane`(参考: [[JInternalFrameを半透明にする>Swing/TransparentFrame]])や、その他の`JComponent`でも使用できます。
+- `Border`を使って背景に画像を表示する方法は`JDesktopPane`(参考: [[JInternalFrameを半透明にする>Swing/TransparentFrame]])や、その他の`JComponent`でも使用可能
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]

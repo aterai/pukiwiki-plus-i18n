@@ -34,14 +34,14 @@ private static JButton createToolbarButton(URL url) {
 }}
 
 * 解説 [#explanation]
-`JToolBar`や`JMenuBar`のデフォルトレイアウトは`BoxLayout`なので、`Box.createGlue()`を間に挟むことでボタンやメニューの右寄せが可能です。
-
-ボタンとボタンの間隔を固定値で空けたい場合は、`Box.createRigidArea`を使用します。`Box.createHorizontalStrut(...)`や`Box.createVerticalStrut(...)`を使うとツールバーの水平・垂直が切り替わった時に、余計な余白が発生する場合があります。
-
-各アイコンは、[http://web.archive.org/web/20120818143859/http://java.sun.com/developer/techDocs/hi/repository/ Java look and feel Graphics Repository]の`jlfgr-1_0.jar`がクラスパス内に存在する場合はそこから読み込んでいます。
+- `JToolBar`や`JMenuBar`のデフォルトレイアウトは`BoxLayout`のため`Box.createGlue()`を間に挟むことでボタンやメニューの右寄せが可能
+- ボタンとボタンの間隔を固定値で空けたい場合は、`Box.createRigidArea`を使用する
+-- `Box.createHorizontalStrut(...)`や`Box.createVerticalStrut(...)`を使うとツールバーの水平・垂直が切り替わった時に余計な余白が発生する場合がある
+- 各アイコンは[http://web.archive.org/web/20120818143859/http://java.sun.com/developer/techDocs/hi/repository/ Java look and feel Graphics Repository]の`jlfgr-1_0.jar`がクラスパス内に存在する場合はそこから読み込んでいる
 
 ----
-`JDK 1.6`で、`JDK 1.5`のようなボタン表示(フォーカスを取得しない)にするには、`JComponent#setRequestFocusEnabled(false)`(マウスクリックではフォーカスを取得しないが、キーボードからは許可)、または、`AbstractButton#setFocusable(false)`とする必要があるようです。
+- `JDK 1.6`と`JDK 1.5`で`JToolBar`に配置したボタン表示が異なる？
+-- `JComponent#setRequestFocusEnabled(false)`(マウスクリックではフォーカスを取得しないが、キーボードからは許可)、または`AbstractButton#setFocusable(false)`と設定すると同一になる
 
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTVeG6fVBI/AAAAAAAAAns/II_0GGIdnNk/s800/ToolBarLayout1.png)
 

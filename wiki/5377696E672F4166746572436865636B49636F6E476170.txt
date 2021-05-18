@@ -1,15 +1,15 @@
 ---
 category: swing
 folder: AfterCheckIconGap
-title: CheckBoxMenuItemのチェックアイコンの位置を調整する
-tags: [CheckBoxMenuItem, MenuItem, RadioButtonMenuItem]
+title: JCheckBoxMenuItemのチェックアイコンの位置を調整する
+tags: [JCheckBoxMenuItem, JMenuItem, JRadioButtonMenuItem]
 author: aterai
 pubdate: 2019-02-25T17:38:11+09:00
-description: CheckBoxMenuItemやRadioButtonMenuItemのチェックアイコンを表示する位置を調整します。
+description: JCheckBoxMenuItemやJRadioButtonMenuItemのチェックアイコンを表示する位置を調整します。
 image: https://drive.google.com/uc?id=1aRMouoW3Pw7GiH5nGdLP9r9bK8v_msLABg
 ---
 * 概要 [#summary]
-`CheckBoxMenuItem`や`RadioButtonMenuItem`のチェックアイコンを表示する位置を調整します。
+`JCheckBoxMenuItem`や`JRadioButtonMenuItem`のチェックアイコンを表示する位置を調整します。
 
 #download(https://drive.google.com/uc?id=1aRMouoW3Pw7GiH5nGdLP9r9bK8v_msLABg)
 
@@ -38,7 +38,7 @@ UIManager.put("CheckBoxMenuItem.checkIconOffset", 20);
 -- メニューのタイトル文字列までのオフセット
 -- `WindowsLookAndFeel`の初期値は`31`(チェックアイコンのサイズは`22`？)
 -- `MetalLookAndFeel`、`NimblsLookAndFeel`の初期値は`null`
--- この値が`checkIconOffset`と`afterCheckIconGap`の合計より大きくなる場合、`afterCheckIconGap`の指定が無視されて拡大する
+-- この値が`checkIconOffset`と`afterCheckIconGap`の合計より大きくなる場合は`afterCheckIconGap`の指定が無視されて拡大する
 
 * 参考リンク [#reference]
 - [[JMenuに追加したJMenuItemなどのテキスト位置を揃える>Swing/MenuItemTextAlignment]]

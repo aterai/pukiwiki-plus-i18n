@@ -29,7 +29,7 @@ try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStrea
 
 - `RowSorter.SortKey`クラスのコンストラクタの引数をプロパティ名として`DefaultPersistenceDelegate`を作成
 - `RowSorter.SortKey`クラスを`XML`で書き出すため、`XMLEncoder#setPersistenceDelegate(...)`で上記の`PersistenceDelegate`を設定
-- `TableModel`の書出しには、別途[[JTableのモデルをXMLファイルで保存、復元する>Swing/PersistenceDelegate]]を使用
+- `TableModel`の書出しには別途[[JTableのモデルをXMLファイルで保存、復元する>Swing/PersistenceDelegate]]を使用
 -- このサンプルでは、カラムヘッダの幅や順序には対応していない
 -- [http://wiki.byte-welt.net/wiki/JTable_Inhalte_speichern JTable Inhalte speichern – Byte-Welt Wiki]
 -- [[TableColumnModelをXMLファイルで保存、復元する>Swing/ColumnModelPersistence]]のような`DefaultPersistenceDelegate`を使ってカラムヘッダの幅や順序を保存する方法もある

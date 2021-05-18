@@ -38,7 +38,7 @@ try (AudioInputStream sound = AudioSystem.getAudioInputStream(url);
 `AudioSystem`を使用すれば、`WAVE`、`AU`、`AIFF`、`SND`形式のサウンドファイルが演奏可能です。
 
 - `AudioInputStream`や`Clip`を`AutoCloseable`で自動的に開放するため`try-with-resources`ブロックで作成
-- 演奏開始後に`SecondaryLoop`で現在のスレッドをブロックし新しいセカンダリイベントループで演奏継続
+- 演奏開始後に`SecondaryLoop`で現在のスレッドをブロックし新しいセカンダリイベントループで演奏を継続
 - 演奏終了イベントを`LineListener`で受け取るとセカンダリイベントループを終了して現在のスレッドに戻り`close()`が自動的に実行される
 
 * 参考リンク [#reference]

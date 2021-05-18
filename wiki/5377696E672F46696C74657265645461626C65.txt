@@ -16,30 +16,33 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMpQqDR4I/AAAAAAAAAZg/vi
 * サンプルコード [#sourcecode]
 #code(link){{
 class TestModel extends DefaultTableModel {
-  public static final String NUMBER  = "番号";
-  public static final String MASTER  = "名前";
+  public static final String NUMBER = "番号";
+  public static final String MASTER = "名前";
   public static final String COMMENT = "コメント";
   private final Vector list = new Vector();
+
   public TestModel() {
     super(new String[] {NUMBER, MASTER, COMMENT}, 0);
   }
+
   public void addRow(Test tst) {
     list.add(tst);
     Integer num = new Integer(list.size());
     Object[] obj = {num, tst.getName(), tst.getComment()};
     addRow(obj);
   }
+
   public void filterRows(boolean flg) {
-    //Vector v = new Vector(list.size());
+    // Vector v = new Vector(list.size());
     dataVector.clear();
     for (int i = 0; i < list.size(); i++) {
       if (flg && i % 2 == 0) continue;
       Test t = (Test) list.elementAt(i);
       Object[] o = {Integer.valueOf(i + 1), t.getName(), t.getComment()};
-      //v.add(convertToVector(o));
+      // v.add(convertToVector(o));
       dataVector.add(convertToVector(o));
     }
-    //setDataVector(v, columnIdentifiers);
+    // setDataVector(v, columnIdentifiers);
     fireTableDataChanged();
   }
 }

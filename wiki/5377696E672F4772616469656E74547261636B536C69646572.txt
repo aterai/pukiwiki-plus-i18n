@@ -30,8 +30,8 @@ JSlider slider = makeSlider();
 slider.setUI(new MetalSliderUI() {
   int[] pallet = makeGradientPallet();
   @Override public void paintTrack(Graphics g) {
-    //Color trackColor = !slider.isEnabled()
-    //  ? MetalLookAndFeel.getControlShadow() : slider.getForeground();
+    // Color trackColor = !slider.isEnabled()
+    //   ? MetalLookAndFeel.getControlShadow() : slider.getForeground();
     boolean leftToRight = true; //MetalUtils.isLeftToRight(slider);
     Color controlDarkShadow = Color.GRAY;
     Color controlHighlight = new Color(200, 255, 200);
@@ -143,11 +143,11 @@ slider.setUI(new MetalSliderUI() {
 
 - `Track`
 -- `JSlider#setOpaque(false)`で透明化
--- `MetalSliderUI#paintTrack(...)`内で、`Fill`の後でハイライトを描画
+-- `MetalSliderUI#paintTrack(...)`内で`Fill`の後でハイライトを描画
 - `Thumb`
--- `UIManager.put("Slider.horizontalThumbIcon", emptyIcon)`で、透明なアイコンを設定して非表示化
+-- `UIManager.put("Slider.horizontalThumbIcon", emptyIcon)`で透明なアイコンを設定して非表示化
 - `Fill`
--- `MetalSliderUI#paintTrack(...)`内で、値に応じて`LinearGradientPaint`から作成した色で描画
+-- `MetalSliderUI#paintTrack(...)`内で値に応じて`LinearGradientPaint`から作成した色で描画
 
 #code{{
 private static int[] makeGradientPallet() {
@@ -169,6 +169,7 @@ private static int[] makeGradientPallet() {
   }
   return pallet;
 }
+
 private static Color getColorFromPallet(int[] pallet, float x) {
   int i = (int) (pallet.length * x);
   int max = pallet.length-1;
@@ -179,11 +180,11 @@ private static Color getColorFromPallet(int[] pallet, float x) {
 }}
 
 ----
-- メモ: 例えば`WindowsLookAndFeel`では、`UIManager.get("Slider.trackWidth")`は`null`なので、`MetalSliderUI#installUI()`中にある以下のコードでエラーになる
+- 例えば`WindowsLookAndFeel`では`UIManager.get("Slider.trackWidth")`は`null`なので`MetalSliderUI#installUI()`中にある以下のコードでエラーになる
 -- `trackWidth = ( (Integer) UIManager.get("Slider.trackWidth") ).intValue();`
 -- なぜ`UIManager.getInt(...)`を使用しないのかは不明
 -- `UIManager.put("Slider.majorTickLength", 6);`などで適当な値を代入して回避
--- `MetalSliderUI`ではなく、`BasicSliderUI`を継承するぺき？
+-- `MetalSliderUI`ではなく`BasicSliderUI`を継承するぺき？
 
 * 参考リンク [#reference]
 - [http://harmoniccode.blogspot.com/2011/05/varying-gradients.html Harmonic Code: Varying gradients...]

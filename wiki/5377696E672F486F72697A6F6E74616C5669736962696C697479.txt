@@ -30,7 +30,7 @@ scroller.setModel(textField.getHorizontalVisibility());
 -- `JTextField`と水平スクロールバー`JScrollBar(Adjustable.HORIZONTAL)`を別々に配置
 -- `JTextField#getHorizontalVisibility()`で`BoundedRangeModel`を取得し、これを`JScrollBar#setModel(...)`で設定して二つを同期する
 - `BoundedRangeModel+textField.ArrowButtonlessScrollBarUI`
--- 上の`JScrollBar`に、矢印ボタンなどを非表示、ノブを半透明化などを行う`ScrollBarUI`を設定
+-- 上の`JScrollBar`に矢印ボタンなどを非表示化、ノブの半透明化などを行う`ScrollBarUI`を設定
 
 ----
 - `setCaretPosition: 0`: `JTextField#setCaretPosition(0);`は`JTextField`にフォーカスが無い場合無効？
@@ -50,6 +50,7 @@ class EmptyThumbHandler extends ComponentAdapter implements DocumentListener {
     this.textField = textField;
     this.scroller = scroller;
   }
+
   private void changeThumbModel() {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
@@ -63,15 +64,19 @@ class EmptyThumbHandler extends ComponentAdapter implements DocumentListener {
       }
     });
   }
+
   @Override public void componentResized(ComponentEvent e) {
     changeThumbModel();
   }
+
   @Override public void insertUpdate(DocumentEvent e) {
     changeThumbModel();
   }
+
   @Override public void removeUpdate(DocumentEvent e) {
     changeThumbModel();
   }
+
   @Override public void changedUpdate(DocumentEvent e) {
     changeThumbModel();
   }
@@ -89,15 +94,18 @@ class ArrowButtonlessScrollBarUI extends BasicScrollBarUI {
   @Override protected JButton createDecreaseButton(int orientation) {
     return new ZeroSizeButton();
   }
+
   @Override protected JButton createIncreaseButton(int orientation) {
     return new ZeroSizeButton();
   }
+
   @Override protected void paintTrack(Graphics g, JComponent c, Rectangle r) {
-    //Graphics2D g2 = (Graphics2D) g.create();
-    //g2.setPaint(new Color(100, 100, 100, 100));
-    //g2.fillRect(r.x, r.y, r.width - 1, r.height - 1);
-    //g2.dispose();
+    // Graphics2D g2 = (Graphics2D) g.create();
+    // g2.setPaint(new Color(100, 100, 100, 100));
+    // g2.fillRect(r.x, r.y, r.width - 1, r.height - 1);
+    // g2.dispose();
   }
+
   @Override protected void paintThumb(Graphics g, JComponent c, Rectangle r) {
     JScrollBar sb = (JScrollBar) c;
     if (!sb.isEnabled()) {

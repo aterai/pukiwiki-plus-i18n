@@ -21,11 +21,10 @@ UIManager.put("swing.boldMetal", Boolean.FALSE);
 * 解説 [#explanation]
 上記のサンプルでは、`UIManager.put("swing.boldMetal", Boolean.FALSE);`として、`JLabel`、`JButton`、`TitledBorder`などのデフォルトとしてボールド(太字)フォントを使用しないように設定しています。
 
-システムプロパティー`swing.boldMetal`を`false`にして、ボールド(太字)フォントを使用しないように設定する方法もあります。
-
+- システムプロパティー`swing.boldMetal`を`false`にしてボールド(太字)フォントを使用しないように設定する方法もある
  > java -Dswing.boldMetal=false example.MainPanel
 
-- デフォルトプロパティーの`swing.boldMetal`が、システムプロパティーの`swing.boldMetal`より優先される
+- デフォルトプロパティーの`swing.boldMetal`がシステムプロパティーの`swing.boldMetal`より優先される
 - `Html`で`<html><b>...</b></html>`のように装飾した場合は、デフォルトプロパティー`swing.boldMetal`より優先される(このサンプルでは、`JTabbedPane`の選択タブタイトルを`<html><b>...</b></html>`で装飾)
 - 以下のようにデフォルトプロパティー`swing.boldMetal`を更新することで切り替え可能
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/metal/DefaultMetalTheme.html DefaultMetalTheme (Java Platform SE 8)]

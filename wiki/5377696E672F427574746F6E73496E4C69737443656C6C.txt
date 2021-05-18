@@ -97,7 +97,7 @@ class ButtonsRenderer<E> extends JPanel implements ListCellRenderer<E> {
 
 * 解説 [#explanation]
 上記のサンプルでは、`JList`のセルに`2`つの`JButton`を配置する`ListCellRenderer`を設定しています。
-`JButton`のクリックイベントは、`JList`本体に追加したマウスリスナーで`SwingUtilities.getDeepestComponentAt(...)`を使用して`ListCellRenderer`から対象の`JButton`を取得し、`JButton#doClick()`を呼び出しています。
+`JButton`のクリックイベントは`JList`本体に追加したマウスリスナーで`SwingUtilities.getDeepestComponentAt(...)`を使用して`ListCellRenderer`から対象の`JButton`を取得し、`JButton#doClick()`を呼び出しています。
 
 * 参考リンク [#reference]
 - [[JTableのセルに複数のJButtonを配置する>Swing/MultipleButtonsInTableCell]]

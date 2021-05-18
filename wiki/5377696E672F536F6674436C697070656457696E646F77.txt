@@ -57,7 +57,7 @@ private static BufferedImage makeClippedImage(BufferedImage source, Shape shape)
 -- 参考: [[Windowの形を変更>Swing/WindowShape]]
 - `soft clipped window`
 -- `JWindow`の背景色を完全に透明(`new Color(0x0, true)`でアルファ値が`0`)に設定
--- `Window#setShape(Shape)`メソッドは使用せず、代わりに`JWindow`の`CcontentPane`に図形(切り抜き用のラウンド矩形)と画像をソフトクリッピング効果(`AlphaComposite.SrcAtop`)でブレンド処理して描画する`JPanel`を追加
+-- `Window#setShape(Shape)`メソッドは使用せず、代わりに`JWindow`の`CcontentPane`に図形(切り抜き用のラウンド矩形)と画像をソフトクリッピング効果でブレンド処理して描画(`AlphaComposite.SrcAtop`)する`JPanel`を追加
 -- 参考: [https://community.oracle.com/blogs/campbell/2006/07/19/java-2d-trickery-soft-clipping campbell: Java 2D Trickery: Soft Clipping Blog | Oracle Community]
 -- 参考: [https://www.pushing-pixels.org/2008/03/03/soft-clipping-and-per-pixel-translucency-for-swing-windows.html Soft clipping and per-pixel translucency for Swing windows · Pushing Pixels]
 

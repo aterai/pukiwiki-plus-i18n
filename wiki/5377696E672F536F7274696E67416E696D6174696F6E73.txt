@@ -16,16 +16,17 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTcZXYeSI/AAAAAAAAAkY/_f
 * サンプルコード [#sourcecode]
 #code(link){{
 private static enum SortAlgorithms {
-  Isort    ("Insertion Sort"),
-  Selsort  ("Selection Sort"),
+  Isort("Insertion Sort"),
+  Selsort("Selection Sort"),
   Shellsort("Shell Sort"),
-  Hsort    ("Heap Sort"),
-  Qsort    ("Quicksort"),
-  Qsort2   ("2-way Quicksort");
+  Hsort("Heap Sort"),
+  Qsort("Quicksort"),
+  Qsort2("2-way Quicksort");
   private final String description;
   private SortAlgorithms(String description) {
     this.description = description;
   }
+
   @Override public String toString() {
     return description;
   }
@@ -40,19 +41,19 @@ JComboBox<SortAlgorithms> algorithmsChoices = new JComboBox<>(SortAlgorithms.val
 
 #code{{
 switch ((SortAlgorithms) algorithmsChoices.getSelectedItem()) {
-  case Isort:     isort(number);         break;
-  case Selsort:   ssort(number);         break;
-  case Shellsort: shellsort(number);     break;
-  case Hsort:     heapsort(number);      break;
-  case Qsort:     qsort(0, number - 1);  break;
-  case Qsort2:    qsort2(0, number - 1); break;
+  case Isort: isort(number); break;
+  case Selsort: ssort(number); break;
+  case Shellsort: shellsort(number); break;
+  case Hsort: heapsort(number); break;
+  case Qsort: qsort(0, number - 1); break;
+  case Qsort2: qsort2(0, number - 1); break;
 }
 }}
 
 ----
-- ソートアニメーション自体は、%%[http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]%%のアプレットから基本部分をコピーして`Swing`に移植
+- ソートアニメーション自体は%%[http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]%%のアプレットから基本部分をコピーして`Swing`に移植
 -- `SwingWorker`(`JDK 6`以上)を使用したキャンセル機能を追加
--- 全画面の書き換えを止めて、移動する円図形の領域のみウェイトを入れて再描画するように変更
+-- 全画面の書き換えを止めて移動する円図形の領域のみウェイトを入れて再描画するように変更
 
 * 参考リンク [#reference]
 - %%[http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]%%

@@ -22,6 +22,7 @@ class RunAction extends AbstractAction {
   public RunAction() {
     super("run");
   }
+
   @Override public void actionPerformed(ActionEvent evt) {
     JProgressBar bar1 = new JProgressBar(0, 100);
     JProgressBar bar2 = new JProgressBar(0, 100);
@@ -108,12 +109,14 @@ class RunAction extends AbstractAction {
     worker.execute();
   }
 }
+
 // ...
 private boolean isPaused = false;
 class PauseAction extends AbstractAction {
   public PauseAction() {
     super("pause");
   }
+
   @Override public void actionPerformed(ActionEvent evt) {
     isPaused = (worker != null && !worker.isCancelled() && !isPaused);
     JButton b = (JButton) evt.getSource();
@@ -123,7 +126,7 @@ class PauseAction extends AbstractAction {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`SwingWorker#doInBackground()`内のループで一時停止のフラグを参照し、一時停止状態の場合は本来の処理(上記のサンプルではカウントアップするだけ)を行わずに、`Thread.sleep(...)`と停止中を表現するコンポーネントの更新(`JTextArea`の文字列を点滅)のみ繰り返す`SwingWorker`を使用しています。
+上記のサンプルでは、`SwingWorker#doInBackground()`内のループで一時停止のフラグを参照し、一時停止状態の場合は本来の処理(上記のサンプルではカウントアップするだけ)を行わずに`Thread.sleep(...)`と停止中を表現するコンポーネントの更新(`JTextArea`の文字列を点滅)のみ繰り返す`SwingWorker`を使用しています。
 
 * 参考リンク [#reference]
 - [[SwingWorkerを使った処理の中断と進捗状況表示>Swing/SwingWorker]]

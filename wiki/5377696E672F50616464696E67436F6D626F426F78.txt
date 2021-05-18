@@ -28,7 +28,7 @@ JComboBox<String> combo = new JComboBox<String>(model) {
   @Override public void updateUI() {
     setRenderer(null);
     super.updateUI();
-    final ListCellRenderer<? super String> lcr = getRenderer();
+    ListCellRenderer<? super String> lcr = getRenderer();
     setRenderer(new ListCellRenderer<String>() {
       @Override public Component getListCellRendererComponent(
           JList<? extends String> list, String value, int index,
@@ -39,19 +39,19 @@ JComboBox<String> combo = new JComboBox<String>(model) {
         return l;
       }
     });
-    //XXX JDK 1.7.0 ?: ((JLabel) lcr).setBorder(padding);
+    // XXX JDK 1.7.0 ?: ((JLabel) lcr).setBorder(padding);
   }
 };
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JComboBox`に、`Border`(`EmptyBorder`と`MatteBorder`を切り替え可能)を設定した`ListCellRenderer`を設定して、ドロップダウンリストの左余白をすこし広げています。`JComboBox`が編集不可の場合、エディタ部分もこの余白が自動的に適用されます。
+上記のサンプルでは、`JComboBox`に`Border`(`EmptyBorder`と`MatteBorder`を切り替え可能)を設定した`ListCellRenderer`を設定して、ドロップダウンリストの左余白をすこし広げています。`JComboBox`が編集不可の場合、エディタ部分もこの余白が自動的に適用されます。
 
 - `0`:編集不可
 -- `ListCellRenderer`で余白を指定
 
 ----
-以下は、`JComboBox`が編集可の場合のテストです。
+以下は`JComboBox`が編集可の場合のテストです。
 
 - `1`: テキストフィールドの元`Border` + 任意の`Border`で余白を設定
 -- `editor.setBorder(BorderFactory.createCompoundBorder(editor.getBorder(), padding));`
@@ -68,54 +68,41 @@ JComboBox<String> combo = new JComboBox<String>(model) {
 
 - `3`: テキストフィールドの`Insets` + `5`ピクセル余白を設定
 -- `editor.setMargin(new Insets(i.top,i.left+5,i.bottom,i.right));`
--- `MetalLookAndFeel`, `MotifLookAndFeel`, `WindowsLookAndFeel`などでは無効
--- `NimbusLookAndFeel`では有効だが、`JComboBox`の高さなども変化してしまう
+-- `MetalLookAndFeel`、`MotifLookAndFeel`、`WindowsLookAndFeel`などでは無効
+-- `NimbusLookAndFeel`では有効だが`JComboBox`の高さなども変化してしまう
 
 - `4`: テキストフィールドの`Margin` + `5`ピクセル余白を設定
 -- `editor.setMargin(new Insets(m.top,m.left+5,m.bottom,m.right));`
--- `MetalLookAndFeel`, `MotifLookAndFeel`, `WindowsLookAndFeel`などでは無効
+-- `MetalLookAndFeel`、`MotifLookAndFeel`、`WindowsLookAndFeel`などでは無効
 -- `NimbusLookAndFeel`では有効
 
 ----
 
 - `5`: `JComboBox`の`Border` + 任意の`Border`で余白を`JComboBox`自身に設定
--- `JComboBox#setBorder()`で、元の`Border`の内側に余白を指定
--- `WindowsLookAndFeel`, `MotifLookAndFeel`で有効？
--- `MetalLookAndFeel`, `NimbusLookAndFeel`では、`JComboBox`の外側に余白が付く
+-- `JComboBox#setBorder()`で元の`Border`の内側に余白を指定
+-- `WindowsLookAndFeel`、`MotifLookAndFeel`で有効？
+-- `MetalLookAndFeel`、`NimbusLookAndFeel`では`JComboBox`の外側に余白が付く
 
 - `6`: `JComboBox`の`Border` + 任意の`Border`で余白を`JComboBox`自身に設定
--- `JComboBox#setBorder()`で、元の`Border`の外側に余白を指定
+-- `JComboBox#setBorder()`で元の`Border`の外側に余白を指定
 -- `WindowsLookAndFeel`で余計な枠が表示される？
 
 ----
-//以下のようにエディタにMarginを指定しても無視されるようです。
-//#code{{
-//editor = (JTextField) combo.getEditor().getEditorComponent();
-//Insets m = editor.getMargin();
-//Insets margin = new Insets(m.top, m.left + 10, m.bottom, m.right);
-////System.out.println(margin.toString());
-//editor.setMargin(margin);
-//}}
-//- 追記
-//-- 無視されるのは、Basic L&F系(Windows L&Fなど)で、Synth L&F系(Nimbus, GTK L&Fなど)では上記の設定は有効になる？
-//-- `1.6.0_10-beta-b13`では、 %%`BasicLookAndFeel`系は%% どちらも、`UIManager.put("ComboBox.padding", insets)`が使用できる？
-
-- %%その他にも、以下のように`UIManager`で余白を設定する方法もありますが、`LookAndFeel`によって対応が異なる？%% `ComboBox.padding`は無くなっている？
--- `JComboBox`が編集可能の場合は、`ComboBox.editorBorder`が有効かもしれない
+- %%その他にも、以下のように`UIManager`で余白を設定する方法もあるが`LookAndFeel`によって対応が異なる？%% `ComboBox.padding`は無くなっている？
+-- `JComboBox`が編集可能の場合は`ComboBox.editorBorder`が有効かもしれない
 #code{{
 // UIManager.put("ComboBox.padding", new InsetsUIResource(insets));
 UIManager.put("ComboBox.editorBorder", BorderFactory.createEmptyBorder(0, 5, 0, 0));
 }}
 
-- %%上記のサンプルを、余白に色無しにして、`Ubuntu 7.04`(`GNOME 2.18.1`)、`JDK 1.6.0`で実行すると、以下のようになる%%
+- %%上記のサンプルを余白に色無しにして`Ubuntu 7.04`(`GNOME 2.18.1`)、`JDK 1.6.0`で実行すると、以下のように表示される%%
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQyV_2TnI/AAAAAAAAAgI/yqGoi_zqsgI/s800/PaddingComboBox1.png)
 
 ----
 - `LookAndFeel`毎に`JComboBox`の余白の描画は異なるみたいなので、全部まとめて消すのは難しい？
 - `BasicComboBoxUI`も、`ComboBox.buttonDarkShadow`が`ArrowButton`の三角とボタンの影に使われていて微妙
 -- `BasicComboBoxUI#createArrowButton()`をオーバーライドして別途三角形アイコンを使う方がよさそう
-
-コードは、[[JComboBoxのBorderを変更する>Swing/ComboBoxBorder]]に移動。
+-- コードは、[[JComboBoxのBorderを変更する>Swing/ComboBoxBorder]]に移動
 
 * 参考リンク [#reference]
 - [[JComboBoxにアイコンを表示>Swing/IconComboBox]]

@@ -22,7 +22,7 @@ class MetalDragLimitedSliderUI extends MetalSliderUI {
   @Override protected TrackListener createTrackListener(JSlider slider) {
     return new TrackListener() {
       @Override public void mouseDragged(MouseEvent e) {
-        //case HORIZONTAL:
+        // case HORIZONTAL:
         int halfThumbWidth = thumbRect.width / 2;
         int thumbLeft = e.getX() - offset;
         int maxPos = xPositionForValue(MAXI) - halfThumbWidth;
@@ -41,10 +41,10 @@ class MetalDragLimitedSliderUI extends MetalSliderUI {
 
 - `ChangeListener`
 -- `JSlider`の`BoundedRangeModel`に`ChangeListener`を追加し、`80`以上の値を指定できないように設定
--- マウスドラッグで`100`まで移動すると、リリースした時点で`80`まで戻る
+-- マウスドラッグで`100`まで移動するとリリースした時点で`80`の位置まで戻る
 - `TrackListener`
--- 上の`ChangeListener`に加えて、`MetalSliderUI#createTrackListener(...)`をオーバーライドし、独自の`TrackListener`を設定して、マウスドラッグで`80`以上に移動できないように制限
--- `TrackListener`は`MouseMotionListener`を実装しているので、`mouseDragged(...)`メソッドをオーバーライドして`80`以上への`MouseEvent`を`translatePoint(...)`メソッドで座標変換して無効化 %%`consume()`メソッドで消費して無効化%%
+-- 上の`ChangeListener`に加えて、`MetalSliderUI#createTrackListener(...)`をオーバーライドした独自の`TrackListener`を設定しマウスドラッグで`80`以上に移動できないように制限
+-- `TrackListener`は`MouseMotionListener`を実装しているので`mouseDragged(...)`メソッドをオーバーライドして`80`以上への`MouseEvent`を`translatePoint(...)`メソッドで座標変換して無効化 %%`consume()`メソッドで消費して無効化%%
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/34561596/how-can-i-prevent-a-jslider-from-moving-full-range java - How can I prevent a JSlider from moving full-range? - Stack Overflow]

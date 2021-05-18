@@ -15,22 +15,22 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHw6_sLrI/AAAAAAAAARs/5f
 
 * サンプルコード [#sourcecode]
 #code(link){{
-//UIManager.put("FileChooser.saveButtonText",   "保存(S)");
-//UIManager.put("FileChooser.openButtonText",   "開く(O)");
+// UIManager.put("FileChooser.saveButtonText", "保存(S)");
+// UIManager.put("FileChooser.openButtonText", "開く(O)");
 UIManager.put("FileChooser.cancelButtonText", "キャンセル");
 
 JFileChooser fileChooser = new JFileChooser();
-//fileChooser.setApproveButtonText("開く(O)");
-//fileChooser.setApproveButtonMnemonic('O');
+// fileChooser.setApproveButtonText("開く(O)");
+// fileChooser.setApproveButtonMnemonic('O');
 }}
 
 * 解説 [#explanation]
 上記のサンプルは、日本語の`WindowsLookAndFeel`に合わせて`JFileChooser`の`ApproveButton`やキャンセルボタンのテキストを以下のように変更しています。
 
 - %%`OpenDialog`のデフォルトでは、ファイルリストでフォルダが選択された状態の場合「開く(`O`)」、ファイルが選択された状態の場合「開く」に切り替わる%%
--- %%この切り替えでボタンサイズが変化しないように、両方「開く(`O`)」に揃える%%
-- %%`SaveDialog`のデフォルトでは、ファイルリストでフォルダが選択されていると「開く(`O`)」、ファイルが選択されていると「保存」なので、「保存(`S`)」に揃える%%
--- `CancelButton`のデフォルトは、「取消し」で`SaveDialog`のフォルダ・ファイルの選択が切り替わるとボタンサイズに合わせてレイアウトが変化してしまうので、これを防ぐために二文字分長い「キャンセル」に変更
+-- %%この切り替えでボタンサイズが変化しないように両方「開く(`O`)」に揃える%%
+- %%`SaveDialog`のデフォルトではファイルリストでフォルダが選択されていると「開く(`O`)」、ファイルが選択されていると「保存」なので「保存(`S`)」に揃える%%
+-- `CancelButton`のデフォルトは「取消し」で`SaveDialog`のフォルダ・ファイルの選択が切り替わるとボタンサイズに合わせてレイアウトが変化してしまうので、これを防ぐために二文字分長い「キャンセル」に変更
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JFileChooser.html JFileChooser (Java Platform SE 8)]

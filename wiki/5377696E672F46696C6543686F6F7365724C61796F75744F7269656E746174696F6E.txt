@@ -44,10 +44,11 @@ button2.addActionListener(e -> {
 - `Default`
 -- `JFileChooser`の`JList`を使用するリスト表示のデフォルトは、ファイルが垂直方向の次に水平方向の順に並ぶ「ニュースペーパー・スタイル」
 -- 名前が長いファイルが存在すると、リストが見づらくなる
+
 - `LayoutOrientation: VERTICAL`
 -- `JFileChooser`の子要素を検索して`JList`を取得し、`JList#setLayoutOrientation(JList.VERTICAL)`でファイルが垂直方向`1`列に配置されるよう設定
 -- `sun.swing.FilePane#setViewType(...)`が実行されて表示形式が`JTable`を使用する`viewTypeDetails`から`JList`を使用する`viewTypeList`に切り替わる度に`JList#setLayoutOrientation(JList.VERTICAL_WRAP)`が実行されるため、`JList`が`JFileChooser`に設定されて表示されると`JList#setLayoutOrientation(JList.VERTICAL)`を実行する`HierarchyListener`を追加
--- 注: コメントで指摘されているように、`sun.swing.FilePane`を使用しない`LookAndFeel`ではこのサンプルは無意味
+-- コメントで指摘されているように`sun.swing.FilePane`を使用しない`LookAndFeel`ではこのサンプルは無意味
 --- 例えば`GTKLookAndFeel`ではディレクトリ用とファイル用に`JList`が使用されているが、どちらも垂直方向`1`列がデフォルト
 
 * 参考リンク [#reference]

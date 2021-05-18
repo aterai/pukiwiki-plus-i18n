@@ -34,6 +34,7 @@ class HighlightTableCellRenderer extends JTextField implements TableCellRenderer
       return true;
     }
   }
+
   public HighlightTableCellRenderer() {
     super();
     setOpaque(true);
@@ -42,6 +43,7 @@ class HighlightTableCellRenderer extends JTextField implements TableCellRenderer
     setBackground(Color.WHITE);
     setEditable(false);
   }
+
   @Override public Component getTableCellRendererComponent(
       JTable table, Object value, boolean isSelected,
       boolean hasFocus, int row, int column) {

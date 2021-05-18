@@ -1,0 +1,86 @@
+---
+category: swing
+folder: XORMode
+title: GraphicsオブジェクトをXORモードに設定してピクセルの色をXOR変更色と現在の色とで反転して描画する
+tags: [Graphics, JPanel]
+author: aterai
+pubdate: 2020-11-09T16:09:28+09:00
+description: Graphicsの論理ピクセル操作をXORモードで実行するように指定して、XOR変更色と現在の色のXORで生成したマスクでピクセルの色を再度XOR反転して描画します。
+image: https://drive.google.com/uc?id=1v9U6zlJ5fCokh8Px9MzbK4etBt-euSyc
+---
+* 概要 [#summary]
+`Graphics`の論理ピクセル操作を`XOR`モードで実行するように指定して、`XOR`変更色と現在の色の`XOR`で生成したマスクでピクセルの色を再度`XOR`反転して描画します。
+
+#download(https://drive.google.com/uc?id=1v9U6zlJ5fCokh8Px9MzbK4etBt-euSyc)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+@Override protected void paintComponent(Graphics g) {
+  super.paintComponent(g);
+  Graphics2D g2 = (Graphics2D) g.create();
+
+  int iw = icon.getIconWidth();
+  int ih = icon.getIconHeight();
+  Dimension dim = getSize();
+  int x = (dim.width - iw) / 2;
+  int y = (dim.height - ih) / 2;
+  g.drawImage(icon.getImage(), x, y, iw, ih, this);
+
+  g2.setPaint(Color.RED);
+  g2.fillOval(10, 10, 32, 32);
+
+  g2.setPaint(Color.GREEN);
+  g2.fillOval(50, 10, 32, 32);
+
+  g2.setPaint(Color.BLUE);
+  g2.fillOval(90, 10, 32, 32);
+
+  g2.setPaint(Color.PINK);
+  g2.fillOval(130, 10, 32, 32);
+
+  g2.setPaint(Color.CYAN);
+  g2.fillOval(170, 10, 32, 32);
+
+  g2.setPaint(Color.ORANGE);
+  g2.fillOval(210, 10, 32, 32);
+
+  g2.setXORMode(Color.PINK);
+  g2.fill(rubberBand);
+
+  g2.setPaintMode();
+  g2.setStroke(stroke);
+  g2.setPaint(Color.WHITE);
+  g2.draw(rubberBand);
+  g2.dispose();
+}
+}}
+
+* 解説 [#explanation]
+- 現在の色: `Graphics#setPaint(...)`で設定した色
+-- このサンプルでは`Color.ORANGE`、`#FFC800`、`1111 1111 1100 1000 0000 0000`
+- `XOR`変更色: `Graphics#setXORMode(...)`で設定した色
+-- このサンプルでは`Color.PINK`、`#FFAFAF`、`1111 1111 1010 1111 1010 1111`
+- マスク: 現在の色と`XOR`変更色の排他論理和
+-- このサンプルでは`Color.ORANGE.getRGB() ^ Color.PINK.getRGB()`、`#0067AF`、`0000 0000 0110 0111 1010 1111`
+----
+- このサンプルでは現在の色が`Color.ORANGE`、`XOR`変更色が`Color.PINK`なのでマウスドラッグで囲んだ範囲内の`Color.ORANGE`は`Color.PINK`に、`Color.PINK`は`Color.ORANGE`に反転する
+- その他のピクセルの色はマスクで`XOR`した色に変換される
+- `XOR`なので`2`回反転すると元の色に戻る
+- 例`1`: 赤(`#FF0000`)は`#FF67AF`になる
+ マスク: 0000 0000 0110 0111 1010 1111
+ 　　赤: 1111 1111 0000 0000 0000 0000
+ 変換後: 1111 1111 0110 0111 1010 1111
+- 例`2`: 青(`#0000FF`)は`#006750`になる
+ マスク: 0000 0000 0110 0111 1010 1111
+ 　　青: 0000 0000 0000 0000 1111 1111
+ 変換後: 0000 0000 0110 0111 0101 0000
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics.html#setXORMode-java.awt.Color- Graphics#setXORMode(...) (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics2D.html Graphics2D (Java Platform SE 8)]
+-- `Graphics`ではなく`Graphics2D`のドキュメントに「`setXORMode(Color xorcolor)`メソッドは、ソース・カラーの`Alpha`成分を無視し、デスティネーション・カラーをその値に設定する特殊な`Composite`オブジェクトを設定するための簡易メソッドとして実装されます。 `dstpixel = (PixelOf(srccolor) ^ PixelOf(xorcolor) ^ dstpixel);`」と説明されている
+-- このため`Graphics#setComposite(...)`を設定していると`setXORMode(...)`は無視される
+
+* コメント [#comment]
+#comment
+#comment

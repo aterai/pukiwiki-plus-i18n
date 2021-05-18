@@ -25,7 +25,7 @@ public MainPanel() {
       showSplashScreen();
     }
   });
-  //長い処理のdummy
+  // 長い処理のダミー
   try {
     Thread.sleep(3000);
   } catch (InterruptedException e) {
@@ -38,6 +38,7 @@ public MainPanel() {
     }
   });
 }
+
 public void createSplashScreen(String path) {
   ImageIcon img = new ImageIcon(getClass().getResource(path));
   splashLabel   = new JLabel(img);
@@ -46,17 +47,21 @@ public void createSplashScreen(String path) {
   splashScreen.pack();
   splashScreen.setLocationRelativeTo(null);
 }
+
 public void showSplashScreen() {
   splashScreen.setVisible(true);
 }
+
 public void hideSplash() {
   splashScreen.setVisible(false);
   splashScreen = null;
   splashLabel  = null;
 }
+
 public JFrame getFrame() {
   return frame;
 }
+
 public void showPanel() {
   this.setPreferredSize(new Dimension(300, 200));
   frame.getContentPane().add(this);
@@ -71,7 +76,7 @@ public void showPanel() {
 上記のサンプルコードでは、クラスパスの通った場所にある`/resources/images/splash.png`を読み込んでスプラッシュ・スクリーン(起動画面)を表示しています。`JWindow`の表示、非表示は、イベントディスパッチスレッド(`EDT`)で行われるように、`Runnable`を作成し`EventQueue.invokeLater()`メソッドで実行しています。
 
 ----
-- `Java SE 6`では、[https://docs.oracle.com/javase/jp/8/docs/api/java/awt/SplashScreen.html SplashScreen]クラスが追加され、起動時にスプラッシュ・スクリーンとして表示する画像をコマンドラインや`manifest.mf`で指定するなどの方法で使用可能になった
+- `Java SE 6`では[https://docs.oracle.com/javase/jp/8/docs/api/java/awt/SplashScreen.html SplashScreen]クラスが追加され、起動時にスプラッシュ・スクリーンとして表示する画像をコマンドラインや`manifest.mf`で指定するなどの方法で使用可能になった
 -- [http://web.archive.org/web/20090419180550/http://java.sun.com/developer/JDCTechTips/2005/tt1115.html#1 SPLASH SCREENS AND JAVA SE 6]
 -- [http://www.oracle.com/technetwork/articles/javase/splashscreen-135938.html New Splash-Screen Functionality in Java SE 6]
 

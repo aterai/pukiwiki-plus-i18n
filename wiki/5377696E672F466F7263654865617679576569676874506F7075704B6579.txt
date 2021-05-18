@@ -15,8 +15,8 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTNMeZI4ZI/AAAAAAAAAaY/8X
 
 * サンプルコード [#sourcecode]
 #code(link){{
-//Swing - ComboBox scroll and selected/highlight on glasspane
-//https://community.oracle.com/thread/1357949
+// Swing - ComboBox scroll and selected/highlight on glasspane
+// https://community.oracle.com/thread/1357949
 try {
   Class clazz = Class.forName("javax.swing.PopupFactory");
   Field field = clazz.getDeclaredField("forceHeavyWeightPopupKey");
@@ -41,8 +41,8 @@ try {
 -- `ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);`としておかないと前面に表示されない環境がある？
 
 ----
-`JDK 1.7.0`の場合は、`javax.swing.PopupFactory.forceHeavyWeightPopupKey`が無くなってしまったので、以下のように
-`javax.swing.ClientPropertyKey.PopupFactory_FORCE_HEAVYWEIGHT_POPUP`を使用します。
+- `JDK 1.7.0`から`javax.swing.PopupFactory.forceHeavyWeightPopupKey`が無くなってしまったので、以下のように
+`javax.swing.ClientPropertyKey.PopupFactory_FORCE_HEAVYWEIGHT_POPUP`を使用する必要がある
 
 #code{{
 Class clazz = Class.forName("javax.swing.ClientPropertyKey");

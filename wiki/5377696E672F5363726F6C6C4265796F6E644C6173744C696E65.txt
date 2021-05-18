@@ -33,7 +33,9 @@ JTextArea textArea = new JTextArea() {
 -- メモ帳やブラウザなどの動作と同じ
 - `JTextArea#getPreferredSize()`メソッドをオーバーライドし、`JViewport`の高さから`JTextArea`の一行分を除いた高さを拡張し、最終行が表示上の先頭行になるまでスクロール可能に設定
 -- 上記のサンプルでは`JTextArea`が編集可能の場合、最終行を超えてスクロール可能に設定している
--- 多くのテキストエディタのデフォルト？
+-- `Visual Studio Code`などのエディタのデフォルト？
+-- `IntelliJ IDEA`ではエディタの設定から`Show virtual space at file bottom`で変更可能
+--- [https://stackoverflow.com/questions/36715803/scrolling-past-the-end-in-idea Scrolling past the end in IDEA - Stack Overflow]
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/32679335/java-jtextarea-allow-scrolling-beyond-end-of-text swing - Java JTextArea allow scrolling beyond end of text - Stack Overflow]

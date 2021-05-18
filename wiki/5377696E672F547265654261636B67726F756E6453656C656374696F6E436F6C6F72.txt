@@ -16,6 +16,19 @@ image: https://lh4.googleusercontent.com/-7JA4jpNa55U/UI1VhdHlkwI/AAAAAAAABVw/dA
 * サンプルコード [#sourcecode]
 #code(link){{
 class SelectionColorTreeCellRenderer extends DefaultTreeCellRenderer {
+  private Color color = null;
+
+  private void setParticularCondition(Object value) {
+    if (value instanceof DefaultMutableTreeNode) {
+      Object uo = ((DefaultMutableTreeNode) value).getUserObject();
+      if (uo instanceof Color) {
+        color = (Color) uo;
+        return;
+      }
+    }
+    color = null;
+  }
+
   @Override public Component getTreeCellRendererComponent(
       JTree tree, Object value, boolean isSelected, boolean expanded,
       boolean leaf, int row, boolean hasFocus) {
@@ -38,17 +51,7 @@ class SelectionColorTreeCellRenderer extends DefaultTreeCellRenderer {
     }
     return c;
   }
-  private Color color = null;
-  private void setParticularCondition(Object value) {
-    if (value instanceof DefaultMutableTreeNode) {
-      Object uo = ((DefaultMutableTreeNode) value).getUserObject();
-      if (uo instanceof Color) {
-        color = (Color) uo;
-        return;
-      }
-    }
-    color = null;
-  }
+
   @Override public Color getBackgroundSelectionColor() {
     return color != null ? color : super.getBackgroundSelectionColor();
   }
@@ -60,11 +63,11 @@ class SelectionColorTreeCellRenderer extends DefaultTreeCellRenderer {
 
 - `DefaultMutableTreeNode#getUserObject()`が`Color`の場合、その色を選択時背景色に採用
 -- `DefaultTreeCellRenderer#getBackgroundSelectionColor()`をオーバーライド
--- ノードアイコンの背景は選択状態にならず、ノードテキストの背景色のみ変更される
-- ノードテキストが`a`で始まる場合、選択背景色を`Color.RED`に変更
+-- ノードアイコンの背景は選択状態に変更せずノードテキストの背景色のみ変更
+- ノードテキストが`a`で始まる場合選択背景色を`Color.RED`に変更
 -- `TreeCellRenderer#getTreeCellRendererComponent(...)`で取得したコンポーネント(`JLabel`)を`setOpaque(true)`で不透明、`setBackground(Color.RED)`で背景色を変更
 -- ノードアイコン、テキストの背景色が共に選択状態になる
--- `SynthLookAndFeel`で作成されている`NimbusLookAndFeel`などでは、上記のような選択背景色にならない場合がある
+-- `SynthLookAndFeel`で作成されている`NimbusLookAndFeel`などでは上記のような選択背景色は適用されない
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html DefaultTreeCellRenderer (Java Platform SE 8)]

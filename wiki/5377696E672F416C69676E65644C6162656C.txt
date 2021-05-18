@@ -27,11 +27,13 @@ class AlignedLabel extends JLabel {
     // setAlignmentX(JComponent.LEFT_ALIGNMENT);
     setHorizontalAlignment(SwingConstants.RIGHT);
   }
+
   @Override public Dimension getPreferredSize() {
     Dimension d = super.getPreferredSize();
     // Align the width with all other labels in group.
     return new Dimension(getMaxWidth() + INDENT, d.height);
   }
+
   private int getMaxWidth() {
     if (maxWidth == 0 && group != null) {
       int max = group.stream()
@@ -41,9 +43,11 @@ class AlignedLabel extends JLabel {
     }
     return maxWidth;
   }
+
   private int getSuperPreferredWidth() {
     return super.getPreferredSize().width;
   }
+
   public static void groupLabels(List<AlignedLabel> group) {
     for (AlignedLabel al: group) {
       al.group = group;
@@ -61,7 +65,7 @@ class AlignedLabel extends JLabel {
 - `BoxLayout`
 -- `AlignedLabel`とその右に配置するコンポーネントを`Box.createHorizontalBox()`で作成した`Box`に追加
 -- `FileChooser`と`HTTP Proxy`のタイトルを`TitledBorder`で設定した`Box`を`2`個作成し、上記の`AlignedLabel`を配置した`Box`をそれぞれ追加
--- 複数の`Box`に`AlignedLabel`が配置されていても、各`AlignedLabel`の推奨サイズの幅はすべて同じになっているため垂直位置は揃う
+-- 複数の`Box`に`AlignedLabel`が配置されていても各`AlignedLabel`の推奨サイズの幅はすべて同じになっているため垂直位置は揃う
 
 * 参考リンク [#reference]
 - [[GroupLayoutの使用>Swing/GroupLayout]]

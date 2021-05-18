@@ -20,10 +20,10 @@ UIManager.put("Table.dropLineColor", Color.GREEN);
 UIManager.put("Table.dropLineShortColor", Color.GREEN);
 UIManager.put("Tree.dropLineColor", Color.BLUE);
 
-// Default drop line color:
+// // Default drop line color:
 // UIManager.put(List.dropLineColor, null);
 
-// Hide drop lines: 
+// // Hide drop lines: 
 // UIManager.put(List.dropLineColor, new Color(0x0, true));
 }}
 
@@ -35,7 +35,7 @@ UIManager.put("Tree.dropLineColor", Color.BLUE);
 - `JTree`は`Tree.dropLineColor`でドロップラインの色を変更可能
 
 ----
-- `UIManager.put("List.dropLineColor", null)`でドロップラインの色に`null`を設定すると、デフォルト色でドロップラインが描画される
+- たとえば`JList`を`UIManager.put("List.dropLineColor", null)`でドロップラインの色に`null`を設定すると、デフォルト色でドロップラインが描画される
 - ドロップラインを非表示にする場合は、`UIManager.put("List.dropLineColor", new Color(0x0, true))`のように完全透明色を設定する
 
 * 参考リンク [#reference]

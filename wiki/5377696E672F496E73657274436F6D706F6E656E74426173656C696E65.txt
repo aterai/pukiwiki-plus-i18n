@@ -25,8 +25,8 @@ textPane.insertComponent(check1);
 
 * 解説 [#explanation]
 - `Default`
--- `JTextPane#insertComponent(...)`メソッドで、`JCheckBox`を追加
--- `JCheckBox`のデフォルトの`AlignmentY`は`0.5`なのでテキストのベースラインと揃わない
+-- `JTextPane#insertComponent(...)`メソッドで`JCheckBox`を追加
+-- `JCheckBox`のデフォルト`AlignmentY`は`0.5`のため、テキストのベースラインと揃わない
 - `JComponent#setAlignmentY(...)`
 -- `JComponent#getBaseline()`メソッドでベースラインを取得し、`JComponent#setAlignmentY(baseline/(float)d.height)`メソッドでテキストベースラインの相対位置に配置
 - `setAlignmentY+setCursor+...`

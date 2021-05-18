@@ -43,11 +43,11 @@ public JComponent makeTranslucentScrollBar(JComponent c) {
       Insets insets = parent.getInsets();
       availR.x = insets.left;
       availR.y = insets.top;
-      availR.width  -= insets.left + insets.right;
-      availR.height -= insets.top  + insets.bottom;
+      availR.width -= insets.left + insets.right;
+      availR.height -= insets.top + insets.bottom;
 
       Rectangle vsbR = new Rectangle();
-      vsbR.width  = 12;
+      vsbR.width = 12;
       vsbR.height = availR.height;
       vsbR.x = availR.x + availR.width - vsbR.width;
       vsbR.y = availR.y;
@@ -74,7 +74,9 @@ public JComponent makeTranslucentScrollBar(JComponent c) {
       return new ZeroSizeButton();
     }
 
-    @Override protected void paintTrack(Graphics g, JComponent c, Rectangle r) { /* empty */ }
+    @Override protected void paintTrack(Graphics g, JComponent c, Rectangle r) {
+      /* empty */
+    }
 
     @Override protected void paintThumb(Graphics g, JComponent c, Rectangle r) {
       Color color;
@@ -111,15 +113,15 @@ public JComponent makeTranslucentScrollBar(JComponent c) {
 * 解説 [#explanation]
 上記のサンプルでは、`JScrollBar`の増減ボタンのサイズを非表示、トラックを透明、つまみを半透明にして、`JViewport`内部に配置しています。
 
-- `ScrollPaneLayout#layoutContainer(...)`をオーバーライドして、`JScrollBar`を`JViewport`の内部にオーバーラップするように配置
--- `scrollPane.setComponentZOrder(...)`で、`JScrollBar`と`JViewport`の`Z`軸の順序を変更
+- `ScrollPaneLayout#layoutContainer(...)`をオーバーライドして`JScrollBar`を`JViewport`の内部にオーバーラップするように配置
+-- `scrollPane.setComponentZOrder(...)`で`JScrollBar`と`JViewport`の`Z`軸の順序を変更
 - `BasicScrollBarUI#createDecreaseButton()`、`BasicScrollBarUI#createIncreaseButton()`をオーバーライドして増減ボタンのサイズを`0`に設定
 -- [[JScrollBarのArrowButtonを非表示にする>Swing/ArrowButtonlessScrollBar]]
 - `BasicScrollBarUI#paintTrack()`をオーバーライドしてトラックを非表示
--- トラックにつまみの残像が残るので、`BasicScrollBarUI#setThumbBounds`をオーバーライドして`JScrollBar`全体を再描画
+-- トラックにつまみの残像が残るので`BasicScrollBarUI#setThumbBounds`をオーバーライドして`JScrollBar`全体を再描画
 - `BasicScrollBarUI#paintThumb()`をオーバーライドして半透明のつまみを描画
-- つまみ描画のチラつき防止のため、`JScrollPane#isOptimizedDrawingEnabled()`が`false`を返すようにオーバーライド
--- このサンプルでは、横スクロールバーの表示、カラムヘッダの表示に未対応
+- つまみ描画のチラつき防止のため`JScrollPane#isOptimizedDrawingEnabled()`が`false`を返すようにオーバーライド
+-- このサンプルでは横スクロールバーの表示、カラムヘッダの表示に未対応
 --- [[JScrollBarをJTable上に重ねて表示するJScrollPaneを作成する>Swing/OverlappedScrollBar]]
 
 * 参考リンク [#reference]

@@ -25,8 +25,9 @@ class TableNextMatchKeyHandler extends KeyAdapter {
   private long timeFactor;
   public TableNextMatchKeyHandler() {
     // Long l = (Long) UIManager.get("List.timeFactor");
-    timeFactor = 500L; //(l != null) ? l.longValue() : 1000L;
+    timeFactor = 500L; // (l != null) ? l.longValue() : 1000L;
   }
+
   private boolean isNavigationKey(KeyEvent e) {
     JTable t = (JTable) e.getSource();
     InputMap im = t.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -36,6 +37,7 @@ class TableNextMatchKeyHandler extends KeyAdapter {
     }
     return false;
   }
+
   @Override public void keyPressed(KeyEvent e) {
     if (isNavigationKey(e)) {
       prefix = "";
@@ -43,6 +45,7 @@ class TableNextMatchKeyHandler extends KeyAdapter {
       lastTime = 0L;
     }
   }
+
   @Override public void keyTyped(KeyEvent e) {
     JTable src = (JTable) e.getSource();
     int max = src.getRowCount();
@@ -125,9 +128,9 @@ class TableNextMatchKeyHandler extends KeyAdapter {
 * 解説 [#explanation]
 上記のサンプルでは、キー入力で`0`列目の文字列の先頭文字が一致(大文字小文字は無視)する行を検索、選択し、その行位置までスクロールします。
 
-検索方法は、`BasicListUI.Handler`、`BasicTreeUI.Handler`、`JList#getNextMatch(...)`、`JTree#getNextMatch(...)`のものと同等(KBD{Shift}キーを同時に押すと逆検索)です。
-
-`JList`などとは異なりデフォルトの`JTable`はキー入力でセルエディタが起動するため、このキー入力による検索を実行するためには`table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`としてキー入力による編集開始を無効(マウスクリック、KBD{F2}キーでの編集は可能)にする必要があります。
+- 検索方法は`JList`の`BasicListUI.Handler`、`JList#getNextMatch(...)`や`JTree`の`BasicTreeUI.Handler`、`JTree#getNextMatch(...)`とほぼ同等
+-- ともにKBD{Shift}キーを同時に押すと逆検索
+- ただし`JList`などとは異なりデフォルトの`JTable`はキー入力でセルエディタが起動するため、このキー入力による検索を実行するためには`table.putClientProperty("JTable.autoStartsEdit", Boolean.FALSE);`としてキー入力による編集開始を無効(マウスクリック、KBD{F2}キーでの編集は可能)にする必要がある
 
 * 参考リンク [#reference]
 - [[JListの先頭文字キー入力による検索選択を無効にする>Swing/DisablePrefixMatchSelection]]

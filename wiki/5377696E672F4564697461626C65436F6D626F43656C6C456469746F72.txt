@@ -26,6 +26,7 @@ class ComboCellEditor extends AbstractCellEditor implements TableCellEditor {
     combo.setEditable(true);
     combo.addActionListener(e -> fireEditingStopped());
   }
+
   @Override public Component getTableCellEditorComponent(
       JTable table, Object value, boolean isSelected, int row, int column) {
     if (value instanceof ComboBoxModel) {
@@ -35,6 +36,7 @@ class ComboCellEditor extends AbstractCellEditor implements TableCellEditor {
     }
     return combo;
   }
+
   @Override public Object getCellEditorValue() {
     @SuppressWarnings("unchecked")
     DefaultComboBoxModel<String> m = (DefaultComboBoxModel<String>) combo.getModel();
@@ -51,9 +53,10 @@ class ComboCellEditor extends AbstractCellEditor implements TableCellEditor {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JComboBox#setEditable(true)`で編集可能にした`JComboBox`を`JTable`のセルエディタに設定し、セルの値の追加・編集を可能にしています。[[JTableのCellEditorにJComboBoxを設定>Swing/ComboCellEditor]]で使用しているデフォルトの`ComboBoxCellEditor`とは違い、各行で`JComboBox`の所有するアイテムが異なり、またそれらのアイテムの選択位置も保持する必要があるため、`TableModel`には`DefaultComboBoxModel`をモデルデータとして保存しています。
+上記のサンプルでは、`JComboBox#setEditable(true)`で編集可能にした`JComboBox`を`JTable`のセルエディタに設定し、セルの値の追加・編集を可能にしています。
 
-----
+- 各行で`JComboBox`の所有するアイテムが異なりまたそれらのアイテムの選択位置も保持する必要があるため`TableModel`には`DefaultComboBoxModel`をモデルデータとして保存
+-- [[JTableのCellEditorにJComboBoxを設定>Swing/ComboCellEditor]]で使用しているデフォルトの`ComboBoxCellEditor`は使用できない
 - `JComboBox`を`JTable`のセルエディタとして使用する場合、`combo.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);`を設定する
 -- ドロップダウンリストでカーソルキーによる選択変更しても、`ActionEvent`などが発生して編集中止にしないために必要
 

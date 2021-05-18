@@ -43,6 +43,7 @@ class BreadcrumbLayerUI extends LayerUI<JPanel> {
       g2.dispose();
     }
   }
+
   @Override public void installUI(JComponent c) {
     super.installUI(c);
     if (c instanceof JLayer) {
@@ -50,12 +51,14 @@ class BreadcrumbLayerUI extends LayerUI<JPanel> {
                                    | AWTEvent.MOUSE_MOTION_EVENT_MASK);
     }
   }
+
   @Override public void uninstallUI(JComponent c) {
     if (c instanceof JLayer) {
       ((JLayer) c).setLayerEventMask(0);
     }
     super.uninstallUI(c);
   }
+
   private void update(MouseEvent e, JLayer<? extends JPanel> l) {
     int id = e.getID();
     Shape s = null;
@@ -76,10 +79,12 @@ class BreadcrumbLayerUI extends LayerUI<JPanel> {
       l.getView().repaint();
     }
   }
+
   @Override protected void processMouseEvent(
       MouseEvent e, JLayer<? extends JPanel> l) {
     update(e, l);
   }
+
   @Override protected void processMouseMotionEvent(
       MouseEvent e, JLayer<? extends JPanel> l) {
     update(e, l);
@@ -90,7 +95,7 @@ class BreadcrumbLayerUI extends LayerUI<JPanel> {
 * 解説 [#explanation]
 上記のサンプルでは、`JLayer#processMouseEvent(...)`と`JLayer#processMouseMotionEvent(...)`メソッドをオーバーライドして、カーソルの下にある`JRadioButton`を取得し、その周辺に`JLayer#paint(...)`メソッドを使って影と縁を描画しています。
 
-- `JLayer`を使用しているので、これらの影と縁は各コンポーネントより一番手前の別レイヤーに上書き可能
+- `JLayer`を使用しているのでこれらの影と縁は各コンポーネントより一番手前の別レイヤーに上書き可能
 -- 隣接したり奥に重なったりしているコンポーネントなどの上に描画が可能
 
 * 参考リンク [#reference]

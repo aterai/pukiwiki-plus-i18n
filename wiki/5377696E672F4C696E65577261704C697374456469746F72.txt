@@ -1,0 +1,103 @@
+---
+category: swing
+folder: LineWrapListEditor
+title: JTextAreaとJFrameで幅固定、文字列の折り返し、親枠外まで高さ拡大可能なセルエディタを作成する
+tags: [JTextArea, JFrame, JPopupMenu, JList]
+author: aterai
+pubdate: 2021-02-15T00:28:50+09:00
+description: JTextAreaを幅固定、文字列の長さに応じた折り返しで高さ伸縮可能に設定し、これをJFrameに配置して親枠外でも表示可能なJListセルラベルエディタとして使用します。
+image: https://drive.google.com/uc?id=1sEuzsyqu2Jzz8PXleIVr44WlUGdeul_8
+---
+* 概要 [#summary]
+`JTextArea`を幅固定、文字列の長さに応じた折り返しで高さ伸縮可能に設定し、これを`JFrame`に配置して親枠外でも表示可能な`JList`セルラベルエディタとして使用します。
+
+#download(https://drive.google.com/uc?id=1sEuzsyqu2Jzz8PXleIVr44WlUGdeul_8)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// private final Container glassPane = new EditorGlassPane();
+// private final JPopupMenu popup = new JPopupMenu();
+private final JFrame window = new JFrame();
+// private final JTextField editor = new JTextField();
+private final JTextArea editor = new JTextArea();
+// ...
+window.setUndecorated(true);
+window.setAlwaysOnTop(true);
+window.addWindowListener(new WindowAdapter() {
+  @Override public void windowDeactivated(WindowEvent e) {
+    if (editor.isEditable()) {
+      renameTitle.actionPerformed(new ActionEvent(editor, ActionEvent.ACTION_PERFORMED, ""));
+    }
+  }
+});
+window.add(editor);
+editor.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+editor.setLineWrap(true);
+editor.setFont(UIManager.getFont("TextField.font"));
+editor.setComponentPopupMenu(new TextComponentPopupMenu());
+editor.getDocument().addDocumentListener(new DocumentListener() {
+  private int prev = -1;
+  private void update() {
+    EventQueue.invokeLater(() -> {
+      int h = editor.getPreferredSize().height;
+      if (prev != h) {
+        Rectangle rect = editor.getBounds();
+        rect.height = h;
+        editor.setBounds(rect);
+        window.pack(); // popup.pack();
+        editor.requestFocusInWindow();
+      }
+      prev = h;
+    });
+  }
+
+  @Override public void insertUpdate(DocumentEvent e) {
+    update();
+  }
+
+  @Override public void removeUpdate(DocumentEvent e) {
+    update();
+  }
+
+  @Override public void changedUpdate(DocumentEvent e) {
+    update();
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `GlassPane` + `JTextField`
+-- `JTextField#setHorizontalAlignment(SwingConstants.CENTER)`を設定して中央揃えが可能
+-- `JTextField`を使用するため`1`行エディタになる
+-- 参考: [[JListのセルに配置したJLabelのテキストを編集する>Swing/ListEditor]]
+- `GlassPane` + `JTextArea`
+-- `JTextArea#setLineWrap(true)`を設定すれば、幅固定で文字列長に応じて行方向に拡大縮小が可能になる
+--- `JTextArea`の折り返しが変化すると推奨サイズの高さが更新される
+-- `JTextArea`を使用するため中央揃えが不可
+--- 本文スタイルに中央揃え属性を設定し、かつ折り返し設定を変更した`JTextPane`で代用可能
+--- [[JTextPaneで中央揃え、行折返し可能なリストセルエディタを作成する>Swing/CenteredMultiRowCellEditor]]に移動
+-- 行数が増加して親`JFrame`外になるとエディタが途切れてしまう
+- `JPopupMenu` + `JTextArea`
+-- 親`JFrame`外にエディタを配置可能
+-- エディタの折り返しが変化すると`JPopupMenu#pack()`を使用して`JPopupMenu`のサイズを`JTextArea`と同じになるよう更新
+--- `JPopupMenu#pack()`を実行すると子の`JTextArea`からフォーカスが移動してしまうので`JTextArea#requestFocusInWindow()`で再設定する必要がある
+--- 親`JFrame`外に表示さている場合(`HeavyWeightWindow`(`JWindow`)に配置されている場合)一瞬親`JFrame`タイトルバーの描画などが乱れる
+-- `JPopupMenu`に`PopupMenuListener`を追加してエディタでの編集のコミットを実行
+-- `JPopupMenu`内の`JTextArea`から`JPopupMenu`を開くことができない
+- `JFrame` + `JTextArea`
+-- `JFrame#setUndecorated(true)`と`JFrame#setAlwaysOnTop(true)`を設定した`JFrame`を`JPopupMenu`の代わりに使用
+--- %%`JFrame`ではなく`JWindow`を使用すると子コンポーネントがフォーカスが取得できない%% [[JWindow内にフォーカス可能なコンポーネントを配置する>Swing/JWindowFocus]]のように所有フレームを表示中の`JFrame`を指定して`JWindow`を作成すれば子コンポーネントがフォーカス取得可能になる
+--- 親`JFrame`がアクティブ`Window`でなくなるためグローバルフォーカスが外れる
+-- `JFrame`内の`JTextArea`から`JPopupMenu`を開くことが可能になる
+-- `JFrame`に`WindowListener`を追加してエディタでの編集のコミットを実行
+--- 編集キャンセルの場合はコミットせずに`JFrame`を非表示にするよう注意が必要
+-- `JFrame`のタイトルバーをクリックしても編集終了できない
+
+* 参考リンク [#reference]
+- [[JListのセルに配置したJLabelのテキストを編集する>Swing/ListEditor]]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextArea.html#setLineWrap-boolean- JTextArea#setLineWrap(boolean) (Java Platform SE 8)]
+- [[JWindow内にフォーカス可能なコンポーネントを配置する>Swing/JWindowFocus]]
+
+* コメント [#comment]
+#comment
+#comment

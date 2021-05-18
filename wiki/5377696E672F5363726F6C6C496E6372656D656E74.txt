@@ -22,23 +22,20 @@ scroll.getVerticalScrollBar().setUnitIncrement(25);
 * 解説 [#explanation]
 `JScrollPane`からスクロールバーを取得し、`JScrollBar#setUnitIncrement(int)`メソッドでユニット増分値(`unitIncrement`)を設定しています。
 
-----
 - `WindowsLookAndFeel`の場合、`JScrollBar#putClientProperty("JScrollBar.fastWheelScrolling", Boolean.TRUE);`を設定するとマウスホイールによるスクロールは高速化(デフォルトと同程度の速度)可能
-
-----
 - `JScrollBar`の`UnitIncrement`と`BlockIncrement`について
 -- [https://tips4java.wordpress.com/2010/01/10/mouse-wheel-controller/ Mouse Wheel Controller « Java Tips Weblog]
 -- `Windows 7`環境での`e.getScrollAmount()`のデフォルト値: `3`
 -- `DesktopProperty`などを経由せず、`OS`のコントロールパネルのマウスのプロパティを直接参照している模様？
 - [https://docs.oracle.com/javase/tutorial/uiswing/events/mousewheellistener.html How to Write a Mouse-Wheel Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]
 -- `scrollPane.getVerticalScrollBar().setBlockIncrement(...)`を設定した場合、その設定した値と`Scroll amount`(デフォルトの`3`固定) × `unit increment(scrollPane.getVerticalScrollBar().getUnitIncrement(...))`のより小さい方がホイールでのスクロール量となる
---- ただし、`scrollPane.getVerticalScrollBar().setBlockIncrement(...)`で設定した値が、`scrollPane.getVerticalScrollBar().getUnitIncrement(...)` より小さい場合は、`UnitIncrement`自体が、ホイールでのスクロール量となる
+--- ただし、`scrollPane.getVerticalScrollBar().setBlockIncrement(...)`で設定した値が`scrollPane.getVerticalScrollBar().getUnitIncrement(...)` より小さい場合は`UnitIncrement`自体がホイールでのスクロール量となる
 --- このため、例えば縦のアイテムを配置する通常の`JList`などのホイールスクロールをスクロールバーの矢印ボタンクリックと同じ`1`行ごとにしたいなら、`scrollPane.getVerticalScrollBar().setBlockIncrement(0)`でも可能
 --- すでに上限、下限近くまでスクロールして余地がない場合などは除く(限界を超えてスクロールなどはしない)
 -- %%`Scrollable#getScrollableUnitIncrement(...)`などをオーバーライドしても、ホイールスクロールには関係ない？(カーソルキー用？)%%
--- `JScrollBar#getClientProperty("JScrollBar.fastWheelScrolling")`が`true`(デフォルト)で、`View`が`JList`などのように`Scrollable`を実装している場合は、`Scrollable#getScrollableUnitIncrement(...)`、`Scrollable#getScrollableBlockIncrement(...)`が使用されている
+-- `JScrollBar#getClientProperty("JScrollBar.fastWheelScrolling")`が`true`(デフォルト)で`View`が`JList`などのように`Scrollable`を実装している場合は`Scrollable#getScrollableUnitIncrement(...)`、`Scrollable#getScrollableBlockIncrement(...)`が使用されている
 --- 詳細は`BasicScrollPaneUI.Handler`を参照
--- マウスのプロパティで「`1`画面ずつスクロールする」にすると、`e.getScrollType()`が`WHEEL_UNIT_SCROLL`から`WHEEL_BLOCK_SCROLL`になり、上記の`3`行×スクロール量(`BasicScrollBarUI.scrollByUnits(...)`)ではなく、`BasicScrollBarUI.scrollByBlock(...)`が使用される
+-- マウスのプロパティで「`1`画面ずつスクロールする」にすると`e.getScrollType()`が`WHEEL_UNIT_SCROLL`から`WHEEL_BLOCK_SCROLL`になり、上記の`3`行×スクロール量(`BasicScrollBarUI.scrollByUnits(...)`)ではなく`BasicScrollBarUI.scrollByBlock(...)`が使用される
 
 #code{{
 import java.awt.*;
@@ -133,6 +130,7 @@ public class WheelScrollTest {
 //           Rectangle visibleRect, int orientation, int direction) {
 //         return 64;
 //       }
+//
 //       @Override public int getScrollableBlockIncrement(
 //           Rectangle visibleRect, int orientation, int direction) {
 //         if (orientation == SwingConstants.VERTICAL) {
@@ -203,6 +201,7 @@ public class WheelScrollTest {
     });
     return list;
   }
+
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
@@ -210,6 +209,7 @@ public class WheelScrollTest {
       }
     });
   }
+
   public static void createAndShowGUI() {
     JFrame f = new JFrame();
     f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

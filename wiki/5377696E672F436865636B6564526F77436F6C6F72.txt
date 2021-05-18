@@ -25,6 +25,7 @@ JTable table = new JTable(model) {
     }
     return cmp;
   }
+
   @Override public Component prepareRenderer(
         TableCellRenderer renderer, int row, int column) {
     Component c = super.prepareRenderer(renderer, row, column);
@@ -40,18 +41,18 @@ JTable table = new JTable(model) {
 * 解説 [#explanation]
 上記のサンプルでは、`JTable`の`prepareEditor`、`prepareRenderer`をオーバーライドして編集中のセルエディタ(`JCheckBox`)や同じ行の背景色を変更しています。
 
-----
-デフォルトのセルレンダラーの場合、例えばチェックボックスがクリックされてモデルが更新されるとその対応するセルのみ再描画されます。このサンプルでは対象セルだけではなく、そのセルが存在する行全体の背景色を変更しているので、`TableModelListener`でモデルの更新を検出し、以下のように`JTable#repaint(...)`メソッドを使って行を再描画しています。
+- デフォルトのセルレンダラーの場合、例えばチェックボックスがクリックされてモデルが更新されるとその対応するセルのみ再描画さる
+- このサンプルでは対象セルだけではなくそのセルが存在する行全体の背景色を変更しているので、`TableModelListener`でモデルの更新を検出し、以下のように`JTable#repaint(...)`メソッドを使って行を再描画
 
 #code{{
 model.addTableModelListener(new TableModelListener() {
   @Override public void tableChanged(TableModelEvent e) {
     if (e.getType() == TableModelEvent.UPDATE) {
-      //rowRepaint(table, table.convertRowIndexToView(e.getFirstRow()));
+      // rowRepaint(table, table.convertRowIndexToView(e.getFirstRow()));
       Rectangle r = table.getCellRect(table.convertRowIndexToView(e.getFirstRow()), 0, true);
       r.width  = table.getWidth();
-      //table.repaint(); //table全体をリペイントする必要はないので
-      table.repaint(r);  //一行だけリペイント
+      // table.repaint(); // table全体をリペイントする必要はないので
+      table.repaint(r);   // 一行だけリペイント
     }
   }
 });

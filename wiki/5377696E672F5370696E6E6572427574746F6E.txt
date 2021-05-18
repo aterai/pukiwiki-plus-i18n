@@ -21,6 +21,7 @@ private static class MySpinnerUI extends BasicSpinnerUI {
     nextButton.setToolTipText("SpinnerUI: next next");
     return nextButton;
   }
+
   @Override protected Component createPreviousButton() {
     JComponent previousButton = (JComponent) super.createPreviousButton();
     previousButton.setToolTipText("SpinnerUI: prev prev");
@@ -44,12 +45,12 @@ private static void searchSpinnerButtons(Container comp) {
 
 * 解説 [#explanation]
 - 上: `BasicSpinnerUI`
--- `BasicSpinnerUI`を継承する`SpinnerUI`を作成し、`createNextButton`、`createPreviousButton`メソッドをオーバーライドして、`ToolTipText`を設定
+-- `BasicSpinnerUI`を継承する`SpinnerUI`を作成し、`createNextButton`、`createPreviousButton`メソッドをオーバーライドして`ToolTipText`を設定
 - 中: `getName()`
--- 名前が`Spinner.nextButton`、`Spinner.previousButton`となっているコンポーネントを検索して、`ToolTipText`を設定
--- `WindowsLookAndFeel`(`XP`スタイル)の場合、`JSpinner`の各ボタンに名前が付けられていないため、正常に動作しない
+-- 名前が`Spinner.nextButton`、`Spinner.previousButton`となっているコンポーネントを検索して`ToolTipText`を設定
+-- `WindowsLookAndFeel`(`XP`スタイル)の場合、`JSpinner`の各ボタンに名前が付けられていないため正常に動作しない
 - 下: `WindowsSpinnerUI`
--- `Windows`環境の場合は`WindowsSpinnerUI`を継承して、それ以外の場合は、名前で検索して`ToolTipText`を設定
+-- `Windows`環境の場合は`WindowsSpinnerUI`を継承してそれ以外の場合は名前で検索して`ToolTipText`を設定
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicSpinnerUI.html#createNextButton-- BasicSpinnerUI#createNextButton() (Java Platform SE 8)]

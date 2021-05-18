@@ -19,6 +19,7 @@ hreflang:
 * サンプルコード [#sourcecode]
 #code(link){{
 class CheckBoxesPanel extends JPanel {
+  private static final String OSNAME = System.getProperty("os.name");
   protected final String[] title = {"r", "w", "x"};
   public JCheckBox[] buttons;
   public CheckBoxesPanel() {
@@ -28,6 +29,7 @@ class CheckBoxesPanel extends JPanel {
     setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     initButtons();
   }
+
   protected void initButtons() {
     buttons = new JCheckBox[title.length];
     for (int i = 0; i < buttons.length; i++) {
@@ -41,7 +43,7 @@ class CheckBoxesPanel extends JPanel {
       add(Box.createHorizontalStrut(5));
     }
   }
-  private static final String OSNAME = System.getProperty("os.name");
+
   protected void updateButtons(Object v) {
     if ("Windows 7".equals(OSNAME)) { //Windows aero?
       removeAll();
@@ -53,25 +55,23 @@ class CheckBoxesPanel extends JPanel {
     buttons[2].setSelected((i & (1 << 0)) != 0);
   }
 }
-}}
 
-#code{{
 class CheckBoxesRenderer extends CheckBoxesPanel
                          implements TableCellRenderer, Serializable {
   public CheckBoxesRenderer() {
     super();
     setName("Table.cellRenderer");
   }
+
   @Override public Component getTableCellRendererComponent(JTable table,
       Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     updateButtons(value);
     return this;
   }
+
   public static class UIResource extends CheckBoxesRenderer implements UIResource {}
 }
-}}
 
-#code{{
 class CheckBoxesEditor extends CheckBoxesPanel
                        implements TableCellEditor, Serializable {
   public CheckBoxesEditor() {
@@ -96,11 +96,13 @@ class CheckBoxesEditor extends CheckBoxesPanel
     im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), title[1]);
     im.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, 0), title[2]);
   }
+
   @Override public Component getTableCellEditorComponent(JTable table,
         Object value, boolean isSelected, int row, int column) {
     updateButtons(value);
     return this;
   }
+
   @Override public Object getCellEditorValue() {
     int i = 0;
     if (buttons[0].isSelected()) i |= 1 << 2;
@@ -109,17 +111,17 @@ class CheckBoxesEditor extends CheckBoxesPanel
     return i;
   }
 
-  //Copied from AbstractCellEditor
+  // Copied from AbstractCellEditor
   protected EventListenerList listenerList = new EventListenerList();
   transient protected ChangeEvent changeEvent = null;
   // ...
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTable`のセル内に`3`つの`JCheckBox`を配置した`JPanel`を作成し、これを`CellRenderer`と`CellEditor`として別々に使用しています。`JCheckBox`をマウスでクリックすると、直下にある`JCheckBox`の選択状態だけが変化します。
-
-----
-編集中にカラムヘッダの移動、リサイズ(`JFrame`などのリサイズに連動)などが発生してもチェックした内容がリセットされないように、`CellEditor`のチェックボックスがクリックされたら`fireEditingStopped()`メソッドを呼び出して編集を終了し更新を確定しています。
+- `JTable`のセル内に`3`つの`JCheckBox`を配置した`JPanel`を作成
+-- この`JPanel`を`CellRenderer`用と`CellEditor`用として別々に使用
+- `JCheckBox`をマウスでクリックすると直下にある`JCheckBox`の選択状態のみ更新
+- 編集中にカラムヘッダの移動、リサイズ(`JFrame`などのリサイズに連動)などが発生してもチェックした内容がリセットされないように`CellEditor`のチェックボックスがクリックされたら`fireEditingStopped()`メソッドを呼び出して編集を終了し更新を確定する
 
 * 参考リンク [#reference]
 - [[JTableのセル中にJRadioButtonを配置>Swing/RadioButtonsInTableCell]]

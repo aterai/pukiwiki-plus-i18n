@@ -17,7 +17,7 @@ image: https://lh4.googleusercontent.com/-_zdaiM8x6a4/VAxzwh3xxFI/AAAAAAAACM0/hB
 #code(link){{
 UIManager.put("SplitPane.oneTouchButtonSize", 32);
 UIManager.put("SplitPane.oneTouchButtonOffset", 50);
-//UIManager.put("SplitPane.centerOneTouchButtons", true);
+// UIManager.put("SplitPane.centerOneTouchButtons", true);
 
 UIManager.put("SplitPaneDivider.border", BorderFactory.createLineBorder(Color.RED, 10));
 UIManager.put("SplitPaneDivider.draggingColor", new Color(255, 100, 100, 100));
@@ -38,20 +38,20 @@ for (Component c: divider.getComponents()) {
 - `OneTouchButton`のサイズ指定
 -- `UIManager.put("SplitPane.oneTouchButtonSize", 32);`
 -- `MetalLookAndFeel`では無効
--- `NimbusLookAndFeel`では無効で、`Divider`のサイズに依存？
+-- `NimbusLookAndFeel`では無効で`Divider`のサイズに依存？
 - `OneTouchButton`のオフセット指定
 -- `UIManager.put("oneTouchButtonOffset", 50);`
--- `JSplitPane.VERTICAL_SPLIT`の場合、`Divider`の左端から`LeftOneTouchButton`までの距離が設定可能
--- `NimbusLookAndFeel`のデフォルトは、`30`になっているため、`JSplitPane.HORIZONTAL_SPLIT`で`Divider`の高さがそれ以下の場合は、`OneTouchButton`が表示できない
+-- `JSplitPane.VERTICAL_SPLIT`の場合`Divider`の左端から`LeftOneTouchButton`までの距離が設定可能
+-- `NimbusLookAndFeel`のデフォルトは`30`になっているため`JSplitPane.HORIZONTAL_SPLIT`で`Divider`の高さがそれ以下の場合は`OneTouchButton`が表示できない
 - `OneTouchButton`の背景色
--- `JButton#paint(...)`がオーバーライドされて、`oneTouchButton.getBackground()`の色で塗り潰されている(`oneTouchButton.setOpaque(false)`で透明にしても無意味)ので、`setBackground()`で、`Divider`の背景色と同じ色を設定
+-- `JButton#paint(...)`がオーバーライドされて`oneTouchButton.getBackground()`の色で塗り潰されている(`oneTouchButton.setOpaque(false)`で透明にしても無意味)ので`setBackground()`で`Divider`の背景色と同じ色を設定
 --- `OneTouchButton`の色や形は`JButton#paint(...)`の中で直接描画(`Color.BLACK`固定)されているため変更しづらい(`BasicSplitPaneUI`や`BasicSplitPaneDivider`をオーバーライドする必要がある)
 -- `MetalLookAndFeel`、`NimbusLookAndFeel`では無効
 - `OneTouchButton`の中央揃え
 -- `UIManager.put("SplitPane.centerOneTouchButtons", true);`
--- `MetalLookAndFeel`、`MotifLookAndFeel`、`WindowsLookAndFeel`、`NimbusLookAndFeel`などでは、効果が無い
-- `Divider`の`Border`と、`OneTouchButton`
--- `divider.setBorder(BorderFactory.createMatteBorder(20, 0, 5, 0, Color.RED));`などを設定すると、`OneTouchButton`が`Border`にめり込んでしまう？
+-- `MetalLookAndFeel`、`MotifLookAndFeel`、`WindowsLookAndFeel`、`NimbusLookAndFeel`などでは効果が無い
+- `Divider`の`Border`と`OneTouchButton`
+-- `divider.setBorder(BorderFactory.createMatteBorder(20, 0, 5, 0, Color.RED));`などを設定すると`OneTouchButton`が`Border`にめり込んでしまう？
 
 * 参考リンク [#reference]
 - [[JSplitPaneのディバイダを展開、収納する>Swing/OneTouchExpandable]]

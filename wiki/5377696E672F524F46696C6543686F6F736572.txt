@@ -15,7 +15,15 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTR_zuU1UI/AAAAAAAAAiE/nZ
 
 * サンプルコード [#sourcecode]
 #code(link){{
-UIManager.put("FileChooser.readOnly", Boolean.TRUE);
+JButton readOnlyButton = new JButton("readOnly");
+readOnlyButton.addActionListener(e -> {
+  UIManager.put("FileChooser.readOnly", Boolean.TRUE);
+  JFileChooser fileChooser = new JFileChooser();
+  int retValue = fileChooser.showOpenDialog(getRootPane());
+  if (retValue == JFileChooser.APPROVE_OPTION) {
+    log.setText(fileChooser.getSelectedFile().getAbsolutePath());
+  }
+});
 }}
 
 * 解説 [#explanation]

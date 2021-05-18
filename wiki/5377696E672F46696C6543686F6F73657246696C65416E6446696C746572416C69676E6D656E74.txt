@@ -19,6 +19,7 @@ class RightAlignmentMetalFileChooserUI extends MetalFileChooserUI {
   protected RightAlignmentMetalFileChooserUI(JFileChooser fc) {
     super(fc);
   }
+
   @Override public void installComponents(JFileChooser fc) {
     super.installComponents(fc);
     SwingUtils.stream(getBottomPanel())
@@ -35,6 +36,7 @@ class RightAlignmentWindowsFileChooserUI extends WindowsFileChooserUI {
   protected RightAlignmentWindowsFileChooserUI(JFileChooser fc) {
     super(fc);
   }
+
   @Override public void installComponents(JFileChooser fc) {
     super.installComponents(fc);
     SwingUtils.stream(getBottomPanel())
@@ -51,7 +53,7 @@ class RightAlignmentWindowsFileChooserUI extends WindowsFileChooserUI {
 --- ファイル名ラベルとファイル名入力欄を配置した`fileNamePanel`(`BoxLayout.LINE_AXIS`)
 --- ファイルフィルタラベルとファイルフィルタコンボボックスを配置した`filesOfTypePanel`(`BoxLayout.LINE_AXIS`)
 --- `approveButton`などを配置した`ButtonPanel`(`FlowLayout`風の独自`ButtonAreaLayout`)
--- 各ラベルの推奨サイズを文字列の長い方に合わせることで、別パネルに分かれていても位置が揃うように設定されているため、`JLabel#setHorizontalAlignment(SwingConstants.RIGHT)`で右揃えに変更可能
+-- 各ラベルの推奨サイズを文字列の長い方に合わせることで別パネルに分かれていても位置が揃うように設定されているため、`JLabel#setHorizontalAlignment(SwingConstants.RIGHT)`で右揃えに変更可能
 - `WindowsLookAndFeel`
 -- `WindowsFileChooserUI#getBottomPanel()`で取得できる`JPanel`のレイアウトを`BoxLayout.LINE_AXIS`に設定し、以下の`3`つの`JPanel`を横並びで配置
 --- ファイル名ラベルとファイル名入力欄を配置した`fileNamePanel`(`BoxLayout.Y_AXIS`)

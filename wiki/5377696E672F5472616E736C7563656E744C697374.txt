@@ -101,10 +101,10 @@ class ListItemListCellRenderer<E extends ListItem> implements ListCellRenderer<E
 
 * 解説 [#explanation]
 - `JList`、`JScrollPane`にアルファ値`0`で完全に透明な背景色を設定
-- `JList`、`JScrollPane`、`JViewport`を`setOpaque(false)`で透明化
+- `JList`、`JScrollPane`、`JViewport`に`setOpaque(false)`を設定して透明化
 -- `JList`を`setOpaque(true)`で不透明化した場合、`ListSelectionListener`などで選択が変更されたら再描画する必要がある
 -- `JViewport`を`setOpaque(true)`で不透明化した場合、`ChangeListener`でスクロールが発生したら再描画する必要がある
-- `ListCellRenderer`を`setOpaque(false)`で透明化
+- `ListCellRenderer`に`setOpaque(false)`を設定して透明化
 -- `ListCellRenderer`の選択色を`paintComponent(...)`メソッドをオーバーライドして半透明で描画
 
 * 参考リンク [#reference]

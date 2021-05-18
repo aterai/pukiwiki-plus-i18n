@@ -27,6 +27,7 @@ class ComboCellRenderer extends JComboBox implements TableCellRenderer {
     editor.setBorder(BorderFactory.createEmptyBorder());
     editor.setOpaque(true);
   }
+
   @Override public Component getTableCellRendererComponent(JTable table,
       Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     removeAllItems();
@@ -46,11 +47,10 @@ class ComboCellRenderer extends JComboBox implements TableCellRenderer {
 * 解説 [#explanation]
 上記のサンプルでは、`1`列目(中央)のセルの表示を`JComboBox`にするために、これを継承するセルレンダラーを設定しています。この列はセルエディタも`JComboBox`ですが、セルレンダラーとは別の`JComboBox`のインスタンスを使用しています。
 
-セルレンダラーで使用する`JComboBox`は、セルの表示のみに使用するため、以下のように設定しています。
-
-- 表示用のアイテム(文字列)を一つだけ持つ
-- 編集可にして`EditorComponent`の背景色などを他のセルと同様になるように変更
-- セル内にきれいに収まるように余白を`0`に設定
+- セルレンダラーとして使用する`JComboBox`はセルの表示のみに使用するため、以下のように設定
+-- 表示用のアイテム(文字列)を一つだけ持つ
+-- 編集可にして`EditorComponent`の背景色などを他のセルと同様になるように変更
+-- セル内にきれいに収まるように余白を`0`に設定
 
 * 参考リンク [#reference]
 - [[JTableのCellEditorにJComboBoxを設定>Swing/ComboCellEditor]]

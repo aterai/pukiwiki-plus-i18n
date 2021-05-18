@@ -21,7 +21,6 @@ class EditableTitledBorder extends TitledBorder implements MouseListener {
   protected final JLabel dummy = new JLabel();
   protected final Rectangle rect = new Rectangle();
   protected Component comp;
-
   protected final Action startEditing = new AbstractAction() {
     @Override public void actionPerformed(ActionEvent e) {
       if (comp instanceof JComponent) {
@@ -57,16 +56,16 @@ class EditableTitledBorder extends TitledBorder implements MouseListener {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`TitledBorder`のタイトルをマウスでダブルクリックすると、`GlassPane`に配置した`JTextField`を重ねて表示されてタイトル文字列が編集可能になります。
+上記のサンプルでは、`TitledBorder`のタイトルをマウスでダブルクリックすると`GlassPane`に配置した`JTextField`を重ねて表示されてタイトル文字列が編集可能になります。
 
 - タイトル文字列をダブルクリックで編集開始
 - `JTextField`にフォーカスがある状態でKBD{Enter}キーを入力すると編集完了
 - `JTextField`にフォーカスがある状態でKBD{ESC}キーで編集をキャンセル
 
 ----
-- `TitledBorder`のタイトルは`JLabel`で表示されているが、`private`なのでその位置やサイズの取得が不可
-- 以下のように`TitledBorder#paintBorder(...)`メソッドから、`JLabel`の位置、サイズを計算しているコードを抜き出してその領域を取得
-- 所得した領域内でダブルクリックされたら編集を開始し、`JTextField`の表示位置とサイズをその領域に合わせて`GlassPane`上に表示
+- `TitledBorder`のタイトルは`JLabel`を使用して描画されているが`private`なのでその位置やサイズの取得が不可
+- 以下のように`TitledBorder#paintBorder(...)`メソッドから`JLabel`の位置、サイズを計算しているコードを抜き出してその領域を取得
+- 所得した領域内でダブルクリックされたら編集を開始し`JTextField`の表示位置とサイズをその領域に合わせて`GlassPane`上に表示
 
 #code{{
 private Rectangle getTitleBounds(Component c, int x, int y, int width, int height) {

@@ -66,9 +66,12 @@ JComboBox<String> combo2 = new JComboBox<String>(model) {
 -- `JComboBox#getAccessibleContext()#getAccessibleChild(0)`で`ComboPopup`を取得
 -- `ComboPopup#getList()`メソッドでドロップダウンリストで使用される`JList`を取得
 -- `JList#setSelectionForeground(...)`、`JList#setSelectionBackground(...)`メソッドを使用してその選択背景色と選択文字色を変更
+-- `MetalLookAndFeel`で編集不可の`JComboBox`の場合、`JComboBox`本体の選択背景色も変更される
 - `DefaultListCellRenderer`
 -- 参考: [[JComboBoxの文字色を変更する>Swing/ComboBoxForegroundColor]]
 -- `DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドして選択背景色と選択文字色を変更
+-- `MetalLookAndFeel`で編集不可の`JComboBox`の場合、`JComboBox`本体の選択背景色は変更されない
+--- このサンプルの場合、ドロップダウンリストの選択背景色に設定したオレンジ色ではなく`UIManager.put("ComboBox.selectionBackground", Color.PINK)`で設定したピンク色になる
 -- `JComboBox`本体のフォーカス時の`Border`(`WindowsLookAndFeel`の場合は`WindowsBorders.DashedBorder`)が非表示になる
 --- 回避方法: セルの描画を`DefaultListCellRenderer`を継承するレンダラーではなく、`JComboBox#getRenderer()`で取得した`LookAndFeel`のデフォルトセルレンダラーに移譲するなどの方法がある
 #code{{

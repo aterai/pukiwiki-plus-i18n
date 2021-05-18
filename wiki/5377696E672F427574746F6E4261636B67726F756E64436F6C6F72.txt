@@ -1,0 +1,97 @@
+---
+category: swing
+folder: ButtonBackgroundColor
+title: JButtonの背景色を変更する
+tags: [JButton, WindowsLookAndFeel, JLayer, Icon]
+author: aterai
+pubdate: 2021-01-25T04:39:52+09:00
+description: WidowsLookAndFeel環境でJButtonの背景色を変更する方法をテストします。
+image: https://drive.google.com/uc?id=1P4tMuLjciT6PKLvAv8nTYFL9IwpgABDU
+---
+* 概要 [#summary]
+`WidowsLookAndFeel`環境で`JButton`の背景色を変更する方法をテストします。
+
+#download(https://drive.google.com/uc?id=1P4tMuLjciT6PKLvAv8nTYFL9IwpgABDU)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JButton button4 = new JButton("JLayer + RGBImageFilter");
+JComponent c = new JLayer<>(button4, new ImageFilterLayerUI<>(new ColorFilter()));
+// ...
+class ImageFilterLayerUI<V extends Component> extends LayerUI<V> {
+  private final transient ImageFilter filter;
+  private transient BufferedImage buf;
+
+  protected ImageFilterLayerUI(ImageFilter filter) {
+    super();
+    this.filter = filter;
+  }
+
+  @Override public void paint(Graphics g, JComponent c) {
+    if (c instanceof JLayer) {
+      Dimension d = ((JLayer<?>) c).getView().getSize();
+      buf = Optional.ofNullable(buf)
+          .filter(bi -> bi.getWidth() == d.width && bi.getHeight() == d.height)
+          .orElseGet(() -> new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB));
+      Graphics2D g2 = buf.createGraphics();
+      super.paint(g2, c);
+      g2.dispose();
+      Image image = c.createImage(new FilteredImageSource(buf.getSource(), filter));
+      g.drawImage(image, 0, 0, null);
+    } else {
+      super.paint(g, c);
+    }
+  }
+}
+
+class ColorFilter extends RGBImageFilter {
+  @Override public int filterRGB(int x, int y, int argb) {
+    int r = 0xFF; // (argb >> 16) & 0xFF;
+    int g = (argb >> 8) & 0xFF;
+    int b = argb & 0xFF;
+    return (argb & 0xFF_00_00_00) | (r << 16) | (g << 8) | b;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- 背景色変更なしのデフォルト`JButton`
+- `setBackground`
+-- `JButton#setBackground(...)`で背景色を変更
+-- `WindowsLookAndFeel`の場合ボタンの外周にのみ背景色が着く
+- `override paintComponent`
+-- `JButton#setContentAreaFilled(false)`を設定し、さらに`JButton#paintComponent(...)`をオーバーライドして独自にボタン背景やフチを描画
+#code{{
+JButton button2 = new JButton("override paintComponent") {
+  @Override protected void paintComponent(Graphics g) {
+    // paint background, border
+    // ...
+    super.paintComponent(g);
+  }
+};
+button2.setContentAreaFilled(false);
+}}
+
+- `setIcon + setPressedIcon`
+-- サイズが`0`で自身の背景ではなく親コンポーネントの背景を描画する`Icon`を作成し、`JButton#setIcon(...)`や`JButton#setPressedIcon(...)`で設定
+#code{{
+JButton button3 = new JButton("setIcon + setPressedIcon");
+button3.setBackground(bg1);
+button3.setBorderPainted(false);
+button3.setIcon(new ButtonBackgroundIcon(bg2));
+button3.setPressedIcon(new ButtonBackgroundIcon(bg1));
+// button3.setHorizontalTextPosition(SwingConstants.CENTER);
+}}
+
+- `JLayer + RGBImageFilter`
+-- `JLayer`で`JButton`全体を`ImageFilter`で色変換した画像に入れ替えて描画
+-- フォアグラウンド・カラーも変更されてしまう
+-- 参考: [[JLayerを使ってJProgressBarの色相を変更する>Swing/ColorChannelSwapFilter]]
+
+* 参考リンク [#reference]
+- [[JLayerを使ってJProgressBarの色相を変更する>Swing/ColorChannelSwapFilter]]
+
+* コメント [#comment]
+#comment
+#comment

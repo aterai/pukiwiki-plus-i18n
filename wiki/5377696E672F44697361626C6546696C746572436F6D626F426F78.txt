@@ -1,0 +1,53 @@
+---
+category: swing
+folder: DisableFilterComboBox
+title: JFileChooserがディレクトリ選択モードの場合ファイルフィルタ用のJComboBoxを無効化する
+tags: [JFileChooser, JComboBox, JLabel]
+author: aterai
+pubdate: 2020-11-02T02:22:30+09:00
+description: JFileChooserがディレクトリのみ選択可能に設定されている場合、ファイルフィルタ用のJComboBoxを無効化します。
+image: https://drive.google.com/uc?id=1Ed1zBEdBgvUiUOVeBr4rXbopF_1aJgBg
+---
+* 概要 [#summary]
+`JFileChooser`がディレクトリのみ選択可能に設定されている場合、ファイルフィルタ用の`JComboBox`を無効化します。
+
+#download(https://drive.google.com/uc?id=1Ed1zBEdBgvUiUOVeBr4rXbopF_1aJgBg)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+boolean f = fileChooser.getFileSelectionMode() != JFileChooser.DIRECTORIES_ONLY;
+fileChooser.setAcceptAllFileFilterUsed(f);
+String labelText = UIManager.getString(
+    "FileChooser.filesOfTypeLabelText", fileChooser.getLocale());
+SwingUtils.descendants(fileChooser)
+    .filter(JLabel.class::isInstance).map(JLabel.class::cast)
+    .forEach(label -> {
+      if (labelText.equals(label.getText())) {
+        Component c = label.getLabelFor();
+        label.setEnabled(f);
+        if (c instanceof JComboBox<?>) {
+          JComboBox<?> combo = (JComboBox<?>) c;
+          combo.setEnabled(f);
+          ((JComponent) combo.getRenderer()).setOpaque(f);
+        }
+      }
+    });
+}}
+
+* 解説 [#explanation]
+- 上: `JFileChooser.FILES_AND_DIRECTORIES`、`JFileChooser.FILES_ONLY`
+-- ファイルフィルタを選択して拡張子などで表示ファイルを絞り込むことが可能
+- 下: `JFileChooser.DIRECTORIES_ONLY`
+-- ディレクトリのみ表示されるのでファイルフィルタはあまり意味がない
+-- `JFileChooser`以下のコンポーネントを検索してテキストが`UIManager.getString("FileChooser.filesOfTypeLabelText", fileChooser.getLocale())`(日本語環境の場合「ファイルのタイプ」)と一致する`JLabel`を取得し、`JLabel.getLabelFor()`メソッドで割り当てられているコンポーネント(この場合`JComboBox`)を無効化
+-- `WindowsLookAndFeel`環境などでファイルフィルタ用の`JComboBox`を無効化する場合、レンダラーを透明化すると矢印ボタンとテキストエリアの無効化状態の背景色を揃えることが可能
+-- `JFileChooser#setAcceptAllFileFilterUsed(false)`で`AcceptAll`ファイルフィルタの説明(日本語環境の場合「すべてのファイル」)も非表示に設定
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/64551354/jfilechooserdialog-shows-filetype-filter-when-set-to-directory-only java - JFileChooserDialog shows filetype filter when set to directory only - Stack Overflow]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JFileChooser.html#FILES_ONLY JFileChooser.FILES_ONLY (Java Platform SE 8)]
+-- 「ファイルだけを表示する命令です。」と説明されているが、ファイルもディレクトリも表示は可能でファイルは選択可能、ディレクトリは選択でそのディレクトリに移動するだけになる
+
+* コメント [#comment]
+#comment
+#comment

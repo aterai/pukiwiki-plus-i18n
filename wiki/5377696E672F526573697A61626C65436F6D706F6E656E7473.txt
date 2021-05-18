@@ -55,18 +55,18 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRw-M85QI/AAAAAAAAAhs/BF
 * 解説 [#explanation]
 上記のサンプルでは、ツールバーやポップアップメニューから、移動、リサイズ可能な`JTable`や`JTree`を`JLayeredPane`(`JLayeredPane`のデフォルトレイアウトマネージャは`null`)に追加できます。
 
-- リサイズボーダーの描画などは、[http://www.jroller.com/santhosh/entry/resizable_components Resizable Components - Santhosh Kumar's Weblog]を参考
-- マウスのドラッグによる移動、リサイズの最大値、最小値の制限などは、`%JAVA_HOME%/src/javax/swing/plaf/basic/BasicInternalFrameUI.java`からの引用
+- リサイズボーダーの描画などは[http://www.jroller.com/santhosh/entry/resizable_components Resizable Components - Santhosh Kumar's Weblog]を参考
+- マウスのドラッグによる移動、リサイズの最大値、最小値の制限などは`%JAVA_HOME%/src/javax/swing/plaf/basic/BasicInternalFrameUI.java`からの引用
 
 ----
-- `JDK1.5`では、`JLayeredPane#setComponentPopupMenu`を使う場合、以下のようにダミーのマウスリスナーなどを追加しておく必要がある
+- `JDK1.5`で`JLayeredPane#setComponentPopupMenu`を使う場合、以下のようにダミーのマウスリスナーなどを追加しておく必要がある？
 #code{{
 layer.setComponentPopupMenu(new MyPopupMenu());
 layer.addMouseListener(new MouseAdapter() {});
 }}
 
 ----
-- `JDK1.6`では、背面にある`JTable`のヘッダが前面にロールオーバーする場合がある
+- `JDK1.6`では背面にある`JTable`のヘッダが前面にロールオーバーする場合がある
 -- `JInternalFrame`が存在する場合は自動的に`JLayeredPane#isOptimizedDrawingEnabled()`が`false`になるよう変更されが、このサンプルでは`JTable`などを直接`JLayeredPane`に配置しているためこの現象が発生する
 -- 以前のように`JLayeredPane#isOptimizedDrawingEnabled()`が常に`false`を返すようオーバーライドすれば回避可能
 -- 参考: [[Component上に重ねて配置したダイアログの表示状態をアニメーション付きで切り替える>Swing/OverlayBorderLayout]]

@@ -9,7 +9,7 @@ description: JTextPaneのStyledDocumentが使用するパラグラフ属性と�
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTUxfmvVtI/AAAAAAAAAmk/hIXOEpGYKYw/s800/TabSize.png
 ---
 * 概要 [#summary]
-`JTextPane`の`StyledDocument`が使用するパラグラフ属性として、タブストップが展開する文字数を設定します。[https://community.oracle.com/thread/1507037 Swing (Archive) - tabsize in JTextPane]からの引用です。
+`JTextPane`の`StyledDocument`が使用するパラグラフ属性として、タブストップが展開する文字数を設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTUxfmvVtI/AAAAAAAAAmk/hIXOEpGYKYw/s800/TabSize.png)
 
@@ -31,7 +31,7 @@ textpane.getStyledDocument().setParagraphAttributes(0, l, attrs, false);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTextPane`から`StyledDocument`を取得し、`TabStop`から作成した`TabSet`をパラグラフ属性として追加することで、タブの幅を指定しています。
+上記のサンプルでは、`JTextPane`から`StyledDocument`を取得し、`TabStop`から作成した`TabSet`をパラグラフ属性として追加することでタブの幅を指定しています。
 
 - `JTextArea`では`JTextArea#setTabSize(...)`メソッドでタブサイズの指定が可能
 - `JTextPane`ではパラグラフ属性でタブサイズを指定する必要がある

@@ -74,8 +74,8 @@ toolbar.add(Box.createGlue());
 
 - このサンプルの`JToolBar`は親`JFrame`の左右にのみドッキング可能に制限
 -- [[JToolBarのドッキングを上下のみに制限>Swing/DockingConstraint]]
-- `JToolBar`がドラッグ・アウトされているかどうかは、`BasicToolBarUI#isFloating()`メソッドで判断
-- `getPreferredSize()`メソッドが実行されたときに、推奨サイズの変更と合わせて`LayoutManager`の切り替えを行う
+- `JToolBar`がドラッグ・アウトされているかどうかは`BasicToolBarUI#isFloating()`メソッドで判断
+- `getPreferredSize()`メソッドが実行されたときに推奨サイズの変更と合わせて`LayoutManager`の切り替えを行う
 -- `AncestorListener#ancestorAdded(...)`が実行されたときに`LayoutManager`の切り替えを行う方法もあるが、ドラッグ・アウト継続中に`JToolBar`の縦横が変化する場合に対応できない
 -- `JToolBar#getPreferredSize()`をオーバーライドした場合、ドラッグ・アウトされた`JToolBar`のサイズが`JToolBar`の親`JDialog`まで拡大されてしまう
 -- `JToolBar`の親`JDialog`のサイズは固定？で変更できないので、`JToolBar`の子に`JPanel`を挟んでこの`JPanel#getPreferredSize()`メソッドをオーバーライドし、`LayoutManager`を切り替えることで回避(ドラッグ・アウトされた`JToolBar`の左右に余白を設ける)

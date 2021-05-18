@@ -1,0 +1,61 @@
+---
+category: swing
+folder: ResizableHorizontalScrollBar
+title: JTableの水平JScrollBarをリサイズ可能にするためJSplitPaneに再配置する
+tags: [JScrollBar, JSplitPane, JTable, JScrollPane]
+author: aterai
+pubdate: 2021-04-12T03:23:04+09:00
+description: JTableを配置したJScrollPaneから水平JScrollBarを取り出し、JSplitPaneに再配置してリサイズ可能にします。
+image: https://drive.google.com/uc?id=182ApSMU7uEGWzk3ANEO3L_RRDbn7U2W7
+---
+* 概要 [#summary]
+`JTable`を配置した`JScrollPane`から水平`JScrollBar`を取り出し、`JSplitPane`に再配置してリサイズ可能にします。
+
+#download(https://drive.google.com/uc?id=182ApSMU7uEGWzk3ANEO3L_RRDbn7U2W7)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+DefaultTableModel m1 = new DefaultTableModel(100, 256);
+JTable table = new JTable(m1);
+table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+JScrollPane scroll = new JScrollPane(table);
+scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+JPanel panel = new JPanel(new BorderLayout());
+panel.setOpaque(false);
+panel.setBorder(BorderFactory.createEmptyBorder(3, 0, 0, 0));
+panel.add(scroll.getHorizontalScrollBar());
+
+JSplitPane horizontalBox = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+horizontalBox.setBackground(Color.WHITE);
+horizontalBox.setLeftComponent(box);
+horizontalBox.setRightComponent(panel);
+horizontalBox.setContinuousLayout(true);
+horizontalBox.setBorder(BorderFactory.createEmptyBorder());
+EventQueue.invokeLater(() -> horizontalBox.setDividerLocation(.4));
+
+JLabel tripleColon = new JLabel("⫶");
+tripleColon.setForeground(Color.GRAY);
+tripleColon.setBorder(BorderFactory.createEmptyBorder(3, 0, 0, 0));
+
+BasicSplitPaneDivider divider = ((BasicSplitPaneUI) horizontalBox.getUI()).getDivider();
+divider.setLayout(new BorderLayout());
+divider.setBorder(BorderFactory.createEmptyBorder());
+divider.setBackground(Color.WHITE);
+divider.add(tripleColon);
+divider.setDividerSize(8);
+}}
+
+* 解説 [#explanation]
+- `JTable`を`JScrollPane`に追加し`JScrollPane#getHorizontalScrollBar()`で水平スクロールバーを取得
+- `JSplitPane`の右コンポーネントとして上記の水平スクロールバーを再配置
+-- `JSplitPane`の`Divider`をマウスでドラッグして水平スクロールバーの幅を変更可能
+- `JSplitPane`の左コンポーネントとして`JTable`のモデル切り替えを実行する`JRadioButton`などを配置
+-- `JTable`のモデル切り替えで`JSplitPane`に移動した水平スクロールバーの`BoundedRangeModel`も自動的に更新される
+
+* 参考リンク [#reference]
+- [[JScrollBarをJScrollPaneの左と上に配置>Swing/LeftScrollBar]]
+
+* コメント [#comment]
+#comment
+#comment

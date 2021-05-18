@@ -22,23 +22,26 @@ class HandScrollListener extends MouseAdapter {
   private final Cursor defCursor = Cursor.getDefaultCursor();
   private final Cursor hndCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
   private final Point pp = new Point();
+
   @Override public void mouseDragged(MouseEvent e) {
     JViewport vport = (JViewport) e.getComponent();
     Point cp = e.getPoint();
     Point vp = vport.getViewPosition();
-           //= SwingUtilities.convertPoint(vport, 0, 0, label);
+          // = SwingUtilities.convertPoint(vport, 0, 0, label);
     vp.translate(pp.x - cp.x, pp.y - cp.y);
-    //if (r1.isSelected()) {
+    // if (r1.isSelected()) {
     label.scrollRectToVisible(new Rectangle(vp, vport.getSize()));
-    //} else {
-    //  vport.setViewPosition(vp);
-    //}
+    // } else {
+    //   vport.setViewPosition(vp);
+    // }
     pp.setLocation(cp);
   }
+
   @Override public void mousePressed(MouseEvent e) {
     e.getComponent().setCursor(hndCursor);
     pp.setLocation(e.getPoint());
   }
+
   @Override public void mouseReleased(MouseEvent e) {
     e.getComponent().setCursor(defCursor);
   }
@@ -48,7 +51,7 @@ class HandScrollListener extends MouseAdapter {
 * 解説 [#explanation]
 `JViewport`の原点(左上)をマウスの移動に応じて変更し、`JComponent#scrollRectToVisible`メソッドの引数として使用して覗き窓のスクロールを行っています。
 
-- `JComponent#scrollRectToVisible(...)`ではなく`JViewport#setViewPosition(Point)`を使用すると、内部コンポーネントの外側に移動可能
+- `JComponent#scrollRectToVisible(...)`ではなく`JViewport#setViewPosition(Point)`を使用すると内部コンポーネントの外側に移動可能
 
 * 参考リンク [#reference]
 - [[JScrollPaneのオートスクロール>Swing/AutoScroll]]

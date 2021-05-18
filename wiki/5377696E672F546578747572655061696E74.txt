@@ -15,13 +15,16 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTVUeXC5lI/AAAAAAAAAnc/CW
 
 * サンプルコード [#sourcecode]
 #code(link){{
-BufferedImage bi;
-try {
-  bi = ImageIO.read(getClass().getResource("16x16.png"));
-} catch (IOException ex) {
-  ex.printStackTrace();
-  bi = makeMissingImage();
-}
+String path = "example/16x16.png";
+ClassLoader cl = Thread.currentThread().getContextClassLoader();
+BufferedImage bi = Optional.ofNullable(cl.getResource(path)).map(url -> {
+  try (InputStream s = url.openStream()) {
+    return ImageIO.read(s);
+  } catch (IOException ex) {
+    ex.printStackTrace();
+    return makeMissingImage();
+  }
+}).orElseGet(MainPanel::makeMissingImage);
 texture = new TexturePaint(bi, new Rectangle(bi.getWidth(), bi.getHeight()));
 panel = new JPanel() {
   @Override protected void paintComponent(Graphics g) {

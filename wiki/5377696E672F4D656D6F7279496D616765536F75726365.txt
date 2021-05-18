@@ -18,6 +18,7 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPu_OEqoI/AAAAAAAAAec/z6
 int[] pixels = new int[320 * 240];
 MemoryImageSource source = new MemoryImageSource(320, 240, pixels, 0, 320);
 int penc = 0x0;
+// ...
 @Override protected void paintComponent(Graphics g) {
   super.paintComponent(g);
   if (backImage != null) {
@@ -27,6 +28,7 @@ int penc = 0x0;
     g.drawImage(createImage(source), 0, 0, null);
   }
 }
+
 @Override public void mouseDragged(MouseEvent e) {
   Point pt = e.getPoint();
   double xDelta = e.getX() - startPoint.getX();
@@ -55,6 +57,7 @@ int penc = 0x0;
   }
   startPoint = pt;
 }
+
 @Override public void mousePressed(MouseEvent e) {
   startPoint = e.getPoint();
   penc = (e.getButton() == MouseEvent.BUTTON1) ? 0xff000000 : 0x0;
@@ -63,10 +66,10 @@ int penc = 0x0;
 
 * 解説 [#explanation]
 上記のサンプルでは、左クリックしてからドラッグすると黒、右クリックしてからドラッグすると透過色(`0xff000000`、消しゴム)で、自由曲線を描画できます。
-`MemoryImageSource`に設定した画像の各ピクセルを表す`int`配列を、マウスのドラッグに応じて操作して`Image`を作成しています。
+`MemoryImageSource`に設定した画像の各ピクセルを表す`int`配列をマウスのドラッグに応じて操作して`Image`を作成しています。
 
 ----
-以下のように、`AlphaComposite.Clear`を使用する方法もあります。
+- 以下のように`AlphaComposite.Clear`を使用する方法もある
 
 #code{{
 private static final Color ERASER = new Color(0x0, true);
@@ -83,6 +86,7 @@ private BufferedImage backImage = null;
     g.drawImage(currentImage, 0, 0, this);
   }
 }
+
 @Override public void mouseDragged(MouseEvent e) {
   Point pt = e.getPoint();
   Graphics2D g2d = currentImage.createGraphics();
@@ -98,6 +102,7 @@ private BufferedImage backImage = null;
   startPoint = pt;
   repaint();
 }
+
 @Override public void mousePressed(MouseEvent e) {
   startPoint = e.getPoint();
   isPen = e.getButton() == MouseEvent.BUTTON1;

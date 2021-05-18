@@ -25,6 +25,7 @@ switch (vo) {
   case BOTTOM:           border.setTitlePosition(TitledBorder.BOTTOM);           break;
   case BELOW_BOTTOM:     border.setTitlePosition(TitledBorder.BELOW_BOTTOM);     break;
 }
+
 Justification jc = (Justification) justificationChoices.getSelectedItem();
 switch (jc) {
   case DEFAULT_JUSTIFICATION: border.setTitleJustification(
@@ -49,7 +50,6 @@ panel.repaint();
 -- `TitledBorder.ABOVE_BOTTOM`
 -- `TitledBorder.BOTTOM`
 -- `TitledBorder.BELOW_BOTTOM`
-
 - タイトルの揃えを`TitledBorder#setTitleJustification(int)`メソッドで指定
 -- `TitledBorder.LEFT`
 -- `TitledBorder.CENTER`

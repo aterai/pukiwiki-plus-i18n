@@ -1,0 +1,81 @@
+---
+category: swing
+folder: ScrollLockCornerButton
+title: JScrollBarの下にスクロールロックボタンを配置する
+tags: [JScrollPane, JScrollBar, JToggleButton, JLayer, JTable]
+author: aterai
+pubdate: 2021-04-19T01:48:04+09:00
+description: JScrollPaneから取得した垂直JScrollBarとそれらのスクロールをロックするためのJToggleButtonを別パネルに配置します。
+image: https://drive.google.com/uc?id=1ZkIGZwvzvvpcM42lAzeWexwmFaguhDY-
+---
+* 概要 [#summary]
+`JScrollPane`から取得した垂直`JScrollBar`とそれらのスクロールをロックするための`JToggleButton`を別パネルに配置します。
+
+#download(https://drive.google.com/uc?id=1ZkIGZwvzvvpcM42lAzeWexwmFaguhDY-)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTable table = new JTable(16, 4);
+table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+JScrollPane scroll = new JScrollPane(table);
+JToggleButton lock = new JToggleButton("🔓");
+lock.setBorder(BorderFactory.createEmptyBorder());
+lock.setContentAreaFilled(false);
+lock.setFocusPainted(false);
+lock.setFocusable(false);
+DisableInputLayerUI<Component> layerUI = new DisableInputLayerUI<>();
+lock.addItemListener(e -> {
+  AbstractButton b = (AbstractButton) e.getItemSelectable();
+  if (e.getStateChange() == ItemEvent.SELECTED) {
+    b.setText("🔒");
+    scrollLock(scroll, true);
+    layerUI.setLocked(true);
+  } else if (e.getStateChange() == ItemEvent.DESELECTED) {
+    b.setText("🔓");
+    scrollLock(scroll, false);
+    layerUI.setLocked(false);
+  }
+});
+JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
+JPanel verticalBox = new JPanel(new BorderLayout());
+verticalBox.setOpaque(false);
+verticalBox.add(new JLayer<>(verticalScrollBar, layerUI));
+verticalBox.add(lock, BorderLayout.SOUTH);
+BoundedRangeModel model = verticalScrollBar.getModel();
+model.addChangeListener(e -> {
+  BoundedRangeModel m = (BoundedRangeModel) e.getSource();
+  verticalBox.setVisible(m.getMaximum() - m.getMinimum() > m.getExtent());
+});
+verticalBox.setVisible(model.getMaximum() - model.getMinimum() > model.getExtent());
+JPanel panel = new JPanel(new BorderLayout(0, 0));
+panel.add(scroll);
+panel.add(verticalBox, BorderLayout.EAST);
+}}
+
+* 解説 [#explanation]
+- `JPanel`
+-- 垂直`JScrollBar`とスクロールロック用の`JToggleButton`を配置するための`JPanel`を作成
+- 垂直`JScrollBar`
+-- `JScrollPane#getVerticalScrollBar()`で取得して上記の`JPanel`中央にロック用の`JLayer`をはさんで追加
+-- `JScrollPane#getVerticalScrollBar()#getModel()`で取得した`BoundedRangeModel`に`ChangeListener`を追加し、垂直`JScrollBar`が非表示になる場合は親`JPanel`ごと`setVisible(false)`メソッドで非表示に設定
+- ロック用`JToggleButton`
+-- 上記の`JPanel`下部に追加
+-- 選択状態になるとテキストを`🔓`から`🔒`に変更
+-- さらに`JScrollPane`のホイールスクロール、内部のコンポーネントを`setEnabled(false)`などで無効化
+--- [[JScrollPaneのスクロールを禁止>Swing/DisableScrolling]]
+-- `JScrollPane`から別パネルに移動、配置されている垂直`JScrollBar`は`JLayer`で入力イベントをブロック
+--- [[JLayerで子コンポーネントへの入力を制限する>Swing/PopupMenuBlockLayer]]
+-- ロック用`JToggleButton`自身は上記の`JLayer`でまとめて入力がブロックされない位置に配置する必要がある
+
+----
+- `Windows 10`環境で実行すればカラー絵文字が表示不可の`Swing`コンポーネントでも白黒のグリフがフォントから取得可能だが、`Ubuntu 20.04`環境で実行すると`Swing`コンポーネントで絵文字が表示されない
+-- `Font.canDisplay(0x1F513)`では`true`が返るがグリフは幅ゼロになってなにも表示されない
+-- [[FontがUnicodeコードポイントで指定した文字のグリフを持って表示可能か確認する>Swing/FontCanDisplay]]
+
+* 参考リンク [#reference]
+- [[JScrollPaneのスクロールを禁止>Swing/DisableScrolling]]
+- [[JLayerで子コンポーネントへの入力を制限する>Swing/PopupMenuBlockLayer]]
+
+* コメント [#comment]
+#comment
+#comment

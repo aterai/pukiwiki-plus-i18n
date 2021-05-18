@@ -20,15 +20,16 @@ class FolderSelectionListener implements TreeSelectionListener {
   public FolderSelectionListener(FileSystemView fileSystemView) {
     this.fileSystemView = fileSystemView;
   }
+
   @Override public void valueChanged(TreeSelectionEvent e) {
-    final JTree tree = (JTree) e.getSource();
-    final DefaultMutableTreeNode node =
+    JTree tree = (JTree) e.getSource();
+    DefaultMutableTreeNode node =
       (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
-    final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-    // final TreePath path = e.getPath();
+    DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+    // TreePath path = e.getPath();
 
     if (!node.isLeaf()) return;
-    final File parent = (File) node.getUserObject();
+    File parent = (File) node.getUserObject();
     if (!parent.isDirectory()) return;
 
     SwingWorker<String, File> worker = new SwingWorker<String, File>() {
@@ -41,6 +42,7 @@ class FolderSelectionListener implements TreeSelectionListener {
         }
         return "done";
       }
+
       @Override protected void process(List<File> chunks) {
         for (File file: chunks) {
           node.add(new DefaultMutableTreeNode(file));

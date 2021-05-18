@@ -22,6 +22,8 @@ class AnimeListCellRenderer extends JPanel implements ListCellRenderer {
   private final javax.swing.Timer animator;
   private final JList list;
   private boolean isRunning = false;
+  int animate_index = -1;
+
   public AnimeListCellRenderer(final JList l) {
     super(new BorderLayout());
     this.list = l;
@@ -38,6 +40,7 @@ class AnimeListCellRenderer extends JPanel implements ListCellRenderer {
     add(label);
     animator.start();
   }
+
   @Override public Component getListCellRendererComponent(JList list, Object object,
       int index, boolean isSelected, boolean cellHasFocus) {
     setBackground(isSelected ? selectedColor : list.getBackground());
@@ -45,10 +48,11 @@ class AnimeListCellRenderer extends JPanel implements ListCellRenderer {
     animate_index = index;
     return this;
   }
+
   private boolean isAnimatingCell() {
     return isRunning && animate_index == list.getSelectedIndex();
   }
-  int animate_index = -1;
+
   private class MarqueeLabel extends JLabel {
     // ...
   }

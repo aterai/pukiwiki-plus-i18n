@@ -22,10 +22,10 @@ Toolkit.getDefaultToolkit().setDynamicLayout(true);
 上記のサンプルでは、`DefaultToolkit`の`setDynamicLayout`メソッドを使って`DynamicLayout`の設定を切り替えています。
 
 - `DynamicLayout`: `false`
--- ウィンドウのリサイズが完了した後、内部コンテナのレイアウトを評価する
+-- ウィンドウのリサイズが完了した後内部コンテナのレイアウトを評価する
 - `DynamicLayout`: `true`
--- ウィンドウのリサイズに応じて、内部コンテナのレイアウトを動的に評価する
--- デスクトップ環境がこの動的レイアウト機能をサポートしているかどうかは、以下のメソッドで調査可能
+-- ウィンドウのリサイズに応じて内部コンテナのレイアウトを動的に評価する
+-- デスクトップ環境がこの動的レイアウト機能をサポートしているかどうかは以下のメソッドで調査可能
 #code{{
 Toolkit.getDefaultToolkit().getDesktopProperty("awt.dynamicLayoutSupported");
 }}

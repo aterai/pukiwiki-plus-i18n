@@ -39,21 +39,22 @@ class StripeTableRenderer extends DefaultTableCellRenderer {
 
 - 奇数偶数で行の背景色を変更してテーブルをストライプ模様にする
 - 第`0`列のカラムのセルを右寄せ
--- ここでは、`TableColumn#setCellRenderer(TableCellRenderer)`を使わず、`Object.classのDefaultRenderer`ひとつにまとめているため、`TableModel#getColumnClass(0)`が`Integer.class`を返すようにしている
--- メモ: `JTable#setDefaultRenderer(Class, TableCellRenderer)`でクラスに関連付けるより、各カラムに関連付けした方が優先順位が高い
+-- ここでは`TableColumn#setCellRenderer(TableCellRenderer)`を使用せずに`Object.classのDefaultRenderer`ひとつにまとめているため、`TableModel#getColumnClass(0)`が`Integer.class`を返すよう設定
+-- `JTable#setDefaultRenderer(Class, TableCellRenderer)`でクラスに関連付けるより、各カラムに関連付けした方が優先順位が高い
 
 #code{{
 table.setDefaultRenderer(Object.class, new StripeTableRenderer());
 }}
 
+----
 あるセルが描画されるとき、設定された`TableCellRenderer`の`getTableCellRendererComponent`メソッドが呼び出されます。レンダラーは、引数などから得られる情報(選択されているか、何行何列目かなど)を使って、コンポーネントを修飾してから`return`します。
 
-サンプルの`TestRenderer`では、`JLabel`を継承する`DefaultTableCellRenderer`を継承しているので、自分自身(`this`)を`setForeground`、`setHorizontalAlignment`などのメソッドで修飾し直し、さらに自分自身(`this`)を戻り値としています。このようにコンポーネントを使い回しているため、セルの数が膨大になっても、オブジェクトを大量に生成しなくて済むようになっています。
+サンプルの`TestRenderer`では`JLabel`を継承する`DefaultTableCellRenderer`を継承しているので、自分自身(`this`)を`setForeground`、`setHorizontalAlignment`などのメソッドで修飾し直し、さらに自分自身(`this`)を戻り値としています。このようにコンポーネントを使い回しているため、セルの数が膨大になっても、オブジェクトを大量に生成しなくて済むようになっています。
 
 また、返されたコンポーネントはセルの描画のためだけに利用され、マウスイベントなどは無視されます。
 
 ----
-セルレンダラーで色を変更する代わりに、以下のように`JTable#prepareRenderer`メソッドをオーバーライドする方法もあります。この場合、使用するセルレンダラーに関係なくテーブル全体での前処理が可能です。このため`Number`クラス用デフォルトレンダラーの`JTable$NumberRenderer`がそのまま使用され、`TableModel#getColumnClass(int)`が`Number.class`を返すようにしておけば自動的に右寄せになります。
+セルレンダラーで色を変更する代わりに、以下のように`JTable#prepareRenderer`メソッドをオーバーライドする方法もあります。この場合使用するセルレンダラーに関係なくテーブル全体での前処理が可能です。このため`Number`クラス用デフォルトレンダラーの`JTable$NumberRenderer`がそのまま使用され、`TableModel#getColumnClass(int)`が`Number.class`を返すようにしておけば自動的に右寄せになります。
 
 #code{{
 JTable table = new JTable(model) {

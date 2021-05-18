@@ -30,6 +30,7 @@ class HighlightCursorTextArea extends JTextArea {
     addMouseMotionListener(rolloverHandler);
     addMouseListener(rolloverHandler);
   }
+
   @Override protected void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g.create();
     Insets i = getInsets();
@@ -40,11 +41,13 @@ class HighlightCursorTextArea extends JTextArea {
     g2.dispose();
     super.paintComponent(g);
   }
+
   private class RollOverListener extends MouseAdapter {
     @Override public void mouseExited(MouseEvent e) {
       rollOverRowIndex = -1;
       repaint();
     }
+
     @Override public void mouseMoved(MouseEvent e) {
       int row = getLineAtPoint(e.getPoint());
       if (row != rollOverRowIndex) {
@@ -52,6 +55,7 @@ class HighlightCursorTextArea extends JTextArea {
         repaint();
       }
     }
+
     public int getLineAtPoint(Point pt) {
       Element root = getDocument().getDefaultRootElement();
       return root.getElementIndex(viewToModel(pt));

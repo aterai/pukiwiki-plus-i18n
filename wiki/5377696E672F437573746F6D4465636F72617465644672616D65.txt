@@ -24,9 +24,11 @@ class ResizeWindowListener extends MouseAdapter {
   public ResizeWindowListener(JFrame frame) {
     this.frame = frame;
   }
+
   @Override public void mousePressed(MouseEvent e) {
     startSide = frame.getBounds();
   }
+
   @Override public void mouseDragged(MouseEvent e) {
     if (startSide == null) return;
     Component c = e.getComponent();
@@ -65,58 +67,69 @@ class ResizeWindowListener extends MouseAdapter {
 * 解説 [#explanation]
 上記のサンプルでは`JFrame`の元のタイトルバーを`setUndecorated(true)`で非表示にし、マウスドラッグで移動可能にした`JPanel`を追加してタイトルバーの代わりにしています。
 
-マウスドラッグでのフレームのリサイズは、[https://community.oracle.com/thread/1365156 Swing - Undecorated and resizable dialog]や`BasicInternalFrameUI.java`、`MetalRootPaneUI#MouseInputHandler`などを参考にして、周辺にそれぞれ対応するリサイズカーソルを設定した`JLabel`を配置して実行可能にしています。
-
-----
-`JDK 1.7.0`の場合、`JFrame`の背景色を透明(`frame.setBackground(new Color(0x0, true));`)にし、`ContentPane`の左右上の角をクリアして透明にしています。
-
-----
-[[JRootPaneにリサイズのための装飾を設定する>Swing/WindowDecorationStyle]]のように、`JRootPane#setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);`を使用してリサイズする方法もあります。
+- マウスドラッグでのフレームのリサイズは[https://community.oracle.com/thread/1365156 Swing - Undecorated and resizable dialog]や`BasicInternalFrameUI.java`、`MetalRootPaneUI#MouseInputHandler`などを参考にして、周辺にそれぞれ対応するリサイズカーソルを設定した`JLabel`を配置して実行
+- `JDK 1.7.0`の場合`JFrame`の背景色を透明(`frame.setBackground(new Color(0x0, true))`)、かつ`ContentPane`の左右上の角をクリアして透明化
+- [[JRootPaneにリサイズのための装飾を設定する>Swing/WindowDecorationStyle]]のように、`JRootPane#setWindowDecorationStyle(JRootPane.PLAIN_DIALOG)`を使用してリサイズする方法もある
 
 #code{{
+// package example;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class WindowDecorationStyleTest {
+public class MainPanel {
+  private static final Color BG_COLOR = Color.ORANGE;
   public JComponent makeTitleBar() {
-    JLabel label = new JLabel("Title");
+    JLabel label = new JLabel("Title", SwingConstants.CENTER);
     label.setOpaque(true);
     label.setForeground(Color.WHITE);
-    label.setBackground(Color.BLACK);
+    label.setBackground(BG_COLOR);
     DragWindowListener dwl = new DragWindowListener();
     label.addMouseListener(dwl);
     label.addMouseMotionListener(dwl);
 
     JPanel title = new JPanel(new BorderLayout());
-    title.setBorder(BorderFactory.createMatteBorder(0, 4, 4, 4, Color.BLACK));
+    title.setBorder(BorderFactory.createMatteBorder(0, 2, 2, 2, BG_COLOR));
     title.add(label);
-    title.add(new JButton(new AbstractAction("x") {
-      @Override public void actionPerformed(ActionEvent e) {
-        Window w = SwingUtilities.windowForComponent((Component) e.getSource());
-        w.dispatchEvent(new WindowEvent(w, WindowEvent.WINDOW_CLOSING));
-      }
-    }), BorderLayout.EAST);
+    title.add(makeCloseButton(), BorderLayout.EAST);
     return title;
   }
+
   public JComponent makeUI() {
     return new JScrollPane(new JTree());
   }
-  public static void main(String[] args) {
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        createAndShowGUI();
+
+  private static JButton makeCloseButton() {
+    JButton button = new JButton(new CloseIcon());
+    button.setContentAreaFilled(false);
+    button.setFocusPainted(false);
+    button.setBorder(BorderFactory.createEmptyBorder());
+    button.setOpaque(true);
+    button.setBackground(BG_COLOR);
+    button.addActionListener(e -> {
+      JComponent b = (JComponent) e.getSource();
+      Container c = b.getTopLevelAncestor();
+      if (c instanceof Window) {
+        Window w = (Window) c;
+        w.dispatchEvent(new WindowEvent(w, WindowEvent.WINDOW_CLOSING));
       }
     });
+    return button;
   }
+
+  public static void main(String[] args) {
+    EventQueue.invokeLater(MainPanel::createAndShowGUI);
+  }
+
   public static void createAndShowGUI() {
     JFrame frame = new JFrame();
     frame.setUndecorated(true);
 
-    WindowDecorationStyleTest demo = new WindowDecorationStyleTest();
+    MainPanel demo = new MainPanel();
     JRootPane root = frame.getRootPane();
     root.setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
-    root.setBorder(BorderFactory.createMatteBorder(4, 8, 8, 8, Color.BLACK));
+    root.setBorder(BorderFactory.createMatteBorder(2, 4, 4, 4, BG_COLOR));
     JLayeredPane layeredPane = root.getLayeredPane();
     Component c = layeredPane.getComponent(1);
     if (c instanceof JComponent) {
@@ -127,6 +140,14 @@ public class WindowDecorationStyleTest {
     }
     frame.setMinimumSize(new Dimension(300, 120));
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+    try {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+      ex.printStackTrace();
+      Toolkit.getDefaultToolkit().beep();
+    }
+
     frame.getContentPane().add(demo.makeUI());
     frame.setSize(320, 240);
     frame.setLocationRelativeTo(null);
@@ -135,7 +156,7 @@ public class WindowDecorationStyleTest {
 }
 
 class DragWindowListener extends MouseAdapter {
-  private final transient Point startPt = new Point();
+  private final Point startPt = new Point();
   private Window window;
   @Override public void mousePressed(MouseEvent me) {
     if (window == null) {
@@ -148,6 +169,7 @@ class DragWindowListener extends MouseAdapter {
     }
     startPt.setLocation(me.getPoint());
   }
+
   @Override public void mouseDragged(MouseEvent me) {
     if (window != null) {
       Point pt = new Point();
@@ -156,6 +178,29 @@ class DragWindowListener extends MouseAdapter {
       int y = pt.y - startPt.y + me.getY();
       window.setLocation(x, y);
     }
+  }
+}
+
+class CloseIcon implements Icon {
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.translate(x, y);
+    g2.setPaint(Color.WHITE);
+    g2.drawLine(4, 4, 11, 11);
+    g2.drawLine(4, 5, 10, 11);
+    g2.drawLine(5, 4, 11, 10);
+    g2.drawLine(11, 4, 4, 11);
+    g2.drawLine(11, 5, 5, 11);
+    g2.drawLine(10, 4, 4, 10);
+    g2.dispose();
+  }
+
+  @Override public int getIconWidth() {
+    return 16;
+  }
+
+  @Override public int getIconHeight() {
+    return 16;
   }
 }
 }}

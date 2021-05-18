@@ -19,12 +19,12 @@ pinTabMenuItem = new JCheckBoxMenuItem(new AbstractAction("pin tab") {
   @Override public void actionPerformed(ActionEvent e) {
     JTabbedPane t = (JTabbedPane) getInvoker();
     JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
-    int idx       = t.getSelectedIndex();
+    int idx = t.getSelectedIndex();
     Component cmp = t.getComponentAt(idx);
     Component tab = t.getTabComponentAt(idx);
-    Icon icon     = t.getIconAt(idx);
-    String tip    = t.getToolTipTextAt(idx);
-    boolean flg   = t.isEnabledAt(idx);
+    Icon icon = t.getIconAt(idx);
+    String tip = t.getToolTipTextAt(idx);
+    boolean flg = t.isEnabledAt(idx);
 
     int i;
     if (check.isSelected()) {
@@ -63,8 +63,7 @@ pinTabMenuItem = new JCheckBoxMenuItem(new AbstractAction("pin tab") {
 - タブの固定を解除
 -- タブタイトルを`TooltipText`から復元する
 -- タブの位置を固定されていないタブの右側に移動
-- 注:
--- `TabPlacement`: `LEFT`, `RIGHT`は考慮していない
+- `TabPlacement`の`LEFT`、`RIGHT`は考慮していない
 
 * 参考リンク [#reference]
 - [https://xp-style-icons.en.softonic.com/ XP Style Icons - Download]

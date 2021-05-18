@@ -42,6 +42,7 @@ slider.setUI(new MetalSliderUI() {
           super.mousePressed(e);
         }
       }
+
       @Override public boolean shouldScroll(int direction) {
         return false;
       }
@@ -53,11 +54,11 @@ slider.setUI(new MetalSliderUI() {
 * 解説 [#explanation]
 - 縦左、横上の`JSlider`:
 -- デフォルト
--- ノブを直接クリックすると、ドラッグ可能
--- ノブ以外の場所をクリックすると、タイマーでノブの幅ずつその方向に移動
+-- ノブを直接クリックするとドラッグ可能
+-- ノブ以外の場所をクリックするとタイマーでノブの幅分だけその方向に移動
 - 縦右、横下の`JSlider`:
--- クリックした位置までスライドし、継続してドラッグ可能
---- 目盛の間隔が広い場合、ノブがスナップされてマウスカーソルからはずれてしまい、継続してドラッグできない場合がある
+-- クリックした位置までスライドし継続してドラッグ可能
+--- 目盛の間隔が広い場合、ノブがスナップされてマウスカーソルからはずれてしまい継続ドラッグがキャンセルされる場合がある
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/518471/jslider-question-position-after-leftclick JSlider question: Position after leftclick - Stack Overflow]

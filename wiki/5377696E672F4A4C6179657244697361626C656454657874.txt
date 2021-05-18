@@ -16,10 +16,12 @@ image: https://lh5.googleusercontent.com/-_2bogxiuOec/TzilFn0ms8I/AAAAAAAABJI/oM
 * サンプルコード [#sourcecode]
 #code(link){{
 class DisableInputLayerUI extends LayerUI<JComponent> {
+  private static final String CMD_BLOCKING = "lock";
   private static final boolean DEBUG_POPUP_BLOCK = false;
   private final MouseAdapter dummyMouseListener = new MouseAdapter() {};
   private final KeyAdapter dummyKeyListener = new KeyAdapter() {};
   private boolean isBlocking;
+
   @Override public void installUI(JComponent c) {
     super.installUI(c);
     if (c instanceof JLayer) {
@@ -34,6 +36,7 @@ class DisableInputLayerUI extends LayerUI<JComponent> {
         | AWTEvent.FOCUS_EVENT_MASK | AWTEvent.COMPONENT_EVENT_MASK);
     }
   }
+
   @Override public void uninstallUI(JComponent c) {
     if (c instanceof JLayer) {
       JLayer jlayer = (JLayer) c;
@@ -45,30 +48,35 @@ class DisableInputLayerUI extends LayerUI<JComponent> {
     }
     super.uninstallUI(c);
   }
+
   @Override protected void processComponentEvent(
       ComponentEvent e, JLayer<? extends JComponent> l) {
     System.out.println("processComponentEvent");
   }
+
   @Override protected void processKeyEvent(
       KeyEvent e, JLayer<? extends JComponent> l) {
     System.out.println("processKeyEvent");
   }
+
   @Override protected void processFocusEvent(
       FocusEvent e, JLayer<? extends JComponent> l) {
     System.out.println("processFocusEvent");
   }
+
   @Override public void eventDispatched(
       AWTEvent e, JLayer<? extends JComponent> l) {
     if (isBlocking && e instanceof InputEvent) {
       ((InputEvent) e).consume();
     }
   }
-  private static final String CMD_BLOCKING = "lock";
+
   public void setLocked(boolean flag) {
     boolean oldv = isBlocking;
     isBlocking = flag;
     firePropertyChange(CMD_BLOCKING, oldv, isBlocking);
   }
+
   @Override public void applyPropertyChange(
       PropertyChangeEvent pce, JLayer<? extends JComponent> l) {
     String cmd = pce.getPropertyName();

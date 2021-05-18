@@ -20,10 +20,11 @@ class CloseButtonTabbedPane extends JTabbedPane {
   private final Dimension buttonSize;
   public CloseButtonTabbedPane(Icon icon) {
     super();
-    //icon = new CloseTabIcon();
+    // icon = new CloseTabIcon();
     this.icon = icon;
     buttonSize = new Dimension(icon.getIconWidth(), icon.getIconHeight());
   }
+
   @Override public void addTab(String title, final JComponent content) {
     JPanel tab = new JPanel(new BorderLayout());
     tab.setOpaque(false);

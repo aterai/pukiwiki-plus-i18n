@@ -26,14 +26,14 @@ JTable table3 = new JTable(1, 3) {
 * 解説 [#explanation]
 - `AUTO_RESIZE_SUBSEQUENT_COLUMNS(Default)`
 -- `JTable`のデフォルト
--- `JTable`の幅が変更された場合、列幅の合計が`JTable`の幅と等しくなるよう各列を均等にサイズ変更
+-- `JTable`の幅が変更された場合列幅の合計が`JTable`の幅と等しくなるよう各列を均等にサイズ変更
 - `AUTO_RESIZE_OFF`
--- `JTable`の幅が変更されても列幅の調整は自動的に行わず、代わりに水平スクロールバーを使用
+-- `JTable`の幅が変更されても列幅の調整は自動的に行わず代わりに水平スクロールバーを使用
 - `AUTO_RESIZE_OFF + getScrollableTracksViewportWidth()`
 -- `JTable#getScrollableTracksViewportWidth()`メソッドをオーバーライドし、`JTable`の幅に応じて列幅の自動調整を実行するかどうかを切り替えるよう設定
 --- 参考: [https://stackoverflow.com/questions/6104916/how-to-make-jtable-both-autoresize-and-horizontall-scrollable java - How to make JTable both AutoResize and horizontall scrollable? - Stack Overflow]
--- `JTable`の幅が一定以下に縮小された場合は、列幅を維持して水平スクロールバーを使用
--- `JTable`の幅が一定以上に拡張された場合は、列幅の自動調整を実行して列幅の合計が`JTable`の幅と等しくなるよう各列を均等にサイズ変更
+-- `JTable`の幅が一定以下に縮小された場合は列幅を維持して水平スクロールバーを使用
+-- `JTable`の幅が一定以上に拡張された場合は列幅の自動調整を実行して列幅の合計が`JTable`の幅と等しくなるよう各列を均等にサイズ変更
 --- 上記のサンプルでは`JTable`の推奨サイズ幅で切り替えるよう設定
 
 * 参考リンク [#reference]

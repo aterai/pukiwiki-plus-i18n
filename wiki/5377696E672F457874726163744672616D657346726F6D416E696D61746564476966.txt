@@ -39,11 +39,10 @@ reader.dispose();
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`ImageReader`に`Animated GIF`ファイルを読み込んで、`IIOImage#getRenderedImage()`メソッドで各フレームの`BufferedImage`を取得しています。
+上記のサンプルでは、`ImageReader`に`Animated GIF`ファイルを読み込んで`IIOImage#getRenderedImage()`メソッドで各フレームの`BufferedImage`を取得しています。
 
-- 注:
--- 背景色や差分フレームは無視している
--- `try-with-resources`を使っているので、`JDK 1.7.0`以上が必要
+- 背景色や差分フレームは無視している
+- `try-with-resources`を使っているので`JDK 1.7.0`以上が必要
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1271862 Swing - Reading gif animation frame rates and such?]

@@ -81,7 +81,7 @@ private JMenuItem createMenuItem(String cmd) {
   Action a = getAction(astr);
   if (a != null) {
     mi.addActionListener(a);
-    //a.addPropertyChangeListener(createActionChangeListener(mi));
+    // a.addPropertyChangeListener(createActionChangeListener(mi));
     mi.setEnabled(a.isEnabled());
   } else {
     mi.setEnabled(false);
@@ -108,23 +108,21 @@ public Action[] getActions() {
 }}
 
 * 解説 [#explanation]
-アプリケーションの起動時に、リソースファイルからメニューのテキストの生成、アイコン、ショートカットなどの指定を行います。
+アプリケーションの起動時にリソースファイルからメニューのテキストの生成、アイコン、ショートカットなどの指定を行います。
 
-上記のサンプルでは、バージョンと終了しか機能しないので、このページにある`src.zip`の`Main.properties.utf8`、`Main_ja_JP.properties.utf8`(日本語用)といったリソースファイルを編集したり、新しいリソースファイルを作成してみてください。
-
-ソースコードの方では以下のように`defaultActions`に、上記の`properties`ファイルに書いた`Action`を追加します。
-
+- 上記のサンプルでは、バージョンと終了メニューのみ動作してその他のメニューはダミー
+- `src.zip`の`Main.properties.utf8`、`Main_ja_JP.properties.utf8`(日本語用)などのリソースファイルを編集してメニュー作成したり、以下のように`defaultActions`に上記の`properties`ファイルに書いた`Action`を追加してテストが可能
 #code{{
 public Action[] defaultActions = {
   new NewAction(),
-  //new OpenAction(),
+  // new OpenAction(),
   new ExitAction(),
   new HelpAction(),
   new VersionAction(),
 };
 }}
 
-- %%リソースファイルで日本語などは使用不可のため、以下のように`ant`から`native2ascii`でユニコードエスケープする必要がある%% `JDK 1.6.0`で変更
+- %%リソースファイルで日本語などは使用不可のため以下のように`ant`から`native2ascii`でユニコードエスケープする必要がある%% `JDK 1.6.0`で変更
 -- `JDK 1.5.0`で導入された`XML`に対応した`Properties`で代用する方法もある
 -- 参考: [http://www.javainthebox.net/laboratory/J2SE1.5/TinyTips/Properties/Properties.html J2SE 5.0 Tiger 虎の穴 Properties]
 
@@ -143,7 +141,7 @@ public Action[] defaultActions = {
 }}
 
 ----
-- `JDK 1.6.0`以降なら、`native2ascii`で変換しなくてもリソースファイルのエンコードを指定しての読み込みが可能
+- `JDK 1.6.0`以降なら`native2ascii`で変換しなくてもリソースファイルのエンコードを指定しての読み込みが可能
 -- 参考: [http://d.hatena.ne.jp/shin/20090707/p4 Java 小ネタ千夜一夜 第13夜 Java SE 6はnative2ascii使わなくていいのはみんな知っていると思うが]
 -- `Java 9`からプロパティファイルはデフォルトで`UTF-8`になったため、以下のような`ResourceBundle`を作成する必要もなくなった
 --- [https://docs.oracle.com/javase/jp/9/intl/internationalization-enhancements-jdk-9.htm#GUID-974CF488-23E8-4963-A322-82006A7A14C7 UTF-8プロパティ・ファイル - JDK 9における国際化の拡張機能]
@@ -154,6 +152,7 @@ ResourceBundle res = ResourceBundle.getBundle(baseName, new ResourceBundle.Contr
     if (baseName == null) throw new NullPointerException();
     return Arrays.asList("properties");
   }
+
   @Override public ResourceBundle newBundle(
       String baseName, Locale locale, String format, ClassLoader loader, boolean reload)
         throws IllegalAccessException, InstantiationException, IOException {

@@ -1,0 +1,63 @@
+---
+category: swing
+folder: OverlayCardLayout
+title: CardLayoutを設定したパネル上にOverlayLayoutでカード切り替え用のJComboBoxを配置する
+tags: [CardLayout, OverlayLayout, JPanel, JComboBox]
+author: aterai
+pubdate: 2020-08-31T00:06:58+09:00
+description: CardLayoutを設定したパネルの内部にそのカード切り替え用のJComboBoxをOverlayLayoutで重ねて配置します。
+image: https://drive.google.com/uc?id=1tKX7-hFrO6328ecI-9rsAf_PbLRbNHpZ
+---
+* 概要 [#summary]
+`CardLayout`を設定したパネルの内部にそのカード切り替え用の`JComboBox`を`OverlayLayout`で重ねて配置します。
+
+#download(https://drive.google.com/uc?id=1tKX7-hFrO6328ecI-9rsAf_PbLRbNHpZ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String[] model = {"red", "green", "blue"};
+
+CardLayout cardLayout = new CardLayout();
+JPanel cards = new JPanel(cardLayout);
+cards.add(makePanel(Color.RED), model[0]);
+cards.add(makePanel(Color.GREEN), model[1]);
+cards.add(makePanel(Color.BLUE), model[2]);
+
+JComboBox<String> combo = new JComboBox<>(model);
+combo.addItemListener(e -> {
+  if (e.getStateChange() == ItemEvent.SELECTED) {
+    cardLayout.show(cards, Objects.toString(e.getItem()));
+  }
+});
+
+JPanel pp = new JPanel(new BorderLayout());
+pp.setOpaque(false);
+pp.setBorder(BorderFactory.createEmptyBorder(8, 24, 0, 24));
+pp.add(combo, BorderLayout.NORTH);
+
+JPanel p = new JPanel() {
+  @Override public boolean isOptimizedDrawingEnabled() {
+    return false;
+  }
+};
+p.setLayout(new OverlayLayout(p));
+p.add(pp);
+p.add(cards);
+}}
+
+* 解説 [#explanation]
+- `CardLayout`を設定したパネルを作成
+-- このパネルにはそれぞれ赤緑青の背景色を設定した`3`つの`JPanel`を追加
+- `BorderLayout`を設定したパネルを作成
+-- このパネルにはカード切り替えを実行する`JComboBox`を`BorderLayout.NORTH`で上部に追加
+- `OverlayLayout`を設定したパネルを作成
+-- このパネルには`OverlayLayout`を設定し、上記の`2`つのパネルを奥から`CardLayout`、`BorderLayout`の順に同サイズで重なるよう配置
+-- `2`つのパネルがオーバーラップするのでマウスイベントなどでコンポーネントの奥手前の描画が入れ替わらないようにするため、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#isOptimizedDrawingEnabled-- JComponent#isOptimizedDrawingEnabled()]が`false`を返すようオーバーライド
+
+* 参考リンク [#reference]
+- [[JTableHeaderで作成したタブエリアでCardLayoutのコンテナを切り替える>Swing/TableHeaderTabArea]]
+- [[OverlayLayoutの使用>Swing/OverlayLayout]]
+
+* コメント [#comment]
+#comment
+#comment

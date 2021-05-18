@@ -17,7 +17,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTL5-PTzWI/AAAAAAAAAYU/G2
 #code(link){{
 class MyDragGestureListener implements DragGestureListener {
   @Override public void dragGestureRecognized(DragGestureEvent dge) {
-    final File tmpfile = getFile();
+    File tmpfile = getFile();
     if (tmpfile == null) {
       return;
     }
@@ -27,9 +27,11 @@ class MyDragGestureListener implements DragGestureListener {
         al.add(tmpfile);
         return al;
       }
+
       @Override public DataFlavor[] getTransferDataFlavors() {
         return new DataFlavor[] { DataFlavor.javaFileListFlavor };
       }
+
       @Override public boolean isDataFlavorSupported(DataFlavor flavor) {
         return flavor.equals(DataFlavor.javaFileListFlavor);
       }
@@ -47,9 +49,9 @@ class MyDragGestureListener implements DragGestureListener {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、ボタンで空の一時ファイルを生成し、中央のラベルをマウスでドラッグすると生成したファイルをデスクトップなどに移動できます。
+上記のサンプルでは、ボタンで空の一時ファイルを生成し中央のラベルをマウスでドラッグすると生成したファイルをデスクトップなどに移動できます。
 
-以下のように`DragGestureListener`を登録してラベルをドラッグ＆ドロップすることで、`JFileChooser`などで書き出すフォルダなどを指定する手間が省いています。
+以下のように`DragGestureListener`を登録してラベルをドラッグ＆ドロップすることで`JFileChooser`などで書き出すフォルダなどを指定する手間が省いています。
 
 #code{{
 DragSource dragSource = DragSource.getDefaultDragSource();
@@ -58,13 +60,14 @@ dragSource.createDefaultDragGestureRecognizer(label,
 }}
 
 ----
-`JDK 1.6.0`以上なら、以下のような`TransferHandler`を使用する方法もあります。
+- `JDK 1.6.0`以上なら以下のような`TransferHandler`を使用する方法もある
 
 #code{{
 label.setTransferHandler(new TransferHandler() {
   @Override public int getSourceActions(JComponent c) {
     return TransferHandler.COPY_OR_MOVE;
   }
+
   @Override protected Transferable createTransferable(JComponent c) {
     File tmpfile = getFile();
     if (tmpfile == null) {
@@ -73,9 +76,11 @@ label.setTransferHandler(new TransferHandler() {
       return new TempFileTransferable(tmpfile);
     }
   }
+
   @Override protected void exportDone(JComponent c, Transferable d, int a) {
     cleanup(c, a == MOVE);
   }
+
   private void cleanup(JComponent c, boolean removeFile) {
     if (removeFile) {
       clearFile();

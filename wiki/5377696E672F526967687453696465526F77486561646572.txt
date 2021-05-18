@@ -18,7 +18,6 @@ image: https://drive.google.com/uc?id=1va-Vod9bidZfMkBZEMw6jIu8TQWjxNk5Mg
 class RightFixedScrollPaneLayout extends ScrollPaneLayout {
   @Override public void layoutContainer(Container parent) {
     // ...
-
     // if (leftToRight) {
     //   rowHeadR.x = availR.x;
     //   availR.x += rowHeadWidth;
@@ -26,7 +25,6 @@ class RightFixedScrollPaneLayout extends ScrollPaneLayout {
     //   rowHeadR.x = availR.x + availR.width;
     // }
     rowHeadR.x = availR.x + availR.width;
-
     // ...
 
     // adjustForVSB(vsbNeeded, availR, vsbR, vpbInsets, leftToRight);
@@ -35,13 +33,13 @@ class RightFixedScrollPaneLayout extends ScrollPaneLayout {
 
 * 解説 [#explanation]
 - `JScrollPane#setRowHeaderView(...)`で行ヘッダを設定した場合、デフォルト(`ComponentOrientation.LEFT_TO_RIGHT`)では左側に配置される
--- 以下のような設定で行ヘッダを右側に配置可能だが、垂直`JScrollBar`が左側になる
+-- 以下のような設定で行ヘッダを右側に配置可能だが垂直`JScrollBar`が左側になる
 #code{{
 table.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 scroll.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 scroll.setCorner(ScrollPaneConstants.UPPER_RIGHT_CORNER, fixedTable.getTableHeader());
 }}
-- `ScrollPaneLayout#layoutContainer(...)`メソッドをオーバーライドして、行ヘッダや垂直`JScrollBar`の位置を直接変更する
+- `ScrollPaneLayout#layoutContainer(...)`メソッドをオーバーライドして行ヘッダや垂直`JScrollBar`の位置を直接変更する
 -- 行ヘッダの位置: `ComponentOrientation.RIGHT_TO_LEFT`が設定されている場合と同じになるよう修正
 -- 垂直`JScrollBar`の位置: `adjustForVSB(...)`メソッドの引数に`JViewport`ではなく行ヘッダの`Rectangle`を渡すよう修正
 --- このため、`JViewport`の右側ではなく行ヘッダの右側に垂直`JScrollBar`が配置され、`JViewport`の幅ではなく行ヘッダの幅が垂直`JScrollBar`の幅だけ縮小される

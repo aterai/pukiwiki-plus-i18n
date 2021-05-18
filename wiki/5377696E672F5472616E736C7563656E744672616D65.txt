@@ -30,13 +30,14 @@ try {
 } catch (Exception e) {
   e.printStackTrace();
 }
-}}
-#code{{
+
 class MySynthStyleFactory extends SynthStyleFactory {
   private SynthStyleFactory wrappedFactory;
+
   public MySynthStyleFactory(SynthStyleFactory factory) {
     this.wrappedFactory = factory;
   }
+
   @Override public SynthStyle getStyle(JComponent c, Region id) {
     SynthStyle s = wrappedFactory.getStyle(c, id);
     // if (id == Region.INTERNAL_FRAME_TITLE_PANE||id == Region.INTERNAL_FRAME) {
@@ -46,11 +47,14 @@ class MySynthStyleFactory extends SynthStyleFactory {
     return s;
   }
 }
+
 class TranslucentSynthStyle extends SynthStyle {
   private final SynthStyle style;
+
   public TranslucentSynthStyle(SynthStyle s) {
     style = s;
   }
+
   @Override public SynthPainter getPainter(final SynthContext context) {
     return new SynthPainter() {
       @Override public void paintInternalFrameBackground(SynthContext context,
@@ -60,6 +64,7 @@ class TranslucentSynthStyle extends SynthStyle {
       }
     };
   }
+
   @Override public boolean isOpaque(SynthContext context) {
     if (context.getRegion() == Region.INTERNAL_FRAME) {
       return false;
@@ -67,9 +72,11 @@ class TranslucentSynthStyle extends SynthStyle {
       return style.isOpaque(context);
     }
   }
+
   @Override public Color getColorForState(SynthContext context, ColorType type) {
     return null; //Color.RED;
   }
+
   @Override public Font getFontForState(SynthContext context) {
     return null; //new Font(Font.MONOSPACED, Font.ITALIC, 24);
   }
@@ -129,6 +136,7 @@ public class BackgroundPainterTest {
     p.setPreferredSize(new Dimension(320, 240));
     return p;
   }
+
   protected JInternalFrame createFrame(JPanel panel, UIDefaults d, int idx) {
     MyInternalFrame frame = new MyInternalFrame();
     frame.putClientProperty("Nimbus.Overrides", d);
@@ -146,12 +154,14 @@ public class BackgroundPainterTest {
     desktop.getDesktopManager().activateFrame(frame);
     return frame;
   }
+
   static class MyInternalFrame extends JInternalFrame {
     public MyInternalFrame() {
       super("title", true, true, true, true);
       setSize(160, 100);
     }
   }
+
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
@@ -159,6 +169,7 @@ public class BackgroundPainterTest {
       }
     });
   }
+
   public static void createAndShowGUI() {
     try {
       UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");

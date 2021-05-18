@@ -26,7 +26,7 @@ button.addActionListener(e -> {
 -- `GridLayout`は`JPanel`の`ComponentOrientation`が`LEFT_TO_RIGHT`の場合、`Z`軸順インデックスで左から右にコンポーネントを配置、表示する
 --- `FlowLayout`、`BoxLayout`なども同様
 - `GridBagLayout`を設定した`JPanel`に配置した`Z`軸順インデックスを変更
--- `GridBagConstraints.gridx`や`GridBagConstraints.gridy`のような位置に関する制約が指定されていない(デフォルトの`GridBagConstraints.RELATIVE`の状態)場合、`GridBagLayout`は`Z`軸順インデックスで左から右にコンポーネントを配置、表示する
+-- `GridBagConstraints.gridx`や`GridBagConstraints.gridy`のような位置に関する制約が指定されていない(制約がデフォルトの`GridBagConstraints.RELATIVE`の状態)場合、`GridBagLayout`は`Z`軸順インデックスで左から右にコンポーネントを配置、表示する
 --- 例えば`c.gridx = 0;`などの制約が設定されている場合、`setComponentZOrder(...)`メソッドで`Z`軸順インデックスを変更しても表示位置は変化しない
 --- `BorderLayout`のように`BorderLayout.NORTH`などのレイアウト制約を設定してコンポーネントを配置している場合も同様に`Z`軸順インデックスを変更しても表示位置は変化しない
 

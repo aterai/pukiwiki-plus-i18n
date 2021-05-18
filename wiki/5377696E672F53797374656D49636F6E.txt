@@ -22,17 +22,22 @@ largeLabel.setIcon(new ImageIcon(ShellFolder.getShellFolder(file).getIcon(true))
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`Windows`環境などからファイルをドロップするとそのファイルの`SystemIcon`を表示できます。
+上記のサンプルでは、`Windows`環境などからファイルをパネルにドロップするとそのファイルの`SystemIcon`を表示できます。
 
 - `16x16`
--- `FileSystemView#getSystemIcon(File)`メソッドで小さいアイコンを取得
+-- `FileSystemView#getSystemIcon(File)`メソッドで小さいアイコンを取得可能
 - `32x32`
--- `ShellFolder.getShellFolder(file).getIcon(true)`で大きいアイコンを取得
+-- `ShellFolder.getShellFolder(file).getIcon(true)`で大きいアイコンを取得可能
 -- コンパイル時に「`ShellFolder`は内部所有の`API`であり、今後のリリースで削除される可能性があります」と警告される
+-- `Java 9`では`sun`パッケージの内部所有クラスは非公開になって使用できない
+-- `Java 17`で復活しそう？
+--- [https://bugs.openjdk.java.net/browse/JDK-8182043 &#91;JDK-8182043&#93; Access to Windows Large Icons - Java Bug System]
+--- [https://github.com/openjdk/jdk/pull/2875 8182043: Access to Windows Large Icons by azuev-java · Pull Request #2875 · openjdk/jdk · GitHub]
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/filechooser/FileSystemView.html#getSystemIcon-java.io.File- FileSystemView#getSystemIcon(File) (Java Platform SE 8)]
 - [http://blog.codebeach.com/2008/02/get-file-type-icon-with-java.html Code Beach: Get the File Type Icon with Java]
+- [https://github.com/openjdk/jdk/pull/2875 8182043: Access to Windows Large Icons by azuev-java · Pull Request #2875 · openjdk/jdk · GitHub]
 
 * コメント [#comment]
 #comment

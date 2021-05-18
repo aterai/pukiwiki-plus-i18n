@@ -20,12 +20,14 @@ class MetalCanWriteFileChooserUI extends MetalFileChooserUI {
   protected MetalCanWriteFileChooserUI(JFileChooser chooser) {
     super(chooser);
   }
+
   public static ComponentUI createUI(JComponent c) {
     if (c instanceof JFileChooser) {
       return new MetalCanWriteFileChooserUI((JFileChooser) c);
     }
     throw new InternalError("Should never happen");
   }
+
   @Override public void createModel() {
     if (model2 != null) {
       model2.invalidateFileCache();
@@ -36,6 +38,7 @@ class MetalCanWriteFileChooserUI extends MetalFileChooserUI {
       }
     };
   }
+
   @Override public BasicDirectoryModel getModel() {
     return model2;
   }

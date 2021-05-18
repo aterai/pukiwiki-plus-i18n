@@ -26,17 +26,20 @@ class TranslucentPopupMenu extends JPopupMenu {
   @Override public boolean isOpaque() {
     return false;
   }
+
   @Override public void updateUI() {
     super.updateUI();
     if (UIManager.getBorder("PopupMenu.border") == null) {
       setBorder(new BorderUIResource(BorderFactory.createLineBorder(Color.GRAY)));
     }
   }
+
   @Override public JMenuItem add(JMenuItem menuItem) {
     menuItem.setOpaque(false);
-    //menuItem.setBackground(ALPHA_ZERO);
+    // menuItem.setBackground(ALPHA_ZERO);
     return super.add(menuItem);
   }
+
   @Override public void show(Component c, int x, int y) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
@@ -52,6 +55,7 @@ class TranslucentPopupMenu extends JPopupMenu {
     });
     super.show(c, x, y);
   }
+
   @Override protected void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g.create();
     g2.setPaint(POPUP_LEFT);
@@ -67,10 +71,10 @@ class TranslucentPopupMenu extends JPopupMenu {
 * 解説 [#explanation]
 上記のサンプルでは、`JPopupMenu`は`isOpaque()`メソッドをオーバーライド、`JMenuItem`は`setOpaque(false)`としてそれぞれ透明に設定し、`JPopupMenu#paintComponent(...)`で半透明の背景を描画しています。
 
-`JPopupMenu`が親フレームの外にはみ出す場合は、`Heavyweight`の`JWindow`を使って`JPopupMenu`が表示されるので、`JWindow#setBackground(new Color(0x0, true))`で(`JDK 1.6.0_10`では、`com.sun.awt.AWTUtilities.setWindowOpaque(w, false)`)、`JPopupMenu#show(...)`が呼ばれるたびに、毎回(親フレームの透明度を引き継がないように？)`JWindow`自体を透明にしています。
+`JPopupMenu`が親フレームの外にはみ出す場合は`Heavyweight`の`JWindow`を使って`JPopupMenu`が表示されるので、`JWindow#setBackground(new Color(0x0, true))`で(`JDK 1.6.0_10`では`com.sun.awt.AWTUtilities.setWindowOpaque(w, false)`)、`JPopupMenu#show(...)`が呼ばれるたびに毎回(親フレームの透明度を引き継がないように？)`JWindow`自体を透明にしています。
 
 ----
-- `JPopupMenu`(ルート)が`Light weight`で、その`JMenu`から開く`JPopupMenu`(サブメニュー) が`Heavy weight`のときに半透明にならない
+- `JPopupMenu`(ルート)が`Light weight`でその`JMenu`から開く`JPopupMenu`(サブメニュー) が`Heavy weight`のときに半透明にならない
 -- [https://bugs.openjdk.java.net/browse/JDK-7156657 JDK-7156657 Version 7 doesn't support translucent popup menus against a translucent window - Java Bug System]
 -- `JDK 1.7.0_06`などで修正された
 

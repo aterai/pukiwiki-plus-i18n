@@ -28,6 +28,7 @@ jta.getDocument().addDocumentListener(new DocumentListener() {
     });
     jta.setCaretPosition(doc.getLength());
   }
+
   private void removeLines(Document doc, Element root) {
     Element fl = root.getElement(0);
     try {
@@ -36,14 +37,14 @@ jta.getDocument().addDocumentListener(new DocumentListener() {
       System.out.println(ble);
     }
   }
+
   @Override public void removeUpdate(DocumentEvent e) {}
+
   @Override public void changedUpdate(DocumentEvent e) {}
 });
-final Timer timer = new Timer(100, new ActionListener() {
-  @Override public void actionPerformed(ActionEvent e) {
-    String s = new Date().toString();
-    jta.append((jta.getDocument().getLength() > 0) ? "\n" + s : s);
-  }
+Timer timer = new Timer(100, () -> {
+  String s = new Date().toString();
+  jta.append((jta.getDocument().getLength() > 0) ? "\n" + s : s);
 });
 }}
 

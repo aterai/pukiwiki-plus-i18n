@@ -18,7 +18,7 @@ image: https://lh4.googleusercontent.com/-QHfYzslScHI/VDq8gaSQpBI/AAAAAAAACO4/AI
 class DefaultTableModelPersistenceDelegate extends DefaultPersistenceDelegate {
   @Override protected void initialize(
         Class<?> type, Object oldInstance, Object newInstance, Encoder encoder) {
-    super.initialize(type, oldInstance,  newInstance, encoder);
+    super.initialize(type, oldInstance, newInstance, encoder);
     DefaultTableModel m = (DefaultTableModel) oldInstance;
     for (int row = 0; row < m.getRowCount(); row++) {
       for (int col = 0; col < m.getColumnCount(); col++) {
@@ -32,8 +32,8 @@ class DefaultTableModelPersistenceDelegate extends DefaultPersistenceDelegate {
 
 * 解説 [#explanation]
 - `XMLEncoder`ボタンをクリック
--- `XMLEncoder#setPersistenceDelegate(...)`で、`DefaultTableModel`の書き出しを自作の`DefaultTableModelPersistenceDelegate`に設定
--- テンポラリディレクトリに`XML`ファイルの書き出しと、`JTextArea`にその`XML`ファイルの読み込み
+-- `XMLEncoder#setPersistenceDelegate(...)`で`DefaultTableModel`の書き出しを自作の`DefaultTableModelPersistenceDelegate`に設定
+-- テンポラリディレクトリに`XML`ファイルの書き出しと`JTextArea`にその`XML`ファイルの読み込み
 
 #code{{
 try {

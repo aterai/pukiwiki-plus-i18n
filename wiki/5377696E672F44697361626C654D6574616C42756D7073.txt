@@ -32,11 +32,13 @@ class BumpsFreeInternalFrameTitlePane extends BasicInternalFrameTitlePane {
     setBorder(BorderFactory.createMatteBorder(
         0, 0, 1, 0, MetalLookAndFeel.getPrimaryControlDarkShadow()));
   }
+
   @Override public Dimension getPreferredSize() {
     Dimension d = super.getPreferredSize();
     d.height = 24;
     return d;
   }
+
   @Override public void createButtons() {
     super.createButtons();
     Arrays.asList(closeButton, maxButton, iconButton).forEach(b -> {

@@ -15,34 +15,31 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUV7me60I/AAAAAAAAAl4/PQ
 
 * サンプルコード [#sourcecode]
 #code(link){{
-//JScrollPane scroll = new JScrollPane(table);
+// JScrollPane scroll = new JScrollPane(table);
 scroll.getViewport().add(table);
 scroll.getViewport().setOpaque(true);
 scroll.getViewport().setBackground(Color.WHITE);
-//table.getParent().setBackground(Color.WHITE);
+// table.getParent().setBackground(Color.WHITE);
 }}
 
 * 解説 [#explanation]
 このページのタイトルなどで「`JTable`の背景色」としている部分は、実際は`JTable`の背景色ではなく、`JTable`を追加した`JViewport`がセルで隠れていない領域を表しています。
 
-このため、上記のスクリーンショットのように色をつけたい場合は、`JTable`自身の背景色を設定するのではなく、`JViewport`の背景色を設定する必要があります。サンプルコードでは`JScrollPane`から`JViewport`を取得していますが、`JTable#getParent()`メソッドからも`JViewport`を取得できます。
+このため、上記のスクリーンショットのように色をつけたい場合は、`JTable`自身の背景色を設定するのではなく`JViewport`の背景色を設定する必要があります。サンプルコードでは`JScrollPane`から`JViewport`を取得していますが`JTable#getParent()`メソッドからも`JViewport`を取得できます。
 
 上記のサンプルでは、背景色を不透明にするを選択して背景色を設定すると`JViewport`の背景色が変更されます。
 
-----
-セルの背景色を変更する場合は、`TableCellRenderer`を使用([[TableCellRendererでセルの背景色を変更>Swing/StripeTable]])します。
-
-----
-ヘッダの背景色(カラムをマウスでドラッグ中に表示される)を変更する場合は、空の`JViewport`を`JScrollPane`のカラムヘッダに追加して、その背景色を変更します。
+-　`JDK 1.6.0`で追加された`JTable#setFillsViewportHeight`メソッドを使用して`JTable`を`JViewport`の高さまで拡張すれば、直接`JTable`の背景色を設定するだけで同様の状態になる
+-- [[JTable自体の高さを拡張>Swing/FillsViewportHeight]]
+- セルの背景色を変更する場合は`TableCellRenderer`を使用する
+-- [[TableCellRendererでセルの背景色を変更>Swing/StripeTable]]
+- ヘッダの背景色(カラムをマウスでドラッグ中に表示される)を変更する場合は、空の`JViewport`を`JScrollPane`のカラムヘッダに追加してその背景色を変更する
 
 #code{{
 scroll.setColumnHeader(new JViewport());
 //or scroll.setColumnHeaderView(new JLabel());
 scroll.getColumnHeader().setBackground(Color.RED);
 }}
-
-----
-`JDK 1.6.0`で追加された`JTable#setFillsViewportHeight`メソッドを使用して`JTable`を`JViewport`の高さまで拡張しておけば、直接`JTable`の背景色を設定するだけでこのサンプルと同様の状態になります。(参考: [[JTable自体の高さを拡張>Swing/FillsViewportHeight]])。
 
 * 参考リンク [#reference]
 - [[JTable自体の高さを拡張>Swing/FillsViewportHeight]]

@@ -30,13 +30,12 @@ Toolkit.getDefaultToolkit().setDynamicLayout(true);
 }}
 
 ----
-`JFrame#setMinimumSize`メソッドを使わず、`ComponentListener`でサイズを制限する場合は、この制限を超えて縮小しようとしても、マウスを放した時点で設定した最小サイズまでフレームの大きさは戻されます。
+- `JFrame#setMinimumSize(...)`や`JFrame#setMaximumSize(...)`メソッドが無効な環境の場合、以下のように`ComponentListener`でサイズを制限する方法がある
 
 #code{{
-//ComponentListenerを使用
-final int mw = 320;
-final int mh = 100;
-final JFrame frame = new JFrame();
+int mw = 320;
+int mh = 100;
+JFrame frame = new JFrame();
 frame.addComponentListener(new ComponentAdapter() {
   @Override public void componentResized(ComponentEvent e) {
     int fw = frame.getSize().width;
@@ -46,16 +45,15 @@ frame.addComponentListener(new ComponentAdapter() {
 });
 }}
 
-`JFrame#setMaximumSize`が無効な環境でも、上記のように`ComponentListener`を使えば最大サイズを制限する(リサイズした後で最大サイズに戻しているだけ)ことができます。
-
 ----
-- 以下、`Robot`を使用する方法
+- 以下`Robot`を使用する方法
 -- 参考: [https://bugs.openjdk.java.net/browse/JDK-6464548 Bug ID: 6464548 Reopen 6383434: Frame.setMaximumSize() doesn't work]
 
 #code{{
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 public class MaximumSizeTest {
   private static final int MAX = 500;
   public static void main(String[] args) {
@@ -65,6 +63,7 @@ public class MaximumSizeTest {
       }
     });
   }
+
   public static void createAndShowGUI() {
     final JFrame frame = new JFrame();
     frame.setMinimumSize(new Dimension(240, 120));

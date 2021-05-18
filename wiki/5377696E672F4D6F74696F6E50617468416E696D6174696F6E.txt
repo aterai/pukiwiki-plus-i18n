@@ -1,0 +1,60 @@
+---
+category: swing
+folder: MotionPathAnimation
+title: Shapeから取得したPathIteratorに沿って図形を移動する
+tags: [Shape, PathIterator, JPanel, Timer]
+author: aterai
+pubdate: 2020-12-28T04:02:15+09:00
+description: Shapeから取得したPathIteratorに沿って図形が移動するアニメーションをJPanel上に描画します。
+image: https://drive.google.com/uc?id=1FHbqO5DwZfRAJS-R59DCLdU78ZxM7W1U
+---
+* 概要 [#summary]
+`Shape`から取得した`PathIterator`に沿って図形が移動するアニメーションを`JPanel`上に描画します。
+
+#download(https://drive.google.com/uc?id=1FHbqO5DwZfRAJS-R59DCLdU78ZxM7W1U)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+PathIterator pi = shape.getPathIterator(null, .01);
+Point2D prev = new Point2D.Double();
+double delta = .02;
+double threshold = 2d;
+double[] coords = new double[6];
+while (!pi.isDone()) {
+  int segment = pi.currentSegment(coords);
+  Point2D current = createPoint(coords[0], coords[1]);
+  if (segment == PathIterator.SEG_MOVETO) {
+    points.add(current);
+    prev.setLocation(current);
+  } else if (segment == PathIterator.SEG_LINETO) {
+    double distance = prev.distance(current);
+    double fraction = delta;
+    if (distance > threshold) {
+      Point2D p = interpolate(prev, current, fraction);
+      while (distance > prev.distance(p)) {
+        points.add(p);
+        fraction += delta;
+        p = interpolate(prev, current, fraction);
+      }
+    } else {
+      points.add(current);
+    }
+    prev.setLocation(current);
+  }
+  pi.next();
+}
+}}
+
+* 解説 [#explanation]
+- `Shape#getPathIterator(...)`で`Shape`の輪郭線を平坦化されたパスセグメントとして取得し`ArrayList`に`Point2D`として保存
+- 輪郭線が指定の長さ以上の直線になる場合は適当な長さで自前で分割して`ArrayList`に追加
+- `JPanel`の中央に`Shape`とその`Shape`から生成した輪郭線上の点を黒い円として描画
+- パスに沿った図形のアニメーションは、`ArrayList`から`Timer`で更新したインデックスの位置にある座標`Point2D`をひとつ取り出して赤い円として`JPanel`に描画
+
+* 参考リンク [#reference]
+- [[FlatteningPathIteratorでShape上の点を取得する>Swing/FlatteningPathIterator]]
+- [https://stackoverflow.com/questions/36947198/moving-objects-along-an-arc-path-with-java-graphics swing - Moving Objects along an arc path with java graphics - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

@@ -46,10 +46,12 @@ class ParagraphWithEopmView extends ParagraphView {
   public ParagraphWithEopmView(Element elem) {
     super(elem);
   }
+
   @Override public void paint(Graphics g, Shape allocation) {
     super.paint(g, allocation);
     paintCustomParagraph(g, allocation);
   }
+
   private void paintCustomParagraph(Graphics g, Shape a) {
     try {
       Shape paragraph = modelToView(getEndOffset(), a, Position.Bias.Backward);
@@ -72,9 +74,9 @@ class ParagraphWithEopmView extends ParagraphView {
 }}
 
 * 解説 [#explanation]
-`StyledEditorKit`を継承する`EditorKit`を作成し、これを`JEditorPane#setEditorKit`メソッドで、`JEditorPane`に設定しています。
+`StyledEditorKit`を継承する`EditorKit`を作成し、これを`JEditorPane#setEditorKit`メソッドで`JEditorPane`に設定しています。
 
-この`EditorKit`は、`Element`がパラグラフ(`AbstractDocument.ParagraphElementName`)の場合、改行記号を末尾に追加で描画する`View`を返す`ViewFactory`を生成します。
+この`EditorKit`は`Element`がパラグラフ(`AbstractDocument.ParagraphElementName`)の場合、改行記号を末尾に追加で描画する`View`を返す`ViewFactory`を生成します。
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1374478 Swing - JTextPane View Problem]

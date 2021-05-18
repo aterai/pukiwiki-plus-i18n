@@ -20,6 +20,7 @@ class StringBorder implements Border {
   private final Insets insets;
   private final Rectangle rect;
   private final String str;
+
   public StringBorder(JComponent parent, String str) {
     this.parent = parent;
     this.str = str;
@@ -27,18 +28,21 @@ class StringBorder implements Border {
     rect = parent.getFont().getStringBounds(str, frc).getBounds();
     insets = new Insets(0, 0, 0, rect.width);
   }
+
   @Override public Insets getBorderInsets(Component c) {
     return insets;
   }
+
   @Override public boolean isBorderOpaque() {
     return false;
   }
+
   @Override public void paintBorder(
       Component c, Graphics g, int x, int y, int width, int height) {
     Graphics2D g2 = (Graphics2D) g;
     float tx = x + width - rect.width;
     float ty = y - rect.y + (height - rect.height) / 2;
-    //g2.setPaint(Color.RED);
+    // g2.setPaint(Color.RED);
     g2.drawString(str, tx, ty);
   }
 }
@@ -60,14 +64,14 @@ JSpinner.NumberEditor editor2 = new JSpinner.NumberEditor(spinner2);
 spinner2.setEditor(editor2);
 editor2.setOpaque(true);
 editor2.setBackground(Color.WHITE);
-//Border b = new StringBorder(editor2, "percent");
+// Border b = new StringBorder(editor2, "percent");
 Border b = new StringBorder(editor2, "%");
 Border c = editor2.getBorder();
 editor2.setBorder((c == null) ? b : BorderFactory.createCompoundBorder(c, b));
 }}
 
 ----
-- 以下のように、`JLabel`を余白に描画する方法もある
+- 以下のように`JLabel`を余白に描画する方法もある
 -- 参考: [https://tips4java.wordpress.com/2009/09/27/component-border/ Component Border ≪ Java Tips Weblog]
 #code{{
 JLabel label = new JLabel("%");

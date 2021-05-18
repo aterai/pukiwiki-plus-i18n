@@ -66,8 +66,9 @@ class CellButtonsMouseListener extends MouseAdapter {
 }}
 
 * 解説 [#explanation]
-`JComboBox`のドロップダウンリスト(`ComboPopup`)から`JList`を取得し、これに上記のような`MouseListener`を追加しています。この`JList`がクリックされた場合、レンダラーから対応するセルに表示されている`JButton`を取得し、`button.doClick()`を呼び出します。
+`JComboBox`のドロップダウンリスト(`ComboPopup`)から`JList`を取得し、これに上記のような`MouseListener`を追加しています。
 
+- `JList`がクリックされた場合、レンダラーから対応するセルに表示されている`JButton`を取得して`JButton#doClick()`メソッドを実行
 #code{{
 Accessible a = getAccessibleContext().getAccessibleChild(0);
 if (a instanceof ComboPopup) {
@@ -80,7 +81,7 @@ if (a instanceof ComboPopup) {
 }}
 
 - 削除ボタンがクリックされてもドロップダウンリスト(`ComboPopup`)は表示状態のまま残したい
--- `MutableComboBoxModel#removeElementAt(index);`のあとで`comboBox.showPopup();`を実行して開き直す
+-- `MutableComboBoxModel#removeElementAt(index)`のあとで`JComboBox#showPopup()`を実行して開き直す
 -- `ComboPopup`が`JFrame`の外に表示されている(`Heavy weight`)場合、一旦閉じてから再度開く様子が見えてしまう
 
 * 参考リンク [#reference]

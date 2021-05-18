@@ -37,11 +37,13 @@ class BalloonToolTip extends JToolTip {
     setOpaque(false);
     setBorder(BorderFactory.createEmptyBorder(8, 5, 0, 5));
   }
+
   @Override public Dimension getPreferredSize() {
     Dimension d = super.getPreferredSize();
     d.height = 28;
     return d;
   }
+
   @Override public void paintComponent(Graphics g) {
     Shape s = makeBalloonShape();
     Graphics2D g2 = (Graphics2D) g.create();
@@ -54,6 +56,7 @@ class BalloonToolTip extends JToolTip {
     g2.dispose();
     super.paintComponent(g);
   }
+
   private Shape makeBalloonShape() {
     Insets i = getInsets();
     int w = getWidth() - 1;
@@ -72,12 +75,12 @@ class BalloonToolTip extends JToolTip {
 }}
 
 * 解説 [#explanation]
-- `setOpaque(false)`で背景色を描画しない`JToolTop`を作成し、`JToolTop#paintComponent(...)`をオーバーライドして吹き出し風の背景を描画
-- `JToolTop`に`HierarchyListener`を追加し、その`JToolTop`が表示状態になった時、親が`JWindow`かどうかを調べてこれを透明に設定
--- `JToolTop`が元`JFrame`外に表示される場合は、`HeavyWeightWindow`(`JWindow`)に配置して表示されるため、`JWindow`を透明にする必要がある
--- `JToolTop`が元`JFrame`内に表示される場合は、その`JFrame`の`JLayeredPane`の`POPUP_LAYER`に`JToolTop`が描画されるので、`setOpaque(false)`な`JToolTop`の背景は描画されない
+- `setOpaque(false)`で背景色を描画しない`JToolTop`を作成し`JToolTop#paintComponent(...)`をオーバーライドして吹き出し風の背景を描画
+- `JToolTop`に`HierarchyListener`を追加しその`JToolTop`が表示状態になった時親が`JWindow`かどうかを調べてこれを透明に設定
+-- `JToolTop`が元`JFrame`外に表示される場合は`HeavyWeightWindow`(`JWindow`)に配置して表示されるため`JWindow`を透明にする必要がある
+-- `JToolTop`が元`JFrame`内に表示される場合はその`JFrame`の`JLayeredPane`の`POPUP_LAYER`に`JToolTop`が描画されるので`setOpaque(false)`な`JToolTop`の背景は描画されない
 -- `JWindow#setShape(...)`メソッドでも形状の変更が可能だが、この場合フチを滑らかにすることが難しい
-- `JList#createToolTip()`をオーバーライドし、通常の`JToolTip`の代わりに`BalloonToolTip`(上記の`JToolTip`)を作成して返すように設定
+- `JList#createToolTip()`をオーバーライドし通常の`JToolTip`の代わりに`BalloonToolTip`(上記の`JToolTip`)を作成して返すように設定
 
 #code{{
 JList<String> list = new JList<String>(model) {

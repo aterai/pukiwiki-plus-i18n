@@ -33,6 +33,7 @@ class PressAndHoldHandler extends AbstractAction implements MouseListener {
       }
     }
   });
+
   public PressAndHoldHandler() {
     super();
     holdTimer.setInitialDelay(1000);
@@ -52,6 +53,7 @@ class PressAndHoldHandler extends AbstractAction implements MouseListener {
       bg.add(b);
     }
   }
+
   private List<MenuContext> makeMenuList() {
     return Arrays.asList(
       new MenuContext("BLACK", Color.BLACK),
@@ -64,6 +66,7 @@ class PressAndHoldHandler extends AbstractAction implements MouseListener {
       new MenuContext("RED", Color.RED),
       new MenuContext("YELLOW", Color.YELLOW));
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     System.out.println("actionPerformed");
     if (holdTimer.isRunning()) {
@@ -74,6 +77,7 @@ class PressAndHoldHandler extends AbstractAction implements MouseListener {
       holdTimer.stop();
     }
   }
+
   @Override public void mousePressed(MouseEvent e) {
     System.out.println("mousePressed");
     Component c = e.getComponent();
@@ -82,16 +86,24 @@ class PressAndHoldHandler extends AbstractAction implements MouseListener {
       holdTimer.start();
     }
   }
+
   @Override public void mouseReleased(MouseEvent e) {
     holdTimer.stop();
   }
+
   @Override public void mouseExited(MouseEvent e) {
     if (holdTimer.isRunning()) {
       holdTimer.stop();
     }
   }
-  @Override public void mouseEntered(MouseEvent e) { /* not needed */ }
-  @Override public void mouseClicked(MouseEvent e) { /* not needed */ }
+
+  @Override public void mouseEntered(MouseEvent e) {
+    /* not needed */
+  }
+
+  @Override public void mouseClicked(MouseEvent e) {
+    /* not needed */
+  }
 }
 }}
 

@@ -1,0 +1,72 @@
+---
+category: swing
+folder: TranslucentFrameShape
+title: JWindowを半透明の滑らかな図形で切り抜きする
+tags: [JWindow, Shape]
+author: aterai
+pubdate: 2020-08-24T00:57:03+09:00
+description: JWindowを半透明に設定し、その形状を滑らかな縁の図形に変更します。
+image: https://drive.google.com/uc?id=1uukYgcQrWU5d2YRZ1KB2oy830BDRxnYl
+---
+* 概要 [#summary]
+`JWindow`を半透明に設定し、その形状を滑らかな縁の図形に変更します。
+
+#download(https://drive.google.com/uc?id=1uukYgcQrWU5d2YRZ1KB2oy830BDRxnYl)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+Shape shape = new RoundRectangle2D.Float(0f, 0f, 240f, 64f, 32f, 32f);
+
+JButton button2 = new JButton("not use Window#setShape(...)");
+button2.addActionListener(e -> {
+  JWindow window = new JWindow();
+  window.setBackground(new Color(0x0, true));
+  window.getContentPane().add(makePanel(shape));
+  window.pack();
+  window.setLocationRelativeTo(((AbstractButton) e.getSource()).getRootPane());
+  window.setVisible(true);
+});
+// ...
+private Component makePanel(Shape shape) {
+  JPanel panel = new JPanel(new BorderLayout()) {
+    @Override public Dimension getPreferredSize() {
+      return shape.getBounds().getSize();
+    }
+
+    @Override protected void paintComponent(Graphics g) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, .5f));
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setPaint(Color.RED);
+      g2.fill(shape);
+      g2.dispose();
+      super.paintComponent(g);
+    }
+  };
+  panel.setOpaque(false);
+  panel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+  // ...
+  return panel;
+}
+}}
+
+* 解説 [#explanation]
+- `use Window#setShape(...)`
+-- `JWindow`の形状を`Window#setShape(...)`メソッドで切り抜いて変更
+-- フチにジャギーが発生して滑らかにならない
+-- 参考: [[Windowの形を変更>Swing/WindowShape]]
+- `not use Window#setShape(...)`
+-- `JWindow`の背景色を`JWindow#setBackground(new Color(0x0, true))`で完全に透明化
+-- 内部の`JPanel`を`JPanel#setOpaque(false)`で背景を描画しない、かつ`JPanel#paintComponent(...)`をオーバーライドして半透明のラウンド矩形を描画
+-- `Window#setShape(...)`を使用しなくてもラウンド矩形の外側は完全に透明でマウスクリックなども無効になるので滑らかなフチの`Shape`で切り抜いた`JWindow`になる
+-- 参考: [[JFrameの透明化と再描画>Swing/TranslucentFrameRepaint]]
+-- このサンプルでは画像を切り抜きする必要はないので、[[Windowの縁をソフトクリッピングでなめらかにする>Swing/SoftClippedWindow]]のようなソフトクリッピング処理は不要
+
+* 参考リンク [#reference]
+- [[Windowの形を変更>Swing/WindowShape]]
+- [[JFrameの透明化と再描画>Swing/TranslucentFrameRepaint]]
+- [[Windowの縁をソフトクリッピングでなめらかにする>Swing/SoftClippedWindow]]
+
+* コメント [#comment]
+#comment
+#comment

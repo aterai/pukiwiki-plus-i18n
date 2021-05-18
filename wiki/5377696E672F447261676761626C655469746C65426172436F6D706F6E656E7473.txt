@@ -1,0 +1,71 @@
+---
+category: swing
+folder: DraggableTitleBarComponents
+title: JFrameのタイトルバーに追加したコンポーネントをドラッグ可能にする
+tags: [JFrame, JLayer]
+author: aterai
+pubdate: 2020-10-26T00:39:08+09:00
+description: JFrameに独自のタイトルバーを設定しその内部に追加したコンポーネントをマウスでドラッグ可能に設定します。
+image: https://drive.google.com/uc?id=1fq7ACTABN4Xp10gFQMkWt-8H0jrsSDfG
+---
+* 概要 [#summary]
+`JFrame`に独自のタイトルバーを設定しその内部に追加したコンポーネントをマウスでドラッグ可能に設定します。
+
+#download(https://drive.google.com/uc?id=1fq7ACTABN4Xp10gFQMkWt-8H0jrsSDfG)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class TitleBarDragLayerUI extends LayerUI<JComponent> {
+  private final Point startPt = new Point();
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(
+          AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseEvent(
+        MouseEvent e, JLayer<? extends JComponent> l) {
+    if (e.getID() == MouseEvent.MOUSE_PRESSED
+        && SwingUtilities.isLeftMouseButton(e)) {
+      startPt.setLocation(e.getPoint());
+    }
+  }
+
+  @Override protected void processMouseMotionEvent(
+        MouseEvent e, JLayer<? extends JComponent> l) {
+    Component c = SwingUtilities.getRoot(e.getComponent());
+    if (e.getID() == MouseEvent.MOUSE_DRAGGED
+        && c instanceof Window && SwingUtilities.isLeftMouseButton(e)) {
+      Point pt = c.getLocation();
+      c.setLocation(pt.x - startPt.x + e.getX(), pt.y - startPt.y + e.getY());
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `TitleBar`
+-- システムのタイトルバーを`setUndecorated(true)`で非表示に設定し代わりに`JPanel`を追加
+--- 参考: [[JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする>Swing/CustomDecoratedFrame]]
+-- タイトルバーとして設定した`JPanel`に`JLayer`を追加し、内部の子コンポーネントへのドラッグイベントを親`JFrame`の移動に変換
+- `JComboBox`
+-- [[JComboBoxのArrowButtonを隠す>Swing/HideComboArrowButton]]で`ArrowButton`は非表示
+-- `MouseListener`を追加して`mousePressed`ではなく、`mouseClicked`時にドロップダウンリストを表示するよう設定
+
+* 参考リンク [#reference]
+- [[JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする>Swing/CustomDecoratedFrame]]
+- [[JComboBoxのArrowButtonを隠す>Swing/HideComboArrowButton]]
+
+* コメント [#comment]
+#comment
+#comment

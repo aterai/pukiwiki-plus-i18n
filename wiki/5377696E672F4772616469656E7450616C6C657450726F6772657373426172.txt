@@ -24,6 +24,7 @@ class GradientPalletProgressBarUI extends BasicProgressBarUI {
     super();
     this.pallet = makeGradientPallet();
   }
+
   private static int[] makeGradientPallet() {
     BufferedImage image = new BufferedImage(100, 1, BufferedImage.TYPE_INT_RGB);
     Graphics2D g2  = image.createGraphics();
@@ -45,6 +46,7 @@ class GradientPalletProgressBarUI extends BasicProgressBarUI {
     }
     return pallet;
   }
+
   private static Color getColorFromPallet(int[] pallet, float x) {
     if (x < 0f || x > 1f) {
       throw new IllegalArgumentException("Parameter outside of expected range");
@@ -53,10 +55,11 @@ class GradientPalletProgressBarUI extends BasicProgressBarUI {
     int max = pallet.length - 1;
     int index = Math.min(Math.max(i, 0), max);
     return new Color(pallet[index] & 0x00_FF_FF_FF);
-    //translucent
-    //int pix = pallet[index] & 0x00_FF_FF_FF | (0x64 << 24);
-    //return new Color(pix), true);
+    // translucent
+    // int pix = pallet[index] & 0x00_FF_FF_FF | (0x64 << 24);
+    // return new Color(pix), true);
   }
+
   @Override public void paintDeterminate(Graphics g, JComponent c) {
     Insets b = progressBar.getInsets(); // area for border
     int barRectWidth  = progressBar.getWidth()  - b.right - b.left;
@@ -64,8 +67,8 @@ class GradientPalletProgressBarUI extends BasicProgressBarUI {
     if (barRectWidth <= 0 || barRectHeight <= 0) {
       return;
     }
-    //int cellLength = getCellLength();
-    //int cellSpacing = getCellSpacing();
+    // int cellLength = getCellLength();
+    // int cellSpacing = getCellSpacing();
     // amount of progress to draw
     int amountFull = getAmountFull(b, barRectWidth, barRectHeight);
 
@@ -88,10 +91,10 @@ class GradientPalletProgressBarUI extends BasicProgressBarUI {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは高さ`1px`の画像をパレットとして予め作成し、それから`JProgressBar`の進捗に応じた色を取得して、`BasicProgressBarUI#paintDeterminate(...)`内で使用することで、色の変更を行なっています。
+上記のサンプルでは高さ`1px`の画像をパレットとして予め作成し、それから`JProgressBar`の進捗に応じた色を取得して`BasicProgressBarUI#paintDeterminate(...)`内で使用することで色の変更を行なっています。
 
-- パレット用の画像作成は、[[JSliderのスタイルを変更する>Swing/GradientTrackSlider]]と同じ
-- 注: 不確定モードには未対応
+- パレット用の画像作成は[[JSliderのスタイルを変更する>Swing/GradientTrackSlider]]と同じ
+- 不確定モードには未対応
 
 * 参考リンク [#reference]
 - [http://harmoniccode.blogspot.jp/2011/05/varying-gradients.html Harmonic Code: Varying gradients...]

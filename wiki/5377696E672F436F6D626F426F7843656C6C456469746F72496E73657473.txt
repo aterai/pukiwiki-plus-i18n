@@ -18,6 +18,7 @@ image: https://lh4.googleusercontent.com/-dIea13PoJ70/T6c7YezP1BI/AAAAAAAABMQ/e0
 class ComboBoxPanel extends JPanel {
   public final JComboBox<String> comboBox = new JComboBox<>(
       new String[] {"aaaaaa", "bbb", "c"});
+
   public ComboBoxPanel() {
     super(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
@@ -31,6 +32,7 @@ class ComboBoxPanel extends JPanel {
     setOpaque(true);
   }
 }
+
 class ComboBoxCellRenderer extends ComboBoxPanel implements TableCellRenderer {
   public ComboBoxCellRenderer() {
     super();
@@ -61,8 +63,8 @@ combo.setBorder(BorderFactory.createCompoundBorder(
 
 - `JPanel` + `JComboBox`(右)
 -- `GridBagLayout`を使用する`JPanel`に`JComboBox`を追加
--- `fill`フィールドを`GridBagConstraints.HORIZONTAL`として、垂直方向には`JComboBox`のサイズを変更しない
--- `insets`フィールドを設定して、`JComboBox`の外側に別途(ドロップダウンリストの位置、サイズに影響しないように)余白を追加
+-- `fill`フィールドを`GridBagConstraints.HORIZONTAL`として垂直方向には`JComboBox`のサイズを変更しない
+-- `insets`フィールドを設定して`JComboBox`の外側に別途(ドロップダウンリストの位置、サイズに影響しないように)余白を追加
 
 ----
 セルの中にある`JComboBox`の幅を可変ではなく固定にする場合は、以下のような`FlowLayout`のパネルに`getPreferredSize()`をオーバーライドして幅を固定した`JComboBox`を使用する方法もあります。
@@ -76,6 +78,7 @@ class ComboBoxPanel extends JPanel {
       return new Dimension(40, d.height);
     }
   };
+
   public ComboBoxPanel() {
     super();
     setOpaque(true);

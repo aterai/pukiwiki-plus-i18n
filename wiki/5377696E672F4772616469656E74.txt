@@ -21,6 +21,7 @@ class GradientSeparatorUI extends BasicSeparatorUI {
   public static ComponentUI createUI(JComponent c) {
     return new GradientSeparatorUI();
   }
+
   private void updateColors(JComponent j) {
     Color c = UIManager.getColor("Panel.background");
     bgc = c instanceof ColorUIResource ? c : j.getBackground();
@@ -29,10 +30,12 @@ class GradientSeparatorUI extends BasicSeparatorUI {
     c = UIManager.getColor("Separator.highlight");
     shc = c instanceof ColorUIResource ? c : j.getBackground().darker();
   }
+
   @Override public void installUI(JComponent c) {
     super.installUI(c);
     updateColors(c);
   }
+
   @Override public void paint(Graphics g, JComponent c) {
     if (c instanceof JSeparator) {
       Graphics2D g2 = (Graphics2D) g.create();
@@ -60,7 +63,7 @@ class GradientSeparatorUI extends BasicSeparatorUI {
 -- デフォルトの`JSeparator`
 - 下、右:
 -- `BasicSeparatorUI`を継承する`GradientSeparatorUI`を`JSeparator`に設定し、元色から親パネルの背景色へとグラデーションする`GradientPaint`で直線を描画
--- `JSeparator`に`Border`を設定すると、`JSeparator`が表示されない
+-- `JSeparator`に`Border`を設定すると`JSeparator`が表示されない
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSeparator.html JSeparator (Java Platform SE 8)]

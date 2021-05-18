@@ -36,6 +36,7 @@ class TextFieldPopupMenu extends JPopupMenu {
       }
     }
   };
+
   protected TextFieldPopupMenu() {
     super();
     add(cutAction);
@@ -45,6 +46,7 @@ class TextFieldPopupMenu extends JPopupMenu {
     addSeparator();
     add(cut2Action);
   }
+
   @Override public void show(Component c, int x, int y) {
     if (c instanceof JTextComponent) {
       JTextComponent tc = (JTextComponent) c;
@@ -65,9 +67,8 @@ class TextFieldPopupMenu extends JPopupMenu {
 - サンプルの`cut2`のように、`JTextComponent#cut()`メソッドなどを使用する方法もある
 
 ----
-サンプルを`Java Web Start`で起動した場合は、システム全体の共有クリップボードにはアクセス不可能で、アプリケーション内部のみでのコピー、貼り付けとなります。
-
-- [[ClipboardServiceでシステム全体の共有クリップボードにアクセスする>Swing/ClipboardService]]
+- サンプルを`Java Web Start`で起動した場合は、システム全体の共有クリップボードにはアクセス不可能でアプリケーション内部のみでのコピー、貼り付けとなる
+-- [[ClipboardServiceでシステム全体の共有クリップボードにアクセスする>Swing/ClipboardService]]
 
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKnUb6nqI/AAAAAAAAAWQ/L3ylLdA-GIw/s800/DefaultEditorKit1.png)
 

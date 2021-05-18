@@ -24,6 +24,7 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLb3DW2ZI/AAAAAAAAAXk/8V
     g2.dispose();
   }
 }
+
 private void initTargetLine(Point p) {
   Rectangle rect = getCellBounds(0, 0);
   int cellHeight = rect.height;
@@ -44,6 +45,7 @@ private void initTargetLine(Point p) {
     targetLine.setLocation(0, targetIndex * cellHeight - lineHeight);
   }
 }
+
 @Override public void dragOver(final DropTargetDragEvent e) {
   if (isDragAcceptable(e)) {
     e.acceptDrag(e.getDropAction());
@@ -54,6 +56,7 @@ private void initTargetLine(Point p) {
   initTargetLine(e.getLocation());
   repaint();
 }
+
 @Override public void drop(DropTargetDropEvent e) {
   DefaultListModel model = (DefaultListModel) getModel();
   Transferable t = e.getTransferable();
@@ -89,8 +92,7 @@ private void initTargetLine(Point p) {
 * 解説 [#explanation]
 上記のサンプルでは、ドラッグソースとドラッグターゲットの両方を`JList`自身に設定して、項目をドラッグ＆ドロップしているように見せかけています。
 
-- メモ:
--- 複数アイテムを選択して移動する場合は、[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]のサンプルなどを参照
+- 複数アイテムを選択して移動する場合は[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]のサンプルなどを参照
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/dnd/intro.html Introduction to Drag and Drop and Data Transfer]

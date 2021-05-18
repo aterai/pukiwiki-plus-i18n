@@ -27,9 +27,8 @@ combo.setSelectedIndex(-1);
 JTextField field = (JTextField) combo.getEditor().getEditorComponent();
 field.setText("");
 field.addKeyListener(new ComboKeyHandler(combo));
-}}
 
-#code{{
+// ...
 class ComboKeyHandler extends KeyAdapter {
   private final JComboBox<String> comboBox;
   private final List<String> list = new ArrayList<>();
@@ -42,6 +41,7 @@ class ComboKeyHandler extends KeyAdapter {
       list.add(comboBox.getItemAt(i));
     }
   }
+
   @Override public void keyTyped(final KeyEvent e) {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
@@ -64,6 +64,7 @@ class ComboKeyHandler extends KeyAdapter {
       }
     });
   }
+
   @Override public void keyPressed(KeyEvent e) {
     JTextField textField = (JTextField) e.getComponent();
     String text = textField.getText();
@@ -92,12 +93,14 @@ class ComboKeyHandler extends KeyAdapter {
       break;
     }
   }
+
   private static void setSuggestionModel(
       JComboBox<String> comboBox, ComboBoxModel<String> mdl, String str) {
     comboBox.setModel(mdl);
     comboBox.setSelectedIndex(-1);
     ((JTextField) comboBox.getEditor().getEditorComponent()).setText(str);
   }
+
   private static ComboBoxModel<String> getSuggestedModel(List<String> list, String text) {
     DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
     for (String s : list) {
@@ -125,14 +128,15 @@ class ComboKeyHandler extends KeyAdapter {
 -- 候補をポップアップ
 
 ----
-- `JComboBox#showPopup()`と`JComboBox#hidePopup()`を使って、候補のポップアップメニュー表示を制御
--- 候補を表示するとき、`JComboBox#setSelectedIndex(-1)`で項目の選択を一旦クリアしないと動作がおかしくなる場合がある
+- `JComboBox#showPopup()`と`JComboBox#hidePopup()`を使って候補のポップアップメニュー表示を制御
+-- 候補を表示するとき`JComboBox#setSelectedIndex(-1)`で項目の選択を一旦クリアしないと動作がおかしくなる場合がある
 
 ----
-`JComboBox`ではなく、`SwingSet3`の[http://java.net/projects/swingset3/sources/svn/content/trunk/SwingSet3/src/com/sun/swingset3/demos/textfield/JHistoryTextField.java JHistoryTextField.java] のように、`JTextField`+`JPopupMenu`を使用することもできますが、画面の下側で候補数が変更された場合の`JPopupMenu`の位置更新(気にしなければ問題無し)が面倒です。`JTextField`風に見せかけたいだけなら、以下のような`ArrowButton`を非表示にする方法もあります。
+- `JComboBox`ではなく`SwingSet3`の[http://java.net/projects/swingset3/sources/svn/content/trunk/SwingSet3/src/com/sun/swingset3/demos/textfield/JHistoryTextField.java JHistoryTextField.java] のように`JTextField`+`JPopupMenu`を使用することも可能だが、画面の下側で候補数が変更された場合の`JPopupMenu`の位置更新が面倒
+- 以下のように`ArrowButton`を非表示にして`JTextField`風に見せかける方法もある
 
 #code{{
-//UIManager.put("ComboBox.squareButton", Boolean.FALSE);
+// UIManager.put("ComboBox.squareButton", Boolean.FALSE);
 JComboBox = new JComboBox(model) {
   @Override public void updateUI() {
     super.updateUI();
@@ -147,6 +151,7 @@ JComboBox = new JComboBox(model) {
         button.setVisible(false);
         return button;
       }
+
       @Override public void configureArrowButton() {}
     });
     for (MouseListener ml: getMouseListeners()) {

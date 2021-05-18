@@ -47,7 +47,7 @@ class WindowsTabHeightTabbedPaneUI extends WindowsTabbedPaneUI {
 - `BasicTabbedPaneUI#calculateTabHeight(...)`などをオーバーライドして、タブ領域の高さを変更
 - `BasicTabbedPaneUI#paintTab(...)`などをオーバーライドして、描画されるタブの高さを`BasicTabbedPaneUI#calculateTabHeight(...)`で設定した高さの半分程度に変更
 -- `JTabbedPane.TOP`の場合、選択されていないタブの`y`座標を下に移動
-- 対応しているのは、`JTabbedPane.SCROLL_TAB_LAYOUT`の場合のみ
+- 対応しているのは`JTabbedPane.SCROLL_TAB_LAYOUT`の場合のみ
 -- `JTabbedPane.TOP`と`JTabbedPane.BOTTOM`の場合、選択したタブの高さが変化する
 -- `JTabbedPane.LEFT`と`JTabbedPane.RIGHT`の場合、すべてのタブが`BasicTabbedPaneUI#calculateTabHeight(...)`で設定した高さになる
 

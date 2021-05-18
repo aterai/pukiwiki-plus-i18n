@@ -19,10 +19,12 @@ class PlaceholderFocusListener implements FocusListener {
   private static final Color INACTIVE
     = UIManager.getColor("TextField.inactiveForeground");
   private final String hintMessage;
+
   public PlaceholderFocusListener(JTextComponent tf) {
     hintMessage = tf.getText();
     tf.setForeground(INACTIVE);
   }
+
   @Override public void focusGained(FocusEvent e) {
     JTextComponent tf = (JTextComponent) e.getComponent();
     if (hintMessage.equals(tf.getText())
@@ -31,6 +33,7 @@ class PlaceholderFocusListener implements FocusListener {
       tf.setText("");
     }
   }
+
   @Override public void focusLost(FocusEvent e) {
     JTextComponent tf = (JTextComponent) e.getComponent();
     if ("".equals(tf.getText().trim())) {
@@ -42,20 +45,22 @@ class PlaceholderFocusListener implements FocusListener {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTextField`からフォーカスが失われた時にまだ何も入力されていない場合は、その`JTextField`の説明などを透かし文字として薄く表示しています。
+上記のサンプルでは、`JTextField`からフォーカスが失われた時にまだ何も入力されていない場合はその`JTextField`の説明などを透かし文字として薄く表示しています。
 
 ----
-`JDK 1.7.0`以上の場合は、`JLayer`を使用して同様にヒント文字列を描画できます。
+- `JDK 1.7.0`以上の場合は`JLayer`を使用して同様にヒント文字列を描画可能
 
 #code{{
 class PlaceholderLayerUI extends LayerUI<JTextComponent> {
   private static final Color INACTIVE = UIManager.getColor("TextField.inactiveForeground");
   private final JLabel hint;
+
   public PlaceholderLayerUI(String hintMessage) {
     super();
     this.hint = new JLabel(hintMessage);
     hint.setForeground(INACTIVE);
   }
+
   @Override public void paint(Graphics g, JComponent c) {
     super.paint(g, c);
     if (c instanceof JLayer) {
@@ -71,18 +76,21 @@ class PlaceholderLayerUI extends LayerUI<JTextComponent> {
       }
     }
   }
+
   @Override public void installUI(JComponent c) {
     super.installUI(c);
     if (c instanceof JLayer) {
       ((JLayer) c).setLayerEventMask(AWTEvent.FOCUS_EVENT_MASK);
     }
   }
+
   @Override public void uninstallUI(JComponent c) {
     super.uninstallUI(c);
     if (c instanceof JLayer) {
       ((JLayer) c).setLayerEventMask(0);
     }
   }
+
   @Override public void processFocusEvent(FocusEvent e, JLayer<? extends JTextComponent> l) {
     l.getView().repaint();
   }

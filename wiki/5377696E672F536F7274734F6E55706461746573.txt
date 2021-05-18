@@ -23,10 +23,10 @@ if (rs instanceof DefaultRowSorter) {
 
 * 解説 [#explanation]
 - セルエディタで値を編集、変更
--- `SortsOnUpdates(false)`の場合、ソート状態に変化なし(デフォルト)
--- `SortsOnUpdates(true)`の場合、`CellEditor`が値をコミットした(`DefaultRowSorter#rowsUpdated(...)`メソッドが呼び出された)後にソートが実行される
+-- `SortsOnUpdates(false)`の場合ソート状態に変化なし(デフォルト)
+-- `SortsOnUpdates(true)`の場合`CellEditor`が値をコミットした(`DefaultRowSorter#rowsUpdated(...)`メソッドが呼び出された)後にソートが実行される
 - モデルに行を追加、削除
--- `SortsOnUpdates`の値には依存せず、常にソートが実行される
+-- `SortsOnUpdates`の値には依存せず常にソートが実行される
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultRowSorter.html#setSortsOnUpdates-boolean- DefaultRowSorter#setSortsOnUpdates(boolean) (Java Platform SE 8)]

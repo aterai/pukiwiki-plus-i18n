@@ -28,15 +28,15 @@ try {
 * 解説 [#explanation]
 - `JFormattedTextField.COMMIT_OR_REVERT`
 -- `JFormattedTextField`のデフォルト
--- フォーカスが失われたとき、正当な値の場合は値を確定し不当な値の場合は前回値に戻す
+-- フォーカスが失われたとき正当な値の場合は値を確定し不当な値の場合は前回値に戻す
 - `JFormattedTextField.REVERT`
--- フォーカスが失われたとき、常に前回値に戻す
+-- フォーカスが失われたとき常に前回値に戻す
 -- 編集を確定するには`JFormattedTextField#commitEdit()`を自前で呼ぶか、`DefaultFormatter#setCommitsOnValidEdit(true)`と設定(文字列が編集されるたびに`commitEdit`が自動的に呼び出される)する必要がある
 - `JFormattedTextField.COMMIT`
--- フォーカスが失われたとき、現在の値を確定する
+-- フォーカスが失われたとき現在の値を確定する
 -- 現在の値が正当な値でない場合でも、その値がそのまま残る 
 - `JFormattedTextField.PERSIST`
--- フォーカスが失われたとき、何も処理しない
+-- フォーカスが失われたとき何も処理しない
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JFormattedTextField.html JFormattedTextField (Java Platform SE 8)]

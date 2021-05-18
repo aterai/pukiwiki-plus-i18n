@@ -18,32 +18,37 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTMNwgwo5I/AAAAAAAAAY0/lp
 interface FontChangeListener extends EventListener {
   public void fontStateChanged(FontChangeEvent e);
 }
+
 class FontChangeEvent extends EventObject {
   private final String command;
   private final Font font;
   public String getCommand() {
     return command;
   }
+
   public Font getFont() {
     return font;
   }
+
   public FontChangeEvent(Object source, String cmd, Font font) {
     super(source);
     this.command = cmd;
     this.font = font;
   }
 }
-}}
-#code{{
+// ...
 private final Vector listenerList = new Vector();
+
 public void addFontChangeListener(FontChangeListener l) {
   if (!listenerList.contains(l)) {
     listenerList.add(l);
   }
 }
+
 public void removeFontChangeListener(FontChangeListener l) {
   listenerList.remove(l);
 }
+
 public void fireFontChangeEvent(String cmd, Font font) {
   Vector list = (Vector) listenerList.clone();
   Enumeration e = list.elements();
@@ -66,7 +71,7 @@ public void fireFontChangeEvent(String cmd, Font font) {
 #code{{
 // https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/EventListenerList.html
 EventListenerList listenerList = new EventListenerList();
-//FontChangeEvent fontChangeEvent = null;
+// FontChangeEvent fontChangeEvent = null;
 public void addFontChangeListener(FontChangeListener l) {
   listenerList.add(FontChangeListener.class, l);
 }

@@ -26,11 +26,11 @@ editor.setBackground(new Color(0xEE_EE_EE));
 
 * 解説 [#explanation]
 - 上:
--- 選択した文字をレンダリングする色は、`LookAndFeel`でのデフォルト
---- `WindowsLookAndFeel`の場合、白
+-- 選択した文字をレンダリングする色は`LookAndFeel`でのデフォルト
+--- `WindowsLookAndFeel`の場合白
 - 下:
--- 選択した文字のレンダリングを`JTextComponent#setSelectedTextColor(null)`で無効化し、`CSS`で設定した文字色のまま表示
--- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setSelectedTextColor-java.awt.Color- JTextComponent#setSelectedTextColor(Color) (Java Platform SE 8)]のドキュメントには、「色に`null`を設定することは、`Color.black`と同じです。」と記述されているが、`JEditorPane`では文字列選択しても文字色は変更されなくなる
+-- 選択した文字のレンダリングを`JTextComponent#setSelectedTextColor(null)`で無効化して`CSS`で設定した文字色を変更せずに表示
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setSelectedTextColor-java.awt.Color- JTextComponent#setSelectedTextColor(Color) (Java Platform SE 8)]のドキュメントには「色に`null`を設定することは、`Color.black`と同じです。」と記述されているが`JEditorPane`では文字列選択しても文字色は変更されなくなる
 
 * 参考リンク [#reference]
 - [[JEditorPaneで選択色を半透明化>Swing/SelectionColor]]

@@ -30,13 +30,19 @@ class RightPopupMenuListener implements PopupMenuListener {
       }
     });
   }
-  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
-  @Override public void popupMenuCanceled(PopupMenuEvent e) {}
+
+  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+    /* not needed */
+  }
+
+  @Override public void popupMenuCanceled(PopupMenuEvent e) {
+    /* not needed */
+  }
 }
 }}
 
 * 解説 [#explanation]
-- `JComboBox`のドロップダウンリストとして`PopupMenu`が開くとき、その位置を変更する`PopupMenuListener`を作成
+- `JComboBox`のドロップダウンリストとして`PopupMenu`が開くときにその表示位置を変更する`PopupMenuListener`を作成
 -- `JComboBox#addPopupMenuListener(...)`メソッドで追加
 - `JComboBox`の矢印アイコンも、以下のように変更
 #code{{

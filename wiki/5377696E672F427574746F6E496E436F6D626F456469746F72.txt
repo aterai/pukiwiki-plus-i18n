@@ -21,22 +21,28 @@ hreflang:
 class SiteComboBoxLayout implements LayoutManager {
   private final JLabel favicon;
   private final JButton feedButton;
+
   protected SiteComboBoxLayout(JLabel favicon, JButton feedButton) {
     this.favicon = favicon;
     this.feedButton = feedButton;
   }
+
   @Override public void addLayoutComponent(String name, Component comp) {
     /* not needed */
   }
+
   @Override public void removeLayoutComponent(Component comp) {
     /* not needed */
   }
+
   @Override public Dimension preferredLayoutSize(Container parent) {
     return parent.getPreferredSize();
   }
+
   @Override public Dimension minimumLayoutSize(Container parent) {
     return parent.getMinimumSize();
   }
+
   @Override public void layoutContainer(Container parent) {
     if (!(parent instanceof JComboBox)) {
       return;
@@ -93,12 +99,12 @@ class SiteComboBoxLayout implements LayoutManager {
 * 解説 [#explanation]
 上記のサンプルでは、`JComboBox`に独自のレイアウトマネージャーを設定して、そのエディタ内部にデフォルトの`ArrowButton`とは異なる`JButton`や`JLabel`を追加で配置しています。
 
-- `JButton`に`Feed`アイコンを設定して、`ArrowButton`の左側に追加配置
--- `EditorComponent`にフォーカスがある場合、この`FeedButton`は非表示
-- `JLabel`に`Favicon`を設定して、左端に追加配置
+- `JButton`に`Feed`アイコンを設定して`ArrowButton`の左側に追加配置
+-- `EditorComponent`にフォーカスがある場合この`FeedButton`は非表示
+- `JLabel`に`Favicon`を設定して左端に追加配置
 
 ----
-`RolloverIcon`は、元のアイコンに以下のようなフィルタを掛けて作成しています。
+- `RolloverIcon`は元のアイコンに以下のようなフィルタを掛けて作成
 
 #code{{
 // RGBImageFilter を使用
@@ -107,10 +113,11 @@ private static ImageIcon makeFilteredImage(ImageIcon srcIcon) {
   FilteredImageSource fis = new FilteredImageSource(srcIcon.getImage().getSource(), filter);
   return new ImageIcon(Toolkit.getDefaultToolkit().createImage(fis));
 }
+
 class SelectedImageFilter extends RGBImageFilter {
   private static final float SCALE = 1.2f;
   @Override public int filterRGB(int x, int y, int argb) {
-    //int a = (argb >> 24) & 0xFF;
+    // int a = (argb >> 24) & 0xFF;
     int r = (int) Math.min(0xFF, ((argb >> 16) & 0xFF) * SCALE);
     int g = (int) Math.min(0xFF, ((argb >>  8) & 0xFF) * SCALE);
     int b = (int) Math.min(0xFF, ((argb)       & 0xFF) * SCALE);

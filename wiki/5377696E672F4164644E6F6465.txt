@@ -28,7 +28,7 @@ class TreePopupMenu extends JPopupMenu {
         DefaultMutableTreeNode child  = new DefaultMutableTreeNode("New");
         model.insertNodeInto(child, parent, parent.getChildCount());
         // parent.add(child);
-        // model.reload(); //= model.nodeStructureChanged(parent);
+        // model.reload(); // = model.nodeStructureChanged(parent);
         tree.expandPath(path);
       }
     });
@@ -45,6 +45,7 @@ class TreePopupMenu extends JPopupMenu {
       }
     });
   }
+
   @Override public void show(Component c, int x, int y) {
     JTree tree = (JTree) c;
     TreePath[] tsp = tree.getSelectionPaths();

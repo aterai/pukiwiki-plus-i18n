@@ -19,12 +19,12 @@ TreeModel model = makeModel();
 CardLayout cardLayout = new CardLayout();
 JPanel p = new JPanel(cardLayout);
 DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
-Enumeration en = root.postorderEnumeration();
-while (en.hasMoreElements()) {
-  DefaultMutableTreeNode node = (DefaultMutableTreeNode) en.nextElement();
-  String title = Objects.toString(node.getUserObject());
-  p.add(new JLabel(title), title);
-}
+// Java 9: Collections.list(root.postorderEnumeration()).stream()
+Collections.list((Enumeration<?>) root.postorderEnumeration()).stream()
+    .filter(DefaultMutableTreeNode.class::isInstance)
+    .map(DefaultMutableTreeNode.class::cast)
+    .map(node -> Objects.toString(node.getUserObject()))
+    .forEach(title -> p.add(new JLabel(title), title));
 
 JTree tree = new RowSelectionTree();
 tree.setModel(model);

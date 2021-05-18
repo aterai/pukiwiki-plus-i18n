@@ -19,6 +19,7 @@ class SortableTableModel extends DefaultTableModel {
   public SortableTableModel(String[] str, int row) {
     super(str, row);
   }
+
   public void sortByColumn(int column, boolean isAscent) {
     Collections.sort(getDataVector(), new ColumnComparator(column, isAscent));
     fireTableDataChanged();
@@ -51,10 +52,10 @@ class ColumnComparator implements Comparator<Object>, Serializable {
 * 解説 [#explanation]
 上記のサンプルでは、各カラムヘッダのクリックでソート可能になっています。
 
-- メモ
--- 複数の列をキーにしてソートしたい場合は、[[TableSorterでJTableをソート>Swing/TableSorter]]を参照
--- `JDK 1.6.0`で、`JTable`のソートが標準機能として追加された
---- [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
+- 複数の列をキーにしてソートしたい場合は`TableSorter.java`が利用可能
+-- [[TableSorterでJTableをソート>Swing/TableSorter]]
+- `JDK 1.6.0`から`JTable`のソートが標準機能として追加された
+-- [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
 
 * 参考リンク [#reference]
 - %%[http://www2.gol.com/users/tame/swing/examples/JTableExamples5.html SortableTableExample]%%

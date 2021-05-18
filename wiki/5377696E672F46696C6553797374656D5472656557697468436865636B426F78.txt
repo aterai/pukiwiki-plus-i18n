@@ -23,6 +23,7 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
   private final JPanel panel = new JPanel(new BorderLayout());
   private DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
   private File file;
+
   public CheckBoxNodeEditor(FileSystemView fileSystemView) {
     super();
     this.fileSystemView = fileSystemView;
@@ -37,6 +38,7 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
     panel.add(this, BorderLayout.WEST);
     this.setOpaque(false);
   }
+
   @Override public Component getTreeCellEditorComponent(
       JTree tree, Object value, boolean isSelected, boolean expanded,
       boolean leaf, int row) {
@@ -60,15 +62,17 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
         l.setText(fileSystemView.getSystemDisplayName(file));
         setSelected(node.status == Status.SELECTED);
       }
-      //panel.add(this, BorderLayout.WEST);
+      // panel.add(this, BorderLayout.WEST);
       panel.add(l);
       return panel;
     }
     return l;
   }
+
   @Override public Object getCellEditorValue() {
     return new CheckBoxNode(file, isSelected() ? Status.SELECTED : Status.DESELECTED);
   }
+
   @Override public boolean isCellEditable(EventObject e) {
     if (e instanceof MouseEvent && e.getSource() instanceof JTree) {
       MouseEvent me = (MouseEvent) e;
@@ -81,21 +85,22 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
       Dimension d = getPreferredSize();
       r.setSize(new Dimension(d.width, r.height));
       if (r.contains(me.getX(), me.getY())) {
-        //if (file == null && System.getProperty("java.version").startsWith("1.7.0")) {
-        //  System.out.println("XXX: Java 7, only on first run\n" + getBounds());
-        //  setBounds(new Rectangle(0, 0, d.width, r.height));
-        //}
+        // if (file == null && System.getProperty("java.version").startsWith("1.7.0")) {
+        //   System.out.println("XXX: Java 7, only on first run\n" + getBounds());
+        //   setBounds(new Rectangle(0, 0, d.width, r.height));
+        // }
         return true;
       }
     }
     return false;
   }
+
   @Override public void updateUI() {
     super.updateUI();
     if (panel != null) {
       panel.updateUI();
     }
-    //1.6.0_24 bug??? @see 1.7.0 DefaultTreeCellRenderer#updateUI()
+    // 1.6.0_24 bug??? @see 1.7.0 DefaultTreeCellRenderer#updateUI()
     renderer = new DefaultTreeCellRenderer();
   }
 // ...
@@ -105,7 +110,8 @@ class CheckBoxNodeEditor extends TriStateCheckBox implements TreeCellEditor {
 このサンプルは、[[FileSystemViewを使ってディレクトリ構造をJTreeに表示する>Swing/DirectoryTree]]と、[[JTreeの葉ノードをJCheckBoxにする>Swing/CheckBoxNodeTree]]を組み合わせて作成しています。
 
 ----
-`TreeCellEditor#isCellEditable(...)`をオーバーライドして、`JCheckBox`付近をクリックした場合のみ編集可能(チェックの有無を切り替えることができる)にし、ラベルやアイコンなどをクリックした場合は、編集状態にせずノードの展開や折り畳みができるように設定しています。
+- `TreeCellEditor#isCellEditable(...)`をオーバーライドして`JCheckBox`付近をクリックした場合のみ編集可能(チェックの有無を切り替えることができる)に設定
+- ラベルやアイコンなどをクリックした場合は編集状態にせずノードの展開や折り畳みができるように設定
 
 * 参考リンク [#reference]
 - [[FileSystemViewを使ってディレクトリ構造をJTreeに表示する>Swing/DirectoryTree]]

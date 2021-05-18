@@ -20,6 +20,7 @@ hreflang:
 #code(link){{
 private int delay = 4;
 private int count = 0;
+
 @Override public void mouseEntered(MouseEvent e) {
   if (animator != null && animator.isRunning() || yy == textArea.getPreferredSize().height) {
     return;
@@ -40,10 +41,11 @@ private int count = 0;
   });
   animator.start();
 }
+
 @Override public void mouseExited(MouseEvent e) {
   if (animator != null && animator.isRunning() ||
      contains(e.getPoint()) && yy == textArea.getPreferredSize().height) return;
-  final double h = (double) textArea.getPreferredSize().height;
+  double h = (double) textArea.getPreferredSize().height;
   animator = new Timer(delay, new ActionListener() {
     @Override public void actionPerformed(ActionEvent e) {
       double a = easeInOut(--count / h);
@@ -59,6 +61,7 @@ private int count = 0;
   });
   animator.start();
 }
+
 // @see Math: EaseIn EaseOut, EaseInOut and Beziér Curves | Anima Entertainment GmbH
 // http://www.anima-entertainment.de/math-easein-easeout-easeinout-and-bezier-curves
 public double easeInOut(double t) {

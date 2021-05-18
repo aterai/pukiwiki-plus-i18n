@@ -37,7 +37,7 @@ combo2.setBorder(BorderFactory.createCompoundBorder(
 -- 編集可能な`JComboBox`の場合は、[[JComboBoxでアイテムが選択されていない場合のプレースホルダ文字列を設定する>Swing/ComboBoxPlaceholder]]のようにセルレンダラーを使用したプレースホルダ文字列の表示は不可
 - 下:
 -- 編集可能に設定した`JComboBox`にプレースホルダ文字列を表示する`JLayer`でラップした`JTextField`を生成する`ComboBoxEditor`を設定
--- `BasicComboBoxEditor#getEditorComponent()`はエディタとして`Component`を返すため、`JLayer`でラップした`JTextField`を使用可能
+-- `BasicComboBoxEditor#getEditorComponent()`はエディタとして`Component`を返すため`JLayer`でラップした`JTextField`を使用可能
 --- `BasicComboBoxEditor#createEditorComponent()`は`JTextField`を返すため、こちらをオーバーライドする場合は[[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]などのように`FocusListener`を使用する必要がある
 -- `WindowsLookAndFeel`でエディタの内余白が適用されない場合がある？ため`JComboBox`本体の縁を変更
 --- このため、他の`LookAndFeel`に切り替えると縁や内余白がおかしくなる

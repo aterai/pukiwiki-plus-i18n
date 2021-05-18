@@ -1,0 +1,119 @@
+---
+category: swing
+folder: ResizeTabAreaByDragging
+title: JTabbedPaneのタブ領域をマウスドラッグでリサイズする
+tags: [JTabbedPane, JLayer]
+author: aterai
+pubdate: 2021-03-22T00:09:51+09:00
+description: JTabbedPaneのタブ領域をマウスで選択、ドラッグしてリサイズします。
+image: https://drive.google.com/uc?id=1DBiqXVRK0G9xkVo1UzHNtdb_kVoW8jLJ
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2021/04/resize-tab-area-of-jtabbedpane-by.html
+    lang: en
+---
+* 概要 [#summary]
+`JTabbedPane`のタブ領域をマウスで選択、ドラッグしてリサイズします。
+
+#download(https://drive.google.com/uc?id=1DBiqXVRK0G9xkVo1UzHNtdb_kVoW8jLJ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class TabAreaResizeLayer extends LayerUI<ClippedTitleTabbedPane> {
+  private int offset;
+  private boolean resizing;
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(
+          AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseEvent(
+        MouseEvent e, JLayer<? extends ClippedTitleTabbedPane> l) {
+    ClippedTitleTabbedPane tabbedPane = l.getView();
+    if (e.getID() == MouseEvent.MOUSE_PRESSED) {
+      Rectangle rect = getDividerBounds(tabbedPane);
+      Point pt = e.getPoint();
+      SwingUtilities.convertPoint(e.getComponent(), pt, tabbedPane);
+      if (rect.contains(pt)) {
+        offset = pt.x - tabbedPane.getTabAreaWidth();
+        tabbedPane.setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
+        resizing = true;
+        e.consume();
+      }
+    } else if (e.getID() == MouseEvent.MOUSE_RELEASED) {
+      tabbedPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+      resizing = false;
+    }
+  }
+
+  @Override protected void processMouseMotionEvent(
+        MouseEvent e, JLayer<? extends ClippedTitleTabbedPane> l) {
+    ClippedTitleTabbedPane tabbedPane = l.getView();
+    Point pt = e.getPoint();
+    SwingUtilities.convertPoint(e.getComponent(), pt, tabbedPane);
+    if (e.getID() == MouseEvent.MOUSE_MOVED) {
+      Rectangle r = getDividerBounds(tabbedPane);
+      Cursor c = Cursor.getPredefinedCursor(
+          r.contains(pt) ? Cursor.W_RESIZE_CURSOR : Cursor.DEFAULT_CURSOR);
+      tabbedPane.setCursor(c);
+    } else if (e.getID() == MouseEvent.MOUSE_DRAGGED && resizing) {
+      tabbedPane.setTabAreaWidth(pt.x - offset);
+      e.consume();
+    }
+  }
+
+  private static Rectangle getDividerBounds(ClippedTitleTabbedPane tabbedPane) {
+    Dimension dividerSize = new Dimension(4, 4);
+    Rectangle bounds = tabbedPane.getBounds();
+    Rectangle compRect = Optional.ofNullable(tabbedPane.getSelectedComponent())
+        .map(Component::getBounds).orElseGet(Rectangle::new);
+    switch (tabbedPane.getTabPlacement()) {
+      case SwingConstants.LEFT:
+        bounds.x = compRect.x - dividerSize.width;
+        bounds.width = dividerSize.width * 2;
+        break;
+      case SwingConstants.RIGHT:
+        bounds.x += compRect.x + compRect.width - dividerSize.width;
+        bounds.width = dividerSize.width * 2;
+        break;
+      case SwingConstants.BOTTOM:
+        bounds.y += compRect.y + compRect.height - dividerSize.height;
+        bounds.height = dividerSize.height * 2;
+        break;
+      default: // case SwingConstants.TOP:
+        bounds.y = compRect.y - dividerSize.height;
+        bounds.height = dividerSize.height * 2;
+        break;
+    }
+    return bounds;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JTabbedPane`
+-- `JTabbedPane#doLayout()`メソッドをオーバーライドしてすべてのタブコンポーネントの推奨サイズを変更することでタブ領域のサイズを変更
+-- ただしタブコンポーネントなどの最小サイズ、最大サイズは考慮せず固定値でタブ領域の最小・最大サイズを決定している
+--- 現状タブ領域が`SwingConstants.LEFT`の場合のみ対応
+- `JLayer`
+-- `JTabbedPane`に`JLayer`を設定してタブ領域とコンポーネント領域の境界をドラッグ可能に設定
+-- `LayerUI#processMouseEvent(...)`ではタブの子コンポーネントへのマウスイベントも取得可能なので、マウスカーソルの位置は`SwingUtilities.convertPoint(e.getComponent(), pt, layer.getView())`でイベントソースコンポーネント(`e.getComponent()`で取得した`JTabbedPane`自身、またはその子コンポーネント)から`JTabbedPane`(`JLayer#getView()`で取得可能)の座標に変換する必要がある
+
+* 参考リンク [#reference]
+- [[JTableの行の高さをマウスドラッグで変更する>Swing/ResizeRowHeightByDragging]]
+- [[JTabbedPane風のタブ配置をレイアウトマネージャーで変更>Swing/NewTabButton]]
+-- 上記のサンプルのように`CardLayout`と`JButton`などの組み合わせで`JTabbedPane`風のコンポーネントを自作する場合は`JSplitPane`に配置することで同様のリサイズが可能
+
+* コメント [#comment]
+#comment
+#comment

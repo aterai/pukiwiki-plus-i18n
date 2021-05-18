@@ -1,0 +1,170 @@
+---
+category: swing
+folder: ListEditor
+title: JListのセルに配置したJLabelのテキストを編集する
+tags: [JList, JTextField, GlassPane]
+author: aterai
+pubdate: 2021-01-18T01:08:02+09:00
+description: JListのセル内に配置したJLabelのテキストを編集可能にするセルエディタを作成します。
+image: https://drive.google.com/uc?id=1X7hqBD35R8ZX4XVDJ0ii4QO6hPgUK_Iz
+---
+* 概要 [#summary]
+`JList`のセル内に配置した`JLabel`のテキストを編集可能にするセルエディタを作成します。
+
+#download(https://drive.google.com/uc?id=1X7hqBD35R8ZX4XVDJ0ii4QO6hPgUK_Iz)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class EditableList<E extends ListItem> extends JList<E> {
+  private transient MouseInputAdapter handler;
+  protected final Container glassPane = new EditorGlassPane();
+  protected final JTextField editor = new JTextField();
+  protected final Action startEditing = new AbstractAction() {
+    @Override public void actionPerformed(ActionEvent e) {
+      getRootPane().setGlassPane(glassPane);
+      int idx = getSelectedIndex();
+      ListItem item = getSelectedValue();
+      Rectangle rect = getCellBounds(idx, idx);
+      Point p = SwingUtilities.convertPoint(
+          EditableList.this, rect.getLocation(), glassPane);
+      rect.setLocation(p);
+      int h = editor.getPreferredSize().height;
+      rect.y = rect.y + rect.height - h - 1;
+      rect.height = h;
+      rect.grow(-2, 0);
+      editor.setBounds(rect);
+      editor.setText(item.title);
+      editor.selectAll();
+      glassPane.add(editor);
+      glassPane.setVisible(true);
+      editor.requestFocusInWindow();
+    }
+  };
+  protected final Action cancelEditing = new AbstractAction() {
+    @Override public void actionPerformed(ActionEvent e) {
+      glassPane.setVisible(false);
+    }
+  };
+  protected final Action renameTitle = new AbstractAction() {
+    @Override public void actionPerformed(ActionEvent e) {
+      ListModel<E> m = getModel();
+      String title = editor.getText().trim();
+      if (!title.isEmpty() && m instanceof DefaultListModel<?>) {
+        @SuppressWarnings("unchecked")
+        DefaultListModel<ListItem> model = (DefaultListModel<ListItem>) getModel();
+        int index = getSelectedIndex();
+        ListItem item = m.getElementAt(index);
+        model.remove(index);
+        model.add(index, new ListItem(editor.getText(), item.icon));
+        setSelectedIndex(index);
+      }
+      glassPane.setVisible(false);
+    }
+  };
+
+  protected EditableList(DefaultListModel<E> model) {
+    super(model);
+    editor.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+    editor.setHorizontalAlignment(SwingConstants.CENTER);
+    // editor.setOpaque(false);
+    // editor.setLineWrap(true);
+
+    InputMap im = editor.getInputMap(JComponent.WHEN_FOCUSED);
+    im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "rename-title");
+    im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "cancel-editing");
+
+    ActionMap am = editor.getActionMap();
+    am.put("rename-title", renameTitle);
+    am.put("cancel-editing", cancelEditing);
+
+    addMouseListener(new MouseAdapter() {
+      @Override public void mouseClicked(MouseEvent e) {
+        int idx = getSelectedIndex();
+        Rectangle rect = getCellBounds(idx, idx);
+        if (rect == null) {
+          return;
+        }
+        int h = editor.getPreferredSize().height;
+        rect.y = rect.y + rect.height - h;
+        rect.height = h;
+        boolean isDoubleClick = e.getClickCount() >= 2;
+        if (isDoubleClick && rect.contains(e.getPoint())) {
+          startEditing.actionPerformed(new ActionEvent(
+              e.getComponent(), ActionEvent.ACTION_PERFORMED, ""));
+        }
+      }
+    });
+    getInputMap(JComponent.WHEN_FOCUSED).put(
+        KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "start-editing");
+    getActionMap().put("start-editing", startEditing);
+  }
+
+  @Override public void updateUI() {
+    removeMouseListener(handler);
+    setSelectionForeground(null);
+    setSelectionBackground(null);
+    setCellRenderer(null);
+    super.updateUI();
+    setLayoutOrientation(JList.HORIZONTAL_WRAP);
+    getSelectionModel().setSelectionMode(
+        ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    setVisibleRowCount(0);
+    setFixedCellWidth(56);
+    setFixedCellHeight(56);
+    setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+    setCellRenderer(new ListItemListCellRenderer<>());
+    handler = new ClearSelectionListener();
+    addMouseListener(handler);
+  }
+
+  protected JTextComponent getEditorTextField() {
+    return editor;
+  }
+
+  private class EditorGlassPane extends JComponent {
+    protected EditorGlassPane() {
+      super();
+      setOpaque(false);
+      setFocusTraversalPolicy(new DefaultFocusTraversalPolicy() {
+        @Override public boolean accept(Component c) {
+          return Objects.equals(c, getEditorTextField());
+        }
+      });
+      addMouseListener(new MouseAdapter() {
+        @Override public void mouseClicked(MouseEvent e) {
+          if (!getEditorTextField().getBounds().contains(e.getPoint())) {
+            renameTitle.actionPerformed(new ActionEvent(
+                e.getComponent(), ActionEvent.ACTION_PERFORMED, ""));
+          }
+        }
+      });
+    }
+
+    @Override public void setVisible(boolean flag) {
+      super.setVisible(flag);
+      setFocusTraversalPolicyProvider(flag);
+      setFocusCycleRoot(flag);
+    }
+  }
+}
+
+}}
+
+* 解説 [#explanation]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#HORIZONTAL_WRAP 水平ニュースペーパー・スタイルレイアウト]を設定した`JList`でアイテム(セル)のタイトル文字列を編集可能にする
+-- `JList`デフォルトのセルを垂直方向に`1`列に並べたレイアウトでセルを編集可能にする場合はヘッダを非表示にした`JTable`と`TableCellEditor`で代用可能
+- 選択したセルのタイトル文字列領域がダブルクリックされると`GlassPane`を表示
+- `JTextField`に選択したセルのタイトル文字列を設定
+- `GlassPane`に`JTextField`を配置してその位置とサイズをセルのタイトル文字列領域と同じになるよう変更
+- `JList`上にセルエディタとして`GlassPane`ごと表示
+- `JTextField`からフォーカスが移動したら`GlassPane`を非表示に設定し、`JTextField`のテキストを選択したセルのタイトル文字列に設定
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのタブタイトルを変更>Swing/EditTabTitle]]
+- [[JListのアイテムをフィルタリングして表示>Swing/FilterListItems]]
+- [[JListのモデルをソートする>Swing/SortedListModel]]
+- [[JTextAreaとJFrameで幅固定、文字列の折り返し、親枠外まで高さ拡大可能なセルエディタを作成する>Swing/LineWrapListEditor]]
+
+* コメント [#comment]
+#comment
+#comment

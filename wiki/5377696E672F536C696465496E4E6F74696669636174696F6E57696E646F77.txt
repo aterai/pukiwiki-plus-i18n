@@ -27,6 +27,7 @@ class SlideInNotification implements PropertyChangeListener, HierarchyListener {
     super();
     this.frame = frame;
   }
+
   public void startSlideIn(final SlideInAnimation slideInAnimation) {
     if (animator != null && animator.isRunning()) {
       return;
@@ -82,12 +83,14 @@ class SlideInNotification implements PropertyChangeListener, HierarchyListener {
     });
     animator.start();
   }
+
   @Override public void propertyChange(PropertyChangeEvent e) {
     if (dialog != null && dialog.isVisible() && e.getNewValue() != null &&
         e.getNewValue() != JOptionPane.UNINITIALIZED_VALUE) {
       dialog.dispose();
     }
   }
+
   @Override public void hierarchyChanged(HierarchyEvent e) {
     JComponent c = (JComponent) e.getComponent();
     if ((e.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED) != 0 &&
@@ -101,7 +104,7 @@ class SlideInNotification implements PropertyChangeListener, HierarchyListener {
 * 解説 [#explanation]
 上記のサンプルでは、`Window#setLocation(int, int)`メソッドを使用して`JOptionPane`を追加した`JWindow`のデスクトップ上での表示位置を変更し、画面右下からスライドインするように設定しています。
 
-- マルチスクリーン環境では、メインの`JFrame`が存在する画面(`frame.getGraphicsConfiguration()`)に警告(`new JWindow(GraphicsConfiguration)`)がスライドインすることを想定しているが未検証
+- マルチスクリーン環境ではメインの`JFrame`が存在する画面(`frame.getGraphicsConfiguration()`)に警告(`new JWindow(GraphicsConfiguration)`)がスライドインすることを想定しているが未検証
 - `JOptionPane.WARNING_MESSAGE`以外の`JOptionPane`は未検証
 - このページのスクリーンショットでは親フレーム中央に`JOptionPane`が表示されているが、これは手動で移動している
 

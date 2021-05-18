@@ -46,14 +46,14 @@ private static Optional<Component> findFileNameTextField(JFileChooser fileChoose
 * 解説 [#explanation]
 上記のサンプルでは、`NimbusLookAndFeel`(`SynthLookAndFeel`)を使用している場合、`JFileChooser`を開いたときの初期フォーカスは、フォルダ選択用の`JComboBox`になっているので、これをファイル名表示用の`JTextField`に変更するテストを行っています。
 
-- `JFileChooser`を開いた後でフォーカスを移動するため、`EventQueue.invokeLater(...)`を使用
-- `JFileChooser`から直接ファイル名表示用の`JTextField`を取得できないので、`Container#getComponents()`で子コンポーネントを検索する必要がある
+- `JFileChooser`を開いた後でフォーカスを移動するため`EventQueue.invokeLater(...)`を使用
+- `JFileChooser`から直接ファイル名表示用の`JTextField`を取得できないので`Container#getComponents()`で子コンポーネントを検索する必要がある
 - `MetalLookAndFeel`や`WindowsLookAndFeel`の場合、初期フォーカスはファイル名表示用の`JTextField`
 -- `SynthLookAndFeel`のバグ？
-- または、`PropertyChangeListener`、`AncestorListener`などを使用、`SynthFileChooserUIImpl#doAncestorChanged()`をオーバーライドする方法がある
+- または`PropertyChangeListener`、`AncestorListener`などを使用、`SynthFileChooserUIImpl#doAncestorChanged()`をオーバーライドする方法がある
 
 #code{{
-//TEST: PropertyChangeListener
+// TEST: PropertyChangeListener
 fileChooser.addPropertyChangeListener(e -> {
   String s = e.getPropertyName();
   if (s.equals("ancestor")) {
@@ -69,7 +69,7 @@ fileChooser.addPropertyChangeListener(e -> {
 }}
 
 #code{{
-//TEST: AncestorListener
+// TEST: AncestorListener
 fileChooser.addAncestorListener(new AncestorListener() {
   @Override public void ancestorAdded(AncestorEvent e) {
     findFileNameTextField(fileChooser).ifPresent(c -> {
@@ -83,7 +83,7 @@ fileChooser.addAncestorListener(new AncestorListener() {
 }}
 
 #code{{
-//TEST: doAncestorChanged
+// TEST: doAncestorChanged
 fileChooser = new JFileChooser() {
   @Override public void updateUI() {
     super.updateUI();

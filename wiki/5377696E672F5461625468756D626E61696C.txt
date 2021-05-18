@@ -40,6 +40,7 @@ class TabThumbnailTabbedPane extends JTabbedPane {
     }
     return new JLabel(icon);
   }
+
   @Override public JToolTip createToolTip() {
     int index = current;
     if (index < 0) {
@@ -66,6 +67,7 @@ class TabThumbnailTabbedPane extends JTabbedPane {
     tip.add(p);
     return tip;
   }
+
   @Override public String getToolTipText(MouseEvent e) {
     int index = indexAtLocation(e.getX(), e.getY());
     String str = (current == index) ? super.getToolTipText(e) : null;

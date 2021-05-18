@@ -15,7 +15,7 @@ image: https://lh4.googleusercontent.com/-qShu8SKEKus/UhDUybKOCYI/AAAAAAAAByg/QR
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final ImageIcon animatedIcon = new ImageIcon(url);
+ImageIcon animatedIcon = new ImageIcon(url);
 JButton button = new JButton(icon9) {
   @Override protected void fireStateChanged() {
     ButtonModel m = getModel();
@@ -28,14 +28,14 @@ JButton button = new JButton(icon9) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`Image#flush()`メソッドを使用して`Image`オブジェクトのリソースを解放することで、`Animated GIF`画像のアニメーションを初期状態までリセットしています。
+上記のサンプルでは、`Image#flush()`メソッドを使用して`Image`オブジェクトのリソースを解放することで`Animated GIF`画像のアニメーションを初期状態までリセットしています。
 
 - 左: `JButton`
--- `JButton#setRolloverIcon(...)`で`Animated GIF`を設定し、マウスによるロールオーバーが発生すると`Image#flush()`が実行され、カウントダウンアニメーションが最初からリスタート
--- `JButton#setIcon(...)`には先頭画像のアイコン、`JButton#setPressedIcon(...)`には、空アイコンを設定
+-- `JButton#setRolloverIcon(...)`で`Animated GIF`を設定しマウスによるロールオーバーが発生すると`Image#flush()`が実行されカウントダウンアニメーションが最初からリスタート
+-- `JButton#setIcon(...)`には先頭画像のアイコン、`JButton#setPressedIcon(...)`には空アイコンを設定
 - 右: `JLabel`
--- マウスリスナーを追加し、クリックで`Image#flush()`が呼ばれて、アニメーションが再開
--- `JButton`で、`Image#flush()`されると、同じ`Image`オブジェクトを使用しているのでアニメーションが止まる
+-- マウスリスナーを追加しクリックで`Image#flush()`が呼ばれてアニメーションが再開
+-- `JButton`で`Image#flush()`されると同じ`Image`オブジェクトを使用しているのでアニメーションが止まる
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/18270701/animated-imageicon-as-button java - Animated ImageIcon as Button - Stack Overflow]

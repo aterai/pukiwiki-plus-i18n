@@ -1,0 +1,57 @@
+---
+category: swing
+folder: MetalTheme
+title: MetalThemeを変更してJInternalFrameのタイトル文字色を変更する
+tags: [MetalLookAndFeel, MetalTheme, LookAndFeel, JInternalFrame]
+author: aterai
+pubdate: 2020-09-21T08:54:04+09:00
+description: MetalThemeを変更してJInternalFrameのタイトル文字色やアクティブでない場合のタイトル文字色を変更します。
+image: https://drive.google.com/uc?id=1K1v80nthZAQkwu0MLR3fy4BSBpVpSHM6
+---
+* 概要 [#summary]
+`MetalTheme`を変更して`JInternalFrame`のタイトル文字色やアクティブでない場合のタイトル文字色を変更します。
+
+#download(https://drive.google.com/uc?id=1K1v80nthZAQkwu0MLR3fy4BSBpVpSHM6)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+MetalLookAndFeel.setCurrentTheme(new OceanTheme() {
+  @Override public ColorUIResource getWindowTitleForeground() {
+    return new ColorUIResource(Color.RED.brighter());
+  }
+
+  @Override public ColorUIResource getWindowTitleInactiveForeground() {
+    return new ColorUIResource(Color.ORANGE.darker());
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `MetalLookAndFeel`
+-- デフォルトではタイトル文字色、非アクティブタイトル文字色ともに黒
+-- `UIManager.put("InternalFrame.activeTitleForeground", Color.RED)`などでの変更は効果がない
+-- `MetalTheme#getWindowTitleForeground()`、`MetalTheme#getWindowTitleInactiveForeground()`をオーバーライドした`MetalTheme`を`MetalLookAndFeel.setCurrentTheme(...)`メソッドで設定
+--- このサンプルではタイトル文字色を明るい赤色、非アクティブタイトル文字色を暗いオレンジ色に変更
+- `BasicLookAndFeel`、`WindowsLookAndFeel`
+-- デフォルトではタイトル文字色、非アクティブタイトル文字色ともに黒
+-- タイトル文字色を`UIManager.put("InternalFrame.activeTitleForeground", Color.RED)`で変更可能
+-- 非アクティブタイトル文字色を`UIManager.put("InternalFrame.inactiveTitleForeground", Color.WHITE)`で変更可能
+--- このサンプルではタイトル文字色を赤色、非アクティブタイトル文字色を白色に変更
+- `NimbusLookAndFeel`
+-- デフォルトではタイトル文字色は黒、非アクティブタイトル文字色は灰色
+-- `UIManager.put("InternalFrame.activeTitleForeground", Color.RED)`などでの変更は効果がない
+-- 以下のように作成した`UIDefaults`を`InternalFrameTitlePane`に`putClientProperty("Nimbus.Overrides", d)`で設定してタイトル文字色を変更可能、非アクティブタイトル文字色は変更できない？
+#code{{
+JComponent titleBar = ((BasicInternalFrameUI) getUI()).getNorthPane();
+UIDefaults d = new UIDefaults();
+d.put("InternalFrame:InternalFrameTitlePane[Enabled].textForeground", Color.GREEN);
+// d.put("InternalFrame:InternalFrameTitlePane[Enabled+WindowNotFocused].textForeground", Color.GREEN.darker());
+titleBar.putClientProperty("Nimbus.Overrides", d);
+}}
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/metal/MetalTheme.html MetalTheme (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

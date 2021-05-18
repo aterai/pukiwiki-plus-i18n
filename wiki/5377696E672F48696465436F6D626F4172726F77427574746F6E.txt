@@ -37,8 +37,8 @@ UIManager.put("ComboBox.squareButton", Boolean.TRUE);
 * 解説 [#explanation]
 上記のサンプルでは、以下のようにして`JComboBox`の矢印ボタンを非表示に設定しています。
 
-- `UIManager.put("ComboBox.squareButton", Boolean.FALSE);`で、`ArrowButton`の幅をそのまま使用するように変更
-- `BasicComboBoxUI#createArrowButton`をオーバーライドして、`ArrowButton`の代わりに幅と高さが`0`で`setVisible(false)`な`JButton`を作成
+- `UIManager.put("ComboBox.squareButton", Boolean.FALSE)`で`ArrowButton`の幅をそのまま使用するように変更
+- `BasicComboBoxUI#createArrowButton`をオーバーライドして`ArrowButton`の代わりに幅と高さが`0`で`setVisible(false)`な`JButton`を作成
 - `JComboBox`の背景色を親の`JPanel`と同じ色に変更
 - `JComboBox`がフォーカスを取得不可になるよう設定
 

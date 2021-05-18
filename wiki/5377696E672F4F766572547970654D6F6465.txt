@@ -9,7 +9,7 @@ description: JTextAreaにキャレット上の文字を上書きする上書き�
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQtaGO6gI/AAAAAAAAAgA/XPqHe-c_DUo/s800/OverTypeMode.png
 ---
 * 概要 [#summary]
-`JTextArea`にキャレット上の文字を上書きする上書きモードを追加します。[https://community.oracle.com/forums/thread.jspa?threadID=1383467 Swing - JTextPane edit mode (insert or overwrite)???]のソースコードを変更して全角文字対応にしています。
+`JTextArea`にキャレット上の文字を上書きする上書きモードを追加します。[https://community.oracle.com/tech/developers/discussion/1385467 JTextPane edit mode (insert or overwrite)???]のソースコードを変更して全角文字対応にしています。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQtaGO6gI/AAAAAAAAAgA/XPqHe-c_DUo/s800/OverTypeMode.png)
 
@@ -17,8 +17,8 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQtaGO6gI/AAAAAAAAAgA/XP
 #code(link){{
 // Paint a horizontal line the width of a column and 1 pixel high
 class OvertypeCaret extends DefaultCaret {
-  //The overtype caret will simply be a horizontal line
-  //one pixel high (once we determine where to paint it)
+  // The overtype caret will simply be a horizontal line
+  // one pixel high (once we determine where to paint it)
   @Override public void paint(Graphics g) {
     if (isVisible()) {
       try {
@@ -27,7 +27,7 @@ class OvertypeCaret extends DefaultCaret {
         Rectangle r = mapper.modelToView(component, getDot());
         g.setColor(component.getCaretColor());
         int width = g.getFontMetrics().charWidth('w');
-        //全角などに対応
+        // 全角などに対応
         if (isOvertypeMode()) {
           int pos = getCaretPosition();
           if (pos < getDocument().getLength()) {
@@ -38,12 +38,13 @@ class OvertypeCaret extends DefaultCaret {
               width = g.getFontMetrics().stringWidth(str);
             }
           }
-        } //ここまで追加
+        } // ここまで追加
         int y = r.y + r.height - 2;
         g.drawLine(r.x, y, r.x + width - 2, y);
       } catch (BadLocationException e) {}
     }
   }
+
   // Damage must be overridden whenever the paint method is overridden
   // (The damaged area is the area the caret is painted in. We must
   // consider the area for the default caret and this caret)
@@ -52,8 +53,8 @@ class OvertypeCaret extends DefaultCaret {
       JTextComponent c = getComponent();
       x = r.x;
       y = r.y;
-      //width = c.getFontMetrics(c.getFont()).charWidth('w');
-      //全角対応
+      // width = c.getFontMetrics(c.getFont()).charWidth('w');
+      // 全角対応
       width = c.getFontMetrics(c.getFont()).charWidth('あ');
       height = r.height;
       repaint();
@@ -63,13 +64,13 @@ class OvertypeCaret extends DefaultCaret {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`DefaultCaret#paint(...)`メソッドなどをオーバーライドした上書きモード用の`Caret`を作成し、KBD{Insert}キーでこの`Caret`を表示するモードに切り替えることができます。
+上記のサンプルでは、`DefaultCaret#paint(...)`メソッドなどをオーバーライドした上書きモード用の`Caret`を作成しKBD{Insert}キーでこの`Caret`を表示するモードに切り替えることができます。
 
-- 上書きモード自体の動作は、`JTextArea#replaceSelection(...)`メソッドをオーバーライドすることで実現
--- ここでキー入力を検知したとき、次の文字までを選択して置き換える処理を行う
+- 上書きモード自体の動作は`JTextArea#replaceSelection(...)`メソッドをオーバーライドすることで実現
+-- ここでキー入力を検知したとき次の文字までを選択して置き換える処理を行う
 
 * 参考リンク [#reference]
-- [https://community.oracle.com/forums/thread.jspa?threadID=1383467 Swing - JTextPane edit mode (insert or overwrite)???]
+- [https://community.oracle.com/tech/developers/discussion/1385467 JTextPane edit mode (insert or overwrite)???]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultCaret.html#paint-java.awt.Graphics- DefaultCaret#paint(...) (Java Platform SE 8)]
 
 * コメント [#comment]

@@ -35,9 +35,11 @@ class ShadowBorder extends AbstractBorder {
     }
     screen = bi;
   }
+
   @Override public Insets getBorderInsets(Component c) {
     return new Insets(0, 0, xoff, yoff);
   }
+
   @Override public void paintBorder(
         Component c, Graphics g, int x, int y, int w, int h) {
     if (screen == null) {
@@ -73,12 +75,11 @@ class ShadowBorder extends AbstractBorder {
 - フレーム内
 -- `JPopupMenu#paintComponent`メソッドで半透明の影を描画
 - フレーム外
--- `Robot`を使って画面全体をキャプチャーし、これを利用して半透明の影を`Border`として作成
--- このためポップアップメニューがはみ出しても、影を付けることが可能
+-- `Robot`を使って画面全体をキャプチャーしこれを利用して半透明の影を`Border`として作成
+-- このためポップアップメニューがはみ出しても影を付けることが可能
 
 ----
-`JDK 1.7.0`や、`1.6.0_10`以上の場合、フレーム外でも`Robot`を使用せず、以下のように`JPopupMenu`の上位`Window`の背景色を透明にすれば影の描画が可能です。
-
+- `1.6.0_10`以上の場合フレーム外でも`Robot`を使用せず以下のように`JPopupMenu`の上位`Window`の背景色を透明にすれば影の描画が可能
 #code{{
 class DropShadowPopupMenu extends JPopupMenu {
   private static final int OFFSET = 4;
@@ -87,19 +88,22 @@ class DropShadowPopupMenu extends JPopupMenu {
   @Override public boolean isOpaque() {
     return false;
   }
+
   @Override public void updateUI() {
     setBorder(null);
     super.updateUI();
     border = null;
   }
+
   @Override protected void paintComponent(Graphics g) {
-    //super.paintComponent(g);
+    // super.paintComponent(g);
     Graphics2D g2 = (Graphics2D) g.create();
     g2.drawImage(shadow, 0, 0, this);
-    g2.setPaint(getBackground()); //??? 1.7.0_03
+    g2.setPaint(getBackground()); // ??? 1.7.0_03
     g2.fillRect(0, 0, getWidth() - OFFSET, getHeight() - OFFSET);
     g2.dispose();
   }
+
   @Override public void show(Component c, int x, int y) {
     if (border == null) {
       Border inner = getBorder();
@@ -153,7 +157,7 @@ class DropShadowPopupMenu extends JPopupMenu {
 private boolean isInRootPanel(JComponent root, Point p) {
   Rectangle r = root.getBounds();
   Dimension d = this.getPreferredSize();
-  //pointed out by sawshun
+  // pointed out by sawshun
   return r.contains(p.x, p.y, d.width + off, d.height + off);
 }
 }}
@@ -165,23 +169,23 @@ final MyPopupMenu pop = new MyPopupMenu();
 pop.add(new JMenuItem("Open"));
 pop.add(new JMenuItem("Save"));
 pop.add(new JMenuItem("Close"));
-//pop.addSeparator(); //XXX: Nimbus
+// pop.addSeparator(); // XXX: Nimbus
 JSeparator s = new JSeparator();
 s.setOpaque(true);
 pop.add(s);
 pop.add(new JMenuItem("Exit"));
 JLabel label = new JLabel(icon);
 label.setComponentPopupMenu(pop);
-//JDK 1.5 label.addMouseListener(new MouseAdapter() {});
-//addMouseListener(new MouseAdapter() {
-//  public void mouseReleased(MouseEvent e) {
-//    if (e.isPopupTrigger()) {
-//      Point pt = e.getPoint();
-//      pop.show(e.getComponent(), pt.x, pt.y);
-//    }
-//    repaint();
-//  }
-//});
+// JDK 1.5 label.addMouseListener(new MouseAdapter() {});
+// addMouseListener(new MouseAdapter() {
+//   public void mouseReleased(MouseEvent e) {
+//     if (e.isPopupTrigger()) {
+//       Point pt = e.getPoint();
+//       pop.show(e.getComponent(), pt.x, pt.y);
+//     }
+//     repaint();
+//   }
+// });
 }}
 - `SynthLookAndFeel`(`Nimbus`など)で、`JSeparator`だけでなく`JMenuItem`まで透明になった修正？に対応。 -- &user(aterai); &new{2012-02-05 (日) 14:22:34};
 - `1.7.0_03`でなにか変更されたのか変な挙動をするようになったので、調査中。 -- &user(aterai); &new{2012-02-21 (火) 16:45:48};

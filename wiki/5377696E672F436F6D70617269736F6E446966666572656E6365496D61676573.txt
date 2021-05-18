@@ -41,13 +41,12 @@ private static int[] getData(ImageIcon imageIcon, int w, int h) {
 
 + `ImageIcon`から`Image`を取得
 + `BufferedImage.TYPE_INT_RGB`で作成した`BufferedImage`に`Image`をコピー
-+ `BufferedImage`から、`WritableRaster`を取得
++ `BufferedImage`から`WritableRaster`を取得
 + `WritableRaster`から`DataBuffer`を取得
-+ `DataBuffer`を`DataBufferInt`にキャストして、`DataBufferInt#getData()`で`int`のピクセル配列を取得
++ `DataBuffer`を`DataBufferInt`にキャストして`DataBufferInt#getData()`で`int`のピクセル配列を取得
 
-比較結果は、 `MemoryImageSource`に格納し、`Component#createImage(ImageProducer)`で`Image`に変換しています。
-
-- `ImageIO.read(...)`で取得した`BufferedImage`から、`getRaster().getDataBuffer()`で`DataBuffer`を取り出すと、`DataBufferByte`になる？
+- 比較結果は`MemoryImageSource`に格納し`Component#createImage(ImageProducer)`メソッドで`Image`に変換
+- `ImageIO.read(...)`で取得した`BufferedImage`から`getRaster().getDataBuffer()`で`DataBuffer`を取り出すと`DataBufferByte`になる？
 
 * 参考リンク [#reference]
 - [[MemoryImageSourceで配列から画像を生成>Swing/MemoryImageSource]]

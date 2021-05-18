@@ -37,10 +37,10 @@ private void deleteActionPerformed(ActionEvent e) {
 上記のサンプルでは、ポップアップメニューを使って、行の追加と削除を行っています。
 
 - 追加
--- `DefaultTableModel`の`addRow`メソッドを使用し、オブジェクトの配列を行として追加
--- 追加された行が表示されるように`JTable#getCellRect(...)`で行の領域を取得し、`JTable#scrollRectToVisible(...)`でスクロール
+-- `DefaultTableModel`の`addRow`メソッドを使用しオブジェクトの配列を行として追加
+-- 追加された行が表示されるように`JTable#getCellRect(...)`で行の領域を取得し`JTable#scrollRectToVisible(...)`でスクロール
 - 削除
--- 複数行の削除に対応するため、`index`の大きい方から削除する
+-- 複数行の削除に対応するため`index`の大きい方から削除する
 -- 行がソートされている場合を考慮して`JTable#convertRowIndexToModel(int)`メソッドで`viewIndex`を`modelIndex`に変換してから`DefaultTableModel#removeRow(int modelIndex)`を使って削除
 
 * 参考リンク [#reference]

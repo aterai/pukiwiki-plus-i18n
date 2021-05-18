@@ -27,6 +27,7 @@ class FileGroupComparator extends DefaultFileComparator {
     super(column);
     this.table = table;
   }
+
   @Override public int compare(File a, File b) {
     int flag = 1;
     List<? extends TableRowSorter.SortKey> keys = table.getRowSorter().getSortKeys();
@@ -56,8 +57,8 @@ class FileGroupComparator extends DefaultFileComparator {
 - `Directory < File`
 -- ファイル名より先に「ディレクトリ < ファイル」で比較する`Comparator`を設定
 - `Group Sorting`
--- 昇順の場合は「ディレクトリ < ファイル」、降順の場合は、「ディレクトリ > ファイル」として、常にディレクトリが優先される`Comparator`を設定
--- ディレクトリ同士、ファイル同士の場合は、ファイル名で比較する
+-- 昇順の場合は「ディレクトリ < ファイル」、降順の場合は「ディレクトリ > ファイル」として常にディレクトリが優先される`Comparator`を設定
+-- ディレクトリ同士、ファイル同士の場合はファイル名で比較する
 -- `ls`コマンドの`--group-directories-first`オプションを付けた状態と同じソート
 
 * 参考リンク [#reference]

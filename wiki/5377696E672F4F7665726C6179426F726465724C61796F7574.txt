@@ -50,7 +50,7 @@ p.add(new JScrollPane(tree));
 * 解説 [#explanation]
 - `BorderLayout#layoutContainer(...)`メソッドをオーバーライドし、`BorderLayout.NORTH`で追加した検索ダイアログを`OverlayLayout`のように`BorderLayout.CENTER`で追加した`JTree`に重ねて配置
 -- `BorderLayout.CENTER`と`BorderLayout.NORTH`のみ対応
--- 検索ダイアログの幅は、`BorderLayout`の`BorderLayout.NORTH`配置のように親コンポーネントの幅まで拡張せず、`FlowLayout`などと同様に`PreferredSize`固定
+-- 検索ダイアログの幅は`BorderLayout`の`BorderLayout.NORTH`配置のように親コンポーネントの幅まで拡張せず、`FlowLayout`などと同様に`PreferredSize`固定
 -- `UIManager.getInt("ScrollBar.width")`で取得したスクロールバーの幅だけ右側に余白を作成して検索ダイアログを配置
 - `Timer`を使った検索ダイアログ位置変更によるスライドインアニメーション
 -- 参考: [[JToolBarの半透明化とアニメーション>Swing/TranslucentToolBar]]、[[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]

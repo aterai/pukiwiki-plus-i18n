@@ -24,7 +24,7 @@ table.setTableHeader(new JTableHeader(table.getColumnModel()) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTableHeader#getToolTipText()`メソッドをオーバーライドしてマウスカーソルの下にあるカラムヘッダの名前を`TooltipsText`として返すよう設定しています。
+上記のサンプルでは、`JTableHeader#getToolTipText(MouseEvent)`メソッドをオーバーライドしてマウスカーソルの下にあるカラムヘッダの名前を`TooltipsText`として返すよう設定しています。
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/JTableHeader.html#getToolTipText-java.awt.event.MouseEvent- JTableHeader#getToolTipText() (Java Platform SE 8)]

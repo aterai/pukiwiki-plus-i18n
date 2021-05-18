@@ -25,13 +25,13 @@ EventQueue.invokeLater(new Runnable() {
 * 解説 [#explanation]
 上記のサンプルでは、`JTextField`がデフォルトのフォーカスを持つように、`JComponent#requestFocusInWindow()`メソッドを使用しています。
 
-`JComponent#requestFocusInWindow()`メソッドは、チュートリアル([https://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html How to Use the Focus Subsystem])にあるように、`JFrame#pack()`、もしくは`JFrame#setSize(...)`などでリサイズされた後(フォーカスを取得するコンポーネントのサイズが決まった後)で実行する必要があります。このため、このサンプルでは`EventQueue.invokeLater(...)`を使って、待ち状態のすべてのイベントが処理された後で実行するようにしています。
+`JComponent#requestFocusInWindow()`メソッドは、チュートリアル([https://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html How to Use the Focus Subsystem])にあるように、`JFrame#pack()`、もしくは`JFrame#setSize(...)`などでリサイズされた後(フォーカスを取得するコンポーネントのサイズが決まった後)で実行する必要があります。このため、このサンプルでは`EventQueue.invokeLater(...)`を使って待ち状態のすべてのイベントが処理された後で実行するようにしています。
 
 ----
-以下のように、`FocusTraversalPolicy`や`WindowListener`を使う方法でも、同様にデフォルトのフォーカスを持つコンポーネントを指定できます。
+以下のように、`FocusTraversalPolicy`や`WindowListener`を使う方法でも同様にデフォルトのフォーカスを持つコンポーネントを指定可能です。
 
 - `FocusTraversalPolicy`を使用
--- `FocusTraversalPolicy`を設定して、最初にフォーカスの当たるコンポーネントを指定(`JDK 1.4.0`以降)
+-- `FocusTraversalPolicy`を設定して最初にフォーカスの当たるコンポーネントを指定(`JDK 1.4.0`以降)
 
 #code{{
 frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
@@ -41,8 +41,8 @@ frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
 });
 }}
 
-- `WindowListener#windowOpened(...)`で、`requestFocusInWindow()`
--- フレームに`WindowListener`を設定して、`windowOpened(...)`が呼び出されたときに、`requestFocusInWindow()`を実行
+- `WindowListener#windowOpened(...)`で`requestFocusInWindow()`
+-- フレームに`WindowListener`を設定して`windowOpened(...)`が呼び出されたときに、`requestFocusInWindow()`を実行
 
 #code{{
 frame.addWindowListener(new WindowAdapter() {
@@ -52,8 +52,8 @@ frame.addWindowListener(new WindowAdapter() {
 });
 }}
 
-- `ComponentListener#componentShown(...)`で、`requestFocusInWindow()`
--- フレームに`ComponentListener`を設定して、`componentShown(...)`が呼び出されたとき(=フレームが`setVisible(true)`されたとき)に、`requestFocusInWindow()`を実行
+- `ComponentListener#componentShown(...)`で`requestFocusInWindow()`
+-- フレームに`ComponentListener`を設定して`componentShown(...)`が呼び出されたとき(=フレームが`setVisible(true)`されたとき)に`requestFocusInWindow()`を実行
 
 #code{{
 frame.addComponentListener(new ComponentAdapter() {
@@ -63,8 +63,8 @@ frame.addComponentListener(new ComponentAdapter() {
 });
 }}
 
-- `KeyboardFocusManager#addPropertyChangeListener(...)`で、`requestFocusInWindow()`
--- `KeyboardFocusManager`に`PropertyChangeListener`を設定して、`propertyChange(...)`が呼び出され、`PropertyName`が、`activeWindow`、かつ`PropertyChangeEvent#getNewValue()`が`null`でないときに、`requestFocusInWindow()`を実行
+- `KeyboardFocusManager#addPropertyChangeListener(...)`で`requestFocusInWindow()`
+-- `KeyboardFocusManager`に`PropertyChangeListener`を設定して`propertyChange(...)`が呼び出され、`PropertyName`が`activeWindow`かつ`PropertyChangeEvent#getNewValue()`が`null`でないときに`requestFocusInWindow()`を実行
 
 #code{{
 KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();

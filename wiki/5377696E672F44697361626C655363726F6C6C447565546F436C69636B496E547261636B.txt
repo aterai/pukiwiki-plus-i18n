@@ -32,7 +32,7 @@ slider.setUI(new MetalSliderUI() {
 
 - `Override TrackListener#shouldScroll(...): false`
 -- `BasicSliderUI#createTrackListener(...)`メソッドをオーバーライドし、`shouldScroll(...)`メソッドが常に`false`を返す`TrackListener`を生成する
--- `BasicSliderUI#scrollDueToClickInTrack(...)`メソッドを空にしても、長押しでスクロールを行う`Timer`が起動して`BasicSliderUI#scrollByBlock(...)`などが実行されて値が変化する
+-- `BasicSliderUI#scrollDueToClickInTrack(...)`メソッドを空にしても長押しでスクロールを行う`Timer`が起動して`BasicSliderUI#scrollByBlock(...)`などが実行されて値が変化する
 - `JLayer + Slider.onlyLeftMouseButtonDrag: false`
 -- `UIManager.put("Slider.onlyLeftMouseButtonDrag", false);`を設定し、かつマウスの右ボタンでノブのドラッグを可能に設定して`JLayer`を使用して左ボタンの押下を右ボタンの押下に入れ替える
 -- 参考: [[JSliderのノブをマウスの右ボタンで操作不可に設定する>Swing/OnlyLeftMouseButtonDrag]]
@@ -45,12 +45,14 @@ class DisableLeftPressedLayerUI extends LayerUI<JSlider> {
       ((JLayer) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK);
     }
   }
+
   @Override public void uninstallUI(JComponent c) {
     if (c instanceof JLayer) {
       ((JLayer) c).setLayerEventMask(0);
     }
     super.uninstallUI(c);
   }
+
   @Override protected void processMouseEvent(
       MouseEvent e, JLayer<? extends JSlider> l) {
     if (e.getID() == MouseEvent.MOUSE_PRESSED

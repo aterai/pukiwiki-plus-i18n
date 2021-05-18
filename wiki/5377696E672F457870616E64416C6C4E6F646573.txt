@@ -24,6 +24,7 @@ private void expandAll(JTree tree) {
     row++;
   }
 }
+
 private void collapseAll(JTree tree) {
   int row = tree.getRowCount() - 1;
   while (row >= 0) {
@@ -64,13 +65,13 @@ private void visitAll(JTree tree, TreePath parent, boolean expand) {
 -- ループは全展開された時の`JTree`の行数だけ繰り返す
 - `collapseAll(A)`
 -- 末尾から順番に`JTree#collapseRow(int)`メソッドを実行し、表示されているすべてのノードを折り畳む
--- 子ノードは展開されているが、親ノードが折り畳まれている場合、その非表示となっている子ノードに対しては折り畳みを実行しない
+-- 子ノードは展開されているが親ノードが折り畳まれている場合、その非表示となっている子ノードに対しては折り畳みを実行しない
 - `expandAll(B)`
 -- `visitAll(tree, new TreePath(root), true);`
--- 再帰的に`TreePath`を辿って、展開(`JTree#expandPath(TreePath)`メソッド)を実行
+-- 再帰的に`TreePath`を辿って展開(`JTree#expandPath(TreePath)`メソッド)を実行
 - `collapseAll(B)`
 -- `visitAll(tree, new TreePath(root), false);`
--- 再帰的に`TreePath`を辿って、折り畳み(`JTree#collapsePath(TreePath)`メソッド)を実行
+-- 再帰的に`TreePath`を辿って折り畳み(`JTree#collapsePath(TreePath)`メソッド)を実行
 
 * 参考リンク [#reference]
 - [http://www.rgagnon.com/javadetails/java-0210.html Expand or collapse a JTree - Real's Java How-to]

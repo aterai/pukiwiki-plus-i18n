@@ -16,7 +16,7 @@ image: https://lh4.googleusercontent.com/-mAnvPJlUJSI/UJ_bYI_kJsI/AAAAAAAABWo/a_
 * サンプルコード [#sourcecode]
 #code(link){{
 JScrollPane scroll1 = new JScrollPane(leftTable);
-//scroll1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+// scroll1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 scroll1.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL) {
   @Override public Dimension getPreferredSize() {
     Dimension dim = super.getPreferredSize();
@@ -29,16 +29,16 @@ scroll2.getVerticalScrollBar().setModel(scroll1.getVerticalScrollBar().getModel(
 
 * 解説 [#explanation]
 - `JTable`
--- `TableModel`を共有し、`JTable#removeColumn()`でそれぞれの`JTable`で非表示にする列を指定
+-- `TableModel`を共有し`JTable#removeColumn()`でそれぞれの`JTable`で非表示にする列を指定
 -- 左右の`JTable`で`RowSorter`と`SelectionModel`を共有
 - `JScrollPane`
--- それぞれ内部に配置する`JTable`の高さは、常に同じになるので、`VerticalScrollBar`の`BoundedRangeModel`を共有
+-- それぞれ内部に配置する`JTable`の高さは、常に同じになるので`VerticalScrollBar`の`BoundedRangeModel`を共有
 - 制限
 -- 例えば左`JTable`のセルを選択して行選択を開始した場合、右`JTable`上でのドラッグには反応しない
 
 * 参考リンク [#reference]
 - [[JTableの列固定とソート>Swing/FixedColumnTableSorting]]
--- `ChangeListener`を使用、`1`つの`JScrollPane`に、`JTable`を`2`つ配置
+-- `ChangeListener`を使用し`1`つの`JScrollPane`に`JTable`を`2`つ配置
 - [[JScrollPaneのスクロールを同期>Swing/SynchronizedScroll]]
 -- `ChangeListener`を使用
 - [http://argius.hatenablog.jp/entry/20080325/1206454660 2つのJTableを同時にスクロール - argius note]

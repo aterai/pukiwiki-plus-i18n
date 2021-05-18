@@ -23,11 +23,13 @@ class NonEditableLineDocumentFilter extends DocumentFilter {
       replace(fb, offset, 0, string, attr);
     }
   }
+
   @Override public void remove(
       FilterBypass fb, int offset, int length)
       throws BadLocationException {
     replace(fb, offset, length, "", null);
   }
+
   @Override public void replace(
       FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
       throws BadLocationException {
@@ -48,8 +50,7 @@ class NonEditableLineDocumentFilter extends DocumentFilter {
     new NonEditableLineDocumentFilter());
 }}
 
-----
-`1`行目と`2`行目の背景色は、編集不可のための`DocumentFilter`とは関係なく、`Highlighter`を使って別途設定しています。
+- `1`行目と`2`行目の背景色は編集不可のための`DocumentFilter`とは無関係に`Highlighter`を使用して設定
 #code{{
 try {
   Highlighter hilite = textArea.getHighlighter();

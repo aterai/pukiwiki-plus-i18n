@@ -35,10 +35,10 @@ button1.addActionListener(e -> {
 -- `FileDialog#setVisible(true)`で`FileDialog`を開く前の場合、`FileDialog#setTitle(...)`でタイトルを変更可能
 -- `FileDialog`に`WindowListener`を追加して`windowOpened`後に`FileDialog#setTitle(...)`でタイトル変更は不可
 -- `FileDialog#setLocation(...)`などで表示位置の変更は不可
---- 値は変更されるが、実際の表示位置には反映されない
--- `FileDialog`に`WindowListener`は有効だが、`WindowStateListener`は無効？
+--- 値は変更されるが実際の表示位置には反映されない
+-- `FileDialog`に`WindowListener`は有効だが`WindowStateListener`は無効？
 -- `FileDialog#getFile()`メソッドで選択されたファイルの名前が文字列で取得可能
--- フルパスが必要な場合は`FileDialog#getDirectory()`で親ディレクトリを取得て`new File(String parent, String child)`などで`File`を生成し、`File#getAbsolutePath()`メソッドを使用する
+-- フルパスが必要な場合は`FileDialog#getDirectory()`で親ディレクトリを取得て`new File(String parent, String child)`などで`File`を生成し`File#getAbsolutePath()`メソッドを使用する
 - `FileDialog(Dialog)`
 -- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/FileDialog.html#FileDialog-java.awt.Frame-java.lang.String- new FileDialog(Dialog dialog, String title)]で`FileDialog`を作成
 -- `new FileDialog(Frame)`で作成した場合との違いは不明

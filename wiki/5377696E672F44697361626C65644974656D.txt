@@ -49,9 +49,9 @@ am.put("selectNextRow", new AbstractAction() {
 * 解説 [#explanation]
 上記のサンプルでは、`JList`中の指定したアイテムを選択不可に設定できます。
 
-- `JList`のアイテムの選択可・不可は、セルレンダラーの`ListCellRenderer#getListCellRendererComponent(...)`メソッド中で判断する
-- インデックスが選択不可の場合、オリジナルのセルレンダラーから選択無し、フォーカス無しのコンポーネントを取得し、さらに`setEnabled(false)`として返す
-- KBD{Up}KBD{Down}キーで`JList`のアイテムの選択を移動する場合、選択不可にしたアイテムを飛ばすように、`selectNextRow`などのアクションを変更
+- `JList`のアイテムの選択可・不可はセルレンダラーの`ListCellRenderer#getListCellRendererComponent(...)`メソッド中で判断する
+- インデックスが選択不可の場合オリジナルのセルレンダラーから選択無し、フォーカス無しのコンポーネントを取得し、さらに`setEnabled(false)`として返す
+- KBD{Up}、KBD{Down}キーで`JList`のアイテムの選択を移動する場合、選択不可にしたアイテムを飛ばすように`selectNextRow`などのアクションを変更
 
 * 参考リンク [#reference]
 - [[JComboBoxのアイテムを選択不可にする>Swing/DisableItemComboBox]]

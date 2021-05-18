@@ -24,11 +24,9 @@ tab.setDisplayedMnemonicIndexAt(tabIdx, 0);
 * 解説 [#explanation]
 上記のサンプルコードは、`JTabbedPane`の`3`番目のタブに`JTabbedPane#setMnemonicAt(3, KeyEvent.VK_B)`メソッドを使用して`Mnemonic`を設定し、KBD{Alt+B}のキー入力でそのタブにフォーカス移動が可能になっています。
 
-また、タブタイトルの先頭文字(`B`)にアンダーラインが入るように`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドで設定しています。
-
-----
-- `JDK 6`以降でタブタイトルに`Component`を使用している場合、`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドでは`Mnemonic`にアンダーラインは表示されないので、以下のように追加するコンポーネント側でアンダーラインを表示するための設定が必要
-
+- タブタイトルの先頭文字(`B`)にアンダーラインが入るように`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドで設定
+- `JDK 6`以降でタブタイトルに`Component`を使用している場合は`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドを使用しても`Mnemonic`にアンダーラインは表示されない
+-- 以下のように追加するコンポーネント側でアンダーラインを表示するための設定が必要
 #code{{
 int index = tab.getTabCount();
 String tabTitle = "label(0)";

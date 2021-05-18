@@ -44,12 +44,14 @@ class DraggableImageMouseListener extends MouseAdapter {
     polaroid = new Rectangle2D.Double(-2, -2, width + 4, height + 20);
     setCirclesLocation(centerPt);
   }
+
   private void setCirclesLocation(Point2D center) {
     double cx = center.getX();
     double cy = center.getY();
     inner.setFrameFromCenter(cx, cy, cx + IR / 2d, cy - IR / 2d);
     outer.setFrameFromCenter(cx, cy, cx + OR / 2d, cy - OR / 2d);
   }
+
   public void paint(Graphics g, ImageObserver observer) {
     Graphics2D g2 = (Graphics2D) g.create();
     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -84,6 +86,7 @@ class DraggableImageMouseListener extends MouseAdapter {
     g2.draw(at.createTransformedShape(border));
     g2.dispose();
   }
+
   @Override public void mouseMoved(MouseEvent e) {
     if (outer.contains(e.getX(), e.getY()) && !inner.contains(e.getX(), e.getY())) {
       moverHover = false;
@@ -97,11 +100,13 @@ class DraggableImageMouseListener extends MouseAdapter {
     }
     e.getComponent().repaint();
   }
+
   @Override public void mouseReleased(MouseEvent e) {
     rotatorHover = false;
     moverHover = false;
     e.getComponent().repaint();
   }
+
   @Override public void mousePressed(MouseEvent e) {
     if (outer.contains(e.getX(), e.getY()) && !inner.contains(e.getX(), e.getY())) {
       rotatorHover = true;
@@ -114,6 +119,7 @@ class DraggableImageMouseListener extends MouseAdapter {
       e.getComponent().repaint();
     }
   }
+
   @Override public void mouseDragged(MouseEvent e) {
     if (rotatorHover) {
       radian = startRadian + Math.atan2(

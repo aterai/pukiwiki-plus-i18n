@@ -23,16 +23,16 @@ image: https://drive.google.com/uc?id=1lEAsdjscriBkK232QDUjR95IJEIuxvnTQg
 * 解説 [#explanation]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultCaret.html#UPDATE_WHEN_ON_EDT DefaultCaret.UPDATE_WHEN_ON_EDT]
 -- デフォルト
--- `EDT`(イベント・ディスパッチ・スレッド)でドキュメントの変更が行われる場合にのみ、`Caret`位置が更新される
--- このサンプルでは、`On EDT`がチェックされている場合、`SwingWorker#process(...)`内でドキュメントが変更される
--- このため、`Caret`が末尾にあるとその位置が移動するので、左と中の`JTextArea`でスクロールが発生する
+-- `EDT`(イベント・ディスパッチ・スレッド)でドキュメントの変更が行われる場合にのみ`Caret`位置が更新される
+-- このサンプルでは`On EDT`がチェックされている場合、`SwingWorker#process(...)`内でドキュメントが変更される
+-- このため`Caret`が末尾にあるとその位置が移動するので、左と中の`JTextArea`でスクロールが発生する
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultCaret.html#ALWAYS_UPDATE DefaultCaret.ALWAYS_UPDATE]
--- ドキュメントの更新が`EDT`で行われるかどうかに関係なく、`Caret`位置が必ず更新される
--- このサンプルでは、`On EDT`がチェックされていない場合、`SwingWorker#doInBackground(...)`内でドキュメントが変更される
--- このため、`Caret`が末尾にあるとその位置が移動するので、この`JTextArea`でのみスクロールが発生する
+-- ドキュメントの更新が`EDT`で行われるかどうかに関係なく`Caret`位置が必ず更新される
+-- このサンプルでは、`On EDT`がチェックされていない場合`SwingWorker#doInBackground(...)`内でドキュメントが変更される
+-- このため`Caret`が末尾にあるとその位置が移動するので、この`JTextArea`でのみスクロールが発生する
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultCaret.html#NEVER_UPDATE DefaultCaret.NEVER_UPDATE]
--- ドキュメントが更新されても、ドキュメント内のキャレットの絶対位置は移動しない
---- テキストが削除されて、ドキュメントの長さが現在のキャレット位置よりも短くなる場合は除く
+-- ドキュメントが更新されてもドキュメント内のキャレットの絶対位置は移動しない
+--- テキストが削除されてドキュメントの長さが現在のキャレット位置よりも短くなる場合は除く
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultCaret.html DefaultCaret (Java Platform SE 8)]

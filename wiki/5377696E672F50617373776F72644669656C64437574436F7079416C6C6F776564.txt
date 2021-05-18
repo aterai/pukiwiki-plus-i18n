@@ -1,0 +1,38 @@
+---
+category: swing
+folder: PasswordFieldCutCopyAllowed
+title: JPasswordFieldでCutとCopyを可能にする
+tags: [JPasswordField]
+author: aterai
+pubdate: 2020-09-28T00:59:46+09:00
+description: JPasswordFieldで選択されたテキストのCutとCopyを実行可能に設定します。
+image: https://drive.google.com/uc?id=10LP_KEMz0Ip15ZRALLO1QqhxuMKSaSWh
+---
+* 概要 [#summary]
+`JPasswordField`で選択されたテキストの`Cut`と`Copy`を実行可能に設定します。
+
+#download(https://drive.google.com/uc?id=10LP_KEMz0Ip15ZRALLO1QqhxuMKSaSWh)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JPasswordField password = new JPasswordField();
+password.putClientProperty("JPasswordField.cutCopyAllowed", Boolean.TRUE);
+
+JPanel p = new JPanel(new GridLayout(2, 1));
+p.add(makePanel("JPasswordField.cutCopyAllowed: false(default)", new JPasswordField()));
+p.add(makePanel("JPasswordField.cutCopyAllowed: true", password));
+}}
+
+* 解説 [#explanation]
+- `JPasswordField.cutCopyAllowed: false(default)`
+-- デフォルトの`JPasswordField`はペースト(KBD{Ctrl-V})は可能だが、そのパスワードテキストのカット(KBD{Ctrl-X})とコピー(KBD{Ctrl-C})は無効で警告音がなる
+- `JPasswordField.cutCopyAllowed: true`
+-- `JPasswordField#putClientProperty("JPasswordField.cutCopyAllowed", Boolean.TRUE)`メソッドでカット(KBD{Ctrl-X})とコピー(KBD{Ctrl-C})を有効化
+
+* 参考リンク [#reference]
+- [[JTextFieldでコピー、貼り付けなどを禁止 - Java Swing Tips>https://ateraimemo.com/Swing/ActionMap]]
+- [[JPasswordFieldでパスワードを可視化する - Java Swing Tips>https://ateraimemo.com/Swing/ShowHidePasswordField]]
+
+* コメント [#comment]
+#comment
+#comment

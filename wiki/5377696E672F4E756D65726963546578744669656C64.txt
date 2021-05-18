@@ -38,11 +38,11 @@ spinner.setValue(5000);
 }}
 
 * 解説 [#explanation]
-- `1`:`JTextField` + `InputVerifier`
+- `1`: `JTextField` + `InputVerifier`
 -- [http://web.archive.org/web/20090831154020/http://java.sun.com/developer/JDCTechTips/2005/tt0518.html Validating with Input Verifiers]
 -- `InputVerifier`を継承する`IntegerInputVerifier`を作成し、これを`JComponent#setInputVerifier(...)`メソッドで設定
--- 別コンポーネントにフォーカスが移動するときに、数値かどうか評価する
--- 数値以外、または結果が範囲外となる場合、テキストは変化せず`beep`音が鳴り、フォーカス移動がキャンセルされる
+-- 別コンポーネントにフォーカスが移動するときに数値かどうか評価する
+-- 数値以外、または結果が範囲外となる場合、テキストは変化せず`beep`音が鳴りフォーカス移動がキャンセルされる
 
 #code{{
 class IntegerInputVerifier extends InputVerifier {
@@ -54,18 +54,18 @@ class IntegerInputVerifier extends InputVerifier {
       verified = true;
     } catch (NumberFormatException e) {
       UIManager.getLookAndFeel().provideErrorFeedback(c);
-      //Toolkit.getDefaultToolkit().beep();
+      // Toolkit.getDefaultToolkit().beep();
     }
     return verified;
   }
 }
 }}
 
-- `2`:`JTextField` + `Custom Document`
+- `2`: `JTextField` + `Custom Document`
 -- [http://web.archive.org/web/20090831154020/http://java.sun.com/developer/JDCTechTips/2005/tt0518.html Validating with a Custom Document]
 -- `PlainDocument`を継承する`IntegerDocument`を作成し、これを`JTextComponent#setDocument(...)`メソッドで設定
--- キー入力、文字列のペーストが行われたときに、数値かどうか評価する
--- 入力が数値以外、または結果が範囲外となる場合、`beep`音が鳴り、テキストは変化しない
+-- キー入力、文字列のペーストが行われたときに数値かどうか評価する
+-- 入力が数値以外、または結果が範囲外となる場合、`beep`音が鳴りテキストは変化しない
 
 #code{{
 class IntegerDocument extends PlainDocument {
@@ -73,9 +73,11 @@ class IntegerDocument extends PlainDocument {
   public IntegerDocument() {
     super();
   }
+
   public int getValue() {
     return currentValue;
   }
+
   @Override public void insertString(int offset, String str, AttributeSet attributes)
         throws BadLocationException {
     if (str == null) {
@@ -95,6 +97,7 @@ class IntegerDocument extends PlainDocument {
       super.insertString(offset, str, attributes);
     }
   }
+
   @Override public void remove(int offset, int length) throws BadLocationException {
     int currentLength = getLength();
     String currentContent = getText(0, currentLength);
@@ -104,6 +107,7 @@ class IntegerDocument extends PlainDocument {
     currentValue = checkInput(newValue, offset);
     super.remove(offset, length);
   }
+
   private int checkInput(String proposedValue, int offset) throws BadLocationException {
     if (proposedValue.length() > 0) {
       try {
@@ -119,15 +123,15 @@ class IntegerDocument extends PlainDocument {
 }
 }}
 
-- `3`:`JTextField` + `DocumentFilter`
+- `3`: `JTextField` + `DocumentFilter`
 -- [http://web.archive.org/web/20090831154020/http://java.sun.com/developer/JDCTechTips/2005/tt0518.html Validating with a Document Filter]
 -- `DocumentFilter`を継承する`IntegerDocumentFilter`を作成し、これを`AbstractDocument#setDocumentFilter(...)`メソッドで設定
--- キー入力、文字列のペーストが行われたときに、数値かどうか評価する
--- 入力が数値以外、または結果が範囲外となる場合、`beep`音が鳴り、テキストは変化しない
+-- キー入力、文字列のペーストが行われたときに数値かどうか評価する
+-- 入力が数値以外、または結果が範囲外となる場合、`beep`音が鳴りテキストは変化しない
 
 #code{{
 class IntegerDocumentFilter extends DocumentFilter {
-  //int currentValue = 0;
+  // int currentValue = 0;
   @Override public void insertString(DocumentFilter.FilterBypass fb,
       int offset, String string, AttributeSet attr) throws BadLocationException {
     if (string == null) {
@@ -136,10 +140,12 @@ class IntegerDocumentFilter extends DocumentFilter {
       replace(fb, offset, 0, string, attr);
     }
   }
+
   @Override public void remove(DocumentFilter.FilterBypass fb, int offset, int length)
       throws BadLocationException {
     replace(fb, offset, length, "", null);
   }
+
   @Override public void replace(DocumentFilter.FilterBypass fb, int offset, int length,
       String text, AttributeSet attrs) throws BadLocationException {
     Document doc = fb.getDocument();
@@ -148,10 +154,10 @@ class IntegerDocumentFilter extends DocumentFilter {
     String before = currentContent.substring(0, offset);
     String after = currentContent.substring(length + offset, currentLength);
     String newValue = before + (text == null ? "" : text) + after;
-    //currentValue =
     checkInput(newValue, offset);
     fb.replace(offset, length, text, attrs);
   }
+
   private static int checkInput(String proposedValue, int offset)
       throws BadLocationException {
     int newValue = 0;
@@ -167,10 +173,10 @@ class IntegerDocumentFilter extends DocumentFilter {
 }
 }}
 
-- `4`:`JFormattedTextField` + `DefaultFormatterFactory`
+- `4`: `JFormattedTextField` + `DefaultFormatterFactory`
 -- [https://docs.oracle.com/javase/tutorial/uiswing/components/formattedtextfield.html How to Use Formatted Text Fields]
 -- `DefaultFormatterFactory`を継承する`NumberFormatterFactory`を作成し、これを`JFormattedTextField#setFormatterFactory(...)`メソッドで設定
--- 別コンポーネントにフォーカスが移動するときに、数値かどうか評価する
+-- 別コンポーネントにフォーカスが移動するときに数値かどうか評価する
 -- 数値以外の場合、テキストは以前の値に`Undo`される
 -- 数値が範囲外となる場合、最小値、または最大値に調整される
 --- 注: [[SpinnerNumberModelに上限値を超える値を入力>Swing/SpinnerNumberModel]]
@@ -182,13 +188,14 @@ class NumberFormatterFactory extends DefaultFormatterFactory {
     numberFormatter.setValueClass(Integer.class);
     ((NumberFormat) numberFormatter.getFormat()).setGroupingUsed(false);
   }
+
   public NumberFormatterFactory() {
     super(numberFormatter, numberFormatter, numberFormatter);
   }
 }
 }}
 
-- `5`:`JSpinner` + `SpinnerNumberModel`
+- `5`: `JSpinner` + `SpinnerNumberModel`
 -- `JFormattedTextField`の場合と同等
 
 * 参考リンク [#reference]

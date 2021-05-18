@@ -15,11 +15,12 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTO8wLpaZI/AAAAAAAAAdM/mM
 
 * サンプルコード [#sourcecode]
 #code(link){{
-JInternalFrame iframe = new JInternalFrame("AlwaysOnTop",
-  true,  //resizable
-  false, //closable
-  true,  //maximizable
-  true); //iconifiable
+JInternalFrame iframe = new JInternalFrame(
+  "AlwaysOnTop", // title
+  true,  // resizable
+  false, // closable
+  true,  // maximizable
+  true); // iconifiable
 iframe.setSize(180, 180);
 desktop.add(iframe, Integer.valueOf(JLayeredPane.MODAL_LAYER + 1));
 iframe.setVisible(true);

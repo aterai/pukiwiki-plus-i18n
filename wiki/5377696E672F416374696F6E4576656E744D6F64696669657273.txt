@@ -35,7 +35,7 @@ button.addActionListener(e -> {
 - `JButton` + `ActionListener`
 -- `(e.getModifiers() & ActionEvent.SHIFT_MASK) != 0`でKBD{Shift}キーが押されているかを判断する
 -- `ActionListener`内で`(e.getModifiers() & InputEvent.SHIFT_MASK) != 0`と`InputEvent.SHIFT_MASK`を使用すべきではない
--- どちらも定数値は`1`だが、`InputEvent.SHIFT_MASK`はキーストローク用、また`Java 9`から`InputEvent.SHIFT_MASK`は非推奨で`InputEvent.SHIFT_DOWN_MASK`を使うべき
+-- どちらも定数値は`1`だが`InputEvent.SHIFT_MASK`はキーストローク用、また`Java 9`から`InputEvent.SHIFT_MASK`は非推奨で`InputEvent.SHIFT_DOWN_MASK`を使うべき
 -- `InputEvent.SHIFT_DOWN_MASK`は`InputEvent.getModifiersEx()`と合わせて使用する
 -- `MouseEvent`や`KeyEvent`は`InputEvent`を継承しているが、`ActionEvent`は継承していないので`getModifiersEx()`メソッドは存在しない
 --- [https://docs.oracle.com/javase/jp/9/docs/api/constant-values.html#java.awt.event.ActionEvent.SHIFT_MASK ActionEvent.SHIFT_MASK]: `1`
@@ -46,7 +46,7 @@ button.addActionListener(e -> {
 -- `MouseEvent`は`InputEvent`を継承しているので、`MouseListener`内では`InputEvent#isShiftDown()`なども使用可能
 
 ----
-- `JMenuItem`などがキー入力ではなくマウスでクリックされたかどうかの判断は、`(ActionEvent#getModifiers() & AWTEvent.MOUSE_EVENT_MASK) != 0`で判断する
+- `JMenuItem`などがキー入力ではなくマウスでクリックされたかどうかは`(ActionEvent#getModifiers() & AWTEvent.MOUSE_EVENT_MASK) != 0`で判断可能
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/ActionEvent.html ActionEvent (Java Platform SE 8)]

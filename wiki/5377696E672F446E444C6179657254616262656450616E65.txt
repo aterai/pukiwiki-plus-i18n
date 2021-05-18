@@ -38,6 +38,7 @@ class DropLocationLayerUI extends LayerUI<DnDTabbedPane> {
       }
     }
   }
+
   private void initLineRect(JTabbedPane tabbedPane, DnDTabbedPane.DropLocation loc) {
     int index = loc.getIndex();
     int a = index == 0 ? 0 : 1;
@@ -55,15 +56,14 @@ class DropLocationLayerUI extends LayerUI<DnDTabbedPane> {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、[[JTabbedPaneのタブをドラッグ＆ドロップ>Swing/DnDTabbedPane]]や、[[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]のように`GlassPane`を使用する代わりに、`JDK 1.7.0`で導入された`JLayer`を使用して、タブの挿入先を描画しています。`JLayer`を使用することで、別ウィンドウにある`JTabbedPane`へのタブ移動などの描画が簡単になります。
+上記のサンプルでは、[[JTabbedPaneのタブをドラッグ＆ドロップ>Swing/DnDTabbedPane]]や、[[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]のように`GlassPane`を使用する代わりに、`JDK 1.7.0`で導入された`JLayer`を使用してタブの挿入先を描画しています。`JLayer`を使用することで別ウィンドウにある`JTabbedPane`へのタブ移動などの描画が簡単になります。
 
 ----
-メニューバーから、ドラッグ中の半透明タブイメージの描画方法を切り替えてテストできます。
+メニューバーからドラッグ中の半透明タブイメージの描画方法を切り替えてテストできます。
 
 - `Lightweight`
 -- `JDK1.7.0`で導入された、`TransferHandler#setDragImage(...)`メソッドを使用して描画
 -- ウィンドウの外では非表示
-
 - `Heavyweight`
 -- 半透明の`JWindow`に`JLabel`を追加して表示
 -- ウィンドウの外でも表示可能
@@ -79,9 +79,9 @@ private final JLabel label = new JLabel() {
 private final JWindow dialog = new JWindow();
 public TabTransferHandler() {
   dialog.add(label);
-  //dialog.setAlwaysOnTop(true); // Web Start
+  // dialog.setAlwaysOnTop(true); // Web Start
   dialog.setOpacity(.5f);
-  //com.sun.awt.AWTUtilities.setWindowOpacity(dialog, .5f); // JDK 1.6.0
+  // com.sun.awt.AWTUtilities.setWindowOpacity(dialog, .5f); // JDK 1.6.0
   DragSource.getDefaultDragSource().addDragSourceMotionListener(
       new DragSourceMotionListener() {
     @Override public void dragMouseMoved(DragSourceDragEvent dsde) {

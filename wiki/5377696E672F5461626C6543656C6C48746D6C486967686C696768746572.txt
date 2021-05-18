@@ -30,6 +30,7 @@ class HighlightTableCellRenderer extends DefaultTableCellRenderer {
       return true;
     }
   }
+
   @Override public Component getTableCellRendererComponent(
       JTable table, Object value, boolean isSelected, boolean hasFocus,
       int row, int column) {
@@ -41,8 +42,8 @@ class HighlightTableCellRenderer extends DefaultTableCellRenderer {
       while (matcher.find(pos) && !matcher.group().isEmpty()) {
         int start = matcher.start();
         int end = matcher.end();
-        buf.append(String.format(SPAN,
-                                 txt.substring(pos, start), txt.substring(start, end)));
+        buf.append(String.format(
+            SPAN, txt.substring(pos, start), txt.substring(start, end)));
         pos = end;
       }
       buf.append(txt.substring(pos));
@@ -58,7 +59,7 @@ class HighlightTableCellRenderer extends DefaultTableCellRenderer {
 - 行のフィルタリング
 -- [[JTableの検索結果をRowFilterとHighlighterで強調表示する>Swing/TableHighlightRegexFilter]]と同様の`RowFilter.regexFilter(pattern)`で正規表現による絞り込みが可能
 - セル中文字列のハイライト
--- [[JTableの検索結果をRowFilterとHighlighterで強調表示する>Swing/TableHighlightRegexFilter]]はセルレンダラーとして`JTextField`を使用し、`JTextField#getHighlighter()#addHighlight(...)`でハイライト表示しているが、このサンプルでは、`JLabel`を継承する`DefaultTableCellRenderer`に`HTML`タグを適用した文字列を生成することでハイライト表示
+-- [[JTableの検索結果をRowFilterとHighlighterで強調表示する>Swing/TableHighlightRegexFilter]]はセルレンダラーとして`JTextField`を使用し`JTextField#getHighlighter()#addHighlight(...)`でハイライト表示しているが、このサンプルでは`JLabel`を継承する`DefaultTableCellRenderer`に`HTML`タグを適用した文字列を生成することでハイライト表示
 --- ハイライトの背景色だけではなく文字色も変更可能なので、`JTable`のセル選択文字色、背景色にデフォルト色が使用可能
 --- 例えば`NimbusLookAndFeel`などのようにセルを選択すると文字色が白抜き反転される`LookAndFeel`で`JTextField#getHighlighter()#addHighlight(...)`を使用する場合、セル文字色を黒に固定してセル選択背景色をハイライト背景色より薄い色に変更するなどの対策が必要
 

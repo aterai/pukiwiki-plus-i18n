@@ -44,6 +44,7 @@ class ViewportDragScrollListener extends MouseAdapter
       }
     });
   }
+
   @Override public void hierarchyChanged(HierarchyEvent e) {
     JComponent c = (JComponent) e.getSource();
     if ((e.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED) != 0
@@ -51,6 +52,7 @@ class ViewportDragScrollListener extends MouseAdapter
       scroller.stop();
     }
   }
+
   @Override public void mouseDragged(MouseEvent e) {
     JViewport vport = (JViewport) e.getSource();
     Point pt = e.getPoint();
@@ -62,18 +64,21 @@ class ViewportDragScrollListener extends MouseAdapter
     move.setLocation(SPEED * dx, SPEED * dy);
     startPt.setLocation(pt);
   }
+
   @Override public void mousePressed(MouseEvent e) {
-    e.getComponent().setCursor(hc); //label.setCursor(hc);
+    e.getComponent().setCursor(hc); // label.setCursor(hc);
     startPt.setLocation(e.getPoint());
     move.setLocation(0, 0);
     scroller.stop();
   }
+
   @Override public void mouseReleased(MouseEvent e) {
-    e.getComponent().setCursor(dc); //label.setCursor(dc);
+    e.getComponent().setCursor(dc); // label.setCursor(dc);
     scroller.start();
   }
+
   @Override public void mouseExited(MouseEvent e) {
-    e.getComponent().setCursor(dc); //label.setCursor(dc);
+    e.getComponent().setCursor(dc); // label.setCursor(dc);
     move.setLocation(0, 0);
     scroller.stop();
   }
@@ -81,9 +86,10 @@ class ViewportDragScrollListener extends MouseAdapter
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JViewport`内の画像ラベルをマウスでドラッグすると、その移動方向に応じて自動的にスクロールします。自動スクロール中に画像をマウスでクリックすると移動を停止します。
+上記のサンプルでは、`JViewport`内の画像ラベルをマウスでドラッグするとその移動方向に応じて自動的にスクロールします。
 
-`javax.swing.Timer`を使うことでスクロールの開始、継続、停止を行っています。
+- `javax.swing.Timer`を使うことでスクロールの開始、継続、停止を実行
+- 自動スクロール中に画像をマウスでクリックすると移動を停止
 
 * 参考リンク [#reference]
 - [[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]

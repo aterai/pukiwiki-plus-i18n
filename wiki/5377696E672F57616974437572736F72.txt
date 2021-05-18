@@ -26,6 +26,7 @@ button.addActionListener(new ActionListener() {
         dummyLongTask();
         return "Done";
       }
+
       @Override public void done() {
         frame.getGlassPane().setVisible(false);
         button.setEnabled(true);
@@ -73,6 +74,7 @@ class LockingGlassPane extends JComponent {
     requestFocusInWindow();
     setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
   }
+
   @Override public void setVisible(boolean flag) {
     super.setVisible(flag);
     setFocusTraversalPolicyProvider(flag);
@@ -85,7 +87,7 @@ class LockingGlassPane extends JComponent {
 
 スタートボタンがクリックされて処理が継続している間はこの`GlassPane`が有効になり、マウス、キー、フォーカス移動などのイベントがすべて`GlassPane`に奪われるため、フレーム内のコンポーネントがアクセス不可状態になります。
 
-このため、サンプルにある`setEnabled(true)`な`JTextField`の上にマウスポインタを移動しても、処理中はカーソルアイコンは砂時計のまま変化しません。
+このため、サンプルにある`setEnabled(true)`な`JTextField`の上にマウスポインタを移動しても処理中はカーソルアイコンは砂時計のまま変化しません。
 
 ----
 KBD{Tab}キーなどによるフォーカス移動を禁止する場合は、`GlassPane`に以下のような設定を行います。

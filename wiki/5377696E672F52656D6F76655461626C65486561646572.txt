@@ -19,12 +19,12 @@ hreflang:
 * サンプルコード [#sourcecode]
 #code(link){{
 final JScrollPane scrollPane = new JScrollPane(table);
-//scrollPane.setColumnHeader(new JViewport()); // Dummy JViewport
+// scrollPane.setColumnHeader(new JViewport()); // Dummy JViewport
 JCheckBox check = new JCheckBox("JTableHeader visible: ", true);
 check.addActionListener(new ActionListener() {
   @Override public void actionPerformed(ActionEvent e) {
     JCheckBox cb = (JCheckBox) e.getSource();
-    //table.getTableHeader().setVisible(cb.isSelected());
+    // table.getTableHeader().setVisible(cb.isSelected());
     scrollPane.getColumnHeader().setVisible(cb.isSelected());
     scrollPane.revalidate();
   }
@@ -35,8 +35,6 @@ check.addActionListener(new ActionListener() {
 上記のサンプルでは、`JTable`を配置した`JScrollPane`の`JScrollPane#getColumnHeader().setVisible(boolean)`メソッドを使って、`JTableHeader`の表示、非表示を変更しています。
 
 - `table.setTableHeader(null)`でヘッダを削除、`table.setTableHeader(new JTableHeader(table.getColumnModel()))`で復元する方法もある
-
-----
 - 以下のように、サイズ`0`の`ColumnHeader`を設定して非表示に見せかけることも可能
 
 #code{{

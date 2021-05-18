@@ -5,14 +5,14 @@ title: JScrollPane内に配置したJPanelをマウスで拡大、縮小、移�
 tags: [JScrollPane, JPanel, AffineTransform, Image, MouseWheelListener]
 author: aterai
 pubdate: 2015-06-22T10:03:20+09:00
-description: JScrollPane内に配置したJPanelを、マウスホイールを使った拡大縮小と、スクロールバーを使った表示領域の移動が可能になるように設定します。
+description: JScrollPane内に配置したJPanelをマウスホイールを使った拡大縮小とスクロールバーを使った表示領域の移動が可能になるように設定します。
 image: https://lh3.googleusercontent.com/-Um9j8O0t3Kg/VYdMPIUOfwI/AAAAAAAAN7A/LAJ5KRiDdp0/s800/ZoomAndPanPanel.png
 hreflang:
     href: https://java-swing-tips.blogspot.com/2015/06/an-image-inside-jscrollpane-zooming-by.html
     lang: en
 ---
 * 概要 [#summary]
-`JScrollPane`内に配置した`JPanel`を、マウスホイールを使った拡大縮小と、スクロールバーを使った表示領域の移動が可能になるように設定します。
+`JScrollPane`内に配置した`JPanel`をマウスホイールを使った拡大縮小とスクロールバーを使った表示領域の移動が可能になるように設定します。
 
 #download(https://lh3.googleusercontent.com/-Um9j8O0t3Kg/VYdMPIUOfwI/AAAAAAAAN7A/LAJ5KRiDdp0/s800/ZoomAndPanPanel.png)
 
@@ -30,6 +30,7 @@ class ZoomAndPanePanel extends JPanel {
     this.img = img;
     this.imgrect = new Rectangle(img.getWidth(this), img.getHeight(this));
   }
+
   @Override protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     Graphics2D g2 = (Graphics2D) g.create();
@@ -54,10 +55,12 @@ class ZoomAndPanePanel extends JPanel {
 
     g2.dispose();
   }
+
   @Override public Dimension getPreferredSize() {
     Rectangle r = zoomTransform.createTransformedShape(imgrect).getBounds();
     return new Dimension(r.width, r.height);
   }
+
   @Override public void updateUI() {
     removeMouseListener(listener);
     removeMouseMotionListener(listener);
@@ -110,9 +113,8 @@ class ZoomAndPanePanel extends JPanel {
 * 解説 [#explanation]
 上記のサンプルでは、`JPanel#getPreferredSize()`を拡大後の画像サイズを返すようにオーバーライドすることで、画像が`JViewport`より大きくなる場合はスクロールバーが表示されるように設定しています。
 
-----
-ズーム自体は[[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]で使用しているものとほぼ同じ`MouseWheelListener`を使用していますが、画像を描画している`JPanel`を`JScrollPane`内に設定してスクロールバーでのスクロールを可能にしているため、`JPanel#paintComponent(...)`内での`AffineTransform`の適用方法などを変更しています。
-
+- ズーム自体は[[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]で使用しているものとほぼ同じ`MouseWheelListener`を使用
+-- 画像を描画している`JPanel`を`JScrollPane`内に設定してスクロールバーでのスクロールを可能にするため`JPanel#paintComponent(...)`内での`AffineTransform`の適用方法などを変更
 - [[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]のようにズームを行うための`AffineTransform`(このサンプルでは`zoomTransform`)を直接`Graphics2D`に設定すると、元からある`Graphics2D`コンテキスト内の`AffineTransform`(`JScrollBar`による移動)と競合して描画が乱れてしまう
 #code{{
 // BAD EXAMPLE

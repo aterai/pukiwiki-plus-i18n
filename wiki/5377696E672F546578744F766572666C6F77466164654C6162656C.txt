@@ -65,10 +65,10 @@ class TextOverflowFadeLabel extends JLabel {
 -- `Graphics2D#setComposite(...)`を使用すると文字列にアンチエイリアスが掛かってしまう？ため、透明化しない文字列にもほぼ`1f`のアルファ値を設定して描画
 - `JLabel TextLayout fade out`
 -- `<html>`タグは使用せず、`TextLayout`を生成し直接文字列を描画してあふれ省略を無効化
--- フェードアウト効果は、`html JLabel fade out`と同様
-- %%`JTextField fade out`%% `JLabel BufferedImage fade out`
--- %%`JLabel`の代わりに編集不可にした`JTextField`を使用して%% `JLabel TextLayout fade out`と同様に`TextLayout`で文字列を描画して省略記号によるあふれ省略を無効化
--- 文字列を`BufferedImage`に描画し、その右端付近のピクセル値を`BufferedImage#getRGB(...)`で取得後、アルファ成分を変更して`BufferedImage#setRGB(...)`で戻す
+-- フェードアウト効果は`html JLabel fade out`と同様
+- `JLabel BufferedImage fade out`
+-- `JLabel TextLayout fade out`と同様に`TextLayout`で文字列を描画して省略記号によるあふれ省略を無効化
+-- 文字列を`BufferedImage`に描画し、その右端付近のピクセル値を`BufferedImage#getRGB(...)`で取得後アルファ成分を変更して`BufferedImage#setRGB(...)`で戻す
 
 #code{{
 class FadingOutLabel extends JLabel {

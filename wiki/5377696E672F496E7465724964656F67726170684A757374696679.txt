@@ -32,13 +32,16 @@ class JustifiedLabel extends JLabel {
   public JustifiedLabel() {
     this(null);
   }
+
   public JustifiedLabel(String str) {
     super(str);
   }
+
   @Override public void setText(String text) {
     super.setText(text);
     prevWidth = -1;
   }
+
   @Override protected void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g.create();
     Font font = getFont();

@@ -50,7 +50,7 @@ class ImgBaselineHTMLEditorKit extends HTMLEditorKit {
 - 上
 -- `<img>`タグで挿入した画像がインラインボックスからずれて表示される
 -- `img {align: middle; valign: middle; vertical-align: middle;}`などの設定が無効
--- `javax/swing/text/html/ImageView.java`の`setPropertiesFromAttributes()`の実装は、以下のように`HTML.Attribute.VERTICAL_ALIGN`ではなく`HTML.Attribute.ALIGN`を使用することで、少なくとも`top`, `middle`が使用できるはずだが、`Java 1.8.0_144`ではこれらを設定しても全く効果がない？
+-- `javax/swing/text/html/ImageView.java`の`setPropertiesFromAttributes()`の実装は、以下のように`HTML.Attribute.VERTICAL_ALIGN`ではなく`HTML.Attribute.ALIGN`を使用することで、少なくとも`top`、`middle`が使用できるはずだが`Java 1.8.0_144`ではこれらを設定しても全く効果がない？
 #code{{
 /**
  * Update any cached values that come from attributes.
@@ -77,9 +77,8 @@ protected void setPropertiesFromAttributes() {
   // ...
 }}
 - 下
--- `ImageView#getAlignment(...)`メソッドをオーバーライドして、`vertical-align`を直接指定する`HTMLFactory`を作成し、`HTMLEditorKit#getViewFactory()`メソッドで使用するよう設定
+-- `ImageView#getAlignment(...)`メソッドをオーバーライドして`vertical-align`を直接指定する`HTMLFactory`を作成し、`HTMLEditorKit#getViewFactory()`メソッドで使用するよう設定
 -- 上記のサンプルでは、画像サイズをデフォルトフォントのサイズと同じに設定し、ベースラインも同じ値を使用するよう固定している
-// -- デフォルトの`HTMLEditorKit`のフォントとは異なるフォントが使用される？
 
 * 参考リンク [#reference]
 - [https://bugs.openjdk.java.net/browse/JDK-5094219 JDK-5094219 JEditorPane doesn't recognize CSS vertical-align property - Java Bug System]
