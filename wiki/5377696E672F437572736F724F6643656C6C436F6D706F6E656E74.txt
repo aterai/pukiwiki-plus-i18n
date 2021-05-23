@@ -20,6 +20,7 @@ class LinkCellList<E> extends JList<E> {
   protected LinkCellList(ListModel<E> model) {
     super(model);
   }
+
   @Override public void updateUI() {
     setForeground(null);
     setBackground(null);
@@ -28,8 +29,9 @@ class LinkCellList<E> extends JList<E> {
     super.updateUI();
     setFixedCellHeight(32);
     setCellRenderer(new LinkCellRenderer<>());
-    //TEST: putClientProperty("List.isFileList", Boolean.TRUE);
+    // TEST: putClientProperty("List.isFileList", Boolean.TRUE);
   }
+
   @Override protected void processMouseMotionEvent(MouseEvent e) {
     Point pt = e.getPoint();
     int i = locationToIndex(pt);
@@ -54,12 +56,12 @@ class LinkCellList<E> extends JList<E> {
 * 解説 [#explanation]
 上記のサンプルでは、以下の手順でイベントを取得しないセルレンダラー中のコンポーネントに応じたカーソルの変更を行っています。
 
-- `JList`上をマウスカーソルを移動した時に、カーソルのある行を取得
+- `JList`上をマウスカーソルを移動した時にカーソルのある行を取得
 - セルレンダラーに行番号や文字列などの値を渡して描画用のコンポーネントを取得
 - 描画用コンポーネントの位置とサイズを`JList#getCellBounds()`で取得したセル領域に変更
 -- `Component#setBounds(...)`で描画用コンポーネントの位置とサイズを変更してもその子コンポーネントのレイアウトは更新されない
-- `Component#doLayout()`で、レイアウトを更新
--- このサンプルで使用している`FlowLayout`では、`JLabel`に設定する文字列の長さで後続のコンポーネントの位置が変化するので、`Component#doLayout()`を実行してレイアウトの更新を行う必要がある
+- `Component#doLayout()`でレイアウトを更新
+-- このサンプルで使用している`FlowLayout`では`JLabel`に設定する文字列の長さで後続のコンポーネントの位置が変化するので、`Component#doLayout()`を実行してレイアウトの更新を行う必要がある
 -- ただし、同じ行の場合は描画用コンポーネントも前回と同じはずなのでレイアウトを更新する必要はない
 -- [[JListのセル内にJButtonを配置する>Swing/ButtonsInListCell]]のように、すべての行のレイアウトが同じ(内容に応じて変化しない)場合もレイアウトを更新する必要はない
 - `JList`基準のカーソル位置座標を描画用コンポーネント基準に変更

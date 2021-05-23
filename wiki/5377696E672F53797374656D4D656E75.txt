@@ -1,0 +1,58 @@
+---
+category: swing
+folder: SystemMenu
+title: SystemMenuとして使用されているJMenuを取得する
+tags: [JRootPane, JMenu, JMenuItem, LookAndFeel]
+author: aterai
+pubdate: 2021-05-24T06:11:30+09:00
+description: JRootPaneの子コンポーネントを検索してSystemMenuとして使用されているJMenuを取得します。
+image: https://drive.google.com/uc?id=17deOtbw1m68IowpoVASZ4QGOeM1WJBnq
+---
+* 概要 [#summary]
+`JRootPane`の子コンポーネントを検索して`SystemMenu`として使用されている`JMenu`を取得します。
+
+#download(https://drive.google.com/uc?id=17deOtbw1m68IowpoVASZ4QGOeM1WJBnq)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTextArea log = new JTextArea();
+EventQueue.invokeLater(() -> {
+  JMenu menu = descendants(getRootPane())
+      .filter(JMenu.class::isInstance).map(JMenu.class::cast)
+      .findFirst().orElse(new JMenu(" "));
+  menu.add("added to the SystemMenu");
+
+  log.append(menu.getPreferredSize() + "\n");
+  menu.setIcon(UIManager.getIcon("InternalFrame.icon"));
+  log.append(menu.getPreferredSize() + "\n---\n");
+
+  Component c = menu;
+  while (c != null) {
+    log.append(c.getClass().getName() + "\n");
+    c = c.getParent();
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `OS`依存の`SystemLookAndFeel`では`SystemMenu`は`JNI`などを使用しないと取得不可能
+- `JFrame.setDefaultLookAndFeelDecorated(true)`で`DefaultLookAndFeel`を使用する場合、`SystemMenu`は以下のようなコンポーネント階層を辿って取得可能
+
+#code{{
+javax.swing.JFrame
+└─javax.swing.JRootPane
+    └─javax.swing.JLayeredPane
+        └─javax.swing.plaf.metal.MetalTitlePane
+            └─javax.swing.plaf.metal.MetalTitlePane$SystemMenuBar
+                └─javax.swing.JMenu
+}}
+
+- 取得した`JMenu`のサイズが小さく、システムアイコンを右クリックしてもシステムメニューがポップアップできない場合がある
+-- 上記のサンプルではシステムアイコンを再設定してクリック可能な領域を拡大している
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/12815659/add-item-to-windows-system-menu-without-winapi java - Add item to windows system menu without winapi - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

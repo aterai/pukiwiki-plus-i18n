@@ -21,13 +21,15 @@ hreflang:
 class TableRowTransferHandler extends TransferHandler {
   private final DataFlavor localObjectFlavor;
   private int[] indices;
-  private int addIndex = -1; //Location where items were added
-  private int addCount; //Number of items added.
+  private int addIndex = -1; // Location where items were added
+  private int addCount; // Number of items added.
   private JComponent source;
+
   public TableRowTransferHandler() {
     super();
     localObjectFlavor = new DataFlavor(Object[].class, "Array of items");
   }
+
   @Override protected Transferable createTransferable(JComponent c) {
     source = c;
     JTable table = (JTable) c;
@@ -42,9 +44,11 @@ class TableRowTransferHandler extends TransferHandler {
       @Override public DataFlavor[] getTransferDataFlavors() {
         return new DataFlavor[] {FLAVOR};
       }
+
       @Override public boolean isDataFlavorSupported(DataFlavor flavor) {
         return Objects.equals(FLAVOR, flavor);
       }
+
       @Override public Object getTransferData(DataFlavor flavor)
             throws UnsupportedFlavorException, IOException {
         if (isDataFlavorSupported(flavor)) {
@@ -55,18 +59,21 @@ class TableRowTransferHandler extends TransferHandler {
       }
     };
   }
+
   @Override public boolean canImport(TransferSupport info) {
     JTable table = (JTable) info.getComponent();
     boolean isDroppable = info.isDrop()
       && info.isDataFlavorSupported(localObjectFlavor);
-    //XXX bug?
+    // XXX bug?
     table.setCursor(isDroppable ? DragSource.DefaultMoveDrop
                                 : DragSource.DefaultMoveNoDrop);
     return isDroppable;
   }
+
   @Override public int getSourceActions(JComponent c) {
     return TransferHandler.MOVE; //TransferHandler.COPY_OR_MOVE;
   }
+
   @Override public boolean importData(TransferSupport info) {
     TransferHandler.DropLocation tdl = info.getDropLocation();
     if (!(tdl instanceof JTable.DropLocation)) {
@@ -76,7 +83,7 @@ class TableRowTransferHandler extends TransferHandler {
     JTable target = (JTable) info.getComponent();
     DefaultTableModel model = (DefaultTableModel) target.getModel();
     int index = dl.getRow();
-    //boolean insert = dl.isInsert();
+    // boolean insert = dl.isInsert();
     int max = model.getRowCount();
     if (index < 0 || index > max) {
       index = max;
@@ -101,10 +108,12 @@ class TableRowTransferHandler extends TransferHandler {
     }
     return false;
   }
+
   @Override protected void exportDone(
       JComponent c, Transferable data, int action) {
     cleanup(c, action == MOVE);
   }
+
   private void cleanup(JComponent c, boolean remove) {
     if (remove && indices != null) {
       c.setCursor(Cursor.getDefaultCursor());
@@ -130,8 +139,7 @@ class TableRowTransferHandler extends TransferHandler {
 * 解説 [#explanation]
 上記のサンプルでは、`1`つの`JTable`内で行の並べ替えを行う[[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]を元に、複数`JTable`間で行移動が可能になるよう`TableRowTransferHandler`を拡張しています。
 
-----
-以下のように、`JTable#setFillsViewportHeight(true)`で[[JTable自体の高さを拡張>Swing/FillsViewportHeight]]しておかないと、`JTable`が空の状態でドロップが不可になります。
+- 以下のように、`JTable#setFillsViewportHeight(true)`で[[JTable自体の高さを拡張>Swing/FillsViewportHeight]]しておかないと、`JTable`が空の状態でドロップが不可になる
 
 #code{{
 TransferHandler handler = new TableRowTransferHandler();
@@ -143,10 +151,9 @@ table.setDragEnabled(true);
 table.setFillsViewportHeight(true);
 }}
 
-----
-`WindowsLookAndFeel`でカーソルのチラつき防止のために、`TransferHandler#canImport(...)`内で`JTable#setCursor(...)`をしているため、デスクトップなどからファイルをドラッグしてドロップ不可カーソルが表示されると、その後マウスをリリースしてもカーソルが表示されたままになるバグがあります。
-
-また、このサンプルでは、各`JTable`に`TableRowSorter`などが設定され、ソートされた状態での並べ替えは想定していません。
+- 制限:
+-- `WindowsLookAndFeel`でのカーソルのチラつき防止のために、`TransferHandler#canImport(...)`内で`JTable#setCursor(...)`をしているため、デスクトップなどからファイルをドラッグしてドロップ不可カーソルが表示されると、その後マウスをリリースしてもカーソルが表示されたままになるバグがある
+-- このサンプルでは、各`JTable`に`TableRowSorter`などが設定され、ソートされた状態での並べ替えは想定していない
 
 * 参考リンク [#reference]
 - [[JTableの行をドラッグ＆ドロップ>Swing/DnDTable]]

@@ -17,7 +17,8 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTQPZi7whI/AAAAAAAAAfQ/yn
 #code(link){{
 private final JTextPane label1 = new JTextPane();
 private final JTextArea label2 = new JTextArea();
-private final JLabel    label3 = new JLabel();
+private final JLabel label3 = new JLabel();
+
 public MainPanel() {
   super(new GridLayout(3, 1));
   ImageIcon icon = new ImageIcon(getClass().getResource("wi0124-32.png"));
@@ -38,9 +39,10 @@ public MainPanel() {
   setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
   setPreferredSize(new Dimension(320, 160));
 }
+
 private static Box setLeftIcon(JTextComponent label, ImageIcon icon) {
   label.setForeground(UIManager.getColor("Label.foreground"));
-  //label.setBackground(UIManager.getColor("Label.background"));
+  // label.setBackground(UIManager.getColor("Label.background"));
   label.setOpaque(false);
   label.setEditable(false);
   label.setFocusable(false);
@@ -62,7 +64,7 @@ private static Box setLeftIcon(JTextComponent label, ImageIcon icon) {
 - 上: `JTextPane`
 -- 文字色、背景色を変更し、編集不可、フォーカスの取得不可にした`JTextPane`を使用
 -- `\n`を使用して改行
--- `SimpleAttributeSet`を使用して、行間を詰めている
+-- `SimpleAttributeSet`を使用して行間を詰めている
 - 中: `JTextArea`
 -- 文字色、背景色を変更し、編集不可、フォーカスの取得不可にした`JTextArea`を使用
 -- `\n`を使用して改行

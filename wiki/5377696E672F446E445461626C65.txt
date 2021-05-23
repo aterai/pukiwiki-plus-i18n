@@ -43,6 +43,7 @@ class DnDTable extends JTable implements DragGestureListener, Transferable {
       g2.dispose();
     }
   }
+
   private void initTargetLine(Point p) {
     Rectangle2D testArea = new Rectangle2D.Float();
     int cellHeight = getRowHeight();
@@ -87,9 +88,11 @@ class DnDTable extends JTable implements DragGestureListener, Transferable {
   @Override public Object getTransferData(DataFlavor flavor) {
     return this;
   }
+
   @Override public DataFlavor[] getTransferDataFlavors() {
     return new DataFlavor[] {FLAVOR};
   }
+
   @Override public boolean isDataFlavorSupported(DataFlavor flavor) {
     return flavor.getHumanPresentableName().equals(NAME);
   }
@@ -99,6 +102,7 @@ class DnDTable extends JTable implements DragGestureListener, Transferable {
       targetIndex = -1;
       repaint();
     }
+
     @Override public void dragEnter(DropTargetDragEvent e) {
       if (isDragAcceptable(e)) {
         e.acceptDrag(e.getDropAction());
@@ -106,6 +110,7 @@ class DnDTable extends JTable implements DragGestureListener, Transferable {
         e.rejectDrag();
       }
     }
+
     @Override public void dragOver(final DropTargetDragEvent e) {
       if (isDragAcceptable(e)) {
         e.acceptDrag(e.getDropAction());
@@ -118,10 +123,12 @@ class DnDTable extends JTable implements DragGestureListener, Transferable {
       initTargetLine(e.getLocation());
       repaint();
     }
+
     @Override public void dropActionChanged(DropTargetDragEvent e) {
       // if (isDragAcceptable(e)) { e.acceptDrag(e.getDropAction()); }
       // else e.rejectDrag();
     }
+
     @Override public void drop(DropTargetDropEvent e) {
       DefaultTableModel model = (DefaultTableModel) getModel();
       if (isDropAcceptable(e)) {

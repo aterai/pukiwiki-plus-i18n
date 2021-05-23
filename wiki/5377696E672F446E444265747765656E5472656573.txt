@@ -32,9 +32,11 @@ class TreeTransferHandler extends TransferHandler {
       @Override public DataFlavor[] getTransferDataFlavors() {
         return new DataFlavor[] {FLAVOR};
       }
+
       @Override public boolean isDataFlavorSupported(DataFlavor flavor) {
         return Objects.equals(FLAVOR, flavor);
       }
+
       @Override public Object getTransferData(DataFlavor flavor)
             throws UnsupportedFlavorException, IOException {
         if (isDataFlavorSupported(flavor)) {
@@ -79,10 +81,10 @@ class TreeTransferHandler extends TransferHandler {
       JTree tree = (JTree) support.getComponent();
       DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
       int idx = childIndex < 0 ? parent.getChildCount() : childIndex;
-      //DefaultTreeModel sm = (DefaultTreeModel) source.getModel();
+      // DefaultTreeModel sm = (DefaultTreeModel) source.getModel();
       for (DefaultMutableTreeNode node : nodes) {
-        //sm.removeNodeFromParent(node);
-        //model.insertNodeInto(node, parent, idx++);
+        // sm.removeNodeFromParent(node);
+        // model.insertNodeInto(node, parent, idx++);
         DefaultMutableTreeNode clone = new DefaultMutableTreeNode(node.getUserObject());
         model.insertNodeInto(deepCopyTreeNode(node, clone), parent, idx++);
       }
@@ -90,6 +92,7 @@ class TreeTransferHandler extends TransferHandler {
     }
     return false;
   }
+
   private static DefaultMutableTreeNode deepCopyTreeNode(
       DefaultMutableTreeNode src, DefaultMutableTreeNode tgt) {
     for (int i = 0; i < src.getChildCount(); i++) {
@@ -102,6 +105,7 @@ class TreeTransferHandler extends TransferHandler {
     }
     return tgt;
   }
+
   @Override protected void exportDone(
       JComponent source, Transferable data, int action) {
     if (action == TransferHandler.MOVE) {
@@ -118,8 +122,9 @@ class TreeTransferHandler extends TransferHandler {
 * 解説 [#explanation]
 上記のサンプルでは、`JTree`間でのノード移動を可能にする`TransferHandler`を作成して、`JTree#setTransferHandler(...)`で設定しています。
 
-`TransferHandler#importData(...)`メソッド内で、ドラッグして移動する`DefaultMutableTreeNode`をドラッグ元の`DefaultTreeModel`から削除せずに、`DefaultTreeModel#insertNodeInto(...)`メソッドでドロップ先の`JTree`の`DefaultTreeModel`に挿入すると、ノードの親子関係がおかしくなって、ドラッグ元の`JTree`から`DefaultTreeModel#removeNodeFromParent(...)`メソッドでノードを削除できなくなります(`DefaultTreeModel.reload()`ですべて再評価すると正常に表示されるが、ノードがすべて折り畳まれてしまう)。これを避けるために、移動する`DefaultMutableTreeNode`のクローン(親ノードは未設定)を作成してドロップ元に追加し、ドラッグ元からの削除は`TransferHandler#exportDone(...)`で実行するようにしています。
-
+- `TransferHandler#importData(...)`メソッド内でドラッグして移動する`DefaultMutableTreeNode`をドラッグ元の`DefaultTreeModel`から削除せずに`DefaultTreeModel#insertNodeInto(...)`メソッドでドロップ先の`JTree`の`DefaultTreeModel`に挿入すると、ノードの親子関係がおかしくなってドラッグ元の`JTree`から`DefaultTreeModel#removeNodeFromParent(...)`メソッドでノードを削除できなくなる
+-- `DefaultTreeModel.reload()`ですべて再評価すると正常に表示されるが、ノードがすべて折り畳まれてしまう
+-- 回避方法は移動する`DefaultMutableTreeNode`のクローン(親ノードは未設定)を作成してドロップ元に追加し、ドラッグ元からの削除は`TransferHandler#exportDone(...)`で実行する
 - 制限:
 -- 同一`JTree`内でのノード入れ替えには未対応
 -- `TreeSelectionModel.SINGLE_TREE_SELECTION`で選択、移動できるのは`1`ノードのみに制限

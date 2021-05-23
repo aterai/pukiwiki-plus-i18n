@@ -46,7 +46,8 @@ private static Component makeKeyboardPanel() {
       c.gridwidth = len > 10 ? 14
                   : len > 4  ? 4
                   : len > 1  ? 3
-                  : len == 1 ? 2 : 1;
+                  : len == 1 ? 2
+                  :            1;
       if (key.isEmpty()) {
         keyboard.add(Box.createHorizontalStrut(KeyButton.SIZE), c);
       } else {
@@ -68,7 +69,7 @@ private static Component makeKeyboardPanel() {
 - KBD{Tab}、KBD{Ctrl}、KBD{Alt}などは`3`列分占有する`JButton`を配置
 -- KBD{Ctrl}などは`JToggleButton`にしたほうが良さそう
 - 空文字列は`1`列分占有する不可視の固定幅コンポーネントを配置
-- このサンプルの各`JButton`にはイベントを設定していないので、クリックしても無反応
+- このサンプルの各`JButton`にはイベントを設定していないのでクリックしても無反応
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/24622279/laying-out-a-keyboard-in-swing java - Laying out a keyboard in Swing - Stack Overflow]

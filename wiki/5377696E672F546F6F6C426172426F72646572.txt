@@ -64,7 +64,7 @@ class ToolBarDragIcon implements Icon {
 -- ツールバーのドラッグ用アイコンは`LookAndFeel`依存
 -- `UIManager.put("ToolBar.border", ...)`などで変更可能
 -- `WindowsLookAndFeel`では`JToolBar`の余白をどこでもドラッグして移動可能だが、`MetalLookAndFeel`ではドラッグ用アイコン上のみドラッグ可能
---- ただしそのドラッグ可能領域の幅は`MetalToolBarUI.MetalDockingListener`で`14px`にハードコーディングされているため、`MetalBorders.ToolBarBorder#getBorderInsets(...)`を変更しても領域の幅などは更新されない
+--- ただしそのドラッグ可能領域の幅は`MetalToolBarUI.MetalDockingListener`で`14px`にハードコーディングされているため、`MetalBorders.ToolBarBorder#getBorderInsets(...)`をオーバーライドしても領域の幅などは変更されない
 - 上:
 -- `MetalBorders.ToolBarBorder`の`paintBorder(...)`メソッドをオーバーライドしてツールバーの方向が水平の場合、ドラッグ用の独自アイコン(`4`点)を描画
 -- `JToolBar#getComponentOrientation()#isLeftToRight() == false`の場合に未対応

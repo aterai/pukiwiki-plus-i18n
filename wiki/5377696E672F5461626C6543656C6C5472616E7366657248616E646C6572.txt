@@ -28,9 +28,11 @@ class CellIconTransferHandler extends TransferHandler {
           @Override public DataFlavor[] getTransferDataFlavors() {
             return new DataFlavor[] {localObjectFlavor};
           }
+
           @Override public boolean isDataFlavorSupported(DataFlavor flavor) {
             return Objects.equals(localObjectFlavor, flavor);
           }
+
           @Override public Object getTransferData(DataFlavor flavor)
               throws UnsupportedFlavorException, IOException {
             if (isDataFlavorSupported(flavor)) {
@@ -44,6 +46,7 @@ class CellIconTransferHandler extends TransferHandler {
     }
     return null;
   }
+
   @Override public boolean canImport(TransferHandler.TransferSupport info) {
     Component c = info.getComponent();
     if (c instanceof JList) {
@@ -51,9 +54,11 @@ class CellIconTransferHandler extends TransferHandler {
     }
     return false;
   }
+
   @Override public int getSourceActions(JComponent c) {
     return TransferHandler.COPY;
   }
+
   @SuppressWarnings("unchecked")
   @Override public boolean importData(TransferHandler.TransferSupport info) {
     JList l = (JList) info.getComponent();
