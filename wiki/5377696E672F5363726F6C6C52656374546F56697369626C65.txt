@@ -5,11 +5,11 @@ title: JScrollPane内にあるJTableなどで追加した行が可視化され�
 tags: [JScrollPane, JViewport, JTable, JList, JTree]
 author: aterai
 pubdate: 2012-09-10T16:06:04+09:00
-description: JScrollPaneのJViewport内にあるJTable、JList、JTreeで、それぞれ追加された最終行が可視化されるようにスクロールします。
+description: JScrollPaneのJViewport内にあるJTable、JList、JTreeでそれぞれ追加された最終行が可視化されるようにスクロールします。
 image: https://lh3.googleusercontent.com/-t_4BD1mGUGk/UE1eF0Ead3I/AAAAAAAABSM/4a4aPSpMDM4/s800/ScrollRectToVisible.png
 ---
 * 概要 [#summary]
-`JScrollPane`の`JViewport`内にある`JTable`、`JList`、`JTree`で、それぞれ追加された最終行が可視化されるようにスクロールします。
+`JScrollPane`の`JViewport`内にある`JTable`、`JList`、`JTree`でそれぞれ追加された最終行が可視化されるようにスクロールします。
 
 #download(https://lh3.googleusercontent.com/-t_4BD1mGUGk/UE1eF0Ead3I/AAAAAAAABSM/4a4aPSpMDM4/s800/ScrollRectToVisible.png)
 
@@ -27,7 +27,7 @@ table.scrollRectToVisible(r);
 -- ソートやフィルタが使用されている場合を考慮して追加した行のインデックスを`JTable#convertRowIndexToView(int)`で変換してからセル領域を取得
 
 - `JList`
--- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#ensureIndexIsVisible-int- JList#ensureIndexIsVisible(int)]を使って、追加した最終行を可視化(このメソッド内部で`scrollRectToVisible`を使用)
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#ensureIndexIsVisible-int- JList#ensureIndexIsVisible(int)]を使用して追加した最終行を可視化(このメソッド内部で`scrollRectToVisible`を使用)
 #code{{
 Rectangle cellBounds = list.getCellBounds(index, index);
 if (cellBounds != null) {
@@ -44,7 +44,7 @@ DefaultTreeModel treeModel = (DefaultTreeModel) tree.getModel();
 DefaultMutableTreeNode parent = (DefaultMutableTreeNode) treeModel.getRoot();
 DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(date);
 treeModel.insertNodeInto(newChild, parent, parent.getChildCount());
-/* //tree.scrollRowToVisible(row) == tree.scrollPathToVisible(tree.getPathForRow(row))
+/* // tree.scrollRowToVisible(row) == tree.scrollPathToVisible(tree.getPathForRow(row))
 tree.scrollRowToVisible(tree.getRowCount() - 1);
 /*/
 tree.scrollPathToVisible(new TreePath(newChild.getPath()));

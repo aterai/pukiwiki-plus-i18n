@@ -24,7 +24,7 @@ class ListItemTransferHandler extends TransferHandler {
     if (!(c instanceof JList)) {
       return TransferHandler.NONE;
     }
-    JList source = (JList) c;
+    JList<?> source = (JList<?>) c;
     Point pt;
     if (compact) {
       int w = source.getFixedCellWidth();

@@ -1,0 +1,69 @@
+---
+category: swing
+folder: PopupLocation
+title: JPopupMenuをキー入力で開く場合の表示位置を調整する
+tags: [JPopupMenu, JTextField, JList]
+author: aterai
+pubdate: 2021-05-31T15:23:17+09:00
+description: JPopupMenuをキー入力で開く場合の表示位置をJTextFieldならキャレット、JListなら選択セル中央となるように調整します。
+image: https://drive.google.com/uc?id=1MVL-ExErClKMpU8XogTJ_t_3bjtszZcv
+---
+* 概要 [#summary]
+`JPopupMenu`をキー入力で開く場合の表示位置を`JTextField`ならキャレット、`JList`なら選択セル中央となるように調整します。
+
+#download(https://drive.google.com/uc?id=1MVL-ExErClKMpU8XogTJ_t_3bjtszZcv)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class NewspaperStyleList<E extends ListItem> extends JList<E> {
+  protected NewspaperStyleList(DefaultListModel<E> model) {
+    super(model);
+  }
+
+  @Override public void updateUI() {
+    setSelectionForeground(null);
+    setSelectionBackground(null);
+    setCellRenderer(null);
+    super.updateUI();
+    setLayoutOrientation(JList.HORIZONTAL_WRAP);
+    getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    setVisibleRowCount(0);
+    setFixedCellWidth(64);
+    setFixedCellHeight(64);
+    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    setCellRenderer(new ListItemListCellRenderer<>());
+  }
+
+  @Override public Point getPopupLocation(MouseEvent event) {
+    if (event == null) {
+      int i = getLeadSelectionIndex();
+      Rectangle r = getCellBounds(i, i);
+      if (r != null) {
+        return new Point((int) r.getCenterX(), (int) r.getCenterY());
+      }
+    }
+    return super.getPopupLocation(event);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- コンポーネントに`setComponentPopupMenu(JPopupMenu)`メソッドで設定した`JPopupMenu`は、たとえば`Windows`環境ではマウスの右クリックやKBD{CONTEXT_MENU}キーで開くことが可能
+-- KBD{CONTEXT_MENU}やKBD{Shift+F10}キーの入力で`JPopupMenu`を開く場合、`JRootPane`に設定された`postPopup`アクションが実行される
+-- このとき`getPopupLocation(MouseEvent)`で`JPopupMenu`を開く位置が決まるが、戻り値がデフォルトの`null`の場合は対象コンポーネントの中央が原点になる
+-- `getPopupLocation(MouseEvent)`メソッドの引数である`MouseEvent`はキー入力の場合`null`になる
+- `JTextField`
+-- キー入力で`JPopupMenu`を開く場合、`JTextField`の中央ではなくキャレットの下端に`JPopupMenu`の左上を配置して開くよう`JTextField#getPopupLocation(MouseEvent)`メソッドをオーバーライド
+- `JList`
+-- キー入力で`JPopupMenu`を開く場合、`JList`の中央ではなく選択セルの中央に`JPopupMenu`の左上を配置して開くよう`JList#getPopupLocation(MouseEvent)`メソッドをオーバーライド
+-- メモ: `Windows 10`などのファイルエクスプローラでファイルなどを選択してKBD{CONTEXT_MENU}キーでポップアップメニューを開く場合、選択セルの中央に右上？を配置して開く仕様になっている？
+
+* 参考リンク [#reference]
+- [[JPopupMenuの表示を親コンポーネント領域内のみに制限する>Swing/AdjustPopupLocation]]
+-- `JPopupMenu#show(Component c, int x, int y)`をオーバーライドしてマウスクリックで開く場合の`JPopupMenu`の表示位置を調整
+- [[JMenuから開くJPopupMenuの位置を変更する>Swing/MenuLocation]]
+-- `JMenu`から`JPopupMenu`を開く場合は`JMenu#setMenuLocation(...)`をオーバーライド
+
+* コメント [#comment]
+#comment
+#comment

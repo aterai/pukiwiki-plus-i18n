@@ -15,7 +15,7 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMr425A3I/AAAAAAAAAZk/ZF
 
 * サンプルコード [#sourcecode]
 #code(link){{
-final TableRowSorter<TableModel> sorter = new TableRowSorter<>(model) {
+ableRowSorter<TableModel> sorter = new TableRowSorter<>(model) {
   @Override public boolean isSortable(int column) {
     return false;
   }
@@ -28,7 +28,7 @@ sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、行のフィルタリングのみ有効にして行のソートは不可にしたいので、`TableRowSorter`に以下のような設定をしています。
+上記のサンプルでは、行のフィルタリングのみ有効にして行のソートは不可にするため`TableRowSorter`に以下のような設定をしています。
 
 - `DefaultRowSorter#setRowFilter(RowFilter)`で偶数行だけ表示するフィルタを設定
 - `DefaultRowSorter#isSortable(int)`をオーバーライドして常に`false`を返す

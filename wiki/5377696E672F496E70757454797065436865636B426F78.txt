@@ -22,12 +22,14 @@ class HeaderRenderer implements TableCellRenderer {
       JTable table, Object value, boolean isSelected, boolean hasFocus,
       int row, int column) {
     TableCellRenderer r = table.getTableHeader().getDefaultRenderer();
-    JLabel l = (JLabel) r.getTableCellRendererComponent(
+    Component c = r.getTableCellRendererComponent(
         table, INPUT, isSelected, hasFocus, row, column);
-    for (Component c : l.getComponents()) {
-      updateCheckBox(((Container) c).getComponent(0), value);
+    if (c instanceof JLabel) {
+      for (Component cmp : ((JLabel) c).getComponents()) {
+        updateCheckBox(((Container) cmp).getComponent(0), value);
+      }
     }
-    return l;
+    return c;
   }
 
   private static void updateCheckBox(Component c, Object value) {

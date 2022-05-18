@@ -45,10 +45,10 @@ panel1.setToolTipText("JPanel: dummy");
 
 * 解説 [#explanation]
 - `TitledBorder`を設定する`JPanel`の`getToolTipText(...)`メソッドをオーバーライド
--- ダミーの`JLabel`に`TitledBorder`のフォントや文字列を設定して、その幅を`getPreferredSize()`で取得
+-- ダミーの`JLabel`に`TitledBorder`のフォントや文字列を設定してその幅を`getPreferredSize()`メソッドで取得
 --- `TitledBorder`が内部で使用している`JLabel`は`private`なのでアクセスできない
 -- ダミー`JLabel`の幅が`TitledBorder`を設定した`JPanel`の幅より長い場合、文字列が省略されていると判断する
--- 上記に加えてマウスカーソルが`TitledBorder`の余白内(位置が`TOP`の場合)に存在する場、`TitledBorder#getTitle()`で取得したタイトルを返すことで`JToolTip`を表示する
+-- 上記に加えてマウスカーソルが`TitledBorder`の余白内(位置が`TOP`の場合)に存在する場合、`TitledBorder#getTitle()`で取得したタイトルを返すことで`JToolTip`を表示する
 - 制限:
 -- このサンプルはタイトルの位置が`TOP`の場合のみに対応
 -- タイトルに`html`タグを使用して省略ではなく折り返しが発生する場合には未対応

@@ -39,8 +39,7 @@ JList<ListItem> list = new JList<ListItem>(model) {
 private Optional<Pattern> getPattern() {
   try {
     return Optional.ofNullable(field.getText())
-                   .filter(s -> !s.isEmpty())
-                   .map(Pattern::compile);
+        .filter(s -> !s.isEmpty()).map(Pattern::compile);
   } catch (PatternSyntaxException ex) {
     return Optional.empty();
   }
@@ -51,8 +50,7 @@ private void filter() {
     List<ListItem> selected = list.getSelectedValuesList();
     model.clear();
     Stream.of(defaultModel)
-          .filter(item -> pattern.matcher(item.title).find())
-          .forEach(model::addElement);
+        .filter(item -> pattern.matcher(item.title).find()).forEach(model::addElement);
     for (ListItem item : selected) {
       int i = model.indexOf(item);
       list.addSelectionInterval(i, i);

@@ -38,7 +38,7 @@ b2.addActionListener(e -> JOptionPane.showMessageDialog(b2.getRootPane(), label,
 * 解説 [#explanation]
 - `default`
 -- `UIManager.put("OptionPane.background", Color.LIGHT_GRAY)`で`JOptionPane`の背景色を変更
--- `JOptionPane`で使用されている子`JPanel`が不透明のため、フチの色のみ変更される
+-- `JOptionPane`で使用されている子`JPanel`が不透明のためフチ色のみ変更される
 - `background`
 -- `UIManager.put("OptionPane.background", Color.LIGHT_GRAY)`で`JOptionPane`の背景色を変更
 -- メッセージ用コンポーネントに`HierarchyListener`を追加して`JOptionPane`のオープンイベントを取得

@@ -53,8 +53,8 @@ Timer timer = new Timer(100, () -> {
 
 - `10`行以上になると先頭行から削除
 - 複数行テキストのペーストには未対応
--- 参考: [https://community.oracle.com/thread/1479784 Swing (Archive) - JTextArea Memory Overflow ??]は、複数行貼り込みに対応している
-- `DocumentListener`ではなく、以下のような`DocumentFilter`を設定する方法もある
+-- 参考: [https://community.oracle.com/thread/1479784 Swing (Archive) - JTextArea Memory Overflow ??]は複数行貼り込みに対応している
+- `DocumentListener`ではなく以下のような`DocumentFilter`を設定する方法もある
 #code{{
 ((AbstractDocument) ta.getDocument()).setDocumentFilter(new FIFODocumentFilter());
 // ...

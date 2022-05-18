@@ -71,7 +71,7 @@ private JMenu createMenu(String key) {
 - `WindowsLookAndFeel`に切り替えた直後のメニュー文字色などがおかしい？
 
 ----
-- `JFrame#setJMenuBar()`で追加した`JMenuBar`を透明にする場合のテスト
+- 以下は`JFrame#setJMenuBar()`で追加した`JMenuBar`を透明にする場合のテスト
 
 #code{{
 import java.awt.*;
@@ -137,6 +137,7 @@ public class MenuBarRootPaneTest {
               g2.fillRect(0, 0, getWidth(), getHeight());
               g2.dispose();
             }
+
             @Override public boolean isOpaque() {
               return true;
             }
@@ -161,6 +162,7 @@ public class MenuBarRootPaneTest {
     @Override public boolean isOpaque() {
       return false;
     }
+
     @Override public void show(Component c, int x, int y) {
       EventQueue.invokeLater(() -> {
         Container p = getTopLevelAncestor();
@@ -171,6 +173,7 @@ public class MenuBarRootPaneTest {
       });
       super.show(c, x, y);
     }
+
     @Override protected void paintComponent(Graphics g) {
       Graphics2D g2 = (Graphics2D) g.create();
       g2.setPaint(POPUP_BACK);
@@ -185,9 +188,11 @@ public class MenuBarRootPaneTest {
     protected TransparentMenu(String title) {
       super(title);
     }
+
     @Override public boolean isOpaque() {
       return false;
     }
+
     // Bug ID: JDK-4688783 JPopupMenu hardcoded i JMenu
     // https://bugs.openjdk.java.net/browse/JDK-4688783
     private void ensurePopupMenuCreated() {
@@ -197,15 +202,18 @@ public class MenuBarRootPaneTest {
         popupListener = createWinListener(popupMenu);
       }
     }
+
     @Override public JPopupMenu getPopupMenu() {
       ensurePopupMenuCreated();
       return popupMenu;
     }
+
     @Override public JMenuItem add(JMenuItem menuItem) {
       ensurePopupMenuCreated();
       menuItem.setOpaque(false);
       return popupMenu.add(menuItem);
     }
+
     @Override public Component add(Component c) {
       ensurePopupMenuCreated();
       if (c instanceof JComponent) {
@@ -214,10 +222,12 @@ public class MenuBarRootPaneTest {
       popupMenu.add(c);
       return c;
     }
+
     @Override public void addSeparator() {
       ensurePopupMenuCreated();
       popupMenu.addSeparator();
     }
+
     @Override public void insert(String s, int pos) {
       if (pos < 0) {
         throw new IllegalArgumentException("index less than zero.");
@@ -225,6 +235,7 @@ public class MenuBarRootPaneTest {
       ensurePopupMenuCreated();
       popupMenu.insert(new JMenuItem(s), pos);
     }
+
     @Override public JMenuItem insert(JMenuItem mi, int pos) {
       if (pos < 0) {
         throw new IllegalArgumentException("index less than zero.");
@@ -233,6 +244,7 @@ public class MenuBarRootPaneTest {
       popupMenu.insert(mi, pos);
       return mi;
     }
+
     @Override public void insertSeparator(int index) {
       if (index < 0) {
         throw new IllegalArgumentException("index less than zero.");
@@ -240,6 +252,7 @@ public class MenuBarRootPaneTest {
       ensurePopupMenuCreated();
       popupMenu.insert(new JPopupMenu.Separator(), index);
     }
+
     @Override public boolean isPopupMenuVisible() {
       ensurePopupMenuCreated();
       return popupMenu.isVisible();
@@ -264,6 +277,7 @@ public class MenuBarRootPaneTest {
     return new TexturePaint(img, new Rectangle(sz, sz));
   }
 }
+
 // //https://ateraimemo.com/Swing/TranslucentPopupMenu.html
 // class TranslucentPopupMenu extends JPopupMenu {
 }}

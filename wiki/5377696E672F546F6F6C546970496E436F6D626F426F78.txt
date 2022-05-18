@@ -39,12 +39,14 @@ class ToolTipLayerUI<V extends JComboBox> extends LayerUI<V> {
       ((JLayer) c).setLayerEventMask(AWTEvent.MOUSE_MOTION_EVENT_MASK);
     }
   }
+
   @Override public void uninstallUI(JComponent c) {
     if (c instanceof JLayer) {
       ((JLayer) c).setLayerEventMask(0);
     }
     super.uninstallUI(c);
   }
+
   @Override protected void processMouseMotionEvent(
         MouseEvent e, JLayer<? extends V> l) {
     JComboBox<?> c = l.getView();
@@ -93,6 +95,7 @@ public class CustomJComboBoxTest2 {
     p.add(box);
     return p;
   }
+
   public static void main(String... args) {
     EventQueue.invokeLater(() -> {
       JFrame f = new JFrame();

@@ -46,7 +46,7 @@ class DisableInputLayerUI extends LayerUI<Component> {
 -- `JTabbedPane#setEnabled(false)`ですべてのタブの切替を禁止
 --- 内部タブコンポーネントには影響しない
 --- `next`ボタンで`JTabbedPane#setSelectedIndex(...)`メソッドを使用してタブを切り替えることは可能
--- `JTabbedPane#setFocusable(false)`を設定している場合でも、`WindowsLookAndFeel`ではマウスカーソルのあるタブがハイライトされる
+-- `JTabbedPane#setFocusable(false)`を設定している場合でも`WindowsLookAndFeel`ではマウスカーソルのあるタブがハイライトされる
 --- `UIManager.put("TabbedPane.disabledAreNavigable", Boolean.TRUE)`は効果がない
 --- [[DisabledなJMenuItemのハイライトをテスト>Swing/DisabledAreNavigable]]
 - 中: `setTabComponentAt(...)`

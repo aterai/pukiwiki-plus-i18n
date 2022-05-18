@@ -24,13 +24,13 @@ class Task extends SwingWorker<String, String> {
       return "Interrupted";
     }
     int current = 0;
-    int lengthOfTask = 120; //list.size();
+    int lengthOfTask = 120; // list.size();
     publish("Length Of Task: " + lengthOfTask);
     publish("\n------------------------------\n");
 
     while (current < lengthOfTask && !isCancelled()) {
       try {
-        Thread.sleep(50); //doSomething(file = list(current));
+        Thread.sleep(50); // doSomething(file = list(current));
       } catch (InterruptedException ie) {
         return "Interrupted";
       }
@@ -118,10 +118,9 @@ class CancelAction extends AbstractAction {
 }}
 
 * 解説 [#explanation]
-`JDK 6`以前の`SwingWorker.java`から一部メソッド名が変更されていますが、基本的な使い方は一緒のようです。
-
+- `JDK 6`以前の`SwingWorker.java`から一部メソッド名が変更されているが、基本的な使用方法は同じ
 - `SwingWorker#execute()`メソッドで処理が開始され、`SwingWorker#doInBackground()`メソッドがバックグラウンドのワーカースレッドで実行される
-- `EDT`で実行する必要のある処理(上記の例では処理中に`JTextArea`へのメッセージの書き出し)は、`SwingWorker#process()`メソッドをオーバーライドして`SwingWorker#publish()`メソッドで呼び出したり、`SwingWorker#firePropertyChange()`を使用する
+- `EDT`で実行する必要のある処理(上記の例では処理中に`JTextArea`へのメッセージの書き出し)は`SwingWorker#process()`メソッドをオーバーライドして`SwingWorker#publish()`メソッドで呼び出したり、`SwingWorker#firePropertyChange()`を使用する
 - プログレスバーの処理には`SwingWorker#setProgress(int)`が予め用意されているので、`SwingWorker#addPropertyChangeListener(ProgressListener)`を設定するだけで使用可能
 - `SwingWorker#setProgress(int)`で設定できるのは`0`から`100`で固定
 #code{{
@@ -135,8 +134,7 @@ protected final void setProgress(int progress) {
 -- キャンセルされたかどうかは`SwingWorker#isCancelled()`メソッドで判定可能
 
 ----
-現在のスレッドがイベントディスパッチスレッド(以下`EDT`)かどうかを調べる`EventQueue.isDispatchThread()`を、このサンプルで使用すると以下のようになります。
-
+- 現在のスレッドがイベントディスパッチスレッド(以下`EDT`)かどうかを調べる`EventQueue.isDispatchThread()`をこのサンプルで使用してテスト
 + `actionPerformed() is EDT?`: `true`
 -- 現在のスレッド(このサンプルでは`EDT`)でボタンを選択不可にしたり、`SwingWorker#execute()`を実行している
 + `doInBackground() is EDT?`: `false`
@@ -146,7 +144,7 @@ protected final void setProgress(int progress) {
 -- `Swing`関連のすべての作業(例えば`JProgressBar`の進捗表示更新)は`EDT`で行う必要があるので、`process()`か`done()`メソッド内で実行する
 
 ----
-`SwingWorker#process()`メソッド内などで`JPanel#isDisplayable()`を呼び、アプリケーション(`frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);`が設定されている)が終了している場合は、タスクを中断することで`SwingWorker`が生き残るのを防止しています。
+- `SwingWorker#process()`メソッド内などで`JPanel#isDisplayable()`を呼び、アプリケーション(`frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);`が設定されている)が終了している場合は、タスクを中断することで`SwingWorker`が生き残るのを防止
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingWorker.html SwingWorker (Java Platform SE 8)]

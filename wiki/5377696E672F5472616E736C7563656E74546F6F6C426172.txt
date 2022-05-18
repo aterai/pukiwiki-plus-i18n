@@ -17,7 +17,7 @@ image: https://lh5.googleusercontent.com/-36mkZfbor58/Tnb1d-2vaPI/AAAAAAAABCM/Ho
 #code(link){{
 class ImageCaptionLabel extends JLabel implements HierarchyListener {
   private float alpha = 0f;
-  private javax.swing.Timer animator;
+  private Timer animator;
   private int yy = 0;
   private JToolBar toolBox = new JToolBar() {
     @Override protected void paintComponent(Graphics g) {

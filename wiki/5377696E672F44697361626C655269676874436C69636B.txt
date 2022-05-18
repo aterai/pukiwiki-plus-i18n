@@ -20,19 +20,23 @@ hreflang:
 #code(link){{
 class BasicComboPopup2 extends BasicComboPopup {
   private transient Handler2 handler2;
+
+  public BasicComboPopup2(JComboBox combo) {
+    super(combo);
+  }
+
   @Override public void uninstallingUI() {
     super.uninstallingUI();
     handler2 = null;
   }
-  public BasicComboPopup2(JComboBox combo) {
-    super(combo);
-  }
+
   @Override protected MouseListener createListMouseListener() {
     if (handler2 == null) {
       handler2 = new Handler2();
     }
     return handler2;
   }
+
   private class Handler2 extends MouseAdapter {
     @Override public void mouseReleased(MouseEvent e) {
       if (e.getSource().equals(list)) {
@@ -116,11 +120,12 @@ class BasicComboPopup3 extends BasicComboPopup {
 - ドロップダウンリストにスクロールバーが表示されていない場合、ホイールを回すとポップアップが閉じてしまうのも地味に困る…。[https://bugs.openjdk.java.net/browse/JDK-8033069 JDK-8033069 mouse wheel scroll closes combobox popup - Java Bug System] -- &user(aterai); &new{2012-04-24 (火) 18:28:39};
 
 #code{{
-//Test
+// Test
 class BasicComboPopup3 extends BasicComboPopup {
   public BasicComboPopup3(JComboBox combo) {
     super(combo);
   }
+
   @Override protected JScrollPane createScroller() {
     JScrollPane sp = new JScrollPane(list,
                      ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,

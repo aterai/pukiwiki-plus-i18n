@@ -72,14 +72,11 @@ private void rejectDrag(DropTargetDragEvent dtde) {
 - 親ノードを子ノードにドロップすることを禁止
 -- 親ノードを自分の子ノードにドロップすると親ノードが消えてしまう
 - サポートされていない`DataFlavor`のドロップを禁止
--- エクスプローラなどからファイルをドロップすると、描画が乱れる
+-- エクスプローラなどからファイルをドロップすると描画が乱れる
 
 ----
-- 制限事項
--- 兄弟ノードの末尾に直接ドラッグ＆ドロップできない
--- それらの親ノードにドロップすると兄弟ノードの一番最後に追加される
+- %%制限: 兄弟ノードの末尾に直接ドラッグ＆ドロップ不可で、それらの親ノードにドロップすると兄弟ノードの一番最後に追加される%% `Java 9`で修正済み
 -- [https://bugs.openjdk.java.net/browse/JDK-8129830 JDK-8129830 JTree drag/drop on lower half of last child of container incorrect - Java Bug System]
---- `Java 9`で修正済み
 
 * 参考リンク [#reference]
 - [https://www.oreilly.co.jp/books/4873112788/ HACK #26: DnD JTree]

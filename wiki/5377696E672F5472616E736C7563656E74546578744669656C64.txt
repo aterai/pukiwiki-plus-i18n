@@ -17,14 +17,14 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTV03Q10yI/AAAAAAAAAoQ/xH
 #code(link){{
 Color BG_COLOR = new Color(1f, .8f, .8f, .2f);
 
-field0 = new JTextField("aaaaaaaaa");
+field0 = new JTextField("000000000");
 field0.setBackground(BG_COLOR);
 
-field1 = new JTextField("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+field1 = new JTextField("111111111111111111");
 field1.setOpaque(false);
 field1.setBackground(BG_COLOR);
 
-field2 = new JTextField("cccccccccccccccccccccc") {
+field2 = new JTextField("22222222222222222222") {
   @Override protected void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g.create();
     g2.setPaint(getBackground());
@@ -48,7 +48,7 @@ field2.setBackground(BG_COLOR);
 -- `NimbusLookAndFeel`では背景色が描画される
 --- 参考: [http://weblogs.java.net/blog/ljnelson/archive/2008/07/nimbus_and_opac.html Laird Nelson's Blog: Nimbus and Opacity]
 - `2`: `1 + paintComponent`
--- `setOpaque(false)`を設定、かつ`paintComponent`をオーバーライドして背景色を描画
+-- `setOpaque(false)`を設定、かつ`paintComponent(...)`メソッドをオーバーライドして背景色を描画
 
 ----
 - `NimbusLookAndFeel`でのスクリーンショット

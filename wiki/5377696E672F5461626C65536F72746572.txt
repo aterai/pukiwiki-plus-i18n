@@ -25,12 +25,8 @@ sorter.setTableHeader(table.getTableHeader());
 * 解説 [#explanation]
 `The Java™ Tutorial`版の`TableSorter`を使用して、[[JTableのソート>Swing/SortableTable]]で使用しているものと同じ`TableModel`をソートしています。
 
-`TableSorter`には、KBD{Ctrl}キーを押しながらヘッダをクリックすると、そのカラムを第`2`キー、第`3`キーとしてソートする機能もあります。
-
-`JDK 1.4.x`と`Windows XP`の環境で、ヘッダにカーソルを置いてもロールオーバーしない場合があるようです。上記のスクリーンショットは`JDK 1.5.0_01`で撮っています。
-
-----
-- `JDK 1.5.0`で`Generics`の警告を出さないようにするには、`TableSorter.java`に以下のような修正が必要
+- `TableSorter`にはKBD{Ctrl}キーを押しながらヘッダをクリックすると、そのカラムを第`2`キー、第`3`キーとしてソートする機能もある
+- `JDK 1.5.0`で`Generics`の警告を出さないようにするには`TableSorter.java`に以下のような修正が必要
 
 #code{{
 private static class ComparableComparator implements Comparator {
@@ -73,7 +69,7 @@ private class Row implements Comparable<Row> {
 }}
 
 ----
-`LookAndFeel`を動作中に切り替える場合は、`sorter.setTableHeader(table.getTableHeader());`で設定した`JTableHeader`を新しい`LookAndFeel`を適用したものに入れ替えておかないと、`NullPointerException`が発生します。
+- `LookAndFeel`を動作中に切り替える場合は、`sorter.setTableHeader(table.getTableHeader());`で設定した`JTableHeader`を新しい`LookAndFeel`を適用したものに入れ替えておかないと`NullPointerException`が発生する
 
 #code{{
 private final TableSorter sorter = new TableSorter(model);
@@ -94,7 +90,6 @@ private final JTable table = new JTable(sorter) {
 
 ----
 - `JDK 1.6.0`から`JTable`には標準でソート機能が追加された
-//-- [http://java.sun.com/developer/JDCTechTips/2005/tt1115.html#2 SORTING AND FILTERING TABLES]
 -- [http://www.oracle.com/technetwork/articles/javase/index-135205.html#1 Table Sorting and Filtering - New and Updated Desktop Features in Java SE 6, Part 2]
 -- [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
 

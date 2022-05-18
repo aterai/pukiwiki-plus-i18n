@@ -26,7 +26,7 @@ GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
 - `3`: `StyleSheet`で`body`タグのフォントを設定して使用
 -- `styleSheet.addRule("body {font-size: 24pt; font-family: Burnstown Dam;}")`
 - `4`: `JTextPane#setFont(...)`メソッドでフォントを設定して使用
--- `body`タグにデフォルトで指定されているフォントを無視して、`JTextPane`のデフォルトのフォントを使用したい場合は、`editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE)`とする必要がある
+-- `body`タグにデフォルトで指定されているフォントを無視して`JTextPane`のデフォルトのフォントを使用したい場合は、`editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE)`とする必要がある
 -- [[JEditorPaneに設定したフォントをHTMLテキストに適用する>Swing/HonorDisplayProperties]]
 
 * 参考リンク [#reference]

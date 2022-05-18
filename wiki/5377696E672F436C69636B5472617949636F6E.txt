@@ -20,10 +20,10 @@ Graphics g = image.getGraphics();
 new StarIcon().paintIcon(null, g, 0, 0);
 g.dispose();
 final SystemTray tray = SystemTray.getSystemTray();
-PopupMenu popup       = new PopupMenu();
-MenuItem open         = new MenuItem("Option");
-MenuItem exit         = new MenuItem("Exit");
-final TrayIcon icon   = new TrayIcon(image, "Click Test", popup);
+PopupMenu popup = new PopupMenu();
+MenuItem open = new MenuItem("Option");
+MenuItem exit = new MenuItem("Exit");
+final TrayIcon icon = new TrayIcon(image, "Click Test", popup);
 popup.add(open);
 popup.add(exit);
 icon.addMouseListener(new MouseAdapter() {

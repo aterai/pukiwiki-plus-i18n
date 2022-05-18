@@ -1,7 +1,7 @@
 ---
 title: 翻訳元からの誤記
 author: aterai
-pubdate: 2010-10-05
+pubdate: 2010-10-05getAccessibleIndexInParent
 description: Java クラスドキュメントで、オリジナルの英語版から修正した方が良さそうな誤字など。
 ---
 * 概要 [#summary]
@@ -10,6 +10,28 @@ description: Java クラスドキュメントで、オリジナルの英語版�
 #contents
 
 * 未修正 [#Unresolved]
+** `BasicTreeUI#getPathBounds(...)` [#w4af6eac]
+- https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicTreeUI.html
+-- Will return null if any component in path is currently valid.
+-- 意味が逆になっている
+- [https://bugs.openjdk.java.net/browse/JDK-8047749 &#91;JDK-8047749&#93; javadoc for getPathBounds() in TreeUI and BasicTreeUI is incorrect - Java Bug System]で以下のように修正される
+-- Will return null if any component in path is currently invalid.
+
+** TreePathのサンプルコードに非互換タイプエラー [#p756b32f]
+- https://docs.oracle.com/javase/8/docs/api/javax/swing/tree/TreePath.html
+#code{{
+DefaultMutableTreeNode selectedNode =
+  ((DefaultMutableTreeNode) selectedPath.getLastPathComponent())
+  .getUserObject();
+}}
+
+- [https://bugs.openjdk.java.net/browse/JDK-8054449 &#91;JDK-8054449&#93; Incompatible type in example code in TreePath - Java Bug System]で以下のように修正される
+#code{{
+DefaultMutableTreeNode selectedNode =
+  (DefaultMutableTreeNode) selectedPath.getLastPathComponent();
+Object myObject= selectedNode.getUserObject();
+}}
+
 ** UIManager.getString("Table.foreground") [#be02be71]
 - https://docs.oracle.com/javase/8/docs/api/javax/swing/UIManager.html
 -- `UIManager.getString("Table.foreground")`
@@ -101,7 +123,8 @@ description: Java クラスドキュメントで、オリジナルの英語版�
 ページの先頭付近に載っているサンプルコード
 
 #code{{
-String propnames[] = (String[])Toolkit.getDefaultToolkit().getDesktopProperty("win.propNames");
+String propnames[] = (String[]) Toolkit.getDefaultToolkit()
+    .getDesktopProperty("win.propNames");
 }}
 で、プロパティー一覧を取得しても、"win.messagebox.textColor" は存在しないので、
 「メッセージボックスのフォントカラー」自体が設定できないのかもしれない。
@@ -125,7 +148,7 @@ String propnames[] = (String[])Toolkit.getDefaultToolkit().getDesktopProperty("w
 - https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Component.html#getPreferredSize--
 -- 寸法オブジェクト
 
-** Component.AccessibleAWTComponent.getAccessibleIndexInParent() [#n8ee376d]
+** getAccessibleIndexInParent() [#n8ee376d]
 - https://docs.oracle.com/javase/8/docs/api/javax/swing/SwingUtilities.html
 -- Note: as of the Java 2 platform v1.3, it is recommended that developers call Component.AccessibleAWTComponent.getAccessibleIndexInParent() instead of using this method.
 

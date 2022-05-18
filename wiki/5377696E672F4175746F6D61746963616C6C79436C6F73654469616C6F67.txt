@@ -19,16 +19,16 @@ label.addHierarchyListener(new HierarchyListener() {
   private Timer timer = null;
   private AtomicInteger atomicDown = new AtomicInteger(SECONDS);
   @Override public void hierarchyChanged(HierarchyEvent e) {
-    final JLabel l = (JLabel) e.getComponent();
+    JLabel l = (JLabel) e.getComponent();
     if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0) {
       if (l.isShowing()) {
         textArea.append("isShowing=true\n");
         atomicDown.set(SECONDS);
         l.setText(String.format("Closing in %d seconds", SECONDS));
         timer = new Timer(1000, new ActionListener() {
-          //private int countdown = SECONDS;
+          // private int countdown = SECONDS;
           @Override public void actionPerformed(ActionEvent e) {
-            //int i = --countdown;
+            // int i = --countdown;
             int i = atomicDown.decrementAndGet();
             l.setText(String.format("Closing in %d seconds", i));
             if (i <= 0) {

@@ -1,0 +1,65 @@
+---
+category: swing
+folder: ZoomLevelsSlider
+title: JSliderのノブをダブルクリックして値を初期値にリセットする
+tags: [JSlider]
+author: aterai
+pubdate: 2022-04-18T00:31:55+09:00
+description: JSliderのノブをダブルクリックして値を初期値にリセットしたり、初期値近辺でノブの吸着を実行します。
+image: https://drive.google.com/uc?id=1UUf36GRObxKK0Insuq9_W2-OhKEIRYmH
+---
+* 概要 [#summary]
+`JSlider`のノブをダブルクリックして値を初期値にリセットしたり、初期値近辺でノブの吸着を実行します。
+
+#download(https://drive.google.com/uc?id=1UUf36GRObxKK0Insuq9_W2-OhKEIRYmH)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+@Override protected TrackListener createTrackListener(JSlider slider) {
+  return new TrackListener() {
+    @Override public void mouseClicked(MouseEvent e) {
+      boolean doubleClick = SwingUtilities.isLeftMouseButton(e) && e.getClickCount() >= 2;
+      if (doubleClick && thumbRect.contains(e.getPoint())) {
+        slider.setValue(0);
+      } else {
+        super.mouseClicked(e);
+      }
+    }
+
+    @Override public void mouseDragged(MouseEvent e) {
+      // case HORIZONTAL:
+      int halfThumbWidth = thumbRect.width / 2;
+      int trackLength = trackRect.width;
+      int pos = e.getX() + halfThumbWidth;
+      int possibleTickPos = slider.getMaximum() - slider.getMinimum();
+      int tickSp = Math.max(slider.getMajorTickSpacing(), 10);
+      int tickPixels = trackLength * tickSp / possibleTickPos;
+      int tickPixels2 = tickPixels / 2;
+      int trackCenter = (int) trackRect.getCenterX();
+      if (trackCenter - tickPixels2 < pos && pos < trackCenter + tickPixels2) {
+        e.translatePoint(trackCenter - halfThumbWidth - e.getX(), 0);
+        offset = 0;
+      }
+      super.mouseDragged(e);
+    }
+  };
+}
+}}
+
+* 解説 [#explanation]
+- ノブのダブルクリック
+-- `TrackListener#mouseClicked(MouseEvent)`をオーバーライドして、ノブ領域(`BasicSliderUI.thumbRect`)がマウスの左ボタンでダブルクリックされたら`JSlider`の値を初期値にリセット
+-- `WindowsSliderUI`で使用する`WindowsTrackListener`はノブのロールオーバーを描画しているがプライベートクラスなのでこのサンプルでは使用しない
+- 初期値付近でのノブの吸着
+-- `TrackListener#mouseDragged(MouseEvent)`をオーバーライドして、トラック領域(`BasicSliderUI.trackRect`)の中央付近にノブがドラッグされたら`MouseEvent#translatePoint(...)`メソッドでドラッグ位置を中央に移動するよう変換
+- 初期値のラベル変更
+-- 各目盛りのラベルが最小値`-100`で`5%`、初期値`0`で`100%`、最大値`100`で`800%`、その他は空白文字になるよう変更
+-- [[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]
+
+* 参考リンク [#reference]
+- [[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]
+- [[JSliderの値を増減するJButtonを作成する>Swing/SliderWithArrowButtons]]
+
+* コメント [#comment]
+#comment
+#comment

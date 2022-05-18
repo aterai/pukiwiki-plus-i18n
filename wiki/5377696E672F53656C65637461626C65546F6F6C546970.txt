@@ -72,7 +72,7 @@ editor.addHyperlinkListener(e -> {
 }}
 
 * 解説 [#explanation]
-- `JComponent#createToolTip()`メソッドをオーバーライドし、`JToolTip`に`HierarchyListener`を追加
+- `JComponent#createToolTip()`メソッドをオーバーライドして`JToolTip`に`HierarchyListener`を追加
 - `JToolTip`が表示状態になったらその`JToolTip`を親にして`JPopupMenu`を表示
 -- `JToolTip`は`JPopupMenu`の背後に隠れている
 -- `JPopupMenu`には`JMenuItem`ではなく`JEditorPane`と`JCheckBox`を配置した`JPanel`を追加している

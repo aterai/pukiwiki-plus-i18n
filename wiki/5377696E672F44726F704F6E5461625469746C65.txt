@@ -17,11 +17,17 @@ image: https://lh5.googleusercontent.com/-oMjKQSnXvmM/VEzg70T1BQI/AAAAAAAANnU/Ex
 #code(link){{
 new DropTarget(jtp, DnDConstants.ACTION_MOVE, new DropTargetListener() {
   private int targetTabIndex = -1;
-  @Override public void dropActionChanged(DropTargetDragEvent e) {}
+  @Override public void dropActionChanged(DropTargetDragEvent e) {
+    // repaint();
+  }
 
-  @Override public void dragExit(DropTargetEvent e) {}
+  @Override public void dragExit(DropTargetEvent e) {
+    // repaint();
+  }
 
-  @Override public void dragEnter(DropTargetDragEvent e) {}
+  @Override public void dragEnter(DropTargetDragEvent e) {
+    // repaint();
+  }
 
   @Override public void dragOver(DropTargetDragEvent e) {
     if (isDropAcceptable(e)) {

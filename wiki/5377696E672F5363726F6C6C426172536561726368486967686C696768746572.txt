@@ -32,7 +32,7 @@ scrollbar.setUI(new WindowsScrollBarUI() {
       for (Highlighter.Highlight hh: highlighter.getHighlights()) {
         Rectangle r = textArea.modelToView(hh.getStartOffset());
         Rectangle s = at.createTransformedShape(r).getBounds();
-        int h = 2; //Math.max(2, s.height - 2);
+        int h = 2; // Math.max(2, s.height - 2);
         g.fillRect(trackBounds.x, trackBounds.y + s.y, trackBounds.width, h);
       }
     } catch (BadLocationException e) {
@@ -47,9 +47,9 @@ scrollbar.setUI(new WindowsScrollBarUI() {
 
 - `1`行分のハイライトの高さは`2px`で固定
 - 検索結果の位置は`JTextComponent#modelToView(Matcher#start());`を利用しているため、ハイライト対象の文字列が折り返しで`2`行になってもハイライトされるのは開始位置のある`1`行目のみ
-
-----
-以下のような`Icon`を設定した`JLabel`を`JScrollPane#setRowHeaderView(...)`で追加する方法もあります。こちらは縦`JScrollBar`に直接ハイライトを描画しないので上下の増減ボタンサイズは考慮せず、またノブの代わりに現在表示位置を示す領域を半透明で描画しています。
+- 以下のような`Icon`を設定した`JLabel`を`JScrollPane#setRowHeaderView(...)`で追加する方法もある
+-- 縦`JScrollBar`に直接ハイライトを描画しないので上下の増減ボタンサイズは考慮しない
+-- ノブの代わりに現在表示位置を示す領域を半透明で描画
 
 #code{{
 JLabel label = new JLabel(new Icon() {
@@ -58,7 +58,7 @@ JLabel label = new JLabel(new Icon() {
   private final JTextComponent textArea;
   private final JScrollBar scrollbar;
   public HighlightIcon(JTextComponent textArea, JScrollBar scrollbar) {
-    this.textArea  = textArea;
+    this.textArea = textArea;
     this.scrollbar = scrollbar;
   }
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
@@ -128,7 +128,7 @@ scroll.setRowHeader(vp);
 }}
 
 ----
-縦`JScrollBar`の中ではなく、左横などにハイライト位置用の`Icon`を表示したい場合は、`MatteBorder`を利用する方法があります。
+- 縦`JScrollBar`の中ではなく左横などにハイライト位置用の`Icon`を表示したい場合は、`MatteBorder`を利用する方法がある
 
 #code{{
 JScrollBar scrollBar = new JScrollBar(Adjustable.VERTICAL) {

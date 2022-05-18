@@ -1,0 +1,59 @@
+---
+category: swing
+folder: TreeScrollsHorizontallyAndVertically
+title: JTreeの選択されたノードが表示される位置まで水平スクロールする
+tags: [JTree, JScrollPane, UIManager, LookAndFeel]
+author: aterai
+pubdate: 2021-10-11T01:53:00+09:00
+description: JTreeのノードがキー入力で選択されたとき、そのノードまで垂直方向だけでなく水平方向にもスクロールするよう設定します。
+image: https://drive.google.com/uc?id=13R7Ag56ENIHuBxOJI8210gput9I5HmJr
+---
+* 概要 [#summary]
+`JTree`のノードがキー入力で選択されたとき、そのノードまで垂直方向だけでなく水平方向にもスクロールするよう設定します。
+
+#download(https://drive.google.com/uc?id=13R7Ag56ENIHuBxOJI8210gput9I5HmJr)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTree tree1 = new JTree(makeTreeRoot());
+expandAll(tree1);
+
+JTree tree2 = new JTree(makeTreeRoot());
+expandAll(tree2);
+tree2.addTreeSelectionListener(e ->
+    tree2.scrollPathToVisible(e.getNewLeadSelectionPath()));
+
+String key = "Tree.scrollsHorizontallyAndVertically";
+JCheckBoxMenuItem check = new JCheckBoxMenuItem(key);
+check.addActionListener(e -> UIManager.put(key, check.isSelected()));
+
+JMenu menu = new JMenu("View");
+menu.add(check);
+
+JMenuBar mb = new JMenuBar();
+mb.add(menu);
+mb.add(LookAndFeelUtil.createLookAndFeelMenu());
+EventQueue.invokeLater(() -> getRootPane().setJMenuBar(mb));
+
+add(makeTitledPanel("Default", new JScrollPane(tree1)));
+add(makeTitledPanel("TreeSelectionListener", new JScrollPane(tree2)));
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- `JTree`のノードサイズが大きく垂直・水平スクロールバーが表示されている状態でカーソルキーやマウスクリックでノードを選択しても水平方向にはスクロールしない
+- `Tree.scrollsHorizontallyAndVertically`
+-- `UIManager.put("Tree.scrollsHorizontallyAndVertically", true)`でキー入力でノード選択した場合そのノード領域が可能な限り表示されるよう垂直・水平方向ともにスクロールする
+-- `Tree.scrollsHorizontallyAndVertically`の初期値は`Boolean.FALSE`
+-- この設定はマウスでのノード選択には無効
+--- キー入力でも複数ノード選択時は効果がない
+-- この設定は`WindowsLookAndFeel`では無効
+- `TreeSelectionListener`
+-- `TreeSelectionListener`を追加して`JTree.scrollPathToVisible(TreeSelection#getNewLeadSelectionPath())`を実行し、マウスやキー入力によるノード選択で垂直・水平ともにスクロールするよう設定
+
+* 参考リンク [#reference]
+- [[JScrollPane内にあるJTableなどで追加した行が可視化されるようにスクロールする>Swing/ScrollRectToVisible]]
+
+* コメント [#comment]
+#comment
+#comment

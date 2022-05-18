@@ -73,10 +73,10 @@ class ScrollableWrapLayout extends FlowLayout {
 }}
 
 * 解説 [#explanation]
-- 上: `JPanel + FlowLayout`
+- 上: `JPanel` + `FlowLayout`
 -- デフォルトの`JPanel`に`FlowLayout`を設定して`JScrollPane`に配置
 -- 水平方向に`JPanel`が拡張されて水平`ScrollBar`が表示される
-- 下: `ScrollableWrapPanel + ScrollableWrapLayout`
+- 下: `ScrollableWrapPanel` + `ScrollableWrapLayout`
 -- `JPanel`に`Scrollable`を実装する`ScrollableWrapPanel`を作成し、これに`FlowLayout#preferredLayoutSize(...)`などをオーバーライドする`ScrollableWrapLayout`を設定して`JScrollPane`に配置
 -- `ScrollableWrapPanel`の子コンポーネント間の水平間隔を親のリサイズに応じて動的・均等に拡大するよう`FlowLayout#layoutContainer(...)`メソッドをオーバーライド
 --- 最小値は初期水平間隔

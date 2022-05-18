@@ -20,7 +20,7 @@ editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 
 * 解説 [#explanation]
 - `HTMLEditorKit`のデフォルトスタイルシートでは`body`タグに`font-size: 14pt`などが設定されている
--- この設定が`HTML`テキストのデフォルト文字サイズになっているため、`JEditorPane`に`JEditorPane#setFont(new Font("Serif", Font.PLAIN, 16))`メソッドでフォントを指定しても反映されない
+-- この設定が`HTML`テキストのデフォルト文字サイズになっているため、`JEditorPane`にたとえば`JEditorPane#setFont(new Font("Serif", Font.PLAIN, 16))`とフォントを変更しても反映されない
 - `JEditorPane`に設定されたフォントを使用する場合は、`JEditorPane#putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE)`としてコンポーネントのデフォルトのフォントを使用するように設定する必要がある
 
 - `body`タグのスタイルを表示するサンプルコード
@@ -44,8 +44,6 @@ while (rules.hasMoreElements()) {
 }
 editor.setText(buf.toString());
 }}
-
-// - `JDK 1.8.0_60`ではスクリーンショットのように自動的に折り返されるが、`JDK 1.9.0-ea-b78`では、水平スクロールバーが表示される？
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JEditorPane.html#HONOR_DISPLAY_PROPERTIES JEditorPane.HONOR_DISPLAY_PROPERTIES (Java Platform SE 8)]

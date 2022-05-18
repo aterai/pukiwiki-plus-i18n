@@ -27,10 +27,10 @@ frame.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
 - `null`
 -- デフォルトのアイコンが表示される
 - `new ImageIcon("").getImage();`
--- `JDK 1.5`では、アイコン非表示、`JDK 1.6`からはデフォルトのアイコンが表示される
--- `Web Start`で起動した場合、`AccessControlException: access denied ("java.io.FilePermission" "" "read")`が発生
+-- `JDK 1.5`ではアイコン非表示、`JDK 1.6`からはデフォルトのアイコンが表示される
+-- `Web Start`で起動した場合`AccessControlException: access denied ("java.io.FilePermission" "" "read")`が発生
 - `new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);`
--- サイズが`1x1`で、透明な`Image`を表示
+-- サイズが`1x1`で透明な`Image`を表示
 -- タイトルアイコンは非表示でもクリックするとタイトルメニューは開く
 -- タスクバーアイコンは黒い矩形になる
 - `toolkit.createImage(url_16x16transparent);`

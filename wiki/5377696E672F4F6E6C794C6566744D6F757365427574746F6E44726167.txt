@@ -15,7 +15,18 @@ image: https://lh3.googleusercontent.com/-coZSnO6AOYE/Vj9vbNsYp8I/AAAAAAAAOGA/2K
 
 * サンプルコード [#sourcecode]
 #code(link){{
-UIManager.put("Slider.onlyLeftMouseButtonDrag", Boolean.TRUE);
+// UIManager.put("Slider.onlyLeftMouseButtonDrag", Boolean.TRUE);
+String key = "Slider.onlyLeftMouseButtonDrag";
+JCheckBox check = new JCheckBox(key) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setSelected(UIManager.getLookAndFeelDefaults().getBoolean(key));
+  }
+};
+check.addActionListener(e -> {
+  boolean f = ((JCheckBox) e.getSource()).isSelected();
+  UIManager.put(key, f);
+});
 }}
 
 * 解説 [#explanation]

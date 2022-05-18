@@ -1,0 +1,39 @@
+---
+category: swing
+folder: DesktopMinOnScreenInsets
+title: JDesktopPane内のJInternalFrameがカーソルキーで移動可能な範囲を変更する
+tags: [JDesktopPane, JInternalFrame, UIManager]
+author: aterai
+pubdate: 2021-11-15T01:28:42+09:00
+description: JDesktopPane内のJInternalFrameがカーソルキーを使用した移動で配置可能な領域をInsetsで設定します。
+image: https://drive.google.com/uc?id=1utMxkJ4Bce477CzPmQgWLM4pMjdCkA3j
+---
+* 概要 [#summary]
+`JDesktopPane`内の`JInternalFrame`がカーソルキーを使用した移動で配置可能な領域を`Insets`で設定します。
+
+#download(https://drive.google.com/uc?id=1utMxkJ4Bce477CzPmQgWLM4pMjdCkA3j)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JInternalFrame f = createInternalFrame();
+Dimension d = ((BasicInternalFrameUI) f.getUI()).getNorthPane().getPreferredSize();
+UIManager.put("Desktop.minOnScreenInsets", new Insets(d.height, 16, 3, 16));
+UIManager.put("Desktop.background", Color.LIGHT_GRAY);
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは`UIManager.put("Desktop.minOnScreenInsets", Insets)`で`JDesktopPane`内の`JInternalFrame`がカーソルキーを使用した移動で配置可能な領域を設定しています。
+
+- `Desktop.minOnScreenInsets`の設定はマウスによる`JInternalFrame`の移動には無効で、KBD{Ctrl+F7}キーで`JInternalFrame`をカーソルキーによる移動モードにした場合のみ有効
+-- KBD{Ctrl+F8}でのカーソルキーによるリサイズモードでも有効だが拡大方向は無関係で、縮小方向は`InputMap`にキー入力が設定されていない
+- `UIManager.put("Desktop.minOnScreenInsets", new Insets(d.height, 16, 3, 16))`で内余白を設定
+-- `top`: `JInternalFrame`のタイトルバーの高さを設定して`JDesktopPane`の下辺からタイトルバーの高さ以上下に`JInternalFrame`を下カーソルキーで移動不可に設定
+-- `bottom`: デフォルトの`3px`を設定して上カーソルキーで`JDesktopPane`の上辺から`JInternalFrame`の下辺の表示が`3px`以下にならないよう設定
+-- `left, right`: `16px`を設定して左右カーソルキーで`JDesktopPane`の左右辺から`JInternalFrame`の右左辺の表示が`16px`以下にならないよう設定
+
+* 参考リンク [#reference]
+- [[JInternalFrameをキー入力で移動、リサイズする>Swing/InternalFrameKeyInputOperation]]
+
+* コメント [#comment]
+#comment
+#comment

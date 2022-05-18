@@ -44,12 +44,14 @@ JTextField textField01 = new JTextField(20) {
 }}
 
 * 解説 [#explanation]
-- 上
--- `JTextField#paintComponent(...)`をオーバーライド、`Border`を`EmptyBorder`、`JTextField#setOpaque(false);`
+- 上: `Override: JTextField#paintComponent(...)`
+-- `JTextField#paintComponent(...)`をオーバーライド
+-- `Border`を`EmptyBorder`に変更
+-- `JTextField#setOpaque(false)`を設定
 -- 参考: [http://web.archive.org/web/20091205092230/http://java.sun.com/products/jfc/tsc/articles/swing2d/index.html Unleash Your Creativity with Swing and the Java 2D API!]
 -- 背景が画像などの場合でも角丸が描画可能
 
-- 下
+- 下: `setBorder(new RoundedCornerBorder())`
 -- `RoundedCornerBorder`を設定
 -- %%角を親コンポーネントの背景色で上書きしているので、背景が画像などの場合はその上に角が描画されてしまう%%
 -- `JTextField`の縁と背景を透明化し、`RoundedCornerBorder`から取得した図形を描画するように修正
@@ -91,7 +93,7 @@ class RoundedCornerBorder extends AbstractBorder {
   }
 
   public Shape getBorderShape(int x, int y, int w, int h) {
-    int r = h; //h / 2;
+    int r = h; // h / 2;
     return new RoundRectangle2D.Double(x, y, w, h, r, r);
   }
 

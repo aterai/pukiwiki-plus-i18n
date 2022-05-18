@@ -69,7 +69,7 @@ class CheckBoxStatusUpdateListener implements TreeModelListener {
 - `Box`
 -- `Box.createVerticalBox()`で作成した垂直`Box`に`JCheckBox`を配置して作成
 -- フォルダノードを親`JCheckBox`、葉ノードを子`JCheckBox`のグループとして作成
--- 子`JCheckBox`は`Box.createHorizontalBox()`に`Box.createHorizontalStrut((DefaultMutableTreeNode#getLevel() - 1) * 16))`で作成したインデントと合わせて追加してから垂直`Box`に配置
+-- 子`JCheckBox`は`Box.createHorizontalBox()`に`Box.createHorizontalStrut( (DefaultMutableTreeNode#getLevel() - 1) * 16))`で作成したインデントと合わせて追加してから垂直`Box`に配置
 -- 親`JCheckBox`に`ActionListener`を追加し、選択状態で子`JCheckBox`のグループの有効化・無効化を切り替える
 --- どの親`JCheckBox`の子`JCheckBox`かは`DefaultMutableTreeNode#children()`で名前を取得して検索しているので、同名ノードが存在すると正しく動作しない
 - `JTree`

@@ -44,8 +44,8 @@ JSpinner spinner3 = new JSpinner(new SpinnerListModel(scale) {
 -- `SpinnerNumberModel`でシーケンスの要素間の差を負の値に設定
 -- `getNextValue()`メソッドと`getPreviousValue()`メソッドによって計算される値変更のサイズがマイナスになるので上矢印ボタンをクリックすると数値は減少、下矢印ボタンで増加に入れ替わる
 - `SpinnerListModel`
--- 上矢印ボタンのクリックで前の値、下矢印ボタンで次の値を返す
 -- デフォルト
+-- 上矢印ボタンのクリックで前の値、下矢印ボタンで次の値を返す
 - `Reverse direction SpinnerListModel`
 -- `SpinnerListModel#getNextValue()`メソッドと`SpinnerListModel#getPreviousValue()`メソッドを入れ替えるようオーバーライドして上矢印ボタンのクリックで次の値、下矢印ボタンで前の値を返すよう変更
 

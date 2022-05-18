@@ -58,19 +58,18 @@ tree2.setUI(new BasicTreeUI() {
 
 * 解説 [#explanation]
 - 左: `lineTypeDashed`
--- `UIManager.put("Tree.lineTypeDashed", Boolean.TRUE);`を設定して接続線を点線に変更
--- `UIManager.put("Tree.hash", Color.RED);`で線色を変更可能
+-- `UIManager.put("Tree.lineTypeDashed", Boolean.TRUE)`を設定して接続線を点線に変更
+-- `UIManager.put("Tree.hash", Color.RED)`で線色を変更可能
 - 中: `lineStyle`
--- `tree1.putClientProperty("JTree.lineStyle", "Horizontal");`を設定して親ノードの上下に水平線を表示するスタイルに変更
+-- `tree1.putClientProperty("JTree.lineStyle", "Horizontal")`を設定して親ノードの上下に水平線を表示するスタイルに変更
 --- 参考: [[JTreeのノード間の接続線のスタイルを変更する>Swing/TreeLineStyle]]
--- `UIManager.put("Tree.line", Color.GREEN);`で水平線の線色を変更可能
+-- `UIManager.put("Tree.line", Color.GREEN)`で水平線の線色を変更可能
 --- 接続線の線色には影響しない
 - 右: `BasicTreeUI`
 -- `BasicTreeUI#paintHorizontalPartOfLeg(...)`、`BasicTreeUI#paintVerticalPartOfLeg(...)`をオーバーライドして、接続線の太さを変更
--- 接続線の色は、`BasicTreeUI#getHashColor()`をオーバーライドして変更
--- %%`UIManager.put("Tree.lineTypeDashed", Boolean.TRUE);`の設定などは無視される%%
--- `UIManager.put("Tree.lineTypeDashed", Boolean.TRUE);`の場合、`Graphics2D#setStroke(...)`の設定が無効になる場合がある？
--- `BasicTreeUI`は点線の描画に`BasicStroke`を使用せず、以下のように`1px`の線を描画しているため？
+-- 接続線の色は`BasicTreeUI#getHashColor()`をオーバーライドして変更
+-- `UIManager.put("Tree.lineTypeDashed", Boolean.TRUE)`の場合`Graphics2D#setStroke(...)`の設定が無効になる場合がある？
+-- `BasicTreeUI`は点線の描画に`BasicStroke`を使用せず以下のように`1px`の線を描画しているため？
 #code{{
 // This method is slow -- revisit when Java2D is ready.
 // assumes y1 <= y2

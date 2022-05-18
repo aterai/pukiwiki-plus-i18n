@@ -48,7 +48,7 @@ add(new JScrollPane(box));
 * 解説 [#explanation]
 上記のサンプルでは、`JScrollPane`内に配置されているコンポーネントにフォーカスが移動した場合、そのコンポーネント全体が表示されるようにスクロールを行う`FocusTraversalPolicy`を作成しています。
 
-- 左: デフォルト
+- 左: `Default`
 -- 表示範囲外にある`JTextField`にKBD{Tab}キーなどでフォーカスが移動しても自動的にスクロールしない
 - 右: `LayoutFocusTraversalPolicy#getComponentAfter(...)`
 -- `LayoutFocusTraversalPolicy#getComponentAfter(...)`メソッドなどをオーバーライドしてフォーカスを取得するコンポーネントを取得し、`JComponent#scrollRectToVisible(...)`メソッドでそのコンポーネントの領域が表示されるまでスクロールを実行

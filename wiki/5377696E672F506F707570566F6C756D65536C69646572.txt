@@ -1,0 +1,130 @@
+---
+category: swing
+folder: PopupVolumeSlider
+title: JPopupMenuに垂直JSliderを配置してJToggleButtonの上部に表示する
+tags: [JSlider, JPopupMenu, JToolTip, JToggleButton]
+author: aterai
+pubdate: 2021-10-04T11:17:36+09:00
+description: JPopupMenuに垂直JSliderを配置し、JToggleButtonに設定したJToolTipを表示するときにその上部に重ねて表示します。
+image: https://drive.google.com/uc?id=1JlCYec_huorcrZoTG5_-vs7oFTK0TRhF
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2021/11/add-vertical-jslider-in-jpopupmenu-and.html
+    lang: en
+---
+* 概要 [#summary]
+`JPopupMenu`に垂直`JSlider`を配置し、`JToggleButton`に設定した`JToolTip`を表示するときにその上部に重ねて表示します。
+
+#download(https://drive.google.com/uc?id=1JlCYec_huorcrZoTG5_-vs7oFTK0TRhF)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JPopupMenu popup = new JPopupMenu();
+popup.setLayout(new BorderLayout());
+popup.addMouseWheelListener(InputEvent::consume);
+
+UIManager.put("Slider.paintValue", Boolean.TRUE);
+UIManager.put("Slider.focus", UIManager.get("Slider.background"));
+JSlider slider = new JSlider(SwingConstants.VERTICAL, 0, 100, 80);
+slider.addMouseWheelListener(e -> {
+  JSlider s = (JSlider) e.getComponent();
+  if (s.isEnabled()) {
+    BoundedRangeModel m = s.getModel();
+    m.setValue(m.getValue() - e.getWheelRotation() * 2);
+  }
+  e.consume();
+});
+popup.add(slider);
+
+JToggleButton button = new JToggleButton("🔊") {
+  @Override public JToolTip createToolTip() {
+    JToolTip tip = super.createToolTip();
+    tip.addHierarchyListener(e -> {
+      long flg = e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED;
+      if (flg != 0 && e.getComponent().isShowing()) {
+        Dimension d = popup.getPreferredSize();
+        popup.show(this, (getWidth() - d.width) / 2, -d.height);
+      }
+    });
+    return tip;
+  }
+
+  @Override public Point getToolTipLocation(MouseEvent e) {
+    return new Point(getWidth() / 2, -getHeight());
+  }
+
+  @Override public void setEnabled(boolean b) {
+    super.setEnabled(b);
+    setText(b ? "🔊" : "🔇");
+  }
+};
+button.setToolTipText("");
+button.addMouseListener(new MouseAdapter() {
+  @Override public void mousePressed(MouseEvent e) {
+    if (!button.isEnabled()) {
+      slider.setValue(80);
+      button.setEnabled(true);
+    }
+    Component b = (Component) e.getSource();
+    Dimension d = popup.getPreferredSize();
+    popup.show(b, (b.getWidth() - d.width) / 2, -d.height);
+  }
+
+  @Override public void mouseEntered(MouseEvent e) {
+    if (!popup.isVisible()) {
+      ToolTipManager.sharedInstance().setEnabled(true);
+    }
+  }
+
+  @Override public void mouseExited(MouseEvent e) {
+    if (!popup.isVisible()) {
+      ToolTipManager.sharedInstance().setEnabled(true);
+    }
+  }
+});
+popup.addPopupMenuListener(new PopupMenuListener() {
+  @Override public void popupMenuCanceled(PopupMenuEvent e) {
+    /* not needed */
+  }
+
+  @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+    EventQueue.invokeLater(() -> ToolTipManager.sharedInstance().setEnabled(false));
+  }
+
+  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+    button.setSelected(false);
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `JPopupMenu`
+-- レイアウトを`BorderLayout`に変更して垂直`JSlider`をひとつだけ追加
+-- `JPopupMenu#addMouseWheelListener(InputEvent::consume)`を追加して余白などでマウスホイールを回転しても閉じないよう設定
+-- `PopupMenuListener`を追加して`JPopupMenu`が開いたあとは`JToolTip`を無効化、閉じる前に`JToggleButton`の選択状態を解除
+- `JSlider`
+-- `MouseWheelListener`を追加してマウスホイールの回転で値を変更可能に設定
+-- `ChangeListener`を追加して値が`0`(最小値)になったら`JToggleButton`を無効化
+-- `UIManager.put("Slider.paintValue", Boolean.TRUE)`で垂直`JSlider`上部に値を常時表示
+--- [[JSliderの上部に現在値を常時表示する>Swing/SliderPaintValue]]
+- `JToggleButton`
+-- `JToggleButton#setToolTipText("")`で空文字(`JPopupMenu`の幅より短くなる文字)を`ToolTipText`として設定
+-- `JToggleButton#createToolTip()`をオーバーライドし`JToolTip`に`HierarchyListener`を追加
+-- `JToggleButton#getToolTipLocation()`をオーバーライドし常に`JPopupMenu`の背面に表示されるよう位置を調整
+-- `JToggleButton#setEnabled(...)`をオーバーライドし、有効なら`🔊`、無効なら`🔇`にテキストを変更
+-- `JSlider`の値が`0`で`JToggleButton`が無効状態でも`JToolTip`は有効
+-- 無効状態の`JToggleButton`をクリックした場合も`JPopupMenu`を開くようにするため`ActionListener`ではなく`MouseListener`を追加
+--- `MouseListener#mousePressed(...)`で`JPopupMenu`を開く前に`JToggleButton`が無効状態の場合は値をデフォルトの`80`まで戻す
+--- マウスカーソルが出入りしたとき`JPopupMenu`が非表示の場合は`JPopupMenu`を開くときに無効化した`JToolTip`を有効に戻す
+- `JToolTip`
+-- 追加した`HierarchyListener`で`JToolTip`の表示後、重ねて`JPopupMenu`を表示するよう設定
+--- `JPopupMenu`の表示後に`JPopupMenu`に追加した上記の`PopupMenuListener#popupMenuWillBecomeVisible(...)`で`EventQueue.invokeLater( () -> ToolTipManager.sharedInstance().setEnabled(false))`を実行して`JToolTip`を無効化
+
+* 参考リンク [#reference]
+- [[JSliderの上部に現在値を常時表示する>Swing/SliderPaintValue]]
+- [[JSliderのUIや色を変更する>Swing/VolumeSlider]]
+- [https://github.com/checkstyle/checkstyle/issues/10837 WhitespaceAround misrecognizes white spaces after emojis · Issue #10837 · checkstyle/checkstyle]
+-- 「🔊(`U+1F50A`)(`\uD83D\uDD0A`)」などの`0x0A`(`CR/LF`)が誤判定されているようで、このサンプルコードでも`WhitespaceAround`の警告が発生するが`checkstyle-9.0.2`で修正されそう？
+
+* コメント [#comment]
+#comment
+#comment

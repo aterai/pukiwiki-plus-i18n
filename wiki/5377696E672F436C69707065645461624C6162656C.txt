@@ -100,8 +100,8 @@ class ClippedTitleTabbedPane extends JTabbedPane {
 上記の`JTabbedPane`では、`JTabbedPane#setTabComponentAt(...)`メソッドを使って各タブ内に`JLabel`を追加し、そのクリップ機能を利用して長いタイトル文字列の後半を省略しています。
 
 - 機能は[[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]とほぼ同等
--- 文字列の長さに依存せず、左右にタブを配置した場合は全体の`1/4`の幅に、上下にタブを配置した場合はすべてのタブ幅を均等になるよう設定
--- [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]のように`TabbedPaneUI#paintText(...)`メソッドをオーバーライドして文字列の描画を上書きする必要がないため、ソースも短く実装も簡単
+-- 文字列の長さに依存せず左右にタブを配置した場合は全体の`1/4`の幅に、上下にタブを配置した場合はすべてのタブ幅を均等になるよう設定
+-- [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]のように`TabbedPaneUI#paintText(...)`メソッドをオーバーライドして文字列の描画を上書きする必要がないためシンプルに実装可能
 
 * 参考リンク [#reference]
 - [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]

@@ -67,7 +67,8 @@ public static void paintAccText(
 
 * 解説 [#explanation]
 - `Default`
--- デフォルトでは、`WindowsLookAndFeel`の場合でも`Accelerator`は左寄せで表示される
+-- デフォルトの`Windows`環境の場合`Accelerator`は左寄せ
+-- デフォルトの`Ubuntu`環境の場合`Accelerator`は右寄せ
 - `RightAcc`
 -- `BasicMenuItemUI#paintMenuItem(...)`メソッドをオーバーライドして、`JMenuItem`の`Accelerator`を左寄せではなく右寄せで表示
 -- `Web Start`で実行すると`java.security.AccessControlException: access denied ("java.lang.RuntimePermission" "accessClassInPackage.sun.swing")`と例外が発生してメニューが表示されない

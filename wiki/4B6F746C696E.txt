@@ -15,7 +15,7 @@ pubdate: 2017-05-31T18:35:21+09:00
  $ curl -s "https://get.sdkman.io" | bash
  $ sdk install kotlin
  $ kotlinc -version
- info: kotlinc-jvm 1.3.70 (JRE 1.8.0_242-b07)
+ info: kotlinc-jvm 1.6.10 (JRE 1.8.0_322-b06)
  $ kotlinc hello.kt -include-runtime -d hello.jar && "$JAVA_HOME/bin/java" -jar hello.jar
 
 ** Gradle [#gradle]
@@ -2075,10 +2075,7 @@ internal class CheckBoxNode public constructor(val text: String, val selected: B
 }}
 #twocolumn
 
-** Optional [#Optional]
-- `Optional#orElse(...)`は、`let {...} ?: ...`に変換可能
--- `Integer stepSize = Optional.ofNullable(stepSizeMap.get(calendarField)).orElse(1);`
--- `val stepSize = stepSizeMap.get(calendarField) ?: 1`
+** Null safety and platform types [#null-safety-and-platform-types]
 - 例えば`SpinnerDateModel#getNextValue(...)`メソッドを`override fun getNextValue(): Object = Calendar.getInstance().apply { ...`のように変換すると、`error: type mismatch: inferred type is Date! but Object was expected`とエラーになる
 - `override fun getNextValue(): Any = Calendar.getInstance().apply { ...`と`Any`を使用するようオーバーライドする必要がある
 - `Date!`は、`Date`もしくは`Date?`の意味
@@ -2584,7 +2581,8 @@ p.setComponentZOrder(p.getComponents().last(), 0)
 }}
 #twocolumn
 
-** Optional [#takeIf]
+** Optional [#Optional]
+*** Optional.ofNullable(...) [#takeIf]
 - `Optional.ofNullable(...).filter(...)`は、`?.takeIf {...}`などに置換可能
 
 #twocolumn
@@ -2613,7 +2611,21 @@ SwingUtilities.getAncestorOfClass(JTable::class.java, e.getComponent())
 }}
 #twocolumn
 
-** Objects.nonNull(...) [#SafeCall]
+*** Optional#orElse(...) [#elvis]
+- `Optional#orElse(...)`はエルビス演算子`?:`に置換可能
+
+#twocolumn
+#code(lang-kotlin){{
+val lv = Optional.ofNullable(spinner).map { it.getModel().getValue() }.orElse(1000L)
+}}
+#twocolumn
+#code(lang-kotlin){{
+val lv = spinner?.getModel()?.getValue() ?: 1000L
+}}
+#twocolumn
+
+** Objects [#Objects]
+*** Objects.nonNull(...) [#SafeCall]
 - `Objects.nonNull(o)`などは、セーフコール演算子`?.`に置換可能
 
 #twocolumn
@@ -2632,16 +2644,17 @@ colHead?.takeIf { it.isVisible() }?.let {
 }}
 #twocolumn
 
-** Optional.orElse(...) [#elvis]
-- `Optional.orElse(...)`などは、エルビス演算子`?:`に置換可能
+*** Objects.requireNonNull(...) [#requireNotNull]
+- `Objects.requireNonNull(o)`は[https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/require-not-null.html requireNotNull]に置換可能
+- `Non`ではなく`Not`になることに注意
 
 #twocolumn
 #code(lang-kotlin){{
-val lv = Optional.ofNullable(spinner).map { it.getModel().getValue() }.orElse(1000L)
+Objects.requireNonNull(url)
 }}
 #twocolumn
 #code(lang-kotlin){{
-val lv = spinner?.getModel()?.getValue() ?: 1000L
+requireNotNull(url)
 }}
 #twocolumn
 

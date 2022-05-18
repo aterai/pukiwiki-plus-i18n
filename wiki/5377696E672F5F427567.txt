@@ -11,6 +11,11 @@ pubdate: 2018-01-22T16:28:08+09:00
 #contents
 
 * 未修正 [#NotFixedYet]
+** ComponentOrientation.RIGHT_TO_LEFTが設定されたJMenuBarの矢印キーによるフォーカス移動がおかしい [#a5eb1769]
+- [https://stackoverflow.com/questions/69984888/jmenubar-arrow-keys-work-the-opposite-of-what-expected-because-componentorientat java - JMenuBar arrow keys work the opposite of what expected because componentOrientation is set to Right to Left - Stack Overflow]
+-- [https://bugs.openjdk.java.net/browse/JDK-8277369 &#91;JDK-8277369&#93; Strange behavior of JMenuBar with RIGHT_TO_LEFT orientation, arrow keys behaves opposite traversing through keyboard - Java Bug System]
+-- [https://github.com/openjdk/jdk/pull/7396 8277369: Strange behavior of JMenuBar with RIGHT_TO_LEFT orientation, arrow keys behaves opposite traversing through keyboard by prsadhuk · Pull Request #7396 · openjdk/jdk]で修正される
+
 ** JToolBarに配置したJButtonのフォーカス描画 [#w21ce2da]
 - [https://stackoverflow.com/questions/37295099/decorating-a-rollover-toolbar-button-with-jlayer-paints-its-border#37295921 java - Decorating a rollover toolbar button with JLayer paints its border - Stack Overflow]
 -- `JButton`を`JLayer`でラップして`JToolBar`に追加すると、`JToolBar`用のフォーカス描画ではなく、デフォルトのフォーカス描画が適用されてしまう

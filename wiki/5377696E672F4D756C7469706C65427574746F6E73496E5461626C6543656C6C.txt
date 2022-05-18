@@ -109,7 +109,7 @@ class ButtonsEditor extends ButtonsPanel
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`CellRenderer`用と`CellEditor`用に`JButton`を`2`つ配置した`JPanel`をそれぞれ作成しています。`CellRenderer`用の`JButton`は表示のみに使用するため`Action`を設定するのは`CellEditor`用の`JButton`のみです。
+上記のサンプルでは、`CellRenderer`用と`CellEditor`用に`JButton`を`2`つ配置した`JPanel`をそれぞれ作成しています。`CellRenderer`用の`JButton`は表示のみに使用するため、クリック後に実行する`Action`は`CellEditor`用の`JButton`だけに設定しています。
 
 ----
 - `LookAndFeel`などが更新されたら`JTable#updateUI()`メソッド内で`SwingUtilities#updateRendererOrEditorUI()`メソッドを呼び出すなどして各セルレンダラーやセルエディタ(これらは`JTable`の子コンポーネントではないので)を更新

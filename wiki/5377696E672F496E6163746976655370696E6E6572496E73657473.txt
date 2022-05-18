@@ -49,7 +49,7 @@ JSpinner spinner3 = new JSpinner() {
 - `Default`
 -- `WindowsLookAndFeel(XP)`の場合`JSpinner`を編集不可にしても白い余白が表示される
 - `setOpaque(false)`
--- `JSpinner#getEditor()`で取得した`JSpinner.DefaultEditor`と`JSpinner.DefaultEditor#getTextField()`で取得した`JTextField`をそれぞれ`setOpaque(false)`としている
+-- `JSpinner#getEditor()`で取得した`JSpinner.DefaultEditor`と`JSpinner.DefaultEditor#getTextField()`で取得した`JTextField`にそれぞれ`setOpaque(false)`を設定
 -- `WindowsLookAndFeel(XP)`で`JSpinner`を編集不可にしても背景色は白から変化しない
 -- `UIManager.put("FormattedTextField.inactiveBackground", Color.WHITE)`
 - `setBorder(...)`

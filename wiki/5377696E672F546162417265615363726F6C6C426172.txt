@@ -1,0 +1,161 @@
+---
+category: swing
+folder: TabAreaScrollBar
+title: CardLayoutで作成したJTabbedPane風コンポーネントのタブエリアに水平JScrollBarを表示する
+tags: [CardLayout, JTabbedPane, JScrollPane, JScrollBar, JLayer]
+author: aterai
+pubdate: 2021-09-13T00:21:04+09:00
+description: CardLayoutを使用してJTabbedPane風のコンポーネントを作成し、そのタブエリアに水平JScrollBarを表示してスクロール可能にします。
+image: https://drive.google.com/uc?id=1WdXMZxIVNrLcy56T7et_nqcCcsWWtqAq
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2021/10/show-horizontal-jscrollbar-in-tab-area.html
+    lang: en
+---
+* 概要 [#summary]
+`CardLayout`を使用して`JTabbedPane`風のコンポーネントを作成し、そのタブエリアに水平`JScrollBar`を表示してスクロール可能にします。
+
+#download(https://drive.google.com/uc?id=1WdXMZxIVNrLcy56T7et_nqcCcsWWtqAq)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class CardLayoutTabbedPane extends JPanel {
+  private final CardLayout cardLayout = new CardLayout();
+  private final JPanel tabPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
+  private final JPanel contentsPanel = new JPanel(cardLayout);
+  private final JButton hiddenTabs = new JButton("V");
+  private final ButtonGroup group = new ButtonGroup();
+  private final JScrollPane tabArea = new JScrollPane(tabPanel) {
+    @Override public boolean isOptimizedDrawingEnabled() {
+      return false; // JScrollBar is overlap
+    }
+
+    @Override public void updateUI() {
+      super.updateUI();
+      EventQueue.invokeLater(() -> {
+        getVerticalScrollBar().setUI(new OverlappedScrollBarUI());
+        getHorizontalScrollBar().setUI(new OverlappedScrollBarUI());
+        setLayout(new OverlapScrollPaneLayout());
+        setComponentZOrder(getVerticalScrollBar(), 0);
+        setComponentZOrder(getHorizontalScrollBar(), 1);
+        setComponentZOrder(getViewport(), 2);
+      });
+      setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+      setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+      getVerticalScrollBar().setOpaque(false);
+      getHorizontalScrollBar().setOpaque(false);
+      setBackground(Color.DARK_GRAY);
+      setViewportBorder(BorderFactory.createEmptyBorder());
+      setBorder(BorderFactory.createEmptyBorder());
+    }
+
+    @Override public Dimension getPreferredSize() {
+      Dimension d = super.getPreferredSize();
+      d.height = 18 + 6;
+      return d;
+    }
+  };
+
+  protected CardLayoutTabbedPane() {
+    super(new BorderLayout());
+    setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    setBackground(new Color(16, 16, 16));
+    tabPanel.setInheritsPopupMenu(true);
+    hiddenTabs.setFont(hiddenTabs.getFont().deriveFont(8f));
+    hiddenTabs.setBorder(BorderFactory.createEmptyBorder(2, 8, 2, 8));
+    hiddenTabs.setOpaque(false);
+    hiddenTabs.setFocusable(false);
+    hiddenTabs.setContentAreaFilled(false);
+    JPanel header = new JPanel(new BorderLayout());
+    header.add(new JLayer<>(tabArea, new HorizontalScrollLayerUI()));
+    header.add(hiddenTabs, BorderLayout.EAST);
+    add(header, BorderLayout.NORTH);
+    add(contentsPanel);
+  }
+
+  protected JComponent createTabComponent(String title, Icon icon) {
+    JToggleButton tab = new TabButton();
+    tab.setInheritsPopupMenu(true);
+    group.add(tab);
+    tab.addMouseListener(new MouseAdapter() {
+      @Override public void mousePressed(MouseEvent e) {
+        if (SwingUtilities.isLeftMouseButton(e)) {
+          ((AbstractButton) e.getComponent()).setSelected(true);
+          cardLayout.show(contentsPanel, title);
+        }
+      }
+    });
+    EventQueue.invokeLater(() -> tab.setSelected(true));
+
+    JLabel label = new JLabel(title, icon, SwingConstants.LEADING);
+    label.setForeground(Color.WHITE);
+    label.setIcon(icon);
+    label.setOpaque(false);
+
+    JButton close = new JButton(new CloseTabIcon(new Color(0xB0_B0_B0))) {
+      @Override public Dimension getPreferredSize() {
+        return new Dimension(12, 12);
+      }
+    };
+    close.addActionListener(e -> System.out.println("dummy action: close button"));
+    close.setBorder(BorderFactory.createEmptyBorder());
+    close.setFocusable(false);
+    close.setOpaque(false);
+    // close.setFocusPainted(false);
+    close.setContentAreaFilled(false);
+    close.setPressedIcon(new CloseTabIcon(new Color(0xFE_FE_FE)));
+    close.setRolloverIcon(new CloseTabIcon(new Color(0xA0_A0_A0)));
+
+    tab.add(label);
+    tab.add(close, BorderLayout.EAST);
+    return tab;
+  }
+
+  public void addTab(String title, Icon icon, Component comp) {
+    JComponent tab = createTabComponent(title, icon);
+    tabPanel.add(tab);
+    contentsPanel.add(comp, title);
+    cardLayout.show(contentsPanel, title);
+    EventQueue.invokeLater(() -> tabPanel.scrollRectToVisible(tab.getBounds()));
+  }
+
+  public JScrollPane getTabArea() {
+    return tabArea;
+  }
+
+  @Override public void doLayout() {
+    BoundedRangeModel m = tabArea.getHorizontalScrollBar().getModel();
+    hiddenTabs.setVisible(m.getMaximum() - m.getExtent() > 0);
+    super.doLayout();
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `CardLayoutTabbedPane`
+-- [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]と同様のコンポーネントを使用
+- `TabPanel`
+-- `new FlowLayout(FlowLayout.LEADING, 0, 0)`を設定した`JPanel`に`JToggleButton`で作成したタブを配置
+-- タブには`JToggleButton`を使用し、`JLabel`でタイトルアイコンと文字列、`JButton`でクローズボタン(機能は未実装)を追加
+-- 右クリックでのタブ切り替えは無効、また`JComponent#setInheritsPopupMenu(true)`で`TabArea`などに設定した`JPopupMenu`が存在すれば右クリックでそれを開くよう設定
+- `TabArea`
+-- `new JScrollPane(tabPanel)`で`TabArea`を作成し、水平`JScrollBar`の増減ボタンやトラックを非表示に設定
+-- [[JComboBoxのドロップダウンリストで使用するJScrollBarを変更する>Swing/ComboBoxScrollBar]]と同様
+--- `JTabbedPane`では`TabArea`に`JViewport`をオーバーライドしたプライベートな`BasicTabbedPaneUI.ScrollableTabViewport`クラスを使用しているので外部から`JScrollBar`などを変更しづらい
+- `JLayer`
+-- `TabArea`に`JLayer`を被せて水平`JScrollBar`の表示・非表示の切り替え、`MouseWheel`によるスクロール機能などを追加
+-- [[JScrollBar上にマウスカーソルが入ったらその幅を拡張する>Swing/ChangeScrollBarWidthOnHover]]
+- `Header`
+-- `JPanel`で`Header`を作成し、`TabArea`に水平`JScrollBar`が表示される場合は非表示タブ一覧を表示するためのメニューボタンと`JLayer`を追加
+-- 隠れているタブが存在しない場合は非表示タブ一覧表示メニューボタンは非表示にする
+-- 隠れているタブが存在するかどうかは`JScrollPane#doLayout()`メソッドをオーバーライドし、水平`JScrollBar`のノブが表示されているかどうかで判断する
+-- 隠れているタブの一覧表示機能は未実装
+
+* 参考リンク [#reference]
+- [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]
+- [[JComboBoxのドロップダウンリストで使用するJScrollBarを変更する>Swing/ComboBoxScrollBar]]
+- [[JScrollBar上にマウスカーソルが入ったらその幅を拡張する>Swing/ChangeScrollBarWidthOnHover]]
+- [[JTabbedPaneのタブエリアレイアウトを変更して一覧表示ボタンなどを追加する>Swing/TabAreaLayout]]
+
+* コメント [#comment]
+#comment
+#comment

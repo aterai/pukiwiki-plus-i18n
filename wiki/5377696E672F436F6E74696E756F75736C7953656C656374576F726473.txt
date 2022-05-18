@@ -91,13 +91,13 @@ class SelectWordCaret extends DefaultCaret {
 -- トリプルクリックで行全体を選択可能
 -- トリプルプレスでは行はまだ選択状態にはならない
 - `setCaret`
--- 以下のようなマウスによる選択動作を実行するため`DefaultCaret#mousePressed(...)`、`DefaultCaret#mouseDragged(...)`メソッドをオーバーライドした`Caret`を作成して、`JTextComponent#setCaret(...)`で設定
+-- 以下のようなマウスによる選択動作を実行するため`DefaultCaret#mousePressed(...)`、`DefaultCaret#mouseDragged(...)`メソッドをオーバーライドした`Caret`を作成して`JTextComponent#setCaret(...)`で設定
 -- ダブルプレスで単語選択後、継続してマウスをドラッグした場合:
 --- 選択範囲内のドラッグでは単語選択状態は変化しない
---- 選択範囲外へのドラッグは現在の単語選択状態は維持したまま、前後の単語まで選択状態を拡張する
+--- 選択範囲外へのドラッグは現在の単語選択状態は維持したまま前後の単語まで選択状態を拡張する
 -- トリプルプレスで行全体を選択後、継続してマウスをドラッグした場合:
 --- 選択範囲内のドラッグでは行選択状態は変化しない
---- 選択範囲外へのドラッグは現在の行選択状態は維持したまま、前後の行まで選択状態を拡張する
+--- 選択範囲外へのドラッグは現在の行選択状態は維持したまま前後の行まで選択状態を拡張する
 
 #code{{
 private void continuouslySelectRows(MouseEvent e) {

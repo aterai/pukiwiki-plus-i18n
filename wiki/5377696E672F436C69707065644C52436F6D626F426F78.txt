@@ -80,7 +80,8 @@ class MultiColumnCellRenderer extends JPanel implements ListCellRenderer {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JLabel`を二つ並べた`JPanel`をレンダラーにすることで`Item`に設定した文字列を左右に表示しています。このため文字列が`JLabel`の推奨サイズより長い場合、自動的にクリップされます。
+- `JLabel`を二つ並べた`JPanel`をセルレンダラーにすることで`Item`に設定した文字列を左右に表示
+- このため左右の文字列が各`JLabel`の推奨サイズより長い場合は自動的に省略表示になる
 
 * 参考リンク [#reference]
 - [[JComboBoxのItemを左右に配置>Swing/LRComboBox]]

@@ -35,7 +35,7 @@ for (ListItem item : selected) {
 }}
 
 * 解説 [#explanation]
-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#HORIZONTAL_WRAP 水平ニュースペーパー・スタイルレイアウト]を設定した`JList`で、アイテム(セル)のタイトル文字列やアイコンのカラーコードでソートを実行
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#HORIZONTAL_WRAP 水平ニュースペーパー・スタイルレイアウト]を設定した`JList`でアイテム(セル)のタイトル文字列やアイコンのカラーコードでソートを実行
 -- `JRadioButton`が選択されると`Comparator<ListItem>`を変更して元リストモデルのストリームから`Stream#sorted(comparator)`を実行してソートされた新規リストモデルを作成している
 -- `JList`デフォルトのセルを垂直方向に`1`列に並べたレイアウトで一種類のソートを行う場合は、ヘッダを非表示にした`JTable`と`RowFilter`で代用可能
 - `Sort`

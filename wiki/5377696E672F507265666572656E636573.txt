@@ -87,7 +87,7 @@ private void saveLocation() {
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/util/prefs/Preferences.html Preferences (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/preferences/overview.html Preferences APIの概要]
--- メモ: `Java 6`の[https://docs.oracle.com/javase/jp/6/technotes/guides/preferences/overview.html Preferences API の概要]にある「`Java` コレクション `API` の設計に関する `FAQ`」は、「`Preferences API` の設計に関する `FAQ`」の間違い
+-- メモ: `Java 6`の[https://docs.oracle.com/javase/jp/6/technotes/guides/preferences/overview.html Preferences API の概要]にある「`Java` コレクション `API` の設計に関する `FAQ`」は「`Preferences API` の設計に関する `FAQ`」の間違い
 -- `Java 8`の「`Preferences API`の概要」で修正済み
 - [[PersistenceServiceを使ってJFrameの位置・サイズを記憶>Swing/PersistenceService]]
 
@@ -95,6 +95,6 @@ private void saveLocation() {
 #comment
 - メモ: [http://sqs.cmr.sfc.keio.ac.jp/tdiary/20070212.html#p01 Preferences APIがJava6上では動かない - 日々是開発: SQS Development(2007-02-12)] -- &user(aterai); &new{2007-06-14 (木) 14:42:00};
 - 最大化した状態で終了すると、`(x, y)`が`(-4, -4)`で記録される。最大化すると、どうやら`Frame.NORMAL`のまま左端に移動してそれから最大扱いになってるようです。だから`componentMoved`が誤爆してる。 -- &user(Tomopy); &new{2007-10-26 (金) 12:20:16};
--- ご指摘ありがとうございます。位置がマイナスの場合は、保存しないほうがよさそうですね。修正しておきます。 -- &user(aterai); &new{2007-10-26 (金) 13:37:15};
+-- ご指摘ありがとうございます。位置がマイナスの場合は保存しないほうがよさそうですね。修正しておきます。 -- &user(aterai); &new{2007-10-26 (金) 13:37:15};
 
 #comment

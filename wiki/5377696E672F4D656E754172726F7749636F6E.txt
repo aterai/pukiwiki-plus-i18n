@@ -53,7 +53,7 @@ class ArrowIcon implements Icon {
 * 解説 [#explanation]
 上記のサンプルでは、`UIManager.put("Menu.arrowIcon", new Icon() {...})`を使用して`JMenu`が使用する`ArrowIcon`を変更しています。
 
-- `Icon#paintIcon(...)`メソッドをオーバーライドし、`JMenu`が選択されている場合は色を変更
+- `Icon#paintIcon(...)`メソッドをオーバーライドして`JMenu`が選択されている場合は色を変更
 #code{{
 if (c instanceof AbstractButton && ((AbstractButton) c).getModel().isSelected()) {
   g2.setPaint(Color.WHITE);

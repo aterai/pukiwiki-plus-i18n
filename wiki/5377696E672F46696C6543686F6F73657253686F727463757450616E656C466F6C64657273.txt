@@ -1,0 +1,57 @@
+---
+category: swing
+folder: FileChooserShortcutPanelFolders
+title: JFileChooserのPlacesBarショートカットの初期値を変更する
+tags: [JFileChooser, WindowsLookAndFeel]
+author: aterai
+pubdate: 2022-02-07T15:34:06+09:00
+description: JFileChooserのPlacesBarショートカットフォルダの初期値をドキュメントからPCに変更します。
+image: https://drive.google.com/uc?id=1u-38lQnqii8nemRJxB3MkP1OoPDrgaZs
+---
+* 概要 [#summary]
+`JFileChooser`の`PlacesBar`ショートカットフォルダの初期値をドキュメントから`PC`に変更します。
+
+#download(https://drive.google.com/uc?id=1u-38lQnqii8nemRJxB3MkP1OoPDrgaZs)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JButton button2 = new JButton("ShellFolder.get(\"fileChooserShortcutPanelFolders\")");
+button2.addActionListener(e -> {
+  JFileChooser chooser = new JFileChooser();
+  chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+  FileSystemView fsv = chooser.getFileSystemView();
+  File[] files = (File[]) ShellFolder.get("fileChooserShortcutPanelFolders");
+  chooser.addHierarchyListener(ev -> {
+    Component c = ev.getComponent();
+    if ((ev.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0 && c.isShowing()) {
+      Class<JToggleButton> clz = JToggleButton.class;
+      descendants(chooser)
+          .filter(clz::isInstance).map(clz::cast)
+          .filter(rb -> fsv.getSystemDisplayName(files[3]).equals(rb.getText()))
+          .findFirst().ifPresent(AbstractButton::doClick);
+    }
+  });
+  chooser.showOpenDialog(getRootPane());
+});
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- `Windows 10`環境で`WindowsLookAndFeel`を適用した`JFileChooser`の`PlacesBar`には「最近使った項目(`Recent`)」、「デスクトップ(`Desktop`)」、「ドキュメント(`Document`)」、「`PC`(`This PC`)」、「ネットワーク(`Network`)」が表示され、デフォルトでは「ドキュメント」が選択状態になっている
+- `System.getenv("SystemDrive")`
+-- `System.getenv("SystemDrive") + File.separatorChar`で`C:\`ドライブの`File`を取得し、その親フォルダを`FileSystemView#getParentDirectory(...)`メソッドで取得
+-- この親フォルダが「`PC`(`This PC`)」となるので`JFileChooser#setCurrentDirectory(...)`で設定してから`JFileChooser`を開く
+-- [https://stackoverflow.com/questions/10524376/how-to-make-jfilechooser-default-to-computer-view-instead-of-my-documents java - How to make JFileChooser Default to Computer View instead of My Documents - Stack Overflow]
+- `ShellFolder.get("fileChooserShortcutPanelFolders")`
+-- `ShellFolder.get("fileChooserShortcutPanelFolders")`でショートカットフォルダ一覧を`File`配列で取得
+-- `PlacesBar`のショートカットは`JToggleButton`で作成されているので`JFileChooser`に`HierarchyListener`を追加してダイアログが表示状態になったらその子コンポーネントを検索
+-- `FileSystemView#getSystemDisplayName(File)`で取得可能なシステム表示名が一致するボタンテキストの`JToggleButton`を発見したら`doClick()`を実行
+-- [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/10524376/how-to-make-jfilechooser-default-to-computer-view-instead-of-my-documents java - How to make JFileChooser Default to Computer View instead of My Documents - Stack Overflow]
+- [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]
+
+* コメント [#comment]
+#comment
+#comment

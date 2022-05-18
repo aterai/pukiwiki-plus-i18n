@@ -45,12 +45,12 @@ class DisableRightButtonSwapLayerUI extends LayerUI<JScrollPane> {
 * 解説 [#explanation]
 上記のサンプルでは、JTableHeaderの列をマウスの右ボタンでドラッグした場合のみ順序変更不可に設定しています。
 
-- 上: `Default`
+- `Default`
 -- 右ボタンでドラッグ可能なので、`JTableHeader`の外部まで列をドラッグしてポップアップメニューを開くと描画が乱れる場合がある
 --- `JPopupMenu#show(...)`メソッドをオーバーライドしてドラッグ中の列をクリア、ヘッダの再描画などを実行して回避する必要がある
 -- 列の入れ替えを禁止する場合は`table.getTableHeader().setReorderingAllowed(false);`を設定する
 --- [[JTableのヘッダ入れ替えを禁止>Swing/Reordering]]
-- 下: `Disable right mouse button reordering`
+- `Disable right mouse button reordering`
 -- `JLayer`を`JTable`を配置した`JScrollPane`に設定
 --- `LayerUI#processMouseMotionEvent(...)`メソッドをオーバーライドし、`JTableHeader`上の右ボタンでのドラッグイベントを消費
 -- マウスの左、中ボタンでのドラッグは有効

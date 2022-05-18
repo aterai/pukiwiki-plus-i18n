@@ -40,7 +40,7 @@ MetalLookAndFeel.setCurrentTheme(new OceanTheme() {
 - `NimbusLookAndFeel`
 -- デフォルトではタイトル文字色は黒、非アクティブタイトル文字色は灰色
 -- `UIManager.put("InternalFrame.activeTitleForeground", Color.RED)`などでの変更は効果がない
--- 以下のように作成した`UIDefaults`を`InternalFrameTitlePane`に`putClientProperty("Nimbus.Overrides", d)`で設定してタイトル文字色を変更可能、非アクティブタイトル文字色は変更できない？
+-- 以下のように作成した`UIDefaults`を`InternalFrameTitlePane`に`putClientProperty("Nimbus.Overrides", d)`で設定してタイトル文字色を変更可能、非アクティブタイトル文字色は変更不可？
 #code{{
 JComponent titleBar = ((BasicInternalFrameUI) getUI()).getNorthPane();
 UIDefaults d = new UIDefaults();

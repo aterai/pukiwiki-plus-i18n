@@ -51,8 +51,8 @@ class Arrow {
 
 * 解説 [#explanation]
 - 矢印として座標原点上に底辺の中央が配置される二等辺三角形を`Path2D`で作成
-- 直線の始点と終点から回転ペクトルを計算して`AffineTransform.getRotateInstance(double vecx, double vecy)`で`AffineTransform`オブジェクトを作成し、`Path2D#transform(AffineTransform)`で矢印を座標原点を中心に回転
-- `AffineTransform.getTranslateInstance(end.getX(), end.getY())`で`AffineTransform`オブジェクトを作成し、`Path2D#transform(AffineTransform)`で直線の終点まで矢印を移動
+- 直線の始点と終点から回転ペクトルを計算して`AffineTransform.getRotateInstance(double vecx, double vecy)`メソッドで`AffineTransform`オブジェクトを作成し、`Path2D#transform(AffineTransform)`メソッドで矢印を座標原点を中心に回転
+- `AffineTransform.getTranslateInstance(end.getX(), end.getY())`メソッドで`AffineTransform`オブジェクトを作成し、`Path2D#transform(AffineTransform)`メソッドで直線の終点まで矢印を移動
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/2027613/how-to-draw-a-directed-arrow-line-in-java drawing - How to draw a directed arrow line in Java? - Stack Overflow]

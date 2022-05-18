@@ -55,8 +55,8 @@ class LocalDateFilter extends RowFilter<TableModel, Integer> {
 
 * 解説 [#explanation]
 - `0`列目に`LocalData`を使用する月カレンダーを`JTable`で作成
-- `0`列目が`LocalData`の場合、指定した開始日と終了日の間に存在する日付だけ表示する`RowFilter`を作成して`TableRowSorter`に設定
--- `LocalData`ではなく`java.util.Date`を使用する場合は、`RowFilter`にデフォルトで用意されている[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.html#dateFilter-javax.swing.RowFilter.ComparisonType-java.util.Date-int...- RowFilter#dateFilter(RowFilter.ComparisonType, Date, int...)]が使用可能
+- `0`列目が`LocalData`の場合指定した開始日と終了日の間に存在する日付だけ表示する`RowFilter`を作成して`TableRowSorter`に設定
+-- `LocalData`ではなく`java.util.Date`を使用する場合は`RowFilter`にデフォルトで用意されている[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.html#dateFilter-javax.swing.RowFilter.ComparisonType-java.util.Date-int...- RowFilter#dateFilter(RowFilter.ComparisonType, Date, int...)]が使用可能
 - フィルタリングのリセットには`TableRowSorter.setRowFilter(null)`を使用
 
 * 参考リンク [#reference]

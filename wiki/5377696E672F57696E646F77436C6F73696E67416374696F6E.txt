@@ -53,12 +53,12 @@ private static class ExitAction extends AbstractAction {
 コンポーネントの親`Window`を取得する場合、`SwingUtilities.getWindowAncestor(...)`などが使用可能ですが、`HeavyWeightWindow`な`JPopupMenu`や`Floating`中の`JToolBar`では親`Window`とは異なる`Window`が使用されるので注意が必要です。
 
 - `JPopupMenu`
--- `JPopupMenu#getInvoker()`を使って、`JComponent#setComponentPopupMenu(popup)`で設定したコンポーネントを取得し、`SwingUtilities.getWindowAncestor(...)`で、親`Window`を取得
+-- `JPopupMenu#getInvoker()`を使用して`JComponent#setComponentPopupMenu(popup)`で設定したコンポーネントを取得し、`SwingUtilities.getWindowAncestor(...)`メソッドで親`Window`を取得
 - `JMenuBar`
--- `SwingUtilities.getWindowAncestor(...)`で、自身の親`Window`を取得
+-- `SwingUtilities.getWindowAncestor(...)`メソッドで自身の親`Window`を取得
 - `JToolBar`
--- 移動中の場合、`JComponent#setComponentPopupMenu(toolbar)`で取得した移動中の`Window`の親`Window`を`Window#getOwner()`で取得
--- 移動中では無い場合、`SwingUtilities.getWindowAncestor(toolbar)`で、自身の親`Window`を取得
+-- 移動中の場合、`JComponent#setComponentPopupMenu(toolbar)`メソッドで取得した移動中の`Window`の親`Window`を`Window#getOwner()`で取得
+-- 移動中では無い場合、`SwingUtilities.getWindowAncestor(toolbar)`メソッドで自身の親`Window`を取得
 
 * 参考リンク [#reference]
 - [[JFrameの終了をキャンセル>Swing/WindowClosing]]

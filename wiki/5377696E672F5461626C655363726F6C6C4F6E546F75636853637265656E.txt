@@ -97,7 +97,6 @@ class TableTouchScreenHandler extends MouseAdapter implements ListSelectionListe
 - タッチがドラッグではなくセル編集開始の場合はスクロール開始を実行しない
 -- 編集終了のタッチの場合でもスクロールが開始されないようにするため、編集開始時点で移動量を`0`に設定する必要がある
 -- この設定をしない場合、例えば`0`列`0`行目のセルを編集状態にしたあと`2`列`10`行目のチェックボックスをタッチすると自動スクロールが開始されてしまう
-- 以上、`Surface Pro 3`で確認
 
 * 参考リンク [#reference]
 - [[JTableをスクロールバー無しのドラッグでスクロールする>Swing/HandDragScrollableTable]]

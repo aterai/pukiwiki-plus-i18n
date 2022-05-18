@@ -51,39 +51,38 @@ JComboBox<String> combo = new JComboBox<String>(model) {
 -- `ListCellRenderer`で余白を指定
 
 ----
-以下は`JComboBox`が編集可の場合のテストです。
 
-- `1`: テキストフィールドの元`Border` + 任意の`Border`で余白を設定
+- `1`: `JComboBox`が編集可 + テキストフィールドの元`Border` + 任意の`Border`で余白を設定
 -- `editor.setBorder(BorderFactory.createCompoundBorder(editor.getBorder(), padding));`
 -- `JComboBox#getEditor()#getEditorComponent()`で取得した`JTextField`に余白を指定
 -- `JDK 1.5`では余白を指定しても反映されない
 -- `JDK 1.6`では取得した`JTextFieldをsetOpaque(true)`としないと背景色は反映されない
 
-- `2`: テキストフィールドの元`Border`は無視して任意の`Border`のみで余白を設定
+- `2`: `JComboBox`が編集可 + テキストフィールドの元`Border`は無視して任意の`Border`のみで余白を設定
 -- `editor.setBorder(padding);`
 -- `JComboBox#getEditor()#getEditorComponent()`で取得した`JTextField`に余白を指定
 -- `MetalLookAndFeel`でテキストフィールドの枠が描画できない
 
 ----
 
-- `3`: テキストフィールドの`Insets` + `5`ピクセル余白を設定
+- `3`: `JComboBox`が編集可 + テキストフィールドの`Insets` + `5`ピクセル余白を設定
 -- `editor.setMargin(new Insets(i.top,i.left+5,i.bottom,i.right));`
 -- `MetalLookAndFeel`、`MotifLookAndFeel`、`WindowsLookAndFeel`などでは無効
 -- `NimbusLookAndFeel`では有効だが`JComboBox`の高さなども変化してしまう
 
-- `4`: テキストフィールドの`Margin` + `5`ピクセル余白を設定
+- `4`: `JComboBox`が編集可 + テキストフィールドの`Margin` + `5`ピクセル余白を設定
 -- `editor.setMargin(new Insets(m.top,m.left+5,m.bottom,m.right));`
 -- `MetalLookAndFeel`、`MotifLookAndFeel`、`WindowsLookAndFeel`などでは無効
 -- `NimbusLookAndFeel`では有効
 
 ----
 
-- `5`: `JComboBox`の`Border` + 任意の`Border`で余白を`JComboBox`自身に設定
+- `5`: `JComboBox`が編集可 + `JComboBox`の`Border` + 任意の`Border`で余白を`JComboBox`自身に設定
 -- `JComboBox#setBorder()`で元の`Border`の内側に余白を指定
 -- `WindowsLookAndFeel`、`MotifLookAndFeel`で有効？
 -- `MetalLookAndFeel`、`NimbusLookAndFeel`では`JComboBox`の外側に余白が付く
 
-- `6`: `JComboBox`の`Border` + 任意の`Border`で余白を`JComboBox`自身に設定
+- `6`: `JComboBox`が編集可 + `JComboBox`の`Border` + 任意の`Border`で余白を`JComboBox`自身に設定
 -- `JComboBox#setBorder()`で元の`Border`の外側に余白を指定
 -- `WindowsLookAndFeel`で余計な枠が表示される？
 

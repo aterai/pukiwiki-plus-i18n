@@ -19,20 +19,25 @@ hreflang:
 * サンプルコード [#sourcecode]
 #code(link){{
 class TextAreaOutputStream extends OutputStream {
-  private final ByteArrayOutputStream buf = new ByteArrayOutputStream();
+  private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
   private final JTextArea textArea;
-  public TextAreaOutputStream(JTextArea textArea) {
+
+  protected TextAreaOutputStream(JTextArea textArea) {
     super();
     this.textArea = textArea;
   }
 
   @Override public void flush() throws IOException {
-    textArea.append(buf.toString("UTF-8"));
-    buf.reset();
+    textArea.append(buffer.toString("UTF-8"));
+    buffer.reset();
   }
 
-  @Override public void write(int b) throws IOException {
-    buf.write(b);
+  @Override public void write(int b) {
+    buffer.write(b);
+  }
+
+  @Override public void write(byte[] b, int off, int len) {
+    buffer.write(b, off, len);
   }
 }
 }}

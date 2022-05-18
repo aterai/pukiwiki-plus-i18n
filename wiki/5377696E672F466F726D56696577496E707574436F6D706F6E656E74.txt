@@ -1,0 +1,120 @@
+---
+category: swing
+folder: FormViewInputComponent
+title: HTMLEditorKitを適用したJEditorPaneのフォームにコンポーネントを表示する
+tags: [JEditorPane, HTMLEditorKit]
+author: aterai
+pubdate: 2022-03-07T01:49:33+09:00
+description: HTMLEditorKitを適用したJEditorPaneのフォームにinputやselectタグで表示可能なコンポーネントをテストします。
+image: https://drive.google.com/uc?id=1GjiSPlLuu6chdSwJIj4-lLAAyPrSXsT-
+---
+* 概要 [#summary]
+`HTMLEditorKit`を適用した`JEditorPane`のフォームに`input`や`select`タグで表示可能なコンポーネントをテストします。
+
+#download(https://drive.google.com/uc?id=1GjiSPlLuu6chdSwJIj4-lLAAyPrSXsT-)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JEditorPane editor = new JEditorPane();
+HTMLEditorKit kit = new HTMLEditorKit();
+kit.setAutoFormSubmission(false);
+editor.setEditorKit(kit);
+editor.setEditable(false);
+editor.addHyperlinkListener(e -> {
+  if (e instanceof FormSubmitEvent) {
+    String data = ((FormSubmitEvent) e).getData();
+    String charset = Charset.defaultCharset().toString();
+    try {
+      System.out.println(URLDecoder.decode(data, charset));
+    } catch (UnsupportedEncodingException ex) {
+      UIManager.getLookAndFeel().provideErrorFeedback(editor);
+      ex.printStackTrace();
+    }
+  }
+});
+editor.setText(makeHtml());
+// ...
+private static String makeHtml() {
+  ClassLoader cl = Thread.currentThread().getContextClassLoader();
+  String path = "example/16x16.png";
+  String src = Optional.ofNullable(cl.getResource(path)).map(URL::toString).orElse("not found");
+  // https://docs.oracle.com/javase/8/docs/api/javax/swing/text/html/FormView.html
+  return String.join(
+      "\n",
+      "<html><body><form id='form1' action='#'>",
+      "<div>Username: <input type='text' id='username' name='username'></div>",
+      "<div>Password: <input type='password' id='password' name='password'></div>",
+      "<input type='submit' value='Submit'>",
+      "</form><br/><hr/>",
+      "<form id='form2' action='#'>",
+      "<div>button: <input type='button' value='JButton'></div>",
+      "<div>checkbox: <input type='checkbox' id='checkbox1' name='checkbox1'></div>",
+      "<div>image: <input type='image' id='image1' name='image1' src='" + src + "'></div>",
+      "<div>password: <input type='password' id='password1' name='password1'></div>",
+      "<div>radio: <input type='radio' id='radio1' name='radio1'></div>",
+      "<div>reset: <input type='reset' id='reset1' name='reset1'></div>",
+      "<div>submit: <input type='submit' id='submit1' name='submit1'></div>",
+      "<div>text: <input type='text' id='text1' name='text1'></div>",
+      "<div>file: <input type='file' id='file1' name='file1'></div>",
+      "</form><br/><hr/>",
+      "<form id='form3' action='#'>",
+      "<div><select name='select1' size='5' multiple>",
+      "  <option value='' selected='selected'>selected</option>",
+      "  <option value='option1'>option1</option>",
+      "  <option value='option2'>option2</option>",
+      "</select></div><br/>",
+      "<div><select name='select2'>",
+      "  <option value='option0'>option0</option>",
+      "  <option value='option1'>option1</option>",
+      "  <option value='option2'>option2</option>",
+      "</select></div><br/>",
+      "<div><textarea name='textarea1' cols='50' rows='5'></div>",
+      "</form>",
+      "</body></html>");
+}
+}}
+
+* 解説 [#explanation]
+- `<input type='button' ...>`
+-- %%`JButton`が使用される%% 空白になる
+-- `type`属性が`button`の場合はドキュメントに記述されているがソースコードでは実装されていない
+- `<input type='checkbox' ...>`
+-- `JCheckBox`が使用される
+-- `checked`属性で選択状態になる
+- `<input type='radio' ...>`
+-- `JRadioButton`が使用される
+-- `checked`属性で選択状態になる
+- `<input type='image' ...>`
+-- `JButton`が使用される
+-- `src`属性で画像ファイルの`URL`が指定可能
+-- クリック座標が取得可能
+- `<input type='password' ...>`
+-- `JPasswordField`が使用される
+- `<input type='text' ...>`
+-- `JTextField`が使用される
+- `<input type='reset' ...>`
+-- `JButton`が使用される
+-- `value`属性でボタンラベルが変更可能
+- `<input type='submit' ...>`
+-- `JButton`が使用される
+-- `value`属性でボタンラベルが変更可能
+- `<input type='file' ...>`
+-- `JTextField`と`JButton`が使用される
+-- `JButton`をクリックすると`JFileChooser`が開き、選択したファイルのフルパスが`JTextField`に表示される
+- `<select ...>`
+-- `size`属性が`1`以上、または`multiple`属性が存在する場合は`JScrollPane`内に配置された`JList`が使用される
+- `<select ...>`
+-- `size`属性が`1`、または存在しない場合は`JComboBox`が使用される
+- `<textarea ...>`
+-- `JScrollPane`内に配置された`JTextArea`が使用される
+-- `rows`、`cols`属性で`JTextArea`の行数と列数を指定可能
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/FormView.html FormView (Java Platform SE 8 )]
+-- 日本語ドキュメントでは`select`要素、`size`属性、`multiple`属性などが次のように翻訳されてしまい少しわかりづらい
+--「選択、サイズは> 1、または複数の属性を定義」
+- [[JEditorPaneに表示されたフォームからの送信データを取得する>Swing/FormSubmitEvent]]
+
+* コメント [#comment]
+#comment
+#comment

@@ -1,0 +1,84 @@
+---
+category: swing
+folder: DragDropEndNewFrame
+title: JTabbedPaneのタブがフレーム外にドロップされたら新規JFrameを作成する
+tags: [JTabbedPane, DragAndDrop, JFrame]
+author: aterai
+pubdate: 2022-02-14T02:16:38+09:00
+description: JTabbedPaneのタブをドラッグしてフレーム外にドロップされたら新規JFrameとそのタブを配置したJTabbedPaneを作成します。
+image: https://drive.google.com/uc?id=1q7P74R90Zr4SF7HSk3SnhVhHaj5tap4P
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2022/02/create-new-jframe-when-jtabbedpane-tab.html
+    lang: en
+---
+* 概要 [#summary]
+`JTabbedPane`のタブをドラッグしてフレーム外にドロップされたら新規`JFrame`とそのタブを配置した`JTabbedPane`を作成します。
+
+#download(https://drive.google.com/uc?id=1q7P74R90Zr4SF7HSk3SnhVhHaj5tap4P)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class TabDragSourceListener implements DragSourceListener {
+  @Override public void dragEnter(DragSourceDragEvent e) {
+    e.getDragSourceContext().setCursor(DragSource.DefaultMoveDrop);
+  }
+
+  @Override public void dragExit(DragSourceEvent e) {
+    e.getDragSourceContext().setCursor(DragSource.DefaultMoveNoDrop);
+  }
+
+  @Override public void dragDropEnd(DragSourceDropEvent e) {
+    Component c = e.getDragSourceContext().getComponent();
+    JRootPane root = ((JComponent) c).getRootPane();
+    Class<GhostGlassPane> clz = GhostGlassPane.class;
+    Optional.ofNullable(root.getGlassPane())
+        .filter(clz::isInstance).map(clz::cast)
+        .ifPresent(p -> p.setVisible(false));
+    boolean dropSuccess = e.getDropSuccess();
+    Window w = SwingUtilities.getWindowAncestor(c);
+    boolean outOfFrame = !w.getBounds().contains(e.getLocation());
+    if (dropSuccess && outOfFrame && c instanceof DnDTabbedPane) {
+      DnDTabbedPane src = (DnDTabbedPane) c;
+      int index = src.dragTabIndex;
+      final Component cmp = src.getComponentAt(index);
+      final Component tab = src.getTabComponentAt(index);
+      final String title = src.getTitleAt(index);
+      final Icon icon = src.getIconAt(index);
+      final String tip = src.getToolTipTextAt(index);
+      src.remove(index);
+      DnDTabbedPane tabs = new DnDTabbedPane();
+      tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+      tabs.addTab(title, icon, cmp, tip);
+      tabs.setTabComponentAt(0, tab);
+      JFrame frame = new JFrame();
+      frame.getContentPane().add(tabs);
+      frame.setSize(320, 240);
+      frame.setLocation(e.getLocation());
+      frame.setVisible(true);
+    }
+  }
+
+  @Override public void dropActionChanged(DragSourceDragEvent e) {
+    /* not needed */
+  }
+
+  @Override public void dragOver(DragSourceDragEvent e) {
+    /* not needed */
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `DragSourceListener#dragDropEnd(DragSourceDropEvent e)`をオーバーライドしてタブのドロップが終了したとき、その位置が`JTabbedPane`の親`JFrame`の範囲外の場合新規に`JFrame`と`JTabbedPane`を作成しタブの中身を移動する
+- KBD{ESC}キーやマウスの右クリックによるドロップのキャンセルに対応するため、`MimeType`が`DataFlavor.javaJVMLocalObjectMimeType`の`DataFlavor`だけではなくファイルリスト対応の`DataFlavor.javaFileListFlavor`もドロップ可能に設定し、親`JFrame`にタブがドロップされたら空ファイルリストをコピー(空なので実際は何もコピーしない)してドロップが成功したと見せかけている
+-- 空ファイルリストをコピーでドロップが成功したら新規`JFrame`を作成してタブをコピーし、ドラッグ元からタブを削除
+-- ドラッグ中にKBD{ESC}キーなどでドロップがキャンセルされたら`DragSourceDropEvent#getDropSuccess()`が`false`になるので、この場合は何もせずにドラッグ終了
+- タブのドロップ先のアプリケーションが空ファイルのドロップに対応している場合、そのアプリケーションが新規`JFrame`より手前に表示されることがある
+- ファイルのドロップが不可のアプリケーション上では新規`JFrame`を作成できない
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのタブをドラッグ＆ドロップ>Swing/DnDTabbedPane]]
+
+* コメント [#comment]
+#comment
+#comment

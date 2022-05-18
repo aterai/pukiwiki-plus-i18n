@@ -45,7 +45,8 @@ class RowComparator implements Comparator<String> {
 }}
 
 * 解説 [#explanation]
-- `Comparator<String>#compare(...)`をオーバーライドして、昇順の場合は「空文字列 < 文字列」、降順の場合は、「空文字列 > 文字列」として、常に空文字列以外が優先される`Comparator`を作成して`TableRowSorter#setComparator(...)`ですべての列に設定
+- `Comparator<String>#compare(...)`をオーバーライドして、昇順の場合は「空文字列 < 文字列」、降順の場合は「空文字列 > 文字列」として常に空文字列以外が優先される`Comparator`を作成
+-- この`Comparator`を`TableRowSorter#setComparator(...)`ですべての列に設定
 -- `JTable`のソートでは`null`は内部でふるい落とされてしまう
 --- `@Override public int compare(String a, String b)`の引数`a`、`b`が`null`になることはない
 -- 空文字列ではなく`null`が設定されている場合、表示上は同一だが降順ソートすると`null`が先頭にきてしまう

@@ -51,7 +51,8 @@ map.put(FilePane.ACTION_CHANGE_TO_PARENT_DIRECTORY, getChangeToParentDirectoryAc
 // sun.swing.FilePane.ACTION_VIEW_DETAILS      = "viewTypeDetails";
 }}
 
-- `JFileChooser`の子で`UIManager.getIcon("FileChooser.detailsViewIcon")`アイコンが設定されている`JToggleButton`を検索、`doClick()`することで`List`から`DetailsView`(詳細)に切り替え
+- `MetalLookAndFeel`などの`JFileChooser`の子で`UIManager.getIcon("FileChooser.detailsViewIcon")`アイコンが設定されている`JToggleButton`を検索、`doClick()`することで`List`から`DetailsView`(詳細)に切り替え
+-- `WindowsLookAndFeel`での`JFileChooser`の`DetailsView`切り替えは`JRadioButtonMenuItem`なのでこの方法は使用不可
 
 #code{{
 // searchAndClick(chooser, UIManager.getIcon("FileChooser.detailsViewIcon"));

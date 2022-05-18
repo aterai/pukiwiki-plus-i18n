@@ -35,10 +35,10 @@ try {
 -- 親フレームの外に`JToolTip`がはみ出す場合は、正常に表示される
 -- %%`ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);`では効果なし？%%
 - `222...`(右)
--- 正常に表示されるように、常に、`JToolTip`を重量コンポーネントとして表示している
--- `PopupFactory`クラスの`forceHeavyWeightPopupKey`をリフレクションで取得して、`JComponent#putClientProperty`メソッドで設定
+-- 正常に表示されるように常に`JToolTip`を重量コンポーネントとして表示している
+-- `PopupFactory`クラスの`forceHeavyWeightPopupKey`をリフレクションで取得して`JComponent#putClientProperty`メソッドで設定
 -- [https://community.oracle.com/thread/1357949 Swing - ComboBox scroll and selected/highlight on glasspane]の`GlassPane`で`JComboBox`のポップアップを正常に表示する方法を引用
--- `ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);`としておかないと前面に表示されない環境がある？
+-- `ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);`を設定しないと前面に表示されない環境がある？
 
 ----
 - `JDK 1.7.0`から`javax.swing.PopupFactory.forceHeavyWeightPopupKey`が無くなってしまったので、以下のように
@@ -52,7 +52,7 @@ combo.putClientProperty(field.get(null), Boolean.TRUE);
 }}
 
 ----
-- `JDK 1.9.0`以降では、以下のようなコードで`Popup`を常に`HeavyWeight`で開くことが可能になった
+- `Java 9`以降では以下のようなコードで`Popup`を常に`HeavyWeight`で開くことが可能になった
 -- [https://bugs.openjdk.java.net/browse/JDK-8147521 JDK-8147521 macosx Internal API Usage: setPopupType used to force creation of heavyweight popup - Java Bug System]
 
 #code{{

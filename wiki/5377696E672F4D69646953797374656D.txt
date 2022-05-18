@@ -16,20 +16,37 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTP2Xw5rXI/AAAAAAAAAeo/3v
 * サンプルコード [#sourcecode]
 #code(link){{
 URL url = getClass().getResource("Mozart_toruko_k.mid");
-Sequencer sequencer;
-try {
-  Sequence s = MidiSystem.getSequence(url);
-  sequencer  = MidiSystem.getSequencer();
-  sequencer.open();
-  sequencer.setSequence(s);
-} catch (Exception ex) {
-  ex.printStackTrace();
-  return;
-}
-startButton = new JButton(new AbstractAction("start") {
-  @Override public void actionPerformed(ActionEvent e) {
-    sequencer.start();
+URL url = getClass().getResource("Mozart_toruko_k.mid");
+SwingWorker<Void, Long> worker = new SwingWorker<Void, Long>() {
+  private long tickPos;
+  @Override protected Void doInBackground() throws InterruptedException {
+    try (Sequencer sequencer = MidiSystem.getSequencer()) {
+      sequencer.open();
+      sequencer.setSequence(MidiSystem.getSequence(url));
+      sequencer.addMetaEventListener(e -> {
+        if (e.getType() == END_OF_TRACK) {
+          publish(0L);
+        }
+      });
+      EventQueue.invokeLater(() -> addListener(sequencer));
+      while (sequencer.isOpen()) {
+        updateTickPosition(sequencer);
+      }
+    } catch (InvalidMidiDataException | MidiUnavailableException | IOException ex) {
+      ex.printStackTrace();
+      publish(0L);
+    } finally {
+      System.out.println("try-with-resources: AutoCloseable");
+    }
+    return null;
   }
+  // ...
+
+JButton start = new JButton("start");
+start.addActionListener(e -> {
+  sequencer.setTickPosition(tickPos);
+  sequencer.start();
+  initButtons(false);
 });
 }}
 

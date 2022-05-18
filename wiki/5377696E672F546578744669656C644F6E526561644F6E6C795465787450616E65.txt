@@ -15,13 +15,14 @@ image: https://lh4.googleusercontent.com/-N1aQ1F9Zrn8/UReetdvfWQI/AAAAAAAABdc/9J
 
 * サンプルコード [#sourcecode]
 #code(link){{
-void insertQuestion(final JTextPane textPane, String str) {
+private static void insertQuestion(JTextPane textPane, String str) {
   Document doc = textPane.getDocument();
   try {
     doc.insertString(doc.getLength(), str, null);
-    final int pos = doc.getLength();
+
+    int pos = doc.getLength();
     System.out.println(pos);
-    final JTextField field = new JTextField(4) {
+    JTextField field = new JTextField(4) {
       @Override public Dimension getMaximumSize() {
         return getPreferredSize();
       }
@@ -33,9 +34,15 @@ void insertQuestion(final JTextPane textPane, String str) {
           Rectangle rect = textPane.modelToView(pos);
           rect.grow(0, 4);
           rect.setSize(field.getSize());
+          // System.out.println(rect);
+          // System.out.println(field.getLocation());
           textPane.scrollRectToVisible(rect);
         } catch (BadLocationException ex) {
-          ex.printStackTrace();
+          // should never happen
+          RuntimeException wrap = new StringIndexOutOfBoundsException(
+              ex.offsetRequested());
+          wrap.initCause(ex);
+          throw wrap;
         }
       }
     });
@@ -43,14 +50,19 @@ void insertQuestion(final JTextPane textPane, String str) {
     int baseline = field.getBaseline(d.width, d.height);
     field.setAlignmentY(baseline / (float) d.height);
 
-    SimpleAttributeSet a = new SimpleAttributeSet();
+    // MutableAttributeSet a = new SimpleAttributeSet();
+    MutableAttributeSet a = textPane.getStyle(StyleContext.DEFAULT_STYLE);
     StyleConstants.setLineSpacing(a, 1.5f);
     textPane.setParagraphAttributes(a, true);
 
     textPane.insertComponent(field);
     doc.insertString(doc.getLength(), "\n", null);
-  } catch (BadLocationException e) {
-    e.printStackTrace();
+  } catch (BadLocationException ex) {
+    // should never happen
+    RuntimeException wrap = new StringIndexOutOfBoundsException(
+        ex.offsetRequested());
+    wrap.initCause(ex);
+    throw wrap;
   }
 }
 }}

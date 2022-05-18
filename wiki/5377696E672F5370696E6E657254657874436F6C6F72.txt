@@ -16,19 +16,17 @@ image: https://lh6.googleusercontent.com/-kpruQCgOnLE/UX2r6exfrII/AAAAAAAABqo/JZ
 * サンプルコード [#sourcecode]
 #code(link){{
 JButton nb = createArrowButton(SwingConstants.NORTH);
-nb.addActionListener(new ActionListener() {
-  @Override public void actionPerformed(ActionEvent e) {
-    e.setSource(comboBox);
-    comboBox.getActionMap().get("selectPrevious2").actionPerformed(e);
-  }
+nb.addActionListener(e -> {
+  e.setSource(comboBox);
+  comboBox.getActionMap().get("selectPrevious2").actionPerformed(e);
 });
+
 JButton sb = createArrowButton(SwingConstants.SOUTH);
-sb.addActionListener(new ActionListener() {
-  @Override public void actionPerformed(ActionEvent e) {
-    e.setSource(comboBox);
-    comboBox.getActionMap().get("selectNext2").actionPerformed(e);
-  }
+sb.addActionListener(e -> {
+  e.setSource(comboBox);
+  comboBox.getActionMap().get("selectNext2").actionPerformed(e);
 });
+
 Box box = Box.createVerticalBox();
 box.add(nb);
 box.add(sb);

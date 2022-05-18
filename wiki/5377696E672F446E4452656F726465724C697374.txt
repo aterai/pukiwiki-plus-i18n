@@ -25,6 +25,7 @@ class ListItemTransferHandler extends TransferHandler {
     super();
     localObjectFlavor = new DataFlavor(List.class, "List of items");
   }
+
   @Override protected Transferable createTransferable(JComponent c) {
     JList<?> source = (JList<?>) c;
     indices = source.getSelectedIndices();
@@ -33,9 +34,11 @@ class ListItemTransferHandler extends TransferHandler {
       @Override public DataFlavor[] getTransferDataFlavors() {
         return new DataFlavor[] {localObjectFlavor};
       }
+
       @Override public boolean isDataFlavorSupported(DataFlavor flavor) {
         return Objects.equals(localObjectFlavor, flavor);
       }
+
       @Override public Object getTransferData(DataFlavor flavor)
           throws UnsupportedFlavorException, IOException {
         if (isDataFlavorSupported(flavor)) {
@@ -46,12 +49,15 @@ class ListItemTransferHandler extends TransferHandler {
       }
     };
   }
+
   @Override public boolean canImport(TransferSupport info) {
     return info.isDrop() && info.isDataFlavorSupported(localObjectFlavor);
   }
+
   @Override public int getSourceActions(JComponent c) {
     return TransferHandler.MOVE; // TransferHandler.COPY_OR_MOVE;
   }
+
   @SuppressWarnings("unchecked")
   @Override public boolean importData(TransferHandler.TransferSupport info) {
     TransferHandler.DropLocation tdl = info.getDropLocation();
@@ -83,10 +89,12 @@ class ListItemTransferHandler extends TransferHandler {
     }
     return false;
   }
+
   @Override protected void exportDone(
       JComponent c, Transferable data, int action) {
     cleanup(c, action == TransferHandler.MOVE);
   }
+
   private void cleanup(JComponent c, boolean remove) {
     if (remove && Objects.nonNull(indices)) {
       // If we are moving items around in the same list, we
@@ -126,12 +134,12 @@ list.setDragEnabled(true);
 - `importData`
 -- 使用されていない？`importString(...)`の内容をこちらに移動
 - `cleanup`
--- 例えば、項目`0`,`1`,`2`を複数選択して、`1`と`2`の間にドロップすると、`1`,`2`,`2`になるので、以下のように修正
+-- 例えば、項目`0, 1, 2`を複数選択して`1`と`2`の間にドロップすると`1, 2, 2`になる(`0`が消えて`2`になる)ので、以下のように修正
 #code{{
 for (int i = 0; i < indices.length; i++) {
   //　if (indices[i] > addIndex) {
   if (indices[i] >= addIndex) {
-//　...
+  //　...
 }}
 
 ----

@@ -38,7 +38,7 @@ scroll.getVerticalScrollBar().getModel().addChangeListener(e -> {
 * 解説 [#explanation]
 上記のサンプルでは、`JEditorPane`を配置した`JScrollPane`の縦`ScrollBar`に`ChangeListener`を設定し、表示状態になったリンクと同名の`JTree`ノードを検索して選択します。
 
-- リンクが表示されているかは`HTMLDocument#getIterator(HTML.Tag.A)`で取得した`<a>`タグの先頭位置が`JEditorPane#getVisibleRect()`で取得した表示範囲に含まれるかで判断
+- リンクが表示されているかは`HTMLDocument#getIterator(HTML.Tag.A)`で取得した`<a>`タグの先頭位置が`JEditorPane#getVisibleRect()`で取得した表示範囲に含まれるかで判断する
 - `JTree`側にはノードをマウスクリックなどで選択したら`JEditorPane#scrollToReference(ref)`でそのリンクまでスクロールする`TreeSelectionListener`を追加しているので、`JEditorPane`側からのノード選択を実行する場合はその`TreeSelectionListener`が反応しないよう設定する必要がある
 #code{{
 tree.addTreeSelectionListener(e -> {

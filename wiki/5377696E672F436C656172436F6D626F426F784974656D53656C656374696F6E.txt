@@ -16,7 +16,7 @@ image: https://drive.google.com/uc?id=1ytLrgrvvfQGy-YNgOPiY67cT8EaLV1yHoA
 * サンプルコード [#sourcecode]
 #code(link){{
 combo.setSelectedIndex(-1);
-//or: combo.setSelectedItem(null);
+// or: combo.setSelectedItem(null);
 }}
 
 
@@ -26,9 +26,9 @@ combo.setSelectedIndex(-1);
 - [https://bugs.openjdk.java.net/browse/JDK-4180057 JDK-4180057 JComboBox needs to document that setSelectedIndex( -1 ) means no selection - Java Bug System]
 -- `JComboBox#setSelectedIndex(-1)`で選択状態がクリアされるのは当初からの仕様だが、ドキュメントに記述されたのは`1.4.0`からになる(日本語版は`1.7.0`から)
 - `JComboBox`のアイテム選択の初期状態:
--- 項目数`== 0`の場合は、`-1`
--- 項目数`> 0`の場合は、`0`
-- `-1`以外の負の値は範囲外となり、例外が発生する:
+-- 項目数が`== 0`の場合は`-1`
+-- 項目数が`> 0`の場合は`0`
+- `-1`以外の負の値は範囲外となり例外が発生する
 -- `java.lang.IllegalArgumentException: setSelectedIndex: -2 out of bounds`
 
 * 参考リンク [#reference]

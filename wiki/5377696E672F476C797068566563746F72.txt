@@ -88,14 +88,11 @@ class WrappedLabel extends JLabel {
 ----
 - ラベルの幅ではなく任意の場所で文字列を改行したい場合は、以下のように`JLabel`に`html`の`<br>`タグを利用したり、編集不可にした`JTextPane`、`JTextArea`などが使用可能
 -- 参考: [[JTextPane、JLabelなどで複数行を表示>Swing/MultiLineLabel]]
-
 #code{{
 label.setText("<html>文字列を適当なところで<br />折り返す。");
 }}
 
-----
 - `AttributedString`と`LineBreakMeasurer`を使って文字列の折り返しを描画する方法もある
-
 #code{{
 class WrappingLabel extends JLabel {
   public WrappingLabel(String text) {

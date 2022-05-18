@@ -17,6 +17,7 @@ image: https://lh6.googleusercontent.com/-PyOW5DW5kHU/T3APD_Cq_bI/AAAAAAAABKk/i9
 #code(link){{
 class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
   private final WindowState windowState;
+
   public LoadSaveTask(WindowState windowState) {
     super();
     this.windowState = windowState;
@@ -50,6 +51,7 @@ class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
       };
     }
   }
+
   private static void loadWindowState(
       PersistenceService ps, URL codebase, WindowState windowState) {
     try {
@@ -70,6 +72,7 @@ class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
       }
     }
   }
+
   private static void saveWindowState(
       PersistenceService ps, URL codebase, WindowState windowState) {
     try {
@@ -93,7 +96,7 @@ class LoadSaveTask extends SwingWorker<WindowAdapter, Void> {
 上記のサンプルでは、`JFrame`の位置とサイズを`PersistenceService`で確保したファイルに`XMLEncoder`で保存、`XMLDecoder`でそのファイルから値を復元しています。
 
 ----
-`Windows`環境では、`C:\Users\(user)\AppData\LocalLow\Sun\Java\Deployment\cache\6.0\muffin`以下に`muf`ファイルが作成されるようです。
+- `Windows`環境では`C:\Users\(user)\AppData\LocalLow\Sun\Java\Deployment\cache\6.0\muffin`以下に次のような`muf`ファイルが作成される
 
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>

@@ -44,7 +44,7 @@ JProgressBar bar = new JProgressBar(model) {
 
 - `JProgressBar#setStringPainted(true)`を同時に使用すると`2`重に表示される
 - 進捗状況に応じた文字色の変化には対応していない
-- `NimbusLookAndFeel`の場合、`TitledBorder`などを直接`JProgressBar`に設定しても進捗文字列の垂直位置がずれない
+- `NimbusLookAndFeel`を適用した`JProgressBar`に`TitledBorder`を設定するとデフォルトの`JProgressBar#setStringPainted(true)`で表示される進捗文字列の垂直位置がずれる場合がある
 
 * 参考リンク [#reference]
 - [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]

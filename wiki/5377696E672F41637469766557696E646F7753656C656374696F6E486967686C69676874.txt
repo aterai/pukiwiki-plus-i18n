@@ -1,0 +1,69 @@
+---
+category: swing
+folder: ActiveWindowSelectionHighlight
+title: JFrameがアクティブであるかどうかでテキスト選択ハイライト色を変更する
+tags: [JFrame, Window, JTextComponent, Caret, Focus]
+author: aterai
+pubdate: 2021-11-01T01:06:05+09:00
+description: JFrameがアクティブであるかどうかでその子JTextComponentのテキスト選択ハイライトの背景色を変更します。
+image: https://drive.google.com/uc?id=1sOHrYiRZV6ufD9BL06qPXjPKbq61R7ge
+---
+* 概要 [#summary]
+`JFrame`がアクティブであるかどうかでその子`JTextComponent`のテキスト選択ハイライトの背景色を変更します。
+
+#download(https://drive.google.com/uc?id=1sOHrYiRZV6ufD9BL06qPXjPKbq61R7ge)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class FocusOwnerCaret extends DefaultCaret {
+  private static final Color COLOR = Color.GRAY.brighter();
+  private static final HighlightPainter NO_FOCUS_PAINTER = new DefaultHighlightPainter(COLOR);
+
+  @Override public void focusLost(FocusEvent e) {
+    super.focusLost(e);
+    updateSelectionHighlightPainter();
+  }
+
+  @Override public void focusGained(FocusEvent e) {
+    super.focusGained(e);
+    updateSelectionHighlightPainter();
+  }
+
+  private void updateSelectionHighlightPainter() {
+    setSelectionVisible(false); // removeHighlight
+    setSelectionVisible(true); // addHighlight
+  }
+
+  @Override protected Highlighter.HighlightPainter getSelectionPainter() {
+    JTextComponent c = getComponent();
+    Container w = c.getTopLevelAncestor();
+    // boolean isFocused = w instanceof Window && ((Window) w).isFocused();
+    boolean isActive = w instanceof Window && ((Window) w).isActive();
+    return c.hasFocus() && isActive ? super.getSelectionPainter() : NO_FOCUS_PAINTER;
+    // https://ateraimemo.com/Swing/CaretSelectionHighlight.html
+    // return c.hasFocus() ? super.getSelectionPainter() : NO_FOCUS_PAINTER;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- フォーカスが同じ`JFrame`内の別コンポーネントに移動するとテキスト選択ハイライトは非表示になる
+-- 別アプリケーションのフレームが選択されて親`JFrame`が非アクティブ化されてもテキスト選択ハイライトは変化しない
+- `Custom`
+-- [[JTextAreaでのCaretによる選択状態表示を維持する>Swing/CaretSelectionHighlight]]と同様の`Caret`を`JTextArea`に設定し、フォーカスが同じ`JFrame`内の別コンポーネントに移動するとテキスト選択ハイライトを灰色に変更して表示状態を維持する
+-- 別アプリケーションのフレームが選択されて親`JFrame`が非アクティブ化されると`DefaultCaret`の`focusLost`イベントが発生するので[https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#isActive-- Window#isActive()]メソッドで親`JFrame`のアクティブ状態を調査しテキスト選択ハイライトの背景色を変更する
+
+* 参考リンク [#reference]
+- [[JTextAreaでのCaretによる選択状態表示を維持する>Swing/CaretSelectionHighlight]]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#isActive-- Window#isActive() (Java Platform SE 8)]
+-- `KeyboardFocusManager.getCurrentKeyboardFocusManager().getActiveWindow()`と自身を比較
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#isFocused-- Window#isFocused() (Java Platform SE 8)]
+-- `KeyboardFocusManager.getCurrentKeyboardFocusManager().getGlobalFocusedWindow()`と自身を比較
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#getFocusOwner-- Window#getFocusOwner() (Java Platform SE 8)]
+-- `Window#isFocused() == true`なら`KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner()`を返す
+- [[JTabbedPaneのタブ選択で表示状態になったタブコンポーネントにフォーカスを移動する>Swing/RequestFocusForVisibleComponent]]
+
+* コメント [#comment]
+#comment
+#comment

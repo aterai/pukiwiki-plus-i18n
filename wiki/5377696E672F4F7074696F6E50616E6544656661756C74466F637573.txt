@@ -45,7 +45,7 @@ if (result == JOptionPane.OK_OPTION) {
 }}
 
 - 右上: `WindowListener`
--- `JOptionPane#createDialog(...)`で`JDialog`を取得し、`WindowListener#windowOpened`で`textField.requestFocusInWindow();`を実行
+-- `JOptionPane#createDialog(...)`で`JDialog`を取得し`WindowListener#windowOpened`で`textField.requestFocusInWindow();`を実行
 -- [[Windowを開いたときのフォーカスを指定>Swing/DefaultFocus]]など
 #code{{
 JOptionPane pane = new JOptionPane(
@@ -69,7 +69,7 @@ if (result == JOptionPane.OK_OPTION) {
 }}
 
 - 左下: `HierarchyListener`
--- `textField`に`HierarchyListener`を追加し、`hierarchyChanged`が呼ばれたときに`textField.requestFocusInWindow();`を実行
+-- `textField`に`HierarchyListener`を追加し`hierarchyChanged`が呼ばれたときに`textField.requestFocusInWindow();`を実行
 #code{{
 textField3.addHierarchyListener(new HierarchyListener() {
   @Override public void hierarchyChanged(HierarchyEvent e) {
@@ -92,7 +92,7 @@ if (result == JOptionPane.OK_OPTION) {
 }}
 
 - 右下: `AncestorListener`
--- `textField`に`addAncestorListener`を追加し、`ancestorAdded`が呼ばれたときに`textField.requestFocusInWindow();`を実行
+-- `textField`に`addAncestorListener`を追加し`ancestorAdded`が呼ばれたときに`textField.requestFocusInWindow();`を実行
 -- [https://community.oracle.com/thread/1354218 Swing - Input focus]
 
 * 参考リンク [#reference]

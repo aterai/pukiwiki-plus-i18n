@@ -1,0 +1,74 @@
+---
+category: swing
+folder: RequestFocusForVisibleComponent
+title: JTabbedPaneのタブ選択で表示状態になったタブコンポーネントにフォーカスを移動する
+tags: [JTabbedPane, MouseListener, Focus]
+author: aterai
+pubdate: 2021-06-14T00:11:58+09:00
+description: JTabbedPaneのタブをマウスの左プレスで選択したとき、表示状態になったタブコンポーネントにフォーカスを移動するよう設定します。
+image: https://drive.google.com/uc?id=19lig34E-Uyjig7Q_tJB-IpcHpNKl_Wgv
+---
+* 概要 [#summary]
+`JTabbedPane`のタブをマウスの左プレスで選択したとき、表示状態になったタブコンポーネントにフォーカスを移動するよう設定します。
+
+#download(https://drive.google.com/uc?id=19lig34E-Uyjig7Q_tJB-IpcHpNKl_Wgv)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class TabSelectionMouseListener extends MouseAdapter {
+  private final BasicTabbedPaneUI ui;
+
+  protected TabSelectionMouseListener(BasicTabbedPaneUI ui) {
+    super();
+    this.ui = ui;
+  }
+
+  @Override public void mousePressed(MouseEvent e) {
+    JTabbedPane tabPane = (JTabbedPane) e.getComponent();
+    if (!tabPane.isEnabled() || SwingUtilities.isRightMouseButton(e)) {
+      return;
+    }
+    int tabIndex = ui.tabForCoordinate(tabPane, e.getX(), e.getY());
+    if (tabIndex >= 0 && tabPane.isEnabledAt(tabIndex)) {
+      if (tabIndex != tabPane.getSelectedIndex() && e.getClickCount() < 2) {
+        tabPane.setSelectedIndex(tabIndex);
+        String cmd = "requestFocusForVisibleComponent";
+        ActionEvent a = new ActionEvent(tabPane, ActionEvent.ACTION_PERFORMED, cmd);
+        EventQueue.invokeLater(() -> tabPane.getActionMap().get(cmd).actionPerformed(a));
+      } else if (tabPane.isRequestFocusEnabled()) {
+        tabPane.requestFocus();
+      }
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- 上: `Default`
+-- デフォルトの`JTabbedPane`では自身のタブコンポーネントにフォーカスがない(自身のタブ、または別コンポーネントにフォーカスが存在する)場合、現在選択されているタブ以外のタブをクリックしてタブ選択状態が切り替わってもフォーカスは移動しない
+-- 自身のタブコンポーネントにフォーカスが存在する場合は、タブ選択で表示状態になったタブコンポーネントにフォーカスが移動する
+-- マウスの右ボタンプレスでタブ選択の切り替えが可能(ポップアップメニューが開いている状態でマウスの右ボタンプレスした場合はタブの切り替え不可)
+- 下: `requestFocusForVisibleComponent`
+-- `BasicTabbedPaneUI#createMouseListener()`をオーバーライドしてタブをマウスで選択した場合、フォーカスを表示されたタブコンポーネントに移動する
+--- `JTabbedPane`に直接同様の`MouseListener`を追加する方法もあるが、その場合以下のようなマウスの右ボタンプレスでのタブ選択無効化ができない
+-- マウスの右ボタンプレスでのタブ選択を無効化(マウス右クリックでのポップアップメニュー表示は有効)
+-- 現在選択されているタブ以外のタブがシングルクリックされた場合、タブ選択状態の移動後に`requestFocusForVisibleComponent`アクション(KBD{Ctrl+↓}キーでも実行可能)を実行してタブ選択で表示状態になったタブコンポーネントにフォーカスを移動
+-- 現在選択されているタブがクリックされたり、ダブルクリックなどの場合はタブにフォーカスを移動
+-- `requestFocusForVisibleComponent`アクションではなく直接`BasicTabbedPaneUI#requestFocusForVisibleComponent()`メソッドを使用したいが、まだパッケージプライベートのままなので使用できない
+#code{{
+// REMIND(aim,7/29/98): This method should be made
+// protected in the next release where
+// API changes are allowed
+boolean requestFocusForVisibleComponent() {
+  return SwingUtilities2.tabbedPaneChangeFocusTo(getVisibleComponent());
+}
+}}
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのタブをマウスの中ボタンクリックで閉じる>Swing/MaskForButton]]
+- [https://bugs.openjdk.java.net/browse/JDK-4799919 &#91;JDK-4799919&#93; 4799919: RFE: Make BasicTabbedPaneUI.requestFocusForVisibleComponent protected - Java Bug System]
+- [[JComboBoxのドロップダウンリストで右クリックを無効化>Swing/DisableRightClick]]
+
+* コメント [#comment]
+#comment
+#comment

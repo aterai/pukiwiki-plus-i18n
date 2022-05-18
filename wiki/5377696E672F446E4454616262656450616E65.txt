@@ -50,8 +50,8 @@ private void convertTab(int prev, int next) {
   insertTab(str, icon, cmp, tip, tgtindex);
   setEnabledAt(tgtindex, flg);
 
-  //When you drag'n'drop a disabled tab, it finishes enabled and selected.
-  //pointed out by dlorde
+  // When you drag'n'drop a disabled tab, it finishes enabled and selected.
+  // pointed out by dlorde
   if (flg) {
     setSelectedIndex(tgtindex);
   }
@@ -64,10 +64,10 @@ private void convertTab(int prev, int next) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTabbedPane`のタブをドラッグすると、マウスカーソルが変更されて、ドロップ可能な位置に青い線を描画します。
+上記のサンプルでは、`JTabbedPane`のタブをドラッグするとマウスカーソルが変更されて、ドロップ可能な位置に青い線を描画します。
 
-- ドラッグ中、半透明のタブゴーストを表示するかどうかを切り替え可能
-- タブ領域以外にドロップしようとすると、カーソルが変化
+- ドラッグ中に半透明のタブゴーストを表示するかどうかを切り替え可能
+- タブ領域以外にドロップしようとするとカーソルが変化
 - `JTabbedPane`のタブが二段以上になる場合は未検証
 
 `MouseMotionListener`と`MouseListener`ではなく、`DragGestureListener`、`DragSourceListener`、`DropTargetListener`を使用する方法に変更しました。
@@ -77,6 +77,7 @@ private void convertTab(int prev, int next) {
 - [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]
 - [[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]
 - [[JLayerを使ってJTabbedPaneのタブの挿入位置を描画する>Swing/DnDLayerTabbedPane]]
+- [[JTabbedPaneのタブがフレーム外にドロップされたら新規JFrameを作成する>Swing/DragDropEndNewFrame]]
 
 * コメント [#comment]
 #comment

@@ -42,10 +42,8 @@ class RadioButtonsPanel extends JPanel {
 
   protected void updateSelectedButton(Object v) {
     if (v instanceof Answer) {
-      // if ("Windows 7".equals(OSNAME)) { //Windows aero?
       removeAll();
       initButtons();
-      // }
       switch ((Answer) v) {
         case A:
           buttons[0].setSelected(true);
@@ -62,9 +60,7 @@ class RadioButtonsPanel extends JPanel {
     }
   }
 }
-}}
 
-#code{{
 class RadioButtonsRenderer extends RadioButtonsPanel implements TableCellRenderer {
   public RadioButtonsRenderer() {
     super();
@@ -77,9 +73,7 @@ class RadioButtonsRenderer extends RadioButtonsPanel implements TableCellRendere
     return this;
   }
 }
-}}
 
-#code{{
 class RadioButtonsEditor extends RadioButtonsPanel implements TableCellEditor {
   public RadioButtonsEditor() {
     super();
@@ -92,6 +86,7 @@ class RadioButtonsEditor extends RadioButtonsPanel implements TableCellEditor {
       b.addActionListener(al);
     }
   }
+
   @Override public Component getTableCellEditorComponent(JTable table,
         Object value, boolean isSelected, int row, int column) {
     updateSelectedButton(value);

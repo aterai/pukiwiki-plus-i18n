@@ -27,7 +27,7 @@ public JComponent makeUI() {
   p.add(new JButton(new AbstractAction("get Clipboard DataFlavor") {
     @Override public void actionPerformed(ActionEvent e) {
       try {
-        Transferable t = (cs == null)
+        Transferable t = Objects.isNull(cs)
           ? Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null)
           : cs.getContents();
         if (t == null) {

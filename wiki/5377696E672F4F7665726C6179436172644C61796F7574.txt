@@ -52,7 +52,7 @@ p.add(cards);
 -- このパネルにはカード切り替えを実行する`JComboBox`を`BorderLayout.NORTH`で上部に追加
 - `OverlayLayout`を設定したパネルを作成
 -- このパネルには`OverlayLayout`を設定し、上記の`2`つのパネルを奥から`CardLayout`、`BorderLayout`の順に同サイズで重なるよう配置
--- `2`つのパネルがオーバーラップするのでマウスイベントなどでコンポーネントの奥手前の描画が入れ替わらないようにするため、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#isOptimizedDrawingEnabled-- JComponent#isOptimizedDrawingEnabled()]が`false`を返すようオーバーライド
+-- `2`つのパネルがオーバーラップするのでマウスイベントなどでコンポーネントの奥手前の描画が入れ替わらないようにするため[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#isOptimizedDrawingEnabled-- JComponent#isOptimizedDrawingEnabled()]が常に`false`を返すようオーバーライド
 
 * 参考リンク [#reference]
 - [[JTableHeaderで作成したタブエリアでCardLayoutのコンテナを切り替える>Swing/TableHeaderTabArea]]

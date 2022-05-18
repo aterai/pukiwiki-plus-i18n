@@ -51,8 +51,10 @@ public JComponent makePanel(JComponent m, JComponent c) {
 
 * 解説 [#explanation]
 - 中央に表示するコンポーネントに右下に配置するコンポーネントと同じ高さの`EtchedBorder`を設定
-- `SpringLayout`を設定した`JLayeredPane`の`DEFAULT_LAYER`上に中央に表示するコンポーネントを追加、また`DEFAULT_LAYER + 1`上に右下に配置するコンポーネントを追加
-- `SpringLayout.Constraints`を設定して、中央に表示するコンポーネントは親の`JLayeredPane`のサイズとおなじになるようにレイアウト、また右下に配置するコンポーネントは右下になるようにレイアウト
+- `SpringLayout`を設定した`JLayeredPane`の`DEFAULT_LAYER`上に中央に表示するコンポーネントを追加
+-- `DEFAULT_LAYER + 1`上に右下に配置するコンポーネントを追加
+- `SpringLayout.Constraints`を設定して中央に表示するコンポーネントは親の`JLayeredPane`のサイズとおなじになるようにレイアウト
+-- 右下に配置するコンポーネントは右下になるようにレイアウト
 -- 右下に配置するコンポーネントと親の`JLayeredPane`の右端同士は固定で`20px`
 
 * 参考リンク [#reference]

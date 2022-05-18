@@ -32,7 +32,7 @@ class LeafTreeCellEditor extends DefaultTreeCellEditor {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`CellEditor#isCellEditable(...)`メソッドをオーバーライドし、葉ノードのみ編集が可能にしたセルエディタを作成し、これを`JTree#setCellEditor(...)`メソッドで設定しています。
+上記のサンプルでは、`CellEditor#isCellEditable(...)`メソッドをオーバーライドして葉ノードのみ編集が可能にしたセルエディタを作成し、これを以下のように`JTree#setCellEditor(...)`メソッドで設定しています。
 
 #code{{
 tree.setCellEditor(

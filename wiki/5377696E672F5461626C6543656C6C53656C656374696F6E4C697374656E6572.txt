@@ -52,7 +52,7 @@ abstract class AbstractTableCellSelectionListener implements ListSelectionListen
 -- `JTable#getSelectionModel()`と`JTable#getColumnModel()#getSelectionModel()`で取得した行と列の`SelectionModel`に共通の`ListSelectionListener`を追加し、選択されたセルの内容と行列番号を表示
 -- `JTable#getSelectedRow()`と`JTable#getSelectedColumn()`を使用しているため、KBD{Shift}+クリックなどで範囲選択した場合アンカーインデックスが現在選択しているセルになる
 --- 同一セルが選択された場合は選択セルの内容を書き出さないよう設定しているため、これらの範囲選択ではなにも書き出されない
--- KBD{Ctrl+A}で全選択すると、常に`(0, 0)`のセル情報が書き出される(直前に選択されているのが`(0, 0)`の場合は除く)
+-- KBD{Ctrl+A}で全選択すると常に`(0, 0)`のセル情報が書き出される(直前に選択されているのが`(0, 0)`の場合は除く)
 - `SelectionModel`
 -- `JTable#getSelectionModel()`と`JTable#getColumnModel()#getSelectionModel()`で取得した行と列の`SelectionModel`に共通の`ListSelectionListener`を追加し、選択されたセルの内容と行列番号を表示
 -- `JTable#getSelectionModel()#getLeadSelectionIndex()`と`JTable#getColumnModel()#getSelectionModel()#getLeadSelectionIndex()`を使用しているため、KBD{Shift}+クリックなどで範囲選択した場合リードインデックスが現在選択しているセルになる
@@ -63,7 +63,7 @@ abstract class AbstractTableCellSelectionListener implements ListSelectionListen
 -- 行と列で異なる`ListSelectionListener`を追加しているため、`1`回のマウス選択などで`2`回情報が書き出される場合がある
 -- 範囲選択した場合、常に`ListSelectionEvent#getFirstIndex() <= ListSelectionEvent#getLastIndex()`
 --- 例えば`(2, 2)`のセルから`(0, 0)`へ範囲選択した場合、`ListSelectionEvent#getFirstIndex()`は`0`、`ListSelectionEvent#getLastIndex()`は`2`
---- アンカーインデックス、リードインデックスを取得する場合は、`ListSelectionModel#getAnchorSelectionIndex()`と`ListSelectionModel#getLeadSelectionIndex()`を使用する
+--- アンカーインデックス、リードインデックスを取得する場合は`ListSelectionModel#getAnchorSelectionIndex()`と`ListSelectionModel#getLeadSelectionIndex()`を使用する
 - `changeSelection`
 -- `JTable#changeSelection(...)`メソッドをオーバーライドして選択セル情報を書き出す
 -- 範囲選択中(`ListSelectionEvent#getValueIsAdjusting()`)を除外していないため、マウスでドラッグされたセル情報などもすべて書き出される

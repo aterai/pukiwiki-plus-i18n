@@ -112,12 +112,12 @@ public void updateTable(WatchEvent.Kind<?> kind, Path child) {
 -- `Files.delete(...)`メソッドで一時ディレクトリから削除
 --- この段階では`JTable`から行の削除は実行しない
 -- `WatchService`で`StandardWatchEventKinds.ENTRY_DELETE`を検出したら`RowFilter`で削除された一時ファイルを表す行を非表示に設定
---- `DefaultTableModel#removeRow(...)`で削除すると例外が発生する場合がある？(再現できない？)
+--- `DefaultTableModel#removeRow(...)`で削除すると例外が発生する場合がある(再現できない？)
 - 別アプリケーションで一時ファイルが削除された場合:
 -- `WatchService`で`StandardWatchEventKinds.ENTRY_DELETE`を検出したら`RowFilter`で削除された一時ファイルを表す行を非表示に設定
 - このサンプルアプリケーションを終了した場合:
--- `HierarchyListener`でパネルの破棄を検出したら、`WatchService`を使用しているスレッドに`interrupt()`メソッドで割り込み`InterruptedException`を発生
--- `InterruptedException`をキャッチしたら`WatchService`の監視ループを抜けて、`SecondaryLoop#exit()`メソッドを実行してセカンダリループも抜ける
+-- `HierarchyListener`でパネルの破棄を検出したら`WatchService`を使用しているスレッドに`interrupt()`メソッドで割り込み`InterruptedException`を発生させる
+-- `InterruptedException`をキャッチしたら`WatchService`の監視ループを抜けて`SecondaryLoop#exit()`メソッドを実行してセカンダリループも抜ける
 
 * 参考リンク [#reference]
 [https://docs.oracle.com/javase/tutorial/essential/io/notification.html Watching a Directory for Changes (The Java™ Tutorials > Essential Classes > Basic I/O)]

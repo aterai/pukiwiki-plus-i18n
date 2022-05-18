@@ -1,0 +1,52 @@
+---
+category: swing
+folder: DisableScrollArrowsOnBoundaryValues
+title: JScrollBarのノブ位置が境界上かどうかでその矢印ボタンの有効・無効を切り替える
+tags: [JScrollBar, ArrowButton]
+author: aterai
+pubdate: 2022-03-21T04:17:26+09:00
+description: JScrollBarのノブ位置が境界値まで到達したとき、対応する増加、減少矢印ボタンを無効化します。
+image: https://drive.google.com/uc?id=1niEozeo_RPCr9KOxa4kN_gObARcoOl3o
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2022/04/disable-arrow-button-when-knob-position.html
+    lang: en
+---
+* 概要 [#summary]
+`JScrollBar`のノブ位置が境界値まで到達したとき、対応する増加、減少矢印ボタンを無効化します。
+
+#download(https://drive.google.com/uc?id=1niEozeo_RPCr9KOxa4kN_gObARcoOl3o)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// UIManager.put("ScrollBar.alwaysShowThumb", Boolean.TRUE);
+JScrollPane scroll = new JScrollPane(new JTable(24, 3));
+// scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+scroll.getVerticalScrollBar().addAdjustmentListener(e -> {
+  JScrollBar scrollBar = (JScrollBar) e.getAdjustable();
+  BoundedRangeModel m = scrollBar.getModel();
+  int value = m.getValue();
+  boolean max = value == m.getMaximum() - m.getExtent();
+  Optional.ofNullable(scrollBar.getComponent(0)).ifPresent(b -> b.setEnabled(!max));
+  boolean min = value == m.getMinimum();
+  Optional.ofNullable(scrollBar.getComponent(1)).ifPresent(b -> b.setEnabled(!min));
+});
+}}
+
+* 解説 [#explanation]
+- 左: デフォルト
+-- 縦`JScrollBar`のノブの位置が上限、または下限でも矢印ボタンの状態は変化しない
+- 右: `addAdjustmentListener`
+-- 縦`JScrollBar`に`AdjustmentListener`を追加してノブ位置が境界上に到達したらその矢印ボタンの有効・無効を切り替える
+--- [[JScrollBarが最後までスクロールしたことを確認する>Swing/DetectScrollToBottom]]では縦`JScrollBar`から取得した`BoundedRangeModel`に`ChangeListener`を追加して同様の切り替えを行っている
+-- 縦`JScrollBar`自体が無効化されている場合は考慮していない
+-- `JSpinner`は[[JSpinnerの値が境界値になった場合、ArrowButtonを無効にする>Swing/DisableOnBoundaryValues]]のように`UIManager.put("Spinner.disableOnBoundaryValues", Boolean.TRUE)`で実現可能(`BasicSpinnerUI#updateEnabledState(...)`)だが、`JScrollBar`は`AdjustmentListener`などを追加して実装する必要がある
+--- `JSpinner`の`ArrowButton`は`Spinner.nextButton`、`Spinner.previousButton`と`setName(...)`で名前が付いているのでこれを検索して有効・無効を切り替えているが、`JScrollBar`の`ArrowButton`はデフォルトでは未設定なので`Component#getComponent(0)`で`incrButton`、`Component#getComponent(1)`で`decrButton`を取得している
+-- [[JScrollBarのノブを常に表示する>Swing/AlwaysShowThumb]]や`JFrame`をリサイズしてノブが表示状態になった場合、矢印ボタンの有効・無効が不正になるバグを修正
+
+* 参考リンク [#reference]
+- [[JScrollBarが最後までスクロールしたことを確認する>Swing/DetectScrollToBottom]]
+- [[JSpinnerの値が境界値になった場合、ArrowButtonを無効にする>Swing/DisableOnBoundaryValues]]
+
+* コメント [#comment]
+#comment
+#comment

@@ -32,10 +32,9 @@ label1.setLabelFor(textField1);
 }}
 
 * 解説 [#explanation]
-- `JLabel#setLabelFor(...)`メソッドで`JLabel`にコンポーネントを割り当て
--- ニーモニックがアクティブになるとフォースが割り当てられたコンポーネントに移動
+- `JLabel#setLabelFor(...)`メソッドで`JLabel`にコンポーネントを割り当てるとニーモニックがアクティブになったときそのコンポーネントにフォースが移動する
 --- 参考: [[JLabelに設定したニーモニックでフォーカス移動>Swing/LabelForDisplayedMnemonic]]
--- `JLabel`に`MouseListener`を設定してマウスで`JLabel`がクリックされた場合も同様にフォースを割り当てられたコンポーネントに移動
+- 上記のサンプルでは`JLabel`に`MouseListener`を追加してマウスで`JLabel`がクリックされた場合も同様にフォースを割り当てられたコンポーネントに移動するよう設定
 
 * 参考リンク [#reference]
 - [[JLabelに設定したニーモニックでフォーカス移動>Swing/LabelForDisplayedMnemonic]]

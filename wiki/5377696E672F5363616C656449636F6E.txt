@@ -1,0 +1,136 @@
+---
+category: swing
+folder: ScaledIcon
+title: JCheckBoxのチェックアイコンを拡大縮小する
+tags: [JCheckBox, Icon, JTable]
+author: aterai
+pubdate: 2021-06-28T01:35:44+09:00
+description: JTableのセルエディタ、セルレンダラに設定したJCheckBoxのチェックアイコンをJTableの行の高さに応じてリサイズします。
+image: https://drive.google.com/uc?id=1gVUpXLf3ISngo_VtzZAQ2GqMmXY5GW38
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2021/07/scale-check-icon-of-jcheckbox.html
+    lang: en
+---
+* 概要 [#summary]
+`JTable`のセルエディタ、セルレンダラに設定した`JCheckBox`のチェックアイコンを`JTable`の行の高さに応じてリサイズします。
+
+#download(https://drive.google.com/uc?id=1gVUpXLf3ISngo_VtzZAQ2GqMmXY5GW38)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class ScaledIcon implements Icon {
+  private final Icon icon;
+  private final int width;
+  private final int height;
+
+  protected ScaledIcon(Icon icon, int width, int height) {
+    this.icon = icon;
+    this.width = width;
+    this.height = height;
+  }
+
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.translate(x, y);
+    double sx = width / (double) icon.getIconWidth();
+    double sy = height / (double) icon.getIconHeight();
+    g2.scale(sx, sy);
+    icon.paintIcon(c, g2, 0, 0);
+    g2.dispose();
+  }
+
+  @Override public int getIconWidth() {
+    return width;
+  }
+
+  @Override public int getIconHeight() {
+    return height;
+  }
+}
+
+class CheckBoxIcon implements Icon {
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    if (!(c instanceof AbstractButton)) {
+      return;
+    }
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.translate(x, y);
+    g2.setPaint(Color.DARK_GRAY);
+    float s = Math.min(getIconWidth(), getIconHeight()) * .05f;
+    float w = getIconWidth() - s - s;
+    float h = getIconHeight() - s - s;
+    float gw = w / 8f;
+    float gh = h / 8f;
+    g2.setStroke(new BasicStroke(s));
+    g2.draw(new Rectangle2D.Float(s, s, w, h));
+    AbstractButton b = (AbstractButton) c;
+    if (b.getModel().isSelected()) {
+      g2.setStroke(new BasicStroke(3f * s));
+      Path2D p = new Path2D.Float();
+      p.moveTo(x + 2f * gw, y + .5f * h);
+      p.lineTo(x + .4f * w, y + h - 2f * gh);
+      p.lineTo(x + w - 2f * gw, y + 2f * gh);
+      g2.draw(p);
+    }
+    g2.dispose();
+  }
+
+  @Override public int getIconWidth() {
+    return 1000;
+  }
+
+  @Override public int getIconHeight() {
+    return 1000;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `CheckBoxIcon`
+-- `Path2D`で作成したチェック図形を描画するサイズ`1000x1000px`の`Icon`を作成
+-- `UIManager.getIcon("CheckBox.icon")`で`LookAndFeel`デフォルトの`Icon`を使用しても良いが`WindowsLookAndFeel`の場合チェックマークが拡大でモザイクになってしまう
+- `ScaledIcon`
+-- `Icon#paintIcon(...)`をオーバーライドして`Graphics2D.scale(double, double)`で指定した値(このサンプルでは行の高さの`40px`)まで縮小して描画する別`Icon`でラップ
+- セルエディタ、セルレンダラ用の`JCheckBox`に`JCheckBox#setIcon(...)`で設定
+-- `JTable#prepareRenderer(...)`と`JTable#prepareEditor(...)`をオーバーライドして上記の`ScaledIcon`を行の高さに調整して設定
+
+#code{{
+JTable table = new JTable(model) {
+  private final Insets iconIns = new Insets(4, 4, 4, 4);
+  private final transient Icon checkIcon = new CheckBoxIcon();
+
+  @Override public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+    Component c = super.prepareRenderer(renderer, row, column);
+    if (c instanceof JCheckBox) {
+      int s = getRowHeight(row) - iconIns.top - iconIns.bottom;
+      JCheckBox cb = (JCheckBox) c;
+      cb.setIcon(new ScaledIcon(checkIcon, s, s));
+      cb.setBorderPainted(false);
+    }
+    return c;
+  }
+
+  @Override public Component prepareEditor(TableCellEditor editor, int row, int column) {
+    Component c = super.prepareEditor(editor, row, column);
+    if (c instanceof JCheckBox) {
+      int s = getRowHeight(row) - iconIns.top - iconIns.bottom;
+      JCheckBox cb = (JCheckBox) c;
+      cb.setIcon(new ScaledIcon(checkIcon, s, s));
+      cb.setBackground(getSelectionBackground());
+    }
+    return c;
+  }
+};
+table.setRowHeight(40);
+table.setSelectionBackground(Color.WHITE);
+}}
+
+* 参考リンク [#reference]
+- [[JCheckBoxのチェックアイコンを変更>Swing/CheckBoxColor]]
+- [[JRadioButtonのデフォルトアイコンをサムネイルに変更する>Swing/RadioButtonSelectedBorder]]
+
+* コメント [#comment]
+#comment
+#comment

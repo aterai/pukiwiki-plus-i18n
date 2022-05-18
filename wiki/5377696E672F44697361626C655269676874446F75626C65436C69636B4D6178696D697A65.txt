@@ -1,0 +1,106 @@
+---
+category: swing
+folder: DisableRightDoubleClickMaximize
+title: JInternalFrameのタイトルを右ダブルクリックしても最大化しないよう設定する
+tags: [JInternalFrame, JDesktopPane, JLayer, JPopupMenu, WindowsLookAndFeel]
+author: aterai
+pubdate: 2021-09-06T06:25:10+09:00
+description: JInternalFrameのタイトルバーをマウスの右ボタンでダブルクリックしても最大化しないよう設定します。
+image: https://drive.google.com/uc?id=1GTvnCmjM652oDX-Ncal6SVoBNtXxxwvd
+---
+* 概要 [#summary]
+`JInternalFrame`のタイトルバーをマウスの右ボタンでダブルクリックしても最大化しないよう設定します。
+
+#download(https://drive.google.com/uc?id=1GTvnCmjM652oDX-Ncal6SVoBNtXxxwvd)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class DesktopLayerUI extends LayerUI<JDesktopPane> {
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseEvent(MouseEvent e, JLayer<? extends JDesktopPane> l) {
+    if (SwingUtilities.isRightMouseButton(e) && e.getClickCount() >= 2) {
+      Component c = e.getComponent();
+      Container p = SwingUtilities.getAncestorOfClass(BasicInternalFrameTitlePane.class, c);
+      int id = e.getID();
+      boolean b1 = c instanceof BasicInternalFrameTitlePane || p instanceof BasicInternalFrameTitlePane;
+      boolean b2 = c instanceof JInternalFrame.JDesktopIcon && id == MouseEvent.MOUSE_PRESSED;
+      if ((b1 && id == MouseEvent.MOUSE_CLICKED) || b2) {
+        e.consume();
+      }
+    }
+  }
+
+  @Override protected void processMouseMotionEvent(MouseEvent e, JLayer<? extends JDesktopPane> l) {
+    boolean b = e.getComponent() instanceof JInternalFrame;
+    boolean isRight = SwingUtilities.isRightMouseButton(e);
+    if (b && isRight && e.getID() == MouseEvent.MOUSE_DRAGGED) {
+      e.consume();
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- `Windows`環境で`WindowsLookAndFeel`を使用する場合でも`JInternalFrame`のタイトルバーをマウスの右ボタンでダブルクリックするとその`JInternalFrame`が最大化してしまう
+- `JPopupMenu`
+-- `( (BasicInternalFrameUI) f.getUI()).getNorthPane()`でタイトルバーを取得し、`JComponent#setComponentPopupMenu(popup)`で`JPopupMenu`を設定するとマウスの右ボタンクリックで`JPopupMenu`が開くので右ボタンのダブルクリックによる最大化は実行不可能になる
+-- [[JInternalFrameにJPopupMenuを設定してタイトルを変更する>Swing/EditInternalFrameTitle]]
+-- タイトルバーから`JPopupMenu`を開き、KBD{Esc}キー入力や別コンポーネントをクリックしてポップアップ表示をキャンセルすると再度タイトルバーを左クリックするまで`JInternalFrame`のリサイズが不可能になるバグ？が存在する
+- `WindowsInternalFrameUI`
+-- `WidowsLookAndFeel`でのみ動作を変更したい場合は`WindowsInternalFrameUI#createBorderListener(...)`メソッドをオーバーライドして
+`MouseInputAdapter`を継承する`BorderListener`がマウスの左ボタンにのみ反応するよう変更することで右ボタンのダブルクリックによる最大化や右ボタンでの`JInternalFrame`のリサイズを無効にする方法がある
+-- 右ボタンでのリサイズ自体が無効なので、上記の`JPopupMenu`のバグは発生しない
+#code{{
+JInternalFrame f = new JInternalFrame("WindowsInternalFrameUI", true, true, true, true) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setUI(new WindowsInternalFrameUI(this) {
+      @Override protected MouseInputAdapter createBorderListener(JInternalFrame w) {
+        return new BorderListener() {
+          @Override public void mouseClicked(MouseEvent e) {
+            if (SwingUtilities.isLeftMouseButton(e)) {
+              super.mouseClicked(e);
+            }
+          }
+
+          @Override public void mousePressed(MouseEvent e) {
+            if (SwingUtilities.isLeftMouseButton(e)) {
+              super.mousePressed(e);
+            }
+          }
+        };
+      }
+    });
+  }
+};
+}}
+
+- `JLayer`
+-- `JDesktopPane`に`JLayer`を被せて`JInternalFrame`のタイトルバーがマウスの右ボタンでダブルクリックされた場合のマウスイベントを無視する
+-- `JInternalFrame`のシステムアイコンがダブルクリックされると`JInternalFrame`は非表示になるが、この`JLayer`では合わせてマウスの右ボタンでダブルクリックを無視するよう設定
+-- さらにマウスの右ボタンでの`JInternalFrame`のリサイズも無効化している
+-- `JInternalFrame.JDesktopIcon`(アイコン化した`JInternalFrame`)を右ボタンでダブルクリック(復元)した場合も無効化
+--- `BasicInternalFrameTitlePane`は`MouseEvent.MOUSE_CLICKED`だが、`JInternalFrame.JDesktopIcon`は`MouseEvent.MOUSE_CLICKED`イベントでダブルクリックを検出する必要がある(なぜ異なる実装になっているのかの理由は不明)
+
+* 参考リンク [#reference]
+- [[JInternalFrameにJPopupMenuを設定してタイトルを変更する>Swing/EditInternalFrameTitle]]
+- [[JComboBoxのドロップダウンリストで右クリックを無効化>Swing/DisableRightClick]]
+- [[JMenuとJMenuItemで右クリックによる選択を無効にする>Swing/DisableRightClickOnMenu]]
+
+* コメント [#comment]
+#comment
+#comment

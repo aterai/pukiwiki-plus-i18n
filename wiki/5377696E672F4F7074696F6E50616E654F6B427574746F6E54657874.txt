@@ -1,0 +1,68 @@
+---
+category: swing
+folder: OptionPaneOkButtonText
+title: JOptionPaneで使用するメッセージダイアログのOKボタンテキストを変更する
+tags: [JOptionPane, UIManager, HierarchyListener]
+author: aterai
+pubdate: 2021-12-20T00:44:31+09:00
+description: JOptionPaneから作成、使用可能なメッセージダイアログのOKボタンテキストを変更します。
+image: https://drive.google.com/uc?id=1ngT9-9mnVJgjE-wARclMMawkfYmQ0G86
+---
+* 概要 [#summary]
+`JOptionPane`から作成、使用可能なメッセージダイアログの`OK`ボタンテキストを変更します。
+
+#download(https://drive.google.com/uc?id=1ngT9-9mnVJgjE-wARclMMawkfYmQ0G86)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+UIManager.put("OptionPane.okButtonText", "back");
+
+JLabel label2 = new JLabel("JButton#setFocusPainted(false)");
+label2.addHierarchyListener(e -> {
+  Component c = e.getComponent();
+  if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0 && c.isShowing()) {
+    descendants(((JComponent) c).getRootPane())
+        .filter(JButton.class::isInstance)
+        .map(JButton.class::cast)
+        .findFirst()
+        .ifPresent(b -> {
+          b.setFocusPainted(false);
+          b.setText("back2");
+        });
+  }
+});
+JButton button2 = new JButton("HierarchyListener + setFocusPainted(false)");
+button2.addActionListener(e -> {
+  Component p = ((JComponent) e.getSource()).getRootPane();
+  JOptionPane.showMessageDialog(p, label2, "title2", JOptionPane.PLAIN_MESSAGE);
+});
+
+// https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html#button
+JButton button3 = new JButton("showOptionDialog");
+button3.addActionListener(e -> {
+  Object[] options = {"Yes, please"}; // {"Yes, please", "No way!"};
+  JOptionPane.showOptionDialog(((JComponent) e.getSource()).getRootPane(),
+                               "Would you like green eggs and ham?",
+                               "A Silly Question",
+                               JOptionPane.OK_OPTION, JOptionPane.PLAIN_MESSAGE,
+                               null, options, options[0]);
+});
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- `UIManager.put("OptionPane.okButtonText", "back")`ですべての`OK`ボタンのテキストを変更
+- `showMessageDialog + HierarchyListener`
+-- `JOptionPane.showMessageDialog(...)`で開く`OK`ボタンのみのメッセージダイアログの表示状態が変化するイベントを`HierarchyListener`で取得し、メッセージダイアログに配置されている`JButton`を検索・取得してそのタイトルを変更
+-- [[JOptionPaneの背景色を変更する>Swing/OptionPaneBackground]]
+- `showOptionDialog`
+-- `JOptionPane.showMessageDialog(...)`で開くオプションダイアログの選択可能な項目をひとつだけ設定してメッセージダイアログ風に変更し、そのひとつのボタンテキストを変更
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html#button Customizing Button Text - How to Make Dialogs (The Java™ Tutorials > Creating a GUI With Swing > Using Swing Components)]
+- [[JFileChooserのボタンテキストを変更>Swing/ApproveButtonText]]
+- [https://stackoverflow.com/questions/70389360/is-there-a-way-to-remove-that-focus-on-the-button-in-a-joptionpanel java - Is there a way to remove that focus on the button in a JOptionPanel? - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

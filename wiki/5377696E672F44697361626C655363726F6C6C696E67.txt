@@ -35,8 +35,8 @@ check.addItemListener(new ItemListener() {
 
 * 解説 [#explanation]
 - `Disable Scrolling`をチェックして無効状態にする
--- スクロールバーを取得し`JScrollBar#setEnabled(boolean)`メソッドを使ってこれを無効化
--- `JScrollPane#setWheelScrollingEnabled(boolean)`メソッドで、マウスホイールによるスクロールを無効化
+-- スクロールバーを取得し`JScrollBar#setEnabled(boolean)`メソッドを使用してこれを無効化
+-- `JScrollPane#setWheelScrollingEnabled(boolean)`メソッドでマウスホイールによるスクロールを無効化
 -- `JScrollPane`に配置したコンポーネントを`setEnabled(false)`とし、フォーカスの移動などによるスクロールを無効化
 - `Disable Scrolling`をチェックして無効状態にしても実行可能な操作
 -- `JTableHeader`は無効にしていないのでマウスクリックでのソートやドラッグによるカラムの移動が実行可能

@@ -29,6 +29,7 @@ class ListItemTransferHandler extends TransferHandler {
     super();
     localObjectFlavor = new DataFlavor(List.class, "List of items");
   }
+
   @Override protected Transferable createTransferable(JComponent c) {
     source = (JList<?>) c;
     indices = source.getSelectedIndices();
@@ -37,9 +38,11 @@ class ListItemTransferHandler extends TransferHandler {
       @Override public DataFlavor[] getTransferDataFlavors() {
         return new DataFlavor[] {localObjectFlavor};
       }
+
       @Override public boolean isDataFlavorSupported(DataFlavor flavor) {
         return Objects.equals(localObjectFlavor, flavor);
       }
+
       @Override public Object getTransferData(DataFlavor flavor)
           throws UnsupportedFlavorException, IOException {
         if (isDataFlavorSupported(flavor)) {
@@ -50,12 +53,15 @@ class ListItemTransferHandler extends TransferHandler {
       }
     };
   }
+
   @Override public boolean canImport(TransferHandler.TransferSupport info) {
     return info.isDrop() && info.isDataFlavorSupported(localObjectFlavor);
   }
+
   @Override public int getSourceActions(JComponent c) {
     return TransferHandler.MOVE;
   }
+
   @SuppressWarnings("unchecked")
   @Override public boolean importData(TransferHandler.TransferSupport info) {
     TransferHandler.DropLocation tdl = info.getDropLocation();

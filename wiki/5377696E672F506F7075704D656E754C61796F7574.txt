@@ -48,9 +48,8 @@ popup.add(new JMenuItem("dddddddddd"), c);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JPopupMenu`のレイアウトを`GridBagLayout`に変更して、上部に`4`つのメニューボタンを水平に並べて表示しています。
+上記のサンプルでは、`JPopupMenu`のレイアウトを`GridBagLayout`に変更して、上部に`4`つのメニューボタンを水平に並べて表示します。これらのメニューボタンは、`JMenuItem`の以下のメソッドをオーバーライドすることで`JButton`風に表示を変更しています。
 
-これらのメニューボタンは、`JMenuItem`の以下のメソッドをオーバーライドすることで、ボタン風に表示を変更しています。
 - `JMenuItem#paintComponent(...)`をオーバーライドして`32x32`の`Icon`のみを直接描画
 -- `JMenuItem#setIcon(...)`を使用すると文字列の左側に`Icon`が表示される
 -- ボタン中央に`Icon`が描画されるように位置を計算する
@@ -81,7 +80,7 @@ b.setOpaque(true);
 
 * 参考リンク [#reference]
 - [[JMenuItemの内部にJButtonを配置する>Swing/ButtonsInMenuItem]]
--- こちらは、`JPopupMenu`のレイアウトを変更するのではなく、`JMenuItem`のレイアウトを変更して、`JMenuItem`の子としてボタンを追加している
+-- こちらは`JPopupMenu`のレイアウトを変更するのではなく、`JMenuItem`のレイアウトを変更して`JMenuItem`の子としてボタンを追加している
 - [[JPopupMenuをボタンの長押しで表示>Swing/PressAndHoldButton]]
 
 * コメント [#comment]

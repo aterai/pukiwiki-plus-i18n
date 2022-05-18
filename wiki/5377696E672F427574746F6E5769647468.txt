@@ -56,11 +56,11 @@ private static JComponent createRightAlignButtonBox2(
 
 - `Default`
 -- `BoxLayout`で`Box.createHorizontalGlue()`を使用して右寄せ
--- `JButton`の幅は、その文字列の長さに依存
+-- `JButton`の幅はその文字列の長さに依存
 - `getPreferredSize`
 -- `Box`を使用して右寄せ
--- `JButton`の幅は、`JButton#setPreferredSize(...)`で固定幅を設定
--- `JButton`の高さは、`JButton#getPreferredSize()`で取得したサイズの高さを使用
+-- `JButton`の幅は`JButton#setPreferredSize(...)`で固定幅を設定
+-- `JButton`の高さは`JButton#getPreferredSize()`で取得したサイズの高さを使用
 -- `LookAndFeel`を変更すると`JButton`の高さが変化するので、その場合は`JButton#updateUI()`をオーバーライドして`JButton#setPreferredSize(...)`を使用する必要がある
 - `SpringLayout`+`Box`
 -- [[SpringLayoutの使用>Swing/SpringLayout]]

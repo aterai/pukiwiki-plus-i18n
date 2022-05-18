@@ -1,0 +1,139 @@
+---
+category: swing
+folder: OverscrollEdgeEffect
+title: JScrollPaneの範囲外へのマウスドラッグによるスクロールで半透明の楕円を描画する
+tags: [JScrollPane, JLayer, Animation]
+author: aterai
+pubdate: 2021-10-25T00:10:46+09:00
+description: JScrollPaneの範囲外にマウスドラッグでスクロールしようとするイベントを取得したら、JLayerを使用してJViewportの端に半透明の楕円を描画しこれ以上移動できないことを表現します。
+image: https://drive.google.com/uc?id=1n7_nqijaxfsuitZqB2Qaqwq4gJhpQ7FY
+---
+* 概要 [#summary]
+`JScrollPane`の範囲外にマウスドラッグでスクロールしようとするイベントを取得したら、`JLayer`を使用して`JViewport`の端に半透明の楕円を描画しこれ以上移動できないことを表現します。
+
+#download(https://drive.google.com/uc?id=1n7_nqijaxfsuitZqB2Qaqwq4gJhpQ7FY)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class OverscrollEdgeEffectLayerUI extends LayerUI<JScrollPane> {
+  private final Color color = new Color(0xAA_AA_EE_FF, true);
+  private final Point mousePt = new Point();
+  private final Timer animator = new Timer(20, null);
+  private final Ellipse2D oval = new Ellipse2D.Double();
+  private double ovalHeight;
+  private int delta;
+
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    if (c instanceof JLayer && ovalHeight > 0d) {
+      JScrollPane scroll = (JScrollPane) ((JLayer<?>) c).getView();
+      Rectangle r = scroll.getViewport().getViewRect();
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setPaint(color);
+      if (oval.getY() < 0) {
+        oval.setFrame(oval.getX(), -ovalHeight, oval.getWidth(), ovalHeight * 2d);
+      } else { // if (r.height < oval.getY() + oval.getHeight()) {
+        oval.setFrame(oval.getX(), r.getHeight() - ovalHeight, oval.getWidth(), ovalHeight * 2d);
+      }
+      g2.fill(oval);
+      g2.dispose();
+    }
+  }
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseEvent(MouseEvent e, JLayer<? extends JScrollPane> l) {
+    if (e.getComponent() instanceof JViewport) {
+      int id = e.getID();
+      if (id == MouseEvent.MOUSE_PRESSED) {
+        mousePt.setLocation(e.getPoint());
+      } else if (ovalHeight > 0d && id == MouseEvent.MOUSE_RELEASED) {
+        ovalShrinking(l);
+      }
+    }
+  }
+
+  @Override protected void processMouseMotionEvent(MouseEvent e, JLayer<? extends JScrollPane> l) {
+    Component c = e.getComponent();
+    if (c instanceof JViewport && e.getID() == MouseEvent.MOUSE_DRAGGED && !animator.isRunning()) {
+      JViewport viewport = l.getView().getViewport();
+      Dimension d = viewport.getView().getSize();
+      Rectangle r = viewport.getViewRect();
+      Point p = SwingUtilities.convertPoint(c, e.getPoint(), l.getView());
+      double ow = Math.max(p.getX(), r.getWidth() - p.getX());
+      double ox = p.getX() - ow;
+      int dy = e.getPoint().y - mousePt.y;
+      if (isDragReversed(dy)) {
+        // The y-axis drag direction has been reversed
+        ovalShrinking(l);
+      } else if (r.y == 0 && dy >= 0) {
+        // top edge
+        ovalHeight = Math.min(r.getHeight() / 8d, p.getY() / 8d);
+        oval.setFrame(ox, -ovalHeight, ow * 2.2, ovalHeight * 2d);
+      } else if (d.height == r.y + r.height && dy <= 0) {
+        // bottom edge
+        ovalHeight = Math.min(r.getHeight() / 8d, (r.getHeight() - p.getY()) / 8d);
+        oval.setFrame(ox, r.getHeight() - ovalHeight, ow * 2.2, ovalHeight * 2d);
+      }
+      mousePt.setLocation(e.getPoint());
+      delta = dy;
+      l.repaint();
+    }
+  }
+
+  private boolean isDragReversed(int dy) {
+    boolean b1 = delta > 0 && dy < 0;
+    boolean b2 = delta < 0 && dy > 0;
+    return b1 || b2;
+  }
+
+  private void ovalShrinking(JLayer<? extends JScrollPane> l) {
+    if (ovalHeight > 0d && !animator.isRunning()) {
+      ActionListener handler = e -> {
+        if (ovalHeight > 0d && animator.isRunning()) {
+          ovalHeight = Math.max(ovalHeight * .67 - .5, 0d);
+          l.repaint();
+        } else {
+          animator.stop();
+          for (ActionListener a : animator.getActionListeners()) {
+            animator.removeActionListener(a);
+          }
+        }
+      };
+      animator.addActionListener(handler);
+      animator.start();
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは`JScrollPane`に`JLayer`を被せてマウスドラッグイベントを取得し、`JViewport#getViewRect()`で取得した矩形の`y`座標が`0`の場合は上辺、矩形の下辺が`View`(子コンポーネントの`JLabel`)の下辺と一致する場合は下辺に接していると判断して適当な大きさの半透明楕円を描画しています。
+
+- たとえば上辺に接して下方向にドラッグしている場合はマウスの`x`座標を楕円の`x`軸の中心として半透明楕円を描画
+-- 楕円の高さはマウスの`y`座標に応じて設定(このサンプルでは`y`座標を`0.125`倍して高さとしている)
+-- ドラッグ方向が上方向に変化したりマウスリリースイベントが発生した場合、`Timer`を使用して楕円の高さを`0`になるまで減少する
+- 下辺は上辺の反対を描画、左辺、右辺は未対応
+
+* 参考リンク [#reference]
+- [[JScrollPaneでキネティックスクロール>Swing/KineticScrolling]]
+-- 内部の`JLabel`のドラッグによるスクロールはこちらのサンプルの`MouseMotionListener`を使用している
+- [[JScrollPaneに先頭領域までのスクロールバックを実行するJButtonを追加する>Swing/ScrollBackToTopButton]]
+- [https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=ja RecyclerView で動的リストを作成する  |  Android デベロッパー  |  Android Developers]
+
+* コメント [#comment]
+#comment
+#comment

@@ -47,7 +47,7 @@ textPane.addCaretListener(e -> {
 - `Element#getAttributes()`メソッドを使用してこの文字が保持する属性セットを取得
 - 取得した属性セットに以下の属性キーが存在するかなどを`StyleConstants`のスタティックメソッドを使用してテスト
 -- `isBold`、`isUnderline`、`Foreground`、`FontFamily`、`FontSize`
--- `FontFamily`ではなく`Font`自体を取得する場合は[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/StyleContext.html#getFont-javax.swing.text.AttributeSet- StyleContext#getFont(AttributeSet)]を使用する
+-- `FontFamily`を文字列で取得するのではなく`Font`自体を取得する場合は[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/StyleContext.html#getFont-javax.swing.text.AttributeSet- StyleContext#getFont(AttributeSet)]を使用する
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/60410481/how-can-i-get-the-fontisbold-isunderline-of-a-specific-character-in-jtextpane java - How can I get the font(isBold,isUnderline) of a specific character in jTextPane? - Stack Overflow]

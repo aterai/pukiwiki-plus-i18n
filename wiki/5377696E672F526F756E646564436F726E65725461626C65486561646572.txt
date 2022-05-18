@@ -1,0 +1,109 @@
+---
+category: swing
+folder: RoundedCornerTableHeader
+title: JTableHeaderの角を丸める
+tags: [JTable, JTableHeader, TableCellRenderer, JLayer]
+author: aterai
+pubdate: 2021-06-21T00:00:07+09:00
+description: JTableHeaderにその角を丸めるTableCellRendererを設定し、月に応じてその背景色を変更するカレンダーを作成します。
+image: https://drive.google.com/uc?id=1G12861FsnGgdiq4go-9ECD8xbj5BU8pW
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2021/06/round-corners-of-jtableheader.html
+    lang: en
+---
+* 概要 [#summary]
+`JTableHeader`にその角を丸める`TableCellRenderer`を設定し、月に応じてその背景色を変更するカレンダーを作成します。
+
+#download(https://drive.google.com/uc?id=1G12861FsnGgdiq4go-9ECD8xbj5BU8pW)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class RoundedHeaderRenderer extends DefaultTableCellRenderer {
+  private final JLabel firstLabel = new JLabel() {
+    @Override public void paintComponent(Graphics g) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setPaint(getBackground());
+      float r = 8f;
+      float x = 0f;
+      float y = 0f;
+      float w = getWidth();
+      float h = getHeight();
+      Path2D p = new Path2D.Float();
+      p.moveTo(x, y + r);
+      p.quadTo(x, y, x + r, y);
+      p.lineTo(x + w, y);
+      p.lineTo(x + w, y + h);
+      p.lineTo(x + r, y + h);
+      p.quadTo(x, y + h, x, y + h - r);
+      p.closePath();
+      g2.fill(p);
+      g2.dispose();
+      super.paintComponent(g);
+    }
+  };
+  private final JLabel lastLabel = new JLabel() {
+    @Override public void paintComponent(Graphics g) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setPaint(getBackground());
+      float r = 8f;
+      float x = 0f;
+      float y = 0f;
+      float w = getWidth();
+      float h = getHeight();
+      Path2D p = new Path2D.Float();
+      p.moveTo(x, y);
+      p.lineTo(x + w - r, y);
+      p.quadTo(x + w, y, x + w, y + r);
+      p.lineTo(x + w, y + h - r);
+      p.quadTo(x + w, y + h, x + w - r, y + h);
+      p.lineTo(x, y + h);
+      p.closePath();
+      g2.fill(p);
+      g2.dispose();
+      super.paintComponent(g);
+    }
+  };
+
+  public RoundedHeaderRenderer() {
+    super();
+    firstLabel.setOpaque(false);
+    lastLabel.setOpaque(false);
+    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    firstLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+    lastLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+  }
+
+  @Override public Component getTableCellRendererComponent(
+        JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    JLabel l = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+    if (column == 0) {
+      l = firstLabel;
+    } else if (column == table.getColumnCount() - 1) {
+      l = lastLabel;
+    }
+    l.setFont(table.getFont());
+    l.setText(value.toString());
+    l.setForeground(table.getTableHeader().getForeground());
+    l.setBackground(table.getTableHeader().getBackground());
+    l.setHorizontalAlignment(SwingConstants.CENTER);
+    return l;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JTableHeader`は透明に設定して背景を描画しないよう設定
+- `JTableHeader`に設定した`DefaultTableCellRenderer`で列位置に応じた図形を`JTableHeader`の背景色で描画する`JLabel`を作成
+-- 先頭列セルは左側、末尾列セルは右側を丸めた図形を`Path2D`で作成して`JLabel#paintComponent(...)`内で描画
+-- カレンダーなので`JTableHeader`の列の移動やリサイズは禁止しているが、列の入れ替えを実行しても先頭と末尾にきたセルの図形を丸めるよう`TableCellRenderer#getTableCellRendererComponent(...)`メソッドをオーバーライド
+
+* 参考リンク [#reference]
+- [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]
+- [[JTableのセルを斜めに分割する>Swing/DiagonallySplitCellCalendar]]
+- [[JTableのヘッダやセル罫線の色を統一して罫線の幅が変化しないよう設定する>Swing/FlatTable]]
+
+* コメント [#comment]
+#comment
+#comment

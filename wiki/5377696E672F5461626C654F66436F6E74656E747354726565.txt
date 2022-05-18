@@ -38,16 +38,19 @@ class TableOfContentsTreeCellRenderer extends DefaultTreeCellRenderer {
         g2.dispose();
       }
     }
+
     @Override public Dimension getPreferredSize() {
       Dimension d = super.getPreferredSize();
       d.width = Short.MAX_VALUE;
       return d;
     }
   };
+
   public TableOfContentsTreeCellRenderer() {
     super();
     p.setOpaque(false);
   }
+
   @Override public void updateUI() {
     super.updateUI();
     isSynth = getUI().getClass().getName().contains("Synth");
@@ -56,6 +59,7 @@ class TableOfContentsTreeCellRenderer extends DefaultTreeCellRenderer {
       setBackgroundSelectionColor(new Color(0x0, true));
     }
   }
+
   @Override public Component getTreeCellRendererComponent(
       JTree tree, Object value, boolean selected, boolean expanded,
       boolean leaf, int row, boolean hasFocus) {
@@ -110,15 +114,17 @@ class TableOfContentsTreeCellRenderer extends DefaultTreeCellRenderer {
 
 #code{{
 JTree tree2 = new JTree(makeModel()) {
+  private boolean isSynth = false;
+  private final BasicStroke reader = new BasicStroke(
+    1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,
+    1f, new float[] { 1f }, 0f);
+
   @Override public void updateUI() {
     super.updateUI();
     setBorder(BorderFactory.createTitledBorder("JTree#paintComponent(...)"));
     isSynth = getUI().getClass().getName().contains("Synth");
   }
-  private boolean isSynth = false;
-  private final BasicStroke reader = new BasicStroke(
-    1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,
-    1f, new float[] { 1f }, 0f);
+
   private Rectangle getVisibleRowsRect() {
     Insets i = getInsets();
     Rectangle visRect = getVisibleRect();
@@ -148,6 +154,7 @@ JTree tree2 = new JTree(makeModel()) {
     }
     return visRect;
   }
+
   @Override protected void paintComponent(Graphics g) {
     g.setColor(getBackground());
     g.fillRect(0, 0, getWidth(), getHeight());
@@ -195,7 +202,7 @@ JTree tree2 = new JTree(makeModel()) {
 }}
 
 ----
-`NimbusLookAndFeel`等の場合、ノード選択時にリーダーとページ番号の文字色を変更するよう設定しています。
+- `NimbusLookAndFeel`等の場合、ノード選択時にリーダーとページ番号の文字色を変更するよう設定
 
 * 参考リンク [#reference]
 - [https://community.oracle.com/thread/1357473 JTree cell width question | Oracle Forums]

@@ -18,30 +18,37 @@ image: https://lh4.googleusercontent.com/-V2E4xmdHmBE/UCiUOuOlrLI/AAAAAAAABQg/IY
 class GridPanel extends JPanel implements Scrollable {
   public static int cols = 3, rows = 4;
   public static Dimension size = new Dimension(160 * cols, 120 * rows);
+
   public GridPanel() {
     super(new GridLayout(rows, cols, 0, 0));
     // scrollBar.putClientProperty("JScrollBar.fastWheelScrolling", Boolean.FALSE);
   }
+
   @Override public Dimension getPreferredScrollableViewportSize() {
     Dimension d = getPreferredSize();
     return new Dimension(d.width / cols, d.height / rows);
   }
+
   @Override public int getScrollableUnitIncrement(
     Rectangle visibleRect, int orientation, int direction) {
     return orientation == SwingConstants.HORIZONTAL ?
            visibleRect.width : visibleRect.height;
   }
+
   @Override public int getScrollableBlockIncrement(
     Rectangle visibleRect, int orientation, int direction) {
     return orientation == SwingConstants.HORIZONTAL ?
            visibleRect.width : visibleRect.height;
   }
+
   @Override public boolean getScrollableTracksViewportWidth() {
     return false;
   }
+
   @Override public boolean getScrollableTracksViewportHeight() {
     return false;
   }
+
   @Override public Dimension getPreferredSize() {
     return size;
   }
@@ -51,11 +58,13 @@ class ScrollAction extends AbstractAction {
   private static Timer scroller;
   private final Point vec;
   private final JScrollPane scrollPane;
+
   public ScrollAction(String name, JScrollPane scrollPane, Point vec) {
     super(name);
     this.scrollPane = scrollPane;
     this.vec = vec;
   }
+
   @Override public void actionPerformed(ActionEvent e) {
     final JViewport vport = scrollPane.getViewport();
     final JComponent v = (JComponent) vport.getView();
@@ -83,6 +92,7 @@ class ScrollAction extends AbstractAction {
     });
     scroller.start();
   }
+
   private static double easeInOut(double t) {
     // range: 0.0<=t<=1.0
     if (t < .5) {
@@ -91,6 +101,7 @@ class ScrollAction extends AbstractAction {
       return .5 * (pow3(t * 2d - 2d) + 2d);
     }
   }
+
   private static double pow3(double a) {
     // return Math.pow(a, 3d);
     return a * a * a;

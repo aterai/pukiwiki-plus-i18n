@@ -1,0 +1,91 @@
+---
+category: swing
+folder: PreviouslySelectedTabColor
+title: JTabbedPaneで直前に選択されていたタブのフォーカスBorderを履歴として表示する
+tags: [JTabbedPane, Focus, Border]
+author: aterai
+pubdate: 2022-02-21T00:44:19+09:00
+description: JTabbedPaneで現在選択されているタブとその直前に選択されていたタブのフォーカスBorderの色を変更します。
+image: https://drive.google.com/uc?id=12XYGL6MqIofBl0sm5TOiDP-Q2GlM4RLA
+---
+* 概要 [#summary]
+`JTabbedPane`で現在選択されているタブとその直前に選択されていたタブのフォーカス`Border`の色を変更します。
+
+#download(https://drive.google.com/uc?id=12XYGL6MqIofBl0sm5TOiDP-Q2GlM4RLA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class LineFocusTabbedPane extends JTabbedPane {
+  private transient ChangeListener listener;
+
+  protected LineFocusTabbedPane() {
+    super();
+  }
+
+  @Override public void updateUI() {
+    removeChangeListener(listener);
+    UIManager.put("TabbedPane.tabInsets", new InsetsUIResource(1, 4, 0, 4));
+    UIManager.put("TabbedPane.selectedTabPadInsets", new InsetsUIResource(1, 1, 1, 1));
+    UIManager.put("TabbedPane.tabAreaInsets", new InsetsUIResource(3, 2, 0, 2));
+    UIManager.put("TabbedPane.selectedLabelShift", 0);
+    UIManager.put("TabbedPane.labelShift", 0);
+    UIManager.put("TabbedPane.focus", new ColorUIResource(new Color(0x0, true)));
+    super.updateUI();
+    listener = new TabSelectionListener();
+    addChangeListener(listener);
+    setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+  }
+
+  @Override public void insertTab(String title, Icon icon, Component c, String tip, int index) {
+    super.insertTab(title, icon, c, tip, index);
+    JLabel label = new JLabel(title, icon, SwingConstants.CENTER);
+    setTabComponentAt(index, label);
+  }
+}
+
+class TabSelectionListener implements ChangeListener {
+  private static final Color ALPHA_ZERO = new Color(0x0, true);
+  private static final Color SELECTION_COLOR = new Color(0x00_AA_FF);
+  private static final Color PREV_COLOR = new Color(0x48_00_AA_FF, true);
+  private int prev = -1;
+
+  @Override public void stateChanged(ChangeEvent e) {
+    JTabbedPane tabbedPane = (JTabbedPane) e.getSource();
+    if (tabbedPane.getTabCount() <= 0) {
+      return;
+    }
+    int idx = tabbedPane.getSelectedIndex();
+    for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+      Component tab = tabbedPane.getTabComponentAt(i);
+      if (tab instanceof JComponent) {
+        Color color;
+        if (i == idx) {
+          color = SELECTION_COLOR;
+        } else if (i == prev) {
+          color = PREV_COLOR;
+        } else {
+          color = ALPHA_ZERO;
+        }
+        ((JComponent) tab).setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, color));
+      }
+    }
+    prev = idx;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- [[JTabbedPaneのタブが選択されている場合のフォーカスBorderを下線に変更する>Swing/UnderlineTabFocusIndicator]]で使用した`JTabbedPane`同様選択されたタブのフォーカス`Border`を`MatteBorder`で表示するよう変更
+-- デフォルトの点線のフォーカス`Border`は`UIManager.put("TabbedPane.focus", new ColorUIResource(new Color(0x0, true)))`で非表示化
+- `JTabbedPane`に`ChangeListener`を追加して直前に選択されていたタブのインデックスを記憶し、タブ選択が変更されたらすべてのタブのフォーカス`Border`を更新
+-- 直前に選択されていたタブのフォーカス`Border`色は現在選択されているタブのフォーカス`Border`色よりアルファ値を下げて残像風に薄く表示
+-- [[JTabbedPaneで現在のタブを閉じた後に選択されるタブを変更する>Swing/FocusAfterClosingCurrentTab]]のように選択タブの履歴を`ArrayList`などに記憶しておけば直前だけでなく`2`つ前、`3`つ前などのタブのフォーカス`Border`色を変更することも可能
+
+* 参考リンク [#reference]
+- [[JTabbedPaneの選択文字色を変更>Swing/ColorTab]]
+- [[JTabbedPaneで現在のタブを閉じた後に選択されるタブを変更する>Swing/FocusAfterClosingCurrentTab]]
+- [[JTabbedPaneのタブが選択されている場合のフォーカスBorderを下線に変更する>Swing/UnderlineTabFocusIndicator]]
+
+* コメント [#comment]
+#comment
+#comment

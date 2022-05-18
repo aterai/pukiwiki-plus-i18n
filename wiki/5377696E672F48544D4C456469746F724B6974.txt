@@ -48,7 +48,7 @@ tabbedPane.addChangeListener(new ChangeListener() {
 逆に、`JTextArea`で`Html`ソースを編集して`JTabbedPane`で`JTextPane`に切り替える時には、`JEditorPane#setText(String)`内で`HTMLEditorKit`に`HTML`形式で読み込まれるよう設定しています。
 
 - `textPane.setContentType("text/html");`とコンテンツ形式を設定しておかないと`JEditorPane#setText(String)`で`Document`が更新されない場合がある？
-- この場合、以下のように`textPane.setText(textArea.getText());`ではなく`HTMLEditorKit#insertHTML(...)`を使用する
+- この場合以下のように`textPane.setText(textArea.getText());`ではなく`HTMLEditorKit#insertHTML(...)`を使用する
 #code{{
 // textPane.setText(textArea.getText());
 textPane.setText("");
@@ -65,7 +65,7 @@ hek.insertHTML(doc, 0, textArea.getText(), 0, 0, null);
 // import java.io.StringReader;
 // import javax.swing.text.html.parser.*;
 ParserDelegator delegator = new ParserDelegator();
-final StringBuffer s = new StringBuffer();
+StringBuffer s = new StringBuffer();
 delegator.parse(new StringReader(str), new HTMLEditorKit.ParserCallback() {
   @Override public void handleText(char[] text, int pos) {
     s.append(text);

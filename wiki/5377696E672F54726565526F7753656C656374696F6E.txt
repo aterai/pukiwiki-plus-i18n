@@ -91,14 +91,15 @@ class RowSelectionTree extends JTree {
 
 * 解説 [#explanation]
 - 左: デフォルト
--- `MetalLookAndFeel`などでは、選択でノードの背景色が変化
+-- `MetalLookAndFeel`などでは選択でノードの背景色が変化
 - 右: `JTree`ノードを行選択に変更
 -- `NimbusLookAndFeel`風に行全体を選択状態の背景色で描画
 -- `BasicTreeUI#getPathBounds(...)`をオーバーライドしてノードではなく行のクリックで選択可能に変更
--- `JTree`の背景を`setOpaque(false)`で透明(非描画)にし、`JTree#paintComponent(...)`をオーバーライドして選択された行を背景色で描画
+--- ドキュメントの[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicTreeUI.html#getPathBounds-javax.swing.JTree-javax.swing.tree.TreePath- BasicTreeUI (Java Platform SE 8)]では「パスのコンポーネントのどれかが現在有効な場合は、`null`が返されます。」となっているがコードは無効な場合`null`になる
+-- `JTree`の背景を`setOpaque(false)`で透明(非描画)に設定し`JTree#paintComponent(...)`をオーバーライドして選択された行を背景色で描画
 -- 不透明にした`TreeCellRenderer`を使用してノードの選択色を`JTree#paintComponent(...)`の背景色と同じものに変更
--- 別コンポーネントにフォーカスが移動した場合、`LeadSelection`の`Border`を描画しない(選択背景色で上書き)ように設定
---- デフォルトではノードのみ再描画されるので、`FocusListener`を追加して`JTree`全体を再描画
+-- 別コンポーネントにフォーカスが移動した場合`LeadSelection`の`Border`を描画しない(選択背景色で上書き)ように設定
+--- デフォルトではノードのみ再描画されるので`FocusListener`を追加して`JTree`全体を再描画
 --- `UIManager.put("Tree.repaintWholeRow", Boolean.TRUE)`を設定することでも回避可能
 
 * 参考リンク [#reference]
@@ -107,6 +108,8 @@ class RowSelectionTree extends JTree {
 -- via: [https://community.oracle.com/thread/2160338 Swing - JTree - highlight entire row on selection]
 - [[NimbusLookAndFeelでJTreeのセル選択を行全体ではなくノードに限定する>Swing/TreeCellSelectionBackground]]
 -- こちらは逆に、`NimbusLookAndFeel`で行全体の選択を行わないようにする方法
+- [https://bugs.openjdk.java.net/browse/JDK-8047749 &#91;JDK-8047749&#93; javadoc for getPathBounds() in TreeUI and BasicTreeUI is incorrect - Java Bug System]
+-- ドキュメントのバグは修正予定
 
 * コメント [#comment]
 #comment

@@ -59,7 +59,7 @@ class EditorComboPopup extends BasicComboPopup {
 * 解説 [#explanation]
 上記のサンプルでは、KBD{Shift+Tab}でポップアップメニューが表示され、KBD{Up}・KBD{Down}キーで移動、KBD{Enter}で`JTextPane`のカーソルの後に選択された文字列が入力されます。
 
-`JComboBox`のポップアップ部分の`UI`を表現する`BasicComboPopup`を利用することで、スクロールバーをもつポップアップメニューを実現しています。
+`JComboBox`のポップアップ部分の`UI`を表現する`BasicComboPopup`を利用することで垂直スクロールバーありのポップアップメニューを実現しています。
 
 - フォーカスを取得してキー入力で選択を変更できるように`BasicComboPopup#isFocusable`メソッドをオーバーライド
 -- `BasicComboPopup#show()`を実行した後`BasicComboPopup#requestFocusInWindow()`を呼びだす必要がある

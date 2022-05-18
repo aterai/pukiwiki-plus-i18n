@@ -1,0 +1,48 @@
+---
+category: swing
+folder: ColorPicker
+title: JLabel上に表示した画像のクリックした位置の色を取得する
+tags: [JLabel, ImageIcon, MouseListener, Graphics]
+author: aterai
+pubdate: 2021-07-05T03:02:53+09:00
+description: JLabelにIconとして画像を表示し、その画像をマウスでクリックした位置の色を取得します。
+image: https://drive.google.com/uc?id=1Q-RhXizUQcuAu_FPuY4zPAwSVpeGHsnk
+---
+* 概要 [#summary]
+`JLabel`に`Icon`として画像を表示し、その画像をマウスでクリックした位置の色を取得します。
+
+#download(https://drive.google.com/uc?id=1Q-RhXizUQcuAu_FPuY4zPAwSVpeGHsnk)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JLabel label = new JLabel(new ImageIcon(image));
+label.addMouseListener(new MouseAdapter() {
+  @Override public void mousePressed(MouseEvent e) {
+    updateViewRect(label);
+    Point pt = e.getPoint();
+    if (iconRect.contains(pt)) {
+      int argb = image.getRGB(pt.x - iconRect.x, pt.y - iconRect.y);
+      field.setText(String.format("#%06X", argb & 0x00_FF_FF_FF));
+      sample.setIcon(new ColorIcon(new Color(argb, true)));
+    }
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `ImageIO.read(...)`で画像ファイルを`BufferedImage`として読み込む
+- `JLabel`に`new ImageIcon(BufferedImage)`で作成した`Icon`を設定
+- `JLabel`に`MouseListener`を追加してマウスクリック位置を取得
+- `JLabel`内の`Icon`表示領域を`SwingUtilities.layoutCompoundLabel(...)`で更新
+-- [[JLabelのアイコンとテキストのどちらにマウスカーソルがあるかを調査する>Swing/LayoutCompoundLabel]]
+- `JLabel`上のマウスクリック位置を`Icon(BufferedImage)`の座標に変換し、`BufferedImage#getRGB(...)`メソッドで整数型ピクセル値で色を取得
+-- 取得した色から`Icon`を生成してサンプル表示用の`JLabel`に設定
+-- 取得した色を`16`進数カラーコードの`6`桁文字列に変換して`JTextField`に設定
+
+* 参考リンク [#reference]
+- [[JLabelのアイコンとテキストのどちらにマウスカーソルがあるかを調査する>Swing/LayoutCompoundLabel]]
+- [[PixelGrabberで画像を配列として取得し編集、書出し>Swing/PixelGrabber]]
+
+* コメント [#comment]
+#comment
+#comment

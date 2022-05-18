@@ -57,7 +57,7 @@ disposeSelectedFrameAction = new AbstractAction() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、選択されている`JInternalFrame`をツールバーのボタンやKBD{Esc}キー(`OS`が`Windows`の場合のデフォルトは、KBD{Ctrl+F4})で閉じることができます。
+上記のサンプルでは、選択されている`JInternalFrame`をツールバーのボタンやKBD{Esc}キー(`OS`が`Windows`の場合のデフォルトはKBD{Ctrl+F4})で閉じることができます。
 
 - `RED`
 -- `JInternalFrame#dispose()`メソッドを使用
@@ -70,7 +70,7 @@ disposeSelectedFrameAction = new AbstractAction() {
 -- `JInternalFrame#setClosed(true)`メソッドを使用
 
 ----
-- 注: `JDK 1.5` + `WindowsLookAndFeel`では、`JInternalFrame`を閉じたときアイコン化されている`JInternalFrame`には選択状態は移動しない
+- `JDK 1.5` + `WindowsLookAndFeel`では`JInternalFrame`を閉じたときアイコン化されている`JInternalFrame`には選択状態は移動しない
 
 * 参考リンク [#reference]
 - [http://mail.openjdk.java.net/pipermail/swing-dev/2013-April/002688.html <Swing Dev> 8 Review request for 8012004: JINTERNALFRAME NOT BEING FINALIZED AFTER CLOSING]

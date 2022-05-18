@@ -1,0 +1,70 @@
+---
+category: swing
+folder: DividerMouseEvent
+title: JSplitPaneのDividerにJPopupMenuやMouseListenerを追加してその位置を変更する
+tags: [JSplitPane, Divider, JPopupMenu, MouseListener]
+author: aterai
+pubdate: 2021-07-26T02:28:40+09:00
+description: JSplitPaneのDividerにJPopupMenuやMouseListenerを追加してその位置を中央、最小、最大位置に変更するためのActionを設定します。
+image: https://drive.google.com/uc?id=1JNqfni40ogZAmYoqP76Sw3gg8BvdRMVK
+---
+* 概要 [#summary]
+`JSplitPane`の`Divider`に`JPopupMenu`や`MouseListener`を追加してその位置を中央、最小、最大位置に変更するための`Action`を設定します。
+
+#download(https://drive.google.com/uc?id=1JNqfni40ogZAmYoqP76Sw3gg8BvdRMVK)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JCheckBox check = new JCheckBox("Show JPopupMenu only on Divider", true);
+JPopupMenu popup = new JPopupMenu() {
+  @Override public void show(Component invoker, int x, int y) {
+    if (check.isSelected() && invoker instanceof JSplitPane) {
+      BasicSplitPaneUI ui = (BasicSplitPaneUI) ((JSplitPane) invoker).getUI();
+      if (ui.getDivider().getBounds().contains(x, y)) {
+        super.show(invoker, x, y);
+      }
+    } else {
+      super.show(invoker, x, y);
+    }
+  }
+};
+popup.add("center").addActionListener(e -> splitPane.setDividerLocation(.5));
+popup.add("selectMin").addActionListener(e -> selectMinMax(splitPane, "selectMin"));
+popup.add("selectMax").addActionListener(e -> selectMinMax(splitPane, "selectMax"));
+splitPane.setComponentPopupMenu(popup);
+
+BasicSplitPaneUI ui = (BasicSplitPaneUI) splitPane.getUI();
+Container divider = ui.getDivider();
+divider.addMouseListener(new MouseAdapter() {
+  @Override public void mouseClicked(MouseEvent e) {
+    if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() >= 2) {
+      splitPane.setDividerLocation(.5);
+    }
+  }
+
+  // @Override public void mouseReleased(MouseEvent e) {
+  //   if (e.isPopupTrigger()) {
+  //     popup.show(divider, e.getX(), e.getY());
+  //   }
+  // }
+});
+}}
+
+* 解説 [#explanation]
+- `JPopupMenu`
+-- `BasicSplitPaneUI#getDivider()`で取得可能な`BasicSplitPaneDivider`は`JComponent`を継承していないため、`JComponent#setComponentPopupMenu(...)`が使用不可
+-- 代わりに`BasicLookAndFeel.AWTEventHelper#eventDispatched(...)`で`getParent()`で取得した親コンポーネントから`JPopupMenu`を取得して表示するよう特別処理されている
+-- このため上記のサンプルでは`Divider`を右クリックするとその親である`JSplitPane`に設定した`JPopupMenu`が開く
+-- `JSplitPane`に設定された`Border`上で右クリックした場合も`JSplitPane`に設定した`JPopupMenu`が開くことになるので、`JPopupMenu#show(...)`をオーバーライドして`Divider`のコンテナ領域がクリックされた場合のみ`JPopupMenu`を開くよう設定(`JCheckBox`で切り替えてテスト可能)
+- `MouseListener`
+-- `BasicSplitPaneUI#getDivider()`で取得可能な`BasicSplitPaneDivider`は`Container`を継承するため、`Component#addMouseListener(...)`で`MouseListener`が使用可能
+-- マウスの左ボタンでダブルクリックすると`Divider`の位置を中央に移動する`MouseListener`を設定
+-- たとえば`Windows`環境だけ考慮すればよい場合、`JComponent#setComponentPopupMenu(...)`を使用せずに`MouseListener#mouseReleased(...)`で`if (e.isPopupTrigger()) { popup.show(divider, e.getX(), e.getY()); }`を実行して`JPopupMenu`を表示する方法もある
+
+* 参考リンク [#reference]
+- [[JSplitPaneを等分割する>Swing/DividerLocation]]
+- [[JSplitPaneの収納状態を維持する>Swing/KeepHiddenDivider]]
+
+* コメント [#comment]
+#comment
+#comment

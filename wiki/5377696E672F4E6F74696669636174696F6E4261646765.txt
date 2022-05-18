@@ -61,7 +61,7 @@ class BadgeLayerUI extends LayerUI<BadgeLabel> {
 }}
 
 * 解説 [#explanation]
-- `JLabel`に`JLayer`を設定して`JLabel`本体ではなく、内部の`Icon`領域の指定した角付近に`Badge`を表示する
+- `JLabel`に`JLayer`を設定して`JLabel`本体ではなく内部の`Icon`領域の指定した角付近に`Badge`を表示する
 -- `JLabel`内部の`Icon`領域は`SwingUtilities.layoutCompoundLabel(...)`メソッドで取得可能
 --- 参考: [[JLabelのアイコンとテキストのどちらにマウスカーソルがあるかを調査する>Swing/LayoutCompoundLabel]]
 -- オフセットとして`x`軸方向に`6px`、`y`軸方向に`2px`ずらして`Badge`を表示しているので`JLabel`にそれ以上の余白を設定する必要がある

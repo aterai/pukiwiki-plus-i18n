@@ -1,0 +1,42 @@
+---
+category: swing
+folder: SliderAltTrackColor
+title: MetalLookAndFeelを適用したJSliderで現在値までのトラック背景色を変更する
+tags: [JSlider, MetalLookAndFeel, UIManager]
+author: aterai
+pubdate: 2022-04-25T00:06:24+09:00
+description: MetalLookAndFeelを適用したJSliderで現在値を示す領域のトラック背景色を変更します。
+image: https://drive.google.com/uc?id=1NIeKsjf4OZ3BQSuBNBzO0YkDemUbh1k3
+---
+* 概要 [#summary]
+`MetalLookAndFeel`を適用した`JSlider`で現在値を示す領域のトラック背景色を変更します。
+
+#download(https://drive.google.com/uc?id=1NIeKsjf4OZ3BQSuBNBzO0YkDemUbh1k3)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+UIManager.put("Slider.altTrackColor", Color.RED);
+JSlider slider1 = new JSlider();
+slider1.setInverted(true);
+
+JSlider slider2 = new JSlider();
+slider2.putClientProperty("JSlider.isFilled", false);
+}}
+
+* 解説 [#explanation]
+- `Slider.altTrackColor: RED`
+-- `UIManager.put("Slider.altTrackColor", Color.RED)`で現在地までのトラック背景色を変更
+-- この設定は`MetalLookAndFeel`でのみ有効
+- `Slider.altTrackColor: RED + Slider.setInverted: true`
+-- `Slider.altTrackColor`の設定は`JSlider#setInverted(true)`で表示する値の範囲を通常とは逆にしている場合にも対応している
+- `JSlider.isFilled: false`
+-- `JSlider#putClientProperty("JSlider.isFilled", false)`で現在地までのトラック背景色を描画しないよう設定しているので、`Slider.altTrackColor`の設定は無効
+--- `JSlider#putClientProperty("JSlider.isFilled", false)`を設定していても、現在地までのトラックのフチ色は変化する
+-- `UIManager.put("JSlider.isFilled", false)`を設定しても参照されないので無効
+
+* 参考リンク [#reference]
+- [[NimbusLookAndFeelを適用したJSliderで範囲の塗りつぶしを行う>Swing/NimbusFilledSlider]]
+
+* コメント [#comment]
+#comment
+#comment

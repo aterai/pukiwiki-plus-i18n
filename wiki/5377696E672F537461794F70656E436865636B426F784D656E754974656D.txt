@@ -52,19 +52,19 @@ popup.add(new JCheckBoxMenuItem("keeping open #2") {
 * 解説 [#explanation]
 - `JCheckBox`
 -- `JPopupMenu`に`JCheckBox`を追加
--- クリックしてもポップアップは閉じないが、カーソルが乗ってもハイライトされない
+-- クリックしてもポップアップは閉じないが、マウスカーソルが乗ってもハイライト表示されない
 - `JMenuItem + JCheckBox`
 -- `JCheckBox`を配置したタイトルが空の`JMenuItem`を作成して`JPopupMenu`に追加
 -- `JCheckBox`へのマウスイベント(`MOUSE_DRAGGED`, `MOUSE_ENTERED`, `MOUSE_EXITED`, `MOUSE_MOVED`)を親の`JMenuItem`に転送してハイライトを描画
 -- `JCheckBox`へのマウスクリックイベント(`MOUSE_CLICKED`, `MOUSE_PRESSED`, `MOUSE_RELEASED`など)はブロックしてポップアップは閉じないように設定
 - `JCheckBoxMenuItem`
--- デフォルトの`JCheckBoxMenuItem`で、クリックするとポップアップは閉じる
+-- デフォルトの`JCheckBoxMenuItem`をクリックするとポップアップは閉じる
 - `keeping open #1`
--- `JCheckBoxMenuItem`に`Action`を追加して、クリック後にポップアップを再度開くように設定
--- `JPopupMenu`が`JFrame`の外に表示される場合は、ポップアップが一瞬消える
+-- `JCheckBoxMenuItem`に`Action`を追加してクリック後にポップアップを再度開くように設定
+-- `JPopupMenu`が`JFrame`の外に表示される場合はポップアップが一瞬消える
 - `keeping open #2`
 -- `JCheckBoxMenuItem`に`BasicCheckBoxMenuItemUI#doClick(MenuSelectionManager)`メソッドをオーバーライドした`CheckBoxMenuItemUI`を設定
---- このイベントでクリック後にポップアップを閉じない代わりに、`menuItem.doClick(0);`でチェック状態のみ変更する
+--- このイベントでクリック後にポップアップを閉じない代わりに`menuItem.doClick(0);`でチェック状態のみ変更する
 --- 参考: [https://stackoverflow.com/questions/3759379/how-to-prevent-jpopupmenu-disappearing-when-checking-checkboxes-in-it swing - How to prevent JPopUpMenu disappearing when checking checkboxes in it? - Stack Overflow]
 
 ----

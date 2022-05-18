@@ -1,0 +1,50 @@
+---
+category: swing
+folder: AlwaysShowThumb
+title: JScrollBarのノブを常に表示する
+tags: [JScrollBar, UIManager, LookAndFeel]
+author: aterai
+pubdate: 2022-03-28T07:58:55+09:00
+description: JScrollBarのノブの長さがトラックと同じ長さになっても非表示にせず、常に表示されるよう設定します。
+image: https://drive.google.com/uc?id=1BeoM_Wcry_psyXpkeTSdy9Wh0nDP_XtW
+---
+* 概要 [#summary]
+`JScrollBar`のノブの長さがトラックと同じ長さになっても非表示にせず、常に表示されるよう設定します。
+
+#download(https://drive.google.com/uc?id=1BeoM_Wcry_psyXpkeTSdy9Wh0nDP_XtW)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// UIManager.put("ScrollBar.alwaysShowThumb", Boolean.TRUE);
+JScrollPane scroll = new JScrollPane(new JTree());
+scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+String key = "ScrollBar.alwaysShowThumb";
+JCheckBox check = new JCheckBox(key) {
+  @Override public void updateUI() {
+    super.updateUI();
+    EventQueue.invokeLater(() ->
+        setSelected(UIManager.getLookAndFeelDefaults().getBoolean(key)));
+  }
+};
+check.addActionListener(e -> {
+  UIManager.getLookAndFeelDefaults().put(key, check.isSelected());
+  SwingUtilities.updateComponentTreeUI(scroll);
+});
+}}
+
+* 解説 [#explanation]
+- `UIManager.put("ScrollBar.alwaysShowThumb", Boolean.TRUE)`
+-- `GTKLookAndFeel`のデフォルト
+-- `GTKLookAndFeel`以外でも`UIManager.put("ScrollBar.alwaysShowThumb", Boolean.TRUE)`を設定すれば`JScrollBar`のノブが常に表示状態になる
+-- スクロールバーポリシーが`ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS`、`ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS`以外の場合は`JScrollBar`自体が非表示になるのでこの設定は無意味になる
+- `UIManager.put("ScrollBar.alwaysShowThumb", Boolean.False)`
+-- `GTKLookAndFeel`以外のデフォルト
+-- 例えば`JScrollPane`のビューコンテンツの高さが`JViewport`の高さより小さく全高が表示されてスクロールの必要がない場合は、`JScrollBar`のノブは非表示になる
+
+* 参考リンク [#reference]
+- [[JScrollBarのKnobの最小サイズを設定する>Swing/MinimumThumbSize]]
+
+* コメント [#comment]
+#comment
+#comment

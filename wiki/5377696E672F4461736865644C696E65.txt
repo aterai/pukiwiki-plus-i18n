@@ -16,7 +16,7 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKaxPM12I/AAAAAAAAAV8/ZQ
 * サンプルコード [#sourcecode]
 #code(link){{
 JLabel label = new JLabel() {
-  BasicStroke dashedStroke;
+  private BasicStroke dashedStroke;
   @Override protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     if (dashedStroke == null) {
@@ -38,7 +38,6 @@ JLabel label = new JLabel() {
 * 解説 [#explanation]
 上記のサンプルでは、`BasicStroke`の破線属性を指定して点線をコンポーネント内に描画しています。
 
-----
 - 破線のパターンは`JTextField`にカンマ区切りで記入した数値を配列に分解し、これを`BasicStroke`に渡して作成
 
 * 参考リンク [#reference]

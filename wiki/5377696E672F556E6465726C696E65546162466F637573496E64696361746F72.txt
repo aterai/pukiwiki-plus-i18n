@@ -1,0 +1,92 @@
+---
+category: swing
+folder: UnderlineTabFocusIndicator
+title: JTabbedPaneのタブが選択されている場合のフォーカスBorderを下線に変更する
+tags: [JTabbedPane, Border, MatteBorder, Focus]
+author: aterai
+pubdate: 2021-11-22T00:35:14+09:00
+description: JTabbedPaneのタブが選択されている場合のフォーカスBorderをドットの囲み罫ではなく下線に変更します。
+image: https://drive.google.com/uc?id=1IT_j78FMubgNQJySR_897nnxNwD_9mDU
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2022/01/change-selection-focus-border-of.html
+    lang: en
+---
+* 概要 [#summary]
+`JTabbedPane`のタブが選択されている場合のフォーカス`Border`をドットの囲み罫ではなく下線に変更します。
+
+#download(https://drive.google.com/uc?id=1IT_j78FMubgNQJySR_897nnxNwD_9mDU)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class UnderlineFocusTabbedPane extends JTabbedPane {
+  private static final Border DEFAULT_BORDER =
+      BorderFactory.createMatteBorder(0, 0, 3, 0, new Color(0x0, true));
+  private static final Border SELECTED_BORDER =
+      BorderFactory.createMatteBorder(0, 0, 3, 0, new Color(0x00_AA_FF));
+
+  protected UnderlineFocusTabbedPane() {
+    super();
+  }
+
+  @Override public void updateUI() {
+    // UIManager.put("TabbedPane.focus", new ColorUIResource(new Color(0x0, true)));
+    super.updateUI();
+    // setFocusable(false);
+    if (getUI() instanceof WindowsTabbedPaneUI) {
+      setUI(new WindowsTabbedPaneUI() {
+        @Override protected void paintFocusIndicator(
+            Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex,
+            Rectangle iconRect, Rectangle textRect, boolean isSelected) {
+          super.paintFocusIndicator(g, tabPlacement, rects, tabIndex, iconRect, textRect, false);
+        }
+      });
+    } else {
+      setUI(new BasicTabbedPaneUI() {
+        @Override protected void paintFocusIndicator(
+            Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex,
+            Rectangle iconRect, Rectangle textRect, boolean isSelected) {
+          super.paintFocusIndicator(g, tabPlacement, rects, tabIndex, iconRect, textRect, false);
+        }
+      });
+    }
+    addChangeListener(e -> {
+      JTabbedPane tabbedPane = (JTabbedPane) e.getSource();
+      if (tabbedPane.getTabCount() <= 0) {
+        return;
+      }
+      int idx = tabbedPane.getSelectedIndex();
+      for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+        Component c = tabbedPane.getTabComponentAt(i);
+        if (c instanceof JComponent) {
+          ((JComponent) c).setBorder(i == idx ? SELECTED_BORDER : DEFAULT_BORDER);
+        }
+      }
+    });
+  }
+
+  @Override public void insertTab(
+      String title, Icon icon, Component component, String tip, int index) {
+    super.insertTab(title, icon, component, tip, index);
+    JLabel label = new JLabel(title, icon, SwingConstants.CENTER);
+    setTabComponentAt(index, label);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- デフォルトのフォーカス`Border`を非表示にし、代わりに選択されたタブのタブタイトルに設定した`JLabel`に`MatteBorder`で作成した下線を適用
+-- [[CardLayoutで作成したJTabbedPane風コンポーネントのタブエリアに水平JScrollBarを表示する>Swing/TabAreaScrollBar]]
+- `JTabbedPane`に`ChangeListener`を追加してタブの切り替えイベントを取得して`MatteBorder`を切り替え
+-- [[JTabbedPaneの選択文字色を変更>Swing/ColorTab]]
+- `JTabbedPane#setFocusable(false)`などでフォーカス自体を不可にする方法もあるが、カーソルキーでの選択移動も不可になるのでこのサンプルでは`BasicTabbedPaneUI#paintFocusIndicator(...)`をオーバーライドしてデフォルトのフォーカス`Border`を非表示化
+-- [[JTabbedPaneのタブ描画をフラットデザイン風に変更する>Swing/FlatTabbedPane]]
+-- `UIManager.put("TabbedPane.focus", new ColorUIResource(new Color(0x0, true)));`でフォーカス`Border`を非表示にする方法もある
+
+* 参考リンク [#reference]
+- [[JTabbedPaneの選択文字色を変更>Swing/ColorTab]]
+- [[JTabbedPaneのタブ描画をフラットデザイン風に変更する>Swing/FlatTabbedPane]]
+- [[CardLayoutで作成したJTabbedPane風コンポーネントのタブエリアに水平JScrollBarを表示する>Swing/TabAreaScrollBar]]
+
+* コメント [#comment]
+#comment
+#comment

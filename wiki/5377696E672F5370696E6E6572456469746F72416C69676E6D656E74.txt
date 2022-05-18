@@ -62,9 +62,9 @@ JSpinner spinner2 = new JSpinner(new SpinnerNumberModel(5, 0, 10, 1));
 -- `GTKLookAndFeel`の初期値は`JTextField.LEADING`
 -- `BasicLookAndFeel`や`WindowsLookAndFeel`の初期値は`JTextField.TRAILING`
 - `JSpinner`のエディタに固有の字揃えが設定されている場合がある
--- `SpinnerListModel`のエディタは`Spinner.editorAlignment`の字揃えに従う
--- `SpinnerDateModel`の`JSpinner.DateEditor`はフォーマッタを設定すると`Spinner.editorAlignment`の字揃えに従わずに`JTextField.LEADING`になる？
--- `SpinnerNumberModel`の`JSpinner.NumberEditor`はコンストラクタで`setHorizontalAlignment(JTextField.RIGHT)`が設定されている
+-- `SpinnerListModel`のエディタは`UIManager.put("Spinner.editorAlignment", ...)`で設定した字揃えに従う
+-- `SpinnerDateModel`の`JSpinner.DateEditor`はフォーマッタを設定すると`UIManager.put("Spinner.editorAlignment", ...)`で設定した字揃えに従わずに`JTextField.LEADING`になる
+--- `SpinnerNumberModel`の`JSpinner.NumberEditor`はコンストラクタで`setHorizontalAlignment(JTextField.RIGHT)`が実行されている
 - 個別の`JSpinner`の`JSpinner.DefaultEditor`から`JTextField`を取得して水平方向の揃えを直接変更する方法もある
 #code{{
 JTextField field = ((JSpinner.DefaultEditor) spinner1.getEditor()).getTextField();

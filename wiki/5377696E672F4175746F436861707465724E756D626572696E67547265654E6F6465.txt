@@ -53,7 +53,7 @@ class ChapterNumberingTreeCellRenderer extends DefaultTreeCellRenderer {
 - `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`メソッドをオーバーライド
 -- `DefaultMutableTreeNode#getPath()`メソッドでルートノードから自ノードまでのノード配列を取得
 -- ルートノードを除く各ノードで自ノードが何番目のノードかを`TreeNode#getIndex()`メソッドで取得して文字列に変換
--- 変換した各番号文字列を`.`で結合し、ノードタイトルの先頭に追加
+-- 変換した各番号文字列を「`.`(`U+2E`)」で連結してノードタイトルの先頭に追加
 
 * 参考リンク [#reference]
 - [[JTreeで目次を作成する>Swing/TableOfContentsTree]]

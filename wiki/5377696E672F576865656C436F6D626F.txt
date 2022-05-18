@@ -18,7 +18,7 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWm95sa5I/AAAAAAAAApg/1t
 JComboBox<String> combo = makeComboBox();
 combo.addMouseWheelListener(new MouseWheelListener() {
   @Override public void mouseWheelMoved(MouseWheelEvent e) {
-    JComboBox source = (JComboBox) e.getComponent();
+    JComboBox<?> source = (JComboBox<?>) e.getComponent();
     if (!source.hasFocus()) {
       return;
     }

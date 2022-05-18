@@ -38,12 +38,12 @@ private Icon makeVerticalTabIcon(String title, Icon icon, boolean clockwise) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、タイトル文字列とアイコンから`JLabel`を作成しこれを`90`°回転して`ImageIcon`に変換し、そのアイコンのみ(タイトル文字列は`null`)を`JTabbedPane#addTab(...)`で追加して横長ではなく縦長のタブを表示しています。
+上記のサンプルでは、タイトル文字列とアイコンから`JLabel`を作成しこれを`90`度回転して`ImageIcon`に変換し、そのアイコンのみ(タイトル文字列は`null`)を`JTabbedPane#addTab(...)`で追加して横長ではなく縦長のタブを表示しています。
 
 - 左: `JTabbedPane#setTabPlacement(LEFT)`
--- タブ用の`JLabel`の幅だけ`y`軸方向に移動し、反時計回りに`90`°回転した`JLabel`を描画する`Icon`を縦長タブとして使用
+-- タブ用の`JLabel`の幅だけ`y`軸方向に移動し、反時計回りに`90`度回転した`JLabel`を描画する`Icon`を縦長タブとして使用
 - 右: `JTabbedPane#setTabPlacement(RIGHT)`
--- タブ用の`JLabel`の高さだけ`x`軸方向に移動し、時計回りに`90`°回転した`JLabel`を描画する`Icon`を縦長タブとして使用
+-- タブ用の`JLabel`の高さだけ`x`軸方向に移動し、時計回りに`90`度回転した`JLabel`を描画する`Icon`を縦長タブとして使用
 
 * 参考リンク [#reference]
 - [[Iconを回転する>Swing/RotatedIcon]]

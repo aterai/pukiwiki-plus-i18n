@@ -18,41 +18,39 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-private void testCreateActionPerformed(ActionEvent e) {
-  model.addTest(new Test("New name", ""));
-  (new Timer(DELAY, new ActionListener() {
-    int i = table.convertRowIndexToView(model.getRowCount() - 1);
-    int h = START_HEIGHT;
-    @Override public void actionPerformed(ActionEvent e) {
-      if (h < END_HEIGHT) {
-        table.setRowHeight(i, h++);
-      } else {
-        ((Timer) e.getSource()).stop();
-      }
+public void createActionPerformed(JTable table, DefaultTableModel model) {
+  model.addRow(new Object[] {"New name", model.getRowCount(), false});
+  int index = table.convertRowIndexToView(model.getRowCount() - 1);
+  AtomicInteger height = new AtomicInteger(START_HEIGHT);
+  new Timer(DELAY, e -> {
+    int h = height.getAndIncrement();
+    if (h < END_HEIGHT) {
+      table.setRowHeight(index, h);
+    } else {
+      ((Timer) e.getSource()).stop();
     }
-  })).start();
+  }).start();
 }
 
-private void deleteActionPerformed(ActionEvent evt) {
-  final int[] selection = table.getSelectedRows();
-  if (selection.length <= 0) {
+public void deleteActionPerformed(JTable table, DefaultTableModel model) {
+  int[] selection = table.getSelectedRows();
+  if (selection.length == 0) {
     return;
   }
-  (new Timer(DELAY, new ActionListener() {
-    int h = END_HEIGHT;
-    @Override public void actionPerformed(ActionEvent e) {
-      h--;
-      if (h > START_HEIGHT) {
-        for (int i = selection.length - 1; i >= 0; i--)
-          table.setRowHeight(selection[i], h);
-      } else {
-        ((Timer) e.getSource()).stop();
-        for (int i = selection.length - 1; i >= 0; i--) {
-          model.removeRow(table.convertRowIndexToModel(selection[i]));
-        }
+  AtomicInteger height = new AtomicInteger(END_HEIGHT);
+  new Timer(DELAY, e -> {
+    int h = height.getAndDecrement();
+    if (h > START_HEIGHT) {
+      for (int i = selection.length - 1; i >= 0; i--) {
+        table.setRowHeight(selection[i], h);
+      }
+    } else {
+      ((Timer) e.getSource()).stop();
+      for (int i = selection.length - 1; i >= 0; i--) {
+        model.removeRow(table.convertRowIndexToModel(selection[i]));
       }
     }
-  })).start();
+  }).start();
 }
 }}
 

@@ -27,10 +27,10 @@ field.setBackground(UIManager.getColor("FormattedTextField.background"));
 - `Default`
 -- デフォルトの`JSpinner`
 - `spinner.setEnabled(false)`
--- `JSpinner#setEnabled(false)`で`JSpinner`全体を編集不可に設定
+-- `JSpinner#setEnabled(false)`メソッドで`JSpinner`全体を編集不可に設定
 - `field.setEnabled(false)`
 -- `( (JSpinner.DefaultEditor) spinner.getEditor()).getTextField()`で`JSpinner`のテキスト入力欄を取得し、これを`JTextComponent#setEditable(false)`で編集不可に設定
--- 上下ボタンで値を変更可能だが、キーボードでの値の入力は不可
+-- 増減ボタンで値を変更可能だがキーボードでの値の入力は不可
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSpinner.html#getEditor-- JSpinner#getEditor() (Java Platform SE 8)]

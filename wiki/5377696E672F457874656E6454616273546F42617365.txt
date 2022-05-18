@@ -1,0 +1,47 @@
+---
+category: swing
+folder: ExtendTabsToBase
+title: JTabbedPaneの二段目以上に存在するタブボーダーの描画をタブコンテンツエリアまで延長する
+tags: [JTabbedPane, NimbusLookAndFeel, UIManager, UIDefaults]
+author: aterai
+pubdate: 2021-11-29T06:35:33+09:00
+description: NimbusLookAndFeelを適用したJTabbedPaneで二段目以上に存在するタブボーダーの描画をタブコンテンツエリアまで延長するかどうかを変更します。
+image: https://drive.google.com/uc?id=15qMUt-AfUmLJgwe-_KJuO5e3cgDdIbWC
+---
+* 概要 [#summary]
+`NimbusLookAndFeel`を適用した`JTabbedPane`で二段目以上に存在するタブボーダーの描画をタブコンテンツエリアまで延長するかどうかを変更します。
+
+#download(https://drive.google.com/uc?id=15qMUt-AfUmLJgwe-_KJuO5e3cgDdIbWC)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// TEST: UIManager.put("TabbedPane.tabRunOverlay", -4);
+// UIManager.put("TabbedPane.extendTabsToBase", Boolean.TRUE); // Default
+// UIManager.put("TabbedPane.extendTabsToBase", Boolean.FALSE);
+JTabbedPane tabbedPane = makeTabbedPane();
+UIDefaults d = UIManager.getLookAndFeelDefaults();
+d.put("TabbedPane.extendTabsToBase", Boolean.FALSE);
+tabbedPane.putClientProperty("Nimbus.Overrides", d);
+tabbedPane.putClientProperty("Nimbus.Overrides.InheritDefaults", false);
+}}
+
+* 解説 [#explanation]
+- 上: `TabbedPane.extendTabsToBase: true`
+-- `TabbedPane.extendTabsToBase`の設定は`SynthLookAndFeel`や`NimbusLookAndFeel`でのみ有効でデフォルトは`true`
+--- かつ二段目以上に存在するタブだけに影響するのでタブレイアウトが`WRAP_TAB_LAYOUT`の場合のみ有効
+-- `UIManager.put("TabbedPane.extendTabsToBase", ...)`で`NimbusLookAndFeel`を適用する場合の初期値を変更可能
+-- `TabbedPane.extendTabsToBase`を`true`に設定すると、たとえばタブ配置が`TOP`の場合二段目以上のタブの下辺がタブコンテンツエリアの上辺まで拡張して描画される
+--- 拡張されるのは描画のみでマウスカーソルで拡張された領域をクリックしても無視される
+- 下: `TabbedPane.extendTabsToBase: false`
+-- 個別の`JTabbedPane`に設定するため`UIDefaults#put("TabbedPane.extendTabsToBase", Boolean.FALSE)`を上書きした`UIDefaults`を`JTabbedPane#putClientProperty("Nimbus.Overrides", UIDefaults)`で設定している
+-- `TabbedPane.extendTabsToBase`を`false`に設定すると、たとえばタブ配置が`TOP`の場合二段目以上のタブの下辺がタブサイズの位置に描画されてタブコンテンツエリアまでつながらない
+--- 上記のスクリーンショットでいうと`JSplitPane`タブと`JTree`タブの右辺が一直線にはならない
+--- デフォルトの`JTabbedPane`では違いが微妙だが`UIManager.put("TabbedPane.tabRunOverlay", -4)`などでタブランの重なりを逆に広げてみると分かりやすいかもしれない
+--- [[JTabbedPaneのタブ・ランの回転を無効にする>Swing/RotateTabRuns]]
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのタブ・ランの回転を無効にする>Swing/RotateTabRuns]]
+
+* コメント [#comment]
+#comment
+#comment

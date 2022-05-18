@@ -65,7 +65,8 @@ class WatermarkPasswordField extends JPasswordField
 * 解説 [#explanation]
 上記のサンプルでは、`JPasswordField#paintComponent(...)`をオーバーライドしてヒント文字列を描画しています。
 
-`paintComponent(...)`メソッドをオーバーライドするのは同じですが、[[JTextFieldに透かし画像を表示する>Swing/WatermarkInTextField]]とは異なり、`JPasswordField`にフォーカスがあっても、まだ入力がない場合(`DocumentListener`を追加)などに、ヒント文字列を非表示にはせず、薄く表示するようにしています(参考: [https://tips4java.wordpress.com/2009/11/29/text-prompt/ Text Prompt « Java Tips Weblog])。
+- `paintComponent(...)`メソッドをオーバーライドするのは[[JTextFieldに透かし画像を表示する>Swing/WatermarkInTextField]]と同様だが、こちらは`JPasswordField`にフォーカスがあってもまだ入力がない場合(`DocumentListener`を追加)などに、ヒント文字列を非表示にはせず薄く表示するよう変更
+-- 参考: [https://tips4java.wordpress.com/2009/11/29/text-prompt/ Text Prompt « Java Tips Weblog]
 
 * 参考リンク [#reference]
 - [https://tips4java.wordpress.com/2009/11/29/text-prompt/ Text Prompt « Java Tips Weblog]

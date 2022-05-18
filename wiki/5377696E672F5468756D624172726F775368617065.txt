@@ -21,7 +21,7 @@ slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);
 * 解説 [#explanation]
 上記のサンプルでは、`slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE)`を使用して、つまみの形状を目盛り表示ありの場合に使用する矢印型に変更しています。
 
-- 矢印型に変化するかどうかは`LookAndFeel`に依存する
+- この設定で矢印型に変化するかどうかは`LookAndFeel`に依存する
 -- `NimbusLookAndFeel`では目盛り表示ありの場合でも矢印型にはならないが、`Slider.paintThumbArrowShape`で三角形になる
 - `WindowsLookAndFeel`でつまみが小さすぎる場合に使用可
 -- `slider.putClientProperty("Slider.minimumHorizontalSize", new Dimension(30, 30))`を設定してもサイズは変化しない

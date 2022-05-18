@@ -18,67 +18,70 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-public static JPopupMenu installTextComponentPopupMenu(final JTextComponent tc) {
-  UndoManager manager = new UndoManager();
-  Action undoAction   = new UndoAction(manager);
-  Action redoAction   = new RedoAction(manager);
-  Action cutAction    = new DefaultEditorKit.CutAction();
-  Action copyAction   = new DefaultEditorKit.CopyAction();
-  Action pasteAction  = new DefaultEditorKit.PasteAction();
-  Action deleteAction = new AbstractAction("delete") {
-    @Override public void actionPerformed(ActionEvent e) {
-      ((JTextComponent) getInvoker()).replaceSelection(null);
-    }
-  };
-  tc.addAncestorListener(new AncestorListener() {
-    @Override public void ancestorAdded(AncestorEvent e) {
-      manager.discardAllEdits();
-      tc.requestFocusInWindow();
-    }
+class TextComponentPopupMenu extends JPopupMenu {
+  protected TextComponentPopupMenu(JTextComponent tc) {
+    super();
+    Action cutAction = new DefaultEditorKit.CutAction();
+    add(cutAction);
+    Action copyAction = new DefaultEditorKit.CopyAction();
+    add(copyAction);
+    Action pasteAction = new DefaultEditorKit.PasteAction();
+    add(pasteAction);
+    Action deleteAction = new DeleteAction();
+    add(deleteAction);
+    addSeparator();
 
-    @Override public void ancestorMoved(AncestorEvent e) {}
+    UndoManager manager = new UndoManager();
+    Action undoAction = new UndoAction(manager);
+    add(undoAction);
 
-    @Override public void ancestorRemoved(AncestorEvent e) {}
-  });
-  tc.getDocument().addUndoableEditListener(manager);
-  tc.getActionMap().put("undo", undoAction);
-  tc.getActionMap().put("redo", redoAction);
-  InputMap imap = tc.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-  imap.put(KeyStroke.getKeyStroke(
-    KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "undo");
-  imap.put(KeyStroke.getKeyStroke(
-    KeyEvent.VK_Y, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "redo");
+    Action redoAction = new RedoAction(manager);
+    add(redoAction);
 
-  JPopupMenu popup = new JPopupMenu();
-  popup.add(cutAction);
-  popup.add(copyAction);
-  popup.add(pasteAction);
-  popup.add(deleteAction);
-  popup.addSeparator();
-  popup.add(undoAction);
-  popup.add(redoAction);
+    tc.addAncestorListener(new AncestorListener() {
+      @Override public void ancestorAdded(AncestorEvent e) {
+        manager.discardAllEdits();
+        e.getComponent().requestFocusInWindow();
+      }
 
-  popup.addPopupMenuListener(new PopupMenuListener() {
-    @Override public void popupMenuCanceled(PopupMenuEvent e) {}
+      @Override public void ancestorMoved(AncestorEvent e) {
+        /* not needed */
+      }
 
-    @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-      undoAction.setEnabled(true);
-      redoAction.setEnabled(true);
-    }
+      @Override public void ancestorRemoved(AncestorEvent e) {
+        /* not needed */
+      }
+    });
+    tc.getDocument().addUndoableEditListener(manager);
+    tc.getActionMap().put("undo", undoAction);
+    tc.getActionMap().put("redo", redoAction);
+    InputMap im = tc.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    int mask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+    // Java 10: int mask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+    im.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, mask), "undo");
+    im.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, mask), "redo");
 
-    @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-      JPopupMenu pop = (JPopupMenu) e.getSource();
-      JTextField field = (JTextField) pop.getInvoker();
-      boolean flg = field.getSelectedText() != null;
-      cutAction.setEnabled(flg);
-      copyAction.setEnabled(flg);
-      deleteAction.setEnabled(flg);
-      undoAction.setEnabled(manager.canUndo());
-      redoAction.setEnabled(manager.canRedo());
-    }
-  });
-  tc.setComponentPopupMenu(popup);
-  return popup;
+    addPopupMenuListener(new PopupMenuListener() {
+      @Override public void popupMenuCanceled(PopupMenuEvent e) {
+        /* not needed */
+      }
+
+      @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+        undoAction.setEnabled(true);
+        redoAction.setEnabled(true);
+      }
+
+      @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+        JTextComponent tc = (JTextComponent) getInvoker();
+        boolean hasSelectedText = Objects.nonNull(tc.getSelectedText());
+        cutAction.setEnabled(hasSelectedText);
+        copyAction.setEnabled(hasSelectedText);
+        deleteAction.setEnabled(hasSelectedText);
+        undoAction.setEnabled(manager.canUndo());
+        redoAction.setEnabled(manager.canRedo());
+      }
+    });
+  }
 }
 }}
 

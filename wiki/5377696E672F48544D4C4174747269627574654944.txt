@@ -81,7 +81,6 @@ private void checkID(Element element) {
 -- `ParserDelegator`を使って文字列をパースし、`HTMLEditorKit.ParserCallback#handleStartTag(...)`でタグの開始を見つけたら、`MutableAttributeSet#getAttribute(HTML.Attribute.ID);`でそのタグの`id`を取得
 -- `javax.swing.text.Element`とは無関係に、`JEditorPane#getText()`で取得した文字列を`html`として解析している
 -- `HTMLEditorKit`が設定された`JEditorPane`から`getText()`で取得された文字列には`<body>`などのタグが自動的に補完されているので、元の`html`テキストとは異なる点に注意
-
 #code{{
 System.out.println("ParserDelegator");
 final String id = field.getText().trim();

@@ -1,0 +1,48 @@
+---
+category: swing
+folder: RendererUseListColors
+title: NimbusLookAndFeelでセル選択色をJListから取得するよう変更する
+tags: [NimbusLookAndFeel, JList, JComboBox, UIManager, LookAndFeel]
+author: aterai
+pubdate: 2022-04-11T04:12:31+09:00
+description: NimbusLookAndFeelでセル選択色をUIDefaultsで設定された色ではなくJListから取得するよう変更します。
+image: https://drive.google.com/uc?id=18L0O-5XjxIFGLpTCKDqLk4voZpSmNMoc
+---
+* 概要 [#summary]
+`NimbusLookAndFeel`でセル選択色を`UIDefaults`で設定された色ではなく`JList`から取得するよう変更します。
+
+#download(https://drive.google.com/uc?id=18L0O-5XjxIFGLpTCKDqLk4voZpSmNMoc)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String[] model = {"Red", "Green", "Blue"};
+JList<String> list = new JList<>(model);
+UIDefaults d = new UIDefaults();
+d.put("List.rendererUseListColors", true);
+String key = "Nimbus.Overrides";
+list.putClientProperty(key, d);
+}}
+
+* 解説 [#explanation]
+- `List.rendererUseListColors`
+-- この設定のデフォルトは`false`(左)で`NimbusLookAndFeel`でのみ有効
+-- `true`(右)に設定すると`UIDefaults`ではなく`JList#getSelectionBackground()`、`JList#getSelectionForeground()`で取得される色でセル選択を描画する
+- `ComboBox.rendererUseListColors`
+-- `ComboBox.rendererUseListColors: true`
+--- `ComboBox.rendererUseListColors`を`ture`に設定すると`JComboBox`のドロップダウンリスト内に配置される`JList`が使用する`NimbusLookAndFeel`のデフォルトセルレンダラーである`SynthComboBoxRenderer`は`JList#getSelectionBackground()`、`JList#getSelectionForeground()`で取得される色でセルを描画する
+--- `ComboBox.rendererUseListColors`を`ture`に設定するとセル背景色が描画されなくなるため設定する意味がない？
+-- `DefaultListCellRenderer`
+--- `JComboBox`に`DefaultListCellRenderer`を設定すると`UIDefaults`ではなく`JList#getSelectionBackground()`、`JList#getSelectionForeground()`で取得される色でセル選択を描画する
+-- `BasicComboBoxRenderer`
+--- `DefaultListCellRenderer`ではなく`BasicComboBoxRenderer`を使用するとセル背景色が描画されない？
+-- `SynthComboBoxRenderer + ListCellRenderer`
+--- `SynthComboBoxRenderer`を使用してデフォルトの`UIDefaults`から取得した色でセルを描画する
+--- `ComboBox.rendererUseListColors`を`ture`に設定している別`JComboBox`が存在すると`LookAndFeel`を変更したときにその値が影響してしまうバグ？があるため、`JComboBox#updateUI()`をオーバーライドして常に`ComboBox.rendererUseListColors`を`false`に再設定している
+--- `List.rendererUseListColors`は`LookAndFeel`を変更しても他の`JList`の設定が影響したりしない
+
+* 参考リンク [#reference]
+- [[JComboBoxのドロップダウンリストでの選択背景色を変更する>Swing/ComboBoxSelectionBackground]]
+
+* コメント [#comment]
+#comment
+#comment

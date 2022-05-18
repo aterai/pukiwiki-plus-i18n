@@ -30,7 +30,7 @@ editorPane.addHyperlinkListener(new HyperlinkListener() {
     } else if (e.getEventType() == HyperlinkEvent.EventType.ENTERED) {
       tooltip = editorPane.getToolTipText();
       URL url = e.getURL();
-      editorPane.setToolTipText((url != null) ? url.toExternalForm() : null);
+      editorPane.setToolTipText(Objects.nonNull(url) ? url.toExternalForm() : null);
     } else if (e.getEventType() == HyperlinkEvent.EventType.EXITED) {
       editorPane.setToolTipText(tooltip);
     }

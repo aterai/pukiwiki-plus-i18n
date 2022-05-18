@@ -17,8 +17,8 @@ image: https://lh3.googleusercontent.com/-rFS_L31nMfg/VJbgMqwW0UI/AAAAAAAANtY/z1
 #code(link){{
 int idx = 0;
 for (Color c: Arrays.asList(Color.RED, Color.GREEN, Color.BLUE)) {
-  String s = String.format("Document #%s", ++idx);
-  JInternalFrame f = new JInternalFrame(s, true, true, true, true);
+  String title = String.format("Document #%s", ++idx);
+  JInternalFrame f = new JInternalFrame(title, true, true, true, true);
   desktop.add(f);
   f.setFrameIcon(new ColorIcon(c));
   f.setSize(240, 120);

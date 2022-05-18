@@ -1,0 +1,81 @@
+---
+category: swing
+folder: ResizeColumnCursor
+title: JSplitPaneやTableColumnのリサイズカーソルを変更する
+tags: [JSplitPane, Divider, JTable, JTableHeader, TableColumn, Cursor]
+author: aterai
+pubdate: 2021-07-19T02:42:38+09:00
+description: JSplitPaneのDividerやJTableHeaderのTableColumnでコンボーネントをリサイズ中に表示されるマウスカーソルを変更します。
+image: https://drive.google.com/uc?id=16YsnRoba4Fln-RrWN_rd1V_81Hiw3q4l
+---
+* 概要 [#summary]
+`JSplitPane`の`Divider`や`JTableHeader`の`TableColumn`でコンボーネントをリサイズ中に表示されるマウスカーソルを変更します。
+
+#download(https://drive.google.com/uc?id=16YsnRoba4Fln-RrWN_rd1V_81Hiw3q4l)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+BasicSplitPaneDivider divider = ((BasicSplitPaneUI) sp2.getUI()).getDivider();
+divider.setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
+
+JSplitPane sp3 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT) {
+  @Override public void updateUI() {
+    super.updateUI();
+    EventQueue.invokeLater(() -> {
+      BasicSplitPaneDivider d = ((BasicSplitPaneUI) getUI()).getDivider();
+      d.setCursor(ResizeCursorUtils.createCursor("⇹", 32, 32, d));
+    });
+  }
+};
+}}
+
+* 解説 [#explanation]
+- 上: `JSplitPane`
+-- デフォルトは左右分割の場合`Cursor.E_RESIZE_CURSOR`、上下分割の場合`Cursor.S_RESIZE_CURSOR`を使用するよう`BasicSplitPaneDivider`でハードコーディングされている
+-- `Ubuntu`環境の`Cursor.E_RESIZE_CURSOR`はホットスポットがカーソルの中央ではなく左端に存在するため、左右分割の`Divider`上にカーソルを置くと左コンポーネント上にカーソルがジャンプ？してしまう
+- 中: `JSplitPane`
+-- 左右分割`Divider`のカーソルを`Ubuntu`環境ではホットスポットが右端に存在する`Cursor.W_RESIZE_CURSOR`に変更
+--- [https://github.com/JetBrains/intellij-community/blob/master/platform/util/ui/src/com/intellij/openapi/ui/Splitter.java Splitter.java - IntelliJ IDEA Community Edition]のリサイズカーソルも左右分割なら`Cursor.E_RESIZE_CURSOR`、上下分割なら`Cursor.N_RESIZE_CURSOR`を使用している
+-- `Windows`環境では`Cursor.E_RESIZE_CURSOR`、`Cursor.W_RESIZE_CURSOR`ともにホットスポットはカーソル中央なので変化なし
+-- このサンプルでは上下分割に切り替えた場合などには未対応
+- 下: `JSplitPane`
+-- ホットスポットを文字`⇹`の中央に設定したカスタムカーソルを作成してリサイズカーソルとして`Divider`に設定
+-- [[Cursorオブジェクトの生成>Swing/CustomCursor]]
+-- このサンプルでは上下分割に切り替えた場合などには未対応
+- 上中: `TableColumn`
+-- `JSplitPane`と同様にデフォルトは左右分割の場合`Cursor.E_RESIZE_CURSOR`、上下分割の場合`Cursor.S_RESIZE_CURSOR`を使用するよう`BasicTableHeaderUI`でハードコーディングされている
+-- リサイズカーソル(`Cursor.E_RESIZE_CURSOR`)表示中にキー入力で`LookAndFeel`を切り替えると`JTableHeader`上では常に`Cursor.E_RESIZE_CURSOR`が表示されて`Cursor.DEFAULT_CURSOR`に戻せなくなる
+- 下: `TableColumn`
+-- ホットスポットを`Excel`風に文字`⇼`の中央に設定したカスタムカーソルを作成
+-- `BasicTableHeaderUI.MouseInputHandler#mouseMoved(...)`メソッドをオーバーライドして`JTableHeader`で使用
+
+#code{{
+class MyBasicTableHeaderUI extends BasicTableHeaderUI {
+  @Override protected MouseInputListener createMouseInputListener() {
+    return new MouseInputHandler() {
+      private final Cursor resizeCursor = ResizeCursorUtils.createCursor("⇼", 32, 32, header);
+      private final Cursor defaultCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+
+      @Override public void mouseMoved(MouseEvent e) {
+        super.mouseMoved(e);
+        if (!header.isEnabled()) {
+          return;
+        }
+        if (ResizeCursorUtils.canResize(ResizeCursorUtils.getResizeColumn(header, e.getPoint()), header)) {
+          header.setCursor(resizeCursor);
+        } else {
+          header.setCursor(defaultCursor);
+        }
+      }
+    };
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [[Cursorオブジェクトの生成>Swing/CustomCursor]]
+
+* コメント [#comment]
+#comment
+#comment

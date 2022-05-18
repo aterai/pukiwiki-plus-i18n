@@ -97,10 +97,10 @@ class CloseableTabbedPaneLayerUI extends LayerUI<JTabbedPane> {
 * 解説 [#explanation]
 - 上
 -- [[JTabbedPaneにタブを閉じるボタンを追加>Swing/TabWithCloseButton]]
--- タブに追加したコンポーネントは、中央揃えで配置される
+-- タブに追加したコンポーネントは中央揃えで配置される
 --- `BasicTabbedPaneUI`などのデフォルト
 - 下
--- `JLayer`を使用して、タブの余白にそれを閉じるための`JButton`を描画
+-- `JLayer`を使用してタブの余白にそれを閉じるための`JButton`を描画
 --- `TabbedPaneUI`をオーバーライドする必要がない
 --- [[JTabbedPaneにタブを閉じるアイコンを追加>Swing/TabWithCloseIcon]]では、`BasicTabbedPaneUI#createLayoutManager()`をオーバーライドして、独自の`TabbedPaneLayout`で右端に☓アイコンを描画
 -- タブの余白は`UIManager.put("TabbedPane.tabInsets", new Insets(2, 18, 2, 18));`で設定

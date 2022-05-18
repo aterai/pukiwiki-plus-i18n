@@ -118,14 +118,13 @@ class CustomBevelBorder extends BevelBorder {
 -- `BevelBorder#getBorderInsets(...)`をオーバーライドして内余白を変更しても変化しない
 - `Custom BevelBorder`
 -- `BevelBorder#getBorderInsets(...)`をオーバーライドして内余白を変更
--- `BevelBorder#paintBorder(...)`をオーバーライドし、`JButton`の状態に応じて`BevelBorder#paintRaisedBevel(...)`と`BevelBorder#paintLoweredBevel(...)`の描画を切り替えるよう設定
--- `BevelBorder#paintRaisedBevel(...)`をオーバーライドして、内余白に応じたサイズの射影と境界線を描画
--- `BevelBorder#paintLoweredBevel(...)`をオーバーライドして、内余白に応じたサイズの射影と境界線を描画
+-- `BevelBorder#paintBorder(...)`をオーバーライドして`JButton`の状態に応じて`BevelBorder#paintRaisedBevel(...)`と`BevelBorder#paintLoweredBevel(...)`の描画を切り替えるよう設定
+-- `BevelBorder#paintRaisedBevel(...)`をオーバーライドして内余白に応じたサイズの射影と境界線を描画
+-- `BevelBorder#paintLoweredBevel(...)`をオーバーライドして内余白に応じたサイズの射影と境界線を描画
 
 ----
-- メモ
--- `JButton`の`ContentArea`の描画が`LookAndFeel`や初期値の関係で不正になる場合がある？
---- `SwingUtilities.updateComponentTreeUI(...)`を使用して回避
+- `JButton`の`ContentArea`の描画が`LookAndFeel`や初期値の関係で不正になる場合がある？
+-- `SwingUtilities.updateComponentTreeUI(...)`を使用して回避
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/border/BevelBorder.html BevelBorder (Java Platform SE 8)]

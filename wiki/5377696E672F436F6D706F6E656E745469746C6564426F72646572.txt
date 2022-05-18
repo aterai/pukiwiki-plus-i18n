@@ -23,7 +23,9 @@ l1.setBorder(new ComponentTitledBorder(c, l1, eb));
 }}
 
 * 解説 [#explanation]
-`SwingUtilities.paintComponent`で`Border`にコンポーネントを描画しているため、`JComboBox`などが選択されてもイベントが伝わりません。このため`ComponentTitledBorder`では、マウスリスナーを設定して`Component#dispatchEvent`メソッドで描画しているコンポーネントにマウスイベントを転送しています。
+- `SwingUtilities.paintComponent`で`Border`にコンポーネントを描画
+-- 描画しているだけなので`JComboBox`などのコンポーネントが選択されてもイベントが伝わらない
+-- このためこの`ComponentTitledBorder`ではマウスリスナーを設定して`Component#dispatchEvent`メソッドで描画しているコンポーネントに以下のようにマウスイベントを転送
 
 #code{{
 @Override public void mouseClicked(MouseEvent me) {

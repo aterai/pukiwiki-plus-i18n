@@ -76,9 +76,7 @@ class HighlightRenderer extends DefaultTableCellRenderer {
 * 解説 [#explanation]
 上記のサンプルでは、`JTable`に`MouseListener`、`MouseMotionListener`を追加してマウスカーソルが乗っているセルを取得し、セルレンダラーでこれを参照してその背景色を変更しています。
 
-----
-`JTable#prepareRenderer(...)`メソッドをオーバーライドする方法もあります。
-
+- `JTable#prepareRenderer(...)`メソッドをオーバーライドする方法もある
 #code{{
 class HighlightableTable extends JTable {
   private final HighlightListener highlighter;

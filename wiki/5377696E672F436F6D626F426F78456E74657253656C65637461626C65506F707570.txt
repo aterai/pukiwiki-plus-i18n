@@ -20,15 +20,15 @@ UIManager.put("ComboBox.isEnterSelectablePopup", Boolean.TRUE);
 
 * 解説 [#explanation]
 - `ComboBox.isEnterSelectablePopup: false(default)`
--- ポップアップメニューが閉じている状態で、KBD{Enter}キー入力やフォーカス移動で編集を終了するとアクションイベントが`2`回発生する
+-- ポップアップメニューが閉じている状態でKBD{Enter}キー入力やフォーカス移動で編集を終了するとアクションイベントが`2`回発生する
 --- このアクションイベントで`JComboBox#getSelectedItem()`を実行するとエディタの値が取得される
--- ポップアップメニューが開いている状態で、KBD{Enter}キーを入力するとアクションイベントが`1`回発生する
+-- ポップアップメニューが開いている状態でKBD{Enter}キーを入力するとアクションイベントが`1`回発生する
 --- 編集不可の`JComboBox`の場合と同じ動作
 --- このアクションイベントで`JComboBox#getSelectedItem()`を実行するとリストアイテムの値が取得される
 - `ComboBox.isEnterSelectablePopup: true`
--- ポップアップメニューが閉じている状態で、KBD{Enter}キー入力やフォーカス移動で編集を終了するとアクションイベントが`2`回発生する
+-- ポップアップメニューが閉じている状態でKBD{Enter}キー入力やフォーカス移動で編集を終了するとアクションイベントが`2`回発生する
 --- このアクションイベントで`JComboBox#getSelectedItem()`を実行するとエディタの値が取得される
--- ポップアップメニューが開いている状態で、KBD{Enter}キーを入力するとアクションイベントが`2`回発生する
+-- ポップアップメニューが開いている状態でKBD{Enter}キーを入力するとアクションイベントが`2`回発生する
 --- このアクションイベントで`JComboBox#getSelectedItem()`を実行するとリストアイテムの値が取得される
 -- 詳細は`javax/swing/plaf/basic/BasicComboBoxUI.java`を参照
 #code{{

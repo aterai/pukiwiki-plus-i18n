@@ -25,7 +25,7 @@ JDialog dummy = new JDialog();
 dummy.setUndecorated(true);
 popup.addPopupMenuListener(new PopupMenuListener() {
   @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-    /* nn */
+    /* not needed */
   }
 
   @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
@@ -63,9 +63,7 @@ icon.addMouseListener(new MouseAdapter() {
 - `PopupMenu`ではなく`JPopupMenu`が使用できるので以下が可能
 -- `JCheckBoxMenuItem`、`JRadioButtonMenuItem`の使用
 -- `LookAndFeel`の変更
-
-----
-このサンプルでは、`JPopupMenu#adjustPopupLocationToFitScreen(...)`メソッドを改変して、`SystemTray`の位置によって`JPopupMenu`が画面外にはみ出さないように調整しています。
+- このサンプルでは、`JPopupMenu#adjustPopupLocationToFitScreen(...)`メソッドを改変して`SystemTray`の位置によって`JPopupMenu`が画面外にはみ出さないように調整
 
 #code{{
 // Copied from JPopupMenu.java: JPopupMenu#adjustPopupLocationToFitScreen(...)
@@ -107,14 +105,17 @@ private static Point adjustPopupLocation(JPopupMenu popup, int xposition, int yp
   long pw = (long) p.x + (long) size.width;
   long ph = (long) p.y + (long) size.height;
 
-  if (pw > screenBounds.x + screenBounds.width)  p.x -= size.width;
-  if (ph > screenBounds.y + screenBounds.height) p.y -= size.height;
+  if (pw > screenBounds.x + screenBounds.width) {
+    p.x -= size.width;
+  }
+  if (ph > screenBounds.y + screenBounds.height) {
+    p.y -= size.height;
+  }
 
-  // Change is made to the desired (X,Y) values, when the
+  // Change is made to the desired (X, Y) values, when the
   // PopupMenu is too tall OR too wide for the screen
-  if (p.x < screenBounds.x) p.x = screenBounds.x;
-  if (p.y < screenBounds.y) p.y = screenBounds.y;
-
+  p.x = Math.max(p.x, screenBounds.x);
+  p.y = Math.max(p.y, screenBounds.y);
   return p;
 }
 }}

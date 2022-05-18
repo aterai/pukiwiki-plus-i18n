@@ -131,7 +131,7 @@ class SolidGaugeUI extends BasicProgressBarUI {
 上記のサンプルでは、`JProgressBar`の形状を半円に変更し、その値に応じてゲージの色を変化させるスピードメーター風のコンポーネントを作成しています。
 
 - ドーナツ状の半円は`Arc2D.PIE`を使用
--- `start`(弧の始角)は反時計回りに`180°`を設定し、`extent`(弧の角)は時計周りなので`0°`からマイナス`180°`まで
+-- `start`(弧の始角)は反時計回りに`180°`を設定し`extent`(弧の角)は時計周りなので`0°`からマイナス`180°`まで
 -- 参考: [[JProgressBarの進捗状況を円形で表示する>Swing/ProgressCircle]]
 - 現在値の表示は`JProgressBar`の`setString(...)`メソッドで設定可能な進捗文字列が`html`タグなどに対応していないので使用せず、独自に`BasicProgressBarUI#paint(...)`メソッド中で値と単位(文字サイズを値の`2/3`に縮小)を`2`行に分けて描画
 - 最小値、最大値の描画も`BasicProgressBarUI#paint(...)`メソッド中で描画

@@ -94,11 +94,11 @@ class BadgeLabel extends JLabel {
 -- `JLabel#isOpaque()`をオーバーライドして透明化
 -- `JLabel#paintComponent(...)`をオーバーライドして背景用のラウンド矩形、`JLabel`の元アイコン、右上隅のリボン、リボン文字列の順に描画
 - リボン
--- 親`JLabel`の`x`軸中央付近にリボンの左下が配置されるように矩形を作成
+-- 親`JLabel`の上辺`x`軸中央付近にリボンの左下が配置されるように矩形を作成
 -- リボン矩形の左下を原点に`Math.toRadians(45d)`回転
 - リボン文字列
 -- `TextLayout.getOutline()`メソッドで文字列を`Shape`に変換
---- 参考: [[Fontを回転する>Swing/TransformedShape]]
+--- [[Fontを回転する>Swing/TransformedShape]]
 -- 文字列の`Shape`をその左下を原点に`Math.toRadians(45d)`回転
 
 * 参考リンク [#reference]

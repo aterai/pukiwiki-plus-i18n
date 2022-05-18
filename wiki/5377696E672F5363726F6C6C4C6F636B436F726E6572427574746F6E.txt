@@ -69,6 +69,7 @@ panel.add(verticalBox, BorderLayout.EAST);
 
 ----
 - `Windows 10`環境で実行すればカラー絵文字が表示不可の`Swing`コンポーネントでも白黒のグリフがフォントから取得可能だが、`Ubuntu 20.04`環境で実行すると`Swing`コンポーネントで絵文字が表示されない
+-- [https://bugs.openjdk.java.net/browse/JDK-8269806 &#91;JDK-8269806&#93; Emoji rendering on Linux - Java Bug System]
 -- `Font.canDisplay(0x1F513)`では`true`が返るがグリフは幅ゼロになってなにも表示されない
 -- [[FontがUnicodeコードポイントで指定した文字のグリフを持って表示可能か確認する>Swing/FontCanDisplay]]
 

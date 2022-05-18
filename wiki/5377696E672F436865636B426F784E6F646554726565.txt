@@ -33,13 +33,15 @@ JTree tree = new JTree() {
     setCellRenderer(null);
     setCellEditor(null);
     super.updateUI();
-    //???: JDK 1.6.0 LnF bug???
+    // ???: JDK 1.6.0 LnF bug???
     setCellRenderer(new CheckBoxNodeRenderer());
     setCellEditor(new CheckBoxNodeEditor());
   }
 };
 
 class CheckBoxNodeRenderer extends JCheckBox implements TreeCellRenderer {
+  private JTree tree = null;
+  private DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
   @Override public Component getTreeCellRendererComponent(JTree tree,
       Object value, boolean selected, boolean expanded,
       boolean leaf, int row, boolean hasFocus) {
@@ -59,8 +61,7 @@ class CheckBoxNodeRenderer extends JCheckBox implements TreeCellRenderer {
     return renderer.getTreeCellRendererComponent(
         tree, value, selected, expanded, leaf, row, hasFocus);
   }
-  private JTree tree = null;
-  private DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+
   @Override public void updateUI() {
     super.updateUI();
     setName("Tree.cellRenderer");

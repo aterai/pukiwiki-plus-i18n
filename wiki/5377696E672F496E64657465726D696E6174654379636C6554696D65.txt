@@ -23,13 +23,13 @@ progressBar.setIndeterminate(true);
 * 解説 [#explanation]
 上記のサンプルでは、`UIManager`を使って`JProgressBar`の不確定進捗のアニメーションで使用するサイクル時間と再ペイント間隔をミリ秒で指定しています。
 
+`WindowsLookAndFeel`などの場合、`JProgressBar#setIndeterminate(true)`が実行されるタイミングでこれらの値は更新されます。
+
 - サイクル時間: `ProgressBar.cycleTime`
 -- `UIManager.put("ProgressBar.cycleTime", 1000)`
+-- サイクル時間が再ペイント間隔の偶数倍でない場合、サイクル時間は自動的にそうなるように増加する
 - 再ペイント間隔: `ProgressBar.repaintInterval`
 -- `UIManager.put("ProgressBar.repaintInterval", 10)`
-- 注:
--- サイクル時間が再ペイント間隔の偶数倍でない場合、サイクル時間は自動的にそうなるように増加する
--- `WindowsLookAndFeel`などの場合、`JProgressBar#setIndeterminate(true)`が実行されるタイミングでこれらの値は更新される
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/swing/1.4/pb.html 不確定進捗バーのサポート]

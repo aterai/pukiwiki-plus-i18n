@@ -20,9 +20,9 @@ frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 frame.getContentPane().add(new MainPanel());
 frame.pack();
 frame.setLocationRelativeTo(null);
-// 以下は自前で位置を計算する場合
+// 以下は自前で中央配置になる位置を計算する場合
 // Rectangle screen = frame.getGraphicsConfiguration().getBounds();
-// frame.setLocation(screen.x + screen.width  / 2 - frame.getSize().width  / 2,
+// frame.setLocation(screen.x + screen.width / 2 - frame.getSize().width / 2,
 //                   screen.y + screen.height / 2 - frame.getSize().height / 2);
 frame.setVisible(true);
 }}

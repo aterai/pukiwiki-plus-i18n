@@ -55,7 +55,7 @@ private static JTabbedPane makeWheelTabbedPane() {
 - KBD{Ctrl}キーを押しながらホイール回転で逆方向にタブ選択を移動する
 - `JTabbedPane`の`ActionMap`から`navigateNext`、`navigatePrevious`アクションを取得してホイール回転の方向に応じて`actionPerformed`メソッドを実行
 -- このため末尾タブから先頭、または先頭タブから末尾へのタブ選択移動が可能
--- また`JTabbedPane#setEnabledAt(index, false)`で選択不可にしたタブは自動的にスキップする
+-- `JTabbedPane#setEnabledAt(index, false)`で選択不可にしたタブは自動的にスキップする
 --- `JTabbedPane#setSelectedIndex(index)`を使用すると選択不可にしたタブも選択されてしまう
 -- `navigateNext|navigatePrevious`アクションはカーソルキーに割り当てられている`navigateRight|navigateLeft|navigateUp|navigateDown`とは異なりタブ配置位置に依存せずにタブ選択の変更が可能
 --- たとえば`SCROLL_TAB_LAYOUT`レイアウトでタブ配置位置が`TOP`の`JTabbedPane`の場合、左右カーソルキーでタブ選択は変更可能だが上下キーは無反応

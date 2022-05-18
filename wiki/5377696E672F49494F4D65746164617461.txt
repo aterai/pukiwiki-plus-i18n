@@ -44,18 +44,16 @@ if (com != null && com.getLength() > 0) {
 * 解説 [#explanation]
 上記のサンプルは、コメント付きの`JPEG`画像から以下の手順でコメントを抽出しています。
 
-+ `ImageReader`から、`IIOMetadata`を取得
++ `ImageReader`から`IIOMetadata`を取得
 + `IIOMetadata`から`XML`の`DOM`(`org.w3c.dom.Node`)形式でデータを取得
 + `com`タグの`comment`属性からコメントを取得
 
-タグやマーカなどの形式は、[https://docs.oracle.com/javase/jp/8/docs/api/javax/imageio/metadata/doc-files/jpeg_metadata.html JPEG メタデータ形式の仕様および使用上の注意]や、以下の`XML`一覧表示を参考にしてください。
-
+- タグやマーカなどの形式は[https://docs.oracle.com/javase/jp/8/docs/api/javax/imageio/metadata/doc-files/jpeg_metadata.html JPEG メタデータ形式の仕様および使用上の注意]や、以下の`XML`一覧表示を参考
+-- このサンプルでは`GIMP`を使用してコメントを追加し、文字コードについては考慮していないので日本語が化ける可能性がある
 - `JTextArea`
 -- 属性は頭に`#`をつけて表示
 - `JTree`
 -- 参考: [https://community.oracle.com/thread/1373824 Swing - XMLViewer]
-- 注:
--- このサンプルでは、`GIMP`を使用してコメントを追加して文字コードについては考慮していないので日本語が化ける可能性がある
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/imageio/metadata/doc-files/jpeg_metadata.html JPEG メタデータ形式の仕様および使用上の注意]

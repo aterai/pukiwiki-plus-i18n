@@ -16,24 +16,25 @@ image: https://lh3.googleusercontent.com/-c5Y9hCoRQbU/U1PhhnitgFI/AAAAAAAACD0/ZX
 * サンプルコード [#sourcecode]
 #code(link){{
 class ZoomAndPanHandler extends MouseAdapter {
-  private static final double ZOOM_MULTIPLICATION_FACTOR = 1.2;
+  private static final double ZOOM_FACTOR = 1.2;
   private static final int MIN_ZOOM = -10;
   private static final int MAX_ZOOM = 10;
   private static final int EXTENT = 1;
   private final BoundedRangeModel zoomRange = new DefaultBoundedRangeModel(
       0, EXTENT, MIN_ZOOM, MAX_ZOOM + EXTENT);
-  private final AffineTransform coordAndZoomTransform = new AffineTransform();
-  private final Point dragStartPoint = new Point();
+  private final AffineTransform coordAndZoomAtf = new AffineTransform();
+  private final Point2D dragStartPoint = new Point();
 
   @Override public void mousePressed(MouseEvent e) {
     dragStartPoint.setLocation(e.getPoint());
   }
 
   @Override public void mouseDragged(MouseEvent e) {
-    Point dragEndPoint = e.getPoint();
-    Point dragStart = transformPoint(dragStartPoint);
-    Point dragEnd   = transformPoint(dragEndPoint);
-    coordAndZoomTransform.translate(dragEnd.x - dragStart.x, dragEnd.y - dragStart.y);
+    Point2D dragEndPoint = e.getPoint();
+    Point2D dragStart = transformPoint(dragStartPoint);
+    Point2D dragEnd = transformPoint(dragEndPoint);
+    coordAndZoomAtf.translate(
+        dragEnd.getX() - dragStart.getX(), dragEnd.getY() - dragStart.getY());
     dragStartPoint.setLocation(dragEndPoint);
     e.getComponent().repaint();
   }
@@ -47,32 +48,35 @@ class ZoomAndPanHandler extends MouseAdapter {
     }
     Component c = e.getComponent();
     Rectangle r = c.getBounds();
-    // Point p = e.getPoint();
-    Point p = new Point(r.x + r.width / 2, r.y + r.height / 2);
-    Point p1 = transformPoint(p);
-    double scale = dir > 0 ? 1 / ZOOM_MULTIPLICATION_FACTOR
-                           : ZOOM_MULTIPLICATION_FACTOR;
-    coordAndZoomTransform.scale(scale, scale);
-    Point p2 = transformPoint(p);
-    coordAndZoomTransform.translate(p2.getX() - p1.getX(), p2.getY() - p1.getY());
+    Point2D p = new Point2D.Double(r.getCenterX(), r.getCenterY());
+    Point2D p1 = transformPoint(p);
+    double scale = dir > 0 ? 1 / ZOOM_FACTOR : ZOOM_FACTOR;
+    coordAndZoomAtf.scale(scale, scale);
+    Point2D p2 = transformPoint(p);
+    coordAndZoomAtf.translate(p2.getX() - p1.getX(), p2.getY() - p1.getY());
     c.repaint();
   }
 
   // https://community.oracle.com/thread/1263955
   // How to implement Zoom & Pan in Java using Graphics2D
-  private Point transformPoint(Point p1) {
-    Point p2 = new Point();
-    try {
-      AffineTransform inverse = coordAndZoomTransform.createInverse();
-      inverse.transform(p1, p2);
-    } catch (NoninvertibleTransformException ex) {
-      ex.printStackTrace();
+  private Point2D transformPoint(Point2D p1) {
+    AffineTransform inverse = coordAndZoomAtf;
+    boolean hasInverse = coordAndZoomAtf.getDeterminant() != 0d;
+    if (hasInverse) {
+      try {
+        inverse = coordAndZoomAtf.createInverse();
+      } catch (NoninvertibleTransformException ex) {
+        // should never happen
+        assert false;
+      }
     }
+    Point2D p2 = new Point();
+    inverse.transform(p1, p2);
     return p2;
   }
 
   public AffineTransform getCoordAndZoomTransform() {
-    return coordAndZoomTransform;
+    return coordAndZoomAtf;
   }
 }
 }}

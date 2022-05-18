@@ -47,14 +47,14 @@ table.setDefaultRenderer(Object.class, new StripeTableRenderer());
 }}
 
 ----
-あるセルが描画されるとき、設定された`TableCellRenderer`の`getTableCellRendererComponent`メソッドが呼び出されます。レンダラーは、引数などから得られる情報(選択されているか、何行何列目かなど)を使って、コンポーネントを修飾してから`return`します。
+あるセルが描画されるとき、設定された`TableCellRenderer`の`getTableCellRendererComponent`メソッドが呼び出されます。レンダラーは引数などから得られる情報(選択されているか何行何列目かなど)を使ってコンポーネントを修飾してから`return`します。
 
-サンプルの`TestRenderer`では`JLabel`を継承する`DefaultTableCellRenderer`を継承しているので、自分自身(`this`)を`setForeground`、`setHorizontalAlignment`などのメソッドで修飾し直し、さらに自分自身(`this`)を戻り値としています。このようにコンポーネントを使い回しているため、セルの数が膨大になっても、オブジェクトを大量に生成しなくて済むようになっています。
+サンプルの`TestRenderer`では`JLabel`を継承する`DefaultTableCellRenderer`を継承しているので自分自身(`this`)を`setForeground`、`setHorizontalAlignment`などのメソッドで修飾し直し、さらに自分自身(`this`)を戻り値としています。このようにコンポーネントを使い回しているためセルの数が膨大になってもオブジェクトを大量に生成しなくて済むようになっています。
 
-また、返されたコンポーネントはセルの描画のためだけに利用され、マウスイベントなどは無視されます。
+また返されたコンポーネントはセルの描画のためだけに利用されマウスイベントなどは無視されます。
 
 ----
-セルレンダラーで色を変更する代わりに、以下のように`JTable#prepareRenderer`メソッドをオーバーライドする方法もあります。この場合使用するセルレンダラーに関係なくテーブル全体での前処理が可能です。このため`Number`クラス用デフォルトレンダラーの`JTable$NumberRenderer`がそのまま使用され、`TableModel#getColumnClass(int)`が`Number.class`を返すようにしておけば自動的に右寄せになります。
+セルレンダラーで色を変更する代わりに以下のように`JTable#prepareRenderer`メソッドをオーバーライドする方法もあります。この場合使用するセルレンダラーに関係なくテーブル全体での前処理が可能です。このため`Number`クラス用デフォルトレンダラーの`JTable$NumberRenderer`がそのまま使用され、`TableModel#getColumnClass(int)`が`Number.class`を返すようにしておけば自動的に右寄せになります。
 
 #code{{
 JTable table = new JTable(model) {

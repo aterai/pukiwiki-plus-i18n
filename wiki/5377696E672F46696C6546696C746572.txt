@@ -34,7 +34,8 @@ fileChooser.addChoosableFileFilter(new FileFilter() {
 上記のサンプルでは、`JFileChooser#addChoosableFileFilter(FileFilter)`メソッドを使用して拡張子がたとえば`.jpg`のファイルのみを表示する`FileFilter`を追加設定しています。
 
 ----
-- %%`addChoosableFileFilter(FileFilter)`メソッドを使うと、そのフィルタが現在選択されているフィルタになります。例えば「すべてのファイル」をデフォルト(選択された状態)に戻したい場合は、`JFileChooser#getAcceptAllFileFilter()`を再設定する%% -
+- %%`addChoosableFileFilter(FileFilter)`メソッドを使うとそのフィルタが現在選択されているフィルタになる%%
+-- %%例えば「すべてのファイル」をデフォルト(選択された状態)に戻したい場合は、`JFileChooser#getAcceptAllFileFilter()`を再設定する必要がある%% -
 - `JDK 7`から`JFileChooser#addChoosableFileFilter(...)`内で`JFileChooser#setFileFilter(...)`を呼ばなくなった
 -- [https://bugs.openjdk.java.net/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]
 

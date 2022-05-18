@@ -39,6 +39,7 @@ class DragScrollingListener extends MouseAdapter {
       }
     });
   }
+
   @Override public void mousePressed(MouseEvent e) {
     Component c = e.getComponent();
     c.setCursor(hc);
@@ -51,6 +52,7 @@ class DragScrollingListener extends MouseAdapter {
       scroller.stop();
     }
   }
+
   @Override public void mouseDragged(MouseEvent e) {
     Component c = e.getComponent();
     Container p = SwingUtilities.getUnwrappedParent(c);
@@ -64,6 +66,7 @@ class DragScrollingListener extends MouseAdapter {
       startPt.setLocation(cp);
     }
   }
+
   @Override public void mouseReleased(MouseEvent e) {
     Component c = e.getComponent();
     c.setCursor(dc);
@@ -75,9 +78,9 @@ class DragScrollingListener extends MouseAdapter {
 
 * 解説 [#explanation]
 - [[JTreeの余白をドラッグしてスクロール>Swing/TreeDragScroll]]の`MouseMotionListener`に[[JScrollPaneでキネティックスクロール>Swing/KineticScrolling]]の`Timer`を使った慣性処理を適用して、行のドラッグスクロールを実行
-- `JScrollBar`を常に非表示にしているので、マウスホイールによるスクロールは不可
+- `JScrollBar`を常に非表示にしているのでマウスホイールによるスクロールは不可
 -- [[JScrollBarが非表示でもMouseWheelでScrollする>Swing/MouseWheelScroll]]で回避可能
-- 行選択と干渉する場合があるので、ドラッグ中は`JTable#setEnabled(false)`で行選択などを無効化
+- 行選択と干渉する場合があるのでドラッグ中は`JTable#setEnabled(false)`で行選択などを無効化
 -- 複数行の選択が不可になる
 
 * 参考リンク [#reference]

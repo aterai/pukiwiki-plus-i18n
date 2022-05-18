@@ -1,0 +1,120 @@
+---
+category: swing
+folder: SliderWithArrowButtons
+title: JSliderの値を増減するJButtonを作成する
+tags: [JSlider, Timer, JButton]
+author: aterai
+pubdate: 2022-05-02T01:15:46+09:00
+description: JSliderの値を減少、増加するJButtonを作成してその左右に配置します。
+image: https://drive.google.com/uc?id=1xjLVPR8SE7m4MInXokfLDVPG8fBpLEDS
+---
+* 概要 [#summary]
+`JSlider`の値を減少、増加する`JButton`を作成してその左右に配置します。
+
+#download(https://drive.google.com/uc?id=1xjLVPR8SE7m4MInXokfLDVPG8fBpLEDS)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JSlider slider = new JSlider(-900, 900, 0);
+slider.setMajorTickSpacing(10);
+// slider.setPaintTicks(true);
+slider.setSnapToTicks(true);
+slider.setPaintLabels(true);
+updateSliderLabelTable(slider);
+
+JLabel label = new JLabel("100%", SwingConstants.CENTER) {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.width = Math.max(d.width, 32);
+    return d;
+  }
+};
+slider.addChangeListener(e -> {
+  int iv = slider.getValue();
+  int pct;
+  if (iv >= 0) {
+    pct = 100 + iv;
+    slider.setMajorTickSpacing(1);
+  } else {
+    pct = 100 + iv / 10;
+    slider.setMajorTickSpacing(10);
+  }
+  label.setText(pct + "%");
+  label.repaint();
+});
+
+}}
+
+* 解説 [#explanation]
+- `JSlider`の値が`0`の場合は`100%`を表現し、ここが中央になるよう最小値を`-900`、最大値を`900`に設定
+-- [[JSliderのノブをダブルクリックして値を初期値にリセットする>Swing/ZoomLevelsSlider]]
+-- `JSlider`の値が正の場合は拡大を表現するよう、値を`100 + JSlider#getValue()`パーセントに変換して`JLabel`に表示(最大値は`1000%`になる)
+-- `JSlider`の値が負の場合は縮小を表現するよう、値を`100 + JSlider#getValue() / 10`パーセントに変換して`JLabel`に表示(最小値は`10%`になる)
+- `JButton`に`ActionListener`ではなく`MouseListener`を追加し、プレスされている間はTimerを起動してJSliderの値を繰り返し増減する
+-- [[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]
+-- `JSlider`の値が正で拡大方向の場合はステップ幅を`+10`、負で縮小方向の場合は`-50`で値を変更
+
+#code{{
+class AutoRepeatHandler extends MouseAdapter implements ActionListener {
+  private final Timer autoRepeatTimer;
+  private final int stepSize;
+  private final JSlider slider;
+  private JButton arrowButton;
+
+  protected AutoRepeatHandler(int stepSize, JSlider slider) {
+    super();
+    this.stepSize = stepSize;
+    this.slider = slider;
+    autoRepeatTimer = new Timer(60, this);
+    autoRepeatTimer.setInitialDelay(300);
+  }
+
+  @Override public void actionPerformed(ActionEvent e) {
+    Object o = e.getSource();
+    if (o instanceof Timer) {
+      boolean isPressed = arrowButton != null && !arrowButton.getModel().isPressed();
+      if (isPressed && autoRepeatTimer.isRunning()) {
+        autoRepeatTimer.stop();
+        arrowButton = null;
+      }
+    } else if (o instanceof JButton) {
+      arrowButton = (JButton) o;
+    }
+    int iv = slider.getValue();
+    int step;
+    if (iv == 0) {
+      step = stepSize > 0 ? stepSize * 2 : stepSize * 10;
+    } else if (iv > 0) {
+      step = stepSize * 2;
+    } else {
+      step = stepSize * 10;
+    }
+    slider.setValue(iv + step);
+  }
+
+  @Override public void mousePressed(MouseEvent e) {
+    if (SwingUtilities.isLeftMouseButton(e) && e.getComponent().isEnabled()) {
+      autoRepeatTimer.start();
+    }
+  }
+
+  @Override public void mouseReleased(MouseEvent e) {
+    autoRepeatTimer.stop();
+    arrowButton = null;
+  }
+
+  @Override public void mouseExited(MouseEvent e) {
+    if (autoRepeatTimer.isRunning()) {
+      autoRepeatTimer.stop();
+    }
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [[JSliderのノブをダブルクリックして値を初期値にリセットする>Swing/ZoomLevelsSlider]]
+- [[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]
+
+* コメント [#comment]
+#comment
+#comment

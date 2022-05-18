@@ -65,13 +65,13 @@ private static <E> JComboBox<E> makeComboBox(ComboBoxModel<E> model) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JComboBox`の本体、またはドロップダウンリストで文字列の溢れが発生する場合のみ`JToolTip`を表示するよう`ListCellRenderer`を設定しています。
+上記のサンプルでは、`JComboBox`の本体またはドロップダウンリストで文字列の溢れが発生する場合のみ`JToolTip`を表示するよう`ListCellRenderer`を設定しています。
 
 - `JComboBox`のドロップダウンリスト
 -- `JComboBox`の内部ペイント領域の幅からセルレンダラーのインセットを引いた長さよりアイテム文字列の幅が短い場合に溢れが発生するので、レンダラーに`setToolTipText(...)`メソッドで省略前のアイテム文字列をツールチップ文字列として設定
 - `JComboBox`の本体:
 -- `JComboBox`の内部ペイント領域の幅からセルレンダラーのインセット、`ArrowButton`の幅、`EditorComponent`のインセットを引いた長さよりアイテム文字列の幅が短い場合に溢れが発生するので、`JComboBox`本体に`setToolTipText(...)`メソッドで省略前のアイテム文字列をツールチップ文字列として設定
--- `ArrowButton`の幅は、`UIManager.getBoolean("ComboBox.squareButton")`が`true`で正方形になる場合は`JComboBox`の高さから取得可能だが、このサンプルでは`JComboBox`の子`JButton`を検索して直接その幅を取得している
+-- `ArrowButton`の幅は`UIManager.getBoolean("ComboBox.squareButton")`が`true`で正方形になる場合は`JComboBox`の高さから取得可能だが、このサンプルでは`JComboBox`の子`JButton`を検索して直接その幅を取得している
 --- 参考: [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicComboBoxUI.html#squareButton BasicComboBoxUI#squareButton (Java Platform SE 8)]
 
 * 参考リンク [#reference]

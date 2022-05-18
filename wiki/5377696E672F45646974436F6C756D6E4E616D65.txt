@@ -39,7 +39,7 @@ private final JMenuItem editItem1 = new JMenuItem(
 * 解説 [#explanation]
 - `Edit: setHeaderValue`
 -- `TableColumn#getHeaderValue()`でカラム名を取得して`TableColumn#setHeaderValue(String)`メソッドで変更
--- カラムモデルの`ColumnIdentifier`は変更されない
+-- このメソッドでカラム名を変更してもカラムモデルの`ColumnIdentifier`は変更されない
 - `Edit: setColumnIdentifiers`
 -- `DefaultTableModel#setColumnIdentifiers(Object[])`メソッドでモデルの列識別子を変更
 -- `JTableHeader`を再作成することになるため列の入れ替えなどは初期化される

@@ -29,8 +29,8 @@ expandedState = tree.getExpandedDescendants(rootPath);
 上記のサンプルでは、`JTree#getExpandedDescendants(TreePath)`メソッドを使用して展開されているノードの`TreePath`を`Enumeration`に保存しています。復元は一旦すべてのノードを折り畳んでから`JTree#expandPath(TreePath)`メソッドを使用して`Enumeration<TreePath>`から取得したノードを展開しています。
 
 - 親ノードが閉じている場合、その子ノードの展開状態は記憶していない
--- このサンプルでの例を挙げると、`Set 004`を展開して親の`Set 001`を折り畳んだ状態で`JTree#getExpandedDescendants(TreePath)`を使用した場合、戻り値の`Enumeration<TreePath>`に`Set 004`へのパスは含まれない
-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#getExpandedDescendants-javax.swing.tree.TreePath- JTree#getExpandedDescendants(TreePath)]メソッドのドキュメントの説明がよく分からない(特に前半)が、もしかしたら上記のことを言っているのかもしれない…
+-- このサンプルでの例を挙げると`Set 004`を展開して親の`Set 001`を折り畳んだ状態で`JTree#getExpandedDescendants(TreePath)`を使用した場合、戻り値の`Enumeration<TreePath>`に`Set 004`へのパスは含まれない
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#getExpandedDescendants-javax.swing.tree.TreePath- JTree#getExpandedDescendants(TreePath)]メソッドのドキュメントの説明がよく分からない(特に前半)がもしかしたら上記のことを言っているのかもしれない…
 
  If you expand/collapse nodes while iterating over the returned Enumeration this may not return all the expanded paths, or may return paths that are no longer expanded.
  返された Enumeration で繰り返している間ノードを展開するか、折りたたむと、このメソッドは展開されたすべてのパスを返すのではなく、それ以上展開されていないパスを返します。

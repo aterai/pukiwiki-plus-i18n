@@ -18,30 +18,30 @@ image: https://lh3.googleusercontent.com/-TJwPLjNC_3w/VvgUy3r36LI/AAAAAAAAORk/iz
 private static void configureUI() {
   UIDefaults d = UIManager.getLookAndFeelDefaults();
   d.put("TabbedPane:TabbedPaneContent.contentMargins", new Insets(0, 5, 5, 5));
-  //d.put("TabbedPane:TabbedPaneTab.contentMargins",     new Insets(2, 8, 3, 8));
+  //d.put("TabbedPane:TabbedPaneTab.contentMargins", new Insets(2, 8, 3, 8));
   //d.put("TabbedPane:TabbedPaneTabArea.contentMargins", new Insets(3, 10, 4, 10));
   d.put("TabbedPane:TabbedPaneTabArea.contentMargins", new Insets(3, 10, OVERPAINT, 10));
 
   Painter<JComponent> tabAreaPainter = new TabAreaPainter();
-  d.put("TabbedPane:TabbedPaneTabArea[Disabled].backgroundPainter",          tabAreaPainter);
-  d.put("TabbedPane:TabbedPaneTabArea[Enabled].backgroundPainter",           tabAreaPainter);
+  d.put("TabbedPane:TabbedPaneTabArea[Disabled].backgroundPainter", tabAreaPainter);
+  d.put("TabbedPane:TabbedPaneTabArea[Enabled].backgroundPainter", tabAreaPainter);
   d.put("TabbedPane:TabbedPaneTabArea[Enabled+MouseOver].backgroundPainter", tabAreaPainter);
-  d.put("TabbedPane:TabbedPaneTabArea[Enabled+Pressed].backgroundPainter",   tabAreaPainter);
+  d.put("TabbedPane:TabbedPaneTabArea[Enabled+Pressed].backgroundPainter", tabAreaPainter);
 
   d.put("TabbedPane:TabbedPaneContent.backgroundPainter", new TabContentPainter());
 
   Painter<JComponent> tabPainter = new TabPainter(false);
   d.put("TabbedPane:TabbedPaneTab[Enabled+MouseOver].backgroundPainter", tabPainter);
-  d.put("TabbedPane:TabbedPaneTab[Enabled+Pressed].backgroundPainter",   tabPainter);
-  d.put("TabbedPane:TabbedPaneTab[Enabled].backgroundPainter",           tabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Enabled+Pressed].backgroundPainter", tabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Enabled].backgroundPainter", tabPainter);
 
   Painter<JComponent> selectedTabPainter = new TabPainter(true);
   d.put("TabbedPane:TabbedPaneTab[Focused+MouseOver+Selected].backgroundPainter", selectedTabPainter);
-  d.put("TabbedPane:TabbedPaneTab[Focused+Pressed+Selected].backgroundPainter",   selectedTabPainter);
-  d.put("TabbedPane:TabbedPaneTab[Focused+Selected].backgroundPainter",           selectedTabPainter);
-  d.put("TabbedPane:TabbedPaneTab[MouseOver+Selected].backgroundPainter",         selectedTabPainter);
-  d.put("TabbedPane:TabbedPaneTab[Selected].backgroundPainter",                   selectedTabPainter);
-  d.put("TabbedPane:TabbedPaneTab[Pressed+Selected].backgroundPainter",           selectedTabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Focused+Pressed+Selected].backgroundPainter", selectedTabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Focused+Selected].backgroundPainter", selectedTabPainter);
+  d.put("TabbedPane:TabbedPaneTab[MouseOver+Selected].backgroundPainter", selectedTabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Selected].backgroundPainter", selectedTabPainter);
+  d.put("TabbedPane:TabbedPaneTab[Pressed+Selected].backgroundPainter", selectedTabPainter);
 }
 
 public static void createAndShowGUI() {
@@ -138,12 +138,12 @@ private static class TabContentPainter implements Painter<JComponent> {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`NimbusLookAndFeel`の`UIDefaults`にタブ、タブ領域、コンテンツ領域などを描画する独自の縁や背景色の`Painter`を設定するテストを行っています。例えば選択タブの`Color.GREEN`、タブ領域の`Color.CYAN`をコンテンツ領域と同じ`Color.WHITE`に変更すると、選択タブとコンテンツ領域が一体になったスタイルを作成できます。
+上記のサンプルでは、`NimbusLookAndFeel`の`UIDefaults`にタブ、タブ領域、コンテンツ領域などを描画する独自の縁や背景色の`Painter`を設定するテストを行っています。例えば選択タブの`Color.GREEN`、タブ領域の`Color.CYAN`をコンテンツ領域と同じ`Color.WHITE`に変更すると選択タブとコンテンツ領域が一体になったスタイルを作成できます。
 
 - `TabbedPaneTabArea`
 -- タブを配置するエリア
 -- このサンプルでは下部背景を`Color.CYAN`、下部縁を`Color.RED`で描画する`Painter`を設定
---- 下部の領域は、タブエリア下部の高さ`OVERPAINT`で、`TabbedPane:TabbedPaneTabArea.contentMargins`の`bottom`と同じに設定
+--- 下部の領域は、タブエリア下部の高さ`OVERPAINT`で`TabbedPane:TabbedPaneTabArea.contentMargins`の`bottom`と同じに設定
 --- 縁は上辺のみラウンド表示されるように`RoundRectangle2D`をクリップ
 -- 一番最初に描画される
 - `TabbedPaneContent`
@@ -153,7 +153,7 @@ private static class TabContentPainter implements Painter<JComponent> {
 -- 一番最後に描画される
 - `TabbedPaneTab`
 -- タブを描画する`Painter`を設定
--- 選択されたタブを描画する場合は、クリップ領域の高さを`OVERPAINT`だけ拡大(タブエリアの下部を上書き)
+-- 選択されたタブを描画する場合はクリップ領域の高さを`OVERPAINT`だけ拡大(タブエリアの下部を上書き)
 --- 縁に影を設定しタブエリアの下部にはみ出す部分は`Color.GREEN`の矩形で塗り潰している
 
 * 参考リンク [#reference]

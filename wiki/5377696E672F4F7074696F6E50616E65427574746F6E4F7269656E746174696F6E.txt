@@ -30,8 +30,8 @@ UIManager.put("OptionPane.buttonOrientation", SwingConstants.RIGHT);
 -- `UIManager.put("OptionPane.buttonOrientation", SwingConstants.LEFT)`で左揃えに変更
 
 ----
-- `MotifLookAndFeel`のデフォルトは、両端揃えで`UIManager.put("OptionPane.buttonOrientation", ...)`の設定は無視される
-- `JOptionPane#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`を設定すると、オプションボタンの揃えも反転する
+- `MotifLookAndFeel`のデフォルトは両端揃えで`UIManager.put("OptionPane.buttonOrientation", ...)`の設定は無視される
+- `JOptionPane#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`を設定するとオプションボタンの揃えも反転する
 #code{{
 // 例えば以下の設定で、"message"は右寄せ、オプションボタンは左寄せになる
 UIManager.put("OptionPane.buttonOrientation", SwingConstants.RIGHT);

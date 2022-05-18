@@ -26,7 +26,9 @@ button2.addActionListener(e -> {
   window.setLocationRelativeTo(((AbstractButton) e.getSource()).getRootPane());
   window.setVisible(true);
 });
+
 // ...
+
 private Component makePanel(Shape shape) {
   JPanel panel = new JPanel(new BorderLayout()) {
     @Override public Dimension getPreferredSize() {

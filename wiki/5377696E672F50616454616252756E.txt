@@ -27,12 +27,12 @@ tabbedPane.setUI(new MetalTabbedPaneUI() {
 * 解説 [#explanation]
 - `default`
 -- デフォルトのタブラン余り詰め方法は`LookAndFeel`に依存する
--- `MetalLookAndFeel`の場合、最後のタブラン以外で余り詰めを実行する
--- その他の`BasicLookAndFeel`を継承する`LookAndFeel`の場合、タブランが複数行になると余り詰めを実行する
+-- `MetalLookAndFeel`の場合最後のタブラン以外で余り詰めを実行する
+-- その他の`BasicLookAndFeel`を継承する`LookAndFeel`の場合タブランが複数行になると余り詰めを実行する
 - `shouldPadTabRun: false`
--- `BasicTabbedPaneUI#shouldPadTabRun(...)`メソッドをオーバーライドし、常に余り詰めを実行しない
+-- `BasicTabbedPaneUI#shouldPadTabRun(...)`メソッドをオーバーライドして常に余り詰めを実行しない
 - `shouldPadTabRun: true`
--- `BasicTabbedPaneUI#shouldPadTabRun(...)`メソッドをオーバーライドし、常に余り詰めを実行する
+-- `BasicTabbedPaneUI#shouldPadTabRun(...)`メソッドをオーバーライドして常に余り詰めを実行する
 -- タブランが一行になってもタブ幅に応じて余り詰めが実行される
 
 * 参考リンク [#reference]

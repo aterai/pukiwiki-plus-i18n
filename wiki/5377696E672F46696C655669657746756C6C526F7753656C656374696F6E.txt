@@ -33,7 +33,6 @@ button.addActionListener(e -> {
       .ifPresent(a -> a.actionPerformed(new ActionEvent(
           e.getSource(), e.getID(), "viewTypeDetails")));
 
-  // https://ateraimemo.com/Swing/GetComponentsRecursively.html
   stream(chooser)
       .filter(JTable.class::isInstance).map(JTable.class::cast)
       .findFirst()
@@ -52,7 +51,7 @@ button.addActionListener(e -> {
 - `FileView.fullRowSelection`: `true`
 -- `NimbusLookAndFeel`のデフォルト
 -- 詳細表示(`Details View`)用の`JTable`で行全体に選択状態が表示される
--- デフォルトでは`FileView.fullRowSelection`の設定にかかわらず`JTable#putClientProperty("Table.isFileList", Boolean.TRUE)`が設定されているため、ファイル名を表示する`0`列目のセルの文字列部分のみマウスクリックに反応する
+-- デフォルトでは`FileView.fullRowSelection`の設定にかかわらず`JTable#putClientProperty("Table.isFileList", Boolean.TRUE)`が設定されているためファイル名を表示する`0`列目のセルの文字列部分のみマウスクリックに反応する
 -- 上記のサンプルでは`FileView.fullRowSelection`が`true`の場合は`JTable#putClientProperty("Table.isFileList", Boolean.FALSE)`を設定して行全体でマウスクリックによる選択を可能に変更している
 
 * 参考リンク [#reference]

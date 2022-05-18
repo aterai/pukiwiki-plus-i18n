@@ -21,7 +21,7 @@ hreflang:
 JFrame.setDefaultLookAndFeelDecorated(true);
 JFrame frame = new JFrame();
 // com.sun.awt.AWTUtilities.setWindowOpacity(frame, .5f);
-// com.sun.awt.AWTUtilities.setWindowOpaque(frame, false); //Java 6
+// com.sun.awt.AWTUtilities.setWindowOpaque(frame, false); // Java 6
 frame.setBackground(new Color(0x0, true));
 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,6 +47,7 @@ frame.setVisible(true);
 - [http://www.viva-edo.com/komon/edokomon.html 江戸の文様（和風素材・デスクトップ壁紙）]
 // - [http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/ How to Create Translucent and Shaped Windows]
 - [https://docs.oracle.com/javase/tutorial/uiswing/misc/trans_shaped_windows.html How to Create Translucent and Shaped Windows (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Other Swing Features)]
+- [[Robotを使用してスクリーンショットを取得する - Java Swing Tips>https://ateraimemo.com/Swing/ScreenCapture]]
 
 * コメント [#comment]
 #comment
@@ -59,19 +60,23 @@ frame.setVisible(true);
 -- 以下のような`PopupMenuListener`を追加すれば回避できるが…。 -- &user(aterai); &new{2012-05-15 (火) 14:16:17};
 #code{{
 combo.addPopupMenuListener(new PopupMenuListener() {
-  @Override public void popupMenuWillBecomeVisible(final PopupMenuEvent e) {
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        JComboBox c = (JComboBox) e.getSource();
-        Object o = c.getAccessibleContext().getAccessibleChild(0);
-        if (o instanceof JComponent) { //BasicComboPopup
-          ((JComponent) o).repaint();
-        }
+  @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+    EventQueue.invokeLater(() -> {
+      JComboBox<?> c = (JComboBox<?>) e.getSource();
+      Object o = c.getAccessibleContext().getAccessibleChild(0);
+      if (o instanceof JComponent) { // BasicComboPopup
+        ((JComponent) o).repaint();
       }
     });
   }
-  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
-  @Override public void popupMenuCanceled(PopupMenuEvent e) {}
+
+  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+    /* not needed */
+  }
+
+  @Override public void popupMenuCanceled(PopupMenuEvent e) {
+    /* not needed */
+  }
 });
 }}
 

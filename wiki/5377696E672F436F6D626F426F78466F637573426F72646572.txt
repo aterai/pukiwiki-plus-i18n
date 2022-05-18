@@ -57,7 +57,7 @@ JComboBox<String> combo3 = new JComboBox<String>(model) {
 -- 点線と文字列の間隔が近く？若干うるさい感じがする
 --- 参考: [[JTreeのノードの文字列に余白を追加>Swing/TreeCellMargin]]
 - `setFocusable(false)`
--- `JComboBox#setFocusable(false)`で点線は非表示になるが、フォーカスが当たらなくなる
+-- `JComboBox#setFocusable(false)`で点線は非表示になるがフォーカスが当たらなくなる
 - `setRenderer(...)`
 -- `DefaultListCellRenderer#getListCellRendererComponent(...)`メソッドをオーバーライドし、インデックスが`0`以下(`JComboBox`本体での内部アイテムの描画)の場合は空の`Border`を使用することで点線を非表示に設定
 -- `WindowsLookAndFeel`以外では、内部アイテムに`FocusBorder`は付かないのでこのセルレンダラーは適用しない

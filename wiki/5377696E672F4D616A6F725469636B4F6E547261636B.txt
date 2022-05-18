@@ -1,0 +1,121 @@
+---
+category: swing
+folder: MajorTickOnTrack
+title: JSliderのトラック内部に目盛りを描画する
+tags: [JSlider, NimbusLookAndFeel]
+author: aterai
+pubdate: 2022-03-14T01:15:06+09:00
+description: JSliderのトラック内部に大目盛り、ノブ内部に現在値を描画します。
+image: https://drive.google.com/uc?id=1L0-XlJbF6L06V-UhIgnH2jae6Zs2kCVq
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2022/03/paint-major-tick-marks-inside-jslider.html
+    lang: en
+---
+* 概要 [#summary]
+`JSlider`のトラック内部に大目盛り、ノブ内部に現在値を描画します。
+
+#download(https://drive.google.com/uc?id=1L0-XlJbF6L06V-UhIgnH2jae6Zs2kCVq)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JSlider slider = new JSlider();
+slider.setSnapToTicks(true);
+slider.setMajorTickSpacing(10);
+slider.addMouseMotionListener(new MouseAdapter() {
+  @Override public void mouseDragged(MouseEvent e) {
+    super.mouseDragged(e);
+    e.getComponent().repaint();
+  }
+});
+
+UIDefaults d = new UIDefaults();
+d.put("Slider.thumbWidth", 24);
+d.put("Slider.thumbHeight", 24);
+Painter<JSlider> thumbPainter = (g, c, w, h) -> {
+  g.setPaint(new Color(0x21_98_F6));
+  g.fillOval(0, 0, w, h);
+  NumberIcon icon = new NumberIcon(c.getValue());
+  int xx = (w - icon.getIconWidth()) / 2;
+  int yy = (h - icon.getIconHeight()) / 2;
+  icon.paintIcon(c, g, xx, yy);
+};
+d.put("Slider:SliderThumb[Disabled].backgroundPainter", thumbPainter);
+d.put("Slider:SliderThumb[Enabled].backgroundPainter", thumbPainter);
+d.put("Slider:SliderThumb[Focused+MouseOver].backgroundPainter", thumbPainter);
+d.put("Slider:SliderThumb[Focused+Pressed].backgroundPainter", thumbPainter);
+d.put("Slider:SliderThumb[Focused].backgroundPainter", thumbPainter);
+d.put("Slider:SliderThumb[MouseOver].backgroundPainter", thumbPainter);
+d.put("Slider:SliderThumb[Pressed].backgroundPainter", thumbPainter);
+
+d.put("Slider:SliderTrack[Enabled].backgroundPainter", new Painter<JSlider>() {
+  @Override public void paint(Graphics2D g, JSlider c, int w, int h) {
+    int arc = 10;
+    int thumbSize = 24;
+    int trackHeight = 8;
+    int tickSize = 4;
+    int trackWidth = w - thumbSize;
+    int fillTop = (thumbSize - trackHeight) / 2;
+    int fillLeft = thumbSize / 2;
+
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setColor(new Color(0xC6_E4_FC));
+    g.fillRoundRect(fillLeft, fillTop + 2, trackWidth, trackHeight - 4, arc, arc);
+
+    // Paint track
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setColor(new Color(0xC6_E4_FC));
+    g.fillRoundRect(fillLeft, fillTop + 2, trackWidth, trackHeight - 4, arc, arc);
+
+    int fillBottom = fillTop + trackHeight;
+    Rectangle r = new Rectangle(fillLeft, fillTop, trackWidth, fillBottom - fillTop);
+
+    // Paint the major tick marks on the track
+    g.setColor(new Color(0x31_A8_F8));
+    int value = c.getMinimum();
+    while (value <= c.getMaximum()) {
+      int xpt = getXPositionForValue(c, r, value);
+      g.fillOval(xpt, (int) r.getCenterY() - tickSize / 2, tickSize, tickSize);
+      // Overflow checking
+      if (Integer.MAX_VALUE - c.getMajorTickSpacing() < value) {
+        break;
+      }
+      value += c.getMajorTickSpacing();
+    }
+
+    // JSlider.isFilled
+    int fillRight = getXPositionForValue(c, r, c.getValue());
+    g.setColor(new Color(0x21_98_F6));
+    g.fillRoundRect(fillLeft, fillTop, fillRight - fillLeft, fillBottom - fillTop, arc, arc);
+  }
+
+  // @see javax/swing/plaf/basic/BasicSliderUI#xPositionForValue(int value)
+  private int getXPositionForValue(JSlider slider, Rectangle trackRect, float value) {
+    float min = slider.getMinimum();
+    float max = slider.getMaximum();
+    float pixelsPerValue = trackRect.width / (max - min);
+    int trackLeft = trackRect.x;
+    int trackRight = trackRect.x + trackRect.width - 1;
+    int pos = trackLeft + Math.round(pixelsPerValue * (value - min));
+    return Math.max(trackLeft, Math.min(trackRight, pos));
+  }
+});
+slider.putClientProperty("Nimbus.Overrides", d);
+}}
+
+* 解説 [#explanation]
+- `Slider:SliderTrack[Enabled].backgroundPainter`
+-- トラック描画用の`Painter<JSlider>`を作成し、その`Painter#paint(...)`メソッドをオーバーライドしてトラック内部に大目盛りを描画
+-- [[NimbusLookAndFeelを適用したJSliderで範囲の塗りつぶしを行う>Swing/NimbusFilledSlider]]
+-- 垂直`JSlider`や`JSlider#setInverted(true)`で値が通常の順序と逆に設定されている場合には未対応
+- `Slider:SliderThumb[Enabled].backgroundPainter`
+-- ノブ描画用の`Painter<JSlider>`を作成し、その`Painter#paint(...)`メソッドをオーバーライドしてノブ内に`JSlider#getValue()`で取得した現在値を描画
+-- [[JLabel内のアイコンにJLayerを使用してバッジを表示する>Swing/NotificationBadge]]
+
+* 参考リンク [#reference]
+- [[JSliderでオン・オフ切り替え可能なスイッチボタンを作成する>Swing/ToggleSwitch]]
+- [[JLabel内のアイコンにJLayerを使用してバッジを表示する>Swing/NotificationBadge]]
+- [[NimbusLookAndFeelを適用したJSliderで範囲の塗りつぶしを行う>Swing/NimbusFilledSlider]]
+
+* コメント [#comment]
+#comment
+#comment

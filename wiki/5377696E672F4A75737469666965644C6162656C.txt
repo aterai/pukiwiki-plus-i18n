@@ -84,7 +84,9 @@ class JustifiedLabel extends JLabel {
 }}
 
 * 解説 [#explanation]
-`JLabel`の文字揃えは、デフォルトが左揃えで、その他に右揃え、中央揃えがあります。両端揃え(文字の均等割り付け)は存在しないので、上記のサンプルでは`JustifiedLabel`(幅が足りない場合などは通常の`JLabel`と同様に`...`で省略)を作成して使用しています。
+- `JLabel`の文字揃えは左揃え(デフォルトは`SwingConstants.LEADING`, `ComponentOrientation.LEFT_TO_RIGHT`で`SwingConstants.LEFT`)、右揃え(`SwingConstants.TRAILING`, `ComponentOrientation.LEFT_TO_RIGHT`で`SwingConstants.RIGHT`)、中央揃え(`SwingConstants.CENTER`)が設定可能
+- `JLabel`の文字揃えに両端揃え(文字の均等割り付け)は存在しないので、上記のサンプルでは`JustifiedLabel`を独自に作成
+-- 幅が足りない場合は通常の`JLabel`と同様に`...`で省略
 
 ----
 - `JTextPane`に挿入、一文字の場合などのテスト

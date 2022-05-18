@@ -87,18 +87,18 @@ panel.add(rsp, BorderLayout.EAST);
 
 * 解説 [#explanation]
 - `SpringLayout`
--- 中央の`JButton`の入った`Box`は、以下のように常に推奨サイズの固定サイズになるような制約を設定
+-- 中央の`JButton`の入った`Box`は以下のように常に推奨サイズの固定サイズになるような制約を設定
 #code{{
 SpringLayout.Constraints centerConstraints = layout.getConstraints(box);
 centerConstraints.setWidth(Spring.constant(box.getPreferredSize().width));
 }}
--- 左右の`JList`(`JScrollPane`)は、以下のように大きい方の制約の幅で同サイズになるよう設定
+-- 左右の`JList`(`JScrollPane`)は以下のように大きい方の制約の幅で同サイズになるよう設定
 #code{{
 Spring width = Spring.max(leftConstraints.getWidth(), rightConstraints.getWidth());
 leftConstraints.setWidth(width);
 rightConstraints.setWidth(width);
 }}
--- `3`列配置するコンポーネントの高さは、以下のように親`JPanel`と同じ高さになるよう設定
+-- `3`列配置するコンポーネントの高さは以下のように親`JPanel`と同じ高さになるよう設定
 #code{{
 Spring height = layout.getConstraint(SpringLayout.HEIGHT, panel);
 leftConstraints.setHeight(height);
@@ -109,7 +109,7 @@ centerConstraints.setHeight(height);
 -- 参考: [https://stackoverflow.com/questions/49978526/java-swing-how-to-make-jlists-resize-properly-when-gridbaglayout-column-is-set/50009817#50009817 Java Swing: How to make JLists resize properly when GridBagLayout column is set to grow, ignoring the JList's item widths? - Stack Overflow]のVGRさんの回答が`SpringLayout`を使用して同様のレイアウトを実現している
 --- 中央幅の固定と高さの設定方法が少し異なる
 - `BorderLayout`
--- `BorderLayout#layoutContainer(...)`をオーバーライドして、親コンポーネントの幅が変更されたら中央は常に幅固定、左右は均等に水平引き伸ばしを行う
+-- `BorderLayout#layoutContainer(...)`をオーバーライドして親コンポーネントの幅が変更されたら中央は常に幅固定、左右は均等に水平引き伸ばしを行う
 -- デフォルトの`BorderLayout`は`3`列レイアウトの場合、左右は常に推奨サイズの幅で固定、中央は水平・垂直両方向に引き伸ばし
 -- 上下配置や`ComponentOrientation`などは考慮していない
 

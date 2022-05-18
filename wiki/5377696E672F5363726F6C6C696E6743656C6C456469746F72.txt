@@ -15,24 +15,24 @@ image: https://lh4.googleusercontent.com/-DDRbJ9WhSJk/Tf7btYjUE7I/AAAAAAAAA9s/yV
 
 * サンプルコード [#sourcecode]
 #code(link){{
-class TextAreaCellEditor extends JTextArea implements TableCellEditor {
+class TextAreaCellEditor extends AbstractCellEditor implements TableCellEditor {
   private static final String KEY = "Stop-Cell-Editing";
-  protected transient ChangeEvent changeEvent;
-  private final JScrollPane scroll;
+  private final JTextArea textArea = new JTextArea();
+  private final JScrollPane scroll = new JScrollPane(textArea);
 
   protected TextAreaCellEditor() {
     super();
-    scroll = new JScrollPane(this);
     scroll.setBorder(BorderFactory.createEmptyBorder());
     // scroll.setViewportBorder(BorderFactory.createEmptyBorder());
 
-    setLineWrap(true);
-    setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));
+    textArea.setLineWrap(true);
+    textArea.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));
 
-    KeyStroke enter = KeyStroke.getKeyStroke(
-        KeyEvent.VK_ENTER, InputEvent.CTRL_DOWN_MASK);
-    getInputMap(JComponent.WHEN_FOCUSED).put(enter, KEY);
-    getActionMap().put(KEY, new AbstractAction() {
+    int modifiers = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+    // Java 10: int modifiers = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+    KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, modifiers);
+    textArea.getInputMap(JComponent.WHEN_FOCUSED).put(enter, KEY);
+    textArea.getActionMap().put(KEY, new AbstractAction() {
       @Override public void actionPerformed(ActionEvent e) {
         stopCellEditing();
       }
@@ -40,44 +40,39 @@ class TextAreaCellEditor extends JTextArea implements TableCellEditor {
   }
 
   @Override public Object getCellEditorValue() {
-    return getText();
+    return textArea.getText();
   }
 
   @Override public Component getTableCellEditorComponent(
-      JTable table, Object value, boolean isSelected, int row, int column) {
-    System.out.println("getTableCellEditorComponent");
-    setFont(table.getFont());
-    setText(Objects.toString(value, ""));
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        setCaretPosition(getText().length());
-        requestFocusInWindow();
-        System.out.println("invokeLater: getTableCellEditorComponent");
-      }
+        JTable table, Object value, boolean isSelected, int row, int column) {
+    // System.out.println("getTableCellEditorComponent");
+    textArea.setFont(table.getFont());
+    textArea.setText(Objects.toString(value, ""));
+    EventQueue.invokeLater(() -> {
+      textArea.setCaretPosition(textArea.getText().length());
+      textArea.requestFocusInWindow();
+      System.out.println("invokeLater: getTableCellEditorComponent");
     });
     return scroll;
   }
 
-  @Override public boolean isCellEditable(final EventObject e) {
+  @Override public boolean isCellEditable(EventObject e) {
     if (e instanceof MouseEvent) {
       return ((MouseEvent) e).getClickCount() >= 2;
     }
-    System.out.println("isCellEditable");
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        if (e instanceof KeyEvent) {
-          KeyEvent ke = (KeyEvent) e;
-          char kc = ke.getKeyChar();
-          if (Character.isUnicodeIdentifierStart(kc)) {
-            setText(getText() + kc);
-            System.out.println("invokeLater: isCellEditable");
-          }
+    // System.out.println("isCellEditable");
+    EventQueue.invokeLater(() -> {
+      if (e instanceof KeyEvent) {
+        KeyEvent ke = (KeyEvent) e;
+        char kc = ke.getKeyChar();
+        if (Character.isUnicodeIdentifierStart(kc)) {
+          textArea.setText(textArea.getText() + kc);
+          System.out.println("invokeLater: isCellEditable");
         }
       }
     });
     return true;
   }
-  // ...
 }
 }}
 

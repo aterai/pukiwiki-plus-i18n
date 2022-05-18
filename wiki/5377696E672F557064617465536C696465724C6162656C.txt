@@ -24,19 +24,20 @@ slider.setPaintTicks(true);
 slider.setSnapToTicks(true);
 // slider.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
 Dictionary<?, ?> labelTable = slider.getLabelTable();
-Enumeration<?> ed = labelTable.keys();
-while (ed.hasMoreElements()) {
-  Integer i = (Integer) ed.nextElement();
-  JLabel label = (JLabel) labelTable.get(i);
-  label.setText(String.valueOf(i / 100));
-}
+Collections.list(labelTable.keys()).stream()
+    .filter(Integer.class::isInstance)
+    .map(Integer.class::cast)
+    .forEach(i -> {
+      JLabel label = (JLabel) labelTable.get(i);
+      label.setText(Objects.toString(i / 100));
+    });
 slider.setLabelTable(labelTable);
 }}
 
 * 解説 [#explanation]
 - `Default`
 -- 最小`0`、最大`10000`で作成した`JSlider`のラベルをその`1/100`で表示
--- 各ラベルの文字数が変更されてもその幅が更新されないので、目盛り中央に数字(文字列)が配置されない
+-- 各ラベルの文字数が変更されてもその幅が更新されないので目盛り中央に数字(文字列)が配置されない
 -- `NimbusLookAndFeel`などで最大値の`100`が見切れて`10`までしか表示されない
 - `JSlider#updateLabelUIs()`
 -- `1/100`に変更後、`JSlider#updateLabelUIs()`を実行してラベルを更新する

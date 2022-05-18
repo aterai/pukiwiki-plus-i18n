@@ -42,21 +42,15 @@ menu.add(new JCheckBoxMenuItem("checkIcon test"));
 }}
 
 * 解説 [#explanation]
-- `JCheckBox`のチェックアイコンは、`JCheckBox#setIcon(Icon)`メソッドで変更可能
+- `JCheckBox`のチェックアイコンは`JCheckBox#setIcon(Icon)`メソッドで変更可能
 - `JCheckBoxMenuItem`はチェックアイコンとは別のアイコンが設定されているため、`setIcon(Icon)`メソッドではなく`UIManager.put("CheckBoxMenuItem.checkIcon", icon)`を使用する必要がある
-
-----
-- `NimbusLookAndFeel`などで`JCheckBoxMenuItem`のチェックアイコンを変更する
+- `NimbusLookAndFeel`などでは`UIManager.put("CheckBoxMenuItem.checkIcon", icon)`は無効なので`UIDefaults`を使用する必要がある
 
 #code{{
 import java.awt.*;
 import java.awt.geom.*;
 import javax.swing.*;
-// JDK 1.6
-import com.sun.java.swing.*;
-import com.sun.java.swing.plaf.nimbus.*;
-// JDK 1.7
-// import javax.swing.plaf.nimbus.*;
+import javax.swing.plaf.nimbus.*;
 
 class NimbusCheckIconTest {
   public JMenuBar createMenuBar() {

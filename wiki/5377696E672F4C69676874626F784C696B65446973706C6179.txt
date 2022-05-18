@@ -130,7 +130,7 @@ class LightboxGlassPane extends JPanel {
 * 解説 [#explanation]
 上記のサンプルでは、`JFrame`に`GlassPane`を設定して、この`GlassPane`の中央にインジケータ、高さ幅がアニメーションしながら拡大する矩形、画像を順番に表示しています。
 
-`GlassPane`に自分を`setVisible(false)`するマウスリスナーを追加しているので、任意の場所をクリックするとこの画像は非表示になります。
+- 任意の場所のクリックで画像を非表示にするため、`GlassPane`にマウスリスナーを追加して`GlassPane#setVisible(false)`を実行
 
 * 参考リンク [#reference]
 - [[JFrameをスクリーン中央に表示>Swing/CenterFrame]]

@@ -42,7 +42,7 @@ scroll.setCorner(ScrollPaneConstants.UPPER_RIGHT_CORNER, fixedTable.getTableHead
 - `ScrollPaneLayout#layoutContainer(...)`メソッドをオーバーライドして行ヘッダや垂直`JScrollBar`の位置を直接変更する
 -- 行ヘッダの位置: `ComponentOrientation.RIGHT_TO_LEFT`が設定されている場合と同じになるよう修正
 -- 垂直`JScrollBar`の位置: `adjustForVSB(...)`メソッドの引数に`JViewport`ではなく行ヘッダの`Rectangle`を渡すよう修正
---- このため、`JViewport`の右側ではなく行ヘッダの右側に垂直`JScrollBar`が配置され、`JViewport`の幅ではなく行ヘッダの幅が垂直`JScrollBar`の幅だけ縮小される
+--- このため`JViewport`の右側ではなく行ヘッダの右側に垂直`JScrollBar`が配置され、`JViewport`の幅ではなく行ヘッダの幅が垂直`JScrollBar`の幅だけ縮小される
 
 * 参考リンク [#reference]
 - [[JTableに行ヘッダを追加>Swing/TableRowHeader]]

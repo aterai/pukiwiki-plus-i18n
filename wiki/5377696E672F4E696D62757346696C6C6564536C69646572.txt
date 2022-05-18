@@ -18,11 +18,11 @@ image: https://lh3.googleusercontent.com/-dCrSqcYLbEg/VziRkYw8_xI/AAAAAAAAOXg/0o
 UIDefaults d = new UIDefaults();
 d.put("Slider:SliderTrack[Enabled].backgroundPainter", new Painter<JSlider>() {
   @Override public void paint(Graphics2D g, JSlider c, int w, int h) {
-    int arc         = 10;
+    int arc = 10;
     int trackHeight = 8;
-    int trackWidth  = w - 2;
-    int fillTop     = 4;
-    int fillLeft    = 1;
+    int trackWidth = w - 2;
+    int fillTop = 4;
+    int fillLeft = 1;
 
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                        RenderingHints.VALUE_ANTIALIAS_ON);
@@ -41,6 +41,7 @@ d.put("Slider:SliderTrack[Enabled].backgroundPainter", new Painter<JSlider>() {
     g.setColor(Color.WHITE);
     g.drawRoundRect(fillLeft, fillTop, trackWidth, trackHeight, arc, arc);
   }
+
   // @see javax/swing/plaf/basic/BasicSliderUI#xPositionForValue(int value)
   protected int xPositionForValue(JSlider slider, Rectangle trackRect) {
     int value = slider.getValue();
@@ -71,11 +72,13 @@ slider.putClientProperty("Nimbus.Overrides", d);
 - `Default`
 -- %%`UIManager.put("JSlider.isFilled", Boolean.TRUE)`%% `slider.putClientProperty("JSlider.isFilled", Boolean.TRUE)`を設定しても`MetalLookAndFeel`以外では効果がない
 - `Nimbus JSlider.isFilled`
--- `UIDefaults#put("Slider:SliderTrack[Enabled].backgroundPainter", painter)`メソッドでトラックの背景を描画する`Painter`を変更し、範囲の塗りつぶしを行う
--- このサンプルでは、垂直スライダー(`slider.getOrientation() == SwingConstants.VERTICAL`)や、`slider#setInverted(true)`を設定して表示される値の範囲が通常とは逆のスライダーには未対応
+-- `UIDefaults#put("Slider:SliderTrack[Enabled].backgroundPainter", painter)`メソッドでトラックの背景を描画する`Painter`を変更し範囲の塗りつぶしを行う
+-- このサンプルでは、垂直スライダー(`slider.getOrientation() == SwingConstants.VERTICAL`)や`slider#setInverted(true)`を設定して表示される値の範囲が通常とは逆のスライダーには未対応
 
 * 参考リンク [#reference]
+- [[MetalLookAndFeelを適用したJSliderで現在値までのトラック背景色を変更する>Swing/SliderAltTrackColor]]
 - [https://stackoverflow.com/questions/37126097/how-to-fill-jslider-track-up-to-the-point-of-the-current-thumb-value-with-nimubs java - How to fill JSlider track up to the point of the current thumb value with Nimubs L&F? - Stack Overflow]
+- [[JSliderのトラック内部に目盛りを描画する>Swing/MajorTickOnTrack]]
 
 * コメント [#comment]
 #comment

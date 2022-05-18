@@ -37,24 +37,24 @@ textField4.setDropTarget(null);
 JTextField textField5 = new JTextField("TransferHandler#canImport(...): false");
 textField5.setDragEnabled(true);
 textField5.setTransferHandler(new TransferHandler() {
-    @Override public boolean canImport(TransferSupport info) {
-        return false;
-    }
+  @Override public boolean canImport(TransferSupport info) {
+    return false;
+  }
 });
 }}
 
 * 解説 [#explanation]
 - `0`: `Initially has BasicTextUI$TextTransferHandler`
--- 初期状態で、`BasicTextUI$TextTransferHandler`が設定されている
+-- 初期状態で`BasicTextUI$TextTransferHandler`が設定されている
 --- このため、例えばワードパットなどから文字列をドラッグ＆ドロップで移動(KBD{Ctrl+ドロップ}でコピー)可能
 --- `BasicTextUI$TextTransferHandler`はファイルなどのドロップには対応していない
 -- `JTextField#setDragEnabled(true)`を設定しているので、他の`JTextComponent`や自分自身にドラッグ＆ドロップで移動・コピーが可能
 - `1`: `setEditable(false)`
--- 初期状態で、`BasicTextUI$TextTransferHandler`が設定されている
+-- 初期状態で`BasicTextUI$TextTransferHandler`が設定されている
 -- `JTextField#setEditable(false)`を設定した場合、ドロップ不可となる
 -- `JTextField#setEditable(false)`かつ`JTextField#setDragEnabled(true)`の場合、選択文字列を他の`JTextComponent`にドラッグ＆ドロップでコピー可能(移動は不可)
 - `2`: `setEnabled(false)`
--- 初期状態で、`BasicTextUI$TextTransferHandler`が設定されている
+-- 初期状態で`BasicTextUI$TextTransferHandler`が設定されている
 -- `JTextField#setEnabled(false)`で使用不可のコンポーネントにはドラッグ＆ドロップ不可
 -- `JTextField#setDragEnabled(true)`を設定しても文字列選択不可なので、`BasicTextUI$TextTransferHandler`ではドラッグ自体が開始できない
 - `3`: `setTransferHandler(null)`

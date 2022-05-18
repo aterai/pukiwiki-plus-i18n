@@ -1,0 +1,132 @@
+---
+category: swing
+folder: ColumnRules
+title: JSeparatorで段落罫線を描画する
+tags: [JSeparator, JLayer, Border, GridLayout, GridBagLayout]
+author: aterai
+pubdate: 2021-08-16T01:18:16+09:00
+description: GridLayoutなどで作成した列の間に罫線としてJSeparatorを描画します。
+image: https://drive.google.com/uc?id=1n9PtghYLYyFH2fXRweyIthvJhNYfa2Mz
+---
+* 概要 [#summary]
+`GridLayout`などで作成した列の間に罫線として`JSeparator`を描画します。
+
+#download(https://drive.google.com/uc?id=1n9PtghYLYyFH2fXRweyIthvJhNYfa2Mz)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JPanel p1 = new JPanel(new GridBagLayout());
+p1.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+GridBagConstraints c = new GridBagConstraints();
+c.anchor = GridBagConstraints.CENTER;
+c.gridheight = 1;
+c.gridwidth = 1;
+c.gridx = 0;
+c.gridy = 0;
+c.weightx = 1.0;
+c.weighty = 1.0;
+
+c.fill = GridBagConstraints.BOTH;
+p1.add(new JLabel("left", SwingConstants.CENTER), c);
+
+c.gridx = 1;
+c.weightx = 0.0;
+c.fill = GridBagConstraints.VERTICAL;
+p1.add(new JSeparator(SwingConstants.VERTICAL), c);
+
+c.gridx = 2;
+c.weightx = 1.0;
+c.fill = GridBagConstraints.BOTH;
+p1.add(new JLabel("right", SwingConstants.CENTER), c);
+
+JPanel p2 = new JPanel(new GridLayout(0, 2, 5, 5));
+p2.setBorder(BorderFactory.createCompoundBorder(
+    BorderFactory.createEmptyBorder(5, 5, 5, 5), new ColumnRulesBorder()));
+
+JPanel p3 = new JPanel(new GridLayout(0, 2, 5, 5));
+p3.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+Stream.of(p2, p3).forEach(p -> {
+  p.add(new JLabel("left", SwingConstants.CENTER));
+  p.add(new JLabel("right", SwingConstants.CENTER));
+});
+}}
+
+* 解説 [#explanation]
+- `GridBagLayout`
+-- `JPanel`に`3`列の`GridBagLayout`を設定
+-- 中央の余分の水平スペースを分配を`0`に設定して縦`JSeparator`を追加
+--- `JSeparator`がすこし左にずれる？
+-- [[Componentの3列配置、中央幅固定、左右均等引き伸ばしを行うLayoutManagerを作成する>Swing/ThreeColumnLayout]]
+
+- `GridLayout + Border`
+-- `JPanel`に`2`列の`GridLayout`を設定
+-- コンポーネントの中央に`SwingUtilities.paintComponent(...)`メソッドを使用して`JSeparator`のコピーを描画する`Border`を作成
+-- `CompoundBorder`で元の`Border`と組み合わせて`JPanel`に設定して段落罫線を描画
+-- [[JMenuから開くポップアップウィンドウのレイアウトを2列に変更する>Swing/TwoColumnsMenu]]
+
+#code{{
+class ColumnRulesBorder implements Border {
+  private final Insets insets = new Insets(0, 0, 0, 0);
+  private final JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
+  private final Container renderer = new JPanel();
+
+  @Override public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+    if (c instanceof JComponent) {
+      Rectangle r = SwingUtilities.calculateInnerArea((JComponent) c, null);
+      int sw = separator.getPreferredSize().width;
+      int sh = r.height;
+      int sx = (int) (r.getCenterX() - sw / 2d);
+      int sy = (int) r.getMinY();
+      Graphics2D g2 = (Graphics2D) g.create();
+      SwingUtilities.paintComponent(g2, separator, renderer, sx, sy, sw, sh);
+      g2.dispose();
+    }
+  }
+
+  @Override public Insets getBorderInsets(Component c) {
+    return insets;
+  }
+
+  @Override public boolean isBorderOpaque() {
+    return true;
+  }
+}
+}}
+
+- `GridLayout + JLayer`
+-- `JPanel`に`2`列の`GridLayout`を設定
+-- コンポーネントの中央に`SwingUtilities.paintComponent(...)`メソッドを使用して`JSeparator`のコピーを描画する`LayerUI`を作成
+-- `JLayer`で`JPanel`をラップして段落罫線を描画
+-- [[JSplitPaneのDividerを円形半透明のつまみに変更して中央に配置する>Swing/TranslucentThumbDivider]]
+
+#code{{
+class ColumnRulesLayerUI extends LayerUI<JComponent> {
+  private final JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
+  private final Container renderer = new JPanel();
+
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    if (c instanceof JLayer) {
+      JComponent tc = (JComponent) ((JLayer<?>) c).getView();
+      Rectangle r = SwingUtilities.calculateInnerArea(tc, null);
+      int sw = separator.getPreferredSize().width;
+      int sh = r.height;
+      int sx = (int) (r.getCenterX() - sw / 2d);
+      int sy = (int) r.getMinY();
+      Graphics2D g2 = (Graphics2D) g.create();
+      SwingUtilities.paintComponent(g2, separator, renderer, sx, sy, sw, sh);
+      g2.dispose();
+    }
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [[Componentの3列配置、中央幅固定、左右均等引き伸ばしを行うLayoutManagerを作成する>Swing/ThreeColumnLayout]]
+- [[JMenuから開くポップアップウィンドウのレイアウトを2列に変更する>Swing/TwoColumnsMenu]]
+- [[JSplitPaneのDividerを円形半透明のつまみに変更して中央に配置する>Swing/TranslucentThumbDivider]]
+
+* コメント [#comment]
+#comment
+#comment

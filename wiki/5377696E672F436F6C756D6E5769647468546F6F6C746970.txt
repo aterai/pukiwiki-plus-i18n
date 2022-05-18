@@ -70,11 +70,11 @@ class ColumnWidthResizeHandler extends MouseInputAdapter {
 - `JTable#getColumnModel()#addColumnModelListener(...)`
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/TableColumnModelListener.html TableColumnModelListener]では列の追加、削除、移動イベントは取得可能だが、リサイズイベントは取得不可
 - `JTable#getTableHeader()#addPropertyChangeListener(...)`
--- `JTableHeader`に`PropertyChangeListener`を追加し、`JTableHeader#getResizingColumn()`メソッドでリサイズ状態の`ColumnModel`を取得可能だが、リサイズ終了イベントが取得できない
+-- `JTableHeader`に`PropertyChangeListener`を追加し、`JTableHeader#getResizingColumn()`メソッドでリサイズ状態の`ColumnModel`を取得可能だがリサイズ終了イベントが取得できない
 - `JTable#getTableHeader()#addMouseListener(...)`、`JTable#getTableHeader()#addMouseMotionListener()`
 -- `MouseListener`と`JTableHeader#getResizingColumn()`メソッドを合わせて使用し、`ColumnModel`リサイズの開始終了を取得
 -- `MouseMotionListener`を使用し、リサイズ中は`ColumnModel#getWidth()`メソッドで取得した`ColumnModel`の幅を`JToolTip`で表示
--- `JToolTip`のデフォルトウィンドウは使用せず、別途用意した`JWindow`に`JToolTip`を追加し、その`JWindow`で表示・非表示や位置の更新を操作
+-- `JToolTip`のデフォルトウィンドウは使用せず別途用意した`JWindow`に`JToolTip`を追加し、その`JWindow`で表示・非表示や位置の更新を操作
 
 * 参考リンク [#reference]
 - [[JToolTipの表示位置>Swing/ToolTipLocation]]

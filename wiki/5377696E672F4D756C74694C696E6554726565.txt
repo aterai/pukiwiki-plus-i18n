@@ -106,7 +106,7 @@ class CellTextArea2 extends JTextArea {
 上記のサンプルでは、`JTree#setRowHeight(0)`を実行して`JTree`のデフォルトの行の高さを`0`にすることでセルレンダラーが行の高さを決めるように設定し、以下の`2`つの方法で改行を行っています。
 
 - `Html`
--- `Html`タグを使用し、`<br>`で改行
+-- `Html`の`<br>`タグを使用して改行
 -- `parent.add(new DefaultMutableTreeNode("<html>blue<br>blue, blue"));`
 - `TextAreaRenderer`
 -- `JTextArea`をノードタイトルの表示に使用する`TreeCellRenderer`を作成して`\n`で改行

@@ -89,10 +89,7 @@ class StripedProgressBarUI extends BasicProgressBarUI {
 
 - デフォルトの不確定状態アニメーションは`JProgressBar`の内部をボックスが左右(縦の場合は上下)に移動するパターン
 - `JProgressBar`全体をストライプで描画するため`BasicProgressBarUI#getBoxLength()`も`JProgressBar`自体の長さを返すようにオーバーライド
-
-----
-アニメーションのスピードなどは[[JProgressBarの不確定進捗サイクル時間を設定>Swing/IndeterminateCycleTime]]と同様に`UIManager.put(...)`を使って調整しています。
-
+- アニメーションのスピードなどは[[JProgressBarの不確定進捗サイクル時間を設定>Swing/IndeterminateCycleTime]]と同様に`UIManager.put(...)`を使って調整可能
 #code{{
 UIManager.put("ProgressBar.cycleTime", 1000);
 UIManager.put("ProgressBar.repaintInterval", 10);

@@ -1,0 +1,69 @@
+---
+category: swing
+folder: StringBounds
+title: Fontから文字列の境界を取得する
+tags: [Font, TextLayout, GlyphVector, Rectangle2D]
+author: aterai
+pubdate: 2021-06-07T01:02:18+09:00
+description: FontからTextLayoutやGlyphVectorを生成して文字列の幅と高さを取得する方法をテストします。
+image: https://drive.google.com/uc?id=1FmQExVp9Ow356UL_Z4SzNFsiRUd46BN2
+---
+* 概要 [#summary]
+`Font`から`TextLayout`や`GlyphVector`を生成して文字列の幅と高さを取得する方法をテストします。
+
+#download(https://drive.google.com/uc?id=1FmQExVp9Ow356UL_Z4SzNFsiRUd46BN2)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+Font font = label.getFont();
+FontRenderContext frc = label.getFontMetrics(font).getFontRenderContext();
+append("Font#getStringBounds(...)", font.getStringBounds(txt, frc));
+
+TextLayout layout = new TextLayout(txt, font, frc);
+append("TextLayout#getBounds()", layout.getBounds());
+
+GlyphVector gv = font.createGlyphVector(frc, txt);
+append("GlyphVector#getPixelBounds(...)", gv.getPixelBounds(frc, 0, 0));
+append("GlyphVector#getLogicalBounds()", gv.getLogicalBounds());
+append("GlyphVector#getVisualBounds()", gv.getVisualBounds());
+}}
+
+* 解説 [#explanation]
+- `Font#getStringBounds(...)`
+-- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Font.html#getStringBounds-java.lang.String-java.awt.font.FontRenderContext- Font#getStringBounds(...) (Java Platform SE 8)]
+-- レディングを含む起点、アセント、有効幅、および高さの論理バウンド
+-- 論理バウンドは常にすべてのテキストを含むとは限らない
+--- たとえば言語やフォントによっては、アクセントのマークがアセントの上、またはディセントの下に来ることがある
+- `TextLayout#getBounds()`
+-- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/TextLayout.html#getBounds-- TextLayout#getBounds() (Java Platform SE 8)]
+-- ラスター化のため`TextLayout`によって描画されたピクセルがすべてこの境界内に収まるとは限らない
+-- `TextLayout`のアセント、ディセント、原点、または有効幅と完全には一致しない場合がある
+- `GlyphVector#getPixelBounds(...)`
+-- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/GlyphVector.html#getPixelBounds-java.awt.font.FontRenderContext-float-float- GlyphVector#getPixelBounds(...) (Java Platform SE 8)]
+-- この`GlyphVector`の視覚境界を整数値のピクセル矩形境界として返す
+- `GlyphVector#getLogicalBounds()`
+--[https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/GlyphVector.html#getLogicalBounds-- GlyphVector#getLogicalBounds() (Java Platform SE 8)]
+-- この`GlyphVector`の論理境界を返す
+-- この`GlyphVector`を視覚的に隣り合う`GlyphVector`オブジェクトと関連して配置するときに使用可能
+-- `Font#getStringBounds(...)`と同等
+- `GlyphVector#getVisualBounds()`
+-- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/GlyphVector.html#getVisualBounds-- GlyphVector#getVisualBounds() (Java Platform SE 8)]
+-- この`GlyphVector`の視覚境界(`GlyphVector`の輪郭のバウンディング・ボックス)を返す
+-- ラスター化やピクセル調整のため、この`GlyphVector`の描画によって影響を受けるピクセルの一部がボックス内に納まらない場合がある
+-- `TextLayout#getBounds()`と同等
+
+----
+- `JLabel#getPreferredSize()`
+-- `JLabel`のアイコンなどを含めた文字列の推奨サイズ
+- `SwingUtilities.layoutCompoundLabel(...)`
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#layoutCompoundLabel-java.awt.FontMetrics-java.lang.String-javax.swing.Icon-int-int-int-int-java.awt.Rectangle-java.awt.Rectangle-java.awt.Rectangle-int- SwingUtilities.layoutCompoundLabel(...) (Java Platform SE 8)]
+-- 引数の`Rectangle textR`でクリップされた複合ラベル文字列の矩形境界を計算して返す
+-- `html`テキストなどにも対応している
+
+* 参考リンク [#reference]
+- [[JLabelで文字列のあふれをフェードアウト効果に変更する>Swing/TextOverflowFadeLabel]]
+- [[JLabelの文字揃え>Swing/JustifiedLabel]]
+
+* コメント [#comment]
+#comment
+#comment

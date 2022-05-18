@@ -1,0 +1,70 @@
+---
+category: swing
+folder: TwoColumnsMenu
+title: JMenuから開くポップアップウィンドウのレイアウトを2列に変更する
+tags: [JMenu, JMenuBar, JPopupMenu, GridLayout]
+author: aterai
+pubdate: 2021-08-09T13:56:12+09:00
+description: JMenuをクリックして開くポップアップウィンドウのレイアウトにGridLayoutを変更してJMenuItemなどを2列で表示します。
+image: https://drive.google.com/uc?id=1WUozvYw68yZx1vvlEWPNmIrTO_-0wA6A
+---
+* 概要 [#summary]
+`JMenu`をクリックして開くポップアップウィンドウのレイアウトを`GridLayout`に変更して`JMenuItem`などを`2`列で表示します。
+
+#download(https://drive.google.com/uc?id=1WUozvYw68yZx1vvlEWPNmIrTO_-0wA6A)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JMenu menu2 = new JMenu("LookAndFeel"); // LookAndFeelUtil.createLookAndFeelMenu();
+menu2.getPopupMenu().setLayout(new GridLayout(0, 2, 2, 0));
+menu2.add("Metel");
+menu2.add("Nimbus");
+menu2.add("CDE/Motif");
+menu2.add("Widows");
+menu2.add("Widows Classic");
+}}
+
+* 解説 [#explanation]
+- `JMenu#getPopupMenu()`メソッドでポップアップウィンドウ(`JPopupMenu`)を取得
+- `JPopupMenu#setLayout(new GridLayout(0, 2, 2, 0));`でレイアウトをデフォルトの`BoxLayout`から`2`列の`GridLayout`に変更し、`JMenuItem`や`JRadioButtonMenuItem`などの表示を`2`列に変更
+-- [[JPopupMenuをボタンの長押しで表示>Swing/PressAndHoldButton]]
+- `JSeparator`を追加しても段抜きにはならないので、その場合は`GridBagLayout`などを使用する必要がある
+-- [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
+- `2`段(`2`列)決め打ちで段落罫線を`JSeparator`で描画する場合は、以下のような`Border`を使用する方法もある
+#code{{
+class ColumnRulesBorder implements Border {
+  private final Insets insets = new Insets(0, 0, 0, 0);
+  private final JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
+
+  @Override public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+    if (c instanceof JComponent) {
+      JComponent p = (JComponent) c;
+      Rectangle r = SwingUtilities.calculateInnerArea(p, null);
+      int sw = separator.getPreferredSize().width;
+      int sh = r.height;
+      int sx = (int) (r.getCenterX() - sw / 2d);
+      int sy = (int) r.getMinY();
+      Graphics2D g2 = (Graphics2D) g.create();
+      SwingUtilities.paintComponent(g2, separator, p, sx, sy, sw, sh);
+      g2.dispose();
+    }
+  }
+
+  @Override public Insets getBorderInsets(Component c) {
+    return insets;
+  }
+
+  @Override public boolean isBorderOpaque() {
+    return true;
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [[JPopupMenuをボタンの長押しで表示>Swing/PressAndHoldButton]]
+- [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
+- [https://stackoverflow.com/questions/7913938/java-swing-how-to-align-menu-items-in-rows-and-columns Java swing: how to align menu items in rows and columns? - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

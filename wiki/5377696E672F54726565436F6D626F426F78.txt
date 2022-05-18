@@ -97,9 +97,9 @@ class TreeComboBox<E extends TreeNode> extends JComboBox<E> {
 * 解説 [#explanation]
 上記のサンプルでは、`TreeModel`から取得した`TreeNode`を`JComboBox`の`Item`として、ドロップダウンリストに表示しています。
 
-- `TreeNode#isLeaf()`の場合だけ、選択可能
+- `TreeNode#isLeaf()`の場合のみ選択可能に設定
 -- [[JComboBoxのアイテムを選択不可にする>Swing/DisableItemComboBox]]
-- 第`0`レベルのルートノードは非表示で、第`1`レベルノードのインデントは`0`に設定
+- 第`0`レベルのルートノードは非表示で第`1`レベルノードのインデントは`0`に設定
 - 第`2`レベル以降の子ノードのインデントは`BorderFactory.createEmptyBorder(1, indent + 1, 1, 1)`で設定
 
 ----

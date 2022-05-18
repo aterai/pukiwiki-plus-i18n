@@ -32,9 +32,10 @@ field.setCaretColor(Color.RED);
 -- `IME`で変換中の`Caret`は`setCaretColor(...)`での設定を無視して`JTextArea`の文字色が`Caret`の色になる
 - `JTextPane`
 -- `setCaretColor(null)`で`Caret`の色を`null`に設定
--- 上記のサンプルで`Caret`の色は、一行目の途中(二行目の`111`の幅まで？)まで赤、それ以外は黒になる
+-- 上記のサンプルで`Caret`の色は一行目の途中(二行目の`111`の幅まで？)まで赤、それ以外は黒になる
 -- `IME`で変換中の`Caret`は`setCaretColor(...)`での設定を無視して`Graphics#setXORMode(...)`で反転した色が`Caret`の色になる
---- 二行目では、行の背景色の緑の反転色のピンク、文字色の赤の反転色の水色になる？(`JTextComponent.ComposedTextCaret`を参照)
+--- 二行目では行の背景色の緑の反転色のピンク、文字色の赤の反転色の水色になる？(`JTextComponent.ComposedTextCaret`を参照)
+
 #code{{
 //
 // Caret implementation for editing the composed text.

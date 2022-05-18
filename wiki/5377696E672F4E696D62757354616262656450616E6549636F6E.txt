@@ -1,0 +1,60 @@
+---
+category: swing
+folder: NimbusTabbedPaneIcon
+title: NimbusLookAndFeelでJTabbedPaneのタブテキストとアイコンの水平方向の配置方法を変更する
+tags: [JTabbedPane, Icon, NimbusLookAndFeel]
+author: aterai
+pubdate: 2022-02-28T01:26:03+09:00
+description: NimbusLookAndFeelを設定したJTabbedPaneのタブテキストとアイコンの水平方向の配置方法やその間隔を変更します。
+image: https://drive.google.com/uc?id=18bc9dKdXmMqpLIy13KYlR9rv1CqvtGSq
+---
+* 概要 [#summary]
+`NimbusLookAndFeel`を設定した`JTabbedPane`のタブテキストとアイコンの水平方向の配置方法やその間隔を変更します。
+
+#download(https://drive.google.com/uc?id=18bc9dKdXmMqpLIy13KYlR9rv1CqvtGSq)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// UIManager.put("TabbedPane.textIconGap", 4);
+JTabbedPane tabbedPane0 = new JTabbedPane() {
+  @Override public void updateUI() {
+    super.updateUI();
+    System.out.println(UIManager.getInt("TabbedPane.textIconGap"));
+    // UIDefaults d = new UIDefaults();
+    // d.put("TabbedPane.textIconGap", 4);
+    // putClientProperty("Nimbus.Overrides", d);
+    // putClientProperty("Nimbus.Overrides.InheritDefaults", true);
+  }
+};
+add(makeTitledPanel("Default addTab(title, icon, c)", initTabbedPane(tabbedPane0)));
+
+JTabbedPane tabbedPane1 = new JTabbedPane() {
+  @Override public void insertTab(
+      String title, Icon icon, c component, String tip, int index) {
+    super.insertTab(title, icon, c, tip, index);
+    JLabel label = new JLabel(title, icon, SwingConstants.LEADING);
+    setTabComponentAt(getTabCount() - 1, label);
+  }
+};
+add(makeTitledPanel("TabComponent + JLabel + LEADING", initTabbedPane(tabbedPane1)));
+}}
+
+* 解説 [#explanation]
+- `Default addTab(title, icon, c)`
+-- `JTabbedPane#addTab(title, icon, c)`メソッドでタブテキストとアイコンを追加した場合、`NimbusLookAndFeel`でのデフォルト水平方向配置はテキスト、アイコンの順番になる
+-- `MetalLookAndFeel`や`WindowsLookAndFeel`のデフォルトはアイコン、テキストの順番になる
+-- `JTabbedPane#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`を設定すればアイコン、テキストの順番になるが、一行タブエリア内でのタブ配置が右寄せになる
+-- `NimbusLookAndFeel`でのタブテキストとアイコンの間隔は未設定でデフォルトは`0`になっている
+--- `MetalLookAndFeel`や`WindowsLookAndFeel`のデフォルトは`4`
+--- `NimbusLookAndFeel`でも`JMenuItem`などのテキストとアイコンの間隔のデフォルトは`4`
+--- `NimbusLookAndFeel`でもタブテキストとアイコンの間隔は`UIManager.put("TabbedPane.textIconGap", 4)`や`UIDefaults`で変更可能
+- `TabComponent + JLabel + LEADING`
+-- `new JLabel(title, icon, SwingConstants.LEADING)`などでテキストとアイコンをもつ`JLabel`を作成し、`JTabbedPane#setTabComponentAt(...)`で設定することで`LookAndFeel`に依存せずにタブテキストとアイコンの水平方向配置方法などを使用可能
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのタブエリアに余白を設定する>Swing/TabAreaContentMargins]]
+- [[JTabbedPaneで選択されたタブのみタイトルを表示する>Swing/SelectedTabTitleText]]
+
+* コメント [#comment]
+#comment
+#comment

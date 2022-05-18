@@ -1,0 +1,53 @@
+---
+category: swing
+folder: SliderPaintValue
+title: JSliderの上部に現在値を常時表示する
+tags: [JSlider, LookAndFeel, SynthLookAndFeel, NimbusLookAndFeel, GTKLookAndFeel]
+author: aterai
+pubdate: 2021-09-27T00:10:53+09:00
+description: JSliderのノブの上部などに現在値を常時表示するよう設定します。
+image: https://drive.google.com/uc?id=1_If8hmAB7ec08-gyZvzCvFP5vEDfjGtT
+---
+* 概要 [#summary]
+`JSlider`のノブの上部などに現在値を常時表示するよう設定します。
+
+#download(https://drive.google.com/uc?id=1_If8hmAB7ec08-gyZvzCvFP5vEDfjGtT)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// UIManager.put("Slider.paintValue", Boolean.TRUE)
+JSlider slider = new JSlider();
+slider.setPaintTrack(true);
+slider.setPaintLabels(false);
+slider.setPaintTicks(true);
+slider.setMajorTickSpacing(10);
+slider.setMinorTickSpacing(5);
+UIDefaults d = UIManager.getLookAndFeelDefaults();
+d.put("Slider.paintValue", Boolean.TRUE);
+slider.putClientProperty("Nimbus.Overrides", d);
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- `SynthLookAndFeel`を継承する`LookAndFeel`は`Slider.paintValue`で`JSlider`の上部に現在値を表示可能
+-- `BasicLookAndFeel`を継承する`MetalLookAndFeel`などでは`Slider.paintValue`の設定は無効でこの設定での`JSlider`の現在値表示は不可能
+-- 水平`JSlider`の場合はノブの上に動的に表示、垂直`JSlider`の場合はノブではなくトラックの上に固定で表示
+-- `Slider.paintValue`の`GTKLookAndFeel`でのデフォルトは`true`で現在値表示あり
+-- `Slider.paintValue`の`NimbusLookAndFeel`でのデフォルトは`false`で現在値表示なし
+- `Slider.paintValue`
+-- `Slider.paintValue`を`true`に設定した`UIDefaults`を`JSlider#putClientProperty("Nimbus.Overrides", UIDefaults)`で設定して現在値を表示
+-- `UIManager.put("Slider.paintValue", Boolean.TRUE)`ですべての`JSlider`の現在値表示を変更することも可能
+-- `Slider.paintValue`が`true`で`JSlider`の現在値表示する場合、あとで親コンテナのレイアウトを再評価しないと`JSlider`のサイズが正しく描画されないバグ？がある
+--- 上記のサンプルでは`EventQueue.invokeLater(...)`を使用してあとで`revalidate()`と`repaint()`を実行して回避
+- `Show ToolTip`
+-- `JToolTip`を使用してノブのドラッグ中のみ現在値を表示
+-- [[JSliderのノブをドラッグ中にToolTipで値を表示>Swing/SliderToolTips]]
+
+* 参考リンク [#reference]
+- [[JPopupMenuに追加したJSliderの表示・非表示をチェックボックスで切り替える>Swing/SliderMenuItem]]
+- [[JSliderのノブをドラッグ中にToolTipで値を表示>Swing/SliderToolTips]]
+- [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
+
+* コメント [#comment]
+#comment
+#comment

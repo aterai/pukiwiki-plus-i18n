@@ -72,7 +72,7 @@ class ProgressBarRenderer extends DefaultTreeCellRenderer {
 上記のサンプルでは、タスクが実行中の場合はノードの幅(アイコンと文字列の合計)と同じサイズの`JProgressBar`を配置する`TreeCellRenderer`を作成し、これを`JTree#setCellRenderer(...)`で設定しています。
 
 - スタートボタンを押すと`JButton`を選択不可に設定し、`SwingWorker`を起動して葉以外のノードをすべて捜査
-- 取得した各ノードでダミーの`SwingWorker`を`ExecutorService#execute(...)`で起動し、進捗を`JProgressBar`を配置した`TreeCellRenderer`で表示
+- 取得した各ノードで`SwingWorker`を起動し、進捗を`JProgressBar`を配置した`TreeCellRenderer`で表示
 -- ダミータスクが終了するとそのノードを展開
 - すべてのノードのタスクが終了したことを`ExecutorService#awaitTermination(...)`で検知したら`JButton`を選択可に戻す
 

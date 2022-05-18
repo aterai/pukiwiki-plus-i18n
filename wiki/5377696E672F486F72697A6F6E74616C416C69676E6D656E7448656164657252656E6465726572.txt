@@ -38,7 +38,7 @@ class HorizontalAlignmentHeaderRenderer implements TableCellRenderer {
 
 * 解説 [#explanation]
 - `Test1`:
--- `JTableHeader`から、`DefaultRenderer`を取得し、`setHorizontalAlignment`メソッドで字揃えを設定
+-- `JTableHeader`から`DefaultRenderer`を取得して`setHorizontalAlignment`メソッドで字揃えを設定
 -- すべての列の字揃えが変更される
 #code{{
 ((JLabel) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
@@ -61,7 +61,7 @@ table.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
 }}
 
 - `Test3`:
--- `TableCellRenderer#getTableCellRendererComponent(...)`メソッド内で、デフォルトのヘッダセルレンダラーを取得し、字揃えを設定
+-- `TableCellRenderer#getTableCellRendererComponent(...)`メソッド内でデフォルトのヘッダセルレンダラーを取得して字揃えを設定
 -- 上記の`HorizontalAlignmentHeaderRenderer`を全ての列に設定
 #code{{
 table.getColumnModel().getColumn(0).setHeaderRenderer(
@@ -73,7 +73,7 @@ table.getColumnModel().getColumn(2).setHeaderRenderer(
 }}
 
 ----
-- 以下の方法でも `0`列目だけ中央揃えになるが、初回が`WindowsLookAndFeel`などの`SystemLookAndFeel`の場合、あとで`LookAndFeel`を変更すると`NullPointerException`が発生する
+- 以下の方法でも`0`列目だけ中央揃えになるが初回が`WindowsLookAndFeel`などの`SystemLookAndFeel`の場合、あとで`LookAndFeel`を変更すると`NullPointerException`が発生する
 -- それ以外の場合でもヘッダの`LookAndFeel`が切り替わらない
 
 #code{{

@@ -25,7 +25,7 @@ try {
 Area area = makeNorthWestConer();
 Rectangle r = area.getBounds();
 
-Shape s = area; //NW
+Shape s = area; // NW
 for (int y = 0; y < r.height; y++) {
   for (int x = 0; x < r.width; x++) {
     if (s.contains(x, y)) {
@@ -48,8 +48,7 @@ for (int y = 0; y < r.height; y++) {
 * 解説 [#explanation]
 上記のサンプルでは、ウィンドウのスクリーンショット画像から`PixelGrabber`で`int`配列を生成し、左上、右上の角を`Windows XP`風に透過色で上書きしています。
 
-角を置き換えた配列は、以下のように`MemoryImageSource`などを使用して画像に変換しています。
-
+- 角を置き換えた配列は以下のように`MemoryImageSource`などを使用して画像に変換
 #code{{
 MemoryImageSource producer = new MemoryImageSource(width, height, pix, 0, width);
 Image img = p.createImage(producer);
@@ -67,9 +66,7 @@ g.dispose();
 // }
 }}
 
-----
-以下のように、`Graphics2D#setComposite(AlphaComposite.Clear)`として透過色で塗りつぶす方法もあります。
-
+- 以下のように、`Graphics2D#setComposite(AlphaComposite.Clear)`として透過色で塗りつぶす方法もある
 #code{{
 // BufferedImage image = ...;
 int w = image.getWidth(null);

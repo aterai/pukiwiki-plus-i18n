@@ -1,0 +1,125 @@
+---
+category: swing
+folder: ScrollBackToTopButton
+title: JScrollPaneに先頭領域までのスクロールバックを実行するJButtonを追加する
+tags: [JScrollPane, JViewport, JLayer, JButton, Timer]
+author: aterai
+pubdate: 2021-07-12T00:25:15+09:00
+description: JScrollPaneにJButtonを描画するJLayerを設定し、ここでクリックイベントを取得したら先頭領域までのスクロールバックを実行します。
+image: https://drive.google.com/uc?id=1SQP-yapYstaY4KpdrUqkyhpcA00ZUVpM
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2021/08/add-jbutton-to-bottom-right-inside.html
+    lang: en
+---
+* 概要 [#summary]
+`JScrollPane`に`JButton`を描画する`JLayer`を設定し、ここでクリックイベントを取得したら先頭領域までのスクロールバックを実行します。
+
+#download(https://drive.google.com/uc?id=1SQP-yapYstaY4KpdrUqkyhpcA00ZUVpM)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class ScrollBackToTopLayerUI extends LayerUI<JScrollPane> {
+  private static final int GAP = 5;
+  private final Container rubberStamp = new JPanel();
+  private final Point mousePt = new Point();
+  private final JButton button = new JButton(new ScrollBackToTopIcon()) {
+    @Override public void updateUI() {
+      super.updateUI();
+      setBorder(BorderFactory.createEmptyBorder());
+      setFocusPainted(false);
+      setBorderPainted(false);
+      setContentAreaFilled(false);
+      setRolloverEnabled(false);
+    }
+  };
+  private final Rectangle buttonRect = new Rectangle(button.getPreferredSize());
+
+  private void updateButtonRect(JScrollPane scroll) {
+    JViewport viewport = scroll.getViewport();
+    int x = viewport.getX() + viewport.getWidth() - buttonRect.width - GAP;
+    int y = viewport.getY() + viewport.getHeight() - buttonRect.height - GAP;
+    buttonRect.setLocation(x, y);
+  }
+
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    if (c instanceof JLayer) {
+      JScrollPane scroll = (JScrollPane) ((JLayer<?>) c).getView();
+      updateButtonRect(scroll);
+      if (scroll.getViewport().getViewRect().y > 0) {
+        button.getModel().setRollover(buttonRect.contains(mousePt));
+        SwingUtilities.paintComponent(g, button, rubberStamp, buttonRect);
+      }
+    }
+  }
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseEvent(MouseEvent e, JLayer<? extends JScrollPane> l) {
+    JScrollPane scroll = l.getView();
+    Rectangle r = scroll.getViewport().getViewRect();
+    Point p = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(), scroll);
+    mousePt.setLocation(p);
+    int id = e.getID();
+    if (id == MouseEvent.MOUSE_CLICKED) {
+      if (buttonRect.contains(mousePt)) {
+        scrollBackToTop(l.getView());
+      }
+    } else if (id == MouseEvent.MOUSE_PRESSED && r.y > 0 && buttonRect.contains(mousePt)) {
+      e.consume();
+    }
+  }
+
+  @Override protected void processMouseMotionEvent(MouseEvent e, JLayer<? extends JScrollPane> l) {
+    Point p = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(), l.getView());
+    mousePt.setLocation(p);
+    l.repaint(buttonRect);
+  }
+
+  private void scrollBackToTop(JScrollPane scroll) {
+    JComponent c = (JComponent) scroll.getViewport().getView();
+    Rectangle current = scroll.getViewport().getViewRect();
+    new Timer(20, e -> {
+      Timer animator = (Timer) e.getSource();
+      if (0 < current.y && animator.isRunning()) {
+        current.y -= Math.max(1, current.y / 2);
+        c.scrollRectToVisible(current);
+      } else {
+        animator.stop();
+      }
+    }).start();
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `ScrollBackToTopLayerUI#paint(...)`
+-- `JScrollPane`相対でその子`JViewport`の右下隅領域に半透明アイコンを設定した`JButton`を`SwingUtilities.paintComponent(...)`メソッドで描画
+--- すでに先頭領域が表示中(`JViewport#getViewRect()`で取得される領域の`y`座標が`0`)の場合は`JButton`を描画しない
+-- 上記の右下隅領域内にマウスカーソルが存在する場合は`JButton#getModel()#setRollover(true)`で`JButton`をロールオーバー状態に変更
+- `ScrollBackToTopLayerUI#processMouseEvent(...)`
+-- SwingUtilities.convertPoint(...)メソッドでマウスイベントを`JScrollPane`基準に変換
+-- 変換したマウスイベントが`JButton`の描画領域内(`JViewport`の右下隅領域)のクリックイベントの場合、`JComponent#scrollRectToVisible(...)`を繰り返し実行する`Timer`を起動して先頭領域までスクロールバック
+-- `JButton`が非表示(すでに先頭領域が表示中)かつ、変換したマウスイベントが`JButton`の描画領域内のプレスイベントの場合、子コンポーネントにイベントが伝達しないように`MouseEvent#consume()`で消費
+--- ここでプレスイベントを消費しないと、`JButton`のプレスだけではなくたとえば`JScrollPane`内の`JTable`のセル選択状態まで変化してしまう
+
+* 参考リンク [#reference]
+- [[JScrollBarが最後までスクロールしたことを確認する>Swing/DetectScrollToBottom]]
+- [[JTextAreaでSmoothScrollによる行移動>Swing/SmoothScroll]]
+- [[JScrollPane内にあるJTableなどで追加した行が可視化されるようにスクロールする>Swing/ScrollRectToVisible]]
+
+* コメント [#comment]
+#comment
+#comment

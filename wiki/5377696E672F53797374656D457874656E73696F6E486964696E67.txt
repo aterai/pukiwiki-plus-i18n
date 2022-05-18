@@ -19,7 +19,7 @@ UIManager.put("FileChooser.useSystemExtensionHiding", Boolean.FALSE);
 }}
 
 * 解説 [#explanation]
-- 左: `false`ボタン
+- 左: `FileChooser.useSystemExtensionHiding`: `false`
 -- `JFileChooser`の`PlacesBar`でローカライズされたシステムフォルダ名を使用しない
 --- 例: 「最近使った項目」が「`Recent`」
 --- 例: 「デスクトップ」が「`Desktop`」
@@ -28,7 +28,7 @@ UIManager.put("FileChooser.useSystemExtensionHiding", Boolean.FALSE);
 --`PlacesBar`でのみ変化し、`JFileChooser`本体ではローカライズされた名前が使用される
 -- 起動直後、または`LookAndFeel`が変更された直後のみ切替が有効になる
 --- `JFileChooser`を生成し直しても内部の`FileSystemView`はインスタンスを引き継ぐため
-- 右: `true`ボタン
+- 右: `FileChooser.useSystemExtensionHiding`: `true`
 -- `WindowsLookAndFeel`のデフォルト
 -- `JFileChooser`の`PlacesBar`でローカライズされたシステムフォルダ名が使用される
 

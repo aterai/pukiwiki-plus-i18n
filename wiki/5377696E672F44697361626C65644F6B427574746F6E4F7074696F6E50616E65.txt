@@ -88,7 +88,7 @@ button2.addActionListener(e -> {
 - 文字列入力用の`JTextField`を作成
 - `HierarchyListener`を`JTextField`に追加し、`ConfirmDialog`が開いたときの初期フォーカスをデフォルトボタンからこの`JTextField`に移動
 -- [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]
-- `DocumentListener`を`JTextField`のドキュメントに追加し、`JTextField`に入力があれば`OK`ボタンの選択可・不可を切り替える
+- `DocumentListener`を`JTextField`のドキュメントに追加して`JTextField`に入力があれば`OK`ボタンの選択可・不可を切り替える
 -- `ConfirmDialog`の`OK`ボタンは`JTextField#getRootPane()#getDefaultButton()`などで取得可能
 -- このサンプルでは`JTextField`の`Border`なども切り替えている
 - `JOptionPane.showConfirmDialog(...)`のメッセージに`JTextField`を含むコンポーネントを設定して`ConfirmDialog`を開く

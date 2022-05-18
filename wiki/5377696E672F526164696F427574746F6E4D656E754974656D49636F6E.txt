@@ -15,7 +15,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRVf_tDmI/AAAAAAAAAhA/1F
 
 * サンプルコード [#sourcecode]
 #code(link){{
-//com.sun.java.swing.plaf.windows.WindowsIconFactory.java
+// com.sun.java.swing.plaf.windows.WindowsIconFactory.java
 class RadioButtonMenuItemIcon1 implements Icon, UIResource, Serializable {
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
     AbstractButton b = (AbstractButton) c;
@@ -65,7 +65,7 @@ class RadioButtonMenuItemIcon2 implements Icon, UIResource, Serializable {
 
 - `default`
 -- デフォルト
--- `WindowsLookAndFeel`(`Java1.6.0`)で`JRadioButtonMenuItem`のチェックアイコンが歪になる場合がある
+-- `Java1.6.0`の`WindowsLookAndFeel`で`JRadioButtonMenuItem`のチェックアイコンが歪になる場合がある
 - `ANTIALIASING`
 -- `com.sun.java.swing.plaf.windows.WindowsIconFactory`のアイコンを`g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)`でアンチエイリアス
 - `fillOval`

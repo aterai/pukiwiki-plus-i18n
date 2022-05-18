@@ -44,9 +44,8 @@ image: https://drive.google.com/uc?id=13h_n-O0YyO15qpFv76ZEomH-8uWykdNI
 * 解説 [#explanation]
 上記のサンプルでは、`JFrame`に`WindowListener`と`WindowStateListener`を追加して`WindowEvent`を取得するテストを実行しています。
 
-`WindowListener`で通常状態から最小化状態(`windowIconified(WindowEvent)`)、最小化状態から通常状態(`windowDeiconified(WindowEvent)`)は取得可能ですが、最大化イベントは`WindowStateListener`を使用して`id`が`WINDOW_STATE_CHANGED`の`WindowEvent`から取得する必要があります。
-
-----
+- `WindowListener`で通常状態から最小化状態(`windowIconified(WindowEvent)`)、最小化状態から通常状態(`windowDeiconified(WindowEvent)`)は取得可能
+- だだし最大化イベントは`WindowStateListener`を使用して`id`が`WINDOW_STATE_CHANGED`の`WindowEvent`から取得する必要がある
 - `Windows 10`環境で最大化状態は`Frame.MAXIMIZED_BOTH`のみサポートされているので、例えば垂直方向にフレームを画面端までリサイズして垂直最大化しても、`WindowEvent`は発生しない
 -- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#isFrameStateSupported-int- Toolkit#isFrameStateSupported(...) (Java Platform SE 8)]
 -- `Frame.MAXIMIZED_HORIZ`: サポートしていない

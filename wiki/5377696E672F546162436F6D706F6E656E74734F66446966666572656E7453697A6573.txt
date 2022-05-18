@@ -1,0 +1,62 @@
+---
+category: swing
+folder: TabComponentsOfDifferentSizes
+title: JTabbedPaneのタブコンポーネントが異なるサイズで表示可能になるようJSplitPaneに配置する
+tags: [JTabbedPane, JSplitPane]
+author: aterai
+pubdate: 2021-10-18T00:06:05+09:00
+description: JTabbedPaneをJSplitPaneに配置し、各タブコンポーネントごとに異なるサイズで表示可能になるようDividerの位置などを調整します。
+image: https://drive.google.com/uc?id=1PhwFToigKUQ-AKOEaVaCNp-j7b_75HAe
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2021/10/add-jtabbedpane-tab-component-to.html
+    lang: en
+---
+* 概要 [#summary]
+`JTabbedPane`を`JSplitPane`に配置し、各タブコンポーネントごとに異なるサイズで表示可能になるよう`Divider`の位置などを調整します。
+
+#download(https://drive.google.com/uc?id=1PhwFToigKUQ-AKOEaVaCNp-j7b_75HAe)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+public void tabComponentResized(ComponentEvent e, JTabbedPane tabs) {
+  Component c = e.getComponent();
+  if (c.equals(tabs.getSelectedComponent())) {
+    Dimension d = c.getPreferredSize();
+    if (isTopBottomTabPlacement(tabs.getTabPlacement())) {
+      d.height = splitPane.getDividerLocation() - tabAreaSize.height;
+    } else {
+      d.width = splitPane.getDividerLocation() - tabAreaSize.width;
+    }
+    c.setPreferredSize(d);
+  }
+}
+
+public void updateDividerLocation(JTabbedPane tabs) {
+  Component c = tabs.getSelectedComponent();
+  if (isTopBottomTabPlacement(tabs.getTabPlacement())) {
+    splitPane.setDividerLocation(c.getPreferredSize().height + tabAreaSize.height);
+  } else {
+    splitPane.setDividerLocation(c.getPreferredSize().width + tabAreaSize.width);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JTabbedPane`
+-- デフォルトの`JTabbedPane`に配置されるタブコンポーネントはすべて同じサイズになる
+-- `JTabbedPane`の最小サイズをタブエリアのサイズに変更して`JSplitPane`でタブエリアが非表示にならないよう設定
+-- `JTabbedPane`に`ChangeListener`を追加し、タブの選択状態が変化したらタブコンポーネントの推奨サイズとタブエリアのサイズの合計まで`Divider`の位置を移動
+-- `JTabbedPane`に`MouseListener`を追加し、選択状態のタブがクリックされたら(タブの切り替えが発生しないクリック)タブコンポーネントの折り畳みとデフォルトサイズへの展開をトグル実行
+- タブコンポーネント
+-- 各タブコンポーネント(このサンプルでは`JLabel`)に`ComponentListener`を追加し、`JTabbedPane`で選択されているタブコンポーネントが`Divider`の移動などでリサイズされたら`Divider`の位置とタブエリアのサイズからタブコンポーネントの推奨サイズを変更
+- `JSplitPane`
+-- 左コンポーネントに`JTabbedPane`、右コンポーネントに適当なコンポーネント(このサンプルでは`JTree`)を配置
+-- タブコンポーネントに`JSplitPane`を使用する方法もあるが、これをデフォルトの`JSplitPane`と組み合わせるのは複雑になりそう
+
+* 参考リンク [#reference]
+- [[JTabbedPaneで選択されているタブの幅のみ拡張する>Swing/ExpandActiveTabWidth]]
+- [[JTabbedPaneのタブタイトル文字列を回転して縦組表示する>Swing/RotatedVerticalTextTabs]]
+
+* コメント [#comment]
+#comment
+#comment

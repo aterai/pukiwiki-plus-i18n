@@ -62,7 +62,7 @@ private class CalendarTableRenderer extends DefaultTableCellRenderer {
 * 解説 [#explanation]
 上記のサンプルでは、月カレンダーで`6`週目になる日を前の`5`週目の同じ曜日のセルを斜め分割してまとめて表示しています。
 
-- `DefaultTableModel#getRowCount()`が常に`5`を返すようオーバーライドして、月カレンダーが`5`週分のみ表示するよう設定
+- `DefaultTableModel#getRowCount()`が常に`5`を返すようオーバーライドして月カレンダーが`5`週分のみ表示するよう設定
 - `5`週目(`row==4`)を表示するセルレンダラーで対象日の`7`日後が今月の場合、`BorderLayout`を設定した`JPanel`に対象日用の`JLabel`を`BorderLayout.NORTH`、`7`日後の日付を表示するための別`JLabel`を`BorderLayout.SOUTH`で追加
 - この`JPanel`に斜め線を表示する`JLayer`を作成してセルレンダラーとして使用
 

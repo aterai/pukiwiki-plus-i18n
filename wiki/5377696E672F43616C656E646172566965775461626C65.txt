@@ -59,8 +59,8 @@ class CalendarViewTableModel extends DefaultTableModel {
 * 解説 [#explanation]
 上記のサンプルでは、`Java 8`から`java.time`パッケージに追加された`LocalDate`を`JTable`のモデルとして使用し、月のカレンダーを表示しています。
 
-- [https://docs.oracle.com/javase/jp/8/docs/api/java/time/temporal/WeekFields.html#getFirstDayOfWeek-- WeekFields#getFirstDayOfWeek()]メソッドで`Locale`に応じた週の最初の曜日を取得して、`JTable`の`0`列目を設定
--- 例: ロケールがフランスや`ISO-8601`標準では月曜日、アラビアなら土曜日が週の最初の曜日になる
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/time/temporal/WeekFields.html#getFirstDayOfWeek-- WeekFields#getFirstDayOfWeek()]メソッドで`Locale`に応じた週の最初の曜日を取得して`JTable`の`0`列目を設定
+-- 例: 週の最初の曜日はロケールがフランスや`ISO-8601`標準の場合は月曜日、アラビアなら土曜日になる
 
 #twocolumn
 `java -Duser.language=fr -jar example.jar`

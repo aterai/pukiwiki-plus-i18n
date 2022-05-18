@@ -47,11 +47,11 @@ check.addActionListener(e -> UIManager.put(key, ((JCheckBox) e.getSource()).isSe
 
 * 解説 [#explanation]
 - `WindowsLookAndFeel`
--- デフォルトは`UIManager.getBoolean("List.lockToPositionOnScroll")　== Boolean.TRUE`でセルの上辺を固定したユニット単位のスクロール
+-- デフォルトは`UIManager.getBoolean("List.lockToPositionOnScroll") == Boolean.TRUE`でセルの上辺を固定したユニット単位のスクロール
 -- ホイールスクロールや矢印ボタンのクリック、カーソルキーなどのスクロールは`List.lockToPositionOnScroll`の設定は影響しない
 --- [[JScrollPaneのスクロール量を変更>Swing/ScrollIncrement]]
 - `BasicLookAndFeel`
--- デフォルトは`UIManager.getBoolean("List.lockToPositionOnScroll")　== Boolean.FALSE`でなめらかにスクロール
+-- デフォルトは`UIManager.getBoolean("List.lockToPositionOnScroll") == Boolean.FALSE`でなめらかにスクロール
 -- `MetalLookAndFeel`は`UIManager.put("List.lockToPositionOnScroll", Boolean.TRUE)`を設定するとスクロールバーのマウスドラッグでもユニット単位のスクロールが可能
 - `NumbusLookAndFeel`
 -- `List.lockToPositionOnScroll`の設定は影響せず、スクロールバーのマウスドラッグはなめらかでもセルの上辺を固定したユニット単位のスクロールではなく、ホイールスクロールや矢印ボタンのクリックと同じスクロールになる

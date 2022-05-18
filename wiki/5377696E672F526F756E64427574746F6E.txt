@@ -112,8 +112,6 @@ class RoundedCornerButton extends JButton {
                         RenderingHints.VALUE_ANTIALIAS_ON);
     g2.setColor(getForeground());
     g2.draw(shape);
-    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_OFF);
     g2.dispose();
   }
 
@@ -125,16 +123,13 @@ class RoundedCornerButton extends JButton {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、ボタンの形や縁、クリック可能な領域をラウンド矩形などの`Shape`に置き換えています。
-
-- `JButton#paintComponent()`メソッドをオーバーライドして描画を変更
-- `JButton#contains()`メソッドをオーバーライドしてマウスでクリック可能な領域を変更
-
-円ボタンは、以下のように角丸ボタンを継承して作成しています。
-
-- 幅と高さが同じになるように`getPreferredSize()`メソッドをオーバーライド
-- 図形の初期化メソッドをオーバーライド
--- メソッド名前は適当、上記のサンプルでは`initShape()`
+- 形や縁、クリック可能な領域をラウンド矩形などの`Shape`に変更したボタンを作成
+-- `JButton#paintComponent()`メソッドをオーバーライドして描画を変更
+-- `JButton#contains()`メソッドをオーバーライドしてマウスでクリック可能な領域を変更
+- 角丸ボタンを継承して円ボタンを作成
+-- 幅と高さが同じになるように`getPreferredSize()`メソッドをオーバーライド
+-- 図形の初期化メソッドをオーバーライド
+--- メソッド名前は適当、上記のサンプルでは`initShape()`
 
 #code{{
 class RoundButton extends RoundedCornerButton {

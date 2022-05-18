@@ -16,7 +16,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWuSq18TI/AAAAAAAAAps/aC
 * サンプルコード [#sourcecode]
 #code(link){{
 class SaveHandler extends WindowAdapter implements DocumentListener, ActionListener {
-  //public static final String ASTERISK_TITLEBAR = "unsaved";
+  // public static final String ASTERISK_TITLEBAR = "unsaved";
   public static final String CMD_SAVE = "save";
   public static final String CMD_EXIT = "exit";
   private final JFrame frame;
@@ -29,7 +29,7 @@ class SaveHandler extends WindowAdapter implements DocumentListener, ActionListe
     this.title = frame.getTitle();
   }
 
-  //WindowAdapter
+  // WindowAdapter
   @Override public void windowClosing(WindowEvent e) {
     System.out.println("windowClosing");
     maybeExit();
@@ -37,10 +37,10 @@ class SaveHandler extends WindowAdapter implements DocumentListener, ActionListe
 
   @Override public void windowClosed(WindowEvent e) {
     System.out.println("windowClosed");
-    System.exit(0); //webstart
+    System.exit(0); // webstart
   }
 
-  //ActionListener
+  // ActionListener
   @Override public void actionPerformed(ActionEvent e) {
     String cmd = e.getActionCommand();
     if (CMD_EXIT.equals(cmd)) {
@@ -50,7 +50,7 @@ class SaveHandler extends WindowAdapter implements DocumentListener, ActionListe
     }
   }
 
-  //DocumentListener
+  // DocumentListener
   @Override public void insertUpdate(DocumentEvent e) {
     fireUnsavedFlagChangeEvent(true);
   }
@@ -79,7 +79,7 @@ class SaveHandler extends WindowAdapter implements DocumentListener, ActionListe
         JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
     if (retValue == JOptionPane.YES_OPTION) {
       System.out.println("exit");
-      //boolean ret = dummyDocumentSaveMethod();
+      // boolean ret = dummyDocumentSaveMethod();
       // if (ret) { // saved and exit
       //   frame.dispose();
       // } else { // error and cancel exit
@@ -116,24 +116,24 @@ class SaveHandler extends WindowAdapter implements DocumentListener, ActionListe
 
 - `WindowListener#windowClosing(WindowEvent e)`
 -- システムメニューでウィンドウを閉じようとしたときに呼び出されるリスナーのメソッド
---- `OS`が`Windows`なら、KBD{Alt+F4}キーを押す
---- タイトルバー左上にあるアイコンをクリックし、ポップアップメニューで閉じるを選択
+--- `OS`が`Windows`ならKBD{Alt+F4}キーを押す
+--- タイトルバー左上にあるアイコンをクリックしポップアップメニューで閉じるを選択
 --- タイトルバー右上の`×`ボタンをクリック
---- `JButton`や`JMenu`などをクリックした時に、対象となる`frame`の`windowClosing`を呼び出したい場合は、`frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));`
--- `frame.dispose();`では、このメソッドは呼び出されない
+--- `JButton`や`JMenu`などをクリックした時に対象となる`frame`の`windowClosing`を呼び出したい場合は、`frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));`
+-- `frame.dispose();`ではこのメソッドは呼び出されない
 - `WindowListener#windowClosed(WindowEvent e)`
--- `frame.dispose()`で、ウィンドウがクローズされたときに呼び出されるリスナーのメソッド
--- `windowClosing`の後、自動的に`windowClosed`が呼び出されるのは、`WindowConstants.DISPOSE_ON_CLOSE`の場合のみ
--- このサンプルでは`Web Start`から起動しても終了できるように、`frame.dispose()`すれば必ず呼び出されるこのメソッド中で`System.exit(0);`を使い、`JVM`ごとシャットダウンしている
+-- `frame.dispose()`でウィンドウがクローズされたときに呼び出されるリスナーのメソッド
+-- `windowClosing`の後自動的に`windowClosed`が呼び出されるのは`WindowConstants.DISPOSE_ON_CLOSE`の場合のみ
+-- このサンプルでは`Web Start`から起動しても終了できるように`frame.dispose()`すれば必ず呼び出されるこのメソッド中で`System.exit(0);`を使い`JVM`ごとシャットダウンしている
 --- 参考: [https://www.pushing-pixels.org/2008/01/14/when-dispose_on_close-met-webstart.html When DISPOSE_ON_CLOSE met WebStart · Pushing Pixels]
 
 ----
-`JFrame#setDefaultCloseOperation`メソッドで、タイトルバー右上の×ボタンをクリック(デフォルトの終了処理)し、`windowClosing`が呼ばれた後(このため`windowClosing`中で変更しても有効)の動作を設定できます(これらの動作については、`JFrame#processWindowEvent(WindowEvent)`のソースを参照)。
-
+- `JFrame#setDefaultCloseOperation`メソッドでタイトルバー右上の×ボタンをクリック(デフォルトの終了処理)し、`windowClosing`が呼ばれた後(このため`windowClosing`中で変更しても有効)の動作を設定可能
+-- これらの動作については`JFrame#processWindowEvent(WindowEvent)`のソースを参照
 - `WindowConstants.DO_NOTHING_ON_CLOSE`
 -- `windowClosing`が呼ばれた後になにもしない(終了しない)
 -- `return;`と同じ
--- このサンプルでは、`WindowConstants.DO_NOTHING_ON_CLOSE`を設定しているが、システムメニューでウィンドウを閉じても、下の`exit`ボタンと同じ処理になるように、`windowClosing`の中で終了処理を行うメソッド(`maybeExit()`)を呼び出し、そこでドキュメントの保存状態によって`frame.dispose();`を呼んでいる
+-- このサンプルでは`WindowConstants.DO_NOTHING_ON_CLOSE`を設定しているが、システムメニューでウィンドウを閉じても、下の`exit`ボタンと同じ処理になるように`windowClosing`の中で終了処理を行うメソッド(`maybeExit()`)を呼び出し、そこでドキュメントの保存状態によって`frame.dispose();`を呼んでいる
 - `WindowConstants.HIDE_ON_CLOSE`
 -- `windowClosing`が呼ばれた後でウィンドウは非表示になる
 -- `setVisible(false);`と同じ
@@ -141,17 +141,16 @@ class SaveHandler extends WindowAdapter implements DocumentListener, ActionListe
 - `WindowConstants.DISPOSE_ON_CLOSE`
 -- `windowClosing`が呼ばれた後でウィンドウは破棄される
 -- `dispose();`と同じ
--- `dispose()`されるので、この後`windowClosed`が呼び出される
+-- `dispose()`されるのでこの後`windowClosed`が呼び出される
 - `WindowConstants.EXIT_ON_CLOSE`
 -- `windowClosing`が呼ばれた後で`JVM`がシャットダウンされる
 -- `System.exit(0);`と同じ
--- `dispose()`されないので、`windowClosed`は呼び出されない
+-- `dispose()`されないので`windowClosed`は呼び出されない
 
 ----
-テキストが変更された場合、タイトル文字列の先頭にアスタリスクを付けることで、保存状態の可視化と保持を行っています。
-
-- ドキュメントに文字列が追加されたとき、ソース側から`firePropertyChange`などで、リスナーに変更をイベントで報告
-- リスナー側ではこのイベントを受け、`JFrame`のタイトルを変更
+- テキストが変更された場合、タイトル文字列の先頭にアスタリスクを付けることで保存状態の可視化と保持を行っている
+- ドキュメントに文字列が追加されたとき、ソース側から`firePropertyChange`などでリスナーに変更をイベントで報告
+- リスナー側ではこのイベントを受け`JFrame`のタイトルを変更
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/WindowListener.html WindowListener (Java Platform SE 8)]

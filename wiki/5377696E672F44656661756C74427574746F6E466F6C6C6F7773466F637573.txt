@@ -36,9 +36,9 @@ Arrays.asList(r1, r2).forEach(r -> {
 
 * 解説 [#explanation]
 - `UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE)`
+-- `WindowsLookAndFeel`のデフォルト
 -- デフォルトボタンではない`JButton`にフォーカスがある場合、KBD{Enter}キー入力でデフォルトボタンではなく現在フォーカスが存在する`JButton`がクリックされる
 -- たとえば上記のサンプルでデフォルトボタンを`Button1`、現在のフォーカスを`Button2`に設定してKBD{Enter}キーを入力すると`Button2`がクリックされて`Beep`音が鳴る
--- `WindowsLookAndFeel`のデフォルト
 - `UIManager.put("Button.defaultButtonFollowsFocus", Boolean.FALSE)`
 -- デフォルトボタンではない`JButton`にフォーカスが存在する場合でも、KBD{Enter}キー入力で常にデフォルトボタンがクリックされる
 -- たとえば上記のサンプルでデフォルトボタンを`Button1`、現在のフォーカスを`Button2`に設定してKBD{Enter}キーを入力すると`Button1`がクリックされて`Beep`音は鳴らない

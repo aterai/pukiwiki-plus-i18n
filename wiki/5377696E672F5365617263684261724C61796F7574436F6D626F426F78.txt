@@ -33,52 +33,52 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI {
 
   @Override protected LayoutManager createLayoutManager() {
     return new LayoutManager() {
-      @Override public void addLayoutComponent(String name, Component comp) {}
-      @Override public void removeLayoutComponent(Component comp) {}
+      @Override public void addLayoutComponent(String name, Component comp) {
+        /* not needed */
+      }
+
+      @Override public void removeLayoutComponent(Component comp) {
+        /* not needed */
+      }
+
       @Override public Dimension preferredLayoutSize(Container parent) {
         return parent.getPreferredSize();
       }
+
       @Override public Dimension minimumLayoutSize(Container parent) {
         return parent.getMinimumSize();
       }
-      @Override public void layoutContainer(Container parent) {
-        if (!(parent instanceof JComboBox)) return;
-        JComboBox cb     = (JComboBox) parent;
-        int width        = cb.getWidth();
-        int height       = cb.getHeight();
-        Insets insets    = cb.getInsets();
-        int buttonHeight = height - (insets.top + insets.bottom);
-        int buttonWidth  = buttonHeight;
-        int loupeWidth   = buttonHeight;
 
+      @Override public void layoutContainer(Container parent) {
+        if (!(parent instanceof JComboBox)) {
+          return;
+        }
+        JComboBox<?> cb = (JComboBox<?>) parent;
+        Rectangle r = SwingUtilities.calculateInnerArea(cb, null);
+
+        int arrowSize = 0;
         JButton arrowButton = (JButton) cb.getComponent(0);
-        if (arrowButton != null) {
+        if (Objects.nonNull(arrowButton)) {
           Insets arrowInsets = arrowButton.getInsets();
-          buttonWidth = arrowButton.getPreferredSize().width +
-            arrowInsets.left + arrowInsets.right;
-          arrowButton.setBounds(insets.left, insets.top, buttonWidth, buttonHeight);
+          int bw = arrowButton.getPreferredSize().width + arrowInsets.left + arrowInsets.right;
+          arrowButton.setBounds(r.x, r.y, bw, r.height);
+          arrowSize = bw;
         }
         JButton loupeButton = null;
-        for (Component c: cb.getComponents()) {
+        for (Component c : cb.getComponents()) {
           if ("ComboBox.loupeButton".equals(c.getName())) {
             loupeButton = (JButton) c;
             break;
           }
         }
-        // = (JButton) cb.getComponent(3);
-        if (loupeButton != null) {
-          Insets loupeInsets = loupeButton.getInsets();
-          loupeWidth = loupeButton.getPreferredSize().width +
-            loupeInsets.left + loupeInsets.right;
-          loupeButton.setBounds(width - (insets.right + loupeWidth),
-                                insets.top, loupeWidth, buttonHeight);
+        int loupeSize = 0;
+        if (Objects.nonNull(loupeButton)) {
+          loupeSize = r.height;
+          loupeButton.setBounds(r.x + r.width - loupeSize, r.y, loupeSize, r.height);
         }
         JTextField editor = (JTextField) cb.getEditor().getEditorComponent();
-        // JTextField editor = (JTextField) cb.getComponent(1);
-        if (editor != null) {
-          editor.setBounds(insets.left + buttonWidth, insets.top,
-               width  - (insets.left + insets.right + buttonWidth + loupeWidth),
-               height - (insets.top  + insets.bottom));
+        if (Objects.nonNull(editor)) {
+          editor.setBounds(r.x + arrowSize, r.y, r.width - arrowSize - loupeSize, r.height);
         }
       }
     };
@@ -95,7 +95,7 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI {
 - `LoupeButton`として新たに`JButton`を追加し、右側に配置
 - 常に編集可能として`JTextField`を中央に配置
 - ポップアップを表示、選択しても`JTextField`が変更されないように設定
--- `JComboBox#putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);`として、カーソル移動で変更されないように設定
+-- `JComboBox#putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);`としてカーソル移動で変更されないように設定
 -- 選択されても`PopupMenuListener`で`setText(...)`し直すように設定
 
 #code{{
@@ -103,10 +103,12 @@ protected PopupMenuListener createPopupMenuListener() {
   if (popupMenuListener == null) {
     popupMenuListener = new PopupMenuListener() {
       private String str;
+
       @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
         JComboBox combo = (JComboBox) e.getSource();
         str = combo.getEditor().getItem().toString();
       }
+
       @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
         Object o = listBox.getSelectedValue();
         if (o instanceof SearchEngine) {
@@ -116,6 +118,7 @@ protected PopupMenuListener createPopupMenuListener() {
         JComboBox combo = (JComboBox) e.getSource();
         combo.getEditor().setItem(str);
       }
+
       @Override public void popupMenuCanceled(PopupMenuEvent e) {}
     };
   }

@@ -30,8 +30,9 @@ class DirectoryExpandVetoListener implements TreeWillExpandListener {
       }
     }
   }
-  @Override public void treeWillCollapse(TreeExpansionEvent e)
-        throws ExpandVetoException {
+
+  @Override public void treeWillCollapse(TreeExpansionEvent e) {
+        // throws ExpandVetoException {
     // 何もしない(例外を返さない)ので、折り畳みは可能
   }
 }
@@ -40,7 +41,7 @@ class DirectoryExpandVetoListener implements TreeWillExpandListener {
 * 解説 [#explanation]
 - `TreeWillExpandListener`を実装し、`treeWillExpand(...)`メソッド内で、ノード(`File`)の名前がドットで始まる場合、`ExpandVetoException`を発生させることでマウスクリックなどによる展開をキャンセル
 -- これらのノードは展開は不可だが、選択自体は可能
-- 名前がドットで始まる場合、`DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`内で、そのノードを`setEnabled(false)`で無効状態に変更して描画
+- 名前がドットで始まる場合、`DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`内でそのノードを`setEnabled(false)`で無効状態に変更して描画
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/events/treewillexpandlistener.html How to Write a Tree-Will-Expand Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]
