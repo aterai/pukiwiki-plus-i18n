@@ -55,7 +55,8 @@ d.put("Spinner:\"Spinner.nextButton\"[Pressed].backgroundPainter", painter4);
 SpinnerModel model = new SpinnerNumberModel(0, 0, 100, 5);
 JSpinner spinner1 = new JSpinner(model);
 // NG: spinner1.putClientProperty("Nimbus.Overrides", d);
-((JSpinner.DefaultEditor) spinner1.getEditor()).getTextField().putClientProperty("Nimbus.Overrides", d);
+((JSpinner.DefaultEditor) spinner1.getEditor())
+    .getTextField().putClientProperty("Nimbus.Overrides", d);
 configureSpinnerButtons(spinner1, d);
 }}
 
@@ -73,7 +74,7 @@ configureSpinnerButtons(spinner1, d);
 -- `JFormattedTextField`は`JSpinner.DefaultEditor#getTextField()`で取得可能
 -- `ArrowButton`を取得するメソッドは存在しないので名前が`Spinner.previousButton`か`Spinner.nextButton`になっている`JButton`を検索して取得している
 --- 参考: [[JSpinnerのボタンにToolTipを付ける>Swing/SpinnerButton]]
--- ひとつの`JSpinner`に`putClientProperty(...)`を設定してもほかの`JSpinner`まで上書きされてしまう？
+-- 特定の`JSpinner`に`putClientProperty(...)`を設定しても他の`JSpinner`まで上書きされてしまう？
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]

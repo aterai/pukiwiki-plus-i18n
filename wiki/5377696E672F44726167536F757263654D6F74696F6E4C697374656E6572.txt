@@ -30,9 +30,9 @@ DragSource.getDefaultDragSource().addDragSourceMotionListener(new DragSourceMoti
 * 解説 [#explanation]
 上記のサンプルでは、`JPanel`中に配置されているアイコンなどを設定した`JLabel`を`Drag & Drop`で別の`JPanel`(例えば親の`JFrame`が異なる場合も可)に移動できます。`JLabel`のドラッグ開始時に元の親`JPanel`からそれを削除して透明化した`Window`に移し替え、ドラッグに合わせて`Window`自体を移動しているので`JFrame`の外でもドラッグアイコンが表示可能です。
 
-- ドラッグ中のカーソル位置取得には`MouseMotionListener`を使用する方法もあるが、このサンプルのような`TransferHandler`を使ったドラッグでは`MouseMotionListener`でマウスイベントを取得できないので、`DefaultDragSource`に`DragSourceMotionListener`を追加してドラッグ中のカーソル位置を取得している
-- `DragSourceDragEvent#getLocation()`で取得した位置はスクリーン座標系なので、そのまま`Window#setLocation(...)`メソッドで使用可能
-- `Point pt = tgtLabel.getLocation();`で取得したドラッグ対象`JLabel`の位置は親コンポーネントの座標系なので、`SwingUtilities.convertPointToScreen(pt, parent);`で変換する必要がある
+- ドラッグ中のカーソル位置取得には`MouseMotionListener`を使用する方法もあるが、このサンプルのような`TransferHandler`を使ったドラッグでは`MouseMotionListener`でマウスイベントを取得できないので`DefaultDragSource`に`DragSourceMotionListener`を追加してドラッグ中のカーソル位置を取得している
+- `DragSourceDragEvent#getLocation()`で取得した位置はスクリーン座標系なのでそのまま`Window#setLocation(...)`メソッドで使用可能
+- `Point pt = tgtLabel.getLocation()`で取得したドラッグ対象`JLabel`の位置は親コンポーネントの座標系なので`SwingUtilities.convertPointToScreen(pt, parent)`で変換する必要がある
 
 * 参考リンク [#reference]
 - [[JLayerを使ってJTabbedPaneのタブの挿入位置を描画する>Swing/DnDLayerTabbedPane]]
@@ -41,7 +41,7 @@ DragSource.getDefaultDragSource().addDragSourceMotionListener(new DragSourceMoti
 #comment
 - `OSX`などの場合はどうなるか不明(テストしていない)。 -- &user(aterai); &new{2012-08-06 (月) 15:50:35};
 - `OSX`でも表示しましたよ。ただクリックした時にアイコン周りに枠が表示されるのですが、その位置がアイコンとずれてます -- &user(nsby); &new{2012-08-07 (火) 11:04:46};
--- ありがとうございます。[https://bugs.openjdk.java.net/browse/JDK-4874070 Bug ID: 4874070 invoking DragSource's startDrag with an Image renders no image on drag]あたりの修正の詳しい内容がよく分かっていないので、逆に`Mac OS X`では競合する(二重になる)のでは？と思っていました。「アイコン周りの枠」はオフセットを変更するか、クリックした時点で`JPanel`からは削除してしまえば、何とかなるかもしれません。 -- &user(aterai); &new{2012-08-07 (火) 14:19:12};
+-- ありがとうございます。[https://bugs.openjdk.org/browse/JDK-4874070 Bug ID: 4874070 invoking DragSource's startDrag with an Image renders no image on drag]あたりの修正の詳しい内容がよく分かっていないので、逆に`Mac OS X`では競合する(二重になる)のでは？と思っていました。「アイコン周りの枠」はオフセットを変更するか、クリックした時点で`JPanel`からは削除してしまえば、何とかなるかもしれません。 -- &user(aterai); &new{2012-08-07 (火) 14:19:12};
 - `Web Start`で起動すると、`window.setAlwaysOnTop(true);`で`AccessControlException`が発生するのを修正。 -- &user(aterai); &new{2012-12-07 (金) 18:20:23};
 - ドラッグ中カーソルが点滅するので、`dragMouseMoved`内で無駄に`Window#setVisible(true);`を実行しないように修正(`TransferHandler#getSourceActions(...)`内でドラッグ開始時に一回だけ実行する)。 -- &user(aterai); &new{2013-10-25 (金) 18:04:11};
 

@@ -43,7 +43,7 @@ class MetalDragLimitedSliderUI extends MetalSliderUI {
 -- `JSlider`の`BoundedRangeModel`に`ChangeListener`を追加し、`80`以上の値を指定できないように設定
 -- マウスドラッグで`100`まで移動するとリリースした時点で`80`の位置まで戻る
 - `TrackListener`
--- 上の`ChangeListener`に加えて、`MetalSliderUI#createTrackListener(...)`をオーバーライドした独自の`TrackListener`を設定しマウスドラッグで`80`以上に移動できないように制限
+-- 上の`ChangeListener`に加えて`MetalSliderUI#createTrackListener(...)`をオーバーライドした独自の`TrackListener`を設定しマウスドラッグで`80`以上に移動できないように制限
 -- `TrackListener`は`MouseMotionListener`を実装しているので`mouseDragged(...)`メソッドをオーバーライドして`80`以上への`MouseEvent`を`translatePoint(...)`メソッドで座標変換して無効化 %%`consume()`メソッドで消費して無効化%%
 
 * 参考リンク [#reference]

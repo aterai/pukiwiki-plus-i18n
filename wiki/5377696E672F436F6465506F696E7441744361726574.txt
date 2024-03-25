@@ -56,12 +56,12 @@ textArea.addCaretListener(e -> {
 * 解説 [#explanation]
 上記のサンプルでは、`JTextArea`に`CaretListener`を設定して`Caret`位置にある文字を取得し、`String#codePointAt(...)`メソッドを使用してその文字の`Unicode`コードポイントを編集不可にした`JTextField`に表示しています。
 
-- `Caret`の位置は、`CaretEvent#getDot()`メソッドで取得
+- `Caret`の位置は`CaretEvent#getDot()`メソッドで取得
 - 文字列選択されている場合(`CaretEvent#getDot() - CaretEvent#getMark() != 0`)はなにも表示しない
-- `Caret`の位置の文字は、`JTextArea.getDocument().getText(dot, 1)`で取得しているため、サロゲートペアの場合は`String#codePointAt(...)`でも`Unicode`上位サロゲートコード単位になる
+- `Caret`位置に存在する文字は`JTextArea.getDocument().getText(dot, 1)`メソッドで取得しているため、サロゲートペアの場合は`String#codePointAt(...)`でも`Unicode`上位サロゲートコード単位になる
 -- `Character.isHighSurrogate(char)`メソッドで`Unicode`上位サロゲートコード単位かを調査し、サロゲートペアの場合は`JTextArea.getDocument().getText(dot, 2)`で取得した文字列の`Unicode`コードポイントを取得する
-- `JTextArea.getText().codePointAt(dot)`を使用する場合は、文字列末尾で`StringIndexOutOfBoundsException`が発生するので注意が必要
-- `JTextArea`は、カラー絵文字には対応していない
+- `JTextArea.getText().codePointAt(dot)`を使用する場合は文字列末尾で`StringIndexOutOfBoundsException`が発生するので注意が必要
+- `Swing`の`JTextComponent`を継承する`JTextArea`などはカラー絵文字には対応していない
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/lang/String.html#codePointAt-int- String#codePointAt(int) (Java Platform SE 8)]

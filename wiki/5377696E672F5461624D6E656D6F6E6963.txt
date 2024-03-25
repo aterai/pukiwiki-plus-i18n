@@ -15,14 +15,26 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUu2fjTpI/AAAAAAAAAmg/ES
 
 * サンプルコード [#sourcecode]
 #code(link){{
-int tabIdx = 3;
+JTabbedPane tab = new JTabbedPane();
+tab.addTab("Label", new JLabel("label"));
+tab.setMnemonicAt(0, KeyEvent.VK_L);
+tab.setDisplayedMnemonicIndexAt(0, 0);
+
+tab.addTab("Tree", new JScrollPane(new JTree()));
+tab.setMnemonicAt(1, KeyEvent.VK_T);
+tab.setDisplayedMnemonicIndexAt(1, 0);
+
+tab.addTab("TextField", new JTextField("field"));
+tab.setMnemonicAt(2, KeyEvent.VK_F);
+tab.setDisplayedMnemonicIndexAt(2, 4);
+
 tab.addTab("Button", new JButton("button"));
-tab.setMnemonicAt(tabIdx, KeyEvent.VK_B);
-tab.setDisplayedMnemonicIndexAt(tabIdx, 0);
+tab.setMnemonicAt(3, KeyEvent.VK_B);
+tab.setDisplayedMnemonicIndexAt(3, 0);
 }}
 
 * 解説 [#explanation]
-上記のサンプルコードは、`JTabbedPane`の`3`番目のタブに`JTabbedPane#setMnemonicAt(3, KeyEvent.VK_B)`メソッドを使用して`Mnemonic`を設定し、KBD{Alt+B}のキー入力でそのタブにフォーカス移動が可能になっています。
+上記のサンプルコードは、`JTabbedPane`の`3`番目のタブに`JTabbedPane#setMnemonicAt(3, KeyEvent.VK_B)`メソッドを使用して`Mnemonic`を設定し、KBD{Alt+B}キーの入力でそのタブへのフォーカス移動を可能にしています。
 
 - タブタイトルの先頭文字(`B`)にアンダーラインが入るように`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドで設定
 - `JDK 6`以降でタブタイトルに`Component`を使用している場合は`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドを使用しても`Mnemonic`にアンダーラインは表示されない

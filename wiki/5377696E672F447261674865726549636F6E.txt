@@ -25,14 +25,16 @@ class DragHereIcon implements Icon {
     BORDER_WIDTH, BORDER_WIDTH,
     ICON_SIZE - 2 * BORDER_WIDTH - 1, ICON_SIZE-2*BORDER_WIDTH - 1,
     ARC_SIZE, ARC_SIZE);
-  private static Font font = new Font(Font.MONOSPACED, Font.BOLD, ICON_SIZE);
-  private static FontRenderContext frc = new FontRenderContext(null, true, true);
+  private static Font font = new Font(
+      Font.MONOSPACED, Font.BOLD, ICON_SIZE);
+  private static FontRenderContext frc = new FontRenderContext(
+      null, true, true);
   // DOWNWARDS WHITE ARROW
-  private static Shape ARROW = new TextLayout("\u21E9", font, frc).getOutline(null);
-  // DOWNWARDS BLACK ARROW
-  // private static Shape ARROW = new TextLayout("\u2B07", font, frc).getOutline(null);
+  private static Shape ARROW = new TextLayout(
+      "\u21E9", font, frc).getOutline(null);
   private static Color LINE_COLOR = Color.GRAY;
-  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+  @Override public void paintIcon(
+        Component c, Graphics g, int x, int y) {
     Graphics2D g2 = (Graphics2D) g.create();
     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
@@ -84,15 +86,15 @@ class DragHereIcon implements Icon {
 * 解説 [#explanation]
 上記のサンプルでは、以下のように`Icon`インタフェースを実装してアイコンを作成しています。フチもアイコンの内部に描画していますが`BasicStroke`の破線ではなく背景色と同じ色の直線でパターンを表現しています。
 
-- `Icon#paintIcon(Component c, Graphics g, int x, int y)`を実装
+- `Icon#paintIcon(Component c, Graphics g, int x, int y)`メソッドをオーバーライドして実装
 -- 原点を移動
 -- ラウンド矩形でフチを描画
 -- 直線で格子状のスリットを上書き
 -- 矢印のアウトラインをフォントから取得して中心に描画
 -- 原点を戻す
 --- 直接`g.translate(x, y)`で原点を変更した場合`g.translate(-x, -y)`で元に戻す必要がある
---- または`Graphics2D g2 = (Graphics2D) g.create()`で別の`Graphics`を生成して原点を移動した場合は最後に`g2.dispose()`で`Graphics2D`を破棄する
-- `Icon#getIconWidth()`、`Icon#getIconHeight()`を実装してアイコンのサイズを指定
+--- または`Graphics2D g2 = (Graphics2D) g.create()`で別の`Graphics`を生成して原点を移動した場合は最後に`g2.dispose()`メソッドで`Graphics2D`を破棄する
+- `Icon#getIconWidth()`、`Icon#getIconHeight()`メソッドをオーバーライドしてアイコンのサイズを指定
 
 * 参考リンク [#reference]
 - [[Fileのドラッグ＆ドロップ>Swing/FileListFlavor]]

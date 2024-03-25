@@ -18,8 +18,9 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-class HighlightTableCellRenderer extends JTextField implements TableCellRenderer {
-  private static final Color BACKGROUND_SELECTION_COLOR = new Color(220, 240, 255);
+class HighlightTableCellRenderer
+    extends JTextField implements TableCellRenderer {
+  private static final Color BGC= new Color(220, 240, 255);
   private final transient Highlighter.HighlightPainter highlightPainter
     = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
   private String pattern = "";
@@ -51,7 +52,7 @@ class HighlightTableCellRenderer extends JTextField implements TableCellRenderer
     Highlighter highlighter = getHighlighter();
     highlighter.removeAllHighlights();
     setText(txt);
-    setBackground(isSelected ? BACKGROUND_SELECTION_COLOR : Color.WHITE);
+    setBackground(isSelected ? BGC : Color.WHITE);
     if (pattern != null && !pattern.isEmpty() && !pattern.equals(prev)) {
       Matcher matcher = Pattern.compile(pattern).matcher(txt);
       int pos = 0;

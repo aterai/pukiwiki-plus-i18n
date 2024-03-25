@@ -30,7 +30,8 @@ class ScrollBarOnHoverLayerUI extends LayerUI<JScrollPane> {
     super.uninstallUI(c);
   }
 
-  @Override protected void processMouseEvent(MouseEvent e, JLayer<? extends JScrollPane> l) {
+  @Override protected void processMouseEvent(
+      MouseEvent e, JLayer<? extends JScrollPane> l) {
     JScrollPane sp = l.getView();
     switch (e.getID()) {
       case MouseEvent.MOUSE_ENTERED:

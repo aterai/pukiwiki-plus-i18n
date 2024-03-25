@@ -56,9 +56,6 @@ description: Drag ＆ Drop関係の記事へのスクリーンショット付き
 ** JList間でのドラッグ＆ドロップによるアイテムの移動 [#DnDBetweenLists]
 #swingdescription(Swing/DnDBetweenLists,JList間でのドラッグ＆ドロップによるアイテムの移動,JList間でのドラッグ＆ドロップによるアイテムの移動や並べ替えを行います。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLUTkzH4I/AAAAAAAAAXY/tSQriEN1G_Y/s200/DnDBetweenLists.png)
 
-** JTableでファイルとディレクトリを別々にソート [#FileDirectoryComparator]
-#swingdescription(Swing/FileDirectoryComparator,JTableでファイルとディレクトリを別々にソート,JTableでファイルとディレクトリを別々にソートし、ディレクトリが常に先頭になるように設定します。,https://lh3.googleusercontent.com/_9Z4BYR88imo/TQXAQuafMsI/AAAAAAAAAqU/BDQdRbMeSnE/s200/FileDirectoryComparator.png)
-
 ** Iconを生成する [#DragHereIcon]
 #swingdescription(Swing/DragHereIcon,Iconを生成する,Iconインタフェースから固定サイズのアイコンを作成します。,https://lh5.googleusercontent.com/-PTY9ydf9DFE/T97u-rwg5lI/AAAAAAAABN0/52xJLmkoNak/s200/DragHereIcon.png)
 
@@ -71,11 +68,11 @@ description: Drag ＆ Drop関係の記事へのスクリーンショット付き
 ** JScrollPane内にある複数Componentを配置したJPanelをJLayerを使ってドラッグスクロール [#DragScrollLayer]
 #swingdescription(Swing/DragScrollLayer,JScrollPane内にある複数Componentを配置したJPanelをJLayerを使ってドラッグスクロール,複数のネストしたComponentを配置したJPanelのドラッグイベントを、JScrollPaneをラップしたJLayerで受け取ってスクロール可能にします。,https://lh5.googleusercontent.com/-5zBF0JOr6kM/UfuiEj7Do7I/AAAAAAAABxg/7tKYnrOl9eo/s200/DragScrollLayer.png)
 
-* ↑20 ↓21 [#h058cba3]
-#adsensebar
-
 ** JInternalFrame間でのドラッグ＆ドロップによるJTableの行入れ替え [#InternalFrameDropTarget]
 #swingdescription(Swing/InternalFrameDropTarget,JInternalFrame間でのドラッグ＆ドロップによるJTableの行入れ替え,JInternalFrame間でJTableの行をドラッグ＆ドロップを使って入れ替えます。,https://lh5.googleusercontent.com/-UP_I_iTgtpc/U3jPL_jhwuI/AAAAAAAACFg/olJ1Sf-P_lU/s200/InternalFrameDropTarget.png)
+
+* ↑20 ↓21 [#h058cba3]
+#adsensebar
 
 ** JListのTransferHandlerにドラッグイメージを設定する [#GhostDragImage]
 #swingdescription(Swing/GhostDragImage,JListのTransferHandlerにドラッグイメージを設定する,JListのアイテムをドラッグ中に表示するイメージをカスタマイズしてTransferHandlerに設定します。,https://lh4.googleusercontent.com/-lGkFK-bJoYE/VDEztZsJyOI/AAAAAAAACOg/Hs7B-dcJAkk/s200/GhostDragImage.png)
@@ -104,8 +101,14 @@ description: Drag ＆ Drop関係の記事へのスクリーンショット付き
 ** TransferHandlerを使用したドラッグ＆ドロップで挿入先を表示するドロップラインの色を変更する [#DropLineColor]
 #swingdescription(Swing/DropLineColor,TransferHandlerを使用したドラッグ＆ドロップで挿入先を表示するドロップラインの色を変更する,JList、JTable、JTreeのTransferHandlerを使用したドラッグ＆ドロップで挿入先を表示するドロップラインの色を変更します。,https://drive.google.com/thumbnail?id=1zV5JFERJgM_2M66Sa8dWyRViXHZfQdkL)
 
+** JFileChooserにTransferHandlerを設定してFileをドロップ可能にする [#DropFileOnFileChooser]
+#swingdescription(Swing/DropFileOnFileChooser,JFileChooserにTransferHandlerを設定してFileをドロップ可能にする,JFileChooserにTransferHandlerを設定してFileやDirectoryをドロップ可能にします。,https://drive.google.com/thumbnail?id=1NA-vGQgCHGvMjG9nrxYwpTVuYCIgeFFZ)
+
 * ↑30 ↓31 [#df333bea]
 #adsensebar
 
-** JFileChooserにTransferHandlerを設定してFileをドロップ可能にする [#DropFileOnFileChooser]
-#swingdescription(Swing/DropFileOnFileChooser,JFileChooserにTransferHandlerを設定してFileをドロップ可能にする,JFileChooserにTransferHandlerを設定してFileやDirectoryをドロップ可能にします。,https://drive.google.com/thumbnail?id=1NA-vGQgCHGvMjG9nrxYwpTVuYCIgeFFZ)
+** JTextComponentにファイルとテキストをドロップ可能に設定する [#FileAndTextTransferHandler]
+#swingdescription(Swing/FileAndTextTransferHandler,JTextComponentにファイルとテキストをドロップ可能に設定する,JTextComponentにデフォルトの文字列だけでなくファイルもドロップ可能になるようなTransferHandlerを設定します。,https://drive.google.com/thumbnail?id=19UPpYiiOmU-vIAHpCt35QmXdofVKz3nO)
+
+** JListでマウスドラッグとクリップボード経由のアイテム移動が可能かを個別に設定する [#ExportAsDragOrExportToClipboard]
+#swingdescription(Swing/ExportAsDragOrExportToClipboard,JListでマウスドラッグとクリップボード経由のアイテム移動が可能かを個別に設定する,TransferHandlerを設定したJListでマウスドラッグ、またはクリップボード経由のアイテム移動を許可するかどうかを切り替えます。,https://drive.google.com/thumbnail?id=1wp4ANGfODIJb47xCpCoT7OSVL7783dR8)

@@ -23,7 +23,7 @@ class TestRenderer extends Box implements TableCellRenderer {
   private final JLabel iconLabel;
   public TestRenderer(JTable table) {
     super(BoxLayout.X_AXIS);
-    textLabel = new JLabel("dummy");
+    textLabel = new JLabel("JLabel");
     textLabel.setOpaque(true);
     textLabel.setBorder(emptyBorder);
     nicon = new ImageIcon(getClass().getResource("wi0063-16.png"));
@@ -76,7 +76,7 @@ class TestRenderer extends Box implements TableCellRenderer {
       // color.getComponents(array);
       // return new Color(array[0] * .5f, array[1] * .5f, array[2], array[3]).getRGB();
       int r = (argb >> 16) & 0xFF;
-      int g = (argb >>  8) & 0xFF;
+      int g = (argb >> 8) & 0xFF;
       return (argb & 0xFF_00_00_FF) | ((r >> 1) << 16) | ((g >> 1) << 8);
     }
   }

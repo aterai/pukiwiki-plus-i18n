@@ -42,7 +42,7 @@ JList<String> list = new JList<String>(model) {
 list.setFixedCellHeight(64);
 
 JCheckBox check = new JCheckBox(key, UIManager.getBoolean(key));
-check.addActionListener(e -> UIManager.put(key, ((JCheckBox) e.getSource()).isSelected()));
+check.addActionListener(e -> UIManager.put(key, check.isSelected()));
 }}
 
 * 解説 [#explanation]

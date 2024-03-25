@@ -22,7 +22,8 @@ class ColumnHeaderRenderer implements TableCellRenderer {
     TableCellRenderer r = table.getTableHeader().getDefaultRenderer();
     ListSelectionModel csm = table.getColumnModel().getSelectionModel();
     boolean f = csm.getLeadSelectionIndex() == column ? true : hasFocus;
-    return r.getTableCellRendererComponent(table, value, isSelected, f, row, column);
+    return r.getTableCellRendererComponent(
+        table, value, isSelected, f, row, column);
   }
 }
 }}
@@ -32,6 +33,7 @@ class ColumnHeaderRenderer implements TableCellRenderer {
 
 - `JTable`内にあるセルの選択状態が変更されても`JTableHeader`の描画には影響しない
 -- このため`TableColumnModel`から取得した`SelectionModel`に`ListSelectionListener`を追加して、リードインデックスの移動イベントが発生するたびに`JTableHeader#repaint()`を呼び出して`JTableHeader`のフォーカス変更を描画し直すように設定
+
 #code{{
 table.getColumnModel().getSelectionModel().addListSelectionListener(e -> {
   header.repaint();

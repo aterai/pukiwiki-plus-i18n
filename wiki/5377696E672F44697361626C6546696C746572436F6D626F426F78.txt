@@ -39,7 +39,7 @@ SwingUtils.descendants(fileChooser)
 -- ファイルフィルタを選択して拡張子などで表示ファイルを絞り込むことが可能
 - 下: `JFileChooser.DIRECTORIES_ONLY`
 -- ディレクトリのみ表示されるのでファイルフィルタはあまり意味がない
--- `JFileChooser`以下のコンポーネントを検索してテキストが`UIManager.getString("FileChooser.filesOfTypeLabelText", fileChooser.getLocale())`(日本語環境の場合「ファイルのタイプ」)と一致する`JLabel`を取得し、`JLabel.getLabelFor()`メソッドで割り当てられているコンポーネント(この場合`JComboBox`)を無効化
+-- `JFileChooser`以下のコンポーネントを検索してテキストが`UIManager.getString("FileChooser.filesOfTypeLabelText", fileChooser.getLocale())`(日本語環境の場合「ファイルのタイプ」)と一致する`JLabel`を取得し、`JLabel.getLabelFor()`メソッドで割り当てられているコンポーネント(`JComboBox`)を無効化
 -- `WindowsLookAndFeel`環境などでファイルフィルタ用の`JComboBox`を無効化する場合、レンダラーを透明化すると矢印ボタンとテキストエリアの無効化状態の背景色を揃えることが可能
 -- `JFileChooser#setAcceptAllFileFilterUsed(false)`で`AcceptAll`ファイルフィルタの説明(日本語環境の場合「すべてのファイル」)も非表示に設定
 

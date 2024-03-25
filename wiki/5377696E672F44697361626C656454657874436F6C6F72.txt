@@ -17,7 +17,7 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLDPDIq4I/AAAAAAAAAW8/jt
 #code(link){{
 UIManager.put("CheckBox.disabledText", Color.RED);
 JCheckBox cbx1 = new JCheckBox("default", true);
-JCheckBox cbx2 = new JCheckBox("<html>html tag</html>", true);
+JCheckBox cbx2 = new JCheckBox("<html>html <span style='color:red'>tag");
 }}
 
 * 解説 [#explanation]
@@ -26,8 +26,8 @@ JCheckBox cbx2 = new JCheckBox("<html>html tag</html>", true);
 --- `MetalLookAndFeel`でのみ有効
 - `JCheckBox` + `html`
 -- `JDK 1.7.0`で以下の動作は修正されて、無効化で`HTML`文字列もグレーになる
---- [https://bugs.openjdk.java.net/browse/JDK-4783068 Bug ID: 4783068 Components with HTML text should gray out the text when disabled]
--- %%`<html>`タグを使った場合、文字色は常に不変で`isEnabled()`の状態に依存しない([https://bugs.openjdk.java.net/browse/JDK-4740519 Bug ID: 4740519 HTML JLabel not greyed out on setEnabled(false)])を利用%%
+--- [https://bugs.openjdk.org/browse/JDK-4783068 Bug ID: 4783068 Components with HTML text should gray out the text when disabled]
+-- %%`<html>`タグを使った場合、文字色は常に不変で`isEnabled()`の状態に依存しない([https://bugs.openjdk.org/browse/JDK-4740519 Bug ID: 4740519 HTML JLabel not greyed out on setEnabled(false)])を利用%%
 --- 参考: [https://community.oracle.com/thread/1359798 Swing - How to disable a JCheckBox and leave the text the original color?]のMichael_Dunn さんの投稿
 --- [[Htmlを使ったJLabelとJEditorPaneの無効化>Swing/DisabledHtmlLabel]]
 - `JComboBox`
@@ -45,10 +45,12 @@ JCheckBox cbx2 = new JCheckBox("<html>html tag</html>", true);
 #ref(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLFT1HGFI/AAAAAAAAAXA/W5L-yIFc61E/s800/DisabledTextColor1.png)
 
 * 参考リンク [#reference]
-- [https://bugs.openjdk.java.net/browse/JDK-4740519 Bug ID: 4740519 HTML JLabel not greyed out on setEnabled(false)]
+- [https://bugs.openjdk.org/browse/JDK-4740519 &#91;JDK-4740519&#93; HTML JLabel not greyed out on setEnabled(false) - Java Bug System]
 - [https://community.oracle.com/thread/1359798 Swing - How to disable a JCheckBox and leave the text the original color?]
--[https://bugs.openjdk.java.net/browse/JDK-4783068 Bug ID: 4783068 Components with HTML text should gray out the text when disabled]
+- [https://bugs.openjdk.org/browse/JDK-4783068 &#91;JDK-4783068&#93; Components with HTML text should gray out the text when disabled - Java Bug System]
 - [[Htmlを使ったJLabelとJEditorPaneの無効化>Swing/DisabledHtmlLabel]]
+- [https://bugs.openjdk.org/browse/JDK-7093691 &#91;JDK-7093691&#93; Nimbus LAF: disabled JComboBox using renderer has bad font color - Java Bug System]
+- [[JButtonが無効な状態でのhtmlテキスト色を変更する>Swing/ButtonDisabledHtmlText]]
 
 * コメント [#comment]
 #comment

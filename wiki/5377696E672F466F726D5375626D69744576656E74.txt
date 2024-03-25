@@ -43,7 +43,7 @@ editor.addHyperlinkListener(e -> {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JEditorPane`に表示されたフォームの送信データを`HyperlinkListener`で取得し、`application/x-www-form-urlencoded`形式でパーセントエンコーディングされた文字列をデコードするテストを行っています。
+上記のサンプルでは、`JEditorPane`に表示されたフォームの送信データを`HyperlinkListener`で取得し、`application/x-www-form-urlencoded`形式でパーセントエンコーディングで符号化された文字列をデコードするテストを行っています。
 
 - `HTMLEditorKit#setAutoFormSubmission(false)`で`html`フォームの送信を自動的に処理ではなく、`FormSubmitEvent`がトリガーされるように設定して`HyperlinkListener`でデータを取得
 - `<form>`要素に`action='#'`のような属性の指定がない場合、`NullPointerException`が発生する？

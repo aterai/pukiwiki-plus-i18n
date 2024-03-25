@@ -15,17 +15,18 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWr-a0yaI/AAAAAAAAApo/Wm
 
 * サンプルコード [#sourcecode]
 #code(link){{
-JButton button = new JButton(new AbstractAction("フレームのタイトルを表示") {
-  @Override public void actionPerformed(ActionEvent e) {
-    JButton btn  = (JButton) e.getSource();
-    JFrame f = (JFrame) SwingUtilities.getWindowAncestor(btn);
-    // JFrame f = (JFrame) btn.getTopLevelAncestor();
-    // JFrame f = (JFrame) JOptionPane.getFrameForComponent(btn);
+JButton button = new JButton("show frame title");
+button.addActionListener(e -> {
+  // Container w = ((JComponent) e.getSource()).getTopLevelAncestor();
+  Window w = SwingUtilities.getWindowAncestor((Component) e.getSource());
+  // Frame frame = JOptionPane.getFrameForComponent((Component) e.getSource());
+  if (w instanceof Frame) {
+    Frame frame = (Frame) w;
+    String msg = "parentFrame.getTitle(): " + frame.getTitle();
     JOptionPane.showMessageDialog(
-        f, "parentFrame.getTitle(): " + f.getTitle(),
-        "title", JOptionPane.INFORMATION_MESSAGE);
+        frame, msg, "title", JOptionPane.INFORMATION_MESSAGE);
   }
-}));
+});
 }}
 
 * 解説 [#explanation]

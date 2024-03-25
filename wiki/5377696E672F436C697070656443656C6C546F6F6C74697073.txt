@@ -19,24 +19,39 @@ class ToolTipHeaderRenderer implements TableCellRenderer {
   // private final Icon icon = UIManager.getIcon("Table.ascendingSortIcon");
   @Override public Component getTableCellRendererComponent(JTable table,
       Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    TableCellRenderer renderer = table.getTableHeader().getDefaultRenderer();
-    JLabel l = (JLabel) renderer.getTableCellRendererComponent(
-      table, value, isSelected, hasFocus, row, column);
-    Insets i = l.getInsets();
-    Rectangle rect = table.getCellRect(row, column, false);
-    rect.width -= i.left + i.right;
-    // RowSorter<? extends TableModel> sorter = table.getRowSorter();
-    // if (sorter != null && !sorter.getSortKeys().isEmpty()
-    //                    && sorter.getSortKeys().get(0).getColumn() == column) {
-    //   rect.width -= icon.getIconWidth() + 2; // XXX
-    // }
-    Optional.ofNullable(l.getIcon())
-            .ifPresent(icon -> rect.width -= icon.getIconWidth() + l.getIconTextGap());
-    FontMetrics fm = l.getFontMetrics(l.getFont());
-    String str = value.toString();
-    int cellTextWidth = fm.stringWidth(str);
-    l.setToolTipText(cellTextWidth > rect.width ? str : null);
-    return l;
+    JTableHeader header = table.getTableHeader();
+    TableCellRenderer r = header.getDefaultRenderer();
+    Component c = r.getTableCellRendererComponent(
+        table, value, isSelected, hasFocus, row, column);
+    if (c instanceof JLabel) {
+      JLabel l = (JLabel) c;
+      Insets i = l.getInsets();
+      Rectangle rect = header.getHeaderRect(column);
+      rect.width -= i.left + i.right;
+      boolean isClipped = isClipped(l, rect);
+      // isClipped = fontMetrics.stringWidth(l.getText()) > rect.width;
+      l.setToolTipText(isClipped ? l.getText() : header.getToolTipText());
+    }
+    return c;
+  }
+
+  private static boolean isClipped(JLabel label, Rectangle viewR) {
+    Rectangle iconR = new Rectangle();
+    Rectangle textR = new Rectangle();
+    String str = SwingUtilities.layoutCompoundLabel(
+        label,
+        label.getFontMetrics(label.getFont()),
+        label.getText(),
+        label.getIcon(),
+        label.getVerticalAlignment(),
+        label.getHorizontalAlignment(),
+        label.getVerticalTextPosition(),
+        label.getHorizontalTextPosition(),
+        viewR,
+        iconR,
+        textR,
+        label.getIconTextGap());
+    return !Objects.equals(label.getText(), str);
   }
 }
 }}
@@ -44,8 +59,9 @@ class ToolTipHeaderRenderer implements TableCellRenderer {
 * 解説 [#explanation]
 - ヘッダセル
 -- `TableCellRenderer`内でセルの幅と文字列の長さを比較し`ToolTip`を設定
--- ソートアイコンと文字列の間隔は`JLabel#getIconTextGap()`で取得してセル幅から除外する
---- `Windows 10`で使用される`WindowsLookAndFeel`のように文字列の上にソートアイコンが表示される場合(`TableCellRenderer#getIcon()`が`null`)はこのアイコンの幅を無視する
+-- ソートアイコンなどが存在する場合を考慮して`SwingUtilities.layoutCompoundLabel(...)`メソッドを使用して`JLabel`内の文字列が省略されているかどうかを判断する
+-- %%ソートアイコンと文字列の間隔は`JLabel#getIconTextGap()`で取得してセル幅から除外する%%
+--- %%`Windows 10`で使用される`WindowsLookAndFeel`のように文字列の上にソートアイコンが表示される場合(`TableCellRenderer#getIcon()`が`null`)はこのアイコンの幅を無視する%%
 - セル
 -- `JTable#prepareRenderer`メソッドをオーバーライドし、セルの幅と文字列の長さを比較して`ToolTip`を設定
 
@@ -56,14 +72,13 @@ JTable table = new JTable(model) {
     Component c = super.prepareRenderer(tcr, row, column);
     if (c instanceof JComponent) {
       JComponent l = (JComponent) c;
-      Object o = getValueAt(row, column);
       Insets i = l.getInsets();
       Rectangle rect = getCellRect(row, column, false);
       rect.width -= i.left + i.right;
       FontMetrics fm = l.getFontMetrics(l.getFont());
-      String str = o.toString();
+      String str = Objects.toString(getValueAt(row, column), "");
       int cellTextWidth = fm.stringWidth(str);
-      l.setToolTipText(cellTextWidth > rect.width ? str : null);
+      l.setToolTipText(cellTextWidth > rect.width ? str : getToolTipText());
     }
     return c;
   }
@@ -73,6 +88,7 @@ JTable table = new JTable(model) {
 * 参考リンク [#reference]
 - [[JTableHeaderのTooltipsを列ごとに変更>Swing/HeaderTooltips]]
 - [[JTableのTooltipsを行ごとに変更>Swing/RowTooltips]]
+- [[Fontから文字列の境界を取得する>Swing/StringBounds]]
 
 * コメント [#comment]
 #comment

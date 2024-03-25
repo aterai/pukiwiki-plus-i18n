@@ -1,0 +1,57 @@
+---
+category: swing
+folder: TableDisplayDensity
+title: JTableの表示倍率を変更する
+tags: [JTable, Font, JTableHeader, JCheckBox]
+author: aterai
+pubdate: 2023-11-20T00:20:43+09:00
+description: JTableのフォントサイズ、行高、セルエディタのチェックアイコンなどを拡大縮小して表示倍率を変更します。
+image: https://drive.google.com/uc?id=1LJH0jt7I5_dk-N4MQhnkGmahNz9NMbOu
+---
+* 概要 [#summary]
+`JTable`のフォントサイズ、行高、セルエディタのチェックアイコンなどを拡大縮小して表示倍率を変更します。
+
+#download(https://drive.google.com/uc?id=1LJH0jt7I5_dk-N4MQhnkGmahNz9NMbOu)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+table.removeEditor();
+Font f = font.deriveFont(fontSize * x);
+table.setFont(f);
+table.getTableHeader().setFont(f);
+table.setRowHeight((int) (.5f + rowHeight * x));
+// // IntercellSpacing
+// Dimension d = new Dimension(1, 1);
+// d.width = (int) (.5f + d.width * x);
+// d.height = (int) (.5f + d.height * x);
+// table.setIntercellSpacing(d);
+// // SortIcon:
+// UIDefaults def = UIManager.getLookAndFeelDefaults();
+// Icon ascending = def.getIcon("Table.ascendingSortIcon");
+// Icon descending = def.getIcon("Table.descendingSortIcon");
+// int w = (int) (.5f + ascending.getIconWidth() * x);
+// int h = (int) (.5f + ascending.getIconHeight() * x);
+// UIManager.put("Table.ascendingSortIcon", new ScaledIcon(ascending, w, h));
+// UIManager.put("Table.descendingSortIcon", new ScaledIcon(descending, w, h));
+}}
+
+* 解説 [#explanation]
+- `JTable`
+-- `JTable#setFont(...)`で倍率を変更した`Font`を設定するとセルレンダラーの`Font`も連動して変更される
+-- デフォルトセルレンダラーとは異なりデフォルトセルエディタの`Font`は自動的には更新されないため、このサンプルでは`JTable#prepareEditor(...)`をオーバーライドして`JTable`の`Font`をセルエディタに適用している
+--- `JTable#prepareEditor(...)`は編集開始前に実行されるのでこのサンプルでは倍率変更の前に`JTable#removeEditor()`で編集をキャンセルしている
+-- `JTable`の各行の高さは`JTable`の`Font`サイズとは無関係のため、別途`JTable#setRowHeight(...)`で倍率に応じた高さに変更する必要がある
+-- デフォルトの`BooleanCellRenderer`や`BooleanCellEditor`で使用される`JCheckBox`は`Font`サイズを変更してもチェックアイコンは不変のため、このサンプルでは[[JCheckBoxのチェックアイコンを拡大縮小する>Swing/ScaledIcon]]のサイズ可変アイコンを使用するよう修正している
+-- 罫線の太さやセル内余白(`JTable#getIntercellSpacing()`)は`JTable`の`Font`サイズを変更しても一定
+- `JTableHeader`
+-- `JTable`に適用した`Font`は`JTableHeader`には自動的に設定されないため、`JTable#getTableHeader()#setFont(font)`を別途実行する必要がある
+-- `JTableHeader`の高さは`JTableHeader`の`Font`サイズに自動的に連動して更新される
+-- `JTableHeader`に表示されるソートアイコンは`JTableHeader`の`Font`サイズを変更しても一定
+
+* 参考リンク [#reference]
+- [[JCheckBoxのチェックアイコンを拡大縮小する>Swing/ScaledIcon]]
+- [https://coyleandrew.medium.com/designing-tables-79a655ca183f Designing tables. A comprehensive visual guide to… | by Andrew Coyle | Nov, 2023 | Medium]
+
+* コメント [#comment]
+#comment
+#comment

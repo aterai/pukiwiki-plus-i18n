@@ -32,13 +32,13 @@ class AutoRepeatHandler extends MouseAdapter implements ActionListener {
   @Override public void actionPerformed(ActionEvent e) {
     Object o = e.getSource();
     if (o instanceof Timer) {
-      if (Objects.nonNull(arrowButton) && !arrowButton.getModel().isPressed() &&
-          autoRepeatTimer.isRunning()) {
+      boolean released= arrowButton != null && !arrowButton.getModel().isPressed();
+      if (released && autoRepeatTimer.isRunning()) {
         autoRepeatTimer.stop();
-        arrowButton = null;
+        // arrowButton = null;
       }
     } else if (o instanceof JButton) {
-      arrowButton = (JButton) e.getSource();
+      arrowButton = (JButton) o;
     }
     BigInteger i = new BigInteger(view.getText());
     view.setText(i.add(extent).toString());
@@ -71,6 +71,8 @@ class AutoRepeatHandler extends MouseAdapter implements ActionListener {
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicSpinnerUI.html BasicSpinnerUI (Java Platform SE 8)]
 - [[JSliderの値を増減するJButtonを作成する>Swing/SliderWithArrowButtons]]
+- [[JTabbedPaneのタブスクロールボタンで連続スクロールを実行する>Swing/ScrollTabsActionRepeater]]
+- [https://github.com/openjdk/jdk/blob/master/src/java.desktop/share/classes/javax/swing/plaf/basic/BasicSpinnerUI.java jdk/src/java.desktop/share/classes/javax/swing/plaf/basic/BasicSpinnerUI.java at master · openjdk/jdk]
 
 * コメント [#comment]
 #comment

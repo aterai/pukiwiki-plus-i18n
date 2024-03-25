@@ -41,11 +41,11 @@ class WheelScrollLayerUI extends LayerUI<JScrollPane> {
     if (c instanceof JScrollPane && !c.equals(main)) {
       JScrollPane child = (JScrollPane) c;
       BoundedRangeModel m = child.getVerticalScrollBar().getModel();
-      int extent  = m.getExtent();
-      int minimum = m.getMinimum();
-      int maximum = m.getMaximum();
-      int value   = m.getValue();
-      if (value + extent >= maximum && dir > 0 || value <= minimum && dir < 0) {
+      int ext = m.getExtent();
+      int min = m.getMinimum();
+      int max = m.getMaximum();
+      int value = m.getValue();
+      if (value + ext >= max && dir > 0 || value <= min && dir < 0) {
         main.dispatchEvent(SwingUtilities.convertMouseEvent(c, e, main));
       }
     }

@@ -73,7 +73,7 @@ class RunAction extends AbstractAction {
             continue;
           }
           int iv = 100 * current / lengthOfTask;
-          Thread.sleep(20); // dummy
+          Thread.sleep(20);
           publish(new Progress(Component.FILE, iv + 1));
           current++;
         }

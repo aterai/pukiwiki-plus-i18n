@@ -15,32 +15,57 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVZeDhwBI/AAAAAAAAAnk/Qm
 
 * サンプルコード [#sourcecode]
 #code(link){{
-VerticalOrientation vo = (VerticalOrientation) verticalOrientationChoices.getSelectedItem();
+VerticalOrientation vo = (VerticalOrientation) vertChoices.getSelectedItem();
 switch (vo) {
-  case DEFAULT_POSITION: border.setTitlePosition(TitledBorder.DEFAULT_POSITION); break;
-  case ABOVE_TOP:        border.setTitlePosition(TitledBorder.ABOVE_TOP);        break;
-  case TOP:              border.setTitlePosition(TitledBorder.TOP);              break;
-  case BELOW_TOP:        border.setTitlePosition(TitledBorder.BELOW_TOP);        break;
-  case ABOVE_BOTTOM:     border.setTitlePosition(TitledBorder.ABOVE_BOTTOM);     break;
-  case BOTTOM:           border.setTitlePosition(TitledBorder.BOTTOM);           break;
-  case BELOW_BOTTOM:     border.setTitlePosition(TitledBorder.BELOW_BOTTOM);     break;
+  case DEFAULT_POSITION:
+    border.setTitlePosition(TitledBorder.DEFAULT_POSITION);
+    break;
+  case ABOVE_TOP:
+    border.setTitlePosition(TitledBorder.ABOVE_TOP);
+    break;
+  case TOP:
+    border.setTitlePosition(TitledBorder.TOP);
+    break;
+  case BELOW_TOP:
+    border.setTitlePosition(TitledBorder.BELOW_TOP);
+    break;
+  case ABOVE_BOTTOM:
+    border.setTitlePosition(TitledBorder.ABOVE_BOTTOM);
+    break;
+  case BOTTOM:
+    border.setTitlePosition(TitledBorder.BOTTOM);
+    break;
+  case BELOW_BOTTOM:
+    border.setTitlePosition(TitledBorder.BELOW_BOTTOM);
+    break;
 }
 
 Justification jc = (Justification) justificationChoices.getSelectedItem();
 switch (jc) {
-  case DEFAULT_JUSTIFICATION: border.setTitleJustification(
-                                              TitledBorder.DEFAULT_JUSTIFICATION); break;
-  case LEFT:     border.setTitleJustification(TitledBorder.LEFT);     break;
-  case CENTER:   border.setTitleJustification(TitledBorder.CENTER);   break;
-  case RIGHT:    border.setTitleJustification(TitledBorder.RIGHT);    break;
-  case LEADING:  border.setTitleJustification(TitledBorder.LEADING);  break;
-  case TRAILING: border.setTitleJustification(TitledBorder.TRAILING); break;
+  case DEFAULT_JUSTIFICATION:
+    border.setTitleJustification(TitledBorder.DEFAULT_JUSTIFICATION);
+    break;
+  case LEFT:
+    border.setTitleJustification(TitledBorder.LEFT);
+    break;
+  case CENTER:
+    border.setTitleJustification(TitledBorder.CENTER);
+    break;
+  case RIGHT:
+    border.setTitleJustification(TitledBorder.RIGHT);
+    break;
+  case LEADING:
+    border.setTitleJustification(TitledBorder.LEADING);
+    break;
+  case TRAILING:
+    border.setTitleJustification(TitledBorder.TRAILING);
+    break;
 }
 panel.repaint();
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、以下のような定数フィールド値を`JComboBox`で指定してタイトルの位置や揃えを変更できます。
+上記のサンプルでは、以下のような定数フィールド値を指定して`TitledBorder`のタイトル位置や揃えを変更できます。
 
 - タイトルの位置を`TitledBorder#setTitlePosition(int)`メソッドで指定
 -- `TitledBorder.DEFAULT_POSITION`
@@ -60,10 +85,10 @@ panel.repaint();
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/border/TitledBorder.html TitledBorder (Java Platform SE 8)]
 - [[TitledBorderのタイトルにアイコンを表示する>Swing/IconTitledBorder]]
-- [https://bugs.openjdk.java.net/browse/JDK-4199867 JDK-4199867 TitledBorder MIDDLE Veritcal Alignment - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-4199867 JDK-4199867 TitledBorder MIDDLE Veritcal Alignment - Java Bug System]
 
 * コメント [#comment]
 #comment
-- メモ: [https://bugs.openjdk.java.net/browse/JDK-6658876 TitledBorder API inconsitent with implementation: uses TOP instead of DEFAULT_POSITION] -- &user(aterai); &new{2008-04-12 (土) 00:35:59};
+- メモ: [https://bugs.openjdk.org/browse/JDK-6658876 TitledBorder API inconsitent with implementation: uses TOP instead of DEFAULT_POSITION] -- &user(aterai); &new{2008-04-12 (土) 00:35:59};
 
 #comment

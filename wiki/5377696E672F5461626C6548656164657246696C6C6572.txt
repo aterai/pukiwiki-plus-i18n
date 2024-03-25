@@ -5,11 +5,11 @@ title: JTableHeaderの余白にヘッダを描画する
 tags: [JTableHeader, JTable, JScrollPane, JLayer]
 author: aterai
 pubdate: 2019-03-11T15:07:56+09:00
-description: JTableHeaderの列幅を自動調整しない場合に発生する余白にダミーのヘッダを描画します。
+description: JTableHeaderの列幅を自動調整しない場合に発生する余白に疑似ヘッダを描画します。
 image: https://drive.google.com/uc?id=1S2FqsLneoDTvkP2Xx-RLfsgLXGkFcduAaw
 ---
 * 概要 [#summary]
-`JTableHeader`の列幅を自動調整しない場合に発生する余白にダミーのヘッダを描画します。
+`JTableHeader`の列幅を自動調整しない場合に発生する余白に疑似ヘッダを描画します。
 
 #download(https://drive.google.com/uc?id=1S2FqsLneoDTvkP2Xx-RLfsgLXGkFcduAaw)
 
@@ -19,7 +19,8 @@ class TableHeaderFillerLayerUI extends LayerUI<JScrollPane> {
   private final JTable tempTable = new JTable(
       new DefaultTableModel(new Object[] {""}, 0));
   private final JTableHeader filler = tempTable.getTableHeader();
-  private final TableColumn fillerColumn = tempTable.getColumnModel().getColumn(0);
+  private final TableColumn fillerColumn = tempTable
+      .getColumnModel().getColumn(0);
 
   @Override public void paint(Graphics g, JComponent c) {
     super.paint(g, c);
@@ -69,16 +70,16 @@ class TableHeaderFillerLayerUI extends LayerUI<JScrollPane> {
 
 * 解説 [#explanation]
 - 上: デフォルト
--- `AUTO_RESIZE_OFF`を設定し、列幅の自動調整を無効にした`JTable`
+-- 列幅の自動調整を`AUTO_RESIZE_OFF`で無効にした`JTable`
 - 下: `TableHeaderFiller`
--- `AUTO_RESIZE_OFF`を設定し列幅の自動調整を無効にした`JTable`で`JTableHeader`に余白が発生する場合、そこにダミーのヘッダ列を描画
--- ダミーヘッダの描画には`JLayer`を使用
+-- `AUTO_RESIZE_OFF`を設定し列幅の自動調整を無効にした`JTable`で`JTableHeader`に余白が発生する場合、そこに疑似ヘッダ列を描画
+-- 疑似ヘッダの描画には`JLayer`を使用
 -- `JLayer`は`JTable`や`JTableHeader`ではなく親の`JScrollPane`に設定
--- `JLayer`でダミーヘッダへの`MouseEvent`などは無効化、`JTableHeader`がリサイズされて`ComponentEvent`が発生した場合は`LayerUI#processComponentEvent(...)`をオーバーライドしてダミーヘッダの幅を更新
+-- `JLayer`で疑似ヘッダへの`MouseEvent`などは無効化、`JTableHeader`がリサイズされて`ComponentEvent`が発生した場合は`LayerUI#processComponentEvent(...)`をオーバーライドして疑似ヘッダの幅を更新
 
 * 参考リンク [#reference]
 - [https://web.archive.org/web/20120126055437/http://l2fprod.com/blog/2008/08/30/the-fun-of-swing-jtable-column-resizing/ the fun of Swing JTable column resizing - blog@l2fprod.com(web.archive.org)]
--- `JLayer`は使用せず、直接`JTableHeader`にリスナーなどを変更したダミーヘッダを追加する場合のサンプル
+-- `JLayer`を使用せず直接`JTableHeader`にリスナーなどを変更した疑似ヘッダを追加する場合のサンプル
 
 * コメント [#comment]
 #comment

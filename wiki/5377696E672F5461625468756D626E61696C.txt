@@ -78,7 +78,8 @@ class TabThumbnailTabbedPane extends JTabbedPane {
 }}
 
 * 解説 [#explanation]
-マウスカーソルがタブタイトル上にきた場合、そのタブ内部のコンポーネントを縮小して`JToolTip`に貼り付けています。
+- 選択されたタブではなく、マウスカーソルが存在するタブコンテンツの内部コンポーネントを縮小して`BufferedImage`を作成
+- 縮小した`BufferedImage`から`ImageIcon`を作成、`JLabel#setIcon(...)`でコンポーネントに変換して`JToolTip`に配置
 
 * 参考リンク [#reference]
 - [http://www.bekkoame.ne.jp/~bootan/free2.html デジタル出力工房　絵写楽]

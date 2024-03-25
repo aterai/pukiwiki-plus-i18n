@@ -47,9 +47,10 @@ description: Conditionタスクを使って、Targetタスクを実行するか�
 - [[Resourceファイルからメニューバーを生成>Swing/ResourceMenuBar]]の[https://ateraimemo.com/swing/resourcemenubar/src.zip src.zip]などを参照
 
 * 解説 [#explanation]
-上記のサンプルでは、`Condition`タスクを使って、`have.resources`プロパティに真偽を代入しています。
+上記のサンプルでは`Condition`タスクを使用して`have.resources`プロパティに真偽を代入しています。
 
-`prepare-resource`ターゲットは、`properties`ファイルをユニコードエスケープしますが、これは、`have.resources`プロパティが真(`if="have.resources"`)の場合だけ実行されます。このため、リソースディレクトリが無い(エスケープする`properties`ファイルが無い)場合、あとで`compile`ターゲットで、`prepare-resource`ターゲットは呼び出されていますが、何もしないというサンプルになっています。
+- `prepare-resource`ターゲットは`properties`ファイルをユニコードエスケープし、`have.resources`プロパティが真(`if="have.resources"`)の場合のみ実行
+- このためリソースディレクトリが存在しない(エスケープする`properties`ファイルがない)場合、`compile`ターゲットで`prepare-resource`ターゲットが呼び出されて何も実行しない
 
 ----
 以下は、同様に`Condition`タスクを使って、`lib`ディレクトリが存在する場合、その下にある`jar`ファイルをパスに含めるように上書きするためのサンプルです。
@@ -76,7 +77,9 @@ description: Conditionタスクを使って、Targetタスクを実行するか�
 - [[JToolBarでアイコンボタンを右寄せ>Swing/ToolBarLayout]]の、[https://ateraimemo.com/swing/toolbarlayout/src.zip src.zip]などを参照
 
 * 参考リンク [#reference]
--- [https://ant.apache.org/manual/Tasks/conditions.html Conditions Task]
+- [https://ant.apache.org/manual/Tasks/conditions.html Conditions Task]
+- [https://ant.apache.org/manual/ifunless.html If and Unless on all tasks/nested elements]
+-- `Ant 1.9.1`からタスクなどに`if`、`unless`属性を使用可能になった
 
 * コメント [#comment]
 #comment

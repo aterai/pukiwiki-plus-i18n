@@ -60,7 +60,8 @@ class ListItemListCellRenderer<E extends ListItem> implements ListCellRenderer<E
     }
   };
   private final JPanel renderer = new JPanel(new BorderLayout());
-  private final Border focusBorder = UIManager.getBorder("List.focusCellHighlightBorder");
+  private final Border focusBorder =
+      UIManager.getBorder("List.focusCellHighlightBorder");
   private final Border noFocusBorder; // = UIManager.getBorder("List.noFocusBorder");
 
   protected ListItemListCellRenderer() {

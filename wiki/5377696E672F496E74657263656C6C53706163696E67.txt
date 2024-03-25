@@ -45,17 +45,20 @@ add(new JCheckBox(new AbstractAction("setShowHorizontalLines") {
 - `JTable`の罫線を非表示にしてもセルの内余白が`0`でない場合、セル選択でその内余白分の塗り残しが発生し分割状態で表示される
 - `JTable#setShowVerticalLines(boolean)`メソッドなどと合わせて`JTable#setIntercellSpacing(Dimension)`メソッドを使用し、セルの内余白を`0`に変更
 - 罫線の設定
--- `JTable#setShowVerticalLines(boolean);`
--- `JTable#setShowHorizontalLines(boolean);`
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setShowVerticalLines-boolean- JTable#setShowVerticalLines(boolean)]
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setShowHorizontalLines-boolean- JTable#setShowHorizontalLines(boolean)]
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setShowGrid-boolean- JTable.html#setShowGrid(boolean)]
+--- `JTable#setShowVerticalLines(boolean)`と`JTable#setShowHorizontalLines(boolean)`をまとめて実行
 - セル内余白の設定
--- `JTable#setIntercellSpacing(Dimension intercellSpacing);`
---- `JTable#setRowMargin(intercellSpacing.height);`
---- `JTable#getColumnModel().setColumnMargin(intercellSpacing.width);`
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setIntercellSpacing-java.awt.Dimension- JTable#setIntercellSpacing(Dimension intercellSpacing)]
+--- `JTable#setRowMargin(intercellSpacing.height)`と`JTable#getColumnModel().setColumnMargin(intercellSpacing.width)`をまとめて実行
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setShowVerticalLines-boolean- JTable#setShowVerticalLines(boolean) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setShowHorizontalLines-boolean- JTable#setShowHorizontalLines(boolean) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setIntercellSpacing-java.awt.Dimension- JTable#setIntercellSpacing(Dimension) (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setShowGrid-boolean- JTable#setShowGrid(boolean) (Java Platform SE 8)]
+- [[JTableのグリッド線描画をUIDefaultsから復元する>Swing/TableShowGrid]]
 
 * コメント [#comment]
 #comment

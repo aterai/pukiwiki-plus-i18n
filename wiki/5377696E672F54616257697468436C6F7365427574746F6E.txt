@@ -47,9 +47,9 @@ class CloseButtonTabbedPane extends JTabbedPane {
 }}
 
 * 解説 [#explanation]
-`JDK 6`から追加されたタブ内にコンポーネントを配置する機能を使用して、`JButton`をタブに追加しています。
-
-[[以前のサンプル>Swing/TabWithCloseIcon]]に比べると実装も簡単でコードも短くなっています。
+- `JDK 6`で追加された[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setTabComponentAt-int-java.awt.Component- JTabbedPane#setTabComponentAt(...)]メソッドを使用して、指定したタブ内に`JButton`を配置
+-- `JButton`に`ActionListener`を追加し、クリックで`JTabbedPane#removeTabAt(...)`を実行してタブを削除
+- [[以前のサンプル>Swing/TabWithCloseIcon]]に比べると実装も簡単でコードも短くなる
 
 * 参考リンク [#reference]
 - [http://www.oracle.com/technetwork/articles/javase/index-135776.html More Enhancements in Java SE 6]

@@ -58,11 +58,11 @@ pinTabMenuItem = new JCheckBoxMenuItem(new AbstractAction("pin tab") {
 * 解説 [#explanation]
 - タブを固定
 -- タブタイトルを空にする
--- タブの位置を左側に移動
--- 固定したタブは削除不可
+-- タブの位置を最も左に存在する未固定タブの左隣りに移動
+-- 固定したタブは削除不可に設定
 - タブの固定を解除
 -- タブタイトルを`TooltipText`から復元する
--- タブの位置を固定されていないタブの右側に移動
+-- タブの位置を最も左に存在する未固定タブの右隣りに移動
 - `TabPlacement`の`LEFT`、`RIGHT`は考慮していない
 
 * 参考リンク [#reference]

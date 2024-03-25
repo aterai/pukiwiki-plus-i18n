@@ -121,7 +121,7 @@ class DividerLocationDragLayerUI extends LayerUI<JSplitPane> {
 * 解説 [#explanation]
 - `JSplitPane#setDividerSize(0)`で`Divider`を非表示に設定
 -- [[JSplitPaneのDividerをマウスで移動できないように設定する>Swing/FixedDividerSplitPane]]
-- `JLayer`を使用して、半透明の円形つまみを作成して`Divider`の中央に配置
+- `JLayer`を使用して半透明の円形つまみを作成して`Divider`の中央に配置
 -- [[JSplitPaneでドラッグ中のDividerの背景色を設定する>Swing/DividerDraggingColor]]でも`Divider`の色を半透明などに変更可能だが、`JSplitPane#setContinuousLayout(false)`の場合のみ有効なので、このサンプルでは使用できない
 
 ----
@@ -162,6 +162,7 @@ split.setRightComponent(afterCanvas);
 
 * 参考リンク [#reference]
 - [[JSplitPaneで画像を差分を比較表示する>Swing/ImageComparisonSplitPane]]
+- [https://bugs.openjdk.org/browse/JDK-4797982 &#91;JDK-4797982&#93; Setting negative size of JSplitPane divider leads to unexpected results. - Java Bug System]
 
 * コメント [#comment]
 #comment

@@ -9,7 +9,7 @@ description: JPanelに表示した画像にAffineTransformによる変換を適�
 image: https://lh3.googleusercontent.com/-c5Y9hCoRQbU/U1PhhnitgFI/AAAAAAAACD0/ZXIcyPywcr0/s800/ZoomingAndPanning.png
 ---
 * 概要 [#summary]
-`JPanel`に表示した画像に`AffineTransform`による変換を適用して、マウスを使った拡大・縮小・移動を実行します。[https://community.oracle.com/thread/1263955 How to implement Zoom & Pan in Java using Graphics2D]に投稿されているコードを参考・引用しています。
+`JPanel`に表示した画像に`AffineTransform`による変換を適用して、マウスを使った拡大・縮小・移動を実行します。
 
 #download(https://lh3.googleusercontent.com/-c5Y9hCoRQbU/U1PhhnitgFI/AAAAAAAACD0/ZXIcyPywcr0/s800/ZoomingAndPanning.png)
 
@@ -43,18 +43,20 @@ class ZoomAndPanHandler extends MouseAdapter {
     int dir = e.getWheelRotation();
     int z = zoomRange.getValue();
     zoomRange.setValue(z + EXTENT * (dir > 0 ? -1 : 1));
-    if (z == zoomRange.getValue()) {
-      return;
+    if (z != zoomRange.getValue()) {
+      double scale = dir > 0 ? 1d / ZOOM_FACTOR : ZOOM_FACTOR;
+      Point2D pt;
+      if (e.isControlDown()) {
+        Rectangle r = e.getComponent().getBounds();
+        pt = new Point2D.Double(r.getCenterX(), r.getCenterY());
+      } else {
+        pt = transformPoint(e.getPoint());
+      }
+      coordAndZoomAtf.translate(pt.getX(), pt.getY());
+      coordAndZoomAtf.scale(scale, scale);
+      coordAndZoomAtf.translate(-pt.getX(), -pt.getY());
+      e.getComponent().repaint();
     }
-    Component c = e.getComponent();
-    Rectangle r = c.getBounds();
-    Point2D p = new Point2D.Double(r.getCenterX(), r.getCenterY());
-    Point2D p1 = transformPoint(p);
-    double scale = dir > 0 ? 1 / ZOOM_FACTOR : ZOOM_FACTOR;
-    coordAndZoomAtf.scale(scale, scale);
-    Point2D p2 = transformPoint(p);
-    coordAndZoomAtf.translate(p2.getX() - p1.getX(), p2.getY() - p1.getY());
-    c.repaint();
   }
 
   // https://community.oracle.com/thread/1263955
@@ -95,11 +97,13 @@ class ZoomAndPanHandler extends MouseAdapter {
 - [http://codezine.jp/article/detail/174 ズームとパンの機能を備えたドローソフトを作成する：CodeZine]
 - [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
 - [http://tech.nitoyon.com/ja/blog/2013/12/13/touch-viewer/ タッチ操作に対応した画像ビューワーをJavaScriptで作るならD3.jsが便利 - てっく煮ブログ]
-- [http://d.hatena.ne.jp/torutk/20140415/p1 CanvasでAffine変換で大いにはまる（数学的センスが足りなかった・・・） - torutkの日記]
+- [https://torutk.hatenablog.jp/entry/20140415/p1 CanvasでAffine変換で大いにはまる（数学的センスが足りなかった・・・） - torutkのブログ]
 - [[JScrollPane内に配置したJPanelをマウスで拡大、縮小、移動する>Swing/ZoomAndPanPanel]]
+- [https://medium.com/@benjamin.botto/zooming-at-the-mouse-coordinates-with-affine-transformations-86e7312fd50b Zooming at the Mouse Coordinates with Affine Transformations | by Ben Botto | Medium]
 
 * コメント [#comment]
 #comment
-- 表示画面の中心を 基準に拡大縮小するように変更。 -- &user(aterai); &new{2014-04-21 (月) 14:55:12};
+- 表示画面の中心を基準に拡大縮小するように変更。 -- &user(aterai); &new{2014-04-21 (月) 14:55:12};
+- KBD{Ctrl}キーを押しながらホイールスクロールで表示画面の中心、それ以外はマウスカーソルを基準に拡大縮小するように変更。 -- &user(aterai); &new{2022-12-31 (土) 21:05:12};
 
 #comment

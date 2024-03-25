@@ -83,16 +83,19 @@ class ShadowBorder extends AbstractBorder {
 #code{{
 class DropShadowPopupMenu extends JPopupMenu {
   private static final int OFFSET = 4;
+  private final Dimension dim = new Dimension();
   private transient BufferedImage shadow;
-  private Border border;
-  @Override public boolean isOpaque() {
-    return false;
-  }
 
   @Override public void updateUI() {
     setBorder(null);
     super.updateUI();
-    border = null;
+    Border inner = getBorder();
+    Border outer = BorderFactory.createEmptyBorder(0, 0, OFFSET, OFFSET);
+    setBorder(BorderFactory.createCompoundBorder(outer, inner));
+  }
+
+  @Override public boolean isOpaque() {
+    return false;
   }
 
   @Override protected void paintComponent(Graphics g) {
@@ -105,16 +108,11 @@ class DropShadowPopupMenu extends JPopupMenu {
   }
 
   @Override public void show(Component c, int x, int y) {
-    if (border == null) {
-      Border inner = getBorder();
-      Border outer = BorderFactory.createEmptyBorder(0, 0, OFFSET, OFFSET);
-      border = BorderFactory.createCompoundBorder(outer, inner);
-    }
-    setBorder(border);
     Dimension d = getPreferredSize();
     int w = d.width;
     int h = d.height;
-    if (shadow == null || shadow.getWidth() != w || shadow.getHeight() != h) {
+    if (dim.width != w || dim.height != h) {
+      dim.setSize(w, h);
       shadow = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
       Graphics2D g2 = shadow.createGraphics();
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -123,16 +121,16 @@ class DropShadowPopupMenu extends JPopupMenu {
       g2.setPaint(Color.BLACK);
       for (int i = 0; i < OFFSET; i++) {
         g2.fillRoundRect(
-            OFFSET, OFFSET, w - OFFSET - OFFSET + i, h - OFFSET - OFFSET + i, 4, 4);
+            OFFSET, OFFSET, w - OFFSET - OFFSET + i,
+            h - OFFSET - OFFSET + i, 4, 4);
       }
       g2.dispose();
     }
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        Window pop = SwingUtilities.getWindowAncestor(DropShadowPopupMenu.this);
-        if (pop instanceof JWindow) {
-          pop.setBackground(new Color(0x0, true)); //JDK 1.7.0
-        }
+    EventQueue.invokeLater(() -> {
+      Window top = SwingUtilities.getWindowAncestor(this);
+      if (top != null && top.getType() == Window.Type.POPUP) {
+        // Popup$HeavyWeightWindow
+        top.setBackground(new Color(0x0, true)); // JDK 1.7.0
       }
     });
     super.show(c, x, y);
@@ -190,7 +188,7 @@ label.setComponentPopupMenu(pop);
 - `SynthLookAndFeel`(`Nimbus`など)で、`JSeparator`だけでなく`JMenuItem`まで透明になった修正？に対応。 -- &user(aterai); &new{2012-02-05 (日) 14:22:34};
 - `1.7.0_03`でなにか変更されたのか変な挙動をするようになったので、調査中。 -- &user(aterai); &new{2012-02-21 (火) 16:45:48};
 - `exit`や`close`が動作するのかと思ったのですが動かないんですよね？ `JPopupMenu`に表示させているだけでしょうか、もしそうなら`Exit`を押したときにフレームが終了するようなコードはどう書けばいいのでしょうか？ -- &user(hshs); &new{2013-03-02 (土) 05:32:25};
--- 影を付けるだけのサンプルコードなので、`JMenuItem`は名前だけのダミーになっています。「フレームを終了するコード…」は、複数の`JFrame`が開いているかもしれない場合を考慮して、以下のような方法を使用するのがいいかもしれません。 -- &user(aterai); &new{2013-03-04 (月) 09:53:00};
+-- 影を付けるだけのサンプルコードなので、各`JMenuItem`のアクションは空になっています。「フレームを終了するコード…」は、複数の`JFrame`が開いているかもしれない場合を考慮して、以下のような方法を使用するのがいいかもしれません。 -- &user(aterai); &new{2013-03-04 (月) 09:53:00};
 
 #code{{
 JMenuItem mi = new JMenuItem(new AbstractAction("Exit") {

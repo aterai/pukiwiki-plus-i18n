@@ -1,0 +1,82 @@
+---
+category: swing
+folder: InsertTabIntoTextField
+title: JTextFieldにタブ文字を挿入する
+tags: [JTextField, PlainDocument]
+author: aterai
+pubdate: 2023-04-10T00:02:08+09:00
+description: JTextFieldにキー入力でタブ文字を挿入したり、タブサイズを変更します。
+image: https://drive.google.com/uc?id=1ov_4TMnJZUMXHOo_GqC9TRDNHhCTOMNf
+---
+* 概要 [#summary]
+`JTextField`にキー入力でタブ文字を挿入したり、タブサイズを変更します。
+
+#download(https://drive.google.com/uc?id=1ov_4TMnJZUMXHOo_GqC9TRDNHhCTOMNf)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String txt2 = "aaa\tbbb\tccc";
+JTextField field1 = new JTextField(txt2, 20);
+initActionInputMap(field1);
+
+int tabSize = 4;
+Document doc = new PlainDocument();
+doc.putProperty(PlainDocument.tabSizeAttribute, tabSize);
+JTextField field2 = new JTextField(doc, txt2, 20);
+initActionInputMap(field2);
+
+SpinnerNumberModel model = new SpinnerNumberModel(tabSize, -2, 12, 1);
+model.addChangeListener(e -> setTabSize(field2, model.getNumber().intValue()));
+JSpinner spinner = new JSpinner(model);
+
+// ...
+private static void initActionInputMap(JTextComponent editor) {
+  String mapKey = "insert-horizontal-tab";
+  editor.getActionMap().put(mapKey, new AbstractAction() {
+    @Override public void actionPerformed(ActionEvent e) {
+      try {
+        editor.getDocument().insertString(
+            editor.getCaretPosition(), "\t", null);
+      } catch (BadLocationException ex) {
+        UIManager.getLookAndFeel().provideErrorFeedback(editor);
+      }
+    }
+  });
+  KeyStroke keyStroke = KeyStroke.getKeyStroke(
+      KeyEvent.VK_I, InputEvent.CTRL_DOWN_MASK);
+  editor.getInputMap(WHEN_FOCUSED).put(keyStroke, mapKey);
+}
+}}
+
+* 解説 [#explanation]
+- `JTextField`: 上
+-- キャレット位置にタブ文字`\t(U+09)`を挿入する`Action`を`JTextField`の`ActionMap`に追加
+-- `JTextField`のKBD{Tab}キーにはフォーカス移動が設定されているので、KBD{Ctrl+I}キーで上記のタブ文字挿入アクションを実行するよう`InputMap`を設定
+-- `JTextField`などに使用される`PlainDocument`のデフォルトタブサイズは`8`
+- `JTextField`: 下
+-- `Document#putProperty(PlainDocument.tabSizeAttribute, 4)`でタブサイズを`4`に変更し、これを初期モデルとして[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextField.html#JTextField-javax.swing.text.Document-java.lang.String-int- JTextField(Document, String, int)]で`JTextField`を生成
+-- `JSpinner`でタブサイズを変更可能に設定
+--- タブサイズに負の値を設定してもエラーなどは発生しないが描画はおかしくなる
+--- コンストラクタでタブサイズを変更したドキュメントを指定するのではなく、`JTextField#getDocument()`でドキュメントを取得してタブサイズを変更する場合は`JTextArea#setTabSize(...)`メソッドのように`BasicTextUI#modelChanged()`を実行してタブサイズのキャッシュを更新する必要がある
+--- `JTextField`には`setTabSize(...)`メソッドは存在しないので、このサンプルでは代わりに`JTextField#setEditable(false);JTextField#setEditable(true);`、または`JTextField#firePropertyChange("font", 0, 1);`でフォント属性の疑似更新などを実行して`BasicTextUI#modelChanged()`を呼び出している
+
+#code{{
+Document doc = editor.getDocument();
+if (doc != null) {
+  doc.putProperty(PlainDocument.tabSizeAttribute, size);
+  // int old = getTabSize(doc);
+  // firePropertyChange("tabSize", old, size);
+  //     BasicTextUI#modelChanged();
+  editor.setEditable(false);
+  editor.setEditable(true);
+  // or: editor.firePropertyChange("font", 0, 1);
+}
+}}
+
+* 参考リンク [#reference]
+- [[JTextPaneでタブサイズを設定>Swing/TabSize]]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextField.html#JTextField-javax.swing.text.Document-java.lang.String-int- new JTextField(Document, String, int) (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

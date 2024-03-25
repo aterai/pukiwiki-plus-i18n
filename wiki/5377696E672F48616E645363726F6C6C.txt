@@ -53,14 +53,50 @@ class HandScrollListener extends MouseAdapter {
 
 - `JComponent#scrollRectToVisible(...)`ではなく`JViewport#setViewPosition(Point)`を使用すると内部コンポーネントの外側に移動可能
 
+----
+- [https://bugs.openjdk.org/browse/JDK-6333318 JDK-6333318 JViewPort.scrollRectToVisible( Rectangle cr ) doesn't scroll if cr left or above - Java Bug System]
+-- `JDK 1.7.0`から、`JViewport#setViewPosition(Point)`などで左上外部などの枠外に移動不可になっている
+-- 左上外部は`Java 11`で修正された？、右下外部は移動不可のまま
+--- [https://bugs.openjdk.org/browse/JDK-8195738 JDK-8195738 scroll position in ScrollPane is reset after calling validate() - Java Bug System]
+-- 以下のように`JViewport#revalidate()`をオーバーライドして枠外スクロールは可能に戻せるが、親`JFrame`をリサイズすると表示位置はリセットされる
+
+#code{{
+// // JDK 1.6.0
+// JScrollPane scroll = new JScrollPane(label);
+// JViewport vport = scroll.getViewport();
+
+// JDK 1.7.0 or later
+JViewport vport = new JViewport() {
+  private static final boolean WEIGHT_MIXING = false;
+  private boolean isAdjusting;
+  @Override public void revalidate() {
+    if (!WEIGHT_MIXING && isAdjusting) {
+      return;
+    }
+    super.revalidate();
+  }
+
+  @Override public void setViewPosition(Point p) {
+    if (WEIGHT_MIXING) {
+      super.setViewPosition(p);
+    } else {
+      isAdjusting = true;
+      super.setViewPosition(p);
+      isAdjusting = false;
+    }
+  }
+};
+vport.add(label);
+JScrollPane scroll = new JScrollPane();
+scroll.setViewport(vport);
+}}
+
 * 参考リンク [#reference]
 - [[JScrollPaneのオートスクロール>Swing/AutoScroll]]
 - [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
 -- 猫の写真を引用
-- [https://bugs.openjdk.java.net/browse/JDK-6333318 JDK-6333318 JViewPort.scrollRectToVisible( Rectangle cr ) doesn't scroll if cr left or above - Java Bug System]
--- `JDK 1.7.0`から、`JViewport#setViewPosition(Point)`などで左上外部に移動不可になっている
--- `Java 11`でこの動作は修正される？ `JScrollPane`ではなく`ScrollPane`で無関係？
---- [https://bugs.openjdk.java.net/browse/JDK-8195738 JDK-8195738 scroll position in ScrollPane is reset after calling validate() - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-6333318 JDK-6333318 JViewPort.scrollRectToVisible( Rectangle cr ) doesn't scroll if cr left or above - Java Bug System]
+-- [https://bugs.openjdk.org/browse/JDK-8195738 JDK-8195738 scroll position in ScrollPane is reset after calling validate() - Java Bug System]
 - [[JScrollPaneでキネティックスクロール>Swing/KineticScrolling]]
 - [[JTreeの余白をドラッグしてスクロール>Swing/TreeDragScroll]]
 

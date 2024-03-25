@@ -17,7 +17,8 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRw-M85QI/AAAAAAAAAhs/BF
 #code(link){{
 @Override public void mouseDragged(MouseEvent e) {
   if (startPos == null || startingBounds == null) return;
-  Point p = SwingUtilities.convertPoint(e.getComponent(), e.getX(), e.getY(), null);
+  Point p = SwingUtilities.convertPoint(
+    e.getComponent(), e.getX(), e.getY(), null);
   int deltaX = startPos.x - p.x;
   int deltaY = startPos.y - p.y;
   int newX = getX();
@@ -55,11 +56,11 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRw-M85QI/AAAAAAAAAhs/BF
 * 解説 [#explanation]
 上記のサンプルでは、ツールバーやポップアップメニューから、移動、リサイズ可能な`JTable`や`JTree`を`JLayeredPane`(`JLayeredPane`のデフォルトレイアウトマネージャは`null`)に追加できます。
 
-- リサイズボーダーの描画などは[http://www.jroller.com/santhosh/entry/resizable_components Resizable Components - Santhosh Kumar's Weblog]を参考
+- リサイズボーダーの描画などは[https://github.com/santhosh-tekuri/MyBlog/tree/master/ResizableBorder MyBlog/ResizableBorder at master · santhosh-tekuri/MyBlog · GitHub]を参考
 - マウスのドラッグによる移動、リサイズの最大値、最小値の制限などは`%JAVA_HOME%/src/javax/swing/plaf/basic/BasicInternalFrameUI.java`からの引用
 
 ----
-- `JDK1.5`で`JLayeredPane#setComponentPopupMenu`を使う場合、以下のようにダミーのマウスリスナーなどを追加しておく必要がある？
+- `JDK1.5`で`JLayeredPane#setComponentPopupMenu`を使う場合、以下のようなマウスリスナー(何も実行しない空のマウスリスナーでよい)を追加しておく必要がある？
 #code{{
 layer.setComponentPopupMenu(new MyPopupMenu());
 layer.addMouseListener(new MouseAdapter() {});
@@ -74,7 +75,7 @@ layer.addMouseListener(new MouseAdapter() {});
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRzAZnaVI/AAAAAAAAAhw/t9TWz3YYv6U/s800/ResizableComponents1.png)
 
 * 参考リンク [#reference]
-- [http://www.jroller.com/santhosh/entry/resizable_components Resizable Components - Santhosh Kumar's Weblog]
+- [https://github.com/santhosh-tekuri/MyBlog/tree/master/ResizableBorder MyBlog/ResizableBorder at master · santhosh-tekuri/MyBlog · GitHub]
 
 * コメント [#comment]
 #comment

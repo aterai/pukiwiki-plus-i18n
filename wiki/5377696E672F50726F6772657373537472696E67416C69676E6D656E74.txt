@@ -15,28 +15,32 @@ image: https://lh5.googleusercontent.com/-zRMPjXT7do4/T3lYdJUnilI/AAAAAAAABLA/kc
 
 * サンプルコード [#sourcecode]
 #code(link){{
-JProgressBar bar = new JProgressBar(model) {
-  private final JLabel label = new JLabel(getString(), halign);
-  private final ChangeListener changeListener = new ChangeListener() {
-    @Override public void stateChanged(ChangeEvent e) {
-      label.setText(getString());
-    }
-  };
+class StringAlignmentProgressBar extends JProgressBar {
+  private final JLabel label;
+  // private transient ChangeListener changeListener;
+
+  protected StringAlignmentProgressBar(BoundedRangeModel model, int horizAlignment) {
+    super(model);
+    label = new JLabel(" ", horizAlignment);
+  }
 
   @Override public void updateUI() {
-    removeChangeListener(changeListener);
     removeAll();
+    // removeChangeListener(changeListener);
     super.updateUI();
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        setLayout(new BorderLayout());
-        addChangeListener(changeListener);
-        add(label);
-        label.setBorder(BorderFactory.createEmptyBorder(0, 4, 0, 4));
-      }
+    setLayout(new BorderLayout());
+    // changeListener = e -> label.setText(getString());
+    // addChangeListener(changeListener);
+    EventQueue.invokeLater(() -> {
+      add(label);
+      label.setBorder(BorderFactory.createEmptyBorder(0, 4, 0, 4));
     });
   }
-};
+
+  @Override protected ChangeListener createChangeListener() {
+    return e -> label.setText(getString());
+  }
+}
 }}
 
 * 解説 [#explanation]

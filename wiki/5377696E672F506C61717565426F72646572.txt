@@ -1,0 +1,119 @@
+---
+category: swing
+folder: PlaqueBorder
+title: Path2Dで額縁風の図形を作成しBorderとして使用する
+tags: [Border, Path2D, EmptyBorder, JTextField]
+author: aterai
+pubdate: 2023-12-25T00:59:23+09:00
+description: Path2Dのベジェ曲線を使用して角を内側に丸めた額縁風の図形を描画するBorderを作成し、JTextFieldなどのコンポーネントに設定します。
+image: https://drive.google.com/uc?id=1jyF7GgJ28kyMLA1wtG9pR6LotgncjhKs
+---
+* 概要 [#summary]
+`Path2D`のベジェ曲線を使用して角を内側に丸めた額縁風の図形を描画する`Border`を作成し、`JTextField`などのコンポーネントに設定します。
+
+#download(https://drive.google.com/uc?id=1jyF7GgJ28kyMLA1wtG9pR6LotgncjhKs)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JScrollPane scroll = new JScrollPane(new JTable(8, 5)) {
+  private static final int ARC = 8;
+
+  @Override protected void paintComponent(Graphics g) {
+    Border b = getBorder();
+    if (!isOpaque() && b instanceof PlaqueBorder) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setPaint(getBackground());
+      int w = getWidth() - 1;
+      int h = getHeight() - 1;
+      g2.fill(((PlaqueBorder) b).getBorderShape(0, 0, w, h, ARC));
+      g2.dispose();
+    }
+    super.paintComponent(g);
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    setOpaque(false);
+    setBackground(Color.WHITE);
+    getViewport().setBackground(getBackground());
+    setBorder(new PlaqueBorder(ARC) {
+      @Override protected Shape getBorderShape(
+            double x, double y, double w, double h, double r) {
+        double rr = r * .5522;
+        Path2D path = new Path2D.Double();
+        path.moveTo(x, y + r);
+        path.curveTo(
+            x + rr, y + r, x + r, y + rr, x + r, y);
+        path.lineTo(x + w - r, y);
+        path.curveTo(
+            x + w - r, y + rr, x + w - rr, y + r, x + w, y + r);
+        path.lineTo(x + w, y + h - r);
+        path.curveTo(
+            x + w - rr, y + h - r, x + w - r, y + h - rr, x + w - r, y + h);
+        path.lineTo(x + r, y + h);
+        path.curveTo(
+            x + r, y + h - rr, x + rr, y + h - r, x, y + h - r);
+        // path.lineTo(x, y + r);
+        path.closePath();
+        return path;
+      }
+    });
+  }
+};
+}}
+
+* 解説 [#explanation]
+- `Path2D#curveTo(...)`
+-- `EmptyBorder`を継承する`PlaqueBorder`を作成
+-- `PlaqueBorder#paintBorder(...)`をオーバーライドしてその余白に`Path2D#curveTo(...)`と`Path2D#lineTo(...)`で作成した額縁風の図形を描画
+--- 余白内に線を描画するので内部のコンポーネントとは交差しない
+-- 角のラウンド半径は`PlaqueBorder#getBorderInsets().top`の値を使用
+-- `Path2D#curveTo(...)`で使用する制御点は頂点から半径の`0.55228…`倍(`4d * (Math.sqrt(2d) - 1d) / 3d`)の位置を使用
+--- [https://cat-in-136.github.io/2014/03/bezier-1-kappa.html ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?]
+- `Area#subtract(...)`
+-- `Rectangle2D`で作成した矩形の`4`隅を`Ellipse2D`で切り取って額縁風の図形を作成
+-- `JTextField#paintComponent(...)`をオーバーライドして`PlaqueBorder`の図形内のみ背景を描画し、角丸の外側部分は[[JTextFieldの角を丸める>Swing/RoundedTextField]]同様透明化
+
+#code{{
+class PlaqueBorder extends EmptyBorder {
+  protected PlaqueBorder(int arc) {
+    super(arc, arc, arc, arc);
+  }
+
+  @Override public void paintBorder(
+        Component c, Graphics g, int x, int y, int width, int height) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(
+        RenderingHints.KEY_ANTIALIASING,
+        RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.setPaint(Color.GRAY);
+    Insets i = getBorderInsets(c);
+    int arc = Math.min(i.top, Math.min(width / 2, height / 2));
+    g2.draw(getBorderShape(x, y, width - 1d, height - 1d, arc));
+    g2.dispose();
+  }
+
+  protected Shape getBorderShape(
+        double x, double y, double w, double h, double r) {
+    Area rect = new Area(new Rectangle2D.Double(x, y, w, h));
+    rect.subtract(new Area(new Ellipse2D.Double(
+        x - r, y - r, r + r, r + r)));
+    rect.subtract(new Area(new Ellipse2D.Double(
+        x + w - r, y - r, r + r, r + r)));
+    rect.subtract(new Area(new Ellipse2D.Double(
+        x - r, y + h - r, r + r, r + r)));
+    rect.subtract(new Area(new Ellipse2D.Double(
+        x + w - r, y + h - r, r + r, r + r)));
+    return rect;
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [[JTextFieldの角を丸める>Swing/RoundedTextField]]
+- [https://cat-in-136.github.io/2014/03/bezier-1-kappa.html ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?]
+- [https://stackoverflow.com/questions/1734745/how-to-create-circle-with-b%25c3%25a9zier-curves geometry - How to create circle with Bézier curves? - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

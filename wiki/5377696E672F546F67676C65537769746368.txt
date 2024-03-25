@@ -36,9 +36,11 @@ d.put("Slider:SliderTrack[Enabled].backgroundPainter", (Painter<JSlider>) (g, c,
   g.setPaint(Color.WHITE);
   g.drawString(off, w - g.getFontMetrics().stringWidth(off) - fillLeft * 5, baseline);
 
-  int fillRight = getXPositionForValue(c, new Rectangle(fillLeft, fillTop, trackWidth, trackHeight));
+  int fillRight = getXPositionForValue(
+      c, new Rectangle(fillLeft, fillTop, trackWidth, trackHeight));
   g.setColor(Color.ORANGE);
-  g.fillRoundRect(fillLeft + 1, fillTop, fillRight - fillLeft, trackHeight, arc, arc);
+  g.fillRoundRect(
+      fillLeft + 1, fillTop, fillRight - fillLeft, trackHeight, arc, arc);
 
   g.setPaint(Color.WHITE);
   if (fillRight - fillLeft > 0) {
@@ -96,7 +98,8 @@ class ToggleSwitchLayerUI extends LayerUI<JSlider> {
   @Override public void installUI(JComponent c) {
     super.installUI(c);
     if (c instanceof JLayer) {
-      ((JLayer<?>) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+      ((JLayer<?>) c).setLayerEventMask(
+          AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
     }
   }
 

@@ -71,7 +71,8 @@ class ColumnRulesBorder implements Border {
   private final JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
   private final Container renderer = new JPanel();
 
-  @Override public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+  @Override public void paintBorder(
+      Component c, Graphics g, int x, int y, int width, int height) {
     if (c instanceof JComponent) {
       Rectangle r = SwingUtilities.calculateInnerArea((JComponent) c, null);
       int sw = separator.getPreferredSize().width;

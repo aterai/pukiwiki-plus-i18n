@@ -76,8 +76,6 @@ editor.addHyperlinkListener(new HyperlinkListener() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、リンクを`JLabel`、`JButton`、`JEditorPane`で表現し、それぞれクリックした時のイベントを取得するテストを行っています。
-
 - `JLabel` + `MouseListener`
 -- `JLabel`に`MouseListener`を設定
 -- リンクの表示には`<a>`タグを使用
@@ -91,9 +89,7 @@ editor.addHyperlinkListener(new HyperlinkListener() {
 -- 文字列選択してコピーが可能
 
 ----
-- 注:
--- このサンプルでは、クリックされた時に実行するイベントは`beep`音を鳴らすだけのダミー
--- リンクをブラウザで開く場合は、[[Desktopでブラウザを起動>Swing/Desktop]]などを参照
+- %%このサンプルではクリックされた時に実行するイベントは`beep`音を鳴らすだけ%% リンクをブラウザで開く場合の処理は[[Desktopでブラウザを起動>Swing/Desktop]]などを参照
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JEditorPane.html JEditorPane (Java Platform SE 8)]

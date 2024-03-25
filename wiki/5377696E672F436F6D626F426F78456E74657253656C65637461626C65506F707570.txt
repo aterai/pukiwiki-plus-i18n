@@ -25,10 +25,12 @@ UIManager.put("ComboBox.isEnterSelectablePopup", Boolean.TRUE);
 -- ポップアップメニューが開いている状態でKBD{Enter}キーを入力するとアクションイベントが`1`回発生する
 --- 編集不可の`JComboBox`の場合と同じ動作
 --- このアクションイベントで`JComboBox#getSelectedItem()`を実行するとリストアイテムの値が取得される
+-- 編集可能な`JComboBox`のポップアップメニューを開き、マウスカーソルでハイライトを移動してKBD{Enter}キーを入力してもポップアップメニューは非表示になるが選択状態は変化しない
 - `ComboBox.isEnterSelectablePopup: true`
 -- ポップアップメニューが閉じている状態でKBD{Enter}キー入力やフォーカス移動で編集を終了するとアクションイベントが`2`回発生する
 --- このアクションイベントで`JComboBox#getSelectedItem()`を実行するとエディタの値が取得される
 -- ポップアップメニューが開いている状態でKBD{Enter}キーを入力するとアクションイベントが`2`回発生する
+-- 編集可能な`JComboBox`のポップアップメニューを開き、マウスカーソルでハイライトを移動してKBD{Enter}キーを入力するとハイライトされているアイテムが選択されてポップアップメニューは非表示になる
 --- このアクションイベントで`JComboBox#getSelectedItem()`を実行するとリストアイテムの値が取得される
 -- 詳細は`javax/swing/plaf/basic/BasicComboBoxUI.java`を参照
 #code{{
@@ -48,15 +50,16 @@ if (!comboBox.isEditable() || isEnterSelectablePopup || ui.isTableCellEditor) {
 comboBox.setPopupVisible(false);
 }}
 
-- 注:
--- `JComboBox#addItemListener(...)`で追加した`ItemListener`にはこの設定は影響しない
--- `UIManager.getBoolean("ComboBox.noActionOnKeyNavigation") == true`の場合、この設定は無視され`ComboBox.isEnterSelectablePopup: true`と同じ動作になる
---- ポップアップメニューが開いている状態で、KBD{Enter}キーを入力するとアクションイベントが`2`回発生する
--- `ComboBox.isEnterSelectablePopup`の設定はKBD{Enter}キーが入力されると毎回`UIManager.getBoolean("ComboBox.isEnterSelectablePopup")`で取得されるので、切替は`PopupMenuListener#popupMenuWillBecomeVisible(...)`メソッドをオーバーライドして実行
+- `JComboBox#addItemListener(...)`で追加した`ItemListener`にはこの設定は影響しない
+- `UIManager.getBoolean("ComboBox.noActionOnKeyNavigation") == true`の場合、この設定は無視され`ComboBox.isEnterSelectablePopup: true`と同じ動作になる
+-- [[JComboBoxのドロップダウンリストでカーソルキーナビゲーションを無効にする>ComboBoxNoActionOnKeyNavigation]]
+-- ポップアップメニューが開いている状態で、KBD{Enter}キーを入力するとアクションイベントが`2`回発生する
+- `ComboBox.isEnterSelectablePopup`の設定はKBD{Enter}キーが入力されると毎回`UIManager.getBoolean("ComboBox.isEnterSelectablePopup")`で取得されるので、切替は`PopupMenuListener#popupMenuWillBecomeVisible(...)`メソッドをオーバーライドして実行
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComboBox.html#addActionListener-java.awt.event.ActionListener- JComboBox#addActionListener(ActionListener) (Java Platform SE 8)]
 - [[JTextFieldにActionListenerを追加する>Swing/TextFieldActionListener]]
+- [[JComboBoxのドロップダウンリストでカーソルキーナビゲーションを無効にする>Swing/ComboBoxNoActionOnKeyNavigation]]
 
 * コメント [#comment]
 #comment

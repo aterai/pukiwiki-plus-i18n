@@ -29,7 +29,7 @@ item3.add(new JMenuItem("JMenuItem(disabled) with JMenuItem", HSTRUT) {
 }}
 
 * 解説 [#explanation]
-`JMenu`や`JPopupMenu`にクリック不可の項目として`JMenuItem`の代わりに`JLabel`を追加すると、`WindowsLookAndFeel`を使用している場合や他の`JMenuItem`にアイコンが設定されている場合に、テキストの開始位置が揃わないので、これを回避するために以下の方法をテストしています。
+`JMenu`や`JPopupMenu`にクリック不可の項目として`JMenuItem`の代わりに`JLabel`を追加すると、`WindowsLookAndFeel`を使用している場合や他の`JMenuItem`にアイコンが設定されている場合にテキストの開始位置が揃わないので、これを回避するために以下の方法をテストしています。
 
 - `JMenuItem.setEnabled(false);`
 -- `JMenuItem.setEnabled(false);`と`UIManager.put("MenuItem.disabledForeground", Color.BLACK);`を使用
@@ -49,9 +49,9 @@ item3.add(new JMenuItem("JMenuItem(disabled) with JMenuItem", HSTRUT) {
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/38360595/jlabel-with-icon-in-jpopupmenu-doesnt-follow-other-jmenuitem-alignment java - JLabel with icon in JPopupMenu doesn't follow other JMenuItem alignment - Stack Overflow]
-- [https://bugs.openjdk.java.net/browse/JDK-8152981 JDK-8152981 Double icons with JMenuItem setHorizontalTextPosition on Win 10 - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-8152981 JDK-8152981 Double icons with JMenuItem setHorizontalTextPosition on Win 10 - Java Bug System]
 - [[JCheckBoxMenuItemのチェックアイコンの位置を調整する>Swing/AfterCheckIconGap]]
--- `Java 8`？では、`CheckBoxMenuItem.afterCheckIconGap`や`CheckBoxMenuItem.minimumTextOffset`などが追加されているため、揃えやすくなった
+-- `Java 8`から`CheckBoxMenuItem.afterCheckIconGap`や`CheckBoxMenuItem.minimumTextOffset`などが追加されているため、揃えやすくなった
 
 * コメント [#comment]
 #comment

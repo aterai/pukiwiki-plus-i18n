@@ -1,0 +1,83 @@
+---
+category: swing
+folder: ScrollTabsActionRepeater
+title: JTabbedPaneのタブスクロールボタンで連続スクロールを実行する
+tags: [JTabbedPane, JButton, Timer]
+author: aterai
+pubdate: 2022-08-29T01:37:17+09:00
+description: JTabbedPaneのスクロールタブレイアウトで矢印ボタンを押下中はスクロールが持続するよう設定します。
+image: https://drive.google.com/uc?id=1JZt4Veeacrr1cyQxiF5JOU7oX14k-aFx
+---
+* 概要 [#summary]
+`JTabbedPane`のスクロールタブレイアウトで矢印ボタンを押下中はスクロールが持続するよう設定します。
+
+#download(https://drive.google.com/uc?id=1JZt4Veeacrr1cyQxiF5JOU7oX14k-aFx)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class ActionRepeatHandler extends MouseAdapter implements ActionListener {
+  // BasicScrollBarUI scrollSpeedThrottle
+  private final static int scrollSpeedThrottle = 60; // delay in milli seconds
+  private final Timer timer;
+  private final Action action;
+  private JButton button;
+
+  protected ActionRepeatHandler(Action action) {
+    super();
+    this.action = action;
+    timer = new Timer(scrollSpeedThrottle, this);
+    timer.setInitialDelay(300);
+  }
+
+  @Override public void actionPerformed(ActionEvent e) {
+    Object o = e.getSource();
+    if (o instanceof Timer && button != null) {
+      if (!button.getModel().isPressed() && timer.isRunning()) {
+        timer.stop();
+        button = null;
+      } else {
+        Component c = SwingUtilities.getAncestorOfClass(JTabbedPane.class, button);
+        action.actionPerformed(new ActionEvent(c,
+            ActionEvent.ACTION_PERFORMED, null,
+            e.getWhen(), e.getModifiers()));
+      }
+    }
+  }
+
+  @Override public void mousePressed(MouseEvent e) {
+    if (SwingUtilities.isLeftMouseButton(e) && e.getComponent().isEnabled()) {
+      button = (JButton) e.getComponent();
+      timer.start();
+    }
+  }
+
+  @Override public void mouseReleased(MouseEvent e) {
+    timer.stop();
+    button = null;
+  }
+
+  @Override public void mouseExited(MouseEvent e) {
+    if (timer.isRunning()) {
+      timer.stop();
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `SCROLL_TAB_LAYOUT`を設定された`JTabbedPane`のタブスクロールボタンは矢印キーや`JScrollBar`の矢印ボタンなどとは異なり、連続スクロール機能は実装されていない
+- `JTabbedPane`の子要素を検索して前方スクロールボタンと後方スクロールボタンを取得し、それぞれ`MouseListener`と`ActionListener`を追加
+- `MouseListener#mousePressed(...)`で`Timer`を起動し、`JButton#getModel()#isPressed()`とボタンが押下中の場合は対応する前方または後方スクロールアクションを繰り返し実行する
+-- 繰り返しの間隔は`BasicScrollBarUI`の`private final static int scrollSpeedThrottle = 60;`と同じ`60ms`に設定
+-- 前方または後方スクロールアクションは`JTabbedPane#getActionMap().get("scrollTabsForwardAction")`、`JTabbedPane#getActionMap().get("scrollTabsBackwardAction")`で取得
+-- [[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]では`JButton#doClick()`を繰り返し実行してスクロールしているが、このサンプルでは`MouseListener#mouseReleased(...)`イベントで`Timer`を中断しているのでこの方法は使用できない
+-- 代わりに`Timer`の`ActionEvent`を`JTabbedPane`の`ActionEvent`に変換して`Action#actionPerformed(ActionEvent)`を実行している
+
+* 参考リンク [#reference]
+- [[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]
+- [[JTabbedPaneの矢印ボタンに先頭もしくは末尾のタブまでスクロールするアクションを設定する>Swing/ScrollToFirstOrLastTabAction]]
+- [[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]
+
+* コメント [#comment]
+#comment
+#comment

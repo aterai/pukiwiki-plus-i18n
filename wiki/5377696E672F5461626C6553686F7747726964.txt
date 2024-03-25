@@ -1,0 +1,58 @@
+---
+category: swing
+folder: TableShowGrid
+title: JTableのグリッド線描画をUIDefaultsから復元する
+tags: [JTable, UIManager, UIDefaults, NimbusLookAndFeel]
+author: aterai
+pubdate: 2023-10-23T02:56:18+09:00
+description: JTableのグリッド線を表示するかをLookAndFeelのデフォルト設定から復元するよう設定します。
+image: https://drive.google.com/uc?id=1XwznLk2WeK7_R5kGZTNERFvTFtIyDXMb
+---
+* 概要 [#summary]
+`JTable`のグリッド線を表示するかを`LookAndFeel`のデフォルト設定から復元するよう設定します。
+
+#download(https://drive.google.com/uc?id=1XwznLk2WeK7_R5kGZTNERFvTFtIyDXMb)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTable table = new JTable(model) {
+  @Override public void updateUI() {
+    ColorUIResource reset = new ColorUIResource(Color.RED);
+    setSelectionForeground(reset);
+    setSelectionBackground(reset);
+    super.updateUI();
+    UIDefaults def = UIManager.getLookAndFeelDefaults();
+    Object showGrid = def.get("Table.showGrid");
+    Color gridColor = def.getColor("Table.gridColor");
+    if (showGrid == null && gridColor != null) {
+      setShowGrid(true);
+      setIntercellSpacing(new DimensionUIResource(1, 1));
+      createDefaultRenderers();
+    }
+  }
+};
+}}
+
+* 解説 [#explanation]
+- 上: `Default`
+-- `NimbusLookAndFeel`のデフォルトでは`Table.showGrid`が`Boolean.FALSE`に設定されている(`null`ではない)ため、`UIManager.getLookAndFeelDefaults().getBoolean("Table.showGrid")`は`false`でグリッド線は非表示
+--- `Table.intercellSpacing`は設定済みで`UIManager.getLookAndFeelDefaults().getDimension("Table.intercellSpacing")`は`new Dimension(0, 0)`となる
+--- `Table.gridColor`は未設定で`UIManager.getLookAndFeelDefaults().getColor("Table.gridColor")`は`null`となる
+-- その他の`MetalLookAndFeel`や`WindowsLookAndFeel`では`Table.showGrid`が未設定で`UIManager.getLookAndFeelDefaults().get("Table.showGrid")`は`null`になるため、`UIManager.getLookAndFeelDefaults().getBoolean("Table.showGrid")`は`false`となるがコンストラクタで実行される`JTable#initializeLocalVars()`メソッド内で`JTable#setShowGrid(true)`や`setRowMargin(1)`(`setRowMargin(intercellSpacing.height)`と連動)などが設定されているためグリッド線はデフォルトで表示状態となる
+--- `Table.intercellSpacing`は未設定で`UIManager.getLookAndFeelDefaults().getDimension("Table.intercellSpacing")`は`null`となる
+--- `Table.gridColor`は設定済みで`UIManager.getLookAndFeelDefaults().getColor("Table.gridColor")`で`Color`が取得可能
+-- たとえば`JTable`のグリッド線非表示がデフォルトの`NimbusLookAndFeel`から表示がデフォルトの`MetalLookAndFeel`などに`LookAndFeel`を切り替えても`JTable#initializeLocalVars()`は実行されないため直前の非表示設定が残ってグリッド線が非表示のままになる
+- 下: `Table.showGrid`、`Table.gridColor`
+-- `JTable#updateUI()`をオーバーライドして`UIManager.getLookAndFeelDefaults().get("Table.showGrid")`が`null`、かつ`UIManager.getLookAndFeelDefaults().getColor("Table.gridColor")`が`null`でない場合は`JTable#setShowGrid(true)`を実行してグリッド線を表示するよう設定
+-- `NimbusLookAndFeel`のように`Table.showGrid`が設定されている場合はその値でグリッド線の表示・非表示を決定する
+-- `BooleanUIResource`は存在しないので`LookAndFeel`ではなくユーザが`JTable#setShowGrid(boolean)`メソッドでグリッド線の表示・非表示を設定したかどうかは`instanceof UIResource`では判断できない
+--- このため`JComponent#putClientProperty(...)`でユーザ設定かを記憶したり、`DimensionUIResource`が`JTable#setIntercellSpacing(...)`で使用されているかなどで判断する必要がある
+
+* 参考リンク [#reference]
+- [[JTableの罫線の有無とセルの内余白を変更>Swing/IntercellSpacing]]
+- [https://bugs.openjdk.org/browse/JDK-8043603 &#91;JDK-8043603&#93; Merging of Table.showGrid does not work in javax.swing.plaf.synth.SynthTableUI - Java Bug System]
+- [https://github.com/JFormDesigner/FlatLaf/issues/750 JTable has inconsistent design between different themes · Issue #750 · JFormDesigner/FlatLaf]
+
+* コメント [#comment]
+#comment
+#comment

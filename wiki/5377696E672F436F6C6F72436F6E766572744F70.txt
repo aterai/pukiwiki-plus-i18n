@@ -29,9 +29,9 @@ icon2 = new ImageIcon(destination);
 }}
 
 * 解説 [#explanation]
-用意したアイコンから、`BufferedImage`を作成し、これを`ColorConvertOp#filter`メソッドを使ってグレースケールに変換しています。
+用意したアイコンから`BufferedImage`を作成し、これを`ColorConvertOp#filter`メソッドを使ってグレースケールに変換しています。
 
-上記のサンプルでは、各`JLabel`をクリックで`Icon`として表示されている元画像とグレースケール画像を切り替えています。
+上記のサンプルでは各`JLabel`をクリックで`Icon`として表示されている元画像とグレースケール画像を切り替えています。
 
 ----
 - 以下のように`GrayFilter.createDisabledImage(...)`を使った場合よりきれいに変換可能

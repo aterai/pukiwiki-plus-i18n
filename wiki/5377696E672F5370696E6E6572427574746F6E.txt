@@ -28,8 +28,7 @@ private static class MySpinnerUI extends BasicSpinnerUI {
     return previousButton;
   }
 }
-}}
-#code{{
+
 private static void searchSpinnerButtons(Container comp) {
   for (Component c: comp.getComponents()) {
     if ("Spinner.nextButton".equals(c.getName())) {
@@ -45,7 +44,7 @@ private static void searchSpinnerButtons(Container comp) {
 
 * 解説 [#explanation]
 - 上: `BasicSpinnerUI`
--- `BasicSpinnerUI`を継承する`SpinnerUI`を作成し、`createNextButton`、`createPreviousButton`メソッドをオーバーライドして`ToolTipText`を設定
+-- `BasicSpinnerUI`を継承する`SpinnerUI`を作成し、`createNextButton()`、`createPreviousButton()`メソッドをオーバーライドして`ToolTipText`を設定
 - 中: `getName()`
 -- 名前が`Spinner.nextButton`、`Spinner.previousButton`となっているコンポーネントを検索して`ToolTipText`を設定
 -- `WindowsLookAndFeel`(`XP`スタイル)の場合、`JSpinner`の各ボタンに名前が付けられていないため正常に動作しない
@@ -54,9 +53,11 @@ private static void searchSpinnerButtons(Container comp) {
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicSpinnerUI.html#createNextButton-- BasicSpinnerUI#createNextButton() (Java Platform SE 8)]
+- [https://bugs.openjdk.org/browse/JDK-5036022 Bug ID: 5036022 JSpinner does not reflect new font on subsequent calls to setFont]
+- [https://kaiseh.hatenadiary.org/entry/20071120/1195560201 JSpinnerのフォント指定 - kaisehのブログ]
 
 * コメント [#comment]
 #comment
-- メモ: [https://bugs.openjdk.java.net/browse/JDK-5036022 Bug ID: 5036022 JSpinner does not reflect new font on subsequent calls to setFont]、[http://d.hatena.ne.jp/kaiseh/20071120/1195560201 JSpinnerのフォント指定 - kaisehのブログ] -- &user(aterai); &new{2007-11-26 (月) 12:10:19};
+- [https://bugs.openjdk.org/browse/JDK-5036022 Bug ID: 5036022 JSpinner does not reflect new font on subsequent calls to setFont] -- &user(aterai); &new{2007-11-26 (月) 12:10:19};
 
 #comment

@@ -1,0 +1,57 @@
+---
+category: swing
+folder: ComboBoxNoActionOnKeyNavigation
+title: JComboBoxのドロップダウンリストでカーソルキーナビゲーションを無効にする
+tags: [JComboBox]
+author: aterai
+pubdate: 2022-05-30T00:27:33+09:00
+description: JComboBoxのドロップダウンリストでアイテム選択状態がカーソルキー入力で変化してもJComboBox本体のアイテム表示を変更しないよう設定します。
+image: https://drive.google.com/uc?id=1dObku__RdVH8sTpYyBpbGRWFwumlZBmU
+---
+* 概要 [#summary]
+`JComboBox`のドロップダウンリストでアイテム選択状態がカーソルキー入力で変化しても`JComboBox`本体のアイテム表示を変更しないよう設定します。
+
+#download(https://drive.google.com/uc?id=1dObku__RdVH8sTpYyBpbGRWFwumlZBmU)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String key1 = "ComboBox.noActionOnKeyNavigation";
+JCheckBox check1 = new JCheckBox(key1, UIManager.getBoolean(key1));
+check1.addActionListener(e -> {
+  JCheckBox c1 = (JCheckBox) e.getSource();
+  UIManager.put(key1, c1.isSelected());
+});
+
+String key2 = "ComboBox.isEnterSelectablePopup";
+JCheckBox check2 = new JCheckBox(key2, UIManager.getBoolean(key2));
+check2.addActionListener(e -> {
+  JCheckBox c2 = (JCheckBox) e.getSource();
+  UIManager.put(key2, c2.isSelected());
+});
+
+JComboBox<String> combo1 = new JComboBox<>(makeModel());
+combo1.setEditable(false);
+
+JComboBox<String> combo2 = new JComboBox<>(makeModel());
+combo2.setEditable(true);
+}}
+
+* 解説 [#explanation]
+- `ComboBox.noActionOnKeyNavigation`
+-- `false`: デフォルト
+--- `JComboBox`のドロップダウンリストの選択状態がカーソルキー入力で変更されると`JComboBox`本体のアイテム表示が変化する
+-- `true`:
+--- `JComboBox`のドロップダウンリストの選択状態がカーソルキー入力で変更されても`JComboBox`本体のアイテム表示は変化しない
+--- カーソルキー入力によるスクロールは可能
+--- 編集不可の`JComboBox`のドロップダウンリストで先頭文字のキー入力によって選択状態が変更された場合は`JComboBox`本体のアイテム表示も変更される(`ComboBox.noActionOnKeyNavigation`に依存しない)
+--- `JComboBox`のドロップダウンリストでKBD{Enter}キーが入力されたて選択状態が変更された場合は`JComboBox`本体のアイテム表示も変更される
+- `ComboBox.isEnterSelectablePopup`
+-- `ComboBox.noActionOnKeyNavigation`が`true`の場合、`ComboBox.isEnterSelectablePopup`の設定は無視される
+-- [[JComboBoxのポップアップメニューでEnterキーが入力された場合のActionListenerの動作をテストする>Swing/ComboBoxEnterSelectablePopup]]
+
+* 参考リンク [#reference]
+- [[JComboBoxのポップアップメニューでEnterキーが入力された場合のActionListenerの動作をテストする>Swing/ComboBoxEnterSelectablePopup]]
+
+* コメント [#comment]
+#comment
+#comment

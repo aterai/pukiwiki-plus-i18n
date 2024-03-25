@@ -97,7 +97,8 @@ class RandomDissolve extends JComponent implements ActionListener {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`BufferedImage`から`WritableRaster`を取得し、元画像と次の画像のコピーから`int`配列をそれぞれ用意しています。元画像の配列を次の画像のピクセルでランダムに置き換えて、これを再描画することで画像の切り替えを行っています。
+- `BufferedImage`から`WritableRaster`を取得し、元画像と次の画像のコピーから`int`配列をそれぞれ作成
+- 元画像の配列を次の画像のピクセルでランダムに置き換えて、これを再描画することで画像の切り替えを実行
 
 * 参考リンク [#reference]
 - %%[https://community.oracle.com/thread/1270228 Java 2D - random pixelwise fading ?]%%

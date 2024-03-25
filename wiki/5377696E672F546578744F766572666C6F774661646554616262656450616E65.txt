@@ -21,7 +21,8 @@ hreflang:
 class TextOverflowFadeTabbedPane extends ClippedTitleTabbedPane {
   @Override public void insertTab(
         String title, Icon icon, Component component, String tip, int index) {
-    super.insertTab(title, icon, component, Objects.toString(tip, title), index);
+    super.insertTab(
+        title, icon, component, Objects.toString(tip, title), index);
     JPanel p = new JPanel(new BorderLayout(2, 0));
     p.setOpaque(false);
     p.add(new JLabel(icon), BorderLayout.WEST);
@@ -33,7 +34,7 @@ class TextOverflowFadeTabbedPane extends ClippedTitleTabbedPane {
 
 * 解説 [#explanation]
 - 上: デフォルトの`JLabel`を使用してタブタイトル文字列を表示
--- [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]を使用してタブ幅を等幅にし、あふれは省略記号`…`で置換
+-- [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]を使用してタブ幅を等幅にし、あふれは`JLabel`デフォルトの省略記号`…`で置換される
 - 下: `JTabbedPane`のタブタイトル文字列を表示する`JLabel`をフェードアウト効果であふれを表現する`TextOverflowFadeLabel`に変更
 -- `TextOverflowFadeLabel`は[[JLabelで文字列のあふれをフェードアウト効果に変更する>Swing/TextOverflowFadeLabel]]を参照
 -- `TextOverflowFadeLabel`は`Icon`表示などに未対応のため`JTabbedPane#setTabComponentAt(...)`で設定するタブタイトル用のコンポーネントには`Icon`のみ表示する`JLabel`と文字列のみ表示する`TextOverflowFadeLabel`の`2`種類のコンポーネントを`JPanel`に配置して代用

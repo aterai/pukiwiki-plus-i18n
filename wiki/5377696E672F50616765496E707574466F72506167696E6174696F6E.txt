@@ -34,7 +34,7 @@ worker = new SwingWorker<String, List<Object[]>>() {
 
   private int makeRowListAndPublish(int current, int size) {
     try {
-      Thread.sleep(500); // dummy
+      Thread.sleep(500);
     } catch (Exception ex) {
       ex.printStackTrace();
     }
@@ -119,15 +119,17 @@ class LoadTask extends SwingWorker<String, List<Object[]>> {
   }
 
   @Override public String doInBackground() {
-    File file = new File("C:/Users/(name)/AppData/Roaming/Mozilla/Firefox/Profiles/xx.default/places.sqlite");
+    File file = new File(
+      "C:/Users/.../AppData/Roaming/Mozilla/Firefox/Profiles/xx.default/places.sqlite");
     String db = "jdbc:sqlite:/" + file.getAbsolutePath();
-    try (Connection conn = DriverManager.getConnection(db); Statement stat = conn.createStatement()) {
+    try (Connection conn = DriverManager.getConnection(db);
+         Statement stat = conn.createStatement()) {
       int current = 1;
       int c = max / itemsPerPage;
       int i = 0;
       while (i < c && !isCancelled()) {
         try {
-          Thread.sleep(500); // dummy
+          Thread.sleep(500);
         } catch (InterruptedException ex) {
           // ex.printStackTrace();
           return "Interrupted";
@@ -148,7 +150,8 @@ class LoadTask extends SwingWorker<String, List<Object[]>> {
 
   private int load(Statement stat, int current, int limit) throws SQLException {
     List<Object[]> result = new ArrayList<>(limit);
-    String q = String.format("select * from moz_bookmarks limit %d offset %d", limit, current - 1);
+    String q = String.format(
+        "select * from moz_bookmarks limit %d offset %d", limit, current - 1);
     ResultSet rs = stat.executeQuery(q);
     int i = current;
     while (rs.next() && !isCancelled()) {

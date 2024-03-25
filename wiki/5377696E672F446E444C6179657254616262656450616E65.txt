@@ -63,10 +63,10 @@ class DropLocationLayerUI extends LayerUI<DnDTabbedPane> {
 
 - `Lightweight`
 -- `JDK1.7.0`で導入された、`TransferHandler#setDragImage(...)`メソッドを使用して描画
--- ウィンドウの外では非表示
+-- ウィンドウの外部では非表示
 - `Heavyweight`
 -- 半透明の`JWindow`に`JLabel`を追加して表示
--- ウィンドウの外でも表示可能
+-- ウィンドウの外部でも表示可能
 -- 表示位置のオフセットが`(0, 0)`の場合、`DragOver`イベントが元の`JFrame`に伝わらない？
 --- オフセットが`(0, 0)`でも、`JLabel#contains(...)`が常に`false`なら問題なし
 

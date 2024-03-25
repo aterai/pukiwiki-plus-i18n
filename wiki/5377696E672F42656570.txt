@@ -16,10 +16,26 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIE6ivySI/AAAAAAAAASM/H5
 * サンプルコード [#sourcecode]
 #code(link){{
 Toolkit.getDefaultToolkit().beep();
+// UIManager.getLookAndFeel().provideErrorFeedback(textField);
 }}
 
 * 解説 [#explanation]
 上記のサンプルでは、ボタンをクリックしてダイアログを開くときに`Toolkit#beep()`メソッドを使ってシステムのビープ音を鳴らしています。
+
+----
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/LookAndFeel.html#provideErrorFeedback-java.awt.Component- LookAndFeel#provideErrorFeedback()]メソッドのデフォルトは以下のようにビープ音を鳴らす実装になっている
+
+#code{{
+public void provideErrorFeedback(Component component) {
+  Toolkit toolkit = null;
+  if (component != null) {
+    toolkit = component.getToolkit();
+  } else {
+    toolkit = Toolkit.getDefaultToolkit();
+  }
+  toolkit.beep();
+}
+}}
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#beep-- Toolkit#beep() (Java Platform SE 8)]

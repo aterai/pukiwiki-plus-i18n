@@ -70,7 +70,7 @@ JScrollPane scroll = new JScrollPane(tree1);
 JViewport vport = scroll.getViewport();
 vport.addMouseMotionListener(ma);
 vport.addMouseListener(ma);
-MouseAdapter dummy = new MouseAdapter() {
+MouseAdapter transparent = new MouseAdapter() {
   private void dispatchEvent(MouseEvent e) {
     JComponent c = (JComponent) e.getComponent();
     JComponent p = (JComponent) e.getComponent().getParent();
@@ -101,6 +101,8 @@ MouseAdapter dummy = new MouseAdapter() {
     dispatchEvent(e);
   }
 };
+tree1.addMouseMotionListener(transparent);
+tree1.addMouseListener(transparent);
 }}
 
 * 参考リンク [#reference]

@@ -19,19 +19,26 @@ hreflang:
 * サンプルコード [#sourcecode]
 #code(link){{
 class DropdownTableComboBox<E extends List<Object>> extends JComboBox<E> {
-  protected final transient HighlightListener highlighter = new HighlightListener();
+  protected final transient HighlightListener highlighter =
+    new HighlightListener();
 
   protected final JTable table = new JTable() {
     @Override public Component prepareRenderer(
           TableCellRenderer renderer, int row, int column) {
       Component c = super.prepareRenderer(renderer, row, column);
-      c.setForeground(Color.BLACK);
-      if (highlighter.isHighlightableRow(row)) {
-        c.setBackground(new Color(255, 200, 200));
+      if (highlighter.isHighlightTableRow(row)) {
+        c.setForeground(
+          UIManager.getColor("Table.selectionForeground"));
+        c.setBackground(
+          UIManager.getColor("Table.selectionBackground").brighter());
       } else if (isRowSelected(row)) {
-        c.setBackground(Color.CYAN);
+        c.setForeground(
+          UIManager.getColor("Table.selectionForeground"));
+        c.setBackground(
+          UIManager.getColor("Table.selectionBackground"));
       } else {
-        c.setBackground(Color.WHITE);
+        c.setForeground(UIManager.getColor("Table.foreground"));
+        c.setBackground(UIManager.getColor("Table.background"));
       }
       return c;
     }

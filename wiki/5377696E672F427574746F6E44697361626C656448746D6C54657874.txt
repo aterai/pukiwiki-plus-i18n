@@ -1,0 +1,82 @@
+---
+category: swing
+folder: ButtonDisabledHtmlText
+title: JButtonが無効な状態でのhtmlテキスト色を変更する
+tags: [JButton, JLayer, JLabel, AbstractButton]
+author: aterai
+pubdate: 2023-02-06T00:00:22+09:00
+description: JButtonが無効な状態でのhtmlテキスト色をデフォルトのグレーではなく半透明にした元のhtmlテキスト色で上書きします。
+image: https://drive.google.com/uc?id=1mgt_pyZzOZXnXY6jG1irUzIbvmKiJO1R
+---
+* 概要 [#summary]
+`JButton`が無効な状態での`html`テキスト色をデフォルトのグレーではなく半透明にした元の`html`テキスト色で上書きします。
+
+#download(https://drive.google.com/uc?id=1mgt_pyZzOZXnXY6jG1irUzIbvmKiJO1R)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class DisabledHtmlTextLayerUI<V extends AbstractButton> extends LayerUI<V> {
+  private final JLabel label = new JLabel();
+  private final JPanel canvas = new JPanel();
+
+  @Override public void updateUI(JLayer<? extends V> l) {
+    super.updateUI(l);
+    SwingUtilities.updateComponentTreeUI(label);
+  }
+
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    if (c instanceof JLayer) {
+      Component view = ((JLayer<?>) c).getView();
+      if (!view.isEnabled()) {
+        paintDisabledText(g, view);
+      }
+    }
+  }
+
+  private void paintDisabledText(Graphics g, Component c) {
+    if (c instanceof AbstractButton) {
+      AbstractButton b = (AbstractButton) c;
+      label.setFont(b.getFont());
+      label.setText(b.getText());
+      label.setIcon(b.getIcon());
+      label.setVerticalAlignment(b.getVerticalAlignment());
+      label.setHorizontalAlignment(b.getHorizontalAlignment());
+      label.setVerticalTextPosition(b.getVerticalTextPosition());
+      label.setHorizontalTextPosition(b.getHorizontalTextPosition());
+      label.setForeground(UIManager.getColor("Button.disabledText"));
+      label.setOpaque(false);
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setComposite(
+          AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .25f));
+      Rectangle r = b.getBounds();
+      SwingUtilities.paintComponent(
+          g2, label, canvas, r.x, r.y, r.width, r.height);
+      g2.dispose();
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- `html`タグで文字色を変更している場合でも`JButton#setEnabled(false)`で文字列すべてがグレーアウトになる
+-- `UIManager.put("Button.disabledText", Color.RED)`などの設定も無効になる
+-- [[JCheckBoxなどが無効な状態での文字色を変更>Swing/DisabledTextColor]]
+- `JLayer1`
+-- `JButton#setEnabled(false)`は使用せず、`JLayer`でマウスクリックやキー入力をブロックし、入力ブロック中は`LayerUI#paint(...)`内で`JButton`を半透明で描画
+-- [[JLayerを使用して無効時のコンポーネントの文字色を変更する>Swing/JLayerDisabledText]]
+-- [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]
+- `JLayer2`
+-- `JLayer`を追加し`JButton#setEnabled(false)`の場合は`JButton`のプロパティをコピーした背景は透明、テキストは半透明の`JLabel`を重ねて描画
+-- [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]
+
+* 参考リンク [#reference]
+- [[JCheckBoxなどが無効な状態での文字色を変更>Swing/DisabledTextColor]]
+- [[JLayerを使用して無効時のコンポーネントの文字色を変更する>Swing/JLayerDisabledText]]
+- [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]
+- [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]
+
+* コメント [#comment]
+#comment
+#comment

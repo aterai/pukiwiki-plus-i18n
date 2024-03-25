@@ -20,15 +20,13 @@ class StarPanel1 extends JPanel {
     Graphics2D g2 = (Graphics2D) g.create();
     int w = getWidth();
     int h = getHeight();
-    // <blockquote cite="%JAVA_HOME%/demo/jfc/Java2D/src/java2d/demos/Lines/Joins.java">
     GeneralPath p = new GeneralPath();
     p.moveTo(-w / 4f, -h / 12f);
-    p.lineTo(+w / 4f, -h / 12f);
-    p.lineTo(-w / 6f, +h / 4f);
-    p.lineTo(+    0f, -h / 4f);
-    p.lineTo(+w / 6f, +h / 4f);
+    p.lineTo(w / 4f, -h / 12f);
+    p.lineTo(-w / 6f, h / 4f);
+    p.lineTo(0f, -h / 4f);
+    p.lineTo(w / 6f, h / 4f);
     p.closePath();
-    // </blockquote>
     g2.translate(w / 2, h / 2);
     g2.setColor(Color.YELLOW);
     g2.fill(p);
@@ -37,13 +35,10 @@ class StarPanel1 extends JPanel {
     g2.dispose();
   }
 }
-}}
 
-#code{{
 class StarIcon2 implements Icon {
   private static final int R1 = 20;
   private static final int R2 = 40;
-  // double R1 = R2 * Math.sin(Math.PI / 10d) / Math.cos(Math.PI / 5d); // = 15d;
   private static final int VC = 5; // 16;
   private final AffineTransform at;
   private final Shape star;
@@ -95,7 +90,7 @@ class StarIcon2 implements Icon {
 -- `Font`から星型文字★(`U+2605`)のアウトラインを取得して描画
 - 下段、左
 -- `10`個の頂点を予め計算して`GeneralPath`で星型を作成
--- [http://gihyo.jp/dev/serial/01/javafx/0009?page=2 ついにベールを脱いだJavaFX：第9回 アニメーションを用いてより魅力的に［応用編］｜gihyo.jp … 技術評論社] を参考
+-- [https://gihyo.jp/dev/serial/01/javafx/0009?page=2 ついにベールを脱いだJavaFX：第9回 アニメーションを用いてより魅力的に［応用編］｜gihyo.jp … 技術評論社] を参考
 - 下段、中
 -- `Icon#paintIcon(...)`メソッドをオーバーライドして`Path2D.Double`で星型図形を描画
 -- 外周の半径: `40px`
@@ -109,9 +104,9 @@ class StarIcon2 implements Icon {
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Polygon.html Polygon (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/geom/Path2D.html Path2D (Java Platform SE 8)]
 - `%JAVA_HOME%/demo/jfc/Java2D/src/java2d/demos/Lines/Joins.java`
-- [http://gihyo.jp/dev/serial/01/javafx/0009?page=2 ついにベールを脱いだJavaFX：第9回 アニメーションを用いてより魅力的に［応用編］｜gihyo.jp … 技術評論社]
-- [http://java-sl.com/shapes.html Java2D Shapes project.]
-- [http://programamemo2.blogspot.com/2008/12/java.html プログラマメモ2: 扇形っぽいのを描く]
+- [https://gihyo.jp/dev/serial/01/javafx/0009?page=2 ついにベールを脱いだJavaFX：第9回 アニメーションを用いてより魅力的に［応用編］｜gihyo.jp … 技術評論社]
+// - [http://java-sl.com/shapes.html Java2D Shapes project.]
+- [https://programamemo2.blogspot.com/2008/12/java.html プログラマメモ2: 扇形っぽいのを描く]
 - [[PathIteratorからSVGを生成>Swing/PathIterator]]
 
 * コメント [#comment]

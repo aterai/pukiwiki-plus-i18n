@@ -38,10 +38,11 @@ b.setContentAreaFilled(false);
 b.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 4));
 b.setAlignmentX(Component.RIGHT_ALIGNMENT);
 b.setAlignmentY(Component.CENTER_ALIGNMENT);
-b.setIcon(new ColorIcon(Color.GREEN));
-b.setRolloverIcon(new ColorIcon(Color.BLUE));
-b.setSelectedIcon(new ColorIcon(Color.RED));
-b.setRolloverSelectedIcon(new ColorIcon(Color.ORANGE));
+b.setIcon(new EyeIcon(Color.BLUE));
+b.setRolloverIcon(new EyeIcon(Color.DARK_GRAY));
+b.setSelectedIcon(new EyeIcon(Color.BLUE));
+b.setRolloverSelectedIcon(new EyeIcon(Color.BLUE));
+b.setToolTipText("show/hide passwords");
 
 JPanel panel = new JPanel() {
   @Override public boolean isOptimizedDrawingEnabled() {
@@ -57,14 +58,14 @@ panel.add(pf);
 上記のサンプルでは、`JPasswordField#setEchoChar(...)`メソッドの値に`\u0000`(`0`)を設定して入力したパスワードを可視状態に切り替えるためのボタンを追加しています。
 
 - `BorderLayout + JCheckBox`:
--- `BorderLayout`で、`JPasswordField`の下にパスワード表示非表示切り替え用の`JCheckBox`を配置
+-- `BorderLayout`で`JPasswordField`の下にパスワード表示非表示切り替え用の`JCheckBox`を配置
 - `OverlayLayout + JToggleButton`:
---  `OverlayLayout`で、`JPasswordField`内の右端にパスワード表示非表示切り替え用の`JToggleButton`を配置
--- `JPasswordField`と`JToggleButton`を配置する`JPanel`に、`OverlayLayout`を設定し、`z`軸が入れ替わらないように、`JPanel#isOptimizedDrawingEnabled()`が常に`false`を返すようオーバーライド
+--  `OverlayLayout`で`JPasswordField`内の右端にパスワード表示非表示切り替え用の`JToggleButton`を配置
+-- `JPasswordField`と`JToggleButton`を配置する`JPanel`に`OverlayLayout`を設定し、マウスカーソルでこのレイアウトの`z`軸が入れ替わらないように`JPanel#isOptimizedDrawingEnabled()`が常に`false`を返すようオーバーライド
 - `CardLayout + JTextField(can copy) + ...`:
 -- 同じ`Document`を使用する`JPasswordField`と`JTextField`を`CardLayout`を設定した`JPanel`を作成
--- `OverlayLayout`を設定した`JPanel`に、上記の`JPanel`と`JToggleButton`を配置し、`JPasswordField`などの内部右端にボタンが表示されるように設定
--- `JTextField`をそのまま使用するので、表示中の文字列を選択してコピー可能
+-- `OverlayLayout`を設定した`JPanel`に上記の`JPanel`と`JToggleButton`を配置し、`JPasswordField`などの内部右端にボタンが表示されるように設定
+-- `JTextField`をそのまま使用しているので表示中の文字列を選択してコピー可能
 #code{{
 JPasswordField pf3 = new JPasswordField(24);
 pf3.setText("abcdefghijklmn");
@@ -90,8 +91,8 @@ AbstractButton b3 = new JToggleButton(new AbstractAction() {
 });
 }}
 - `press and hold down the mouse button`:
---  `OverlayLayout`で、`JPasswordField`内の右端にパスワード表示非表示切り替え用の`JButton`を配置
---  この`JButton`に`MouseListener`を追加して、マウスでクリックしている間はパスワードを表示するように設定
+--  `OverlayLayout`で`JPasswordField`内の右端にパスワード表示非表示切り替え用の`JButton`を配置
+--  この`JButton`に`MouseListener`を追加してマウスでクリックしている間はパスワードを表示するように設定
 #code{{
 b4.addMouseListener(new MouseAdapter() {
   @Override public void mousePressed(MouseEvent e) {
@@ -105,14 +106,15 @@ b4.addMouseListener(new MouseAdapter() {
 
 ----
 - `passwordField.setEchoChar((char) 0);`を使用するサンプルを追加
--- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JPasswordField.html#setEchoChar-char- JPasswordField#setEchoChar(...) (Java Platform SE 8)]に、「値`0`に設定すると、標準の`JTextField`の動作と同様に、テキストが入力したとおりに表示されます。」とあるように、`passwordField.setEchoChar((char) 0);`とすれば、パスワード文字列の表示が可能
--- `CardLayout`を使って`JTextField`を表示する方法は一旦削除したが、表示中のパスワードをコピー可能なので、残しておくことにした
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JPasswordField.html#setEchoChar-char- JPasswordField#setEchoChar(...) (Java Platform SE 8)]に「値`0`に設定すると標準の`JTextField`の動作と同様にテキストが入力したとおりに表示されます。」とあるように`passwordField.setEchoChar((char) 0);`とすればパスワード文字列の表示が可能
+-- `CardLayout`を使って`JTextField`を表示する方法は一旦削除したが、表示中のパスワードをコピー可能なので残しておくことにした
 --- [[JPasswordFieldでCutとCopyを可能にする>Swing/PasswordFieldCutCopyAllowed]]
 - ボタンをクリックしている間だけパスワードを表示するサンプルを追加
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JPasswordField.html#setEchoChar-char- JPasswordField#setEchoChar(...) (Java Platform SE 8)]
 - [[JPasswordFieldのエコー文字を変更>Swing/PasswordView]]
+- [[JPasswordFieldでPINコード入力欄を作成する>Swing/PinCodeInputField]]
 
 * コメント [#comment]
 #comment

@@ -15,10 +15,7 @@ image: https://lh5.googleusercontent.com/--_lXbzG-H7g/T53noZrOnHI/AAAAAAAABME/Fy
 
 * サンプルコード [#sourcecode]
 #code(link){{
-private ClipboardService cs;
-}}
-
-#code{{
+ClipboardService cs;
 try {
   cs = (ClipboardService) ServiceManager.lookup("javax.jnlp.ClipboardService");
 } catch (Throwable t) {

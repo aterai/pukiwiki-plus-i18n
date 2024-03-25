@@ -15,54 +15,6 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTL5-PTzWI/AAAAAAAAAYU/G2
 
 * サンプルコード [#sourcecode]
 #code(link){{
-class MyDragGestureListener implements DragGestureListener {
-  @Override public void dragGestureRecognized(DragGestureEvent dge) {
-    File tmpfile = getFile();
-    if (tmpfile == null) {
-      return;
-    }
-    Transferable tran = new Transferable() {
-      @Override public Object getTransferData(DataFlavor flavor) {
-        ArrayList al = new ArrayList(1);
-        al.add(tmpfile);
-        return al;
-      }
-
-      @Override public DataFlavor[] getTransferDataFlavors() {
-        return new DataFlavor[] { DataFlavor.javaFileListFlavor };
-      }
-
-      @Override public boolean isDataFlavorSupported(DataFlavor flavor) {
-        return flavor.equals(DataFlavor.javaFileListFlavor);
-      }
-    };
-    DragSourceAdapter dsa = new DragSourceAdapter() {
-      @Override public void dragDropEnd(DragSourceDropEvent dsde) {
-        if (dsde.getDropSuccess()) {
-          clearFile();
-        }
-      }
-    };
-    dge.startDrag(DragSource.DefaultMoveDrop, tran, dsa);
-  }
-}
-}}
-
-* 解説 [#explanation]
-上記のサンプルでは、ボタンで空の一時ファイルを生成し中央のラベルをマウスでドラッグすると生成したファイルをデスクトップなどに移動できます。
-
-以下のように`DragGestureListener`を登録してラベルをドラッグ＆ドロップすることで`JFileChooser`などで書き出すフォルダなどを指定する手間が省いています。
-
-#code{{
-DragSource dragSource = DragSource.getDefaultDragSource();
-dragSource.createDefaultDragGestureRecognizer(label,
-       DnDConstants.ACTION_MOVE, new MyDragGestureListener());
-}}
-
-----
-- `JDK 1.6.0`以上なら以下のような`TransferHandler`を使用する方法もある
-
-#code{{
 label.setTransferHandler(new TransferHandler() {
   @Override public int getSourceActions(JComponent c) {
     return TransferHandler.COPY_OR_MOVE;
@@ -93,6 +45,34 @@ label.addMouseListener(new MouseAdapter() {
     System.out.println(e);
     JComponent c = (JComponent) e.getSource();
     c.getTransferHandler().exportAsDrag(c, e, TransferHandler.COPY);
+  }
+});
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは、ボタンで空の一時ファイルを生成し中央のラベルをマウスでドラッグすると生成したファイルをデスクトップなどに移動できます。
+
+- `TransferHandler`が使用不可の`Java 1.5.0`などでは、以下のような`DragGestureListener`を使用する必要がある
+
+#code{{
+DragSource.getDefaultDragSource().createDefaultDragGestureRecognizer(
+      label, DnDConstants.ACTION_MOVE, new DragGestureListener() {
+  @Override public void dragGestureRecognized(DragGestureEvent e) {
+    File tmpFile = getFile();
+    if (Objects.isNull(tmpFile)) {
+      return;
+    }
+    DragSourceAdapter dsa = new DragSourceAdapter() {
+      @Override public void dragDropEnd(DragSourceDropEvent ev) {
+        if (ev.getDropSuccess()) {
+          clearFile();
+        }
+      }
+    };
+    e.startDrag(
+      DragSource.DefaultMoveDrop,
+      new TempFileTransferable(tmpFile),
+      dsa);
   }
 });
 }}

@@ -1,0 +1,53 @@
+---
+category: swing
+folder: TabbedPaneUseBasicArrows
+title: NimbusLookAndFeelでJTabbedPaneのスクロール矢印ボタンを変更する
+tags: [NimbusLookAndFeel, JTabbedPane, ArrowButton, UIManager]
+author: aterai
+pubdate: 2022-09-05T03:34:14+09:00
+description: NimbusLookAndFeelを適用したJTabbedPaneのスクロール矢印ボタンがBasicArrowButtonかSynthArrowButtonのどちらを使用するかを切り替えます。
+image: https://drive.google.com/uc?id=1kL0AppkB4JwnMPqMOEcChAIp3L58NV3F
+---
+* 概要 [#summary]
+`NimbusLookAndFeel`を適用した`JTabbedPane`のスクロール矢印ボタンが`BasicArrowButton`か`SynthArrowButton`のどちらを使用するかを切り替えます。
+
+#download(https://drive.google.com/uc?id=1kL0AppkB4JwnMPqMOEcChAIp3L58NV3F)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTabbedPane tabs = new JTabbedPane();
+tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+IntStream.range(0, 100)
+    .forEach(i -> tabs.addTab("title" + i, new JLabel("label" + i)));
+
+String key = "TabbedPane.useBasicArrows";
+// UIManager.put(key, Boolean.FALSE);
+// UIManager.put("ArrowButton.size", 24);
+
+JCheckBox check = new JCheckBox(key, UIManager.getBoolean(key));
+check.addActionListener(e -> {
+  boolean b = ((JCheckBox) e.getSource()).isSelected();
+  UIManager.put(key, b);
+  SwingUtilities.updateComponentTreeUI(tabs);
+});
+}}
+
+* 解説 [#explanation]
+- `TabbedPane.useBasicArrows: Boolean.TRUE`
+-- `NimbusLookAndFeel`のデフォルトで`JTabbedPane`のスクロール矢印ボタンとして`BasicArrowButton`を使用する
+- `TabbedPane.useBasicArrows: Boolean.FALSE`
+-- `JTabbedPane`のスクロール矢印ボタンとして`SynthArrowButton`を継承した`SynthScrollableTabButton`を使用する
+-- `UIManager.put("ArrowButton.size", 24)`などでスクロール矢印ボタンのサイズ変更が可能
+
+----
+- `Java 11`の`GTKLookAndFeel`で`JTabbedPane.SCROLL_TAB_LAYOUT`を設定した場合のバグ？
+-- スクロール矢印ボタンをクリックすると`Gtk-CRITICAL **: ...: gtk_render_frame_gap: assertion 'xy0_gap >= 0' failed`と警告がコンソールに表示される
+-- `GTKLookAndFeel`のデフォルトで`JSpinner`の下矢印ボタンが`2`つ左右に並んで表示される
+--- これは`UIManager.put("TabbedPane.useBasicArrows", Boolean.TRUE)`の設定で回避が可能
+
+* 参考リンク [#reference]
+- [[JSpinnerのArrowButtonのサイズを変更>Swing/SpinnerArrowButtonSize]]
+
+* コメント [#comment]
+#comment
+#comment

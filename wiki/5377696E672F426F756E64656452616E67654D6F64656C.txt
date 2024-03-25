@@ -36,8 +36,8 @@ class HighlightBarHandler extends MouseAdapter {
 }}
 
 * 解説 [#explanation]
-- `Icon`に検索結果をハイライト表示し`JLabel`に設定
--- この`JLabel`は`JScrollPane`の子コンポーネントではないので縦`JScrollBar`の`BoundedRangeModel`に`ChangeListener`を追加して更新ごとに`JLabel#repaint()`もあわせて実行する必要がある
+- `Icon`に検索結果をハイライト表示し`JLabel#setIcon(...)`で設定
+-- この`JLabel`は`JScrollPane`の子コンポーネントではないので縦`JScrollBar`の`BoundedRangeModel`に`ChangeListener`を追加して更新ごとに`JLabel#repaint()`を実行して再描画する必要がある
 - `JLabel`上の表示範囲をマウスで操作可能にするため`MouseListener`などを追加
 -- 位置は`JScrollBar`から`BoundedRangeModel`を取得して計算する
 

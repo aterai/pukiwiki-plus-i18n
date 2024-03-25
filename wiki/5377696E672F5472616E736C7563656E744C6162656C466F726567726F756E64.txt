@@ -28,11 +28,11 @@ label2.setHorizontalAlignment(SwingConstants.CENTER);
 
 * 解説 [#explanation]
 - 一行目
--- `JLabel#setForeground(...)`メソッドでテキスト色に半透明色を設定
--- 親の`JPanel`までテキスト色を透過させる場合は`JLabel#setOpaque(true)`でコンポーネントの背景を透明化(描画しない)する、または`JLabel#setBackground(...)`メソッドで透明・半透明の背景色を設定する必要がある
+-- `JLabel#setForeground(...)`メソッドでテキスト文字色に半透明色を設定
+-- 親の`JPanel`までテキスト文字色を透過させる場合は`JLabel#setOpaque(true)`でコンポーネントの背景を透明化(描画しない)する、または`JLabel#setBackground(...)`メソッドで透明・半透明の背景色を設定する必要がある
 - 二行目
--- `<html>`タグを使用して`CSS`で`color:rgba(255,170,170,0.4);`のようにテキスト色を設定しても半透明にならない
--- [https://github.com/openjdk/jdk/pull/1158 8256019: JLabel HTML text does not support translucent text colors by prsadhuk · Pull Request #1158 · openjdk/jdk]で修正される予定
+-- `<html>`タグを使用して`CSS`で`color:rgba(255,170,170,0.4);`のようにテキスト文字色を設定しても半透明にならない
+-- [https://github.com/openjdk/jdk/pull/1158 8256019: JLabel HTML text does not support translucent text colors by prsadhuk · Pull Request #1158 · openjdk/jdk]で修正され、`Java 17`では一行目と同等の半透明になる
 
 * 参考リンク [#reference]
 - [https://github.com/openjdk/jdk/pull/1158 8256019: JLabel HTML text does not support translucent text colors by prsadhuk · Pull Request #1158 · openjdk/jdk]

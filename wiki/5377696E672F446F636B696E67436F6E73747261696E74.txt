@@ -37,11 +37,10 @@ toolbar.setUI(new BasicToolBarUI() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JToolBar`は上下にのみドッキングできるようになっているため、`JComboBox`のような横長のコンポーネントを配置している場合でも`JToolBar`のレイアウトが崩れにくくなっています。
-
 - `ToolBarUI#canDock(Component, Point)`メソッドをオーバーライドして左右の場合は`false`を返すよう設定
+-- このため`JToolBar`は上下にのみドッキング可能になるよう制限され、横長の`JComboBox`などのコンポーネントを配置した`JToolBar`が左右に配置されてレイアウトが崩れる心配がない
 - ドッキングできるかどうかを判定している`BasicToolBarUI#getDockingConstraint`メソッドが`private`のため、サンプルコードではこれをコピーしてすこしだけ条件を変更した`isHorizontalDockingConstraint`メソッドを作成して使用
-- `BorderLayout`の`WEST`と`EAST`に適当なダミーコンポーネント(例えばサイズ`0`の`Box`)を配置すると`LookAndFeel`を変更しなくてもドッキングの制限が可能になる
+- `BorderLayout`の`WEST`と`EAST`に、たとえばサイズ`0`の`Box`や空の`JLabel`などの適当な非表示コンポーネントを配置すると`LookAndFeel`の変更なしでドッキングの制限が可能になる
 #code{{
 JPanel panel = new JPanel(new BorderLayout());
 panel.add(toolbar, BorderLayout.NORTH);

@@ -19,21 +19,22 @@ hreflang:
 * サンプルコード [#sourcecode]
 #code(link){{
 JScrollPane scroll = new JScrollPane(c);
-scroll.getVerticalScrollBar().getModel().addChangeListener(new ChangeListener() {
-  @Override public void stateChanged(ChangeEvent e) {
-    BoundedRangeModel m = (BoundedRangeModel) e.getSource();
-    int extent = m.getExtent();
-    int maximum = m.getMaximum();
-    int value = m.getValue();
-    if (value + extent >= maximum) {
-      check.setEnabled(true);
-    }
+scroll.getVerticalScrollBar().getModel().addChangeListener(e -> {
+      BoundedRangeModel m = (BoundedRangeModel) e.getSource();
+      int extent = m.getExtent();
+      int maximum = m.getMaximum();
+      int value = m.getValue();
+      if (value + extent >= maximum) {
+        check.setEnabled(true);
+      }
+    });
   }
 });
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、縦`JScrollBar`から取得した`BoundedRangeModel`に`ChangeListener`を追加し、ノブの幅を加えた値が最大値になった時に最後までスクロールしたと判断して対応する`JCheckBox`を有効に設定しています。
+- 縦`JScrollBar`から取得した`BoundedRangeModel`に`ChangeListener`を追加
+- この`ChangeListener`でノブの幅を加えた値が最大値になった時に最後までスクロールしたと判断して対応する`JCheckBox`を有効に設定
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/12916192/how-to-know-if-a-jscrollbar-has-reached-the-bottom-of-the-jscrollpane java - How to know if a JScrollBar has reached the bottom of the JScrollPane? - Stack Overflow]

@@ -1,0 +1,162 @@
+---
+category: swing
+folder: SliderTicksPosition
+title: JSliderの目盛り表示位置をトラック上部に変更する
+tags: [JSlider, JLayer]
+author: aterai
+pubdate: 2022-07-18T09:24:25+09:00
+description: 水平JSliderの目盛りをトラック上部に表示し、つまみの矢印も上向きに描画するよう変更します。
+image: https://drive.google.com/uc?id=1Jm5tHOewLJQ6ExRVgFWdzBBTezrNjzZA
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2022/12/inverse-display-position-of-jsliders.html
+    lang: en
+---
+* 概要 [#summary]
+水平`JSlider`の目盛りをトラック上部に表示し、つまみの矢印も上向きに描画するよう変更します。
+
+#download(https://drive.google.com/uc?id=1Jm5tHOewLJQ6ExRVgFWdzBBTezrNjzZA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class VerticalFlipLayerUI extends LayerUI<JComponent> {
+  @Override public void paint(Graphics g, JComponent c) {
+    if (c instanceof JLayer) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setTransform(getAffineTransform(c.getSize()));
+      super.paint(g2, c);
+      g2.dispose();
+    } else {
+      super.paint(g, c);
+    }
+  }
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      JLayer<?> l = (JLayer<?>) c;
+      l.setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override public void eventDispatched(AWTEvent e, JLayer<? extends JComponent> l) {
+    if (e instanceof MouseEvent) {
+      MouseEvent me = (MouseEvent) e;
+      Point2D pt = me.getPoint();
+      try {
+        pt = getAffineTransform(l.getSize()).inverseTransform(pt, null);
+      } catch (NoninvertibleTransformException ex) {
+        ex.printStackTrace();
+        UIManager.getLookAndFeel().provideErrorFeedback(me.getComponent());
+      }
+      // Horizontal: me.translatePoint((int) pt.getX() - me.getX(), 0);
+      me.translatePoint(0, (int) pt.getY() - me.getY());
+      me.getComponent().repaint();
+    }
+    super.eventDispatched(e, l);
+  }
+
+  private AffineTransform getAffineTransform(Dimension d) {
+    AffineTransform at = AffineTransform.getTranslateInstance(0d, d.height);
+    at.scale(1d, -1d);
+    return at;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `VerticalFlipLayerUI`
+-- `JLayer`を使用して水平`JSlider`とその内部の`MouseEvent`の上下を反転
+-- ラベルの数字も上下反転してしまう
+-- `Ubuntu 20.04.4 LTS`で`JLayer`が表示されない場合がある？
+--- このサンプルでは`BorderLayout.NORTH`で表示されて`BorderLayout.SOUTH`で非表示になる？
+- `UpArrowThumbSliderUI`
+-- `BasicSliderUI`の`calculateTrackRect()`、`calculateTickRect()`、`calculateLabelRect()`をオーバーライドしてこの`3`つの領域の描画位置を入れ替える
+-- つまみの矢印は`BasicSliderUI#paintThumb()`をオーバーライドしてその場で上下反転描画
+-- `MetalLookAndFeel`%%や`WindowsLookAndFeel`%%ではつまみだけ反転するのは難しい？
+
+#code{{
+class UpArrowThumbSliderUI extends BasicSliderUI {
+  protected UpArrowThumbSliderUI(JSlider slider) {
+    super(slider);
+  }
+
+  @Override protected void calculateTrackRect() {
+    if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
+      int centerSpacing = thumbRect.height;
+      if (slider.getPaintTicks()) {
+        centerSpacing -= getTickLength();
+      }
+      if (slider.getPaintLabels()) {
+        centerSpacing -= getHeightOfTallestLabel();
+      }
+      trackRect.x = contentRect.x + trackBuffer;
+      trackRect.y = contentRect.y + (contentRect.height + centerSpacing + 1) / 2;
+      trackRect.width = contentRect.width - (trackBuffer * 2);
+      trackRect.height = thumbRect.height;
+    } else {
+      super.calculateTrackRect();
+    }
+  }
+
+  @Override protected void calculateTickRect() {
+    if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
+      tickRect.x = trackRect.x;
+      // tickRect.y = trackRect.y + trackRect.height;
+      tickRect.y = trackRect.y;
+      tickRect.width = trackRect.width;
+      tickRect.height = slider.getPaintTicks() ? getTickLength() : 0;
+    } else {
+      super.calculateTickRect();
+    }
+  }
+
+  @Override protected void calculateLabelRect() {
+    if (slider.getPaintLabels()) {
+      if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
+        labelRect.width = tickRect.width + (trackBuffer * 2);
+        labelRect.height = getHeightOfTallestLabel();
+        labelRect.x = tickRect.x - trackBuffer;
+        labelRect.y = tickRect.y - labelRect.height;
+      } else {
+        super.calculateLabelRect();
+      }
+    } else {
+      if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
+        labelRect.x = tickRect.x;
+        labelRect.y = tickRect.y; // + tickRect.height;
+        labelRect.width = tickRect.width;
+        labelRect.height = 0;
+      } else {
+        super.calculateLabelRect();
+      }
+    }
+  }
+
+  @Override public void paintThumb(Graphics g) {
+    if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.translate(0, contentRect.y + contentRect.height + thumbRect.height);
+      g2.scale(1d, -1d);
+      super.paintThumb(g2);
+      g2.dispose();
+    } else {
+      super.paintThumb(g);
+    }
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [[JSliderの順序を反転>Swing/InvertedSlider]]
+-- 垂直`JSlider`の目盛りをデフォルトの右側から左側に変更する場合は`JSlider#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`が使用可能
+
+* コメント [#comment]
+#comment
+#comment

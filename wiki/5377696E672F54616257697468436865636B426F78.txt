@@ -35,7 +35,7 @@ JTabbedPane tabs = new JTabbedPane() {
 
 - タブタイトル文字列を`JCheckBox#setText(...)`で設定した`JCheckBox`を`JTabbedPane#setTabComponentAt(...)`で追加するのではなく、タブタイトル用の`JLabel`とチェックアイコンのみの`JCheckBox`に分割して`JPanel`に配置
 - タブタイトル文字列用の`JLabel`はクリックイベントを処理しないよう設定
-- このためタブタイトルをクリックしても別コンポーネントである`JCheckBox`のチェック状態は変化せずタブの切り替えが実行される
+- このためタブタイトルをクリックしても別コンポーネントである`JCheckBox`のチェック状態は変化せずタブの切り替えが実行可能
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setTabComponentAt-int-java.awt.Component- JTabbedPane#setTabComponentAt(...) (Java Platform SE 8)]

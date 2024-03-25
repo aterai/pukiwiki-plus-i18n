@@ -5,11 +5,11 @@ title: JSplitPaneの収納状態を維持する
 tags: [JSplitPane, ActionMap, JButton, Divider]
 author: aterai
 pubdate: 2010-07-26T06:35:29+09:00
-description: JSplitPaneのサイズが変更されても、ディバイダの収納状態を維持するように設定します。
+description: JSplitPaneのサイズが変更されてもDividerの収納状態を維持するように設定します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOy71x7HI/AAAAAAAAAc8/gLDHiIJS_Yw/s800/KeepHiddenDivider.png
 ---
 * 概要 [#summary]
-`JSplitPane`のサイズが変更されても、ディバイダの収納状態を維持するように設定します。
+`JSplitPane`のサイズが変更されても`Divider`の収納状態を維持するように設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOy71x7HI/AAAAAAAAAc8/gLDHiIJS_Yw/s800/KeepHiddenDivider.png)
 
@@ -55,7 +55,8 @@ panel.add(new JButton(new AbstractAction("Max:Action") {
     splitPane.requestFocusInWindow();
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
-        Action selectMaxAction = splitPane.getActionMap().get("selectMax");
+        Action selectMaxAction =
+            splitPane.getActionMap().get("selectMax");
         e.setSource(splitPane);
         selectMaxAction.actionPerformed(e);
       }
@@ -70,7 +71,7 @@ panel.add(new JButton(new AbstractAction("Max:Action") {
 
 ----
 - 収納状態を維持するために`BasicSplitPaneUI#setKeepHidden(true)`メソッドをリフレクションを使って実行する方法もある
--- [https://bugs.openjdk.java.net/browse/JDK-5006095 JDK-5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5 - Java Bug System]のサンプルコード
+-- [https://bugs.openjdk.org/browse/JDK-5006095 JDK-5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5 - Java Bug System]のサンプルコード
 
 #code{{
 try {
@@ -85,7 +86,7 @@ try {
 }}
 
 * 参考リンク [#reference]
-- [https://bugs.openjdk.java.net/browse/JDK-5006095 JDK-5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5 - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-5006095 JDK-5006095 Need a way to programmatically stick JSplitPane divider under j2sdk 1.5 - Java Bug System]
 - [[JSplitPaneのディバイダを展開、収納する>Swing/OneTouchExpandable]]
 
 * コメント [#comment]

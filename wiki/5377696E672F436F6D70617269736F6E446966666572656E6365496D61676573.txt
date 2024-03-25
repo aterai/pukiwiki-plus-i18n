@@ -26,20 +26,19 @@ for (int i = 0; i < pixelsA.length; i++) {
   }
 }
 // ...
-private static int[] getData(ImageIcon imageIcon, int w, int h) {
-  Image img = imageIcon.getImage();
+private static int[] getData(Image img, int w, int h) {
   BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
   Graphics g = image.createGraphics();
   g.drawImage(img, 0, 0, null);
   g.dispose();
-  return ((DataBufferInt) (image.getRaster().getDataBuffer())).getData();
+  return ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 }
 }}
 
 * 解説 [#explanation]
 上記のサンプルでは、以下の手順で同サイズの画像から、それぞれのピクセル配列を取得して比較を行っています。
 
-+ `ImageIcon`から`Image`を取得
++ 画像ファイルから`ImageIO.read(...)`で`Image`を取得
 + `BufferedImage.TYPE_INT_RGB`で作成した`BufferedImage`に`Image`をコピー
 + `BufferedImage`から`WritableRaster`を取得
 + `WritableRaster`から`DataBuffer`を取得

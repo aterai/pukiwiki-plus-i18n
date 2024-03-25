@@ -1,0 +1,118 @@
+---
+category: swing
+folder: VerticalColumnTableHeader
+title: JTableHeaderの列タイトル文字列を回転して垂直表示する
+tags: [JTable, JTableHeader, TableColumn, AffineTransform, Icon, NimbusLookAndFeel]
+author: aterai
+pubdate: 2022-10-10T16:26:15+09:00
+description: JTableHeaderの列タイトル文字列を反時計回りに90度回転して垂直表示します。
+image: https://drive.google.com/uc?id=1-KX81FoU4eiaGBTgO_1Qig3ZUfn_lb3P
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2022/11/rotate-jtableheader-column-title-string.html
+    lang: en
+---
+* 概要 [#summary]
+`JTableHeader`の列タイトル文字列を反時計回りに`90`度回転して垂直表示します。
+
+#download(https://drive.google.com/uc?id=1-KX81FoU4eiaGBTgO_1Qig3ZUfn_lb3P)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class VerticalTableHeaderRenderer implements TableCellRenderer {
+  private static final String ASCENDING = "Table.ascendingSortIcon";
+  private static final String DESCENDING = "Table.descendingSortIcon";
+  private final Icon ascendingIcon;
+  private final Icon descendingIcon;
+  private final EmptyIcon emptyIcon = new EmptyIcon();
+  private final JPanel intermediate = new JPanel();
+  private final JLabel label = new JLabel("", null, SwingConstants.LEADING);
+
+  protected VerticalTableHeaderRenderer() {
+    ascendingIcon = UIManager.getLookAndFeelDefaults().getIcon(ASCENDING);
+    descendingIcon = UIManager.getLookAndFeelDefaults().getIcon(DESCENDING);
+    emptyIcon.width = ascendingIcon.getIconWidth();
+    emptyIcon.height = ascendingIcon.getIconHeight();
+  }
+
+  @Override public Component getTableCellRendererComponent(
+      JTable table, Object value, boolean isSelected, boolean hasFocus,
+      int row, int column) {
+    UIManager.put(ASCENDING, emptyIcon);
+    UIManager.put(DESCENDING, emptyIcon);
+    TableCellRenderer r = table.getTableHeader().getDefaultRenderer();
+    Component c = r.getTableCellRendererComponent(
+      table, value, isSelected, hasFocus, row, column);
+    UIManager.put(ASCENDING, ascendingIcon);
+    UIManager.put(DESCENDING, descendingIcon);
+    if (c instanceof JLabel) {
+      JLabel l = (JLabel) c;
+      l.setHorizontalAlignment(SwingConstants.CENTER);
+      SortOrder sortOrder = getColumnSortOrder(table, column);
+      Icon sortIcon;
+      switch (sortOrder) {
+        case ASCENDING:
+          sortIcon = ascendingIcon;
+          break;
+        case DESCENDING:
+          sortIcon = descendingIcon;
+          break;
+        default: // case UNSORTED:
+          sortIcon = emptyIcon;
+          break;
+      }
+      label.setText(l.getText());
+      label.setIcon(new RotateIcon(sortIcon, 90));
+      label.setHorizontalTextPosition(SwingConstants.LEFT);
+      label.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
+      // l.setIcon(new RotateIcon(new ComponentIcon(label), -90));
+      l.setIcon(makeVerticalHeaderIcon(label));
+      l.setText(null);
+    }
+    return c;
+  }
+
+  public static SortOrder getColumnSortOrder(JTable table, int column) {
+    SortOrder rv = SortOrder.UNSORTED;
+    if (table != null && table.getRowSorter() != null) {
+      List<? extends RowSorter.SortKey> sortKeys =
+        table.getRowSorter().getSortKeys();
+      int mi = table.convertColumnIndexToModel(column);
+      if (!sortKeys.isEmpty() && sortKeys.get(0).getColumn() == mi) {
+        rv = sortKeys.get(0).getSortOrder();
+      }
+    }
+    return rv;
+  }
+
+  private Icon makeVerticalHeaderIcon(Component label) {
+    Dimension d = label.getPreferredSize();
+    int w = d.height;
+    int h = d.width;
+    BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g2 = (Graphics2D) bi.getGraphics();
+    AffineTransform at = AffineTransform.getTranslateInstance(0, h);
+    at.quadrantRotate(-1);
+    g2.setTransform(at);
+    SwingUtilities.paintComponent(g2, label, intermediate, 0, 0, h, w);
+    g2.dispose();
+    return new ImageIcon(bi);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JTable#getColumnModel()#getColumn(idx)`ですべての列に垂直表示用の`TableCellRenderer`を設定
+- `JTable#getTableHeader()#setDefaultRenderer(...)`で全体のヘッダレンダラーを変更可能だが、`LookAndFeel`の描画を上記の垂直表示用`TableCellRenderer`で使用するため変更しない
+- ヘッダレンダラーを垂直表示用にまとめて反時計回りに`90`度回転するとソートアイコンが左右矢印になるので、事前に時計回りに`90`度回転しておく必要がある
+- 列タイトル文字列は[[JTabbedPaneのタブタイトル文字列を回転して縦組表示する>Swing/RotatedVerticalTextTabs]]と同様に回転した`Icon`に変換して`JLabel#setIcon(...)`で設定し、元の文字列は`JLabel#setText(null)`で非表示に変更
+-- `NimbusLookAndFeel`で回転した列タイトル文字列アイコンが表示されないバグがある？
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのタブタイトル文字列を回転して縦組表示する>Swing/RotatedVerticalTextTabs]]
+- [[Iconを回転する>Swing/RotatedIcon]]
+- [[TitledBorderのタイトルを縦(左側)に表示する>Swing/VerticalTitledBorder]]
+- [[JTableHeaderのソートアイコンをヘッダセルの左上に表示する>Swing/SortIconLayoutHeaderRenderer]]
+
+* コメント [#comment]
+#comment
+#comment

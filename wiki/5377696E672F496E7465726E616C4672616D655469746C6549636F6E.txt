@@ -28,12 +28,9 @@ for (Color c: Arrays.asList(Color.RED, Color.GREEN, Color.BLUE)) {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JInternalFrame#setFrameIcon(Icon)`メソッドを使用して、各`JInternalFrame`に異なる色の`16x16`アイコンを設定しています。
-
-- `WindowsLookAndFeel`
--- アイコン化したとき`JInternalFrame#setFrameIcon(Icon)`で設定した`Icon`を拡大した画像が`JInternalFrame.JDesktopIcon`として使用される
-- `MotifLookAndFeel`
--- `JInternalFrame#setFrameIcon(Icon)`で設定したアイコンは表示されない(デフォルトアイコンも表示しない)
+- `JInternalFrame#setFrameIcon(Icon)`メソッドを使用して各`JInternalFrame`に異なる色の`16x16`アイコンを設定
+-- `WindowsLookAndFeel`ではアイコン化したとき`JInternalFrame#setFrameIcon(Icon)`で設定した`Icon`を拡大した画像が`JInternalFrame.JDesktopIcon`として使用される
+-- `MotifLookAndFeel`では`JInternalFrame#setFrameIcon(Icon)`で設定したアイコンは無視され表示されない(デフォルトアイコンも表示しない)
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JInternalFrame.html#setFrameIcon-javax.swing.Icon- JInternalFrame#setFrameIcon(Icon) (Java Platform SE 8)]

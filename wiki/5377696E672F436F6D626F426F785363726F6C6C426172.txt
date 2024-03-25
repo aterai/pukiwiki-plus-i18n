@@ -124,11 +124,11 @@ class WithoutArrowButtonScrollBarUI extends BasicScrollBarUI {
 * 解説 [#explanation]
 - 上: `MetalLookAndFeel`デフォルトの編集不可`JComboBox`
 - 下: `BasicComboBoxUI`をオーバーライドしてドロップダウンリストのスタイルなどを変更した編集不可`JComboBox`
--- `BasicComboBoxUI#createPopup()`をオーバーライドして`BasicComboPopup`を生成、さらにその`BasicComboPopup#createScroller()`をオーバーライドして`JScrollPane`を生成、縦`JScrollBar`などを取得して以下の`UI`を変更
+-- `BasicComboBoxUI#createPopup()`メソッドをオーバーライドして`BasicComboPopup`を生成、さらにその`BasicComboPopup#createScroller()`メソッドをオーバーライドして`JScrollPane`を生成、縦`JScrollBar`などを取得し以下の`UI`を変更
 --- [[JScrollPaneの角を丸める>Swing/RoundedScrollPane]]
 -- `JScrollBar`の幅: `UIManager.put("ScrollBar.width", 10);`で変更
 --- [[JScrollBar上にマウスカーソルが入ったらその幅を拡張する>Swing/ChangeScrollBarWidthOnHover]]
--- `JScrollBar`の増減ボタン: サイズ`0`の`JButton`を使用
+-- `JScrollBar`の増減ボタン: サイズ`0`の`JButton`を使用して非表示化
 --- [[JScrollBarのArrowButtonを非表示にする>Swing/ArrowButtonlessScrollBar]]
 -- `JScrollBar`のハイライト色、背景色など: `BasicScrollBarUI#paintThumb(...)`をオーバーライドして変更
 --- [[ScrollBarの表示を変更>Swing/IconScrollBar]]

@@ -54,13 +54,13 @@ class HtmlListEditor extends JLabel implements ChangeListener {
 }}
 
 * 解説 [#explanation]
-- 上: `ListEditor(default)`
+- `ListEditor(default)`
 -- デフォルトの`ListEditor`を使用
 -- エディタは`JFormattedTextField`なので`HTML`タグは使用不可
-- 下: `HtmlListEditor`
+- `HtmlListEditor`
 -- `JLabel`を継承する`HtmlListEditor`を作成して`JSpinner#setEditor(...)`で設定
 -- `JLabel`がエディタになるので`HTML`タグが使用可能
--- このエディタは`JSpinner.DefaultEditor`を継承していないため`JSpinner#setEditor(...)`で`JSpinner`に設定する場合は、以下のように`JSpinner#removeChangeListener(...)`を呼んで`ChangeListener`を除去する必要がある
+-- このエディタは`JSpinner.DefaultEditor`を継承していないため`JSpinner#setEditor(...)`で`JSpinner`に設定する場合は以下のように`JSpinner#removeChangeListener(...)`を呼んで`ChangeListener`を除去する必要がある
 #code{{
 JSpinner spinner = new JSpinner(new SpinnerListModel(items)) {
   @Override public void setEditor(JComponent editor) {

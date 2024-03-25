@@ -25,7 +25,8 @@ class WindowsVerticalAlignmentCheckBoxUI extends WindowsCheckBoxUI {
     // ...
   }
 
-  public static int getFirstLineCenterY(String text, AbstractButton c, Rectangle iconRect) {
+  public static int getFirstLineCenterY(
+      String text, AbstractButton c, Rectangle iconRect) {
     int y = 0;
     if (text != null && c.getVerticalTextPosition() == SwingConstants.TOP) {
       Object o = c.getClientProperty(BasicHTML.propertyKey);
@@ -35,8 +36,10 @@ class WindowsVerticalAlignmentCheckBoxUI extends WindowsCheckBoxUI {
           Element e = v.getElement().getElement(0);
           Shape s = new Rectangle();
           Position.Bias b = Position.Bias.Forward;
-          s = v.modelToView(e.getStartOffset(), b, e.getEndOffset(), b, s);
-          y = (int) (.5 + Math.abs(s.getBounds().height - iconRect.height) * .5);
+          s = v.modelToView(
+              e.getStartOffset(), b, e.getEndOffset(), b, s);
+          y = (int) (.5 + Math.abs(
+              s.getBounds().height - iconRect.height) * .5);
         } catch (BadLocationException ex) {
           ex.printStackTrace();
         }

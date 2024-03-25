@@ -124,7 +124,7 @@ public class ProgressSplashScreenTest {
           int lengthOfTask = 120;
           while (current <= lengthOfTask && !isCancelled()) {
             try {
-              Thread.sleep(50); // dummy
+              Thread.sleep(50);
             } catch (InterruptedException ie) {
               ie.printStackTrace();
               return null;

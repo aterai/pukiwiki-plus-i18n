@@ -31,7 +31,8 @@ private static enum SortAlgorithms {
     return description;
   }
 }
-JComboBox<SortAlgorithms> algorithmsChoices = new JComboBox<>(SortAlgorithms.values());
+JComboBox<SortAlgorithms> algorithmsChoices =
+    new JComboBox<>(SortAlgorithms.values());
 }}
 
 * 解説 [#explanation]
@@ -58,6 +59,7 @@ switch ((SortAlgorithms) algorithmsChoices.getSelectedItem()) {
 * 参考リンク [#reference]
 - %%[http://www.cs.bell-labs.com/cm/cs/pearls/sortanim.html Sorting Algorithm Animations from Programming Pearls]%%
 - [https://docs.oracle.com/javase/tutorial/uiswing/painting/ Lesson: Performing Custom Painting (The Java™ Tutorials > Creating a GUI With JFC/Swing)]
+- [[Enum定数を選択するJRadioButtonのButtonGroupやJComboBoxを作成する>Swing/EnumInputSelect]]
 
 * コメント [#comment]
 #comment

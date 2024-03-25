@@ -34,9 +34,9 @@ visitAll(menubar, new MouseAdapter() {
 上記のサンプルでは、トップレベルの(`JMenuBar`の子コンポーネントになっている)`JMenu`の領域内にマウスカーソルが入った場合に自動的にポップアップメニューが開くように、`JMenu#doClick()`を実行する`MouseListener`を追加しています。
 
 - マウスボタンを押した場合も入った場合にすでに表示したポップアップメニューが非表示にならないように`JMenu#doClick()`を実行
-- このサンプルのすべての`JMenuItem`は、`beep`音を鳴らすだけのダミー
+- このサンプルのすべての`JMenuItem`は`beep`音を鳴らすだけのアクションを設定している
 - この`JMenu`の入った、`JPopupMenu`を`JComponent#setComponentPopupMenu(...)`で`JMenuBar`以外のコンポーネントに設定すると無限ループする
--- [https://bugs.openjdk.java.net/browse/JDK-6949414 Bug ID: JDK-6949414 JMenu.buildMenuElementArray() endless loop]
+-- [https://bugs.openjdk.org/browse/JDK-6949414 Bug ID: JDK-6949414 JMenu.buildMenuElementArray() endless loop]
 - 回避方法:
 -- マウスイベントを作成して`menu.dispatchEvent(new MouseEvent(menu, MouseEvent.MOUSE_ENTERED, e.getWhen(), 0, 0, 0, 0, false));`を実行する
 --- [https://stackoverflow.com/questions/25260684/programmatically-expand-sub-jmenuitems java - Programmatically expand sub JMenuItems - Stack Overflow]

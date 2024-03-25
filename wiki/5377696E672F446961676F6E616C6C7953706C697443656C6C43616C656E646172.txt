@@ -2,7 +2,7 @@
 category: swing
 folder: DiagonallySplitCellCalendar
 title: JTableのセルを斜めに分割する
-tags: [JTable, JLayer, JLabel]
+tags: [JTable, JLayer, JLabel, Calendar]
 author: aterai
 pubdate: 2020-06-01T03:09:34+09:00
 description: JTableのセルレンダラーにJLayerで直線を描画して斜め分断セルを表示します。
@@ -72,7 +72,8 @@ class DiagonallySplitCellLayerUI extends LayerUI<JPanel> {
     super.paint(g, c);
     if (c instanceof JLayer) {
       Graphics2D g2 = (Graphics2D) g.create();
-      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
       g2.setPaint(UIManager.getColor("Table.gridColor"));
       g2.drawLine(c.getWidth(), 0, 0, c.getHeight());
       g2.dispose();
@@ -84,6 +85,8 @@ class DiagonallySplitCellLayerUI extends LayerUI<JPanel> {
 * 参考リンク [#reference]
 - [[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]
 - [[JTableの行高がJViewportの高さに合うまで調整する>Swing/AdjustRowHeightFillsViewport]]
+- [[JTableHeaderのTableColumnを斜め線で分割する>Swing/DiagonalHeaderCellBorder]]
+-- `JLayer`ではなく`Border`を使用して斜め線を描画する方法もある
 
 * コメント [#comment]
 #comment

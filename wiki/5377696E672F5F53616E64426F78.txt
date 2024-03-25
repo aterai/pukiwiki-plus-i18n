@@ -34,7 +34,6 @@ pubdate: 2006-01-29
 - JTabbedPane Tearaway tabs
 - JTabbedPane content Rounded corners like nimbus
 - JTabbedPane tab height animation
-- JTabbedPane tab area resize mouse drag
 - JTable VerticalTableHeader
 - JTable cell Editable and auto completion JComboBox suggest in TableCell
 - JTable git graph JLayer
@@ -64,16 +63,36 @@ pubdate: 2006-01-29
 ** Java 9 AWT, Swing 新機能 [#a1caf2c7]
 - [https://docs.oracle.com/javase/jp/9/docs/api/java/awt/Desktop.html#moveToTrash-java.io.File- Desktop#moveToTrash(File) (Java SE 9 & JDK 9)]
 - [https://docs.oracle.com/javase/jp/9/docs/api/java/awt/Taskbar.html Taskbar (Java SE 9 & JDK 9)]
-[https://docs.oracle.com/javase/jp/9/docs/api/javax/swing/filechooser/FileSystemView.html#isLink-java.io.File- FileSystemView#isLink(File) (Java SE 9 & JDK 9)]
+- [https://docs.oracle.com/javase/jp/9/docs/api/javax/swing/filechooser/FileSystemView.html#isLink-java.io.File- FileSystemView#isLink(File) (Java SE 9 & JDK 9)]
+- [https://docs.oracle.com/javase/jp/9/docs/api/javax/swing/JColorChooser.html#showDialog-java.awt.Component-java.lang.String-java.awt.Color-boolean- JColorChooser#showDialog(..., boolean colorTransparencySelectionEnabled) (Java SE 9 & JDK 9)]
+-- `Java 8`には存在せず`Java 9`からの機能なのになぜか`@since 9`が付いていない？
 
-** CubeEffect [#k3a71776]
-- [https://java.net/projects/animatingcardlayout Animatingcardlayout — Project Kenai]
-- [http://www.kawa.net/works/js/animation/cube-e.html (JavaScript) Animation.Cube - Rotating Cube Animation Effect]
-- http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=36768&forum=12&7
-- [https://jogl-demos.dev.java.net/ jogl-demos:]
-- [http://programamemo2.blogspot.com/2008/06/image-processing.html プログラマメモ2: Image Processing 台形変形への道 - へたれなので。]
-- [http://www.javaworld.com/javaworld/jw-03-2008/jw-03-opensourcejava-animatingcardlayout.html Open source Java projects: AnimatingCardLayout - JavaWorld]
-- [https://animatingcardlayout.dev.java.net/ animatingcardlayout: ホーム]
+// ** CubeEffect [#k3a71776]
+// - [https://java.net/projects/animatingcardlayout Animatingcardlayout — Project Kenai]
+// - [http://www.kawa.net/works/js/animation/cube-e.html (JavaScript) Animation.Cube - Rotating Cube Animation Effect]
+// - http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=36768&forum=12&7
+// - [https://jogl-demos.dev.java.net/ jogl-demos:]
+// - [http://programamemo2.blogspot.com/2008/06/image-processing.html プログラマメモ2: Image Processing 台形変形への道 - へたれなので。]
+// - [http://www.javaworld.com/javaworld/jw-03-2008/jw-03-opensourcejava-animatingcardlayout.html Open source Java projects: AnimatingCardLayout - JavaWorld]
+// - [https://animatingcardlayout.dev.java.net/ animatingcardlayout: ホーム]
+
+* DefaultLookup [#DefaultLookup]
+- [[Button.defaultButtonFollowsFocus>Swing/DefaultButtonFollowsFocus]]
+- [[ColorChooser.showPreviewPanelText>Swing/ColorChooserPreviewText]]
+- [[ComboBox.showPopupOnNavigation>Swing/ShowPopupOnNavigation]]
+- [[InternalFrame.layoutTitlePaneAtOrigin>Swing/InternalFrameLayoutTitlePaneAtOrigin]]
+- [[IsindexView.prompt>Swing/FormViewInputComponent]]
+- [[OptionPane.buttonOrientation>Swing/OptionPaneButtonOrientation]]
+- [[OptionPane.isYesLast>Swing/YesLastOptionPane]]
+- [[ScrollPane.useChildTextComponentFocus>Swing/ScrollPaneUseChildTextComponentFocus]]
+- [[Spinner.disableOnBoundaryValues>Swing/DisableOnBoundaryValues]]
+- [[SplitPane.centerOneTouchButtons>Swing/CenterOneTouchButtons]]
+- [[SplitPane.supportsOneTouchButtons>Swing/OneTouchExpandable]]
+- [[TabbedPane.tabsOverlapBorder>Swing/TabbedPaneTabsOverlapBorder]]
+- [[TabbedPane.useBasicArrows>Swing/TabbedPaneUseBasicArrows]]
+- [[Table.alternateRowColor>Swing/StripeTable]]
+- [[TableHeader.rightAlignSortArrow>Swing/TableHeaderRightAlignSortArrow]]
+- [[Tree.scrollsHorizontallyAndVertically>Swing/TreeScrollsHorizontallyAndVertically]]
 
 * Java 9 [#java9]
 - [[Swing/AuxiliaryLookAndFeel]]
@@ -390,56 +409,53 @@ Posted by: ewin on September 28, 2007 at 02:58 PM
  >find . -type f -name TestModel.java -ls | gawk "{print $7, $11}" | sort
 -- Look&Feel関係でpublic クラスでないとダメなのは…、放置。
 
-* リンクメモ(自分用) [#e0861111]
-- [https://bugs.openjdk.java.net/browse/JDK-8039464 JDK-8039464 The scrollbar in JScrollPane has no right border if used WindowsLookAndFeel - Java Bug System]
-- [http://java.sun.com/developer/JDCTechTips/ Core Java Technologies Tech Tips]
-- [http://java.sun.com/developer/JDCTechTips/2004/tt0210.html Styling Digital Images with ConvolveOp and Using HttpURLConnection to Access Web Pages Tech Tips]
-- [http://java.sun.com/developer/onlineTraining/ Online Training and Tutorials]
-- [http://java.sun.com/developer/onlineTraining/new2java/supplements/2005/jan05.html Java Technology Fundamentals Newsletter]
-- [http://java.sun.com/developer/onlineTraining/Programming/JDCBook/advprint.html Chapter 6 Continued: Advanced Printing]
-- [http://java.sun.com/developer/onlineTraining/GUI/Swing1/shortcourse.html Short Course]
-- [http://java.sun.com/developer/technicalArticles/GUI/java2d/java2dpart1.html Learning Java 2D, Part 1]
-- [http://java.sun.com/developer/technicalArticles/GUI/swing/wizard/ Creating Wizard Dialogs with Java Swing]
-- [http://java.sun.com/developer/technicalArticles/J2SE/jconsole.html Using JConsole to Monitor Applications]
-- [http://java.sun.com/developer/technicalArticles/Media/imagestrategies/ VolatileBufferedToolkitImage Strategies]
-- [http://java.sun.com/developer/technicalArticles/Media/intimages/ Intermediate Images]
-- [http://java.sun.com/developer/technicalArticles/Printing/Java2DPrinting/ Java 2D: New Printing Package]
-- [http://java.sun.com/developer/technicalArticles/Programming/jnlp/ Deploying Software with JNLP and Java Web Start]
-- [http://java.sun.com/developer/techDocs/hi/repository/ Java look and feel Graphics Repository]
-- [http://java.sun.com/products/java-media/2D/samples/suite/ Java 2D API Sample Programs]
+// * リンクメモ [#c9947875]
+// - [https://bugs.openjdk.org/browse/JDK-8039464 JDK-8039464 The scrollbar in JScrollPane has no right border if used WindowsLookAndFeel - Java Bug System]
+// - [http://java.sun.com/developer/JDCTechTips/ Core Java Technologies Tech Tips]
+// - [http://java.sun.com/developer/JDCTechTips/2004/tt0210.html Styling Digital Images with ConvolveOp and Using HttpURLConnection to Access Web Pages Tech Tips]
+// - [http://java.sun.com/developer/onlineTraining/ Online Training and Tutorials]
+// - [http://java.sun.com/developer/onlineTraining/new2java/supplements/2005/jan05.html Java Technology Fundamentals Newsletter]
+// - [http://java.sun.com/developer/onlineTraining/Programming/JDCBook/advprint.html Chapter 6 Continued: Advanced Printing]
+// - [http://java.sun.com/developer/onlineTraining/GUI/Swing1/shortcourse.html Short Course]
+// - [http://java.sun.com/developer/technicalArticles/GUI/java2d/java2dpart1.html Learning Java 2D, Part 1]
+// - [http://java.sun.com/developer/technicalArticles/GUI/swing/wizard/ Creating Wizard Dialogs with Java Swing]
+// - [http://java.sun.com/developer/technicalArticles/J2SE/jconsole.html Using JConsole to Monitor Applications]
+// - [http://java.sun.com/developer/technicalArticles/Media/imagestrategies/ VolatileBufferedToolkitImage Strategies]
+// - [http://java.sun.com/developer/technicalArticles/Media/intimages/ Intermediate Images]
+// - [http://java.sun.com/developer/technicalArticles/Printing/Java2DPrinting/ Java 2D: New Printing Package]
+// - [http://java.sun.com/developer/technicalArticles/Programming/jnlp/ Deploying Software with JNLP and Java Web Start]
+// - [http://java.sun.com/developer/techDocs/hi/repository/ Java look and feel Graphics Repository]
+// - [http://java.sun.com/products/java-media/2D/samples/suite/ Java 2D API Sample Programs]
 
-- [http://www.oracle.com/technetwork/java/jlf-135985.html Java Look and Feel Design Guidelines]
-- [http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html How to Write Doc Comments for the Javadoc Tool]
+// - [http://www.oracle.com/technetwork/java/jlf-135985.html Java Look and Feel Design Guidelines]
+// - [http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html How to Write Doc Comments for the Javadoc Tool]
 
 //- [http://java.sun.com/products/jlf/ed2/book/HIGTitle.html Java Look and Feel Design Guidelines]
 //- [http://java.sun.com/j2se/javadoc/writingdoccomments/ How to Write Doc Comments for the Javadoc Tool]
 
-* Bugリンクメモ(自分用) [#n41d9755]
+* Bugリンクメモ [#f0f03e28]
 - [[Swing/_Bug]]に移動
 
-//*1180447205*[Java]
-* メモ: 痒いところに手が届かないJavaのコード [#d7c7d8f2]
-- 以下、[http://d.hatena.ne.jp/nowokay/20070529#1180430016 Java6でLogger.globalが非推奨になっている]から引用
+// * メモ: 痒いところに手が届かないJavaのコード [#d7c7d8f2]
+// - 以下[https://nowokay.hatenablog.com/entry/20070529/1180430016 Java6でLogger.globalが非推奨になっている - きしだのHatena]から引用
+//  初期化時にデッドロックの可能性があるからということで、それはいいとして。
+//  代わりに使うのが
+//  Logger.getLogger(Logger.GLOBAL_LOGGER_NAME)
+//  だなんて、どうにかしてほしい。
+//  Logger.getGlobal()
+//  を用意してくれればいいのに。なに考えてんだろう？EoDじゃなかったの？
+// Javaのコード書きにくさって、静的動的よりも、こういう痒いところに手が届かないことの積み重ねが大きいと思う。
 
- 初期化時にデッドロックの可能性があるからということで、それはいいとして。
- 代わりに使うのが
- Logger.getLogger(Logger.GLOBAL_LOGGER_NAME)
- だなんて、どうにかしてほしい。
- Logger.getGlobal()
- を用意してくれればいいのに。なに考えてんだろう？EoDじゃなかったの？
- Javaのコード書きにくさって、静的動的よりも、こういう痒いところに手が届かないことの積み重ねが大きいと思う。
+// ----
+// Swing関係
+// - 表の全行を削除するメソッド
+// -- [[表の全行を削除>Swing/ClearTable]]する場合、`DefaultTableModel#setRowCount(0);`ではなく、もっと分かりやすいメソッドが欲しい。
+// -- 例えば`DefaultComboBoxModel#removeAllElements()`、`DefaultListModel#clear()`のような(これはこれでどれかひとつに統一して欲しい…)。
 
-----
-Swing関係
+// - フレームを画面中央に表示するメソッド
+// -- [[フレームを画面中央に表示>Swing/CenterFrame]]する場合、`Window#setLocationRelativeTo(null);`ではなく、もっと分かりやすいメソッドが欲しい。
+// -- `JavaFX Script`では、`centerOnScreen: true`が用意されていたが…。
 
-- 表の全行を削除するメソッド
--- [[表の全行を削除>Swing/ClearTable]]する場合、`DefaultTableModel#setRowCount(0);`ではなく、もっと分かりやすいメソッドが欲しい。
--- 例えば`DefaultComboBoxModel#removeAllElements()`、`DefaultListModel#clear()`のような(これはこれでどれかひとつに統一して欲しい…)。
-
-- フレームを画面中央に表示するメソッド
--- [[フレームを画面中央に表示>Swing/CenterFrame]]する場合、`Window#setLocationRelativeTo(null);`ではなく、もっと分かりやすいメソッドが欲しい。
--- `JavaFX Script`では、`centerOnScreen: true`が用意されていたが…。
-
-- ポイントからインデックスを取得するメソッド
--- [https://docs.oracle.com/javase/jp/6/api/javax/swing/JTabbedPane.html#indexAtLocation(int,%20int) JTabbedPane#indexAtLocation(int, int) (Java Platform SE 6)]
--- [https://docs.oracle.com/javase/jp/6/api/javax/swing/JList.html#locationToIndex(java.awt.Point) JList#locationToIndex(java.awt.Point) (Java Platform SE 6)]
+// - ポイントからインデックスを取得するメソッド
+// -- [https://docs.oracle.com/javase/jp/6/api/javax/swing/JTabbedPane.html#indexAtLocation(int,%20int) JTabbedPane#indexAtLocation(int, int) (Java Platform SE 6)]
+// -- [https://docs.oracle.com/javase/jp/6/api/javax/swing/JList.html#locationToIndex(java.awt.Point) JList#locationToIndex(java.awt.Point) (Java Platform SE 6)]

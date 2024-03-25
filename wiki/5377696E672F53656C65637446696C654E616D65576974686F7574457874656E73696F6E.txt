@@ -1,0 +1,112 @@
+---
+category: swing
+folder: SelectFileNameWithoutExtension
+title: JFileChooserのセルエディタでリネームを開始したとき拡張子を除くファイル名を選択状態にする
+tags: [JFileChooser, JTextField, JList, ContainerListener, JTable, FocusListener, DefaultCellEditor]
+author: aterai
+pubdate: 2023-10-01T00:44:38+09:00
+description: JFileChooserのListViewやDetailsViewでリネーム可能なセルエディタとして使用されるJTextFieldを取得し、ファイル名全体ではなく拡張子を除くファイル名が選択状態になるよう設定します。
+image: https://drive.google.com/uc?id=1Q83JplI4_5QHhy5qekG6vSDpBZmQYuQv
+---
+* 概要 [#summary]
+`JFileChooser`の`ListView`や`DetailsView`でリネーム可能なセルエディタとして使用される`JTextField`を取得し、ファイル名全体ではなく拡張子を除くファイル名が選択状態になるよう設定します。
+
+#download(https://drive.google.com/uc?id=1Q83JplI4_5QHhy5qekG6vSDpBZmQYuQv)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JButton button2 = new JButton("ListView");
+button2.addActionListener(e -> {
+  JFileChooser chooser = new JFileChooser();
+  descendants(chooser)
+      .filter(JList.class::isInstance)
+      .map(JList.class::cast)
+      .findFirst()
+      .ifPresent(MainPanel::addCellEditorListener);
+  int retValue = chooser.showOpenDialog(log.getRootPane());
+  if (retValue == JFileChooser.APPROVE_OPTION) {
+    log.setText(chooser.getSelectedFile().getAbsolutePath());
+  }
+});
+// ...
+private static void selectWithoutExtension(JTextField editor) {
+  EventQueue.invokeLater(() -> {
+    String name = editor.getText();
+    int end = name.lastIndexOf('.');
+    editor.setSelectionStart(0);
+    editor.setSelectionEnd(end > 0 ? end : name.length());
+  });
+}
+
+private static void addCellEditorListener(JList<?> list) {
+  boolean readOnly = UIManager.getBoolean("FileChooser.readOnly");
+  if (!readOnly) {
+    list.addContainerListener(new ContainerAdapter() {
+      @Override public void componentAdded(ContainerEvent e) {
+        Component c = e.getChild();
+        if (c instanceof JTextField && "Tree.cellEditor".equals(c.getName())) {
+          selectWithoutExtension((JTextField) c);
+        }
+      }
+    });
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- デフォルトの`JFileChooser`のセルエディタは編集開始時に`JTextField#selectAll()`でファイル名が全選択される
+- `ListView`(`JList`)
+-- デフォルトの`JList`にはセルアイテムを編集するエディタは用意されていないので、`JFileChooser`(`FilePane`)では名前が`Tree.cellEditor`の`JTextField`を`JList`に追加してセルエディタとして使用している
+-- `JList`へのセルエディタ追加を`ContainerListener#componentAdded(ContainerEvent)`で受信し、追加後そのセルエディタに`JTextField#setSelectionEnd(...)`を実行して拡張子を除くファイル名が選択状態になるよう設定
+- `DetailsView`(`JTable`)
+-- ファイル名を表示する`0`列目の`TableColumn`から`TableColumn#getCellEditor()#getComponent()`でセルエディタとして使用する`JTextField`を取得
+-- 取得した`JTextField`に`FocusListener`を追加し、フォーカスが当たったら(`FocusListener#focusGained(FocusEvent)`)拡張子を除くファイル名が選択状態になるよう設定
+-- マウスでファイル名のセルを選択したあと、シングルクリックでリネーム開始するとセルエディタが表示されるまでに想定外のタイムラグが発生する？
+--- KBD{F2}でのリネーム開始は正常に動作している
+
+#code{{
+JButton button3 = new JButton("DetailsView");
+button3.addActionListener(e -> {
+  JFileChooser chooser = new JFileChooser();
+  String cmd = "viewTypeDetails";
+  Action detailsAction = chooser.getActionMap().get(cmd);
+  if (Objects.nonNull(detailsAction)) {
+    detailsAction.actionPerformed(
+        new ActionEvent(chooser, ActionEvent.ACTION_PERFORMED, cmd));
+  }
+  descendants(chooser)
+      .filter(JTable.class::isInstance)
+      .map(JTable.class::cast)
+      .findFirst()
+      .ifPresent(MainPanel::addCellEditorFocusListener);
+  int retValue = chooser.showOpenDialog(log.getRootPane());
+  if (retValue == JFileChooser.APPROVE_OPTION) {
+    log.setText(chooser.getSelectedFile().getAbsolutePath());
+  }
+});
+// ...
+private static void addCellEditorFocusListener(JTable table) {
+  boolean readOnly = UIManager.getBoolean("FileChooser.readOnly");
+  TableColumnModel columnModel = table.getColumnModel();
+  if (!readOnly && columnModel.getColumnCount() > 0) {
+    TableColumn tc = columnModel.getColumn(0);
+    DefaultCellEditor editor = (DefaultCellEditor) tc.getCellEditor();
+    JTextField tf = (JTextField) editor.getComponent();
+    tf.addFocusListener(new FocusAdapter() {
+      @Override public void focusGained(FocusEvent e) {
+        selectWithoutExtension(tf);
+      }
+    });
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [[JFileChooserのリスト表示を垂直1列に変更する>Swing/FileChooserLayoutOrientation]]
+- [[JFileChooserの詳細表示でファイル名が編集中の場合はそれをキャンセルする>Swing/FileChooserCancelEdit]]
+- [[JListのセルに配置したJLabelのテキストを編集する>Swing/ListEditor]]
+
+* コメント [#comment]
+#comment
+#comment

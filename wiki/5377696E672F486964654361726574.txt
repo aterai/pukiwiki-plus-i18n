@@ -31,11 +31,13 @@ textArea.setCaret(new DefaultCaret() {
 -- `JTextArea#setHighlighter(null)`のように`null`を設定して選択ハイライトを非表示にする
 - `Editable`
 -- `JTextArea#setEditable(false)`を設定すると編集不可になり、選択は可能だが`Caret`は非表示になる
-- `Editable`
+-- [https://bugs.openjdk.org/browse/JDK-4512626 &#91;JDK-4512626&#93; Non-editable JTextArea provides no visual indication of keyboard focus - Java Bug System]で編集不可でも`Caret`が非表示にならないよう修正される
+- `Focusable`
 -- `JTextArea#setFocusable(false)`を設定すると選択不可になり、結果`Caret`も選択ハイライトも非表示になる
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultCaret.html#isVisible-- DefaultCaret#isVisible() (Java Platform SE 8)]
+- [https://bugs.openjdk.org/browse/JDK-4512626 &#91;JDK-4512626&#93; Non-editable JTextArea provides no visual indication of keyboard focus - Java Bug System]
 
 * コメント [#comment]
 #comment

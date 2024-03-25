@@ -30,7 +30,8 @@ class DisableRightButtonSwapLayerUI extends LayerUI<JScrollPane> {
     super.uninstallUI(c);
   }
 
-  @Override protected void processMouseMotionEvent(MouseEvent e, JLayer<? extends JScrollPane> l) {
+  @Override protected void processMouseMotionEvent(
+        MouseEvent e, JLayer<? extends JScrollPane> l) {
     int id = e.getID();
     Component c = e.getComponent();
     if (c instanceof JTableHeader &&
@@ -43,7 +44,7 @@ class DisableRightButtonSwapLayerUI extends LayerUI<JScrollPane> {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、JTableHeaderの列をマウスの右ボタンでドラッグした場合のみ順序変更不可に設定しています。
+上記のサンプルでは、`JTableHeader`の列をマウスの右ボタンでドラッグした場合のみ順序変更不可に設定しています。
 
 - `Default`
 -- 右ボタンでドラッグ可能なので、`JTableHeader`の外部まで列をドラッグしてポップアップメニューを開くと描画が乱れる場合がある
@@ -56,12 +57,15 @@ class DisableRightButtonSwapLayerUI extends LayerUI<JScrollPane> {
 -- マウスの左、中ボタンでのドラッグは有効
 -- マウスの右ボタンをクリックして`JTableHeader`に設定したポップアップメニューを開くことは可能
 -- 左ボタンでドラッグ開始、途中で左右両方のボタンを押して右ボタンを後からリリースすると`JTableHeader`の外部でポップアップメニューを開くことが可能なので、`Default`と同様に`JPopupMenu#show(...)`メソッドをオーバーライドしてドラッグ中の列をクリア、ヘッダの再描画などを実行する必要がある
+-- [https://bugs.openjdk.org/browse/JDK-8068824 &#91;JDK-8068824&#93; Exception thrown in JTableHeader after clicking on popupmenu opened with right-click on header - Java Bug System]
 
 * 参考リンク [#reference]
 - [[JTableのヘッダ入れ替えを禁止>Swing/Reordering]]
 - [[JTableHeaderに追加された各TableColumnの表示・非表示を切り替える>Swing/AddRemoveTableColumn]]
 - [[JComboBoxのドロップダウンリストで右クリックを無効化>Swing/DisableRightClick]]
 -- こちらのサンプル同様、`WindowsLookAndFeel`でのみ右ボタンドラッグを無効にしても良いかもしれない
+- [[JToolBarの右マウスボタンでのドラッグアウトを無効にする>Swing/DisableRightButtonFloating]]
+- [https://bugs.openjdk.org/browse/JDK-8068824 &#91;JDK-8068824&#93; Exception thrown in JTableHeader after clicking on popupmenu opened with right-click on header - Java Bug System]
 
 * コメント [#comment]
 #comment

@@ -64,7 +64,7 @@ image: https://drive.google.com/uc?id=1v9U6zlJ5fCokh8Px9MzbK4etBt-euSyc
 -- このサンプルでは`Color.ORANGE.getRGB() ^ Color.PINK.getRGB()`、`#0067AF`、`0000 0000 0110 0111 1010 1111`
 ----
 - このサンプルでは現在の色が`Color.ORANGE`、`XOR`変更色が`Color.PINK`なのでマウスドラッグで囲んだ範囲内の`Color.ORANGE`は`Color.PINK`に、`Color.PINK`は`Color.ORANGE`に反転する
-- その他のピクセルの色はマスクで`XOR`した色に変換される
+- その他のピクセルの色はマスクで`XOR`した色に変換
 - `XOR`なので`2`回反転すると元の色に戻る
 - 例`1`: 赤(`#FF0000`)は`#FF67AF`になる
  マスク: 0000 0000 0110 0111 1010 1111

@@ -1,0 +1,106 @@
+---
+category: swing
+folder: DisableRightButtonFloating
+title: JToolBarの右マウスボタンでのドラッグアウトを無効にする
+tags: [JToolBar, JLayer]
+author: aterai
+pubdate: 2022-07-11T02:40:01+09:00
+description: JToolBarのドラッグアウト開始を左マウスボタンでのみ可能になるよう制限します。
+image: https://drive.google.com/uc?id=12XVKQQIGqcIDa8p5FfEPfvHJTTZ9qyMn
+---
+* 概要 [#summary]
+`JToolBar`のドラッグアウト開始を左マウスボタンでのみ可能になるよう制限します。
+
+#download(https://drive.google.com/uc?id=12XVKQQIGqcIDa8p5FfEPfvHJTTZ9qyMn)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class DockingListener2 extends MouseInputAdapter {
+  private final JToolBar toolBar;
+  private final MouseInputListener listener;
+
+  protected DockingListener2(JToolBar toolBar, MouseInputListener listener) {
+    super();
+    this.toolBar = toolBar;
+    this.listener = listener;
+  }
+
+  private boolean cancelDrag(MouseEvent e) {
+    return !toolBar.isEnabled() || !SwingUtilities.isLeftMouseButton(e);
+  }
+
+  @Override public void mousePressed(MouseEvent e) {
+    if (cancelDrag(e)) {
+      return;
+    }
+    listener.mousePressed(e);
+  }
+
+  @Override public void mouseDragged(MouseEvent e) {
+    if (cancelDrag(e)) {
+      return;
+    }
+    listener.mouseDragged(e);
+  }
+
+  @Override public void mouseReleased(MouseEvent e) {
+    if (cancelDrag(e)) {
+      return;
+    }
+    listener.mouseReleased(e);
+  }
+}
+}}
+
+
+* 解説 [#explanation]
+- `Default`
+-- デフォルトの`JToolBar`は左マウスボタンだけでなく右・中マウスボタンのクリックでもドラッグアウト開始が可能
+-- このため`WindowsLookAndFeel`環境などで`JToolBar`に`JPopupMenu`を設定して右マウスボタンでドラッグアウトすると`JToolBar`は元の位置に残ったままドラッグ中の`JWindow`も表示され続ける状態になる
+--- 再度左マウスボタンで`JToolBar`をドラッグアウトし直さないとドラッグ中の`JWindow`を非表示に戻せないバグ？
+- `Override createDockingListener()`
+-- `BasicToolBarUI#createDockingListener()`をオーバーライドして右マウスボタンでのドラッグアウトはキャンセルするよう設定
+-- このサンプルでは`BasicToolBarUI`を`JToolBar`に設定しているので、子の`JButton`の`LookAndFeel`がデフォルトの`JToolBar`に配置した`JButton`とは異なる描画になっている
+- `DisableRightButtonDraggedOut`
+-- `JLayer`を使用して右マウスボタンでのドラッグアウトはキャンセルするよう設定
+-- `JToolBar`に直接`JLayer`を設定するとドラッグで配置を変更したときに例外が発生するので、`JToolBar`の親`JPanel`に`JLayer`を設定する必要がある
+-- このサンプルでは`JToolBar`の名前が`DisableRightButtonDraggedOut`と一致する場合のみ右マウスボタンでのドラッグアウトを無効化している
+-- 左マウスボタンでドラッグアウトを開始して右マウスボタンをプレス、左マウスボタンをリリース、右マウスボタンをリリースするとデフォルトの`JToolBar`と同様に非表示化できないドラッグ中の`JWindow`が生成されてしまう
+#code{{
+class DisableRightButtonDragOutLayerUI extends LayerUI<JPanel> {
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseMotionEvent(
+        MouseEvent e, JLayer<? extends JPanel> l) {
+    Component c = e.getComponent();
+    if (c instanceof JToolBar) {
+      boolean dragEvent = e.getID() == MouseEvent.MOUSE_DRAGGED;
+      boolean leftButton = SwingUtilities.isLeftMouseButton(e);
+      boolean checkName = "DisableRightButtonDraggedOut".equals(c.getName());
+      if (dragEvent && !leftButton && checkName) {
+        e.consume();
+      }
+    }
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [[JTableHeaderの列をマウスの右ボタンドラッグで順序変更不可にする>Swing/DisableRightButtonReordering]]
+- [[JComboBoxのドロップダウンリストで右クリックを無効化>Swing/DisableRightClick]]
+
+* コメント [#comment]
+#comment
+#comment

@@ -17,7 +17,7 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJ_UDZVaI/AAAAAAAAAVQ/Bb
 #code(link){{
 private final Box box = Box.createVerticalBox();
 private final Component glue = Box.createVerticalGlue();
-public void addComp(final JComponent comp) {
+public void addComp(JComponent comp) {
   comp.setMaximumSize(new Dimension(
       Short.MAX_VALUE, comp.getPreferredSize().height));
   box.remove(glue);

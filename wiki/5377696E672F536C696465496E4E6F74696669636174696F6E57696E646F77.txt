@@ -38,7 +38,8 @@ class SlideInNotification implements PropertyChangeListener, HierarchyListener {
     GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
     Rectangle desktopBounds = env.getMaximumWindowBounds();
 
-    JOptionPane optionPane = new JOptionPane("Warning", JOptionPane.WARNING_MESSAGE);
+    JOptionPane optionPane = new JOptionPane(
+        "Warning", JOptionPane.WARNING_MESSAGE);
     DragWindowListener dwl = new DragWindowListener();
     optionPane.addMouseListener(dwl);
     optionPane.addMouseMotionListener(dwl);

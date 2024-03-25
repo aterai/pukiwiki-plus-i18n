@@ -24,7 +24,8 @@ class TransparentHeader extends JLabel implements TableCellRenderer {
       BorderFactory.createEmptyBorder(2, 2, 1, 2));
   private final Color alphaZero = new Color(0x0, true);
   @Override public Component getTableCellRendererComponent(
-      JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+      JTable table, Object value, boolean isSelected, boolean hasFocus,
+      int row, int column) {
     this.setText(Objects.toString(value, ""));
     this.setHorizontalAlignment(SwingConstants.CENTER);
     this.setOpaque(false);
@@ -48,13 +49,14 @@ class TransparentHeader extends JLabel implements TableCellRenderer {
 - `Boolean.class`の`DefaultRenderer`
 -- 透明化した`BooleanCellRenderer`や`BooleanCellEditor`を設定
 - 注:
--- `ColumnHeader`には、`scroll.setColumnHeader(new JViewport())`とダミーの`JViewport`を設定しておかないと`NullPointerException`が発生する
+-- `ColumnHeader`には`scroll.setColumnHeader(new JViewport())`のように適当な空
+`JViewport`などを設定しておかないと`NullPointerException`が発生する
 #code{{
 scroll.setOpaque(false);
 scroll.setBackground(alphaZero);
 scroll.getViewport().setOpaque(false);
 scroll.getViewport().setBackground(alphaZero);
-scroll.setColumnHeader(new JViewport()); // Dummy JViewport
+scroll.setColumnHeader(new JViewport()); // Empty JViewport
 scroll.getColumnHeader().setOpaque(false);
 scroll.getColumnHeader().setBackground(alphaZero);
 }}

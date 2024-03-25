@@ -2,7 +2,7 @@
 category: swing
 folder: AnalogClock
 title: Timerを使用してJPanelにアナログ時計の針を描画する
-tags: [AffineTransform, JPanel, Animation]
+tags: [AffineTransform, JPanel, Animation, Clock]
 author: aterai
 pubdate: 2021-05-10T02:47:21+09:00
 description: javax.swing.Timerを使用して現在時刻の取得し、JPanel上にアナログ時計の針の描画します。
@@ -20,7 +20,7 @@ hreflang:
 #code(link){{
 class AnalogClock extends JPanel {
   protected LocalTime time = LocalTime.now(ZoneId.systemDefault());
-  protected Timer timer = new Timer(200, e -> {
+  protected final Timer timer = new Timer(200, e -> {
     time = LocalTime.now(ZoneId.systemDefault());
     repaint();
   });
@@ -32,10 +32,8 @@ class AnalogClock extends JPanel {
     listener = e -> {
       if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0) {
         if (e.getComponent().isShowing()) {
-          // System.out.println("start");
           timer.start();
         } else {
-          // System.out.println("stop");
           timer.stop();
         }
       }
@@ -49,13 +47,13 @@ class AnalogClock extends JPanel {
     Rectangle rect = SwingUtilities.calculateInnerArea(this, null);
     g2.setColor(Color.BLACK);
     g2.fill(rect);
-    float radius = Math.min(rect.width, rect.height) / 2f - 10f;
+    double radius = Math.min(rect.width, rect.height) / 2d - 10d;
     g2.translate(rect.getCenterX(), rect.getCenterY());
 
-    // Drawing the hour and minute markers
-    float hourMarkerLen = radius / 6f - 10f;
-    Shape hourMarker = new Line2D.Float(0f, hourMarkerLen - radius, 0f, -radius);
-    Shape minuteMarker = new Line2D.Float(0f, hourMarkerLen / 2f - radius, 0f, -radius);
+    // Drawing the hour markers
+    double hourMarkerLen = radius / 6d - 10d;
+    Shape hourMarker = new Line2D.Double(0d, hourMarkerLen - radius, 0d, -radius);
+    Shape minuteMarker = new Line2D.Double(0d, hourMarkerLen / 2d - radius, 0d, -radius);
     AffineTransform at = AffineTransform.getRotateInstance(0d);
     g2.setStroke(new BasicStroke(2f));
     g2.setColor(Color.WHITE);
@@ -68,31 +66,33 @@ class AnalogClock extends JPanel {
       at.rotate(Math.PI / 30d);
     }
 
-    // Drawing the hour hand
-    float hourHandLen = radius / 2f;
-    Shape hourHand = new Line2D.Float(0f, 0f, 0f, -hourHandLen);
-    double minuteRot = time.getMinute() * Math.PI / 30d;
+    // Calculate the angle of rotation
+    double secondRot = time.getSecond() * Math.PI / 30d;
+    double minuteRot = time.getMinute() * Math.PI / 30d + secondRot / 60d;
     double hourRot = time.getHour() * Math.PI / 6d + minuteRot / 12d;
+
+    // Drawing the hour hand
+    double hourHandLen = radius / 2d;
+    Shape hourHand = new Line2D.Double(0d, 0d, 0d, -hourHandLen);
     g2.setStroke(new BasicStroke(8f));
     g2.setPaint(Color.LIGHT_GRAY);
     g2.draw(AffineTransform.getRotateInstance(hourRot).createTransformedShape(hourHand));
 
     // Drawing the minute hand
-    float minuteHandLen = 5f * radius / 6f;
-    Shape minuteHand = new Line2D.Float(0f, 0f, 0f, -minuteHandLen);
+    double minuteHandLen = 5d * radius / 6d;
+    Shape minuteHand = new Line2D.Double(0d, 0d, 0d, -minuteHandLen);
     g2.setStroke(new BasicStroke(4f));
     g2.setPaint(Color.WHITE);
     g2.draw(AffineTransform.getRotateInstance(minuteRot).createTransformedShape(minuteHand));
 
     // Drawing the second hand
-    float r = radius / 6f;
-    float secondHandLen = radius - r;
-    Shape secondHand = new Line2D.Float(0f, r, 0f, -secondHandLen);
-    double secondRot = time.getSecond() * Math.PI / 30d;
+    double r = radius / 6d;
+    double secondHandLen = radius - r;
+    Shape secondHand = new Line2D.Double(0d, r, 0d, -secondHandLen);
     g2.setPaint(Color.RED);
     g2.setStroke(new BasicStroke(1f));
     g2.draw(AffineTransform.getRotateInstance(secondRot).createTransformedShape(secondHand));
-    g2.fill(new Ellipse2D.Float(-r / 4f, -r / 4f, r / 2f, r / 2f));
+    g2.fill(new Ellipse2D.Double(-r / 4d, -r / 4d, r / 2d, r / 2d));
 
     g2.dispose();
   }
@@ -102,21 +102,22 @@ class AnalogClock extends JPanel {
 * 解説 [#explanation]
 - `javax.swing.Timer`
 -- `200`ミリ秒ごとに`LocalTime.now(ZoneId.systemDefault())`で現在時刻を取得し、アナログ時計を描画する`JPanel`を`repaint()`メソッドで再描画
-- 長針(`minute hand`)
--- 時計盤の半径の`5/6`の長さで太さ`4f`の`Line2D`を使用
--- この図形を`LocalTime#getMinute() * 2d * Math.PI / 60分`だけ回転して描画
-- 短針(`hour hand`)
--- 時計盤の半径の`1/2`の長さで太さ`8f`の`Line2D`を使用
--- この図形を`LocalTime#getHour() * 2d * Math.PI / 12時間`と`LocalTime#getMinute() * 2d * Math.PI / (12時間 * 60分)`だけ回転して描画
 - 秒針(`second hand`)
 -- 時計盤の半径より少し短く太さ`1f`の`Line2D`を使用
 -- この図形を`LocalTime#getSecond() * 2d * Math.PI / 60秒`だけ回転して描画
+- 長針(`minute hand`)
+-- 時計盤の半径の`5/6`の長さで太さ`4f`の`Line2D`を使用
+-- この図形を`LocalTime#getMinute() * 2d * Math.PI / 60分`と`LocalTime#getSecond() * 2d * Math.PI / 60秒 / 60分`だけ回転して描画
+- 短針(`hour hand`)
+-- 時計盤の半径の`1/2`の長さで太さ`8f`の`Line2D`を使用
+-- この図形を`LocalTime#getHour() * 2d * Math.PI / 12時間`と`LocalTime#getMinute() * 2d * Math.PI / (12時間 * 60分)`だけ回転して描画
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/26211683/analog-clock-working-but-seconds-repainting java - Analog Clock working but seconds repainting - Stack Overflow]
 - [https://stackoverflow.com/questions/49740199/java-analogue-clock swing - Java analogue clock - Stack Overflow]
 - [https://stackoverflow.com/questions/58217509/how-to-fix-the-clock-from-flickering java - How to fix the clock from flickering? - Stack Overflow]
 - [[Fontを回転する>Swing/TransformedShape]]
+- [[AffineTransformを使用してアナログ時計の文字盤に数字を配置する>Swing/ClockWithArabicOrRomanNumerals]]
 
 * コメント [#comment]
 #comment

@@ -38,12 +38,17 @@ class HighlightCursorTextArea extends JTextArea {
   }
 
   @Override protected void paintComponent(Graphics g) {
-    Graphics2D g2 = (Graphics2D) g;
-    Insets i = getInsets();
-    int h = caret.height;
-    int y = caret.y;
-    g2.setPaint(linecolor);
-    g2.fillRect(i.left, y, getSize().width - i.left - i.right, h);
+    Caret c = getCaret();
+    if (c instanceof DefaultCaret) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      DefaultCaret caret = (DefaultCaret) c;
+      Rectangle r = SwingUtilities.calculateInnerArea(this, rect);
+      r.y = caret.y;
+      r.height = caret.height;
+      g2.setPaint(LINE_COLOR);
+      g2.fill(r);
+      g2.dispose();
+    }
     super.paintComponent(g);
   }
 }

@@ -68,7 +68,6 @@ frame.setFocusTraversalPolicy(policy);
 -- `4`つの`JButton`以外にはKBD{Tab}キーでフォーカスは移動しない
 - `Layout`
 -- 以下のように`LayoutFocusTraversalPolicy`(`LayoutFocusTraversalPolicy`は`Swing`のデフォルト、`AWT`のデフォルトは`DefaultFocusTraversalPolicy`)の`accept`メソッドをオーバーライドして中央の`JTextArea`(通常`JTextArea`などから次のコンポーネントにフォーカス移動する場合はKBD{Ctrl+Tab})が編集不可の場合は、これにKBD{Tab}キーなどでフォーカスが移動しないように設定
-
 #code{{
 frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
   @Override protected boolean accept(Component c) {

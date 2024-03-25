@@ -1,0 +1,105 @@
+---
+category: swing
+folder: DropDownHeightResizing
+title: JComboBoxのドロップダウンリストの高さをマウスドラッグで変更する
+tags: [JComboBox, JList, JPopupMenu]
+author: aterai
+pubdate: 2022-06-20T00:37:46+09:00
+description: JComboBoxのドロップダウンリスト下部にドラッグ可能なアイコンを追加し、その高さをマウスドラッグで変更します。
+image: https://drive.google.com/uc?id=1UN09ThQIcw2H8XpxI6ZpY2HOzFytr1-J
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2022/06/change-height-of-drop-down-list-of.html
+    lang: en
+---
+* 概要 [#summary]
+`JComboBox`のドロップダウンリスト下部にドラッグ可能なアイコンを追加し、その高さをマウスドラッグで変更します。
+
+#download(https://drive.google.com/uc?id=1UN09ThQIcw2H8XpxI6ZpY2HOzFytr1-J)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JPopupMenu popup = new JPopupMenu();
+popup.setBorder(BorderFactory.createEmptyBorder());
+popup.setPopupSize(240, 120);
+
+JLabel bottom = new JLabel("", new DotIcon(), SwingConstants.CENTER);
+MouseInputListener rwl = new ResizeWindowListener(popup);
+bottom.addMouseListener(rwl);
+bottom.addMouseMotionListener(rwl);
+bottom.setCursor(Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR));
+bottom.setOpaque(true);
+bottom.setBackground(new Color(0xE0_E0_E0));
+bottom.setFocusable(false);
+
+JPanel resizePanel = new JPanel(new BorderLayout());
+resizePanel.add(scroll);
+resizePanel.add(bottom, BorderLayout.SOUTH);
+resizePanel.add(Box.createHorizontalStrut(240), BorderLayout.NORTH);
+resizePanel.setBorder(BorderFactory.createLineBorder(new Color(0x64_64_64)));
+
+JPopupMenu popup = new JPopupMenu();
+popup.add(resizePanel);
+}}
+
+* 解説 [#explanation]
+- `JPopupMenu`
+-- `JPopupMenu`内に`JMenuItem`ではなく`BorderLayout`を設定した`JPanel`をひとつ配置
+--- この`JPanel`は`BorderLayout.CENTER`に`JList`、`BorderLayout.SOUTH`に自身の親フレームの高さのみリサイズ可能にする`MouseInputListener`を設定した`JLabel`を追加
+#code{{
+class ResizePopupMenuListener extends MouseInputAdapter {
+  private final Rectangle rect = new Rectangle();
+  private final Point startPt = new Point();
+  private final Dimension startDim = new Dimension();
+
+  @Override public void mousePressed(MouseEvent e) {
+    Container popup = SwingUtilities.getAncestorOfClass(
+        JPopupMenu.class, e.getComponent());
+    rect.setSize(popup.getSize());
+    startDim.setSize(popup.getSize());
+    startPt.setLocation(e.getComponent().getLocationOnScreen());
+  }
+
+  @Override public void mouseDragged(MouseEvent e) {
+    rect.height = startDim.height + e.getLocationOnScreen().y - startPt.y;
+    Container c = SwingUtilities.getAncestorOfClass(
+        JPopupMenu.class, e.getComponent());
+    if (c instanceof JPopupMenu) {
+      JPopupMenu popup = (JPopupMenu) c;
+      popup.setPreferredSize(rect.getSize());
+      Window w = SwingUtilities.getWindowAncestor(popup);
+      if (w != null && w.getType() == Window.Type.POPUP) {
+        // Popup$HeavyWeightWindow
+        w.setSize(rect.width, rect.height);
+      } else {
+        // Popup$LightWeightWindow
+        popup.pack();
+      }
+    }
+  }
+}
+}}
+
+- `JComboBox`
+-- `JComboBox`本来のドロップダウンリストは`JComboBox.setMaximumRowCount(1)`で高さ最小、`JComboBox#getPreferredSize()`をオーバーライドして幅が上記の`JPopupMenu`以下になるよう設定し、`PopupMenuListener#popupMenuWillBecomeVisible(...)`で`JPopupMenu`を手前に重ねて表示
+-- %%手前に表示する`JPopupMenu`は`Invoker`を`JComboBox`ではなく`null`に設定しているので`SwingUtilities.getWindowAncestor(JLabel)`で`JPopupMenu`の親フレームが取得可能%%
+--- %%`Invoker`を`JComboBox`に設定すると`JComboBox`の親フレームが返ってきてしまう%%
+-- %%`Invoker`が`null`なので`JComboBox`の親フレームをクリックしたりリサイズしても`JPopupMenu`は自動的に非表示にはならない%%
+--- %%このサンプルではその親フレームに`ComponentListener`などを追加して`JPopupMenu`を非表示に変更している%%
+-- `Invoker`を`JComboBox`に設定
+--- `JPopupMenu`が親フレーム領域内に収まって`light weight popup`(`JPopupMenu#getTopLevelAncestor()`で`JComboBox`の親フレームが返ってくる)になる場合は`JPopupMenu#setPreferredSize(...) + JPopupMenu#pack()`でリサイズ
+--- `JPopupMenu`が親フレーム領域外に高さが拡大されて`heavy weight popup`(`JPopupMenu#getTopLevelAncestor()`で共用の`JWindow`が返ってくる)になる場合は`JPopupMenu#setPreferredSize(...) + JWindow#setSize(...)`でリサイズ
+
+- `JList`
+-- 手前に表示する`JPopupMenu`に追加した`JList`のアイテム選択と`JComboBox`のドロップダウンリストの選択状態を`ItemListener`を追加して同期
+-- `JList`に`MouseListener`を追加してダブルクリックで`JComboBox`の選択状態更新と`JPopupMenu`の非表示化を実行
+-- `GraphicsEnvironment#getAllFonts()`で取得したフォント名を一覧表示
+
+* 参考リンク [#reference]
+- [[JToggleButtonからポップアップメニューを開く>Swing/ToolButtonPopup]]
+- [[JWindow内にフォーカス可能なコンポーネントを配置する>Swing/JWindowFocus]]
+- [[JComboBoxのドロップダウンリストでセル配置をニュースペーパー・スタイルに設定する>Swing/HorizontalWrapComboPopup]]
+- [[Fontの一覧を取得する>Swing/AllFonts]]
+
+* コメント [#comment]
+#comment
+#comment

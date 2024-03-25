@@ -21,10 +21,9 @@ label.setBorder(BorderFactory.createCompoundBorder(outside, inside));
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`4`辺それぞれ異なる幅の直線を描画可能な`MatteBorder`を使用して左と下のみ枠を表示するラベルを作成しています。
-
-- `Border`として`Icon`をタイル状に描画することも可能
--- 参考: [[JComboBoxにアイコンを表示>Swing/IconComboBox]]
+- `4`辺それぞれ異なる幅の直線を描画可能な`MatteBorder`を使用して左(`10px`)と下(`1px`)のみフチを描画
+-- 内部余白を`EmptyBorder`で作成し、上記の`MatteBorder`と組み合わせて`CompoundBorder`を作成
+- [[JComboBoxにアイコンを表示>Swing/IconComboBox]]のように`Border`として`Icon`をタイル状に描画する方法もある
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/border/MatteBorder.html MatteBorder (Java Platform SE 8)]

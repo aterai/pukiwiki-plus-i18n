@@ -16,7 +16,8 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIJ0rZk-I/AAAAAAAAASU/Jv
 * サンプルコード [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
-  @Override public Component prepareEditor(TableCellEditor editor, int row, int column) {
+  @Override public Component prepareEditor(
+        TableCellEditor editor, int row, int column) {
     Component c = super.prepareEditor(editor, row, column);
     if (c instanceof JCheckBox) {
       JCheckBox b = (JCheckBox) c;
@@ -39,6 +40,6 @@ JTable table = new JTable(model) {
 
 * コメント [#comment]
 #comment
-- KBD{Ctrl}キーを押しながら選択されている行にある`JCheckBox`をマウスで選択すると、リリースするまで`JCheckBox`の背景色が残っている、`NimbusLookAndFeel`から別の`LookAndFeel`に変更すると選択色が残ってしまうなどの問題に対応しました。 -- &user(aterai); &new{2012-02-23 (木) 15:05:20};
+- KBD{Ctrl}キーを押しながら選択されている行にある`JCheckBox`をマウスで選択するとリリースするまで`JCheckBox`の背景色が残る、または`NimbusLookAndFeel`から別の`LookAndFeel`に変更すると選択色が残るなどの問題に対応。 -- &user(aterai); &new{2012-02-23 (木) 15:05:20};
 
 #comment

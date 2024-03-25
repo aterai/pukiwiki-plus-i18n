@@ -1,0 +1,88 @@
+---
+category: swing
+folder: ProgressMonitorProgressText
+title: ProgressMonitorを表示する進捗ダイアログのタイトルを変更する
+tags: [ProgressMonitor, JOptionPane, UIManager, UIDefaults]
+author: aterai
+pubdate: 2023-08-14T01:51:47+09:00
+description: ProgressMonitorを表示する進捗ダイアログのタイトル文字列をUIManagerを使用して変更します。
+image: https://drive.google.com/uc?id=16lSNILVyM6JQdkXhzj1drfgLXyS0DZPv
+---
+* 概要 [#summary]
+`ProgressMonitor`を表示する進捗ダイアログのタイトル文字列を`UIManager`を使用して変更します。
+
+#download(https://drive.google.com/uc?id=16lSNILVyM6JQdkXhzj1drfgLXyS0DZPv)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String key = "ProgressMonitor.progressText";
+JTextArea area = new JTextArea();
+area.setEditable(false);
+area.append(String.format("%s: %s%n", key, UIManager.getString(key)));
+
+JTextField textField = new JTextField("Title Progress...");
+JCheckBox check = new JCheckBox("Default");
+check.addActionListener(e -> textField.setEnabled(
+    !((JCheckBox) e.getSource()).isSelected()));
+
+ProgressMonitor monitor = new ProgressMonitor(this, "message", "note", 0, 100);
+JButton runButton = new JButton("run");
+runButton.addActionListener(e -> {
+  runButton.setEnabled(false);
+  String title = check.isSelected() ? null : textField.getText();
+  UIManager.put(key, title);
+  monitor.setProgress(0);
+  // ...
+}}
+
+* 解説 [#explanation]
+- `ProgressMonitor#setProgress(...)`が実行されて内部で`JOptionPane#createDialog(...)`で進捗ダイアログが作成されるときに`UIManager.getString("ProgressMonitor.progressText")`が実行されるので、その直前に`JTextField`から文字列を取得して`UIManager.put("ProgressMonitor.progressText", title)`で設定
+- `UIManager.put("ProgressMonitor.progressText", null)`が設定されている場合、`UIManager.getString("ProgressMonitor.progressText")`は現在の`Locale`の`ResourceBundle`から`ProgressMonitor.progress.textAndMnemonic`の値を参照して文字列を返す
+-- `JOptionPane`のタイトルバーに`Mnemonic`は設定不可のため`Text`のみ適用される
+
+#code{{
+// javax/swing/UIDefaults.java
+public Object get(Object key, Locale l) {
+  Object value = getFromHashtable(key);
+  return value != null ? value : getFromResourceBundle(key, l);
+}
+// ...
+
+/**
+ * <code>TextAndMnemonicHashMap</code> stores swing resource strings. Many of strings
+ * can have a mnemonic. For example:
+ *   FileChooser.saveButton.textAndMnemonic=&Save
+ * For this case method get returns "Save" for the key "FileChooser.saveButtonText" and
+ * mnemonic "S" for the key "FileChooser.saveButtonMnemonic"
+ *
+ * There are several patterns for the text and mnemonic suffixes which are checked by the
+ * <code>TextAndMnemonicHashMap</code> class.
+ * Patterns which are converted to the xxx.textAndMnemonic key:
+ * (xxxNameText, xxxNameMnemonic)
+ * (xxxNameText, xxxMnemonic)
+ * (xxx.nameText, xxx.mnemonic)
+ * (xxxText, xxxMnemonic)
+ *
+ * These patterns can have a mnemonic index in format
+ * (xxxDisplayedMnemonicIndex)
+ *
+ * Pattern which is converted to the xxx.titleAndMnemonic key:
+ * (xxxTitle, xxxMnemonic)
+ *
+ */
+private static class TextAndMnemonicHashMap extends HashMap<String, Object> {
+  static final String AND_MNEMONIC = "AndMnemonic";
+  static final String TITLE_SUFFIX = ".titleAndMnemonic";
+  static final String TEXT_SUFFIX = ".textAndMnemonic";
+
+  @Override public Object get(Object key) {
+    // ...
+}}
+
+* 参考リンク [#reference]
+- [[ProgressMonitorで処理の進捗を表示>Swing/ProgressMonitor]]
+- [https://github.com/openjdk/jdk8u-dev/blob/5f62e559fb5040c5d0021de4c3ee49e6fca6b087/jdk/src/share/classes/javax/swing/UIDefaults.java#L1214 jdk8u-dev/jdk/src/share/classes/javax/swing/UIDefaults.java ・ openjdk/jdk8u-dev ・ GitHub]
+
+* コメント [#comment]
+#comment
+#comment

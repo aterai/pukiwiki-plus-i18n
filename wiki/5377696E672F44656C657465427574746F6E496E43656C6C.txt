@@ -66,7 +66,7 @@ class DeleteButtonEditor extends DeleteButton implements TableCellEditor {
 }}
 
 * 解説 [#explanation]
-- セルレンダラーに使っている`JButton`は表示のためのダミー
+- セルレンダラーに使用する`JButton`は表示専用でクリックイベントなどは無視される
 - セルエディタとして使用する`JButton`に`ActionListener`を追加し、この`JButton`がクリックされたら`AbstractCellEditor`からコピーした`fireEditingStopped()`メソッドでセルの編集を終了し、`TableModel`から対象行を削除
 -- セルレンダラー、セルエディタがコンポーネント(もしくは`DefaultCellEditor`)を継承していないと`JTable`の`LookAndFeel`を変更てもセルレンダラー、セルエディタの`updateUI()`が呼ばれない
 --- `JTable#updateUI()`、`Java 1.6.0`の`JTable#updateSubComponentUI(...)`、`Java 1.7.0`の`SwingUtilities#updateRendererOrEditorUI(Object)`を参照
@@ -82,7 +82,7 @@ class DeleteButtonEditor extends DeleteButton implements TableCellEditor {
 * コメント [#comment]
 #comment
 - ボタンのセル内でマウスを移動しても削除するように変更。 -- &user(aterai); &new{2008-03-28 (金) 16:59:11};
--- メモ: %%`0`行目のボタンをクリックし、真上のヘッダ上でリリースしても削除可能%% 修正済み: [https://bugs.openjdk.java.net/browse/JDK-6291631 Bug ID: 6291631 JTable: rowAtPoint returns 0 for negative y] (追記: このバグは未修正になっているけど、`JDK 1.6, 1.7`などのソースではコメントにある修正が追加されている) -- &user(aterai); &new{2008-03-28 (金) 17:21:10};
+-- メモ: %%`0`行目のボタンをクリックし、真上のヘッダ上でリリースしても削除可能%% 修正済み: [https://bugs.openjdk.org/browse/JDK-6291631 Bug ID: 6291631 JTable: rowAtPoint returns 0 for negative y] (追記: このバグは未修正になっているけど、`JDK 1.6, 1.7`などのソースではコメントにある修正が追加されている) -- &user(aterai); &new{2008-03-28 (金) 17:21:10};
 
 #code{{
 //上記のBug Databaseにある回避方法

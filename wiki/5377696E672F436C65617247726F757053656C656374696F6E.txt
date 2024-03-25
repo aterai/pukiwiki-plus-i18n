@@ -15,12 +15,12 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTJDUnsHFI/AAAAAAAAATw/gk
 
 * サンプルコード [#sourcecode]
 #code(link){{
-List<? extends AbstractButton> l = Arrays.asList(
+List<? extends AbstractButton> buttons = Arrays.asList(
   new JRadioButton("RadioButton1"),
   new JRadioButton("RadioButton2"),
   new JToggleButton(icon));
 ButtonGroup bg = new ButtonGroup();
-for (AbstractButton b: l) {
+for (AbstractButton b: buttons) {
   bg.add(b);
   add(b);
 }

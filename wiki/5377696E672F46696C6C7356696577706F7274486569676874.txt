@@ -31,7 +31,7 @@ scroll.getViewport().setBackground(Color.GREEN);
 - `getFillsViewportHeight() == false`(デフォルト値)の場合
 -- 下部の余白は`JTable`ではないため`JViewport`の背景色(緑)が表示される
 --- [[JTableの背景色を変更>Swing/TableBackground]]
--- `JScrollPane`、または`JViewport`に`setComponentPopupMenu`したりリスナーを設定していないため下部の余白で右クリックしてもポップアップメニューは無効
+-- `JScrollPane`、または`JViewport`に`setComponentPopupMenu(...)`で`JPopupMenu`は未設定で、マウスリスナーも設定していないため下部の余白で右クリックしてもポップアップメニューは無効
 
 - `getFillsViewportHeight() == true`の場合
 -- `JTable`の高さが`JViewport`の高さより小さい時は両者が同じ高さになるように`JTable`が拡張される

@@ -37,13 +37,14 @@ tab1.setUI(new BasicTabbedPaneUI() {
     Rectangle tabRect = rects[tabIndex];
     Rectangle rect = new Rectangle(textRect.x + tabInsets.left, textRect.y,
       tabRect.width - tabInsets.left - tabInsets.right, textRect.height);
-    String clippedText = SwingUtilities.layoutCompoundLabel(metrics, title, null,
-                                    SwingUtilities.CENTER, SwingUtilities.CENTER,
-                                    SwingUtilities.CENTER, SwingUtilities.TRAILING,
-                                    rect, new Rectangle(), rect, 0);
+    String clippedText = SwingUtilities.layoutCompoundLabel(
+      metrics, title, null,
+      SwingUtilities.CENTER, SwingUtilities.CENTER,
+      SwingUtilities.CENTER, SwingUtilities.TRAILING,
+      rect, new Rectangle(), rect, 0);
     if (title.equals(clippedText)) {
-      super.paintText(g, tabPlacement, font, metrics, tabIndex,
-                      title, textRect, isSelected);
+      super.paintText(
+        g, tabPlacement, font, metrics, tabIndex, title, textRect, isSelected);
     } else {
       rect = new Rectangle(textRect.x + tabInsets.left, textRect.y,
         tabRect.width - tabInsets.left - tabInsets.right, textRect.height);
@@ -55,7 +56,7 @@ tab1.setUI(new BasicTabbedPaneUI() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`BasicTabbedPaneUI#calculateTabWidth(...)`メソッドをオーバーライドして、`JTabbedPane`のタブ幅が、すべて等しくなるように設定しています。
+上記のサンプルでは、`BasicTabbedPaneUI#calculateTabWidth(...)`メソッドをオーバーライドして、`JTabbedPane`のタブ幅がすべて等しくなるように設定しています。
 
 - タイトル文字列のほうがこのタブ幅より長い場合は`SwingUtilities.layoutCompoundLabel(...)`メソッドで文字列をクリップして表示
 - タイトルがクリップされていてもツールチップで元の文字列を表示する

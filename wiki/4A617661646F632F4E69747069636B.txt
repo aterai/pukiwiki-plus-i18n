@@ -14,7 +14,7 @@ description: Java クラスドキュメントで、オリジナルの英語版�
 - https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicTreeUI.html
 -- Will return null if any component in path is currently valid.
 -- 意味が逆になっている
-- [https://bugs.openjdk.java.net/browse/JDK-8047749 &#91;JDK-8047749&#93; javadoc for getPathBounds() in TreeUI and BasicTreeUI is incorrect - Java Bug System]で以下のように修正される
+- [https://bugs.openjdk.org/browse/JDK-8047749 &#91;JDK-8047749&#93; javadoc for getPathBounds() in TreeUI and BasicTreeUI is incorrect - Java Bug System]で以下のように修正される
 -- Will return null if any component in path is currently invalid.
 
 ** TreePathのサンプルコードに非互換タイプエラー [#p756b32f]
@@ -25,7 +25,7 @@ DefaultMutableTreeNode selectedNode =
   .getUserObject();
 }}
 
-- [https://bugs.openjdk.java.net/browse/JDK-8054449 &#91;JDK-8054449&#93; Incompatible type in example code in TreePath - Java Bug System]で以下のように修正される
+- [https://bugs.openjdk.org/browse/JDK-8054449 &#91;JDK-8054449&#93; Incompatible type in example code in TreePath - Java Bug System]で以下のように修正される
 #code{{
 DefaultMutableTreeNode selectedNode =
   (DefaultMutableTreeNode) selectedPath.getLastPathComponent();
@@ -62,7 +62,7 @@ Object myObject= selectedNode.getUserObject();
 - 修正案
 -- `translateMouseEvent()`というメソッドはどこにも存在しない？
 - 参考
--- [https://bugs.openjdk.java.net/browse/JDK-8049533 JDK-8049533 SwingUtilities.convertMouseEvent misses MouseWheelEvent.preciseWheelRotation - Java Bug System]
+-- [https://bugs.openjdk.org/browse/JDK-8049533 JDK-8049533 SwingUtilities.convertMouseEvent misses MouseWheelEvent.preciseWheelRotation - Java Bug System]
 -- `Java 9`で`MouseWheelEvent`がコピーされない件は修正されているが、同時に指摘されている`translateMouseEvent()`などは未修正
 
 ** SwingConstants#VERTICAL [#i122ead5]
@@ -85,7 +85,7 @@ Object myObject= selectedNode.getUserObject();
 - 修正案
 -- If newValue is true,
 - メモ
--- [https://bugs.openjdk.java.net/browse/JDK-8026776 JDK-8026776 Broken API names in API doc - Java Bug System]で既出
+-- [https://bugs.openjdk.org/browse/JDK-8026776 JDK-8026776 Broken API names in API doc - Java Bug System]で既出
 --- https://docs.oracle.com/javase/jp/8/docs/api/java/net/URLConnection.html のgetLastModifedなど
 
 ** TableModelevent [#e8b81142]
@@ -109,7 +109,7 @@ Object myObject= selectedNode.getUserObject();
 ** TableModel#isCellEditable(...) [#m34adfd8]
 - https://docs.oracle.com/javase/8/docs/api/javax/swing/table/TableModel.html#isCellEditable-int-int-
 -- Returns true if the cell at rowIndex and columnIndex is editable. Otherwise, setValueAt on the cell will not change the value of that cell.
--- [https://bugs.openjdk.java.net/browse/JDK-4292804 Bug ID: 4292804 DefaultTableModel doc confusion between isCellEditable and setValueAt]
+-- [https://bugs.openjdk.org/browse/JDK-4292804 Bug ID: 4292804 DefaultTableModel doc confusion between isCellEditable and setValueAt]
 --- DefaultTableModel は修正されている？、TableModel は関係ない？
 
 ** 文字化け？ [#j58229fa]
@@ -182,7 +182,7 @@ String propnames[] = (String[]) Toolkit.getDefaultToolkit()
 
 ** JSpinnerサンプルコード [#nc09884d]
 - https://docs.oracle.com/javase/8/docs/api/javax/swing/JSpinner.html
--- [https://bugs.openjdk.java.net/browse/JDK-5109918 JDK-5109918 Wrong documentation for JSpinner.DateEditor constructor - Java Bug System]
+-- [https://bugs.openjdk.org/browse/JDK-5109918 JDK-5109918 Wrong documentation for JSpinner.DateEditor constructor - Java Bug System]
 
 - 余計な`{`がある。
 -- `catch (ParseException pe) {{`
@@ -209,17 +209,17 @@ IllegalArgumentException - newModel が null の場合
 ** Htmlの表がずれている [#p5e32821]
 - https://docs.oracle.com/javase/8/docs/api/java/awt/Container.html#setFocusTraversalKeys-int-java.util.Set-
 -- KeyboardFocusManager.DOWN_CYCLE_TRAVERSAL_KEYS,	1 つ下のフォーカストラバーサルサイクルに移動	none
-- [https://bugs.openjdk.java.net/browse/JDK-4470006 Bug ID: 4470006 Table shown for Traversal Keys in setDefaultFocusTraversalKeys() not proper]
+- [https://bugs.openjdk.org/browse/JDK-4470006 Bug ID: 4470006 Table shown for Traversal Keys in setDefaultFocusTraversalKeys() not proper]
 -- Submit Date 	14-JUN-2001
 - [https://docs.oracle.com/javase/9/docs/api/java/awt/Container.html#setFocusTraversalKeys-int-java.util.Set- Container#setFocusTraversalKeys(...) (Java SE 9 & JDK 9)]
 
 ** setAlignmentX, setAlignmentY, getAlignmentX, getAlignmentY javadoc of JComponent [#ueae105a]
-- [https://bugs.openjdk.java.net/browse/JDK-8068374 JDK-8068374 setAlignmentX, setAlignmentY, getAlignmentX, getAlignmentY javadoc of JComponent - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-8068374 JDK-8068374 setAlignmentX, setAlignmentY, getAlignmentX, getAlignmentY javadoc of JComponent - Java Bug System]
 
 水平と垂直が実際の動作と入れ替わっている。
 
 ** DateTimeFormatter week-of-month [#yda50306]
-- [https://bugs.openjdk.java.net/browse/JDK-8169482 JDK-8169482 java.time.DateTimeFormatter javadoc: F is not week-of-month - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-8169482 JDK-8169482 java.time.DateTimeFormatter javadoc: F is not week-of-month - Java Bug System]
 - [https://stackoverflow.com/questions/40389916/java-8-dateformatter-week-of-month-and-year-key-symbols-difference time - Java 8 DateFormatter week of month and year key symbols difference - Stack Overflow]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/time/format/DateTimeFormatter.html#patterns DateTimeFormatter (Java Platform SE 8)]
 - パターン文字の`W`と`F`が両方`week-of-month`になっている
@@ -230,7 +230,7 @@ IllegalArgumentException - newModel が null の場合
 - https://docs.oracle.com/javase/8/docs/api/javax/swing/JEditorPane.html#scrollToReference-java.lang.String-
 -- that is, the value returned by the `UL.getRef` method for the `URL` being displayed
 -- `UL.getRef`は[https://docs.oracle.com/javase/8/docs/api/java/net/URL.html#getRef-- URL#getRef()]のtypo
--- `Java 9`、`Java 10`で修正済み [https://bugs.openjdk.java.net/browse/JDK-8182350 &#91;JDK-8182350&#93; Spelling mistake in javadoc: javax.swing.JEditorPane.scrollToReference(String) - Java Bug System]
+-- `Java 9`、`Java 10`で修正済み [https://bugs.openjdk.org/browse/JDK-8182350 &#91;JDK-8182350&#93; Spelling mistake in javadoc: javax.swing.JEditorPane.scrollToReference(String) - Java Bug System]
 
 * コメント [#comment]
 #comment

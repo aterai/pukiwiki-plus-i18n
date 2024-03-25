@@ -156,8 +156,8 @@ class DragHandler extends MouseAdapter {
 
 - ドラッグされて移動対象になった`JLabel`(アイコン)は親`JToolBar`から削除され、透明な別`JWindow`に移動
 -- `JWindow`なので元のフレームの外側でも表示可能
-- ドロップする位置に`JWindow`が移動してきた場合、`JToolBar`に`Box.createHorizontalStrut(24);`で作成したアイコンと同じ幅の`Box`を配置
-- `JLabel`がドロップされるとダミーの`Box`は削除され`JLabel`と入れ替わる
+- ドロップする位置に`JWindow`が移動してきた場合、`JToolBar`に`Box.createHorizontalStrut(24);`で作成したアイコンと同じ幅の間隔維持用の仮`Box`を配置
+- `JLabel`がドロップされると上記の仮`Box`は削除され`JLabel`と入れ替わる
 -- `JWindow`は非表示に設定
 -- `JToolBar`以外の場所にドロップされた場合はドラッグ前の位置に`JLabel`を戻す
 

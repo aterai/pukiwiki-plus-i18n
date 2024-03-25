@@ -104,13 +104,14 @@ class SiteComboBoxLayout implements LayoutManager {
 - `JLabel`に`Favicon`を設定して左端に追加配置
 
 ----
-- `RolloverIcon`は元のアイコンに以下のようなフィルタを掛けて作成
+- `RolloverIcon`は元のアイコンに以下のようなフィルタを掛けて作成している
 
 #code{{
 // RGBImageFilter を使用
 private static ImageIcon makeFilteredImage(ImageIcon srcIcon) {
   RGBImageFilter filter = new SelectedImageFilter();
-  FilteredImageSource fis = new FilteredImageSource(srcIcon.getImage().getSource(), filter);
+  FilteredImageSource fis = new FilteredImageSource(
+      srcIcon.getImage().getSource(), filter);
   return new ImageIcon(Toolkit.getDefaultToolkit().createImage(fis));
 }
 

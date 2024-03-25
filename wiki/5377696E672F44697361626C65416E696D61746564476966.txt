@@ -29,7 +29,7 @@ JLabel label2 = new JLabel() {
 上記のサンプルでは、`JLabel#isEnabled()`が`false`の場合は`setIcon()`メソッドで設定した`Animated Gif`のアニメーションを停止するなどのテストを行っています。
 
 - `Default`
--- デフォルトの`JLabel`では`JLabel#setEnabled(false);`としてもアニメーションは停止しない
+-- デフォルトの`JLabel`では`JLabel#setEnabled(false)`を設定してもアニメーションは停止しない
 - `Override imageUpdate(...)`
 -- `JLabel#imageUpdate(...)`の`infoflags`から`FRAMEBITS`フラグを落とすことでアニメーションを停止
 -- `JLabel`がリサイズされると？コマが進んでしまう

@@ -193,8 +193,8 @@ class CheckComboBoxRenderer<E extends ComboItem> implements ListCellRenderer<E> 
 - `setEditable(true), setRenderer(...), setEditor(...)`
 -- 編集可能な`JComboBox`にレンダラーとエディタとして複数の`JCheckBox`と`JTextField`を配置した`JPanel`を使用
 -- 編集可能な`JComboBox`のエディタとして設定した`JPanel`がそのまま使用されるため`JCheckBox`などに設定した`ActionListener`なども有効
---- 左`JCeckBox`: 右`JCeckBox`と`JTextField`の`setEnabled(...)`を切り替える
---- 右`JCeckBox`: `JTextField`の`setEditable(...)`を切り替える
+--- 左`JCheckBox`: 右`JCheckBox`と`JTextField`の`setEnabled(...)`を切り替える
+--- 右`JCheckBox`: `JTextField`の`setEditable(...)`を切り替える
 
 * 参考リンク [#reference]
 - [[JComboBoxのEditorComponentにJButtonを配置>Swing/ButtonInComboEditor]]

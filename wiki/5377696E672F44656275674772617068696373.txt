@@ -1,0 +1,61 @@
+---
+category: swing
+folder: DebugGraphics
+title: DebugGraphicsを使用してJComponentの描画をデバッグする
+tags: [Graphics, DebugGraphics, RepaintManager, JComponent]
+author: aterai
+pubdate: 2023-02-20T01:26:44+09:00
+description: GraphicsのサブクラスであるDebugGraphicsを使用してJComponentの描画をデバッグします。
+image: https://drive.google.com/uc?id=1WDlKL0YJoviSNVrMmNEA08psSkb2-h1a
+---
+* 概要 [#summary]
+`Graphics`のサブクラスである`DebugGraphics`を使用して`JComponent`の描画をデバッグします。
+
+#download(https://drive.google.com/uc?id=1WDlKL0YJoviSNVrMmNEA08psSkb2-h1a)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String[] columnNames = {"String", "Integer", "Boolean"};
+Object[][] data = {
+    {"aaa", 12, true}, {"bbb", 5, false}, {"ccc", 92, true}
+};
+TableModel model = new DefaultTableModel(data, columnNames) {
+  @Override public Class<?> getColumnClass(int column) {
+    return getValueAt(0, column).getClass();
+  }
+};
+JTable table = new JTable(model);
+table.setAutoCreateRowSorter(true);
+
+RepaintManager repaintManager = RepaintManager.currentManager(table);
+repaintManager.setDoubleBufferingEnabled(false);
+table.setDebugGraphicsOptions(DebugGraphics.BUFFERED_OPTION
+    | DebugGraphics.FLASH_OPTION
+    | DebugGraphics.LOG_OPTION);
+}}
+
+* 解説 [#explanation]
+- `JComponent#paintComponent(Graphics)`などの描画で使用する`Graphics`をそのサブクラスである`DebugGraphics`に変更して描画を数回赤色で点滅したり速度を遅くしてデバッグを行う
+-- `JComponent#setDebugGraphicsOptions(...)`で以下のようなオプションを設定すれば自動的に`DebugGraphics`が使用されるよう変更される
+--- `DebugGraphics.LOG_OPTION` テキスト・メッセージを出力する
+--- `DebugGraphics.FLASH_OPTION` 描画を数回点滅させる
+--- `DebugGraphics.BUFFERED_OPTION` `View`のオフスクリーン・バッファで実行された処理を表示する`ExternalWindow`を作成する
+--- `DebugGraphics.NONE_OPTION` デバッグを無効にする
+--- 値がゼロの場合はデバッグ・オプションを変更しない
+- `DebugGraphics`を使用する場合、コンポーネントのダブルバッファリング設定をオフにする必要がある
+#code{{
+RepaintManager repaintManager = RepaintManager.currentManager(component);
+repaintManager.setDoubleBufferingEnabled(false);
+}}
+
+- 上記のサンプルでは`JTable`の描画を遅くしてデバッグしている
+-- デバッグ用に描画速度が遅くなるので、たとえば`WindowsLookAndFeel`でフォーカスボーダーの点線を描画すると`1`ドットごとにウェイトを入れて描画されるので長時間マウス操作などを受け付けなくなる
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DebugGraphics.html DebugGraphics (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#setDebugGraphicsOptions-int- JComponent#setDebugGraphicsOptions(...) (Java Platform SE 8)]
+- [[Swingコンポーネントの再描画をJXLayerのDebugPainterを使ってデバッグ>>Tips/DebugPainterAgent]]
+
+* コメント [#comment]
+#comment
+#comment

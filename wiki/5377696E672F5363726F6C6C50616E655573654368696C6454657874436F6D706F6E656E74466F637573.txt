@@ -1,0 +1,49 @@
+---
+category: swing
+folder: ScrollPaneUseChildTextComponentFocus
+title: NimbusLookAndFeelで子テキストコンポーネントのフォーカスボーダーを親JScrollPaneに適用する
+tags: [JScrollPane, JTextComponent, NimbusLookAndFeel, Focus, UIManager]
+author: aterai
+pubdate: 2022-09-12T03:52:41+09:00
+description: NimbusLookAndFeelでJScrollPaneのビューポートにテキストコンポーネントがひとつだけ配置されている場合、そのフォーカスボーダーを親JScrollPaneに適用するかを切り替えます。
+image: https://drive.google.com/uc?id=1wHPpe9jRQbjdxqHXxX0WlG6cOm48FUzL
+---
+* 概要 [#summary]
+`NimbusLookAndFeel`で`JScrollPane`のビューポートにテキストコンポーネントがひとつだけ配置されている場合、そのフォーカスボーダーを親`JScrollPane`に適用するかを切り替えます。
+
+#download(https://drive.google.com/uc?id=1wHPpe9jRQbjdxqHXxX0WlG6cOm48FUzL)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+StringBuilder buf = new StringBuilder();
+IntStream.range(0, 100).forEach(i -> buf.append(i).append(LF));
+String str = buf.toString();
+JScrollPane scroll = new JScrollPane(new JTextArea(str));
+
+String key = "ScrollPane.useChildTextComponentFocus";
+JCheckBox check = new JCheckBox(key, UIManager.getBoolean(key));
+check.addActionListener(e -> {
+  UIManager.put(key, ((JCheckBox) e.getSource()).isSelected());
+  SwingUtilities.updateComponentTreeUI(scroll);
+});
+
+JPanel p = new JPanel(new GridLayout(1, 2));
+p.add(new JScrollPane(new JTextArea(str)));
+p.add(scroll);
+}}
+
+* 解説 [#explanation]
+- `ScrollPane.useChildTextComponentFocus: true`
+-- `NimbusLookAndFeel`のデフォルト
+-- `JScrollPane`のビューポートにテキストコンポーネントがひとつだけ配置されている場合、そのフォーカスボーダーを親`JScrollPane`に適用する
+-- `SynthScrollPaneUI`を継承する`ScrollPaneUI`でのみ有効で、`BasicScrollPaneUI`を使用する`MetalLookAndFeel`などでは無効
+- `ScrollPane.useChildTextComponentFocus: false`
+-- `JScrollPane`のビューポートにテキストコンポーネントがひとつだけ配置されている場合でも、そのフォーカスボーダーを親`JScrollPane`に適用しない
+-- テキストコンポーネントが`JLayer`でラップされている場合でも無効で内部のテキストコンポーネントにフォーカスボーダーが適用される
+
+* 参考リンク [#reference]
+- [[Nimbusの外観をUIDefaultsで変更する>Swing/UIDefaultsOverrides]]
+
+* コメント [#comment]
+#comment
+#comment

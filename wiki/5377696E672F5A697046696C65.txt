@@ -80,7 +80,7 @@ public static void unzip(Path zipFilePath, Path destDir) throws IOException {
 
 * 解説 [#explanation]
 - `Zip`
--- `JFileChooser#setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)`を設定して、ディレクトリのみ表示する`JFileChooser`で`zip`圧縮する対象ディレクトリを選択
+-- `JFileChooser#setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)`を設定し、ディレクトリ表示用`JFileChooser`で`zip`圧縮対象ディレクトリを選択
 -- `Files.walk(...)`で対象ディレクトリ内を検索しパスを`ZipEntry`に変換して`ZipOutputStream`に追加、`Files.copy(...)`で書き出し
 #code{{
 public static void zip(Path srcDir, Path zip) throws IOException {

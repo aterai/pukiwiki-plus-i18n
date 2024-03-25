@@ -48,7 +48,7 @@ class PlaceholderFocusListener implements FocusListener {
 上記のサンプルでは、`JTextField`からフォーカスが失われた時にまだ何も入力されていない場合はその`JTextField`の説明などを透かし文字として薄く表示しています。
 
 ----
-- `JDK 1.7.0`以上の場合は`JLayer`を使用して同様にヒント文字列を描画可能
+- `Java 1.7.0`以上の場合`JLayer`を使用して同様にヒント文字列を描画可能
 
 #code{{
 class PlaceholderLayerUI extends LayerUI<JTextComponent> {
@@ -100,7 +100,7 @@ class PlaceholderLayerUI extends LayerUI<JTextComponent> {
 * 参考リンク [#reference]
 - [[JTextFieldに透かし画像を表示する>Swing/WatermarkInTextField]]
 - [[JPasswordFieldにヒント文字列を描画する>Swing/InputHintPasswordField]]
--- `JPasswordField`の場合、`setText(String)`は使用できないので、透かし画像と同じ要領で`paintComponent`をオーバーライドして文字列を描画
+-- `JPasswordField`の場合`setText(String)`は使用できないので透かし画像と同じ要領で`paintComponent`をオーバーライドして文字列を描画
 - [[JComboBoxでアイテムが選択されていない場合のプレースホルダ文字列を設定する>Swing/ComboBoxPlaceholder]]
 
 * コメント [#comment]

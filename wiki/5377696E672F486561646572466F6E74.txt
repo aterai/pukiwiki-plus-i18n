@@ -34,11 +34,11 @@ class HeaderRenderer implements TableCellRenderer {
 
 - 同様の方法で文字色、背景色、ボーダー、文字の中央揃え、右揃えなども変更可能
 -- 字揃えを変更する場合の注意点: [[JTableHeaderの字揃えを変更>Swing/HorizontalAlignmentHeaderRenderer]]
-- コメントで&user(いつも見てます);さんが指摘しているように、`JTableHeader#setFont()`メソッドを使用すると全カラムヘッダのフォントを指定可能
+- コメントで&user(いつも見てます);さんが指摘しているように`JTableHeader#setFont()`メソッドを使用すると全カラムヘッダのフォントを指定可能
 #code{{
 table.getTableHeader().setFont(font);
 }}
-- すべての`JTable`のヘッダを同じフォントや文字色で変更する場合は、以下のように`UIManager`を使用する方法もある
+- すべての`JTable`のヘッダを同じフォントや文字色で変更する場合は以下のように`UIManager`を使用する方法もある
 #code{{
 UIManager.put("TableHeader.font", new FontUIResource(font));
 }}

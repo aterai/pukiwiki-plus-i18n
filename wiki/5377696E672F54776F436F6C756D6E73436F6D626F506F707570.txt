@@ -1,0 +1,66 @@
+---
+category: swing
+folder: TwoColumnsComboPopup
+title: JComboBoxのドロップダウンリストを2段に変更する
+tags: [JComboBox, JList, JPopupMenu, Border]
+author: aterai
+pubdate: 2023-08-28T07:43:46+09:00
+description: JComboBoxのドロップダウンリストのレイアウトに変更してリストアイテムを2段で表示する
+image: https://drive.google.com/uc?id=1__jrNNiwQkWDlF79S88zv3rKhSUvc3Ci
+---
+* 概要 [#summary]
+`JComboBox`のドロップダウンリストのレイアウトに変更してリストアイテムを`2`段で表示する
+
+#download(https://drive.google.com/uc?id=1__jrNNiwQkWDlF79S88zv3rKhSUvc3Ci)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+ComboBoxModel<String> model = makeModel();
+int rowCount = (model.getSize() + 1) / 2;
+JComboBox<String> combo = new JComboBox<String>(model) {
+  @Override public Dimension getPreferredSize() {
+    Insets i = getInsets();
+    Dimension d = super.getPreferredSize();
+    int w = Math.max(100, d.width);
+    int h = d.height;
+    int buttonWidth = 20; // ???
+    return new Dimension(
+        buttonWidth + w + i.left + i.right, h + i.top + i.bottom);
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    setMaximumRowCount(rowCount);
+    setPrototypeDisplayValue("12345");
+    Accessible o = getAccessibleContext().getAccessibleChild(0);
+    if (o instanceof ComboPopup) {
+      JList<?> list = ((ComboPopup) o).getList();
+      list.setLayoutOrientation(JList.VERTICAL_WRAP);
+      list.setVisibleRowCount(rowCount);
+      Border b0 = list.getBorder();
+      Border b1 = new ColumnRulesBorder();
+      list.setBorder(BorderFactory.createCompoundBorder(b0, b1));
+      list.setFixedCellWidth((getPreferredSize().width - 2) / 2);
+    }
+  }
+};
+}}
+
+* 解説 [#explanation]
+- `JComboBox#getAccessibleContext()#getAccessibleChild(0)`で`ComboPopup`を取得
+- `ComboPopup#getList()`でドロップダウンリストに配置される`JList`を取得
+- セルの配置方法を垂直方向の次に水平方向の順で並ぶ「ニュースペーパー・スタイル」レイアウトに変更
+-- `JList#setMaximumRowCount((model.getSize() + 1) / 2)`で常に2列になるよう最大行数を調整
+-- [[JComboBoxのドロップダウンリストでセル配置をニュースペーパー・スタイルに設定する>Swing/HorizontalWrapComboPopup]]
+- `JList`の推奨サイズ中央に`ColumnRulesBorder`で段間罫線を描画
+-- [[JMenuから開くポップアップウィンドウのレイアウトを2列に変更する>Swing/TwoColumnsMenu]]
+- `NimbusLookAndFeel`や`MotifLookAndFeel`でリストアイテムの幅が段幅を超える場合がある？
+-- マウスカーソルの移動で左右に段がスクロール？する
+
+* 参考リンク [#reference]
+- [[JMenuから開くポップアップウィンドウのレイアウトを2列に変更する>Swing/TwoColumnsMenu]]
+- [[JComboBoxのドロップダウンリストでセル配置をニュースペーパー・スタイルに設定する>Swing/HorizontalWrapComboPopup]]
+
+* コメント [#comment]
+#comment
+#comment

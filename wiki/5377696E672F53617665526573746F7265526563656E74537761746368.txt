@@ -1,0 +1,79 @@
+---
+category: swing
+folder: SaveRestoreRecentSwatch
+title: JColorChooserのSwatchesタブに配置されたRecentカラーパレットを保存、復元する
+tags: [JColorChooser, JPanel]
+author: aterai
+pubdate: 2023-08-21T02:00:07+09:00
+description: JColorChooserのサンプル(Swatches)タブに配置されている最新(Recent)カラーパレットを保存、復元可能になるよう設定します。
+image: https://drive.google.com/uc?id=1TgGl797HaTynH4nyLDgHODJ8fj7HbJ4Y
+---
+* 概要 [#summary]
+`JColorChooser`のサンプル(`Swatches`)タブに配置されている最新(`Recent`)カラーパレットを保存、復元可能になるよう設定します。
+
+#download(https://drive.google.com/uc?id=1TgGl797HaTynH4nyLDgHODJ8fj7HbJ4Y)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+RecentSwatchPanel switchPanel = new RecentSwatchPanel();
+switchPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+switchPanel.colors[0] = Color.RED;
+switchPanel.colors[1] = Color.GREEN;
+switchPanel.colors[2] = Color.BLUE;
+
+JButton button = new JButton("open JColorChooser");
+button.addActionListener(e -> {
+  JColorChooser cc = new JColorChooser();
+  AbstractColorChooserPanel[] panels = cc.getChooserPanels();
+  List<AbstractColorChooserPanel> choosers =
+      new ArrayList<>(Arrays.asList(panels));
+  choosers.remove(0);
+  MySwatchChooserPanel swatch = new MySwatchChooserPanel();
+  swatch.addPropertyChangeListener("ancestor", event -> {
+    Color[] colors = swatch.recentSwatchPanel.colors;
+    if (event.getNewValue() == null) {
+      System.arraycopy(
+          colors, 0, switchPanel.colors, 0, colors.length);
+    } else {
+      System.arraycopy(
+          switchPanel.colors, 0, colors, 0, colors.length);
+    }
+  });
+  choosers.add(0, swatch);
+  cc.setChooserPanels(choosers.toArray(new AbstractColorChooserPanel[0]));
+
+  ColorTracker ok = new ColorTracker(cc);
+  Component parent = getRootPane();
+  String title = "JColorChooser";
+  JDialog dialog = JColorChooser.createDialog(
+      parent, title, true, cc, ok, null);
+  dialog.addComponentListener(new ComponentAdapter() {
+    @Override public void componentHidden(ComponentEvent e) {
+      ((Window) e.getComponent()).dispose();
+    }
+  });
+  dialog.setVisible(true);
+  switchPanel.repaint();
+  Color color = ok.getColor();
+  if (color != null) {
+    label.setBackground(color);
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `JColorChooser`をシリアライズしてもサンプル(`Swatches`)タブで使用される最新(`Recent`)カラーパレットは保存、復元不可(未対応？)
+- また、サンプル(`Swatches`)タブで使用される`DefaultSwatchChooserPanel`はパッケージプライベートなので、これをコピーして`MySwatchChooserPanel`を作成
+-- 最新(`Recent`)カラーパレット用の`RecentSwatchPanel`もパッケージプライベートなのでこれをパブリックに変更し、外部から操作可能に変更
+- `JColorChooser#setChooserPanels(...)`で`MySwatchChooserPanel`を使用するサンプル(`Swatches`)パネルを差し替え
+-- [https://stackoverflow.com/questions/10793916/jcolorchooser-save-restore-recent-colors-in-swatches-panel java - JColorChooser: Save/restore recent colors in Swatches panel - Stack Overflow]
+- サンプル(`Swatches`)パネルに`PropertyChangeListener`を追加:
+-- 親パネルへの追加イベントで最新(`Recent`)カラーパレットへの色配列復元を実行
+-- 親パネルからの削除イベントで最新(`Recent`)カラーパレットからの色配列取得を実行
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/10793916/jcolorchooser-save-restore-recent-colors-in-swatches-panel java - JColorChooser: Save/restore recent colors in Swatches panel - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

@@ -32,7 +32,6 @@ combo.addActionListener(e -> {
 
 * 解説 [#explanation]
 `JComboBox`
-
 - `ItemListener`
 -- `ItemEvent#getItemSelectable()`でイベント元の`JComboBox`が取得可能
 -- `ItemEvent#getItem()`で`JComboBox`で選択されたアイテムが取得可能
@@ -46,7 +45,6 @@ combo.addActionListener(e -> {
 -- `JComboBox`の同じアイテムを選択しても`ActionEvent`は発生する
 
 `JCheckBox`
-
 - `ItemListener`
 -- `ItemEvent#getItemSelectable()`、または`ItemEvent#getItem()`でイベント元の`JCheckBox`が取得可能
 -- `ItemEvent#getStateChange()`で`JCheckBox`が選択されたかを取得可能
@@ -58,13 +56,12 @@ combo.addActionListener(e -> {
 -- `JCheckBox#setSelected(...)`メソッドなどを使用して`JCheckBox`の状態を変更しても、`ActionEvent`は発生しない
 
 `JRadioButton`(`ButtonGroup`)
-
 - `ItemListener`
 -- `ItemEvent#getItemSelectable()`、または`ItemEvent#getItem()`でイベント元の`JCheckBox`が取得可能
 -- `ItemEvent#getStateChange()`で`JRadioButton`が選択されたかを取得可能
 -- `JRadioButton#setSelected(...)`メソッドなどを使用して`JRadioButton`を直接マウスやキー入力で操作しなくても、`ItemEvent`は発生する
 -- `JRadioButton#setSelected(...)`メソッドを使用しても選択状態が変化しない場合、`ItemEvent`は発生しない
--- 注: `ButtonGroup#getSelection()`は`JRadioButton#setSelected(...)`メソッドを使用して選択変更した場合は`null`、マウスなどで選択変更した場合はその`ButtonModel`を返す
+-- `ButtonGroup#getSelection()`は`JRadioButton#setSelected(...)`メソッドを使用して選択変更した場合は`null`、マウスなどで選択変更した場合はその`ButtonModel`を返す
 - `ActionListener`
 -- `ActionEvent#getSource()`でイベント元の`JRadioButton`が取得可能
 -- デフォルトの`JRadioButton`は`ActionEvent#getActionCommand()`で`JRadioButton#getText()`と同じ値を返す

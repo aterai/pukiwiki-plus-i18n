@@ -79,8 +79,8 @@ class TableHeaderPopupMenu extends JPopupMenu {
 -- `TableColumnModel`に列は追加されて`JTableHeader`にも表示されるが、`TableModel`は初期状態から変化しない
 
 ----
-- `Java 9`以上で`UIManager.put("CheckBoxMenuItem.doNotCloseOnMouseClick", true);`を設定し、`JPopupMenu`を開いたまま現在選択状態の`TableColumn`を`JCheckBoxMenuItem`で非表示に切り替えると`ArrayIndexOutOfBoundsException`が発生する
--- `PopupMenuListener`を`JPopupMenu`に追加、または`JPopupMenu#show(...)`メソッドをオーバーライドして`JTableHeader.setDraggedColumn(null);`で選択状態をクリアすることで回避可能
+- `Java 9`以上で有効な`UIManager.put("CheckBoxMenuItem.doNotCloseOnMouseClick", true)`を設定し、`JPopupMenu`を開いたまま現在選択状態の`TableColumn`を`JCheckBoxMenuItem`で非表示に切り替えると`ArrayIndexOutOfBoundsException`が発生する
+-- `PopupMenuListener`を`JPopupMenu`に追加、または`JPopupMenu#show(...)`メソッドをオーバーライドして`JTableHeader.setDraggedColumn(null)`で選択状態をクリアすれば回避が可能
 
 * 参考リンク [#reference]
 - [[JTableHeaderにJPopupMenuを追加してソート>Swing/RowSorterPopupMenu]]

@@ -41,10 +41,7 @@ try {
 * 解説 [#explanation]
 `Web Start`アプリケーションの場合、`javax.jnlp.SingleInstanceService`に`SingleInstanceListener`を追加することで、新しい次のインスタンスの起動やその時の引数取得などが可能になります。
 
-- %%メモ: `JDK 1.6.0_03`では`SingleInstanceService`は正常に動作しない%%
--- `JDK 1.6.0_10`で修正済み
-
-----
+// - %%メモ: `JDK 1.6.0_03`では`SingleInstanceService`は正常に動作しない%% `JDK 1.6.0_10`で修正済み
 - コンパイルに`javaws.jar`が必要なので以下のようなクラスパスを設定
  set CLASSPATH=%JAVA_HOME%/jre/lib/javaws.jar
 - または`build.xml`などに記入
@@ -60,7 +57,7 @@ try {
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/jre/api/javaws/jnlp/javax/jnlp/SingleInstanceService.html SingleInstanceService (JNLP API Reference 1.8.0_71)]
-- [https://bugs.openjdk.java.net/browse/JDK-6631056 Bug ID: 6631056 SingleInstanceService does not work on JRE 1.6.0_03]
+- [https://bugs.openjdk.org/browse/JDK-6631056 Bug ID: 6631056 SingleInstanceService does not work on JRE 1.6.0_03]
 -- via: [https://community.oracle.com/thread/1307009 Java Web Start & JNLP - How to use singleinstance service with a JWS application]
 - [https://appframework.dev.java.net/servlets/ReadMsg?listName=users&msgNo=396 Java Web Start SingleInstanceService - appframework(JSR-296)]
 - [[ServerSocketを使ってアプリケーションの複数起動を禁止>Swing/SingleInstanceApplication]]

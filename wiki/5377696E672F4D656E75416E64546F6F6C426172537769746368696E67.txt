@@ -1,0 +1,92 @@
+---
+category: swing
+folder: MenuAndToolBarSwitching
+title: JToolBarとJMenuBarを切り替える
+tags: [JToolBar, JMenuBar, JMenu, JPopupMenu, PopupMenuListener]
+author: aterai
+pubdate: 2024-03-18T03:12:18+09:00
+description: JToolBarに配置したハンバーガーメニュー風のJButtonをクリックしてこれをJMenuBarと切り替えます。
+image: https://drive.google.com/uc?id=1Qpanq4RDxRa_VHcMRdzG0OxBomIumTwl
+---
+* 概要 [#summary]
+`JToolBar`に配置したハンバーガーメニュー風の`JButton`をクリックしてこれを`JMenuBar`と切り替えます。
+
+#download(https://drive.google.com/uc?id=1Qpanq4RDxRa_VHcMRdzG0OxBomIumTwl)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JMenuBar mainMenuBar = makeMenuBar();
+JButton button = makeHamburgerMenuButton(mainMenuBar);
+JMenuBar wrappingMenuBar = new JMenuBar();
+wrappingMenuBar.add(makeToolBar(button));
+EventQueue.invokeLater(() -> getRootPane().setJMenuBar(wrappingMenuBar));
+
+PopupMenuListener handler = new PopupMenuListener() {
+  @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+    // not need
+  }
+
+  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+    EventQueue.invokeLater(() -> {
+      if (MenuSelectionManager.defaultManager().getSelectedPath().length == 0) {
+        getRootPane().setJMenuBar(wrappingMenuBar);
+      }
+    });
+  }
+
+  @Override public void popupMenuCanceled(PopupMenuEvent e) {
+    EventQueue.invokeLater(() -> getRootPane().setJMenuBar(wrappingMenuBar));
+  }
+};
+for (int i = 0; i < mainMenuBar.getMenuCount(); i++) {
+  mainMenuBar.getMenu(i).getPopupMenu().addPopupMenuListener(handler);
+}
+// ...
+private JButton makeHamburgerMenuButton(JMenuBar menuBar) {
+  JButton button = new JButton("Ξ") {
+    @Override public Dimension getPreferredSize() {
+      Dimension d = super.getPreferredSize();
+      d.height = menuBar.getMenu(0).getPreferredSize().height;
+      return d;
+    }
+
+    @Override public void updateUI() {
+      super.updateUI();
+      setContentAreaFilled(false);
+      setFocusPainted(false);
+      setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
+    }
+  };
+  button.addActionListener(e -> {
+    getRootPane().setJMenuBar(menuBar);
+    getRootPane().revalidate();
+    EventQueue.invokeLater(() -> menuBar.getMenu(0).doClick());
+  });
+  button.setMnemonic('\\');
+  button.setToolTipText("Main Menu(Alt+\\)");
+  return button;
+}
+}}
+
+* 解説 [#explanation]
+- 移動不可に設定したメイン`JToolBar`をラップする`JMenuBar`を作成し、`JRootPane#setJMenuBar(wrappingMenuBar)`で`JRootPane`上部に配置
+- メイン`JToolBar`に高さを`JMenuBar`と同じになるよう揃えた`JButton`を追加
+-- `JButton`に`ActionListener`を追加し、クリックで`JRootPane#setJMenuBar(mainMenuBar)`でのメイン`JMenuBar`表示への切り替えと`mainMenuBar.getMenu(0).doClick()`で先頭`JMenu`の`JPopupMenu`を自動的オープンを実行するよう設定
+-- `JButton#setMnemonic('\\')`でニーモニックを設定し、KBD{Alt+\}キー入力でメイン`JMenuBar`表示への切り替えを可能にする
+-- `JButton#setToolTipText("Main Menu(Alt+\\)")`で`ToolTipText`を設定
+- メイン`JMenuBar`を作成し、その直接の子`JMenu`(`JMenu#isTopLevelMenu()==true`)から取得した`JPopupMenu`に以下のような`PopupMenuListener`を追加
+-- `JMenuItem`クリックなどで`PopupMenuListener#popupMenuWillBecomeInvisible(...)`が実行されたとき、選択された`MenuElement`がひとつもない場合(`MenuSelectionManager.defaultManager().getSelectedPath().length == 0`)は表示をメイン`JToolBar`に戻す
+-- KBD{ESC}キーや`JPopupMenu`外がクリックされて`PopupMenuListener#popupMenuCanceled(...)`が実行されたときは無条件で表示をメイン`JToolBar`に戻す
+-- `TopLevel-JMenu`をクリックしてもその`JPopupMenu`が開いた状態を維持するため`MouseListener`を`JMenu`に追加
+
+* 参考リンク [#reference]
+- [[JToolBar内にJMenuBarを配置して分離・移動可能に設定する>Swing/FloatableMenuBar]]
+-- リンクのサンプルは`JMenuBar`内に`JToolBar`を配置するここのサンプルとは逆に`JToolBar`内に`JMenuBar`を配置して`JMenuBar`を分離・移動可能にしている
+- [[MenuSelectionManagerですべてのJPopupMenuを取得する>Swing/GetAllPopupMenus]]
+- [https://www.jetbrains.com/help/idea/customize-actions-menus-and-toolbars.html#main_menu_as_toolbar Show the main menu as a toolbar (Windows and Linux) | Menus and toolbars | IntelliJ IDEA Documentation]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JMenu.html JMenu (Java Platform SE 8)]に「「ボタン」がJMenuBar上にあれば、そのメニューはトップレベル・ウィンドウです。(If the "button" is on the JMenuBar, the menu is a top-level window.)」と記述されているが[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JMenu.html#isTopLevelMenu-- JMenu#isTopLevelMenu()]ではトップレベル・メニューとなっている
+-- トップレベル・ウィンドウ、トップレベル・メニュー、それ以外の「プルライト」メニューが出現するのでトップレベル・メニューに揃えたほうがよさそう？
+
+* コメント [#comment]
+#comment
+#comment

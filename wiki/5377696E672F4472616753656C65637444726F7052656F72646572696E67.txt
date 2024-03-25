@@ -27,7 +27,8 @@ list.setCellRenderer(new IconListCellRenderer());
 RubberBandingListener rbl = new RubberBandingListener();
 list.addMouseMotionListener(rbl);
 list.addMouseListener(rbl);
-list.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+list.getSelectionModel().setSelectionMode(
+    ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 list.setTransferHandler(new ListItemTransferHandler());
 list.setDropMode(DropMode.INSERT);
 }}

@@ -30,13 +30,11 @@ ToolTipManager.sharedInstance().registerComponent(tree);
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`JTree#getToolTipText(MouseEvent)`メソッドをオーバーライドして`JToolTip`で表示する文字列を変更しています。
-
-ツールチップ表示を有効にするには、`JTree`オブジェクトを`ToolTipManager`に登録するか、`JTree#setToolTipText(...)`メソッドで`null`以外を指定しておく必要があります。
-
+- `JTree#getToolTipText(MouseEvent)`メソッドをオーバーライドして`JToolTip`で表示する文字列を変更
+- ツールチップ表示を有効にするには`JTree`オブジェクトを`ToolTipManager`に登録するか、`JTree#setToolTipText(...)`メソッドで`null`以外を指定しておく必要がある
 #code{{
 ToolTipManager.sharedInstance().registerComponent(tree);
-// tree.setToolTipText("dummy");
+// tree.setToolTipText("non null text");
 }}
 
 - セルレンダラーを使用する別方法

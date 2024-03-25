@@ -1,0 +1,90 @@
+---
+category: swing
+folder: ClockWithArabicOrRomanNumerals
+title: AffineTransformを使用してアナログ時計の文字盤に数字を配置する
+tags: [AffineTransform, Font, TextLayout, TextAttribute, JPanel, Clock]
+author: aterai
+pubdate: 2022-08-22T00:18:25+09:00
+description: AffineTransformを使用してアナログ時計の文字盤にアラビア数字やローマ数字を配置します。
+image: https://drive.google.com/uc?id=1lJ0MWGTsDflFSRzI8m5spBQZ6Ls_RT1m
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2022/08/use-affinetransform-to-place-roman.html
+    lang: en
+---
+* 概要 [#summary]
+`AffineTransform`を使用してアナログ時計の文字盤にアラビア数字やローマ数字を配置します。
+
+#download(https://drive.google.com/uc?id=1lJ0MWGTsDflFSRzI8m5spBQZ6Ls_RT1m)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+private final String[] arabicNumerals = {
+  "12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
+};
+private final String[] romanNumerals = {
+  "XII", "I", "II", "III", "IIII", "V", "VI", "VII", "VIII", "IX", "X", "XI"
+};
+
+private void paintClockNumbers(
+    Graphics2D g2, double radius, double hourMarkerLen) {
+  AffineTransform at = AffineTransform.getRotateInstance(0d);
+  g2.setColor(Color.WHITE);
+  Font font = g2.getFont();
+  FontRenderContext frc = g2.getFontRenderContext();
+  if (isRomanNumerals) {
+    AffineTransform si = AffineTransform.getScaleInstance(1d, 2d);
+    for (String txt : romanNumerals) {
+      Shape s = getTextLayout(txt, font, frc).getOutline(si);
+      Rectangle2D r = s.getBounds2D();
+      double tx = r.getCenterX();
+      double ty = radius - hourMarkerLen - r.getHeight() + r.getCenterY() * .5;
+      Shape t = AffineTransform.getTranslateInstance(-tx, -ty)
+                               .createTransformedShape(s);
+      g2.fill(at.createTransformedShape(t));
+      at.rotate(Math.PI / 6d);
+    }
+  } else {
+    Point2D ptSrc = new Point2D.Double();
+    for (String txt : arabicNumerals) {
+      Shape s = getTextLayout(txt, font, frc).getOutline(null);
+      Rectangle2D r = s.getBounds2D();
+      double ty = radius - hourMarkerLen - r.getHeight() - r.getCenterY() * .5;
+      ptSrc.setLocation(0d, -ty);
+      Point2D pt = at.transform(ptSrc, null);
+      double dx = pt.getX() - r.getCenterX();
+      double dy = pt.getY() - r.getCenterY();
+      // g2.drawString(txt, (float) dx, (float) dy);
+      g2.fill(AffineTransform.getTranslateInstance(dx, dy)
+                             .createTransformedShape(s));
+      at.rotate(Math.PI / 6d);
+    }
+  }
+}
+
+private static TextLayout getTextLayout(
+    String txt, Font font, FontRenderContext frc) {
+  return new TextLayout(txt, font, frc);
+}
+}}
+
+* 解説 [#explanation]
+- アラビア数字
+-- `Font`に負のトラッキング値(字送り、文字間)を設定して文字列幅を縮小
+-- アラビア数字文字列から`Font`や`TextLayout`を使用して文字図形を取得
+-- 時計盤の中心から`12`時の位置まで`Point`を移動
+-- 時計盤の中心を原点にプラス`30°`回転を`AffineTransform`に追加して`Point`を回転
+-- `Point`が文字図形の中心になるよう座標を調整して%%`Graphics#drawString(...)`メソッドで数字文字列%%文字図形を描画
+- ローマ数字
+-- `Font`に負のトラッキング値(字送り、文字間)を設定して文字列幅を縮小
+-- ローマ数字文字列から`Font`や`TextLayout`を使用して高さのみ`200%`拡大した文字図形を取得
+-- 時計盤の中心から`12`時の位置まで文字図形を移動
+-- 時計盤の中心を原点にプラス`30°`回転を`AffineTransform`に追加して文字図形を回転
+
+* 参考リンク [#reference]
+- [[Timerを使用してJPanelにアナログ時計の針を描画する>Swing/AnalogClock]]
+- [[Fontにトラッキングを設定して文字列幅を詰めて描画する>Swing/Tracking]]
+- [[AffineTransformを使用してアラビア数字を回転して時計盤に配置する>Swing/ArabicClockFace]]
+
+* コメント [#comment]
+#comment
+#comment

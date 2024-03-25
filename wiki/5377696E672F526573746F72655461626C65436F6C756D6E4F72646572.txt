@@ -36,7 +36,7 @@ class SortableTableColumnModel extends DefaultTableColumnModel {
 - `tableColumns`メソッドは`protected`なので、ソートは`DefaultTableColumnModel`を継承するクラス内で実行する
 -- `JTable#createDefaultColumnModel()`をオーバーライドしてこの`TableColumnModel`を使用する
 -- ソート後`fireColumnMoved(...)`で`TableColumn`の移動を通知し、再描画を実行する必要がある
-- 直接`tableColumns`をソートするのではなく、以下のように`TableColumnModel#moveColumn(...)`メソッドなどを使用してソートする方法もある
+- 直接`tableColumns`をソートするのではなく、以下のように[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/TableColumnModel.html#moveColumn-int-int- TableColumnModel#moveColumn(int, int)]メソッドなどを使用してソートする方法もある
 
 #code{{
 public static void sortTableColumn(TableColumnModel model) {
@@ -58,6 +58,7 @@ public static void sortTableColumn(TableColumnModel model) {
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/TableColumnModelEvent.html TableColumnModelEvent (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/TableColumnModel.html#moveColumn-int-int- TableColumnModel#moveColumn(int, int) (Java Platform SE 8)]
 
 * コメント [#comment]
 #comment

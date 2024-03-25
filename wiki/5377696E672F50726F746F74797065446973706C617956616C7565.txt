@@ -18,7 +18,7 @@ image: https://lh3.googleusercontent.com/-DafUFitik9w/VVidadY7TNI/AAAAAAAAN4U/D4
 combo3.setPrototypeDisplayValue(TITLE);
 // ...
 combo5.setRenderer(new SiteListCellRenderer<Site>());
-combo5.setPrototypeDisplayValue(new Site(TITLE, new DummyIcon(Color.GRAY)));
+combo5.setPrototypeDisplayValue(new Site(TITLE, new ColorIcon(Color.GRAY)));
 }}
 
 * 解説 [#explanation]
@@ -27,20 +27,24 @@ combo5.setPrototypeDisplayValue(new Site(TITLE, new DummyIcon(Color.GRAY)));
 -- 上記のサンプルではモデルが空なのでボタンの幅と余白が`JComboBox`の推奨サイズになっている
 + `JComboBox#setPrototypeDisplayValue(...)`で指定した要素から`JComboBox`の推奨サイズを決定する
 + 編集可能な場合の`JComboBox`に`JComboBox#setPrototypeDisplayValue(...)`を設定
--- [https://bugs.openjdk.java.net/browse/JDK-6422966 Bug ID: JDK-6422966 Editable JComboBox.setPrototypeDisplayValue: size can not be smaller than editor]
+-- [https://bugs.openjdk.org/browse/JDK-6422966 Bug ID: JDK-6422966 Editable JComboBox.setPrototypeDisplayValue: size can not be smaller than editor]
 + 独自の要素`E`を使用する`JComboBox<E>`にその要素を表示するための`ListCellRenderer<E>`を設定
 + 上記の`JComboBox<E>`に`JComboBox#setPrototypeDisplayValue(E)`でプロトタイプ値を設定
 + 上記の`JComboBox<E>`でモデルを空にして`ListCellRenderer`で値が`null`になる場合、`JComboBox#setPrototypeDisplayValue(E)`で設定した値が表示されてしまう
 #code{{
-class SiteListCellRenderer<E extends Site> extends JLabel implements ListCellRenderer<E> {
+class SiteListCellRenderer<E extends Site>
+    extends JLabel
+    implements ListCellRenderer<E> {
   @Override public Component getListCellRendererComponent(
-      JList<? extends E> list, E value, int index, boolean isSelected, boolean cellHasFocus) {
+      JList<? extends E> list, E value, int index,
+      boolean isSelected, boolean cellHasFocus) {
     setOpaque(index >= 0);
     if (Objects.nonNull(value)) {
       setText(value.title);
       setIcon(value.favicon);
     } else {
-      //JComboBox#setPrototypeDisplayValue(E)で設定した値が表示されないようにクリア
+      // JComboBox#setPrototypeDisplayValue(E)で設定した値が
+      // 表示されないようにクリア
       setText("");
       setIcon(null);
     }

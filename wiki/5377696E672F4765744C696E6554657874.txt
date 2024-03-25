@@ -43,7 +43,7 @@ for (String line: textArea.getText().split("\\n")) {
 -- 空行あり
 
 #code{{
-try (LineNumberReader lnr = new LineNumberReader(new StringReader(textArea.getText()))) {
+try (LineNumberReader lnr = new LineNumberReader(new StringReader(txa.getText()))) {
   String line = null;
   while ((line = lnr.readLine()) != null) {
     if (!line.isEmpty() && line.codePointAt(0) == '#') {
@@ -64,7 +64,8 @@ Element root = doc.getDefaultRootElement();
 try {
   for (int i = 0; i < root.getElementCount(); i++) {
     Element elm = root.getElement(i);
-    String line = doc.getText(elm.getStartOffset(), elm.getEndOffset() - elm.getStartOffset());
+    String line = doc.getText(
+        elm.getStartOffset(), elm.getEndOffset() - elm.getStartOffset());
     if (line.codePointAt(0) == '#') {
       count++;
     }

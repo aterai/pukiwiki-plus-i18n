@@ -65,11 +65,9 @@ public JTable makeTable() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、以下のようにしてサマリー行を作成しています。
-
-- モデル(`Integer`)の先頭と末尾にダミー行を追加
+- モデル(`Integer`)の先頭と末尾にサマリーを表示する行を追加
 -- 値は`Integer.MIN_VALUE`と`Integer.MAX_VALUE`を使用してソートしても先頭と末尾になるよう設定
-- ソートでどちらかが表示上での先頭行になった場合、フィルタでこれを非表示にする
+- ソートで表示上の先頭になった行を`RowFilter`で非表示化
 
 * 参考リンク [#reference]
 - [http://www.jroller.com/santhosh/date/20070812 Sorting Table with Summary Row - Santhosh Kumar's Weblog]

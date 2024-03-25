@@ -73,7 +73,8 @@ tree2.setUI(new BasicTreeUI() {
 #code{{
 // This method is slow -- revisit when Java2D is ready.
 // assumes y1 <= y2
-protected void drawDashedVerticalLine(Graphics g, int x, int y1, int y2) {
+protected void drawDashedVerticalLine(
+    Graphics g, int x, int y1, int y2) {
   // Drawing only even coordinates helps join line segments so they
   // appear as one line.  This can be defeated by translating the
   // Graphics by an odd amount.

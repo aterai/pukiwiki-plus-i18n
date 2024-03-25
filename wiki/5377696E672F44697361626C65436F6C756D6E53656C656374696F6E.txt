@@ -63,7 +63,7 @@ table2.getColumnModel().setSelectionModel(new DefaultListSelectionModel() {
 
 - 上: `Override JTable#prepareRenderer(...)`
 -- `JTable#prepareRenderer(...)`をオーバーライドし`0`列目以外は選択状態を描画しないように設定
--- `Boolean`のデフォルトセルエディタ(`JCheckBox`)の背景色を修正していないのでクリック時に選択されたように見えてしまう場合がある(KBD{Ctrl+A}などで全選択した後など)
+-- `Boolean`のデフォルトセルエディタ(`JCheckBox`)の背景色を修正していないので、たとえばKBD{Ctrl+A}で全セルを選択した後に選択不可の`Boolean`セルをクリックすると背景色が選択色に変化する場合がある
 - 下: `table.setCellSelectionEnabled(true);` + `Override ListSelectionModel#isSelectedIndex(...)`
 -- カラムモデルに`ListSelectionModel#isSelectedIndex(...)`をオーバーライドした`ListSelectionModel`を設定し`0`列目以外は選択されないように設定
 

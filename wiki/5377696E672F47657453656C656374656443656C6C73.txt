@@ -15,7 +15,7 @@ image: https://drive.google.com/uc?id=1ggYIcKf-1ErfYHclwW_lUH1U1N0dvgye7g
 
 * サンプルコード [#sourcecode]
 #code(link){{
-toggle = add("toggle");
+JMenuItem toggle = new JMenuItem("toggle"); // add("toggle");
 toggle.addActionListener(e -> {
   JTable table = (JTable) getInvoker();
   for (int row: table.getSelectedRows()) {

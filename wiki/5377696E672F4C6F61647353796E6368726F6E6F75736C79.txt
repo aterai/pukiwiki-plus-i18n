@@ -37,7 +37,7 @@ class ImageLoadSynchronouslyHTMLEditorKit extends HTMLEditorKit {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、タブを切り替えた後に`JEditorPane#setText(...)`で`HTML`の読み込みを行い、全体のスクリーンショットを縮小して画像にし、サムネイルとして右端の`JLabel`に表示しています。
+上記のサンプルでは、タブを切り替えた後に`JEditorPane#setText(...)`で`HTML`の読み込みを行い、全体のスクリーンショットを縮小してサムネイル画像を作成し右端の`JLabel`に表示しています。
 
 - `default`タブ
 -- デフォルトの`HTMLEditorKit`を使用
@@ -53,7 +53,7 @@ class ImageLoadSynchronouslyHTMLEditorKit extends HTMLEditorKit {
 ----
 - `JDK 11.0.2`、`JDK 8.0.202`から`ImageView`に`setLoadsSynchronously(true)`を設定すると画像が表示されなくなってしまった
 -- `JDK 8.0.222`では修正されている
--- [https://bugs.openjdk.java.net/browse/JDK-8223384 &#91;JDK-8223384&#93; ImageView incorrectly calculates size when synchronously loaded - Java Bug System]
+-- [https://bugs.openjdk.org/browse/JDK-8223384 &#91;JDK-8223384&#93; ImageView incorrectly calculates size when synchronously loaded - Java Bug System]
 -- `OracleJDK`でも`OpenJDK`でも同じ状況
 - `JDK 11.0.1`では正常に画像が表示される
  openjdk version "11.0.1" 2018-10-16

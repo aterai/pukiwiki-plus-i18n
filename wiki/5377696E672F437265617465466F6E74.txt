@@ -16,13 +16,13 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKOUJYB7I/AAAAAAAAAVo/K2
 * サンプルコード [#sourcecode]
 #code(link){{
 Font makeFont(URL url) {
-    Font font = null;
-    try (InputStream is = url.openStream()) {
-        font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(12f);
-    } catch (IOException | FontFormatException ex) {
-        ex.printStackTrace();
-    }
-    return font;
+  Font font = null;
+  try (InputStream is = url.openStream()) {
+    font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(12f);
+  } catch (IOException | FontFormatException ex) {
+    ex.printStackTrace();
+  }
+  return font;
 }
 // Font makeFont(URL url) {
 //   Font font = null;
@@ -60,6 +60,6 @@ Font makeFont(URL url) {
 #comment
 - `JDK 1.5.0_01`でずれる？ -- &user(aterai); &new{2005-03-07 11:19:11 (月)};
 -- 応急処置済み -- &user(aterai); &new{2005-03-07 11:32:44 (月)};
-- メモ: [https://bugs.openjdk.java.net/browse/JDK-6313541 Bug ID: 6313541 Fonts loaded with createFont cannot be converted into FontUIResource] -- &user(aterai); &new{2006-05-25 (木) 23:34:18};
+- メモ: [https://bugs.openjdk.org/browse/JDK-6313541 Bug ID: 6313541 Fonts loaded with createFont cannot be converted into FontUIResource] -- &user(aterai); &new{2006-05-25 (木) 23:34:18};
 
 #comment

@@ -19,6 +19,7 @@ String href = "https://ateraimemo.com/";
 // DataFlavor uriflavor = new DataFlavor(String.class, "text/uri-list");
 DataFlavor uriflavor = DataFlavor.stringFlavor;
 JButton b = new JButton(href);
+b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 b.setTransferHandler(new TransferHandler("text") {
   @Override public boolean canImport(JComponent c, DataFlavor[] flavors) {
     return flavors.length > 0 && flavors[0].equals(uriflavor);
@@ -51,7 +52,7 @@ b.addMouseListener(new MouseAdapter() {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`URL`文字列を設定した`JButton`をマウスでドラッグしてブラウザなどにドロップすると、そのサイトに移動できます。
+上記のサンプルでは、`URL`文字列を設定した`JButton`をマウスでドラッグしてウェブブラウザなどにドロップすると、そのサイトに移動できます。
 
 このような`URL`のドラッグ＆ドロップを実行するために以下のような`TransferHandler`と`Transferable`を設定しています。
 

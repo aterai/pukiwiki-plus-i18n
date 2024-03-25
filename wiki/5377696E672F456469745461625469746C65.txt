@@ -113,7 +113,7 @@ class EditableTabbedPane extends JTabbedPane {
 * 解説 [#explanation]
 上記のサンプルでは、`JTabbedPane`のタブタイトルを`Excel`などのように直接編集できるよう設定しています。
 
-編集が開始されると対象となるタブ上に`JTextField`をレイアウトした`GlassPane`を表示しています。この`GlassPane`には編集中はフォーカスの移動が起こらないようにするための`FocusTraversalPolicy`などを追加しています。
+編集が開始されると対象となるタブ上に`JTextField`をレイアウトした`GlassPane`を表示しています。この`GlassPane`には編集中にフォーカス移動イベントが発生しないようにするための`FocusTraversalPolicy`などを追加しています。
 
 - 操作方法
 -- マウスでタブをダブルクリック、またはタブを選択してKBD{Enter}キーで編集開始

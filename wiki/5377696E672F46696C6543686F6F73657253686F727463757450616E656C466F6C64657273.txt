@@ -37,7 +37,7 @@ button2.addActionListener(e -> {
 
 * 解説 [#explanation]
 - `Default`
--- `Windows 10`環境で`WindowsLookAndFeel`を適用した`JFileChooser`の`PlacesBar`には「最近使った項目(`Recent`)」、「デスクトップ(`Desktop`)」、「ドキュメント(`Document`)」、「`PC`(`This PC`)」、「ネットワーク(`Network`)」が表示され、デフォルトでは「ドキュメント」が選択状態になっている
+-- `Windows 10`環境で`WindowsLookAndFeel`を適用した`JFileChooser`の`PlacesBar`には「最近使った項目(`Recent`)」、「デスクトップ(`Desktop`)」、「ドキュメント(`Document`)」、「`PC`(`This PC`)」、「ネットワーク(`Network`)」が表示され、デフォルトでは「ドキュメント」が選択状態になる
 - `System.getenv("SystemDrive")`
 -- `System.getenv("SystemDrive") + File.separatorChar`で`C:\`ドライブの`File`を取得し、その親フォルダを`FileSystemView#getParentDirectory(...)`メソッドで取得
 -- この親フォルダが「`PC`(`This PC`)」となるので`JFileChooser#setCurrentDirectory(...)`で設定してから`JFileChooser`を開く

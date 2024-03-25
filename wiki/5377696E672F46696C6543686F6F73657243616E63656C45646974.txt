@@ -37,6 +37,16 @@ button1.addActionListener(e -> {
 - `default`
 -- `JFileChooser`の詳細表示モード(`JTable`)でファイルをマウスのダブルクリックで選択してダイアログを閉じた場合、次回`JFileChooser`を再表示するとファイル名セルの編集状態が継続している場合がある
 -- 再現が不安定？なので仕様ではなくバグなのかもしれない
+-- `Java 21`で以下のように`BasicTableUI.java`が修正されて発生しなくなった？
+#code{{
+    } else if (key == CANCEL_EDITING) {
+        if (table.isEditing()) {
+            table.getCellEditor().cancelCellEditing();
+        }
+        table.removeEditor();
+        // ...
+}}
+
 - `removeEditor`
 -- `JFileChooser`を表示する前に子`JTable`を検索して`JTable#removeEditor()`メソッドを実行し、セルエディタを除去
 -- `sun.swing.FilePane#cancelEdit()`メソッドが内部で`detailsTable.getCellEditor().cancelCellEditing();`を実行して編集状態を解除しているがプライベートなので使用しづらい
@@ -44,9 +54,9 @@ button1.addActionListener(e -> {
 * 参考リンク [#reference]
 - [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]
 - [[JTableのセルの編集をコミット>Swing/TerminateEdit]]
--- `JFileChooser`の詳細表示モードで使用する`JTable`に`table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);`を設定すれば、フォーカスが無くなった時点で編集は破棄される
+-- `JFileChooser`の詳細表示モードで使用する`JTable`に`table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);`を設定すればフォーカスが無くなった時点で編集は破棄される
 - [[JFileChooserを編集不可にする>Swing/ROFileChooser]]
--- `JFileChooser`でファイル名を編集する必要がない場合は、`UIManager.put("FileChooser.readOnly", Boolean.TRUE);`と編集不可にすればこの問題は発生しない
+-- `JFileChooser`でファイル名を編集する必要がない場合は`UIManager.put("FileChooser.readOnly", Boolean.TRUE);`と編集不可にすればこの問題は発生しない
 
 * コメント [#comment]
 #comment

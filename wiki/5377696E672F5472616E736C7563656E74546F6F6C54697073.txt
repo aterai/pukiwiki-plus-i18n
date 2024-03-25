@@ -2,7 +2,7 @@
 category: swing
 folder: TranslucentToolTips
 title: JToolTipを半透明にする
-tags: [JToolTip, JList]
+tags: [JToolTip, JList, Calendar]
 author: aterai
 pubdate: 2019-06-03T15:15:47+09:00
 description: JToolTipを半透明に設定し、その形状や表示位置も変更します。
@@ -89,8 +89,11 @@ class BalloonToolTip extends JToolTip {
     return null;
   }
   Contribution value = getModel().getElementAt(idx);
-  String act = value.activity == 0 ? "No" : Objects.toString(value.activity);
-  return "<html>" + act + " contribution <span style='color:#C8C8C8'> on "
+  String act = value.activity == 0
+      ? "No"
+      : Objects.toString(value.activity);
+  return "<html>" + act
+      + " contribution <span style='color:#C8C8C8'> on "
       + value.date.toString();
 }
 

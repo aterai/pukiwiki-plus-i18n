@@ -30,6 +30,8 @@ int w = img.getWidth(this);
 int h = img.getHeight(this);
 AffineTransform at = AffineTransform.getScaleInstance(-1d, 1d);
 at.translate(-w, 0);
+// or:
+// AffineTransform at = new AffineTransform(-1d, 0d, 0d, 1d, w, 0d);
 AffineTransformOp atOp = new AffineTransformOp(at, null);
 g.drawImage(atOp.filter(img, null), 0, 0, w, h, this);
 }}
@@ -37,10 +39,12 @@ g.drawImage(atOp.filter(img, null), 0, 0, w, h, this);
 * 解説 [#explanation]
 上記のサンプルでは、`AffineTransformOp#filter(...)`メソッドを使用して左右反転した`BufferedImage`を生成しています。
 
-- 上下反転の例:
+- 上下反転の場合:
 #code{{
 AffineTransform at = AffineTransform.getScaleInstance(1d, -1d);
 at.translate(0, -h);
+// or:
+// AffineTransform at = new AffineTransform(1d, 0d, 0d, -1d, 0d, h);
 g2.drawImage(img , at, this);
 }}
 

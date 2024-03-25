@@ -15,23 +15,29 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTNRK4g8I/AAAAAAAAAkA/dn
 
 * サンプルコード [#sourcecode]
 #code(link){{
-Hashtable<Integer, Component> labelTable = new Hashtable<>();
-int c = 0;
-for (String s: Arrays.asList(
+List<Icon> list1 = Stream.of(
     "wi0009-16.png", "wi0054-16.png", "wi0062-16.png",
     "wi0063-16.png", "wi0064-16.png", "wi0096-16.png",
     "wi0111-16.png", "wi0122-16.png", "wi0124-16.png",
-    "wi0126-16.png")) {
-  labelTable.put(c++,
-    new JLabel(s, new ImageIcon(getClass().getResource(s)),
-               SwingConstants.RIGHT));
-}
-labelTable.put(c, new JButton("aaa"));
-JSlider slider1 = new JSlider(SwingConstants.VERTICAL, 0, 10, 0);
-slider1.setLabelTable(labelTable);
+    "wi0126-16.png").map(MainPanel::makeIcon).collect(Collectors.toList());
+JSlider slider1 = new JSlider(SwingConstants.VERTICAL, 0, list1.size() - 1, 0);
 slider1.setSnapToTicks(true);
+slider1.setMajorTickSpacing(1);
 slider1.setPaintTicks(true);
 slider1.setPaintLabels(true);
+Object labelTable1 = slider1.getLabelTable();
+if (labelTable1 instanceof Map) {
+  ((Map<?, ?>) labelTable1).forEach((key, value) -> {
+    if (key instanceof Integer && value instanceof JLabel) {
+      int idx = (Integer) key;
+      JLabel l = (JLabel) value;
+      l.setIcon(list1.get(idx));
+      l.setText(null);
+      l.setBorder(BorderFactory.createEmptyBorder(0, 1, 0, 1));
+    }
+  });
+}
+slider1.setLabelTable(slider1.getLabelTable()); // Update LabelTable
 }}
 
 * 解説 [#explanation]

@@ -1,0 +1,108 @@
+---
+category: swing
+folder: TabbedPaneSelectionFollowsFocus
+title: JTabbedPaneの選択タブとフォーカスタブを分離する
+tags: [JTabbedPane, UIManager, Focus, InputMap, LookAndFeel]
+author: aterai
+pubdate: 2023-04-03T03:44:40+09:00
+description: JTabbedPaneのキー入力によるタブ移動で選択タブとフォーカスタブを一致させるか、または別々に扱うかを設定で切り替えます。
+image: https://drive.google.com/uc?id=1mS3Bmh6B7dAqMMBMM3TiCTRLVoHZzxiy
+---
+* 概要 [#summary]
+`JTabbedPane`のキー入力によるタブ移動で選択タブとフォーカスタブを一致させるか、または別々に扱うかを設定で切り替えます。
+
+#download(https://drive.google.com/uc?id=1mS3Bmh6B7dAqMMBMM3TiCTRLVoHZzxiy)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTabbedPane tabs = new JTabbedPane() {
+  @Override public void updateUI() {
+    super.updateUI();
+    if (getUI() instanceof MetalTabbedPaneUI) {
+      setUI(new MetalTabbedPaneUI() {
+        @Override protected void navigateSelectedTab(int direction) {
+          super.navigateSelectedTab(direction);
+          focusIndex = getFocusIndex();
+        }
+      });
+    }
+  }
+};
+tabs.addChangeListener(e -> {
+  // System.out.println("Tab selected");
+  focusIndex = tabs.getSelectedIndex();
+  // focusIndex = -1;
+  tabs.repaint();
+});
+tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+String help1 = "SPACE: selectTabWithFocus";
+String help2 = "LEFT: navigateLeft";
+String help3 = "RIGHT: navigateRight";
+JTextArea textArea = new JTextArea(String.join("\n", help1, help2, help3));
+textArea.setEditable(false);
+tabs.addTab("help", new JScrollPane(textArea));
+IntStream.range(0, 10).forEach(i -> tabs.addTab("title" + i, new JLabel("JLabel" + i)));
+
+InputMap im = tabs.getInputMap(WHEN_FOCUSED);
+im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "selectTabWithFocus");
+
+String key = "TabbedPane.selectionFollowsFocus";
+JCheckBox check = new JCheckBox(key, UIManager.getBoolean(key)) {
+  @Override public void updateUI() {
+    super.updateUI();
+    boolean b = UIManager.getLookAndFeelDefaults().getBoolean(key);
+    setSelected(b);
+    UIManager.put(key, b);
+  }
+};
+check.setFocusable(false);
+check.addActionListener(e -> {
+  boolean b = ((JCheckBox) e.getSource()).isSelected();
+  UIManager.put(key, b);
+  SwingUtilities.updateComponentTreeUI(tabs);
+});
+
+add(new JLayer<>(tabs, new LayerUI<JTabbedPane>() {
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    if (c instanceof JLayer) {
+      JLayer<?> layer = (JLayer<?>) c;
+      JTabbedPane tabbedPane = (JTabbedPane) layer.getView();
+      if (focusIndex >= 0 && focusIndex != tabbedPane.getSelectedIndex()) {
+        Rectangle r = tabbedPane.getBoundsAt(focusIndex);
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));
+        g2.setPaint(Color.RED);
+        g2.fill(r);
+        g2.dispose();
+      }
+    }
+  }
+}));
+}}
+
+* 解説 [#explanation]
+- `TabbedPane.selectionFollowsFocus`: `true`
+-- `MetalLookAndFeel`, `WindowsLookAndFeel`, `GTKLookAndFeel`などのデフォルトでカーソルキーなどによるタブ選択移動にフォーカスタブも追従する
+-- マウスクリックでのタブ選択ではこの設定に関係なく選択タブとフォーカスタブは一致する
+--- `WindowsLookAndFeel`などのマウスカーソルによるロールオーバータブとフォーカスタブは別物
+- `TabbedPane.selectionFollowsFocus`: `false`
+-- `NimbusLookAndFeel`のデフォルトだが、`NimbusLookAndFeel`はこの設定を無視してカーソルキーなどによるタブ選択移動にフォーカスタブも同期して移動する
+-- `MetalLookAndFeel`, `WindowsLookAndFeel`ではフォーカスタブは選択タブと別々になるがフォーカスタブの描画は選択されていないタブと同じになって見分けがつかない
+--- このサンプルでは`MetalLookAndFeel`を適用した場合のみ、テスト用として選択タブとフォーカスタブを半透明の赤色で描画する`JLayer`を`JTabbedPane`に設定している
+--- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicTabbedPaneUI.html#getFocusIndex-- BasicTabbedPaneUI#getFocusIndex()]は`protected`、`BasicTabbedPaneUI#setFocusIndex(...)`はパッケージプライベートメソッドなので代わりに`BasicTabbedPaneUI#navigateSelectedTab(...)`をオーバーライドして`focusIndex`を`JLayer`に伝えている
+-- `GTKLookAndFeel`ではフォーカスタブにラウンド矩形の`Border`が表示され、デフォルトでKBD{SPACE}キーでフォーカスタブが選択タブになる`Action`が実行される
+--- このサンプルでは`GTKLookAndFeel`以外の場合でもこの`selectTabWithFocus`アクションをKBD{SPACE}キーで実行するよう以下のような`InputMap`を設定している
+#code{{
+InputMap im = tabs.getInputMap(WHEN_FOCUSED);
+im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "selectTabWithFocus");
+}}
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicTabbedPaneUI.html#getFocusIndex-- BasicTabbedPaneUI#getFocusIndex() (Java Platform SE 8)]
+- [[JLayerを使ってJTabbedPaneのタブの挿入位置を描画する>Swing/DnDLayerTabbedPane]]
+- [[JTabbedPaneのカーソルキーによるタブ選択遷移の動作を変更する>Swing/NavigateSelectedTab]]
+
+* コメント [#comment]
+#comment
+#comment

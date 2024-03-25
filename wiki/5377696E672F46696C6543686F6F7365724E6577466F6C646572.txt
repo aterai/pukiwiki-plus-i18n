@@ -1,0 +1,52 @@
+---
+category: swing
+folder: FileChooserNewFolder
+title: JFileChooserのテンプレート新規フォルダ名を変更する
+tags: [JFileChooser, UIManager]
+author: aterai
+pubdate: 2023-07-24T01:40:47+09:00
+description: JFileChooserで新規フォルダを作成するときに使用するテンプレートフォルダ名を変更します。
+image: https://drive.google.com/uc?id=1R2Ntdo5TiC-L9M31OVIzgq-U7J4nxixK
+---
+* 概要 [#summary]
+`JFileChooser`で新規フォルダを作成するときに使用するテンプレートフォルダ名を変更します。
+
+#download(https://drive.google.com/uc?id=1R2Ntdo5TiC-L9M31OVIzgq-U7J4nxixK)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String newFolderKey = "FileChooser.win32.newFolder";
+String subsequentKey = "FileChooser.win32.newFolder.subsequent";
+info(log, newFolderKey);
+info(log, subsequentKey);
+UIManager.put(newFolderKey, "新しいフォルダー");
+UIManager.put(subsequentKey, "新しいフォルダー ({0})");
+info(log, newFolderKey);
+info(log, subsequentKey);
+}}
+
+* 解説 [#explanation]
+- `FileChooser.win32.newFolder`
+-- このキーで`JFileChooser`の「新規フォルダの作成」ボタンや「新規フォルダ」メニューで新しいフォルダを作成する場合のテンプレート新規フォルダ名を設定、変更可能
+--- `Windows`環境以外では`FileChooser.other.newFolder`が使用される
+-- 日本語環境での初期値は「新規フォルダ」で、このサンプルでは「新しいフォルダー」に変更
+--- `com/sun/swing/internal/plaf/basic/resources/basic_ja.java`
+--- `JMenuItem`のタイトルに適用される`FileChooser.newFolderActionLabelText`の初期値も「新規フォルダ」だが、この文字列を変更してもテンプレート新規フォルダ名には影響しない
+-- テンプレート新規フォルダ名は`FileSystemView`で設定されるので`JFileChooser`を再作成しても変更不可
+--- [https://bugs.openjdk.org/browse/JDK-8312075 &#91;JDK-8312075&#93; FileChooser.win32.newFolder is not updated when changing Locale - Java Bug System]で修正されるかも
+- `FileChooser.win32.newFolder.subsequent`
+-- すでにテンプレート新規フォルダ名と同名のフォルダーが存在する場合、代わりに使用するフォルダー名テンプレート
+--- `Windows`環境以外では`FileChooser.other.newFolder.subsequent`が使用される
+-- `FileChooser.win32.newFolder`で設定するテンプレートは完全に別の設定となる
+
+[https://stackoverflow.com/questions/76640899/java-jfilechooser-new-folder-translation swing - Java JFileChooser "New Folder" translation - Stack Overflow]
+[https://docs.oracle.com/javase/jp/8/docs/api/java/text/MessageFormat.html MessageFormat (Java Platform SE 8)]
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/76640899/java-jfilechooser-new-folder-translation swing - Java JFileChooser "New Folder" translation - Stack Overflow]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/text/MessageFormat.html MessageFormat (Java Platform SE 8)]
+- [https://bugs.openjdk.org/browse/JDK-8312075 &#91;JDK-8312075&#93; FileChooser.win32.newFolder is not updated when changing Locale - Java Bug System]
+
+* コメント [#comment]
+#comment
+#comment

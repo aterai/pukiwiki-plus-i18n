@@ -43,7 +43,7 @@ JButton button = new JButton(new AbstractAction("Connect") {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、一定時間(`10`秒)マウスやキーボードからの入力が無い場合は接続(ダミー)を終了するよう`AWTEventListener`を`Toolkit`に設定しています。
+上記のサンプルでは、一定時間(`10`秒)マウスやキーボードからの入力が無い場合は接続(実際はなにも実行しない)を終了するよう`AWTEventListener`を`Toolkit`に設定しています。
 
 ----
 - [https://tips4java.wordpress.com/2008/10/24/application-inactivity/ Application Inactivity « Java Tips Weblog]を参考にして`Toolkit.getDefaultToolkit().getSystemEventQueue().push(eventQueue)`は使用せず、以下のように`Toolkit.getDefaultToolkit().addAWTEventListener(AWTEventListener)`を使う方法に変更

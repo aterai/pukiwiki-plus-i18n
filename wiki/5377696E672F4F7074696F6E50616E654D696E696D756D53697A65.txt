@@ -1,0 +1,48 @@
+---
+category: swing
+folder: OptionPaneMinimumSize
+title: JOptionPaneの最小サイズを設定する
+tags: [JOptionPane, UIManager]
+author: aterai
+pubdate: 2023-01-09T10:56:45+09:00
+description: JOptionPaneの最小サイズをUIManagerを使用して変更します。
+image: https://drive.google.com/uc?id=1VDOBP5adm7znzjkXMCd2ew2SKGJGgQW_
+---
+* 概要 [#summary]
+`JOptionPane`の最小サイズを`UIManager`を使用して変更します。
+
+#download(https://drive.google.com/uc?id=1VDOBP5adm7znzjkXMCd2ew2SKGJGgQW_)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String key = "OptionPane.minimumSize";
+JButton button3 = new JButton(key);
+button3.addActionListener(e -> {
+  // UIManager.put(key, new DimensionUIResource(120, 120));
+  UIManager.put(key, new Dimension(120, 120));
+  Component p = ((JComponent) e.getSource()).getRootPane();
+  JOptionPane.showMessageDialog(
+      p, "message3", "title3(120*120)", JOptionPane.PLAIN_MESSAGE);
+  UIManager.put(key, UIManager.getLookAndFeelDefaults().getDimension(key));
+});
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- `JOptionPane`のデフォルト最小サイズは`BasicOptionPaneUI`と`SynthOptionPaneUI`で個別に設定されているが値は同じで`262*90`
+- `HierarchyListener + setPreferredSize`
+-- `HierarchyListener`を使用して`JOptionPane`に追加するメッセージ表示用コンポーネントが表示状態になったとき、`JOptionPane#setPreferredSize(...)`メソッドで推奨サイズを設定
+- `OptionPane.minimumSize`
+-- `UIManager.put("OptionPane.minimumSize", Dimension)`で`JOptionPane`の最小サイズを設定
+-- `OptionPane.minimumSize`が`null`以外の場合、`BasicOptionPaneUI#getMinimumOptionPaneSize()`メソッドはこの値を返す(`null`の場合は`new Dimension(262, 90)`)
+-- このサンプルでは`JOptionPane`を閉じたあとに`UIManager.put("OptionPane.minimumSize", UIManager.getLookAndFeelDefaults().getDimension("OptionPane.minimumSize"))`で最小サイズをデフォルト値に戻している
+- `HierarchyListener + setPreferredSize`
+-- `UIManager.put("OptionPane.minimumSize", Dimension)`で`JOptionPane`の最小サイズを設定しても、メッセージ表示用コンポーネントなどの最小サイズがそれより大きくなる場合はそちらが優先される
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicOptionPaneUI.html#getMinimumOptionPaneSize-- BasicOptionPaneUI#getMinimumOptionPaneSize() (Java Platform SE 8)]
+- [[JOptionPaneに配置するJTextAreaの最大幅を指定してサイズ調整を行う>Swing/MaxWidthWrapOptionPane]]
+
+* コメント [#comment]
+#comment
+#comment

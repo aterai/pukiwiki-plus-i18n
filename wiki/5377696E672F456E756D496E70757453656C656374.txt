@@ -1,0 +1,120 @@
+---
+category: swing
+folder: EnumInputSelect
+title: Enum定数を選択するJRadioButtonのButtonGroupやJComboBoxを作成する
+tags: [JRadioButton, JRadioButtonMenuItem, JComboBox, JSpinner]
+author: aterai
+pubdate: 2023-05-01T04:13:48+09:00
+description: Enum定数の一覧からJRadioButtonのButtonGroupやJComboBox、JSpinnerなどの選択コンポーネントを作成し、指定したenum定数を取得します。
+image: https://drive.google.com/uc?id=1rClNFi7Ho6S142h4FccGE2d0RYNZyKhA
+---
+* 概要 [#summary]
+`Enum`定数の一覧から`JRadioButton`の`ButtonGroup`や`JComboBox`、`JSpinner`などの選択コンポーネントを作成し、指定した`enum`定数を取得します。
+
+#download(https://drive.google.com/uc?id=1rClNFi7Ho6S142h4FccGE2d0RYNZyKhA)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+enum TabPlacement {
+  TOP(SwingConstants.TOP),
+  LEFT(SwingConstants.LEFT),
+  BOTTOM(SwingConstants.BOTTOM),
+  RIGHT(SwingConstants.RIGHT);
+
+  private final int placement;
+
+  TabPlacement(int placement) {
+    this.placement = placement;
+  }
+
+  public int getPlacement() {
+    return placement;
+  }
+}
+
+// ...
+JTabbedPane tabs3 = makeTabbedPane();
+JComboBox<TabPlacement> combo = new JComboBox<>(TabPlacement.values());
+combo.addItemListener(e -> {
+  Object o = e.getItem();
+  if (e.getStateChange() == ItemEvent.SELECTED && o instanceof TabPlacement) {
+    tabs3.setTabPlacement(((TabPlacement) o).getPlacement());
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `JTabbedPane`のタブ配置を設定する定数を置き換える`Enum`列挙型の`TabPlacement`を作成
+-- `TabPlacement.values()`で定数一覧を取得し以下のような選択コンポーネントを作成
+-- これらの選択コンポーネントで指定された`enum`定数から取得した元の`int`定数を`JTabbedPane#setTabPlacement(int)`に適用して`JTabbedPane`のタブ配置を変更可能
+
+----
+- `JRadioButtonMenuItem`、`JRadioButton`
+-- `enum`定数の名前をボタンのアクションコマンドに設定し、`ItemListener`で選択されたボタンのアクションコマンドを取得して`TabPlacement.valueOf(...)`で対応する`enum`定数を取得
+#code{{
+JTabbedPane tabs1 = makeTabbedPane();
+JMenu menu = new JMenu("JMenu");
+ButtonGroup bg1 = new ButtonGroup();
+ItemListener handler1 = e -> {
+  if (e.getStateChange() == ItemEvent.SELECTED) {
+    String name = bg1.getSelection().getActionCommand();
+    tabs1.setTabPlacement(TabPlacement.valueOf(name).getPlacement());
+  }
+};
+Arrays.asList(TabPlacement.values()).forEach(tp -> {
+  String name = tp.name();
+  boolean selected = tp == TabPlacement.TOP;
+  JMenuItem item = new JRadioButtonMenuItem(name, selected);
+  item.addItemListener(handler1);
+  item.setActionCommand(name);
+  menu.add(item);
+  bg1.add(item);
+});
+}}
+
+- `JComboBox<TabPlacement>`
+-- `TabPlacement.values()`で取得した定数配列から`ComboBoxModel<TabPlacement>`を作成して`JComboBox<TabPlacement>`を作成
+-- `JComboBox<TabPlacement>`に`ItemListener`を設定し、`ItemEvent#getItem()`で`enum`定数を取得
+-- `JRadioButton`のサンプルと同様に`enum`定数の名前を`ItemEvent#getItem()#toString()`で取得し、`TabPlacement.valueOf(...)`で対応する`enum`定数を取得する方法もある
+-- 選択インデックスから`JComboBox<TabPlacement>#getItemAt(idx)`で直接`enum`定数を取得する方法もある
+#code{{
+JComboBox<TabPlacement> combo = new JComboBox<>(TabPlacement.values());
+combo.addItemListener(e -> {
+  if (e.getStateChange() == ItemEvent.SELECTED) {
+    // String n = e.getItem().toString();
+    // tabs3.setTabPlacement(TabPlacement.valueOf(n).getPlacement());
+    int idx = combo.getSelectedIndex();
+    tabs3.setTabPlacement(combo.getItemAt(idx).getPlacement());
+  }
+});
+}}
+
+- `JSpinner`
+-- `TabPlacement.values()`で取得した定数配列から`SpinnerListModel`を作成して`JSpinner`を作成
+-- `JSpinner`に`ChangeListener`を設定し、`SpinnerListModel#getValue()`で`enum`定数を取得
+#code{{
+JTabbedPane tabs4 = makeTabbedPane();
+SpinnerListModel model4 = new SpinnerListModel(TabPlacement.values());
+JSpinner spinner = new JSpinner(model4) {
+  @Override public Object getNextValue() {
+    return super.getPreviousValue();
+  }
+
+  @Override public Object getPreviousValue() {
+    return super.getNextValue();
+  }
+};
+spinner.addChangeListener(e -> {
+  Object o = model4.getValue();
+  if (o instanceof TabPlacement) {
+    tabs4.setTabPlacement(((TabPlacement) o).getPlacement());
+  }
+});
+}}
+
+* 参考リンク [#reference]
+- [[JComboBoxのモデルとしてenumを使用する>Swing/SortingAnimations]]
+
+* コメント [#comment]
+#comment
+#comment

@@ -1,0 +1,107 @@
+---
+category: swing
+folder: RightClickRowSelectionAndPopupMenu
+title: JTableの行を右クリックで選択して同時にJPopupMenuを開く
+tags: [JTable, JPopupMenu, MouseListener, PopupMenuListener, JLayer]
+author: aterai
+pubdate: 2023-11-06T01:41:53+09:00
+description: JTableの行を右クリックした場合、その選択状態の変更とJPopupMenuの表示を両方実行する方法をテストします。
+image: https://drive.google.com/uc?id=1dB25osj9KkSJRo10xdTA9IJhMoHz3Fm0
+---
+* 概要 [#summary]
+`JTable`の行を右クリックした場合、その選択状態の変更と`JPopupMenu`の表示を両方実行する方法をテストします。
+
+#download(https://drive.google.com/uc?id=1dB25osj9KkSJRo10xdTA9IJhMoHz3Fm0)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class RightMouseButtonLayerUI extends LayerUI<JScrollPane> {
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseEvent(
+        MouseEvent e, JLayer<? extends JScrollPane> l) {
+    Component c = e.getComponent();
+    if (c instanceof JTable && SwingUtilities.isRightMouseButton(e)) {
+      JTable table = (JTable) c;
+      if (table.isEditing()) {
+        table.removeEditor();
+      }
+      Point pt = e.getPoint();
+      Rectangle r = TableUtils.getCellArea(table);
+      if (r.contains(pt)) {
+        int currentRow = table.rowAtPoint(pt);
+        int currentColumn = table.columnAtPoint(pt);
+        if (TableUtils.isNotRowContains(table.getSelectedRows(), currentRow)) {
+          table.changeSelection(currentRow, currentColumn, false, false);
+        }
+      } else {
+        table.clearSelection();
+      }
+    } else {
+      super.processMouseEvent(e, l);
+    }
+  }
+}
+
+final class TableUtils {
+  private TableUtils() {
+    /* Singleton */
+  }
+
+  public static Rectangle getCellArea(JTable table) {
+    Rectangle start = table.getCellRect(0, 0, true);
+    int rc = table.getRowCount();
+    int cc = table.getColumnCount();
+    Rectangle end = table.getCellRect(rc - 1, cc - 1, true);
+    return start.union(end);
+  }
+
+  public static boolean isNotRowContains(int[] selectedRows, int currentRow) {
+    for (int i : selectedRows) {
+      if (i == currentRow) {
+        return false;
+      }
+    }
+    return true;
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- デフォルトのマウスクリックによる`JTable`の行選択では`!SwingUtilities.isLeftMouseButton(MouseEvent)`で左クリック以外は無視される
+-- このため右クリックでは行の選択状態は変更されない
+- `MouseListener`
+-- `JTable`に`MouseListener`を追加して`mousePressed(...)`をオーバーライドし、`JPopupMenu`を開く動作はそのまま残して別途右クリックでの選択状態変更動作を定義
+--- `JTable`が編集状態の場合は`JTable#removeEditor()`を実行してそれをキャンセル
+--- `JTable`のセル領域以外で右クリックされた場合は`JTable#clearSelection()`を実行して選択状態をクリアし、`JPopupMenu`を開く
+--- `JTable`の行選択領域内で右クリックされた場合は選択状態を維持したまま`JPopupMenu`を開く
+--- `JTable`のセル領域かつ行選択領域外で右クリックされた場合は右クリックされた行のみを選択状に変更し、`JPopupMenu`を開く
+-- 制限: `JPopupMenu`が開いた状態のまま連続して右クリックすると`MouseListener#mousePressed(...)`が実行されない(`Windows 11`環境では問題ない？)ため、`JPopupMenu`は右クリックした位置に再オープンされるが行選択状態は変更できない
+- `PopupMenuListener`
+-- `JPopupMenu`に`PopupMenuListener`を追加して`popupMenuWillBecomeVisible(PopupMenuEvent)`をオーバーライドし、`JPopupMenu`を開く動作はそのまま残して別途右クリックでの選択状態変更動作を定義
+--- 右クリックで実行する動作の定義は`MouseListener`と同様
+-- 制限: `JPopupMenu`の左上隅を右クリックされた位置として使用するため、画面端などで`JPopupMenu`の表示位置が調整される場合は右クリックされた行が選択されない場合がある
+- `JLayer`
+-- `JTable`の親`JScrollPane`を`JLayer`でラップして`processMouseEvent(...)`をオーバーライドし、`JPopupMenu`を開く動作はそのまま残して別途右クリックでの選択状態変更動作を定義
+--- 右クリックで実行する動作の定義は`MouseListener`と同様
+
+* 参考リンク [#reference]
+- [[JTableで文字列をクリックした場合だけセルを選択状態にする>Swing/TableFileList]]
+- [[JTableのセル内でリンクだけHover可能にする>Swing/PointInsidePrefSize]]
+
+* コメント [#comment]
+#comment
+#comment

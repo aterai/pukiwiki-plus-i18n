@@ -18,7 +18,6 @@ image: https://drive.google.com/uc?id=1T6g79tQY4xA9kVjE53DiRWGIfHgIQs6p
 // UIManager.put("Menu.preserveTopLevelSelection", Boolean.TRUE);
 String key = "Menu.preserveTopLevelSelection";
 Boolean b = UIManager.getBoolean(key);
-System.out.println(key + ": " + b);
 JCheckBox preserveTopLevelSelectionCheck = new JCheckBox(key, b) {
   @Override public void updateUI() {
     super.updateUI();
@@ -34,16 +33,16 @@ preserveTopLevelSelectionCheck.addActionListener(e ->
 上記のサンプルでは、`JMenuBar`直下の`JMenu`から開いた`JPopupMenu`をKBD{ESC}キー入力でキャンセルして閉じた場合その`JMenu`の選択状態を維持するかどうかを切り替えてテストできます。
 
 - `WindowsLookAndFeel`
--- `UIManager.getLookAndFeelDefaults().getBoolean("Menu.preserveTopLevelSelection")`の初期値は`true`
+-- `UIManager.getLookAndFeelDefaults().getBoolean("Menu.preserveTopLevelSelection")`の初期値は`Boolean.TRUE`
 -- `JMenuBar`直下の`JMenu`から開いた`JPopupMenu`をキャンセルで閉じた場合その`JMenu`の選択状態を維持する
---- この状態でもう一度キャンセルキー(KBD{ESC})を入力すると選択状態はクリアされる
--- マウスクリックでキャンセルした場合は常に`JMenu`の選択状態はクリアされ`Menu.preserveTopLevelSelection`には影響されない
--- サブメニューをキャンセルした場合は常に`JMenu`の選択状態は維持され`Menu.preserveTopLevelSelection`には影響されない
+--- この状態からもう一度キャンセルキー(KBD{ESC})を入力すると選択状態はクリアされる
+-- マウスクリックでキャンセルした場合は常に`JMenu`の選択状態はクリアされ`Menu.preserveTopLevelSelection`の設定には影響されない
+-- サブメニューをキャンセルした場合は常に`JMenu`の選択状態は維持され`Menu.preserveTopLevelSelection`の設定には影響されない
 - その他の`LookAndFeel`(`MetalLookAndFeel`、`NimbusLookAndFeel`など)
 -- `UIManager.getLookAndFeelDefaults().getBoolean("Menu.preserveTopLevelSelection")`の初期値は`false`
 -- `JMenuBar`直下の`JMenu`から開いた`JPopupMenu`をキャンセルで閉じた場合、その`JMenu`の選択状態はクリアされる
 -- `UIManager.put("Menu.preserveTopLevelSelection", Boolean.TRUE)`を設定すれば、`WindowsLookAndFeel`風に`JMenu`の選択状態が維持される
--- サブメニューをキャンセルした場合は常に`JMenu`の選択状態は維持され`Menu.preserveTopLevelSelection`には影響されない
+-- サブメニューをキャンセルした場合は常に`JMenu`の選択状態は維持され`Menu.preserveTopLevelSelection`の設定には影響されない
 --- `MotifLookAndFeel`の場合サブメニューをキャンセルするとすべての`JPopupMenu`が閉じる
 --- `UIManager.put("Menu.cancelMode", "hideLastSubmenu");`で最後の`JPopupMenu`のみ閉じるよう切り替え可能
 --- [[JMenuから開いたJPopupMenuをキャンセルした場合の動作を変更する>Swing/MenuCancelMode]]

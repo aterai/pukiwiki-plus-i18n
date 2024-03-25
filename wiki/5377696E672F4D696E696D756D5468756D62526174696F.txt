@@ -37,7 +37,7 @@ scroll.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL) {
 -- `UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32))`でノブの最小サイズを設定
 --- `BasicLookAndFeel`、`NimbusLookAndFeel`で有効
 -- `MetalLookAndFeel`の場合、たとえば縦`JScrollBar`は`UIManager.getInt("ScrollBar.width")`の値が高さの最小サイズになる
--- `WindowsLookAndFeel`(`Windows 10`)の場合`OS`(レジストリ)の設定が優先される？
+-- `WindowsLookAndFeel`の場合`OS`(レジストリ)の設定が優先される？
 -- [[JScrollBarのKnobの最小サイズを設定する>Swing/MinimumThumbSize]]
 - 右: `override getMinimumThumbSize()`
 -- `BasicScrollBarUI#getMinimumThumbSize()`をオーバーライドして最小値を指定

@@ -1,0 +1,112 @@
+---
+category: swing
+folder: MinimalHTMLWriter
+title: JTextPaneのStyledDocumentからhtmlテキストを生成する
+tags: [JTextPane, StyledDocument, Html, Clipboard]
+author: aterai
+pubdate: 2023-06-05T03:07:49+09:00
+description: JTextPaneから取得したStyledDocumentをMinimalHTMLWriterで変換してhtmlテキストを生成します。
+image: https://drive.google.com/uc?id=1vmydUsUDHmnZMDK1ZRv5Ww-K7NjwCC1F
+---
+* 概要 [#summary]
+`JTextPane`から取得した`StyledDocument`を`MinimalHTMLWriter`で変換して`html`テキストを生成します。
+
+#download(https://drive.google.com/uc?id=1vmydUsUDHmnZMDK1ZRv5Ww-K7NjwCC1F)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+public void copyHtmlTextToClipboard(JTextPane textPane) {
+  Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+  int start = textPane.getSelectionStart();
+  int end = textPane.getSelectionEnd();
+  int length = end - start;
+  StyledDocument styledDocument = textPane.getStyledDocument();
+  try (OutputStream os = new ByteArrayOutputStream();
+       OutputStreamWriter writer = new OutputStreamWriter(
+           os, StandardCharsets.UTF_8)) {
+    MinimalHTMLWriter w = new MinimalHTMLWriter(
+        writer, styledDocument, start, length);
+    w.write();
+    writer.flush();
+    String contents = os.toString();
+    String plain= styledDocument .getText(start, length);
+    Transferable transferable = new BasicTransferable(plain, contents);
+    clipboard.setContents(transferable, null);
+  } catch (IOException | BadLocationException e) {
+    UIManager.getLookAndFeel().provideErrorFeedback(textPane);
+    e.printStackTrace();
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `copy-to-clipboard`
+-- `DefaultEditorKit.CopyAction()`を使用して選択テキストをコピー
+-- KBD{Ctrl+C}でのコピーと同じ
+-- コピー元の`JTextPane`にペーストすれば`DataFlavor`が`application/x-java-jvm-local-objectref`に対応しているのでスタイルを維持したテキストになる
+-- `JEditorPane#setContentType("text/html")`を設定して`HTMLEditorKit`を使用する`JEditorPane`にペーストするとスタイルは除去されたテキストになる
+- `copy-html-and-text-to-clipboard`
+-- `MinimalHTMLWriter`を使用してスタイル付きテキストを`Html`テキストに変換してクリップボードにコピー
+--- `javax/swing/plaf/basic/BasicTransferable.java`をコピーしてプレーンテキストと`Html`テキストを保持する`Transferable`を生成してクリップボードにコピー
+--- このため`JEditorPane#setContentType("text/html")`を設定して`HTMLEditorKit`を使用する`JEditorPane`に`Html`テキストとしてペーストが可能
+--- `MinimalHTMLWriter`で`Html`化するとタグ間に空白文字が追加されたり、改行文字が追加・除去される場合がある？
+-- `HTMLEditorKit#write(Writer out, Document doc, int pos, int len)`では、以下のように`HTMLDocument`は`HTMLWriter`で、`StyledDocument`は`MinimalHTMLWriter`で`html`テキストに変換しているのでこれを参考にしている
+
+#code{{
+public void write(Writer out, Document doc, int pos, int len)
+    throws IOException, BadLocationException {
+  if (doc instanceof HTMLDocument) {
+    HTMLWriter w = new HTMLWriter(out, (HTMLDocument) doc, pos, len);
+    w.write();
+  } else if (doc instanceof StyledDocument) {
+    MinimalHTMLWriter w = new MinimalHTMLWriter(out, (StyledDocument) doc, pos, len);
+    w.write();
+  } else {
+    super.write(out, doc, pos, len);
+  }
+}
+}}
+
+- `copy-html-to-clipboard`
+-- `copy-html-and-text-to-clipboard`と同様に`MinimalHTMLWriter`を使用してスタイル付きテキストを`Html`テキストに変換し、以下のような`Html`テキストのみを保持する簡易`Transferable`を生成してクリップボードにコピー
+-- `JEditorPane#setContentType("text/html")`を設定して`HTMLEditorKit`を使用する`JEditorPane`に`Html`テキストとしてペーストが可能だが、コピー元の`JTextPane`にペースト不可になる
+
+#code{{
+class HtmlTransferable implements Transferable {
+  private final String htmlFormattedText;
+
+  public HtmlTransferable(String htmlFormattedText) {
+    this.htmlFormattedText = htmlFormattedText;
+  }
+
+  @Override public DataFlavor[] getTransferDataFlavors() {
+    return new DataFlavor[] { DataFlavor.allHtmlFlavor };
+  }
+
+  @Override public boolean isDataFlavorSupported(DataFlavor flavor) {
+    for (DataFlavor supportedFlavor : getTransferDataFlavors()) {
+      if (supportedFlavor.equals(flavor)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override public Object getTransferData(DataFlavor flavor)
+      throws UnsupportedFlavorException, IOException {
+    if (Objects.equals(flavor, DataFlavor.allHtmlFlavor)) {
+      return htmlFormattedText;
+    }
+    throw new UnsupportedFlavorException(flavor);
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/MinimalHTMLWriter.html MinimalHTMLWriter (Java Platform SE 8)]
+- [[JTextPaneで修飾したテキストをJTextAreaにHtmlソースとして表示する>Swing/HTMLEditorKit]]
+- [[JTextPaneでキーワードのSyntaxHighlight>Swing/SimpleSyntaxHighlight]]
+
+* コメント [#comment]
+#comment
+#comment

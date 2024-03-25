@@ -24,7 +24,7 @@ l1.setBorder(new ComponentTitledBorder(c, l1, eb));
 
 * 解説 [#explanation]
 - `SwingUtilities.paintComponent`で`Border`にコンポーネントを描画
--- 描画しているだけなので`JComboBox`などのコンポーネントが選択されてもイベントが伝わらない
+-- 描画しているだけなので`JCheckBox`などのコンポーネントが選択されてもイベントが伝わらない
 -- このためこの`ComponentTitledBorder`ではマウスリスナーを設定して`Component#dispatchEvent`メソッドで描画しているコンポーネントに以下のようにマウスイベントを転送
 
 #code{{
@@ -36,8 +36,7 @@ l1.setBorder(new ComponentTitledBorder(c, l1, eb));
 }}
 
 * 参考リンク [#reference]
-- [http://www.jroller.com/page/santhosh?entry=component_titled_border ComponentTitledBorder]
--- 参考にしていた[http://www.jroller.com/page/santhosh Santhosh Kumar's Weblog]に接続できなくなっている
+- [https://github.com/santhosh-tekuri/MyBlog/tree/master/ComponentTitledBorder MyBlog/ComponentTitledBorder at master · santhosh-tekuri/MyBlog]
 - [[Borderの右下にJComponentを配置>Swing/RightAlignComponentBorder]]
 - [[TitledBorderにタイトル文字列までの内余白を設定する>Swing/TitledBorderHorizontalInsetOfText]]
 

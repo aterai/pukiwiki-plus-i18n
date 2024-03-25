@@ -49,7 +49,6 @@ class HtmlTableTransferHandler extends TransferHandler {
         }
       }
 
-      // if (rows == null || cols == null || rows.length == 0 || cols.length == 0) {
       if (cols == null || rows.length == 0 || cols.length == 0) {
         return null;
       }
@@ -104,7 +103,7 @@ class HtmlTableTransferHandler extends TransferHandler {
 -- デフォルトの`BasicTableUI.TableTransferHandler`を使用
 - 下`JTable`:
 -- `HtmlTableTransferHandler`を設定
--- `TransferHandler#createTransferable(JComponent)`をオーバーライドしてクリップボードに渡す`text/html`なテキストを独自に作成
+-- `TransferHandler#createTransferable(JComponent)`をオーバーライドしてクリップボードに転送する`text/html`なテキストを独自に作成
 --- `text/plain`は`BasicTableUI.TableTransferHandler`のコピーをそのまま使用
 --- `<table>`タグに属性`border='1'`を追加
 -- セルのクラスに応じたタグを生成

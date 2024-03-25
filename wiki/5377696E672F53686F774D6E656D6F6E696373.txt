@@ -36,7 +36,7 @@ showMnemonicsCheck.addActionListener(e -> {
 -- デフォルト
 --- 例えば`Windows 10`の場合「コントロール パネル\コンピューターの簡単操作\コンピューターの簡単操作センター\キーボードを使いやすくします」の「ショートカット キーとアクセス キーに下線を表示します」のチェックに対応
 -- `WindowsLookAndFeel`でチェックボックスで切り替えを行う際、`WindowsLookAndFeel.setMnemonicHidden(true)`で一旦下線を非表示にしてから`JFrame`全体を再描画している
---- [https://bugs.openjdk.java.net/browse/JDK-6921687 JDK-6921687 Mnemonic disappears after repeated attempts to open menu items using mnemonics - Java Bug System]
+--- [https://bugs.openjdk.org/browse/JDK-6921687 JDK-6921687 Mnemonic disappears after repeated attempts to open menu items using mnemonics - Java Bug System]
 - `UIManager.put("Button.showMnemonics", true)`
 -- `WindowsLookAndFeel`の場合でも`Mnemonic`の下線が常に表示状態になる
 

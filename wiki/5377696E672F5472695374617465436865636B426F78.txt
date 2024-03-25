@@ -15,57 +15,64 @@ image: https://lh6.googleusercontent.com/-Rs-vnlD35Cg/TuTNCuEvU_I/AAAAAAAABF4/Iz
 
 * サンプルコード [#sourcecode]
 #code(link){{
-JCheckBox checkBox = new JCheckBox("TriState JCheckBox") {
-  protected TriStateActionListener listener = null;
-  class TriStateActionListener implements ActionListener {
-    protected Icon icon;
-    public void setIcon(Icon icon) {
-      this.icon = icon;
-    }
+class TriStateCheckBox extends JCheckBox {
+  private transient TriStateActionListener listener;
+  private transient Icon icon;
 
-    @Override public void actionPerformed(ActionEvent e) {
-      JCheckBox cb = (JCheckBox) e.getSource();
-      if (!cb.isSelected()) {
-        cb.setIcon(icon);
-      } else if (cb.getIcon() != null) {
-        cb.setIcon(null);
-        cb.setSelected(false);
-      }
+  protected TriStateCheckBox(String title) {
+    super(title);
+  }
+
+  public void updateStatus(Status s) {
+    switch (s) {
+      case SELECTED:
+        setSelected(true);
+        setIcon(null);
+        break;
+      case DESELECTED:
+        setSelected(false);
+        setIcon(null);
+        break;
+      case INDETERMINATE:
+        setSelected(false);
+        setIcon(icon);
+        break;
+      default:
+        throw new AssertionError("Unknown Status");
     }
   }
 
   @Override public void updateUI() {
-    final Icon oi = getIcon();
-    removeActionListener(listener);
     setIcon(null);
+    removeActionListener(listener);
     super.updateUI();
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        if (listener == null) {
-          listener = new TriStateActionListener();
-        }
-        Icon icon = new IndeterminateIcon();
-        listener.setIcon(icon);
-        addActionListener(listener);
-        if (oi != null) {
-          setIcon(icon);
-        }
-      }
-    });
+    listener = new TriStateActionListener();
+    icon = new IndeterminateIcon();
+    listener.setIcon(icon);
+    addActionListener(listener);
+    if (Objects.nonNull(getIcon())) {
+      setIcon(icon);
+    }
   }
-};
+}
 
 class IndeterminateIcon implements Icon {
-  private final Color color = UIManager.getColor("CheckBox.foreground");
+  // private  FOREGROUND = UIManager.getColor("CheckBox.foreground");
+  private static final Color FOREGROUND = Color.BLACK;
+  private static final int MARGIN = 4;
+  private static final int HEIGHT = 2;
   private final Icon icon = UIManager.getIcon("CheckBox.icon");
+
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
-    icon.paintIcon(c, g, x, y);
-    int w = getIconWidth(), h = getIconHeight();
-    int a = 4, b = 2;
     Graphics2D g2 = (Graphics2D) g.create();
-    g2.setPaint(Color.BLACK);
     g2.translate(x, y);
-    g2.fillRect(a, (h - b) / 2, w - a - a, b);
+    icon.paintIcon(c, g2, 0, 0);
+    g2.setPaint(FOREGROUND);
+    g2.fillRect(
+      MARGIN,
+      (getIconHeight() - HEIGHT) / 2,
+      getIconWidth() - MARGIN - MARGIN,
+      HEIGHT);
     g2.dispose();
   }
 
@@ -77,12 +84,15 @@ class IndeterminateIcon implements Icon {
     return icon.getIconHeight();
   }
 }
+
+enum Status {
+  SELECTED, DESELECTED, INDETERMINATE
+}
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`UIManager.getIcon("CheckBox.icon")`で取得した非選択状態のチェックボックスアイコンの上に横棒を引いて不定状態のアイコンを作成しています。
-
-- `JCheckBox#getIcon()`が`null`の場合、チェックボックスは不定状態であると判定
+- `UIManager.getIcon("CheckBox.icon")`で取得した非選択状態のチェックボックスアイコンの上に一本の横棒を引いて不定状態のアイコンを作成
+- `JCheckBox#getIcon()`が`null`の場合、チェックボックスは不定状態であると判定して上記の不定状態のアイコンを表示
 - 横棒の色は`UIManager.getColor("CheckBox.foreground")`を使用しているが`LookAndFeel`によっては無意味
 - [[JTableHeaderにJCheckBoxを追加してセルの値を切り替える>Swing/TableHeaderCheckBox]]で使用すると`NimbusLookAndFeel`でアイコンと文字列のベースラインがずれる？
 -- 文字列も`ImageIcon`にして回避

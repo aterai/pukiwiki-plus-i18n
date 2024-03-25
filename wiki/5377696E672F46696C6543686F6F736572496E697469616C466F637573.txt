@@ -50,7 +50,7 @@ private static Optional<Component> findFileNameTextField(JFileChooser fileChoose
 - `JFileChooser`から直接ファイル名表示用の`JTextField`を取得できないので`Container#getComponents()`で子コンポーネントを検索する必要がある
 - `MetalLookAndFeel`や`WindowsLookAndFeel`の場合、初期フォーカスはファイル名表示用の`JTextField`
 -- `SynthLookAndFeel`のバグ？
-- または`PropertyChangeListener`、`AncestorListener`などを使用、`SynthFileChooserUIImpl#doAncestorChanged()`をオーバーライドする方法がある
+- または`PropertyChangeListener`、`AncestorListener`などを使用、`SynthFileChooserUIImpl#doAncestorChanged()`をオーバーライドする方法もある
 
 #code{{
 // TEST: PropertyChangeListener

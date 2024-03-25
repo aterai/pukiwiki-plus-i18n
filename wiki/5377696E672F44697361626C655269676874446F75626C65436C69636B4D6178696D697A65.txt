@@ -61,7 +61,7 @@ class DesktopLayerUI extends LayerUI<JDesktopPane> {
 -- [[JInternalFrameにJPopupMenuを設定してタイトルを変更する>Swing/EditInternalFrameTitle]]
 -- タイトルバーから`JPopupMenu`を開き、KBD{Esc}キー入力や別コンポーネントをクリックしてポップアップ表示をキャンセルすると再度タイトルバーを左クリックするまで`JInternalFrame`のリサイズが不可能になるバグ？が存在する
 - `WindowsInternalFrameUI`
--- `WidowsLookAndFeel`でのみ動作を変更したい場合は`WindowsInternalFrameUI#createBorderListener(...)`メソッドをオーバーライドして
+-- `WindowsLookAndFeel`でのみ動作を変更したい場合は`WindowsInternalFrameUI#createBorderListener(...)`メソッドをオーバーライドして
 `MouseInputAdapter`を継承する`BorderListener`がマウスの左ボタンにのみ反応するよう変更することで右ボタンのダブルクリックによる最大化や右ボタンでの`JInternalFrame`のリサイズを無効にする方法がある
 -- 右ボタンでのリサイズ自体が無効なので、上記の`JPopupMenu`のバグは発生しない
 #code{{

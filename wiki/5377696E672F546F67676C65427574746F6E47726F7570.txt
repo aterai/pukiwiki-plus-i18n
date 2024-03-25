@@ -41,7 +41,7 @@ class ToggleButtonGroup extends ButtonGroup {
 - `Default ButtonGroup`
 -- `ButtonGroup`に追加された`JToggleButton`などはすでに選択状態にあるボタンをクリックしてもその選択を解除することはできない
 - `Custom ButtonGroup(clears the selection)`
--- `ButtonGroup#setSelected(...)`メソッドをオーバーライドして選択状態にあるボタンをクリックした場合は`ButtonGroup#clearSelection()`メソッドを呼び出してグループ内のすべてのボタンを未選択状態に戻す
+-- `ButtonGroup#setSelected(...)`メソッドをオーバーライドして現在選択状態のボタンをクリックした場合はグループ内のすべてのボタンを未選択状態に戻すために`ButtonGroup#clearSelection()`メソッドを呼び出す
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/37598206/how-to-deselect-already-selected-jradiobutton-by-clicking-on-it/37607560#37607560 java - How to deselect already selected JRadioButton by clicking on it - Stack Overflow]

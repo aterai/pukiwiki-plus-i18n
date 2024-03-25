@@ -1,0 +1,138 @@
+---
+category: swing
+folder: FileAndTextTransferHandler
+title: JTextComponentにファイルとテキストをドロップ可能に設定する
+tags: [JTextComponent, DragAndDrop, DropTargetListener, TransferHandler]
+author: aterai
+pubdate: 2022-11-21T00:21:27+09:00
+description: JTextComponentにデフォルトの文字列だけでなくファイルもドロップ可能になるようなTransferHandlerを設定します。
+image: https://drive.google.com/uc?id=19UPpYiiOmU-vIAHpCt35QmXdofVKz3nO
+---
+* 概要 [#summary]
+`JTextComponent`にデフォルトの文字列だけでなくファイルもドロップ可能になるような`TransferHandler`を設定します。
+
+#download(https://drive.google.com/uc?id=19UPpYiiOmU-vIAHpCt35QmXdofVKz3nO)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+public void addTab(File file) {
+  JTextArea textArea = new JTextArea();
+  textArea.setDragEnabled(true);
+  new DropTarget(textArea, DnDConstants.ACTION_COPY,
+                 new FileDropTargetListener(), true);
+  if (file != null) {
+    try (Reader in = Files.newBufferedReader(
+            file.toPath(), StandardCharsets.UTF_8)) {
+      textArea.read(in, "File");
+      tabbedPane.addTab(file.getName(), new JScrollPane(textArea));
+    } catch (IOException ex) {
+      UIManager.getLookAndFeel().provideErrorFeedback(textArea);
+    }
+  } else {
+    tabbedPane.addTab("*untitled*", new JScrollPane(textArea));
+  }
+  tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+}
+
+public void addFile(Transferable transferable)
+      throws UnsupportedFlavorException, IOException {
+  List<?> list = (List<?>) transferable.getTransferData(
+      DataFlavor.javaFileListFlavor);
+  new SwingWorker<Void, Void>() {
+    @Override protected Void doInBackground() {
+      for (Object o : list) {
+        if (o instanceof File) {
+          addTab((File) o);
+        }
+      }
+      return null;
+    }
+  }.execute();
+}
+
+private class FileDropTargetListener extends DropTargetAdapter {
+  @Override public void drop(DropTargetDropEvent e) {
+    Transferable transferable = e.getTransferable();
+    if (e.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+      e.acceptDrop(DnDConstants.ACTION_COPY);
+      try {
+        addFile(transferable);
+        e.dropComplete(true);
+      } catch (UnsupportedFlavorException | IOException ex) {
+        e.dropComplete(false);
+      }
+    } else {
+      JTextComponent textArea = (JTextComponent) e.getSource();
+      TransferHandler textHandler = textArea.getTransferHandler();
+      if (textHandler != null) {
+        textHandler.importData(textArea, transferable);
+      }
+    }
+  }
+}
+
+private class FileTransferHandler extends TransferHandler {
+  @Override public boolean canImport(TransferSupport support) {
+    boolean isDrop = support.isDrop();
+    boolean supported = support.isDataFlavorSupported(
+        DataFlavor.javaFileListFlavor);
+    return supported && isDrop;
+  }
+
+  @Override public boolean importData(TransferSupport support) {
+    Transferable transferable = support.getTransferable();
+    try {
+      addFile(transferable);
+      return true;
+    } catch (IOException | UnsupportedFlavorException ex) {
+      return false;
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `FileTransferHandler`を設定した`JFrame`
+-- 子コンポーネントやタイトルバーを含む領域にファイルをドロップ可能
+#code{{
+Window window = SwingUtilities.getWindowAncestor(tabbedPane);
+if (window instanceof JFrame) {
+  ((JFrame) window).setTransferHandler(new FileTransferHandler());
+}
+}}
+
+- デフォルトの`JTextArea`
+-- `BasicTextUI.TextTransferHandler`がデフォルトで設定されているのでテキスト文字列を別コンポーネントなどからドロップ(ペースト)可能だが、親`JFrame`に設定した`FileTransferHandler`はこの`BasicTextUI.TextTransferHandler`に打ち消されるためファイルのドロップは不可
+-- `JTextArea#setDragEnabled(true)`を設定して選択文字列をドラッグ可能に設定
+
+- `FileDropTargetListener`を追加した`JTextArea`
+-- `DropTargetAdapter#drop(...)`をオーバーライドしてドロップイベントが`DataFlavor.javaFileListFlavor`をサポートしている場合はファイルを`JTextArea`に読み込んで`JTabbedPane`に追加、それ以外は`JTextArea`から`BasicTextUI.TextTransferHandler`を取得して`TransferHandler#importData(...)`を実行してテキストをドロップ
+-- `JTextArea#setDragEnabled(true)`を設定すれば選択文字列をドラッグ可能になるが、テキストドラッグオーバー中のキャレット描画に未対応
+
+---
+- `JTextArea`に`JFrame`に設定した`FileTransferHandler`を設定すると、デフォルトの`BasicTextUI.TextTransferHandler`が置き換えられてテキストがドロップ不可になる
+- これを回避するため、以下のような`TransferHandler`でラップしてファイルとテキストのドロップに対応する方法もあるが、`JTextArea#setDragEnabled(true)`を設定済みの`JTextArea`でも文字列を選択してドラッグアウトが不可になる
+#code{{
+TransferHandler textHandler = textArea.getTransferHandler();
+TransferHandler fileHandler = new FileTransferHandler();
+textArea.setTransferHandler(new TransferHandler() {
+  @Override public boolean canImport(TransferSupport support) {
+    return fileHandler.canImport(support) || textHandler.canImport(support);
+  }
+
+  @Override public boolean importData(TransferSupport support) {
+    if (support.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+      return fileHandler.importData(support);
+    } else {
+      return textHandler.importData(support);
+    }
+  }
+});
+}}
+
+* 参考リンク [#reference]
+- [[Fileのドラッグ＆ドロップ>Swing/FileListFlavor]]
+
+* コメント [#comment]
+#comment
+#comment

@@ -33,7 +33,7 @@ icon.setImageObserver((img, infoflags, x, y, w, h) -> {
 * 解説 [#explanation]
 - `Default`
 -- `DefaultMutableTreeNode`の`UserObject`として`Animated GIF`画像から生成した`ImageIcon`を設定し、これを`DefaultTreeCellRenderer#setIcon(...)`でノードに表示
--- 自動的に再描画されないためアニメーションが正常に行われない
+-- 自動的に再描画されないためアニメーションが開始されない
 - `setImageObserver`
 -- 同様に設定した`ImageIcon`に`setImageObserver(ImageObserver)`メソッドで`ImageObserver`を追加し、正常にアニメーションが行えるように画像の更新に合わせて`JTree#repaint(Rectangle)`でノードを再描画
 -- 再描画する領域は対象のノードのみになるよう`JTree.getPathBounds(TreePath)`で取得される領域に制限

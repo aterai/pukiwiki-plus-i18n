@@ -15,13 +15,14 @@ image: https://drive.google.com/uc?id=1WUozvYw68yZx1vvlEWPNmIrTO_-0wA6A
 
 * サンプルコード [#sourcecode]
 #code(link){{
-JMenu menu2 = new JMenu("LookAndFeel"); // LookAndFeelUtil.createLookAndFeelMenu();
+JMenu menu2 = new JMenu("LookAndFeel");
+// = LookAndFeelUtil.createLookAndFeelMenu();
 menu2.getPopupMenu().setLayout(new GridLayout(0, 2, 2, 0));
 menu2.add("Metel");
 menu2.add("Nimbus");
 menu2.add("CDE/Motif");
-menu2.add("Widows");
-menu2.add("Widows Classic");
+menu2.add("Windows");
+menu2.add("Windows Classic");
 }}
 
 * 解説 [#explanation]
@@ -36,7 +37,8 @@ class ColumnRulesBorder implements Border {
   private final Insets insets = new Insets(0, 0, 0, 0);
   private final JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
 
-  @Override public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+  @Override public void paintBorder(
+      Component c, Graphics g, int x, int y, int width, int height) {
     if (c instanceof JComponent) {
       JComponent p = (JComponent) c;
       Rectangle r = SwingUtilities.calculateInnerArea(p, null);

@@ -121,7 +121,7 @@ class CheckBoxesEditor extends CheckBoxesPanel
 - `JTable`のセル内に`3`つの`JCheckBox`を配置した`JPanel`を作成
 -- この`JPanel`を`CellRenderer`用と`CellEditor`用として別々に使用
 - `JCheckBox`をマウスでクリックすると直下にある`JCheckBox`の選択状態のみ更新
-- 編集中にカラムヘッダの移動、リサイズ(`JFrame`などのリサイズに連動)などが発生してもチェックした内容がリセットされないように`CellEditor`のチェックボックスがクリックされたら`fireEditingStopped()`メソッドを呼び出して編集を終了し更新を確定する
+- 編集中にカラムヘッダの移動やリサイズ(`JFrame`などのリサイズに連動)などが発生してもチェックした内容がリセットされないように`CellEditor`のチェックボックスがクリックされたら`fireEditingStopped()`メソッドを呼び出して編集を終了し更新を確定する
 
 * 参考リンク [#reference]
 - [[JTableのセル中にJRadioButtonを配置>Swing/RadioButtonsInTableCell]]

@@ -21,10 +21,12 @@ class ImgBaselineHTMLEditorKit extends HTMLEditorKit {
       @Override public View create(Element elem) {
         View view = super.create(elem);
         if (view instanceof LabelView) {
-          System.out.println("debug: " + view.getAlignment(View.Y_AXIS));
+          System.out.println(
+              "debug: " + view.getAlignment(View.Y_AXIS));
         }
         AttributeSet attrs = elem.getAttributes();
-        Object elementName = attrs.getAttribute(AbstractDocument.ElementNameAttribute);
+        Object elementName = attrs.getAttribute(
+            AbstractDocument.ElementNameAttribute);
         Object o = Objects.nonNull(elementName)
             ? null
             : attrs.getAttribute(StyleConstants.NameAttribute);
@@ -34,7 +36,9 @@ class ImgBaselineHTMLEditorKit extends HTMLEditorKit {
             return new ImageView(elem) {
               @Override public float getAlignment(int axis) {
                 // .8125f magic number...
-                return axis == View.Y_AXIS ? .8125f : super.getAlignment(axis);
+                return axis == View.Y_AXIS
+                    ? .8125f
+                    : super.getAlignment(axis);
               }
             };
           }
@@ -49,7 +53,7 @@ class ImgBaselineHTMLEditorKit extends HTMLEditorKit {
 * 解説 [#explanation]
 - 上
 -- `<img>`タグで挿入した画像がインラインボックスからずれて表示される
--- `img {align: middle; valign: middle; vertical-align: middle;}`などの設定が無効
+-- `img {align: middle; valign: middle; vertical-align: middle;}`などを設定しても`HTMLEditorKit`では無効
 -- `javax/swing/text/html/ImageView.java`の`setPropertiesFromAttributes()`の実装は、以下のように`HTML.Attribute.VERTICAL_ALIGN`ではなく`HTML.Attribute.ALIGN`を使用することで、少なくとも`top`、`middle`が使用できるはずだが`Java 1.8.0_144`ではこれらを設定しても全く効果がない？
 #code{{
 /**
@@ -81,7 +85,7 @@ protected void setPropertiesFromAttributes() {
 -- 上記のサンプルでは、画像サイズをデフォルトフォントのサイズと同じに設定し、ベースラインも同じ値を使用するよう固定している
 
 * 参考リンク [#reference]
-- [https://bugs.openjdk.java.net/browse/JDK-5094219 JDK-5094219 JEditorPane doesn't recognize CSS vertical-align property - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-5094219 JDK-5094219 JEditorPane doesn't recognize CSS vertical-align property - Java Bug System]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/ImageView.html#getAlignment-int- ImageView#getAlignment(...) (Java Platform SE 8)]
 - [[JTextPaneに追加するコンポーネントのベースラインを揃える>Swing/InsertComponentBaseline]]
 

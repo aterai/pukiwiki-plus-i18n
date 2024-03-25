@@ -38,17 +38,15 @@ class RubberBandSelectionList<E extends ListItem> extends JList<E> {
       removeMouseListener(renderer);
     }
     super.updateUI();
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        setCellRenderer(renderer);
-        addMouseMotionListener(renderer);
-        addMouseListener(renderer);
-        setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        setVisibleRowCount(0);
-        setFixedCellWidth(62);
-        setFixedCellHeight(62);
-        setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-      }
+    EventQueue.invokeLater(() -> {
+      setCellRenderer(renderer);
+      addMouseMotionListener(renderer);
+      addMouseListener(renderer);
+      setLayoutOrientation(JList.HORIZONTAL_WRAP);
+      setVisibleRowCount(0);
+      setFixedCellWidth(62);
+      setFixedCellHeight(62);
+      setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     });
     Color c = getSelectionBackground();
     int r = c.getRed();

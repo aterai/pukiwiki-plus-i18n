@@ -1,0 +1,61 @@
+---
+category: swing
+folder: FileChooserListViewWindowsStyle
+title: JFileChooserのファイル一覧で選択状態をWindowsスタイルに設定する
+tags: [FileChooser, UIManager, WindowsLookAndFeel]
+author: aterai
+pubdate: 2023-05-15T01:33:15+09:00
+description: JFileChooserのファイル一覧でファイルの選択状態やポップアップメニューのセパレータなどをWindows風の表示に変更します。
+image: https://drive.google.com/uc?id=1h9w0k8twLfHOwzNGtvXLIWL5SP75W68w
+---
+* 概要 [#summary]
+`JFileChooser`のファイル一覧でファイルの選択状態やポップアップメニューのセパレータなどを`Windows`風の表示に変更します。
+
+#download(https://drive.google.com/uc?id=1h9w0k8twLfHOwzNGtvXLIWL5SP75W68w)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+String key = "FileChooser.listViewWindowsStyle";
+JCheckBox check = new JCheckBox("listViewWindowsStyle") {
+  @Override public void updateUI() {
+    super.updateUI();
+    boolean b = UIManager.getLookAndFeelDefaults().getBoolean(key);
+    setSelected(b);
+  }
+};
+
+JButton button = new JButton("show");
+button.addActionListener(e -> {
+  boolean b = check.isSelected();
+  UIManager.put(key, b);
+  JFileChooser fileChooser = new JFileChooser();
+  int retValue = fileChooser.showOpenDialog(getRootPane());
+  if (retValue == JFileChooser.APPROVE_OPTION) {
+    log.setText(fileChooser.getSelectedFile().getAbsolutePath());
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `FileChooser.listViewWindowsStyle`: `Boolean.TRUE`
+-- スクリーンショット下
+-- `WindowsLookAndFeel`でのデフォルトで、`JFileChooser`のファイル一覧の選択状態などを以下のような`Windows`スタイル？で表示する
+--- `WindowsLookAndFeel`以外でも`UIManager.put("FileChooser.listViewWindowsStyle", Boolean.TRUE)`を設定すると`Windows`スタイルでの表示が可能になる
+-- `JList`を使用した`ListView`、`JTable`を使用した`DetailsView`でファイルなどを選択し、右クリックなどでポップアップメニューを開くと選択状態の表示がクリアされる
+--- デフォルト？の`Windows 10`のファイル選択ダイアログでは右クリックでポップアップメニューを開いてもファイル選択状態は維持されるので、上記の動作が意図したものかバグなのかは分からない
+--- `UIManager.put("FileView.fullRowSelection", Boolean.TRUE)`が設定されて`JTable`を使用した`DetailsView`の一行選択が有効になっている場合は、選択状態の表示がクリアが無効になる
+--- [[JFileChooserのDetails Viewで行全体を選択可能にする>Swing/FileViewFullRowSelection]]
+-- ポップアップメニューにセパレータが追加される
+// -- `DetailsView`のファイルサイズ表記が変化する場合がある？
+- `FileChooser.listViewWindowsStyle`: `Boolean.FALSE`
+-- スクリーンショット上
+-- `WindowsLookAndFeel`以外でのデフォルト
+-- `JList`を使用した`ListView`、`JTable`を使用した`DetailsView`でファイルなどを選択し、右クリックなどでポップアップメニューを開いても選択状態の表示が保持される
+-- ポップアップメニューのセパレーターが非表示になる
+
+* 参考リンク [#reference]
+- [[JFileChooserのDetails Viewで行全体を選択可能にする>Swing/FileViewFullRowSelection]]
+
+* コメント [#comment]
+#comment
+#comment

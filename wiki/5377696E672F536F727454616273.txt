@@ -17,13 +17,13 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTe98QmaI/AAAAAAAAAkc/w7
 #code(link){{
 class SortAction extends AbstractAction {
   @Override public void actionPerformed(ActionEvent e) {
-    JTabbedPane tabs = (JTabbedPane) getInvoker();
-    List<ComparableTab> list = IntStream.range(0, tabs.getTabCount())
-      .mapToObj(i -> new ComparableTab(tabs.getTitleAt(i), tabs.getComponentAt(i)))
+    JTabbedPane t = (JTabbedPane) getInvoker();
+    List<ComparableTab> list = IntStream.range(0, t.getTabCount())
+      .mapToObj(i -> new ComparableTab(t.getTitleAt(i), t.getComponentAt(i)))
       .sorted(Comparator.comparing(ComparableTab::getTitle))
       .collect(Collectors.toList());
-    tabs.removeAll();
-    list.forEach(c -> tabs.addTab(c.getTitle(), c.getComponent()));
+    t.removeAll();
+    list.forEach(c -> t.addTab(c.getTitle(), c.getComponent()));
   }
 }
 

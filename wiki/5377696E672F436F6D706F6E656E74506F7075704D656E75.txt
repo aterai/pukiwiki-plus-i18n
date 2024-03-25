@@ -5,11 +5,11 @@ title: JPopupMenuをコンポーネントに追加
 tags: [JPopupMenu, JTextComponent, PopupMenuListener, DefaultEditorKit]
 author: aterai
 pubdate: 2008-03-10T01:39:57+09:00
-description: コンポーネントに右クリックなどでポップアップするJPopupMenuを追加します。
+description: JComponentに右クリックなどでポップアップするJPopupMenuを追加します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKBw4_YtI/AAAAAAAAAVU/J_aFRLSj-VU/s800/ComponentPopupMenu.png
 ---
 * 概要 [#summary]
-コンポーネントに右クリックなどでポップアップする`JPopupMenu`を追加します。
+`JComponent`に右クリックなどでポップアップする`JPopupMenu`を追加します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKBw4_YtI/AAAAAAAAAVU/J_aFRLSj-VU/s800/ComponentPopupMenu.png)
 
@@ -110,17 +110,17 @@ popup.addPopupMenuListener(new PopupMenuListener() {
 textArea.setComponentPopupMenu(popup);
 }}
 
-- 注: `PopupMenuEvent`からはマウスでクリックした位置を取得できない
+- `PopupMenuEvent`からはマウスでクリックした位置を取得できない
 -- このため、`JTabbedPane`などでどのタブの上でポップアップが表示されるかなどを取得したい場合は`JPopupMenu#show(...)`をオーバーライドする必要がある
--- 参考: [[JTabbedPaneでタブを追加削除>Swing/TabbedPane]]
+-- [[JTabbedPaneでタブを追加削除>Swing/TabbedPane]]
 
 * 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#setComponentPopupMenu-javax.swing.JPopupMenu- JComponent#setComponentPopupMenu(JPopupMenu) (Java Platform SE 8)]
 - [[JPopupMenuの取得を親に委譲>Swing/InheritsPopupMenu]]
 - [[JTabbedPaneでタブを追加削除>Swing/TabbedPane]]
+- [https://bugs.openjdk.org/browse/JDK-6675802 Bug ID: 6675802 Regression: heavyweight popups cause SecurityExceptions in applets]
+- [https://bugs.openjdk.org/browse/JDK-6299213 Bug ID: 6299213 The PopupMenu is not updated if the LAF is changed (incomplete fix of 4962731)]
 
 * コメント [#comment]
 #comment
-- メモ: [https://bugs.openjdk.java.net/browse/JDK-6675802 Bug ID: 6675802 Regression: heavyweight popups cause SecurityExceptions in applets] -- &user(aterai); &new{2008-04-05 (土) 20:59:02};
-- メモ: [https://bugs.openjdk.java.net/browse/JDK-6299213 Bug ID: 6299213 The PopupMenu is not updated if the LAF is changed (incomplete fix of 4962731)] -- &user(aterai); &new{2008-04-10 (木) 18:58:52};
-
 #comment

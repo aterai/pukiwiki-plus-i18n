@@ -35,11 +35,11 @@ yesLastButton.addActionListener(e -> {
 * 解説 [#explanation]
 - `OptionPane.isYesLast: false(default)`
 -- `WindowsLookAndFeel`でのデフォルトで`Yes`ボタン(`YES_OPTION`)や`OK`ボタン(`OK_OPTION`)を各オプションボタンの中で先頭(左端)に配置する
--- `JOptionPane#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`が設定されている場合、先頭は右端になる
+-- `JOptionPane#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`が設定されている場合、先頭は右端に反転する
 - `OptionPane.isYesLast: true`
 -- `Yes`ボタンを各オプションボタンの中で末尾(右端)に配置する
 -- `MotifLookAndFeel`や`NimbusLookAndFeel`でもこの設定は有効
--- `JOptionPane#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`が設定されている場合、末尾は左端になる
+-- `JOptionPane#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`が設定されている場合、末尾は左端に反転する
 
 * 参考リンク [#reference]
 - [[JOptionPaneのボタンの揃えを変更する>Swing/OptionPaneButtonOrientation]]

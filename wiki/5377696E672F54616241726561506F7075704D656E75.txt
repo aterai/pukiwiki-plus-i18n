@@ -1,0 +1,172 @@
+---
+category: swing
+folder: TabAreaPopupMenu
+title: JTabbedPaneのTabAreaで開くJPopupMenuを設定する
+tags: [JTabbedPane, JPopupMenu]
+author: aterai
+pubdate: 2024-01-29T05:46:34+09:00
+description: JTabbedPaneのタブ上とTabArea内では異なるJPopupMenuを開くよう設定します。
+image: https://drive.google.com/uc?id=1gYHccpOFLZywYrdW0agN_qhRAitbFgtF
+---
+* 概要 [#summary]
+`JTabbedPane`のタブ上と`TabArea`内では異なる`JPopupMenu`を開くよう設定します。
+
+#download(https://drive.google.com/uc?id=1gYHccpOFLZywYrdW0agN_qhRAitbFgtF)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTabbedPane tabbedPane = new JTabbedPane() {
+  private final JPopupMenu popup1 = makeTabPopupMenu();
+  private final JPopupMenu popup2 = makeTabAreaPopupMenu();
+
+  @Override public void updateUI() {
+    super.updateUI();
+    EventQueue.invokeLater(() -> {
+      SwingUtilities.updateComponentTreeUI(popup1);
+      SwingUtilities.updateComponentTreeUI(popup2);
+      setComponentPopupMenu(popup1);
+    });
+  }
+
+  @Override public Point getPopupLocation(MouseEvent e) {
+    int idx = indexAtLocation(e.getX(), e.getY());
+    if (idx < 0 && getTabAreaBounds().contains(e.getPoint())) {
+      setComponentPopupMenu(popup2);
+    } else {
+      setComponentPopupMenu(popup1);
+    }
+    return super.getPopupLocation(e);
+  }
+
+  private Rectangle getTabAreaBounds() {
+    Rectangle r = SwingUtilities.calculateInnerArea(this, null);
+    Rectangle cr = Optional.ofNullable(getSelectedComponent())
+        .map(Component::getBounds)
+        .orElseGet(Rectangle::new);
+    int tp = getTabPlacement();
+    // Note: don't call BasicTabbedPaneUI#getTabAreaInsets(),
+    // because it causes rotation.
+    Insets i1 = UIManager.getInsets("TabbedPane.tabAreaInsets");
+    Insets i2 = UIManager.getInsets("TabbedPane.contentBorderInsets");
+    if (tp == TOP || tp == BOTTOM) {
+      r.height -= cr.height + i1.top + i1.bottom + i2.top + i2.bottom;
+      // r.x += i1.left;
+      r.y += tp == TOP ? i1.top : cr.y + cr.height + i1.bottom + i2.bottom;
+    } else {
+      r.width -= cr.width + i1.top + i1.bottom + i2.left + i2.right;
+      r.x += tp == LEFT ? i1.top : cr.x + cr.width + i1.bottom + i2.right;
+      // r.y += i1.left;
+    }
+    return r;
+  }
+};
+}}
+
+* 解説 [#explanation]
+- タブ上用`popup1`と`TabArea`内用`popup2`に`2`種類の`JPopupMenu`を用意
+- `JTabbedPane#getPopupLocation(MouseEvent)`をオーバーライドしてクリック位置によって使用する`JPopupMenu`を切り替える
+-- `JTabbedPane#getPopupLocation(MouseEvent)`は`JTabbedPane#getComponentPopupMenu()`が`null`で未設定の場合は実行されないので、初期状態で適当な`JPopupMenu`を設定しておく必要がある
+-- `TabArea`内、かつ`JTabbedPane#indexAtLocation(...)`が負でクリック位置がタブ上でない場合は`TabArea`内用の`popup2`を`JTabbedPane#setComponentPopupMenu(popup2)`で設定
+-- それ以外の場合はタブ上用の`popup1`を`JTabbedPane#setComponentPopupMenu(popup1)`で設定
+--- タブコンテナ内のコンポーネントにマウスリスナーが未設定の場合タブ上用の`popup1`が`JPopupMenu`として使用される
+- ひとつの`JPopupMenu`で`JPopupMenu#show(invoker, x, y)`をオーバーライドし、この`xy`座標で使用する`JMenuItem`を入れ替える方法もある
+-- どちらを使用する場合も動作中に`LookAndFeel`を変更する場合は手動で`SwingUtilities.updateComponentTreeUI(...)`を実行して現在使用していない`JPopupMenu`や`JMenuItem`の`LookAndFeel`を更新する必要がある
+- `JTabbedPane#setTabComponentAt(...)`で設定したタブコンポーネントに`JPopupMenu`を設定して以下のように`JTabbedPane#getComponentPopupMenu()`で切り替える方法もあるが、マウスクリックによるタブ移動が不可になる場合がある
+
+#code{{
+@Override public JPopupMenu getComponentPopupMenu() {
+  int idx = getSelectedIndex();
+  Component c = getTabComponentAt(idx);
+  JPopupMenu popup;
+  if (idx>= 0 && c instanceof JComponent) {
+    popup = ((JComponent) c).getComponentPopupMenu();
+  } else {
+    popup = super.getComponentPopupMenu();
+  }
+  return popup;
+}
+}}
+
+- `TabbedPane.tabAreaInsets`と`TabbedPane.contentBorderInsets`の余白を考慮して`TabArea`領域を計算するよう修正
+-- `TabbedPane.tabAreaInsets`はタブ配置位置によって上下左右の余白が入れ替わる場合がある
+-- `TabbedPane.contentBorderInsets`は変化しない
+-- 入れ替え方法は`BasicTabbedPaneUI#rotateInsets(...)`を参照
+
+#code{{
+protected static void rotateInsets(
+    Insets topInsets, Insets targetInsets, int targetPlacement) {
+  switch(targetPlacement) {
+    case LEFT:
+      targetInsets.top = topInsets.left;
+      targetInsets.left = topInsets.top;
+      targetInsets.bottom = topInsets.right;
+      targetInsets.right = topInsets.bottom;
+      break;
+    case BOTTOM:
+      targetInsets.top = topInsets.bottom;
+      targetInsets.left = topInsets.left;
+      targetInsets.bottom = topInsets.top;
+      targetInsets.right = topInsets.right;
+      break;
+    case RIGHT:
+      targetInsets.top = topInsets.left;
+      targetInsets.left = topInsets.bottom;
+      targetInsets.bottom = topInsets.right;
+      targetInsets.right = topInsets.top;
+      break;
+    case TOP:
+    default:
+      targetInsets.top = topInsets.top;
+      targetInsets.left = topInsets.left;
+      targetInsets.bottom = topInsets.bottom;
+      targetInsets.right = topInsets.right;
+  }
+}
+}}
+
+- スクロールタブレイアウトの場合のみで十分な場合は、以下のように名前が`TabbedPane.scrollableViewport`の`JViewport`を検索してエッジボタンを除く`TabArea`領域を取得する方法もある
+-- [[JTabbedPaneのタブ選択をマウスホイールで変更する>Swing/MouseWheelTabCycling]]
+
+#code{{
+private static Rectangle getTabAreaBounds2(JTabbedPane tabbedPane) {
+  return descendants(tabbedPane)
+      .filter(JViewport.class::isInstance)
+      .map(JComponent.class::cast)
+      .filter(v -> "TabbedPane.scrollableViewport".equals(v.getName()))
+      .findFirst()
+      .map(c -> {
+        Rectangle r = SwingUtilities.calculateInnerArea(c, null);
+        // Note: BasicTabbedPaneUI#getTabAreaInsets() causes rotation.
+        Insets tabAreaInsets = UIManager.getInsets(
+            "TabbedPane.tabAreaInsets");
+        Insets targetInsets = new Insets(0, 0, 0, 0);
+        rotateInsets(
+            tabAreaInsets, targetInsets, tabbedPane.getTabPlacement());
+        if (r != null) {
+          r.x += tabAreaInsets.left;
+          r.y += tabAreaInsets.top;
+          r.width -= tabAreaInsets.left + tabAreaInsets.right;
+          r.height -= tabAreaInsets.top + tabAreaInsets.bottom;
+          r = SwingUtilities.convertRectangle(c, r, tabbedPane);
+        }
+        return r;
+      })
+      .orElseGet(Rectangle::new);
+}
+
+private static Stream<Component> descendants(Container parent) {
+  return Stream.of(parent.getComponents())
+      .filter(Container.class::isInstance).map(Container.class::cast)
+      .flatMap(c -> Stream.concat(Stream.of(c), descendants(c)));
+}
+}}
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのタブをドラッグ＆ドロップ>Swing/DnDTabbedPane]]
+-- `TabArea`領域の取得方法は上記のリンク先のサンプルと同一
+- [[JTabbedPaneのタブ選択をマウスホイールで変更する>Swing/MouseWheelTabCycling]]
+-- こちらの`TabArea`領域の取得方法は、`JTabbedPane.SCROLL_TAB_LAYOUT`限定かつ内余白内でのマウスホイールイベントも使用するため、名前が`TabbedPane.scrollableViewport`の`JViewport`の領域を使用している
+
+* コメント [#comment]
+#comment
+#comment

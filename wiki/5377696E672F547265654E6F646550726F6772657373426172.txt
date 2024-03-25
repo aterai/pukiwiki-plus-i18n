@@ -16,54 +16,61 @@ image: https://lh4.googleusercontent.com/-SBg5NOTGinM/UrcLHfPzXVI/AAAAAAAAB84/HD
 * サンプルコード [#sourcecode]
 #code(link){{
 class ProgressBarRenderer extends DefaultTreeCellRenderer {
-  private int nodeWidth = 100;
-  private static int barHeight = 4;
-  private final JProgressBar b = new JProgressBar(0, 100) {
+  // protected int nodeWidth = 100;
+  protected static final int BAR_HEIGHT = 4;
+  private final JProgressBar progress = new JProgressBar() {
     @Override public Dimension getPreferredSize() {
       Dimension d = super.getPreferredSize();
-      d.height = barHeight;
-      d.width  = nodeWidth;
+      // d.setSize(nodeWidth, BAR_HEIGHT);
+      d.height = BAR_HEIGHT;
       return d;
     }
 
     @Override public void updateUI() {
       super.updateUI();
       setUI(new BasicProgressBarUI());
+      setStringPainted(true);
+      setString("");
+      setOpaque(false);
+      setBorder(BorderFactory.createEmptyBorder());
     }
   };
-  private final JPanel p = new JPanel(new BorderLayout());
-
-  public ProgressBarRenderer() {
-    super();
-    b.setOpaque(false);
-    p.setOpaque(false);
-    b.setStringPainted(true);
-    b.setString("");
-    b.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-  }
+  private final Container renderer = new JPanel(new BorderLayout()) {
+    @Override public void updateUI() {
+      super.updateUI();
+      setOpaque(false);
+    }
+  };
 
   @Override public Component getTreeCellRendererComponent(
       JTree tree, Object value, boolean selected, boolean expanded,
       boolean leaf, int row, boolean hasFocus) {
-    Object o = ((DefaultMutableTreeNode) value).getUserObject();
-    JComponent c = (JComponent) super.getTreeCellRendererComponent(
+    Component c = super.getTreeCellRendererComponent(
         tree, value, selected, expanded, leaf, row, hasFocus);
-    if (!(o instanceof ProgressObject)) {
-      return c;
+    Object o = ((DefaultMutableTreeNode) value).getUserObject();
+    if (o instanceof ProgressObject) {
+      ProgressObject n = (ProgressObject) o;
+      int i = n.getValue();
+      progress.setValue(i);
+
+      // int titleWidth = c.getFontMetrics(c.getFont()).stringWidth(n.getTitle());
+      // int ww = getX() + getIcon().getIconWidth() + getIconTextGap() + titleWidth;
+      // nodeWidth = ww;
+
+      renderer.removeAll();
+      renderer.add(c);
+      if (i < progress.getMaximum()) {
+        renderer.add(progress, BorderLayout.SOUTH);
+      }
+      c = renderer;
     }
-    ProgressObject n = (ProgressObject) o;
-    int i = n.getValue();
-    b.setValue(i);
+    return c;
+  }
 
-    FontMetrics metrics = c.getFontMetrics(c.getFont());
-    int ww = getX() + getIcon().getIconWidth() + getIconTextGap()
-      + metrics.stringWidth(n.title);
-    nodeWidth = ww;
-
-    p.removeAll();
-    p.add(c);
-    p.add(i < 100 ? b : Box.createVerticalStrut(barHeight), BorderLayout.SOUTH);
-    return p;
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.height = 18;
+    return d;
   }
 }
 }}
@@ -71,15 +78,14 @@ class ProgressBarRenderer extends DefaultTreeCellRenderer {
 * 解説 [#explanation]
 上記のサンプルでは、タスクが実行中の場合はノードの幅(アイコンと文字列の合計)と同じサイズの`JProgressBar`を配置する`TreeCellRenderer`を作成し、これを`JTree#setCellRenderer(...)`で設定しています。
 
-- スタートボタンを押すと`JButton`を選択不可に設定し、`SwingWorker`を起動して葉以外のノードをすべて捜査
+- スタートボタンを押すとその`JButton`を選択不可に設定し、`SwingWorker`を起動して葉以外のノードをすべて捜査
 - 取得した各ノードで`SwingWorker`を起動し、進捗を`JProgressBar`を配置した`TreeCellRenderer`で表示
--- ダミータスクが終了するとそのノードを展開
-- すべてのノードのタスクが終了したことを`ExecutorService#awaitTermination(...)`で検知したら`JButton`を選択可に戻す
+-- 仮設定のタスクが終了するとそのノードを展開
+- すべてのノードのタスクが終了したことを`ExecutorService#awaitTermination(...)`で検知したら`JButton`を選択可に変更
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html DefaultTreeCellRenderer (Java Platform SE 8)]
 [https://docs.oracle.com/javase/jp/8/docs/api/java/util/concurrent/ExecutorService.html ExecutorService (Java Platform SE 8)]
-
 
 * コメント [#comment]
 #comment

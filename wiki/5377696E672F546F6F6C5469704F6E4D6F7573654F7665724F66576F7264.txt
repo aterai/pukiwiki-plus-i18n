@@ -1,0 +1,60 @@
+---
+category: swing
+folder: ToolTipOnMouseOverOfWord
+title: JTextArea内の単語上にマウスカーソルでJToolTipを表示する
+tags: [JTextArea, JToolTip, JTextComponent]
+author: aterai
+pubdate: 2024-03-25T02:42:05+09:00
+description: JTextArea内でマウスカーソルが乗った単語の開始オフセットなどをJToolTipで表示します。
+image: https://drive.google.com/uc?id=1G7tL6PLzVdyUZ9P6PlMM1sFE1QngbLup
+---
+* 概要 [#summary]
+`JTextArea`内でマウスカーソルが乗った単語の開始オフセットなどを`JToolTip`で表示します。
+
+#download(https://drive.google.com/uc?id=1G7tL6PLzVdyUZ9P6PlMM1sFE1QngbLup)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTextArea textArea = new JTextArea(txt) {
+  @Override public String getToolTipText(MouseEvent e) {
+    // Java 9: int pos = viewToModel2D(e.getPoint());
+    int pos = viewToModel(e.getPoint());
+    String tipText = super.getToolTipText(e);
+    try {
+      int start = Utilities.getWordStart(this, pos);
+      int end = Utilities.getWordEnd(this, start);
+      String word = getText(start, end - start);
+      // Java 11: if (!word.isBlank()) {
+      if (!word.trim().isEmpty()) { // if (!checkTrimEmpty(word)) {
+        tipText = String.format("%s(%d-%d)", word, start, end);
+      }
+    } catch (BadLocationException ex) {
+      UIManager.getLookAndFeel().provideErrorFeedback(this);
+    }
+    return tipText;
+  }
+};
+}}
+
+* 解説 [#explanation]
+- `JTextArea#getToolTipText(MouseEvent)`をオーバーライドして以下の手順で単語を取得
+-- `JTextComponent#viewToModel(Point)`でマウスカーソル位置(`MouseEvent.getPoint()`)のドキュメントの先頭からのオフセットを取得
+-- `Utilities.getWordStart(textArea, offset)`で指定したオフセット近くの単語の開始オフセットを取得
+-- `Utilities.getWordEnd(textArea, offset)`で指定したオフセット近くの単語の終了オフセットを取得
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#getText-int-int- JTextComponent#getText(offs, len)]で単語文字列を取得
+-- 取得した文字列が空白のみや空でなければ`ToolTipText`として使用する
+----
+- `Utilities.getWordStart(...)`などの内部で`BreakIterator.getWordInstance(c.getLocale())`を使用しているので日本語環境で実行すれば記号、漢字、ひらがな、カタカナなどの区切りで単語を取得可能
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Utilities.html#getWordStart-javax.swing.text.JTextComponent-int- Utilities#getWordStart(...)]、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Utilities.html#getWordEnd-javax.swing.text.JTextComponent-int- Utilities#getWordEnd(...)]、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Utilities.html#getNextWord-javax.swing.text.JTextComponent-int- Utilities#getNextWord(...)]などのドキュメントすべてに「`BreakIterator.getWordInstance()`を使用すると、実際に語を取得できます。」と記述されているが意味がよく分からない
+-- 「Uses BreakIterator.getWordInstance() to actually get the words.」
+-- 「実際の単語取得には BreakIterator.getWordInstance() を使用しています。」ぐらいの意味？
+- `Utilities.getWordStart(...)`などの内部では`BreakIterator.getWordInstance(c.getLocale())`を使用して単語を取得してからその開始オフセット、終了オフセットを取得している
+-- そのため`Utilities.getWordStart(...)`、`Utilities.getWordEnd(...)`、`JTextComponent#getText(...)`を実行しなくても一回の`BreakIterator.getWordInstance(c.getLocale())`で最寄りの単語とその開始オフセット、終了オフセットが取得可能
+
+* 参考リンク [#reference]
+- [[JTextAreaで単語選択を実行した場合の区切り文字を変更する>Swing/SelectWordAction]]
+- [[JTextAreaのCaretを変更してマウスのダブルクリックによる単語選択の動作を変更する>Swing/ContinuouslySelectWords]]
+
+* コメント [#comment]
+#comment
+#comment

@@ -15,11 +15,19 @@ image: https://drive.google.com/uc?id=1aRMouoW3Pw7GiH5nGdLP9r9bK8v_msLABg
 
 * サンプルコード [#sourcecode]
 #code(link){{
-// UIManager.put("MenuItem.minimumTextOffset", 20 + 20 + 31 - 9);
+// System.out.println(UIManager.get("CheckBoxMenuItem.checkIconOffset"));
+// System.out.println(UIManager.get("CheckBoxMenuItem.afterCheckIconGap"));
+// System.out.println(UIManager.get("CheckBoxMenuItem.minimumTextOffset"));
+// System.out.println(UIManager.get("CheckBoxMenuItem.evenHeight"));
+
+// UIManager.put("MenuItem.checkIconOffset", 20);
+// UIManager.put("MenuItem.afterCheckIconGap", 20);
+UIManager.put("MenuItem.minimumTextOffset", 20 + 20 + 31 - 9);
+
 UIManager.put("CheckBoxMenuItem.afterCheckIconGap", 20);
 UIManager.put("CheckBoxMenuItem.checkIconOffset", 20);
+// UIManager.put("CheckBoxMenuItem.minimumTextOffset", 100);
 }}
-
 
 * 解説 [#explanation]
 上記のサンプルでは、`JCheckBoxMenuItem`の`checkIconOffset`と`afterCheckIconGap`を`20`、`JMenuItem`の`minimumTextOffset`を`62`、その他と`JRadioButtonMenuItem`、`JMenu`は初期値に設定してチェックアイコンの位置をテストしています。

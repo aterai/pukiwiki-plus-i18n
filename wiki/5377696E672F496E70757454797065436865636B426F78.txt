@@ -62,11 +62,14 @@ class HeaderRenderer implements TableCellRenderer {
 }}
 
 * 解説 [#explanation]
-`NimbusLookAndFeel`で[[JTableHeaderにJCheckBoxを追加してセルの値を切り替える>Swing/TableHeaderCheckBox]]のように`JCheckBox`をアイコン化し、これをヘッダセルレンダラーに`JLabel#setIcon(...)`を使用して設定すると、ソートアイコンの設定と干渉(ソートを使用しない場合でも)して意図した表示にならない場合があります。このサンプルでは、代わりに`HTML`フォーマットの`<input type='checkbox'>`タグを`JLabel#setText(...)`メソッドで設定してチェックボックスを表示しています。
-
+- `NimbusLookAndFeel`で[[JTableHeaderにJCheckBoxを追加してセルの値を切り替える>Swing/TableHeaderCheckBox]]のように`JCheckBox`をアイコン化してこれをヘッダセルレンダラーに`JLabel#setIcon(...)`を使用して設定すると、ソートアイコンの設定と干渉(ソートを使用しない場合でも)して意図した表示にならない場合がある
+- そのためサンプルでは、アイコン化した`JCheckBox`ではなく`HTML`フォーマットの`<input type='checkbox'>`タグを`JLabel#setText(...)`メソッドで設定してチェックボックスを表示
 - `<input>`要素の`checked`属性を使用して選択状態の`JCheckBox`を表示可能だが、`disabled`属性で無効状態にできない
 - 代わりに`HTML`コンポーネントのレンダリングを行うコンポーネントを`JLabel`から取得し、その子要素から`JCheckBox`自体を取得して直接`JCheckBox#setEnabled(...)`、`JCheckBox#setSelected(...)`メソッドで状態を変更
--- 参考: [https://stackoverflow.com/questions/7958378/listening-to-html-check-boxes-in-jtextpane-or-an-alternative java - Listening to HTML check boxes in jTextPane (or an alternative)? - Stack Overflow]
+-- [https://stackoverflow.com/questions/7958378/listening-to-html-check-boxes-in-jtextpane-or-an-alternative java - Listening to HTML check boxes in jTextPane (or an alternative)? - Stack Overflow]
+- `Java 11`以降で実行するとヘッダのチェックボックス描画が更新されない場合がある？
+-- 調査中
+-- `Java 8`では問題なし
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/7958378/listening-to-html-check-boxes-in-jtextpane-or-an-alternative java - Listening to HTML check boxes in jTextPane (or an alternative)? - Stack Overflow]

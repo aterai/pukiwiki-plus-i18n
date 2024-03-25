@@ -1,0 +1,92 @@
+---
+category: swing
+folder: DiagonalHeaderCellBorder
+title: JTableHeaderのTableColumnを斜め線で分割する
+tags: [JTableHeader, Border]
+author: aterai
+pubdate: 2023-03-27T00:15:21+09:00
+description: JTableHeaderの第0番目のTableColumnを斜め線で分割して行と列で異なる見出しを表示します。
+image: https://drive.google.com/uc?id=1ZYw3qU1gbO_gq4-6YrfXTlkH35QLEAyf
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2023/11/split-tablecolumn-of-jtableheader-with.html
+    lang: en
+---
+* 概要 [#summary]
+`JTableHeader`の第`0`番目の`TableColumn`を斜め線で分割して行と列で異なる見出しを表示します。
+
+#download(https://drive.google.com/uc?id=1ZYw3qU1gbO_gq4-6YrfXTlkH35QLEAyf)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+int size = 32;
+JTable table = new JTable(model) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setRowHeight(size);
+    TableCellRenderer hr = new VerticalTableHeaderRenderer();
+    TableColumnModel cm = getColumnModel();
+    cm.getColumn(0).setHeaderRenderer(
+        new DiagonallySplitHeaderRenderer());
+    cm.getColumn(0).setPreferredWidth(size * 5);
+    for (int i = 1; i < cm.getColumnCount(); i++) {
+      TableColumn tc = cm.getColumn(i);
+      tc.setHeaderRenderer(hr);
+      tc.setPreferredWidth(size);
+    }
+  }
+};
+table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+JScrollPane scroll = new JScrollPane(table);
+scroll.setColumnHeader(new JViewport() {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.height = size * 2;
+    return d;
+  }
+});
+// ...
+
+class DiagonallySplitBorder extends MatteBorder {
+  protected DiagonallySplitBorder(
+      int top, int left, int bottom, int right, Color matteColor) {
+    super(top, left, bottom, right, matteColor);
+  }
+
+  @Override public void paintBorder(
+      Component c, Graphics g, int x, int y, int width, int height) {
+    super.paintBorder(c, g, x, y, width, height);
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.translate(x, y);
+    g2.setRenderingHint(
+        RenderingHints.KEY_ANTIALIASING,
+        RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.setPaint(getMatteColor());
+    g2.drawLine(0, 0, c.getWidth() - 1, c.getHeight() - 1);
+    g2.dispose();
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JScrollPane`の`ColumnHeader`の高さを変更してその内部に配置される`JTableHeader`の高さも変更して列タイトル文字列を回転して垂直表示
+-- [[JTableHeaderの高さを変更>Swing/TableHeaderHeight]]
+-- [[JTableHeaderの列タイトル文字列を回転して垂直表示する>Swing/VerticalColumnTableHeader]]
+- 第`0`番目の`TableColumn`を取得し`TableColumn#setHeaderRenderer(...)`で`DiagonallySplitHeaderRenderer`を設定
+-- `DiagonallySplitHeaderRenderer`に`MatteBorder`を継承して上下左右の罫線と斜め線を描画可能な`Border`を設定
+-- 斜め線は`MatteBorder#paintBorder(...)`をオーバーライドして`Border`として描画
+-- [[JTextAreaの背景に画像を表示>Swing/CentredBackgroundBorder]]
+- 行と列の見出しは別々に`JLabel`で作成して`BorderLayout`を設定した`JPanel`の上下に配置
+-- 列見出し用の`JLabel`は`SwingConstants.RIGHT`で右寄せで表示するよう設定し、`BorderLayout.NORTH`で`JPanel`の上辺に配置
+-- 行見出し用の`JLabel`は`SwingConstants.LEFT`で左寄せで表示するよう設定し、`BorderLayout.SOUTH`で`JPanel`の下辺に配置
+
+* 参考リンク [#reference]
+- [[JTableのセルを斜めに分割する>Swing/DiagonallySplitCellCalendar]]
+-- `JLayer`を使用して斜め線を描画する方法もある
+- [[JTableHeaderの高さを変更>Swing/TableHeaderHeight]]
+- [[JTableHeaderの列タイトル文字列を回転して垂直表示する>Swing/VerticalColumnTableHeader]]
+- [[JTextAreaの背景に画像を表示>Swing/CentredBackgroundBorder]]
+
+* コメント [#comment]
+#comment
+#comment

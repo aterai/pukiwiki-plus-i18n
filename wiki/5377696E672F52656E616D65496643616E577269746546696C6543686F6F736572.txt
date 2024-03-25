@@ -46,10 +46,9 @@ class MetalCanWriteFileChooserUI extends MetalFileChooserUI {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`BasicDirectoryModel#renameFile(...)`メソッドをオーバーライドし、読み取り専用属性の付いたファイルの名前変更を確定しようとすると警告ダイアログを表示して変更が取り消されるように設定しています。
-
-----
-`sun.swing.FilePane#canWrite(File)`をオーバーライドすれば、ファイル名の編集開始自体を禁止にすることもできそうですが、`MetalFileChooserUI`などの`UI`で`FilePane`が`private`になっているためかなり面倒です。
+- `BasicDirectoryModel#renameFile(...)`メソッドをオーバーライドし、読み取り専用属性の付いたファイルの名前変更を確定しようとすると警告ダイアログを表示して変更が取り消されるように設定
+- 別方法として`sun.swing.FilePane#canWrite(File)`をオーバーライドすればファイル名の編集開始自体を禁止にすることが可能かもしれない？
+-- `MetalFileChooserUI`などの`UI`で`FilePane`が`private`になっているため難しそう
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicDirectoryModel.html#renameFile-java.io.File-java.io.File- BasicDirectoryModel#renameFile(...) (Java Platform SE 8)]

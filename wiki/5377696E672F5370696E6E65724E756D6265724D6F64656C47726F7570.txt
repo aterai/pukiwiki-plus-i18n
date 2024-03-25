@@ -1,0 +1,132 @@
+---
+category: swing
+folder: SpinnerNumberModelGroup
+title: JSpinnerの数値の合計がグループ内で一定になるよう設定する
+tags: [JSpinner, SpinnerNumberModel, ChangeListener]
+author: aterai
+pubdate: 2023-09-04T08:13:40+09:00
+description: 複数のSpinnerNumberModelをセットしたグループを作成し、グループ内でその数値の合計が一定になるよう設定します。
+image: https://drive.google.com/uc?id=1zvtUOV-9xdUWI6Ybl6ZCMS52aBabjAjV
+---
+* 概要 [#summary]
+複数の`SpinnerNumberModel`をセットしたグループを作成し、グループ内でその数値の合計が一定になるよう設定します。
+
+#download(https://drive.google.com/uc?id=1zvtUOV-9xdUWI6Ybl6ZCMS52aBabjAjV)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class SpinnerNumberModelGroup {
+  private final int expectedSum;
+  private final Deque<SpinnerNumberModel> candidates = new ArrayDeque<>();
+  private final ChangeListener changeListener = e -> {
+    SpinnerNumberModel source = (SpinnerNumberModel) e.getSource();
+    update(source);
+  };
+  private boolean updating;
+
+  protected SpinnerNumberModelGroup(int expectedSum) {
+    this.expectedSum = expectedSum;
+  }
+
+  @SuppressWarnings("PMD.UnusedAssignment")
+  private void update(SpinnerNumberModel source) {
+    if (updating) {
+      return;
+    }
+    updating = true;
+    if (candidates.size() - 1 > 0) {
+      int delta = computeSum() - expectedSum;
+      if (delta > 0) {
+        distributeRemove(delta, source);
+      } else {
+        distributeAdd(delta, source);
+      }
+    }
+    updating = false;
+  }
+
+  private void distributeRemove(int delta, SpinnerNumberModel source) {
+    int counter = 0;
+    int remaining = delta;
+    while (remaining > 0) {
+      SpinnerNumberModel model = candidates.removeFirst();
+      counter++;
+      if (Objects.equals(model, source)) {
+        candidates.addLast(model);
+      } else {
+        Object prev = model.getPreviousValue();
+        if (prev instanceof Integer) {
+          model.setValue(prev);
+          remaining--;
+          counter = 0;
+        }
+        candidates.addLast(model);
+        if (remaining == 0) {
+          break;
+        }
+      }
+      if (counter > candidates.size()) {
+        String msg = "Can not distribute " + delta + " among " + candidates;
+        throw new IllegalArgumentException(msg);
+      }
+    }
+  }
+
+  private void distributeAdd(int delta, SpinnerNumberModel source) {
+    int counter = 0;
+    int remaining = -delta;
+    while (remaining > 0) {
+      SpinnerNumberModel model = candidates.removeLast();
+      counter++;
+      if (Objects.equals(model, source)) {
+        candidates.addFirst(model);
+      } else {
+        // if (model.getNumber().intValue() < (int) model.getMaximum()) {
+        Object next = model.getNextValue();
+        if (next instanceof Integer) {
+          model.setValue(next);
+          remaining--;
+          counter = 0;
+        }
+        candidates.addFirst(model);
+        if (remaining == 0) {
+          break;
+        }
+      }
+      if (counter > candidates.size()) {
+        String msg = "Can not distribute " + delta + " among " + candidates;
+        throw new IllegalArgumentException(msg);
+      }
+    }
+  }
+
+  private int computeSum() {
+    return candidates.stream()
+        .map(SpinnerNumberModel::getNumber)
+        .mapToInt(Number::intValue)
+        .sum();
+  }
+
+  public void add(SpinnerNumberModel spinner) {
+    candidates.add(spinner);
+    spinner.addChangeListener(changeListener);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `Deque<SpinnerNumberModel>`で`SpinnerNumberModel`のグループを作成
+-- [https://stackoverflow.com/questions/21388255/multiple-jsliders-reacting-to-each-other-to-always-equal-100-percent java - Multiple JSliders reacting to each other to always equal 100 percent - Stack Overflow]の`JSlider`のサンプルを参考に`SpinnerNumberModel`を使用するよう変更
+- グループ内の`SpinnerNumberModel`に`ChangeListener`を追加し、値の更新イベントを取得
+- ひとつの`SpinnerNumberModel`が更新されたらその差分を計算
+- `Deque<SpinnerNumberModel>`の末尾から`SpinnerNumberModel`を取り出して差分を配分し、`Deque<SpinnerNumberModel>`の先頭に戻す
+-- 取り出した`SpinnerNumberModel`が更新イベント元の`SpinnerNumberModel`の場合はなにもせずに先頭に戻す
+-- 差分が`0`になるまでこの処理を繰り返す
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/21388255/multiple-jsliders-reacting-to-each-other-to-always-equal-100-percent java - Multiple JSliders reacting to each other to always equal 100 percent - Stack Overflow]
+- [https://stackoverflow.com/questions/53416274/multiple-jsliders-activating-and-deactivating-sharing-values java - Multiple JSliders activating and deactivating - Sharing values - Stack Overflow]
+
+* コメント [#comment]
+#comment
+#comment

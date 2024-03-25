@@ -19,15 +19,34 @@ hreflang:
 * サンプルコード [#sourcecode]
 #code(link){{
 protected int getTargetTabIndex(Point glassPt) {
+  int count = getTabCount();
+  if (count == 0) {
+    return -1;
+  }
+
   Point tabPt = SwingUtilities.convertPoint(glassPane, glassPt, this);
-  boolean isTB = getTabPlacement() == JTabbedPane.TOP
-              || getTabPlacement() == JTabbedPane.BOTTOM;
-  Point d = isTB ? new Point(1, 0) : new Point(0, 1);
-  for (int i = 0; i < getTabCount(); i++) {
+  boolean isHorizontal = isTopBottomTabPlacement(getTabPlacement());
+  for (int i = 0; i < count; ++i) {
     Rectangle r = getBoundsAt(i);
-    r.translate(-r.width * d.x / 2, -r.height * d.y / 2);
+
+    // First half.
+    if (isHorizontal) {
+      r.width = r.width / 2 + 1;
+    } else {
+      r.height = r.height / 2 + 1;
+    }
     if (r.contains(tabPt)) {
       return i;
+    }
+
+    // Second half.
+    if (isHorizontal) {
+      r.x += r.width;
+    } else {
+      r.y += r.height;
+    }
+    if (r.contains(tabPt)) {
+      return i + 1;
     }
   }
   Rectangle r = getBoundsAt(getTabCount() - 1);
@@ -69,8 +88,9 @@ private void convertTab(int prev, int next) {
 - ドラッグ中に半透明のタブゴーストを表示するかどうかを切り替え可能
 - タブ領域以外にドロップしようとするとカーソルが変化
 - `JTabbedPane`のタブが二段以上になる場合は未検証
-
-`MouseMotionListener`と`MouseListener`ではなく、`DragGestureListener`、`DragSourceListener`、`DropTargetListener`を使用する方法に変更しました。
+- `MouseMotionListener`と`MouseListener`ではなく、`DragGestureListener`、`DragSourceListener`、`DropTargetListener`を使用する方法に変更
+- [https://github.com/aterai/java-swing-tips/pull/24#event-11907600220 DnDTabbedPane. Idx for insertion selection fix. by AndreiKud · Pull Request #24 · aterai/java-swing-tips]
+-- 短いタブの前後にドロップする場合にバグがあったので、AndreiKudさんのプルリクをコミット
 
 * 参考リンク [#reference]
 - [https://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks #63 半透明のドラッグ＆ドロップ]

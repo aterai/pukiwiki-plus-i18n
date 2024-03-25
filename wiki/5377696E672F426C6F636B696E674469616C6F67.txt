@@ -15,23 +15,33 @@ image: https://lh3.googleusercontent.com/-BlvRwXum2Vc/Vi0ubz6y1mI/AAAAAAAAOE4/XK
 
 * サンプルコード [#sourcecode]
 #code(link){{
-Window w = SwingUtilities.getWindowAncestor(getRootPane());
-JDialog dialog = new JDialog(w, Dialog.ModalityType.DOCUMENT_MODAL); // APPLICATION_MODAL);
-dialog.setUndecorated(true);
-dialog.setBounds(w.getBounds());
-dialog.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-int color = check.isSelected() ? 0x22_FF_00_00 : 0x01_00_00_00;
-dialog.setBackground(new Color(color, true));
-(new Task() {
-  @Override public void done() {
-    if (!isDisplayable()) {
-      cancel(true);
-      return;
+JButton button = new JButton("Stop 5sec");
+button.addActionListener(e -> {
+  Window w = SwingUtilities.getWindowAncestor(getRootPane());
+  JDialog dialog = new JDialog(w, Dialog.ModalityType.APPLICATION_MODAL);
+  dialog.setUndecorated(true);
+  dialog.setBounds(w.getBounds());
+  dialog.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+  int color = check.isSelected() ? 0x22_FF_00_00 : 0x01_00_00_00;
+  dialog.setBackground(new Color(color, true));
+  new BackgroundTask() {
+    @Override protected void done() {
+      if (!isDisplayable()) {
+        cancel(true);
+        return;
+      }
+      dialog.setVisible(false);
     }
-    dialog.setVisible(false);
+  }.execute();
+  dialog.setVisible(true);
+});
+// ...
+class BackgroundTask extends SwingWorker<String, Void> {
+  @Override protected String doInBackground() throws InterruptedException {
+    Thread.sleep(5_000);
+    return "Done";
   }
-}).execute();
-dialog.setVisible(true);
+}
 }}
 
 * 解説 [#explanation]

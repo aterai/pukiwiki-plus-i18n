@@ -49,7 +49,7 @@ JComboBox<String> combo = new JComboBox<String>(makeModel()) {
     UIManager.put(KEY, new TopRoundedCornerBorder());
     super.updateUI();
     setUI(new BasicComboBoxUI() {
-      // Swing/ComboBoxScrollBar に移動したのでここでは省略
+      // Swing/ComboBoxScrollBar.html に移動
     });
     handler = new ComboRolloverHandler();
     addMouseListener(handler);

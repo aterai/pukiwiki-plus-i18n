@@ -18,7 +18,8 @@ image: https://drive.google.com/uc?id=1QoXjiHkRpuR6I_IrsTRbEOcVi3-02nmReg
 JTable table = new JTable(new DefaultTableModel(15, 3));
 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 5, 0, 5, Color.ORANGE));
+table.getTableHeader().setBorder(
+    BorderFactory.createMatteBorder(0, 5, 0, 5, Color.ORANGE));
 table.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));
 
 JScrollPane scroll = new JScrollPane(table);
@@ -42,7 +43,7 @@ EventQueue.invokeLater(() -> {
 -- `JTable`自体に`JTable#setBorder(...)`で線幅`5px`の`LineBorder`を設定
 -- セル内部に`LineBorder`が入り込んでしまう
 - `ORANGE`
--- `JTableHeader`に`JTableHeader#setBorder(...)`で左右の幅`5px`の`MatteBorder`を設定
+-- `JTableHeader`に`JTableHeader#setBorder(...)`で左右の幅が`5px`の`MatteBorder`を設定
 - `BLUE`
 -- 親`JScrollPane`に`JScrollPane#setBorder(...)`で線幅`5px`の`LineBorder`を設定
 - `RED`
@@ -65,6 +66,7 @@ EventQueue.invokeLater(() -> {
 
 * 参考リンク [#reference]
 - [[JTableに行ヘッダを追加>Swing/TableRowHeader]]
+- [[JTableが配置されたJScrollPaneのBorderを変更する>Swing/TableScrollPaneBorder]]
 
 * コメント [#comment]
 #comment

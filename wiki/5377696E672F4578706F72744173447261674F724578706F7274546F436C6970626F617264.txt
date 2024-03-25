@@ -1,0 +1,69 @@
+---
+category: swing
+folder: ExportAsDragOrExportToClipboard
+title: JListでマウスドラッグとクリップボード経由のアイテム移動が可能かを個別に設定する
+tags: [TransferHandler, DnD, JList]
+author: aterai
+pubdate: 2023-05-29T04:25:09+09:00
+description: TransferHandlerを設定したJListでマウスドラッグ、またはクリップボード経由のアイテム移動を許可するかどうかを切り替えます。
+image: https://drive.google.com/uc?id=1wp4ANGfODIJb47xCpCoT7OSVL7783dR8
+---
+* 概要 [#summary]
+`TransferHandler`を設定した`JList`でマウスドラッグ、またはクリップボード経由のアイテム移動を許可するかどうかを切り替えます。
+
+#download(https://drive.google.com/uc?id=1wp4ANGfODIJb47xCpCoT7OSVL7783dR8)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+@Override public void exportAsDrag(
+    JComponent comp, InputEvent e, int action) {
+  Object o = comp.getClientProperty("canExportAsDrag");
+  if (Objects.equals(o, Boolean.TRUE)) {
+    super.exportAsDrag(comp, e, action);
+  }
+}
+
+@Override public void exportToClipboard(
+    JComponent comp, Clipboard clip, int action) {
+  Object o = comp.getClientProperty("canExportToClipboard");
+  if (Objects.equals(o, Boolean.TRUE)) {
+    super.exportToClipboard(comp, clip, action);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `canExportAsDrag`
+-- マウスドラッグによるリストアイテム移動の可・不可を切り替える
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/TransferHandler.html#exportAsDrag-javax.swing.JComponent-java.awt.event.InputEvent-int- TransferHandler#exportAsDrag(...)]をオーバーライドしてドラッグ元の`JList`に`ClientProperty`で`canExportAsDrag`が設定されているかどうかで判断
+-- ドラッグ開始可能かを判断し、ドロップ可能かは無関係
+- `canExportToClipboard`
+-- リストアイテムをKBD{Ctrl+C}でコピー、KBD{Ctrl+X}のカットが可能かを切り替える
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/TransferHandler.html#exportToClipboard-javax.swing.JComponent-java.awt.datatransfer.Clipboard-int- TransferHandler#exportToClipboard(...)]をオーバーライドしてコピー(カット)元の`JList`に`ClientProperty`で`canExportToClipboard`が設定されているかどうかで判断
+-- KBD{Ctrl+V}でのペーストの可・不可は`TransferHandler#exportToClipboard(...)`のオーバーライドでは設定できない
+- `canImportFromClipboard`
+-- リストアイテムをKBD{Ctrl+V}でペースト可能かを切り替える
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/TransferHandler.html#importData-javax.swing.TransferHandler.TransferSupport- TransferHandler#importData(TransferHandler.TransferSupport)]をオーバーライドして、`TransferHandler.TransferSupport#isDrop() == true`ではない、かつペースト先の`JList`に`ClientProperty`で`canImportFromClipboard`が設定されているかどうかで判断
+--- `TransferHandler#importData(JComponent, Transferable)`や`TransferHandler#canImport(TransferHandler.TransferSupport)`、`TransferHandler#canImport(JComponent, DataFlavor[])`メソッドはマウスでのドラッグ＆ドロップ時にのみ実行されてペースト時には実行されない
+
+----
+- 以下のように空のアクションを設定することでコピー、カット、ペーストのみ無効にする方法もある
+#code{{
+ActionMap am = list.getActionMap();
+Action empty = new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    /* do nothing */
+  }
+};
+am.put(TransferHandler.getCutAction().getValue(Action.NAME), empty);
+am.put(TransferHandler.getCopyAction().getValue(Action.NAME), empty);
+am.put(TransferHandler.getPasteAction().getValue(Action.NAME), empty);
+}}
+
+* 参考リンク [#reference]
+- [[JList間でのコピー＆ペーストによるアイテムの移動>Swing/ExportToClipboard]]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/TransferHandler.html TransferHandler (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

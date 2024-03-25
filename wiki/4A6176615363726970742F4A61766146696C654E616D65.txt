@@ -22,7 +22,7 @@ description: JavaScriptでソースコードからJavaのファイル名を取�
     return (r ? r[1] : 'Unknown') + '.java';
   }
   function pre2text(pre) {
-    var div = document.createElement('div'); //dummy div
+    var div = document.createElement('div');
     div.innerHTML = pre.innerHTML.replace(/<br[ \/]*>/ig, '\n').replace(/<.*?>/mg, '');
     return div.childNodes[0].nodeValue.replace(/\xA0/g, ' '); //replace &nbsp;
   }

@@ -21,7 +21,7 @@ Action addAboveAction = new AbstractAction("insert preceding sibling node") {
     DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
     MutableTreeNode self = (MutableTreeNode) path.getLastPathComponent();
     MutableTreeNode parent = (MutableTreeNode) self.getParent();
-    MutableTreeNode child = new DefaultMutableTreeNode("New preceding sibling");
+    MutableTreeNode child = new DefaultMutableTreeNode("preceding sibling");
     int index = model.getIndexOfChild(parent, self);
     parent.insert(child, index);
     model.reload(parent);
@@ -34,7 +34,7 @@ Action addBelowAction = new AbstractAction("insert following sibling node") {
     DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
     MutableTreeNode self = (MutableTreeNode) path.getLastPathComponent();
     MutableTreeNode parent = (MutableTreeNode) self.getParent();
-    MutableTreeNode child = new DefaultMutableTreeNode("New following sibling");
+    MutableTreeNode child = new DefaultMutableTreeNode("following sibling");
     int index = model.getIndexOfChild(parent, self);
     parent.insert(child, index + 1);
     model.reload(parent);

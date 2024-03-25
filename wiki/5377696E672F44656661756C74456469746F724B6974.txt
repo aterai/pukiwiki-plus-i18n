@@ -15,7 +15,7 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKk8KGiNI/AAAAAAAAAWM/dJ
 
 * サンプルコード [#sourcecode]
 #code(link){{
-//textField.setComponentPopupMenu(new TextFieldPopupMenu());
+// textField.setComponentPopupMenu(new TextFieldPopupMenu());
 class TextFieldPopupMenu extends JPopupMenu {
   private final Action cutAction = new DefaultEditorKit.CutAction();
   private final Action copyAction = new DefaultEditorKit.CopyAction();
@@ -62,13 +62,12 @@ class TextFieldPopupMenu extends JPopupMenu {
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、`DefaultEditorKit.CopyAction`をポップアップメニューに追加してクリップボードを使ったコピーなどを可能にしています。
-
-- サンプルの`cut2`のように、`JTextComponent#cut()`メソッドなどを使用する方法もある
+- `DefaultEditorKit.CopyAction`をポップアップメニューに追加してクリップボードを使ったコピーなどが可能になるよう設定
+-- サンプルの`cut2`のように、`JTextComponent#cut()`メソッドなどを使用する方法もある
 
 ----
 - サンプルを`Java Web Start`で起動した場合は、システム全体の共有クリップボードにはアクセス不可能でアプリケーション内部のみでのコピー、貼り付けとなる
--- [[ClipboardServiceでシステム全体の共有クリップボードにアクセスする>Swing/ClipboardService]]
+- [[ClipboardServiceでシステム全体の共有クリップボードにアクセスする>Swing/ClipboardService]]
 
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKnUb6nqI/AAAAAAAAAWQ/L3ylLdA-GIw/s800/DefaultEditorKit1.png)
 
@@ -78,6 +77,6 @@ class TextFieldPopupMenu extends JPopupMenu {
 
 * コメント [#comment]
 #comment
-- 「今後この警告を表示しない」をやめて、セキュリティの警告を表示したいけど、やり方が分からないorz。 -- &user(aterai); &new{2008-02-06 (水) 13:00:48};
+- 「今後この警告を表示しない」をやめて、セキュリティの警告を表示したいが方法が不明。 -- &user(aterai); &new{2008-02-06 (水) 13:00:48};
 
 #comment

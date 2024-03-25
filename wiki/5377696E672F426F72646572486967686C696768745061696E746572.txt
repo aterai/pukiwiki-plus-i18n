@@ -1,0 +1,65 @@
+---
+category: swing
+folder: BorderHighlightPainter
+title: JTextAreaの検索ハイライトに縁を描画する
+tags: [JTextArea, Highlighter, Highlighter.HighlightPainter, Border]
+author: aterai
+pubdate: 2024-02-12T19:09:38+09:00
+description: JTextAreaの検索文字列に適用するハイライトに縁色を設定します。
+image: https://drive.google.com/uc?id=1GPgC3RJq-ZBoxlGhY6xMpwQDo7OlXOgQ
+---
+* 概要 [#summary]
+`JTextArea`の検索文字列に適用するハイライトに縁色を設定します。
+
+#download(https://drive.google.com/uc?id=1GPgC3RJq-ZBoxlGhY6xMpwQDo7OlXOgQ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+Highlighter.Highlight hh = highlighter.getHighlights()[idx];
+highlighter.removeHighlight(hh);
+HighlightPainter currentPainter = new DefaultHighlightPainter(Color.ORANGE) {
+  @Override public Shape paintLayer(
+        Graphics g, int offs0, int offs1,
+        Shape bounds, JTextComponent c, View view) {
+    Shape s = super.paintLayer(g, offs0, offs1, bounds, c, view);
+    if (s instanceof Rectangle) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setPaint(Color.RED);
+      Rectangle r = s.getBounds();
+      // g2.draw(r);
+      g2.drawRect(r.x, r.y, r.width - 1, r.height - 1);
+      g2.dispose();
+    }
+    return s;
+  }
+};
+try {
+  highlighter.addHighlight(
+      hh.getStartOffset(), hh.getEndOffset(), currentPainter);
+  scrollToCenter(textArea, hh.getStartOffset());
+} catch (BadLocationException ex) {
+  // should never happen
+  RuntimeException wrap = new StringIndexOutOfBoundsException(
+      ex.offsetRequested());
+  wrap.initCause(ex);
+  throw wrap;
+}
+}}
+
+* 解説 [#explanation]
+- 検索にマッチした文字列のハイライト
+-- `DefaultHighlighter.DefaultHighlightPainter(Color.ORANGE)`でハイライト背景色を`Color.ORANGE`に設定した`HighlightPainter`を使用
+- 検索にマッチした文字列のうち現在選択されているハイライト
+-- `DefaultHighlighter.DefaultHighlightPainter#paintLayer(...)`をオーバーライドして、ハイライト図形の縁を追加描画
+-- `paintLayer(...)`メソッドの引数の`Shape bounds`は`JTextComponent`の現在表示されている領域で戻り値が`offs0...offs1`の範囲の文字列領域となるので、`super.paintLayer(g, offs0, offs1, bounds, c, view)`を実行して取得した図形に縁を描画している
+
+* 参考リンク [#reference]
+- [[JTextComponentの選択ハイライトを変更>Swing/SelectionHighlightPainter]]
+- [[JTextAreaでハイライト付き検索を行う>Swing/HighlightSearch]]
+-- 検索ハイライト機能はこちらのサンプルと同一
+- [[JTextPaneで検索結果のハイライト表示と文字色変更を同時に行う>Swing/HighlightTextForeground]]
+-- こちらは`JTextPane`で`HighlightPainter`ではなく`html`タグでハイライトの描画を変更するサンプル
+
+* コメント [#comment]
+#comment
+#comment

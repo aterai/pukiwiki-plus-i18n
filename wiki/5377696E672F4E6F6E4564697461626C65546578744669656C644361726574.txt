@@ -1,0 +1,53 @@
+---
+category: swing
+folder: NonEditableTextFieldCaret
+title: JTextFieldが編集不可状態でもCaretが点滅するよう設定する
+tags: [JTextField, JTextComponent, DefaultCaret]
+author: aterai
+pubdate: 2022-12-19T00:15:08+09:00
+description: JTextFieldなどのJTextComponentが編集不可の状態でもCaretを非表示にせず点滅が継続するよう設定します。
+image: https://drive.google.com/uc?id=18ZFiLXopnIpYF5bc7nr-WTLw1vG1ZZwo
+---
+* 概要 [#summary]
+`JTextField`などの`JTextComponent`が編集不可の状態でも`Caret`を非表示にせず点滅が継続するよう設定します。
+
+#download(https://drive.google.com/uc?id=18ZFiLXopnIpYF5bc7nr-WTLw1vG1ZZwo)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTextField field3 = makeTextField("DefaultCaret#setBlinkRate(...)");
+field3.setCaret(new DefaultCaret() {
+  @Override public void focusGained(FocusEvent e) {
+    super.focusGained(e);
+    if (getComponent().isEnabled()) {
+      setBlinkRate(UIManager.getInt("TextField.caretBlinkRate"));
+      setVisible(true);
+    }
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- `Border`を非表示、`JTextField#setOpaque(false)`で背景色を描画しないよう設定
+-- `NimbusLookAndFeel`の場合、さらに`JTextField#setBackground(new Color(0x0, true))`のように背景色に透過色を設定する必要がある？
+- `setEnabled(false)`
+-- `JTextField`が無効化されている場合はフォーカスを取得できないので`Caret`は表示不可能
+- `setEditable(false)`
+-- `JTextField`が編集不可の場合でもフォーカスの取得や文字列選択が可能だが、`Caret`は非表示になる
+- `DefaultCaret#setVisible(true)`
+-- `DefaultCaret#focusGained(...)`メソッドをオーバーライドして`JTextField`が有効化されていれば編集可能・不可能に関係なく`DefaultCaret#setVisible(true)`を実行して`Caret`を表示するよう設定
+-- 点滅速度はリセットされて`0`になり点滅不可になる
+- `DefaultCaret#setBlinkRate(...)`
+-- `DefaultCaret#focusGained(...)`メソッドをオーバーライドして`JTextField`が有効化されていれば編集可能・不可能に関係なく`Caret`を表示、点滅するよう設定
+-- 点滅速度は`UIManager.getLookAndFeelDefaults().getInt("TextField.caretBlinkRate")`で取得し、`DefaultCaret#setBlinkRate(...)`で再設定
+-- `NimbusLookAndFeel`の場合`UIManager.getLookAndFeelDefaults().getInt("TextField.caretBlinkRate")`で点滅速度を取得すると`0`になる
+
+* 参考リンク [#reference]
+- [https://bugs.openjdk.org/browse/JDK-4512626 &#91;JDK-4512626&#93; Non-editable JTextArea provides no visual indication of keyboard focus - Java Bug System]
+-- デフォルトで編集不可でも`Caret`が非表示にならないよう`Java 20`で修正される予定
+- [[JTextAreaなどのCaretを非表示にする>Swing/HideCaret]]
+
+* コメント [#comment]
+#comment
+#comment

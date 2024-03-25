@@ -56,6 +56,8 @@ private static String makeHtml() {
       "<div>submit: <input type='submit' id='submit1' name='submit1'></div>",
       "<div>text: <input type='text' id='text1' name='text1'></div>",
       "<div>file: <input type='file' id='file1' name='file1'></div>",
+      "<div><isindex id='search1' name='search1' action='#'></div>",
+      "<div><isindex id='search2' name='search2' prompt='search: ' action='#'></div>",
       "</form><br/><hr/>",
       "<form id='form3' action='#'>",
       "<div><select name='select1' size='5' multiple>",
@@ -101,6 +103,9 @@ private static String makeHtml() {
 - `<input type='file' ...>`
 -- `JTextField`と`JButton`が使用される
 -- `JButton`をクリックすると`JFileChooser`が開き、選択したファイルのフルパスが`JTextField`に表示される
+- `<isindex prompt='...' action='#' ...>`
+-- `JLabel`と`JTextField`が使用される
+-- `JLabel`のテキストは`prompt`属性で指定、または`UIManager.put("IsindexView.prompt", "Search: ")`などで設定可能
 - `<select ...>`
 -- `size`属性が`1`以上、または`multiple`属性が存在する場合は`JScrollPane`内に配置された`JList`が使用される
 - `<select ...>`

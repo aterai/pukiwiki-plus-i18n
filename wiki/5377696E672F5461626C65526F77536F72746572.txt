@@ -42,7 +42,7 @@ table.setAutoCreateRowSorter(true);
 - %%第二キーを使ったソートは`TableRowSorter`版では存在しない?ため`TableSorter.java`を使う場合もまだあるかもしれない。%%
 - `TableRowSorter`でも`TableSorter.java`と同様に複数キーを使ったソートが可能
 -- ページ下部にあるsyoさんのコメントを参照
-- デフォルトではソートキーは`3`つでヘッダにマークが表示されるのは最新のソートキーのみだがクリックした順に保持される
+- デフォルトではソートキーは`3`つまでクリックした順に保持されるが、ヘッダにマークが表示されるのは最新のソートキーのみ
 -- 参考: [http://syo.cocolog-nifty.com/freely/2006/08/table_616d.html Tableの内容をソート]
 - [https://tips4java.wordpress.com/2010/08/29/multisort-table-header-cell-renderer/ Multisort Table Header Cell Renderer « Java Tips Weblog]
 -- 第二キー以下を薄く表示するサンプルがある
@@ -50,8 +50,8 @@ table.setAutoCreateRowSorter(true);
 -- ソートキーの状態を文字列にして追加
 
 ----
-- `TableModel`に要素を追加した後で、`table.setRowSorter(sorter);`とすると、`IndexOutOfBoundsException`: `Invalid range`が、モデルへの追加、削除、編集中に別の行クリックなどで発生する
--- 以下のサンプルの場合、`model.fireTableDataChanged()`メソッドを`table.setRowSorter(sorter)`の後で呼び出すと回避可能
+- `TableModel`に要素を追加した後で`table.setRowSorter(sorter);`とすると、`IndexOutOfBoundsException`: `Invalid range`がモデルへの追加、削除、編集中に別の行クリックなどで発生する
+-- 以下のサンプルの場合`model.fireTableDataChanged()`メソッドを`table.setRowSorter(sorter)`の後で呼び出すと回避可能
 
 #code{{
 import java.awt.*;

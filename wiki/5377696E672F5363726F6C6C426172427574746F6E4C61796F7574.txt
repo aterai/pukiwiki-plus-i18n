@@ -31,14 +31,14 @@ scrollbar.setUI(new WindowsScrollBarUI() {
      * size will fit.
      */
     boolean squareButtons = false;
-    // DefaultLookup.getBoolean(scrollbar, this, "ScrollBar.squareButtons", false);
     int decrButtonH = squareButtons
       ? itemW : decrButton.getPreferredSize().height;
     int incrButtonH = squareButtons
       ? itemW : incrButton.getPreferredSize().height;
 
     // int decrButtonY = sbInsets.top;
-    int decrButtonY = sbSize.height - (sbInsets.bottom + incrButtonH + decrButtonH);
+    int decrButtonY =
+      sbSize.height - (sbInsets.bottom + incrButtonH + decrButtonH);
     int incrButtonY = sbSize.height - (sbInsets.bottom + incrButtonH);
 
     /* The thumb must fit within the height left over after we

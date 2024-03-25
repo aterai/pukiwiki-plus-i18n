@@ -1,15 +1,15 @@
 ---
 category: swing
 folder: SingleThreadExecutor
-title: SwingWorkerを一スレッドづつ順番に実行する
+title: SwingWorkerを一スレッドずつ順番に実行する
 tags: [SwingWorker, ExecutorService, JTable, JProgressBar]
 author: aterai
 pubdate: 2019-06-10T16:52:22+09:00
-description: JTableのセルに配置したJProgressBarを操作するSwingWorkerタスクを一つづつ順番に実行します。
+description: JTableのセルに配置したJProgressBarを操作するSwingWorkerタスクを一つずつ順番に実行します。
 image: https://drive.google.com/uc?id=1x3PqH08NWiKXBFZl355XaqHN5fyc1zEdrg
 ---
 * 概要 [#summary]
-`JTable`のセルに配置した`JProgressBar`を操作する`SwingWorker`タスクを一つづつ順番に実行します。
+`JTable`のセルに配置した`JProgressBar`を操作する`SwingWorker`タスクを一つずつ順番に実行します。
 
 #download(https://drive.google.com/uc?id=1x3PqH08NWiKXBFZl355XaqHN5fyc1zEdrg)
 
@@ -89,7 +89,7 @@ executorService =
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/util/concurrent/Executors.html#newSingleThreadExecutor-- Executors#newSingleThreadExecutor() (Java Platform SE 8)]
 - [[JTableのセルにJProgressBarを表示>Swing/TableCellProgressBar]]
-- [https://bugs.openjdk.java.net/browse/JDK-6880336 &#91;JDK-6880336&#93; SwingWorker deadlocks due one thread in the swingworker-pool - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-6880336 &#91;JDK-6880336&#93; SwingWorker deadlocks due one thread in the swingworker-pool - Java Bug System]
 
 * コメント [#comment]
 #comment

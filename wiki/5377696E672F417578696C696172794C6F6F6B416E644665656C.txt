@@ -26,7 +26,7 @@ SwingUtilities.updateComponentTreeUI(getRootPane());
 }}
 
 * 解説 [#explanation]
-`WindowsLookAndFeel`の場合、それを修正することなく、`JComboBox`のドロップダウンリストで右クリックを無効にするような`ComboBoxUI`を`UIManager.addAuxiliaryLookAndFeel(...)`を使って追加しています。
+`WindowsLookAndFeel`の場合、それを修正することなく`JComboBox`のドロップダウンリストで右クリックを無効にするような`ComboBoxUI`を`UIManager.addAuxiliaryLookAndFeel(...)`を使って追加しています。
 
 - [[JComboBoxのドロップダウンリストで右クリックを無効化>Swing/DisableRightClick]]
 
@@ -69,9 +69,9 @@ public class AuxiliaryWindowsComboBoxUI extends WindowsComboBoxUI {
 }}
 
 - `LookAndFeel`を`Nimbus`にすると`ClassCastException`が発生する
--- [https://bugs.openjdk.java.net/browse/JDK-6631956 &#91;JDK-6631956&#93; Nimbus: ClassCastException when running with MultiLookAndFeel - Java Bug System]
-- `UIManager.addPropertyChangeListener(new PropertyChangeListener() {...});`を追加して、`WindowsLookAndFeel`以外の場合は、`UIManager.removeAuxiliaryLookAndFeel(auxLookAndFeel);`
-- 編集可能な`JComboBox`の場合、`NullPointerException`が発生する
+-- [https://bugs.openjdk.org/browse/JDK-6631956 &#91;JDK-6631956&#93; Nimbus: ClassCastException when running with MultiLookAndFeel - Java Bug System]
+- `UIManager.addPropertyChangeListener(new PropertyChangeListener() {...});`を追加して`WindowsLookAndFeel`以外の場合は、`UIManager.removeAuxiliaryLookAndFeel(auxLookAndFeel);`
+- 編集可能な`JComboBox`の場合`NullPointerException`が発生する
 -- `WindowsComboBoxUI#addEditor()`をオーバーライド
 
 * 参考リンク [#reference]
@@ -80,6 +80,6 @@ public class AuxiliaryWindowsComboBoxUI extends WindowsComboBoxUI {
 
 * コメント [#comment]
 #comment
-- `AuxiliaryLookAndFeel`の作成方法、使い方などを間違えているような気がするが…。 -- &user(aterai); &new{2012-04-09 (月) 14:41:52};
+- `AuxiliaryLookAndFeel`の作成方法について。公式のサンプルなどが見つからないので使い方などを間違えていないといいけど…。 -- &user(aterai); &new{2012-04-09 (月) 14:41:52};
 
 #comment

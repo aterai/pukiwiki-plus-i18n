@@ -31,8 +31,9 @@ class CustomComponentCellEditor extends DefaultCellEditor {
     panel.setFocusable(false);
   }
 
-  @Override public Component getTableCellEditorComponent(JTable table, Object value,
-                         boolean isSelected, int row, int column) {
+  @Override public Component getTableCellEditorComponent(
+      JTable table, Object value,
+      boolean isSelected, int row, int column) {
     // System.out.println("getTableCellEditorComponent");
     field.setText(Objects.toString(value, ""));
     EventQueue.invokeLater(new Runnable() {
@@ -70,7 +71,7 @@ class CustomComponentCellEditor extends DefaultCellEditor {
 * 解説 [#explanation]
 - `0`列目
 -- `DefaultCellEditor`を継承する`CustomComponentCellEditor`を作成
--- `JTextField`をコンストラクタの引数にしているがダミーであり、実際のセルエディタは`JPanel`で作成して使用
+-- `JTextField`をコンストラクタの引数にしているがこれは使用せず、実際のセルエディタは`JPanel`で作成して使用
 --- `TableCellEditor#getTableCellEditorComponent`が`JPanel`を返す
 -- この`JPanel`のレイアウトを`BorderLayout`にして`JTextField`と`JButton`を配置
 -- `TableCellEditor#getCellEditorValue`は`JTextField`の値を返し、フォーカス、キー入力時の編集開始なども`JTextField`になるように変更
@@ -113,7 +114,7 @@ class CustomCellEditor extends DefaultCellEditor {
 
 - `2`列目
 -- `DefaultCellEditor`を継承する`CustomComponentCellEditor2`を作成
---- `JTextField`を`DefaultCellEditor`のコンストラクタの引数にしているがダミーであり、実際のセルエディタは`JPanel`を継承する`CustomComponent`で作成して使用
+--- `JTextField`を`DefaultCellEditor`のコンストラクタの引数にしているがこれは使用せず、実際のセルエディタは`JPanel`を継承する`CustomComponent`で作成して使用
 -- `CustomComponent#processKeyBinding(...)`をオーバーライドしてキー入力開始時に`KeyboardFocusManager.getCurrentKeyboardFocusManager().redispatchEvent(field, e);`を呼び出している
 -- `0`列目の`CustomComponentCellEditor`と同様
 

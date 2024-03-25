@@ -1,0 +1,102 @@
+---
+category: swing
+folder: EditableTreePath
+title: JTreeのTreeNodeが編集を開始可能かを調査する
+tags: [JTree, TreeCellEditor, TreePath, TreeNode, DefaultMutableTreeNode]
+author: aterai
+pubdate: 2024-02-26T02:07:52+09:00
+description: JTreeのノードエディタが編集を開始できるかどうかをTreePathやMouseEventから状態を取得して判断します。
+image: https://drive.google.com/uc?id=1oHmohICOAH5TjHT3z4sAl7gJY0z9imbB
+---
+* 概要 [#summary]
+`JTree`のノードエディタが編集を開始できるかどうかを`TreePath`や`MouseEvent`から状態を取得して判断します。
+
+#download(https://drive.google.com/uc?id=1oHmohICOAH5TjHT3z4sAl7gJY0z9imbB)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTree tree = new JTree() {
+  @Override public void updateUI() {
+    super.updateUI();
+    setEditable(true);
+    setCellEditor(makeTreeCellEditor(this));
+  }
+
+  @Override public boolean isPathEditable(TreePath path) {
+    appendLog("JTree#isPathEditable(TreePath)");
+    return Optional.ofNullable(path.getLastPathComponent())
+        .filter(TreeNode.class::isInstance)
+        .map(node -> {
+          boolean isLeaf = ((TreeNode) node).isLeaf();
+          appendLog(String.format("  isLeaf: %s", isLeaf));
+          if (node instanceof DefaultMutableTreeNode) {
+            int lv = ((DefaultMutableTreeNode) node).getLevel();
+            appendLog(String.format("  getLevel: %d", lv));
+          }
+          return isLeaf;
+        })
+        .orElse(false);
+  }
+
+  private TreeCellEditor makeTreeCellEditor(JTree tree) {
+    return new DefaultTreeCellEditor(
+        tree, (DefaultTreeCellRenderer) tree.getCellRenderer()) {
+      @Override public boolean isCellEditable(EventObject e) {
+        appendLog("TreeCellEditor#isCellEditable(EventObject)");
+        boolean ret;
+        if (e instanceof MouseEvent) {
+          MouseEvent me = (MouseEvent) e;
+          appendLog("  MouseEvent");
+          appendLog(String.format("  getPoint(): %s", me.getPoint()));
+          appendLog(String.format("  getClickCount: %d", me.getClickCount()));
+          appendLog(String.format("  isShiftDown: %s", me.isShiftDown()));
+          appendLog(String.format("  isControlDown: %s", me.isControlDown()));
+          ret = me.getClickCount() >= 2 || me.isShiftDown() || me.isControlDown();
+        } else if (e instanceof KeyEvent) {
+          appendLog("  KeyEvent");
+          ret = super.isCellEditable(e);
+        } else { // e == null
+          appendLog("  startEditing Action(F2)");
+          ret = super.isCellEditable(e);
+        }
+        return ret;
+      }
+    };
+  }
+};
+}}
+
+* 解説 [#explanation]
+- `JTree#isPathEditable(TreePath)`
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#isPathEditable-javax.swing.tree.TreePath- JTree#isPathEditable(TreePath) (Java Platform SE 8)]
+-- デフォルトの`JTree`では引数の`TreePath`は参照せずに常に`JTree#isEditable()`を返すだけの関数のため、この関数は通常オーバーライドして使用する
+-- このサンプルではこの関数をオーバーライドして葉ノードの場合のみ編集可能と設定
+-- 後述の`TreeCellEditor#isCellEditable(EventObject)`より先に実行される
+-- 引数の`TreePath`からパス内の要素数(`TreePath#getPathCount()`)や親`TreePath`などを取得して編集可・不可を判断できる
+-- 引数の`TreePath`から`TreePath#getLastPathComponent()`でこのパスの最後の要素(`TreeNode`、`DefaultMutableTreeNode`)を取得できるので、葉ノードかどうか(`TreeNode#isLeaf()`)やユーザーオブジェクト(`DefaultMutableTreeNode#getUserObject()`)の状態を調査して編集可・不可を判断できる
+- `TreeCellEditor#isCellEditable(EventObject)`
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/CellEditor.html#isCellEditable-java.util.EventObject- CellEditor#isCellEditable(EventObject) (Java Platform SE 8)]
+-- 引数の`EventObject`を使用して編集を開始できるかどうかをエディタに問い合せる
+-- このサンプルではこの関数をオーバーライドしてダブルクリック、またはKBD{Shift}キーもしくはKBD{Ctrl}キーがクリック時に押下されている場合編集可と設定
+-- `TableCellEditor#isCellEditable(EventObject)`の場合引数の`EventObject`が`KeyEvent`になる場合があるが`DefaultTreeCellEditor#isCellEditable(EventObject)`の場合は`MouseEvent`か`null`のみになる？
+--- `startEditing`アクション(KBD{F2})の場合引数の`EventObject`は`null`
+-- 引数の`EventObject`が`MouseEvent`の場合`JTree#isPathEditable(TreePath)`の`TreePath`では取得できない以下のような情報で編集可・不可を判断できる
+--- `MouseEvent#getPoint()`で`JTree`座標系のクリックされた位置
+--- `MouseEvent#getClickCount()`でクリック数
+--- `MouseEvent#isShiftDown()`、`MouseEvent#isControlDown()`などでクリックと同時にKBD{Shift}キーなどが押されているか
+-- `MouseEvent#getComponent()`で親`JTree`を参照し`JTree#getPathForLocation(x, y)`で`TreePath`、`JTree#getLastSelectedPathComponent()`で`TreeNode`を取得する方法もあるが、それだけの場合は`JTree#isPathEditable(TreePath)`を使用すべき？
+--- たとえば[[JCheckBoxをグループでまとめて有効化する>Swing/CheckBoxGroupEnabling]]のように編集対象ノードのユーザーオブジェクトの状態で編集可・不可を判断する場合、`JTree#isPathEditable(TreePath)`よりあとに実行される`TreeCellEditor#isCellEditable(EventObject)`で調査するとユーザーオブジェクトが編集不可なのに一瞬デフォルトの？(または直前に使用された？)編集可`TreeCellEditor`が表示されてしまう
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#isPathEditable-javax.swing.tree.TreePath- JTree#isPathEditable(TreePath) (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/CellEditor.html#isCellEditable-java.util.EventObject- CellEditor#isCellEditable(EventObject) (Java Platform SE 8)]
+- [[JCheckBoxをグループでまとめて有効化する>Swing/CheckBoxGroupEnabling]]
+-- `JTree#isPathEditable(TreePath)`をオーバーライドして`TreePath`から`DefaultMutableTreeNode`、ユーザーオブジェクトを順に取得し、これが編集可状態の場合のみノードエディタを起動
+- [[JTreeのノード編集をJPopupMenuからのみに制限する>Swing/StartEditingPopupMenu]]
+-- `TreeCellEditor#isCellEditable(EventObject)`をオーバーライドして`EventObject`が`MouseEvent`ではない場合のみノードエディタを起動
+- [[JTreeのノードにクリック可能なJButtonを複数配置する>Swing/MultipleButtonsInTreeNode]]
+-- `TreeCellEditor#isCellEditable(EventObject)`をオーバーライドして`EventObject`が`MouseEvent`、かつクリック位置がセルレンダラー内に配置されたボタン上の場合のみノードエディタを起動
+
+* コメント [#comment]
+#comment
+#comment

@@ -28,7 +28,8 @@ Collections.list((Enumeration<?>) root.postorderEnumeration()).stream()
 
 JTree tree = new RowSelectionTree();
 tree.setModel(model);
-tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+tree.getSelectionModel().setSelectionMode(
+    TreeSelectionModel.SINGLE_TREE_SELECTION);
 tree.addTreeSelectionListener(e -> {
   // https://ateraimemo.com/Swing/CardLayoutTabbedPane.html
   Object o = tree.getLastSelectedPathComponent();

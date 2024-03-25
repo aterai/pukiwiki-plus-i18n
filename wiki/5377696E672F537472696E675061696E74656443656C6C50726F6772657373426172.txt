@@ -20,7 +20,7 @@ hreflang:
 #code(link){{
 class Task extends SwingWorker<Integer, ProgressValue> {
   private final int lengthOfTask;
-  private final int sleepDummy = new Random().nextInt(100) + 1;
+  private final int randomSleep = new Random().nextInt(100) + 1;
   public Task(int lengthOfTask) {
     super();
     this.lengthOfTask = lengthOfTask;
@@ -31,13 +31,13 @@ class Task extends SwingWorker<Integer, ProgressValue> {
     while (current < lengthOfTask && !isCancelled()) {
       current++;
       try {
-        Thread.sleep(sleepDummy);
+        Thread.sleep(randomSleep);
       } catch (InterruptedException ie) {
         break;
       }
       publish(new ProgressValue(lengthOfTask, current));
     }
-    return sleepDummy * lengthOfTask;
+    return randomSleep * lengthOfTask;
   }
 }
 

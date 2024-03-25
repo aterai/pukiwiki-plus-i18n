@@ -41,7 +41,7 @@ JScrollPane scroll2 = new JScrollPane(textArea2) {
 - 右: `JScrollPane#setViewportBorder(...)`
 -- `JTextArea#setMargin(new Insets(0, 0, 0, 1))`で`JTextArea`自体の余白を変更
 --- %%すべて`0`の場合、一番長い行の末尾で`Caret`が表示されない%% `Java 9`で修正済み
---- [https://bugs.openjdk.java.net/browse/JDK-6866751 JDK-6866751 J2SE_Swing_Reg: the caret disappears when moving to the end of the line. - Java Bug System]
+--- [https://bugs.openjdk.org/browse/JDK-6866751 JDK-6866751 J2SE_Swing_Reg: the caret disappears when moving to the end of the line. - Java Bug System]
 -- `JScrollPane#setViewportBorder(...)`で`JViewport`の周囲に余白を設定
 --- スクロールバーなどの有無によらずこの余白は常に表示されている
 -- 余白は`View`に設定したコンポーネントの背景色と色の`LineBorder`で描画

@@ -217,9 +217,8 @@ class PukiWikiParser
         lines.shift
       when /\A----/
         if codeblock then
-          buf.push "<!-- dummy comment line for breaking list -->"
+          buf.push "<!-- comment line for breaking list -->"
         end
-        #buf.push "<!-- dummy comment line for breaking list -->"
         break
       when marker
         l = lines.shift
@@ -246,7 +245,7 @@ class PukiWikiParser
         listblock = false
       else
         if listblock then
-          buf.push "<!-- dummy comment line for breaking list -->"
+          buf.push "<!-- comment line for breaking list -->"
           break
         elsif codeblock then
           buf.push lines.shift

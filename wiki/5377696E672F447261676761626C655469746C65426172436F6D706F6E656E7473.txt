@@ -55,8 +55,8 @@ class TitleBarDragLayerUI extends LayerUI<JComponent> {
 
 * 解説 [#explanation]
 - `TitleBar`
--- システムのタイトルバーを`setUndecorated(true)`で非表示に設定し代わりに`JPanel`を追加
---- 参考: [[JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする>Swing/CustomDecoratedFrame]]
+-- システムタイトルバーを`setUndecorated(true)`で非表示に設定し、代わりにドラッグ可能にした`JPanel`をタイトルバーとして追加
+--- [[JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする>Swing/CustomDecoratedFrame]]
 -- タイトルバーとして設定した`JPanel`に`JLayer`を追加し、内部の子コンポーネントへのドラッグイベントを親`JFrame`の移動に変換
 - `JComboBox`
 -- [[JComboBoxのArrowButtonを隠す>Swing/HideComboArrowButton]]で`ArrowButton`は非表示

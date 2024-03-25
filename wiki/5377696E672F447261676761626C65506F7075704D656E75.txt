@@ -1,0 +1,69 @@
+---
+category: swing
+folder: DraggablePopupMenu
+title: JPopupMenuにマウスドラッグで位置変更を可能にするヘッダを追加する
+tags: [JPopupMenu, MouseListener, JLabel, JWindow]
+author: aterai
+pubdate: 2022-10-31T00:03:07+09:00
+description: JPopupMenuにJLabelで作成したヘッダを追加し、MouseListenerを追加してドラッグで位置変更を可能にします。
+image: https://drive.google.com/uc?id=1bT2wG0hF2SSjNYBY5t23Xl-8_WCRHdPO
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2022/10/add-header-to-jpopupmenu-to-enable.html
+    lang: en
+---
+* 概要 [#summary]
+`JPopupMenu`に`JLabel`で作成したヘッダを追加し、`MouseListener`を追加してドラッグで位置変更を可能にします。
+
+#download(https://drive.google.com/uc?id=1bT2wG0hF2SSjNYBY5t23Xl-8_WCRHdPO)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class PopupHeaderMouseListener extends MouseAdapter {
+  private final Point startPt = new Point();
+
+  @Override public void mousePressed(MouseEvent e) {
+    if (SwingUtilities.isLeftMouseButton(e)) {
+      startPt.setLocation(e.getPoint());
+    }
+  }
+
+  @Override public void mouseDragged(MouseEvent e) {
+    Component c = e.getComponent();
+    Window w = SwingUtilities.getWindowAncestor(c);
+    if (w != null && SwingUtilities.isLeftMouseButton(e)) {
+      if (w.getType() == Window.Type.POPUP) { // Popup$HeavyWeightWindow
+        Point pt = e.getLocationOnScreen();
+        w.setLocation(pt.x - startPt.x, pt.y - startPt.y);
+      } else { // Popup$LightWeightWindow
+        Container popup = SwingUtilities.getAncestorOfClass(
+            JPopupMenu.class, c);
+        Point pt = popup.getLocation();
+        popup.setLocation(
+            pt.x - startPt.x + e.getX(), pt.y - startPt.y + e.getY());
+      }
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JPopupMenu`のデフォルトレイアウトは垂直`BoxLayout`なので、ドラッグ可能なヘッダとして使用する`JLabel`は`getMaximumSize()`をオーバーライドして最大幅を`JPopupMenu`の推奨幅以上に設定しておく
+-- `JPopupMenu`の幅スペースを残さないようヘッダの幅が水平方向に引き伸ばすために必要な設定
+-- [[JComboBoxのドロップダウンリストにヘッダ・フッタを追加する>Swing/HeaderFooterComboPopup]]
+-- `GTKLookAndFeel`では`header.setAlignmentX(Component.CENTER_ALIGNMENT)`を設定しないとヘッダ左側に余白が生成される場合がある？
+- `JPopupMenu`が親`JFrame`外に表示されて`Popup$HeavyWeightWindow`になる場合:
+-- `MouseEvent#getLocationOnScreen()`で取得したデスクトップ領域の絶対位置に`SwingUtilities.getWindowAncestor(header)`で取得した`JPopupMenu`の親`Window`を移動
+-- [[JWindowをマウスで移動>Swing/DragWindow]]
+- `JPopupMenu`が親`JFrame`内に表示されて`Popup$LightWeightWindow`になる場合:
+-- `SwingUtilities.getAncestorOfClass(JPopupMenu.class, header)`で取得した`JPopupMenu`の位置を変更
+-- [[JComboBoxのドロップダウンリストの高さをマウスドラッグで変更する>Swing/DropDownHeightResizing]]
+
+* 参考リンク [#reference]
+- [[JComboBoxのドロップダウンリストにヘッダ・フッタを追加する>Swing/HeaderFooterComboPopup]]
+- [[JToggleButtonからポップアップメニューを開く>Swing/ToolButtonPopup]]
+- [[JComboBoxのドロップダウンリストの高さをマウスドラッグで変更する>Swing/DropDownHeightResizing]]
+- [[JWindowをマウスで移動>Swing/DragWindow]]
+
+* コメント [#comment]
+#comment
+#comment

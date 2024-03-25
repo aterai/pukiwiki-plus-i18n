@@ -1,0 +1,191 @@
+---
+category: swing
+folder: ListComboBoxEditor
+title: ComboBoxEditorとして複数アイテムが表示可能なJListを使用する
+tags: [JList, JPopupMenu, JComboBox, JScrollPane, JToggleButton]
+author: aterai
+pubdate: 2022-07-04T02:53:37+09:00
+description: ComboBoxEditorとして複数アイテムが表示やスクロールが可能なニュースペーパースタイルのJListを使用します。
+image: https://drive.google.com/uc?id=1Wf8pV3xZzSyuHrmifdUcrSY09lCTGf2R
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2022/07/use-newspaper-style-jlist-that-can.html
+    lang: en
+---
+* 概要 [#summary]
+`ComboBoxEditor`として複数アイテムが表示やスクロールが可能なニュースペーパースタイルの`JList`を使用します。
+
+#download(https://drive.google.com/uc?id=1Wf8pV3xZzSyuHrmifdUcrSY09lCTGf2R)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+ListModel<ListItem> model = makeModel();
+JList<ListItem> list = new NewspaperStyleList<>(model);
+JScrollPane scroll = new JScrollPane(list) {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.width = 62 * 3 + 10;
+    d.height = 32;
+    return d;
+  }
+};
+scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+scroll.setBorder(BorderFactory.createEmptyBorder());
+scroll.setViewportBorder(BorderFactory.createEmptyBorder());
+
+JList<ListItem> list2 = new NewspaperStyleList<>(model);
+JScrollPane scroll2 = new JScrollPane(list2) {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.width = 62 * 4 + 10;
+    return d;
+  }
+};
+scroll2.setBorder(BorderFactory.createEmptyBorder());
+scroll2.setViewportBorder(BorderFactory.createEmptyBorder());
+
+JPopupMenu popup = new JPopupMenu();
+popup.setLayout(new BorderLayout());
+list2.addMouseListener(new MouseAdapter() {
+  @Override public void mouseClicked(MouseEvent e) {
+    if (popup.isVisible() && e.getClickCount() >= 2) {
+      popup.setVisible(false);
+    }
+  }
+});
+popup.add(scroll2);
+popup.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+JToggleButton dropDown = new JToggleButton(new DropDownArrowIcon());
+popup.addPopupMenuListener(new PopupMenuListener() {
+  @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+    list2.setSelectedIndex(list.getSelectedIndex());
+    EventQueue.invokeLater(popup::pack);
+  }
+
+  @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+    dropDown.setSelected(false);
+    list.requestFocusInWindow();
+    int i = list2.getSelectedIndex();
+    if (i >= 0) {
+      list.setSelectedIndex(i);
+      list.scrollRectToVisible(list.getCellBounds(i, i));
+    }
+  }
+
+  @Override public void popupMenuCanceled(PopupMenuEvent e) {
+    popupMenuWillBecomeInvisible(e);
+  }
+});
+
+dropDown.setBorder(BorderFactory.createEmptyBorder());
+dropDown.setContentAreaFilled(false);
+dropDown.setFocusPainted(false);
+dropDown.setFocusable(false);
+dropDown.addItemListener(e -> {
+  AbstractButton b = (AbstractButton) e.getItemSelectable();
+  if (e.getStateChange() == ItemEvent.SELECTED) {
+    popup.show(b, -scroll.getWidth(), b.getHeight());
+  }
+});
+
+JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
+JPanel verticalBox = new JPanel(new BorderLayout()) {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.height = 32 + 5 + 5;
+    return d;
+  }
+};
+verticalBox.setOpaque(false);
+verticalBox.add(verticalScrollBar);
+verticalBox.add(dropDown, BorderLayout.SOUTH);
+
+JPanel panel = new JPanel(new BorderLayout(0, 0));
+panel.add(scroll);
+panel.add(verticalBox, BorderLayout.EAST);
+panel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+}}
+
+* 解説 [#explanation]
+- `JList + JPopupMenu`
+-- エディタ部分にニュースペーパースタイルで複数アイテムが表示可能な`JList`、その親`JScrollPane`から縦`JScrollBar`、ドロップダウン表示用の`JToggleButton`を組み合わせて`JComboBox`風のコンポーネントを作成
+-- ドロップダウンリストは`JPopupMenu`で作成し、その子コンポーネントとしてエディタ部分の`JList`とは別の`JList`を追加
+-- `MouseListener`や`PopupMenuListener`でドロップダウンリスト内の`JList`の選択状態変更をエディタ部分の`JList`に反映するよう設定
+- `JComboBox + ComboBoxEditor`
+-- `ComboBoxEditor#getEditorComponent()`をオーバーライドしてニュースペーパースタイルで複数アイテムが表示可能な`JList`を`JComboBox`のエディタとして設定
+-- `ComboPopup`からドロップダウンリスト内の`JList`を取得し、そのスタイルをニュースペーパー・スタイルに変更
+--- [[JComboBoxのドロップダウンリストでセル配置をニュースペーパー・スタイルに設定する>Swing/HorizontalWrapComboPopup]]
+-- `JComboBox`のエディタと矢印ボタンの間に意図しない余白が生成されてしまう？
+
+#code{{
+ListModel<ListItem> model = makeModel();
+JList<ListItem> list = new NewspaperStyleList<>(model);
+JScrollPane scroll = new JScrollPane(list) {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.width = 62 * 4;
+    d.height = 40;
+    return d;
+  }
+};
+scroll.setBorder(BorderFactory.createEmptyBorder());
+scroll.setViewportBorder(BorderFactory.createEmptyBorder());
+DefaultComboBoxModel<ListItem> cm = new DefaultComboBoxModel<>();
+for (int i = 0; i < model.getSize(); i++) {
+  cm.addElement(model.getElementAt(i));
+}
+JComboBox<ListItem> combo = new JComboBox<ListItem>(cm) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setMaximumRowCount(4);
+    setPrototypeDisplayValue(new ListItem("red", new ColorIcon(Color.RED)));
+    EventQueue.invokeLater(() -> {
+      ComboPopup popup = (ComboPopup) getAccessibleContext().getAccessibleChild(0);
+      JList<?> lst = popup.getList();
+      lst.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+      lst.setVisibleRowCount(0);
+      lst.setFixedCellWidth(62);
+      lst.setFixedCellHeight(40);
+      lst.setOpaque(true);
+      lst.setBackground(new Color(0x32_32_32));
+      lst.setForeground(Color.WHITE);
+    });
+  }
+};
+combo.setRenderer(new ListItemListCellRenderer<>());
+combo.setEditable(true);
+combo.setEditor(new ComboBoxEditor() {
+  @Override public Component getEditorComponent() {
+    return scroll;
+  }
+
+  @Override public void setItem(Object anObject) {
+    combo.setSelectedIndex(list.getSelectedIndex());
+  }
+
+  @Override public Object getItem() {
+    return list.getSelectedValue();
+  }
+
+  @Override public void selectAll() {
+    // System.out.println("selectAll");
+  }
+
+  @Override public void addActionListener(ActionListener l) {
+    // System.out.println("addActionListener");
+  }
+
+  @Override public void removeActionListener(ActionListener l) {
+    // System.out.println("removeActionListener");
+  }
+});
+}}
+
+* 参考リンク [#reference]
+- [[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]
+- [[JPopupMenuをボタンの長押しで表示>Swing/PressAndHoldButton]]
+- [[JComboBoxのドロップダウンリストでセル配置をニュースペーパー・スタイルに設定する>Swing/HorizontalWrapComboPopup]]
+
+* コメント [#comment]
+#comment
+#comment

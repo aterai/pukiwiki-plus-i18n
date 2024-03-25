@@ -18,7 +18,16 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
-JEditorPane hint = new JEditorPane("text/html", "<html><a href='dummy'>No data!</a></html>");
+String placeholder = "<html>No data! <a href='#placeholder'>Input hint(beep)";
+JEditorPane hint = new JEditorPane("text/html", placeholder);
+hint.setOpaque(false);
+hint.setEditable(false);
+hint.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+hint.addHyperlinkListener(e -> {
+  if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+    UIManager.getLookAndFeel().provideErrorFeedback((Component) e.getSource());
+  }
+});
 
 table.setFillsViewportHeight(true);
 table.setLayout(new GridBagLayout());

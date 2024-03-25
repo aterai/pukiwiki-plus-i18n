@@ -43,13 +43,13 @@ JTable table = new JTable(model) {
 
 - デフォルトのセルレンダラーの場合、例えばチェックボックスがクリックされてモデルが更新されるとその対応するセルのみ再描画さる
 - このサンプルでは対象セルだけではなくそのセルが存在する行全体の背景色を変更しているので、`TableModelListener`でモデルの更新を検出し、以下のように`JTable#repaint(...)`メソッドを使って行を再描画
-
 #code{{
 model.addTableModelListener(new TableModelListener() {
   @Override public void tableChanged(TableModelEvent e) {
     if (e.getType() == TableModelEvent.UPDATE) {
       // rowRepaint(table, table.convertRowIndexToView(e.getFirstRow()));
-      Rectangle r = table.getCellRect(table.convertRowIndexToView(e.getFirstRow()), 0, true);
+      Rectangle r = table.getCellRect(
+          table.convertRowIndexToView(e.getFirstRow()), 0, true);
       r.width  = table.getWidth();
       // table.repaint(); // table全体をリペイントする必要はないので
       table.repaint(r);   // 一行だけリペイント
@@ -66,6 +66,6 @@ model.addTableModelListener(new TableModelListener() {
 #comment
 - ごちそうさまでした。 -- &user(tanuchan); &new{2009-12-14 (Mon) 04:22:08};
 -- まいどありです。 -- &user(aterai); &new{2009-12-16 (水) 21:25:57};
-- メモ: [https://bugs.openjdk.java.net/browse/JDK-6711682 Bug ID: 6711682 JCheckBox in JTable: checkbox doesn't alaways respond to the first mouse click] -- &user(aterai); &new{2010-07-26 (月) 14:18:03};
+- メモ: [https://bugs.openjdk.org/browse/JDK-6711682 Bug ID: 6711682 JCheckBox in JTable: checkbox doesn't alaways respond to the first mouse click] -- &user(aterai); &new{2010-07-26 (月) 14:18:03};
 
 #comment

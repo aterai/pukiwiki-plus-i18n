@@ -73,12 +73,12 @@ UIManager.put("swing.boldMetal", Boolean.FALSE);
 
 ----
 - `JComboBox#setFont(...)`で使用するフォントのサイズを変更しても、`JComboBox`自体のサイズが更新されない
--- [https://bugs.openjdk.java.net/browse/JDK-5006246 JCombobox doesn't get resized according to font size change]
+-- [https://bugs.openjdk.org/browse/JDK-5006246 JCombobox doesn't get resized according to font size change]
 #code{{
 combo.setFont(font);
 // 以下回避方法
 combo.setPrototypeDisplayValue(null); // null:default?
-// or combo.firePropertyChange("prototypeDisplayValue", 0, 1); // 0, 1:dummy
+// or combo.firePropertyChange("prototypeDisplayValue", 0, 1);
 }}
 
 ----

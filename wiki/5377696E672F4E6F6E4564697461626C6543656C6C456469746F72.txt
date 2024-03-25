@@ -37,7 +37,7 @@ table.setDefaultEditor(Object.class, cellEditor);
 * 解説 [#explanation]
 - `JTable#isCellEditable(...)`などをオーバーライドして`JTable`を編集不可にするとセル内の文字列を部分選択してコピーできない
 -- [[JTableのセルを編集不可にする>Swing/CellEditor]]
-- デフォルトの`JTable`ではセルを選択してKBD{Ctrl-C}を入力しても列がタブ区切りでコピーされる
+- デフォルトの`JTable`ではセルを選択してKBD{Ctrl+C}を入力しても列がタブ区切りでコピーされる
 -- 参考: [[JTableのHTML形式コピーをカスタマイズする>Swing/HtmlTableTransferHandler]]
 - `Object.class`の`DefaultCellEditor`として編集を不可にした`JTextField`を設定することで編集は不可だが、文字列を選択してのコピーは可能にする
 -- `JTextField#setEditable(false)`で編集不可に設定

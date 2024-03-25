@@ -1,0 +1,79 @@
+---
+category: swing
+folder: TableHeaderRightAlignSortArrow
+title: JTableHeaderのソートアイコンをヘッダセル右揃えで表示する
+tags: [JTableHeader, JTable, UIManager, TableRowSorter]
+author: aterai
+pubdate: 2022-08-15T00:19:13+09:00
+description: JTableHeaderのソートアイコンの表示位置をタイトル文字列右隣からヘッダセル右揃えに変更します。
+image: https://drive.google.com/uc?id=1kIVVpk_5RXF_0L8G6lmCKbcvTm71Pv3Z
+---
+* 概要 [#summary]
+`JTableHeader`のソートアイコンの表示位置をタイトル文字列右隣からヘッダセル右揃えに変更します。
+
+#download(https://drive.google.com/uc?id=1kIVVpk_5RXF_0L8G6lmCKbcvTm71Pv3Z)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JTable table = new JTable(model);
+table.setAutoCreateRowSorter(true);
+String key = "TableHeader.rightAlignSortArrow";
+JCheckBox check = new JCheckBox(key, UIManager.getBoolean(key)) {
+  @Override public void updateUI() {
+    super.updateUI();
+    EventQueue.invokeLater(() -> {
+      boolean b = UIManager.getLookAndFeelDefaults().getBoolean(key);
+      setSelected(b);
+      UIManager.put(key, b);
+      table.getTableHeader().setCursor(Cursor.getDefaultCursor());
+      SwingUtilities.updateComponentTreeUI(table);
+    });
+  }
+};
+}}
+
+* 解説 [#explanation]
+上記のサンプルではソートアイコンの表示位置を`UIManager.put("TableHeader.rightAlignSortArrow", Boolean)`でヘッダセルの右揃えで表示するテストを実施しています。
+
+- `MetalLookAndFeel`、`MotifLookAndFeel`、`Windows Classic`
+-- デフォルトは`false`でヘッダタイトル文字列の右隣にソートアイコンが表示される
+-- `UIManager.put("TableHeader.rightAlignSortArrow", Boolean.TRUE)`でヘッダセル右揃えのソートアイコンが表示される
+- `WindowsLookAndFeel`
+-- デフォルトは`false`でヘッダセル上辺中央にソートアイコンが表示される
+-- `UIManager.put("TableHeader.rightAlignSortArrow", Boolean.TRUE)`でヘッダセル上辺中央とヘッダセル右揃えでソートアイコンが重複して表示される
+- `GTKLookAndFeel`
+-- デフォルトは`false`だがヘッダセル右揃えのソートアイコンが表示される
+-- `UIManager.put("TableHeader.rightAlignSortArrow", Boolean.TRUE)`でソートアイコンが非表示になる
+- `NimbusLookAndFeel`
+-- デフォルトは`true`でヘッダセル右揃えのソートアイコンが表示される
+-- `UIManager.put("TableHeader.rightAlignSortArrow", Boolean.FALSE)`は無効になったり、ヘッダセルクリックでタイトル文字列の右隣からヘッダセル右揃えにソートアイコンが移動するなど描画が安定しない
+-- ヘッダレンダラーにも以下のように`putClientProperty(...)`で`TableHeader.rightAlignSortArrow`を設定する必要がある
+--- `JTable#getTableHeader()#putClientProperty(...)`などは無効
+
+#code{{
+String key = "TableHeader.rightAlignSortArrow";
+UIManager.put(key, Boolean.FALSE);
+TableCellRenderer renderer = (t, value, isSelected, hasFocus, row, column) -> {
+  TableCellRenderer r = t.getTableHeader().getDefaultRenderer();
+  Component c = r.getTableCellRendererComponent(t, value, isSelected, hasFocus, row, column);
+  if (c instanceof JLabel) {
+    JLabel l = (JLabel) c;
+    UIDefaults d2 = new UIDefaults();
+    d2.put("TableHeader.rightAlignSortArrow", Boolean.FALSE);
+    l.putClientProperty("Nimbus.Overrides", d2);
+    l.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+  }
+  return c;
+};
+TableColumnModel cm = table.getColumnModel();
+for (int i = 1; i < cm.getColumnCount(); i++) {
+  cm.getColumn(i).setHeaderRenderer(renderer);
+}
+}}
+
+* 参考リンク [#reference]
+- [[JTableのソートアイコンを変更>Swing/TableSortIcon]]
+
+* コメント [#comment]
+#comment
+#comment

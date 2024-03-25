@@ -38,7 +38,8 @@ panel = new JPanel() {
 }}
 
 * 解説 [#explanation]
-このサンプルでは、`BufferedImage`から`TexturePaint`を生成し、これを`Graphics2D#setPaint`メソッドで設定してパネル全体を塗りつぶしています。
+- `BufferedImage`を生成
+- この`Image`を`Graphics#drawImage(...)`で描画するのではなく、`TexturePaint`を作成し`Graphics2D#setPaint`メソッドで設定してパネル全体の塗りつぶしを実行
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/TexturePaint.html TexturePaint (Java Platform SE 8)]

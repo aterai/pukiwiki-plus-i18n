@@ -1,0 +1,156 @@
+---
+category: swing
+folder: SevenSegmentDigitalClock
+title: AffineTransformを使用してPath2Dを変換し、7セグメントデジタル時計の数字を作成する
+tags: [AffineTransform, Timer, JPanel, Path2D, Clock]
+author: aterai
+pubdate: 2023-01-16T01:56:34+09:00
+description: AffineTransformを使用してPath2Dを変換、組み合わせて7セグメントデジタル時計用の数字を作成します。
+image: https://drive.google.com/uc?id=12UqbyhXtbTzdZn657FSX_--dt9R08RRQ
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2023/01/create-numbers-for-7-segment-digital.html
+    lang: en
+---
+* 概要 [#summary]
+`AffineTransform`を使用して`Path2D`を変換、組み合わせて`7`セグメントデジタル時計用の数字を作成します。
+
+#download(https://drive.google.com/uc?id=12UqbyhXtbTzdZn657FSX_--dt9R08RRQ)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class DigitalNumber {
+  private final double isosceles;
+  private final double dx;
+  private final double dy;
+  private final double width;
+  private final double height;
+  private final Rectangle rect = new Rectangle();
+  public static final Color OFF = new Color(0xCC_CC_CC);
+  public static final Color ON = Color.DARK_GRAY;
+  public static final Color BGC = Color.LIGHT_GRAY;
+  private final List<Set<Seg>> numbers = Arrays.asList(
+      EnumSet.of(Seg.A, Seg.B, Seg.C, Seg.D, Seg.E, Seg.F),
+      EnumSet.of(Seg.B, Seg.C),
+      EnumSet.of(Seg.A, Seg.B, Seg.D, Seg.E, Seg.G),
+      EnumSet.of(Seg.A, Seg.B, Seg.C, Seg.D, Seg.G),
+      EnumSet.of(Seg.B, Seg.C, Seg.F, Seg.G),
+      EnumSet.of(Seg.A, Seg.C, Seg.D, Seg.F, Seg.G),
+      EnumSet.of(Seg.A, Seg.C, Seg.D, Seg.E, Seg.F, Seg.G),
+      EnumSet.of(Seg.A, Seg.B, Seg.C),
+      EnumSet.of(Seg.A, Seg.B, Seg.C, Seg.D, Seg.E, Seg.F, Seg.G),
+      EnumSet.of(Seg.A, Seg.B, Seg.C, Seg.D, Seg.F, Seg.G));
+  private Set<Seg> led = EnumSet.noneOf(Seg.class);
+
+  protected DigitalNumber(double dx, double dy, double isosceles) {
+    this.isosceles = isosceles;
+    this.dx = dx;
+    this.dy = dy;
+    this.width = 2d * isosceles;
+    this.height = width + isosceles;
+    rect.setLocation((int) dx, (int) dy);
+    rect.setSize((int) (width + 3 * isosceles), (int) (height * 2));
+  }
+
+  public Rectangle getBounds() {
+    return rect;
+  }
+
+  public void setNumber(int num) {
+    led = numbers.get(num);
+  }
+
+  public void turnOffNumber() {
+    led.clear();
+  }
+
+  public void drawNumber(Graphics2D g2) {
+    EnumSet.allOf(Seg.class).forEach(s -> {
+      g2.setColor(led.contains(s) ? ON : OFF);
+      Shape seg = s.getShape(dx, dy, width, height, isosceles);
+      g2.fill(seg);
+      g2.setColor(BGC);
+      g2.draw(seg);
+    });
+  }
+}
+}}
+
+* 解説 [#explanation]
+- [https://en.wikipedia.org/wiki/Seven-segment_display Seven-segment display - Wikipedia]のセグメント配置を参考にセグメント`A..G`を`enum`で作成
+-- `enum Seg { A, B, C, D, E, F, G }`
+- `EnumSet`を使用して数字に対してどのセグメントが点灯しているかを定義
+-- 例えば数字の`2`は`EnumSet.of(Seg.A, Seg.B, Seg.D, Seg.E, Seg.G)`で表現する
+- セグメント`F`の下頂点(底辺と高さが`2 * isosceles`となる二等辺三角形の頂点)を原点として、`Path2D.Double()`で五角形の縦長セグメントを作成
+#code{{
+private static Path2D vert(double height, double isosceles) {
+  Path2D path = new Path2D.Double();
+  path.moveTo(0d, 0d);
+  path.lineTo(isosceles, -isosceles);
+  path.lineTo(isosceles, -isosceles - height);
+  path.lineTo(-isosceles, -isosceles - height - isosceles * 2);
+  path.lineTo(-isosceles, -isosceles);
+  path.closePath();
+  return path;
+}
+}}
+
+- セグメント`E`はセグメント`F`を原点の下頂点で上下反転して作成
+-- `AffineTransform at = AffineTransform.getTranslateInstance(x, y); at.scale(1, -1);`で作成した`AffineTransform`を使用し`at.createTransformedShape(shapeF)`で変換
+- セグメント`B`は、セグメント`F`を原点の下頂点で左右反転してセグメント`G`の幅だけ`x`軸方向に移動してを作成
+-- `AffineTransform at = AffineTransform.getTranslateInstance(x + widthG, y); at.scale(-1, 1);`で作成した`AffineTransform`を使用し`at.createTransformedShape(shapeF)`で変換
+- セグメント`C`は、セグメント`F`を原点の下頂点で上下左右を反転してセグメント`G`の幅だけ`x`軸方向に移動してを作成
+-- `AffineTransform at = AffineTransform.getTranslateInstance(x + widthG, y); at.scale(-1, -1);`で作成した`AffineTransform`を使用し`at.createTransformedShape(shapeF)`で変換
+- セグメント`G`はその左頂点(底辺と高さが`2 * isosceles`となる二等辺三角形の頂点)を原点として`Path2D.Double()`で六角形の横長セグメントを作成
+#code{{
+private static Path2D horiz1(double width, double isosceles) {
+  Path2D path = new Path2D.Double();
+  path.moveTo(0, 0);
+  path.lineTo(isosceles, isosceles);
+  path.lineTo(isosceles + width, isosceles);
+  path.lineTo(isosceles + width + isosceles, 0);
+  path.lineTo(isosceles + width, -isosceles);
+  path.lineTo(isosceles, -isosceles);
+  path.closePath();
+  return path;
+}
+}}
+
+- セグメント`A`は上辺が下辺より`3 * isosceles`長くなる等脚台形を`Path2D.Double()`で作成し、セグメント`F`の高さだけ`y`軸方向に移動、原点は左右の辺の中心に設定
+#code{{
+private static Path2D horiz2(double width, double isosceles) {
+  Path2D path = new Path2D.Double();
+  path.moveTo(isosceles, isosceles);
+  path.lineTo(isosceles + width, isosceles);
+  path.lineTo(3 * isosceles + width, -isosceles);
+  path.lineTo(-isosceles, -isosceles);
+  path.closePath();
+  return path;
+}
+}}
+
+- セグメント`D`はセグメント`A`を上下反転してセグメント`F`の高さだけ`y`軸方向に移動して作成
+-- `AffineTransform at = AffineTransform.getTranslateInstance(x, y + heightF); at.scale(1, -1);`で作成した`AffineTransform`を使用し`at.createTransformedShape(shapeA)`で変換
+
+----
+- `DigitalNumber`を`6`個配置して`24`時間表記のデジタル時計を作成
+- 時間と分の区切りドットは`250`ミリ秒で点滅するよう`Timer`で設定
+- 各セグメント間の隙間は`BasicStroke`を設定して`Path2D`を線描することで表現
+- 時計全体を`g2.shear(-.1, 0d);`でシャーリング変換してイタリック風に表示
+- 時計全体が`JPanel`に収まるよう以下のようなスケールを設定
+#code{{
+double sv = getWidth() / (h1.getBounds().width * 8d);
+g2.scale(sv, sv);
+}}
+
+* 参考リンク [#reference]
+- [https://en.wikipedia.org/wiki/Seven-segment_display Seven-segment display - Wikipedia]
+- [https://www.youtube.com/watch?v=KdIwrBQhYHw Java Digital Clock - YouTube]
+- [http://kiunwong.blogspot.com/2012/09/seven-segments-display-in-java.html Seven Segments Display in Java | Java Programming]
+- [https://www.jug-muenster.de/swing-apollo-space-program-mission-timer-280/ Swing Apollo space program mission timer | Java User Group Münster]
+- [[Shapeの反転>Swing/HorizontalFlip]]
+- [[AffineTransformを使用してアナログ時計の文字盤に数字を配置する>Swing/ClockWithArabicOrRomanNumerals]]
+- [[JListでドットマトリクスLEDデジタル時計を作成する>Swing/DotMatrixLedDigitalClock]]
+
+* コメント [#comment]
+#comment
+#comment

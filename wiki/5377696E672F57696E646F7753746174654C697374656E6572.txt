@@ -46,11 +46,11 @@ image: https://drive.google.com/uc?id=13h_n-O0YyO15qpFv76ZEomH-8uWykdNI
 
 - `WindowListener`で通常状態から最小化状態(`windowIconified(WindowEvent)`)、最小化状態から通常状態(`windowDeiconified(WindowEvent)`)は取得可能
 - だだし最大化イベントは`WindowStateListener`を使用して`id`が`WINDOW_STATE_CHANGED`の`WindowEvent`から取得する必要がある
-- `Windows 10`環境で最大化状態は`Frame.MAXIMIZED_BOTH`のみサポートされているので、例えば垂直方向にフレームを画面端までリサイズして垂直最大化しても、`WindowEvent`は発生しない
+- `Windows 10`環境の最大化状態のうち`Toolkit`でサポートしているのは`Frame.MAXIMIZED_BOTH`のみなので、たとえば垂直方向にフレームを画面端までリサイズして垂直最大化しても`WindowEvent`は発生しない
 -- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#isFrameStateSupported-int- Toolkit#isFrameStateSupported(...) (Java Platform SE 8)]
--- `Frame.MAXIMIZED_HORIZ`: サポートしていない
--- `Frame.MAXIMIZED_VERT`: サポートしていない
--- `Frame.MAXIMIZED_BOTH`: サポートしている
+-- `Frame.MAXIMIZED_HORIZ`: サポート無し
+-- `Frame.MAXIMIZED_VERT`: サポート無し
+-- `Frame.MAXIMIZED_BOTH`: サポート在り
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/events/windowlistener.html How to Write Window Listeners (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]

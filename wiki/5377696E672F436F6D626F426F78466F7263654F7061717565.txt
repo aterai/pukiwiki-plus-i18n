@@ -1,0 +1,101 @@
+---
+category: swing
+folder: ComboBoxForceOpaque
+title: NimbusLookAndFeelでJComboBoxのセル選択色などを変更する
+tags: [NimbusLookAndFeel, JComboBox, UIManager, UIDefaults, JList]
+author: aterai
+pubdate: 2023-12-18T01:53:08+09:00
+description: NimbusLookAndFeelでJComboBoxの背景色、セル選択色や選択文字色などを変更します。
+image: https://drive.google.com/uc?id=1JemJqu62MW3KY-ZTqk7XGk_JB7XjAWl3
+---
+* 概要 [#summary]
+`NimbusLookAndFeel`で`JComboBox`の背景色、セル選択色や選択文字色などを変更します。
+
+#download(https://drive.google.com/uc?id=1JemJqu62MW3KY-ZTqk7XGk_JB7XjAWl3)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+UIManager.put("ComboBox.forceOpaque", Boolean.FALSE);
+Insets ins = UIManager.getInsets("ComboBox.padding");
+ins.right = 0;
+UIManager.put("ComboBox.padding", ins);
+// ...
+JComboBox<String> comboBox = new JComboBox<>(MODEL);
+comboBox.setForeground(Color.WHITE);
+comboBox.setBackground(BACKGROUND);
+UIDefaults d1 = new UIDefaults();
+d1.put("ComboBox:\"ComboBox.listRenderer\".background", BACKGROUND);
+d1.put("ComboBox:\"ComboBox.listRenderer\".textForeground", Color.WHITE);
+d1.put("ComboBox:\"ComboBox.listRenderer\"[Selected].background", Color.LIGHT_GRAY);
+d1.put("ComboBox:\"ComboBox.listRenderer\"[Selected].textForeground", Color.BLACK);
+// d1.put("ComboBox:\"ComboBox.listRenderer\".opaque", Boolean.TRUE);
+ListCellRenderer<? super String> renderer = comboBox.getRenderer();
+if (renderer instanceof JComponent) {
+  putClientProperty((JComponent) renderer, d1);
+}
+// ...
+private static final class ComboRenderer extends DefaultListCellRenderer {
+  @Override public Component getListCellRendererComponent(
+      JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+    list.setBackground(BACKGROUND);
+    list.setForeground(Color.WHITE);
+    list.setSelectionBackground(Color.LIGHT_GRAY);
+    list.setSelectionForeground(Color.BLACK);
+    return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+  }
+}
+// ...
+private static JComboBox<String> makeComboBox2() {
+  return new JComboBox<String>(MODEL) {
+    @Override public void updateUI() {
+      setRenderer(null);
+      super.updateUI();
+      ListCellRenderer<? super String> r = getRenderer();
+      setRenderer((list, value, index, isSelected, cellHasFocus) -> {
+        Component c = r.getListCellRendererComponent(
+            list, value, index, isSelected, cellHasFocus);
+        ((JComponent) c).setOpaque(true);
+        return c;
+      });
+      ComboPopup popup = (ComboPopup) getAccessibleContext().getAccessibleChild(0);
+      JList<?> list = popup.getList();
+      list.setBackground(BACKGROUND);
+      list.setForeground(Color.WHITE);
+      list.setSelectionBackground(Color.LIGHT_GRAY);
+      list.setSelectionForeground(Color.BLACK);
+      setBackground(BACKGROUND);
+    }
+  };
+}
+}}
+
+* 解説 [#explanation]
+- `UIDefaults`
+-- 以下の色を`JComboBox`のセルレンダラーに設定
+--- `UIDefaults#put("ComboBox:\"ComboBox.listRenderer\".background", BACKGROUND)`
+--- `UIDefaults#put("ComboBox:\"ComboBox.listRenderer\".textForeground", Color.WHITE)`
+--- `UIDefaults#put("ComboBox:\"ComboBox.listRenderer\"[Selected].background", Color.LIGHT_GRAY)`
+--- `UIDefaults#put("ComboBox:\"ComboBox.listRenderer\"[Selected].textForeground", Color.WHITE)`
+-- `UIManager.put("ComboBox.forceOpaque", Boolean.FALSE)`を設定しても`JComboBox`自体の描画は`JComboBox.setBackground(...)`で設定した色に変更されない？
+-- カーソルキーで選択状態を変更すれば先頭セル以外の選択背景色は変化する？
+-- マウスオーバーによる状態変化は下方向にのみ有効で上方向には反応しない？
+-- ドロップダウンリストの下辺に`JList`の背景色が描画される
+--- `UIManager.put("ComboBox.popupInsets", ...)`はドロップダウンリストの内余白ではなく外余白を変更するので
+- `DefaultListCellRenderer`
+-- `UIManager.put("ComboBox.forceOpaque", Boolean.FALSE)`を設定して`JComboBox`自体の背景色を`JComboBox.setBackground(...)`で設定した色に変更
+-- `DefaultListCellRenderer#getListCellRendererComponent(...)`をオーバーライドして`JList`の背景色、文字色、選択背景色、選択文字色を変更
+-- `UIManager.put("ComboBox.padding", new Insets(3, 3, 3, 0))`を設定して右余白を除去しないと矢印ボタンとの間に設定した背景色で描画されない領域が生成されてしまう？
+- `ComboPopup`
+-- 上記の`DefaultListCellRenderer`同様、`UIManager.put("ComboBox.forceOpaque", Boolean.FALSE)`を設定、セルレンダラーは反対に`setOpaque(true)`で不透明化して`JComboBox`自体の背景色を`JComboBox.setBackground(...)`で設定した色に変更
+-- `(ComboPopup) JComboBox#getAccessibleContext().getAccessibleChild(0)`で`ComboPopup`を取得し、さらに`ComboPopup#getList()`でドロップダウンリストで使用する`JList`を取得してその背景色、文字色、選択背景色、選択文字色を変更
+-- 上記の`DefaultListCellRenderer`同様、`UIManager.put("ComboBox.padding", new Insets(3, 3, 3, 0))`を設定して右余白を除去しないと矢印ボタンとの間に設定した背景色で描画されない領域が生成されてしまう？
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With Swing > Modifying the Look and Feel)]
+- [[JComboBoxの内余白>Swing/PaddingComboBox]]
+- [https://stackoverflow.com/questions/64580527/jcombobox-background-is-not-painted-untill-hover-over-it java - JComboBox background is not painted untill hover over it - Stack Overflow]
+- [[NimbusLookAndFeelでセル選択色をJListから取得するよう変更する>Swing/RendererUseListColors]]
+
+* コメント [#comment]
+#comment
+#comment

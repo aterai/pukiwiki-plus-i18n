@@ -17,21 +17,21 @@ image: https://lh3.googleusercontent.com/-GLtzHl48JaY/VuWAq1hSxSI/AAAAAAAAOQk/Hb
 #code(link){{
 Color bgc = new Color(110, 110, 0, 100);
 Color fgc = new Color(255, 255, 0, 100);
-UIManager.put("TabbedPane.shadow",                fgc);
-UIManager.put("TabbedPane.darkShadow",            fgc);
-UIManager.put("TabbedPane.light",                 fgc);
-UIManager.put("TabbedPane.highlight",             fgc);
-UIManager.put("TabbedPane.tabAreaBackground",     fgc);
-UIManager.put("TabbedPane.unselectedBackground",  fgc);
-UIManager.put("TabbedPane.background",            bgc);
-UIManager.put("TabbedPane.foreground",            Color.WHITE);
-UIManager.put("TabbedPane.focus",                 fgc);
-UIManager.put("TabbedPane.contentAreaColor",      fgc);
-UIManager.put("TabbedPane.selected",              fgc);
-UIManager.put("TabbedPane.selectHighlight",       fgc);
-// UIManager.put("TabbedPane.borderHighlightColor",  fgc);
+UIManager.put("TabbedPane.shadow", fgc);
+UIManager.put("TabbedPane.darkShadow", fgc);
+UIManager.put("TabbedPane.light", fgc);
+UIManager.put("TabbedPane.highlight", fgc);
+UIManager.put("TabbedPane.tabAreaBackground", fgc);
+UIManager.put("TabbedPane.unselectedBackground", fgc);
+UIManager.put("TabbedPane.background", bgc);
+UIManager.put("TabbedPane.foreground", Color.WHITE);
+UIManager.put("TabbedPane.focus", fgc);
+UIManager.put("TabbedPane.contentAreaColor", fgc);
+UIManager.put("TabbedPane.selected", fgc);
+UIManager.put("TabbedPane.selectHighlight", fgc);
+// UIManager.put("TabbedPane.borderHighlightColor", fgc);
 // Maybe typo but defined in MetalTabbedPaneUI
-UIManager.put("TabbedPane.borderHightlightColor",  fgc);
+UIManager.put("TabbedPane.borderHightlightColor", fgc);
 }}
 
 * 解説 [#explanation]
@@ -41,8 +41,8 @@ UIManager.put("TabbedPane.borderHightlightColor",  fgc);
 -- [https://tips4java.wordpress.com/2009/05/31/backgrounds-with-transparency/ Backgrounds With Transparency « Java Tips Weblog]
 -- [[JFrameの透明化と再描画>Swing/TranslucentFrameRepaint]]
 - `UIManager.put(...)`で半透明になるかどうかは`LookAndFeel`に依存する
--- `NimbusLookAndFeel`では、タブなどが半透明にならない
--- `Classic`ではない`WindowsLookAndFeel`では、半透明にならない
+-- `NimbusLookAndFeel`ではタブなどが半透明にならない
+-- `Classic`ではない`WindowsLookAndFeel`では半透明にならない
 - `TabbedPane.borderHightlightColor`は`TabbedPane.borderHighlightColor`の書き間違いだと思うが、`MetalTabbedPaneUI`では`TabbedPane.borderHightlightColor`が定義されている
 
 * 参考リンク [#reference]

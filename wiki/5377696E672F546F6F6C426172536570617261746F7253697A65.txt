@@ -1,0 +1,80 @@
+---
+category: swing
+folder: ToolBarSeparatorSize
+title: JToolBar専用JSeparatorのサイズを指定する
+tags: [JToolBar, JSeparator, UIManager]
+author: aterai
+pubdate: 2023-04-24T05:02:52+09:00
+description: JToolBar専用JToolBar.Separatorのサイズ変更をテストします。
+image: https://drive.google.com/uc?id=1DUJCi9uB6NXFr0uKs3fvCHLW4Z_0xpbl
+---
+* 概要 [#summary]
+`JToolBar`専用`JToolBar.Separator`のサイズ変更をテストします。
+
+#download(https://drive.google.com/uc?id=1DUJCi9uB6NXFr0uKs3fvCHLW4Z_0xpbl)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// UIManager.put("ToolBar.separatorSize", new Dimension(2, 20));
+JToolBar bar = new JToolBar();
+bar.add(new JCheckBox("JCheckBox"));
+bar.addSeparator();
+bar.add(new JRadioButton("JRadioButton"));
+bar.addSeparator(new Dimension(32, 32));
+bar.add(new JButton("JButton"));
+bar.addSeparator(new Dimension(10, 10));
+bar.add(new JToggleButton("JToggleButton"));
+bar.add(Box.createVerticalGlue());
+
+SpinnerNumberModel mw = new SpinnerNumberModel(10, -10, 50, 1);
+SpinnerNumberModel mh = new SpinnerNumberModel(32, -10, 50, 1);
+ChangeListener cl = e -> {
+  Dimension d = new Dimension(
+      mw.getNumber().intValue(), mh.getNumber().intValue());
+  for (Component c : bar.getComponents()) {
+    if (c instanceof JToolBar.Separator) {
+      ((JToolBar.Separator) c).setSeparatorSize(d);
+    }
+  }
+  bar.revalidate();
+};
+mw.addChangeListener(cl);
+mh.addChangeListener(cl);
+}}
+
+* 解説 [#explanation]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JToolBar.html#addSeparator-java.awt.Dimension- JToolBar#addSeparator(Dimension)]メソッドで`JToolBar`にサイズを指定して`JSeparator`を追加可能
+- `UIManager.put("ToolBar.separatorSize", new Dimension(...))`でまとめてデフォルトの`JToolBar.Separator`のサイズ指定する方法もある
+-- `UIManager.put("ToolBar.separatorSize", new Dimension(...))`を使用した水平`JToolBar`の場合、幅が高さ、高さが幅に自動的に入れ替わる
+- `JToolBar.Separator`のサイズを`JToolBar#addSeparator(Dimension)`や`JToolBar.Separator#setSeparatorSize(...)`で指定して水平`JToolBar`を垂直`JToolBar`に変換:
+-- `UIManager.put("ToolBar.separatorSize", new Dimension(...))`を使用した場合と異なり、幅と高さの入れ替えは発生しない
+-- `WindowsLookAndFeel`の場合、区切り線は指定した幅までのみ描画され、親`JToolBar`の幅まで拡張されない
+-- `NimbusLookAndFeel`の場合、区切り点線は親`JToolBar`の幅まで拡張して描画される
+-- `MetalLookAndFeel`の場合、区切り線は描画されず指定したサイズがコンポーネントの間隔になる
+- `[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JToolBar.Separator.html#setSeparatorSize-java.awt.Dimension- JToolBar.Separator#setSeparatorSize(Dimension)]`
+-- 負のサイズを設定してもエラーにはならない
+-- `null`を設定してもなにも変化せず、初期状態に戻せない？
+-- このサンプルでは以下のように一旦`JToolBar#removeAll()`ですべてのコンポーネントを削除してからサイズ指定なしで`JToolBar#addSeparator()`を使用して`JToolBar.Separator`を追加しなおしている
+
+#code{{
+JButton button = new JButton("reset");
+button.addActionListener(e -> {
+  Component[] list = bar.getComponents();
+  bar.removeAll();
+  for (Component c : list) {
+    if (c instanceof JToolBar.Separator) {
+      bar.addSeparator();
+    } else {
+      bar.add(c);
+    }
+  }
+});
+}}
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JToolBar.html#addSeparator-java.awt.Dimension- JToolBar#addSeparator(Dimension) (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JToolBar.Separator.html JToolBar.Separator (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

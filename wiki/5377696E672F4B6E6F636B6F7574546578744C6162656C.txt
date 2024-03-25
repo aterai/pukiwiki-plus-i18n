@@ -30,8 +30,8 @@ JLabel label = new JLabel("ABC") {
     double h = getHeight();
     double cx = w / 2d - b.getCenterX();
     double cy = h / 2d - b.getCenterY();
-    AffineTransform toCenterAtf = AffineTransform.getTranslateInstance(cx, cy);
-    Shape s = toCenterAtf.createTransformedShape(gv.getOutline());
+    AffineTransform toCenter = AffineTransform.getTranslateInstance(cx, cy);
+    Shape s = toCenter.createTransformedShape(gv.getOutline());
     Area bg = new Area(new Rectangle2D.Double(0d, 0d, w, h));
     bg.subtract(new Area(s));
     g2.setColor(getBackground());

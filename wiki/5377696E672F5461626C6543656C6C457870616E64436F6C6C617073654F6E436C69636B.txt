@@ -1,0 +1,78 @@
+---
+category: swing
+folder: TableCellExpandCollapseOnClick
+title: JTableのセル内に配置したJCheckBoxをクリックして行の高さの展開・折り畳みを実行する
+tags: [JTable, TableCellEditor, TableCellRenderer, JCheckBox]
+author: aterai
+pubdate: 2023-05-08T00:00:19+09:00
+description: JTableのセル内にJCheckBoxを配置し、これをクリックしたらとなりのセルの推奨サイズまで行の高さを展開します。
+image: https://drive.google.com/uc?id=16vOMLYeg5yf607l6d6z-mU1d6GMU96m2
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2023/07/click-on-jcheckbox-placed-in-jtable.html
+    lang: en
+---
+* 概要 [#summary]
+`JTable`のセル内に`JCheckBox`を配置し、これをクリックしたらとなりのセルの推奨サイズまで行の高さを展開します。
+
+#download(https://drive.google.com/uc?id=16vOMLYeg5yf607l6d6z-mU1d6GMU96m2)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+int defaultHeight = 20;
+JTable table = new JTable(model) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setAutoCreateRowSorter(true);
+    setSurrendersFocusOnKeystroke(true);
+    setRowHeight(defaultHeight);
+    setDefaultRenderer(RowHeader.class, new RowHeaderRenderer());
+    setDefaultEditor(RowHeader.class, new RowHeaderEditor());
+    TableColumn column = getColumnModel().getColumn(1);
+    column.setCellRenderer(new TextAreaCellRenderer());
+    column.setPreferredWidth(160);
+  }
+};
+table.getModel().addTableModelListener(e -> {
+  int mc = e.getColumn();
+  int mr = e.getFirstRow();
+  int vc = table.convertColumnIndexToView(mc);
+  int vr = table.convertRowIndexToView(mr);
+  Object o = table.getValueAt(vr, vc);
+  if (mc == 0 && o instanceof RowHeader) {
+    RowHeader rh = (RowHeader) o;
+    int vc1 = table.convertColumnIndexToView(1);
+    TableCellRenderer r = table.getColumnModel().getColumn(vc1)
+                               .getCellRenderer();
+    Object v = table.getValueAt(vr, vc1);
+    Component c = r.getTableCellRendererComponent(
+        table, v, true, true, vr, vc1);
+    int h = rh.isSelected() ? c.getPreferredSize().height
+                            : defaultHeight;
+    table.setRowHeight(vr, h);
+  }
+});
+}}
+
+* 解説 [#explanation]
+- `0`列目
+-- 「タイトル文字列」、「展開・折り畳み可能か」、「現在展開されているか」の`3`つのデータを保持する`RowHeader`クラスを`ColumnClass`として設定
+-- `JTable#setDefaultRenderer(RowHeader.class, new RowHeaderRenderer())`で`RowHeader`クラスのセルレンダラを設定
+-- `JTable#setDefaultEditor(RowHeader.class, new RowHeaderEditor())`で`RowHeader`クラスのセルエディタを設定
+-- 共にタイトル用の`JLabel`と展開・折り畳み用の`JCheckBox`を配置した`JPanel`を使用
+-- `JCheckBox`の選択アイコンは`∧`、未選択状態アイコンは`∨`の文字表示に変更
+- `1`列目
+-- 複数行の文字列を表示可能な`JTextArea`をセルレンダラとして設定
+-- `TableCellRenderer#getTableCellRendererComponent(...)`内で`JTextArea`に文字列を設定し、かつ`JTextArea`の幅を現在の列のセル幅と同じになるよう設定することで`JTextArea`の推奨サイズが計算可能になる
+--- [[JTableのセルの高さを自動調整>Swing/AutoWrapTableCell]]
+- `TableModelListener`
+-- 実際の行の高さの展開・折り畳みは`RowHeader`の選択状態が変化して`TableModelEvent`が発生したときに`JTable#setRowHeight(...)`メソッドで実行する
+-- [[JTableの行の高さを変更する>Swing/FishEyeTable]]
+
+* 参考リンク [#reference]
+- [[JTableの行の高さを変更する>Swing/FishEyeTable]]
+- [[JTableのセルの高さを自動調整>Swing/AutoWrapTableCell]]
+- [[JTableのセル内部にあるJCheckBoxのみクリック可能にする>Swing/CheckBoxCellEditor]]
+
+* コメント [#comment]
+#comment
+#comment

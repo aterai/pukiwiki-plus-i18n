@@ -37,9 +37,9 @@ scroll.getVerticalScrollBar().addAdjustmentListener(e -> {
 -- 縦`JScrollBar`のノブの位置が上限、または下限でも矢印ボタンの状態は変化しない
 - 右: `addAdjustmentListener`
 -- 縦`JScrollBar`に`AdjustmentListener`を追加してノブ位置が境界上に到達したらその矢印ボタンの有効・無効を切り替える
---- [[JScrollBarが最後までスクロールしたことを確認する>Swing/DetectScrollToBottom]]では縦`JScrollBar`から取得した`BoundedRangeModel`に`ChangeListener`を追加して同様の切り替えを行っている
+--- [[JScrollBarが最後までスクロールしたことを確認する>Swing/DetectScrollToBottom]]のように縦`JScrollBar`から取得した`BoundedRangeModel`に`ChangeListener`を追加して同様の切り替えを実行する方法もある
 -- 縦`JScrollBar`自体が無効化されている場合は考慮していない
--- `JSpinner`は[[JSpinnerの値が境界値になった場合、ArrowButtonを無効にする>Swing/DisableOnBoundaryValues]]のように`UIManager.put("Spinner.disableOnBoundaryValues", Boolean.TRUE)`で実現可能(`BasicSpinnerUI#updateEnabledState(...)`)だが、`JScrollBar`は`AdjustmentListener`などを追加して実装する必要がある
+-- `JSpinner`は[[JSpinnerの値が境界値になった場合、ArrowButtonを無効にする>Swing/DisableOnBoundaryValues]]のように`UIManager.put("Spinner.disableOnBoundaryValues", Boolean.TRUE)`で実現可能(`BasicSpinnerUI#updateEnabledState(...)`を参照)だが、`JScrollBar`は`AdjustmentListener`などを追加して実装する必要がある
 --- `JSpinner`の`ArrowButton`は`Spinner.nextButton`、`Spinner.previousButton`と`setName(...)`で名前が付いているのでこれを検索して有効・無効を切り替えているが、`JScrollBar`の`ArrowButton`はデフォルトでは未設定なので`Component#getComponent(0)`で`incrButton`、`Component#getComponent(1)`で`decrButton`を取得している
 -- [[JScrollBarのノブを常に表示する>Swing/AlwaysShowThumb]]や`JFrame`をリサイズしてノブが表示状態になった場合、矢印ボタンの有効・無効が不正になるバグを修正
 

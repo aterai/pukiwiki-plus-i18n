@@ -1,0 +1,121 @@
+---
+category: swing
+folder: ColorChooserRgbaHexCode
+title: JColorChooserのRGB色選択パネル内に表示される16進数カラーコードにAlpha値を追加する
+tags: [JColorChooser, JFormattedTextField]
+author: aterai
+pubdate: 2023-09-11T00:53:31+09:00
+description: JColorChooserのRGB色選択パネル内に表示される16進数カラーコードをRGB6桁からAlpha値を追加したRGBA8桁に変更します。
+image: https://drive.google.com/uc?id=1iY0SMrR9hzzjHE-HLO6DOsXwlKRxLNyg
+---
+* 概要 [#summary]
+`JColorChooser`の`RGB`色選択パネル内に表示される`16`進数カラーコードを`RGB6`桁から`Alpha`値を追加した`RGBA8`桁に変更します。
+
+#download(https://drive.google.com/uc?id=1iY0SMrR9hzzjHE-HLO6DOsXwlKRxLNyg)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+UIManager.put("ColorChooser.rgbHexCodeText", "#RGBA:");
+JButton button = new JButton("open JColorChooser");
+button.addActionListener(e -> {
+  JColorChooser cc = new JColorChooser();
+  cc.setColor(new Color(0xFF_FF_00_00, true));
+  AbstractColorChooserPanel[] panels = cc.getChooserPanels();
+  List<AbstractColorChooserPanel> choosers = new ArrayList<>(Arrays.asList(panels));
+  AbstractColorChooserPanel ccp = choosers.get(3);
+  // Java 9: if (ccp.isColorTransparencySelectionEnabled()) {
+  for (Component c : ccp.getComponents()) {
+    if (c instanceof JFormattedTextField) {
+      // removeFocusListeners(c);
+      // javax.swing.colorchooser.ValueFormatter.init(8, true, (JFormattedTextField) c);
+      ValueFormatter.init((JFormattedTextField) c);
+    }
+  }
+  cc.setChooserPanels(choosers.toArray(new AbstractColorChooserPanel[0]));
+
+  ColorTracker ok = new ColorTracker(cc);
+  Component parent = getRootPane();
+  String title = "JColorChooser";
+  JDialog dialog = JColorChooser.createDialog(parent, title, true, cc, ok, null);
+  dialog.addComponentListener(new ComponentAdapter() {
+    @Override public void componentHidden(ComponentEvent e) {
+      ((Window) e.getComponent()).dispose();
+    }
+  });
+  dialog.setVisible(true);
+  Color color = ok.getColor();
+  if (color != null) {
+    label.setBackground(color);
+  }
+});
+
+// copied from javax/swing/colorchooser/ValueFormatter.java
+class ValueFormatter extends JFormattedTextField.AbstractFormatter implements FocusListener {
+  private final transient DocumentFilter filter = new DocumentFilter() {
+    // ...
+  };
+
+  public static void init(JFormattedTextField text) {
+    ValueFormatter formatter = new ValueFormatter();
+    text.setColumns(8);
+    text.setFormatterFactory(new DefaultFormatterFactory(formatter));
+    text.setHorizontalAlignment(SwingConstants.RIGHT);
+    text.setMinimumSize(text.getPreferredSize());
+    text.addFocusListener(formatter);
+  }
+
+  @Override public Object stringToValue(String text) throws ParseException {
+    try {
+      int r = Integer.parseInt(text.substring(0, 2), 16);
+      int g = Integer.parseInt(text.substring(2, 4), 16);
+      int b = Integer.parseInt(text.substring(4, 6), 16);
+      int a = Integer.parseInt(text.substring(6), 16);
+      return (a << 24) | (r << 16) | (g << 8) | b;
+      // return Integer.valueOf(argb, 16); // <- NumberFormatException
+    } catch (NumberFormatException nfe) {
+      ParseException pe = new ParseException("illegal format", 0);
+      pe.initCause(nfe);
+      throw pe;
+    }
+  }
+
+  @Override public String valueToString(Object object) throws ParseException {
+    if (object instanceof Integer) {
+      int value = (Integer) object;
+      // String str = "00" + Integer.toHexString(value).toUpperCase();
+      char[] array = new char[8];
+      for (int i = array.length - 1; i >= 0; i--) {
+        array[i] = Character.forDigit(value & 0x0F, 16);
+        value >>= 4;
+      }
+      String argb = String.valueOf(array).toUpperCase(Locale.ENGLISH);
+      return argb.substring(2) + argb.substring(0, 2);
+    }
+    throw new ParseException("illegal object", 0);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- デフォルト`JColorChooser`の`RGB`色選択パネルで`16`進数色コード(`ColorChooser.rgbHexCodeText`)表示に使用される`JFormattedTextField`は`6`桁で`#RRGGBB`表示
+- `16`進数色コード表示用の`JFormattedTextField`を取得して`16`進数`8`桁(`#RRGGBBAA`)を表示するような`Formatter`を設定
+-- `JColorChooser#getChooserPanels()`で`AbstractColorChooserPanel`の配列を取得
+-- この配列の`3`番目から`RGB`色選択パネルを取得
+-- `AbstractColorChooserPanel#getComponents()`で子要素の`JFormattedTextField`を取得
+--- 赤青緑アルファ用の`JSpinner`が使用する`JFormattedTextField`を取得しないよう注意
+-- `16`進数色コード表示用の`JFormattedTextField`に`setFormatterFactory(new DefaultFormatterFactory(formatter))`で`16`進数`8`桁(`#RRGGBBAA`)を表示する`Formatter`を設定
+--- この`Formatter`は`javax/swing/colorchooser/ValueFormatter.java`を参考に作成
+-- `valueToString(Object)`で`argb`形式の`Integer`色値を`16`進数色コード文字列に変換後、`argb.substring(2) + argb.substring(0, 2)`で`rgba`形式に並び替える
+-- `stringToValue(String)`で`rgba`形式の`16`進数色コード文字列を`red`, `green`, `blue`, `alpha`を表す文字列に分解して`Integer.parseInt(...)`で`Integer`化し、`(a << 24) | (r << 16) | (g << 8) | b`で順序を並び変えて結合して`argb`形式の`Integer`色値に変換
+--- `16`進数`6`桁で使用している`Integer.valueOf(argbStr, 16)`を`8`桁で使用すると`int`の最大値を超えて`NumberFormatException`が発生する場合がある
+--- `Integer.parseUnsignedInt(argbStr, 16)`で回避可能
+
+* 参考リンク [#reference]
+- [https://en.wikipedia.org/wiki/RGBA_color_model RGBA color model - Wikipedia]
+- [[JColorChooserのSwatchesタブに配置されたRecentカラーパレットを保存、復元する>Swing/SaveRestoreRecentSwatch]]
+- [[JColorChooserのRGB色選択パネルでアルファ設定用のJSliderとJSpinnerを無効化する>Swing/ColorTransparencySelectionEnabled]]
+- [[HTMLの16進数カラーコードからColorを生成する>Swing/HTMLColorCodes]]
+
+* コメント [#comment]
+#comment
+#comment

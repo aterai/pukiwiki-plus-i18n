@@ -15,13 +15,14 @@ image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTH67VnIQI/AAAAAAAAAR8/JM
 
 * サンプルコード [#sourcecode]
 #code(link){{
+private final Image image;
 @Override protected void paintComponent(Graphics g) {
   Dimension d = getSize();
-  int w = bgimage.getIconWidth();
-  int h = bgimage.getIconHeight();
+  int w = image.getWidth(this);
+  int h = image.getHeight(this);
   for (int i = 0; i * w < d.width; i++) {
     for (int j = 0; j * h < d.height; j++) {
-      g.drawImage(bgimage.getImage(), i * w, j * h, w, h, this);
+      g.drawImage(image, i * w, j * h, w, h, this);
     }
   }
   super.paintComponent(g);

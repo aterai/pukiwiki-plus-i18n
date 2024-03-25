@@ -1,0 +1,118 @@
+---
+category: swing
+folder: PinCodeInputField
+title: JPasswordFieldでPINコード入力欄を作成する
+tags: [JPasswordField, DocumentFilter, JLayer]
+author: aterai
+pubdate: 2023-03-06T04:07:02+09:00
+description: JPasswordFieldを使用して数字4桁のPINコード入力欄を作成します。
+image: https://drive.google.com/uc?id=1RCDFeR52kFEbUARNAfQjvMDjCLrm3UiH
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2023/12/create-4-digit-numeric-pin-code-input.html
+    lang: en
+---
+* 概要 [#summary]
+`JPasswordField`を使用して数字`4`桁の`PIN`コード入力欄を作成します。
+
+#download(https://drive.google.com/uc?id=1RCDFeR52kFEbUARNAfQjvMDjCLrm3UiH)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class PinCodeDocumentFilter extends DocumentFilter {
+  public static final int MAX = 4;
+
+  @Override public void replace(
+      DocumentFilter.FilterBypass fb, int offset,
+      int length, String text, AttributeSet attrs) throws BadLocationException {
+    String str = fb.getDocument().getText(
+      0, fb.getDocument().getLength()) + text;
+    if (str.length() <= MAX && str.matches("\\d+")) {
+      super.replace(fb, offset, length, text, attrs);
+    }
+  }
+}
+
+class PasswordView2 extends PasswordView {
+  public PasswordView2(Element elem) {
+    super(elem);
+  }
+
+  @Override protected int drawUnselectedText(
+      Graphics g, int x, int y, int p0, int p1) throws BadLocationException {
+    return drawText(g, x, y, p0, p1);
+  }
+
+  // @see drawUnselectedTextImpl(...)
+  private int drawText(Graphics g, int x, int y, int p0, int p1)
+        throws BadLocationException {
+    Container c = getContainer();
+    int j = x;
+    if (c instanceof JPasswordField) {
+      JPasswordField f = (JPasswordField) c;
+      if (f.isEnabled()) {
+        g.setColor(f.getForeground());
+      } else {
+        g.setColor(f.getDisabledTextColor());
+      }
+      Graphics2D g2 = (Graphics2D) g;
+      char echoChar = f.getEchoChar();
+      int n = p1 - p0;
+      for (int i = 0; i < n; i++) {
+        j = i == n - 1
+            ? drawLastChar(g2, j, y, i)
+            : drawEchoCharacter(g, j, y, echoChar);
+      }
+    }
+    return j;
+  }
+
+  private int drawLastChar(Graphics g, int x, int y, int p1)
+        throws BadLocationException {
+    Graphics2D g2 = (Graphics2D) g;
+    Font font = g2.getFont();
+    float fs = font.getSize2D();
+    double w = font.getStringBounds("0", g2.getFontRenderContext()).getWidth();
+    int sz = (int) ((fs - w) / 2d);
+    Document doc = getDocument();
+    Segment s = new Segment(); // SegmentCache.getSharedSegment();
+    doc.getText(p1, 1, s);
+    // int ret = Utilities.drawTabbedText(s, x, y, g, this, p1);
+    // SegmentCache.releaseSharedSegment(s);
+    return Utilities.drawTabbedText(s, x + sz, y, g, this, p1);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `PinCodeDocumentFilter`を`JPasswordField`に設定して`4`桁の`0-9`数字のみ入力可能になるよう制限
+-- `JPasswordField#setColumns(4)`で表示桁を`4`桁に設定する`4`文字目のエコー文字が見切れてしまう？
+- `PlaceholderLayerUI`を`JPasswordField`に設定して入力欄が空の場合はヒント文字列を表示する
+-- [[ComboBoxEditorにJLayerを設定してプレースホルダ文字列を表示する>Swing/ComboEditorPlaceholder]]
+- `DocumentListener`を`JPasswordField`の`Document`に設定して`4`桁の数字が入力されたら`JOptionPane`の表示と入力文字列のリセットを実行
+-- `JPasswordField#setText("")`でのリセットは`EventQueue.invokeLater(...)`などで後で実行しないと`IllegalStateException`が発生する場合がある？
+- `DefaultCaret#isSelectionVisible()`が常に`false`を返すようオーバライドした`Caret`を`JPasswordField`に設定して文字列選択を非表示化
+-- [[JTextFieldが編集不可状態でもCaretが点滅するよう設定する>Swing/NonEditableTextFieldCaret]]
+- `BasicPasswordFieldUI#create(Element)`をオーバーライドして末尾の数字のみマスクせずに可視化する`PasswordView2`を返すよう設定
+
+#code{{
+JPasswordField password = new JPasswordField(6) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setUI(new BasicPasswordFieldUI() {
+      @Override public View create(Element elem) {
+        return new PasswordView2(elem);
+      }
+    });
+  }
+};
+}}
+
+* 参考リンク [#reference]
+- [https://bugs.openjdk.org/browse/JDK-8296878 &#91;JDK-8296878&#93; Document Filter attached to JPasswordField and setText("") is not cleared instead inserted characters replaced with unicode null characters - Java Bug System]
+- [[ComboBoxEditorにJLayerを設定してプレースホルダ文字列を表示する>Swing/ComboEditorPlaceholder]]
+- [[JTextFieldが編集不可状態でもCaretが点滅するよう設定する>Swing/NonEditableTextFieldCaret]]
+- [[JPasswordFieldでパスワードを可視化する>Swing/ShowHidePasswordField]]
+
+* コメント [#comment]
+#comment
+#comment

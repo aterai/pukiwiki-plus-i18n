@@ -144,7 +144,7 @@ class Hoge
 
 * FileInputStream / FileOutputStream でメモリリーク [#FileInputStreamMemoryLeak]
 - [http://blog.cybozu.io/entry/8218 恐怖の JVM 大量メモリ消費！メモリリークの謎を追え！！ - Cybozu Inside Out | サイボウズエンジニアのブログ]
-- [https://bugs.openjdk.java.net/browse/JDK-8080225 JDK-8080225 FileInputStream cleanup should be improved. - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-8080225 JDK-8080225 FileInputStream cleanup should be improved. - Java Bug System]
 - [https://www.cloudbees.com/blog/fileinputstream-fileoutputstream-considered-harmful FileInputStream / FileOutputStream Considered Harmful | CloudBees]
 -- via: [http://marxsoftware.blogspot.jp/2017/04/java-finalizer-file-io-streams.html Inspired by Actual Events: Java Finalizer and Java File Input/Output Streams]
 -- `FileInputStream`や`FileOutputStream`は、`finalize()`メソッドをオーバーライドしている(`FinalReference`に登録されてしまう)ので`close()`メソッドを呼んだ後でもフル`GC`が発生するまでメモリ上に残り続ける
@@ -310,7 +310,7 @@ public final class MainPanel extends JPanel {
   private MainPanel() {
     super(new BorderLayout());
     try {
-      Thread.sleep(3000); //dummy task
+      Thread.sleep(3000);
     } catch (InterruptedException ex) {
       ex.printStackTrace();
     }

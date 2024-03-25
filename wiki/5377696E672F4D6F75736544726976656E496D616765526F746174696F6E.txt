@@ -18,29 +18,29 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQAQVe8YI/AAAAAAAAAe4/y6
 class DraggableImageMouseListener extends MouseAdapter {
   private static final BasicStroke BORDER_STROKE = new BasicStroke(4f);
   private static final Color BORDER_COLOR = Color.WHITE;
-  private static final Color HOVER_COLOR  = new Color(100, 255, 200, 100);
+  private static final Color HOVER_COLOR = new Color(100, 255, 200, 100);
   private static final int IR = 40;
   private static final int OR = IR * 3;
   private final Shape border;
   private final Shape polaroid;
   private final RectangularShape inner = new Ellipse2D.Double(0, 0, IR, IR);
   private final RectangularShape outer = new Ellipse2D.Double(0, 0, OR, OR);
-  private final Point2D startPt  = new Point2D.Double(); //drag start point
-  private final Point2D centerPt = new Point2D.Double(100d, 100d); //center of Image
+  private final Point2D startPt = new Point2D.Double();
+  private final Point2D centerPt = new Point2D.Double(100d, 100d);
   private final Dimension imageSz;
   private final Image image;
-  private double radian = 45d * (Math.PI / 180d);
-  private double startRadian; //drag start radian
+  private double radian = Math.toRadians(45d); // 45d / 180d * Math.PI;
+  private double startRadian; // drag start radian
   private boolean moverHover;
   private boolean rotatorHover;
 
   protected DraggableImageMouseListener(ImageIcon ii) {
     super();
     image = ii.getImage();
-    int width  = ii.getIconWidth();
+    int width = ii.getIconWidth();
     int height = ii.getIconHeight();
-    imageSz  = new Dimension(width, height);
-    border   = new RoundRectangle2D.Double(0, 0, width, height, 10, 10);
+    imageSz　= new Dimension(width, height);
+    border = new RoundRectangle2D.Double(0, 0, width, height, 10, 10);
     polaroid = new Rectangle2D.Double(-2, -2, width + 4, height + 20);
     setCirclesLocation(centerPt);
   }
@@ -88,7 +88,8 @@ class DraggableImageMouseListener extends MouseAdapter {
   }
 
   @Override public void mouseMoved(MouseEvent e) {
-    if (outer.contains(e.getX(), e.getY()) && !inner.contains(e.getX(), e.getY())) {
+    if (outer.contains(e.getX(), e.getY())
+          && !inner.contains(e.getX(), e.getY())) {
       moverHover = false;
       rotatorHover = true;
     } else if (inner.contains(e.getX(), e.getY())) {
@@ -108,7 +109,8 @@ class DraggableImageMouseListener extends MouseAdapter {
   }
 
   @Override public void mousePressed(MouseEvent e) {
-    if (outer.contains(e.getX(), e.getY()) && !inner.contains(e.getX(), e.getY())) {
+    if (outer.contains(e.getX(), e.getY())
+          && !inner.contains(e.getX(), e.getY())) {
       rotatorHover = true;
       startRadian = radian - Math.atan2(
           e.getY() - centerPt.getY(), e.getX() - centerPt.getX());
@@ -126,8 +128,9 @@ class DraggableImageMouseListener extends MouseAdapter {
           e.getY() - centerPt.getY(), e.getX() - centerPt.getX());
       e.getComponent().repaint();
     } else if (moverHover) {
-      centerPt.setLocation(centerPt.getX() + e.getX() - startPt.getX(),
-                           centerPt.getY() + e.getY() - startPt.getY());
+      centerPt.setLocation(
+          centerPt.getX() + e.getX() - startPt.getX(),
+          centerPt.getY() + e.getY() - startPt.getY());
       setCirclesLocation(centerPt);
       startPt.setLocation(e.getPoint());
       e.getComponent().repaint();

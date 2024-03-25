@@ -19,21 +19,19 @@ SystemTray tray  = SystemTray.getSystemTray();
 Image image = new ImageIcon(getClass().getResource("16x16.png")).getImage();
 TrayIcon icon = new TrayIcon(image, "TRAY", null);
 JPopupMenu popup = new JPopupMenu();
-JDialog dummy = new JDialog();
-// This code is inspired from:
-// http://weblogs.java.net/blog/alexfromsun/archive/2008/02/jtrayicon_updat.html
-dummy.setUndecorated(true);
+JDialog tmp = new JDialog();
+tmp.setUndecorated(true);
 popup.addPopupMenuListener(new PopupMenuListener() {
   @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
     /* not needed */
   }
 
   @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-    dummy.setVisible(false);
+    tmp.setVisible(false);
   }
 
   @Override public void popupMenuCanceled(PopupMenuEvent e) {
-    dummy.setVisible(false);
+    tmp.setVisible(false);
   }
 });
 
@@ -41,9 +39,9 @@ icon.addMouseListener(new MouseAdapter() {
   private void showJPopupMenu(MouseEvent e) {
     if (e.isPopupTrigger()) {
       Point p = adjustPopupLocation(popup, e.getX(), e.getY());
-      dummy.setLocation(p);
-      dummy.setVisible(true);
-      popup.show(dummy, 0, 0);
+      tmp.setLocation(p);
+      tmp.setVisible(true);
+      popup.show(tmp, 0, 0);
     }
   }
 
@@ -67,7 +65,8 @@ icon.addMouseListener(new MouseAdapter() {
 
 #code{{
 // Copied from JPopupMenu.java: JPopupMenu#adjustPopupLocationToFitScreen(...)
-private static Point adjustPopupLocation(JPopupMenu popup, int xposition, int yposition) {
+private static Point adjustPopupLocation(
+    JPopupMenu popup, int xposition, int yposition) {
   Point p = new Point(xposition, yposition);
   if (GraphicsEnvironment.isHeadless()) {
     return p;
@@ -75,7 +74,8 @@ private static Point adjustPopupLocation(JPopupMenu popup, int xposition, int yp
   Rectangle screenBounds;
   GraphicsConfiguration gc = null;
   // Try to find GraphicsConfiguration, that includes mouse pointer position
-  for (GraphicsDevice gd: GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
+  GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+  for (GraphicsDevice gd : ge.getScreenDevices()) {
     if (gd.getType() == GraphicsDevice.TYPE_RASTER_SCREEN) {
       GraphicsConfiguration dgc = gd.getDefaultConfiguration();
       if (dgc.getBounds().contains(p)) {
@@ -121,17 +121,17 @@ private static Point adjustPopupLocation(JPopupMenu popup, int xposition, int yp
 }}
 
 * 参考リンク [#reference]
-- [http://weblogs.java.net/blog/alexfromsun/archive/2008/02/jtrayicon_updat.html JTrayIcon update | Java.net]
--- [http://java.net/projects/swinghelper/sources/svn/content/trunk/src/java/org/jdesktop/swinghelper/tray/JXTrayIcon.java Swinghelper: Subversion: JXTrayIcon.java — Java.net]
+- [https://web.archive.org/web/20090327054056/http://weblogs.java.net/blog/alexfromsun/archive/2008/02/jtrayicon_updat.html Alexander Potochkin's Blog: JTrayIcon update]
+-- [https://github.com/floscher/swinghelper/blob/master/src/java/org/jdesktop/swinghelper/tray/JXTrayIcon.java swinghelper/JXTrayIcon.java at master · floscher/swinghelper · GitHub]
 - [https://docs.oracle.com/javase/tutorial/uiswing/misc/systemtray.html How to Use the System Tray (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Other Swing Features)]
-- [https://bugs.openjdk.java.net/browse/JDK-6285881 Bug ID: 6285881 JTrayIcon: support Swing JPopupMenus for tray icons]
-- [https://bugs.openjdk.java.net/browse/JDK-6453521 Bug ID: 6453521 TrayIcon should support transparency]
+- [https://bugs.openjdk.org/browse/JDK-6285881 Bug ID: 6285881 JTrayIcon: support Swing JPopupMenus for tray icons]
+- [https://bugs.openjdk.org/browse/JDK-6453521 Bug ID: 6453521 TrayIcon should support transparency]
 
 * コメント [#comment]
 #comment
 - ソースを上げ忘れていたのを修正。 -- &user(aterai); &new{2011-02-02 (水) 19:07:51};
 - `JRE1.6.0u3`で`2`度連続で右クリックすると`ClassCastException`起きちゃうんですよね・・・`BugParade`でも見つけらんなかったです -- &user(sawshun); &new{2011-10-25 (火) 18:45:38};
--- どうもです。こちらでも`WindowsXP`+`Java6u3`の環境で、`TrayIcon`上で右クリックを繰り返すと、`ClassCastException: java.awt.TrayIcon cannot be cast to java.awt.Component`が発生するのを確認しました。`bugs.java.com`を調べたら、`6u10`で修正された [https://bugs.openjdk.java.net/browse/JDK-6583251 Bug ID: 6583251 One more ClassCastException in Swing with TrayIcon]がそれっぽい気がします。 -- &user(aterai); &new{2011-10-26 (水) 00:56:41};
+-- どうもです。こちらでも`WindowsXP`+`Java6u3`の環境で、`TrayIcon`上で右クリックを繰り返すと、`ClassCastException: java.awt.TrayIcon cannot be cast to java.awt.Component`が発生するのを確認しました。`bugs.java.com`を調べたら、`6u10`で修正された [https://bugs.openjdk.org/browse/JDK-6583251 Bug ID: 6583251 One more ClassCastException in Swing with TrayIcon]がそれっぽい気がします。 -- &user(aterai); &new{2011-10-26 (水) 00:56:41};
 - 情報ありがとうございます・・・`u10`か・・・`SynthUI`がらみの大きなパッケージ変更がイヤで古代の`Ver`を利用しているのでちょっと工夫してみます -- &user(sawshun); &new{2011-10-27 (木) 10:45:59};
 
 #comment

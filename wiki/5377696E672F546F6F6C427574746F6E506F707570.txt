@@ -39,42 +39,49 @@ class MenuArrowIcon implements Icon {
 }
 
 class MenuToggleButton extends JToggleButton {
-  private static final Icon i = new MenuArrowIcon();
-  protected JPopupMenu pop;
-  public MenuToggleButton() {
+  private static final Icon ARROW_ICON = new MenuArrowIcon();
+  private JPopupMenu popup;
+
+  protected MenuToggleButton() {
     this("", null);
   }
 
-  public MenuToggleButton(Icon icon) {
+  protected MenuToggleButton(Icon icon) {
     this("", icon);
   }
 
-  public MenuToggleButton(String text) {
+  protected MenuToggleButton(String text) {
     this(text, null);
   }
 
-  public MenuToggleButton(String text, Icon icon) {
+  protected MenuToggleButton(String text, Icon icon) {
     super();
-    Action a = new AbstractAction(text) {
-      @Override public void actionPerformed(ActionEvent ae) {
-        MenuToggleButton b = (MenuToggleButton) ae.getSource();
-        if (pop != null) {
-          pop.show(b, 0, b.getHeight());
-        }
+    Action action = new AbstractAction(text) {
+      @Override public void actionPerformed(ActionEvent e) {
+        Component b = (Component) e.getSource();
+        Optional.ofNullable(getPopupMenu()).ifPresent(p -> p.show(b, 0, b.getHeight()));
       }
     };
-    a.putValue(Action.SMALL_ICON, icon);
-    setAction(a);
+    action.putValue(Action.SMALL_ICON, icon);
+    setAction(action);
     setFocusable(false);
-    setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4 + i.getIconWidth()));
+    setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4 + ARROW_ICON.getIconWidth()));
   }
 
-  @Override public void setPopupMenu(final JPopupMenu pop) {
-    this.pop = pop;
-    pop.addPopupMenuListener(new PopupMenuListener() {
-      @Override public void popupMenuCanceled(PopupMenuEvent e) {}
+  public JPopupMenu getPopupMenu() {
+    return popup;
+  }
 
-      @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
+  public void setPopupMenu(JPopupMenu pop) {
+    this.popup = pop;
+    pop.addPopupMenuListener(new PopupMenuListener() {
+      @Override public void popupMenuCanceled(PopupMenuEvent e) {
+        /* not needed */
+      }
+
+      @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+        /* not needed */
+      }
 
       @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
         setSelected(false);
@@ -87,8 +94,8 @@ class MenuToggleButton extends JToggleButton {
     Dimension dim = getSize();
     Insets ins = getInsets();
     int x = dim.width - ins.right;
-    int y = ins.top + (dim.height - ins.top - ins.bottom - i.getIconHeight()) / 2;
-    i.paintIcon(this, g, x, y);
+    int y = ins.top + (dim.height - ins.top - ins.bottom - ARROW_ICON.getIconHeight()) / 2;
+    ARROW_ICON.paintIcon(this, g, x, y);
   }
 }
 }}

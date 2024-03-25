@@ -1,0 +1,92 @@
+---
+category: swing
+folder: MenuItemMinimumTextOffset
+title: JRadioButtonMenuItemのチェックアイコンを非表示にしてテキストオフセットを縮小する
+tags: [JRadioButtonMenuItem, JMenuItem, UIManager]
+author: aterai
+pubdate: 2023-06-19T01:24:14+09:00
+description: JRadioButtonMenuItemのチェックアイコンの非表示化し、その余白を最小テキストオフセットを変更することで縮小します。
+image: https://drive.google.com/uc?id=1voGvv6Yy431WG3LEjHojVfno6PURUbTe
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2023/08/hide-check-icon-on-jradiobuttonmenuitem.html
+    lang: en
+---
+* 概要 [#summary]
+`JRadioButtonMenuItem`のチェックアイコンの非表示化し、その余白を最小テキストオフセットを変更することで縮小します。
+
+#download(https://drive.google.com/uc?id=1voGvv6Yy431WG3LEjHojVfno6PURUbTe)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+UIManager.put(PRE + "minimumTextOffset", 10);
+UIManager.put(PRE + "afterCheckIconGap", 0);
+UIManager.put(PRE + "checkIconOffset", 0);
+Icon checkIcon = getCheckIcon();
+int height = checkIcon == null ? 22 : checkIcon.getIconHeight();
+UIManager.put(PRE + "checkIcon", new EmptyIcon());
+Dimension d = new Dimension(100, height);
+JPopupMenu popup = new JPopupMenu();
+ButtonGroup bg = new ButtonGroup();
+Arrays.asList(
+    makeMenuItem("0.5 pt", .5f, d),
+    makeMenuItem("0.75 pt", .75f, d),
+    makeMenuItem("1 pt", 1f, d),
+    makeMenuItem("1.5 pt", 1.5f, d),
+    makeMenuItem("2.25 pt", 2.25f, d),
+    makeMenuItem("3 pt", 3f, d)
+).forEach(m -> {
+  popup.add(m);
+  bg.add(m);
+});
+}}
+
+* 解説 [#explanation]
+- `UIManager.put("RadioButtonMenuItem.minimumTextOffset", 10)`
+-- 最小テキストオフセットで`RadioButtonMenuItem`のチェックアイコンが表示される領域の幅を指定
+-- `WindowsLookAndFeel`のデフォルトは`31`
+-- このサンプルでは`10`に縮小
+- `UIManager.put("RadioButtonMenuItem.afterCheckIconGap", 0)`
+-- チェックアイコンと`JRadioButtonMenuItem`のテキストまたはアイコンとの間隔
+-- `WindowsLookAndFeel`のデフォルトは`9`
+- `UIManager.put("RadioButtonMenuItem.checkIconOffset", 0)`
+-- `JRadioButtonMenuItem`の左端とチェックアイコンとの間隔
+-- `WindowsLookAndFeel`のデフォルトは`0`
+- `UIManager.put("RadioButtonMenuItem.checkIcon", new EmptyIcon())`
+-- `JRadioButtonMenuItem`のチェックアイコン
+-- このサンプルではサイズ`0`のアイコンを設定してチェックアイコンを非表示化
+--- アイコンでの選択状態表示の代わりに`JRadioButtonMenuItem#paintComponent(...)`をオーバーライドして選択状態の場合はその背景色を変更している
+-- `WindowsLookAndFeel`のデフォルトはサイズ`22x22`のアイコン
+-- `JMenuItem`にも非表示のチェックアイコンが存在するため`RadioButtonMenuItem.minimumTextOffset`だけでなくチェックアイコンのサイズも変更しないと`JMenuItem`の左余白サイズを変更できない
+- `setHorizontalTextPosition(...)`, `setHorizontalAlignment(...)`
+-- `JRadioButtonMenuItem`のデフォルト揃えは`setHorizontalTextPosition(TRAILING)`, `setHorizontalAlignment(LEADING)`だが、このサンプルでは以下のように`setHorizontalTextPosition(LEADING)`, `setHorizontalAlignment(TRAILING)`と反転し、`0.5 pt`などのテキストを右揃えで左側、その太さを表示するアイコンを右側に配置している
+
+#code{{
+private static JMenuItem makeMenuItem(String txt, float width, Dimension d) {
+  float px = width * Toolkit.getDefaultToolkit().getScreenResolution() / 72f;
+  return new JRadioButtonMenuItem(txt, new LineIcon(new BasicStroke(px), d)) {
+    @Override protected void init(String text, Icon icon) {
+      super.init(text, icon);
+      setHorizontalTextPosition(LEADING);
+      setHorizontalAlignment(TRAILING);
+    }
+
+    @Override protected void paintComponent(Graphics g) {
+      if (isSelected()) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setPaint(new Color(0xAA_64_AA_FF, true));
+        g2.fillRect(0, 0, getWidth(), getHeight());
+        g2.dispose();
+      }
+      super.paintComponent(g);
+    }
+  };
+}
+}}
+
+* 参考リンク [#reference]
+- [[JCheckBoxMenuItemのチェックアイコンの位置を調整する>Swing/AfterCheckIconGap]]
+- [[JCheckBoxMenuItemのチェックアイコンを変更する>Swing/CheckBoxMenuItemIcon]]
+
+* コメント [#comment]
+#comment
+#comment

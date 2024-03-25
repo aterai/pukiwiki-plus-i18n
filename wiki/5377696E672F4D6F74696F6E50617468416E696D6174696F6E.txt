@@ -49,7 +49,7 @@ while (!pi.isDone()) {
 - `Shape#getPathIterator(...)`で`Shape`の輪郭線を平坦化されたパスセグメントとして取得し`ArrayList`に`Point2D`として保存
 - 輪郭線が指定の長さ以上の直線になる場合は適当な長さで自前で分割して`ArrayList`に追加
 - `JPanel`の中央に`Shape`とその`Shape`から生成した輪郭線上の点を黒い円として描画
-- パスに沿った図形のアニメーションは、`ArrayList`から`Timer`で更新したインデックスの位置にある座標`Point2D`をひとつ取り出して赤い円として`JPanel`に描画
+- パスに沿った図形のアニメーションは`ArrayList`から`Timer`で更新したインデックスの位置にある座標`Point2D`をひとつ取り出して赤い円として`JPanel`に描画
 
 * 参考リンク [#reference]
 - [[FlatteningPathIteratorでShape上の点を取得する>Swing/FlatteningPathIterator]]

@@ -31,7 +31,7 @@ worker = new SwingWorker<String, Progress>() {
     int current = 0;
     int lengthOfTask = 12; // filelist.size();
     publish(new Progress(ComponentType.LOG, "Length Of Task: " + lengthOfTask));
-    publish(new Progress(ComponentType.LOG, "\n------------------------------\n"));
+    publish(new Progress(ComponentType.LOG, "\n--------------------------\n"));
     while (current < lengthOfTask && !isCancelled()) {
       if (!bar1.isDisplayable()) {
         return "Disposed";
@@ -47,10 +47,10 @@ worker = new SwingWorker<String, Progress>() {
 
   private void convertFileToSomething() throws InterruptedException {
     int current = 0;
-    int lengthOfTask = 10 + r.nextInt(50); // long lengthOfTask = file.length();
+    int lengthOfTask = 10 + r.nextInt(50); // = file.length();
     while (current <= lengthOfTask && !isCancelled()) {
       int iv = 100 * current / lengthOfTask;
-      Thread.sleep(20); // dummy
+      Thread.sleep(20);
       publish(new Progress(Component.FILE, iv + 1));
       current++;
     }
@@ -72,7 +72,7 @@ worker = new SwingWorker<String, Progress>() {
 上記のサンプルでは、デフォルトで用意されている`SwingWorker#setProgress(int)`は使用せず、以下の`3`つのコンポーネントの状態を表す`Progress`クラスを作成し、これを`SwingWorker<String, Progress>#publish(Progress)`メソッドに与えて`EDT`上でそれぞれの状態を更新しています。
 
 - 全体の進捗を表示する`JProgressBar`
-- 個々のファイル処理(このサンプルでは`Thread.sleep(...)`するだけのダミー)の進捗を表示する`JProgressBar`
+- 個々のファイル処理(このサンプルではランダムに`Thread.sleep(...)`を実行するだけ)の進捗を表示する`JProgressBar`
 - ログを表示する`JTextArea`
 
 ----

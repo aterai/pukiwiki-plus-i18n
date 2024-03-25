@@ -1,0 +1,46 @@
+---
+category: swing
+folder: OptionPaneMessageTypeColor
+title: JOptionPaneのタイトルバー背景色をMessageTypeに応じて変更する
+tags: [JOptionPane, JDialog, MetalLookAndFeel]
+author: aterai
+pubdate: 2022-12-05T08:32:32+09:00
+description: JOptionPaneのタイトルバー背景色や縁色などをMessageTypeに対応した色に変更します。
+image: https://drive.google.com/uc?id=1AVd6cPRb_L98qWsiVXcNaQ8LYNvJB9T_
+---
+* 概要 [#summary]
+`JOptionPane`のタイトルバー背景色や縁色などを`MessageType`に対応した色に変更します。
+
+#download(https://drive.google.com/uc?id=1AVd6cPRb_L98qWsiVXcNaQ8LYNvJB9T_)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JDialog.setDefaultLookAndFeelDecorated(true);
+JOptionPane.showMessageDialog(parent, msg, title, JOptionPane.ERROR_MESSAGE);
+}}
+
+* 解説 [#explanation]
+- `JDialog.setDefaultLookAndFeelDecorated(true)`を実行して`MetalLookAndFeel`がウィンドウ装飾をサポートするよう設定
+-- `JFrame.setDefaultLookAndFeelDecorated(true)`は`JDialog`を使用する`JOptionPane`のウィンドウ装飾には影響しない
+-- [[JFrameがデフォルトのウィンドウ装飾を使用する場合のタイトルバー背景色を変更>Swing/WindowTitleBackground]]
+- `JOptionPane.PLAIN_MESSAGE`
+-- デフォルトのウィンドウ装飾を適用
+- `JOptionPane.ERROR_MESSAGE`
+-- エラーダイアログのウィンドウ装飾を適用
+-- エラーダイアログのタイトルバー背景色は`UIManager.put("OptionPane.errorDialog.titlePane.background", color)`で変更可能
+- `JOptionPane.INFORMATION_MESSAGE`
+-- 情報ダイアログのウィンドウ装飾はデフォルトと同一
+- `JOptionPane.WARNING_MESSAGE`
+-- 警告ダイアログのウィンドウ装飾を適用
+-- 警告ダイアログのタイトルバー背景色は`UIManager.put("OptionPane.warningDialog.titlePane.background", color)`で変更可能
+- `JOptionPane.QUESTION_MESSAGE`
+-- 質問ダイアログのウィンドウ装飾を適用
+-- 質問ダイアログのタイトルバー背景色は`UIManager.put("OptionPane.questionDialog.titlePane.background", color)`で変更可能
+
+* 参考リンク [#reference]
+- [[JFrameがデフォルトのウィンドウ装飾を使用する場合のタイトルバー背景色を変更>Swing/WindowTitleBackground]]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JDialog.html#setDefaultLookAndFeelDecorated-boolean- JDialog#setDefaultLookAndFeelDecorated(boolean) (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

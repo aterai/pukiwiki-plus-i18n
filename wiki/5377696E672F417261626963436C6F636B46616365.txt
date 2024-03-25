@@ -1,0 +1,49 @@
+---
+category: swing
+folder: ArabicClockFace
+title: AffineTransformを使用してアラビア数字を回転して時計盤に配置する
+tags: [AffineTransform, JPanel, Timer, Clock]
+author: aterai
+pubdate: 2022-10-03T00:30:06+09:00
+description: AffineTransformを使用して時計盤の上半分と下半分で異なる回転でアラビア数字を配置します。
+image: https://drive.google.com/uc?id=1KzFKziZV4Y0zs-b2nE4d8_Y92mdUGZAO
+---
+* 概要 [#summary]
+`AffineTransform`を使用して時計盤の上半分と下半分で異なる回転でアラビア数字を配置します。
+
+#download(https://drive.google.com/uc?id=1KzFKziZV4Y0zs-b2nE4d8_Y92mdUGZAO)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+for (String txt : arabicNumerals) {
+  double m00 = at.getScaleX();
+  double d = m00 > 0d || Math.abs(m00) < 0.0001 ? 1d : -1d;
+  AffineTransform si = AffineTransform.getScaleInstance(d, d);
+  Shape s = getTextLayout(txt, font, frc).getOutline(si);
+  Rectangle2D r = s.getBounds2D();
+  double tx = r.getCenterX();
+  double ty = radius - hourMarkerLen - r.getHeight() + r.getCenterY();
+  Shape t = AffineTransform.getTranslateInstance(-tx, -ty)
+      .createTransformedShape(s);
+  g2.fill(at.createTransformedShape(t));
+  at.rotate(Math.PI / 6d);
+}
+}}
+
+* 解説 [#explanation]
+- 時計盤の上半分(`9, 10, 11, 12, 1, 2, 3`)
+-- アラビア数字文字列から`Font`や`TextLayout`を使用して文字図形を取得
+-- 時計盤の中央から`12`時の位置まで文字図形を移動
+-- 時計盤の中央を原点にプラス`30°`回転を`AffineTransform`に追加して文字図形を回転
+- 時計盤の下半分(`4, 5, 6, 7, 8`)
+-- `3x3`アフィン変換行列の`X`座標スケーリング要素`m00`が負かつ`0`ではない場合時計盤の下半分と判断し、アラビア数字文字列から`Font`や`TextLayout`を使用して上下左右反転した文字図形を取得
+--- `0`かどうかは`m00`の絶対値が誤差`0.0001`以下かどうかで計算(`Math.abs(m00) < 0.0001`)
+-- 時計の中心から`12`時の位置まで文字図形を移動
+-- 時計の中心を原点にプラス`30°`回転を`AffineTransform`に追加して文字図形を回転
+
+* 参考リンク [#reference]
+- [[AffineTransformを使用してアナログ時計の文字盤に数字を配置する>Swing/ClockWithArabicOrRomanNumerals]]
+
+* コメント [#comment]
+#comment
+#comment

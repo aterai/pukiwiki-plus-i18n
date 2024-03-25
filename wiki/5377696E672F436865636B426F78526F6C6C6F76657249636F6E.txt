@@ -1,0 +1,98 @@
+---
+category: swing
+folder: CheckBoxRolloverIcon
+title: JCheckBoxのRolloverIconを変更する
+tags: [JCheckBox, Icon, UIManager, UIDefaults]
+author: aterai
+pubdate: 2023-08-07T00:47:37+09:00
+description: JCheckBoxがマウスオーバー状態になったときに表示されるRolloverIconを変更します。
+image: https://drive.google.com/uc?id=1q_EVtkUi9y7ZaFQtmAwu4HJD4zy-qWlz
+---
+* 概要 [#summary]
+`JCheckBox`がマウスオーバー状態になったときに表示される`RolloverIcon`を変更します。
+
+#download(https://drive.google.com/uc?id=1q_EVtkUi9y7ZaFQtmAwu4HJD4zy-qWlz)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+// UIManager
+class CheckBoxIcon implements Icon {
+  private final Icon checkIcon = UIManager.getIcon("CheckBox.icon");
+
+  @Override public void paintIcon(Component c, Graphics g, int x, int y) {
+    if (c instanceof AbstractButton) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.translate(x, y);
+      AbstractButton b = (AbstractButton) c;
+      ButtonModel model = b.getModel();
+      if (!model.isSelected() && model.isRollover()) {
+        checkIcon.paintIcon(c, g2, 0, 0);
+        g2.setComposite(AlphaComposite.getInstance(
+            AlphaComposite.SRC_OVER, .2f));
+        b.setSelected(true);
+        checkIcon.paintIcon(b, g2, 0, 0);
+        b.setSelected(false);
+      } else {
+        checkIcon.paintIcon(c, g2, 0, 0);
+      }
+      g2.dispose();
+    }
+  }
+
+  @Override public int getIconWidth() {
+    return checkIcon.getIconWidth();
+  }
+
+  @Override public int getIconHeight() {
+    return checkIcon.getIconHeight();
+  }
+}
+
+// UIDefaults
+JCheckBox check3 = new JCheckBox("CheckBox[MouseOver].iconPainter") {
+  @Override public void updateUI() {
+    super.updateUI();
+    UIDefaults d = UIManager.getLookAndFeelDefaults();
+    Painter<JCheckBox> painter0 = getIconPainter(d, "Focused+Selected");
+    Painter<JCheckBox> painter1 = getIconPainter(d, "MouseOver");
+    Painter<JCheckBox> painter2 = (g, object, width, height) -> {
+      painter1.paint(g, object, width, height);
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setPaint(Color.WHITE);
+      g2.setComposite(AlphaComposite.getInstance(
+          AlphaComposite.SRC_OVER, .2f));
+      object.setSelected(true);
+      painter0.paint(g2, object, width, height);
+      object.setSelected(false);
+      g2.dispose();
+    };
+    d.put("CheckBox[MouseOver].iconPainter", painter2);
+    d.put("CheckBox[Focused+MouseOver].iconPainter", painter2);
+    putClientProperty("Nimbus.Overrides", d);
+    putClientProperty("Nimbus.Overrides.InheritDefaults", true);
+  }
+};
+}}
+
+* 解説 [#explanation]
+- `JCheckBox.setRolloverIcon(...)`
+-- `JCheckBox#setRolloverIcon(...)`で`RolloverIcon`を変更
+-- `MetalLookAndFeel`や`WindowsLookAndFeel`では`JCheckBox#setIcon(...)`でデフォルトの`Icon`を変更しないと`JCheckBox#setRolloverIcon(...)`で設定した`RolloverIcon`は使用されない？
+-- `NimbusLookAndFeel`では`JCheckBox#setRolloverIcon(...)`単独で有効になる
+- `UIManager CheckBox.icon`
+-- `UIManager.getIcon("CheckBox.icon")`でチェックアイコンを取得してこれをラップするアイコンを`JCheckBox#setIcon(...)`で設定
+-- ラップしたアイコンの`Icon#paintIcon(...)`をオーバーライドし、`ButtonModel#isRollover()`の場合は透明化したチェックアイコンを上書きする
+-- `NimbusLookAndFeel`の`NimbusIcon`ではこの方法は使用できない
+- `UIDefaults CheckBox[MouseOver].iconPainter`
+-- `UIManager.getLookAndFeelDefaults()`で`UIDefaults`を取得して、`CheckBox[Focused+Selected].iconPainter`状態などで使用する`Painter`を取得
+-- 取得した`Painter`をラップする`Painter`を作成して`Painter#paint(...)`をオーバーライドし、透明化したチェックアイコンを上書きするよう設定
+-- `CheckBox[MouseOver].iconPainter`状態で使用する`Painter`をこのラップした`Painter`で置き換え
+-- `SynthLookAndFeel`系の`NimbusLookAndFeel`などでのみこの方法は有効
+
+* 参考リンク [#reference]
+- [[JCheckBoxのチェックアイコンを変更>Swing/CheckBoxColor]]
+- [[Nimbusの外観をUIDefaultsで変更する>Swing/UIDefaultsOverrides]]
+
+* コメント [#comment]
+#comment
+#comment

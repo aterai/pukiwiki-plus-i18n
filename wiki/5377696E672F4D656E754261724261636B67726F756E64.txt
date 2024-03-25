@@ -59,7 +59,9 @@ private JMenu createMenu(String key) {
   if ("Windows XP".equals(System.getProperty("os.name"))) {
     menu.setBackground(new Color(0x0, true)); // XXX: Windows XP lnf?
   }
-  menu.add("dummy1"); menu.add("dummy2"); menu.add("dummy3");
+  menu.add("JMenuItem1");
+  menu.add("JMenuItem2");
+  menu.add("JMenuItem3");
   return menu;
 }
 }}
@@ -102,29 +104,29 @@ public class MenuBarRootPaneTest {
 
   private static JMenu createMenu(String key) {
     JMenu menu = new TransparentMenu(key);
-    menu.add(new JMenuItem("dummy1"));
-    menu.add(new JMenuItem("dummy2"));
-    menu.add(new JMenuItem("dummy3"));
+    menu.add(new JMenuItem("JMenuItem1"));
+    menu.add(new JMenuItem("JMenuItem2"));
+    menu.add(new JMenuItem("JMenuItem3"));
     return menu;
   }
 
   public static void main(String... args) {
     EventQueue.invokeLater(() -> {
       UIManager.put("MenuBar.background", POPUP_BACK);
-      UIManager.put("MenuBar.border",     BorderFactory.createEmptyBorder());
-      UIManager.put("PopupMenu.border",   BorderFactory.createEmptyBorder());
+      UIManager.put("MenuBar.border", BorderFactory.createEmptyBorder());
+      UIManager.put("PopupMenu.border", BorderFactory.createEmptyBorder());
 
-      UIManager.put("Menu.foreground",              Color.WHITE);
-      UIManager.put("Menu.background",              ALPHA_ZERO);
-      UIManager.put("Menu.selectionBackground",     POPUP_BACK);
-      UIManager.put("Menu.selectionForeground",     Color.WHITE);
-      UIManager.put("Menu.borderPainted",           Boolean.FALSE);
+      UIManager.put("Menu.foreground", Color.WHITE);
+      UIManager.put("Menu.background", ALPHA_ZERO);
+      UIManager.put("Menu.selectionBackground", POPUP_BACK);
+      UIManager.put("Menu.selectionForeground", Color.WHITE);
+      UIManager.put("Menu.borderPainted", Boolean.FALSE);
 
-      UIManager.put("MenuItem.foreground",          Color.WHITE);
-      UIManager.put("MenuItem.background",          ALPHA_ZERO);
+      UIManager.put("MenuItem.foreground", Color.WHITE);
+      UIManager.put("MenuItem.background", ALPHA_ZERO);
       UIManager.put("MenuItem.selectionBackground", POPUP_BACK);
       UIManager.put("MenuItem.selectionForeground", Color.WHITE);
-      UIManager.put("MenuItem.borderPainted",       Boolean.FALSE);
+      UIManager.put("MenuItem.borderPainted", Boolean.FALSE);
 
       JFrame frame = new JFrame() {
         @Override protected JRootPane createRootPane() {
@@ -194,7 +196,7 @@ public class MenuBarRootPaneTest {
     }
 
     // Bug ID: JDK-4688783 JPopupMenu hardcoded i JMenu
-    // https://bugs.openjdk.java.net/browse/JDK-4688783
+    // https://bugs.openjdk.org/browse/JDK-4688783
     private void ensurePopupMenuCreated() {
       if (Objects.isNull(popupMenu)) {
         this.popupMenu = new TranslucentPopupMenu();

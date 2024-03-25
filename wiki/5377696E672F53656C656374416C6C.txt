@@ -15,7 +15,8 @@ image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSvQx8j-I/AAAAAAAAAjQ/iX
 
 * サンプルコード [#sourcecode]
 #code(link){{
-textfield.addFocusListener(new FocusAdapter() {
+JTextField field = new JTextField();
+field.addFocusListener(new FocusAdapter() {
   @Override public void focusGained(FocusEvent e) {
     ((JTextComponent) e.getComponent()).selectAll();
   }

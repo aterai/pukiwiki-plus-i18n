@@ -1,0 +1,59 @@
+---
+category: swing
+folder: TableScrollPaneBorder
+title: JTableが配置されたJScrollPaneのBorderを変更する
+tags: [JTable, Border, JScrollPane, UIManager, LookAndFeel]
+author: aterai
+pubdate: 2022-12-26T00:29:57+09:00
+description: JTableが配置されたJScrollPaneに適用されるBorderをまとめて変更します。
+image: https://drive.google.com/uc?id=1xoD1g3KbpKqnDrtB-PKy5XMrZzAjsynn
+---
+* 概要 [#summary]
+`JTable`が配置された`JScrollPane`に適用される`Border`をまとめて変更します。
+
+#download(https://drive.google.com/uc?id=1xoD1g3KbpKqnDrtB-PKy5XMrZzAjsynn)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JScrollPane scroll = new JScrollPane(table);
+// scroll.setBorder(new BorderUIResource(BorderFactory.createLineBorder(Color.BLUE)));
+String key = "Table.scrollPaneBorder";
+JCheckBox check = new JCheckBox(key, Objects.nonNull(UIManager.getBorder(key))) {
+  @Override public void updateUI() {
+    super.updateUI();
+    boolean b = Objects.nonNull(UIManager.getLookAndFeelDefaults().getBorder(key));
+    updateTableScrollPane(scroll, key, b);
+    setSelected(b);
+  }
+};
+check.addActionListener(e -> {
+  boolean b = ((JCheckBox) e.getSource()).isSelected();
+  updateTableScrollPane(scroll, key, b);
+});
+// ...
+public static void updateTableScrollPane(Component scroll, String key, boolean lnf) {
+  Border border;
+  if (lnf) {
+    border = UIManager.getLookAndFeelDefaults().getBorder(key);
+  } else {
+    border = new BorderUIResource(BorderFactory.createEmptyBorder());
+  }
+  UIManager.put(key, border);
+  SwingUtilities.updateComponentTreeUI(scroll);
+}
+}}
+
+* 解説 [#explanation]
+上記のサンプルでは`UIManager.put("Table.scrollPaneBorder", ...)`を使用して`JTable`が配置された`JScrollPane`に適用される`Border`を`LookAndFeel`固有の`Border`と空の`BorderFactory.createEmptyBorder()`で切り替えるテストを実行しています。
+
+- `UIManager.put("Table.scrollPaneBorder", ...)`で適用される`Border`は個別の`JScrollPane`の`JScrollPane#setBorder(...)`で変更可能な`Border`となる
+-- [[JTableの本体、ヘッダ、親JScrollPaneなどにBorderを設定する>Swing/TableBorder]]
+- `NimbusLookAndFeel`の`UIManager.getLookAndFeelDefaults().getBorder("Table.scrollPaneBorder")`で取得できる`Border`は`null`だが、`JScrollPane`の`Border`は別の`Painter`で描画される
+- `MotifLookAndFeel`の`UIManager.getLookAndFeelDefaults().getBorder("Table.scrollPaneBorder")`で取得できる`Border`は`null`で`JScrollPane`の`Border`は描画されない
+
+* 参考リンク [#reference]
+- [[JTableの本体、ヘッダ、親JScrollPaneなどにBorderを設定する>Swing/TableBorder]]
+
+* コメント [#comment]
+#comment
+#comment

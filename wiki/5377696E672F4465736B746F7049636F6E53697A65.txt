@@ -38,7 +38,7 @@ f.setDesktopIcon(new JInternalFrame.JDesktopIcon(f) {
 ----
 - デフォルト状態の`NimbusLookAndFeel`で`JDesktopIcon`の高さが`JInternalFrame`によって変化する？
 -- 起動時からの`JInternalFrame`: `height=33`、後でボタンから追加した`JInternalFrame`: `height=27`
--- [https://bugs.openjdk.java.net/browse/JDK-7126823 JDK-7126823 JInternalFrame.getNormalBounds() returns bad value after iconify/deiconify - Java Bug System]
+-- [https://bugs.openjdk.org/browse/JDK-7126823 JDK-7126823 JInternalFrame.getNormalBounds() returns bad value after iconify/deiconify - Java Bug System]
 - `DefaultDesktopManager#getBoundsForIconOf(...)`メソッドをオーバーライドしてサイズ変更
 #code{{
 desktop.setDesktopManager(new DefaultDesktopManager() {

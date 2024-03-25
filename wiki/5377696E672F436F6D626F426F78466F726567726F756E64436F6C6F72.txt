@@ -53,8 +53,8 @@ class ComboForegroundRenderer extends DefaultListCellRenderer {
 - 上: `Default`
 -- デフォルトのリストセルレンダラーを使用
 - 中: `setForeground`
--- `ListCellRenderer`で`JList`の選択時文字色(`JList#setSelectionForeground(...)`)、選択時背景色(`JList#setSelectionBackground(...)`)を変更
--- `XPStyle.getXP()!=null`な`WindowsLookAndFeel`や`MotifLookAndFeel`の場合フィールド部分の非選択時文字色は`JComboBox`の文字色(`getForeground()`)が使用されるため、セルレンダラーで`JComboBox#setForeground(Color)`を使用
+-- `ListCellRenderer`で`JList`の選択時文字色:`JList#setSelectionForeground(...)`、選択時背景色:`JList#setSelectionBackground(...)`を変更
+-- `XPStyle.getXP()!=null`な`WindowsLookAndFeel`や`MotifLookAndFeel`の場合フィールド部分の非選択時文字色は`JComboBox`の文字色:`getForeground()`が使用されるため、セルレンダラーで`JComboBox#setForeground(Color)`を使用
 - 下: `Html tag`
 -- 選択時背景色は上記の`setForeground`と同様に`JList#setSelectionBackground`を使用
 -- セルレンダラーで文字色を`Html`タグで変更

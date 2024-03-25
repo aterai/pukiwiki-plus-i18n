@@ -141,10 +141,12 @@ pubdate: 2003-09-25
 }}
 
 - `java`タスク
+-- `Exception in thread "AWT-EventQueue-0" java.lang.IllegalAccessError: superclass access check failed: class example.WindowsClippedTitleTabbedPaneUI (in unnamed module @0x396038de) cannot access class com.sun.java.swing.plaf.windows.WindowsTabbedPaneUI (in module java.desktop) because module java.desktop does not export com.sun.java.swing.plaf.windows to unnamed module @0x396038de`のようなエラーになる場合は`--add-opens=module/package=ALL-UNNAMED`などを`JVM`引数に追加
 -- `Exception in thread "AWT-EventQueue-0" java.lang.NoClassDefFoundError: javax/activation/ActivationDataFlavor`などのエラーがでる場合は、`--add-modules=java.activation`などを`JVM`引数に追加
 #code{{
 <target name="run" depends="compile">
   <java classname="${main.class}" classpathref="project.class.path" fork="true">
+    <jvmarg value="--add-opens=java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED" />
     <jvmarg value="--add-modules=java.activation" />
   </java>
 </target>

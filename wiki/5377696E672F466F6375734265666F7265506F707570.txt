@@ -59,7 +59,7 @@ class TextComponentPopupMenu extends JPopupMenu {
 ----
 - `JPopupMenu does not open???`
 -- 編集可能に設定した`JComboBox`の`JTextField`にマウスクリックでフォーカスを移動しても、他コンポーネントの`JPopupMenu`が開いたままになるバグ(仕様？)があるため、`JTextField#setComponentPopupMenu(...)`で追加した`JPopupMenu`を開くことができない
--- [https://bugs.openjdk.java.net/browse/JDK-8044493 JDK-8044493 Clicking on an editable JComboBox leaves JPopupMenus and other menus open - Java Bug System]
+-- [https://bugs.openjdk.org/browse/JDK-8044493 JDK-8044493 Clicking on an editable JComboBox leaves JPopupMenus and other menus open - Java Bug System]
 -- [https://explodingpixels.wordpress.com/2008/11/10/prevent-popup-menu-dismissal/ Prevent popup menu dismissal | Exploding Pixels]
 --- `textField.putClientProperty("doNotCancelPopup", null);`で回避可能だが、エディタをマウスでクリックすると`JComboBox`のドロップダウンリストも閉じるようになる
 #code{{
@@ -100,7 +100,7 @@ textField4.addMouseListener(new MouseAdapter() {
 - [[DefaultEditorKitでポップアップメニューからコピー>Swing/DefaultEditorKit]]
 - [[MenuSelectionManagerですべてのJPopupMenuを取得する>Swing/GetAllPopupMenus]]
 - [[JTextField内のテキストをすべて選択>Swing/SelectAll]]
-- [https://bugs.openjdk.java.net/browse/JDK-8044493 JDK-8044493 Clicking on an editable JComboBox leaves JPopupMenus and other menus open - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-8044493 JDK-8044493 Clicking on an editable JComboBox leaves JPopupMenus and other menus open - Java Bug System]
 
 * コメント [#comment]
 #comment

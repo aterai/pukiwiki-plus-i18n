@@ -19,9 +19,10 @@ UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32));
 }}
 
 * 解説 [#explanation]
-上記のサンプルでは、右の`JScrollPane`で、`JScrollBar`のつまみ(`Thumb`、`Knob`)が短くなりすぎないように、最小サイズ(`Horizontal`の場合は幅、`Vertical`の場合は高さ)を設定します。
-
-- 注: `LookAndFeel`によって、`UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32));`が有効かどうかは異なる
+- 左: デフォルト
+- 右: `JScrollBar`のつまみ(`Thumb`、`Knob`)に最小サイズを設定
+-- `Horizontal`の場合の最小サイズは幅、`Vertical`の場合は高さ
+- `LookAndFeel`によって`UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32));`が有効かどうかは異なる
 -- 有効: `BasicLookAndFeel`、`WindowsLookAndFeel`、`NimbusLookAndFeel`(`Java 8`以上？)
 -- 無効: `MetalLookAndFeel`、%%`NimbusLookAndFeel`%%
 --- 以下のように縦スクロールバーならその幅が最小サイズになるよう上書きされているため`ScrollBar.minimumThumbSize`を設定しても効果がない
@@ -38,7 +39,7 @@ protected Dimension getMinimumThumbSize() {
 ----
 - `JDK 1.8.0_20`で修正されて、この記事のスクリーンショットのようにノブのサイズが小さくなり過ぎることはなくなった
 -- `WindowsScrollBarUI`(`XPStyle`)が修正された
--- [https://bugs.openjdk.java.net/browse/JDK-8039464 JDK-8039464 The scrollbar in JScrollPane has no right border if used WindowsLookAndFeel]
+-- [https://bugs.openjdk.org/browse/JDK-8039464 JDK-8039464 The scrollbar in JScrollPane has no right border if used WindowsLookAndFeel]
 -- `Windows 10`は`XPStyle`ではない？ので`UIManager.put("ScrollBar.minimumThumbSize", ...)`は効果がない
 
 ----
@@ -55,6 +56,9 @@ protected Dimension getMinimumThumbSize() {
 -- `slider.setPaintTicks(true)`とした場合は、正常なサイズで描画される
 - [[JSliderのつまみの形状を変更>Swing/ThumbArrowShape]]
 -- トラックを表示したくない場合は、`slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);`で、つまみの形だけ変更
+
+----
+- `Windows 11`環境では`UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32))`を設定しても無効？
 
 * 参考リンク [#reference]
 - [https://stackoverflow.com/questions/2754306/java-swing-rendering-bug-on-windows-7-look-and-feel Java Swing rendering bug on Windows 7 look-and-feel? - Stack Overflow]

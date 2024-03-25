@@ -118,11 +118,14 @@ import javax.swing.tree.TreeCellRenderer;
 
 public final class TreeComboBoxTest {
   private Component makeUI() {
-    DefaultMutableTreeNode root = (DefaultMutableTreeNode) new JTree().getModel().getRoot();
     JPanel p = new JPanel(new BorderLayout());
-    p.add(new TreeComboBox(root), BorderLayout.NORTH);
+    p.add(new TreeComboBox(makeRoot()), BorderLayout.NORTH);
     p.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     return p;
+  }
+
+  private static DefaultMutableTreeNode makeRoot() {
+    return (DefaultMutableTreeNode) new JTree().getModel().getRoot();
   }
 
   public static void main(String[] args) {
@@ -157,11 +160,12 @@ class TreeComboBox extends JComboBox<DefaultMutableTreeNode> {
   @Override
   public void updateUI() {
     super.updateUI();
-    JTree dummyTree = new JTree();
-    TreeCellRenderer renderer = dummyTree.getCellRenderer();
+    JTree sampleTree = new JTree();
+    TreeCellRenderer renderer = sampleTree.getCellRenderer();
     ListCellRenderer<? super DefaultMutableTreeNode> r = getRenderer();
     setRenderer((list, value, index, isSelected, cellHasFocus) -> {
-      Component c = r.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+      Component c = r.getListCellRendererComponent(
+          list, value, index, isSelected, cellHasFocus);
       if (value == null) {
         return c;
       }
@@ -177,7 +181,7 @@ class TreeComboBox extends JComboBox<DefaultMutableTreeNode> {
       } else {
         boolean leaf = value.isLeaf();
         JLabel l = (JLabel) renderer.getTreeCellRendererComponent(
-            dummyTree, value, isSelected, true, leaf, index, false);
+            sampleTree, value, isSelected, true, leaf, index, false);
         int childIndent = UIManager.getInt("Tree.leftChildIndent") +
                           UIManager.getInt("Tree.rightChildIndent");
         int indent = Math.max(0, value.getLevel() - 1) * childIndent;

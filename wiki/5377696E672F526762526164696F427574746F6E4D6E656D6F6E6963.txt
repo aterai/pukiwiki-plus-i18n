@@ -1,0 +1,75 @@
+---
+category: swing
+folder: RgbRadioButtonMnemonic
+title: JColorChooserのRGB色選択JRadioButtonにMnemonicを設定する
+tags: [JColorChooser, JRadioButton, UIManager]
+author: aterai
+pubdate: 2023-11-27T03:52:23+09:00
+description: JColorChooserのRGB色選択パネル内に配置されたRGB選択用JRadioButtonのテキストに表示されたMnemonicを有効化します。
+image: https://drive.google.com/uc?id=1PCMoVMxkXTzrdR85EBmOo36H_oe08ryp
+---
+* 概要 [#summary]
+`JColorChooser`の`RGB`色選択パネル内に配置された`RGB`選択用`JRadioButton`のテキストに表示された`Mnemonic`を有効化します。
+
+#download(https://drive.google.com/uc?id=1PCMoVMxkXTzrdR85EBmOo36H_oe08ryp)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JColorChooser cc = new JColorChooser();
+cc.setColor(label.getBackground());
+AbstractColorChooserPanel rgbChooser = getRgbChooser(cc);
+if (rgbChooser != null) {
+  AbstractColorChooserPanel[] panels = cc.getChooserPanels();
+  List<AbstractColorChooserPanel> choosers = new ArrayList<>(Arrays.asList(panels));
+  List<String> rgbKey = Arrays.asList("rgbRed", "rgbGreen", "rgbBlue");
+  String fmt = "ColorChooser.%sText";
+  List<String> rgbList = Arrays.asList(
+      UIManager.getString(String.format(fmt, rgbKey.get(0)), rgbChooser.getLocale()),
+      UIManager.getString(String.format(fmt, rgbKey.get(1)), rgbChooser.getLocale()),
+      UIManager.getString(String.format(fmt, rgbKey.get(2)), rgbChooser.getLocale()));
+  SwingUtils.descendants(rgbChooser)
+      .filter(JRadioButton.class::isInstance)
+      .map(JRadioButton.class::cast)
+      .forEach(r -> {
+        String txt = r.getText();
+        int idx = rgbList.indexOf(txt);
+        if (idx >= 0) {
+          String key = String.format("ColorChooser.%sMnemonic", rgbKey.get(idx));
+          int mnemonic = getInteger(rgbChooser, key);
+          if (mnemonic > 0) {
+            r.setMnemonic(Character.toChars(mnemonic)[0]);
+            mnemonic = getInteger(this, key + "Index");
+            if (mnemonic >= 0) {
+              r.setDisplayedMnemonicIndex(mnemonic);
+            }
+          }
+        }
+      });
+  cc.setChooserPanels(choosers.toArray(new AbstractColorChooserPanel[0]));
+}
+}}
+
+* 解説 [#explanation]
+- `Default`
+-- `MetalLookAndFeel`などで使用可能な`RGB`色選択パネルの`RGB`選択用`JRadioButton`テキストにはそれぞれ`赤(D)`、`緑(N)`、`青(B)`と`Mnemonic`が表示されているが、KBD{Alt+B}などをキー入力しても効果がない
+-- [https://bugs.openjdk.org/browse/JDK-4917411 &#91;JDK-4917411&#93; RGB dialog of JColorChooser missing mnemonics for Red and Blue colors in French - Java Bug System]のようなバグレポートが存在するので少なくとも`Java 1.4`ではこれらの`Mnemonic`が有効だったようだが、いつから無効になったのかは不明
+-- `HSV`色選択パネルの色相・彩度・値選択用`JRadioButton`や`CMYK`色選択パネルのシアン・マゼンタ・黄選択用`JRadioButton`のように`Mnemonic`なしに揃える場合は、以下のように赤・緑・青選択用`JRadioButton`のテキストを変更する必要がある
+#code{{
+UIManager.put("ColorChooser.rgbRedText", "Red");
+UIManager.put("ColorChooser.rgbGreenText", "Green");
+UIManager.put("ColorChooser.rgbBlueText", "Blue");
+}}
+
+- `Mnemonic`
+-- `RGB`色選択パネルの子孫コンポーネントを検索して`JRadioButton`を取得
+-- 取得した`JRadioButton`のタイトルが、たとえば`UIManager.get("ColorChooser.rgbRedText")`と一致する場合は`UIManager.get("ColorChooser.rgbRedMnemonic")`で`Mnemonic`を取得して設定
+--- 赤選択用`JRadioButton`のテキストと`Mnemonic`は`java.desktop/com/sun/swing/internal/plaf/basic/resources/basic.java`で`{ "ColorChooser.rgbRed.textAndMnemonic", "Re&d" },`のような形式でまとめて定義されている
+
+* 参考リンク [#reference]
+- [[JColorChooserのRGB色選択パネル内に表示される16進数カラーコードにAlpha値を追加する>Swing/ColorChooserRgbaHexCode]]
+-- `RGB`色選択パネルの取得方法は上記と同様
+- [https://bugs.openjdk.org/browse/JDK-4917411 &#91;JDK-4917411&#93; RGB dialog of JColorChooser missing mnemonics for Red and Blue colors in French - Java Bug System]
+
+* コメント [#comment]
+#comment
+#comment

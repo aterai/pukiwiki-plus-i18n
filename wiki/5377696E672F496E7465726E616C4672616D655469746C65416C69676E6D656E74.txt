@@ -23,6 +23,7 @@ def.put("InternalFrame:InternalFrameTitlePane.titleAlignment", "LEADING");
 * 解説 [#explanation]
 上記のサンプルでは、`UIDefaults`の`InternalFrame:InternalFrameTitlePane.titleAlignment`キーの値を変更することで`NimbusLookAndFeel`を使用する`JInternalFrame`のタイトルを変更しています。
 
+- デフォルトは`CENTER`
 - `TRAILING`で右寄せになる
 - `SynthLookAndFeel`系でのみ有効
 - `JInternalFrame#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`を設定すると、各ボタンと合わせてタイトルの字揃えも逆転する
@@ -42,6 +43,7 @@ titleBar.putClientProperty("Nimbus.Overrides", d);
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicInternalFrameUI.html#getNorthPane-- BasicInternalFrameUI#getNorthPane() (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With Swing > Modifying the Look and Feel)]
 
 * コメント [#comment]
 #comment

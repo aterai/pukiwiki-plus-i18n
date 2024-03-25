@@ -1,0 +1,85 @@
+---
+category: swing
+folder: WholeRowSelectableTree
+title: JTreeのノード選択可能な領域を行全体に拡張する
+tags: [JTree, MouseListener]
+author: aterai
+pubdate: 2022-10-17T02:52:38+09:00
+description: JTreeのノードでマウスクリックによる選択可能な領域を行全体に拡張します。
+image: https://drive.google.com/uc?id=1DaPvGijSvyOGkYymKeApaNsaZKvo9ycw
+---
+* 概要 [#summary]
+`JTree`のノードでマウスクリックによる選択可能な領域を行全体に拡張します。
+
+#download(https://drive.google.com/uc?id=1DaPvGijSvyOGkYymKeApaNsaZKvo9ycw)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class WholeRowSelectableTreeUI extends BasicTreeUI {
+  @Override public void paint(Graphics g, JComponent c) {
+    // @see javax/swing/plaf/synth/SynthTreeUI#paint(SynthContext, Graphics)
+  }
+
+  @Override protected void paintRow(...) {
+    // @see javax/swing/plaf/basic/BasicTreeUI#paintRow(...)
+  }
+
+  @Override protected MouseListener createMouseListener() {
+    return new MouseHandler() {
+      @Override public void mousePressed(MouseEvent e) {
+        super.mousePressed(convertMouseEvent(e));
+      }
+
+      @Override public void mouseReleased(MouseEvent e) {
+        super.mouseReleased(convertMouseEvent(e));
+      }
+
+      @Override public void mouseDragged(MouseEvent e) {
+        super.mouseDragged(convertMouseEvent(e));
+      }
+
+      private MouseEvent convertMouseEvent(MouseEvent e) {
+        if (!tree.isEnabled()
+            || !SwingUtilities.isLeftMouseButton(e)
+            || e.isConsumed()) {
+          return e;
+        }
+
+        int x = e.getX();
+        int y = e.getY();
+        TreePath path = getClosestPathForLocation(tree, x, y);
+        if (path == null || isLocationInExpandControl(path, x, y)) {
+          return e;
+        }
+
+        Rectangle bounds = getPathBounds(tree, path);
+        int newX = (int) bounds.getCenterX();
+        bounds.x = 0;
+        bounds.width = tree.getWidth();
+        if (bounds.contains(e.getPoint())) {
+          return new MouseEvent(
+              e.getComponent(), e.getID(),
+              e.getWhen(), e.getModifiersEx(), newX, e.getY(),
+              e.getClickCount(), e.isPopupTrigger(), e.getButton());
+        } else {
+          return e;
+        }
+      }
+    };
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `BasicTreeUI#createMouseListener()`をオーバーライドして行全体がクリック可能になるようノード領域外で発生したマウスイベントの`x`座標をノード領域の中央に変換
+- `BasicTreeUI#paintRow(...)`をオーバーライドして行全体の選択背景色での描画とノードにフォーカスが存在する場合の`Border`の描画を追加
+- `NimbusLookAndFeel`のように行全体の選択背景色での描画の後でノード接続線などを描画するよう`BasicTreeUI#paint(...)`の中身を`SynthTreeUI#paint(...)`と入れ替え
+
+* 参考リンク [#reference]
+- [[JTreeを行クリックで選択し、行全体を選択状態の背景色で描画>Swing/TreeRowSelection]]
+-- 同様に行クリックでの選択と行全体の描画が可能だがノードの左側余白のクリックには未対応
+- [https://github.com/JFormDesigner/FlatLaf/blob/main/flatlaf-core/src/main/java/com/formdev/flatlaf/ui/FlatTreeUI.java FlatLaf/FlatTreeUI.java at main · JFormDesigner/FlatLaf]
+
+* コメント [#comment]
+#comment
+#comment

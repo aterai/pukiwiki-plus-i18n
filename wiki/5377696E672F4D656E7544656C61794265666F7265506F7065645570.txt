@@ -1,0 +1,53 @@
+---
+category: swing
+folder: MenuDelayBeforePopedUp
+title: JMenuからJPopupMenuが表示されるまでの遅延時間を設定する
+tags: [JMenu, JPopupMenu]
+author: aterai
+pubdate: 2023-07-31T01:52:11+09:00
+description: JMenuがサブメニューの場合、JPopupMenuが表示されるまでの遅延時間を設定します。
+image: https://drive.google.com/uc?id=1M5LdPYH6ASqoI0ZrMN3X_RMQDKwy8_lB
+---
+* 概要 [#summary]
+`JMenu`がサブメニューの場合、`JPopupMenu`が表示されるまでの遅延時間を設定します。
+
+#download(https://drive.google.com/uc?id=1M5LdPYH6ASqoI0ZrMN3X_RMQDKwy8_lB)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JPopupMenu popup = new JPopupMenu();
+JMenu sub0 = new JMenu("JMenu(Default)");
+sub0.add("JMenuItem:0");
+sub0.add("JMenuItem:1");
+popup.add(sub0);
+
+JMenu sub1 = new JMenu("JMenu(0..2000)");
+sub1.setDelay(2000);
+sub1.add("JMenuItem:2");
+sub1.add("JMenuItem:3");
+popup.add(sub1);
+
+SpinnerNumberModel model = new SpinnerNumberModel(2000, 0, 2000, 100);
+JSpinner spinner = new JSpinner(model);
+model.addChangeListener(e -> sub1.setDelay(model.getNumber().intValue()));
+setComponentPopupMenu(popup);
+}}
+
+* 解説 [#explanation]
+- `JMenu#setDelay(...)`メソッドで`JMenu`にその`JPopupMenu`が表示されるまでの遅延時間をミリ秒単位で設定可能
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JMenu.html#getDelay-- JMenu#getDelay() (Java Platform SE 8)]
+-- ドキュメントには「`delay`のデフォルトは`0`です。」と記述されているが、実際は`BasicMenuUI#installDefaults()`で`200`ミリ秒が直接設定されている
+--- `UIManager`などを使用せずに直接設定されているため`LookAndFeel`を変更すると`JMenu#setDelay(...)`で設定した値がすべて`200`ミリ秒に初期化されてしまう
+--- `NimbusLookAndFeel`は`SynthStyle#getInt(SynthContext, "Menu.delay", 200)`などで任意の値で初期化可能
+-- ドキュメントには「サブメニューを表示または非表示にするまでの、推奨される遅延時間をミリ秒単位で返します。」と記述されているが、「非表示」化にこの遅延時間を使用する`LookAndFeel`は存在しない？
+-- `JMenu`が`JMenuBar`に直接の子として配置されたトップレベル・メニューの場合(`JMenu#isTopLevelMenu()==true`)や、ドラッグ中はこの設定は無視される
+--- 「ドラッグ中は無視」: たとえば`JMenu(0)`をクリックしてその`JPopupMenu`を表示状態とし、クリックしたままマウスドラッグで直下の`JMenu(2000)`にカーソルが入る場合、この`2000`ミリ秒の遅延時間は無視されて`JMenu(2000)`の`JPopupMenu`に直ちに切り替わる
+// -- ドキュメントには「このメソッドはルック・アンド・フィールコードのプロパティであり、様々なUI実装の特質を管理するために使用されます。」と記述されているが、意味がよく分からない
+
+* 参考リンク [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JMenu.html#getDelay-- JMenu#getDelay() (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JMenu.html#getDelay-- JMenu#setDelay(int) (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

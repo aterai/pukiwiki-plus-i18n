@@ -39,9 +39,12 @@ class ButtonsRenderer extends ButtonsPanel
     setName("Table.cellRenderer");
   }
 
-  @Override public Component getTableCellRendererComponent(JTable table,
-        Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    setBackground(isSelected?table.getSelectionBackground():table.getBackground());
+  @Override public Component getTableCellRendererComponent(
+      JTable table, Object value, boolean isSelected,
+      boolean hasFocus, int row, int column) {
+    Color bgc = isSelected ? table.getSelectionBackground()
+                           : table.getBackground()
+    setBackground(bgc);
     return this;
   }
 }
@@ -51,8 +54,9 @@ class ButtonsEditor extends ButtonsPanel
   public ButtonsEditor(final JTable table) {
     super();
     // ---->
-    // DEBUG: view button click -> control key down + edit button(same cell) press
-    //       -> remain selection color
+    // DEBUG: view button click
+    //   -> control key down + edit button(same cell) press
+    //   -> remain selection color
     MouseListener ml = new MouseAdapter() {
       @Override public void mousePressed(MouseEvent e) {
         ButtonModel m = ((JButton) e.getSource()).getModel();
@@ -146,6 +150,9 @@ static void updateRendererOrEditorUI(Object rendererOrEditor) {
 - [https://tips4java.wordpress.com/2009/07/12/table-button-column/ Table Button Column « Java Tips Weblog]
 - [[JTableのセル中にJRadioButtonを配置>Swing/RadioButtonsInTableCell]]
 - [[JTableのCellにJCheckBoxを複数配置する>Swing/CheckBoxesInTableCell]]
+- [https://bugs.openjdk.org/browse/JDK-8138667 &#91;JDK-8138667&#93; java.lang.IllegalAccessError: tried to access method (for a protected method) - Java Bug System]
+-- `Java 8`で`EventQueue.invokeLater( () -> fireEditingStopped() );`ではなく`EventQueue.invokeLater(ButtonsEditor.this::fireEditingStopped);`のようなコードを実行すると`IllegalAccessError`になる場合がある
+-- `Java 9`で修正済
 
 * コメント [#comment]
 #comment

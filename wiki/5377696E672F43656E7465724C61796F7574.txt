@@ -15,6 +15,7 @@ image: https://drive.google.com/uc?id=1Ehb-rycwWuewQ2Ti2QkNeidSiGXqL0hj
 
 * サンプルコード [#sourcecode]
 #code(link){{
+// @see javax.swing.colorchooser.CenterLayout
 class CenterLayout implements LayoutManager {
   @Override public void addLayoutComponent(String name, Component comp) {
     /* not needed */
@@ -41,11 +42,13 @@ class CenterLayout implements LayoutManager {
   @Override public void layoutContainer(Container container) {
     Component c = container.getComponent(0);
     c.setSize(c.getPreferredSize());
-    Dimension size = c.getSize();
-    Rectangle r = SwingUtilities.calculateInnerArea((JComponent) container, null);
-    int x = r.x + (r.width - size.width) / 2;
-    int y = r.y + (r.height - size.height) / 2;
-    c.setBounds(x, y, size.width, size.height);
+    if (container instanceof JComponent) {
+      Dimension size = c.getSize();
+      Rectangle r = SwingUtilities.calculateInnerArea((JComponent) container, null);
+      int x = r.x + (r.width - size.width) / 2;
+      int y = r.y + (r.height - size.height) / 2;
+      c.setBounds(x, y, size.width, size.height);
+    }
   }
 }
 }}
@@ -56,10 +59,10 @@ class CenterLayout implements LayoutManager {
 -- 複数コンポーネントを追加すると列方向にセルが追加されて各コンポーネントがそこに配置される
 -- [[JTableが空の場合、中央にJComponentを表示する>Swing/PlaceholderForEmptyTable]]
 - `CenterLayout`
--- `JFileChooser`で使用されている`javax.swing.colorchooser.CenterLayout`を参考にして、常に中央に子コンポーネントを配置する`LayoutManager`を作成
+-- `JFileChooser`で使用されている`javax.swing.colorchooser.CenterLayout`クラスを参考にして、常に中央に子コンポーネントを配置する`LayoutManager`を作成
 --- `javax.swing.colorchooser.CenterLayout`はパッケージプライベートなのでそのままでは使用しづらい
--- `Border`の内余白を除く領域(`SwingUtilities.calculateInnerArea(...)`で取得)の中央に子コンポーネントを配置する
--- `CenterLayout`を設定した親コンテナから`getComponent(0)`で取得した子コンポーネントのみレイアウトするので、これ以降追加したコンポーネントはレイアウト(表示)されない
+-- `Border`の内余白を除く領域(`SwingUtilities.calculateInnerArea(...)`メソッドで取得)の中央に子コンポーネントを配置する
+-- `CenterLayout`を設定した親コンテナから`getComponent(0)`メソッドで取得した子コンポーネントのみレイアウトするので、これ以降追加したコンポーネントはレイアウト(表示)されない
 
 * 参考リンク [#reference]
 - [[JTableが空の場合、中央にJComponentを表示する>Swing/PlaceholderForEmptyTable]]

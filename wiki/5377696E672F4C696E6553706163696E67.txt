@@ -45,7 +45,7 @@ class BottomInsetEditorKit extends StyledEditorKit {
 }}
 
 * 解説 [#explanation]
-- 上: `StyleConstants.setLineSpacing`で、行間を指定した`AttributeSet`を作成し、`JTextPane#setParagraphAttributes`で設定
+- 上: `StyleConstants.setLineSpacing`で行間を指定した`AttributeSet`を作成し、`JTextPane#setParagraphAttributes`で設定
 -- フォントサイズ相対の行間になる
 
 #code{{
@@ -56,15 +56,15 @@ StyleConstants.setLineSpacing(a, .5f);
 // StyleConstants.setLeftIndent(a, 5f);
 // StyleConstants.setRightIndent(a, 5f);
 editor1.setParagraphAttributes(a, true);
-setDummyText(editor1);
+setSampleText(editor1);
 }}
 
-- 下: `ParagraphView#getBottomInset`をオーバーライドして、固定の行間をピクセルで指定
--- フォントサイズに関係なく、アキ`5px`
+- 下: `ParagraphView#getBottomInset`をオーバーライドして固定の行間をピクセルで指定
+-- フォントサイズに関係なくアキ`5px`
 
 ----
 - スタイルシートで`line-height`を指定しても反映されない
--- `line-height`は、モデル化されているが、現在は描画されない
+-- `line-height`はモデル化されているが、現在は描画されない
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/CSS.html 対応しているCSSプロパティ一覧 - CSS (Java Platform SE 8)]
 - ブロックレベルで`1`行だけ固定の行間を指定したい場合は`margin-bottom`が使用可能
 #code{{

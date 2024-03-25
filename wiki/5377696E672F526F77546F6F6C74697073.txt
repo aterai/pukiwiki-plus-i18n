@@ -32,9 +32,7 @@ JTable table = new JTable(model) {
 - 第`1`列、第`2`列を`html`タグを使ってそれぞれ`ToolTipText`として設定
 
 ----
-以下のように`setToolTipText(...)`メソッドを使用して、各行に`ToolTipText`を設定する方法もあります。
-
-- `JTable#prepareRenderer(...)`メソッド内で`setToolTipText(...)`を使用する
+- 以下のように`JTable#prepareRenderer(...)`をオーバーライドしてその内部で`setToolTipText(...)`メソッドを使用し、各行に`ToolTipText`を設定する方法もある
 #code{{
 JTable table = new JTable() {
   @Override public Component prepareRenderer(

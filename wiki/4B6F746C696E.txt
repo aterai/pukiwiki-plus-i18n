@@ -2475,7 +2475,7 @@ class TreePopupMenu : JPopupMenu() {
         }
       }
     }
-    add("dummy")
+    add("JMenuItem")
   }
 }
 
@@ -2748,6 +2748,39 @@ val text = Collections.nCopies(2000, "aaaaaaaaaaaaa").joinToString("\n")
 #twocolumn
 #code(lang-kotlin){{
 val text = "aaaaaaaaaaaaa\n".repeat(2000)
+}}
+#twocolumn
+
+** joinToString(...) [#join]
+#twocolumn
+#code(lang-java){{
+String msg = jlist.getSelectedValuesList().stream()
+    .map(it -> it.title)
+    .collect(Collectors.joining(", "));
+}}
+#twocolumn
+#code(lang-kotlin){{
+val msg = jlist.selectedValuesList
+    .map { it.title }
+    .joinToString(", ")
+}}
+#twocolumn
+
+** maxOf(...) [#maxOf]
+#twocolumn
+#code(lang-java){{
+// private List<AlignedLabel> group;
+int max = group.stream()
+    .map(AlignedLabel::getSuperPreferredWidth)
+    .reduce(0, Integer::max);
+}}
+#twocolumn
+#code(lang-kotlin){{
+// private var group = mutableListOf<AlignedLabel>()
+// val max = group.map { it.getSuperPreferredWidth() }.fold(0, ::maxOf)
+// val max = group.map { it.getSuperPreferredWidth() }.maxOrNull() ?: 0
+// group.isNotEmpty()
+val max = group.maxOf(AlignedLabel::getSuperPreferredWidth)
 }}
 #twocolumn
 

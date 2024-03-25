@@ -70,10 +70,10 @@ slider.putClientProperty("Nimbus.Overrides", d);
 
 * 解説 [#explanation]
 - `Default`
--- %%`UIManager.put("JSlider.isFilled", Boolean.TRUE)`%% `slider.putClientProperty("JSlider.isFilled", Boolean.TRUE)`を設定しても`MetalLookAndFeel`以外では効果がない
+-- `slider.putClientProperty("JSlider.isFilled", Boolean.TRUE)`を設定しても`MetalLookAndFeel`以外では効果がない
 - `Nimbus JSlider.isFilled`
 -- `UIDefaults#put("Slider:SliderTrack[Enabled].backgroundPainter", painter)`メソッドでトラックの背景を描画する`Painter`を変更し範囲の塗りつぶしを行う
--- このサンプルでは、垂直スライダー(`slider.getOrientation() == SwingConstants.VERTICAL`)や`slider#setInverted(true)`を設定して表示される値の範囲が通常とは逆のスライダーには未対応
+-- このサンプルでは、`slider.setOrientation(SwingConstants.VERTICAL)`で作成した垂直スライダーや`slider#setInverted(true)`を設定して表示される値の範囲が通常とは逆のスライダーには未対応
 
 * 参考リンク [#reference]
 - [[MetalLookAndFeelを適用したJSliderで現在値までのトラック背景色を変更する>Swing/SliderAltTrackColor]]

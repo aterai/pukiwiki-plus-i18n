@@ -31,7 +31,7 @@ JButton button = new JButton(icon9) {
 上記のサンプルでは、`Image#flush()`メソッドを使用して`Image`オブジェクトのリソースを解放することで`Animated GIF`画像のアニメーションを初期状態までリセットしています。
 
 - 左: `JButton`
--- `JButton#setRolloverIcon(...)`で`Animated GIF`を設定しマウスによるロールオーバーが発生すると`Image#flush()`が実行されカウントダウンアニメーションが最初からリスタート
+-- `JButton#setRolloverIcon(...)`で`Animated GIF`を設定しマウスによるロールオーバーが発生すると`Image#flush()`が実行されカウントダウン・アニメーションが最初からリスタート
 -- `JButton#setIcon(...)`には先頭画像のアイコン、`JButton#setPressedIcon(...)`には空アイコンを設定
 - 右: `JLabel`
 -- マウスリスナーを追加しクリックで`Image#flush()`が呼ばれてアニメーションが再開

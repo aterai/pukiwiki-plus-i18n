@@ -1,0 +1,84 @@
+---
+category: swing
+folder: ScrollToFirstOrLastTabAction
+title: JTabbedPaneの矢印ボタンに先頭もしくは末尾のタブまでスクロールするアクションを設定する
+tags: [JTabbedPane, JScrollPane, ActionMap]
+author: aterai
+pubdate: 2022-06-06T00:51:31+09:00
+description: JTabbedPaneのスクロールタブレイアウトで矢印ボタンにCtrlキーを押しながらクリックすると先頭もしくは末尾のタブまでスクロールするアクションを追加します。
+image: https://drive.google.com/uc?id=1eNSI9wDlm4F4yA6Xm0Df6YOcHqmTYlHS
+---
+* 概要 [#summary]
+`JTabbedPane`のスクロールタブレイアウトで矢印ボタンにKBD{Ctrl}キーを押しながらクリックすると先頭もしくは末尾のタブまでスクロールするアクションを追加します。
+
+#download(https://drive.google.com/uc?id=1eNSI9wDlm4F4yA6Xm0Df6YOcHqmTYlHS)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class ScrollTabsAction extends AbstractAction {
+  private final JTabbedPane tabbedPane;
+  private final Action action;
+  private final int index;
+
+  protected ScrollTabsAction(JTabbedPane tabbedPane, Action action) {
+    super();
+    this.tabbedPane = tabbedPane;
+    this.action = action;
+    Object name = action.getValue(Action.NAME);
+    String forward = "scrollTabsForwardAction";
+    this.index = Objects.equals(name, forward) ? tabbedPane.getTabCount() - 1 : 0;
+  }
+
+  @Override public void actionPerformed(ActionEvent e) {
+    if (action != null && action.isEnabled()) {
+      boolean isCtrlDown = (e.getModifiers() & ActionEvent.CTRL_MASK) != 0;
+      if (isCtrlDown) {
+        scrollTabAt(tabbedPane, index);
+      } else {
+        action.actionPerformed(new ActionEvent(tabbedPane,
+            ActionEvent.ACTION_PERFORMED, null,
+            e.getWhen(), e.getModifiers()));
+      }
+    }
+  }
+
+  public static void scrollTabAt(JTabbedPane tabbedPane, int index) {
+    Component cmp = null;
+    for (Component c : tabbedPane.getComponents()) {
+      if ("TabbedPane.scrollableViewport".equals(c.getName())) {
+        cmp = c;
+        break;
+      }
+    }
+    if (cmp instanceof JViewport) {
+      JViewport viewport = (JViewport) cmp;
+      Dimension d = tabbedPane.getSize();
+      Rectangle r = tabbedPane.getBoundsAt(index);
+      int gw = (d.width - r.width) / 2;
+      r.grow(gw, 0);
+      viewport.scrollRectToVisible(r);
+    }
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `scrollTabsForwardAction`
+-- `JTabbedPane.getActionMap().get("scrollTabsForwardAction")`でアクションを取得
+-- `AbstractAction#actionPerformed(...)`をオーバーライドしてKBD{Ctrl}キーが押されている`(ActionEvent#getModifiers() & ActionEvent.CTRL_MASK) != 0`場合は、末尾タブ`tabbedPane.getTabCount() - 1`までスクロール、それ以外は先に取得した`scrollTabsForwardAction`を実行するよう設定
+-- `JTabbedPane.getActionMap().put("scrollTabsForwardAction", action)`でアクションを置換
+- `scrollTabsBackwardAction`
+-- `JTabbedPane.getActionMap().get("scrollTabsBackwardAction")`でアクションを取得
+-- `AbstractAction#actionPerformed(...)`をオーバーライドしてKBD{Ctrl}キーが押されている`(ActionEvent#getModifiers() & ActionEvent.CTRL_MASK) != 0`場合は、先頭タブ`0`までスクロール、それ以外は先に取得した`scrollTabsBackwardAction`を実行するよう設定
+-- `JTabbedPane.getActionMap().put("scrollTabsBackwardAction", action)`でアクションを置換
+
+----
+- `scrollTabsForwardAction`、`scrollTabsBackwardAction`はスクロールするだけなので、このサンプルで置換したアクションでも先頭末尾へのスクロールのみ実行してタブの選択状態は変化しない
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのTabAreaをスクロール>Swing/ScrollTabToVisible]]
+- [[JTabbedPaneのタブスクロールボタンで連続スクロールを実行する>Swing/ScrollTabsActionRepeater]]
+
+* コメント [#comment]
+#comment
+#comment

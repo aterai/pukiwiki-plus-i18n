@@ -1,0 +1,103 @@
+---
+category: swing
+folder: TitledBorderBackground
+title: TitledBorderの背景色を設定する
+tags: [TitledBorder, OverlayLayout, JLabel]
+author: aterai
+pubdate: 2022-06-13T00:28:07+09:00
+description: TitledBorderを背景色を変更する方法をテストします。
+image: https://drive.google.com/uc?id=1zy01CxlpcrOEL_AdTSgJlNpKaq75VB5f
+---
+* 概要 [#summary]
+`TitledBorder`を背景色を変更する方法をテストします。
+
+#download(https://drive.google.com/uc?id=1zy01CxlpcrOEL_AdTSgJlNpKaq75VB5f)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JPanel p1 = new JPanel() {
+  @Override protected void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setPaint(getBackground());
+    g2.fill(SwingUtilities.calculateInnerArea(this, null));
+    g2.dispose();
+    super.paintComponent(g);
+  }
+};
+p1.setBackground(Color.WHITE);
+p1.setOpaque(false);
+p1.setBorder(BorderFactory.createTitledBorder(title));
+}}
+
+* 解説 [#explanation]
+- `Default TitledBorder`
+-- デフォルトでは`TitledBorder`で使用される`JLabel`は`isOpaque() == true`なので`TitledBorder`を設定した`JPanel`ではなくその親`JPanel`の背景色が表示される
+
+- `Transparent TitledBorder`
+-- `TitledBorder`を設定した`JPanel`の`paintComponent(...)`メソッドをオーバーライドし、`SwingUtilities.calculateInnerArea(...)`で`Border`を除いた領域を白で塗りつぶすよう設定
+-- [https://stackoverflow.com/questions/72578926/how-to-set-background-within-the-titled-border java - How to set background within the titled border? - Stack Overflow]
+
+- `Paint TitledBorder background`
+-- 上記の`Transparent TitledBorder`とは逆に`Border`を描画する領域のみ`TitledBorder`を設定した`JPanel`の背景を白で塗りつぶすよう設定
+#code{{
+JPanel p2 = new JPanel() {
+  @Override protected void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setPaint(getBackground());
+    Area area = new Area(new Rectangle(getSize()));
+    area.subtract(new Area(SwingUtilities.calculateInnerArea(this, null)));
+    g2.fill(area);
+    g2.dispose();
+    super.paintComponent(g);
+  }
+};
+}}
+
+- `Override paintBorder`
+-- `TitledBorder#paintBorder(...)`をオーバーライドして`TitledBorder`の上辺のみ背景を白で塗りつぶすよう設定
+-- `TitledBorder#isBorderOpaque(...)`はオーバーライドしても効果がない
+
+- `OverlayLayout + JLabel`
+-- `TitledBorder`のタイトルは空にして背景色を白に設定した`JLabel`を`OverlayLayout`で左上に配置
+-- `BorderFactory.createTitledBorder("<html><span style='background:white'>html TitledBorder")`のように`html`タグを使用してタイトルの背景色のみ変更する方法もある
+-- [[Borderの右下にJComponentを配置>Swing/RightAlignComponentBorder]]
+-- [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]
+#code{{
+JLabel label = new JLabel(title, SwingConstants.LEADING);
+label.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));
+label.setOpaque(true);
+label.setBackground(Color.WHITE);
+label.setAlignmentX(Component.LEFT_ALIGNMENT);
+label.setAlignmentY(Component.TOP_ALIGNMENT);
+
+Box box = Box.createHorizontalBox();
+box.add(Box.createHorizontalStrut(8));
+box.add(label);
+box.setAlignmentX(Component.LEFT_ALIGNMENT);
+box.setAlignmentY(Component.TOP_ALIGNMENT);
+
+int height = label.getPreferredSize().height / 2;
+Color color = new Color(0x0, true);
+Border b1 = BorderFactory.createMatteBorder(height, 2, 2, 2, color);
+Border b2 = BorderFactory.createTitledBorder("");
+p.setBorder(BorderFactory.createCompoundBorder(b1, b2));
+p.setAlignmentX(Component.LEFT_ALIGNMENT);
+p.setAlignmentY(Component.TOP_ALIGNMENT);
+
+JPanel panel = new JPanel();
+panel.setLayout(new OverlayLayout(panel));
+panel.add(box);
+panel.add(p);
+}}
+
+* 参考リンク [#reference]
+- [https://stackoverflow.com/questions/72578926/how-to-set-background-within-the-titled-border java - How to set background within the titled border? - Stack Overflow]
+- [[Borderの右下にJComponentを配置>Swing/RightAlignComponentBorder]]
+- [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]
+- [[TitledBorderのタイトルにアイコンを表示する>Swing/IconTitledBorder]]
+- [[TitledBorderにタイトル文字列までの内余白を設定する>Swing/TitledBorderHorizontalInsetOfText]]
+- [https://bugs.openjdk.org/browse/JDK-8213531 &#91;JDK-8213531&#93; Test javax/swing/border/TestTitledBorderLeak.java fails - Java Bug System]
+
+* コメント [#comment]
+#comment
+#comment

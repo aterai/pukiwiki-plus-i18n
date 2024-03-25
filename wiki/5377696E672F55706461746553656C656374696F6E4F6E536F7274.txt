@@ -32,10 +32,9 @@ table.setUpdateSelectionOnSort(true);
 -- チェックあり
 --- ソート後は選択状態をクリア
 --- `JDK 1.5`などで`TableSorter.java`を使用した場合の動作と同じになるように設定する
-
 #code{{
 table.getTableHeader().addMouseListener(new MouseAdapter() {
-  @Override public void mouseClicked(MouseEvent e) { //mousePressed(MouseEvent e) {
+  @Override public void mouseClicked(MouseEvent e) {
     if (table.isEditing()) {
       table.getCellEditor().stopCellEditing();
     }

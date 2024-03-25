@@ -18,25 +18,28 @@ hreflang:
 
 * サンプルコード [#sourcecode]
 #code(link){{
+JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
+split.setResizeWeight(.4);
+
 JButton button = new JButton("swap");
 button.setFocusable(false);
 button.addActionListener(e -> {
-  Component left = sp.getLeftComponent();
-  Component right = sp.getRightComponent();
+  Component left = split.getLeftComponent();
+  Component right = split.getRightComponent();
 
-  // sp.removeAll(); // Divider is also removed
-  sp.remove(left);
-  sp.remove(right);
+  // split.removeAll(); // Divider is also removed
+  split.remove(left);
+  split.remove(right);
   // or:
-  // sp.setLeftComponent(null);
-  // sp.setRightComponent(null);
+  // split.setLeftComponent(null);
+  // split.setRightComponent(null);
 
-  sp.setLeftComponent(right);
-  sp.setRightComponent(left);
+  split.setLeftComponent(right);
+  split.setRightComponent(left);
 
-  sp.setResizeWeight(1d - sp.getResizeWeight());
+  split.setResizeWeight(1d - split.getResizeWeight());
   if (check.isSelected()) {
-    sp.setDividerLocation(sp.getDividerLocation());
+    split.setDividerLocation(split.getDividerLocation());
   }
 });
 }}
@@ -50,7 +53,7 @@ button.addActionListener(e -> {
 - ディバイダの位置を入れ替え前と同じ場所に保つ場合、`JSplitPane#setResizeWeight(...)`メソッドで余分なスペースの配分率の入れ替えと`JSplitPane#setDividerLocation(...)`メソッドで位置の再設定が必要になる
 
 ----
-- `GridLayout`を設定した`JPanel`などの場合は、以下のように`Container#setComponentZOrder(...)`メソッドでコンポーネントの位置の入れ替えが可能
+- `GridLayout`を設定した`JPanel`などの場合、以下のように`Container#setComponentZOrder(...)`メソッドでコンポーネントの位置の入れ替えが可能
 -- サンプルコードは[[JPanelに追加したコンポーネントの順序を変更する>Swing/ComponentZOrder]]に移動
 
 * 参考リンク [#reference]

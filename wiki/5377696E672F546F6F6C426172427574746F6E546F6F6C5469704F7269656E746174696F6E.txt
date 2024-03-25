@@ -1,0 +1,129 @@
+---
+category: swing
+folder: ToolBarButtonToolTipOrientation
+title: JToolBarの配置位置によってJToolTipの表示方向を切り替える
+tags: [JToolBar, JButton, JToolTip, BorderLayout]
+author: aterai
+pubdate: 2024-01-15T04:17:32+09:00
+description: JToolBarの配置位置、縦横の方向、言語依存の方向によって内部に配置したJButtonのJToolTip表示位置が常に内側になるよう切り替えます。
+image: https://drive.google.com/uc?id=1u9OhK9Xb_egsfQ-hog8kHOP4gKoMon9Y
+---
+* 概要 [#summary]
+`JToolBar`の配置位置、縦横の方向、言語依存の方向によって内部に配置した`JButton`の`JToolTip`表示位置が常に内側になるよう切り替えます。
+
+#download(https://drive.google.com/uc?id=1u9OhK9Xb_egsfQ-hog8kHOP4gKoMon9Y)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+private Component createToolBarButton(ColorItem item) {
+  JButton button = new JButton(item.getIcon()) {
+    private transient BalloonToolTip tip;
+    private final JLabel label = new JLabel(" ", CENTER);
+
+    @Override public Point getToolTipLocation(MouseEvent e) {
+      String txt = getToolTipText();
+      return Optional.ofNullable(txt).map(toolTipText -> {
+        JToolTip tips = createToolTip();
+        tips.setTipText(toolTipText);
+        label.setText(toolTipText);
+        Container bar = SwingUtilities.getAncestorOfClass(
+            JToolBar.class, this);
+        String constraint = calculateConstraint(bar.getParent(), bar);
+        if (tips instanceof BalloonToolTip) {
+          ((BalloonToolTip) tips).updateBalloonShape(constraint);
+        }
+        return getToolTipPoint(
+            getPreferredSize(), tips.getPreferredSize(), constraint);
+      }).orElse(null);
+    }
+
+    @Override public JToolTip createToolTip() {
+      if (tip == null) {
+        tip = new BalloonToolTip();
+        LookAndFeel.installColorsAndFont(
+            label,
+            "ToolTip.background",
+            "ToolTip.foreground",
+            "ToolTip.font");
+        tip.add(label);
+        Container bar = SwingUtilities.getAncestorOfClass(
+            JToolBar.class, this);
+        String constraint = calculateConstraint(bar.getParent(), bar);
+        tip.updateBalloonShape(constraint);
+        tip.setComponent(this);
+      }
+      return tip;
+    }
+
+    @Override public void updateUI() {
+      tip = null;
+      super.updateUI();
+    }
+  };
+  button.setOpaque(false);
+  button.setToolTipText(item.getTitle());
+  button.setFocusPainted(false);
+  return button;
+}
+
+private static String calculateConstraint(
+    Container source, Component toolBar) {
+  String constraint = null;
+  JToolBar bar = (JToolBar) toolBar;
+  if (((BasicToolBarUI) bar.getUI()).isFloating()) {
+    if (bar.getOrientation() == SwingConstants.VERTICAL) {
+      boolean lr = bar.getComponentOrientation().isLeftToRight();
+      constraint = lr ? BorderLayout.WEST : BorderLayout.EAST;
+    }
+  } else {
+    LayoutManager lm = source.getLayout();
+    if (lm instanceof BorderLayout) {
+      constraint = (String) ((BorderLayout) lm).getConstraints(toolBar);
+    }
+  }
+  return constraint == null ? BorderLayout.NORTH : constraint;
+}
+
+private static Point getToolTipPoint(
+    Dimension btnSz, Dimension tipSz, String constraint) {
+  double dx;
+  double dy;
+  switch (constraint) {
+    case BorderLayout.WEST:
+      dx = btnSz.getWidth();
+      dy = (btnSz.getHeight() - tipSz.getHeight()) / 2d;
+      break;
+    case BorderLayout.EAST:
+      dx = -tipSz.getWidth();
+      dy = (btnSz.getHeight() - tipSz.getHeight()) / 2d;
+      break;
+    case BorderLayout.SOUTH:
+      dx = (btnSz.getWidth() - tipSz.getWidth()) / 2d;
+      dy = -tipSz.getHeight();
+      break;
+    default: // case BorderLayout.NORTH:
+      dx = (btnSz.getWidth() - tipSz.getWidth()) / 2d;
+      dy = btnSz.getHeight();
+  }
+  return new Point((int) (dx + .5), (int) (dy + .5));
+}
+}}
+
+* 解説 [#explanation]
+- `JToolBar`が`BorderLayout`を設定した`JPanel`内に配置されている場合:
+-- その配置位置(`BorderLayout.NORTH`、`BorderLayout.SOUTH`、`BorderLayout.WEST`、`BorderLayout.EAST`)を`BorderLayout#getConstraints(toolBar)`メソッドで取得
+-- `JToolTip`が親`JPanel`内に表示されるよう`JButton#getToolTipLocation(MouseEvent)`をオーバーライドし、`JPanel`内配置位置に対応した表示位置となるよう`getToolTipPoint(...)`で計算
+-- `JToolTip`表示の`x`軸座標は`JButton`相対で中央揃えになるよう計算するので、`JToolBar`に設定された言語依存の方向(`ComponentOrientation`)には影響されない
+- `JToolBar`がフロート状態(ツールバー専用のウィンドウにドラッグアウト)の場合:
+-- ウィンドウが横長(`BorderLayout.NORTH`、`BorderLayout.SOUTH`に配置された状態からドラッグアウト)の場合は`JToolBar`の言語依存の方向に依存せず、`BorderLayout.NORTH`に配置されていた場合と同様にその下側に`JToolTip`を表示
+-- ウィンドウが縦長(`BorderLayout.EAST`、`BorderLayout.WEST`に配置された状態からドラッグアウト)の場合
+--- 言語依存の方向(`JToolBar#getComponentOrientation()`)が左から右(`ComponentOrientation.LEFT_TO_RIGHT`)の場合は`BorderLayout.WEST`に配置されていた場合と同様にその右側に`JToolTip`を表示
+--- 言語依存の方向(`JToolBar#getComponentOrientation()`)が右から左(`ComponentOrientation.RIGHT_TO_LEFT`)の場合は`BorderLayout.EAST`に配置されていた場合と同様にその左側に`JToolTip`を表示
+
+* 参考リンク [#reference]
+- [[JTabbedPaneのツールヒントをタブ位置に対応したふきだしに変更する>Swing/SpeechBalloonToolTipTail]]
+-- ふきだし型の`JToolTip`の使用方法、タブ配置位置(`JTabbedPane.TOP`、`JTabbedPane.BOTTOM`、`JTabbedPane.LEFT`、`JTabbedPane.RIGHT`)に応じた表示位置の変更などはこのサンプルとほぼ同等
+
+* コメント [#comment]
+#comment
+#comment

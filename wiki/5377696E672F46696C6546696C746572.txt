@@ -37,7 +37,7 @@ fileChooser.addChoosableFileFilter(new FileFilter() {
 - %%`addChoosableFileFilter(FileFilter)`メソッドを使うとそのフィルタが現在選択されているフィルタになる%%
 -- %%例えば「すべてのファイル」をデフォルト(選択された状態)に戻したい場合は、`JFileChooser#getAcceptAllFileFilter()`を再設定する必要がある%% -
 - `JDK 7`から`JFileChooser#addChoosableFileFilter(...)`内で`JFileChooser#setFileFilter(...)`を呼ばなくなった
--- [https://bugs.openjdk.java.net/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]
+-- [https://bugs.openjdk.org/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]
 
 ----
 - `java.awt.FileDialog`は以下のように`java.io.FilenameFilter`を使用する
@@ -64,8 +64,8 @@ fileChooser.addChoosableFileFilter(filter);
 
 * 参考リンク [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JFileChooser.html#addChoosableFileFilter-javax.swing.filechooser.FileFilter- JFileChooser#addChoosableFileFilter(...) (Java Platform SE 8)]
-- [https://bugs.openjdk.java.net/browse/JDK-6400960 Bug ID: 6400960 Swing File*Filters should extend java.io.File*Filters]
-- [https://bugs.openjdk.java.net/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-6400960 Bug ID: 6400960 Swing File*Filters should extend java.io.File*Filters]
+- [https://bugs.openjdk.org/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]
 
 * コメント [#comment]
 #comment
@@ -73,6 +73,6 @@ fileChooser.addChoosableFileFilter(filter);
 -- 直しておきました。どもです。 -- &user(aterai); &new{2003-12-24 (水) 12:41:13};
 - `addChoosableFileFilter`を何度も呼ぶと最後に追加されたものがデフォルトになるが、例えば`2`番目に追加した`filter`を最後に再び追加すると`2`番目がデフォルトになる。 -- &user(Y); &new{2006-11-27 (月) 15:21:26};
 -- `addChoosableFileFilter(FileFilter)`は、その`FileFilter`がすでに含まれている場合は、`setFileFilter(FileFilter)`だけ実行するみたいですね。 -- &user(aterai); &new{2006-11-28 (火) 16:44:40};
--- 追記: [https://bugs.openjdk.java.net/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]で、この動作は修正されたようです。 -- &user(aterai); &new{2018-03-13 (火) 20:46:52};
+-- 追記: [https://bugs.openjdk.org/browse/JDK-4776197 JDK-4776197 JFileChooser has an easy-to-fix but serious performance bug - Java Bug System]で、この動作は修正されたようです。 -- &user(aterai); &new{2018-03-13 (火) 20:46:52};
 
 #comment

@@ -34,12 +34,14 @@ class ViewportDragScrollListener extends MouseAdapter
     this.dc = comp.getCursor();
     this.scroller = new Timer(DELAY, new ActionListener() {
       @Override public void actionPerformed(ActionEvent e) {
-        Container c = SwingUtilities.getAncestorOfClass(JViewport.class, label);
+        Container c = SwingUtilities.getAncestorOfClass(
+            JViewport.class, label);
         if (c instanceof JViewport.class) {
           JViewport vport = (JViewport) c;
           Point vp = vport.getViewPosition();
           vp.translate(move.x, move.y);
-          label.scrollRectToVisible(new Rectangle(vp, vport.getSize()));
+          label.scrollRectToVisible(
+              new Rectangle(vp, vport.getSize()));
         }
       }
     });

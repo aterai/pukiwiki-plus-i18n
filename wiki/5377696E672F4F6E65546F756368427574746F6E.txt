@@ -49,12 +49,14 @@ for (Component c: divider.getComponents()) {
 -- `MetalLookAndFeel`、`NimbusLookAndFeel`では無効
 - `OneTouchButton`の中央揃え
 -- `UIManager.put("SplitPane.centerOneTouchButtons", true);`
--- `MetalLookAndFeel`、`MotifLookAndFeel`、`WindowsLookAndFeel`、`NimbusLookAndFeel`などでは効果が無い
+-- %%`MetalLookAndFeel`、`MotifLookAndFeel`、`WindowsLookAndFeel`、%% `NimbusLookAndFeel`では無効で常に中央揃えになる
+-- [[JSplitPaneの展開・収納ボタンをDividerサイズの中央に配置する>Swing/CenterOneTouchButtons]]
 - `Divider`の`Border`と`OneTouchButton`
 -- `divider.setBorder(BorderFactory.createMatteBorder(20, 0, 5, 0, Color.RED));`などを設定すると`OneTouchButton`が`Border`にめり込んでしまう？
 
 * 参考リンク [#reference]
 - [[JSplitPaneのディバイダを展開、収納する>Swing/OneTouchExpandable]]
+- [[JSplitPaneの展開・収納ボタンをDividerサイズの中央に配置する>Swing/CenterOneTouchButtons]]
 
 * コメント [#comment]
 #comment

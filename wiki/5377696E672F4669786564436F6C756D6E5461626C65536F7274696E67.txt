@@ -62,9 +62,9 @@ add(scroll);
 }}
 
 * 解説 [#explanation]
-左の固定テーブル(`fixedTable`)と、右のテーブル(`table`)に同じ`RowSorter`を設定することで、列固定表でもソートできるようにしています。
-ただし、上記のサンプルではソート中に行の追加を行うと例外が発生するので、追加の前に`sorter.setSortKeys(null);`で`SortKeys`をクリアしています。
-
+- 左の列固定された表(`fixedTable`)と右の表(`table`)に同じ`RowSorter`を設定することで、列固定表でもソート可能に設定
+- ソート中に行の追加を行うと例外が発生する
+-- 上記のサンプルでは以下のように追加前に`sorter.setSortKeys(null)`で`SortKeys`をクリアして回避
 #code{{
 add(new JButton(new AbstractAction("add") {
   @Override public void actionPerformed(ActionEvent e) {

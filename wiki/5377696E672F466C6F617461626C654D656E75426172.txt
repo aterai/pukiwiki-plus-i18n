@@ -1,0 +1,87 @@
+---
+category: swing
+folder: FloatableMenuBar
+title: JToolBar内にJMenuBarを配置して分離・移動可能に設定する
+tags: [JToolBar, JMenuBarm, JMenu, JPopupMenu]
+author: aterai
+pubdate: 2023-03-20T21:13:17+09:00
+description: JToolBar内にJMenuBarを配置することで分離・移動可能なメニューを作成します。
+image: https://drive.google.com/uc?id=1DbHuFYcf7KnhBIFnBfL2wvZSudJvLGgd
+---
+* 概要 [#summary]
+`JToolBar`内に`JMenuBar`を配置することで分離・移動可能なメニューを作成します。
+
+#download(https://drive.google.com/uc?id=1DbHuFYcf7KnhBIFnBfL2wvZSudJvLGgd)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JMenuBar menuBar = new JMenuBar();
+menuBar.add(makeMenu("JMenu 1"));
+
+JMenu menu2 = makeMenu("JMenu 2");
+menu2.addMenuListener(new MenuListener() {
+  private boolean isFloating(Component c) {
+    Container p = SwingUtilities.getAncestorOfClass(JToolBar.class, c);
+    return p instanceof JToolBar &&
+        ((BasicToolBarUI) ((JToolBar) p).getUI()).isFloating();
+  }
+
+  @Override public void menuSelected(MenuEvent e) {
+    JMenu menu = (JMenu) e.getSource();
+    if (menu.isTopLevelMenu() && !isFloating(menu)) {
+      Dimension d = menu.getPreferredSize();
+      Component cp = menu.getRootPane().getContentPane();
+      Point pt = SwingUtilities.convertPoint(
+          menu.getParent(), menu.getLocation(), cp);
+      pt.y += d.height * 2;
+      if (!cp.getBounds().contains(pt)) {
+        EventQueue.invokeLater(() -> {
+          JPopupMenu popup = menu.getPopupMenu();
+          Rectangle bounds = popup.getBounds();
+          Point loc = menu.getLocationOnScreen();
+          loc.y -= bounds.height + UIManager.getInt("Menu.menuPopupOffsetY");
+          popup.setLocation(loc);
+        });
+      }
+    }
+  }
+
+  @Override public void menuDeselected(MenuEvent e) {
+    // Do nothing
+  }
+
+  @Override public void menuCanceled(MenuEvent e) {
+    // Do nothing
+  }
+});
+menuBar.add(menu2);
+
+JToolBar toolBar = new JToolBar() {
+  @Override public void updateUI() {
+    super.updateUI();
+    setLayout(new BorderLayout());
+  }
+};
+toolBar.add(menuBar);
+
+add(toolBar, BorderLayout.NORTH);
+}}
+
+* 解説 [#explanation]
+- `JToolBar`のレイアウトを`BorderLayout`に変更して`JMenuBar`を追加
+-- `JToolBar`のデフォルトレイアウトは配置で水平垂直を切り替える`BoxLayout`
+-- この`BoxLayout`のままだと`JMenuBar`の幅が`JToolBar`の幅まで拡張されない
+-- `JMenuBar#setMaximumSize(...)`で十分大きな最大サイズを設定すれば`BoxLayout`のままでも回避可能
+-- このサンプルでは垂直にしてもレイアウトの切り替えは実行しないのでパネルの左右に`JToolBar`を配置不可に設定
+- `MenuListener`を`JMenu`に追加して`BorderLayout.SOUTH`に`JToolBar`が配置されている場合は`JMenu`の上方に`JPopupMenu`を開くようその位置を変更
+-- `JMenu`がトップレベル(親が`JPopupMenu`ではなく`JMenuBar`)、かつ`JMenuBar`がフローティング状態ではない場合のみ、`JPopupMenu`を開く位置を変更するかどうかチェックしている
+
+* 参考リンク [#reference]
+- [[JPopupMenuの表示を親コンポーネント領域内のみに制限する>Swing/AdjustPopupLocation]]
+- [[JToolBarのドッキングを上下のみに制限>Swing/DockingConstraint]]
+- [[JMenuから開くJPopupMenuの位置を変更する>Swing/MenuLocation]]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/MenuListener.html MenuListener (Java Platform SE 8)]
+
+* コメント [#comment]
+#comment
+#comment

@@ -112,7 +112,7 @@ class OptionPaneDescription {
 - `0`行目だけカラムヘッダのサイズを変更すると描画がおかしくなる？
 -- `0`行目ではなく一番上に表示されている行の表示が乱れている
 -- `JTextArea#scrollRectToVisible(...)`ではなく`JViewport#setViewPosition(Point)`を使用すると正常にリサイズ可能
--- %%`0`行目だけ高さ`1`のダミー行を追加して回避(ソートなどで問題が残る)%%
+-- %%`0`行目だけ高さ`1`の仮行を追加して回避(ソートなどで問題が残る)%%
 - %%`JTable`のクリック(セル選択？)などで表示が乱れる場合がある%%
 -- %%`JTable#repaint(Rectangle)`をオーバーライドして常に全体を描画することで回避%%
 - `JScrollPane`内に`JTextArea`を配置せずに直接`JTextArea`から表示領域を切り取っても良さそう？

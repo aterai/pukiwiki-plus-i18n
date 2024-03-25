@@ -60,11 +60,11 @@ textField5.setTransferHandler(new TransferHandler() {
 - `3`: `setTransferHandler(null)`
 -- `JTextField#setTransferHandler(null)`で`BasicTextUI$TextTransferHandler`を削除
 -- 親コンポーネントの`TransferHandler`が有効になる
---- このサンプルの場合は、`JFrame`に設定したダミー`TransferHandler`
+--- このサンプルの場合は、`JFrame`に設定した仮の`TransferHandler`
 - `4`: `setDropTarget(null)`
 -- `JTextField#setDropTarget(null)`でこのコンポーネントに関連付けされた`DropTarget`をクリア
 -- 親コンポーネントの`DropTarget`が有効になる
---- このサンプルの場合は、`JFrame`に設定したダミー`TransferHandler`の`DropTarget`
+--- このサンプルの場合は、`JFrame`に設定した仮の`TransferHandler`の`DropTarget`
 - `5`: `TransferHandler#canImport(...): false`
 -- `TransferHandler#canImport(...)`が常に`false`を返す`TransferHandler`を設定
 -- 親コンポーネントの`TransferHandler`にドロップイベントは伝搬せず、常にドロップ不可

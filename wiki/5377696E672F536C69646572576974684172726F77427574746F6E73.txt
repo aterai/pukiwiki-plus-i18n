@@ -50,7 +50,7 @@ slider.addChangeListener(e -> {
 -- [[JSliderのノブをダブルクリックして値を初期値にリセットする>Swing/ZoomLevelsSlider]]
 -- `JSlider`の値が正の場合は拡大を表現するよう、値を`100 + JSlider#getValue()`パーセントに変換して`JLabel`に表示(最大値は`1000%`になる)
 -- `JSlider`の値が負の場合は縮小を表現するよう、値を`100 + JSlider#getValue() / 10`パーセントに変換して`JLabel`に表示(最小値は`10%`になる)
-- `JButton`に`ActionListener`ではなく`MouseListener`を追加し、プレスされている間はTimerを起動してJSliderの値を繰り返し増減する
+- `JButton`に`ActionListener`ではなく`MouseListener`を追加し、プレスされている間は`Timer`を起動して`JSlider`の値を繰り返し増減する
 -- [[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]
 -- `JSlider`の値が正で拡大方向の場合はステップ幅を`+10`、負で縮小方向の場合は`-50`で値を変更
 

@@ -35,7 +35,7 @@ fc2.addPropertyChangeListener(JFileChooser.DIRECTORY_CHANGED_PROPERTY, e -> {
 -- ツールバーの「新規フォルダの作成」ボタンやコンテキストメニューの「新規フォルダ」メニューアイテムはクリック可能だが、クリックしても新規フォルダが作成されなくなる
 - `JFileChooser#getActionMap()`で`FilePane.ACTION_NEW_FOLDER`アクションを取得し`setEnabled(false)`で無効化
 -- フォルダごとに新規フォルダが作成可能かどうかは変化するので、`JFileChooser`に`PropertyChangeListener`を追加してカレントディレクトリが変更されるたびに「新規フォルダの作成」アクションを無効化している
--- [https://bugs.openjdk.java.net/browse/JDK-8021379 &#91;JDK-8021379&#93; JFileChooser Create New Folder button enabled in write proteced directory - Java Bug System]
+-- [https://bugs.openjdk.org/browse/JDK-8021379 &#91;JDK-8021379&#93; JFileChooser Create New Folder button enabled in write proteced directory - Java Bug System]
 -- [[JFileChooserに画像プレビューを追加>Swing/PreviewAccessory]]
 - `UIManager.put("FileChooser.readOnly", Boolean.TRUE)`で`JFileChooser`をリードオンリーにすると「新規フォルダの作成」だけでなくファイルの「名前の変更」も不可になる
 -- [[JFileChooserを編集不可にする>Swing/ROFileChooser]]
@@ -43,7 +43,7 @@ fc2.addPropertyChangeListener(JFileChooser.DIRECTORY_CHANGED_PROPERTY, e -> {
 * 参考リンク [#reference]
 - [[JFileChooserを編集不可にする>Swing/ROFileChooser]]
 - [[JFileChooserに画像プレビューを追加>Swing/PreviewAccessory]]
-- [https://bugs.openjdk.java.net/browse/JDK-8021379 &#91;JDK-8021379&#93; JFileChooser Create New Folder button enabled in write proteced directory - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-8021379 &#91;JDK-8021379&#93; JFileChooser Create New Folder button enabled in write proteced directory - Java Bug System]
 
 * コメント [#comment]
 #comment

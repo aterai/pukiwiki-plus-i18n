@@ -4,11 +4,11 @@ keywords: [Java, Swing, SSCCE, MCVE]
 hreflang:
     href: https://java-swing-tips.blogspot.com/
     lang: en
-description: ソースコード付きの小さな Java Swing アプリケーションを例にして、GUI プログラム作成のコツなどを解説
+description: ソースコード付きの小さな Java Swing アプリケーションを例にしてGUI プログラム作成のコツなどを解説
 author: aterai
 pubdate: 2003-09-25
 ---
-このページ以下では、ソースコード付きの小さな`Java Swing`アプリケーションを例にして、`GUI`プログラム作成のコツなどを解説しています。
+このページ以下では、ソースコード付きの小さな`Java Swing`アプリケーションを例にして`GUI`プログラム作成のコツなどを解説しています。
 
 &ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQslJy3MxYI/AAAAAAAAAts/xrxOCvbp-0A/s800/screenshots.png);
 
@@ -20,20 +20,20 @@ pubdate: 2003-09-25
 RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the JFC and Swing (The Java™ Tutorials)]
 
 * 新着記事 [#whatsnew]
-- 2022-05-16
-#swingdescription(Swing/FiveStarRatingLabel,GlyphVectorで作成した5段階評価の結果をラベルに描画する,GlyphVectorを使用して5段階評価の★のアウトラインを作成し、その内部を評価値の小数点一位まで塗りつぶします。,https://drive.google.com/thumbnail?id=1qWNar6LNSc0eR0JQQL9exGtmmmNfL-ki)
+- 2024-03-25
+#swingdescription(Swing/ToolTipOnMouseOverOfWord,JTextArea内の単語上にマウスカーソルでJToolTipを表示する,JTextArea内でマウスカーソルが乗った単語の開始オフセットなどをJToolTipで表示します。,https://drive.google.com/thumbnail?id=1G7tL6PLzVdyUZ9P6PlMM1sFE1QngbLup)
 
-- 2022-05-09
-#swingdescription(Swing/DisableNewFolderAction,JFileChooserで新規フォルダ作成を無効化する,JFileChooserで既存ファイルの名前変更は有効のまま新規フォルダの作成のみ無効に設定します。,https://drive.google.com/thumbnail?id=1a7Lm2pVbgfsEnORKxYiekYuJz_rAwCCI)
+- 2024-03-18
+#swingdescription(Swing/MenuAndToolBarSwitching,JToolBarとJMenuBarを切り替える,JToolBarに配置したハンバーガーメニュー風のJButtonをクリックしてこれをJMenuBarと切り替えます。,https://drive.google.com/thumbnail?id=1Qpanq4RDxRa_VHcMRdzG0OxBomIumTwl)
 
-- 2022-05-02
-#swingdescription(Swing/SliderWithArrowButtons,JSliderの値を増減するJButtonを作成する,JSliderの値を減少、増加するJButtonを作成してその左右に配置します。,https://drive.google.com/thumbnail?id=1xjLVPR8SE7m4MInXokfLDVPG8fBpLEDS)
+- 2024-03-11
+#swingdescription(Swing/VariableRoundedBorderOnComboBox,JComboBoxのBorderをドロップダウンリストの表示状態で切り替える,JComboBoxのBorderをドロップダウンリストの表示状態で切り替えて左右の辺が直線で描画されるよう設定します。,https://drive.google.com/thumbnail?id=1srDCMSHQw2olzIC8t0q1MQjJRHhVR4y_)
 
-- 2022-04-25
-#swingdescription(Swing/SliderAltTrackColor,MetalLookAndFeelを適用したJSliderで現在値までのトラック背景色を変更する,MetalLookAndFeelを適用したJSliderで現在値を示す領域のトラック背景色を変更します。,https://drive.google.com/thumbnail?id=1NIeKsjf4OZ3BQSuBNBzO0YkDemUbh1k3)
+- 2024-03-04
+#swingdescription(Swing/RoundingSpecificCorners,Path2Dで指定した隅を丸めたランウド矩形図形を作成する,Path2Dを使用して指定した隅のみをベジェ曲線で丸めたランウド矩形図形を作成します。,https://drive.google.com/thumbnail?id=1F3aKQ3EgrQD9MXA8sJoeXRKXWj-gB6h2)
 
-- 2022-04-18
-#swingdescription(Swing/ZoomLevelsSlider,JSliderのノブをダブルクリックして値を初期値にリセットする,JSliderのノブをダブルクリックして値を初期値にリセットしたり、初期値近辺でノブの吸着を実行します。,https://drive.google.com/thumbnail?id=1UUf36GRObxKK0Insuq9_W2-OhKEIRYmH)
+- 2024-02-26
+#swingdescription(Swing/EditableTreePath,JTreeのTreeNodeが編集を開始可能かを調査する,JTreeのノードエディタが編集を開始できるかどうかをTreePathやMouseEventから状態を取得して判断します。,https://drive.google.com/thumbnail?id=1oHmohICOAH5TjHT3z4sAl7gJY0z9imbB)
 
 ** 更新履歴 [#changelog]
 - [https://ateraimemo.com/archive Archive]
@@ -42,73 +42,78 @@ RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About th
 * Tips一覧 [#listoftips]
 #twocolumn
 ** `javax.swing.JComponent` [#jcomponent]
-- [[JTable(59)>Swing/_JTable]]
--- [[CellEditor CellRenderer(48)>Swing/_CellEditor]]
--- [[JTableHeader TableColumn(37)>Swing/_JTableHeader]]
--- [[TableRowSorter RowFilter(25)>Swing/_TableRowSorter]]
+- [[JTable(67)>Swing/_JTable]]
+-- [[CellEditor CellRenderer(52)>Swing/_CellEditor]]
+-- [[JTableHeader TableColumn(42)>Swing/_JTableHeader]]
+-- [[TableRowSorter RowFilter(28)>Swing/_TableRowSorter]]
 -- [[JDK1.5.0(6)>Swing/_JTable1.5.0]]
-- [[JTree(52)>Swing/_JTree]]
--- [[TreeCellEditor(10)>Swing/_TreeCellEditor]]
+- [[JTree(55)>Swing/_JTree]]
+-- [[TreeCellEditor(11)>Swing/_TreeCellEditor]]
 -- [[TreeCellRenderer(13)>Swing/_TreeCellRenderer]]
-- [[JTextComponent(24)>Swing/_JTextComponent]]
--- [[JTextArea(28)>Swing/_JTextArea]]
--- [[JTextPane JEditorPane(38)>Swing/_JTextPane]]
-- [[JButton AbstractButton(34)>Swing/_JButton]]
--- [[JCheckBox JCheckBoxMenuItem(25)>Swing/_JCheckBox]]
--- [[JRadioButton JToggleButton ButtonGroup(17)>Swing/_JRadioButton]]
-- [[JComboBox(69)>Swing/_JComboBox]]
-- [[JTabbedPane(65)>Swing/_JTabbedPane]]
-- [[JScrollPane JViewport JScrollBar(60)>Swing/_JScrollPane]]
-- [[JMenuBar JToolBar JMenu JMenuItem JSeparator(45)>Swing/_JMenuBar]]
-- [[JFrame JDialog JWindow(45)>Swing/_JFrame]]
-- [[JList(45)>Swing/_JList]]
-- [[JLabel(43)>Swing/_JLabel]]
-- [[JFileChooser JOptionPane JColorChooser(41)>Swing/_JFileChooser]]
-- [[JPopupMenu(40)>Swing/_JPopupMenu]]
-- [[JPanel JSplitPane(39)>Swing/_JPanel]]
-- [[JTextField JPasswordField JFormattedTextField(39)>Swing/_JTextField]]
-- [[JLayer(38)>Swing/_JLayer]]
-- [[JInternalFrame JLayeredPane JDesktopPane(32)>Swing/_JInternalFrame]]
-- [[JToolTip(30)>Swing/_JToolTip]]
-- [[JProgressBar ProgressMonitor(29)>Swing/_JProgressBar]]
-- [[JSlider(29)>Swing/_JSlider]]
-- [[JSpinner(27)>Swing/_JSpinner]]
+- [[JTextComponent(30)>Swing/_JTextComponent]]
+-- [[JTextArea(30)>Swing/_JTextArea]]
+-- [[JTextPane JEditorPane(39)>Swing/_JTextPane]]
+- [[JButton AbstractButton(35)>Swing/_JButton]]
+-- [[JCheckBox JCheckBoxMenuItem(27)>Swing/_JCheckBox]]
+-- [[JRadioButton JToggleButton ButtonGroup(19)>Swing/_JRadioButton]]
+- [[JComboBox(78)>Swing/_JComboBox]]
+- [[JTabbedPane(73)>Swing/_JTabbedPane]]
+- [[JScrollPane JViewport JScrollBar(65)>Swing/_JScrollPane]]
+- [[JMenuBar JToolBar JMenu JMenuItem JSeparator(57)>Swing/_JMenuBar]]
+- [[JList(51)>Swing/_JList]]
+- [[JFileChooser JOptionPane JColorChooser(51)>Swing/_JFileChooser]]
+- [[JPopupMenu(48)>Swing/_JPopupMenu]]
+- [[JFrame JDialog JWindow(46)>Swing/_JFrame]]
+- [[JTextField JPasswordField JFormattedTextField(46)>Swing/_JTextField]]
+- [[JLayer(45)>Swing/_JLayer]]
+- [[JLabel(45)>Swing/_JLabel]]
+- [[JPanel JSplitPane(40)>Swing/_JPanel]]
+- [[JInternalFrame JLayeredPane JDesktopPane(35)>Swing/_JInternalFrame]]
+- [[JToolTip(35)>Swing/_JToolTip]]
+- [[JSlider(32)>Swing/_JSlider]]
+- [[JProgressBar ProgressMonitor(32)>Swing/_JProgressBar]]
+- [[JSpinner(28)>Swing/_JSpinner]]
 
 #twocolumn
 
 ** `Others` [#others]
-- [[Graphics(53)>Swing/_Graphics]]
-- [[LayoutManager(50)>Swing/_Layout]]
-- [[Animation(41)>Swing/_Animation]]
-- [[Focus(41)>Swing/_Focus]]
-- [[Hyperlink Html(39)>Swing/_Hyperlink]]
-- [[Border(37)>Swing/_Border]]
-- [[Drag & Drop(31)>Swing/_DnD]]
-- [[LookAndFeel(31)>Swing/_LookAndFeel]]
-- [[Font(24)>Swing/_Font]]
+- [[Graphics(61)>Swing/_Graphics]]
+- [[LayoutManager(52)>Swing/_Layout]]
+- [[Focus(45)>Swing/_Focus]]
+- [[Border(45)>Swing/_Border]]
+- [[Animation(43)>Swing/_Animation]]
+- [[Hyperlink Html(40)>Swing/_Hyperlink]]
+- [[LookAndFeel(39)>Swing/_LookAndFeel]]
+- [[Drag & Drop(32)>Swing/_DnD]]
+- [[Font(28)>Swing/_Font]]
 - [[SwingWorker(22)>Swing/_SwingWorker]]
 - [[File(14)>Swing/_File]]
+- [[Calendar(13)>Swing/_Calendar]]
 - [[Cursor(9)>Swing/_Cursor]]
-- [[TrayIcon(6)>Swing/_TrayIcon]]
+- [[TrayIcon(7)>Swing/_TrayIcon]]
+- [[Clock(6)>Swing/_Clock]]
 - [[Sound(5)>Swing/_Sound]]
-- [[Others(23)>Swing/_Others]]
+- [[Others(24)>Swing/_Others]]
 
 ** `JDK 6`, `JDK 7` [#jdk6jdk7]
 - [[JDK 6, 7 での Swing 新機能(37)>Swing/_JDK6]]
 
 ** `Screenshot` [#screenshot]
-- [https://drive.google.com/drive/folders/1ZiLGUiAv4olCMNUvlTWhkfrTCezfC6pa?usp=sharing スクリーンショット一覧(944)]
+- [https://drive.google.com/drive/folders/1ZiLGUiAv4olCMNUvlTWhkfrTCezfC6pa?usp=sharing スクリーンショット一覧(1073)]
 
 #twocolumn
 
+* ダウンロード [#download]
+ git clone https://github.com/aterai/java-swing-tips.git
+
+// - `Git`リポジトリを取得する場合:
+//  git clone https://github.com/aterai/java-swing-tips.git
+// - `Subversion`で特定のディレクトリ以下のみ取得する場合:
+//  # 例えばSurrogatePair以下のサンプルコードのみ取得する
+//  svn co https://github.com/aterai/java-swing-tips/trunk/SurrogatePair
+
 * ライセンス [#licence]
 このページ以下のすべてのソースコードは[https://github.com/aterai/java-swing-tips GitHub]で、[https://github.com/aterai/java-swing-tips/blob/master/LICENSE.txt MITライセンス]のもと公開しています。
-
-- `Git`リポジトリを取得する場合:
- git clone https://github.com/aterai/java-swing-tips.git
-- `Subversion`で特定のディレクトリ以下のみ取得する場合:
- # 例えばSurrogatePair以下のサンプルコードのみ取得する
- svn co https://github.com/aterai/java-swing-tips/trunk/SurrogatePair
 
 * 編集方針 [#policy]
 - ''最も欲しいものはサンプル'' ([https://bn.dodgson.org/bn/2007/07/06/ あるチュートリアルの思い出 - Backnumbers: Steps to Phantasien])

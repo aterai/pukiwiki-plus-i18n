@@ -9,7 +9,7 @@ description: メニューバーから選択したLook and Feelを起動中のア
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPf78s81I/AAAAAAAAAeE/DIOTnqtAOnY/s800/LookAndFeel.png
 ---
 * 概要 [#summary]
-メニューバーから選択した`Look and Feel`を起動中のアプリケーションに適用します。以下のサンプルコードは、`%JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java`から引用改変したものです。
+メニューバーから選択した`Look and Feel`を起動中のアプリケーションに適用します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPf78s81I/AAAAAAAAAeE/DIOTnqtAOnY/s800/LookAndFeel.png)
 
@@ -17,11 +17,11 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPf78s81I/AAAAAAAAAeE/DI
 #code(link){{
 // %JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java
 // Possible Look & Feels
-private static final String MAC     = "com.sun.java.swing.plaf.mac.MacLookAndFeel";
-private static final String METAL   = "javax.swing.plaf.metal.MetalLookAndFeel";
-private static final String MOTIF   = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+private static final String MAC = "com.sun.java.swing.plaf.mac.MacLookAndFeel";
+private static final String METAL = "javax.swing.plaf.metal.MetalLookAndFeel";
+private static final String MOTIF = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
 private static final String WINDOWS = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
-private static final String GTK     = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+private static final String GTK = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
 // JDK 1.6.0_10
 // private static final String NIMBUS  = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
 // JDK 1.7.0
@@ -95,11 +95,12 @@ try {
 }}
 
 - %%`Ubuntu(GNOME)`で上記のようにシステム`LookAndFeel`を指定すると`NullPointerException`が発生する場合は、直前に`UIManager.getInstalledLookAndFeels()`を呼んでおくと回避可能%% `6u10`で修正済
--- [https://bugs.openjdk.java.net/browse/JDK-6389282 Bug ID: 6389282 NPE in GTKLookAndFeel.initSystemColorDefaults() on mustang when remote X11 displaying.]
+-- [https://bugs.openjdk.org/browse/JDK-6389282 Bug ID: 6389282 NPE in GTKLookAndFeel.initSystemColorDefaults() on mustang when remote X11 displaying.]
 // -- [http://blogs.sun.com/katakai/entry/omegat_in_mdi_mode JDK1.6 で使うと JDK 側のバグ (6389282) に引っかかってしまうのか NPE]
 // -- [http://blogs.sun.com/katakai/entry/bad_issue_for_swing_gtk Java6 の痛いバグ… NetBeans デスクトップアプリが Linux で動かず… - Masaki Katakai's Weblog]
 
 * 参考リンク [#reference]
+- `%JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java`
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html How to Set the Look and Feel]
 - [[LookAndFeelの一覧を取得する>Swing/InstalledLookAndFeels]]
 -- `SwingSet3`からコードを引用したサンプル

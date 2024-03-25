@@ -15,21 +15,22 @@ image: https://lh3.googleusercontent.com/-hvnKWYKZNQc/VPMhtSl-SSI/AAAAAAAANx4/QN
 
 * サンプルコード [#sourcecode]
 #code(link){{
-textPane.setText(
-    "LEFT1\tCENTER\tRIGHT1\t3.14\n"
-  + "LEFT22\tCENTER22\tRIGHT22\t12.3\n"
-  + "LEFT333\tCENTER333\tRIGHT333\t1.23\n"
-  + "LEFT4444\tCENTER4444\tRIGHT4444\t0.9876\n");
-SimpleAttributeSet attr = new SimpleAttributeSet();
+textPane.setText(String.join("\n",
+    String.join("\t", "LEFT1", "CENTER1", "RIGHT1", "3.14"),
+    String.join("\t", "LEFT22", "CENTER22", "RIGHT22", "12.3"),
+    String.join("\t", "LEFT333", "CENTER333", "RIGHT333", "123.45"),
+    String.join("\t", "LEFT4444", "CENTER4444", "RIGHT4444", "0.9876")));
+
+// MutableAttributeSet attr = new SimpleAttributeSet();
+Style attr = textPane.getStyle(StyleContext.DEFAULT_STYLE);
 StyleConstants.setTabSet(attr, new TabSet(new TabStop[] {
-  new TabStop(0f,   TabStop.ALIGN_LEFT,    TabStop.LEAD_NONE),
-  new TabStop(100f, TabStop.ALIGN_CENTER,  TabStop.LEAD_NONE),
-  new TabStop(200f, TabStop.ALIGN_RIGHT,   TabStop.LEAD_NONE),
-  new TabStop(250f, TabStop.ALIGN_DECIMAL, TabStop.LEAD_NONE),
-  // new TabStop(300f, TabStop.ALIGN_BAR,     TabStop.LEAD_NONE),
+    new TabStop(0f, TabStop.ALIGN_LEFT, TabStop.LEAD_NONE),
+    new TabStop(100f, TabStop.ALIGN_CENTER, TabStop.LEAD_NONE),
+    new TabStop(200f, TabStop.ALIGN_RIGHT, TabStop.LEAD_NONE),
+    new TabStop(250f, TabStop.ALIGN_DECIMAL, TabStop.LEAD_NONE)
+    // new TabStop(300f, TabStop.ALIGN_BAR, TabStop.LEAD_NONE)
 }));
-textPane.getStyledDocument().setParagraphAttributes(
-  0, textPane.getDocument().getLength(), attr, false);
+textPane.setParagraphAttributes(attr, false);
 }}
 
 * 解説 [#explanation]

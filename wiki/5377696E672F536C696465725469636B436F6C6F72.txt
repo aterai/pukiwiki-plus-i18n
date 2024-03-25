@@ -1,0 +1,39 @@
+---
+category: swing
+folder: SliderTickColor
+title: JSliderの目盛りの色を変更する
+tags: [JSlider, UIManager, LookAndFeel]
+author: aterai
+pubdate: 2022-08-01T00:27:38+09:00
+description: JSliderの目盛りの色変更をLookAndFeelごとにテストします。
+image: https://drive.google.com/uc?id=1Cf9CFyGMxx4esEAIv644pqKWVvQvd77c
+---
+* 概要 [#summary]
+`JSlider`の目盛りの色変更を`LookAndFeel`ごとにテストします。
+
+#download(https://drive.google.com/uc?id=1Cf9CFyGMxx4esEAIv644pqKWVvQvd77c)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+JSlider slider = new JSlider() {
+  @Override public void updateUI() {
+    super.updateUI();
+    UIManager.put("Slider.tickColor", Color.RED);
+    setUI(new BasicSliderUI(this));
+  }
+};
+}}
+
+* 解説 [#explanation]
+- `UIManager.put("Slider.tickColor", color)`で`JSlider`の目盛りの色を変更可能
+-- この設定は`LookAndFeel`に依存し、`BasicLookAndFeel`、`NimbusLookAndFeel`、`MotifLookAndFeel`で有効
+-- `WindowsLookAndFeel`はクラシックの場合のみ有効
+-- `MetalLookAndFeel`、`GTKLookAndFeel`では無効
+
+* 参考リンク [#reference]
+- [[JSliderのUIや色を変更する>Swing/VolumeSlider]]
+- [[JSliderの目盛りをアイコンに変更する>Swing/TriangleTickSlider]]
+
+* コメント [#comment]
+#comment
+#comment

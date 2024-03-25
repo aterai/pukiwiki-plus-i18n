@@ -1,0 +1,135 @@
+---
+category: swing
+folder: RoundedCornerPopupMenu
+title: JPopupMenuの角を丸める
+tags: [JPopupMenu, Border, JMenu]
+author: aterai
+pubdate: 2024-01-22T05:56:34+09:00
+description: JPopupMenuの背景を透明化し、これに角丸Borderを設定します。
+image: https://drive.google.com/uc?id=1UcaF0qHBjIuO-hIGwMbyCBGBm4T6OqBl
+---
+* 概要 [#summary]
+`JPopupMenu`の背景を透明化し、これに角丸`Border`を設定します。
+
+#download(https://drive.google.com/uc?id=1UcaF0qHBjIuO-hIGwMbyCBGBm4T6OqBl)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+UIManager.put("PopupMenuUI", "example.RoundedPopupMenuUI");
+// ...
+public final class RoundedPopupMenuUI extends BasicPopupMenuUI {
+  public static ComponentUI createUI(JComponent c) {
+    return new RoundedPopupMenuUI();
+  }
+
+  @Override public Popup getPopup(JPopupMenu popup, int x, int y) {
+    Popup pp = super.getPopup(popup, x, y);
+    if (pp != null) {
+      EventQueue.invokeLater(() -> {
+        Window w = SwingUtilities.getWindowAncestor(popup);
+        if (w != null && w.getType() == Window.Type.POPUP) {
+          w.setBackground(new Color(0x0, true));
+        }
+      });
+      popup.setBorder(new RoundedBorder());
+      popup.setOpaque(false);
+    }
+    return pp;
+  }
+}
+
+class RoundedBorder extends AbstractBorder {
+  @Override public Insets getBorderInsets(Component c) {
+    return new Insets(5, 5, 5, 5);
+  }
+
+  @Override public void paintBorder(
+      Component c, Graphics g, int x, int y, int w, int h) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.setPaint(c.getBackground());
+    Shape s = makeShape((JComponent) c);
+    g2.fill(s);
+    g2.setPaint(Color.GRAY);
+    g2.draw(s);
+    g2.dispose();
+  }
+
+  private static Shape makeShape(JComponent c) {
+    float w = c.getWidth() - 1f;
+    float h = c.getHeight() - 1f;
+    Insets i = c.getInsets();
+    float r = Math.min(i.top + i.left, i.bottom + i.right);
+    return new RoundRectangle2D.Float(0f, 0f, w, h, r, r);
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `BasicPopupMenuUI#getPopup(...)`をオーバーライドして`JPopupMenu`の背景を透明化する`RoundedPopupMenuUI`を作成
+-- 親`JFrame`内に表示される場合は`JPopupMenu#setOpaque(false)`で透明化が可能
+-- 親`JFrame`外に表示される場合は`JPopupMenu#setOpaque(false)`に加えて、その親となる重量コンポーネントの`Window`の背景も透明化する必要がある
+- `RoundRectangle2D.Float(...)`で作成したラウンド矩形を表示する`Border`を透明化した`JPopupMenu`に設定
+- `UIManager.put("PopupMenuUI", "example.RoundedPopupMenuUI")`で`JMenu`から開く場合を含めたすべての`JPopupMenu`が`RoundedPopupMenuUI`を使用するよう設定
+
+----
+- 特定の`JPopupMenu`のみ角を丸めたい場合は、直接以下のメソッドをオーバーライドした`JPopupMenu`を使用する方法がある
+-- `JPopupMenu#isOpaque()`をオーバーライドして自身を透明化
+-- `JPopupMenu#show(...)`をオーバーライドして親`Popup$HeavyWeightWindow`を透明化
+-- `JPopupMenu#paintComponent(...)`をオーバーライドしてラウンド矩形を描画
+
+#code{{
+final class RoundedPopupMenu extends JPopupMenu {
+  @Override public void updateUI() {
+    setBorder(null);
+    super.updateUI();
+    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+  }
+
+  @Override public boolean isOpaque() {
+    return false;
+  }
+
+  @Override protected void paintComponent(Graphics g) {
+    // super.paintComponent(g);
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        RenderingHints.VALUE_ANTIALIAS_ON);
+    g2.setPaint(getBackground());
+    Shape s = makeShape();
+    g2.fill(s);
+    g2.setPaint(Color.GRAY);
+    g2.draw(s);
+    g2.dispose();
+  }
+
+  @Override public void show(Component c, int x, int y) {
+    EventQueue.invokeLater(() -> {
+      Window top = SwingUtilities.getWindowAncestor(this);
+      // Popup$HeavyWeightWindow
+      if (top != null && top.getType() == Window.Type.POPUP) {
+        top.setBackground(new Color(0x0, true));
+      }
+    });
+    super.show(c, x, y);
+  }
+
+  private Shape makeShape() {
+    float w = getWidth() - 1f;
+    float h = getHeight() - 1f;
+    Insets i = getInsets();
+    float r = Math.min(i.top + i.left, i.bottom + i.right);
+    return new RoundRectangle2D.Float(0f, 0f, w, h, r, r);
+  }
+}
+}}
+
+* 参考リンク [#reference]
+- [[Menuに半透明の影を付ける>Swing/MenuWithShadow]]
+- [[JPopupMenuに半透明の影を付ける>Swing/DropShadowPopup]]
+
+* コメント [#comment]
+#comment
+#comment

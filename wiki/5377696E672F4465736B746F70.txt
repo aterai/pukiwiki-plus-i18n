@@ -15,19 +15,17 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTKu9HhvrI/AAAAAAAAAWc/iM
 
 * サンプルコード [#sourcecode]
 #code(link){{
-if (!Desktop.isDesktopSupported()) {
-  return;
-}
-try {
-  Desktop.getDesktop().browse(new URI(href));
-} catch (IOException | URISyntaxException ex) {
-  ex.printStackTrace();
+if (Desktop.isDesktopSupported()) {
+  try {
+    Desktop.getDesktop().browse(new URI(href));
+  } catch (IOException | URISyntaxException ex) {
+    ex.printStackTrace();
+  }
 }
 }}
 
 * 解説 [#explanation]
-`Desktop`を使用することで、拡張子に関連付けられたデフォルトのアプリケーションを起動可能です。
-
+- `Desktop`を使用することで拡張子に関連付けられたデフォルトのアプリケーションを起動可能
 - `OS`毎に対応するアプリケーションを`Runtime.getRuntime().exec(String[])`で実行せずにブラウザなどを起動可能
 
 * 参考リンク [#reference]

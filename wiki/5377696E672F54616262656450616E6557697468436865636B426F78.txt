@@ -9,39 +9,34 @@ description: JTabbedPaneの余白にJCheckBoxを配置して特定のタブの�
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUQ8ALIWI/AAAAAAAAAlw/7jfCbNrxWK8/s800/TabbedPaneWithCheckBox.png
 ---
 * 概要 [#summary]
-`JTabbedPane`の余白に`JCheckBox`を配置して特定のタブの開閉を行います。
+`JTabbedPane`の余白に`JCheckBox`を配置して特定のタブの表示・非表示を切り替えます。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUQ8ALIWI/AAAAAAAAAlw/7jfCbNrxWK8/s800/TabbedPaneWithCheckBox.png)
 
 * サンプルコード [#sourcecode]
 #code(link){{
 class TabbedPaneWithCompBorder implements Border, MouseListener, SwingConstants {
-  private final JComponent  dummy = new JPanel();
-  private final JCheckBox   cbox;
+  private final JCheckBox checkBox;
   private final JTabbedPane tab;
-  private Rectangle rect;
-  public TabbedPaneWithCompBorder(JCheckBox cbox, JTabbedPane tab) {
-    this.cbox = cbox;
-    this.tab  = tab;
-    tab.addMouseListener(this);
-    cbox.setFocusPainted(false);
-    cbox.addMouseListener(new MouseAdapter() {
-      @Override public void mouseClicked(MouseEvent me) {
-        ((AbstractButton) me.getComponent()).doClick();
-      }
-    });
+  private final Container rubberStamp = new JPanel();
+  private final Rectangle rect = new Rectangle();
+
+  protected TabbedPaneWithCompBorder(JCheckBox checkBox, JTabbedPane tab) {
+    this.checkBox = checkBox;
+    this.tab = tab;
   }
 
-  @Override public void paintBorder(Component c, Graphics g, int x, int y, int w, int h) {
-    Dimension size = cbox.getPreferredSize();
+  @Override public void paintBorder(
+      Component c, Graphics g, int x, int y, int width, int height) {
+    Dimension size = checkBox.getPreferredSize();
     int xx = tab.getSize().width - size.width;
     Rectangle lastTab = tab.getBoundsAt(tab.getTabCount() - 1);
     int tabEnd = lastTab.x + lastTab.width;
     if (xx < tabEnd) {
       xx = tabEnd;
     }
-    rect = new Rectangle(xx, -2, size.width, size.height);
-    SwingUtilities.paintComponent(g, cbox, dummy, rect);
+    rect.setBounds(xx, -2, size.width, size.height);
+    SwingUtilities.paintComponent(g, checkBox, rubberStamp, rect);
   }
 
   @Override public Insets getBorderInsets(Component c) {
@@ -52,39 +47,39 @@ class TabbedPaneWithCompBorder implements Border, MouseListener, SwingConstants 
     return true;
   }
 
-  private void dispatchEvent(MouseEvent me) {
-    if (rect == null || !rect.contains(me.getX(), me.getY())) {
+  private void dispatchEvent(MouseEvent e) {
+    if (!rect.contains(e.getX(), e.getY())) {
       return;
     }
-    cbox.setBounds(rect);
-    cbox.dispatchEvent(SwingUtilities.convertMouseEvent(tab, me, cbox));
+    checkBox.setBounds(rect);
+    checkBox.dispatchEvent(SwingUtilities.convertMouseEvent(tab, e, checkBox));
   }
 
-  @Override public void mouseClicked(MouseEvent me) {
-    dispatchEvent(me);
+  @Override public void mouseClicked(MouseEvent e) {
+    dispatchEvent(e);
   }
 
-  @Override public void mouseEntered(MouseEvent me) {
-    dispatchEvent(me);
+  @Override public void mouseEntered(MouseEvent e) {
+    dispatchEvent(e);
   }
 
-  @Override public void mouseExited(MouseEvent me) {
-    dispatchEvent(me);
+  @Override public void mouseExited(MouseEvent e) {
+    dispatchEvent(e);
   }
 
-  @Override public void mousePressed(MouseEvent me) {
-    dispatchEvent(me);
+  @Override public void mousePressed(MouseEvent e) {
+    dispatchEvent(e);
   }
 
-  @Override public void mouseReleased(MouseEvent me) {
-    dispatchEvent(me);
+  @Override public void mouseReleased(MouseEvent e) {
+    dispatchEvent(e);
   }
 }
 }}
 
 * 解説 [#explanation]
 - `JTabbedPane`の`Border`に`SwingUtilities.paintComponent(...)`メソッドを使って`JCheckBox`を描画
-- `JCheckBox`が`JTabbedPane`の子になってタブが増えないようにダミーパネルを中間コンテナに指定
+- `JCheckBox`が`JTabbedPane`の子になってタブが増えないように、別途レンダリング用パネルを作成して中間コンテナに指定
 - `JTabbedPane`で受け取ったマウスイベントを`SwingUtilities.convertMouseEvent(...)`メソッドを利用し、チェックボックス用に座標などを変換してイベント転送
 - タブとチェックボックスが重ならないようにフレームの最小サイズを設定
 #code{{
