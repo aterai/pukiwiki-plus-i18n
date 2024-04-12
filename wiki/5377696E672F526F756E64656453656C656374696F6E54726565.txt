@@ -1,0 +1,103 @@
+---
+category: swing
+folder: RoundedSelectionTree
+title: JTreeの選択領域描画をラウンド矩形に変更する
+tags: [JTree, Area, NimbusLookAndFeel]
+author: aterai
+pubdate: 2024-04-01T02:30:20+09:00
+description: JTreeの選択を行全体に拡張し、その隅を丸めてラウンド矩形で描画します。
+image: https://drive.google.com/uc?id=11-4gPgFYz6fegNlPLellh5ZExqAoFeDc
+---
+* 概要 [#summary]
+`JTree`の選択を行全体に拡張し、その隅を丸めてラウンド矩形で描画します。
+
+#download(https://drive.google.com/uc?id=11-4gPgFYz6fegNlPLellh5ZExqAoFeDc)
+
+* サンプルコード [#sourcecode]
+#code(link){{
+class RoundedSelectionTree extends JTree {
+  private static final Color SELECTED_COLOR = new Color(0xC8_00_78_D7, true);
+
+  @Override protected void paintComponent(Graphics g) {
+    int[] selectionRows = getSelectionRows();
+    if (selectionRows != null) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setPaint(SELECTED_COLOR);
+      Rectangle innerArea = SwingUtilities.calculateInnerArea(this, null);
+      Area area = new Area();
+      Arrays.stream(selectionRows)
+          .mapToObj(this::getRowBounds)
+          .map(r -> new Rectangle(innerArea.x, r.y, innerArea.width, r.height))
+          .forEach(r -> area.add(new Area(r)));
+      int arc = 10;
+      for (Area a : singularization(area)) {
+        Rectangle r = a.getBounds();
+        g2.fillRoundRect(r.x, r.y, r.width - 1, r.height - 1, arc, arc);
+      }
+      g2.dispose();
+    }
+    super.paintComponent(g);
+  }
+
+  private static List<Area> singularization(Area rect) {
+    List<Area> list = new ArrayList<>();
+    Path2D path = new Path2D.Double();
+    PathIterator pi = rect.getPathIterator(null);
+    double[] coords = new double[6];
+    while (!pi.isDone()) {
+      int pathSegmentType = pi.currentSegment(coords);
+      switch (pathSegmentType) {
+        case PathIterator.SEG_MOVETO:
+          path.moveTo(coords[0], coords[1]);
+          break;
+        case PathIterator.SEG_LINETO:
+          path.lineTo(coords[0], coords[1]);
+          break;
+        case PathIterator.SEG_CLOSE:
+          path.closePath();
+          list.add(new Area(path));
+          path.reset();
+          break;
+        default:
+          break;
+      }
+      pi.next();
+    }
+    return list;
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    UIManager.put("Tree.repaintWholeRow", Boolean.TRUE);
+    setCellRenderer(new TransparentTreeCellRenderer());
+    setOpaque(false);
+    setRowHeight(20);
+    UIDefaults d = new UIDefaults();
+    String key = "Tree:TreeCell[Enabled+Selected].backgroundPainter";
+    d.put(key, new TransparentTreeCellPainter());
+    putClientProperty("Nimbus.Overrides", d);
+    putClientProperty("Nimbus.Overrides.InheritDefaults", false);
+    addTreeSelectionListener(e -> repaint());
+  }
+}
+}}
+
+* 解説 [#explanation]
+- `JTree`の選択背景色を`DefaultTreeCellRenderer#getBackgroundSelectionColor()`をオーバーライドして透明色`new Color(0x0, true)`に変更し、セルレンダラーでは選択背景を描画しないよう設定
+-- `NimubsLookAndFeel`の場合はなにも描画しない`RegionPainter`を設定することで選択背景を描画しないよう設定
+- `JTree#paintComponent(...)`をオーバーライドして選択背景をラウンド矩形として描画
+-- `JTree#getSelectionRows()`で取得した選択行を`JTree#getRowBounds(row)`で選択領域に変換し、`Area#add(new Area(Rectangle))`でひとつの`Area`にまとめる
+-- `TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION`で選択範囲の項目数に制限はなく、各項目は連続している必要がない場合は上記の`Area`に複数セグメントが存在するので、これを単一の閉じられたサブパスから構成されている`Area`(`Area#isSingular()==true`となる)ごとに分割
+-- 分割した各`Area`が`Area#getBounds()`で取得した矩形領域の`4`隅を丸めて選択背景として描画
+- たとえば連続する上中下の`3`セルが選択された状態から中セルをKBD{Ctrl+クリック}で選択解除した場合、上セルの下隅、下セルの上隅が丸められるが上セル、下セルの選択状態は変化しないのでこれらの再描画が実行されない
+-- このサンプルでは選択状態が変化したら`JTree`全体を再描画することで丸めの更新を再描画している
+
+* 参考リンク [#reference]
+- [[JTreeを透明にし、選択状態を半透明にする>Swing/TranslucentTree]]
+- [[JTreeのノード選択可能な領域を行全体に拡張する>Swing/WholeRowSelectableTree]]
+
+* コメント [#comment]
+#comment
+#comment

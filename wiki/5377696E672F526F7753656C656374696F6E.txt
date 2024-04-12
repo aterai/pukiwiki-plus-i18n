@@ -17,14 +17,12 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTSWRoWNRI/AAAAAAAAAio/X-
 #code(link){{
 table = new JTable(model);
 table.setAutoCreateRowSorter(true);
-table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-  @Override public void valueChanged(ListSelectionEvent e) {
-    if (e.getValueIsAdjusting()) {
-      return;
-    }
-    int sc = table.getSelectedRowCount();
-    changeInfoPanel((sc == 1) ? getInfo() : " ");
+table.getSelectionModel().addListSelectionListener(e ->
+  if (e.getValueIsAdjusting()) {
+    return;
   }
+  int sc = table.getSelectedRowCount();
+  changeInfoPanel((sc == 1) ? getInfo() : " ");
 });
 // ...
 private String getInfo() {

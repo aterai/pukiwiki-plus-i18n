@@ -16,12 +16,20 @@ image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHzQ8XbXI/AAAAAAAAARw/-T
 * サンプルコード [#sourcecode]
 #code(link){{
 Object[] optionPaneAuditoryCues = {
-  "OptionPane.errorSound", "OptionPane.informationSound",
-  "OptionPane.questionSound", "OptionPane.warningSound"
+  "OptionPane.errorSound",
+  "OptionPane.informationSound",
+  "OptionPane.questionSound",
+  "OptionPane.warningSound"
 };
-// UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.allAuditoryCues"));
-// UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.defaultCueList"));
-// UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.noAuditoryCues"));
+// UIManager.put(
+//     "AuditoryCues.playList",
+//     UIManager.get("AuditoryCues.allAuditoryCues"));
+// UIManager.put(
+//    "AuditoryCues.playList",
+//     UIManager.get("AuditoryCues.defaultCueList"));
+// UIManager.put(
+//     "AuditoryCues.playList",
+//     UIManager.get("AuditoryCues.noAuditoryCues"));
 UIManager.put("AuditoryCues.playList", optionPaneAuditoryCues);
 }}
 
