@@ -45,7 +45,7 @@ class PukiWikiParser
   end
   def filename(pw_name)
     decoded_name = HTMLUtils.urldecode(pw_name).sub(/\:/, '_').downcase.split("/").last
-    name = decoded_name.sub(/\.txt$/, '.md')
+    name = decoded_name.sub(/\.txt\z/, '.md')
     if @timestamp.nil? || @timestamp.size===0
       return name
     else
@@ -58,7 +58,7 @@ class PukiWikiParser
   def to_md(src, page_names, page, base_uri = 'https://ateraimemo.com/', suffix= '/')
     @page_names = page_names
     @base_uri = base_uri
-    @page = page.sub(/\ASwing\/(.+)\.txt$/) { $1 }
+    @page = page.sub(/\ASwing\/(.+)\.txt\z/) { $1 }
     @pagelist_suffix = suffix
     @inline_re = nil
 
@@ -165,8 +165,8 @@ class PukiWikiParser
     buf = []
     until lines.empty?
       l = lines.shift
-      break if /^\}\}$/ =~ l
-      next  if /^.code.*$/ =~ l
+      break if /\A\}\}\z/ =~ l
+      next  if /\A\#code.*\z/ =~ l
       buf.push l
     end
     buf
@@ -217,7 +217,7 @@ class PukiWikiParser
         until lines.empty?
           l = lines.shift
           array.push l
-          break if /^\}\}$/ =~ l
+          break if /\A\}\}\z/ =~ l
         end
         buf.concat array
         codeblock = true

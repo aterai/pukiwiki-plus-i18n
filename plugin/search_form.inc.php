@@ -21,13 +21,18 @@ function plugin_search_form_convert() {
 //   </div>
 // </form>
 // <script async defer type="text/javascript" src="http://www.google.co.jp/coop/cse/brand?form=cse-search-box&amp;lang="></script>
+// <form class="form-inline my-2 my-lg-0" action="$url?cmd=search" method="post" role="search">
+//   <input type="hidden" name="encode_hint" value="ぷ" />
+//   <input class="form-control mr-sm-2" type="search" name="word" value="" placeholder="サイト内検索" aria-label="Search">
+//   <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+// </form>
     $url = get_script_uri(); // . '?' .  rawurlencode($vars['page']); // . $name;
     return <<<EOD
-<form class="form-inline my-2 my-lg-0" action="$url?cmd=search" method="post" role="search">
-  <input type="hidden" name="encode_hint" value="ぷ" />
-  <input class="form-control mr-sm-2" type="search" name="word" value="" placeholder="サイト内検索" aria-label="Search">
-  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-</form>
+    <form class="d-flex" action="$url?cmd=search" method="post" role="search">
+      <input type="hidden" name="encode_hint" value="ぷ" />
+      <input class="form-control me-2" type="search" name="word" value="" placeholder="サイト内検索" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
 EOD;
 }
 ?>

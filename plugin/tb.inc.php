@@ -228,7 +228,7 @@ function plugin_tb_mode_rss($tb_id)
 		// _utime_, title, excerpt, _blog_name_
 		array_shift($arr); // Cut utime
 		list ($url, $title, $excerpt) = array_map(
-			create_function('$a', 'return htmlspecialchars($a);'), $arr);
+			function($a){return htmlspecialchars($a);}, $arr);
 		$items .= <<<EOD
 
    <item>
@@ -305,7 +305,7 @@ function plugin_tb_mode_view_set($page)
 	$data = tb_get(tb_get_filename($page));
 
 	// Sort: The first is the latest
-	usort($data, create_function('$a,$b', 'return $b[0] - $a[0];'));
+	usort($data, function($a,$b){return $b[0] - $a[0];});
 
 	foreach ($data as $x) {
 		if (count($x) != 5) continue; // Ignore incorrect record
@@ -350,7 +350,7 @@ function plugin_tb_recent($page,$line)
 
 	if ($ctr > 1) {
 		// Sort: The first is the latest
-		usort($data, create_function('$a,$b', 'return $b[0] - $a[0];'));
+		usort($data, function($a,$b){return $b[0] - $a[0];});
 	}
 
 	$body .= '<h5>' . _("RECENT TRACKBACK") . "</h5>\n";

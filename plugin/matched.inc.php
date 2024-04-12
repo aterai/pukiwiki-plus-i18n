@@ -9,7 +9,7 @@ function plugin_matched_convert() {
     }
 return <<<EOD
 <aside class="ad_bar">
-<h3 id="matched">関連コンテンツ＆広告</h3>
+<h3 id="matched">関連記事＆広告</h3>
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-6939179021013694"

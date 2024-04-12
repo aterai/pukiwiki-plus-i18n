@@ -31,20 +31,22 @@ function plugin_code_convert() {
             continue;
         }
         if (strpos($tmp, "lang-") >= 0) {
-            $buf .= $tmp . ' ';
+            $buf .= ' ' . $tmp;
         }
     }
-    if ($buf != '') {
-        $buf = ' ' + $buf.rtrim();
-    }
+//     if ($buf != '') {
+//         $buf = ' ' + $buf.rtrim();
+//     }
 
     //$pre = sprintf('<pre class="prettyprint' . $buf . '" itemscope="itemscope" itemtype="https://schema.org/Code"><code itemprop="sampleType" content="code snippet">%s</code></pre>', $str);
-    $pre = sprintf('<pre class="prettyprint' . $buf . '"><code itemscope="itemscope" itemtype="https://schema.org/Code">%s</code></pre>', $str);
     //$svn = "http://java-swing-tips.googlecode.com/svn/trunk/" . str_replace('Swing/', '', $page) . "/src/java/example/MainPanel.java";
-    $git = '//github.com/aterai/java-swing-tips/blob/master/' . str_replace('Swing/', '', $page) . '/src/java/example/MainPanel.java';
     //if ($flag && is_url($git)) {
+
+    $pre = sprintf('<pre><code ' . $buf . ' translate="no" itemscope="itemscope" itemtype="https://schema.org/Code">%s</code></pre>', $str);
     if ($flag) {
-        return '<div style="position:relative">' . $pre . sprintf('<a href="%s" style="position:absolute;right:1.5EM;top:-1.5EM;z-index:50">view all</a></div>', $git);
+        $git = 'https://github.com/aterai/java-swing-tips/blob/master/' . str_replace('Swing/', '', $page) . '/src/java/example/MainPanel.java';
+        $kotlin = 'https://github.com/aterai/kotlin-swing-tips/blob/master/' . str_replace('Swing/', '', $page) . '/src/main/kotlin/example/App.kt';
+        return '<div style="position:relative">' . $pre . sprintf('<span style="position:absolute;right:1.5EM;top:-1.5EM;z-index:50">View in GitHub: <a href="%s">Java</a>, <a href="%s">Kotlin</a></span></div>', $git, $kotlin);
     }else{
         return $pre;
     }

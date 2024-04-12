@@ -18,8 +18,9 @@ function plugin_header_convert() {
     $path = explode('/', $_page);
     $navi = '';
     if ($is_read && count($path) > 1) {
-        include_once(PLUGIN_DIR.'navi.inc.php');
-        $navi = plugin_navi_convert($path[0]);
+        include_once(PLUGIN_DIR.'topicpath.inc.php');
+        // $navi = plugin_navi_convert($path[0]);
+        $navi = plugin_topicpath_convert();
     }
 
     $h1 = isset($frontmatter['title']) ? $frontmatter['title'] : $title;
@@ -33,7 +34,7 @@ function plugin_header_convert() {
             $tags_buf = $tags_buf . '<li><a href="/tags.html#' . $tag . '-ref" rel="tag"><span itemprop="keywords">' . $tag . '</span></a></li>';
         }
         if ($tags_buf != '') {
-            $tags_buf = '<ul class="tag_box inline"><li><span class="glyphicon-tags" aria-hidden="true"></span></li>' . $tags_buf . '</ul>';
+            $tags_buf = '<ul class="tag_box inline">' . $tags_buf . '</ul>';
         }
     }
 
@@ -42,7 +43,7 @@ function plugin_header_convert() {
         $lng = $frontmatter['hreflang']['lang'];
         //$hrf = $frontmatter['hreflang']['href'];
         $hrf = preg_replace("/^https?:/", "", $frontmatter['hreflang']['href']);
-        $hreflang = '<ul class="tag_box inline"><li><span class="glyphicon-list-alt" aria-hidden="true"></span></li><li><a rel="alternate" hreflang="' . $lng . '" href="' . $hrf . '">' . $lng . '</a></li></ul>';
+        $hreflang = '<ul class="tag_box inline"><li><a rel="alternate" hreflang="' . $lng . '" href="' . $hrf . '">' . $lng . '</a></li></ul>';
     }
 
     $time  = $is_read ? get_filetime($_page) : 0;
@@ -86,10 +87,10 @@ function plugin_header_convert() {
 
     return <<<EOD
 <div class="page-header">
-$navi
 <h1 class="page-title" itemprop="name headline">$h1</h1>
 <div class="row">
 <div class="col-md-7 col-xs-12">
+$navi
 $tags_buf
 $hreflang
 </div><!-- col-md-7 -->

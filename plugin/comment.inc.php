@@ -226,21 +226,23 @@ s.setAttribute('data-timestamp', +new Date());
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </aside>
-<br />
-<aside class="ad_bar">
-<h2>広告</h2>
-<!-- responsive -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-6939179021013694"
-     data-ad-slot="1067574330"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</aside>
 EOD;
 }
+// <br />
+// <aside class="ad_bar">
+// <h2>広告</h2>
+// <!-- responsive -->
+// <ins class="adsbygoogle"
+//      style="display:block"
+//      data-ad-client="ca-pub-6939179021013694"
+//      data-ad-slot="1067574330"
+//      data-ad-format="auto"></ins>
+// <script>
+// (adsbygoogle = window.adsbygoogle || []).push({});
+// </script>
+// </aside>
+// EOD;
+// }
 // <!-- START: Livefyre Embed -->
 // <div id="livefyre-comments"></div>
 // <script src="//zor.livefyre.com/wjs/v3.0/javascripts/livefyre.js"></script>

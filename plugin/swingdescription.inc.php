@@ -16,7 +16,7 @@ function plugin_swingdescription_convert() {
     $ssurl       = preg_replace('/https:\/\/drive\.google\.com\/uc/', 'https://drive.google.com/thumbnail', htmlspecialchars(trim($aryargs[3])));
 
     $pattern     = '/([\w\s\.\(\)]+)/i';
-    $replacement = '<code>$1</code>';
+    $replacement = '<code translate="no">$1</code>';
     $description = preg_replace($pattern, $replacement, htmlspecialchars(trim($aryargs[2])));
 
     return <<<EOD

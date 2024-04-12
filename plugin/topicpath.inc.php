@@ -23,7 +23,7 @@ function plugin_topicpath_convert()
 {
 	global $topicpath;
 	if (isset($topicpath) && $topicpath == false) return '';
-	return '<ol id ="topicpath" class="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">' . plugin_topicpath_inline() . '</ol>';
+	return '<ol id="topicpath" class="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">' . plugin_topicpath_inline() . '</ol>';
 }
 
 function plugin_topicpath_inline()

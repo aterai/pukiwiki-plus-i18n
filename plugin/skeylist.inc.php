@@ -56,7 +56,7 @@ function plugin_skeylist_action()
 
 	$data = skeylist_analysis($data);
 	// 0:検索キー 1:参照カウンタ
-	usort($data,create_function('$a,$b','return $b[1] - $a[1];'));
+	usort($data,function($a,$b){return $b[1] - $a[1];});
 	$data = skeylist_print($data,$max);
 
 	$retval['body']  = '<div>';
@@ -83,7 +83,7 @@ function plugin_skeylist_convert()
 	if (count($data) == 0) return ''; //  データ無し
 	$data = skeylist_analysis($data);
 	// 0:検索キー 1:参照カウンタ
-	usort($data,create_function('$a,$b','return $b[1] - $a[1];'));
+	usort($data,function($a,$b){return $b[1] - $a[1];});
 	$data = skeylist_print($data,$max);
 	return '<div>'.$data."</div>\n";
 }

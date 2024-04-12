@@ -181,22 +181,27 @@ function plugin_navi_convert()
 
 	} else if (! $footer) {
 		// Header
+// <div class="row justify-content-between">
+//   <div class="col col-lg-1">
+//     <a itemprop="url" class="navi_left previous" href="{$navi[$home]['prevhref']}">Prev</a>
+//   </div>
+//   <div>
+//     <nav aria-label="breadcrumb" class="pager mx-auto" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
+//       <ol class="breadcrumb bg-white" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">
+//         {$navi[$home]['home']}
+//       </ol>
+//     </nav>
+//   </div>
+//   <div class="col col-lg-1">
+//     <a itemprop="url" class="navi_right next" href="{$navi[$home]['nexthref']}">Next</a>
+//   </div>
+// </div>
 		$ret = <<<EOD
-<div class="row justify-content-between">
-  <div class="col col-lg-1">
-    <a itemprop="url" class="navi_left previous" href="{$navi[$home]['prevhref']}">Prev</a>
-  </div>
-  <div>
-    <nav aria-label="breadcrumb" class="pager mx-auto" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
-      <ol class="breadcrumb bg-white" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">
-        {$navi[$home]['home']}
-      </ol>
-    </nav>
-  </div>
-  <div class="col col-lg-1">
-    <a itemprop="url" class="navi_right next" href="{$navi[$home]['nexthref']}">Next</a>
-  </div>
-</div>
+<nav aria-label="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
+<ol class="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">
+    {$navi[$home]['home']}
+</ol>
+</nav>
 EOD;
 	} else {
 		// Footer
