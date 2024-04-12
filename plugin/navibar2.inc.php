@@ -47,7 +47,7 @@ function plugin_navibar2_makehtml($page)
 	foreach ($lines as $line) {
 		if ($line == '') continue;
 
-		$head  = $line{0};	// The first letter
+		$head  = $line[0];	// The first letter
 		$level = strspn($line, $head);
 
 		if ($head == '-') {

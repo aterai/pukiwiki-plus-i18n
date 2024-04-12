@@ -19,7 +19,7 @@ function plugin_siteimage_inline()
 		return 'Usage: &amp;siteimage([url],[option(s),...]);';
 
 	$options = array('nolink'=>false);
-	get_plugin_option($args, &$options);
+	get_plugin_option($args, $options);
 	return plugin_siteimage_make($url, $options['nolink']);
 //	return plugin_siteimage_make($url, $options['nolink'], $options['target']);
 }
@@ -33,7 +33,7 @@ function plugin_siteimage_convert()
 		return '<p>Usage: #siteimage([url],[option(s),...]);</p>';
 
 	$options = array('nolink'=>false,'around'=>false,'left'=>false,'right'=>false,'center'=>false);
-	get_plugin_option($args, &$options);
+	get_plugin_option($args, $options);
 
 	$style = 'width:128px;height:128px;margin:10px;';
 	if ($options['around']) {

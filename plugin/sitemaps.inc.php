@@ -4,7 +4,7 @@ function plugin_sitemaps_action() {
     global $vars, $non_list;
     //$nl_flag = TRUE;     //.*wiki.ini.php の$non_listで指定したpageを書き出す？(TRUE:有効)
 
-    $sitemaps_max = 1000; //recent.datに合わせて適当に修正してください
+    $sitemaps_max = 2000; //recent.datに合わせて適当に修正してください
     $recent = CACHE_DIR . PKWK_MAXSHOW_CACHE;
     if(!file_exists($recent)) die('recent.dat is not found');
 
@@ -62,6 +62,8 @@ function plugin_sitemaps_action() {
 
     $array[] = '^Subversion%2FSubclipse$';
     $array[] = '^Subversion%2FeSvn$';
+    $array[] = '^Subversion%2F_Link$';
+    $array[] = '^JavaScript%2FlivedoorReader$';
 
     $array[] = '^Tips%2FAPIDocEnJa$';
 

@@ -49,7 +49,7 @@ function plugin_linklist_action()
 
 	$data = linklist_analysis($data);
 	// 0:検索キー 1:参照カウンタ
-	usort($data,create_function('$a,$b','return $b[1] - $a[1];'));
+	usort($data, function($a, $b) { return $b[1] - $a[1]; };
 	$data = linklist_print($data,$max,0);
 
 	$retval['body']  = '<div>';
@@ -74,7 +74,7 @@ function plugin_linklist_convert()
 	if (count($data) == 0) return; //  データ無し
 	$data = linklist_analysis($data);
 	// 0:検索キー 1:参照カウンタ
-	usort($data,create_function('$a,$b','return $b[1] - $a[1];'));
+	usort($data, function($a, $b) { return $b[1] - $a[1]; };
 	$data = linklist_print($data,$max,1);
 	return '<div>'.$data."</div>\n";
 }
