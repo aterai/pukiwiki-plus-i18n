@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2016/11/filtering-jlist-items-by-regex.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`のアイテムのタイトル文字列に対して、正規表現による表示フィルタリングを実行します。
 
 #download(https://drive.google.com/uc?id=1po5ebXxijKnGitb-gGFQv-USKEVDS9IaBQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 DefaultListModel<ListItem> model = new DefaultListModel<>();
 JList<ListItem> list = new JList<ListItem>(model) {
@@ -59,14 +59,14 @@ private void filter() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#HORIZONTAL_WRAP 水平ニュースペーパー・スタイルレイアウト]を設定した`JList`で、アイテム(セル)のタイトル文字列が`JTextField`に入力したパターンにマッチするかどうかによる表示のフィルタリングを行っています。
 
 - `JList`デフォルトのセルを垂直方向に`1`列に並べたレイアウトでフィルタリングを行う場合は、ヘッダを非表示にした`JTable`と`RowFilter`で代用可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#HORIZONTAL_WRAP JList#HORIZONTAL_WRAP (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,28 +8,28 @@ pubdate: 2004-12-20T00:29:03+09:00
 description: JLabelの装飾にMatteBorderを使用し、4辺でそれぞれ異なる線幅の枠を描画します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTPp-xSv1I/AAAAAAAAAeU/K5lHH6YMz_E/s800/MatteBorder.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLabel`の装飾に`MatteBorder`を使用し、`4`辺でそれぞれ異なる線幅の枠を描画します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTPp-xSv1I/AAAAAAAAAeU/K5lHH6YMz_E/s800/MatteBorder.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Border outside = BorderFactory.createMatteBorder(0, 10, 1, 0, Color.GREEN);
 Border inside = BorderFactory.createEmptyBorder(0, 5, 0, 0);
 label.setBorder(BorderFactory.createCompoundBorder(outside, inside));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `4`辺それぞれ異なる幅の直線を描画可能な`MatteBorder`を使用して左(`10px`)と下(`1px`)のみフチを描画
 -- 内部余白を`EmptyBorder`で作成し、上記の`MatteBorder`と組み合わせて`CompoundBorder`を作成
 - [[JComboBoxにアイコンを表示>Swing/IconComboBox]]のように`Border`として`Icon`をタイル状に描画する方法もある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/border/MatteBorder.html MatteBorder (Java Platform SE 8)]
 - [[JComboBoxにアイコンを表示>Swing/IconComboBox]]
 - [[JTextField内にアイコンを追加>Swing/IconTextField]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

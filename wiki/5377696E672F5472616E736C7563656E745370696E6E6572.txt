@@ -8,12 +8,12 @@ pubdate: 2020-04-06T12:14:53+09:00
 description: NimbusLookAndFeelを適用したJSpinnerでそのFormattedTextFieldやArrowButtonが半透明になるよう設定します。
 image: https://drive.google.com/uc?id=1W4bLhbm0FPWEiaLl_9_CIbsCO_Fe4LpP
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`を適用した`JSpinner`でその`FormattedTextField`や`ArrowButton`が半透明になるよう設定します。
 
 #download(https://drive.google.com/uc?id=1W4bLhbm0FPWEiaLl_9_CIbsCO_Fe4LpP)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIDefaults d = new UIDefaults();
 Painter<JComponent> painter1 = (g, c, w, h) -> {
@@ -24,11 +24,12 @@ Painter<JComponent> painter2 = (g, c, w, h) -> {
   g.setColor(new Color(100, 200, 200, 100));
   g.fillRect(0, 0, w, h);
 };
-d.put("Spinner:Panel:\"Spinner.formattedTextField\"[Enabled].backgroundPainter", painter1);
-d.put("Spinner:Panel:\"Spinner.formattedTextField\"[Focused].backgroundPainter", painter2);
-d.put("Spinner:Panel:\"Spinner.formattedTextField\"[Selected].backgroundPainter", painter2);
-// d.put("Spinner:Panel:\"Spinner.formattedTextField\"[Focused+Selected].backgroundPainter", painter2);
-// d.put("Spinner:Panel:\"Spinner.formattedTextField\"[Disabled].backgroundPainter", painter);
+d.put("Spinner:Panel:\"Spinner.formattedTextField\"[Enabled].backgroundPainter",
+    painter1);
+d.put("Spinner:Panel:\"Spinner.formattedTextField\"[Focused].backgroundPainter",
+    painter2);
+d.put("Spinner:Panel:\"Spinner.formattedTextField\"[Selected].backgroundPainter",
+    painter2);
 
 Painter<JComponent> painter3 = (g, c, w, h) -> {
   g.setColor(new Color(100, 100, 200, 100));
@@ -38,19 +39,31 @@ Painter<JComponent> painter4 = (g, c, w, h) -> {
   g.setColor(new Color(120, 120, 120, 100));
   g.fillRect(0, 0, w, h);
 };
-d.put("Spinner:\"Spinner.previousButton\"[Enabled].backgroundPainter", painter3);
-d.put("Spinner:\"Spinner.previousButton\"[Focused+MouseOver].backgroundPainter", painter3);
-d.put("Spinner:\"Spinner.previousButton\"[Focused+Pressed].backgroundPainter", painter3);
-d.put("Spinner:\"Spinner.previousButton\"[Focused].backgroundPainter", painter3);
-d.put("Spinner:\"Spinner.previousButton\"[MouseOver].backgroundPainter", painter3);
-d.put("Spinner:\"Spinner.previousButton\"[Pressed].backgroundPainter", painter4);
+d.put("Spinner:\"Spinner.previousButton\"[Enabled].backgroundPainter",
+    painter3);
+d.put("Spinner:\"Spinner.previousButton\"[Focused+MouseOver].backgroundPainter",
+    painter3);
+d.put("Spinner:\"Spinner.previousButton\"[Focused+Pressed].backgroundPainter",
+    painter3);
+d.put("Spinner:\"Spinner.previousButton\"[Focused].backgroundPainter",
+    painter3);
+d.put("Spinner:\"Spinner.previousButton\"[MouseOver].backgroundPainter",
+    painter3);
+d.put("Spinner:\"Spinner.previousButton\"[Pressed].backgroundPainter",
+    painter4);
 
-d.put("Spinner:\"Spinner.nextButton\"[Enabled].backgroundPainter", painter3);
-d.put("Spinner:\"Spinner.nextButton\"[Focused+MouseOver].backgroundPainter", painter3);
-d.put("Spinner:\"Spinner.nextButton\"[Focused+Pressed].backgroundPainter", painter3);
-d.put("Spinner:\"Spinner.nextButton\"[Focused].backgroundPainter", painter3);
-d.put("Spinner:\"Spinner.nextButton\"[MouseOver].backgroundPainter", painter3);
-d.put("Spinner:\"Spinner.nextButton\"[Pressed].backgroundPainter", painter4);
+d.put("Spinner:\"Spinner.nextButton\"[Enabled].backgroundPainter",
+    painter3);
+d.put("Spinner:\"Spinner.nextButton\"[Focused+MouseOver].backgroundPainter",
+    painter3);
+d.put("Spinner:\"Spinner.nextButton\"[Focused+Pressed].backgroundPainter",
+    painter3);
+d.put("Spinner:\"Spinner.nextButton\"[Focused].backgroundPainter",
+    painter3);
+d.put("Spinner:\"Spinner.nextButton\"[MouseOver].backgroundPainter",
+    painter3);
+d.put("Spinner:\"Spinner.nextButton\"[Pressed].backgroundPainter",
+    painter4);
 
 SpinnerModel model = new SpinnerNumberModel(0, 0, 100, 5);
 JSpinner spinner1 = new JSpinner(model);
@@ -60,7 +73,7 @@ JSpinner spinner1 = new JSpinner(model);
 configureSpinnerButtons(spinner1, d);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `UIDefaults`を作成して`JSpinner`の`FormattedTextField`や`ArrowButton`で使用する`Painter`を登録
 -- [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]にキー一覧がある
 -- `JSpinner`の`FormattedTextField`は`Spinner:Panel:"Spinner.formattedTextField"[Enabled].backgroundPainter`のように`Panel`が付くので注意
@@ -76,10 +89,10 @@ configureSpinnerButtons(spinner1, d);
 --- 参考: [[JSpinnerのボタンにToolTipを付ける>Swing/SpinnerButton]]
 -- 特定の`JSpinner`に`putClientProperty(...)`を設定しても他の`JSpinner`まで上書きされてしまう？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
 - [[JSpinnerのボタンにToolTipを付ける>Swing/SpinnerButton]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

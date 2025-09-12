@@ -8,12 +8,12 @@ pubdate: 2006-12-11T14:51:59+09:00
 description: JPasswordFieldのエコー文字を独自のIcon図形に変更します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTQ8cs8ApI/AAAAAAAAAgY/gxUUdKI65yA/s800/PasswordView.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPasswordField`のエコー文字を独自の`Icon`図形に変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTQ8cs8ApI/AAAAAAAAAgY/gxUUdKI65yA/s800/PasswordView.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class MyPasswordFieldUI extends BasicPasswordFieldUI {
   private static final StarIcon ICON = new StarIcon();
@@ -40,17 +40,17 @@ class MyPasswordFieldUI extends BasicPasswordFieldUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `setEchoChar('\u2605')`
 -- `JPasswordField#setEchoChar(...)`メソッドで任意の文字をエコー文字に設定
 - 下: `drawEchoCharacter`
 -- `PasswordView#drawEchoCharacter(...)`をオーバーライドして任意の図形をエコー文字として描画する`BasicPasswordFieldUI`を作成し`JPasswordField`に設定
 -- 上の`JPasswordField`のエコー文字と同じ文字を`setEchoChar`で設定し図形のサイズを合わせる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JPasswordFieldでパスワードを可視化する>Swing/ShowHidePasswordField]]
 - [https://bugs.openjdk.org/browse/JDK-6852577 &#91;JDK-6852577&#93; Only for Nimbus LAF UIManager.get("PasswordField.echoChar") is null - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

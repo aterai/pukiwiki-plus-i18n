@@ -8,12 +8,12 @@ pubdate: 2011-12-19T19:46:54+09:00
 description: JFrameのタイトルバーなどを非表示にし、Windowの形を非矩形図形に変更します。
 image: https://lh4.googleusercontent.com/-f54GogC4jCU/Tu7AbPCJhsI/AAAAAAAABGc/EzG0Tf9ITFI/s800/WindowShape.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFrame`のタイトルバーなどを非表示にし、`Window`の形を非矩形図形に変更します。
 
 #download(https://lh4.googleusercontent.com/-f54GogC4jCU/Tu7AbPCJhsI/AAAAAAAABGc/EzG0Tf9ITFI/s800/WindowShape.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JFrame frame = new JFrame();
 frame.setUndecorated(true);
@@ -35,15 +35,15 @@ frame.setLocationRelativeTo(parent);
 frame.setVisible(true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JDK 1.7.0`で導入された`Window#setShape(Shape)`メソッドを使用して`JFrame`の形を変更しています。
 
 - `JDK 1.6.0_10`の場合は`com.sun.awt.AWTUtilities.setWindowShape(...)`を使用する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://blogs.oracle.com/thejavatutorials/entry/translucent_and_shaped_windows_in Translucent and Shaped Windows in JDK7 (The Java Tutorials' Weblog)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#setShape-java.awt.Shape- Window#setShape(Shape) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

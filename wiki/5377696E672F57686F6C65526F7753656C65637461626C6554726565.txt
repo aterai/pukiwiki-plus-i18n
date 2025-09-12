@@ -8,12 +8,12 @@ pubdate: 2022-10-17T02:52:38+09:00
 description: JTreeのノードでマウスクリックによる選択可能な領域を行全体に拡張します。
 image: https://drive.google.com/uc?id=1DaPvGijSvyOGkYymKeApaNsaZKvo9ycw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードでマウスクリックによる選択可能な領域を行全体に拡張します。
 
 #download(https://drive.google.com/uc?id=1DaPvGijSvyOGkYymKeApaNsaZKvo9ycw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class WholeRowSelectableTreeUI extends BasicTreeUI {
   @Override public void paint(Graphics g, JComponent c) {
@@ -70,16 +70,16 @@ class WholeRowSelectableTreeUI extends BasicTreeUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `BasicTreeUI#createMouseListener()`をオーバーライドして行全体がクリック可能になるようノード領域外で発生したマウスイベントの`x`座標をノード領域の中央に変換
 - `BasicTreeUI#paintRow(...)`をオーバーライドして行全体の選択背景色での描画とノードにフォーカスが存在する場合の`Border`の描画を追加
 - `NimbusLookAndFeel`のように行全体の選択背景色での描画の後でノード接続線などを描画するよう`BasicTreeUI#paint(...)`の中身を`SynthTreeUI#paint(...)`と入れ替え
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeを行クリックで選択し、行全体を選択状態の背景色で描画>Swing/TreeRowSelection]]
 -- 同様に行クリックでの選択と行全体の描画が可能だがノードの左側余白のクリックには未対応
 - [https://github.com/JFormDesigner/FlatLaf/blob/main/flatlaf-core/src/main/java/com/formdev/flatlaf/ui/FlatTreeUI.java FlatLaf/FlatTreeUI.java at main · JFormDesigner/FlatLaf]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

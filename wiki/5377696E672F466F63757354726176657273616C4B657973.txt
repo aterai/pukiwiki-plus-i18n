@@ -8,12 +8,12 @@ pubdate: 2008-06-02T13:10:23+09:00
 description: デフォルトのKBD{Tab}キーに加えて、矢印キーでもフォーカス移動できるように設定します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTNHR5gShI/AAAAAAAAAaQ/KUE3fbR0bXo/s800/FocusTraversalKeys.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 デフォルトのKBD{Tab}キーに加えて、矢印キーでもフォーカス移動できるように設定します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTNHR5gShI/AAAAAAAAAaQ/KUE3fbR0bXo/s800/FocusTraversalKeys.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 
@@ -30,7 +30,7 @@ backwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
 focusManager.setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, backwardKeys);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、デフォルトのフォーカストラバーサルキー(KBD{Tab}、KBD{Shift+Tab})に加えて、上下左右の矢印キーでもフォーカス移動できるように設定しています。
 
 - `KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS`
@@ -49,12 +49,12 @@ forwardKeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
 frame.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardKeys);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/KeyboardFocusManager.html KeyboardFocusManager (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#setFocusTraversalKeys-int-java.util.Set- Container#setFocusTraversalKeys(...) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html How to Use the Focus Subsystem]
 - [[Focusの移動>Swing/FocusTraversal]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

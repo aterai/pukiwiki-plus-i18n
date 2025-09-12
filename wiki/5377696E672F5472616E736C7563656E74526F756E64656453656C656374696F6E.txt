@@ -1,0 +1,119 @@
+---
+category: swing
+folder: TranslucentRoundedSelection
+title: JTextComponentの文字列選択ハイライトのすべての角を丸めて半透明で描画する
+tags: [JTextComponent, HighlightPainter, Caret, JTextArea, JEditorPane]
+author: aterai
+pubdate: 2025-03-24T03:07:24+09:00
+description: JTextAreaやJEditorPaneなどのJTextComponentが使用するCaretに文字列選択ハイライトのすべての角を丸め、かつ半透明で描画するHighlightPainterを使用するよう設定します。
+image: https://drive.google.com/uc?id=1tragzwUpNp26U_PhnHyKNCzU9mtvNiZx
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2025/03/rounds-all-corners-of-jtextcomponents.html
+    lang: en
+---
+* Summary [#summary]
+`JTextArea`や`JEditorPane`などの`JTextComponent`が使用する`Caret`に文字列選択ハイライトのすべての角を丸め、かつ半透明で描画する`HighlightPainter`を使用するよう設定します。
+
+#download(https://drive.google.com/uc?id=1tragzwUpNp26U_PhnHyKNCzU9mtvNiZx)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class RoundedSelectionHighlightPainter extends DefaultHighlightPainter {
+  protected RoundedSelectionHighlightPainter() {
+    super(null);
+  }
+
+  @Override public void paint(
+      Graphics g, int offs0, int offs1, Shape bounds, JTextComponent c) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(
+      RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    int rgba = c.getSelectionColor().getRGB() & 0xFF_FF_FF | (64 << 24);
+    g2.setColor(new Color(rgba, true));
+    try {
+      Area area = getLinesArea(c, offs0, offs1);
+      for (Area a : GeomUtils.singularization(area)) {
+        List<Point2D> lst = GeomUtils.convertAreaToListOfPoint2D(a);
+        GeomUtils.flatteningStepsOnRightSide(lst, 3d * 2d);
+        g2.fill(GeomUtils.convertRoundedPath(lst, 3d));
+      }
+    } catch (BadLocationException ex) {
+      // can't render
+      Logger.getGlobal().severe(ex::getMessage);
+    }
+    g2.dispose();
+  }
+
+  private static Area getLinesArea(JTextComponent c, int offs0, int offs1)
+      throws BadLocationException {
+    TextUI mapper = c.getUI();
+    Area area = new Area();
+    int cur = offs0;
+    do {
+      int startOffset = Utilities.getRowStart(c, cur);
+      int endOffset = Utilities.getRowEnd(c, cur);
+      Rectangle p0 = mapper.modelToView(c, Math.max(startOffset, offs0));
+      Rectangle p1 = mapper.modelToView(c, Math.min(endOffset, offs1));
+      if (offs1 > endOffset) {
+        p1.width += 6;
+      }
+      addRectToArea(area, p0.union(p1));
+      cur = endOffset + 1;
+    } while (cur < offs1);
+    return area;
+  }
+
+  private static void addRectToArea(Area area, Rectangle rect) {
+    area.add(new Area(rect));
+  }
+}
+}}
+
+* Description [#description]
+- すべての角を丸める
+-- [[JTextComponentの選択ハイライトを角丸で描画する>Swing/RoundedSelectionHighlightPainter]]と同様に、`DefaultHighlighter#setDrawsLayeredHighlights(false)`を設定
+--- `DefaultHighlightPainter#paint(...)`をオーバーライドして選択ハイライト領域を取得して角丸に変更する`HighlightPainter`を作成
+--- この`HighlightPainter`を文字列選択で使用する`Caret`を作成して`JTextComponent`に設定
+-- 角の丸め方法は[[JTextComponentの選択ハイライトを角丸で描画する>Swing/RoundedSelectionHighlightPainter]]のような行単位ではなく、一まとまりの領域単位で適用するので[[JTreeのノード選択で生成された直角多角形の角を丸める>Swing/FlatTreeNodeRoundedCornerSelection]]と同様に、重複点やラウンド直径より小さい段差などで尖点が発生しないよう選択領域図形を平坦化してから実施
+-- 行末の改行が選択された場合はその行の選択領域幅を`3(ラウンド半径) * 2`の`6px`に拡張してから角丸に変換
+-- 複数行に渡って文字列選択されている場合、`DefaultHighlighter#setDrawsLayeredHighlights(false)`を設定した場合のデフォルトである`JTextComponent`の行幅全体をハイライトするのではなく、文字列部分のみ選択ハイライトするよう変更するため、`Utilities.getRowStart(...)`、`Utilities.getRowEnd(...)`で取得した行頭、行末オフセットの位置を選択ハイライト領域としている
+--- [[JEditorPaneで選択ハイライトの描画範囲を変更する>Swing/WholeLineHighlightPainter]]
+--- `JTextArea#setLineWrap(true)`や`JTextArea#setWrapStyleWord(true)`が設定されて折り返しが発生する場合、`Utilities.getRowEnd(...)`で取得される行末の位置は折り返しの位置になる
+-- デフォルトの`DefaultCaret`での選択ハイライト再描画では領域右側隅の丸め部分が更新できないので、%%複数行選択の場合は%%`DefaultCaret#damage(...)`をオーバーライドして選択開始行、終了行の行幅全体を追加で再描画している
+#code{{
+class RoundedSelectionCaret extends DefaultCaret {
+  @Override protected HighlightPainter getSelectionPainter() {
+    return new RoundedSelectionHighlightPainter();
+  }
+
+  @SuppressWarnings("PMD.AvoidSynchronizedAtMethodLevel")
+  @Override protected synchronized void damage(Rectangle r) {
+    super.damage(r);
+    JTextComponent c = getComponent();
+    int startOffset = c.getSelectionStart();
+    int endOffset = c.getSelectionEnd();
+    TextUI mapper = c.getUI();
+    try {
+      Rectangle p0 = mapper.modelToView(c, startOffset);
+      Rectangle p1 = mapper.modelToView(c, endOffset);
+      int h = (int) (p1.getMaxY() - p0.getMinY());
+      c.repaint(new Rectangle(0, p0.y, c.getWidth(), h));
+    } catch (BadLocationException ex) {
+      UIManager.getLookAndFeel().provideErrorFeedback(c);
+    }
+  }
+}
+}}
+
+- 選択ハイライトを半透明化
+-- [[JEditorPaneで選択した文字列の色反転を無効化>Swing/SelectedTextColor]]では`JTextComponent#setSelectedTextColor(null)`、`JTextComponent#setSelectionColor(new Color(0x64_88_AA_AA, true))`を設定して選択文字色の変更は無し、選択ハイライトを半透明に設定しているが、このサンプルでは`DefaultCaret#getSelectionPainter()`をオーバーライドしているので`DefaultHighlightPainter#paint(...)`内で角丸化と同時に半透明化を実施している
+
+* Reference [#reference]
+- [[JTextComponentの選択ハイライトを角丸で描画する>Swing/RoundedSelectionHighlightPainter]]
+- [[JTreeのノード選択で生成された直角多角形の角を丸める>Swing/FlatTreeNodeRoundedCornerSelection]]
+- [[JEditorPaneで選択した文字列の色反転を無効化>Swing/SelectedTextColor]]
+- [[JEditorPaneで選択ハイライトの描画範囲を変更する>Swing/WholeLineHighlightPainter]]
+
+* Comment [#comment]
+#comment
+#comment

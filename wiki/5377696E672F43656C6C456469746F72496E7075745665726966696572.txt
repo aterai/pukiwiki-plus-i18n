@@ -8,12 +8,12 @@ pubdate: 2019-08-05T16:10:21+09:00
 description: JTableのセルエディタへの入力が妥当かをInputVerifierなどを使用して検証します。
 image: https://drive.google.com/uc?id=1a1Hfeov5wRU2B59t5ea3zVRm8m-6PkLW
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルエディタへの入力が妥当かを`InputVerifier`などを使用して検証します。
 
 #download(https://drive.google.com/uc?id=1a1Hfeov5wRU2B59t5ea3zVRm8m-6PkLW)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 TableModel model = new DefaultTableModel(columnNames, 10) {
   @Override public Class<?> getColumnClass(int column) {
@@ -41,7 +41,7 @@ table.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(textFiel
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- デフォルトの`JTable.NumberEditor`(`JTable.GenericEditor`を継承)を使用
 -- 数値以外を入力し、KBD{Enter}やKBD{Tab}キーで編集確定を実行するとエディタの縁が赤くなりフォーカス移動がキャンセルされる
@@ -67,10 +67,10 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextFieldの入力を数値に制限する>Swing/NumericTextField]]
 - [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

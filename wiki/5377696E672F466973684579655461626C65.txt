@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2008/12/jtable-fisheye-row.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の行の高さを変更して、マウスカーソルの下を魚眼レンズのように拡大します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMw3Q5yMI/AAAAAAAAAZs/0O7lUunN9Rw/s800/FishEyeTable.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 @Override public void mouseMoved(MouseEvent e) {
   int row = rowAtPoint(e.getPoint());
@@ -56,17 +56,17 @@ public void initRowHeight(int height, int ccRow) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、マウスカーソルの下の行の高さを`JTable#setRowHeight(int, int)`メソッドを使用して動的に変更し、魚眼レンズのような拡大強調表示を行っています。
 
 - `JTable#setFillsViewportHeight(true);`を使用しているので、`JDK 1.6.0`以上が必要
 - `JTable`自体の高さが変化することは想定していない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setRowHeight-int-int- JTable#setRowHeight(int, int) (Java Platform SE 8)]
 - [http://www.cs.umd.edu/hcil/fisheyemenu/ Fisheye Menus]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - スクリーンショット更新 -- &user(aterai); &new{2008-12-25 (木) 16:12:54};
 

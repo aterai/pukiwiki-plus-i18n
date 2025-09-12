@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2013/11/cut-copy-paste-buttuns-in-jmenuitem.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenuItem`の内部に切り取り、コピー、貼り付けを行う`JButton`を配置します。
 
 #download(https://lh6.googleusercontent.com/-aY1o9VhHFWI/UpHzycRD8gI/AAAAAAAAB64/jaFbU_zn7hI/s800/ButtonsInMenuItem.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static JMenuItem makeEditMenuItem(final JComponent edit) {
   JMenuItem item = new JMenuItem("Edit") {
@@ -88,7 +88,7 @@ private static AbstractButton makeButton(String title, Action action) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JMenuItem`
 -- `JMenuItem#getPreferredSize()`をオーバーライドして挿入する`JButton`を考慮したサイズを返すように変更
 -- `JMenuItem`自体は選択不可になるように`JMenuItem#setEnabled(false)`を設定
@@ -107,7 +107,7 @@ private static AbstractButton makeButton(String title, Action action) {
 -- 左右両端に配置された`JButton`のフチのラウンドなどは`Icon`を生成して描画
 --- [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/5972368/custom-jmenuitems-in-java Custom JMenuItems in Java]
 - [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
 -- こちらは`JPopupMenu`のレイアウトを変更してボタンメニューを作成している
@@ -115,6 +115,6 @@ private static AbstractButton makeButton(String title, Action action) {
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultEditorKit.CopyAction.html DefaultEditorKit.CopyAction (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultEditorKit.PasteAction.html DefaultEditorKit.PasteAction (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

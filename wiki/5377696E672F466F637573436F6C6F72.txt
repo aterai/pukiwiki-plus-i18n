@@ -8,12 +8,12 @@ pubdate: 2006-08-07T16:37:20+09:00
 description: どのJTextFieldを編集しているのかを分かりやすくするために、フォーカスのあるJTextFieldの背景色を変更します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTM__NmYpI/AAAAAAAAAaE/EUMDKR-Rwa4/s800/FocusColor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 どの`JTextField`を編集しているのかを分かりやすくするために、フォーカスのある`JTextField`の背景色を変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTM__NmYpI/AAAAAAAAAaE/EUMDKR-Rwa4/s800/FocusColor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class BGFocusListener implements FocusListener {
   private final Color color;
@@ -31,12 +31,14 @@ class BGFocusListener implements FocusListener {
 }
 }}
 
-* 解説 [#explanation]
-上記のサンプルでは、`JTextField`に`FocusListener`を追加し、`focusGained(...)`メソッドをオーバーライドして背景色を指定した色に変更、`focusLost(...)`メソッドをオーバーライドして`JTextField`のデフォルト背景色(`UIManager.getColor("TextField.background")`)に戻しています。
+* Description [#description]
+- `JTextField`に`FocusListener`を追加
+-- `FocusListener#focusGained(...)`メソッドをオーバーライドして背景色を指定した色に変更
+-- `FocusListener#focusLost(...)`メソッドをオーバーライドして`JTextField`のデフォルト背景色(`UIManager.getColor("TextField.background")`)に戻す
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/FocusListener.html FocusListener (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

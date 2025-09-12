@@ -8,12 +8,12 @@ pubdate: 2019-07-08T16:03:23+09:00
 description: JScrollBarのArrowButtonを非表示に設定します。
 image: https://drive.google.com/open?id=1Z86M0kl6w-3P0yhRIA5uyxj8PEtvbJPr
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollBar`の`ArrowButton`を非表示に設定します。
 
 #download(https://drive.google.com/uc?id=1Z86M0kl6w-3P0yhRIA5uyxj8PEtvbJPr)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("ScrollBar.width", 10);
 UIManager.put("ScrollBar.thumbHeight", 20); // GTK, SynthLookAndFeel
@@ -56,7 +56,7 @@ class ArrowButtonlessScrollBarUI extends BasicScrollBarUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左: `ArrowButton`有り(デフォルト)
 -- `UIManager.put("ScrollBar.width", 10);`で`JScrollBar`の幅を変更
 -- `ArrowButton`のアイコンサイズは変更されず？、微妙にずれてしまう
@@ -79,9 +79,9 @@ scrollPane.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL) {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollBarを半透明にする>Swing/TranslucentScrollBar]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

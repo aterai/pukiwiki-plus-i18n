@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2020/12/use-thumbnail-as-default-icon-for.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JRadioButton`のデフォルトラジオボタンを画像のサムネイル、選択状態ボタンをそのサムネイル上にフチを描画したアイコンに変更します。
 
 #download(https://drive.google.com/uc?id=1r29AzJE-F52kpvdKYV58sSzCCdJONkLv)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SelectedIcon implements Icon {
   private final Icon icon;
@@ -59,15 +59,15 @@ class SelectedIcon implements Icon {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは`JRadioButton`のデフォルトラジオボタンを`ColorIcon`や`ImageIcon`に変更し、テキストをそのアイコンの下に配置してサムネイル風に表示するよう設定しています。
 選択状態ボタンもデフォルトラジオボタンとして設定したアイコンの上に選択状態を示すフチを描画するアイコンを`JRadioButton#setSelectedIcon(...)`メソッドで設定します。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JRadioButtonの文字色を変更>Swing/RadioButtonTextColor]]
 - [https://help.vivaldi.com/ja/show-on-first-page-ja/browser-themes/ テーマ | Vivaldi Browser Help]
 -- ブラウザの`Vivaldi`のテーマ設定画面を参考にしている
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

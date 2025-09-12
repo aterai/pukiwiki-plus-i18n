@@ -1,0 +1,74 @@
+---
+category: swing
+folder: LightWeightPopupEnabled
+title: JPopupMenuを常に重量ポップアップで開く
+tags: [JPopupMenu, JComboBox, GlassPane]
+author: aterai
+pubdate: 2024-10-28T00:23:44+09:00
+description: JPopupMenuの表示位置で軽量・重量ポップアップを切り替えるのではなく、常に重量ポップアップを使用するよう設定します。
+image: https://drive.google.com/uc?id=1KmwoXwsLYnuC6X7xH9rlxYl4GBkeP8QH
+---
+* Summary [#summary]
+`JPopupMenu`の表示位置で軽量・重量ポップアップを切り替えるのではなく、常に重量ポップアップを使用するよう設定します。
+
+#download(https://drive.google.com/uc?id=1KmwoXwsLYnuC6X7xH9rlxYl4GBkeP8QH)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JPopupMenu popup0 = makePopupMenu();
+// popup0.setLightWeightPopupEnabled(true); // Default
+JLabel label0 = makeLabel("setLightWeightPopupEnabled: true", Color.ORANGE);
+label0.setComponentPopupMenu(popup0);
+
+JPopupMenu popup1 = makePopupMenu();
+popup1.setLightWeightPopupEnabled(false);
+JLabel label1 = makeLabel("setLightWeightPopupEnabled: false", Color.PINK);
+label1.setComponentPopupMenu(popup1);
+
+JComponent glass = new JPanel(new GridLayout(3, 1, 10, 10)) {
+  private final Color backgroundColor = new Color(0x64_64_64_C8, true);
+  @Override protected void paintComponent(Graphics g) {
+    g.setColor(backgroundColor);
+    g.fillRect(0, 0, getWidth(), getHeight());
+    super.paintComponent(g);
+  }
+};
+glass.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+glass.setOpaque(false);
+glass.add(label0);
+glass.add(label1);
+}}
+
+* Description [#description]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComboBox.html#setLightWeightPopupEnabled-boolean- JComboBox#setLightWeightPopupEnabled(boolean)]
+-- `GlassPane`に配置された`JComboBox`のドロップダウンリスト全体が親`JFrame`内で表示可能で軽量ポップアップが使用されると`GlassPane`の奥に表示される
+-- `JComboBox`で使用するドロップダウンリスト(`javax.swing.plaf.basic.BasicComboPopup`は`JPopupMenu`を継承)に`JComboBox#setLightWeightPopupEnabled(false)`を指定することでそのドロップダウンリストが常に重量ポップアップで開くよう設定
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JPopupMenu.html#setLightWeightPopupEnabled-boolean- JPopupMenu#setLightWeightPopupEnabled(boolean)]
+-- `GlassPane`に配置されたコンポーネントに`JComponent#setComponentPopupMenu(...)`で設定された`JPopupMenu`全体が親`JFrame`内で表示可能で軽量ポップアップが使用されると`GlassPane`の奥に表示される
+-- `JPopupMenu`に`JPopupMenu#setLightWeightPopupEnabled(false)`を指定してそれが常に重量ポップアップとして開くよう設定
+
+----
+- `Java 9`以降では以下のように`PopupFactory#getPopup(...)`をオーバーライドすることで`JMenuBar`、`JToolTip`、`JComboBox`、`JPopupMenu`などすべてで重量ポップアップの使用を強制可能
+-- [[JToolTipをGlassPane上のコンポーネントで表示する>Swing/ForceHeavyWeightPopupKey]]
+
+#code{{
+// Java 9:
+PopupFactory.setSharedInstance(new PopupFactory() {
+  @Override public Popup getPopup(
+      Component owner, Component contents, int x, int y)
+      throws IllegalArgumentException {
+    // @param isHeavyWeightPopup true if Popup should be heavy-weight,
+    // protected Popup getPopup(..., boolean isHeavyWeightPopup) ...
+    return super.getPopup(owner, contents, x, y, true);
+  }
+});
+}}
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JPopupMenu.html#setLightWeightPopupEnabled-boolean- JPopupMenu#setLightWeightPopupEnabled(boolean)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComboBox.html#setLightWeightPopupEnabled-boolean- JComboBox#setLightWeightPopupEnabled(boolean)]
+- [[JToolTipをGlassPane上のコンポーネントで表示する>Swing/ForceHeavyWeightPopupKey]]
+
+* Comment [#comment]
+#comment
+#comment

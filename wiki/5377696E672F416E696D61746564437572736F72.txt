@@ -8,12 +8,12 @@ pubdate: 2006-05-01T12:35:56+09:00
 description: Timerを使ったCursorの切り替えで、マウスポインタのループアニメーションを行います。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHkbNXdwI/AAAAAAAAARY/RzDAT8xyR3c/s800/AnimatedCursor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Timer`を使った`Cursor`の切り替えで、マウスポインタのループアニメーションを行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHkbNXdwI/AAAAAAAAARY/RzDAT8xyR3c/s800/AnimatedCursor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Toolkit tk = Toolkit.getDefaultToolkit();
 list[0] = tk.createCustomCursor(tk.createImage(url00), pt, "00");
@@ -40,11 +40,11 @@ button = new JButton(new AbstractAction("Start") {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JButton`のクリックでパネル上にあるカーソルのアニメーションを開始
 - `3`枚の透過`png`ファイルをコマにして`Timer`で順番にこれを切り替え
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://w.atwiki.jp/vippointer/ VIPポインタ@Wiki - トップページ]
 -- このサンプルの各コマは[http://www11.atwiki.jp/vippointer/pages/54.html ぶーん(通常の選択.ani、VIPポインタ)]から[http://www.vector.co.jp/soft/win95/amuse/se195017.html ANIめーかー]を使って生成
 - [https://www.vector.co.jp/soft/win95/amuse/se195017.html ANIめーかー(Windows95/98/Me/アミューズメント)]
@@ -52,7 +52,7 @@ button = new JButton(new AbstractAction("Start") {
 - [https://www.oreilly.co.jp/books/4873112788/download.html oreilly.co.jp -- Online Catalog: Java Swing Hacks]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#createCustomCursor-java.awt.Image-java.awt.Point-java.lang.String- Toolkit (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `Cursor`に用いる`png`ファイルは、フルカラー(`24`ビット)ではなく`256`色にしておかないと、うまく透過できないようです。もしかしたら自分の`PC`の画面の色が`16`ビットになっているせいかもしれません。 -- &user(aterai); &new{2006-07-11 (火) 12:41:59};
 -- `32`ビットにしてもだめみたいです。 -- &user(aterai); &new{2006-07-25 (火) 16:53:29};

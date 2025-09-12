@@ -8,12 +8,12 @@ pubdate: 2004-03-22T10:23:19+09:00
 description: SpringLayoutを使用して、各ラベルのサイズとパネルからの距離が一定の比率になるような配置を指定します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTwX9UR-I/AAAAAAAAAk8/TLNZjmIrPnw/s800/SpringLayout.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `SpringLayout`を使用して、各ラベルのサイズとパネルからの距離が一定の比率になるような配置を指定します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTwX9UR-I/AAAAAAAAAk8/TLNZjmIrPnw/s800/SpringLayout.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static void setScaleAndAdd(
     JComponent parent, SpringLayout layout, JComponent child,
@@ -54,7 +54,7 @@ private static void setScaleAndAdd(
 // }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`SpringLayout`を使って`2`つの`JComponent`をパネル内にレイアウトしています。
 
 %%パネルのサイズが変更されるたびに、各ラベルのサイズとパネルからの距離が一定の割合になるように設定し直しています(ただしパネルの余白は無視)。%%
@@ -68,10 +68,10 @@ private static void setScaleAndAdd(
 -- 左上座標は、親パネルの左上から`x: 50%`、`y: 65%`の位置
 -- %%パネルと自身の`WEST`からの距離`50%`、パネルと自身の`SOUTH`からの距離`-5%`%%
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SpringLayout.html SpringLayout (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 以前の内容は、[[BoxLayoutでリスト状に並べる>Swing/ComponentList]]に移動しました。 -- &user(aterai); &new{2006-06-15 (木) 19:40:17};
 - リスナーを使わなくても次ので出来ました。 --  &new{2010-09-02 (木) 02:41:13};

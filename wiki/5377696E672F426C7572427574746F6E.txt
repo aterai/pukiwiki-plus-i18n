@@ -8,12 +8,12 @@ pubdate: 2013-12-09T00:54:27+09:00
 description: ConvolveOpを使って、使用不可状態のJButtonにぼかしを入れます。
 image: https://lh6.googleusercontent.com/-KJB6Hz9n1R0/UqSGnCNV3HI/AAAAAAAAB70/sTyoJce2HZQ/s800/BlurButton.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `ConvolveOp`を使って、使用不可状態の`JButton`にぼかしを入れます。
 
 #download(https://lh6.googleusercontent.com/-KJB6Hz9n1R0/UqSGnCNV3HI/AAAAAAAAB70/sTyoJce2HZQ/s800/BlurButton.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class BlurButton extends JButton {
   private final ConvolveOp op = new ConvolveOp(
@@ -37,7 +37,8 @@ class BlurButton extends JButton {
       int h = getHeight();
       buf = Optional.ofNullable(buf)
           .filter(bi -> bi.getWidth() == w && bi.getHeight() == h)
-          .orElseGet(() -> new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB));
+          .orElseGet(() ->
+            new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB));
       Graphics2D g2 = buf.createGraphics();
       g2.setFont(g.getFont()); // pointed out by 八ツ玉舘
       super.paintComponent(g2);
@@ -54,7 +55,7 @@ class BlurButton extends JButton {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上
 -- デフォルトの`JButton`
 - 中
@@ -66,12 +67,12 @@ class BlurButton extends JButton {
 --- コメントで八ツ玉舘さんから指摘があり、文字が拡大されるのは`BufferedImage`から生成した`Graphics`とコンポーネントの`Graphics`で異なるフォントが設定されていることが原因と判明
 --- `g2.setFont(g.getFont());`を使用するよう修正
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/image/ConvolveOp.html ConvolveOp (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/1.4/guide/2d/spec/j2d-image.fm8.html 5.8.1 イメージ処理操作の使用方法]
 - [http://www.jhlabs.com/ip/blurring.html Java Image Processing - Blurring for Beginners]
 - [https://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks 9. 使用不可状態のコンポーネントをぼかし表示する]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

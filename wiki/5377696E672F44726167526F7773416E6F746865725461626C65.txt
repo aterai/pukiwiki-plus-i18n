@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2009/09/drag-rows-from-one-jtable-to-another.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の行を別の`JTable`に`Drag & Drop`で移動します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTL05H70DI/AAAAAAAAAYM/YtTZHzrA2HU/s800/DragRowsAnotherTable.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TableRowTransferHandler extends TransferHandler {
   private final DataFlavor localObjectFlavor;
@@ -136,7 +136,7 @@ class TableRowTransferHandler extends TransferHandler {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`1`つの`JTable`内で行の並べ替えを行う[[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]を元に、複数`JTable`間で行移動が可能になるよう`TableRowTransferHandler`を拡張しています。
 
 - 以下のように、`JTable#setFillsViewportHeight(true)`で[[JTable自体の高さを拡張>Swing/FillsViewportHeight]]しておかないと、`JTable`が空の状態でドロップが不可になる
@@ -155,10 +155,10 @@ table.setFillsViewportHeight(true);
 -- `WindowsLookAndFeel`でのカーソルのチラつき防止のために、`TransferHandler#canImport(...)`内で`JTable#setCursor(...)`をしているため、デスクトップなどからファイルをドラッグしてドロップ不可カーソルが表示されると、その後マウスをリリースしてもカーソルが表示されたままになるバグがある
 -- このサンプルでは、各`JTable`に`TableRowSorter`などが設定され、ソートされた状態での並べ替えは想定していない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableの行をドラッグ＆ドロップ>Swing/DnDTable]]
 - [[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

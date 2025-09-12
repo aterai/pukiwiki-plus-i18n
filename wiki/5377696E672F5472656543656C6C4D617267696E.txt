@@ -8,12 +8,12 @@ pubdate: 2010-05-17T14:59:42+09:00
 description: JTreeのノードにある文字列の左右に余白を追加します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWBZNFbLI/AAAAAAAAAok/8_0YqLhhqTk/s800/TreeCellMargin.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードにある文字列の左右に余白を追加します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWBZNFbLI/AAAAAAAAAok/8_0YqLhhqTk/s800/TreeCellMargin.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class MyTreeCellRenderer2 extends DefaultTreeCellRenderer {
   private final JPanel p = new JPanel(new BorderLayout());
@@ -65,7 +65,7 @@ class MyTreeCellRenderer2 extends DefaultTreeCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左
 -- `Default`
 - 中
@@ -75,9 +75,9 @@ class MyTreeCellRenderer2 extends DefaultTreeCellRenderer {
 -- `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`メソッドをオーバーライドしてアイコンと文字列を別の`JLabel`に分解し、文字列にのみ`BorderFactory.createEmptyBorder(0, 0, 0, 2)`で余白を追加
 -- `WindowsLookAndFeel`(フォーカスのボーダーがアイコンの周りには描画されない)で`getComponentOrientation().isLeftToRight()==true`の場合のみ対応
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html DefaultTreeCellRenderer (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

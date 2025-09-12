@@ -8,12 +8,12 @@ pubdate: 2017-10-30T15:36:53+09:00
 description: JTextFieldが初期状態や編集不可の場合などでドラッグ＆ドロップをテストします。
 image: https://drive.google.com/uc?id=1bHJS4TOFW3wUg-zz4Ut_gnrS2vYNXKE_Vg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`が初期状態や編集不可の場合などでドラッグ＆ドロップをテストします。
 
 #download(https://drive.google.com/uc?id=1bHJS4TOFW3wUg-zz4Ut_gnrS2vYNXKE_Vg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextField textField0 = new JTextField("Initially has BasicTextUI$TextTransferHandler");
 textField0.setDragEnabled(true);
@@ -43,7 +43,7 @@ textField5.setTransferHandler(new TransferHandler() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `0`: `Initially has BasicTextUI$TextTransferHandler`
 -- 初期状態で`BasicTextUI$TextTransferHandler`が設定されている
 --- このため、例えばワードパットなどから文字列をドラッグ＆ドロップで移動(KBD{Ctrl+ドロップ}でコピー)可能
@@ -70,10 +70,10 @@ textField5.setTransferHandler(new TransferHandler() {
 -- 親コンポーネントの`TransferHandler`にドロップイベントは伝搬せず、常にドロップ不可
 -- `JTextField#setDragEnabled(true)`を設定してもこの`TransferHandler`ではドラッグ開始できない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Component.html#setDropTarget-java.awt.dnd.DropTarget- Component#setDropTarget(...) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/tutorial/uiswing/dnd/defaultsupport.html Default DnD Support (The Java™ Tutorials > Creating a GUI With JFC/Swing > Drag and Drop and Data Transfer)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

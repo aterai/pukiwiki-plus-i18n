@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2019/08/create-minimap-of-jeditorpane-with.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`のミニマップを`ImageIcon`で作成し、これを`LayoutManager`を使用して`JScrollPane`上に重ねて表示します。
 
 #download(https://drive.google.com/uc?id=1_Ix_ksss07Sfpz-vM0rEWJ_yorOS9dX8)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private final JEditorPane editor = new JEditorPane();
 private final JScrollPane scroll = new JScrollPane(editor);
@@ -127,7 +127,7 @@ p.add(minimap, BorderLayout.EAST);
 p.add(scroll);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JEditorPane`の縮小画像から`ImageIcon`を生成して`JLabel`に設定し、さらにスクロールバーを非表示にした`JScrollPane`に配置してミニマップを作成
 -- [[JTabbedPaneのサムネイルをJToolTipで表示>Swing/TabThumbnail]]
 - `JEditorPane`を配置した`JScrollPane`とミニマップを配置した`JScrollPane`を重ねて配置する`LayoutManager`を使用
@@ -135,12 +135,12 @@ p.add(scroll);
 - ミニマップとして使用する`JLabel`に`MouseListener`を追加してマウスで表示位置を変更可能に設定
 -- [[JLabelとIconで作成した検索位置表示バーをマウスで操作する>Swing/BoundedRangeModel]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JLabelとIconで作成した検索位置表示バーをマウスで操作する>Swing/BoundedRangeModel]]
 - [[Component上に重ねて配置したダイアログの表示状態をアニメーション付きで切り替える>Swing/OverlayBorderLayout]]
 - [[JTabbedPaneのサムネイルをJToolTipで表示>Swing/TabThumbnail]]
 - [[JEditorPaneで選択した文字列の色反転を無効化>Swing/SelectedTextColor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

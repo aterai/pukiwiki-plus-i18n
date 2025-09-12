@@ -8,12 +8,12 @@ pubdate: 2023-04-10T00:02:08+09:00
 description: JTextFieldにキー入力でタブ文字を挿入したり、タブサイズを変更します。
 image: https://drive.google.com/uc?id=1ov_4TMnJZUMXHOo_GqC9TRDNHhCTOMNf
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`にキー入力でタブ文字を挿入したり、タブサイズを変更します。
 
 #download(https://drive.google.com/uc?id=1ov_4TMnJZUMXHOo_GqC9TRDNHhCTOMNf)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String txt2 = "aaa\tbbb\tccc";
 JTextField field1 = new JTextField(txt2, 20);
@@ -48,7 +48,7 @@ private static void initActionInputMap(JTextComponent editor) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTextField`: 上
 -- キャレット位置にタブ文字`\t(U+09)`を挿入する`Action`を`JTextField`の`ActionMap`に追加
 -- `JTextField`のKBD{Tab}キーにはフォーカス移動が設定されているので、KBD{Ctrl+I}キーで上記のタブ文字挿入アクションを実行するよう`InputMap`を設定
@@ -73,10 +73,10 @@ if (doc != null) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextPaneでタブサイズを設定>Swing/TabSize]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextField.html#JTextField-javax.swing.text.Document-java.lang.String-int- new JTextField(Document, String, int) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

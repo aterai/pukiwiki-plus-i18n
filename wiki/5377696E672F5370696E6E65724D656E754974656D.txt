@@ -1,0 +1,101 @@
+---
+category: swing
+folder: SpinnerMenuItem
+title: JPopupMenuのMenuItemとしてJSpinnerを配置する
+tags: [JSpinner, JMenuItem, JPopupMenu, JSlider, LayoutManager]
+author: aterai
+pubdate: 2025-01-27T07:43:46+09:00
+description: JPopupMenuのMenuItemとしてMenuElementを実装しないJSpinnerやJSliderなどのコンポーネントを使用します。
+image: https://drive.google.com/uc?id=1QqtQjPQ5KaFOGQr-RBfKkE-gkwyRmg8r
+---
+* Summary [#summary]
+`JPopupMenu`の`MenuItem`として`MenuElement`を実装しない`JSpinner`や`JSlider`などのコンポーネントを使用します。
+
+#download(https://drive.google.com/uc?id=1QqtQjPQ5KaFOGQr-RBfKkE-gkwyRmg8r)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+private static Component makeSpinnerMenuItem(String title, Component c) {
+  JMenuItem item = new JMenuItem() {
+    @Override public void updateUI() {
+      super.updateUI();
+      setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+      setEnabled(false);
+      setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+    }
+
+    @Override public Dimension getPreferredSize() {
+      Dimension d = super.getPreferredSize();
+      d.height = Math.max(d.height, c.getPreferredSize().height);
+      return d;
+    }
+  };
+  item.add(new JLabel(title));
+  item.add(c);
+  return item;
+}
+
+private static JMenu makeSpinnerMenu() {
+  SpinnerNumberModel model1 = new SpinnerNumberModel(100, 10, 300, 10);
+  SpinnerNumberModel model2 = new SpinnerNumberModel(150, 10, 300, 10);
+  JMenu menu = new JMenu("JSpinner");
+  menu.add(makeMenuBox("L: ", makeSpinner(model1)));
+  menu.add(makeMenuBox("R: ", makeSpinner(model2)));
+  menu.add(new JSeparator());
+  menu.add(makeSpinnerMenuItem("Left: ", makeSpinner(model1)));
+  menu.add(makeSpinnerMenuItem("Right: ", makeSpinner(model2)));
+  menu.addSeparator();
+  menu.add("JMenuItem1");
+  menu.add("JMenuItem2");
+  menu.add(Box.createHorizontalStrut(160));
+  return menu;
+}
+
+private static JSpinner makeSpinner(SpinnerModel model) {
+  JSpinner spinner = new JSpinner(model);
+  ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setColumns(8);
+  spinner.addMouseWheelListener(e -> {
+    JSpinner s = (JSpinner) e.getComponent();
+    SpinnerModel o = s.getModel();
+    if (s.isEnabled() && o instanceof SpinnerNumberModel) {
+      SpinnerNumberModel m = (SpinnerNumberModel) o;
+      m.setValue(m.getNumber().intValue() - e.getWheelRotation());
+    }
+    e.consume();
+  });
+  return spinner;
+}
+}}
+
+* Description [#description]
+- `JSpinner`メニュー上: `Box.createHorizontalBox()`にタイトル表示用の`JLabel`と`JSpinner`を配置して`JMenu#add(...)`で`JPopupMenu`に配置
+-- `MenuElement`を実装しないコンポーネントなのでKBD{↑}キー入力などでのメニュー選択などは不可だが、`JSpinner`自体のマウス入力での操作やKBD{Tab}キー入力によるフォーカス移動は可能
+- `JSpinner`メニュー下: 無効化した`JMenuItem`のタイトルを空、かつ右寄せの`FlowLayout`を設定し、別途タイトル表示用の`JLabel`と`JSpinner`を配置して`JMenu#add(...)`で`JPopupMenu`に配置
+-- `MenuElement`を実装する`JMenuItem`なのでKBD{↑}キー入力などでのメニュー選択が可能で、かつ`JSpinner`自体のマウス入力での操作やKBD{Tab}キー入力によるフォーカス移動も可能
+-- 無効化した`JMenuItem`の選択状態表示は[[DisabledなJMenuItemのハイライトをテスト>Swing/DisabledAreNavigable]]のように`LookAndFeel`に依存する
+-- `JSpinner`に追加した`MouseWheelListener`でホイール回転による値の変更も可能
+--- `Java 8`では`JSpinner`や`JMenuItem`上でホイールを回転すると`JPopupMenu`が閉じてしまうので[[JPopupMenuに追加したJSliderの表示・非表示をチェックボックスで切り替える>Swing/SliderMenuItem]]のようにホイールイベントを消費する`MouseWheelListener`を追加する必要があったが、`Java 9`では修正されて不要になった
+-- 無効化した`JMenuItem`でクリックしても`JPopupMenu`を閉じないよう設定するのではなく、選択アイコンを非表示化した`JCheckBoxMenuItem`に`putClientProperty("CheckBoxMenuItem.doNotCloseOnMouseClick", true)`を設定して使用する方法も`Java 9`以降では可能
+--- [[JCheckBoxMenuItemをクリックしてもJPopupMenuを閉じないように設定する>Swing/StayOpenCheckBoxMenuItem]]
+- `JSlider`メニュー
+-- 同様に`JSlider`を配置して使用も可能
+-- [[JPopupMenuに追加したJSliderの表示・非表示をチェックボックスで切り替える>Swing/SliderMenuItem]]
+
+----
+- 同様にマウスクリック可能な`JButton`を無効化した`JMenuItem`に配置して使用も可能
+-- [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
+- マウスクリックは無効でマウスドラッグのみ可能な`JLabel`を配置することも可能
+-- [[JPopupMenuにマウスドラッグで位置変更を可能にするヘッダを追加する>Swing/DraggablePopupMenu]]
+- `JComboBox`も配置可能だが`JComboBox`のドロップダウンリストが開くとその親の`JPopupMenu`が閉じてしまう
+- `JMenuItem`の代わりに`JScrollPane`に`JList`を配置してスクロール可能なメニューにすることも可能
+-- [[JMenuのJPopupMenuにスクロール可能なJListを配置する>Swing/ScrollableListMenu]]
+
+* Reference [#reference]
+- [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
+- [[JPopupMenuに追加したJSliderの表示・非表示をチェックボックスで切り替える>Swing/SliderMenuItem]]
+- [[JPopupMenuにマウスドラッグで位置変更を可能にするヘッダを追加する>Swing/DraggablePopupMenu]]
+- [[JMenuのJPopupMenuにスクロール可能なJListを配置する>Swing/ScrollableListMenu]]
+
+* Comment [#comment]
+#comment
+#comment

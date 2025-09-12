@@ -1,0 +1,195 @@
+---
+category: swing
+folder: RoundedSelectionHighlightPainter
+title: JTextComponentの選択ハイライトを角丸で描画する
+tags: [JTextComponent, DefaultCaret, Highlighter, HighlightPainter, DefaultHighlighter]
+author: aterai
+pubdate: 2025-03-03T01:21:51+09:00
+description: JTextComponentの選択ハイライトや検索ハイライトなどを角丸で描画するHighlightPainterを作成します。
+image: https://drive.google.com/uc?id=1Dqr2sjeKtmMlgwKYuFxDhckSJHlDTzHS
+---
+* Summary [#summary]
+`JTextComponent`の選択ハイライトや検索ハイライトなどを角丸で描画する`HighlightPainter`を作成します。
+
+#download(https://drive.google.com/uc?id=1Dqr2sjeKtmMlgwKYuFxDhckSJHlDTzHS)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class RoundedSelectionHighlightPainter extends DefaultHighlightPainter {
+  protected RoundedSelectionHighlightPainter() {
+    super(null);
+  }
+
+  @Override public void paint(
+        Graphics g, int offs0, int offs1, Shape bounds, JTextComponent c) {
+    Rectangle alloc = bounds.getBounds();
+    try {
+      // --- determine locations ---
+      TextUI mapper = c.getUI();
+      Rectangle p0 = mapper.modelToView(c, offs0);
+      Rectangle p1 = mapper.modelToView(c, offs1);
+      // --- render ---
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
+      Color color = getColor();
+      if (color == null) {
+        g2.setColor(c.getSelectionColor().brighter());
+      } else {
+        g2.setColor(color);
+      }
+      if (p0.y == p1.y) { // same line, render a rectangle
+        Rectangle r = p0.union(p1);
+        g2.fillRoundRect(r.x, r.y, r.width, r.height, 5, 5);
+      } else { // different lines
+        int p0ToMarginWidth = alloc.x + alloc.width - p0.x;
+        g2.fillRoundRect(p0.x, p0.y, p0ToMarginWidth, p0.height, 5, 5);
+        g2.fillRect(p0.x + 5, p0.y, p0ToMarginWidth - 5, p0.height);
+        int maxY = p0.y + p0.height;
+        if (maxY != p1.y) {
+          g2.fillRect(alloc.x, maxY, alloc.width, p1.y - maxY);
+        }
+        g2.fillRect(alloc.x, p1.y, p1.x - alloc.x - 5, p1.height);
+        g2.fillRoundRect(alloc.x, p1.y, p1.x - alloc.x, p1.height, 5, 5);
+      }
+      g2.dispose();
+    } catch (BadLocationException ex) {
+      // can't render
+      Logger.getGlobal().severe(ex::getMessage);
+    }
+  }
+
+  @Override public Shape paintLayer(
+        Graphics g, int offs0, int offs1, Shape bounds,
+        JTextComponent c, View view) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+    Color color = getColor();
+    if (color == null) {
+      g2.setColor(c.getSelectionColor());
+    } else {
+      g2.setColor(color);
+    }
+    Rectangle r = null;
+    if (offs0 == view.getStartOffset() && offs1 == view.getEndOffset()) {
+      // Contained in view, can just use bounds.
+      if (bounds instanceof Rectangle) {
+        r = (Rectangle) bounds;
+      } else {
+        r = bounds.getBounds();
+      }
+    } else {
+      // Should only render part of View.
+      try {
+        // --- determine locations ---
+        Shape shape = view.modelToView(
+            offs0, Position.Bias.Forward, offs1, Position.Bias.Backward, bounds);
+        r = shape instanceof Rectangle ? (Rectangle) shape : shape.getBounds();
+      } catch (BadLocationException ex) {
+        // can't render
+        Logger.getGlobal().severe(ex::getMessage);
+      }
+    }
+    if (r != null) {
+      // If we are asked to highlight, we should draw something even
+      // if the model-to-view projection is of zero width (6340106).
+      r.width = Math.max(r.width, 1);
+      g2.fillRoundRect(r.x, r.y, r.width - 1, r.height - 1, 5, 5);
+      g2.setColor(c.getSelectionColor().darker());
+      g2.drawRoundRect(r.x, r.y, r.width - 1, r.height - 1, 5, 5);
+    }
+    g2.dispose();
+    return r;
+  }
+}
+}}
+
+* Description [#description]
+- 選択ハイライト: `RoundedSelectionHighlightPainter`
+-- [[JTextComponentの選択ハイライトを変更>Swing/SelectionHighlightPainter]]と同様に、`Caret#getSelectionPainter()`メソッドをオーバーライドして選択ハイライトを描画する`HighlightPainter`を変更
+-- `DefaultHighlightPainter#paintLayer(...)`をオーバーライドして`Graphics#fillRect(...)`を`Graphics#fillRoundRect(...)`に置換して各選択ハイライト領域の角を丸めて描画
+-- `DefaultHighlighter#setDrawsLayeredHighlights(false)`が設定されている場合、`DefaultHighlightPainter#paint(...)`でハイライトが描画されるので、こちらをオーバーライドして選択ハイライトを角丸に変更
+--- 選択が同一行内に収まる場合は`Graphics#fillRect(...)`を`Graphics#fillRoundRect(...)`に置換して角丸矩形を描画
+--- 選択が複数行に渡る場合は先頭と末尾の選択行領域を描画する`Graphics#fillRect(...)`を`Graphics#fillRoundRect(...)`に置換して角丸矩形を描画
+-- 選択行領域に[[JTreeのノード選択で生成された直角多角形の角を丸める>Swing/FlatTreeNodeRoundedCornerSelection]]と同様の平坦化を適用すれば、`Visual Studio Code`と同様の角丸選択を描画することも可能
+--- [[JTextComponentの文字列選択ハイライトのすべての角を丸めて半透明で描画する>Swing/TranslucentRoundedSelection]]に移動
+
+- 検索ハイライト: `RoundedHighlightPainter`
+-- [[JTextAreaの検索ハイライトに縁を描画する>Swing/BorderHighlightPainter]]と同様に、`Highlighter#addHighlight(...)`メソッドで検索にヒットした文字列のハイライトを描画する`HighlightPainter`を指定
+-- 選択ハイライトと同様に`DefaultHighlighter#setDrawsLayeredHighlights(...)`の設定を考慮して`DefaultHighlightPainter#paintLayer(...)`と`DefaultHighlightPainter#paint(...)`の両方をオーバーライドしてハイライトを角丸で描画
+
+#code{{
+class RoundedHighlightPainter extends DefaultHighlightPainter {
+  protected RoundedHighlightPainter() {
+    super(new Color(0x0, true));
+  }
+
+  @Override public void paint(
+      Graphics g, int offs0, int offs1, Shape bounds, JTextComponent c) {
+    try {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
+      TextUI mapper = c.getUI();
+      Rectangle p0 = mapper.modelToView(c, offs0);
+      Rectangle p1 = mapper.modelToView(c, offs1);
+      if (p0.y == p1.y) { // same line, render a rectangle
+        Shape s = makeRoundRectangle(p0.union(p1));
+        g2.setColor(Color.PINK);
+        g2.fill(s);
+        g2.setPaint(Color.RED);
+        g2.draw(s);
+      } else { // different lines
+        Rectangle alloc = bounds.getBounds();
+        int p0ToMarginWidth = alloc.x + alloc.width - p0.x;
+        g2.setColor(Color.PINK);
+        g2.fillRoundRect(p0.x, p0.y, p0ToMarginWidth, p0.height, 5, 5);
+        g2.fillRect(p0.x + 5, p0.y, p0ToMarginWidth - 5, p0.height);
+        int maxY = p0.y + p0.height;
+        if (maxY != p1.y) {
+          g2.fillRect(alloc.x, maxY, alloc.width, p1.y - maxY);
+        }
+        g2.fillRect(alloc.x, p1.y, p1.x - alloc.x - 5, p1.height);
+        g2.fillRoundRect(alloc.x, p1.y, p1.x - alloc.x, p1.height, 5, 5);
+      }
+      g2.dispose();
+    } catch (BadLocationException ex) {
+      // can't render
+      Logger.getGlobal().severe(ex::getMessage);
+    }
+  }
+
+  @Override public Shape paintLayer(
+      Graphics g, int offs0, int offs1, Shape bounds,
+      JTextComponent c, View view) {
+    Shape s = super.paintLayer(g, offs0, offs1, bounds, c, view);
+    if (s instanceof Rectangle) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setPaint(Color.ORANGE);
+      Shape r = makeRoundRectangle(s.getBounds());
+      g2.fill(r);
+      g2.setPaint(Color.RED);
+      g2.draw(r);
+      g2.dispose();
+    }
+    return s;
+  }
+
+  private static RoundRectangle2D makeRoundRectangle(Rectangle r) {
+    return new RoundRectangle2D.Float(r.x, r.y, r.width - 1, r.height - 1, 5f, 5f);
+  }
+}
+}}
+
+* Reference [#reference]
+- [[JTextComponentの選択ハイライトを変更>Swing/SelectionHighlightPainter]]
+- [[DefaultHighlighterの描画方法を変更する>Swing/DrawsLayeredHighlights]]
+- [[JTextAreaの検索ハイライトに縁を描画する>Swing/BorderHighlightPainter]]
+- [[JTextComponentの文字列選択ハイライトのすべての角を丸めて半透明で描画する>Swing/TranslucentRoundedSelection]]
+
+* Comment [#comment]
+#comment
+#comment

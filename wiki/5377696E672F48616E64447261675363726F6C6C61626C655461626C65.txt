@@ -8,12 +8,12 @@ pubdate: 2017-12-25T14:36:51+09:00
 description: JTableをスクロールバーではなく、内部の行をマウスでドラッグすることでスクロール可能になるよう設定します。
 image: https://drive.google.com/uc?id=10Tv7RlmeMiqhXBuq5fgixQ3v4KR8p5_9
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`をスクロールバーではなく、内部の行をマウスでドラッグすることでスクロール可能になるよう設定します。
 
 #download(https://drive.google.com/uc?id=10Tv7RlmeMiqhXBuq5fgixQ3v4KR8p5_9)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DragScrollingListener extends MouseAdapter {
   protected static final int VELOCITY = 5;
@@ -76,19 +76,19 @@ class DragScrollingListener extends MouseAdapter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - [[JTreeの余白をドラッグしてスクロール>Swing/TreeDragScroll]]の`MouseMotionListener`に[[JScrollPaneでキネティックスクロール>Swing/KineticScrolling]]の`Timer`を使った慣性処理を適用して、行のドラッグスクロールを実行
 - `JScrollBar`を常に非表示にしているのでマウスホイールによるスクロールは不可
 -- [[JScrollBarが非表示でもMouseWheelでScrollする>Swing/MouseWheelScroll]]で回避可能
 - 行選択と干渉する場合があるのでドラッグ中は`JTable#setEnabled(false)`で行選択などを無効化
 -- 複数行の選択が不可になる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeの余白をドラッグしてスクロール>Swing/TreeDragScroll]]
 - [[JScrollPaneでキネティックスクロール>Swing/KineticScrolling]]
 - [[JScrollBarが非表示でもMouseWheelでScrollする>Swing/MouseWheelScroll]]
 - [[JTableのドラッグスクロールをタッチスクリーンで実行する>Swing/TableScrollOnTouchScreen]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

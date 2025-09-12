@@ -8,12 +8,12 @@ pubdate: 2019-02-04T15:52:56+09:00
 description: JTabbedPaneをスクロールタブレイアウトポリシーにしたとき、すべてのタブが非表示になる状態を回避するための方法をテストしています。
 image: https://drive.google.com/uc?id=1nbZldZvy1sewRvGKvkWQ79-msQqacTj9Iw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`をスクロールタブレイアウトポリシーにしたとき、すべてのタブが非表示になる状態を回避するための方法をテストしています。
 
 #download(https://drive.google.com/uc?id=1nbZldZvy1sewRvGKvkWQ79-msQqacTj9Iw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTabbedPane tabs = new JTabbedPane() {
   @Override public void removeTabAt(int index) {
@@ -47,7 +47,7 @@ tabs.setSelectedIndex(tabs.getTabCount() - 1);
 // });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上段
 -- `JTabbedPane.SCROLL_TAB_LAYOUT`を設定した`JTabbedPane`
 -- `JTabbedPane`を表示状態である親コンポーネントに配置していない状態で末尾のタブを選択状態に設定しているため、このサンプルでは`9`のタブのみが表示されている
@@ -66,11 +66,11 @@ tabs.setSelectedIndex(tabs.getTabCount() - 1);
 -- スクロールしているだけなので、タブの選択状態は変化しない
 -- スクロールは、コンポーネント名が`TabbedPane.scrollableViewport(...)`の`JViewport`を取得して`JComponent#scrollRectToVisible(...)`メソッドを使用
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのTabAreaをスクロール>Swing/ScrollTabToVisible]]
 - [[JComponentの表示状態>Swing/ShowingDisplayableVisible]]
 - [https://stackoverflow.com/questions/54461567/scroll-remaining-tabs-to-visible-after-tab-removal-from-a-scroll-tab-layout-jtab java - Scroll remaining tabs to visible after tab removal from a SCROLL_TAB_LAYOUT JTabbedPane - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

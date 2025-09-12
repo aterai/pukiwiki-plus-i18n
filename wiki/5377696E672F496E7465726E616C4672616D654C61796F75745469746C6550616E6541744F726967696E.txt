@@ -8,12 +8,12 @@ pubdate: 2022-10-24T03:44:45+09:00
 description: JInternalFrameのタイトルパネルをフレーム原点から描画するかBorderを考慮した配置にするかを切り替えます。
 image: https://drive.google.com/uc?id=1_RXTVB4CXv1uNAlIn03U3C2adWtAa1w1
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`のタイトルパネルをフレーム原点から描画するか`Border`を考慮した配置にするかを切り替えます。
 
 #download(https://drive.google.com/uc?id=1_RXTVB4CXv1uNAlIn03U3C2adWtAa1w1)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String key = "InternalFrame.layoutTitlePaneAtOrigin";
 JDesktopPane desktop = new JDesktopPane();
@@ -37,7 +37,7 @@ addFrame(desktop, 0, true);
 addFrame(desktop, 1, false);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `BasicLookAndFeel`、`MetalLookAndFeel`、`MotifLookAndFeel`、`NimbusLookAndFeel`のデフォルトは`false`
 -- `MetalLookAndFeel`でこの設定を`true`にするとタイトルパネルが`JInternalFrame`の`Border`を考慮せずに原点から幅全体が描画されて不自然なレイアウトのタイトルパネルになってしまう
 -- `MotifLookAndFeel`でこの設定を`true`にするとタイトルパネルが`JInternalFrame`の`Border`を考慮せずに原点から幅全体を占めるようレイアウトされる
@@ -46,10 +46,10 @@ addFrame(desktop, 1, false);
 -- `WindowsLookAndFeel`でこの設定を`false`にするとタイトルパネルが`JInternalFrame`の`Border`を考慮して縮小して描画されて不自然なレイアウトのタイトルパネルになってしまう
 -- `GTKLookAndFeel`でこの設定を`false`にするとタイトルパネルアイコンがタイトル文字列にかぶったり最大化、最小化、閉じるボタンが`JInternalFrame`の内側に移動して不自然なレイアウトのタイトルパネルになってしまう
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicInternalFrameUI.html#getNorthPane-- BasicInternalFrameUI#getNorthPane() (Java Platform SE 8)]
--- `InternalFrame.layoutTitlePaneAtOrigin`の設定は通常は変更する必要はなく、タイトルパネル(`NorthPane`)を自作する必要がある場合のみ考慮すればよさそう？
+-- `InternalFrame.layoutTitlePaneAtOrigin`の設定を考慮する必要があるのはタイトルパネル(`NorthPane`)を自作する場合のみ？
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

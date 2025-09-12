@@ -8,12 +8,12 @@ pubdate: 2007-06-25T18:03:27+09:00
 description: JTableの選択状態をchangeSelectionメソッドを使って変更します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTI0VFZw9I/AAAAAAAAATY/1C_mVqWcXPc/s800/ChangeSelection.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の選択状態を`changeSelection`メソッドを使って変更します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTI0VFZw9I/AAAAAAAAATY/1C_mVqWcXPc/s800/ChangeSelection.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 p.add(new JButton(new AbstractAction("changeSelection") {
   @Override public void actionPerformed(ActionEvent e) {
@@ -29,7 +29,7 @@ p.add(new JButton(new AbstractAction("changeSelection") {
 }));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JTable#changeSelection(...)`メソッドを使用すれば`toggle`と`extend`の`2`つのフラグでセルの選択状態を以下のように変更可能です。
 
 - `toggle`:`false`、`extend`:`false`
@@ -45,10 +45,10 @@ p.add(new JButton(new AbstractAction("changeSelection") {
 - `toggle`、`extend`の状態を変えて実際に選択状態の変化をテスト可能
 - アンカーや選択状態、列の入れ替えなどを行って`changeSelection(...)`による変更もテスト可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#changeSelection-int-int-boolean-boolean- JTable#changeSelection(int, int, boolean, boolean) (Java Platform SE 8)]
 -- この記事の内容は、ほぼ上記の`API`ドキュメントからの引用
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

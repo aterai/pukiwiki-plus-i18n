@@ -8,12 +8,12 @@ pubdate: 2005-08-15T00:22:53+09:00
 description: JComponentのcreateToolTip()メソッドをオーバーライドして、Borderを変更したJToolTipを生成します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVjcQsX6I/AAAAAAAAAn0/tieki8bniAM/s800/ToolTipBorder.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComponent`の`createToolTip()`メソッドをオーバーライドして、`Border`を変更した`JToolTip`を生成します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVjcQsX6I/AAAAAAAAAn0/tieki8bniAM/s800/ToolTipBorder.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton button = new JButton() {
   @Override public JToolTip createToolTip() {
@@ -28,12 +28,12 @@ JButton button = new JButton() {
 button.setToolTipText("Test - ToolTipText1");
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JComponent#createToolTip()`メソッドをオーバーライドして`JToolTip`のデフォルト`Border`と`MatteBorder`を組み合わせた`Border`を設定しています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#createToolTip-- JComponent#createToolTip() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

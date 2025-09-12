@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2008/03/jprogressbar-in-jtable-cell.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルに`JProgressBar`を使用して進捗を表示します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUYeEtfWI/AAAAAAAAAl8/47mUyOKeiQY/s800/TableCellProgressBar.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ProgressRenderer extends DefaultTableCellRenderer {
   private final JProgressBar b = new JProgressBar(0, 100);
@@ -93,7 +93,7 @@ executor.execute(worker); // 1.6.0_18
 // worker.execute(); //1.6.0_21
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`add`ボタンをクリックすると`SwingWorker`を使用したランダムな仮タスクが起動し、その進捗状況が`2`列目セル内の`JProgressBar`で表示されます。
 
 - `ProgressRenderer`は`JProgressBar`を一つ持ち、仮タスクが動いている間はその`JProgressBar`に値を設定して描画用のコンポーネントとして返す
@@ -111,12 +111,12 @@ public abstract class SwingWorker<T, V> implements RunnableFuture<T> {
   private static final int MAX_WORKER_THREADS = 10;
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[SwingWorkerを使った処理の中断と進捗状況表示>Swing/SwingWorker]]
 - [[TableCellRendererに進捗文字列を設定したJProgressBarを使用する>Swing/StringPaintedCellProgressBar]]
 - [[SwingWorkerを一スレッドずつ順番に実行する>Swing/SingleThreadExecutor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - %%`Windows` + `Java 1.7.0-ea-b24`での動作がおかしいみたいです。 -- &user(aterai); &new{2007-12-19 (水) 21:08:43};%%
 - メモ: [http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=87 Bug 87 - Icedtea 1.7.0 and SwingWorker problem] -- &user(aterai); &new{2008-01-31 (木) 15:56:51};

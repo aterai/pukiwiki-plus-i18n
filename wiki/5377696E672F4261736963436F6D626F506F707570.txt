@@ -8,12 +8,12 @@ pubdate: 2005-10-17T19:42:35+09:00
 description: JComboBoxを使ってスクロール可能なポップアップメニューを表示します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTH_tpIbsI/AAAAAAAAASE/DrHgihVbnn0/s800/BasicComboPopup.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`を使ってスクロール可能なポップアップメニューを表示します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTH_tpIbsI/AAAAAAAAASE/DrHgihVbnn0/s800/BasicComboPopup.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class EditorComboPopup extends BasicComboPopup {
   private final JTextComponent textArea;
@@ -56,7 +56,7 @@ class EditorComboPopup extends BasicComboPopup {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、KBD{Shift+Tab}でポップアップメニューが表示され、KBD{Up}・KBD{Down}キーで移動、KBD{Enter}で`JTextPane`のカーソルの後に選択された文字列が入力されます。
 
 `JComboBox`のポップアップ部分の`UI`を表現する`BasicComboPopup`を利用することで垂直スクロールバーありのポップアップメニューを実現しています。
@@ -86,11 +86,11 @@ private void popupMenu(ActionEvent e) {
 - 上記の`AccessControlException`は、`6u10 build b26`で修正されている
 -- [https://bugs.openjdk.org/browse/JDK-6675802 Bug ID: 6675802 Regression: heavyweight popups cause SecurityExceptions in applets]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1367473 Swing - Scrollable PopupMenu]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicComboPopup.html BasicComboPopup (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 大変参考になりました。その上、マウスクリックで文字列を選定できるようにしたいですが、どうすればいかがですか？ -- &user(java); &new{2008-01-08 (火) 16:25:30};
 -- どうもです。とりあえず(勘違いしているかもしれませんが、以前はマウスクリックでも動作していたような…？)、手抜きですが、`BasicComboPopup#installListListeners`メソッドをオーバーライドしてマウスリスナーを追加してみました。 -- &user(aterai); &new{2008-01-08 (火) 18:23:22};

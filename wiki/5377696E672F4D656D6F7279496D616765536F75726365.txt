@@ -8,12 +8,12 @@ pubdate: 2010-06-07T15:20:45+09:00
 description: マウスのドラッグに応じて線を描画、消しゴムで消去する機能を実装します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPu_OEqoI/AAAAAAAAAec/z6MobKhblfI/s800/MemoryImageSource.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 マウスのドラッグに応じて線を描画、消しゴムで消去する機能を実装します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPu_OEqoI/AAAAAAAAAec/z6MobKhblfI/s800/MemoryImageSource.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 int[] pixels = new int[320 * 240];
 MemoryImageSource source = new MemoryImageSource(320, 240, pixels, 0, 320);
@@ -64,7 +64,7 @@ int penc = 0x0;
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、左クリックしてからドラッグすると黒、右クリックしてからドラッグすると透過色(`0xff000000`、消しゴム)で、自由曲線を描画できます。
 `MemoryImageSource`に設定した画像の各ピクセルを表す`int`配列をマウスのドラッグに応じて操作して`Image`を作成しています。
 
@@ -109,10 +109,10 @@ private BufferedImage backImage = null;
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JPanelにマウスで自由曲線を描画>Swing/PaintPanel]]
 - [[PixelGrabberで画像を配列として取得し編集、書出し>Swing/PixelGrabber]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

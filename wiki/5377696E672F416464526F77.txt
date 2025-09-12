@@ -8,12 +8,12 @@ pubdate: 2004-05-03T19:35:45+09:00
 description: JTableへの行追加と、選択行の削除をJPopupMenuから実行します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHaSWCCMI/AAAAAAAAARI/UM476TJWRdM/s800/AddRow.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`への行追加と、選択行の削除を`JPopupMenu`から実行します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHaSWCCMI/AAAAAAAAARI/UM476TJWRdM/s800/AddRow.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private final DefaultTableModel model = new DefaultTableModel();
 private final JTable table;
@@ -33,7 +33,7 @@ private void deleteActionPerformed(ActionEvent e) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、ポップアップメニューを使用して行の追加と削除を行っています。
 
 - 追加
@@ -43,12 +43,12 @@ private void deleteActionPerformed(ActionEvent e) {
 -- 複数行の削除に対応するため`index`の大きい方から削除する
 -- 行がソートされている場合を考慮して`JTable#convertRowIndexToModel(int)`メソッドで`viewIndex`を`modelIndex`に変換してから`DefaultTableModel#removeRow(int modelIndex)`を使って削除
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/DefaultTableModel.html DefaultTableModel (Java Platform SE 8)]
 - [[JTableのセルにJButtonを追加して行削除>Swing/DeleteButtonInCell]]
 - [[JTableの行を全削除>Swing/ClearTable]]
 - [[JTableで行の追加、削除アニメーション>Swing/SlideTableRows]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

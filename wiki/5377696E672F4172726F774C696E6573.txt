@@ -8,12 +8,12 @@ pubdate: 2020-09-14T01:14:39+09:00
 description: JPanel上にPath2Dを使用して作成した矢印付きの直線を描画します。
 image: https://drive.google.com/uc?id=1VDPfzAYOCu-8IfK1RdpFDm7SLdSrGH-E
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPanel`上に`Path2D`を使用して作成した矢印付きの直線を描画します。
 
 #download(https://drive.google.com/uc?id=1VDPfzAYOCu-8IfK1RdpFDm7SLdSrGH-E)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class Arrow {
   private final Point start = new Point();
@@ -49,14 +49,14 @@ class Arrow {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 矢印として座標原点上に底辺の中央が配置される二等辺三角形を`Path2D`で作成
 - 直線の始点と終点から回転ベクトルを計算して`AffineTransform.getRotateInstance(double vecx, double vecy)`メソッドで`AffineTransform`オブジェクトを作成し、`Path2D#transform(AffineTransform)`メソッドで矢印を座標原点を中心に回転
 - `AffineTransform.getTranslateInstance(end.getX(), end.getY())`メソッドで`AffineTransform`オブジェクトを作成し、`Path2D#transform(AffineTransform)`メソッドで直線の終点まで矢印を移動
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/2027613/how-to-draw-a-directed-arrow-line-in-java drawing - How to draw a directed arrow line in Java? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

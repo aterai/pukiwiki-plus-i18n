@@ -8,12 +8,12 @@ pubdate: 2023-12-04T00:00:25+09:00
 description: JTreeの親ノードが選択されている場合、キー入力でその展開・折り畳み状態を切り替えます。
 image: https://drive.google.com/uc?id=13FbBMCLGuFg240-BFwNXCWSCryo813Dl
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`の親ノードが選択されている場合、キー入力でその展開・折り畳み状態を切り替えます。
 
 #download(https://drive.google.com/uc?id=13FbBMCLGuFg240-BFwNXCWSCryo813Dl)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 InputMap im = tree.getInputMap(JComponent.WHEN_FOCUSED);
 int modifiers1 = InputEvent.CTRL_DOWN_MASK;
@@ -34,9 +34,9 @@ am.put("toggle2", new AbstractAction() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `BasicTreeUI.TreeToggleAction`
--- `BasicTreeUI`に`TreeToggleAction`が実装されてすでに`JTree`の`ActionMap`に追加されているので、これを呼び出す`KeyStroke`を`JTree`の`InputMap`に追加
+-- `BasicTreeUI`には`TreeToggleAction`が実装されて`JTree`の`ActionMap`に追加されているため、これを呼び出す`KeyStroke`を`JTree`の`InputMap`に追加
 -- このサンプルではKBD{Ctrl+T}で`TreeToggleAction`を実行
 -- 展開`+`、折り畳み`-`アイコンのシングルクリックと同等
 -- `TreeNode`の左マウスボタンでのダブルクリック(`JTree#getToggleClickCount()`がデフォルトの`2`の場合)とは異なり、`TreeToggleAction`によるノードトグルはその子ノード以外の選択状態は維持される
@@ -45,10 +45,10 @@ am.put("toggle2", new AbstractAction() {
 -- このサンプルではKBD{Shift+Ctrl+T}でこの`Action`を実行
 -- `TreeToggleAction`とは異なり、行表示スクロールなどの処理を省略している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeで特定のノードをマウスクリックした場合のみ展開不可に設定する>Swing/PreventToggleClickNodeExpanding]]
 - [https://bugs.openjdk.org/browse/JDK-8317771 &#91;JDK-8317771&#93; &#91;macos14&#93; Expand/collapse a JTree using keyboard freezes the application in macOS 14 Sonoma - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

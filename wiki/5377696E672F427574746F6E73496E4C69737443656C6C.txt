@@ -8,12 +8,12 @@ pubdate: 2011-10-03T14:43:12+09:00
 description: JListのセル内に複数のJButtonを配置します。
 image: https://lh3.googleusercontent.com/-j4_Xv9F17Jc/TolDAZSkQUI/AAAAAAAABDU/GK_sK9k5aJE/s800/ButtonsInListCell.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`のセル内に複数の`JButton`を配置します。
 
 #download(https://lh3.googleusercontent.com/-j4_Xv9F17Jc/TolDAZSkQUI/AAAAAAAABDU/GK_sK9k5aJE/s800/ButtonsInListCell.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ButtonsRenderer<E> extends JPanel implements ListCellRenderer<E> {
   protected static final Color EVEN_COLOR = new Color(0xE6_FF_E6);
@@ -95,14 +95,14 @@ class ButtonsRenderer<E> extends JPanel implements ListCellRenderer<E> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JList`のセルに`2`つの`JButton`を配置する`ListCellRenderer`を設定しています。
 `JButton`のクリックイベントは`JList`本体に追加したマウスリスナーで`SwingUtilities.getDeepestComponentAt(...)`を使用して`ListCellRenderer`から対象の`JButton`を取得し、`JButton#doClick()`を呼び出しています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのセルに複数のJButtonを配置する>Swing/MultipleButtonsInTableCell]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - サンプルの動作未定義だった`view, edit`ボタンを実際に動作する現在行の`delete, copy`ボタンに変更。 -- &user(aterai); &new{2013-11-20 (水) 16:13:40};
 - `VerticalScrollBar`が表示されると、セルの幅が縮むように変更。 -- &user(aterai); &new{2016-04-19 (火) 16:13:40};

@@ -8,12 +8,12 @@ pubdate: 2019-09-30T08:12:21+09:00
 description: JList、JTable、JTreeのTransferHandlerを使用したドラッグ＆ドロップで挿入先を表示するドロップラインの色を変更します。
 image: https://drive.google.com/uc?id=1zV5JFERJgM_2M66Sa8dWyRViXHZfQdkL
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`、`JTable`、`JTree`の`TransferHandler`を使用したドラッグ＆ドロップで挿入先を表示するドロップラインの色を変更します。
 
 #download(https://drive.google.com/uc?id=1zV5JFERJgM_2M66Sa8dWyRViXHZfQdkL)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("List.dropLineColor", Color.RED);
 UIManager.put("Table.dropLineColor", Color.GREEN);
@@ -27,7 +27,7 @@ UIManager.put("Tree.dropLineColor", Color.BLUE);
 // UIManager.put(List.dropLineColor, new Color(0x0, true));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JList`は`List.dropLineColor`でドロップラインの色を変更可能
 - `JTable`は`Table.dropLineColor`でドロップラインの色を変更可能
 -- `Table.dropLineShortColor`でマウスカーソル先のセルに引かれる短いドロップラインの色を変更可能
@@ -38,11 +38,11 @@ UIManager.put("Tree.dropLineColor", Color.BLUE);
 - たとえば`JList`を`UIManager.put("List.dropLineColor", null)`でドロップラインの色に`null`を設定すると、デフォルト色でドロップラインが描画される
 - ドロップラインを非表示にする場合は、`UIManager.put("List.dropLineColor", new Color(0x0, true))`のように完全透明色を設定する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/58032762/java-how-to-change-jtable-drag-drop-dropline-color swing - Java: How to change JTable drag & drop dropLine color? - Stack Overflow]
 - [[JTreeのノードをドラッグ＆ドロップ>Swing/DnDTree]]
 -- こちらのドラッグ＆ドロップは`TransferHandler`を使用していないため、`Tree.dropLineColor`も無視して独自にドロップラインを描画している
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2006-06-10T11:46:45+09:00
 description: JDK 6で新しくなったSwingWorkerを使って、処理の中断や進捗状況の表示更新などを行います。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTT8xXI-cI/AAAAAAAAAlQ/ueJc6P4EJVg/s800/SwingWorker.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JDK 6`で新しくなった`SwingWorker`を使って、処理の中断や進捗状況の表示更新などを行います。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTT8xXI-cI/AAAAAAAAAlQ/ueJc6P4EJVg/s800/SwingWorker.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class Task extends SwingWorker<String, String> {
   @Override public String doInBackground() {
@@ -117,7 +117,7 @@ class CancelAction extends AbstractAction {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JDK 6`以前の`SwingWorker.java`から一部メソッド名が変更されているが、基本的な使用方法は同じ
 - `SwingWorker#execute()`メソッドで処理が開始され、`SwingWorker#doInBackground()`メソッドがバックグラウンドのワーカースレッドで実行される
 - `EDT`で実行する必要のある処理(上記の例では処理中に`JTextArea`へのメッセージの書き出し)は`SwingWorker#process()`メソッドをオーバーライドして`SwingWorker#publish()`メソッドで呼び出したり、`SwingWorker#firePropertyChange()`を使用する
@@ -146,7 +146,7 @@ protected final void setProgress(int progress) {
 ----
 - `SwingWorker#process()`メソッド内などで`JPanel#isDisplayable()`を呼び、アプリケーション(`frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);`が設定されている)が終了している場合は、タスクを中断することで`SwingWorker`が生き残るのを防止
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingWorker.html SwingWorker (Java Platform SE 8)]
 //- [http://java.sun.com/developer/technicalArticles/javase/swingworker/ Improve Application Performance With SwingWorker in Java SE 6]
 - [http://www.oracle.com/technetwork/articles/javase/swingworker-137249.html Improve Application Performance With SwingWorker in Java SE 6]
@@ -155,7 +155,7 @@ protected final void setProgress(int progress) {
 - [[SwingWorkerで複数のJProgressBarを使用する>Swing/TwoProgressBars]]
 - [[SwingWorkerの一時停止と再開>Swing/PauseResumeSwingWorker]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - %%以前の`SwingWorker`の使い方などは、[[Timerでアニメーションするアイコンを作成>Swing/AnimeIcon]]、[[Fileの再帰的検索>Swing/RecursiveFileSearch]]などのソースコードやリンク先を参考にしてみてください。%% [[Fileの再帰的検索>Swing/RecursiveFileSearch]]は、`JDK 1.6`の`javax.swing.SwingWorker`を使用するように変更しました。 -- &user(aterai); &new{2007-02-22 (木) 17:57:58};
 -- [[Timerでアニメーションするアイコンを作成>Swing/AnimeIcon]]は %%https://swingworker.dev.java.net/ にある%% `JDK 1.6`からバックポートされた`org.jdesktop.swingworker.SwingWorker`を使用するように変更しました。 -- &user(aterai); &new{2009-12-17 (木) 01:47:38};

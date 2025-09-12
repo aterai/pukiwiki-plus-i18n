@@ -8,12 +8,12 @@ pubdate: 2021-08-30T02:48:24+09:00
 description: JInternalFrameのタイトルをタイトルバーやアイコン化された状態のJDesktopIconからJPopupMenuを開いて変更します。
 image: https://drive.google.com/uc?id=1OBg1GInat6Dbj4WK5tRYaSihXxU2E32R
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`のタイトルをタイトルバーやアイコン化された状態の`JDesktopIcon`から`JPopupMenu`を開いて変更します。
 
 #download(https://drive.google.com/uc?id=1OBg1GInat6Dbj4WK5tRYaSihXxU2E32R)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static JInternalFrame createFrame(String t, int i) {
   JInternalFrame f = new JInternalFrame(t + i, true, true, true, true);
@@ -63,7 +63,7 @@ private static Component getInternalFrame(Component c) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JInternalFrame`やそのアイコン化状態でのコンポーネントである`JInternalFrame.JDesktopIcon`に`setComponentPopupMenu(...)`メソッドで`JPopupMenu`を設定し、この`JPopupMenu`から`JOptionPane`を開いて`JInternalFrame`のタイトルを変更しています。
 
 - `Windows`環境で`JInternalFrame`のタイトルバーを右クリックした場合の動作は`LookAndFeel`で異なる
@@ -76,9 +76,9 @@ private static Component getInternalFrame(Component c) {
 --- デフォルトではタイトルバーのシングル右クリックは無視され(システムメニューは表示されない)、左右どのマウスボタンのダブルクリックでも`JInternalFrame`の最大化、復元が実行される
 --- デフォルトは`WindowsInternalFrameTitlePane#isInheritsPopupMenu() == true`なので、`WindowsInternalFrameTitlePane#setInheritsPopupMenu(true)`などの設定で右クリックはポップアップ表示に変更可能(右マウスボタンのダブルクリックは無効になる)
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JInternalFrameのタイトル文字列幅を取得し、その値でJDesktopIconの幅を調整する>Swing/ComputeTitleWidth]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2014/10/jmenuitem-accelerator-text-alignment.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenuItem`の`Accelerator`表示を右揃えに変更します。
 
 #download(https://lh5.googleusercontent.com/-vl8nnt_tGvQ/UkhDq1YV-VI/AAAAAAAAB2o/B0-hGdv35Ns/s800/MenuItemAcceleratorAlignment.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public static void paintAccText(
   Graphics g, MenuItemLayoutHelper lh, MenuItemLayoutHelper.LayoutResult lr,
@@ -65,10 +65,22 @@ public static void paintAccText(
 }
 }}
 
-* 解説 [#explanation]
-- `Default`
--- デフォルトの`Windows`環境の場合`Accelerator`は左寄せ
--- デフォルトの`Ubuntu`環境の場合`Accelerator`は右寄せ
+* Description [#description]
+- `Default`(かつ左から右に文字が流れる言語(`Component#getComponentOrientation()#isLeftToRight() == true`)の場合)
+-- `WindowsLookAndFeel`環境のデフォルトでは`Accelerator`は左寄せ
+-- %%デフォルトの`Ubuntu`%% `SynthLookAndFeel`を継承する`NimbusLookAndFeel`や`GTKLookAndFeel`の場合、`Accelerator`は右寄せ
+-- `SynthLookAndFeel`では`MenuItem.alignAcceleratorText`の設定で`Accelerator`の字揃えを簡単に変更可能
+--- デフォルトは`UIManager.put("MenuItem.alignAcceleratorText", Boolean.FALSE)`で右寄せ
+--- `UIManager.put("MenuItem.alignAcceleratorText", Boolean.TRUE);`などで左寄せ
+--- `MetalLookAndFeel`や`WindowsLookAndFeel`などでは効果なし
+
+#code{{
+UIManager.put("CheckBoxMenuItem.alignAcceleratorText", Boolean.FALSE);
+UIManager.put("Menu.alignAcceleratorText", Boolean.FALSE);
+UIManager.put("MenuItem.alignAcceleratorText", Boolean.FALSE);
+UIManager.put("RadioButtonMenuItem.alignAcceleratorText", Boolean.FALSE);
+}}
+
 - `RightAcc`
 -- `BasicMenuItemUI#paintMenuItem(...)`メソッドをオーバーライドして、`JMenuItem`の`Accelerator`を左寄せではなく右寄せで表示
 -- `Web Start`で実行すると`java.security.AccessControlException: access denied ("java.lang.RuntimePermission" "accessClassInPackage.sun.swing")`と例外が発生してメニューが表示されない
@@ -149,12 +161,12 @@ public final class awt_ja extends ListResourceBundle {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1364746 Swing - Localized Accelorator Keys]
 - [[JMenuItemの内部にJButtonを配置する>Swing/ButtonsInMenuItem]]
 - [[JMenuItemのAccelerator表示を変更する>Swing/MenuItemAcceleratorFont]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JMenuItem`に`GridBagLayout`を設定して右寄せする方法を追加。 -- &user(aterai); &new{2014-11-30 (日) 17:57:58};
 

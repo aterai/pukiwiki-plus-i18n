@@ -6,7 +6,7 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 `Ant`から`PMD`を実行します。
 
 * サンプルターゲット [#target]
@@ -69,7 +69,7 @@ description: ソースコードの静的解析を行うPMDをAntから実行す�
 </ruleset>
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 + [https://pmd.github.io/ PMD]からダウンロードした`pmd-bin-x.x.zip`の`lib`以下にある`pmd-x.x.jar`などの`jar`ファイルを`%ANT_HOME%\lib`にコピー、もしくは環境変数`%PMD_HOME%`を設定した場所に`lib`を展開
 + 上記のような`pmd`ターゲットを`build.xml`に追加し、`ant pmd`で`pmd.xml`を生成、`jenkins`の`PMD`プラグインなどで読み込む
 + チェックするルールをカスタマイズする場合は、`ruleset.xml`を記述してこれを`rulesetfiles`属性で参照する
@@ -299,10 +299,10 @@ model2 = new BasicDirectoryModel(getFileChooser()) {
 * Jenkins [#jenkins]
 - [[Jenkins]]に移動
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://pmd.github.io/ PMD]
 - [http://d.hatena.ne.jp/guess880/20121014/1350200644 PMD5.0.0のルールを和訳しながら読む - 1 - Design Ruleset - 開発メモ]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

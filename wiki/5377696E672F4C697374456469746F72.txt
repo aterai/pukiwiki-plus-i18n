@@ -8,12 +8,12 @@ pubdate: 2021-01-18T01:08:02+09:00
 description: JListのセル内に配置したJLabelのテキストを編集可能にするセルエディタを作成します。
 image: https://drive.google.com/uc?id=1X7hqBD35R8ZX4XVDJ0ii4QO6hPgUK_Iz
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`のセル内に配置した`JLabel`のテキストを編集可能にするセルエディタを作成します。
 
 #download(https://drive.google.com/uc?id=1X7hqBD35R8ZX4XVDJ0ii4QO6hPgUK_Iz)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class EditableList<E extends ListItem> extends JList<E> {
   private transient MouseInputAdapter handler;
@@ -47,16 +47,11 @@ class EditableList<E extends ListItem> extends JList<E> {
   };
   protected final Action renameTitle = new AbstractAction() {
     @Override public void actionPerformed(ActionEvent e) {
-      ListModel<E> m = getModel();
       String title = editor.getText().trim();
-      if (!title.isEmpty() && m instanceof DefaultListModel<?>) {
-        @SuppressWarnings("unchecked")
-        DefaultListModel<ListItem> model = (DefaultListModel<ListItem>) getModel();
-        int index = getSelectedIndex();
-        ListItem item = m.getElementAt(index);
-        model.remove(index);
-        model.add(index, new ListItem(editor.getText(), item.icon));
-        setSelectedIndex(index);
+      int index = getSelectedIndex();
+      if (!title.isEmpty() && index >= 0) {
+        E item = getModel().getElementAt(index);
+        item.setTitle(title);
       }
       glassPane.setVisible(false);
     }
@@ -147,10 +142,9 @@ class EditableList<E extends ListItem> extends JList<E> {
     }
   }
 }
-
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#HORIZONTAL_WRAP 水平ニュースペーパー・スタイルレイアウト]を設定した`JList`でアイテム(セル)のタイトル文字列を編集可能にする
 -- `JList`デフォルトのセルを垂直方向に`1`列に並べたレイアウトでセルを編集可能にする場合はヘッダを非表示にした`JTable`と`TableCellEditor`で代用可能
 -- `JFileChooser`(`FilePane`)で使用される`ListView`は`JList`で作成されているが、名前が`Tree.cellEditor`の`JTextField`がファイル名変更用セルエディタとして利用可能
@@ -161,13 +155,20 @@ class EditableList<E extends ListItem> extends JList<E> {
 - `JList`上にセルエディタとして`GlassPane`ごと表示
 - `JTextField`からフォーカスが移動したら`GlassPane`を非表示に設定し、`JTextField`のテキストを選択したセルのタイトル文字列に設定
 
-* 参考リンク [#reference]
+----
+- [https://github.com/aterai/java-swing-tips/issues/34 Resizing the parent JFrame results in incorrect positioning of the list cell editor during editing · Issue #34 · aterai/java-swing-tips]
+-- リストエディタ表示中に`JList`のサイズが変更されて編集中のセル位置が変化した場合、リストエディタの位置がずれてしまうバグを修正
+-- `JFileChooser`のリストエディタも同様に位置がずれるバグ？がある
+-- &ref(https://ateraimemo.com/swing/listeditor/screenshot2.png);
+-- [[JFileChooserのリサイズでファイル名編集をキャンセルする>Swing/CancelFilePaneCellEditor]]に、`ComponentListener`を追加してリサイズで編集をキャンセルすることで位置ズレを回避するサンプルを移動
+
+* Reference [#reference]
 - [[JTabbedPaneのタブタイトルを変更>Swing/EditTabTitle]]
 - [[JListのアイテムをフィルタリングして表示>Swing/FilterListItems]]
 - [[JListのモデルをソートする>Swing/SortedListModel]]
 - [[JTextAreaとJFrameで幅固定、文字列の折り返し、親枠外まで高さ拡大可能なセルエディタを作成する>Swing/LineWrapListEditor]]
 - [[JFileChooserのセルエディタでリネームを開始したとき拡張子を除くファイル名を選択状態にする>Swing/SelectFileNameWithoutExtension]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

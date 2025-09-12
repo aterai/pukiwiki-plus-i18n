@@ -6,7 +6,7 @@ description: AntでのJavaコードのコンパイラにコード解析を行う
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 `Ant`での`Java`コードコンパイルに`Error Prone`を使用して、ソースコード解析を強化します。
 
 * サンプルターゲット [#target]
@@ -21,62 +21,64 @@ description: AntでのJavaコードのコンパイラにコード解析を行う
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="example" default="compile" xmlns:if="ant:if" xmlns:unless="ant:unless">
 ...
-  <path id="project.class.path">
-    <pathelement location="${build.dest}" />
-    <pathelement location="${java.home}/lib/javaws.jar" />
-    <pathelement path="${java.class.path}" />
+<target name="errorprone" depends="prepare-src">
+  <!-- using github.com/google/error-prone-javac is required when running on JDK 8 -->
+  <property name="javac.jar" location="${env.ERRORPRONE_HOME}/javac-9+181-r4173-1.jar" />
+  <path id="processorpath.ref">
+    <fileset dir="${env.ERRORPRONE_HOME}">
+      <include name="*.jar" />
+      <exclude name="error_prone_core-2.10.0-with-dependencies.jar" if:set="jdk9orlater" />
+      <exclude name="javac-9+181-r4173-1.jar" if:set="jdk9orlater" />
+      <exclude name="jFormatString-3.0.0.jar" if:set="jdk9orlater" />
+    </fileset>
   </path>
-  <target name="errorprone" depends="prepare-src">
-    <!-- using github.com/google/error-prone-javac is required when running on JDK 8 -->
-    <property name="javac.jar" location="${env.ERRORPRONE_HOME}/javac-9+181-r4173-1.jar"/>
-    <path id="processorpath.ref">
-      <fileset dir="${env.ERRORPRONE_HOME}">
-        <include name="*.jar" />
-        <exclude name="error_prone_core-2.10.0-with-dependencies.jar" if:set="jdk9orlater" />
-        <exclude name="javac-9+181-r4173-1.jar" if:set="jdk9orlater" />
-        <exclude name="jFormatString-3.0.0.jar" if:set="jdk9orlater" />
-      </fileset>
-    </path>
-    <javac srcdir="${build.src}"
-           destdir="${build.dest}"
-           encoding="${compile.encoding}"
-           debug="${compile.debug}"
-           optimize="${compile.optimize}"
-           deprecation="${compile.deprecation}"
-           fork="yes"
-           includeAntRuntime="no"
-           classpathref="project.class.path">
-      <include name="**/*.java" />
-      <exclude name="**/module-info.java" if:set="jdk9orlater" />
-      <compilerarg value="-J-Xbootclasspath/p:${javac.jar}" unless:set="jdk9orlater"/>
-      <compilerarg value="-XDcompilePolicy=simple"/>
-      <compilerarg value="-processorpath"/>
-      <compilerarg pathref="processorpath.ref"/>
-      <compilerarg value="-Xplugin:ErrorProne -Xep:DeadException:ERROR -Xep:MultipleTopLevelClasses:OFF" />
-      <compilerarg value="-J-Dfile.encoding=UTF-8" />
-      <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED" if:set="jdk9orlater" />
-      <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED" if:set="jdk9orlater" />
-      <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED" if:set="jdk9orlater" />
-      <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED" if:set="jdk9orlater" />
-      <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED" if:set="jdk9orlater" />
-      <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" if:set="jdk9orlater" />
-      <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED" if:set="jdk9orlater" />
-      <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED" if:set="jdk9orlater" />
-      <compilerarg value="-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED" if:set="jdk9orlater" />
-      <compilerarg value="-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED" if:set="jdk9orlater" />
-      <compilerarg value="--add-exports=java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED" if:set="jdk9orlater" />
-    </javac>
-  </target>
+  <javac srcdir="${build.src}"
+         destdir="${build.dest}"
+         encoding="${compile.encoding}"
+         fork="yes"
+         includeAntRuntime="no">
+    <include name="**/*.java" />
+    <exclude name="**/module-info.java" unless:set="jdk9orlater" />
+    <compilerarg value="-J-Xbootclasspath/p:${javac.jar}" unless:set="jdk9orlater" />
+    <compilerarg value="-XDcompilePolicy=simple" />
+    <compilerarg value="--should-stop=ifError=FLOW" if:set="jdk9orlater" />
+    <compilerarg value="-processorpath" />
+    <compilerarg pathref="processorpath.ref" />
+    <compilerarg value="-Xplugin:ErrorProne -Xep:DeadException:ERROR -Xep:MultipleTopLevelClasses:OFF" />
+    <compilerarg value="-J-Dfile.encoding=UTF-8" />
+    <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED" if:set="jdk9orlater" />
+    <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED" if:set="jdk9orlater" />
+    <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED" if:set="jdk9orlater" />
+    <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED" if:set="jdk9orlater" />
+    <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED" if:set="jdk9orlater" />
+    <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" if:set="jdk9orlater" />
+    <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED" if:set="jdk9orlater" />
+    <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED" if:set="jdk9orlater" />
+    <compilerarg value="-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED" if:set="jdk9orlater" />
+    <compilerarg value="-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED" if:set="jdk9orlater" />
+    <compilerarg value="--add-exports=java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED" if:set="jdk9orlater" />
+  </javac>
+</target>
 }}
 
-* 解説 [#explanation]
-+ [https://errorprone.info/docs/installation#ant Installation]に記述されている`error_prone_core-2.3.2-with-dependencies.jar`、`jFormatString-3.0.0.jar`、`javac-9+181-r4173-1.jar`をダウンロードし、適当な(例えば環境変数`ERRORPRONE_HOME`を設定した)場所に配置する
+* Description [#description]
++ [https://errorprone.info/docs/installation#ant Installation]に記述されている`error_prone_core-x.x.x-with-dependencies.jar`、`jFormatString-3.0.0.jar`、`javac-9+181-r4173-1.jar`をダウンロードし、適当な(例えば環境変数`ERRORPRONE_HOME`を設定した)場所に配置する
+-- `2.10.0`以降の場合は`error_prone_core-x.x.x-with-dependencies.jar`と`dataflow-errorprone-3.42.0-eisop4.jar`(`google-java-format-1.24.0.jar`が必要になる場合もある？)
 + 上記のような`errorprone`ターゲットを`build.xml`に追加する、または`complie`ターゲットの`<javac>`を置き換えてコンパイルする
 
 ----
 - 例えば`MultipleTopLevelClasses`をチェックしないように設定する場合は、以下のように`-Xep:MultipleTopLevelClasses:OFF`を引数に追加する
 -- `<compilerarg value="-Xplugin:ErrorProne -Xep:DeadException:ERROR -Xep:MultipleTopLevelClasses:OFF -Xep:CatchAndPrintStackTrace:OFF" />`
 -- [https://errorprone.info/docs/flags Command-line flags]
+
+** Error Prone 2.35.1 [#i7157002]
+- `Java 21.0.5` + `Ant 1.10.15` + `Error Prone 2.35.1`で実行すると`java.lang.NoClassDefFoundError: com/google/googlejavaformat/java/FormatterException`とエラーになる
+-- [https://github.com/google/google-java-format GitHub - google/google-java-format: Reformats Java source code to comply with Google Java Style.]から`google-java-format-1.24.0.jar`をダウンロードして`error_prone_core-2.35.1-with-dependencies.jar`と同じディレクトリに配置すると解消する？
+- [https://github.com/google/error-prone/pull/4633 Bundle google-java-format in the with-dependencies JAR by lgemeinhardt · Pull Request #4633 · google/error-prone]
+-- `2.36.0`では`error_prone_core-2.36.0-with-dependencies.jar`に`com/google/googlejavaformat/java/`が含まれるようになってエラーは解消した
+
+** Error Prone 2.10.0 [#g447c785]
+- `Java 8`で実行可能なバージョンは`2.10.0`までとなっており、現在のバージョンは`Java 17`以降で実行する必要がある
 
 ** Error Prone 2.4.0 [#md1bf1ec]
 - `Ant` + `Error Prone 2.4.0`で以下のような例外が発生する？
@@ -122,10 +124,10 @@ description: AntでのJavaコードのコンパイラにコード解析を行う
      [javac]     (see https://errorprone.info/bugpattern/CatchAndPrintStackTrace)
      [javac] 警告1個
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://errorprone.info/ Error Prone]
 - [https://github.com/google/error-prone google/error-prone: Catch common Java mistakes as compile-time errors]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

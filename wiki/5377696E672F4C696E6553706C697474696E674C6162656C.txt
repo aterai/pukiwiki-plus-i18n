@@ -8,12 +8,12 @@ pubdate: 2011-09-26T17:16:34+09:00
 description: クリップを設定することで描画範囲を制限し、文字列の内部を異なる色で修飾します。
 image: https://lh5.googleusercontent.com/-1UyXoR9Qkyo/ToAw2259JmI/AAAAAAAABC4/xHq03u7R3v4/s800/LineSplittingLabel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Graphics`にクリップ図形を設定することで描画範囲を制限し、文字列の内部を異なる色で修飾します。
 
 #download(https://lh5.googleusercontent.com/-1UyXoR9Qkyo/ToAw2259JmI/AAAAAAAABC4/xHq03u7R3v4/s800/LineSplittingLabel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TricoloreLabel extends JComponent {
   private final GlyphVector gv;
@@ -67,16 +67,16 @@ class TricoloreLabel extends JComponent {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左
 -- `TextLayout`からアウトラインを取得し、上下にクリッピング領域を設定して色分け
 - 右
 -- `GlyphVector`からアウトラインを取得し、上中下にクリッピング領域を設定して色分け
 
-* 参考リンク [#reference]
+* Reference [#reference]
 [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics.html#setClip-java.awt.Shape- Graphics#setClip(Shape) (Java Platform SE 8)]
 - [[JLabelのテキストで背景画像を切り抜いて表示する>Swing/KnockoutTextLabel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

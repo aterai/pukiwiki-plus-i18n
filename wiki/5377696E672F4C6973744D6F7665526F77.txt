@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2023/09/move-selected-item-in-jlist-up-or-down.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`の選択アイテムを`JToolBar`に配置した`JButton`をクリックして上下に移動します。
 
 #download(https://drive.google.com/uc?id=1waKjbKioCjx9-YGyfSwPbmo5LMLpfzvM)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton up = new JButton("▲");
 up.setFocusable(false);
@@ -65,7 +65,7 @@ down.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `DefaultListModel`には[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/DefaultTableModel.html#moveRow-int-int-int- DefaultTableModel(int start, int end, int to)]のような移動メソッドは用意されていないので、以下のように`DefaultListModel<E>#get(index)`、`DefaultListModel<E>#remove(index)`、`DefaultListModel<E>#add(index,E)`メソッドを組み合わせて選択アイテムの上下移動を実行します。
 
 - `JButton up = new JButton("▲")`
@@ -80,11 +80,11 @@ down.addActionListener(e -> {
 -- `DefaultListModel<E>#get(index)`で選択アイテムを取得し、これを`DefaultListModel<E>#add(index,E)`で目的となる`index`に複写、その後で選択アイテムを下から順に削除することで下方向に移動
 -- [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]と同様の移動方法
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultListModel.html DefaultListModel (Java Platform SE 8)]
 -- `DefaultListModel`に[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/DefaultTableModel.html#moveRow-int-int-int- DefaultTableModel#moveRow(int start, int end, int to)]メソッドをコピーして[[JTableの行を移動>Swing/MoveRow]]のように移動する方法もある
 - [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

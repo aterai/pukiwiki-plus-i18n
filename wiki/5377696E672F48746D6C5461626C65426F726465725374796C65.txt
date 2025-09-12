@@ -8,12 +8,12 @@ pubdate: 2016-02-08T00:00:25+09:00
 description: JLabelなどのコンポーネントにHTMLのtableタグを使用して描画する表の罫線を分離表示ではなく結合表示に変更します。
 image: https://lh3.googleusercontent.com/-KUe25svxTkQ/VrdVpBBO6TI/AAAAAAAAONE/x6Lvt2P_x_c/s800-Ic42/HtmlTableBorderStyle.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLabel`などのコンポーネントに`HTML`の`table`タグを使用して描画する表の罫線を分離表示ではなく結合表示に変更します。
 
 #download(https://lh3.googleusercontent.com/-KUe25svxTkQ/VrdVpBBO6TI/AAAAAAAAONE/x6Lvt2P_x_c/s800-Ic42/HtmlTableBorderStyle.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String TD1 = "<td style='background-color:white;border-right:1px solid green;border-top:1px solid blue'>a...";
 String TS1 = "style='border-left:1px solid red;border-bottom:1px solid red;background-color:yellow' cellspacing='0px' cellpadding='5px'";
@@ -28,7 +28,7 @@ String TS3 = "style='border:0px;background-color:red' cellspacing='1px' cellpadd
 String html3 = "<html><table " + TS3 + ">" + "<tr>" + TD3 + TD3 + "<tr>" + TD3 + TD3;
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/CSS.html SwingのCSS]は、`table`要素の`border-collapse`プロパティに未対応なので、`border-bottom`などを組み合わせて罫線を結合表示します。
 
 - `border-left, border-bottom`
@@ -41,10 +41,10 @@ String html3 = "<html><table " + TS3 + ">" + "<tr>" + TD3 + TD3 + "<tr>" + TD3 +
 -- すべての罫線が同じ色になる
 -- 参考: [https://stackoverflow.com/questions/3355469/1-pixel-table-border-in-jtextpane-using-html java - 1 pixel table border in JTextPane using HTML - Stack Overflow]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/3355469/1-pixel-table-border-in-jtextpane-using-html java - 1 pixel table border in JTextPane using HTML - Stack Overflow]
 - [[BasicStrokeで指定した辺の描画を行うBorderを作成する>Swing/StrokeMatteBorder]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

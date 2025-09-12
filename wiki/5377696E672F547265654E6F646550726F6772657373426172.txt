@@ -8,12 +8,12 @@ pubdate: 2013-12-23T01:15:16+09:00
 description: JTreeのノードにJProgressBarを表示するTreeCellRendererを設定します。
 image: https://lh4.googleusercontent.com/-SBg5NOTGinM/UrcLHfPzXVI/AAAAAAAAB84/HD0k-sWiJGo/s800/TreeNodeProgressBar.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードに`JProgressBar`を表示する`TreeCellRenderer`を設定します。
 
 #download(https://lh4.googleusercontent.com/-SBg5NOTGinM/UrcLHfPzXVI/AAAAAAAAB84/HD0k-sWiJGo/s800/TreeNodeProgressBar.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ProgressBarRenderer extends DefaultTreeCellRenderer {
   // protected int nodeWidth = 100;
@@ -75,7 +75,7 @@ class ProgressBarRenderer extends DefaultTreeCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、タスクが実行中の場合はノードの幅(アイコンと文字列の合計)と同じサイズの`JProgressBar`を配置する`TreeCellRenderer`を作成し、これを`JTree#setCellRenderer(...)`で設定しています。
 
 - スタートボタンを押すとその`JButton`を選択不可に設定し、`SwingWorker`を起動して葉以外のノードをすべて捜査
@@ -83,10 +83,10 @@ class ProgressBarRenderer extends DefaultTreeCellRenderer {
 -- 仮設定のタスクが終了するとそのノードを展開
 - すべてのノードのタスクが終了したことを`ExecutorService#awaitTermination(...)`で検知したら`JButton`を選択可に変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html DefaultTreeCellRenderer (Java Platform SE 8)]
 [https://docs.oracle.com/javase/jp/8/docs/api/java/util/concurrent/ExecutorService.html ExecutorService (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

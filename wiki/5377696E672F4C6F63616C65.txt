@@ -8,19 +8,19 @@ pubdate: 2008-01-07T12:38:12+09:00
 description: JFileChooserにLocaleを設定して、タイトルやボタンの文字列を変更します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPdRLH4_I/AAAAAAAAAeA/tZciS7a5CCc/s800/Locale.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`に`Locale`を設定して、タイトルやボタンの文字列を変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPdRLH4_I/AAAAAAAAAeA/tZciS7a5CCc/s800/Locale.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // JFileChooser.setDefaultLocale(Locale.ENGLISH);
 fileChooser.setLocale((Locale) combo.getSelectedItem());
 SwingUtilities.updateComponentTreeUI(fileChooser);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JFileChooser`のタイトル、ボタンのラベルなどを指定した`Locale`に対応した文字列に変更するテストができます。
 
 - `ファイルのタイプ(T): JComboBox`の「すべてのファイル」などは更新されない
@@ -29,13 +29,13 @@ SwingUtilities.updateComponentTreeUI(fileChooser);
 -- `JDK 8`では`java -Duser.language=fr -jar example.jar`で起動しても「名前、サイズ、項目の種類、更新日時」など`OS`が使用しているロケール？から文字列が取得される？
 -- `JDK 13`では`java -Duser.language=fr -jar example.jar`で起動すると`Locale`を変更しても「`Nom, Taille, ...`」から変化しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://bugs.openjdk.org/browse/JDK-6606475 Bug ID: 6606475 JComponent.setDefaultLocale(Locale.ENGLISH) useless if def locale is non-english]
 -- `JDK 1.5.0_13`では、`JVM`のデフォルトが`English`以外の場合、`Component#setLocale(Locale.ENGLISH)`や、`JComponent.setDefaultLocale(Locale.ENGLISH)`としても反映されない
 -- `JDK 1.6.0`で修正済み
 -- `JDK 1.8.0`では再発している？
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - メモ: [https://bugs.openjdk.org/browse/JDK-6342301 Bug ID: 6342301 Bad interaction between setting the ui and file filters in JFileChooser] -- &user(aterai); &new{2011-01-18 (火) 02:29:14};
 

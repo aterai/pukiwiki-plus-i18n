@@ -8,12 +8,12 @@ pubdate: 2013-07-22T01:35:03+09:00
 description: LookAndFeel一覧からNimbusLookAndFeelを名前で検索取得して使用します。
 image: https://lh5.googleusercontent.com/-40dXjNq1HbU/UewL67WFpWI/AAAAAAAABwg/zOHVr2U7KiM/s800/NimbusLookAndFeel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `LookAndFeel`一覧から`NimbusLookAndFeel`を名前で検索取得して使用します。[https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/nimbus.html Nimbus Look and Feel (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]などのサンプルから引用しています。
 
 #download(https://lh5.googleusercontent.com/-40dXjNq1HbU/UewL67WFpWI/AAAAAAAABwg/zOHVr2U7KiM/s800/NimbusLookAndFeel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 try {
   UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -29,7 +29,7 @@ try {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JDK 1.7.0`で`NimbusLookAndFeel`のパッケージが移動されて完全クラス名が変更されたので`JDK 1.6.0_10`との互換性を考慮する場合は注意が必要です。
 
 - `JDK 1.6.0_10`: `com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel`
@@ -37,9 +37,9 @@ try {
 - `JDK 1.7.0`以降: `javax.swing.plaf.nimbus.NimbusLookAndFeel`
 -- 完全クラス名から`NimbusLookAndFeel`のインスタンスを生成して設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/nimbus.html Nimbus Look and Feel (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

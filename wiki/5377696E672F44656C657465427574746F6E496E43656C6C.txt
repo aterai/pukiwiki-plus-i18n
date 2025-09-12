@@ -8,12 +8,12 @@ pubdate: 2007-10-22T07:55:05+09:00
 description: JTableのセルにJButtonを追加し、クリックされたらその行を削除します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKsRqqqeI/AAAAAAAAAWY/X0y-Ph7jngA/s800/DeleteButtonInCell.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルに`JButton`を追加し、クリックされたらその行を削除します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKsRqqqeI/AAAAAAAAAWY/X0y-Ph7jngA/s800/DeleteButtonInCell.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DeleteButton extends JButton {
   @Override public void updateUI() {
@@ -65,21 +65,21 @@ class DeleteButtonEditor extends DeleteButton implements TableCellEditor {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - セルレンダラーに使用する`JButton`は表示専用でクリックイベントなどは無視される
 - セルエディタとして使用する`JButton`に`ActionListener`を追加し、この`JButton`がクリックされたら`AbstractCellEditor`からコピーした`fireEditingStopped()`メソッドでセルの編集を終了し、`TableModel`から対象行を削除
 -- セルレンダラー、セルエディタがコンポーネント(もしくは`DefaultCellEditor`)を継承していないと`JTable`の`LookAndFeel`を変更てもセルレンダラー、セルエディタの`updateUI()`が呼ばれない
 --- `JTable#updateUI()`、`Java 1.6.0`の`JTable#updateSubComponentUI(...)`、`Java 1.7.0`の`SwingUtilities#updateRendererOrEditorUI(Object)`を参照
 -- `AbstractCellEditor`を継承していても`updateUI()`は呼ばれない、`DefaultCellEditor`は継承しづらい…
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1357728 Swing - JButton inside JTable Cell]
 - [[JTableの行を追加、削除>Swing/AddRow]]
 - [[JTableの行を全削除>Swing/ClearTable]]
 - [[JTableのセルに複数のJButtonを配置する>Swing/MultipleButtonsInTableCell]]
 - [[JTableのセルにHyperlinkを表示>Swing/HyperlinkInTableCell]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - ボタンのセル内でマウスを移動しても削除するように変更。 -- &user(aterai); &new{2008-03-28 (金) 16:59:11};
 -- メモ: %%`0`行目のボタンをクリックし、真上のヘッダ上でリリースしても削除可能%% 修正済み: [https://bugs.openjdk.org/browse/JDK-6291631 Bug ID: 6291631 JTable: rowAtPoint returns 0 for negative y] (追記: このバグは未修正になっているけど、`JDK 1.6, 1.7`などのソースではコメントにある修正が追加されている) -- &user(aterai); &new{2008-03-28 (金) 17:21:10};

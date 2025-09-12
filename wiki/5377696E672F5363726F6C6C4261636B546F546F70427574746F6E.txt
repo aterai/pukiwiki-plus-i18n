@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2021/08/add-jbutton-to-bottom-right-inside.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollPane`に`JButton`を描画する`JLayer`を設定し、ここでクリックイベントを取得したら先頭領域までのスクロールバックを実行します。
 
 #download(https://drive.google.com/uc?id=1SQP-yapYstaY4KpdrUqkyhpcA00ZUVpM)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ScrollBackToTopLayerUI extends LayerUI<JScrollPane> {
   private static final int GAP = 5;
@@ -104,7 +104,7 @@ class ScrollBackToTopLayerUI extends LayerUI<JScrollPane> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `ScrollBackToTopLayerUI#paint(...)`
 -- `JScrollPane`相対でその子`JViewport`の右下隅領域に半透明アイコンを設定した`JButton`を`SwingUtilities.paintComponent(...)`メソッドで描画
 --- すでに先頭領域が表示中(`JViewport#getViewRect()`で取得される領域の`y`座標が`0`)の場合は`JButton`を描画しない
@@ -115,11 +115,11 @@ class ScrollBackToTopLayerUI extends LayerUI<JScrollPane> {
 -- `JButton`が非表示(すでに先頭領域が表示中)かつ、変換したマウスイベントが`JButton`の描画領域内のプレスイベントの場合、子コンポーネントにイベントが伝達しないように`MouseEvent#consume()`で消費
 --- ここでプレスイベントを消費しないと、`JButton`のプレスだけではなくたとえば`JScrollPane`内の`JTable`のセル選択状態まで変化してしまう
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollBarが最後までスクロールしたことを確認する>Swing/DetectScrollToBottom]]
 - [[JTextAreaでSmoothScrollによる行移動>Swing/SmoothScroll]]
 - [[JScrollPane内にあるJTableなどで追加した行が可視化されるようにスクロールする>Swing/ScrollRectToVisible]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2020/03/rotate-tab-title-of-jtabbedpane.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブタイトル文字列をタブ配置の左右に応じて回転して縦長になるよう設定します。
 
 #download(https://drive.google.com/uc?id=1GSBG4hscI1mhP8nMGMvgdjd5zK66537Y)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private Icon makeVerticalTabIcon(String title, Icon icon, boolean clockwise) {
   JLabel label = new JLabel(title, icon, SwingConstants.LEADING);
@@ -37,7 +37,7 @@ private Icon makeVerticalTabIcon(String title, Icon icon, boolean clockwise) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、タイトル文字列とアイコンから`JLabel`を作成しこれを`90`度回転して`ImageIcon`に変換し、そのアイコンのみ(タイトル文字列は`null`)を`JTabbedPane#addTab(...)`で追加して横長ではなく縦長のタブを表示しています。
 
 - 左: `JTabbedPane#setTabPlacement(LEFT)`
@@ -45,11 +45,11 @@ private Icon makeVerticalTabIcon(String title, Icon icon, boolean clockwise) {
 - 右: `JTabbedPane#setTabPlacement(RIGHT)`
 -- タブ用の`JLabel`の高さだけ`x`軸方向に移動し、時計回りに`90`度回転した`JLabel`を描画する`Icon`を縦長タブとして使用
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Iconを回転する>Swing/RotatedIcon]]
 - [[JTableHeaderの列タイトル文字列を回転して垂直表示する>Swing/VerticalColumnTableHeader]]
 -- アイコンは回転したくない場合はリンク先のサンプルのようにあらかじめ文字列の回転とは逆方向に`90`度回転しておく
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

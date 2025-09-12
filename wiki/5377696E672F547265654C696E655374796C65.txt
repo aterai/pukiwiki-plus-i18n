@@ -8,12 +8,12 @@ pubdate: 2016-08-08T01:48:44+09:00
 description: JTreeのノード間の接続線のスタイルを変更、または非表示にします。
 image: https://drive.google.com/uc?id=1pbnpWXAOC1SNWnBA7miVxg8WiwCgX0w34w
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノード間の接続線のスタイルを変更、または非表示にします。
 
 #download(https://drive.google.com/uc?id=1pbnpWXAOC1SNWnBA7miVxg8WiwCgX0w34w)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTree tree0 = new JTree();
 tree0.putClientProperty("JTree.lineStyle", "Angled");
@@ -25,8 +25,9 @@ JTree tree2 = new JTree();
 tree2.putClientProperty("JTree.lineStyle", "None");
 }}
 
-* 解説 [#explanation]
-上記のサンプルでは、`JTree#putClientProperty("JTree.lineStyle", "Angled")`などでノード間の接続線のスタイルを変更してます。これらの設定は`MetalLookAndFeel`を使用している場合のみ有効になります。
+* Description [#description]
+上記のサンプルでは、`JTree`に`JTree#putClientProperty("JTree.lineStyle", "Angled")`などを設定して
+各ノード間の接続線スタイルを変更してます。これらの設定は`MetalLookAndFeel`を使用している場合のみ有効です。
 
 - `Angled`(`Default`)
 -- ノード間を接続する水平垂直線を表示する(デフォルト)
@@ -35,10 +36,10 @@ tree2.putClientProperty("JTree.lineStyle", "None");
 - `None`
 -- ノード間の接続線をすべて非表示にする
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/tree.html How to Use Trees (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]
 - [[JTreeの水平垂直線を表示しない>Swing/TreePaintLines]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

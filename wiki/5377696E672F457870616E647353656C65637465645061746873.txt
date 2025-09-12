@@ -8,12 +8,12 @@ pubdate: 2012-09-24T13:08:25+09:00
 description: JTreeの選択されたノードまでのパスをすべて展開して可視状態にします。
 image: https://lh6.googleusercontent.com/-sOsnOftT8xE/UF_b7dSxzQI/AAAAAAAABS0/i_xYkTfxbZg/s800/ExpandsSelectedPaths.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`の選択されたノードまでのパスをすべて展開して可視状態にします。
 
 #download(https://lh6.googleusercontent.com/-sOsnOftT8xE/UF_b7dSxzQI/AAAAAAAABS0/i_xYkTfxbZg/s800/ExpandsSelectedPaths.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // tree.setExpandsSelectedPaths(true);
 JTextField textField = new JTextField("soccer");
@@ -41,7 +41,7 @@ private static void searchTree(JTree tree, TreePath path, String q) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、マウスによるノード選択ではなく`JTree#addSelectionPath(TreePath)`などによるノード選択が行われた場合にそのノードまでのパスを展開するかどうかを`JTree#setExpandsSelectedPaths(...)`メソッドを使って切り替えるテストを行っています。
 
 - `JTree#setExpandsSelectedPaths(false)`
@@ -50,11 +50,11 @@ private static void searchTree(JTree tree, TreePath path, String q) {
 -- `Java 1.3`からのデフォルト
 -- 選択されたノードまでのパスをすべて展開して可視化(スクロールはしない)
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/1.3/guide/swing/JTreeChanges.html JTree の expandsSelectedPaths 新規プロパティおよび removeDescendantSelectedPaths 新規メソッド]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#setExpandsSelectedPaths-boolean- JTree#setExpandsSelectedPaths(boolean) (Java Platform SE 8)]
 - [[JTreeのノードを検索する>Swing/SearchBox]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

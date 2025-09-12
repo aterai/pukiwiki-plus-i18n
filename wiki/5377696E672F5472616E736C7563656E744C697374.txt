@@ -8,12 +8,12 @@ pubdate: 2019-02-18T17:02:30+09:00
 description: JListの選択色を半透明に設定、また背景色を透明にして親パネルの背景を透かして表示します。
 image: https://drive.google.com/uc?id=1vKNT9-SB-DsPrTxPEVYwq8FHoKQ97DYZog
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`の選択色を半透明に設定、また背景色を透明にして親パネルの背景を透かして表示します。
 
 #download(https://drive.google.com/uc?id=1vKNT9-SB-DsPrTxPEVYwq8FHoKQ97DYZog)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JList<ListItem> list = new RubberBandSelectionList<>(model);
 list.setOpaque(false);
@@ -100,7 +100,7 @@ class ListItemListCellRenderer<E extends ListItem> implements ListCellRenderer<E
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JList`、`JScrollPane`にアルファ値`0`で完全に透明な背景色を設定
 - `JList`、`JScrollPane`、`JViewport`に`setOpaque(false)`を設定して透明化
 -- `JList`を`setOpaque(true)`で不透明化した場合、`ListSelectionListener`などで選択が変更されたら再描画する必要がある
@@ -108,12 +108,12 @@ class ListItemListCellRenderer<E extends ListItem> implements ListCellRenderer<E
 - `ListCellRenderer`に`setOpaque(false)`を設定して透明化
 -- `ListCellRenderer`の選択色を`paintComponent(...)`メソッドをオーバーライドして半透明で描画
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]
 -- 半透明の矩形選択はこちらのサンプルを参考
 - [[JTableのヘッダを透明化>Swing/TransparentTableHeader]]
 -- セル選択の半透明化はこちらの`JTable`のサンプルを参考
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

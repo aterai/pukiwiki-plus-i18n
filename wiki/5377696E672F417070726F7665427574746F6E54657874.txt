@@ -8,12 +8,12 @@ pubdate: 2008-10-20T14:22:27+09:00
 description: JFileChooserのボタンテキストを変更します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHw6_sLrI/AAAAAAAAARs/5fsN5G2p15U/s800/ApproveButtonText.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`のボタンテキストを変更します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHw6_sLrI/AAAAAAAAARs/5fsN5G2p15U/s800/ApproveButtonText.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // UIManager.put("FileChooser.saveButtonText", "保存(S)");
 // UIManager.put("FileChooser.openButtonText", "開く(O)");
@@ -24,7 +24,7 @@ JFileChooser fileChooser = new JFileChooser();
 // fileChooser.setApproveButtonMnemonic('O');
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルは、日本語の`WindowsLookAndFeel`に合わせて`JFileChooser`の`ApproveButton`やキャンセルボタンのテキストを以下のように変更しています。
 
 - %%`OpenDialog`のデフォルトでは、ファイルリストでフォルダが選択された状態の場合「開く(`O`)」、ファイルが選択された状態の場合「開く」に切り替わる%%
@@ -32,10 +32,10 @@ JFileChooser fileChooser = new JFileChooser();
 - %%`SaveDialog`のデフォルトではファイルリストでフォルダが選択されていると「開く(`O`)」、ファイルが選択されていると「保存」なので「保存(`S`)」に揃える%%
 -- `CancelButton`のデフォルトは「取消%%し%%」で`SaveDialog`のフォルダ・ファイルの選択が切り替わるとボタンサイズに合わせてレイアウトが変化してしまうので、これを防ぐために二文字分長い「キャンセル」に変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JFileChooser.html JFileChooser (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `Java 1.6.0_12`以降、デフォルトでは`Mnemonic`の表示がなくなっているようです(もしかしてバグ？)。 -- &user(aterai); &new{2009-10-09 (金) 20:01:14};
 -- メモ: [https://bugs.openjdk.org/browse/JDK-5045878 &#91;JDK-5045878&#93; &#91;ja&#93; extra mnemonic characters on control buttons in JFileChooser - Java Bug System]でも、`1.6.0`は関係なさそう…。 -- &user(aterai); &new{2009-10-09 (金) 20:16:41};

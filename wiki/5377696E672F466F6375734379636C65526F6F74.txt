@@ -8,19 +8,19 @@ pubdate: 2010-07-19T23:07:24+09:00
 description: JPanelがフォーカストラバーサルサイクルのルートになるように設定します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNCX36INI/AAAAAAAAAaI/xunzBpsDJLk/s800/FocusCycleRoot.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPanel`がフォーカストラバーサルサイクルのルートになるように設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNCX36INI/AAAAAAAAAaI/xunzBpsDJLk/s800/FocusCycleRoot.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPanel p1 = new JPanel();
 p1.setFocusCycleRoot(true);
 p1.add(new JTextField(16));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下の`JPanel`がそれぞれフォーカストラバーサルサイクルのルートコンテナになるように設定しています。
 
 - 左`JPanel`
@@ -30,11 +30,11 @@ p1.add(new JTextField(16));
 -- `Container#setFocusTraversalPolicyProvider(true)`
 -- 順方向キーボードトラバーサルとリバースキーボードトラバーサルを入れ替え
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#setFocusCycleRoot-boolean- Container#setFocusCycleRoot(boolean) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#setFocusTraversalPolicyProvider-boolean- Container#setFocusTraversalPolicyProvider(boolean) (Java Platform SE 8)]
 - [[Focusの移動>Swing/FocusTraversal]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

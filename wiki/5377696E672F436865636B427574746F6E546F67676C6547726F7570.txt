@@ -1,0 +1,67 @@
+---
+category: swing
+folder: CheckButtonToggleGroup
+title: JToggleButtonが選択状態のときチェックアイコンを表示する
+tags: [JToggleButton, ButtonGroup, FlowLayout, Icon]
+author: aterai
+pubdate: 2025-02-03T00:41:02+09:00
+description: JToggleButtonが選択状態の場合はチェックアイコンを表示し、非選択状態の場合はサイズが0のアイコンを設定して非表示にします。
+image: https://drive.google.com/uc?id=1Hgu-Ti6Y0aB6H181Lwr9ZxQ59wE3nkgv
+---
+* Summary [#summary]
+`JToggleButton`が選択状態の場合はチェックアイコンを表示し、非選択状態の場合はサイズが`0`のアイコンを設定して非表示にします。
+
+#download(https://drive.google.com/uc?id=1Hgu-Ti6Y0aB6H181Lwr9ZxQ59wE3nkgv)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+private static AbstractButton makeCheckToggleButton(String title) {
+  AbstractButton b = new JToggleButton(title) {
+    @Override public void updateUI() {
+      super.updateUI();
+      setBackground(Color.GRAY);
+      setBorder(makeBorder(getBackground()));
+      setContentAreaFilled(false);
+      setFocusPainted(false);
+      setOpaque(false);
+    }
+  };
+  b.addActionListener(e -> {
+    Container parent = ((AbstractButton) e.getSource()).getParent();
+    SwingUtils.descendants(parent)
+        .filter(AbstractButton.class::isInstance)
+        .map(AbstractButton.class::cast)
+        .forEach(MainPanel::updateButton);
+  });
+  return b;
+}
+
+private static void updateButton(AbstractButton button) {
+  if (button.getModel().isSelected()) {
+    button.setIcon(SELECTED_ICON);
+    button.setForeground(Color.WHITE);
+    button.setOpaque(true);
+  } else {
+    button.setIcon(EMPTY_ICON);
+    button.setForeground(Color.BLACK);
+    button.setOpaque(false);
+  }
+}
+}}
+
+* Description [#description]
+- `JRadioButton`や`JCheckBox`のように選択状態を表すチェックアイコンを常に表示するのではなく、`JToggleButton`に`ActionListener`を追加して選択状態が変化したときにサイズの異なるチェックアイコンを設定することで選択状態の変化を表現するよう設定
+-- このため選択状態が変化すると`JToggleButton`自体の幅も変化する
+-- 選択状態のチェックアイコンは[[JCheckBoxのチェックアイコンを拡大縮小する>Swing/ScaledIcon]]で使用したアイコンの外枠を非表示にして使用
+- 各`JToggleButton`は選択背景色と`LineBorder`の色を同じに設定
+- 各`JToggleButton`は`LineBorder`の幅である`1px`で重なるよう設定した`FlowLayout`を使用して`JPanel`に配置
+-- [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]
+
+* Reference [#reference]
+- [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]
+- [[JCheckBoxのチェックアイコンを拡大縮小する>Swing/ScaledIcon]]
+- [[ButtonGroup中にある選択状態のJToggleButtonをクリックして選択解除可能にする>Swing/ToggleButtonGroup]]
+
+* Comment [#comment]
+#comment
+#comment

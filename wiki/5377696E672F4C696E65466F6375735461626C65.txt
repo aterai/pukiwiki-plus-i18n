@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2011/05/change-border-of-focused-row-in-jtable.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のフォーカスをセルではなく、一行全体に掛かっているように表示します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPOarzqiI/AAAAAAAAAdo/uwFLFlU_EpI/s800/LineFocusTable.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 enum Type { START, END }
 
@@ -59,14 +59,14 @@ class DotBorder extends EmptyBorder {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - デフォルトの`JTable`では`JTable#setRowSelectionAllowed(true)`を設定すると選択状態は一行ごとになるが、フォーカスはセル単位で描画される
 - 上記のサンプルではセルレンダラーの描画メソッド内で`JTable#getSelectionModel()#getLeadSelectionIndex()`を使用してフォーカスが存在するセルを取得し、独自ラベルを使って最初と最後のセルの垂直の点線、途中のセルの水平点線を追加することでフォーカスが一行全体に適用されているように見せている
 -- カラム幅を変更するなどの操作を行ってもセル上下の水平点線のつなぎ目でドットが重ならないようにするため、偶数奇数ドット目のどちらで始まっているかを判断して開始位置のオフセットを決定する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableの次行にTabキーでフォーカスを移動>Swing/SelectNextRow]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2021-09-06T06:25:10+09:00
 description: JInternalFrameのタイトルバーをマウスの右ボタンでダブルクリックしても最大化しないよう設定します。
 image: https://drive.google.com/uc?id=1GTvnCmjM652oDX-Ncal6SVoBNtXxxwvd
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`のタイトルバーをマウスの右ボタンでダブルクリックしても最大化しないよう設定します。
 
 #download(https://drive.google.com/uc?id=1GTvnCmjM652oDX-Ncal6SVoBNtXxxwvd)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DesktopLayerUI extends LayerUI<JDesktopPane> {
   @Override public void installUI(JComponent c) {
@@ -53,7 +53,7 @@ class DesktopLayerUI extends LayerUI<JDesktopPane> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `Windows`環境で`WindowsLookAndFeel`を使用する場合でも`JInternalFrame`のタイトルバーをマウスの右ボタンでダブルクリックするとその`JInternalFrame`が最大化してしまう
 - `JPopupMenu`
@@ -96,11 +96,11 @@ JInternalFrame f = new JInternalFrame("WindowsInternalFrameUI", true, true, true
 -- `JInternalFrame.JDesktopIcon`(アイコン化した`JInternalFrame`)を右ボタンでダブルクリック(復元)した場合も無効化
 --- `BasicInternalFrameTitlePane`は`MouseEvent.MOUSE_CLICKED`だが、`JInternalFrame.JDesktopIcon`は`MouseEvent.MOUSE_CLICKED`イベントでダブルクリックを検出する必要がある(なぜ異なる実装になっているのかの理由は不明)
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JInternalFrameにJPopupMenuを設定してタイトルを変更する>Swing/EditInternalFrameTitle]]
 - [[JComboBoxのドロップダウンリストで右クリックを無効化>Swing/DisableRightClick]]
 - [[JMenuとJMenuItemで右クリックによる選択を無効にする>Swing/DisableRightClickOnMenu]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

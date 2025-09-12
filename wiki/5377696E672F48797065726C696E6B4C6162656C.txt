@@ -8,12 +8,12 @@ pubdate: 2007-11-26T04:49:23+09:00
 description: Hyperlinkを、JLabel、JButton、JEditorPaneで表示し、それぞれクリックした時のイベントを取得します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOIQH0ABI/AAAAAAAAAb4/9QlzkW-7_Es/s800/HyperlinkLabel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Hyperlink`を、`JLabel`、`JButton`、`JEditorPane`で表示し、それぞれクリックした時のイベントを取得します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOIQH0ABI/AAAAAAAAAb4/9QlzkW-7_Es/s800/HyperlinkLabel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class URILabel extends JLabel {
   private final String href;
@@ -75,7 +75,7 @@ editor.addHyperlinkListener(new HyperlinkListener() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JLabel` + `MouseListener`
 -- `JLabel`に`MouseListener`を設定
 -- リンクの表示には`<a>`タグを使用
@@ -91,13 +91,13 @@ editor.addHyperlinkListener(new HyperlinkListener() {
 ----
 - %%このサンプルではクリックされた時に実行するイベントは`beep`音を鳴らすだけ%% リンクをブラウザで開く場合の処理は[[Desktopでブラウザを起動>Swing/Desktop]]などを参照
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JEditorPane.html JEditorPane (Java Platform SE 8)]
 - [http://www.jroller.com/santhosh/entry/link_buttons_in_swing Link Buttons in Swing - Santhosh Kumar's Weblog]
 -- `JButton`+`MatteBorder`でリンクを表現するサンプルがある
 - [[TransferHandlerでHyperlinkをブラウザにドロップ>Swing/DraggableLinkButton]]
 - [[Htmlを使ったJLabelとJEditorPaneの無効化>Swing/DisabledHtmlLabel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

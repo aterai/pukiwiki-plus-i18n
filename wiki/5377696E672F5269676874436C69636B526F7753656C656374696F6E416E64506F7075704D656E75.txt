@@ -8,12 +8,12 @@ pubdate: 2023-11-06T01:41:53+09:00
 description: JTableの行を右クリックした場合、その選択状態の変更とJPopupMenuの表示を両方実行する方法をテストします。
 image: https://drive.google.com/uc?id=1dB25osj9KkSJRo10xdTA9IJhMoHz3Fm0
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の行を右クリックした場合、その選択状態の変更と`JPopupMenu`の表示を両方実行する方法をテストします。
 
 #download(https://drive.google.com/uc?id=1dB25osj9KkSJRo10xdTA9IJhMoHz3Fm0)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RightMouseButtonLayerUI extends LayerUI<JScrollPane> {
   @Override public void installUI(JComponent c) {
@@ -79,7 +79,7 @@ final class TableUtils {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- デフォルトのマウスクリックによる`JTable`の行選択では`!SwingUtilities.isLeftMouseButton(MouseEvent)`で左クリック以外は無視される
 -- このため右クリックでは行の選択状態は変更されない
@@ -98,10 +98,10 @@ final class TableUtils {
 -- `JTable`の親`JScrollPane`を`JLayer`でラップして`processMouseEvent(...)`をオーバーライドし、`JPopupMenu`を開く動作はそのまま残して別途右クリックでの選択状態変更動作を定義
 --- 右クリックで実行する動作の定義は`MouseListener`と同様
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableで文字列をクリックした場合だけセルを選択状態にする>Swing/TableFileList]]
 - [[JTableのセル内でリンクだけHover可能にする>Swing/PointInsidePrefSize]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

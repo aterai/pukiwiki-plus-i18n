@@ -11,63 +11,104 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2009/02/hyperlink-in-jtable-cell.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルの中に、`Hyperlink`を表示します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOF06rk7I/AAAAAAAAAb0/31ZBya_beYk/s800/HyperlinkInTableCell.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
-class URLRenderer extends DefaultTableCellRenderer implements MouseInputListener {
-  private int row = -1;
-  private int col = -1;
-  @Override public Component getTableCellRendererComponent(
-      JTable table, Object value,
-      boolean isSelected, boolean hasFocus, int row, int column) {
-    super.getTableCellRendererComponent(
+class UriRenderer extends DefaultTableCellRenderer implements MouseListener, MouseMotionListener {
+  private int viewRowIndex = -1;
+  private int viewColumnIndex = -1;
+  private boolean isRollover;
+
+  @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    Component c = super.getTableCellRendererComponent(
         table, value, isSelected, false, row, column);
-    if (!table.isEditing() && this.row == row && this.col == column) {
-      setText("<html><u><font color='blue'>" + value.toString());
-    } else if (hasFocus) {
-      setText("<html><font color='blue'>" + value.toString());
-    } else {
-      setText(value.toString());
+    if (c instanceof JLabel) {
+      JLabel l = (JLabel) c;
+      // @see https://ateraimemo.com/Swing/ClippedHtmlLabel.html
+      // String str = SwingUtilities.layoutCompoundLabel(...);
+      String str = Objects.toString(value, "");
+      if (isRolloverCell(table, row, column)) {
+        l.setText("&lt;html&gt;&lt;u&gt;&lt;font color='blue'&gt;" + str);
+      } else if (hasFocus) {
+        l.setText("&lt;html&gt;&lt;font color='blue'&gt;" + str);
+      } else {
+        l.setText(str);
+      }
     }
-    return this;
+    return c;
+  }
+
+  protected boolean isRolloverCell(JTable table, int row, int column) {
+    return !table.isEditing() &amp;&amp; viewRowIndex == row &amp;&amp; viewColumnIndex == column &amp;&amp; isRollover;
+  }
+
+  private static boolean isUriColumn(JTable table, int column) {
+    return column &gt;= 0 &amp;&amp; table.getColumnClass(column).equals(URI.class);
   }
 
   @Override public void mouseMoved(MouseEvent e) {
-    JTable table = (JTable) e.getSource();
+    JTable table = (JTable) e.getComponent();
     Point pt = e.getPoint();
-    row = table.rowAtPoint(pt);
-    col = table.columnAtPoint(pt);
-    if (row < 0 || col < 0) {
-      row = -1;
-      col = -1;
+    int prevRow = viewRowIndex;
+    int prevCol = viewColumnIndex;
+    viewRowIndex = table.rowAtPoint(pt);
+    viewColumnIndex = table.columnAtPoint(pt);
+    boolean isSameCell = viewRowIndex == prevRow &amp;&amp; viewColumnIndex == prevCol;
+
+    boolean prevRollover = isRollover;
+    isRollover = isUriColumn(table, viewColumnIndex);
+    boolean isNotRollover = isRollover == prevRollover &amp;&amp; !isRollover; // &amp;&amp; !prevRollover;
+
+    if (isSameCell &amp;&amp; isNotRollover) {
+      return;
     }
-    table.repaint();
+
+    // &gt;&gt;&gt;&gt; HyperlinkCellRenderer.java
+    // @see https://github.com/sjas/swingset3/blob/master/trunk/SwingSet3/src/com/sun/swingset3/demos/table/HyperlinkCellRenderer.java
+    Rectangle repaintRect;
+    if (isRollover) {
+      Rectangle r = table.getCellRect(viewRowIndex, viewColumnIndex, false);
+      repaintRect = prevRollover ? r.union(table.getCellRect(prevRow, prevCol, false)) : r;
+    } else { // if (prevRollover) {
+      repaintRect = table.getCellRect(prevRow, prevCol, false);
+    }
+    table.repaint(repaintRect);
+    // &lt;&lt;&lt;&lt;
+    // table.repaint();
   }
 
-  @Override public void mouseExited(MouseEvent e)  {
-    JTable table = (JTable) e.getSource();
-    row = -1;
-    col = -1;
-    table.repaint();
+  @Override public void mouseExited(MouseEvent e) {
+    JTable table = (JTable) e.getComponent();
+    if (isUriColumn(table, viewColumnIndex)) {
+      table.repaint(table.getCellRect(viewRowIndex, viewColumnIndex, false));
+      viewRowIndex = -1;
+      viewColumnIndex = -1;
+      isRollover = false;
+    }
   }
 
   @Override public void mouseClicked(MouseEvent e) {
-    JTable table = (JTable) e.getSource();
+    JTable table = (JTable) e.getComponent();
     Point pt = e.getPoint();
-    int crow = table.rowAtPoint(pt);
-    int ccol = table.columnAtPoint(pt);
-    // if (table.convertColumnIndexToModel(ccol) == 2)
-    if (table.getColumnClass(ccol).equals(URL.class)) {
-      URL url = (URL) table.getValueAt(crow, ccol);
-      System.out.println(url);
+    int col = table.columnAtPoint(pt);
+    if (isUriColumn(table, col)) {
+      int crow = table.rowAtPoint(pt);
+      URI uri = (URI) table.getValueAt(crow, col);
+      // System.out.println(uri);
       try {
-        Desktop.getDesktop().browse(url.toURI());
-      } catch (Exception ex) {
-        ex.printStackTrace();
+        // Web Start
+        // BasicService bs = (BasicService) ServiceManager.lookup("javax.jnlp.BasicService");
+        // bs.showDocument(uri);
+        if (Desktop.isDesktopSupported()) {
+          Desktop.getDesktop().browse(uri);
+        }
+      } catch (IOException ex) {
+        // Logger.getGlobal().severe(ex::getMessage);
+        UIManager.getLookAndFeel().provideErrorFeedback(e.getComponent());
       }
     }
   }
@@ -90,7 +131,7 @@ class URLRenderer extends DefaultTableCellRenderer implements MouseInputListener
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTable`のセル内にリンクを表現するために`html`タグを使って文字列を修飾するセルレンダラーを作成して使用しています。
 
 #code{{
@@ -100,11 +141,11 @@ table.addMouseListener(renderer);
 table.addMouseMotionListener(renderer);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Hyperlinkを、JLabel、JButton、JEditorPaneで表示>Swing/HyperlinkLabel]]
 - [[Htmlで修飾した文字列のクリップ>Swing/ClippedHtmlLabel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `URLRenderer`のコンストラクタで`JTable`にマウスリスナーを追加していたのを修正。 -- &user(aterai); &new{2009-06-25 (木) 12:05:13};
 - 「解説」中のコードではコンストラクタに`table`が渡されたままになっているようです。 -- &user(yosei); &new{2010-05-05 (Wed) 16:54:43};

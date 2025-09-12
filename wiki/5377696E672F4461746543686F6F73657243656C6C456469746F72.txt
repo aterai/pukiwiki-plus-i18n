@@ -1,0 +1,113 @@
+---
+category: swing
+folder: DateChooserCellEditor
+title: JTableの日付セルエディタとしてJTableで作成したカレンダーを使用する
+tags: [Calendar, Date, JPopupMenu, JTable, LocalDate]
+author: aterai
+pubdate: 2025-07-07T02:10:53+09:00
+description: JTableのDate用セルエディタとしてJTableで作成したカレンダーをJPopupMenuに配置して使用することで日付の選択・変更を可能にします。
+image: https://drive.google.com/uc?id=1xKbIZf4FPxW1u-TGREGhb2l94e9NUpXo
+---
+* Summary [#summary]
+`JTable`の`Date`用セルエディタとして`JTable`で作成したカレンダーを`JPopupMenu`に配置して使用することで日付の選択・変更を可能にします。
+
+#download(https://drive.google.com/uc?id=1xKbIZf4FPxW1u-TGREGhb2l94e9NUpXo)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class DateEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
+  private static final String EDIT = "edit";
+  private final JButton button = new JButton();
+  private final DateFormat formatter = DateFormat.getDateInstance();
+  private final CalenderPanel dateChooser = new CalenderPanel();
+  private JPopupMenu popup;
+  private JTable table;
+
+  protected DateEditor() {
+    super();
+    button.setActionCommand(EDIT);
+    button.addActionListener(this);
+    button.setContentAreaFilled(false);
+    button.setFocusPainted(false);
+    button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    button.setHorizontalAlignment(SwingConstants.LEFT);
+    button.setHorizontalTextPosition(SwingConstants.RIGHT);
+  }
+
+  @Override public void actionPerformed(ActionEvent e) {
+    if (EDIT.equals(e.getActionCommand()) && table != null) {
+      int row = table.getSelectedRow();
+      int col = table.getSelectedColumn();
+      Rectangle rect = table.getCellRect(row, col, true);
+      Point p = new Point(rect.x, (int) rect.getMaxY());
+      if (popup == null) {
+        popup = new JPopupMenu();
+        popup.add(dateChooser);
+        popup.pack();
+      }
+      popup.show(table, p.x, p.y);
+      dateChooser.requestFocusInWindow();
+    }
+  }
+
+  @Override public boolean isCellEditable(EventObject e) {
+    return e instanceof MouseEvent && ((MouseEvent) e).getClickCount() >= 2;
+  }
+
+  @Override public Object getCellEditorValue() {
+    LocalDate d = dateChooser.getLocalDate();
+    return Date.from(d.atStartOfDay(ZoneId.systemDefault()).toInstant());
+  }
+
+  @Override public Component getTableCellEditorComponent(
+      JTable table, Object value, boolean isSelected, int row, int column) {
+    if (value instanceof Date) {
+      Date date = (Date) value;
+      button.setText(formatter.format(date));
+      button.setOpaque(true);
+      // button.setForeground(table.getSelectionForeground());
+      Color fgc = table.getSelectionForeground();
+      button.setForeground(new Color(fgc.getRGB()));
+      button.setBackground(table.getSelectionBackground());
+      ZonedDateTime dateTime = date.toInstant().atZone(ZoneId.systemDefault());
+      dateChooser.setLocalDate(dateTime.toLocalDate());
+      this.table = table;
+    }
+    return button;
+  }
+
+  private final class CalenderPanel extends JPanel {
+     // ...
+  }
+
+  private static final class MonthTable extends JTable {
+     // ...
+  }
+
+  private static class CalendarTableRenderer extends DefaultTableCellRenderer {
+     // ...
+  }
+}
+}}
+
+* Description [#description]
+- `DateEditor`
+-- `AbstractCellEditor`を継承して日付用セルエディタを作成
+-- エディタのセル内の表示には`JButton`を使用
+-- `AbstractCellEditor#isCellEditable(...)`をオーバーライドしてマウスでダブルクリックした場合セル編集を開始するよう設定
+-- `TableCellEditor#getTableCellEditorComponent(...)`を実装して`DateChooser`や`JButton`に日付などを設定
+-- 編集開始で`JButton`のクリックイベントが発生するので編集対象セルの下にカレンダーを配置した`JPopupMenu`を開く
+- `CalenderPanel`、`MonthTable`
+-- カレンダーは[[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]の`JTable`にハイライト表示と日付選択用の`MouseAdapter`を追加して使用
+-- `MonthTable`の日付セルがシングルクリックされると`LocalDate`を記憶し、`AbstractCellEditor#getCellEditorValue()`で`Date`に変換してセルの日付を更新
+
+* Reference [#reference]
+- [[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]
+- [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
+- [[JTableでプロパティ一覧表を作成する>Swing/PropertyTable]]
+- [[JTableのセルのハイライト>Swing/CellHighlight]]
+- [[JTableの編集にセルより大きなセルエディタを使用>Swing/LargeCellEditor]]
+
+* Comment [#comment]
+#comment
+#comment

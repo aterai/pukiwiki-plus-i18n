@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2022/07/use-newspaper-style-jlist-that-can.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `ComboBoxEditor`として複数アイテムが表示やスクロールが可能なニュースペーパースタイルの`JList`を使用します。
 
 #download(https://drive.google.com/uc?id=1Wf8pV3xZzSyuHrmifdUcrSY09lCTGf2R)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 ListModel<ListItem> model = makeModel();
 JList<ListItem> list = new NewspaperStyleList<>(model);
@@ -106,7 +106,7 @@ panel.add(verticalBox, BorderLayout.EAST);
 panel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JList + JPopupMenu`
 -- エディタ部分にニュースペーパースタイルで複数アイテムが表示可能な`JList`、その親`JScrollPane`から縦`JScrollBar`、ドロップダウン表示用の`JToggleButton`を組み合わせて`JComboBox`風のコンポーネントを作成
 -- ドロップダウンリストは`JPopupMenu`で作成し、その子コンポーネントとしてエディタ部分の`JList`とは別の`JList`を追加
@@ -181,11 +181,11 @@ combo.setEditor(new ComboBoxEditor() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]
 - [[JPopupMenuをボタンの長押しで表示>Swing/PressAndHoldButton]]
 - [[JComboBoxのドロップダウンリストでセル配置をニュースペーパー・スタイルに設定する>Swing/HorizontalWrapComboPopup]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

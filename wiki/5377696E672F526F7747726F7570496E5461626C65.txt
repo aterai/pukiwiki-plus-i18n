@@ -8,12 +8,12 @@ pubdate: 2017-06-05T16:09:45+09:00
 description: JTableで直上のセルと同一内容のセルを空表示にして、行のグループ化を表現します。
 image: https://drive.google.com/uc?id=1BtPc00VYQd5w5UwghwQc6KYrIoZCZ0W_EQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`で直上のセルと同一内容のセルを空表示にして、行のグループ化を表現します。
 
 #download(https://drive.google.com/uc?id=1BtPc00VYQd5w5UwghwQc6KYrIoZCZ0W_EQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String colors = "colors";
 String sports = "sports";
@@ -67,7 +67,7 @@ class RowDataRenderer implements TableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `TableModel`
 -- データとしてすべての列に`RowData`のインスタンスのコピーを設定
 -- セルレンダラーで第`0`列目に`RowData.getGroup()`の値、第`1`列目に`RowData.getName()`の値、第`2`列目に`RowData.getCount()`の値を表示するよう設定
@@ -85,10 +85,10 @@ sorter.setComparator(2, c.thenComparing(RowData::getCount));
 table.setRowSorter(sorter);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/43011596/swing-sort-a-jtables-rows-but-keep-them-grouped-by-one-column-and-only-show-t java - Swing - sort a JTable's rows but keep them grouped by one column and only show the value once on top of each group - Stack Overflow]
 - [[JTableでファイルとディレクトリを別々にソート>Swing/FileDirectoryComparator]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

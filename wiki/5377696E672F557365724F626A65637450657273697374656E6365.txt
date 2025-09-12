@@ -8,12 +8,12 @@ pubdate: 2016-04-25T00:07:44+09:00
 description: JTreeのノードに追加したJCheckBoxのチェック状態など保持するUserObjectを永続化可能になるよう設定し、その保存と復元を行います。
 image: https://lh3.googleusercontent.com/-Foeg7fF4Uj4/VxzbvHpNTUI/AAAAAAAAOTY/LnDkJRi6CtQXJcQAGJ2boc27LJrY_lT-QCCo/s800/UserObjectPersistence.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードに追加した`JCheckBox`のチェック状態など保持する`UserObject`を永続化可能になるよう設定し、その保存と復元を行います。
 
 #download(https://lh3.googleusercontent.com/-Foeg7fF4Uj4/VxzbvHpNTUI/AAAAAAAAOTY/LnDkJRi6CtQXJcQAGJ2boc27LJrY_lT-QCCo/s800/UserObjectPersistence.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 try {
   File file = new File("output.xml");
@@ -29,7 +29,7 @@ try {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、[[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]]などで使用しているチェックボックス付き`JTree`を、そのチェック状態も含めて永続化を行っています。
 
 - `JTree`の`DefaultTreeModel`や`DefaultMutableTreeNode`はデフォルトで`XMLEncoder`に対応
@@ -38,11 +38,11 @@ try {
 -- `public`なクラスにしておく必要がある
 - 親ノードなどのチェック状態を更新する`TreeModelListener`は永続化していないので`XMLDecoder`で`DefaultTreeModel`を復元後に再度`addTreeModelListener(...)`で設定し直す必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのSortKeyを永続化し、ソート状態の保存と復元を行う>Swing/SortKeyPersistence]]
 - [[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]]
 - [[JTreeの展開状態を記憶・復元する>Swing/ExpandedDescendants]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2020-08-31T00:06:58+09:00
 description: CardLayoutを設定したパネルの内部にそのカード切り替え用のJComboBoxをOverlayLayoutで重ねて配置します。
 image: https://drive.google.com/uc?id=1tKX7-hFrO6328ecI-9rsAf_PbLRbNHpZ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `CardLayout`を設定したパネルの内部にそのカード切り替え用の`JComboBox`を`OverlayLayout`で重ねて配置します。
 
 #download(https://drive.google.com/uc?id=1tKX7-hFrO6328ecI-9rsAf_PbLRbNHpZ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String[] model = {"red", "green", "blue"};
 
@@ -45,7 +45,7 @@ p.add(pp);
 p.add(cards);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `CardLayout`を設定したパネルを作成
 -- このパネルにはそれぞれ赤緑青の背景色を設定した`3`つの`JPanel`を追加
 - `BorderLayout`を設定したパネルを作成
@@ -54,10 +54,10 @@ p.add(cards);
 -- このパネルには`OverlayLayout`を設定し、上記の`2`つのパネルを奥から`CardLayout`、`BorderLayout`の順に同サイズで重なるよう配置
 -- `2`つのパネルがオーバーラップするのでマウスイベントなどでコンポーネントの奥手前の描画が入れ替わらないようにするため[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#isOptimizedDrawingEnabled-- JComponent#isOptimizedDrawingEnabled()]が常に`false`を返すようオーバーライド
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableHeaderで作成したタブエリアでCardLayoutのコンテナを切り替える>Swing/TableHeaderTabArea]]
 - [[OverlayLayoutの使用>Swing/OverlayLayout]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

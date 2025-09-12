@@ -8,12 +8,12 @@ pubdate: 2021-04-19T01:48:04+09:00
 description: JScrollPaneから取得した垂直JScrollBarとそれらのスクロールをロックするためのJToggleButtonを別パネルに配置します。
 image: https://drive.google.com/uc?id=1ZkIGZwvzvvpcM42lAzeWexwmFaguhDY-
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollPane`から取得した垂直`JScrollBar`とそれらのスクロールをロックするための`JToggleButton`を別パネルに配置します。
 
 #download(https://drive.google.com/uc?id=1ZkIGZwvzvvpcM42lAzeWexwmFaguhDY-)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(16, 4);
 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -52,7 +52,7 @@ panel.add(scroll);
 panel.add(verticalBox, BorderLayout.EAST);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JPanel`
 -- 垂直`JScrollBar`とスクロールロック用の`JToggleButton`を配置するための`JPanel`を作成
 - 垂直`JScrollBar`
@@ -73,10 +73,10 @@ panel.add(verticalBox, BorderLayout.EAST);
 -- `Font.canDisplay(0x1F513)`では`true`が返るがグリフは幅ゼロになってなにも表示されない
 -- [[FontがUnicodeコードポイントで指定した文字のグリフを持って表示可能か確認する>Swing/FontCanDisplay]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollPaneのスクロールを禁止>Swing/DisableScrolling]]
 - [[JLayerで子コンポーネントへの入力を制限する>Swing/PopupMenuBlockLayer]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

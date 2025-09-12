@@ -8,12 +8,12 @@ pubdate: 2006-12-04T02:52:00+09:00
 description: JSliderのトラックやつまみ、色などを変更して、音量調節風のスライダーを作成します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWc-B0OXI/AAAAAAAAApQ/t1b78yBXWUQ/s800/VolumeSlider.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`のトラックやつまみ、色などを変更して、音量調節風のスライダーを作成します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWc-B0OXI/AAAAAAAAApQ/t1b78yBXWUQ/s800/VolumeSlider.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TriangleSliderUI extends MetalSliderUI {
   @Override public void paintThumb(Graphics g) {
@@ -42,7 +42,7 @@ slider2.setUI(new MetalSliderUI() {
 slider2.setForeground(Color.BLUE);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `TriangleSliderUI`
 -- `MetalSliderUI`を継承する`SliderUI`を設定
 --- `paintThumb(Graphics)`メソッドをオーバーライドしてつまみの形を変更
@@ -54,12 +54,12 @@ slider2.setForeground(Color.BLUE);
 --- `paintHorizontalLabel(Graphics, int, Component)`メソッドをオーバーライドし目盛を緑色に変更
 -- 目盛の色は[[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]でも変更可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1375990 Swing - Problem in changing forground color of JSlider!!]
 - [[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]
 - [[JPopupMenuに垂直JSliderを配置してJToggleButtonの上部に表示する>Swing/PopupVolumeSlider]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `Java SE 6 Runtime (JRE) Update N build 12 Kernel Installer`だと、`NullPointerException`が発生する？ -- &user(aterai); &new{2008-03-03 (月) 19:34:50};
 - %%別方法のメモ:%% [[JSliderの目盛りをアイコンに変更する>Swing/TriangleTickSlider]]に移動。 -- &user(aterai); &new{2010-05-19 (水) 16:52:13};

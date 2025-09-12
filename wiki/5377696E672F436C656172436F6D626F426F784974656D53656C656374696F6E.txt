@@ -8,22 +8,22 @@ pubdate: 2017-03-27T13:52:28+09:00
 description: JComboBoxの項目が何も選択されていない状態になるよう設定します。
 image: https://drive.google.com/uc?id=1ytLrgrvvfQGy-YNgOPiY67cT8EaLV1yHoA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`の項目が何も選択されていない状態になるよう設定します。
 
 #download(https://drive.google.com/uc?id=1ytLrgrvvfQGy-YNgOPiY67cT8EaLV1yHoA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 combo.setSelectedIndex(-1);
 // or: combo.setSelectedItem(null);
 }}
 
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JComboBox#setSelectedIndex(-1)`や`JComboBox#setSelectedItem(null)`で`JComboBox`の項目がどれも選択されていない状態にするテストを行っています。
 
-- [https://bugs.openjdk.org/browse/JDK-4180057 JDK-4180057 JComboBox needs to document that setSelectedIndex( -1 ) means no selection - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-4180057 &#91;JDK-4180057&#93; JComboBox needs to document that setSelectedIndex( -1 ) means no selection - Java Bug System]
 -- `JComboBox#setSelectedIndex(-1)`で選択状態がクリアされるのは当初からの仕様だが、ドキュメントに記述されたのは`1.4.0`からになる(日本語版は`1.7.0`から)
 - `JComboBox`のアイテム選択の初期状態:
 -- 項目数が`== 0`の場合は`-1`
@@ -31,10 +31,10 @@ combo.setSelectedIndex(-1);
 - `-1`以外の負の値は範囲外となり例外が発生する
 -- `java.lang.IllegalArgumentException: setSelectedIndex: -2 out of bounds`
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComboBox.html#setSelectedIndex-int- JComboBox#setSelectedIndex(int) (Java Platform SE 8)]
-- [https://bugs.openjdk.org/browse/JDK-4180057 JDK-4180057 JComboBox needs to document that setSelectedIndex( -1 ) means no selection - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-4180057 &#91;JDK-4180057&#93; JComboBox needs to document that setSelectedIndex( -1 ) means no selection - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

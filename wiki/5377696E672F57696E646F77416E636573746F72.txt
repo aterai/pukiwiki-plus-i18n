@@ -8,12 +8,12 @@ pubdate: 2005-05-09T21:28:35+09:00
 description: SwingUtilities.getWindowAncestor()などで、親ウィンドウを取得します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWr-a0yaI/AAAAAAAAApo/Wm-nQMxDh4s/s800/WindowAncestor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `SwingUtilities.getWindowAncestor()`などで、親ウィンドウを取得します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTWr-a0yaI/AAAAAAAAApo/Wm-nQMxDh4s/s800/WindowAncestor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton button = new JButton("show frame title");
 button.addActionListener(e -> {
@@ -29,7 +29,7 @@ button.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 自分(コンポーネント)の最初の上位ウィンドウ(親ウィンドウ)を取得します。
 
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#getWindowAncestor-java.awt.Component- SwingUtilities.getWindowAncestor(Component c)]
@@ -54,11 +54,11 @@ button.addActionListener(e -> {
 -- 有効な親`Frame`が無い場合は`JOptionPane.getRootFrame()`で非表示にしている`TookKit Private`なフレームが返る
 -- `JOptionPane`用？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SwingUtilities.html#getRoot-java.awt.Component- SwingUtilities.getRoot(Component c)] を追加
 -- via: [https://stackoverflow.com/questions/9650874/java-swing-obtain-window-jframe-from-inside-a-jpanel Java/Swing: Obtain Window/JFrame from inside a JPanel - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JComponent#getTopLevelAncestor()`でもほぼ同じ内容が取得できるような感じですね（自分自身からスタートするか、親からスタートするかの違いはあるようですが）。ただ、この場合、`Window`の他に`Applet`が戻される場合もあるようですが。 -- &user(syo); &new{2006-08-24 (木) 17:07:25};
 -- 補足ありがとうございます。`Window`か`Applet`か気にする必要が無いのは便利そうですね。 -- &user(aterai); &new{2006-08-25 (金) 12:46:43};

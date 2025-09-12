@@ -8,12 +8,12 @@ pubdate: 2004-08-30T05:11:06+09:00
 description: JFrameのタイトルバー左に表示されているアイコンを別の画像に変更します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTNO_p95yI/AAAAAAAAAac/gl0vOOoKH14/s800/FrameIcon.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFrame`のタイトルバー左に表示されているアイコンを別の画像に変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTNO_p95yI/AAAAAAAAAac/gl0vOOoKH14/s800/FrameIcon.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 MainPanel panel = new MainPanel();
 URL url = panel.getClass().getResource("16x16.png");
@@ -21,7 +21,7 @@ JFrame frame = new JFrame();
 frame.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JFrame#setIconImage`メソッドで`JFrame`のタイトルバーなどに表示される画像を設定しています。
 
 - サンプル画像としてサイズ`16x16`の透過`PNG`を使用
@@ -68,10 +68,10 @@ public class TransparentIconTest {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/18224184/sizes-of-frame-icons-used-in-swing java - Sizes of frame icons used in Swing - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - %%`JDK 1.6.0`で試すとアイコンの表示が乱れる？ -- &user(aterai); &new{2006-06-29 (木) 17:57:16};%%
 

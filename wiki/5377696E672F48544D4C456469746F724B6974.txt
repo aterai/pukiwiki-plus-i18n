@@ -8,12 +8,12 @@ pubdate: 2013-04-01T00:08:05+09:00
 description: HTMLEditorKitを使用するJTextPaneで修飾したテキストをJTextAreaにHtmlソースとして表示、編集、JTextPaneに反映するテストを行なっています。
 image: https://lh6.googleusercontent.com/-ORS7lITRAUE/UVhL_1G6hPI/AAAAAAAABo4/5WKtBFFthJ0/s800/HTMLEditorKit.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `HTMLEditorKit`を使用する`JTextPane`で修飾したテキストを`JTextArea`に`Html`ソースとして表示、編集、`JTextPane`に反映するテストを行なっています。
 
 #download(https://lh6.googleusercontent.com/-ORS7lITRAUE/UVhL_1G6hPI/AAAAAAAABo4/5WKtBFFthJ0/s800/HTMLEditorKit.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 textPane.setComponentPopupMenu(new HTMLColorPopupMenu());
 // textPane.setEditorKit(new HTMLEditorKit());
@@ -42,7 +42,7 @@ tabbedPane.addChangeListener(new ChangeListener() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `HTMLEditorKit`を使用(コンテンツ形式を`text/html`に設定)する`JTextPane`で`JEditorPane#getText()`を実行すると、`HTMLEditorKit`から文字色などの`Style`を設定した`Html`ソースとして文字列を取得可能なので、`JTabbedPane`が`JTextArea`に切り替わるときに`JTextArea`に流し込んでいます。
 
 逆に、`JTextArea`で`Html`ソースを編集して`JTabbedPane`で`JTextPane`に切り替える時には、`JEditorPane#setText(String)`内で`HTMLEditorKit`に`HTML`形式で読み込まれるよう設定しています。
@@ -74,9 +74,9 @@ delegator.parse(new StringReader(str), new HTMLEditorKit.ParserCallback() {
 System.out.println(s.toString());
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/HTMLEditorKit.html#insertHTML-javax.swing.text.html.HTMLDocument-int-java.lang.String-int-int-javax.swing.text.html.HTML.Tag- HTMLEditorKit#insertHTML(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

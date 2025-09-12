@@ -8,12 +8,12 @@ pubdate: 2016-09-26T01:36:44+09:00
 description: WindowsLookAndFeelを使用する環境でJMenuItemやJButtonなどに設定したMnemonicの下線を常に表示するよう設定します。
 image: https://drive.google.com/uc?id=1m64MGIgQ2o25gL3ZpVz_ZyEXU_TG2oZnAw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `WindowsLookAndFeel`を使用する環境で`JMenuItem`や`JButton`などに設定した`Mnemonic`の下線を常に表示するよう設定します。
 
 #download(https://drive.google.com/uc?id=1m64MGIgQ2o25gL3ZpVz_ZyEXU_TG2oZnAw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 showMnemonicsCheck.setSelected(UIManager.getBoolean("Button.showMnemonics"));
 showMnemonicsCheck.setMnemonic('B');
@@ -26,7 +26,7 @@ showMnemonicsCheck.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JMenuItem`に設定した`Mnemonic`の下線表示の切り替えをテストしています。
 
 - `UIManager.put("Button.showMnemonics", false)`
@@ -40,9 +40,9 @@ showMnemonicsCheck.addActionListener(e -> {
 - `UIManager.put("Button.showMnemonics", true)`
 -- `WindowsLookAndFeel`の場合でも`Mnemonic`の下線が常に表示状態になる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/swing/1.4/keyboard_nav_hiding.html Windows Look & Feelのキーボード・ナビゲーションの非表示]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2010-08-23T15:50:45+09:00
 description: JSpinnerを編集不可にした場合の背景色や内部余白の色などを変更します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTOcTAKgdI/AAAAAAAAAcY/R1dvME0C6UA/s800/InactiveSpinnerInsets.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`を編集不可にした場合の背景色や内部余白の色などを変更します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTOcTAKgdI/AAAAAAAAAcY/R1dvME0C6UA/s800/InactiveSpinnerInsets.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSpinner spinner3 = new JSpinner() {
   @Override protected void paintComponent(Graphics g) {
@@ -45,7 +45,7 @@ JSpinner spinner3 = new JSpinner() {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `WindowsLookAndFeel(XP)`の場合`JSpinner`を編集不可にしても白い余白が表示される
 - `setOpaque(false)`
@@ -67,9 +67,9 @@ field2.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 0));
 -- `JSpinner#paintComponent()`をオーバーライドして`WindowsLookAndFeel(XP)`の場合表示される余白(背景色)を`UIManager.getColor("FormattedTextField.inactiveBackground")`で塗りつぶしている
 -- `JSpinner#paintChildren()`をオーバーライドして`WindowsLookAndFeel(XP)`の場合表示されるボタン周りの白い余白を塗りつぶしている
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://www.oracle.com/technetwork/java/painting-140037.html Painting in AWT and Swing]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

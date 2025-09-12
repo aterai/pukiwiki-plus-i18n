@@ -8,12 +8,12 @@ pubdate: 2021-04-26T19:47:27+09:00
 description: FontにUnicodeコードポイントで指定した文字のグリフが存在し、かつ表示可能か確認します。
 image: https://drive.google.com/uc?id=1BR9NZACpykg8UXFiiAI7pFRE9UitBIbc
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Font`に`Unicode`コードポイントで指定した文字のグリフが存在し、かつ表示可能か確認します。
 
 #download(https://drive.google.com/uc?id=1BR9NZACpykg8UXFiiAI7pFRE9UitBIbc)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 int code = 0x1F512;
 JLabel label = new JLabel(new String(Character.toChars(code)));
@@ -48,7 +48,7 @@ Stream.of(fonts)
     .forEach(model::addRow);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは絵文字ロック🔒`U+1F512`がフォント一覧から選択したフォントで表示可能かをテストしています。
 
 - `4`列目: `Font.canDisplay(int codePoint)`
@@ -58,10 +58,10 @@ Stream.of(fonts)
 -- グリフのサイズが`0`かを調べる
 -- 日本語環境の`Ubuntu 29.04`でフォントを`Serif`に指定すると`Font.canDisplay(int codePoint)`は`true`になるが、`GlyphVector#getVisualBounds()`はサイズ`0`で絵文字が表示されない場合がある？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Font.html#canDisplay-int- Font (Java Platform SE 8)]
 - [https://bugs.openjdk.org/browse/JDK-8269806 &#91;JDK-8269806&#93; Emoji rendering on Linux - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

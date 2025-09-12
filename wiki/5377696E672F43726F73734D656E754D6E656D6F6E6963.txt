@@ -8,12 +8,12 @@ pubdate: 2019-10-07T15:56:56+09:00
 description: トップレベルのJMenuの表示中に別のトップレベルJMenuを開くMnemonicキーが入力された場合、それらのポップアップ表示を切り替えるかどうかを設定します。
 image: https://drive.google.com/uc?id=1dyq9CF4OHfr0yYxPQYInJOIbHQMEYtuJ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 トップレベルの`JMenu`の表示中に別のトップレベル`JMenu`を開く`Mnemonic`キーが入力された場合、それらのポップアップ表示を切り替えるかどうかを設定します。
 
 #download(https://drive.google.com/uc?id=1dyq9CF4OHfr0yYxPQYInJOIbHQMEYtuJ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String key = "Menu.crossMenuMnemonic";
 
@@ -32,7 +32,7 @@ check.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Menu.crossMenuMnemonic`: `true`
 -- `MetalLookAndFeel`、`MotifLookAndFeel`のデフォルト
 -- トップレベルの`JMenu`の表示中に別のトップレベル`JMenu`を開く`Mnemonic`キーが入力された場合、別のトップレベル`JMenu`のポップアップに切り替わる
@@ -46,9 +46,9 @@ check.addActionListener(e -> {
 - トップレベルではない`JMenu`(`JToolBar`直下ではなく`JPopupMenu`以下に追加されている`JMenu`)にはこの設定は無関係
 - `UIManager.put("Menu.crossMenuMnemonic", ...);`で設定を切り替えた場合、`SwingUtilities.updateComponentTreeUI(...)`などで`LoolAndFeel`の`UI`プロパティを更新する必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://bugs.openjdk.org/browse/JDK-6674479 &#91;JDK-6674479&#93; Incorrect cycling between conflicting mnemonics in menu - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

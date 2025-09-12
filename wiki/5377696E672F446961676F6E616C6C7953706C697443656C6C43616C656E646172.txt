@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2020/06/create-month-calendar-with-diagonally.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルレンダラーに`JLayer`で直線を描画して斜め分断セルを表示します。
 
 #download(https://drive.google.com/uc?id=19GKh0Ts86Zd4J0mjJTp1pmNkOnrcURBy)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private class CalendarTableRenderer extends DefaultTableCellRenderer {
   private final JPanel p = new JPanel();
@@ -59,7 +59,7 @@ private class CalendarTableRenderer extends DefaultTableCellRenderer {
   // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、月カレンダーで`6`週目になる日を前の`5`週目の同じ曜日のセルを斜め分割してまとめて表示しています。
 
 - `DefaultTableModel#getRowCount()`が常に`5`を返すようオーバーライドして月カレンダーが`5`週分のみ表示するよう設定
@@ -82,12 +82,12 @@ class DiagonallySplitCellLayerUI extends LayerUI<JPanel> {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]
 - [[JTableの行高がJViewportの高さに合うまで調整する>Swing/AdjustRowHeightFillsViewport]]
 - [[JTableHeaderのTableColumnを斜め線で分割する>Swing/DiagonalHeaderCellBorder]]
 -- `JLayer`ではなく`Border`を使用して斜め線を描画する方法もある
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

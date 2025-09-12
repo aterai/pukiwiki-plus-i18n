@@ -8,12 +8,12 @@ pubdate: 2018-11-19T16:40:06+09:00
 description: JComboBoxのItemをキー入力やJPopupMenuを使用してコピーします。
 image: https://drive.google.com/uc?id=1NdGJia5hxUObZKEOuG1aS83TzDZvfjOpXQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`の`Item`をキー入力や`JPopupMenu`を使用してコピーします。
 
 #download(https://drive.google.com/uc?id=1NdGJia5hxUObZKEOuG1aS83TzDZvfjOpXQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JComboBox<String> combo1 = new JComboBox<>(makeModel(5));
 Action copy = new AbstractAction() {
@@ -51,7 +51,7 @@ popup.add(COPY_KEY).addActionListener(e -> {
 combo1.setComponentPopupMenu(popup);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default:`
 -- デフォルトでは編集不可の`JComboBox`にKBD{Ctrl+C}などのキー入力でのコピー機能はない
 - `Editable: false, JPopupMenu, Ctrl+C`
@@ -62,11 +62,11 @@ combo1.setComponentPopupMenu(popup);
 -- `JComboBox#getEditor().getEditorComponent()`で取得した`JTextField`に`JTextField#setComponentPopupMenu(...)`でコピーなどを実行する`JPopupMenu`を設定
 -- `JTextField`はデフォルトでKBD{Ctrl+C}キーなどでのコピーが可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/52731102/copy-text-in-combo-box-java swing - Copy text in combo-box Java - Stack Overflow]
 - [[DefaultEditorKitでポップアップメニューからコピー>Swing/DefaultEditorKit]]
 - [[JPopupMenuを開く前に対象となるJTextFieldにFocusを移動する>Swing/FocusBeforePopup]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

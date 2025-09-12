@@ -8,12 +8,12 @@ pubdate: 2005-07-04T07:42:08+09:00
 description: JFrameを2つ並べて作成し、その位置関係を保ったまま移動できるようにします。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLtEL3M0I/AAAAAAAAAYA/9HmyXI1Uw0M/s800/DockingFrames.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFrame`を`2`つ並べて作成し、その位置関係を保ったまま移動できるようにします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLtEL3M0I/AAAAAAAAAYA/9HmyXI1Uw0M/s800/DockingFrames.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private void positionFrames(ComponentEvent e) {
   if (e.getComponent().equals(frame1)) {
@@ -32,15 +32,15 @@ private void positionFrames(ComponentEvent e) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JFrame`を上下に並べてそれぞれに`ComponentListener`を実装したリスナーを追加
 - 片方のフレームが移動された時、残りのフレームの位置を指定する前に一旦このリスナーを削除することで処理ループの発生を防止
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1479997 Swing (Archive) - how to dock two jdialogs?]
 - [https://community.oracle.com/thread/1492552 Swing (Archive) - how to catch drag event in the title bar of a jframe]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/ComponentListener.html ComponentListener (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

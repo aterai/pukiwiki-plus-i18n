@@ -8,12 +8,12 @@ pubdate: 2006-08-28T00:57:26+09:00
 description: 通常のセルエディタではなく、セルより大きなアイコンを選択する為のセルエディタを使用してJTableを編集します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTO6b-zTJI/AAAAAAAAAdI/UAROdzzun4k/s800/LargeCellEditor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 通常のセルエディタではなく、セルより大きなアイコンを選択する為のセルエディタを使用して`JTable`を編集します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTO6b-zTJI/AAAAAAAAAdI/UAROdzzun4k/s800/LargeCellEditor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class IconTable extends JTable {
   private static final int XOFF = 4;
@@ -125,7 +125,7 @@ class IconTable extends JTable {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTable`のセルをクリックするとそのセル上にセルエディタ(`JList`)を表示してアイコンの選択、変更が可能になります。
 
 - デフォルトの`TableCellEditor`は使用しないためすべてのセルを編集不可に設定
@@ -135,10 +135,10 @@ class IconTable extends JTable {
 -- `GlassPane`を使用しているため`JFrame`の外にセルエディタを描画できない
 --- `JTable`の周りに余白を設定することで回避
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://xp-style-icons.en.softonic.com/ XP Style Icons - Download]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 表示をアニメーションさせたり、音を出したりしても面白そうです。 -- &user(aterai); &new{2006-10-29 (日) 02:03:44};
 

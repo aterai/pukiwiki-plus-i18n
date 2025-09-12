@@ -8,12 +8,12 @@ pubdate: 2008-04-07T12:47:33+09:00
 description: どのカラムでソートされているかを表示するために、セルの背景色を変更します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTZ75OnPI/AAAAAAAAAkU/k4lx4c2XKK8/s800/SortColumnColor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 どのカラムでソートされているかを表示するために、セルの背景色を変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTZ75OnPI/AAAAAAAAAkU/k4lx4c2XKK8/s800/SortColumnColor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   private final Color evenColor = new Color(255, 250, 250);
@@ -46,13 +46,13 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTable#getSortKeys()#getSortKeys()`でソート中のカラムを取得し、第`1`ソートキーになっているカラムのセル背景色を変更しています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowSorter.html#getSortKeys-- RowSorter#getSortKeys() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - このサンプルでは、`NimbusLookAndFeel`などの場合、`BooleanCellRenderer`(`JCheckBox`を使った`Boolean`用のデフォルトセルレンダラー)を使った列の背景色を変更できない。 -- &user(aterai); &new{2013-01-15 (火) 16:33:54};
 

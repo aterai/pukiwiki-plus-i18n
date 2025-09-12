@@ -8,12 +8,12 @@ pubdate: 2004-10-11T07:41:37+09:00
 description: JFrameやJDialogなどのWindowを開いたときに、デフォルトでフォーカスを持つコンポーネントを指定します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKp09XXEI/AAAAAAAAAWU/p3YhSijyS90/s800/DefaultFocus.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFrame`や`JDialog`などの`Window`を開いたときに、デフォルトでフォーカスを持つコンポーネントを指定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKp09XXEI/AAAAAAAAAWU/p3YhSijyS90/s800/DefaultFocus.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 EventQueue.invokeLater(new Runnable() {
   @Override public void run() {
@@ -22,7 +22,7 @@ EventQueue.invokeLater(new Runnable() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTextField`がデフォルトのフォーカスを持つように`JComponent#requestFocusInWindow()`メソッドを使用しています。
 
 - `JComponent#requestFocusInWindow()`メソッドはチュートリアル([https://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html How to Use the Focus Subsystem])にあるように`JFrame#pack()`、もしくは`JFrame#setSize(...)`などでリサイズされた後(フォーカスを取得するコンポーネントのサイズが決まった後)で実行する必要がある
@@ -78,12 +78,12 @@ kfm.addPropertyChangeListener(new PropertyChangeListener() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Focusの移動>Swing/FocusTraversal]]
 - [https://community.oracle.com/thread/1367389 Swing - When does requestFocusInWindow() fail]
 - [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JFrame#getRootPane()#setDefaultButton()`は使用方法がよくわからない… -- [[aterai]]
 - `setDefaultButton`って、KBD{Enter}したときに押されたとみなすボタンだったかな…… --  &new{2004-10-14 (木) 23:21:53};

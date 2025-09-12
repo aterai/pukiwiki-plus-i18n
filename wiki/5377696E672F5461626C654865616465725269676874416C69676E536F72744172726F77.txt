@@ -8,12 +8,12 @@ pubdate: 2022-08-15T00:19:13+09:00
 description: JTableHeaderのソートアイコンの表示位置をタイトル文字列右隣からヘッダセル右揃えに変更します。
 image: https://drive.google.com/uc?id=1kIVVpk_5RXF_0L8G6lmCKbcvTm71Pv3Z
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTableHeader`のソートアイコンの表示位置をタイトル文字列右隣からヘッダセル右揃えに変更します。
 
 #download(https://drive.google.com/uc?id=1kIVVpk_5RXF_0L8G6lmCKbcvTm71Pv3Z)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(model);
 table.setAutoCreateRowSorter(true);
@@ -32,7 +32,7 @@ JCheckBox check = new JCheckBox(key, UIManager.getBoolean(key)) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルではソートアイコンの表示位置を`UIManager.put("TableHeader.rightAlignSortArrow", Boolean)`でヘッダセルの右揃えで表示するテストを実施しています。
 
 - `MetalLookAndFeel`、`MotifLookAndFeel`、`Windows Classic`
@@ -71,9 +71,9 @@ for (int i = 1; i < cm.getColumnCount(); i++) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのソートアイコンを変更>Swing/TableSortIcon]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

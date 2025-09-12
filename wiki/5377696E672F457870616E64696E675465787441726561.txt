@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2017/12/automatically-extend-its-height-when.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`にフォーカスが当たったときその高さを自動拡張、外れたときに縮小します。
 
 #download(https://drive.google.com/uc?id=11MUj8pt3sndJr2o7ebuYFDE4gaRnE4AklA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 textArea.addFocusListener(new FocusAdapter() {
   @Override public void focusLost(FocusEvent e) {
@@ -33,7 +33,7 @@ label.addFocusListener(new FocusAdapter() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `JTextArea` + `FocusListener`
 -- `JTextArea`にフォーカスが当たったとき`JTextArea#setRows(...)`で行数を拡張、フォーカスが外れたときに一行に縮小
 -- 複数行分の文字列が入力されている状態で一行に縮小した場合、`JScrollPane`のスクロールボタンが表示される
@@ -42,9 +42,9 @@ label.addFocusListener(new FocusAdapter() {
 -- 複数行分の文字列が入力されている状態で一行に縮小した場合、`JLabel`のデフォルトの切り詰めで末尾が`...`に置換表示される
 -- `JLabel`のテキストを無しにすると高さが`0`になってしまうので空白文字を追加することで回避
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/42847168/it-is-posible-to-expand-a-jtextarea-or-jtextpane-by-clicking-on-it java - It is posible to expand a JTextArea or JTextPane by clicking on it? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2006-03-13T00:29:10+09:00
 description: javax.swing.Timerを使って、アニメーションするアイコンを作成します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHuI0XeDI/AAAAAAAAARo/CVs615Dtkqs/s800/AnimeIcon.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `javax.swing.Timer`を使って、アニメーションするアイコンを作成します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHuI0XeDI/AAAAAAAAARo/CVs615Dtkqs/s800/AnimeIcon.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class AnimatedLabel extends JLabel implements ActionListener {
   private final Timer animator;
@@ -106,7 +106,7 @@ class AnimeIcon implements Icon, Serializable {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、スタートボタンを押すと(`JTextArea`に表示している作業状況はランダムに`Thread.sleep(...)`を実行して時間稼ぎしている)アイコンが`FireFox`風にアニメーションします。
 
 アニメーションは、`8`個の小さな円からアイコンを生成して、それぞれのインデックスを順に変更することで行っています。
@@ -185,10 +185,10 @@ class AnimeIcon2 implements Icon, Serializable {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/Icon.html Icon (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 色の濃い円が時計回りに回転するように変更しました。 -- &user(aterai); &new{2006-03-15 (水) 11:12:08};
 - ロードインジケータと呼ぶらしい。 -- &user(aterai); &new{2007-07-11 (水) 23:49:44};

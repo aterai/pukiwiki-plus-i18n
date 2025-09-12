@@ -8,18 +8,18 @@ pubdate: 2022-12-05T08:32:32+09:00
 description: JOptionPaneのタイトルバー背景色や縁色などをMessageTypeに対応した色に変更します。
 image: https://drive.google.com/uc?id=1AVd6cPRb_L98qWsiVXcNaQ8LYNvJB9T_
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JOptionPane`のタイトルバー背景色や縁色などを`MessageType`に対応した色に変更します。
 
 #download(https://drive.google.com/uc?id=1AVd6cPRb_L98qWsiVXcNaQ8LYNvJB9T_)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JDialog.setDefaultLookAndFeelDecorated(true);
 JOptionPane.showMessageDialog(parent, msg, title, JOptionPane.ERROR_MESSAGE);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JDialog.setDefaultLookAndFeelDecorated(true)`を実行して`MetalLookAndFeel`がウィンドウ装飾をサポートするよう設定
 -- `JFrame.setDefaultLookAndFeelDecorated(true)`は`JDialog`を使用する`JOptionPane`のウィンドウ装飾には影響しない
 -- [[JFrameがデフォルトのウィンドウ装飾を使用する場合のタイトルバー背景色を変更>Swing/WindowTitleBackground]]
@@ -37,10 +37,10 @@ JOptionPane.showMessageDialog(parent, msg, title, JOptionPane.ERROR_MESSAGE);
 -- 質問ダイアログのウィンドウ装飾を適用
 -- 質問ダイアログのタイトルバー背景色は`UIManager.put("OptionPane.questionDialog.titlePane.background", color)`で変更可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFrameがデフォルトのウィンドウ装飾を使用する場合のタイトルバー背景色を変更>Swing/WindowTitleBackground]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JDialog.html#setDefaultLookAndFeelDecorated-boolean- JDialog#setDefaultLookAndFeelDecorated(boolean) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

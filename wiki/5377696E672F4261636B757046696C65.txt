@@ -8,12 +8,12 @@ pubdate: 2003-11-03T02:48:53+09:00
 description: 拡張子に番号を付けたバックアップファイルを作成します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTH9enrSII/AAAAAAAAASA/du4XRgNsIZs/s800/BackupFile.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 拡張子に番号を付けたバックアップファイルを作成します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTH9enrSII/AAAAAAAAASA/du4XRgNsIZs/s800/BackupFile.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private File makeBackupFile(File file, int intold, int intnew) {
   File testFile = null;
@@ -63,7 +63,7 @@ private File makeBackupFile(File file, int intold, int intnew) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`xyzzy`風の番号付きバックアップファイル作成のテストを行っています。
 
 - 以下の例では古いバージョンを`2`つ、新しいバージョンを`3`つバックアップとして残す
@@ -83,9 +83,9 @@ File file = makeBackupFile(file, 2, 3);
 tmpFile.renameTo(file);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/io/File.html#createTempFile-java.lang.String-java.lang.String-java.io.File- File#createTempFile(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

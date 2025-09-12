@@ -8,12 +8,12 @@ pubdate: 2014-04-14T00:48:39+09:00
 description: パネルのタイルアニメーションで使用するjava.swing.Timerの数を変更して動作のテストを行います。
 image: https://lh6.googleusercontent.com/-Kc02XwN3fHA/U0qu1BcXNEI/AAAAAAAACDg/UDwGuPoJmjk/s800/TimerAction.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 パネルのタイルアニメーションで使用する`java.swing.Timer`の数を変更して動作のテストを行います。
 
 #download(https://lh6.googleusercontent.com/-Kc02XwN3fHA/U0qu1BcXNEI/AAAAAAAACDg/UDwGuPoJmjk/s800/TimerAction.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // Timer: 1, ActionListener: 100
 class Tile2 extends JComponent {
@@ -40,7 +40,7 @@ class Tile2 extends JComponent {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Timer: 100`
 -- `10x10`個のアニメーション用タイル(`JComponent`)一つにそれぞれ`Timer`を生成して使用(その為`Timer`も`10x10`個存在する)
 -- %%`JDK 1.7.0_40`以降で低速%% すでに修正済みで上記のサンプルは他と差がない
@@ -50,11 +50,11 @@ class Tile2 extends JComponent {
 - `Timer: 1, ActionListener: 1`
 -- `1`個の`Timer`を使用し`for`ループで`10x10`のラベルの色を変更してアニメーションを実行
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/18933986/javax-swing-timer-slowdown-in-java7u40 java - javax.swing.Timer slowdown in Java7u40 - Stack Overflow]
 -- `JDK 1.7.0_25`までは、どれも同じような速度でアニメーションするが、`JDK 1.7.0_40`以降は`Timer`の数を減らさないと遅くなる(`JDK 1.8.0`は`JDK 1.7.0_25`と同等に速い)
 -- [https://bugs.openjdk.org/browse/JDK-7167780 JDK-7167780 Hang javasoft.sqe.tests.api.javax.swing.Timer.Ctor2Tests - Java Bug System]の修正が影響していた？
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

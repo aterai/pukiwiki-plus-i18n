@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2024/03/switching-between-jtoolbar-and-jmenubar.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolBar`に配置したハンバーガーメニュー風の`JButton`をクリックしてこれを`JMenuBar`と切り替えます。
 
 #download(https://drive.google.com/uc?id=1Qpanq4RDxRa_VHcMRdzG0OxBomIumTwl)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JMenuBar mainMenuBar = makeMenuBar();
 JButton button = makeHamburgerMenuButton(mainMenuBar);
@@ -71,7 +71,7 @@ private JButton makeHamburgerMenuButton(JMenuBar menuBar) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 移動不可に設定したメイン`JToolBar`をラップする`JMenuBar`を作成し、`JRootPane#setJMenuBar(wrappingMenuBar)`で`JRootPane`上部に配置
 - メイン`JToolBar`に高さを`JMenuBar`と同じになるよう揃えた`JButton`を追加
 -- `JButton`に`ActionListener`を追加し、クリックで`JRootPane#setJMenuBar(mainMenuBar)`でのメイン`JMenuBar`表示への切り替えと`mainMenuBar.getMenu(0).doClick()`で先頭`JMenu`の`JPopupMenu`を自動的オープンを実行するよう設定
@@ -82,7 +82,7 @@ private JButton makeHamburgerMenuButton(JMenuBar menuBar) {
 -- KBD{ESC}キーや`JPopupMenu`外がクリックされて`PopupMenuListener#popupMenuCanceled(...)`が実行されたときは無条件で表示をメイン`JToolBar`に戻す
 -- `TopLevel-JMenu`をクリックしてもその`JPopupMenu`が開いた状態を維持するため`MouseListener`を`JMenu`に追加
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JToolBar内にJMenuBarを配置して分離・移動可能に設定する>Swing/FloatableMenuBar]]
 -- リンクのサンプルは`JMenuBar`内に`JToolBar`を配置するここのサンプルとは逆に`JToolBar`内に`JMenuBar`を配置して`JMenuBar`を分離・移動可能にしている
 - [[MenuSelectionManagerですべてのJPopupMenuを取得する>Swing/GetAllPopupMenus]]
@@ -90,6 +90,6 @@ private JButton makeHamburgerMenuButton(JMenuBar menuBar) {
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JMenu.html JMenu (Java Platform SE 8)]に「「ボタン」がJMenuBar上にあれば、そのメニューはトップレベル・ウィンドウです。(If the "button" is on the JMenuBar, the menu is a top-level window.)」と記述されているが[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JMenu.html#isTopLevelMenu-- JMenu#isTopLevelMenu()]ではトップレベル・メニューとなっている
 -- トップレベル・ウィンドウ、トップレベル・メニュー、それ以外の「プルライト」メニューが出現するのでトップレベル・メニューに揃えたほうがよさそう？
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

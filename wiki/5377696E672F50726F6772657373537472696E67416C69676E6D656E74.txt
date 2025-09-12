@@ -8,12 +8,12 @@ pubdate: 2012-04-02T16:48:11+09:00
 description: JProgressBarの進捗文字列をJLabelにして、字揃えなどを変更します。
 image: https://lh5.googleusercontent.com/-zRMPjXT7do4/T3lYdJUnilI/AAAAAAAABLA/kcpMYSYoklM/s800/ProgressStringAlignment.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JProgressBar`の進捗文字列を`JLabel`にして、字揃えなどを変更します。
 
 #download(https://lh5.googleusercontent.com/-zRMPjXT7do4/T3lYdJUnilI/AAAAAAAABLA/kcpMYSYoklM/s800/ProgressStringAlignment.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class StringAlignmentProgressBar extends JProgressBar {
   private final JLabel label;
@@ -43,16 +43,16 @@ class StringAlignmentProgressBar extends JProgressBar {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JProgressBar`のレイアウトを`BorderLayout`に変更し、水平方向の配置方法を設定した`JLabel`を追加して字揃えを変更しています。
 
 - `JProgressBar#setStringPainted(true)`を同時に使用すると`2`重に表示される
 - 進捗状況に応じた文字色の変化には対応していない
 - `NimbusLookAndFeel`を適用した`JProgressBar`に`TitledBorder`を設定するとデフォルトの`JProgressBar#setStringPainted(true)`で表示される進捗文字列の垂直位置がずれる場合がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

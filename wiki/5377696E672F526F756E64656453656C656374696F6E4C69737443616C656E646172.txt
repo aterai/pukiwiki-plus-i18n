@@ -1,0 +1,104 @@
+---
+category: swing
+folder: RoundedSelectionListCalendar
+title: JListで作成したカレンダーのセル選択領域を角丸で描画する
+tags: [JList, Path2D, Graphics, Calendar]
+author: aterai
+pubdate: 2024-04-15T05:49:23+09:00
+description: JListで作成したカレンダーでセルを複数選択した領域のすべての角を丸めて描画します。
+image: https://drive.google.com/uc?id=1Mmv2sjRe4isN64Nwl_0FyI9ZRedoCJMX
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2024/04/rounding-corners-of-rectilinear-polygon.html
+    lang: en
+---
+* Summary [#summary]
+`JList`で作成したカレンダーでセルを複数選択した領域のすべての角を丸めて描画します。
+
+#download(https://drive.google.com/uc?id=1Mmv2sjRe4isN64Nwl_0FyI9ZRedoCJMX)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+/**
+  Rounding the corners of a Rectilinear Polygon.
+*/
+public static Path2D convertRoundedPath(List<Point2D> list, double arc) {
+  double kappa = 4d * (Math.sqrt(2d) - 1d) / 3d; // = 0.55228...;
+  double akv = arc - arc * kappa;
+  int sz = list.size();
+  Point2D pt0 = list.get(0);
+  Path2D path = new Path2D.Double();
+  path.moveTo(pt0.getX() + arc, pt0.getY());
+  for (int i = 0; i < sz; i++) {
+    Point2D prv = list.get((i - 1 + sz) % sz);
+    Point2D cur = list.get(i);
+    Point2D nxt = list.get((i + 1) % sz);
+    double dx0 = Math.signum(cur.getX() - prv.getX());
+    double dy0 = Math.signum(cur.getY() - prv.getY());
+    double dx1 = Math.signum(nxt.getX() - cur.getX());
+    double dy1 = Math.signum(nxt.getY() - cur.getY());
+    path.curveTo(
+        cur.getX() - dx0 * akv, cur.getY() - dy0 * akv,
+        cur.getX() + dx1 * akv, cur.getY() + dy1 * akv,
+        cur.getX() + dx1 * arc, cur.getY() + dy1 * arc);
+    path.lineTo(nxt.getX() - dx1 * arc, nxt.getY() - dy1 * arc);
+  }
+  path.closePath();
+  return path;
+}
+}}
+
+* Description [#description]
+- [[JListで月のカーソルキー移動や、週を跨いた日付を範囲選択が可能なカレンダーを作成する>Swing/CalendarViewList]]の`JList`を使用
+- セルの選択状態、フォーカス状態に関係なく背景色を描画しないセルレンダラーを設定し、代わりに`JList#paintComponent(...)`をオーバーライドしてセルの選択状態を描画
+- `ListSelectionModel.SINGLE_INTERVAL_SELECTION`で`1`つの連続区間のみを選択可能に設定
+-- `JList#getCellBounds(...)`で選択セル領域を取得し、`Area#add(new Area(Rectangle))`でひとつ、またはふたつの`Area`にまとめる
+--- セルが水平方向の次に垂直方向の順で並ぶ「ニュースペーパー・スタイル」レイアウトなのでセル選択の連続区間は`1`つでもセル選択領域は`2`つの`Area`になる場合がある
+-- まとめられた選択領域の各`Area`は直角多角形(任意の内角が`90°`または`270°`で辺が直角に交わる)になるので、これらの角(`Point2D`)をすべて`Path2D.curveTo(...)`で丸めた`Path2D`に変換
+
+#code{{
+public final JList<LocalDate> monthList = new JList<LocalDate>() {
+  @Override public void updateUI() {
+    setCellRenderer(null);
+    super.updateUI();
+    setLayoutOrientation(HORIZONTAL_WRAP);
+    setVisibleRowCount(CalendarViewListModel.ROW_COUNT);
+    setFixedCellWidth(size.width);
+    setFixedCellHeight(size.height);
+    setCellRenderer(new CalendarListRenderer());
+    setOpaque(false);
+    getSelectionModel().setSelectionMode(
+        ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+    addListSelectionListener(e -> repaint());
+  }
+
+  @Override protected void paintComponent(Graphics g) {
+    int[] indices = getSelectedIndices();
+    if (indices != null && indices.length > 0) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(
+          RenderingHints.KEY_ANTIALIASING,
+          RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setPaint(SELECTED_COLOR);
+      Area area = new Area();
+      Arrays.stream(indices)
+          .mapToObj(i -> getCellBounds(i, i))
+          .forEach(r -> area.add(new Area(r)));
+      for (Area a : GeomUtils.singularization(area)) {
+        List<Point2D> lst = GeomUtils.convertAreaToListOfPoint2D(a);
+        g2.fill(GeomUtils.convertRoundedPath(lst, 4d));
+      }
+      g2.dispose();
+    }
+    super.paintComponent(g);
+  }
+};
+}}
+
+* Reference [#reference]
+- [[JListで月のカーソルキー移動や、週を跨いた日付を範囲選択が可能なカレンダーを作成する>Swing/CalendarViewList]]
+- [[JTreeの選択領域描画をラウンド矩形に変更する>Swing/RoundedSelectionTree]]
+-- セルを垂直方向に`1`列に並べたレイアウト(デフォルト、`JList.VERTICAL`)の`JList`でセル選択領域の角を丸める場合は、リンク先の`JTree`の方法がそのまま利用可能
+
+* Comment [#comment]
+#comment
+#comment

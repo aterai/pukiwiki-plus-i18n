@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2012/06/height-of-jtableheader.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 内部の文字サイズなどはそのままで、`JTableHeader`の高さだけを変更する方法をテストします。
 
 #download(https://lh4.googleusercontent.com/-l20IOO5wKSo/T8MIf7FVUwI/AAAAAAAABNM/9BNN63T96Fo/s800/TableHeaderHeight.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JScrollPane scroll = new JScrollPane(table);
 scroll.setColumnHeader(new JViewport() {
@@ -28,7 +28,7 @@ scroll.setColumnHeader(new JViewport() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `Bad: JTableHeader#setPreferredSize(...)`
 -- `JTableHeader`に`null`(デフォルト)以外のサイズを`setPreferredSize(...)`で設定
 -- 列幅の調整を自動的に行わない`JTable.AUTO_RESIZE_OFF`モードの場合、設定されたこのサイズが列の追加や列幅の変更で更新されないためヘッダの描画が不正になる
@@ -50,12 +50,12 @@ table.setTableHeader(new JTableHeader(table.getColumnModel()) {
 -- `JTableHeader#getHeight()`をオーバーライドするとヘッダ文字列などの描画だけ変更される
 --- `getHeight()`は`JTableHeader#getHeaderRect()`で使用されているため
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://kensir0u.hatenadiary.org/entry/20090416/1239898154 JTableのJTalbeHeaderの高さを変更して列幅の合計が１２００ピクセルを超えて横スクロールするとバグった。 - kensir0uのしくみ]
 -- このバグ？の状態を適切に示す良いサンプルコードがある
 - [https://bugs.openjdk.org/browse/JDK-4473075 JDK-4473075 JTable header rendering problem (after setting preferred size) - Java Bug System]
 -- `JDK 9`で修正されている
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

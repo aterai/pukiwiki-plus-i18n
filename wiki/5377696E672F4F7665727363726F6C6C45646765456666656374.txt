@@ -8,12 +8,12 @@ pubdate: 2021-10-25T00:10:46+09:00
 description: JScrollPaneの範囲外にマウスドラッグでスクロールしようとするイベントを取得したら、JLayerを使用してJViewportの端に半透明の楕円を描画しこれ以上移動できないことを表現します。
 image: https://drive.google.com/uc?id=1n7_nqijaxfsuitZqB2Qaqwq4gJhpQ7FY
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollPane`の範囲外にマウスドラッグでスクロールしようとするイベントを取得したら、`JLayer`を使用して`JViewport`の端に半透明の楕円を描画しこれ以上移動できないことを表現します。
 
 #download(https://drive.google.com/uc?id=1n7_nqijaxfsuitZqB2Qaqwq4gJhpQ7FY)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class OverscrollEdgeEffectLayerUI extends LayerUI<JScrollPane> {
   private final Color color = new Color(0xAA_AA_EE_FF, true);
@@ -120,7 +120,7 @@ class OverscrollEdgeEffectLayerUI extends LayerUI<JScrollPane> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは`JScrollPane`に`JLayer`を被せてマウスドラッグイベントを取得し、`JViewport#getViewRect()`で取得した矩形の`y`座標が`0`の場合は上辺、矩形の下辺が`View`(子コンポーネントの`JLabel`)の下辺と一致する場合は下辺に接していると判断して適当な大きさの半透明楕円を描画しています。
 
 - たとえば上辺に接して下方向にドラッグしている場合はマウスの`x`座標を楕円の`x`軸の中心として半透明楕円を描画
@@ -128,12 +128,12 @@ class OverscrollEdgeEffectLayerUI extends LayerUI<JScrollPane> {
 -- ドラッグ方向が上方向に変化したりマウスリリースイベントが発生した場合、`Timer`を使用して楕円の高さを`0`になるまで減少する
 - 下辺は上辺の反対を描画、左辺、右辺は未対応
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollPaneでキネティックスクロール>Swing/KineticScrolling]]
 -- 内部の`JLabel`のドラッグによるスクロールはこちらのサンプルの`MouseMotionListener`を使用している
 - [[JScrollPaneに先頭領域までのスクロールバックを実行するJButtonを追加する>Swing/ScrollBackToTopButton]]
 - [https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=ja RecyclerView で動的リストを作成する  |  Android デベロッパー  |  Android Developers]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

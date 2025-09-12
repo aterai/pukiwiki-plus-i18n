@@ -8,30 +8,30 @@ pubdate: 2007-12-31T16:51:19+09:00
 description: JButtonをクリックしたときのテキストシフト量を変更します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVR92SsdI/AAAAAAAAAnY/_wKFJTNu2oY/s800/TextShiftOffset.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JButton`をクリックしたときのテキストシフト量を変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVR92SsdI/AAAAAAAAAnY/_wKFJTNu2oY/s800/TextShiftOffset.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("Button.textShiftOffset", 0);
 SwingUtilities.updateComponentTreeUI(this);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - このサンプルでは`JButton`をクリックした際にあわせて内部の文字列が移動する距離を`0`、`1`、`-1`と切り替えることが可能
 - `JButton`に設定した`Icon`は文字列と同様に移動するが文字列が`HTML`テキストの場合は無効で移動しない
 - `JToggleButton`などには効果がない
 -- `UIManager.put("ToggleButton.textShiftOffset", 1)`なども無効
 - `Java 1.5.0` + `WindowsLookAndFeel`のデフォルトは`1`
 - `Java 1.6.0` + `WindowsLookAndFeel`のデフォルトは`0`
-- `Java 1.6.0`頃？から`JTabbedPane`のタブは`TabbedPane.selectedLabelShift`と`TabbedPane.labelShift`でテキストシフト量を変更可能
+- `Java 1.6.0`頃？から`JTabbedPane`のタブは`TabbedPane.selectedLabelShift`と`TabbedPane.labelShift`でテキストシフト量を変更可能になった
 -- [[JTabbedPaneのタブのテキストシフト量を変更する>Swing/TabbedPaneLabelShift]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブのテキストシフト量を変更する>Swing/TabbedPaneLabelShift]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

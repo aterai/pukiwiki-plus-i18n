@@ -8,12 +8,12 @@ pubdate: 2015-12-28T00:09:10+09:00
 description: JComboBoxで編集した後の文字列がドロップダウンリスト中に存在する場合、そのアイテムを選択するように設定します。
 image: https://lh3.googleusercontent.com/-EomuM0qaNtw/Vn_-BRt08_I/AAAAAAAAOJ0/hrUTPDKhroE/s800-Ic42/ComboBoxDropdownSelection.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`で編集した後の文字列がドロップダウンリスト中に存在する場合、そのアイテムを選択するように設定します。
 
 #download(https://lh3.googleusercontent.com/-EomuM0qaNtw/Vn_-BRt08_I/AAAAAAAAOJ0/hrUTPDKhroE/s800-Ic42/ComboBoxDropdownSelection.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SelectItemMenuListener implements PopupMenuListener {
   @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -31,7 +31,7 @@ class SelectItemMenuListener implements PopupMenuListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `"123456"`を編集して`"a"`に変更しドロップダウンリストを開くと`"123456"`が選択状態になる
 - `popupMenuWillBecomeVisible`
@@ -65,9 +65,9 @@ Action a = new AbstractAction() {
 getActionMap().put(ENTER_PRESSED, a);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/PopupMenuListener.html#popupMenuWillBecomeVisible-javax.swing.event.PopupMenuEvent- PopupMenuListener#popupMenuWillBecomeVisible(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

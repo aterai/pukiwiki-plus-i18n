@@ -1,0 +1,67 @@
+---
+category: swing
+folder: CancelFilePaneCellEditor
+title: JFileChooserのリサイズでファイル名編集をキャンセルする
+tags: [JFileChooser, JDialog, ComponentListener]
+author: aterai
+pubdate: 2025-06-02T06:33:17+09:00
+description: JFileChooserのFilePaneでCellEditorが表示中にJFileChooserのサイズ変更が発生した場合、そのリネームをキャンセルするComponentListenerを作成します。
+image: https://drive.google.com/uc?id=1g0K3CSMMj_MdIGjzm1Ofd3_qWPQR_Exe
+---
+* Summary [#summary]
+`JFileChooser`の`FilePane`で`CellEditor`が表示中に`JFileChooser`のサイズ変更が発生した場合、そのリネームをキャンセルする`ComponentListener`を作成します。
+
+#download(https://drive.google.com/uc?id=1g0K3CSMMj_MdIGjzm1Ofd3_qWPQR_Exe)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class CancelEditListener extends ComponentAdapter {
+  private final JFileChooser chooser;
+
+  protected CancelEditListener(JFileChooser chooser) {
+    super();
+    this.chooser = chooser;
+  }
+
+  @Override public void componentResized(ComponentEvent e) {
+    // sun.swing.FilePane.cancelEdit();
+    chooser.setSelectedFile(null);
+  }
+}
+}}
+
+* Description [#description]
+- `Default`
+-- デフォルトの`MetalLookAndFeel`や`WindowsLookAndFeel`の`JFileChooser`で`ListView`中のファイル名を編集する`CellEditor`を表示したまま`JFileChooser`をリサイズしても`CellEditor`は編集状態を維持する
+-- このため、`CellEditor`の表示中に`JFileChooser`をリサイズして編集中のセル位置が変化した場合、上記のスクリーンショットのように`CellEditor`の位置がずれてしまう場合がある
+-- [[FileDialog>Swing/FileDialog]]ではそのリサイズでリネームはキャンセルされる
+-- `DetailsView`の`CellEditor`は`JFileChooser`のリサイズでセル位置は変化しない、またカラムのリサイズでもリネームはキャンセルされる
+- `JFileChooser`
+-- `ComponentListener#componentResized(...)`をオーバーライドしてリサイズイベントが発生したらリネームをキャンセルする`ComponentListener`を`JFileChooser`に追加
+-- `sun.swing.FilePane.cancelEdit()`は直接実行できないので、`JFileChooser#setSelectedFile(null)`を実行することでリネームをキャンセルする
+--- [[JFileChooserの詳細表示でファイル名が編集中の場合はそれをキャンセルする>Swing/FileChooserCancelEdit]]
+--- `DetailsView`での`CellEditor`もこの`ComponentListener#componentResized(...)`でキャンセルされる
+-- `JFileChooser`のリサイズでリネームをキャンセルすると`CellEditor`の表示が一瞬チラつく場合がある？
+- `Dialog`
+-- `JFileChooser#createDialog()`をオーバーライドして親`JDialog`にリネームをキャンセルする`ComponentListener`を追加
+-- `JFileChooser`に`ComponentListener`を追加した場合とは異なり、マウスカーソルがリサイズカーソルの状態で`JDialog`のフチをプレスした時点でリサイズイベントが発生するため、上記のような表示の乱れは発生しない？
+#code{{
+JFileChooser chooser = new JFileChooser() {
+  @Override protected JDialog createDialog(Component parent) {
+    JDialog dialog = super.createDialog(parent);
+    dialog.addComponentListener(new CancelEditListener(this));
+    return dialog;
+  }
+};
+}}
+
+* Reference [#reference]
+- [[JListのセルに配置したJLabelのテキストを編集する>Swing/ListEditor]]
+-- [https://github.com/aterai/java-swing-tips/issues/34 Resizing the parent JFrame results in incorrect positioning of the list cell editor during editing · Issue #34 · aterai/java-swing-tips]
+- [[JFileChooserのセルエディタでリネームを開始したとき拡張子を除くファイル名を選択状態にする>Swing/SelectFileNameWithoutExtension]]
+- [[FileDialogでファイルを選択する>Swing/FileDialog]]
+- [[JFileChooserの詳細表示でファイル名が編集中の場合はそれをキャンセルする>Swing/FileChooserCancelEdit]]
+
+* Comment [#comment]
+#comment
+#comment

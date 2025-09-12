@@ -8,12 +8,12 @@ pubdate: 2016-12-05T02:23:19+09:00
 description: JTreeのノードが編集開始されたときに表示するノードアイコンを変更します。
 image: https://drive.google.com/uc?id=1bjb1mUD5NQcTmyA9lBFKu1Zu5gPs9po_sw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードが編集開始されたときに表示するノードアイコンを変更します。
 
 #download(https://drive.google.com/uc?id=1bjb1mUD5NQcTmyA9lBFKu1Zu5gPs9po_sw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTree tree2 = new JTree();
 tree2.setEditable(true);
@@ -33,7 +33,7 @@ tree3.setCellRenderer(renderer2);
 tree3.setCellEditor(new DefaultTreeCellEditor(tree3, renderer3));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左
 -- `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`をオーバーライドし内部で`setIcon(icon)`メソッドを使用してノードアイコンを変更
 -- ノード編集中はデフォルトのアイコンが表示される
@@ -44,9 +44,9 @@ tree3.setCellEditor(new DefaultTreeCellEditor(tree3, renderer3));
 -- `DefaultTreeCellRenderer#setOpenIcon(...)`、`DefaultTreeCellRenderer#setClosedIcon(...)`、`DefaultTreeCellRenderer#setLeafIcon(...)`メソッドを使用してアイコンを変更した`TreeCellRenderer`を`JTree#setCellRenderer(...)`メソッドで設定
 -- `DefaultTreeCellEditor`で使用する`TreeCellRenderer`には表示用とは異なるアイコンを設定して`JTree#setCellEditor(...)`メソッドで設定しているため、編集中は異なるアイコンが表示される
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellEditor.html#DefaultTreeCellEditor-javax.swing.JTree-javax.swing.tree.DefaultTreeCellRenderer- DefaultTreeCellEditor (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

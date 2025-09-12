@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2011/03/checkboxes-in-jtable-cell.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセル中に`JCheckBox`を複数個配置します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TWs6JY73P8I/AAAAAAAAA2M/wwrwT7R5K4k/s800/CheckBoxesInTableCell.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CheckBoxesPanel extends JPanel {
   private static final String OSNAME = System.getProperty("os.name");
@@ -117,18 +117,18 @@ class CheckBoxesEditor extends CheckBoxesPanel
   // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTable`のセル内に`3`つの`JCheckBox`を配置した`JPanel`を作成
 -- この`JPanel`を`CellRenderer`用と`CellEditor`用として別々に使用
 - `JCheckBox`をマウスでクリックすると直下にある`JCheckBox`の選択状態のみ更新
 - 編集中にカラムヘッダの移動やリサイズ(`JFrame`などのリサイズに連動)などが発生してもチェックした内容がリセットされないように`CellEditor`のチェックボックスがクリックされたら`fireEditingStopped()`メソッドを呼び出して編集を終了し更新を確定する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのセル中にJRadioButtonを配置>Swing/RadioButtonsInTableCell]]
 - [[JTableのセルに複数のJButtonを配置する>Swing/MultipleButtonsInTableCell]]
 - [[JCheckBoxのセルをロールオーバーする>Swing/RolloverBooleanRenderer]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - ビットフラグを`EnumSet`に変更したサンプルを[[JTableの列にEnumSetを使用する>Swing/EnumSet]]に移動。 -- &user(aterai); &new{2011-03-01 (火) 14:22:06};
 - `rwx`セルを選択中にKBD{R}、KBD{W}、KBD{X}キーを入力すると、そのチェックが切り替わるように`InputMap`、`ActionMap`を追加。 -- &user(aterai); &new{2011-03-09 (水) 22:33:39};

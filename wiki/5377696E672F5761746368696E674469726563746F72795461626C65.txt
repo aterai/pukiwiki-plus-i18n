@@ -8,12 +8,12 @@ pubdate: 2019-01-07T15:06:47+09:00
 description: WatchServiceを使用してディレクトリの変更を監視し、ファイルの追加削除をJTableに表示します。
 image: https://drive.google.com/uc?id=1zVO0YYMG8diggVHo4BHTANeWATFiL90StA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `WatchService`を使用してディレクトリの変更を監視し、ファイルの追加削除を`JTable`に表示します。
 
 #download(https://drive.google.com/uc?id=1zVO0YYMG8diggVHo4BHTANeWATFiL90StA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Path dir = Paths.get(System.getProperty("java.io.tmpdir"));
 SecondaryLoop loop = Toolkit.getDefaultToolkit().getSystemEventQueue().createSecondaryLoop();
@@ -103,7 +103,7 @@ public void updateTable(WatchEvent.Kind<?> kind, Path child) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`SecondaryLoop`で作成した`EDT`とは別のスレッドで`WatchService`を起動し、`System.getProperty("java.io.tmpdir")`で取得した一時ディレクトリの変更を監視しています。
 
 - `createTempFile`ボタンで一時ファイルを作成した場合:
@@ -119,9 +119,9 @@ public void updateTable(WatchEvent.Kind<?> kind, Path child) {
 -- `HierarchyListener`でパネルの破棄を検出したら`WatchService`を使用しているスレッドに`interrupt()`メソッドで割り込み`InterruptedException`を発生させる
 -- `InterruptedException`をキャッチしたら`WatchService`の監視ループを抜けて`SecondaryLoop#exit()`メソッドを実行してセカンダリループも抜ける
 
-* 参考リンク [#reference]
+* Reference [#reference]
 [https://docs.oracle.com/javase/tutorial/essential/io/notification.html Watching a Directory for Changes (The Java™ Tutorials > Essential Classes > Basic I/O)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

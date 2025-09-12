@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2022/02/create-new-jframe-when-jtabbedpane-tab.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブをドラッグしてフレーム外にドロップされたら新規`JFrame`とそのタブを配置した`JTabbedPane`を作成します。
 
 #download(https://drive.google.com/uc?id=1q7P74R90Zr4SF7HSk3SnhVhHaj5tap4P)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TabDragSourceListener implements DragSourceListener {
   @Override public void dragEnter(DragSourceDragEvent e) {
@@ -68,7 +68,7 @@ class TabDragSourceListener implements DragSourceListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `DragSourceListener#dragDropEnd(DragSourceDropEvent e)`をオーバーライドしてタブのドロップが終了したとき、その位置が`JTabbedPane`の親`JFrame`の範囲外の場合新規に`JFrame`と`JTabbedPane`を作成しタブの中身を移動する
 - KBD{ESC}キーやマウスの右クリックによるドロップのキャンセルに対応するため、`MimeType`が`DataFlavor.javaJVMLocalObjectMimeType`の`DataFlavor`だけではなくファイルリスト対応の`DataFlavor.javaFileListFlavor`もドロップ可能に設定し、親`JFrame`にタブがドロップされたら空ファイルリストをコピー(空なので実際は何もコピーしない)してドロップが成功したと見せかけている
 -- 空ファイルリストをコピーでドロップが成功したら新規`JFrame`を作成してタブをコピーし、ドラッグ元からタブを削除
@@ -76,9 +76,11 @@ class TabDragSourceListener implements DragSourceListener {
 - タブのドロップ先のアプリケーションが空ファイルのドロップに対応している場合、そのアプリケーションが新規`JFrame`より手前に表示されることがある
 - ファイルのドロップが不可のアプリケーション上では新規`JFrame`を作成できない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブをドラッグ＆ドロップ>Swing/DnDTabbedPane]]
+- [[JTabbedPaneのタブのドラッグアウトで新規JFrameの作成と空JFrameの破棄を実行する>Swing/DockAndUndockTabs]]
+-- `Java 6`で導入された`TransferHandler`を使用してタブドラッグアウトで新規`JFrame`を作成サンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

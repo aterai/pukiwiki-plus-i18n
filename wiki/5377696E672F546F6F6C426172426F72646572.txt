@@ -8,12 +8,12 @@ pubdate: 2021-05-17T01:12:41+09:00
 description: JToolBarが移動可能な場合にBorderとして表示されるドラッグアイコンを変更します。
 image: https://drive.google.com/uc?id=1o41A_5z8emvRi_r9364CLZDTcnC3I0ia
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolBar`が移動可能な場合に`Border`として表示されるドラッグアイコンを変更します。
 
 #download(https://drive.google.com/uc?id=1o41A_5z8emvRi_r9364CLZDTcnC3I0ia)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ToolBarDragBorder extends MetalBorders.ToolBarBorder {
   private static final Icon DRAG_ICON = new ToolBarDragIcon();
@@ -58,7 +58,7 @@ class ToolBarDragIcon implements Icon {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 下:
 -- デフォルト
 -- ツールバーのドラッグ用アイコンは`LookAndFeel`依存
@@ -70,9 +70,9 @@ class ToolBarDragIcon implements Icon {
 -- `JToolBar#getComponentOrientation()#isLeftToRight() == false`の場合に未対応
 -- ツールバーの方向が垂直の場合は元の`MetalLookAndFeel`の`ToolBarBorder`を使用
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/metal/MetalBorders.ToolBarBorder.html MetalBorders.ToolBarBorder (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

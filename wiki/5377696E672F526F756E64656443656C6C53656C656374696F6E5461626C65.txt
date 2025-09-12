@@ -1,0 +1,127 @@
+---
+category: swing
+folder: RoundedCellSelectionTable
+title: JTableのセル選択背景描画をラウンド矩形に変更する
+tags: [JTable, Area, Path2D, NimbusLookAndFeel]
+author: aterai
+pubdate: 2024-08-12T08:24:22+09:00
+description: JTableのセルを選択可能に設定し、その選択背景描画をラウンド矩形に変更します。
+image: https://drive.google.com/uc?id=1XLJRNOyKt8rDQ-7OLIx2HSPFx-h0SabF
+---
+* Summary [#summary]
+`JTable`のセルを選択可能に設定し、その選択背景描画をラウンド矩形に変更します。
+
+#download(https://drive.google.com/uc?id=1XLJRNOyKt8rDQ-7OLIx2HSPFx-h0SabF)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class RoundedCellSelectionTable extends JTable {
+  protected RoundedCellSelectionTable(TableModel model) {
+    super(model);
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    setOpaque(false);
+    setFocusable(false);
+    setCellSelectionEnabled(true);
+    setShowGrid(false);
+    setIntercellSpacing(new Dimension());
+    setAutoCreateRowSorter(true);
+    setBackground(new Color(0x0, true));
+    setRowHeight(20);
+    if (getUI() instanceof SynthTableUI) {
+      setDefaultRenderer(
+          Boolean.class, new SynthBooleanTableCellRenderer2());
+    }
+  }
+
+  @Override public Component prepareRenderer(
+        TableCellRenderer renderer, int row, int column) {
+    Component c = super.prepareRenderer(renderer, row, column);
+    if (c instanceof JComponent) {
+      ((JComponent) c).setOpaque(false);
+    }
+    return c;
+  }
+
+  @Override public Component prepareEditor(
+        TableCellEditor editor, int row, int column) {
+    Component c = super.prepareEditor(editor, row, column);
+    if (c instanceof JComponent) {
+      ((JComponent) c).setOpaque(false);
+    }
+    return c;
+  }
+
+  @Override public void changeSelection(
+        int rowIndex, int columnIndex,
+        boolean toggle, boolean extend) {
+    super.changeSelection(rowIndex, columnIndex, toggle, extend);
+    repaint();
+  }
+
+  @Override protected void paintComponent(Graphics g) {
+    if (getSelectedColumnCount() != 0 && getSelectedRowCount() != 0) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(
+          RenderingHints.KEY_ANTIALIASING,
+          RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setPaint(getSelectionBackground());
+      Area area = new Area();
+      for (int row : getSelectedRows()) {
+        for (int col : getSelectedColumns()) {
+          addArea(area, row, col);
+        }
+      }
+      // Arrays.stream(getSelectedRows())
+      //     .boxed()
+      //     .flatMap(row -> Arrays.stream(getSelectedColumns())
+      //         .filter(col -> isCellSelected(row, col))
+      //         .mapToObj(col -> getCellRect(row, col, true))
+      //         .map(Area::new))
+      //     .forEach(area::add);
+      // if (!area.isEmpty()) {
+      int arc = 8;
+      for (Area a : GeomUtils.singularization(area)) {
+        // List<Point2D> lst = GeomUtils.convertAreaToListOfPoint2D(a);
+        // g2.fill(GeomUtils.convertRoundedPath(lst, arc / 2d));
+        Rectangle r = a.getBounds();
+        g2.fillRoundRect(r.x, r.y, r.width - 1, r.height - 1, arc, arc);
+      }
+      g2.dispose();
+    }
+    super.paintComponent(g);
+  }
+
+  private void addArea(Area area, int row, int col) {
+    if (isCellSelected(row, col)) {
+      area.add(new Area(getCellRect(row, col, true)));
+    }
+  }
+}
+}}
+
+* Description [#description]
+- `JTable#setCellSelectionEnabled(true)`で列選択ではなくセル選択を可能に設定
+- `JTable#setShowGrid(false)`、`JTable#setIntercellSpacing(new Dimension())`でグリッド線を非表示化
+- セルレンダラー、セルエディタを透明化してこれらを使用した選択背景の描画を無効化
+-- `JTable#prepareRenderer(...)`、`JTable#prepareEditor(...)`をオーバーライドしてすべてのセルレンダラー、セルエディタが使用される直前に`JComponent#setOpaque(false)`を実行して透明化
+-- `NimbusLookAndFeel`などで使用される`SynthBooleanTableCellRenderer`は`JCheckBox#isOpaque()`をオーバーライドして選択行の場合は常に`true`を返すため、`JTable#prepareRenderer(...)`で`JComponent#setOpaque(false)`を実行しても透明化(セル選択描画の無効化)が無視されてしまう
+-- このサンプルでは`SynthBooleanTableCellRenderer#isOpaque()`をオーバーライドしないセルレンダラーをコピーして`NimbusLookAndFeel`の`BooleanTableCellRenderer`として使用することで回避
+- `JTable#paintComponent(...)`をオーバーライドして選択背景をラウンド矩形として描画
+-- 以下、[[JTreeの選択領域描画をラウンド矩形に変更する>Swing/RoundedSelectionTree]]と同等の処理を実行してセル選択背景をラウンド矩形化している
+-- `JTable#isCellSelected(...)`で選択されたセルをすべて取得、`JTable#getCellRect(...)`で選択領域に変換し、`Area#add(new Area(Rectangle))`でひとつの`Area`にまとめる
+-- まとめられた`Area`にはセル選択状態によって複数セグメントが存在する場合があるため、これを単一の閉じられたサブパスから構成されている`Area`(`Area#isSingular()==true`となる)ごとに分割
+-- 分割した各`Area`が`Area#getBounds()`で取得した矩形領域の`4`隅を丸めて選択背景として描画
+- たとえば連続する上中下の`3`セルが選択された状態から中セルをKBD{Ctrl+クリック}で選択解除した場合、上セルの下隅、下セルの上隅が丸められるが上セル、下セルの選択状態は変化しないのでこれらの再描画が実行されない
+-- このサンプルでは`JTable#changeSelection(...)`をオーバーライドして選択状態が変化したら`JTable`全体を再描画することで丸めの更新を再描画している
+
+* Reference [#reference]
+- [[JTreeの選択領域描画をラウンド矩形に変更する>Swing/RoundedSelectionTree]]
+- [[JTableの行選択背景描画をラウンド矩形に変更する>Swing/RoundedCornerTableRowSelection]]
+- [[JTableのセル選択を半透明化して上書き>Swing/TranslucentTableCellSelection]]
+
+* Comment [#comment]
+#comment
+#comment

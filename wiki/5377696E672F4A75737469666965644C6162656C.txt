@@ -8,12 +8,12 @@ pubdate: 2008-03-31T00:41:18+09:00
 description: JLabelで、左右中央両端などの文字揃えをテストします。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTOwQzSk-I/AAAAAAAAAc4/bD-z_hTSHB8/s800/JustifiedLabel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLabel`で、左右中央両端などの文字揃えをテストします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTOwQzSk-I/AAAAAAAAAc4/bD-z_hTSHB8/s800/JustifiedLabel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JLabel l0 = new JLabel("打率");
 JLabel l1 = new JLabel("打率", SwingConstants.RIGHT);
@@ -83,7 +83,7 @@ class JustifiedLabel extends JLabel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JLabel`の文字揃えは左揃え(デフォルトは`SwingConstants.LEADING`, `ComponentOrientation.LEFT_TO_RIGHT`で`SwingConstants.LEFT`)、右揃え(`SwingConstants.TRAILING`, `ComponentOrientation.LEFT_TO_RIGHT`で`SwingConstants.RIGHT`)、中央揃え(`SwingConstants.CENTER`)が設定可能
 - `JLabel`の文字揃えに両端揃え(文字の均等割り付け)は存在しないので、上記のサンプルでは`JustifiedLabel`を独自に作成
 -- 幅が足りない場合は通常の`JLabel`と同様に`...`で省略
@@ -195,10 +195,10 @@ class JustifiedLabel extends JLabel {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのセル内文字列を両端揃えにする>Swing/InterIdeographJustify]]
 -- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/TextLayout.html#getJustifiedLayout-float- TextLayoutTextLayout#getJustifiedLayout(float) (Java Platform SE 8)]メソッドを使用して`JTable`のセルで両端揃えを行うサンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

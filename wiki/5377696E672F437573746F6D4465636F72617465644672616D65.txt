@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2010/05/custom-decorated-titlebar-jframe.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFrame`のタイトルバーなどを非表示にして独自に描画し、これに移動リサイズなどの機能も追加します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKV1P7mYI/AAAAAAAAAV0/u4qjd-ItBYU/s800/CustomDecoratedFrame.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ResizeWindowListener extends MouseAdapter {
   private Rectangle startSide = null;
@@ -64,7 +64,7 @@ class ResizeWindowListener extends MouseAdapter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは`JFrame`の元のタイトルバーを`setUndecorated(true)`で非表示にし、マウスドラッグで移動可能にした`JPanel`を追加してタイトルバーの代わりにしています。
 
 - マウスドラッグでのフレームのリサイズは[https://community.oracle.com/thread/1365156 Swing - Undecorated and resizable dialog]や`BasicInternalFrameUI.java`、`MetalRootPaneUI#MouseInputHandler`などを参考にして、周辺にそれぞれ対応するリサイズカーソルを設定した`JLabel`を配置して実行
@@ -205,13 +205,13 @@ class CloseIcon implements Icon {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1365156 Swing - Undecorated and resizable dialog]
 - [[JWindowをマウスで移動>Swing/DragWindow]]
 - [[JInternalFrameをJFrameとして表示する>Swing/InternalFrameTitleBar]]
 - [[JRootPaneにリサイズのための装飾を設定する>Swing/WindowDecorationStyle]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `blogger`の方にコメントをもらって、調査、修正中だけど、`dual-monitor`環境が無いのでテストしづらい…。 -- &user(aterai); &new{2010-10-06 (水) 13:01:36};
 - [https://java-swing-tips.blogspot.com/2010/05/custom-decorated-titlebar-jframe.html blogspot]で指摘されていた件について: このサンプルを`1.6.0_xx`+`WebStart`で実行すると、画面外へのフレームのドラッグは不可でしたが、`Java 1.7.0`では`WebStart`で起動しても画面外に移動可能になっているようです。もしかしてデュアルディスプレイでも移動できるようになっているのかも？(未確認...) -- &user(aterai); &new{2011-09-06 (火) 21:27:18};

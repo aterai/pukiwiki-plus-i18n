@@ -8,19 +8,19 @@ pubdate: 2013-07-15T00:07:35+09:00
 description: JProgressBarの不確定進捗状態アニメーションで使用するサイクル時間などを設定します。
 image: https://lh3.googleusercontent.com/--xwJeUKsm8k/UeK6iFE0vkI/AAAAAAAABvw/SNNt1mvM4_c/s800/IndeterminateCycleTime.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JProgressBar`の不確定進捗状態アニメーションで使用するサイクル時間などを設定します。
 
 #download(https://lh3.googleusercontent.com/--xwJeUKsm8k/UeK6iFE0vkI/AAAAAAAABvw/SNNt1mvM4_c/s800/IndeterminateCycleTime.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("ProgressBar.repaintInterval", (Integer) repaintIntervalSpinner.getValue());
 UIManager.put("ProgressBar.cycleTime", (Integer) cycleTimeSpinner.getValue());
 progressBar.setIndeterminate(true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`UIManager`を使って`JProgressBar`の不確定進捗のアニメーションで使用するサイクル時間と再ペイント間隔をミリ秒で指定しています。
 
 `WindowsLookAndFeel`などの場合、`JProgressBar#setIndeterminate(true)`が実行されるタイミングでこれらの値は更新されます。
@@ -31,10 +31,10 @@ progressBar.setIndeterminate(true);
 - 再ペイント間隔: `ProgressBar.repaintInterval`
 -- `UIManager.put("ProgressBar.repaintInterval", 10)`
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/swing/1.4/pb.html 不確定進捗バーのサポート]
 -- via: [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/swing/1.4/SwingChanges.html Java™ 2 SDK, Standard Edition, v 1.4 での Swing の変更点および新機能]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

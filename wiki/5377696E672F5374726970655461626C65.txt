@@ -8,19 +8,20 @@ pubdate: 2004-01-19
 description: TableCellRendererを継承するレンダラーを作ってテーブルのセルを修飾します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTT1bwXoBI/AAAAAAAAAlE/jmpoFwDpvqs/s800/StripeTable.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TableCellRenderer`を継承するレンダラーを作ってテーブルのセルを修飾します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTT1bwXoBI/AAAAAAAAAlE/jmpoFwDpvqs/s800/StripeTable.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class StripeTableRenderer extends DefaultTableCellRenderer {
   private static final Color evenColor = new Color(240, 240, 255);
-  @Override public Component getTableCellRendererComponent(JTable table, Object value,
-                           boolean isSelected, boolean hasFocus,
-                           int row, int column) {
-    super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+  @Override public Component getTableCellRendererComponent(
+      JTable table, Object value, boolean isSelected,
+      boolean hasFocus, int row, int column) {
+    super.getTableCellRendererComponent(
+        table, value, isSelected, hasFocus, row, column);
     if (isSelected) {
       setForeground(table.getSelectionForeground());
       setBackground(table.getSelectionBackground());
@@ -34,7 +35,7 @@ class StripeTableRenderer extends DefaultTableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下のようなセルレンダラーを作成し、`Object`を継承するクラスのデフォルトレンダラーとして設定しています。
 
 - 奇数偶数で行の背景色を変更してテーブルをストライプ模様にする
@@ -59,7 +60,8 @@ table.setDefaultRenderer(Object.class, new StripeTableRenderer());
 #code{{
 JTable table = new JTable(model) {
   private final Color evenColor = new Color(240, 240, 255);
-  @Override public Component prepareRenderer(TableCellRenderer tcr, int row, int column) {
+  @Override public Component prepareRenderer(
+      TableCellRenderer tcr, int row, int column) {
     Component c = super.prepareRenderer(tcr, row, column);
     if (isRowSelected(row)) {
       c.setForeground(getSelectionForeground());
@@ -112,11 +114,12 @@ public class TableAlternateRowColorTest {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#sorting Sorting and Otherwise Manipulating Data - How to Use Tables (The Java™ Tutorials > Creating a GUI with JFC/Swing > Using Swing Components)]
 - [https://www.ibm.com/developerworks/jp/java/library/j-jtable/ SwingのJTableコンポーネントでセルを描く]
+- [[JTreeのセル背景を縞模様で描画する>Swing/AlternateRowColorTree]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JTable#prepareRenderer`メソッドを使用する場合のサンプルを修正。 -- &user(aterai); &new{2007-04-04 (水) 19:41:37};
 - メモ: [http://d.hatena.ne.jp/KrdLab/20071209/1197143960 JTable でセルのないところに行っぽい表示を出せますか？ - KrdLabの不定期日記]。これおもしろいです。 -- &user(aterai); &new{2007-12-10 (月) 17:25:47};

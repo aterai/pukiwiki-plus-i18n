@@ -8,12 +8,12 @@ pubdate: 2021-08-23T17:03:25+09:00
 description: JTabbedPaneのタブコンポーネントにアイコンを設定したJLabelを使用し、タブが選択された場合そのタイトルを追加表示します。
 image: https://drive.google.com/uc?id=1MAHuPmHWUIKaBLKIKd89puMQ8Qt3fDjd
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブコンポーネントにアイコンを設定した`JLabel`を使用し、タブが選択された場合そのタイトルを追加表示します。
 
 #download(https://drive.google.com/uc?id=1MAHuPmHWUIKaBLKIKd89puMQ8Qt3fDjd)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 tabs.addChangeListener(e -> {
   JTabbedPane tabbedPane = (JTabbedPane) e.getSource();
@@ -53,18 +53,18 @@ private static void addTab(JTabbedPane tabbedPane, TabTitle tt, Component c) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - [[JTabbedPaneで選択されているタブの幅のみ拡張する>Swing/ExpandActiveTabWidth]]と同様に、`JTabbedPane`に`ChangeListener`を追加してタブ選択が変更されたらタブコンポーネントを更新しているが、このサンプルでは推奨サイズを変更してタブタイトルを非表示にするのではなく`JLabel#setText(null)`でタブタイトルを非表示にしている
 -- `JTabbedPane`の各タブには表示に使用するタブコンポーネントとは別にタブタイトルが保存可能なので、タブ選択時にタブタイトルを復元する場合はこれを`JTabbedPane#getTitleAt(index)`で取得してタブコンポーネントの`JLabel`に`setText(title)`で適用している
 - タブコンポーネントとして使用する`JLabel`は`label.setVerticalTextPosition(SwingConstants.BOTTOM)`、`label.setHorizontalTextPosition(SwingConstants.CENTER)`でアイコンの下にタイトルを表示するためタイトルの表示・非表示でその高さが変化するが、タブ自体の高さは選択で変更せずにアイコンの高さ、タイトル文字列の高さ、`JLabel#getIconTextGap()`の合計を固定値として使用
 - 起動時に先頭タブを選択状態にしてタブタイトルも表示するため、一旦`JTabbedPane.setSelectedIndex(-1)`でタブ選択を解除してから`EventQueue.invokeLater( () -> tabbedPane.setSelectedIndex(0) )`であとから選択し直している
 -- `JTabbedPane.setSelectedIndex(0)`だけ実行してもすでに先頭の`0`番目タグが選択状態なので`ChangeListener`のイベントが発生しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブアイコンとタイトルの位置>Swing/TabTitleTextPosition]]
 -- タブアイコンとタイトルの位置調整やタブ幅の拡張はこちらのサンプルと同じ`JTabbedPane`を使用
 - [[JTabbedPaneで選択されているタブの幅のみ拡張する>Swing/ExpandActiveTabWidth]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

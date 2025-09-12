@@ -8,17 +8,17 @@ pubdate: 2017-11-20T15:20:31+09:00
 description: JPopupMenuを閉じるイベントが別コンポーネントをクリックすることで発生したとき、コンポーネントのクリックイベントを実行するかどうかを切り替えます。
 image: https://drive.google.com/uc?id=1hqQoBKoHLGEqyn7rHxhKsyo-HBHiKTwAEQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPopupMenu`を閉じるイベントが別コンポーネントをクリックすることで発生したとき、コンポーネントのクリックイベントを実行するかどうかを切り替えます。
 
 #download(https://drive.google.com/uc?id=1hqQoBKoHLGEqyn7rHxhKsyo-HBHiKTwAEQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("PopupMenu.consumeEventOnClose", false);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `PopupMenu.consumeEventOnClose`: `true`
 -- `JPopupMenu`を閉じるイベントが別コンポーネントをクリックすることで発生したとき、コンポーネントのクリックイベントを実行しない
 -- `WindowsLookAndFeel`や`NimbusLookAndFeel`のデフォルト
@@ -37,11 +37,11 @@ UIManager.put("PopupMenu.consumeEventOnClose", false);
 --- `JPopupMenu`を開いた状態で`JComboBox`のコンボエディタをクリックしても`JPopupMenu`は表示状態を維持する
 --- `JToolBar`を分離し別ウィンドウで`JPopupMenu`開いた状態の場合、`JComboBox`のコンボエディタをクリックするとフォーカスが移動して`JPopupMenu`は非表示になる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/34679216/changing-nimbus-jpopupmenu-behaviour java - Changing nimbus JPopupmenu behaviour - Stack Overflow]
 - [https://bugs.openjdk.org/browse/JDK-6770445 JDK-6770445 Unable to transfer focus with single click when the combobox popup is visible - Java Bug System]
 - [[JToggleButtonからポップアップメニューを開く>Swing/ToolButtonPopup]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2017-02-06T14:11:50+09:00
 description: Containerの子Componentを再帰的にすべて取得するメソッドを作成し、JFileChooserに配置されたJTableを取得します。
 image: https://drive.google.com/uc?id=1NedWhPhVuMDTwrHRaFdW-YXZjdH-019yuw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Container`の子`Component`を再帰的にすべて取得するメソッドを作成し、`JFileChooser`に配置された`JTable`を取得します。
 
 #download(https://drive.google.com/uc?id=1NedWhPhVuMDTwrHRaFdW-YXZjdH-019yuw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public static Stream<Component> descendants(Container parent) {
   return Stream.of(parent.getComponents())
@@ -29,7 +29,7 @@ descendants(fileChooser)
   .ifPresent(t -> t.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Stream#flatMap(...)`を使用してすべての子コンポーネントを検索しそのストリームを取得する
 -- 上記の関数で`JFileChooser`のすべての子コンポーネントのストリームを取得し、さらに`JFileChooser`の詳細表示に使用されている`JTable`を絞り込む
 -- 詳細表示用`JTable`を発見したらその自動サイズ変更モードを`JTable#setAutoResizeMode(...)`で変更
@@ -61,11 +61,11 @@ public static boolean searchAndResizeMode(Container parent) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFileChooserのデフォルトをDetails Viewに設定>Swing/DetailsViewFileChooser]]
 - [[JFileChooserでの隠しファイルの非表示設定を変更する>Swing/FileHidingEnabled]]
 - [http://www.java2s.com/Code/Java/Swing-JFC/GetAllComponentsinacontainer.htm Get All Components in a container : Container « Swing JFC « Java]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

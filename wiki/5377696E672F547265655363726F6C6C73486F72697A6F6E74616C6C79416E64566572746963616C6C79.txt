@@ -8,12 +8,12 @@ pubdate: 2021-10-11T01:53:00+09:00
 description: JTreeのノードがキー入力で選択されたとき、そのノードまで垂直方向だけでなく水平方向にもスクロールするよう設定します。
 image: https://drive.google.com/uc?id=13R7Ag56ENIHuBxOJI8210gput9I5HmJr
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードがキー入力で選択されたとき、そのノードまで垂直方向だけでなく水平方向にもスクロールするよう設定します。
 
 #download(https://drive.google.com/uc?id=13R7Ag56ENIHuBxOJI8210gput9I5HmJr)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTree tree1 = new JTree(makeTreeRoot());
 expandAll(tree1);
@@ -39,7 +39,7 @@ add(makeTitledPanel("Default", new JScrollPane(tree1)));
 add(makeTitledPanel("TreeSelectionListener", new JScrollPane(tree2)));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `JTree`のノードサイズが大きく垂直・水平スクロールバーが表示されている状態でカーソルキーやマウスクリックでノードを選択しても水平方向にはスクロールしない
 - `Tree.scrollsHorizontallyAndVertically`
@@ -51,9 +51,9 @@ add(makeTitledPanel("TreeSelectionListener", new JScrollPane(tree2)));
 - `TreeSelectionListener`
 -- `TreeSelectionListener`を追加して`JTree.scrollPathToVisible(TreeSelection#getNewLeadSelectionPath())`を実行し、マウスやキー入力によるノード選択で垂直・水平ともにスクロールするよう設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollPane内にあるJTableなどで追加した行が可視化されるようにスクロールする>Swing/ScrollRectToVisible]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

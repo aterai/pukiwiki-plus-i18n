@@ -8,12 +8,12 @@ pubdate: 2010-03-08T15:39:14+09:00
 description: JSpinnerからJFormattedTextFieldを取得し、これに無効な値の入力を許可しないように設定します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTQg6Td8tI/AAAAAAAAAfs/u5mXLfk3k64/s800/NumberFormatter.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`から`JFormattedTextField`を取得し、これに無効な値の入力を許可しないように設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTQg6Td8tI/AAAAAAAAAfs/u5mXLfk3k64/s800/NumberFormatter.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSpinner spinner = new JSpinner(makeSpinnerNumberModel());
 JSpinner.DefaultEditor editor =
@@ -25,7 +25,7 @@ if (formatter instanceof DefaultFormatter) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`DefaultFormatter#setAllowsInvalid(false)`などを設定した`DefaultFormatterFactory`を作成して、`JSpinner`から取得した`JFormattedTextField`に`setFormatterFactory(...)`メソッドで追加しています。
 
 - 上
@@ -121,12 +121,12 @@ private static SpinnerNumberModel makeSpinnerNumberModel() {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextFieldの入力を数値に制限する>Swing/NumericTextField]]
 - [[SpinnerNumberModelに上限値を超える値を入力>Swing/SpinnerNumberModel]]
 - [https://bugs.openjdk.org/browse/JDK-6423494 Bug ID: 6423494 SpinnerNumberModel should use getMinimum and getMaximum instead of fields]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 無効な値が入力されたときの背景色の変更を`DocumentListener`で行うように修正。 -- &user(aterai); &new{2011-09-27 (火) 21:52:05};
 

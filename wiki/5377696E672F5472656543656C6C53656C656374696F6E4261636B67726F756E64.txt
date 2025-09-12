@@ -8,12 +8,12 @@ pubdate: 2015-12-07T02:44:17+09:00
 description: JTreeのセル選択色で塗りつぶす範囲をNimbusLookAndFeelのデフォルトになっている行全体ではなくノードのみになるように設定します。
 image: https://lh3.googleusercontent.com/-iMbDreRXOYI/VmRwiLsVZmI/AAAAAAAAOIg/tfanc-vemfo/s800-Ic42/TreeCellSelectionBackground.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のセル選択色で塗りつぶす範囲を`NimbusLookAndFeel`のデフォルトになっている行全体ではなくノードのみになるように設定します。
 
 #download(https://lh3.googleusercontent.com/-iMbDreRXOYI/VmRwiLsVZmI/AAAAAAAAOIg/tfanc-vemfo/s800-Ic42/TreeCellSelectionBackground.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIDefaults def = new UIDefaults();
 JTree tree = new JTree();
@@ -39,7 +39,7 @@ tree.setCellRenderer(new DefaultTreeCellRenderer() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`NimbusLookAndFeel`がデフォルトで使用するセルレンダラーなどを空にした`UIDefaults`を`JTree`に設定し、選択時にノードのみ背景色で塗りつぶしを行うセルレンダラーを`JTree#setCellRenderer(...)`で設定して使用しています。
 
 - 親ノードの左に表示される三角のアイコン(`collapsedIcon`、`expandedIcon`)が選択されている場合の色を変更する方法がない？
@@ -70,11 +70,11 @@ def.put("Tree[Enabled+Selected].collapsedIconPainter", null);
 def.put("Tree[Enabled+Selected].expandedIconPainter", null);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/33939381/jtree-nimbus-selectionbackground-not-working-on-java-1-8 swing - JTree Nimbus Selectionbackground not Working on Java 1.8 - Stack Overflow]
 - [[JTreeを行クリックで選択し、行全体を選択状態の背景色で描画>Swing/TreeRowSelection]]
 -- `MetalLookAndFeel`などでノードだけではなく行全体の選択を行うサンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

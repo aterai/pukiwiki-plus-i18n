@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2008/11/create-jtabbedpane-like-component-using.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `CardLayout`と`JRadioButton`や`JTableHeader`を組み合わせて`JTabbedPane`風のコンポーネントを作成します。
 
 #download(https://lh3.googleusercontent.com/-i_zX5mZNCL0/VZBOp7c2kwI/AAAAAAAAN74/yEHMZL9l8xs/s800/CardLayoutTabbedPane.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CardLayoutTabbedPane extends JPanel {
   protected final CardLayout cardLayout = new CardLayout();
@@ -53,18 +53,18 @@ class CardLayoutTabbedPane extends JPanel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `CardLayout`と`JRadioButton`を使用して`JTabbedPane`風のコンポーネントを作成
 -- `CardLayout`でパネルを切り替えるためのタブとして`UI`を変更してチェックアイコンを非表示にした`JRadioButton`を使用
 -- これらのタブを配置するタブエリア(`JPanel`)のレイアウトマネージャーに`GridLayout`を適用して、すべてのタブサイズが均等になるように設定
 -- `CardLayout`+`JTableHeader`を使用したサンプルは[[JTableHeaderで作成したタブエリアでCardLayoutのコンテナを切り替える>Swing/TableHeaderTabArea]]に移動
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブをドラッグ＆ドロップ>Swing/DnDTabbedPane]]
 - [[TabbedPane風のタブ配置をレイアウトマネージャーで変更>Swing/NewTabButton]]
 - [[JTableHeaderで作成したタブエリアでCardLayoutのコンテナを切り替える>Swing/TableHeaderTabArea]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - タブに`CloseButton`を追加。 -- &user(aterai); &new{2008-10-29 (水) 18:14:02};
 

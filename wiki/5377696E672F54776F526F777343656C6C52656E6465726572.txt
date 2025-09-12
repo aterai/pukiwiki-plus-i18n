@@ -8,12 +8,12 @@ pubdate: 2010-12-20T15:44:39+09:00
 description: JTableのセル内に文字列を二行分だけ表示し、あふれる場合は...で省略します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQ77KlEsZJI/AAAAAAAAAuE/mc9fcp-ZmBU/s800/TwoRowsCellRenderer.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセル内に文字列を二行分だけ表示し、あふれる場合は`...`で省略します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQ77KlEsZJI/AAAAAAAAAuE/mc9fcp-ZmBU/s800/TwoRowsCellRenderer.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(model);
 table.setAutoCreateRowSorter(true);
@@ -64,7 +64,7 @@ class TwoRowsCellRenderer extends JPanel implements TableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JLabel`を上下に配置した`JPanel`を使って、`TableCellRenderer`を作成しています。`...`での省略は、セル内`2`行目で使用している`JLabel`のデフォルト動作です。
 
 - 補助文字(サロゲートペアなど)を含む文字列を扱う場合は、`String#charAt(int)`ではなく`String#codePointAt(int)`や`Character.charCount(codePoint)`などを使用する必要がある
@@ -83,11 +83,11 @@ while (i < text.length()) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JLabelの文字列を折り返し>Swing/GlyphVector]]
 - [https://www.ibm.com/developerworks/jp/ysl/library/java/j-unicode_surrogate/index.html Java による Unicode サロゲートプログラミング]
 - [https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp -webkit-line-clamp - CSS: Cascading Style Sheets | MDN]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

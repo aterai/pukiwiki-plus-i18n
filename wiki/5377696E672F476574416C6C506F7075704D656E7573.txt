@@ -8,12 +8,12 @@ pubdate: 2017-01-30T15:17:50+09:00
 description: MenuSelectionManagerですべてのJPopupMenuを取得し、任意のタイミングでそれらを非表示に切り替えます。
 image: https://drive.google.com/uc?id=18mKH-3iW9D0-aw0doM7C-6-hFWoe-JMa7w
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `MenuSelectionManager`ですべての`JPopupMenu`を取得し、任意のタイミングでそれらを非表示に切り替えます。
 
 #download(https://drive.google.com/uc?id=18mKH-3iW9D0-aw0doM7C-6-hFWoe-JMa7w)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 tabs.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
     KeyStroke.getKeyStroke(KeyEvent.VK_4, KeyEvent.CTRL_MASK), "next2");
@@ -29,7 +29,7 @@ tabs.getActionMap().put("next2", new AbstractAction() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - KBD{Ctrl+1}: `prev1`
 -- `JTable`に設定した`JPopupMenu`を開いた状態で`JTabbedPane`に設定したキー入力(`JComponent.WHEN_IN_FOCUSED_WINDOW`)によるタブ切替アクションを実行すると`JPopupMenu`が開いたまま前のタブの選択が実行される
 -- `requestFocusInWindow()`などでフォーカスを`JTable`以外に移動しても`JPopupMenu`は閉じない
@@ -54,9 +54,9 @@ for (Component c: lp.getComponentsInLayer(JLayeredPane.POPUP_LAYER)) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/41867173/jpopupmenu-not-closing-on-keyevent java - JPopupMenu not closing on keyevent - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

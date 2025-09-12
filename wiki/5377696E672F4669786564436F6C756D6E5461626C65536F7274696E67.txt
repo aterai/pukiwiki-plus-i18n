@@ -8,12 +8,12 @@ pubdate: 2008-11-10T14:26:25+09:00
 description: 列固定したJTableで、JDK 6で導入されたTableRowSorterを使った行ソートを行います。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMzes1hqI/AAAAAAAAAZw/-m-PZSFzYAk/s800/FixedColumnTableSorting.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 列固定した`JTable`で、`JDK 6`で導入された`TableRowSorter`を使った行ソートを行います。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMzes1hqI/AAAAAAAAAZw/-m-PZSFzYAk/s800/FixedColumnTableSorting.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 fixedTable = new JTable(model);
 table = new JTable(model);
@@ -61,7 +61,7 @@ scroll.getRowHeader().addChangeListener(new ChangeListener() {
 add(scroll);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左の列固定された表(`fixedTable`)と右の表(`table`)に同じ`RowSorter`を設定することで、列固定表でもソート可能に設定
 - ソート中に行の追加を行うと例外が発生する
 -- 上記のサンプルでは以下のように追加前に`sorter.setSortKeys(null)`で`SortKeys`をクリアして回避
@@ -97,12 +97,12 @@ scroll.getRowHeader().addChangeListener(new ChangeListener() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://www.google.com/search?q=FixedColumnExample.java FixedColumnExample.java]
 - [https://tips4java.wordpress.com/2008/11/05/fixed-column-table/ Fixed Column Table ≪ Java Tips Weblog]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setUpdateSelectionOnSort-boolean- JTable#setUpdateSelectionOnSort(boolean) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - KBD{Tab}キーによるフォーカスの移動は…、まぁいいかな。 -- &user(aterai); &new{2008-11-10 (月) 14:26:25};
 - 固定列は、数字でソートするように変更。 -- &user(aterai); &new{2008-11-10 (月) 15:27:19};

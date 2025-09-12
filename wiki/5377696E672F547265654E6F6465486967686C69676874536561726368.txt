@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2010/10/jtree-node-highlight-search.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`を検索し、`TreeCellRenderer`を使ってノードをハイライトします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWIqTzfbI/AAAAAAAAAow/n7eIy_ax-zY/s800/TreeNodeHighlightSearch.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class HighlightTreeCellRenderer extends DefaultTreeCellRenderer {
   private static final Color rollOverRowColor = new Color(220, 240, 255);
@@ -50,7 +50,7 @@ class HighlightTreeCellRenderer extends DefaultTreeCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTextField`に入力した文字列に`startsWith(...)`で一致するノードをハイライトしています。
 
 - デフォルトの`TreeCellRenderer`は`isOpaque() == Boolean.FALSE`
@@ -59,7 +59,7 @@ class HighlightTreeCellRenderer extends DefaultTreeCellRenderer {
 - `DefaultTreeCellRenderer#getBackgroundNonSelectionColor()`をオーバーライドすればデフォルト選択領域の選択色を変更可能(ノードアイコンは含まず、ノードテキストのみ)
 -- [[JTreeの選択背景色を変更>Swing/TreeBackgroundSelectionColor]]に移動
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのノードを検索する>Swing/SearchBox]]
 - [[JTreeのノードを展開・折り畳み>Swing/ExpandAllNodes]]
 - [[JTreeのノードをハイライト>Swing/RollOverTree]]
@@ -67,6 +67,6 @@ class HighlightTreeCellRenderer extends DefaultTreeCellRenderer {
 - [[JTreeのノード中の文字列をハイライトする>Swing/HighlightWordInNode]]
 -- ノードではなく一致する文字列だけをハイライトして強調表示する場合のサンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

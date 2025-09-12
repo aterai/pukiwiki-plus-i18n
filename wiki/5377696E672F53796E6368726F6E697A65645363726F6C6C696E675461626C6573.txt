@@ -8,12 +8,12 @@ pubdate: 2012-11-12T02:37:41+09:00
 description: JSplitPaneの左右に、JTableをそれぞれ配置し、スクロールや追加などが同期するようにモデルを共有します。
 image: https://lh4.googleusercontent.com/-mAnvPJlUJSI/UJ_bYI_kJsI/AAAAAAAABWo/a_jdyUqFLwM/s800/SynchronizedScrollingTables.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSplitPane`の左右に、`JTable`をそれぞれ配置し、スクロールや追加などが同期するようにモデルを共有します。
 
 #download(https://lh4.googleusercontent.com/-mAnvPJlUJSI/UJ_bYI_kJsI/AAAAAAAABWo/a_jdyUqFLwM/s800/SynchronizedScrollingTables.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JScrollPane scroll1 = new JScrollPane(leftTable);
 // scroll1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -27,7 +27,7 @@ JScrollPane scroll2 = new JScrollPane(table);
 scroll2.getVerticalScrollBar().setModel(scroll1.getVerticalScrollBar().getModel());
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTable`
 -- `TableModel`を共有し`JTable#removeColumn(...)`メソッドでそれぞれの`JTable`で非表示にする列を指定
 -- 左右の`JTable`で`RowSorter`と`SelectionModel`を共有
@@ -36,7 +36,7 @@ scroll2.getVerticalScrollBar().setModel(scroll1.getVerticalScrollBar().getModel(
 - 制限
 -- 例えば左`JTable`のセルを選択して行選択を開始した場合、右`JTable`上でのドラッグには反応しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableの列固定とソート>Swing/FixedColumnTableSorting]]
 -- `ChangeListener`を使用し`1`つの`JScrollPane`に`JTable`を`2`つ配置
 - [[JScrollPaneのスクロールを同期>Swing/SynchronizedScroll]]
@@ -44,6 +44,6 @@ scroll2.getVerticalScrollBar().setModel(scroll1.getVerticalScrollBar().getModel(
 - [http://argius.hatenablog.jp/entry/20080325/1206454660 2つのJTableを同時にスクロール - argius note]
 -- `AdjustmentListener`が使用されている
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

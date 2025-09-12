@@ -8,12 +8,12 @@ pubdate: 2020-07-20T02:56:59+09:00
 description: JSpinnerの矢印ボタンをクリックした場合の値の増減、または前次の方向を入れ替えます。
 image: https://drive.google.com/uc?id=1j0E3gvCn6ljBBqAu6CjIbunUZwhW2h0s
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`の矢印ボタンをクリックした場合の値の増減、または前次の方向を入れ替えます。
 
 #download(https://drive.google.com/uc?id=1j0E3gvCn6ljBBqAu6CjIbunUZwhW2h0s)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSpinner spinner0 = new JSpinner(new SpinnerNumberModel(5, 0, 10, 1));
 
@@ -37,7 +37,7 @@ JSpinner spinner3 = new JSpinner(new SpinnerListModel(scale) {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `stepSize: 1`
 -- `SpinnerNumberModel`でシーケンスの要素間の差を正の値に設定
 - `stepSize: -1`
@@ -49,11 +49,11 @@ JSpinner spinner3 = new JSpinner(new SpinnerListModel(scale) {
 - `Reverse direction SpinnerListModel`
 -- `SpinnerListModel#getNextValue()`メソッドと`SpinnerListModel#getPreviousValue()`メソッドを入れ替えるようオーバーライドして上矢印ボタンのクリックで次の値、下矢印ボタンで前の値を返すよう変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://www.java2s.com/Code/Java/Swing-JFC/Aprogramtotestspinners.htm A program to test spinners. : Spinner « Swing JFC « Java]
 - [https://stackoverflow.com/questions/61658679/java-jspinner-increase-value-with-down-arrow swing - Java JSpinner increase value with down arrow - Stack Overflow]
 - [[JSliderの順序を反転>Swing/InvertedSlider]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

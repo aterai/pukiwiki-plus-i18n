@@ -8,12 +8,12 @@ pubdate: 2003-10-27
 description: Swingの各種コンポーネントで使用する全てのフォントを一気に変更します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNJ5XQrjI/AAAAAAAAAaU/lvxCohYLmBI/s800/FontChange.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Swing`の各種コンポーネントで使用する全てのフォントを一気に変更します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNJ5XQrjI/AAAAAAAAAaU/lvxCohYLmBI/s800/FontChange.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private void updateFont(final Font font) {
   FontUIResource fontUIResource = new FontUIResource(font);
@@ -43,7 +43,7 @@ private void recursiveUpdateUI(JComponent p) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、ツールバーのボタンでコンポーネントが使用するフォントを切り替えています。ただしツールバーだけは、`UI`の`update`(フォントの変更)を除外しています。
 
 ----
@@ -93,10 +93,10 @@ JLabel label = new JLabel() {
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://java-house.jp/ml/archive/j-h-b/049474.html Re: setFont に関して]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JFileChooser`インスタンス化前に上記ソースを実行すると `ConcurrentModificationException`がスローされるのですが... 「`JDK1.4.2_02`」プロパティーが動的に変化するとしたらあまり有効な方法でないのでは? -- &user(MT); &new{2003-12-24 (水) 14:22:15};
 -割と手軽なので重宝するのですが、ちゃんとスレッド処理考えたほうがいいのかもしれませんね。 -- &user(aterai); &new{2003-12-25 (木) 20:06:15};

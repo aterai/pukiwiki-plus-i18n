@@ -8,12 +8,12 @@ pubdate: 2016-04-11T00:24:26+09:00
 description: JTableのセルに設定した日付をRegexFilterなどでフィルタリングするテストを行います。
 image: https://lh3.googleusercontent.com/-yjS3rTYWgk0/VwprmN868uI/AAAAAAAAOSs/-HBZ7l1VimsTNtZo7FDk0wwasI3G4wirACCo/s800-Ic42/RegexDateFilter.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルに設定した日付を`RegexFilter`などでフィルタリングするテストを行います。
 
 #download(https://lh3.googleusercontent.com/-yjS3rTYWgk0/VwprmN868uI/AAAAAAAAOSs/-HBZ7l1VimsTNtZo7FDk0wwasI3G4wirACCo/s800-Ic42/RegexDateFilter.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 ActionListener al = e -> {
   Object o = e.getSource();
@@ -52,7 +52,7 @@ class RegexDateFilter extends RowFilter<TableModel, Integer> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `null`
 -- フィルタをクリア
 - `RowFilter.regexFilter`
@@ -100,11 +100,11 @@ DefaultTableModel model = new DefaultTableModel(data, new String[] {"Date", "Loc
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.html#regexFilter-java.lang.String-int...- RowFilter#regexFilter(...) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.html#dateFilter-javax.swing.RowFilter.ComparisonType-java.util.Date-int...- RowFilter#dateFilter(...) (Java Platform SE 8)]
 -- `Date`を文字列ではなく、日付として各条件を指定しフィルタリングする場合は、`RowFilter#dateFilter(...)`を使用する
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

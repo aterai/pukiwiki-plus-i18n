@@ -8,12 +8,12 @@ pubdate: 2024-04-01T02:30:20+09:00
 description: JTreeの選択を行全体に拡張し、その隅を丸めてラウンド矩形で描画します。
 image: https://drive.google.com/uc?id=11-4gPgFYz6fegNlPLellh5ZExqAoFeDc
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`の選択を行全体に拡張し、その隅を丸めてラウンド矩形で描画します。
 
 #download(https://drive.google.com/uc?id=11-4gPgFYz6fegNlPLellh5ZExqAoFeDc)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RoundedSelectionTree extends JTree {
   private static final Color SELECTED_COLOR = new Color(0xC8_00_78_D7, true);
@@ -84,7 +84,7 @@ class RoundedSelectionTree extends JTree {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTree`の選択背景色を`DefaultTreeCellRenderer#getBackgroundSelectionColor()`をオーバーライドして透明色`new Color(0x0, true)`に変更し、セルレンダラーでは選択背景を描画しないよう設定
 -- `NimubsLookAndFeel`の場合はなにも描画しない`RegionPainter`を設定することで選択背景を描画しないよう設定
 - `JTree#paintComponent(...)`をオーバーライドして選択背景をラウンド矩形として描画
@@ -94,10 +94,10 @@ class RoundedSelectionTree extends JTree {
 - たとえば連続する上中下の`3`セルが選択された状態から中セルをKBD{Ctrl+クリック}で選択解除した場合、上セルの下隅、下セルの上隅が丸められるが上セル、下セルの選択状態は変化しないのでこれらの再描画が実行されない
 -- このサンプルでは選択状態が変化したら`JTree`全体を再描画することで丸めの更新を再描画している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeを透明にし、選択状態を半透明にする>Swing/TranslucentTree]]
 - [[JTreeのノード選択可能な領域を行全体に拡張する>Swing/WholeRowSelectableTree]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2018-01-01T18:58:15+09:00
 description: JButtonやJMenuItemがクリックされたとき、同時にShiftキーなどが押下されているかをテストします。
 image: https://drive.google.com/uc?id=1OqGPANokzyj1ocWyhI1StYYYEm0o0fCAKw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JButton`や`JMenuItem`がクリックされたとき、同時にKBD{Shift}キーなどが押下されているかをテストします。
 
 #download(https://drive.google.com/uc?id=1OqGPANokzyj1ocWyhI1StYYYEm0o0fCAKw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton button = new JButton("TEST: ActionEvent#getModifiers()");
 button.addActionListener(e -> {
@@ -31,7 +31,7 @@ button.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JButton` + `ActionListener`
 -- `(e.getModifiers() & ActionEvent.SHIFT_MASK) != 0`でKBD{Shift}キーが押されているかを判断する
 -- `ActionListener`内で`(e.getModifiers() & InputEvent.SHIFT_MASK) != 0`と`InputEvent.SHIFT_MASK`を使用すべきではない
@@ -48,11 +48,11 @@ button.addActionListener(e -> {
 ----
 - `JMenuItem`などがキー入力ではなくマウスでクリックされたかどうかは`(ActionEvent#getModifiers() & AWTEvent.MOUSE_EVENT_MASK) != 0`で判断可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/ActionEvent.html ActionEvent (Java Platform SE 8)]
 - [https://stackoverflow.com/questions/5592065/isshiftdown-when-jbutton-pressed java - isShiftDown when JButton pressed? - Stack Overflow]
 - [https://mail.openjdk.org/pipermail/awt-dev/2018-October/014518.html <AWT Dev> creating an ActionEvent with modifiers from an InputEvent]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

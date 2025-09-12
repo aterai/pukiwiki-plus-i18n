@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2022/03/paint-major-tick-marks-inside-jslider.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`のトラック内部に大目盛り、ノブ内部に現在値を描画します。
 
 #download(https://drive.google.com/uc?id=1L0-XlJbF6L06V-UhIgnH2jae6Zs2kCVq)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSlider slider = new JSlider();
 slider.setSnapToTicks(true);
@@ -102,7 +102,7 @@ d.put("Slider:SliderTrack[Enabled].backgroundPainter", new Painter<JSlider>() {
 slider.putClientProperty("Nimbus.Overrides", d);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Slider:SliderTrack[Enabled].backgroundPainter`
 -- トラック描画用の`Painter<JSlider>`を作成し、その`Painter#paint(...)`メソッドをオーバーライドしてトラック内部に大目盛りを描画
 -- [[NimbusLookAndFeelを適用したJSliderで範囲の塗りつぶしを行う>Swing/NimbusFilledSlider]]
@@ -111,11 +111,11 @@ slider.putClientProperty("Nimbus.Overrides", d);
 -- ノブ描画用の`Painter<JSlider>`を作成し、その`Painter#paint(...)`メソッドをオーバーライドしてノブ内に`JSlider#getValue()`で取得した現在値を描画
 -- [[JLabel内のアイコンにJLayerを使用してバッジを表示する>Swing/NotificationBadge]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSliderでオン・オフ切り替え可能なスイッチボタンを作成する>Swing/ToggleSwitch]]
 - [[JLabel内のアイコンにJLayerを使用してバッジを表示する>Swing/NotificationBadge]]
 - [[NimbusLookAndFeelを適用したJSliderで範囲の塗りつぶしを行う>Swing/NimbusFilledSlider]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -1,0 +1,63 @@
+---
+category: swing
+folder: TreeSelectionPaths
+title: JTreeで親ノードが展開されたときに子ノードの選択状態を変更する
+tags: [JTree, DefaultMutableTreeNode, TreePath, TreeWillExpandListener]
+author: aterai
+pubdate: 2024-07-01T04:02:21+09:00
+description: JTreeで親ノードが展開されたときにその選択状態で子ノードの選択状態も切り替えるTreeWillExpandListenerを作成します。
+image: https://drive.google.com/uc?id=1gzLJzPPF-wTbpmMFjYwnqv5uXcx0iiGB
+---
+* Summary [#summary]
+`JTree`で親ノードが展開されたときにその選択状態で子ノードの選択状態も切り替える`TreeWillExpandListener`を作成します。
+
+#download(https://drive.google.com/uc?id=1gzLJzPPF-wTbpmMFjYwnqv5uXcx0iiGB)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JTree tree = new JTree();
+tree.addTreeWillExpandListener(new TreeWillExpandListener() {
+  @Override public void treeWillExpand(TreeExpansionEvent e) {
+    JTree t = (JTree) e.getSource();
+    TreePath anchor = t.getAnchorSelectionPath();
+    TreePath lead = t.getLeadSelectionPath();
+    TreePath path = e.getPath();
+    Object o = path.getLastPathComponent();
+    if (o instanceof DefaultMutableTreeNode && t.isPathSelected(path)) {
+      DefaultMutableTreeNode n = (DefaultMutableTreeNode) o;
+      TreePath[] paths = Collections.list((Enumeration<?>) n.children())
+          .stream()
+          .filter(DefaultMutableTreeNode.class::isInstance)
+          .map(DefaultMutableTreeNode.class::cast)
+          .map(DefaultMutableTreeNode::getPath)
+          .map(TreePath::new)
+          .toArray(TreePath[]::new);
+      t.addSelectionPaths(paths);
+      t.setAnchorSelectionPath(anchor);
+      t.setLeadSelectionPath(lead);
+    }
+  }
+
+  @Override public void treeWillCollapse(TreeExpansionEvent e) {
+    /* do nothing */
+  }
+});
+}}
+
+* Description [#description]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/TreeExpansionEvent.html#getPath-- TreeExpansionEvent#getPath()]で展開予定の`TreePath`を取得
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/TreePath.html#getLastPathComponent-- TreePath#getLastPathComponent()]で`TreePath`の最後の要素(展開予定の`DefaultMutableTreeNode`)を取得
+- 展開予定の`TreePath`が選択状態の場合、以下の手順で子の`TreeNode`配列を`TreePath`配列に変換して[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#addSelectionPaths-javax.swing.tree.TreePath:A- JTree#addSelectionPaths(TreePath&#91;&#93;)]で選択状態に追加
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultMutableTreeNode.html#children-- DefaultMutableTreeNode#children()]で子の`TreeNode`配列を取得
+-- 取得した`TreeNode`配列が`DefaultMutableTreeNode`インスタンスの場合、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultMutableTreeNode.html#getPath-- DefaultMutableTreeNode#getPath()]でルートノードから自身までの`TreeNode`配列を取得
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/TreePath.html#TreePath-java.lang.Object:A- new TreePath(TreeNode&#91;&#93;)]で子の`TreePath`配列を生成
+-- `JTree#addSelectionPaths(TreePath[])`で`JTree`(選択範囲の項目数に制限なし)の選択状態に追加
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#setAnchorSelectionPath-javax.swing.tree.TreePath- JTree#setAnchorSelectionPath(TreePath)]、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#setLeadSelectionPath-javax.swing.tree.TreePath- JTree#setLeadSelectionPath()]で選択のアンカー、リードパスを`JTree#addSelectionPaths(TreePath[])`実行前の状態に復元
+- 展開予定の`TreePath`が未選択状態の場合はなにも実行しない
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#addSelectionPaths-javax.swing.tree.TreePath:A- JTree#addSelectionPaths(TreePath&#91;&#93;)]
+
+* Comment [#comment]
+#comment
+#comment

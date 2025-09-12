@@ -8,12 +8,12 @@ pubdate: 2023-08-07T00:47:37+09:00
 description: JCheckBoxがマウスオーバー状態になったときに表示されるRolloverIconを変更します。
 image: https://drive.google.com/uc?id=1q_EVtkUi9y7ZaFQtmAwu4HJD4zy-qWlz
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JCheckBox`がマウスオーバー状態になったときに表示される`RolloverIcon`を変更します。
 
 #download(https://drive.google.com/uc?id=1q_EVtkUi9y7ZaFQtmAwu4HJD4zy-qWlz)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // UIManager
 class CheckBoxIcon implements Icon {
@@ -74,7 +74,7 @@ JCheckBox check3 = new JCheckBox("CheckBox[MouseOver].iconPainter") {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JCheckBox.setRolloverIcon(...)`
 -- `JCheckBox#setRolloverIcon(...)`で`RolloverIcon`を変更
 -- `MetalLookAndFeel`や`WindowsLookAndFeel`では`JCheckBox#setIcon(...)`でデフォルトの`Icon`を変更しないと`JCheckBox#setRolloverIcon(...)`で設定した`RolloverIcon`は使用されない？
@@ -89,10 +89,10 @@ JCheckBox check3 = new JCheckBox("CheckBox[MouseOver].iconPainter") {
 -- `CheckBox[MouseOver].iconPainter`状態で使用する`Painter`をこのラップした`Painter`で置き換え
 -- `SynthLookAndFeel`系の`NimbusLookAndFeel`などでのみこの方法は有効
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JCheckBoxのチェックアイコンを変更>Swing/CheckBoxColor]]
 - [[Nimbusの外観をUIDefaultsで変更する>Swing/UIDefaultsOverrides]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

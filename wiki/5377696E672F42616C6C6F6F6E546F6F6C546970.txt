@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2016/12/change-shape-of-jtooltip-to-balloon.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolTip`の形状を吹き出し風に変更し、`JList`のセル上にこれを表示します。
 
 #download(https://drive.google.com/uc?id=1tL6BwEx2s_gjjZZX3nwBOUAtoslcPXQnrA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class BalloonToolTip extends JToolTip {
   private HierarchyListener listener;
@@ -75,7 +75,7 @@ class BalloonToolTip extends JToolTip {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `setOpaque(false)`で背景色を描画しない`JToolTop`を作成し`JToolTop#paintComponent(...)`をオーバーライドして吹き出し風の背景を描画
 - `JToolTop`に`HierarchyListener`を追加しその`JToolTop`が表示状態になった時親が`JWindow`で`Window#getType() == Window.Type.POPUP`かどうかを調べてこれを透明に設定
 -- `JToolTop`が元`JFrame`外に表示される場合は`HeavyWeightWindow`に配置して表示されるためこの`JWindow`を透明にする必要がある
@@ -93,10 +93,10 @@ JList<String> list = new JList<String>(model) {
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/HierarchyListener.html HierarchyListener (Java Platform SE 8)]
 - [[JTabbedPaneのツールヒントをタブ位置に対応したふきだしに変更する>Swing/SpeechBalloonToolTipTail]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

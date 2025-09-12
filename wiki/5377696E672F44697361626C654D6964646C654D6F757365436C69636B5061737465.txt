@@ -1,0 +1,45 @@
+---
+category: swing
+folder: DisableMiddleMouseClickPaste
+title: System選択文字列のマウス中央ボタンクリックによるペーストを無効化
+tags: [JTextComponent, DefaultCaret, Clipboard, Toolkit]
+author: aterai
+pubdate: 2025-07-21T08:13:57+09:00
+description: System選択文字列のマウス中央ボタンクリックによるペーストが有効な環境でこれを無効化するCaretをJTextComponentに設定します。
+image: https://drive.google.com/uc?id=1Q7Yns8J0DDRy91jBg_-FTSsJeV7Xip06
+---
+* Summary [#summary]
+`System`選択文字列のマウス中央ボタンクリックによるペーストが有効な環境でこれを無効化する`Caret`を`JTextComponent`に設定します。
+
+#download(https://drive.google.com/uc?id=1Q7Yns8J0DDRy91jBg_-FTSsJeV7Xip06)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class DisableMiddleClickPasteCaret extends DefaultCaret {
+  @Override public void mouseClicked(MouseEvent e) {
+    if (SwingUtilities.isMiddleMouseButton(e)) {
+      e.consume();
+    }
+    super.mouseClicked(e);
+  }
+}
+}}
+
+* Description [#description]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#getSystemSelection-- Toolkit#getSystemSelection()]が`Clipboard`を返す`Toolkit`を使用する環境では、システム全体での文字列選択をマウス中央ボタンクリックによるペースト可能になるよう`DefaultCaret#mouseClicked(...)`で実装されている
+-- `Windows`環境の`Toolkit`では`Toolkit#getSystemSelection()`は常に`null`なので、マウス中央ボタンクリックによるペーストは不可
+-- このため`Linux`環境でも`Toolkit#getSystemSelection()`をオーバーライドして`null`を返すよう変更すればマウス中央ボタンクリックによるペーストを無効化できそうだが、`Toolkit`の入れ替えが難しい？
+- `DefaultCaret#mouseClicked(...)`をオーバーライドし、マウス中央ボタン`SwingUtilities.isMiddleMouseButton(...)`の場合はイベントを消費して処理されないよう設定した`Caret`を作成
+-- この`Caret`を設定した`JTextComponent`ではシステム選択文字列のマウス中央ボタンクリックによるペースが不可になる
+
+* Reference [#reference]
+- [https://stackoverflow.com/questions/79702564/how-can-i-disable-middle-click-paste-in-a-java-swing-application linux - How can I disable middle-click paste in a Java Swing application? - Stack Overflow]
+-- `Toolkit`に`AWTEventListener`を追加してアプリケーション全体でマウス中央ボタンクリックによるペースを不可にするサンプル
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#getSystemSelection-- Toolkit#getSystemSelection() (Java Platform SE 8)]
+-- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Toolkit.html#getSystemClipboard-- Toolkit#getSystemClipboard() (Java Platform SE 8)]で取得可能なシステム`Clipboard`とは異なり、`Toolkit#getSystemSelection()`はシステム選択の単独インスタンスを`Clipboard`オブジェクトとして取得する
+- [[JTextAreaのCaretを変更してマウスのダブルクリックによる単語選択の動作を変更する>Swing/ContinuouslySelectWords]]
+- [[JTextArea内の文字列がマウス操作で選択されたら自動的にコピーする>Swing/CopyOnSelect]]
+
+* Comment [#comment]
+#comment
+#comment

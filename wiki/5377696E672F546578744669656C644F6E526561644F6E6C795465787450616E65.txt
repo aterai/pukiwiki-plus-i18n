@@ -8,12 +8,12 @@ pubdate: 2013-02-11T00:11:13+09:00
 description: JTextFieldを空欄として編集不可にしたJTextPaneに追加します。
 image: https://lh4.googleusercontent.com/-N1aQ1F9Zrn8/UReetdvfWQI/AAAAAAAABdc/9J_2lkAgW0Y/s800/TextFieldOnReadOnlyTextPane.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`を空欄として編集不可にした`JTextPane`に追加します。
 
 #download(https://lh4.googleusercontent.com/-N1aQ1F9Zrn8/UReetdvfWQI/AAAAAAAABdc/9J_2lkAgW0Y/s800/TextFieldOnReadOnlyTextPane.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static void insertQuestion(JTextPane textPane, String str) {
   Document doc = textPane.getDocument();
@@ -67,7 +67,7 @@ private static void insertQuestion(JTextPane textPane, String str) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、編集不可状態の`JTextPane`内の文字列中に編集可能な`JTextField`を`JTextPane#insertComponent(...)`メソッドを使用して追加しています。
 
 - `JTextPane`
@@ -82,9 +82,9 @@ private static void insertQuestion(JTextPane textPane, String str) {
 -- `JTextField`に`FocusListener`を追加してKBD{Tab}キーなどで`Focus`が移動したら、その`JTextField`までスクロールするように設定
 --- [[FocusTraversalPolicyを使用してフォーカスを取得したコンポーネントまでスクロールする>Swing/AutoScrollOnFocus]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextPane.html#insertComponent-java.awt.Component- JTextPane#insertComponent(Component) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

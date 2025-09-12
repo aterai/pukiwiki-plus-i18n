@@ -8,12 +8,12 @@ pubdate: 2019-02-11T21:46:54+09:00
 description: JPanel内のコンポーネントのZ軸順インデックスを変更してその表示順序を変更します。
 image: https://drive.google.com/uc?id=1mSe3NrxaEpAwsdupzRCA_Uv1RY8aaMXf5Q
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPanel`内のコンポーネントの`Z`軸順インデックスを変更してその表示順序を変更します。
 
 #download(https://drive.google.com/uc?id=1mSe3NrxaEpAwsdupzRCA_Uv1RY8aaMXf5Q)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 button.addActionListener(e -> {
   p.setComponentZOrder(p.getComponent(p.getComponentCount() - 1), 0);
@@ -21,7 +21,7 @@ button.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `GridLayout`を設定した`JPanel`に配置した`Z`軸順インデックスを変更
 -- `GridLayout`は`JPanel`の`ComponentOrientation`が`LEFT_TO_RIGHT`の場合`Z`軸順インデックスで左から右にコンポーネントを配置する
 --- `FlowLayout`、`BoxLayout`なども同様
@@ -30,10 +30,10 @@ button.addActionListener(e -> {
 --- 例えば`c.gridx = 0;`などの制約が設定されている場合`setComponentZOrder(...)`メソッドで`Z`軸順インデックスを変更しても表示位置は変化しない
 --- `BorderLayout`のように`BorderLayout.NORTH`などのレイアウト制約を設定してコンポーネントを配置している場合も同様に`Z`軸順インデックスを変更しても表示位置は変化しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#setComponentZOrder-java.awt.Component-int- Container#setComponentZOrder(int) (Java Platform SE 8)]
 - [[JSplitPaneに設定した子コンポーネントの位置を入れ替える>Swing/SwappingSplitPane]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2013-07-01T00:02:16+09:00
 description: JTreeのノードから文字列を検索して、HighlightPainterで強調表示します。
 image: https://lh4.googleusercontent.com/-rBf-D-8MbOM/UdBIT7ksWjI/AAAAAAAABvI/m_v7K_LuLao/s800/HighlightWordInNode.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードから文字列を検索して、`HighlightPainter`で強調表示します。
 
 #download(https://lh4.googleusercontent.com/-rBf-D-8MbOM/UdBIT7ksWjI/AAAAAAAABvI/m_v7K_LuLao/s800/HighlightWordInNode.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class HighlightTreeCellRenderer extends JTextField
                                 implements TreeCellRenderer {
@@ -49,14 +49,14 @@ class HighlightTreeCellRenderer extends JTextField
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`TreeCellRenderer`に`JLabel`ではなく`JTextField`を使用して`JTextField#getHighlighter()#addHighlight(...)`メソッドで検索中の文字列をハイライト表示しています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeで条件に一致するノードを検索しハイライト>Swing/TreeNodeHighlightSearch]]
 -- こちらはノードの色を変更してハイライト表示
 - [[Highlighterで文字列をハイライト>Swing/Highlighter]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

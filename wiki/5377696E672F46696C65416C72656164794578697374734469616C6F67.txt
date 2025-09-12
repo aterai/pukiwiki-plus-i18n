@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2012/08/jfilechooser-with-file-already-exists.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`で名前を付けて保存する場合、すでに存在するファイルを選択してセーブボタンを押すと上書き警告ダイアログを表示するように設定します。
 
 #download(https://lh6.googleusercontent.com/-77H8Wl7UgV0/T_E-hZznv2I/AAAAAAAABOo/RIVqWmchCfw/s800/FileAlreadyExistsDialog.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JFileChooser fileChooser = new JFileChooser() {
   @Override public void approveSelection() {
@@ -36,7 +36,7 @@ JFileChooser fileChooser = new JFileChooser() {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JFileChooser`の`Save`ボタンをクリックした時に呼び出される`JFileChooser#approveSelection()`メソッドをオーバーライドし、選択されているファイルがすでに存在するかどうかをチェック
 -- ファイルが存在しない場合は通常の`JFileChooser`の処理を実行
 -- 存在する場合は上書きしても良いかを確認する`ConfirmDialog`を`JFileChooser`を親にして呼び出し
@@ -46,10 +46,10 @@ JFileChooser fileChooser = new JFileChooser() {
 - `ConfirmDialog`で`No`をクリック
 -- なにもせずに`JFileChooser`に戻る
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1391852 Swing - How to react on events fired by a JFileChooser?]
 - [https://stackoverflow.com/questions/3651494/jfilechooser-with-confirmation-dialog java - JFileChooser with confirmation dialog - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2020/02/display-unicode-code-point-of-character.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`内にある`Caret`の隣の位置にある文字の`Unicode`コードポイントを`JTextField`に表示します。
 
 #download(https://drive.google.com/uc?id=1t5jI8FiHF3xA21GNY307MZtNBUX5jP-O1A)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String u1F60x = "😀😁😂😃😄😅😆😇😈😉😊😋😌😍😎😏";
 String u1F61x = "😐😑😒😓😔😕😖😗😘😙😚😛😜😝😞😟";
@@ -53,7 +53,7 @@ textArea.addCaretListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTextArea`に`CaretListener`を設定して`Caret`位置にある文字を取得し、`String#codePointAt(...)`メソッドを使用してその文字の`Unicode`コードポイントを編集不可にした`JTextField`に表示しています。
 
 - `Caret`の位置は`CaretEvent#getDot()`メソッドで取得
@@ -63,11 +63,11 @@ textArea.addCaretListener(e -> {
 - `JTextArea.getText().codePointAt(dot)`を使用する場合は文字列末尾で`StringIndexOutOfBoundsException`が発生するので注意が必要
 - `Swing`の`JTextComponent`を継承する`JTextArea`などはカラー絵文字には対応していない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/lang/String.html#codePointAt-int- String#codePointAt(int) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/lang/Character.html#isHighSurrogate-char- Character#isHighSurrogate(char) (Java Platform SE 8)]
 - [[JTextComponentでサロゲートペアのテスト>Swing/SurrogatePair]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

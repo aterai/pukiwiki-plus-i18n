@@ -8,12 +8,12 @@ pubdate: 2017-11-13T15:19:39+09:00
 description: JTableのセル内文字列をHTMLタグを使用して強調表示します。
 image: https://drive.google.com/uc?id=1PqzXSbIvazI6-v8INSlkDS2FOv7LtY-u-Q
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセル内文字列を`HTML`タグを使用して強調表示します。
 
 #download(https://drive.google.com/uc?id=1PqzXSbIvazI6-v8INSlkDS2FOv7LtY-u-Q)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class HighlightTableCellRenderer extends DefaultTableCellRenderer {
   private static final String SPAN =
@@ -55,7 +55,7 @@ class HighlightTableCellRenderer extends DefaultTableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 行のフィルタリング
 -- [[JTableの検索結果をRowFilterとHighlighterで強調表示する>Swing/TableHighlightRegexFilter]]と同様の`RowFilter.regexFilter(pattern)`で正規表現による絞り込みが可能
 - セル中文字列のハイライト
@@ -63,11 +63,11 @@ class HighlightTableCellRenderer extends DefaultTableCellRenderer {
 --- ハイライトの背景色だけではなく文字色も変更可能なので、`JTable`のセル選択文字色、背景色にデフォルト色が使用可能
 --- 例えば`NimbusLookAndFeel`などのようにセルを選択すると文字色が白抜き反転される`LookAndFeel`で`JTextField#getHighlighter()#addHighlight(...)`を使用する場合、セル文字色を黒に固定してセル選択背景色をハイライト背景色より薄い色に変更するなどの対策が必要
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableの検索結果をRowFilterとHighlighterで強調表示する>Swing/TableHighlightRegexFilter]]
 - [[JTextPaneで検索結果のハイライト表示と文字色変更を同時に行う>Swing/HighlightTextForeground]]
 -- `JTextPane`とスタイルでハイライトの文字色と背景色を変更する方法もある
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

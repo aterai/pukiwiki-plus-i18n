@@ -8,12 +8,12 @@ pubdate: 2020-07-06T02:13:21+09:00
 description: JTextFieldやJTextAreaなどのJTextComponentで使用されるCaretの幅を変更します。
 image: https://drive.google.com/uc?id=1yXj9mvzo3Ary_OohlWvmmV2DQXZiSG1O
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`や`JTextArea`などの`JTextComponent`で使用される`Caret`の幅を変更します。
 
 #download(https://drive.google.com/uc?id=1yXj9mvzo3Ary_OohlWvmmV2DQXZiSG1O)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("Caret.width", 2);
 JTextField field1 = new JTextField("Caret.width: 2");
@@ -25,7 +25,7 @@ JTextField field3 = new JTextField("caretAspectRatio: 0.4");
 field3.putClientProperty("caretAspectRatio", .4f);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Caret.width`
 -- `UIManager.put("Caret.width", 2)`ですべての`JTextComponent`で`Caret`の幅を変更
 - `caretWidth`
@@ -41,10 +41,10 @@ field3.putClientProperty("caretAspectRatio", .4f);
 - `Caret`の幅を`0px`に設定すると`Caret`が非表示になる
 -- [[JTextAreaなどのCaretを非表示にする>Swing/HideCaret]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://bugs.openjdk.org/browse/JDK-6994562 &#91;JDK-6994562&#93; Swing classes (both JTextArea and JTextField) don't support caret width tuning - Java Bug System]
 - [[JTextAreaなどのCaretを非表示にする>Swing/HideCaret]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

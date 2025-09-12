@@ -8,12 +8,12 @@ pubdate: 2008-07-14T14:18:45+09:00
 description: JTableのセルに表示されているJCheckBoxがチェックされていれば、その行の背景色を変更します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTI7wkSMbI/AAAAAAAAATk/uGVLWCqLJUI/s800/CheckedRowColor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルに表示されている`JCheckBox`がチェックされていれば、その行の背景色を変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTI7wkSMbI/AAAAAAAAATk/uGVLWCqLJUI/s800/CheckedRowColor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   @Override public Component prepareEditor(
@@ -38,7 +38,7 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTable`の`prepareEditor`、`prepareRenderer`をオーバーライドして編集中のセルエディタ(`JCheckBox`)や同じ行の背景色を変更しています。
 
 - デフォルトのセルレンダラーの場合、例えばチェックボックスがクリックされてモデルが更新されるとその対応するセルのみ再描画さる
@@ -58,11 +58,11 @@ model.addTableModelListener(new TableModelListener() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#prepareRenderer-javax.swing.table.TableCellRenderer-int-int- JTable#prepareRenderer(...) (Java Platform SE 8)]
 - [https://community.oracle.com/thread/1361072 Swing - JTable-Row color issue]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - ごちそうさまでした。 -- &user(tanuchan); &new{2009-12-14 (Mon) 04:22:08};
 -- まいどありです。 -- &user(aterai); &new{2009-12-16 (水) 21:25:57};

@@ -1,0 +1,112 @@
+---
+category: swing
+folder: ScrollableListMenu
+title: JMenuのJPopupMenuにスクロール可能なJListを配置する
+tags: [JMenu, JPopupMenu, JScrollPane, JList]
+author: aterai
+pubdate: 2025-02-24T01:23:27+09:00
+description: JMenuのJPopupMenuにJMenuItemではなくスクロールや選択が可能なJListを使用します。
+image: https://drive.google.com/uc?id=1fc4sYPBKTHGjJz8rlWWdInMAthSUFFV4
+---
+* Summary [#summary]
+`JMenu`の`JPopupMenu`に`JMenuItem`ではなくスクロールや選択が可能な`JList`を使用します。
+
+#download(https://drive.google.com/uc?id=1fc4sYPBKTHGjJz8rlWWdInMAthSUFFV4)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+Font[] fonts = GraphicsEnvironment
+    .getLocalGraphicsEnvironment()
+    .getAllFonts();
+DefaultListModel<String> model = new DefaultListModel<>();
+Stream.of(fonts)
+    .map(Font::getFontName)
+    .sorted()
+    .forEach(model::addElement);
+JList<String> list = new PopupList<>(model);
+JScrollPane scroll = new JScrollPane(list);
+scroll.setBorder(BorderFactory.createEmptyBorder());
+scroll.setViewportBorder(BorderFactory.createEmptyBorder());
+JMenu subMenu = new JMenu("Font list");
+subMenu.add(scroll);
+// ...
+class PopupList<E> extends JList<E> {
+  private transient PopupListMouseListener listener;
+
+  protected PopupList(ListModel<E> model) {
+    super(model);
+  }
+
+  @Override public void updateUI() {
+    removeMouseListener(listener);
+    removeMouseMotionListener(listener);
+    super.updateUI();
+    setFixedCellHeight(20);
+    setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    listener = new PopupListMouseListener();
+    addMouseListener(listener);
+    addMouseMotionListener(listener);
+    Color selectedBg = new Color(0x91_C9_F7);
+    ListCellRenderer<? super E> renderer = getCellRenderer();
+    setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
+      Component c = renderer.getListCellRendererComponent(
+          list, value, index, isSelected, cellHasFocus);
+      if (c instanceof JComponent && listener.isRolloverIndex(index)) {
+        c.setBackground(selectedBg);
+        c.setForeground(Color.WHITE);
+      }
+      return c;
+    });
+  }
+}
+}}
+
+* Description [#description]
+- `JMenu#add(...)`で`JMenu`が使用する`JPopupMenu`の末尾に`JMenuItem`ではなく`JScrollPane`でスクロール可能にした`JList`を配置
+- `JPopupMenu`に配置された`JList`はスクロール可能だが、マウスカーソルでのロールオーバーやマウスクリックでの選択が不可になるので、以下のような`MouseAdapter`を追加して対応
+-- `mouseMoved(...)`が実行されたらロールオーバー表示するリストアイテムのインデックスを記憶し、`JList`に設定した`ListCellRenderer`で背景色などを変更
+-- `mouseClicked(...)`が実行されたら`MenuSelectionManager.defaultManager().clearSelectedPath();`を実行することですべてのメニューを閉じる
+
+#code{{
+class PopupListMouseListener extends MouseAdapter {
+  private int index = -1;
+
+  public boolean isRolloverIndex(int i) {
+    return this.index == i;
+  }
+
+  private void setRollover(MouseEvent e) {
+    Point pt = e.getPoint();
+    Component c = e.getComponent();
+    if (c instanceof JList) {
+      index = ((JList<?>) c).locationToIndex(pt);
+      c.repaint();
+    }
+  }
+
+  @Override public void mouseMoved(MouseEvent e) {
+    setRollover(e);
+  }
+
+  @Override public void mouseDragged(MouseEvent e) {
+    setRollover(e);
+  }
+
+  @Override public void mouseClicked(MouseEvent e) {
+    MenuSelectionManager.defaultManager().clearSelectedPath();
+  }
+
+  @Override public void mouseExited(MouseEvent e) {
+    index = -1;
+    e.getComponent().repaint();
+  }
+}
+}}
+
+* Reference [#reference]
+- [[JPopupMenuのMenuItemとしてJSpinnerを配置する>Swing/SpinnerMenuItem]]
+- [[JComboBoxのドロップダウンリストの高さをマウスドラッグで変更する>Swing/DropDownHeightResizing]]
+
+* Comment [#comment]
+#comment
+#comment

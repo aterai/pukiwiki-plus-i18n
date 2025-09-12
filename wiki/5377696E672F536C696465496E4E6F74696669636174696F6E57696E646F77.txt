@@ -8,12 +8,12 @@ pubdate: 2014-08-04T16:21:27+09:00
 description: JOptionPaneを追加したJWindowを、スライドインアニメーションを使ってデスクトップ上に表示します。
 image: https://lh4.googleusercontent.com/-axruZWDGZys/U98iB0eZi8I/AAAAAAAACK0/hh_jWt5nsi4/s800/SlideInNotificationWindow.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JOptionPane`を追加した`JWindow`を、スライドインアニメーションを使ってデスクトップ上に表示します。
 
 #download(https://lh4.googleusercontent.com/-axruZWDGZys/U98iB0eZi8I/AAAAAAAACK0/hh_jWt5nsi4/s800/SlideInNotificationWindow.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SlideInNotification implements PropertyChangeListener, HierarchyListener {
   private static final int DELAY = 5;
@@ -102,16 +102,16 @@ class SlideInNotification implements PropertyChangeListener, HierarchyListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`Window#setLocation(int, int)`メソッドを使用して`JOptionPane`を追加した`JWindow`のデスクトップ上での表示位置を変更し、画面右下からスライドインするように設定しています。
 
 - マルチスクリーン環境ではメインの`JFrame`が存在する画面(`frame.getGraphicsConfiguration()`)に警告(`new JWindow(GraphicsConfiguration)`)がスライドインすることを想定しているが未検証
 - `JOptionPane.WARNING_MESSAGE`以外の`JOptionPane`は未検証
 - このページのスクリーンショットでは親フレーム中央に`JOptionPane`が表示されているが、これは手動で移動している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

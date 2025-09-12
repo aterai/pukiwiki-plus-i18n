@@ -1,0 +1,97 @@
+---
+category: swing
+folder: DockAndUndockTabs
+title: JTabbedPaneのタブのドラッグアウトで新規JFrameの作成と空JFrameの破棄を実行する
+tags: [JTabbedPane, TransferHandler, DragAndDrop, JFrame]
+author: aterai
+pubdate: 2024-06-03T01:53:27+09:00
+description: JTabbedPaneのタブをJFrame外にドラッグアウトした場合はそのタブを含む新規JFrameを作成し、ドラッグ元のJTabbedPaneが空になる場合はその親JFrameごと破棄を実行します。
+image: https://drive.google.com/uc?id=16s-3Bs9AtEpgEPhbzapN4qIiwyGjH3K4
+---
+* Summary [#summary]
+`JTabbedPane`のタブを`JFrame`外にドラッグアウトした場合はそのタブを含む新規`JFrame`を作成し、ドラッグ元の`JTabbedPane`が空になる場合はその親`JFrame`ごと破棄を実行します。
+
+#download(https://drive.google.com/uc?id=16s-3Bs9AtEpgEPhbzapN4qIiwyGjH3K4)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+protected TabTransferHandler() {
+  super();
+  dialog.add(label);
+  dialog.setOpacity(.5f);
+  DragSource.getDefaultDragSource().addDragSourceMotionListener(e -> {
+    Point pt = e.getLocation();
+    pt.translate(5, 5); // offset
+    dialog.setLocation(pt);
+    source.pointOnScreen.setLocation(pt);
+  });
+}
+
+@Override protected void exportDone(
+    JComponent c, Transferable data, int action) {
+  DnDTabbedPane src = (DnDTabbedPane) c;
+  if (src.pointOnScreen.x > 0) {
+    createNewFrame(src);
+  }
+  src.updateTabDropLocation(null, false);
+  src.repaint();
+  if (src.getTabCount() == 0) {
+    Optional.ofNullable(SwingUtilities.getWindowAncestor(src))
+        .ifPresent(Window::dispose);
+  }
+  if (mode == DragImageMode.HEAVYWEIGHT && dialog != null) {
+    dialog.dispose();
+  }
+}
+
+private static void createNewFrame(DnDTabbedPane src) {
+  int index = src.dragTabIndex;
+  final Component cmp = src.getComponentAt(index);
+  // final Component tab = src.getTabComponentAt(index);
+  final String title = src.getTitleAt(index);
+  final Icon icon = src.getIconAt(index);
+  final String tip = src.getToolTipTextAt(index);
+  src.remove(index);
+  DnDTabbedPane tabs = new DnDTabbedPane();
+  tabs.setTransferHandler(src.getTransferHandler());
+  tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+  tabs.addTab(title, icon, cmp, tip);
+  // tabs.setTabComponentAt(0, tab);
+  tabs.setTabComponentAt(0, new ButtonTabComponent(tabs));
+  DropTargetListener listener = new TabDropTargetAdapter();
+  try {
+    tabs.getDropTarget().addDropTargetListener(listener);
+  } catch (TooManyListenersException ex) {
+    ex.printStackTrace();
+    UIManager.getLookAndFeel().provideErrorFeedback(tabs);
+  }
+  JFrame frame = new JFrame();
+  frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+  frame.getContentPane().add(
+      new JLayer<>(tabs, new DropLocationLayerUI()));
+  frame.setSize(320, 240);
+  frame.setLocation(src.pointOnScreen);
+  frame.setVisible(true);
+  EventQueue.invokeLater(frame::toFront);
+}
+}}
+
+* Description [#description]
+- `JFrame`外へのタブドラッグアウトで新規`JFrame`作成と`JFrame`間でのタブ移動
+-- [[JTabbedPaneのタブがフレーム外にドロップされたら新規JFrameを作成する>Swing/DragDropEndNewFrame]]と同様に、タブドロップで空ファイルリストを`JFrame`外にコピーすることで新規`JFrame`と`JTabbedPane`を生成し、タブの移動を実行
+-- [[JLayerを使ってJTabbedPaneのタブの挿入位置を描画する>Swing/DnDLayerTabbedPane]]と同様に、`TransferHandler`を使用して異なる`JFrame`に配置された`JTabbedPane`間でのタブ移動を実行しているため、[[JTabbedPaneのタブがフレーム外にドロップされたら新規JFrameを作成する>Swing/DragDropEndNewFrame]]のように`DragSourceListener#dragDropEnd(DragSourceDropEvent e)`でドロップ終了時の位置をチェックするのではなく`DragSource.getDefaultDragSource().addDragSourceMotionListener(e-> ...)`でドラッグ中の画面でのカーソル位置を記録して`TransferHandler#exportDone(...)`実行時に新規`JFrame`を作成するかや、その座標に利用している
+- 異なる`JFrame`間でのタブ移動
+-- ドロップ先の`JFrame`が前面にくるよう`Window#toFront()`を実行
+-- 異なる`JFrame`間でドラッグアイコンを表示するための`JWindow`を`JWindow#setVisible(...)`で表示・非表示するとすべての`JFrame`(`JFrame#setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)`を設定)を閉じてもアプリケーションを終了することができなくなるので、ドラッグ開始時に`new JWindow()`で生成、終了時に`JWindow#dispose()`で破棄するよう変更
+- 空`JFrame`の破棄
+-- `TransferHandler#exportDone(...)`実行時、ドラッグ元の`JTabbedPane`のタブ数が`0`になるかどうかをチェックして親`JFrame`と`JTabbedPane`の破棄を実行
+-- [[JLayerを使ってJTabbedPaneのタブの挿入位置を描画する>Swing/DnDLayerTabbedPane]]などとは異なり、ドラッグ元の`JTabbedPane`のタブ数が`1`でもドラッグ開始可能に変更している
+-- タブ内に配置したクローズボタンをクリックして`JTabbedPane`のタブ数が`0`になる場合の親`JFrame`破棄には対応していない
+
+* Reference [#reference]
+- [[JTabbedPaneのタブがフレーム外にドロップされたら新規JFrameを作成する>Swing/DragDropEndNewFrame]]
+- [[JLayerを使ってJTabbedPaneのタブの挿入位置を描画する>Swing/DnDLayerTabbedPane]]
+
+* Comment [#comment]
+#comment
+#comment

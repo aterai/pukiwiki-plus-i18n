@@ -8,12 +8,12 @@ pubdate: 2008-09-01T13:22:20+09:00
 description: JTabbedPaneのタブにMnemonicを追加します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUu2fjTpI/AAAAAAAAAmg/EST6gnFRH84/s800/TabMnemonic.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブに`Mnemonic`を追加します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUu2fjTpI/AAAAAAAAAmg/EST6gnFRH84/s800/TabMnemonic.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTabbedPane tab = new JTabbedPane();
 tab.addTab("Label", new JLabel("label"));
@@ -33,7 +33,7 @@ tab.setMnemonicAt(3, KeyEvent.VK_B);
 tab.setDisplayedMnemonicIndexAt(3, 0);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルコードは、`JTabbedPane`の`3`番目のタブに`JTabbedPane#setMnemonicAt(3, KeyEvent.VK_B)`メソッドを使用して`Mnemonic`を設定し、KBD{Alt+B}キーの入力でそのタブへのフォーカス移動を可能にしています。
 
 - タブタイトルの先頭文字(`B`)にアンダーラインが入るように`JTabbedPane#setDisplayedMnemonicIndexAt(...)`メソッドで設定
@@ -53,10 +53,10 @@ tab.setMnemonicAt(index, KeyEvent.VK_0);
 label.setDisplayedMnemonic(KeyEvent.VK_0);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setMnemonicAt-int-int- JTabbedPane#setMnemonicAt(...) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setDisplayedMnemonicIndexAt-int-int- JTabbedPane#setDisplayedMnemonicIndexAt(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

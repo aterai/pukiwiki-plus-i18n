@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2022/12/inverse-display-position-of-jsliders.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 水平`JSlider`の目盛りをトラック上部に表示し、つまみの矢印も上向きに描画するよう変更します。
 
 #download(https://drive.google.com/uc?id=1Jm5tHOewLJQ6ExRVgFWdzBBTezrNjzZA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class VerticalFlipLayerUI extends LayerUI<JComponent> {
   @Override public void paint(Graphics g, JComponent c) {
@@ -70,7 +70,7 @@ class VerticalFlipLayerUI extends LayerUI<JComponent> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `VerticalFlipLayerUI`
 -- `JLayer`を使用して水平`JSlider`とその内部の`MouseEvent`の上下を反転
 -- ラベルの数字も上下反転してしまう
@@ -153,10 +153,10 @@ class UpArrowThumbSliderUI extends BasicSliderUI {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSliderの順序を反転>Swing/InvertedSlider]]
 -- 垂直`JSlider`の目盛りをデフォルトの右側から左側に変更する場合は`JSlider#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`が使用可能
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

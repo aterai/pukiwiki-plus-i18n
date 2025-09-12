@@ -8,12 +8,12 @@ pubdate: 2004-09-20T16:06:29+09:00
 description: TexturePaintを使用して背景にタイル状に画像を貼り付けます。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTVUeXC5lI/AAAAAAAAAnc/CWUYfOODy1E/s800/TexturePaint.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TexturePaint`を使用して背景にタイル状に画像を貼り付けます。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTVUeXC5lI/AAAAAAAAAnc/CWUYfOODy1E/s800/TexturePaint.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String path = "example/16x16.png";
 ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -21,7 +21,7 @@ BufferedImage bi = Optional.ofNullable(cl.getResource(path)).map(url -> {
   try (InputStream s = url.openStream()) {
     return ImageIO.read(s);
   } catch (IOException ex) {
-    ex.printStackTrace();
+    // ex.printStackTrace();
     return makeMissingImage();
   }
 }).orElseGet(MainPanel::makeMissingImage);
@@ -37,14 +37,14 @@ panel = new JPanel() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `BufferedImage`を生成
 - この`Image`を`Graphics#drawImage(...)`で描画するのではなく、`TexturePaint`を作成し`Graphics2D#setPaint`メソッドで設定してパネル全体の塗りつぶしを実行
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/TexturePaint.html TexturePaint (Java Platform SE 8)]
 - [[JPanelの背景に画像を並べる>Swing/BackgroundImage]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

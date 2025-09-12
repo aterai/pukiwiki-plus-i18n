@@ -8,12 +8,12 @@ pubdate: 2007-12-10T16:19:56+09:00
 description: JTabbedPaneのタブ上に、マウスカーソルがある場合、その文字色を変更します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTU7QqLieI/AAAAAAAAAm0/dgW3rio-pzA/s800/TabTitleHighlight.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブ上に、マウスカーソルがある場合、その文字色を変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTU7QqLieI/AAAAAAAAAm0/dgW3rio-pzA/s800/TabTitleHighlight.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 tabbedPane.addMouseMotionListener(new MouseMotionAdapter() {
   @Override public void mouseMoved(MouseEvent e) {
@@ -26,15 +26,15 @@ tabbedPane.addMouseMotionListener(new MouseMotionAdapter() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTabbedPane`に`MouseMotionListener`を追加し`JTabbedPane#indexAtLocation`メソッドでマウスカーソルの下にあるタブを取得しています。
 
 - タブ文字色の変更が可能かは`LookAndFeel`に依存する
 -- 例えば`GTKLookAndFeel`では`JTabbedPane#setForegroundAt(...)`メソッドでのタイトル変更は不可
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneの選択文字色を変更>Swing/ColorTab]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

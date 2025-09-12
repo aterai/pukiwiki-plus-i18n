@@ -1,0 +1,68 @@
+---
+category: swing
+folder: KeepSplitRatioSplitPane
+title: JSplitPaneの分割割合を維持する
+tags: [JSplitPane, JPanel]
+author: aterai
+pubdate: 2024-12-30T17:25:16+09:00
+description: JSplitPaneのサイズが変更されてもその分割割合を維持するよう設定します。
+image: https://drive.google.com/uc?id=1ZYkS0KjkqWHvUzF1ERFkalqoOdVZVH6R
+---
+* Summary [#summary]
+`JSplitPane`のサイズが変更されてもその分割割合を維持するよう設定します。
+
+#download(https://drive.google.com/uc?id=1ZYkS0KjkqWHvUzF1ERFkalqoOdVZVH6R)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class SplitPaneWrapper extends JPanel {
+  private final JSplitPane splitPane;
+
+  protected SplitPaneWrapper(JSplitPane splitPane) {
+    super(new BorderLayout());
+    this.splitPane = splitPane;
+    add(splitPane);
+  }
+
+  private static int getOrientedSize(JSplitPane sp) {
+    return sp.getOrientation() == JSplitPane.VERTICAL_SPLIT
+        ? sp.getHeight() - sp.getDividerSize()
+        : sp.getWidth() - sp.getDividerSize();
+  }
+
+  @Override public void doLayout() {
+    int size = getOrientedSize(splitPane);
+    int loc = splitPane.getDividerLocation();
+    BigDecimal ratio = BigDecimal.valueOf(loc / (double) size)
+        .setScale(2, RoundingMode.HALF_UP);
+    super.doLayout();
+    if (splitPane.isShowing()) {
+      EventQueue.invokeLater(() -> {
+        int sz = getOrientedSize(splitPane);
+        int iv = (int) (.5 + sz * ratio.doubleValue());
+        splitPane.setDividerLocation(iv);
+      });
+    }
+  }
+}
+}}
+
+* Description [#description]
+- `Default(ResizeWeight:0.5)`
+-- デフォルトの`JSplitPane`に`JSplitPane#setResizeWeight(.5)`を設定し、余分なスペースの配分方法を左右均等に設定
+-- `JSplitPane`のリサイズ(このサンプルの場合親`JFrame`のリサイズ)を繰り返していると余りや誤差？が常に左側のコンポーネントに積み重なるので、子コンポーネントの推奨サイズに基づいた分割割合から大きくズレてしまう場合がある
+- `SplitPaneWrapper(Keep ratio)`
+-- `JSplitPane`を`JPanel`でラップし、その`JPanel#doLayout()`をオーバーライドして`JSplitPane`の分割割合を補正
+--- `BasicSplitPaneUI.BasicHorizontalLayoutManager#distributeSpace(int space, boolean keepHidden)`はオーバーライドしづらいので[[JSplitPaneのDividerの位置を最大化後に変更する>Swing/DividerSplitRatio]]と同様に`JPanel`をラップして対応
+--- `super.doLayout()`で再レイアウトする前の`JSplitPane`分割割合を保存
+--- `super.doLayout()`実行後に`JSplitPane`の新規サイズと保存していた分割割合からディバイダーの位置を計算
+--- `JSplitPane#setDividerLocation(...)`を実行してリサイズ前の分割割合を復元
+-- この方法でも誤差は発生するので完全に分割割合を維持することはできない
+
+* Reference [#reference]
+- [https://stackoverflow.com/questions/36067690/how-do-you-get-jsplitpane-to-keep-the-same-proportional-location-if-the-user-has java - How do you get JSplitPane to keep the same proportional location if the user has moved the location of the divider - Stack Overflow]
+- [[JSplitPaneのDividerの位置を最大化後に変更する>Swing/DividerSplitRatio]]
+
+* Comment [#comment]
+#comment
+#comment

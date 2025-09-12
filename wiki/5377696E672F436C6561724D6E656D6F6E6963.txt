@@ -8,17 +8,17 @@ pubdate: 2012-01-30T16:49:29+09:00
 description: JButtonに設定されたMnemonicをクリアして初期状態に戻します。
 image: https://lh4.googleusercontent.com/-VBCuKbB3hhs/TyZJM3aWNzI/AAAAAAAABIg/01Dscav-qV4/s800/ClearMnemonic.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JButton`に設定された`Mnemonic`をクリアして初期状態に戻します。
 
 #download(https://lh4.googleusercontent.com/-VBCuKbB3hhs/TyZJM3aWNzI/AAAAAAAABIg/01Dscav-qV4/s800/ClearMnemonic.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 button.setMnemonic(0);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `setMnemonic(...)`
 -- `JTextField`の最初の文字を`JButton`の`Mnemonic`に設定
 -- `JTextField`が空の場合は`JButton`のラベルの先頭文字を`Mnemonic`に設定
@@ -26,9 +26,9 @@ button.setMnemonic(0);
 -- `Mnemonic`にヌル文字(`\u0000`、`\0`、`0`)を設定することで初期化
 -- `button.setMnemonic('\0')`や`button.setMnemonic('\u0000')`と同様
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#setMnemonic-int- AbstractButton#setMnemonic(int) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

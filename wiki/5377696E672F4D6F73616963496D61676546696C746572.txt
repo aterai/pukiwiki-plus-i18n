@@ -1,0 +1,108 @@
+---
+category: swing
+folder: MosaicImageFilter
+title: BufferedImageOpで画像にモザイク処理を適用する
+tags: [ImageFilter, BufferedImageOp, JSplitPane]
+author: aterai
+pubdate: 2024-04-22T01:43:01+09:00
+description: BufferedImageOpを実装するモザイクフィルタを作成してBufferedImageにブロックモザイクを適用します。
+image: https://drive.google.com/uc?id=1IeLTWYWT9rZ2qTxZvmcJQlpfpZ_9osPd
+---
+* Summary [#summary]
+`BufferedImageOp`を実装するモザイクフィルタを作成して`BufferedImage`にブロックモザイクを適用します。
+
+#download(https://drive.google.com/uc?id=1IeLTWYWT9rZ2qTxZvmcJQlpfpZ_9osPd)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class MosaicImageFilter implements BufferedImageOp {
+  private final int blockSize;
+
+  protected MosaicImageFilter(int blockSize) {
+    this.blockSize = blockSize;
+  }
+
+  @Override public BufferedImage filter(
+      BufferedImage src, BufferedImage dst) {
+    int width = src.getWidth();
+    int height = src.getHeight();
+    WritableRaster srcRaster = src.getRaster();
+    BufferedImage img = dst == null
+        ? createCompatibleDestImage(src, null)
+        : dst;
+    WritableRaster dstRaster = img.getRaster();
+    int[] pixels = new int[blockSize * blockSize];
+    for (int y = 0; y < height; y += blockSize) {
+      for (int x = 0; x < width; x += blockSize) {
+        int w = Math.min(blockSize, width - x);
+        int h = Math.min(blockSize, height - y);
+        srcRaster.getDataElements(x, y, w, h, pixels);
+        updatePixels(w, h, pixels);
+        dstRaster.setDataElements(x, y, w, h, pixels);
+      }
+    }
+    return img;
+  }
+
+  public static int getBlockRgb(int w, int h, int[] pixels) {
+    int r = 0;
+    int g = 0;
+    int b = 0;
+    for (int by = 0; by < h; by++) {
+      for (int bx = 0; bx < w; bx++) {
+        int argb = pixels[bx + by * w];
+        r += (argb >> 16) & 0xFF;
+        g += (argb >> 8) & 0xFF;
+        b += argb & 0xFF;
+      }
+    }
+    int size = w * h;
+    return (r / size) << 16 | (g / size) << 8 | (b / size);
+  }
+
+  public static void updatePixels(int w, int h, int[] pixels) {
+    int rgb = getBlockRgb(w, h, pixels);
+    for (int by = 0; by < h; by++) {
+      for (int bx = 0; bx < w; bx++) {
+        int i = bx + by * w;
+        pixels[i] = (pixels[i] & 0xFF_00_00_00) | rgb;
+      }
+    }
+  }
+
+  @Override public Rectangle2D getBounds2D(BufferedImage src) {
+    return null;
+  }
+
+  @Override public BufferedImage createCompatibleDestImage(
+      BufferedImage src, ColorModel dstCm) {
+    return new BufferedImage(
+      src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_ARGB);
+  }
+
+  @Override public Point2D getPoint2D(Point2D srcPt, Point2D dstPt) {
+    return null;
+  }
+
+  @Override public RenderingHints getRenderingHints() {
+    return new RenderingHints(Collections.emptyMap());
+  }
+}
+}}
+
+* Description [#description]
+- 元画像から`ImageIcon`を作成して、これを表示する`JComponent`を`JSplitPane`の左側に配置
+-- [[JSplitPaneで画像を差分を比較表示する>Swing/ImageComparisonSplitPane]]
+- `BufferedImageOp#filter(...)`をオーバーライドして指定したブロックサイズ(このサンプルでは`16x16px`)領域の`RGB`色要素を平均して塗りつぶすモザイク処理を実行する`MosaicImageFilter`を作成
+-- `ImageFilter`は`new BufferedImageFilter(MosaicImageFilter)`で作成
+-- `ImageProducer`は`new FilteredImageSource(ImageProducer, ImageFilter)`で作成
+-- モザイク処理後の`Image`は`Toolkit#createImage(ImageProducer)`で生成
+- `new ImageIcon(Image)`で作成した`ImageIcon`を表示する`JComponent`を`JSplitPane`の右側に配置
+
+* Reference [#reference]
+- [http://www.jhlabs.com/ip/filters/ Jerry's Java Image Processing Pages]
+- [[JSplitPaneで画像を差分を比較表示する>Swing/ImageComparisonSplitPane]]
+
+* Comment [#comment]
+#comment
+#comment

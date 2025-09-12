@@ -1,0 +1,57 @@
+---
+category: swing
+folder: InputContextCaretColor
+title: InputContextが使用可能な状態でCaretの色を変更
+tags: [Caret, InputContext, JTextComponent, DefaultCaret]
+author: aterai
+pubdate: 2025-08-25T04:55:51+09:00
+description: JTextComponentなどで使用中のインプット・メソッドが変換のために使用可能な場合はCaretの色を変更するよう設定します。
+image: https://drive.google.com/uc?id=1QlI0riqRCNwR88VEVcdO-beHF0MhWHIO
+---
+* Summary [#summary]
+`JTextComponent`などで使用中のインプット・メソッドが変換のために使用可能な場合は`Caret`の色を変更するよう設定します。
+
+#download(https://drive.google.com/uc?id=1QlI0riqRCNwR88VEVcdO-beHF0MhWHIO)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JTextArea textArea = new JTextArea() {
+  @Override public void updateUI() {
+    super.updateUI();
+    Caret caret = new InputContextCaret();
+    caret.setBlinkRate(UIManager.getInt("TextArea.caretBlinkRate"));
+    setCaret(caret);
+  }
+};
+
+//...
+class InputContextCaret extends DefaultCaret {
+  private final Color caretFg = UIManager.getColor("TextArea.caretForeground");
+
+  @Override public void paint(Graphics g) {
+    if (isVisible()) {
+      JTextComponent c = getComponent();
+      boolean b = c.getInputContext().isCompositionEnabled();
+      c.setCaretColor(b ? Color.RED : caretFg);
+    }
+    super.paint(g);
+  }
+}
+}}
+
+* Description [#description]
+- `DefaultCaret#paint(...)`をオーバーライドして、`JTextComponent#getInputContext()`で`InputContext`を取得
+- 取得した`InputContext`で現在のインプット・メソッドが変換のために使用可能かを[https://docs.oracle.com/javase/jp/8/docs/api/java/awt/im/InputContext.html#isCompositionEnabled-- InputContext#isCompositionEnabled()]で判別
+-- `ON`: 使用可能の場合は`Caret`の色を`Caret#setCaretColor(Color.RED)`で変更
+--- 入力途中の`Caret`色や下点線の変更方法が見つからない → 調査中
+-- `OFF`: 使用可能の場合は`Caret`の色を`Caret#setCaretColor(UIManager.getColor("TextArea.caretForeground"))`で戻す
+--- `TextField.caretForeground`、`PasswordField.caretForeground`、`TextPane.caretForeground`、`EditorPane.caretForeground`などで他の`JTextComponent`の`Caret`デフォルト色を個別に取得可能
+- [https://docs.oracle.com/javase/jp/8/docs/api//java/awt/event/InputMethodListener.html InputMethodListener (Java Platform SE 8)]では現在のインプット・メソッドの使用可・不可の切り替えを取得できない？
+
+* Reference [#reference]
+- [[JTableのセル編集を文字入力変換中からでも可能にする>Swing/CompositionEnabled]]
+- [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/imf/api-reference.html インプット・メソッド・クライアントAPIリファレンス]
+
+* Comment [#comment]
+#comment
+#comment

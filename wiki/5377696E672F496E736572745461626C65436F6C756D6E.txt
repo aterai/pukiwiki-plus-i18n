@@ -1,0 +1,233 @@
+---
+category: swing
+folder: InsertTableColumn
+title: JTableの列の境界上に追加挿入カーソルを表示する
+tags: [JTable, JTableHeader, TableColumn, JScrollPane, JLayer]
+author: aterai
+pubdate: 2024-11-18T01:25:01+09:00
+description: JTableの各列の間にマウスを移動したときその境界線上にクリックで新規のTableColumnが挿入可能なカーソルを描画します。
+image: https://drive.google.com/uc?id=1DNPZgjuR8T_QJLZOGZR7Te6_sZWHAbS2
+---
+* Summary [#summary]
+`JTable`の各列の間にマウスを移動したときその境界線上にクリックで新規の`TableColumn`が挿入可能なカーソルを描画します。
+
+#download(https://drive.google.com/uc?id=1DNPZgjuR8T_QJLZOGZR7Te6_sZWHAbS2)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class ColumnInsertLayerUI extends LayerUI<JScrollPane> {
+  private static final Color LINE_COLOR = new Color(0x00_78_D7);
+  private static final int LINE_WIDTH = 4;
+  private final Rectangle2D line = new Rectangle2D.Double();
+  private final Ellipse2D plus = new Ellipse2D.Double(0d, 0d, 10d, 10d);
+
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    if (c instanceof JLayer && !line.isEmpty()) {
+      JScrollPane scroll = (JScrollPane) ((JLayer<?>) c).getView();
+      JTableHeader header =
+          ((JTable) scroll.getViewport().getView()).getTableHeader();
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(
+          RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      Point pt0 = line.getBounds().getLocation();
+      Point pt1 = SwingUtilities.convertPoint(header, pt0, c);
+      g2.translate(pt1.getX() - pt0.getX(), pt1.getY() - pt0.getY());
+      // paint Insert Line
+      g2.setPaint(LINE_COLOR);
+      g2.fill(line);
+      // paint Plus Icon
+      g2.setPaint(Color.WHITE);
+      g2.fill(plus);
+      g2.setPaint(LINE_COLOR);
+      double cx = plus.getCenterX();
+      double cy = plus.getCenterY();
+      double w2 = plus.getWidth() / 2d;
+      double h2 = plus.getHeight() / 2d;
+      g2.draw(new Line2D.Double(cx - w2, cy, cx + w2, cy));
+      g2.draw(new Line2D.Double(cx, cy - h2, cx, cy + h2));
+      g2.draw(plus);
+      g2.dispose();
+    }
+  }
+
+  private void updateLineLocation(JScrollPane scroll, Point loc) {
+    JTable table = (JTable) scroll.getViewport().getView();
+    JTableHeader header = table.getTableHeader();
+    Rectangle rect = scroll.getVisibleRect();
+    JScrollBar bar = scroll.getHorizontalScrollBar();
+    int scrollHeight = bar.isVisible() ? bar.getHeight() : 0;
+    Dimension d = new Dimension(
+        LINE_WIDTH, rect.height - scrollHeight);
+    for (int i = 0; i < table.getColumnCount(); i++) {
+      if (canInsert(header, loc, i, d)) {
+        return;
+      }
+    }
+  }
+
+  private boolean canInsert(
+        JTableHeader header, Point loc, int i, Dimension d) {
+    Rectangle r = header.getHeaderRect(i);
+    Rectangle r1 = getWestRect(r, i);
+    Rectangle r2 = getEastRect(r);
+    boolean hit = false;
+    if (r1.contains(loc)) {
+      updateInsertLineLocation(r1, loc, d, header);
+      hit = true;
+    } else if (r2.contains(loc)) {
+      updateInsertLineLocation(r2, loc, d, header);
+      hit = true;
+    } else if (r.contains(loc)) {
+      line.setFrame(0d, 0d, 0d, 0d);
+      header.setCursor(Cursor.getDefaultCursor());
+      hit = true;
+    }
+    return hit;
+  }
+
+  private Rectangle getWestRect(Rectangle r, int i) {
+    Rectangle rect = r.getBounds();
+    Rectangle bounds = plus.getBounds();
+    if (i != 0) {
+      rect.x -= bounds.width / 2;
+    }
+    rect.setSize(bounds.getSize());
+    return rect;
+  }
+
+  private Rectangle getEastRect(Rectangle r) {
+    Rectangle rect = r.getBounds();
+    Rectangle bounds = plus.getBounds();
+    rect.x += rect.width - bounds.width / 2;
+    rect.setSize(bounds.getSize());
+    return rect;
+  }
+
+  private void updateInsertLineLocation(
+        Rectangle r, Point loc, Dimension d, Component c) {
+    if (r.contains(loc)) {
+      double cx = r.getCenterX();
+      double cy = r.getCenterY();
+      line.setFrame(
+          cx - d.getWidth() / 2d, r.getY(), d.width, d.height);
+      double pw = plus.getWidth() / 2d;
+      double ph = plus.getHeight() / 2d;
+      plus.setFrameFromCenter(cx, cy, cx - pw, cy - ph);
+      c.setCursor(Cursor.getDefaultCursor());
+    } else {
+      line.setFrame(0d, 0d, 0d, 0d);
+      c.setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
+    }
+  }
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(
+          AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseEvent(
+        MouseEvent e, JLayer<? extends JScrollPane> l) {
+    super.processMouseEvent(e, l);
+    if (e.getID() == MouseEvent.MOUSE_CLICKED) {
+      JScrollPane scroll = l.getView();
+      Point pt = e.getPoint();
+      if (plus.contains(pt) && !line.isEmpty()) {
+        JTable table = (JTable) scroll.getViewport().getView();
+        TableModel model = table.getModel();
+        int columnCount = table.getColumnCount();
+        int maxColumn = model.getColumnCount();
+        if (columnCount < maxColumn) {
+          int idx = table.columnAtPoint(
+              line.getBounds().getLocation());
+          TableColumn column = new TableColumn(columnCount);
+          column.setHeaderValue("Column" + columnCount);
+          table.addColumn(column);
+          table.moveColumn(columnCount, idx + 1);
+          updateLineLocation(scroll, pt);
+        }
+      }
+      l.repaint(scroll.getBounds());
+    }
+  }
+
+  @Override protected void processMouseMotionEvent(
+        MouseEvent e, JLayer<? extends JScrollPane> l) {
+    super.processMouseMotionEvent(e, l);
+    Component c = e.getComponent();
+    int id = e.getID();
+    JScrollPane scroll = l.getView();
+    if (id == MouseEvent.MOUSE_MOVED && c instanceof JTableHeader) {
+      updateLineLocation(scroll, e.getPoint());
+    } else {
+      line.setFrame(0d, 0d, 0d, 0d);
+    }
+    l.repaint(scroll.getBounds());
+  }
+}
+}}
+
+* Description [#description]
+- `JTable`と`JTableHeader`を配置する`JScrollPane`に`JLayer`を設定して挿入カーソルを描画
+-- `JTableHeader#getHeaderRect(column)`で取得した`TableColumn`領域を左右の境界付近`2`つに分割し、その領域内にマウスが存在する場合は挿入カーソルを描画
+-- `JTableHeader`ではなく`JScrollPane`に`JLayer`を設定しているので、`SwingUtilities.convertPoint(header, pt, layer)`で`TableColumn`領域の位置を変換しないと水平スクロールバーで移動して表示される`TableColumn`領域はずれてしまう
+- 列名は`Excel`風にアルファベット`26`進数(`bijective base-26)`で表示
+#code{{
+private static String convertToColumnTitle(int columnNumber) {
+  assert columnNumber > 0 : "Input is not valid!";
+  StringBuilder sb = new StringBuilder();
+  int num = columnNumber;
+  while (num > 0) {
+    int mod = (num - 1) % 26;
+    int code = 'A' + mod;
+    sb.insert(0, (char) code);
+    // Java 11: sb.insert(0, Character.toString(code));
+    num = (num - mod) / 26;
+  }
+  return sb.toString();
+}
+}}
+
+- 列を入れ替えても列名は表示上の列順番から生成するヘッダセルレンダラーを`JTableHeader#setDefaultRenderer(...)`で設定
+-- このサンプルを`Java 8`環境で実行し、`WindowsLookAndFeel`から別の`LookAndFeel`へ切り替えると`NullPointerException`が発生する
+--- [https://bugs.openjdk.org/browse/JDK-8039383 &#91;JDK-8039383&#93; NPE when changing Windows Theme - Java Bug System]が関係している？
+-- `Java 21`では修正されているが`WindowsLookAndFeel`から別の`LookAndFeel`に切り替えると`JTableHeader`の高さが変化してしまう
+#code{{
+Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
+    at com.sun.java.swing.plaf.windows.WindowsTableHeaderUI$XPDefaultRenderer.paint(WindowsTableHeaderUI.java:171)
+    at javax.swing.CellRendererPane.paintComponent(CellRendererPane.java:151)
+    at javax.swing.plaf.basic.BasicTableHeaderUI.paintCell(BasicTableHeaderUI.java:710)
+}}
+
+- 初期状態での表示上の列数は`3`列だが、`TableModel`は`16,384`列で作成し`JTable#setAutoCreateColumnsFromModel(false)`で`TableModel`から列を自動作成しないよう設定
+-- `JTable#addColumn(...)`で表示上の列を追加挿入してもモデル上の列数を超えるまでは`ArrayIndexOutOfBoundsException`の発生を防ぐことができる
+
+- `JTable`や`TableColumnModel`には指定した位置に`TableColumn`を挿入するメソッドは用意されていない
+-- 行挿入は[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/DefaultTableModel.html#insertRow-int-java.lang.Object:A- DefaultTableModel#insertRow(row, ...)]が存在する
+-- 代わりに[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#addColumn-javax.swing.table.TableColumn- JTable#addColumn(TableColumn)]で列の末尾に追加した後、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#moveColumn-int-int- JTable#moveColumn(int last, int target)]で挿入位置まで移動している
+#code{{
+TableColumn column = new TableColumn(columnCount);
+column.setHeaderValue("Column" + columnCount);
+table.addColumn(column);
+table.moveColumn(columnCount, idx + 1);
+}}
+
+* Reference [#reference]
+- [https://techcommunity.microsoft.com/blog/excelblog/modernized-excel-grid/4176473 Modernized Excel Grid | Microsoft Community Hub]
+-- このサンプルは`Web`版`Excel`の`Simplified insert options`機能を参考に作成している
+- [https://stackoverflow.com/questions/181596/how-to-convert-a-column-number-e-g-127-into-an-excel-column-e-g-aa/182924#182924 c# - How to convert a column number (e.g. 127) into an Excel column (e.g. AA) - Stack Overflow]
+- [[TableColumnのドラッグによる順序変更が可能な領域を制限する>Swing/TableColumnReorderingIcon]]
+
+* Comment [#comment]
+#comment
+#comment

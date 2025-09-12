@@ -8,12 +8,12 @@ pubdate: 2012-05-07T12:28:04+09:00
 description: JTableのCellEditorに設定したJComboBoxに余白を追加します。
 image: https://lh4.googleusercontent.com/-dIea13PoJ70/T6c7YezP1BI/AAAAAAAABMQ/e0IqDjxhjpw/s800/ComboBoxCellEditorInsets.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の`CellEditor`に設定した`JComboBox`に余白を追加します。
 
 #download(https://lh4.googleusercontent.com/-dIea13PoJ70/T6c7YezP1BI/AAAAAAAABMQ/e0IqDjxhjpw/s800/ComboBoxCellEditorInsets.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ComboBoxPanel extends JPanel {
   public final JComboBox<String> comboBox = new JComboBox<>(
@@ -52,7 +52,7 @@ class ComboBoxCellRenderer extends ComboBoxPanel implements TableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Border`(左)
 -- `JComboBox`自身に余白を設定し、これを`CellRenderer`と`CellEditor`に適用
 -- ドロップダウンリストの位置、サイズが余白を含んだ幅になる
@@ -88,9 +88,9 @@ class ComboBoxPanel extends JPanel {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのCellRendererにJComboBoxを設定>Swing/ComboCellRenderer]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

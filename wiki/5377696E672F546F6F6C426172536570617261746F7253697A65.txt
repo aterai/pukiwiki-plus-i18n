@@ -8,12 +8,12 @@ pubdate: 2023-04-24T05:02:52+09:00
 description: JToolBar専用JToolBar.Separatorのサイズ変更をテストします。
 image: https://drive.google.com/uc?id=1DUJCi9uB6NXFr0uKs3fvCHLW4Z_0xpbl
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolBar`専用`JToolBar.Separator`のサイズ変更をテストします。
 
 #download(https://drive.google.com/uc?id=1DUJCi9uB6NXFr0uKs3fvCHLW4Z_0xpbl)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // UIManager.put("ToolBar.separatorSize", new Dimension(2, 20));
 JToolBar bar = new JToolBar();
@@ -42,7 +42,7 @@ mw.addChangeListener(cl);
 mh.addChangeListener(cl);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JToolBar.html#addSeparator-java.awt.Dimension- JToolBar#addSeparator(Dimension)]メソッドで`JToolBar`にサイズを指定して`JSeparator`を追加可能
 - `UIManager.put("ToolBar.separatorSize", new Dimension(...))`でまとめてデフォルトの`JToolBar.Separator`のサイズ指定する方法もある
 -- `UIManager.put("ToolBar.separatorSize", new Dimension(...))`を使用した水平`JToolBar`の場合、幅が高さ、高さが幅に自動的に入れ替わる
@@ -71,10 +71,10 @@ button.addActionListener(e -> {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JToolBar.html#addSeparator-java.awt.Dimension- JToolBar#addSeparator(Dimension) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JToolBar.Separator.html JToolBar.Separator (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

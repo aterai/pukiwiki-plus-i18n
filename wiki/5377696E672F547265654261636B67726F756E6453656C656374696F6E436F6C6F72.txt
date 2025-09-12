@@ -8,12 +8,12 @@ pubdate: 2012-10-29T01:14:10+09:00
 description: JTreeのノード条件によって、その選択背景色を変更します。
 image: https://lh4.googleusercontent.com/-7JA4jpNa55U/UI1VhdHlkwI/AAAAAAAABVw/dAUHGh4q014/s800/TreeBackgroundSelectionColor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノード条件によって、その選択背景色を変更します。
 
 #download(https://lh4.googleusercontent.com/-7JA4jpNa55U/UI1VhdHlkwI/AAAAAAAABVw/dAUHGh4q014/s800/TreeBackgroundSelectionColor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SelectionColorTreeCellRenderer extends DefaultTreeCellRenderer {
   private Color color = null;
@@ -58,7 +58,7 @@ class SelectionColorTreeCellRenderer extends DefaultTreeCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下の条件でノードの選択時背景色を変更しています。
 
 - `DefaultMutableTreeNode#getUserObject()`が`Color`の場合、その色を選択時背景色に採用
@@ -69,9 +69,9 @@ class SelectionColorTreeCellRenderer extends DefaultTreeCellRenderer {
 -- ノードアイコン、テキストの背景色が共に選択状態になる
 -- `SynthLookAndFeel`で作成されている`NimbusLookAndFeel`などでは上記のような選択背景色は適用されない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeCellRenderer.html DefaultTreeCellRenderer (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

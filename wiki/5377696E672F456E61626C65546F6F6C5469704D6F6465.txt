@@ -8,12 +8,12 @@ pubdate: 2019-12-02T14:46:11+09:00
 description: JToolTipの表示モードをすべてのウィンドウで有効にする、またはアクティブなウィンドウのみに限定するで切り替えます。
 image: https://drive.google.com/uc?id=1Fpl-P9uPOWTn4O-9Xy0pbWKQZIevg_VT
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolTip`の表示モードをすべてのウィンドウで有効にする、またはアクティブなウィンドウのみに限定するで切り替えます。
 
 #download(https://drive.google.com/uc?id=1Fpl-P9uPOWTn4O-9Xy0pbWKQZIevg_VT)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static final String TOOLTIP_MODE = "ToolTipManager.enableToolTipMode";
 // ...
@@ -28,7 +28,7 @@ radio2.setToolTipText("ToolTip: " + activeApplication);
 radio2.addItemListener(e -> UIManager.put(TOOLTIP_MODE, activeApplication));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `allWindows`
 -- `JFrame`などのウィンドウがアクティブかどうかにかかわらずツールチップ表示は有効
 -- デフォルトはこの`allWindows`で`BasicLookAndFeel`などの初期値
@@ -51,9 +51,9 @@ if ("activeApplication".equals(mode)) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://bugs.openjdk.org/browse/JDK-6529793 &#91;JDK-6529793&#93; Swing's default behavior should be to display tooltips when window lacks focus. - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

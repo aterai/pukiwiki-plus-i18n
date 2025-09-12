@@ -8,19 +8,19 @@ pubdate: 2005-08-22T08:08:31+09:00
 description: Borderを変更したJTextFieldを、JTableのデフォルトセルエディタとして設定します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIiyFXk2I/AAAAAAAAAS8/Dgu1EqDMma4/s800/CellEditorBorder.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Border`を変更した`JTextField`を、`JTable`のデフォルトセルエディタとして設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIiyFXk2I/AAAAAAAAAS8/Dgu1EqDMma4/s800/CellEditorBorder.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextField field = new JTextField();
 field.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 table.setDefaultEditor(Object.class, new DefaultCellEditor(field));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`LineBorder`を設定した`JTextField`を使用する`DefaultCellEditor`を作成し、`JTable#setDefaultEditor(...)`メソッドで`Object`クラスのデフォルトセルエディタとして設定しています。
 
 - `JTable#setDefaultEditor(...)`を使用せずに`JTable#prepareEditor(...)`をオーバーライドしてセルエディタとして使用するコンポーネントの背景色や`Border`を変更する方法もある
@@ -44,9 +44,9 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableが使用するBooleanCellEditorの背景色を変更>Swing/BooleanCellEditor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

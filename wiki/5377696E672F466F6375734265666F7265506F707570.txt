@@ -8,12 +8,12 @@ pubdate: 2017-11-06T15:23:38+09:00
 description: JTextFieldなどに設定したJPopupMenuをマウスの右クリックで開くとき、そのにFocusを移動し文字列を全選択します。
 image: https://drive.google.com/uc?id=1DYqevQ-Nj2i5IptiAWC7KPYVKcbmuL9sMA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`などに設定した`JPopupMenu`をマウスの右クリックで開くとき、その`JTextComponent`に`Focus`を移動し文字列を全選択します。
 
 #download(https://drive.google.com/uc?id=1DYqevQ-Nj2i5IptiAWC7KPYVKcbmuL9sMA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TextComponentPopupMenu extends JPopupMenu {
   private final Action cutAction = new DefaultEditorKit.CutAction();
@@ -45,7 +45,7 @@ class TextComponentPopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default setComponentPopupMenu`
 -- `JTextField#setComponentPopupMenu(...)`で`JTextField`に`JPopupMenu`を設定
 -- 別の`JTextComponent`にフォーカスがある状態でこの`JTextField`内を右クリックして`JPopupMenu`を表示してもフォーカスは前の`JTextComponent`に残る
@@ -96,12 +96,12 @@ textField4.addMouseListener(new MouseAdapter() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[DefaultEditorKitでポップアップメニューからコピー>Swing/DefaultEditorKit]]
 - [[MenuSelectionManagerですべてのJPopupMenuを取得する>Swing/GetAllPopupMenus]]
 - [[JTextField内のテキストをすべて選択>Swing/SelectAll]]
 - [https://bugs.openjdk.org/browse/JDK-8044493 JDK-8044493 Clicking on an editable JComboBox leaves JPopupMenus and other menus open - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

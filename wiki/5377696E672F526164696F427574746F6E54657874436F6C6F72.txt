@@ -8,12 +8,12 @@ pubdate: 2009-01-05T12:42:32+09:00
 description: JRadioButtonの状態の変化に応じて、その文字色やアイコンを変更します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRa2rE0nI/AAAAAAAAAhI/A6NX-uUoYjM/s800/RadioButtonTextColor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JRadioButton`の状態の変化に応じて、その文字色やアイコンを変更します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRa2rE0nI/AAAAAAAAAhI/A6NX-uUoYjM/s800/RadioButtonTextColor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ColorRadioButton extends JRadioButton {
   private static final Color defaultColor = Color.BLACK;
@@ -40,7 +40,7 @@ class ColorRadioButton extends JRadioButton {
   // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JRadioButton`が選択やロールオーバーした時の文字色をマウスリスナーではなく`AbstractButton#fireStateChanged()`メソッドをオーバーライドして変更しています。
 
 - 文字色ではなくアイコンを変更する場合は`setPressedIcon(...)`、`setSelectedIcon(...)`、`setRolloverIcon(...)`メソッドが使用可能
@@ -64,12 +64,12 @@ radioButton.addChangeListener(new ChangeListener() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#fireStateChanged-- AbstractButton#fireStateChanged() (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ButtonModel.html ButtonModel (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/ChangeListener.html ChangeListener (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - スクリーンショットのタイトルボーダーが入れ替わっていたのを修正。 -- &user(aterai); &new{2009-06-03 (水) 21:27:13};
 

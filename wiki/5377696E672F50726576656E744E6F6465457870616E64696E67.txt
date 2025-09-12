@@ -8,12 +8,12 @@ pubdate: 2014-01-27T00:45:37+09:00
 description: JTreeで特定のノードだけ展開できないように設定します。
 image: https://lh4.googleusercontent.com/-WcBsEg_mxgc/UuUbyvn84EI/AAAAAAAAB-0/iZ6t8_EGeZQ/s800/PreventNodeExpanding.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`で特定のノードだけ展開できないように設定します。
 
 #download(https://lh4.googleusercontent.com/-WcBsEg_mxgc/UuUbyvn84EI/AAAAAAAAB-0/iZ6t8_EGeZQ/s800/PreventNodeExpanding.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DirectoryExpandVetoListener implements TreeWillExpandListener {
   @Override public void treeWillExpand(TreeExpansionEvent e)
@@ -38,15 +38,15 @@ class DirectoryExpandVetoListener implements TreeWillExpandListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `TreeWillExpandListener`を実装し、`treeWillExpand(...)`メソッド内で、ノード(`File`)の名前がドットで始まる場合、`ExpandVetoException`を発生させることでマウスクリックなどによる展開をキャンセル
 -- これらのノードは展開は不可だが、選択自体は可能
 - 名前がドットで始まる場合、`DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`内でそのノードを`setEnabled(false)`で無効状態に変更して描画
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/events/treewillexpandlistener.html How to Write a Tree-Will-Expand Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)]
 - [[JTreeのノードを折り畳み不可に設定する>Swing/TreeNodeCollapseVeto]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

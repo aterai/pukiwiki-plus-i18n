@@ -8,18 +8,18 @@ pubdate: 2019-04-22T14:59:07+09:00
 description: JToolBarに配置したJToggleButtonやJButtonの縁色を設定します。
 image: https://drive.google.com/uc?id=1jkCLCEtkxl2qq_I13YIftBgpCsXiCwkCtQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolBar`に配置した`JToggleButton`や`JButton`の縁色を設定します。
 
 #download(https://drive.google.com/uc?id=1jkCLCEtkxl2qq_I13YIftBgpCsXiCwkCtQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("Button.disabledToolBarBorderBackground", Color.RED);
 UIManager.put("Button.toolBarBorderBackground", Color.GREEN);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Button.disabledToolBarBorderBackground`
 -- `MetalLookAndFeel`を適用した`JToolBar`に配置した`setEnabled(false)`の`JToggleButton`などの縁背景色を設定可能
 -- `JToggleButton`と`JButton`は有効、`JCheckBox`と`JRadioButton`は無効
@@ -29,9 +29,9 @@ UIManager.put("Button.toolBarBorderBackground", Color.GREEN);
 -- `JToggleButton`と`JButton`は有効、`JCheckBox`と`JRadioButton`は無効
 -- ボタンに独自の縁(`UIResource`を実装していない)が設定されている場合、この設定はそのボタンに対して影響しない
  
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JToolBarのロールオーバー状態を設定する>Swing/RolloverModeToolBar]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

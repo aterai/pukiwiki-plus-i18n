@@ -7,7 +7,7 @@ description: Windows環境のSubversionで、差分の比較(diff)にWinMergeを
 ---
 #contents
 
-* 概要 [#p838af6f]
+* Summary [#p838af6f]
 このページでは、Windows環境のSubversionで、差分の比較(diff)に、WinMergeを使用する方法をメモしています。
 
 #ref(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQr22Z_HNOI/AAAAAAAAArY/KMybO9YLyow/s800/winmerge.png)
@@ -82,7 +82,7 @@ diff-cmd = winmerge.bat
 コマンドラインなどで、diff-cmdオプションを指定しなくても、WinMergeが立ち上がります((%%ただし、うっかり大量のファイルを比較してしまうと、一つずつ順番にWinMergeが立ち上がるので注意が必要%%))。
  svn diff Example.java -r PREV:HEAD
 
-* 参考リンク [#z313e92f]
+* Reference [#z313e92f]
 - [http://www.geocities.co.jp/SiliconValley-SanJose/8165/winmerge.html WinMerge 日本語版]
 - [http://winmerge.org/2.6/manual/CommandLine.html 16. Command Line]
 - [http://svnbook.red-bean.com/en/1.2/svn.advanced.externaldifftools.html#svn.advanced.externaldifftools.diff.ex-2 Using External Differencing Tools]
@@ -90,7 +90,7 @@ diff-cmd = winmerge.bat
 -- [http://itpro.nikkeibp.co.jp/free/NT/WinKeyWord/20040805/1/start.shtml Windowsコマンド集：（start）]
 -- [http://winmerge.org/2.6/manual/CommandLine.html 16. Command Line]
 
-* コメント [#s74a5720]
+* Comment [#s74a5720]
 #comment
 - [http://flimflan.com/blog/UsingWinMergeWithSubversion.aspx Joshua Flanagan - Using WinMerge with Subversion]を参考にしてバッチファイルを変更(比較を一つのWinMergeで開くように)しました。 -- &user(aterai); &new{2008-07-01 (火) 17:46:39};
 - winmerge.bat のコメントに日本語があると、このページでうまく表示できていなかったのを修正。 -- &user(aterai); &new{2008-12-15 (月) 20:36:03};

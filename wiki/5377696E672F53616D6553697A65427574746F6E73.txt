@@ -8,17 +8,17 @@ pubdate: 2015-05-11T00:39:58+09:00
 description: NimbusLookAndFeelでJOptionPaneを使用した場合、そのJButtonのサイズを揃えるかどうかを設定します。
 image: https://lh3.googleusercontent.com/-vidT_rr0mcE/VU97kF6HGpI/AAAAAAAAN4A/ByrWGh41AQg/s800/SameSizeButtons.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`で`JOptionPane`を使用した場合、その`JButton`のサイズを揃えるかどうかを設定します。[https://stackoverflow.com/questions/30138984/joptionpane-button-size-nimbus-laf java - JOptionPane button size (Nimbus LAF) - Stack Overflow]の回答を参考にしています。
 
 #download(https://lh3.googleusercontent.com/-vidT_rr0mcE/VU97kF6HGpI/AAAAAAAAN4A/ByrWGh41AQg/s800/SameSizeButtons.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.getLookAndFeelDefaults().put("OptionPane.sameSizeButtons", true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `default`
 -- デフォルトの`NimbusLookAndFeel`で`JOptionPane`が使用する`JButton`のサイズは各ボタンのテキストの長さに依存する
 - `SameSizeButtons`
@@ -34,12 +34,12 @@ SwingUtilities.updateComponentTreeUI(op);
 op.createDialog(getRootPane(), "title").setVisible(true);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/30138984/joptionpane-button-size-nimbus-laf java - JOptionPane button size (Nimbus LAF) - Stack Overflow]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/synth/doc-files/componentProperties.html SynthLookAndFeelでのコンポーネント固有のプロパティ]
 - [[Nimbusの外観をUIDefaultsで変更する>Swing/UIDefaultsOverrides]]
 - [[JButtonなどの高さを変更せずに幅を指定>Swing/ButtonWidth]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

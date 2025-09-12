@@ -1,0 +1,96 @@
+---
+category: swing
+folder: SplitButton
+title: JComboBoxのドロップダウンリストで異なる高さのセルを使用する
+tags: [JComboBox, JList, ListCellRenderer, PopupMenuListener, JTextArea]
+author: aterai
+pubdate: 2024-09-30T08:53:40+09:00
+description: JComboBoxのセルレンダラとして選択状態用のJCheckBox、複数行文字列用のJTextAreaなどを配置したJPanelを使用し、異なる高さのセルを描画します。
+image: https://drive.google.com/uc?id=1tSfYI71idR4Y2i-iH0OxQHtBwLjQghGk
+---
+* Summary [#summary]
+`JComboBox`のセルレンダラとして選択状態用の`JCheckBox`、複数行文字列用の`JTextArea`などを配置した`JPanel`を使用し、異なる高さのセルを描画します。
+
+#download(https://drive.google.com/uc?id=1tSfYI71idR4Y2i-iH0OxQHtBwLjQghGk)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JComboBox<ComboItem> combo = new JComboBox<ComboItem>(model) {
+  private transient PopupMenuListener listener;
+
+  @Override public void updateUI() {
+    removePopupMenuListener(listener);
+    super.updateUI();
+    setPrototypeDisplayValue(new ComboItem("**********", ""));
+    setRenderer(new CheckComboBoxRenderer<>(this));
+    // AccessibleContext ac = getAccessibleContext();
+    // ComboPopup popup = (ComboPopup) ac.getAccessibleChild(0);
+    // JList<?> list = popup.getList();
+    // list.setFixedCellHeight(-1);
+    listener = new WidePopupMenuListener();
+    addPopupMenuListener(listener);
+  }
+};
+}}
+
+* Description [#description]
+- `JComboBox#setPrototypeCellValue(...)`で`JComboBox`本体のサイズを指定
+-- ドロップダウンリストで使用する`JList`のセルサイズには影響せず(自動的に`JList#setPrototypeCellValue(...)`は実行されない)、デフォルトの`JList.setFixedCellHeight(-1)`が適用されて各要素のセルレンダラに`getPreferredSize`を設定して`ListUI`でセルの高さが計算される
+-- [[JListで異なる高さのセルを使用>Swing/DifferentCellHeight]]
+- `JComboBox`に`PopupMenuListener`を追加してドロップダウンリストの幅を`JComboBox`本体より広く設定
+-- [[JComboBoxのドロップダウンリスト幅を指定値以上に保つ>Swing/ComboPopupWidth]]
+- `JComboBox#setRenderer(...)`で`ListCellRenderer#getListCellRendererComponent(...)`を実装したセルレンダラを設定
+-- ドロップダウンリストのセルを描画する場合(`index>=0`)は、選択状態を表示する`JCheckBox`、タイトルを表示する`JLabel`、複数行のテキストを表示する`JTextArea`などを`JPanel`に配置して返す
+-- `JComboBox`本体のセルを描画する場合(`index==-1`)は、タイトルを表示する`JLabel`を返す
+
+#code{{
+class CheckComboBoxRenderer<E extends ComboItem>
+    implements ListCellRenderer<E> {
+  private static final Color SELECTED_BGC = new Color(0xC0_E8_FF);
+  private final EditorPanel renderer;
+  private final JLabel label = new JLabel();
+  private final JComboBox<ComboItem> combo;
+
+  protected CheckComboBoxRenderer(JComboBox<ComboItem> combo) {
+    this.combo = combo;
+    ComboItem proto = Optional
+        .ofNullable(combo.getPrototypeDisplayValue())
+        .orElseGet(() -> new ComboItem("", ""));
+    renderer = new EditorPanel(proto);
+  }
+
+  @Override public Component getListCellRendererComponent(
+      JList<? extends E> list, E value, int index,
+      boolean isSelected, boolean cellHasFocus) {
+    Component c;
+    if (index >= 0) {
+      renderer.setItem(value);
+      if (isSelected) {
+        renderer.setSelected(true);
+        renderer.setOpaque(true);
+        renderer.setBackground(SELECTED_BGC);
+      } else {
+        renderer.setSelected(combo.getSelectedIndex() == index);
+        renderer.setOpaque(false);
+        renderer.setBackground(Color.WHITE);
+      }
+      c = renderer;
+    } else {
+      label.setOpaque(false);
+      label.setText(Objects.toString(value, ""));
+      c = label;
+    }
+    return c;
+  }
+}
+}}
+
+* Reference [#reference]
+- [[JListで異なる高さのセルを使用>Swing/DifferentCellHeight]]
+- [[JComboBoxのドロップダウンリスト幅を指定値以上に保つ>Swing/ComboPopupWidth]]
+- [https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request Merging a pull request - GitHub Docs]
+-- via: [https://azukiazusa.dev/blog/customizable-select-element/ スタイルをカスタマイズ可能な新しい `<select>` 要素]
+
+* Comment [#comment]
+#comment
+#comment

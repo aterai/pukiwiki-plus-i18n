@@ -8,12 +8,12 @@ pubdate: 2004-02-09
 description: JTabbedPaneで、選択されたタブの文字色を変更します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJo7nZnbI/AAAAAAAAAUs/6SU2JG2B0t0/s800/ColorTab.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`で、選択されたタブの文字色を変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJo7nZnbI/AAAAAAAAAUs/6SU2JG2B0t0/s800/ColorTab.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 tabbedPane.addChangeListener(e -> {
   JTabbedPane tabs = (JTabbedPane) e.getSource();
@@ -32,7 +32,7 @@ tabbedPane.addChangeListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JTabbedPane`に`ChangeListener`を追加し、条件によってタブの文字色を変更しています。
 
 - タブ文字色: `JTabbedPane#setForegroundAt(Color)`
@@ -55,11 +55,11 @@ public static void createAndShowGUI() {
 // ...
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setForegroundAt-int-java.awt.Color- JTabbedPane#setForegroundAt(Color) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setBackgroundAt-int-java.awt.Color- JTabbedPane#setBackgroundAt(Color) (Java Platform SE 8)]
 - [[JTabbedPaneのタブ文字列をハイライト>Swing/TabTitleHighlight]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

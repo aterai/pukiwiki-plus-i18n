@@ -8,12 +8,12 @@ pubdate: 2022-05-09T03:24:27+09:00
 description: JFileChooserで既存ファイルの名前変更は有効のまま新規フォルダの作成のみ無効に設定します。
 image: https://drive.google.com/uc?id=1a7Lm2pVbgfsEnORKxYiekYuJz_rAwCCI
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`で既存ファイルの名前変更は有効のまま新規フォルダの作成のみ無効に設定します。
 
 #download(https://drive.google.com/uc?id=1a7Lm2pVbgfsEnORKxYiekYuJz_rAwCCI)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JFileChooser fc2 = new JFileChooser();
 fc2.setFileSystemView(new FileSystemView() {
@@ -30,7 +30,7 @@ fc2.addPropertyChangeListener(JFileChooser.DIRECTORY_CHANGED_PROPERTY, e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `FileSystemView#createNewFolder(...)`をオーバーライドし`null`を返すよう設定して新規フォルダの作成を無効化
 -- ツールバーの「新規フォルダの作成」ボタンやコンテキストメニューの「新規フォルダ」メニューアイテムはクリック可能だが、クリックしても新規フォルダが作成されなくなる
 - `JFileChooser#getActionMap()`で`FilePane.ACTION_NEW_FOLDER`アクションを取得し`setEnabled(false)`で無効化
@@ -40,11 +40,11 @@ fc2.addPropertyChangeListener(JFileChooser.DIRECTORY_CHANGED_PROPERTY, e -> {
 - `UIManager.put("FileChooser.readOnly", Boolean.TRUE)`で`JFileChooser`をリードオンリーにすると「新規フォルダの作成」だけでなくファイルの「名前の変更」も不可になる
 -- [[JFileChooserを編集不可にする>Swing/ROFileChooser]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFileChooserを編集不可にする>Swing/ROFileChooser]]
 - [[JFileChooserに画像プレビューを追加>Swing/PreviewAccessory]]
 - [https://bugs.openjdk.org/browse/JDK-8021379 &#91;JDK-8021379&#93; JFileChooser Create New Folder button enabled in write proteced directory - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

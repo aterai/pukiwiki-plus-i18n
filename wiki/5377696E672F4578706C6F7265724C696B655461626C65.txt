@@ -8,12 +8,12 @@ pubdate: 2006-07-17T08:23:31+09:00
 description: セルの中にアイコンと文字列を配置し、エクスプローラ風に見えるよう、文字列だけにフォーカスをかけます。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMWzLLVKI/AAAAAAAAAZA/k3vF14Jt-V0/s800/ExplorerLikeTable.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 セルの中にアイコンと文字列を配置し、エクスプローラ風に見えるよう、文字列だけにフォーカスをかけます。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTMWzLLVKI/AAAAAAAAAZA/k3vF14Jt-V0/s800/ExplorerLikeTable.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TestRenderer extends Box implements TableCellRenderer {
   private final Border emptyBorder = BorderFactory.createEmptyBorder(1, 1, 1, 1);
@@ -83,7 +83,7 @@ class TestRenderer extends Box implements TableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `Windows Explorer`(ファイルシステム・エクスプローラ)の詳細表示風にするため、以下のような設定をしています。
 
 - セル間の罫線を非表示(`JTable#setShowHorizontalLines`、`JTable#setShowVerticalLines`)
@@ -107,10 +107,10 @@ class TestRenderer extends Box implements TableCellRenderer {
 -- %%KBD{Tab}キー、矢印キーによる選択状態の移動がおかしい%%
 -- 編集不可
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://xp-style-icons.en.softonic.com/ XP Style Icons - Download]
 - [[JTableで文字列をクリックした場合だけセルを選択状態にする>Swing/TableFileList]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

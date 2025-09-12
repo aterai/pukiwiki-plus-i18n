@@ -8,12 +8,12 @@ pubdate: 2012-11-05T14:47:06+09:00
 description: JTableの行の描画に、JTableHeaderから取得した列ヘッダのRendererを適用します。
 image: https://lh3.googleusercontent.com/-FSdrv2BDUCo/UJaJTUVXcdI/AAAAAAAABWU/gBeKokda9h8/s800/RowHeaderStyle.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の行の描画に、`JTableHeader`から取得した列ヘッダの`Renderer`を適用します。
 
 #download(https://lh3.googleusercontent.com/-FSdrv2BDUCo/UJaJTUVXcdI/AAAAAAAABWU/gBeKokda9h8/s800/RowHeaderStyle.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RowHeaderRenderer extends JLabel implements TableCellRenderer {
   private int rollOverRowIndex = -1;
@@ -105,7 +105,7 @@ class ComponentIcon implements Icon {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`0`列目のセルに`JTable#getTableHeader()#getDefaultRenderer()`メソッドで取得したセルレンダラーを使用する`TableCellRenderer`を適用しています。
 
 - ソートアイコンが列ヘッダに表示されていても行ヘッダには表示しない
@@ -114,10 +114,10 @@ class ComponentIcon implements Icon {
 -- ロールオーバーを描画する場合は`TableCellRenderer#getTableCellRendererComponent(...)`で取得したコンポーネントを透明にする
 -- 右と下側に余白が発生するのでヘッダセルレンダラーからサイズを変更したアイコンを作成して`JLabel#setIcon(Icon)`で表示
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableに行ヘッダを追加>Swing/TableRowHeader]]
 - [[JTableのセルのハイライト>Swing/CellHighlight]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2022-07-11T02:40:01+09:00
 description: JToolBarのドラッグアウト開始を左マウスボタンでのみ可能になるよう制限します。
 image: https://drive.google.com/uc?id=12XVKQQIGqcIDa8p5FfEPfvHJTTZ9qyMn
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolBar`のドラッグアウト開始を左マウスボタンでのみ可能になるよう制限します。
 
 #download(https://drive.google.com/uc?id=12XVKQQIGqcIDa8p5FfEPfvHJTTZ9qyMn)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DockingListener2 extends MouseInputAdapter {
   private final JToolBar toolBar;
@@ -53,7 +53,7 @@ class DockingListener2 extends MouseInputAdapter {
 }}
 
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- デフォルトの`JToolBar`は左マウスボタンだけでなく右・中マウスボタンのクリックでもドラッグアウト開始が可能
 -- このため`WindowsLookAndFeel`環境などで`JToolBar`に`JPopupMenu`を設定して右マウスボタンでドラッグアウトすると`JToolBar`は元の位置に残ったままドラッグ中の`JWindow`も表示され続ける状態になる
@@ -97,10 +97,10 @@ class DisableRightButtonDragOutLayerUI extends LayerUI<JPanel> {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableHeaderの列をマウスの右ボタンドラッグで順序変更不可にする>Swing/DisableRightButtonReordering]]
 - [[JComboBoxのドロップダウンリストで右クリックを無効化>Swing/DisableRightClick]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

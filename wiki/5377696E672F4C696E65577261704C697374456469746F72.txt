@@ -8,12 +8,12 @@ pubdate: 2021-02-15T00:28:50+09:00
 description: JTextAreaを幅固定、文字列の長さに応じた折り返しで高さ伸縮可能に設定し、これをJFrameに配置して親枠外でも表示可能なJListセルラベルエディタとして使用します。
 image: https://drive.google.com/uc?id=1sEuzsyqu2Jzz8PXleIVr44WlUGdeul_8
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`を幅固定、文字列の長さに応じた折り返しで高さ伸縮可能に設定し、これを`JFrame`に配置して親枠外でも表示可能な`JList`セルラベルエディタとして使用します。
 
 #download(https://drive.google.com/uc?id=1sEuzsyqu2Jzz8PXleIVr44WlUGdeul_8)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // private final Container glassPane = new EditorGlassPane();
 // private final JPopupMenu popup = new JPopupMenu();
@@ -26,7 +26,8 @@ window.setAlwaysOnTop(true);
 window.addWindowListener(new WindowAdapter() {
   @Override public void windowDeactivated(WindowEvent e) {
     if (editor.isEditable()) {
-      renameTitle.actionPerformed(new ActionEvent(editor, ActionEvent.ACTION_PERFORMED, ""));
+      renameTitle.actionPerformed(
+          new ActionEvent(editor, ActionEvent.ACTION_PERFORMED, ""));
     }
   }
 });
@@ -65,7 +66,7 @@ editor.getDocument().addDocumentListener(new DocumentListener() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `GlassPane` + `JTextField`
 -- `JTextField#setHorizontalAlignment(SwingConstants.CENTER)`を設定して中央揃えが可能
 -- `JTextField`を使用するため`1`行エディタになる
@@ -93,11 +94,12 @@ editor.getDocument().addDocumentListener(new DocumentListener() {
 --- 編集キャンセルの場合はコミットせずに`JFrame`を非表示にするよう注意が必要
 -- `JFrame`のタイトルバーをクリックしても編集終了できない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JListのセルに配置したJLabelのテキストを編集する>Swing/ListEditor]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextArea.html#setLineWrap-boolean- JTextArea#setLineWrap(boolean) (Java Platform SE 8)]
 - [[JWindow内にフォーカス可能なコンポーネントを配置する>Swing/JWindowFocus]]
+- [[JTextPaneで中央揃え、行折返し可能なリストセルエディタを作成する>Swing/CenteredMultiRowCellEditor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

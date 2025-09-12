@@ -6,106 +6,140 @@ description: SwingアプリケーションのLookAndFeelをagentを使って外�
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 `Swing`アプリケーションの`LookAndFeel`を`agent`を使って外部から切り替えてデバッグします。
 
-- [https://ateraimemo.com/data/swing/lnfagent.jar lnfagent.jar]
-- [https://ateraimemo.com/data/swing/LookAndFeel_Debug_Agent_src.zip src.zip]
+- [https://ateraimemo.com/data/swing/lnfagent-1.0.1.jar lnfagent-1.0.1.jar]
+- [https://ateraimemo.com/data/swing/LookAndFeelDebugAgent-1.0.1.zip LookAndFeelDebugAgent-1.0.1.zip]
 
-#ref(https://lh5.googleusercontent.com/_9Z4BYR88imo/TT_f_Hrp06I/AAAAAAAAAzQ/zeH8FoIfM4A/s800/LookAndFeelDebugAgent.png)
+// #ref(https://lh5.googleusercontent.com/_9Z4BYR88imo/TT_f_Hrp06I/AAAAAAAAAzQ/zeH8FoIfM4A/s800/LookAndFeelDebugAgent.png)
+#ref(https://ateraimemo.com/data/swing/LookAndFeelDebugAgent.png)
 
 * ソースコード [#sourcecode]
 #code{{
 package swinghelper;
+
 import java.awt.*;
-import java.awt.event.*;
-import java.lang.instrument.*;
+import java.awt.event.ActionEvent;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.logging.Logger;
 import javax.swing.*;
+import com.formdev.flatlaf.*;
 
 public class LookAndFeelDebugAgent {
-  public static void premain(String args) throws Exception {
-    EventQueue.invokeLater(new Runnable() {
-      @Override public void run() {
-        createAndShowGUI();
-      }
-    });
-  }
-  public static void createAndShowGUI() {
-    ButtonGroup group = new ButtonGroup();
-    Box box = Box.createVerticalBox();
-    for (LookAndFeelEnum lnf: LookAndFeelEnum.values()) {
-      JRadioButton rb = new JRadioButton(new ChangeLookAndFeelAction(lnf));
-      group.add(rb); box.add(rb);
-    }
+  public static Component makeUI() {
+    Box box = LookAndFeelUtils.createLookAndFeelBox();
     box.add(Box.createVerticalGlue());
     box.setBorder(BorderFactory.createEmptyBorder(5, 25, 5, 25));
+    return box;
+  }
 
-    JFrame frame = new JFrame("LnF");
-    frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    frame.getContentPane().add(box);
-    frame.pack();
-    frame.setVisible(true);
+  public static void premain(String args) {
+    EventQueue.invokeLater(() -> {
+      JFrame frame = new JFrame("LookAndFeelDebugAgent");
+      frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+      frame.getContentPane().add(makeUI());
+      frame.pack();
+      frame.setVisible(true);
+    });
   }
-  private static enum LookAndFeelEnum {
-    Metal  ("javax.swing.plaf.metal.MetalLookAndFeel"),
-    Mac  ("com.sun.java.swing.plaf.mac.MacLookAndFeel"),
-    Motif  ("com.sun.java.swing.plaf.motif.MotifLookAndFeel"),
-    Windows("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"),
-    GTK  ("com.sun.java.swing.plaf.gtk.GTKLookAndFeel"),
-    Nimbus ("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-    private final String clazz;
-    private LookAndFeelEnum(String clazz) {
-      this.clazz = clazz;
+}
+
+final class LookAndFeelUtils {
+  private static String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
+
+  private LookAndFeelUtils() {
+    /* Singleton */
+  }
+
+  public static Box createLookAndFeelBox() {
+    Box box = Box.createVerticalBox();
+    ButtonGroup buttonGroup = new ButtonGroup();
+    for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+      AbstractButton b = makeButton(info);
+      initLookAndFeelAction(info, b);
+      box.add(b);
+      buttonGroup.add(b);
     }
-    public String getClassName() {
-      return clazz;
+    for (Class<?> clz : Arrays.asList(FlatLightLaf.class, FlatDarkLaf.class)) {
+      String full = clz.getName();
+      String name = full.substring(full.lastIndexOf('.') + 1);
+      UIManager.LookAndFeelInfo info = new UIManager.LookAndFeelInfo(name, full);
+      AbstractButton b = makeButton(info);
+      initLookAndFeelAction(info, b);
+      box.add(b);
+      buttonGroup.add(b);
+    }
+    return box;
+  }
+
+  private static AbstractButton makeButton(UIManager.LookAndFeelInfo info) {
+    boolean selected = info.getClassName().equals(lookAndFeel);
+    return new JRadioButton(info.getName(), selected);
+  }
+
+  public static void initLookAndFeelAction(UIManager.LookAndFeelInfo info, AbstractButton b) {
+    String cmd = info.getClassName();
+    b.setText(info.getName());
+    b.setActionCommand(cmd);
+    b.setHideActionText(true);
+    b.addActionListener(e -> setLookAndFeel(cmd));
+  }
+
+  private static void setLookAndFeel(String newLookAndFeel) {
+    String oldLookAndFeel = lookAndFeel;
+    if (!oldLookAndFeel.equals(newLookAndFeel)) {
+      try {
+        UIManager.setLookAndFeel(newLookAndFeel);
+        lookAndFeel = newLookAndFeel;
+      } catch (UnsupportedLookAndFeelException ignored) {
+        Toolkit.getDefaultToolkit().beep();
+      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+        Logger.getGlobal().severe(ex::getMessage);
+        return;
+      }
+      updateLookAndFeel();
     }
   }
-  private static class ChangeLookAndFeelAction extends AbstractAction {
-    private final String lnf;
-    protected ChangeLookAndFeelAction(LookAndFeelEnum lnfe) {
-      super(lnfe.toString());
-      this.lnf = lnfe.getClassName();
-      this.setEnabled(isAvailableLookAndFeel(lnf));
-    }
-    private static boolean isAvailableLookAndFeel(String lnf) {
-      try {
-        Class lnfClass = Class.forName(lnf);
-        LookAndFeel newLnF = (LookAndFeel) lnfClass.newInstance();
-        return newLnF.isSupportedLookAndFeel();
-      } catch (Exception e) {
-        return false;
-      }
-    }
-    @Override public void actionPerformed(ActionEvent e) {
-      try {
-        UIManager.setLookAndFeel(lnf);
-      } catch (Exception ex) {
-        ex.printStackTrace();
-        System.out.println("Failed loading L&F: " + lnf);
-      }
-      for (Frame f: Frame.getFrames()) {
-        if (f instanceof JFrame) {
-          SwingUtilities.updateComponentTreeUI(f);
-          f.pack();
-        }
-      }
+
+  private static void updateLookAndFeel() {
+    for (Window window : Window.getWindows()) {
+      SwingUtilities.updateComponentTreeUI(window);
     }
   }
 }
 }}
 
-* 解説 [#explanation]
-アプリケーションと同時に`Look And Feel`を切り替えるための別パネルを起動して、対象アプリケーションのソースコードを変更することなく`LookAndFeel`の変更がテスト可能です。
+* Description [#description]
+- アプリケーションと同時に`Look And Feel`を切り替えるための別パネルを起動して、対象アプリケーションのソースコードを変更することなく`LookAndFeel`の変更がテスト可能
+
+- このサンプルではデフォルト以外の`Look And Feel`として`FlatLightLaf`と`FlatDarkLaf`を追加して以下のように`Boot-Class-Path`を指定してコンパイルしている
+#code{{
+<target name="package" depends="compile">
+  <jar jarfile="${build.dir}/${name}-${version}.jar" basedir="${build.dest}">
+    <manifest>
+      <!--attribute name="Main-Class" value="${main.class}" /-->
+      <!--attribute name="Agent-Class" value="${main.class}" /-->
+      <attribute name="Premain-Class" value="${main.class}" />
+      <attribute name="Class-Path" value="${runtime.classpath}" />
+      <attribute name="Can-Retransform-Classes" value="true"/>
+      <attribute name="Boot-Class-Path" value="flatlaf-3.5.jar" />
+    </manifest>
+  </jar>
+</target>
+}}
 
 - `javaagent`を使用するため、`JDK 1.6`以上で以下のように起動する
 #code{{
-java -javaagent:lnfagent.jar -jar example.jar
+java -javaagent:lnfagent1.0.1.jar -jar example.jar
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/lang/instrument/package-summary.html java.lang.instrument (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

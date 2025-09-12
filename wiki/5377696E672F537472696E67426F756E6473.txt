@@ -8,12 +8,12 @@ pubdate: 2021-06-07T01:02:18+09:00
 description: FontからTextLayoutやGlyphVectorを生成して文字列の幅と高さを取得する方法をテストします。
 image: https://drive.google.com/uc?id=1FmQExVp9Ow356UL_Z4SzNFsiRUd46BN2
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Font`から`TextLayout`や`GlyphVector`を生成して文字列の幅と高さを取得する方法をテストします。
 
 #download(https://drive.google.com/uc?id=1FmQExVp9Ow356UL_Z4SzNFsiRUd46BN2)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Font font = label.getFont();
 FontRenderContext frc = label.getFontMetrics(font).getFontRenderContext();
@@ -28,12 +28,12 @@ append("GlyphVector#getLogicalBounds()", gv.getLogicalBounds());
 append("GlyphVector#getVisualBounds()", gv.getVisualBounds());
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Font#getStringBounds(...)`
 -- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Font.html#getStringBounds-java.lang.String-java.awt.font.FontRenderContext- Font#getStringBounds(...) (Java Platform SE 8)]
 -- レディングを含む起点、アセント、有効幅、および高さの論理バウンド
 -- 論理バウンドは常にすべてのテキストを含むとは限らない
---- たとえば言語やフォントによっては、アクセントのマークがアセントの上、またはディセントの下に来ることがある
+--- たとえば言語やフォントによっては、アクセントマークがアセントの上、またはディセントの下に配置される場合がある
 - `TextLayout#getBounds()`
 -- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/TextLayout.html#getBounds-- TextLayout#getBounds() (Java Platform SE 8)]
 -- ラスター化のため`TextLayout`によって描画されたピクセルがすべてこの境界内に収まるとは限らない
@@ -60,11 +60,11 @@ append("GlyphVector#getVisualBounds()", gv.getVisualBounds());
 -- 引数の`Rectangle textR`でクリップされた複合ラベル文字列の矩形境界を計算して返す
 -- `html`テキストなどにも対応している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JLabelで文字列のあふれをフェードアウト効果に変更する>Swing/TextOverflowFadeLabel]]
 - [[JLabelの文字揃え>Swing/JustifiedLabel]]
 - [https://bugs.openjdk.org/browse/JDK-8304350 &#91;JDK-8304350&#93; Font.getStringBounds calculates wrong width for TextAttribute.TRACKING other than 0.0 - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2009-03-09T14:08:29+09:00
 description: GridBagLayoutを使ってコンポーネントをレンガ状に配置します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIOzg1doI/AAAAAAAAASc/V_SwABvAldE/s800/BrickLayout.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `GridBagLayout`を使ってコンポーネントをレンガ状に配置します。[https://community.oracle.com/thread/1357310 Swing - GridBagLayout to create a board]を参考にしています。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIOzg1doI/AAAAAAAAASc/V_SwABvAldE/s800/BrickLayout.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPanel panel = new JPanel(new GridBagLayout());
 panel.setBorder(BorderFactory.createTitledBorder("Brick Layout"));
@@ -50,7 +50,7 @@ for (c.gridx = 0; c.gridx <= WIDTH * XSIZE; c.gridx++) {
 // </guide-row>
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`GridBagLayout`を使って`JButton`をレンガ状に配置します。互い違いに`2`列ずつ占めるようにボタンを配置していますが、`<guide-row>`が無い場合正しくレンガ状にはなりません。
 
 以下、[https://community.oracle.com/thread/1357310 Swing - GridBagLayout to create a board]のDarryl.Burkeさんの投稿を引用
@@ -63,10 +63,10 @@ for (c.gridx = 0; c.gridx <= WIDTH * XSIZE; c.gridx++) {
 - 同様に指定した幅、かつ高さ`0`のセルで構成されたガイド行を作成して`JButton`をキーボード風に配置するサンプル
 -- [[GridBagLayoutを使ってJButtonをキーボード状に配置する>Swing/KeyboardLayout]]に移動
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1357310 Swing - GridBagLayout to create a board]
 - [[GridBagLayoutを使ってJButtonをキーボード状に配置する>Swing/KeyboardLayout]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

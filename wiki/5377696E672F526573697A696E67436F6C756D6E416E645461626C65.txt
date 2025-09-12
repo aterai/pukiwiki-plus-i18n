@@ -8,12 +8,12 @@ pubdate: 2014-05-26T00:01:15+09:00
 description: JTableがリサイズされた場合、最後にあるTableColumnがその幅の変更を吸収するように設定します。
 image: https://lh4.googleusercontent.com/-uhbVwRqsa2g/U4HyPhrI8PI/AAAAAAAACF8/OJXWaFVxavE/s800/ResizingColumnAndTable.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`がリサイズされた場合、最後にある`TableColumn`がその幅の変更を吸収するように設定します。主に[https://stackoverflow.com/questions/23201818/jtable-columns-doesnt-resize-probably-when-jframe-resize java - JTable columns doesnt resize probably when JFrame resize - Stack Overflow]の回答からソースを引用しています。
 
 #download(https://lh4.googleusercontent.com/-uhbVwRqsa2g/U4HyPhrI8PI/AAAAAAAACF8/OJXWaFVxavE/s800/ResizingColumnAndTable.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private final JTable table = new JTable(100, 3) {
   @Override public void doLayout() {
@@ -29,10 +29,11 @@ private final JTable table = new JTable(100, 3) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JFrame`に連動して`JTable`と`JTableHeader`がリサイズされた場合、最後の`TableColumn`が幅の変更をすべて吸収するように`JTable#doLayout()`のオーバーライドや`JTableHeader.setResizingColumn(...)`の設定を行なっています。
 
 - `table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);`を設定しても例えば親`JFrame`の幅が変更されて`JTableHeader`自体がリサイズされた場合、すべての`TableColumn`の幅が均等に変化してしまう
+-- [https://bugs.openjdk.org/browse/JDK-8234071 &#91;JDK-8234071&#93; JTable.AUTO_RESIZE_LAST_COLUMN acts like AUTO_RESIZE_ALL_COLUMNS - Java Bug System]で修正され%%るかも？%%、`Java 24`では最後の列の幅のみ変化するようになった
 - 列を入れ替えた場合でも表示上最後にある`TableColumn`がリサイズされる
 - 以下のように`JTable#doLayout()`をオーバーライドではなく`JTable`または`JTableHeader`に`ComponentListener`を追加しても同様の動作になるが、リサイズ開始時に最後の`TableColumn`にも幅の変更が適用されてしまうため微妙に幅が変化してしまう場合がある(先に`JTable#doLayout()`が実行される)
 
@@ -55,10 +56,11 @@ table2.getTableHeader().addComponentListener(new ComponentAdapter() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/23201818/jtable-columns-doesnt-resize-probably-when-jframe-resize java - JTable columns doesnt resize probably when JFrame resize - Stack Overflow]
 - [https://stackoverflow.com/questions/16368343/jtable-resize-only-selected-column-when-container-size-changes java - JTable resize only selected column when container size changes - Stack Overflow]
+- [https://bugs.openjdk.org/browse/JDK-8234071 &#91;JDK-8234071&#93; JTable.AUTO_RESIZE_LAST_COLUMN acts like AUTO_RESIZE_ALL_COLUMNS - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

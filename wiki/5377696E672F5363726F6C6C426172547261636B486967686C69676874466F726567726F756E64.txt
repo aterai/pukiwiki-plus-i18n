@@ -8,12 +8,12 @@ pubdate: 2023-09-25T01:02:05+09:00
 description: JScrollBarのトラック色やトラックをマウスでクリックした時に使用されるとハイライト色を変更します。
 image: https://drive.google.com/uc?id=17jffD7-KwJvXflfEg3_V4PNMqBnx2LYy
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollBar`のトラック色やトラックをマウスでクリックした時に使用されるとハイライト色を変更します。
 
 #download(https://drive.google.com/uc?id=17jffD7-KwJvXflfEg3_V4PNMqBnx2LYy)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextArea log = new JTextArea(200, 200) {
   @Override public void updateUI() {
@@ -39,7 +39,7 @@ JScrollPane scroll = new JScrollPane(log);
 add(scroll);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `ScrollBar.track`、`ScrollBar.trackForeground`
 -- `JScrollBar`の通常状態のトラック色
 -- `MotifLookAndFeel`では`ScrollBar.track`が有効
@@ -48,10 +48,10 @@ add(scroll);
 -- `JScrollBar`のトラックがマウスでクリックされてスクロール中、その領域を描画するトラックハイライト色
 -- `WindowsClassicLookAndFeel`でのみ有効で、この`2`色でクリックされたトラック領域に網目模様が描画される
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollBarに検索結果をハイライト表示>Swing/ScrollBarSearchHighlighter]]
 - [[MetalLookAndFeelを適用したJSliderで現在値までのトラック背景色を変更する>Swing/SliderAltTrackColor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

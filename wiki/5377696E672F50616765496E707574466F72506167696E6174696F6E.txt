@@ -8,12 +8,12 @@ pubdate: 2013-11-04T03:33:05+09:00
 description: JTableでRowFilterを使ったPaginationとSwingWorkerでの逐次読み込みを行います。
 image: https://lh5.googleusercontent.com/-1qIJd4HlwkQ/UnaN9fNNZtI/AAAAAAAAB5Y/JqssphQAq3Q/s800/PageInputForPagination.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`で`RowFilter`を使った`Pagination`と`SwingWorker`での逐次読み込みを行います。
 
 #download(https://lh5.googleusercontent.com/-1qIJd4HlwkQ/UnaN9fNNZtI/AAAAAAAAB5Y/JqssphQAq3Q/s800/PageInputForPagination.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 worker = new SwingWorker<String, List<Object[]>>() {
   private int max = 2013;
@@ -98,7 +98,7 @@ private void initFilterAndButton() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、[[RowFilterでJTableのページ分割>Swing/TablePagination]]に以下の変更を追加しています。
 
 - `JTextField`に数値を入力して指定ページにジャンプ可能
@@ -164,9 +164,9 @@ class LoadTask extends SwingWorker<String, List<Object[]>> {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[RowFilterでJTableのページ分割>Swing/TablePagination]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

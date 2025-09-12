@@ -7,7 +7,7 @@ description: Htmlのtable要素をCSV、TSVに変換するBookmarklet
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 `Html`の`<table>`要素を`CSV`(`character-separated values`)に変換する`Bookmarklet`です。`colspan`、`rowspan`で結合するセルがある場合は、同文字列を挿入しています。
 
 - 区切り文字はタブ(`TSV`)
@@ -62,11 +62,11 @@ description: Htmlのtable要素をCSV、TSVに変換するBookmarklet
 ||||||||BGCOLOR(white):|c
 |>|>|>|>|>|>|>|CENTER:footer|f
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://marklets.com/CSV+from+HTML+tables.aspx CSV from HTML tables Bookmarklet | Bookmarklet Search Engine]
 - [http://www.codekeep.net/snippets/ec9f4704-b88a-486a-98f9-896de6afb021.aspx CodeKeep Snippet : Convert html table to csv (JavaScript)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 表計算ソフトなどの場合は、`<table>`タグをコピペするだけで`span`を考慮した表の取込みが出来るので、このスクリプトを使って`CSV`,`TSV`に変換して読み込む意味はあまりないかも。ただ、自分の使いたいソフトには、`Html`での`<table>`取り込み機能がないが、`csv`を読み込んで表にする機能があり、また連続する同文字列セルの結合が可能なので作成してみました。取り込み作業は終わったのでもう必要ないけど、せっかくなので公開しておきます。 -- &user(aterai); &new{2012-07-24 (火) 17:59:18};
 - `innerText`ではなく`innerHTML.replace(/<.*?>/mg, "")`を使用して、`FireFox`でも動作するように修正。 -- &user(aterai); &new{2012-07-27 (金) 14:49:37};

@@ -8,12 +8,12 @@ pubdate: 2019-07-29T02:07:59+09:00
 description: TableColumnをマウスでリサイズ中の場合、その幅をJWindowに配置したJToolTipで表示します。
 image: https://drive.google.com/uc?id=10_c07xtUT3tMntB9hunUeA4fV-jZN50j
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TableColumn`をマウスでリサイズ中の場合、その幅を`JWindow`に配置した`JToolTip`で表示します。
 
 #download(https://drive.google.com/uc?id=10_c07xtUT3tMntB9hunUeA4fV-jZN50j)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ColumnWidthResizeHandler extends MouseInputAdapter {
   private final JWindow window = new JWindow();
@@ -64,7 +64,7 @@ class ColumnWidthResizeHandler extends MouseInputAdapter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`TableColumn`のマウスによるリサイズイベントを取得してその列幅を`JToolTip`で表示しています。
 
 - `JTable#getColumnModel()#addColumnModelListener(...)`
@@ -76,9 +76,9 @@ class ColumnWidthResizeHandler extends MouseInputAdapter {
 -- `MouseMotionListener`を使用して列幅のリサイズ中は`ColumnModel#getWidth()`メソッドで取得した`ColumnModel`の幅を`JToolTip`で表示
 -- `JToolTip`のデフォルトウィンドウは使用せず別途用意した`JWindow`に`JToolTip`を追加し、その`JWindow`で表示・非表示や位置の更新を操作
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JToolTipの表示位置>Swing/ToolTipLocation]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2019-03-04T15:46:57+09:00
 description: Windowの形を図形で切り抜きした場合に生じる縁のジャギーをソフトクリッピング効果でなめらかに変更します。
 image: https://drive.google.com/uc?id=1qfCcXJGR0gXwMZu9LI_5jSJ_rPNct5o4rg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Window`の形を図形で切り抜きした場合に生じる縁のジャギーをソフトクリッピング効果でなめらかに変更します。
 
 #download(https://drive.google.com/uc?id=1qfCcXJGR0gXwMZu9LI_5jSJ_rPNct5o4rg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 int width = image.getWidth();
 int height = image.getHeight();
@@ -50,7 +50,7 @@ private static BufferedImage makeClippedImage(BufferedImage source, Shape shape)
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `clipped window`
 -- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#setShape-java.awt.Shape- Window#setShape(Shape)]メソッドで`JWindow`をラウンド矩形で切り抜き
 -- 縁にジャギーが発生する
@@ -89,12 +89,12 @@ private static BufferedImage makeClippedImage(BufferedImage source, Shape shape)
  OpenJDK Runtime Environment Corretto-8.222.10.3 (build 1.8.0_222-b10)
  OpenJDK 64-Bit Server VM Corretto-8.222.10.3 (build 25.222-b10, mixed mode)
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/blogs/campbell/2006/07/19/java-2d-trickery-soft-clipping campbell: Java 2D Trickery: Soft Clipping Blog | Oracle Community]
 -- [http://otn.oracle.co.jp/technology/global/jp/sdn/java/private/techtips/2006/tt0923.html Java Developer Connection]
 - [https://www.pushing-pixels.org/2008/03/03/soft-clipping-and-per-pixel-translucency-for-swing-windows.html Soft clipping and per-pixel translucency for Swing windows · Pushing Pixels]
 - [[Windowの形を変更>Swing/WindowShape]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

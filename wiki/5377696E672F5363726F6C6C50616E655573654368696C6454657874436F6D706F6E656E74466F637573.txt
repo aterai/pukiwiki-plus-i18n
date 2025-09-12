@@ -8,12 +8,12 @@ pubdate: 2022-09-12T03:52:41+09:00
 description: NimbusLookAndFeelでJScrollPaneのビューポートにテキストコンポーネントがひとつだけ配置されている場合、そのフォーカスボーダーを親JScrollPaneに適用するかを切り替えます。
 image: https://drive.google.com/uc?id=1wHPpe9jRQbjdxqHXxX0WlG6cOm48FUzL
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`で`JScrollPane`のビューポートにテキストコンポーネントがひとつだけ配置されている場合、そのフォーカスボーダーを親`JScrollPane`に適用するかを切り替えます。
 
 #download(https://drive.google.com/uc?id=1wHPpe9jRQbjdxqHXxX0WlG6cOm48FUzL)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 StringBuilder buf = new StringBuilder();
 IntStream.range(0, 100).forEach(i -> buf.append(i).append(LF));
@@ -32,18 +32,18 @@ p.add(new JScrollPane(new JTextArea(str)));
 p.add(scroll);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `ScrollPane.useChildTextComponentFocus: true`
 -- `NimbusLookAndFeel`のデフォルト
--- `JScrollPane`のビューポートにテキストコンポーネントがひとつだけ配置されている場合、そのフォーカスボーダーを親`JScrollPane`に適用する
+-- `JScrollPane`の`JViewport`にテキストコンポーネントがひとつだけ配置されている場合、そのフォーカスボーダーを親`JScrollPane`に適用する
 -- `SynthScrollPaneUI`を継承する`ScrollPaneUI`でのみ有効で、`BasicScrollPaneUI`を使用する`MetalLookAndFeel`などでは無効
 - `ScrollPane.useChildTextComponentFocus: false`
--- `JScrollPane`のビューポートにテキストコンポーネントがひとつだけ配置されている場合でも、そのフォーカスボーダーを親`JScrollPane`に適用しない
+-- `JScrollPane`の`JViewport`にテキストコンポーネントがひとつだけ配置されている場合でも、そのフォーカスボーダーを親`JScrollPane`に適用しない
 -- テキストコンポーネントが`JLayer`でラップされている場合でも無効で内部のテキストコンポーネントにフォーカスボーダーが適用される
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Nimbusの外観をUIDefaultsで変更する>Swing/UIDefaultsOverrides]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

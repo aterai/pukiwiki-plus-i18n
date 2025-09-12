@@ -8,12 +8,12 @@ pubdate: 2024-01-22T05:56:34+09:00
 description: JPopupMenuの背景を透明化し、これに角丸Borderを設定します。
 image: https://drive.google.com/uc?id=1UcaF0qHBjIuO-hIGwMbyCBGBm4T6OqBl
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPopupMenu`の背景を透明化し、これに角丸`Border`を設定します。
 
 #download(https://drive.google.com/uc?id=1UcaF0qHBjIuO-hIGwMbyCBGBm4T6OqBl)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 UIManager.put("PopupMenuUI", "example.RoundedPopupMenuUI");
@@ -67,7 +67,7 @@ class RoundedBorder extends AbstractBorder {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `BasicPopupMenuUI#getPopup(...)`をオーバーライドして`JPopupMenu`の背景を透明化する`RoundedPopupMenuUI`を作成
 -- 親`JFrame`内に表示される場合は`JPopupMenu#setOpaque(false)`で透明化が可能
 -- 親`JFrame`外に表示される場合は`JPopupMenu#setOpaque(false)`に加えて、その親となる重量コンポーネントの`Window`の背景も透明化する必要がある
@@ -126,10 +126,10 @@ final class RoundedPopupMenu extends JPopupMenu {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Menuに半透明の影を付ける>Swing/MenuWithShadow]]
 - [[JPopupMenuに半透明の影を付ける>Swing/DropShadowPopup]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

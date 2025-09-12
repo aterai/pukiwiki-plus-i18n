@@ -8,12 +8,12 @@ pubdate: 2012-07-16T23:28:29+09:00
 description: JTreeのノードアイコンによって行の高さが変更された場合のテキストの選択状態を修正します。
 image: https://lh3.googleusercontent.com/-W4SPLnW3RVY/UAQjez2fI3I/AAAAAAAABPY/c4v9ljR2k40/s800/TreeRowHeightCellMargin.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードアイコンによって行の高さが変更された場合のテキストの選択状態を修正します。
 
 #download(https://lh3.googleusercontent.com/-W4SPLnW3RVY/UAQjez2fI3I/AAAAAAAABPY/c4v9ljR2k40/s800/TreeRowHeightCellMargin.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CompoundTreeCellRenderer extends DefaultTreeCellRenderer {
   private final JPanel p = new JPanel(new BorderLayout());
@@ -73,7 +73,7 @@ class CompoundTreeCellRenderer extends DefaultTreeCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左: `Default`
 -- `UIManager.put("Tree.closedIcon", icon)`などで`JTree`のノードアイコンを変更
 -- ノードを選択した場合、アイコン(行)の高さまで選択色で塗られる
@@ -84,9 +84,9 @@ class CompoundTreeCellRenderer extends DefaultTreeCellRenderer {
 --- ノードが選択された場合、アイコン(行)の高さではなくテキスト用の`JLabel`のみ背景を選択色で塗る
 --- ノードを複数連続して選択すると行間に余白ができる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのノードの文字列に余白を追加>Swing/TreeCellMargin]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2016/05/the-jradiobutton-that-is-currently_10.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 KBD{Tab}キーによるフォーカス移動が発生した場合、`ButtonGroup`内で現在選択されている`JRadioButton`にフォーカスが移動するよう設定します。
 
 #download(https://lh3.googleusercontent.com/-r6C4rorBCYw/Vpuu38No8lI/AAAAAAAAOLc/6xa7VoLpsWI/s800-Ic42/ButtonGroupFocusTraversalPolicy.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 buttons.setFocusTraversalPolicyProvider(true);
 buttons.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
@@ -28,7 +28,7 @@ buttons.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- %%デフォルトの`LayoutFocusTraversalPolicy`では、`JRadioButton`の選択状態には無関係に、レイアウト内のグループ先頭にある`JRadioButton`にフォーカスが移動する%%
 -- [https://bugs.openjdk.org/browse/JDK-8033699 &#91;JDK-8033699&#93; Incorrect radio button behavior - Java Bug System]で修正済で、デフォルトで以下と同じ動作をするようになった
@@ -40,11 +40,11 @@ buttons.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
 -- `JRadioButton`を配置したパネルに`getDefaultComponent(...)`メソッドをオーバーライドした`FocusTraversalPolicy`を設定し現在選択されている`JRadioButton`が存在する場合は、そこにフォーカスが移動する
 -- パネルに設定した`FocusTraversalPolicy`を有効にするために`JPanel#setFocusTraversalPolicyProvider(true);`を設定する必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/34820018/get-the-focus-in-a-buttongroup-of-jradiobuttons-to-go-to-the-currently-selected/34832814#34832814 java - Get the focus in a ButtonGroup of JRadioButtons to go to the currently selected item instead of first - Stack Overflow]
 - [https://bugs.openjdk.org/browse/JDK-8033699 &#91;JDK-8033699&#93; Incorrect radio button behavior - Java Bug System]
 - [https://bugs.openjdk.org/browse/JDK-8154043 &#91;JDK-8154043&#93; Fields not reachable anymore by tab-key, because of new tabbing behaviour of radio button groups. - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

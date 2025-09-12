@@ -8,12 +8,12 @@ pubdate: 2008-12-22T13:06:25+09:00
 description: ArrowButtonを隠して、JComboBoxの表示をJLabel風にします。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTN0Yp0GRI/AAAAAAAAAbY/WvXw5vm2_LI/s800/HideComboArrowButton.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `ArrowButton`を隠して、`JComboBox`の表示を`JLabel`風にします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTN0Yp0GRI/AAAAAAAAAbY/WvXw5vm2_LI/s800/HideComboArrowButton.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Object[] items = {"JComboBox 11111:", "JComboBox 222:", "JComboBox 33:"};
 UIManager.put("ComboBox.squareButton", Boolean.FALSE);
@@ -34,7 +34,7 @@ comboBox.setFocusable(false);
 UIManager.put("ComboBox.squareButton", Boolean.TRUE);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下のようにして`JComboBox`の矢印ボタンを非表示に設定しています。
 
 - `UIManager.put("ComboBox.squareButton", Boolean.FALSE)`を設定して`JComboBox`の高さと同じ幅ではなく`ArrowButton`の幅をそのまま使用するように変更
@@ -42,10 +42,10 @@ UIManager.put("ComboBox.squareButton", Boolean.TRUE);
 - `JComboBox`の背景色を親の`JPanel`と同じ色に変更
 - `JComboBox`がフォーカスを取得不可になるよう設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1359216 Swing - Hide JComboBox Arrow?]
 - [https://bugs.openjdk.org/browse/JDK-6337518 Bug ID: 6337518 Null Arrow Button Throws Exception in BasicComboBoxUI]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

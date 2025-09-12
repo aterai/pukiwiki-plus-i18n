@@ -8,12 +8,12 @@ pubdate: 2008-09-29T13:33:14+09:00
 description: JListのアイテムを複数選択し、ドラッグ＆ドロップで並べ替えを可能にするTransferHandlerを作成します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLeSCyHuI/AAAAAAAAAXo/v2OLiSPdgEY/s800/DnDReorderList.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`のアイテムを複数選択し、ドラッグ＆ドロップで並べ替えを可能にする`TransferHandler`を作成します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLeSCyHuI/AAAAAAAAAXo/v2OLiSPdgEY/s800/DnDReorderList.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ListItemTransferHandler extends TransferHandler {
   protected final DataFlavor localObjectFlavor;
@@ -120,12 +120,13 @@ class ListItemTransferHandler extends TransferHandler {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルの`TransferHandler`は、主に[https://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#BasicDnD Drag and Drop and Data Transfer: Examples (The Java™ Tutorials > Creating a GUI with JFC/Swing > Drag and Drop and Data Transfer)]の[https://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/DropDemoProject/src/dnd/ListTransferHandler.java ListTransferHandler.java]を参考にして作成しています。ただし、この`ListTransferHandler.java`は項目を複数選択して、`JList`内での並べ替えは想定していない(もしくはバグ？)ようなので、`importData(...)`メソッドや、`cleanup()`メソッドを修正しています。
 
 #code{{
 JList list = new JList(listModel);
-list.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+list.getSelectionModel().setSelectionMode(
+    ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 list.setTransferHandler(new ListItemTransferHandler());
 list.setDropMode(DropMode.INSERT);
 list.setDragEnabled(true);
@@ -145,13 +146,13 @@ for (int i = 0; i < indices.length; i++) {
 ----
 [[JListの項目をドラッグ＆ドロップ>Swing/DnDList]]とは異なり、複数アイテムを選択して`Drag&Drop`による移動が可能になっています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/index.html#BasicDnD Drag and Drop and Data Transfer: Examples (The Java™ Tutorials > Creating a GUI with JFC/Swing > Drag and Drop and Data Transfer)]
 -- [https://docs.oracle.com/javase/tutorial/uiswing/examples/dnd/DropDemoProject/src/dnd/ListTransferHandler.java ListTransferHandler.java]
 - [[JListの項目をドラッグ＆ドロップ>Swing/DnDList]]
 - [[JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え>Swing/DragSelectDropReordering]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 複数選択して選択されたアイテムのインデックスに移動した場合、複写されるバグ？を修正。 -- &user(aterai); &new{2008-10-10 (金) 21:44:34};
 

@@ -8,12 +8,12 @@ pubdate: 2012-12-10T00:03:24+09:00
 description: JEditorPaneのHTMLEditorKitからStyleSheetを取得し、list-style-imageを使ってList bulletを変更します。
 image: https://lh4.googleusercontent.com/-cVKrTqKAhYk/UMSbt8J09jI/AAAAAAAABY0/IWonqNua5dM/s800/EditorPaneListStyle.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`の`HTMLEditorKit`から`StyleSheet`を取得し、`list-style-image`を使って`List bullet`を変更します。
 
 #download(https://lh4.googleusercontent.com/-cVKrTqKAhYk/UMSbt8J09jI/AAAAAAAABY0/IWonqNua5dM/s800/EditorPaneListStyle.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JEditorPane pane = new JEditorPane();
 pane.setContentType("text/html");
@@ -24,7 +24,7 @@ String u = getClass().getResource(bullet).toString();
 styleSheet.addRule(String.format("ul{list-style-image:url(%s);margin:0px 20px;}", u));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `Default`
 - 下: `ul{list-style-image:url(bullet.png);}`
 -- `CSS`の`list-style-image`プロパティを使用して`bullet`を画像に変更
@@ -46,10 +46,10 @@ styleSheet.addRule("ul li:before{content:'\u00BB';}");
 }}
 - `javax.swing.text.html.StyleSheet.ListPainter#drawShape(...)`などをオーバーライドできれば直接`bullet`の形やサイズを変更できそうだが、コンストラクタがパッケージプライベートのため変更不可
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JEditorPaneのHTMLEditorKitにCSSを適用>Swing/StyleSheet]]
 - [https://bugs.openjdk.org/browse/JDK-8201925 JDK-8201925 JEditorPane unordered list bullets look pixelated - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

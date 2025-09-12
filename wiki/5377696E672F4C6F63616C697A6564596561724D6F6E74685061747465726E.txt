@@ -1,0 +1,69 @@
+---
+category: swing
+folder: LocalizedYearMonthPattern
+title: Localeに対応した順序の年月パターンでカレンダータイトルを表示する
+tags: [Locale, JTable, DateTimeFormatter, Calendar]
+author: aterai
+pubdate: 2025-07-14T01:57:37+09:00
+description: Localeに応じた年月の表示順序でDateTimeFormatterを作成し、カレンダータイトル文字列として表示するよう設定します。
+image: https://drive.google.com/uc?id=1oAoT-MkwgVgmcyfiD4ZfQL7kNNZ4H8zX
+---
+* Summary [#summary]
+`Locale`に応じた年月の表示順序で`DateTimeFormatter`を作成し、カレンダータイトル文字列として表示するよう設定します。
+
+#download(https://drive.google.com/uc?id=1oAoT-MkwgVgmcyfiD4ZfQL7kNNZ4H8zX)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+public static String getLocalizedPattern(Locale locale) {
+  // DateFormat formatter = DateFormat.getDateInstance(DateFormat.LONG, locale);
+  // return ((SimpleDateFormat) formatter).toLocalizedPattern();
+  return DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+      FormatStyle.LONG, null, Chronology.ofLocale(locale), locale);
+}
+
+public static DateTimeFormatter getLocalizedYearMonthFormatter(Locale locale) {
+  String localizedPattern = getLocalizedPattern(locale);
+  String year = find(localizedPattern, Pattern.compile("(y+)"));
+  String month = find(localizedPattern, Pattern.compile("(M+)"));
+  String pattern = isYearFirst(locale) ? year + " / " + month : month + " / " + year;
+  return DateTimeFormatter.ofPattern(pattern);
+}
+
+public static String find(String str, Pattern ptn) {
+  Matcher matcher = ptn.matcher(str);
+  return matcher.find() ? matcher.group(1) : "";
+}
+
+public static boolean isYearFirst(Locale locale) {
+  String localizedPattern = getLocalizedPattern(locale);
+  int yearIndex = localizedPattern.indexOf('y');
+  int monthIndex = localizedPattern.indexOf('M');
+  return yearIndex != -1 && monthIndex != -1 && yearIndex < monthIndex;
+}
+}}
+
+* Description [#description]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/time/format/DateTimeFormatterBuilder.html#getLocalizedDateTimePattern-java.time.format.FormatStyle-java.time.format.FormatStyle-java.time.chrono.Chronology-java.util.Locale- DateTimeFormatterBuilder.getLocalizedDateTimePattern(...)]メソッドを使用して指定した`Locale`固有の日付スタイル書式設定パターンを取得
+-- `Java 8`以前では`( (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.LONG, locale) ).toLocalizedPattern()`などで日付パターンを取得可能
+- 日付パターンを年シンボル`y`、月シンボル`M`で検索し、年が月より先か後かを判断してローカライズされた年と月のパターンで`DateTimeFormatter`を生成
+- `LocalDate#format(formatter.withLocale(locale))`で`LocalDate`から日時を除いたローカライズ済みの年月文字列にフォーマットしてカレンダータイトルとして設定
+#code{{
+public void updateMonthView(LocalDate localDate) {
+  currentLocalDate = localDate;
+  Locale locale = Locale.getDefault();
+  DateTimeFormatter fmt = CalendarUtils.getLocalizedYearMonthFormatter(locale);
+  monthLabel.setText(localDate.format(fmt.withLocale(locale)));
+  monthTable.setModel(new CalendarViewTableModel(localDate));
+}
+}}
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/time/format/DateTimeFormatterBuilder.html#getLocalizedDateTimePattern-java.time.format.FormatStyle-java.time.format.FormatStyle-java.time.chrono.Chronology-java.util.Locale- DateTimeFormatterBuilder#getLocalizedDateTimePattern(...) (Java Platform SE 8)]
+- [https://stackoverflow.com/questions/4594519/how-do-i-get-localized-date-pattern-string java - How do I get localized date pattern string? - Stack Overflow]
+-- [https://icu.unicode.org/ ICU - International Components for Unicode]を使用して年月`DateFormat.YEAR_MONTH`のみのパターンを生成する方法などが紹介されている
+- [[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]
+
+* Comment [#comment]
+#comment
+#comment

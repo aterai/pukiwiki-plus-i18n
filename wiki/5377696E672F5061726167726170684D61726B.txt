@@ -8,12 +8,12 @@ pubdate: 2007-06-11T17:28:09+09:00
 description: JEditorPaneのパラグラフ終了位置に改行を意味する図形を追加表示します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTQ3cf9HLI/AAAAAAAAAgQ/gIbt2d-Hz7k/s800/ParagraphMark.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`のパラグラフ終了位置に改行を意味する図形を追加表示します。[https://community.oracle.com/thread/1374478 Swing - JTextPane View Problem]から、ソースコードの大部分を引用しています。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTQ3cf9HLI/AAAAAAAAAgQ/gIbt2d-Hz7k/s800/ParagraphMark.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class MyEditorKit extends StyledEditorKit {
   @Override public ViewFactory getViewFactory() {
@@ -75,15 +75,15 @@ class ParagraphWithEopmView extends ParagraphView {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `StyledEditorKit`を継承する`EditorKit`を作成し、これを`JEditorPane#setEditorKit`メソッドで`JEditorPane`に設定
 - この`EditorKit`は`Element`がパラグラフ(`AbstractDocument.ParagraphElementName`)の場合、改行記号を末尾に追加で描画する`View`を返す`ViewFactory`を生成
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1374478 Swing - JTextPane View Problem]
 - [[JTextPaneで全角スペースやタブを可視化>Swing/WhitespaceMark]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 行の折り返しが発生すると、改行記号が縦長になるバグを修正。 -- &user(aterai); &new{2007-09-21 (金) 17:05:03};
 

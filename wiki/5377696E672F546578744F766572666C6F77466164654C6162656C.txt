@@ -8,12 +8,12 @@ pubdate: 2018-12-03T02:58:34+09:00
 description: JLabelなどで文字列があふれる場合、デフォルトの省略記号…ではなく、フェードアウト効果を適用して端付近の文字を透明表示します。
 image: https://drive.google.com/uc?id=16SQWlFfTk5X8LOxTKkjobFZblb-hgj5uGA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLabel`などで文字列があふれる場合、デフォルトの省略記号`…`ではなく、フェードアウト効果を適用して端付近の文字を透明表示します。
 
 #download(https://drive.google.com/uc?id=16SQWlFfTk5X8LOxTKkjobFZblb-hgj5uGA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TextOverflowFadeLabel extends JLabel {
   private static final int LENGTH = 20;
@@ -54,7 +54,7 @@ class TextOverflowFadeLabel extends JLabel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `default JLabel ellipsis`
 -- `JLabel`のデフォルトは、省略記号`…`であふれる文字列を省略
 - `html JLabel fade out`
@@ -117,11 +117,11 @@ class FadingOutLabel extends JLabel {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Fontのアウトラインを取得して文字列の内部を修飾する>Swing/LineSplittingLabel]]
 - [[JComboBoxのアイテム文字列を左側からクリップ>Swing/LeftClippedComboBox]]
 - [[JTabbedPaneのタブ文字列のあふれをフェードアウト効果に変更する>Swing/TextOverflowFadeTabbedPane]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

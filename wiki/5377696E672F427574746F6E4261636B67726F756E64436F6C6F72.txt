@@ -8,12 +8,12 @@ pubdate: 2021-01-25T04:39:52+09:00
 description: WindowsLookAndFeel環境でJButtonの背景色を変更する方法をテストします。
 image: https://drive.google.com/uc?id=1P4tMuLjciT6PKLvAv8nTYFL9IwpgABDU
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `WindowsLookAndFeel`環境で`JButton`の背景色を変更する方法をテストします。
 
 #download(https://drive.google.com/uc?id=1P4tMuLjciT6PKLvAv8nTYFL9IwpgABDU)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton button4 = new JButton("JLayer + RGBImageFilter");
 JComponent c = new JLayer<>(button4, new ImageFilterLayerUI<>(new ColorFilter()));
@@ -54,7 +54,7 @@ class ColorFilter extends RGBImageFilter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- 背景色変更なしのデフォルト`JButton`
 - `setBackground`
@@ -89,9 +89,9 @@ button3.setPressedIcon(new ButtonBackgroundIcon(bg1));
 -- フォアグラウンド・カラーも変更されてしまう
 -- 参考: [[JLayerを使ってJProgressBarの色相を変更する>Swing/ColorChannelSwapFilter]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JLayerを使ってJProgressBarの色相を変更する>Swing/ColorChannelSwapFilter]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

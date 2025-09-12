@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2012/11/make-togglebuttonbar-with-jradiobuttons.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JRadioButton`のアイコンを変更して、`ToggleButtonBar`を作成します。
 
 #download(https://lh3.googleusercontent.com/-5-1KU3hp2co/UKjlTJyKvRI/AAAAAAAABW8/QuYQcKDeeyM/s800/ToggleButtonBar.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ToggleButtonBarCellIcon implements Icon {
   private static final Color TL = new Color(1f, 1f, 1f, .2f);
@@ -100,7 +100,7 @@ class ToggleButtonBarCellIcon implements Icon {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JRadioButton`に選択またはロールオーバーでハイライトが変化する`Icon`を設定し、これらを`ButtonGroup`に追加することで`ToggleButtonBar`を作成しています。
 
 - 配色は[http://weboook.blog22.fc2.com/blog-entry-342.html 簡単、きれい！RGBaカラーを使って横メニューを作ってみる｜Webpark]から引用
@@ -110,11 +110,11 @@ class ToggleButtonBarCellIcon implements Icon {
 -- 参考: [[JComboBoxの角を丸める>Swing/RoundedComboBox]]
 -- 角を丸めた時に背景色を描画しないようにするため`JRadioButton#setContentAreaFilled(false)`を設定して描画をすべてアイコンで行う
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://weboook.blog22.fc2.com/blog-entry-342.html 簡単、きれい！RGBaカラーを使って横メニューを作ってみる｜Webpark]
 - [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]
 - [[JComboBoxの角を丸める>Swing/RoundedComboBox]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2018-01-22T15:56:54+09:00
 description: JTextFieldやJTextPaneなどのJTextComponentで、Caretの色を変更します。
 image: https://drive.google.com/uc?id=1u7eaiGMgpBZefGTMjAxkHBsxf29Fu-ZfbQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`や`JTextPane`などの`JTextComponent`で、`Caret`の色を変更します。
 
 #download(https://drive.google.com/uc?id=1u7eaiGMgpBZefGTMjAxkHBsxf29Fu-ZfbQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("TextArea.caretForeground", Color.ORANGE);
 JTextArea area = new JTextArea("TextArea.caretForeground: ORANGE");
@@ -22,7 +22,7 @@ JTextField field = new JTextField("JTextField");
 field.setCaretColor(Color.RED);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTextField`
 -- `setCaretColor(...)`メソッドで`Caret`の色を変更
 --- `null`を設定すると`JTextField`の文字色が`Caret`の色になる
@@ -109,9 +109,9 @@ class ComposedTextCaret extends DefaultCaret implements Serializable {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setCaretColor-java.awt.Color- JTextComponent#setCaretColor(Color) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

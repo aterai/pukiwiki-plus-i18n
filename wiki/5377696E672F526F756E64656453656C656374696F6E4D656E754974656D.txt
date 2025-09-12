@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2024/02/paint-jmenuitem-selection-rollover-with.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenuItem`の選択ロールオーバーを矩形ではなくラウンド矩形で描画するよう設定します。
 
 #download(https://drive.google.com/uc?id=1FdiqbmBLtgx7TvBg4XokxUJq6BN24u6C)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class BasicRoundMenuItemUI extends BasicMenuItemUI {
   @Override protected void paintBackground(
@@ -50,7 +50,7 @@ class BasicRoundMenuItemUI extends BasicMenuItemUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `MetalLookAndFeel`、`MotifLookAndFeel`
 -- `WindowsLookAndFeel`以外の`BasicMenuItemUI`を継承する`MenuItemUI`で`JMenuItem`の選択ロールオーバーをラウンド矩形で描画するよう`BasicMenuItemUI#paintBackground(...)`をオーバーライド
 -- `JMenu#add(String)`、`JPopupMenu#add(String)`などをオーバーライドしてこのメソッドで生成される`JMenuItem`に`BasicRoundMenuItemUI`を設定
@@ -144,11 +144,11 @@ class WindowsRoundMenuItemUI2 extends WindowsMenuItemUI {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JPopupMenuの角を丸める>Swing/RoundedCornerPopupMenu]]
 -- `JPopupMenu`の角丸はリンク先と同一の`RoundedPopupMenuUI.java`を使用している
 - [[Windowの縁をソフトクリッピングでなめらかにする>Swing/SoftClippedWindow]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2021/11/add-vertical-jslider-in-jpopupmenu-and.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPopupMenu`に垂直`JSlider`を配置し、`JToggleButton`に設定した`JToolTip`を表示するときにその上部に重ねて表示します。
 
 #download(https://drive.google.com/uc?id=1JlCYec_huorcrZoTG5_-vs7oFTK0TRhF)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPopupMenu popup = new JPopupMenu();
 popup.setLayout(new BorderLayout());
@@ -96,7 +96,7 @@ popup.addPopupMenuListener(new PopupMenuListener() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JPopupMenu`
 -- レイアウトを`BorderLayout`に変更して垂直`JSlider`をひとつだけ追加
 -- `JPopupMenu#addMouseWheelListener(InputEvent::consume)`を追加して余白などでマウスホイールを回転しても閉じないよう設定
@@ -119,12 +119,12 @@ popup.addPopupMenuListener(new PopupMenuListener() {
 -- 追加した`HierarchyListener`で`JToolTip`の表示後、重ねて`JPopupMenu`を表示するよう設定
 --- `JPopupMenu`の表示後に`JPopupMenu`に追加した上記の`PopupMenuListener#popupMenuWillBecomeVisible(...)`で`EventQueue.invokeLater( () -> ToolTipManager.sharedInstance().setEnabled(false))`を実行して`JToolTip`を無効化
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSliderの上部に現在値を常時表示する>Swing/SliderPaintValue]]
 - [[JSliderのUIや色を変更する>Swing/VolumeSlider]]
 - [https://github.com/checkstyle/checkstyle/issues/10837 WhitespaceAround misrecognizes white spaces after emojis · Issue #10837 · checkstyle/checkstyle]
 -- 「🔊(`U+1F50A`)(`\uD83D\uDD0A`)」などの`0x0A`(`CR/LF`)が誤判定されているようで、このサンプルコードでも`WhitespaceAround`の警告が発生するが`checkstyle-9.0.2`で修正され%%そう？%%た
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

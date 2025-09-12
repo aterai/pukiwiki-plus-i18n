@@ -1,0 +1,54 @@
+---
+category: swing
+folder: RowFilterComparisonType
+title: JTableの行フィルタリングをRowFilter.ComparisonTypeで指定した比較方法で実行する
+tags: [JTable, RowFilter, TableRowSorter]
+author: aterai
+pubdate: 2025-03-17T01:55:27+09:00
+description: JTableの行フィルタリングをRowFilter.ComparisonTypeで指定した不等号、等号比較で実行するよう設定します。
+image: https://drive.google.com/uc?id=12CHq0T1SxA92camk4aI-2b-mjBkLqsby
+---
+* Summary [#summary]
+`JTable`の行フィルタリングを`RowFilter.ComparisonType`で指定した不等号、等号比較で実行するよう設定します。
+
+#download(https://drive.google.com/uc?id=12CHq0T1SxA92camk4aI-2b-mjBkLqsby)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+private void setFilter(TableRowSorter<?> sorter, RowFilter.ComparisonType type) {
+  int num = model.getNumber().intValue();
+  sorter.setRowFilter(RowFilter.numberFilter(type, num));
+}
+}}
+
+* Description [#description]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.ComparisonType.html#AFTER RowFilter.ComparisonType.AFTER]
+-- たとえば、`RowFilter.numberFilter(RowFilter.ComparisonType.AFTER, 10)`で作成した`RowFilter`は`JTable`の行の数値が`10 < num`の行を表示し、`10 >= num`の行はフィルタリングして非表示になる
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.ComparisonType.html#BEFORE RowFilter.ComparisonType.BEFORE]
+-- たとえば、`RowFilter.numberFilter(RowFilter.ComparisonType.BEFORE, 10)`で作成した`RowFilter`は`JTable`の行の数値が`10 > num`の行を表示し、`10 <= num`の行はフィルタリングして非表示になる
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.ComparisonType.html#EQUAL RowFilter.ComparisonType.EQUAL]
+-- `JTable`の行の数値が指定した数値と等しい場合その行を表示するフィルタになる
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.ComparisonType.html#NOT_EQUAL RowFilter.ComparisonType.NOT_EQUAL]
+-- `JTable`の行の数値が指定した数値と等しくない場合その行を表示するフィルタになる
+
+----
+- 空の行(値が`null`など)は比較対象にならず、どの`RowFilter.ComparisonType`を設定したフィルタでも常に非表示になる
+- 等号付き不等号の`ComparisonType`は用意されていないが、`RowFilter.orFilter(...)`でフィルタを組み合わせて使用するなどで代用が可能
+-- [https://stackoverflow.com/questions/67789446/jtable-row-filtering-based-on-values-of-two-different-columns-that-have-same-dat java - JTable row filtering based on values of two different columns that Have same data - Stack Overflow]
+
+#code{{
+if (type == ComparisonType.AFTER || type == ComparisonType.BEFORE) {
+  RowFilter<TableModel, Integer> f1 = RowFilter.numberFilter(type, num);
+  ComparisonType eq = ComparisonType.EQUAL;
+  RowFilter<TableModel, Integer> f2 = RowFilter.numberFilter(eq, num);
+  sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(f1, f2)));
+}
+}}
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowFilter.ComparisonType.html RowFilter.ComparisonType (Java Platform SE 8)]
+- [https://stackoverflow.com/questions/67789446/jtable-row-filtering-based-on-values-of-two-different-columns-that-have-same-dat java - JTable row filtering based on values of two different columns that Have same data - Stack Overflow]
+
+* Comment [#comment]
+#comment
+#comment

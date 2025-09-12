@@ -8,12 +8,12 @@ pubdate: 2023-01-23T06:28:18+09:00
 description: NimbusLookAndFeelを設定したJProgressBarが垂直配置の場合その進捗文字列を回転して表示するかを変更します。
 image: https://drive.google.com/uc?id=1y_mjj8GE5DxLoNwhPdxPpaNEN5h4965I
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`を設定した`JProgressBar`が垂直配置の場合その進捗文字列を回転して表示するかを変更します。
 
 #download(https://drive.google.com/uc?id=1y_mjj8GE5DxLoNwhPdxPpaNEN5h4965I)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // UIManager.put("ProgressBar.rotateText", Boolean.FALSE);
 JProgressBar progressBar1 = new JProgressBar(SwingConstants.VERTICAL);
@@ -31,7 +31,7 @@ progressBar2.putClientProperty("Nimbus.Overrides", d);
 progressBar2.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `ProgressBar.rotateText`: `Boolean.TRUE`
 -- 進捗文字列を`-90`度回転して表示
 -- `NimbusLookAndFeel`でのデフォルト
@@ -46,10 +46,10 @@ progressBar2.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
 -- `SynthProgressBarUI`のデフォルト
 -- 垂直`JProgressBar`の推奨幅は進捗文字列幅とは同期しないので、`UIManager.put("ProgressBar.verticalSize", new Dimension(50, 150))`などで推奨サイズを調節する必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]
 - [https://bugs.openjdk.org/browse/JDK-8285962 &#91;JDK-8285962&#93; NimbusDefaults has a typo in a L&F property - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

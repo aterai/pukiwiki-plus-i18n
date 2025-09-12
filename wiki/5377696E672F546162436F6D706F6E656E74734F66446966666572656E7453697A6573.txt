@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2021/10/add-jtabbedpane-tab-component-to.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`を`JSplitPane`に配置し、各タブコンポーネントごとに異なるサイズで表示可能になるよう`Divider`の位置などを調整します。
 
 #download(https://drive.google.com/uc?id=1PhwFToigKUQ-AKOEaVaCNp-j7b_75HAe)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public void tabComponentResized(ComponentEvent e, JTabbedPane tabs) {
   Component c = e.getComponent();
@@ -41,7 +41,7 @@ public void updateDividerLocation(JTabbedPane tabs) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTabbedPane`
 -- デフォルトの`JTabbedPane`に配置されるタブコンポーネントはすべて同じサイズになる
 -- `JTabbedPane`の最小サイズをタブエリアのサイズに変更して`JSplitPane`でタブエリアが非表示にならないよう設定
@@ -53,10 +53,10 @@ public void updateDividerLocation(JTabbedPane tabs) {
 -- 左コンポーネントに`JTabbedPane`、右コンポーネントに適当なコンポーネント(このサンプルでは`JTree`)を配置
 -- タブコンポーネントに`JSplitPane`を使用する方法もあるが、これをデフォルトの`JSplitPane`と組み合わせるのは複雑になりそう？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneで選択されているタブの幅のみ拡張する>Swing/ExpandActiveTabWidth]]
 - [[JTabbedPaneのタブタイトル文字列を回転して縦組表示する>Swing/RotatedVerticalTextTabs]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

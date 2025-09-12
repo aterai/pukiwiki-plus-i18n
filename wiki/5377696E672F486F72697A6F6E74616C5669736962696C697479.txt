@@ -11,17 +11,17 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2015/04/scrollbar-for-jtextfield.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`の表示領域を`JScrollBar`でスクロール可能にします。
 
 #download(https://lh3.googleusercontent.com/-e-5Z2Ze6fmU/U4Q5K7nrzqI/AAAAAAAACGQ/9vdUHpxI2VA/s800/HorizontalVisibility.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 scroller.setModel(textField.getHorizontalVisibility());
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTextField#getHorizontalVisibility()`で取得した`BoundedRangeModel`(可視領域のモデル)を`JScrollBar`に設定することで、これを使用したスクロールや現在の可視領域の位置、幅の表示などが可能になっています。
 
 - `JScrollPane + VERTICAL_SCROLLBAR_NEVER`
@@ -37,7 +37,7 @@ scroller.setModel(textField.getHorizontalVisibility());
 -- `JScrollBar`が同期しない場合がある
 - `setScrollOffset: 0`: `JScrollBar`のノブがマウスドラッグに反応しなくなる場合がある？
 - ノブの表示: 文字列をすべて削除するなどしても、ノブが非表示にならない
--- `1px`の余白？、以下のようなリスナーで回避するテストを追加
+-- `1px`の余白(`Caret`の幅？)を以下のようなリスナーで回避するテストを追加
 
 #code{{
 class EmptyThumbHandler extends ComponentAdapter implements DocumentListener {
@@ -55,7 +55,7 @@ class EmptyThumbHandler extends ComponentAdapter implements DocumentListener {
     EventQueue.invokeLater(new Runnable() {
       @Override public void run() {
         BoundedRangeModel m = textField.getHorizontalVisibility();
-        int iv = m.getMaximum() - m.getMinimum() - m.getExtent() - 1; //-1:bug?
+        int iv = m.getMaximum() - m.getMinimum() - m.getExtent() - 1;
         if (iv <= 0) {
           scroller.setModel(emptyThumbModel);
         } else {
@@ -112,7 +112,7 @@ class ArrowButtonlessScrollBarUI extends BasicScrollBarUI {
       return;
     }
     BoundedRangeModel m = sb.getModel();
-    int iv = m.getMaximum() - m.getMinimum() - m.getExtent() - 1; //-1:bug?
+    int iv = m.getMaximum() - m.getMinimum() - m.getExtent() - 1;
     if (iv > 0) {
       Graphics2D g2 = (Graphics2D) g.create();
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -138,10 +138,10 @@ class ArrowButtonlessScrollBarUI extends BasicScrollBarUI {
 -- 縦スクロールバーを非表示にした`JScrollPane`を使用する場合、`JTextField`内の文字列選択でスクロールしない
 -- 文字列を適当な長さまで削除するとノブが非表示になる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextField.html#getHorizontalVisibility-- JTextField#getHorizontalVisibility() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 可視領域の幅の表示を考えると`ArrowButton`は不要なので、[[JScrollBarを半透明にする>Swing/TranslucentScrollBar]]のような外見の`JScrollBar`を使用した方が良いかもしれない。 -- &user(aterai); &new{2014-05-14 (水) 16:05:32};
 - サンプルの追加と、スクリーンショットの更新。 -- &user(aterai); &new{2014-05-27 (火) 16:12:38};

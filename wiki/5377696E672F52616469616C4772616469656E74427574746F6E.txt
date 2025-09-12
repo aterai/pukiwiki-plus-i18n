@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2019/03/perform-hover-effect-animation-using.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JButton`のホバーエフェクトとして円放射状グラデーションのアニメーションを実行します。
 
 #download(https://drive.google.com/uc?id=1Qz_LOeUGxuzVCL6hdpYVyJF44f442OzRmA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 protected void update() {
   if (!getBounds().equals(base)) {
@@ -61,7 +61,7 @@ protected void update() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JButton#paintComponent(...)`メソッドをオーバーライドして角丸矩形の`JButton`を描画し、ホバーエフェクトとして`Timer`で半径が増減する`Ellipse2D`図形を`RadialGradientPaint`で塗りつぶしています。
 
 - 上: `setClip`
@@ -72,12 +72,12 @@ protected void update() {
 --- [https://community.oracle.com/blogs/campbell/2006/07/19/java-2d-trickery-soft-clipping campbell: Java 2D Trickery: Soft Clipping Blog | Oracle Community]
 --- [[Windowの縁をソフトクリッピングでなめらかにする>Swing/SoftClippedWindow]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/RadialGradientPaint.html RadialGradientPaint (Java Platform SE 8)]
 - [https://blog.prototypr.io/stunning-hover-effects-with-css-variables-f855e7b95330 Stunning hover effects with CSS variables – Prototypr]
 -- via: [https://coliss.com/articles/build-websites/operation/css/css-hover-effects-with-css-variables.html &#91;CSS&#93;実装がこれなら思っていたより簡単！グラデーションが変化する美しいエフェクトを実装するスタイルシート | コリス]
 -- ボタンやグラデーションの色などを参考
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

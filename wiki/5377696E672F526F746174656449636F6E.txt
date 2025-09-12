@@ -8,12 +8,12 @@ pubdate: 2012-06-11T15:18:47+09:00
 description: 画像ファイルから90、180、270度回転したIconを作成します。
 image: https://lh4.googleusercontent.com/-OK_vUTiAiCA/T9WIzXvRm9I/AAAAAAAABNk/ubus049qH04/s800/RotatedIcon.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 画像ファイルから`90`、`180`、`270`度回転した`Icon`を作成します。
 
 #download(https://lh4.googleusercontent.com/-OK_vUTiAiCA/T9WIzXvRm9I/AAAAAAAABNk/ubus049qH04/s800/RotatedIcon.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RotateIcon implements Icon {
   private final Dimension d = new Dimension();
@@ -67,7 +67,7 @@ class RotateIcon implements Icon {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- 幅高さ: `83x100`
 - `Rotate`: `180`
@@ -83,7 +83,7 @@ class RotateIcon implements Icon {
 ----
 - `AffineTransform.getQuadrantRotateInstance(...)`メソッドを使用するサンプルは[[Iconを指定した数の四分円だけ回転して表示する>Swing/QuadrantRotateIcon]]に移動
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - %%[http://duke.kenai.com/iconSized/index.html Duke Images: iconSized]%%
 - [[Iconを指定した数の四分円だけ回転して表示する>Swing/QuadrantRotateIcon]]
 - [[AffineTransformOpで画像を反転する>Swing/AffineTransformOp]]
@@ -91,6 +91,6 @@ class RotateIcon implements Icon {
 - [[JTabbedPaneのタブタイトル文字列を回転して縦組表示する>Swing/RotatedVerticalTextTabs]]
 - [[Animated Gifを回転して表示する>Swing/RotateAnimatedGifImageIcon]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

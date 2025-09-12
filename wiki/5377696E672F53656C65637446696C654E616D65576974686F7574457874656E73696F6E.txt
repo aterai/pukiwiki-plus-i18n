@@ -8,12 +8,12 @@ pubdate: 2023-10-01T00:44:38+09:00
 description: JFileChooserのListViewやDetailsViewでリネーム可能なセルエディタとして使用されるJTextFieldを取得し、ファイル名全体ではなく拡張子を除くファイル名が選択状態になるよう設定します。
 image: https://drive.google.com/uc?id=1Q83JplI4_5QHhy5qekG6vSDpBZmQYuQv
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`の`ListView`や`DetailsView`でリネーム可能なセルエディタとして使用される`JTextField`を取得し、ファイル名全体ではなく拡張子を除くファイル名が選択状態になるよう設定します。
 
 #download(https://drive.google.com/uc?id=1Q83JplI4_5QHhy5qekG6vSDpBZmQYuQv)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton button2 = new JButton("ListView");
 button2.addActionListener(e -> {
@@ -53,11 +53,12 @@ private static void addCellEditorListener(JList<?> list) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- デフォルトの`JFileChooser`のセルエディタは編集開始時に`JTextField#selectAll()`でファイル名が全選択される
 - `ListView`(`JList`)
 -- デフォルトの`JList`にはセルアイテムを編集するエディタは用意されていないので、`JFileChooser`(`FilePane`)では名前が`Tree.cellEditor`の`JTextField`を`JList`に追加してセルエディタとして使用している
+--- 名前が`FilePane.cellEditor`や`List.cellEditor`などではなく`Tree.cellEditor`である理由は不明、以前または別の`LookAndFeel`では`FilePane`に`JTree`を使用していた？
 -- `JList`へのセルエディタ追加を`ContainerListener#componentAdded(ContainerEvent)`で受信し、追加後そのセルエディタに`JTextField#setSelectionEnd(...)`を実行して拡張子を除くファイル名が選択状態になるよう設定
 - `DetailsView`(`JTable`)
 -- ファイル名を表示する`0`列目の`TableColumn`から`TableColumn#getCellEditor()#getComponent()`でセルエディタとして使用する`JTextField`を取得
@@ -102,11 +103,11 @@ private static void addCellEditorFocusListener(JTable table) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFileChooserのリスト表示を垂直1列に変更する>Swing/FileChooserLayoutOrientation]]
 - [[JFileChooserの詳細表示でファイル名が編集中の場合はそれをキャンセルする>Swing/FileChooserCancelEdit]]
 - [[JListのセルに配置したJLabelのテキストを編集する>Swing/ListEditor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

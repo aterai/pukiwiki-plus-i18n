@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2020/09/creating-statusbar-with-size-grips-to.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFrame`の下部にマウスドラッグでリサイズが可能なサイズグリップ付きのステータスバーを配置します。
 
 #download(https://drive.google.com/uc?id=1axOgWRI88iTM2MsOfCiFhDfcAMnMYCNf)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ResizeWindowListener extends MouseInputAdapter {
   private final Rectangle rect = new Rectangle();
@@ -42,7 +42,7 @@ class ResizeWindowListener extends MouseInputAdapter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - ステータスバー
 -- `BorderLayout`を設定した`JPanel`で作成
 
@@ -114,11 +114,11 @@ class BottomRightCornerIcon implements Icon {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする>Swing/CustomDecoratedFrame]]
 - [https://web.archive.org/web/20050609021916/http://today.java.net/pub/a/today/2005/06/07/pixelpushing.html java.net: Pixel Pushing - web.archive.org]
 // - [https://community.oracle.com/hub/pub/a/today/2005/06/07/pixelpushing.html java.net: Pixel Pushing]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

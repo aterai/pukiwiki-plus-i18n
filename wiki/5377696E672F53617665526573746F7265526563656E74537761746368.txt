@@ -8,12 +8,12 @@ pubdate: 2023-08-21T02:00:07+09:00
 description: JColorChooserのサンプル(Swatches)タブに配置されている最新(Recent)カラーパレットを保存、復元可能になるよう設定します。
 image: https://drive.google.com/uc?id=1TgGl797HaTynH4nyLDgHODJ8fj7HbJ4Y
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JColorChooser`のサンプル(`Swatches`)タブに配置されている最新(`Recent`)カラーパレットを保存、復元可能になるよう設定します。
 
 #download(https://drive.google.com/uc?id=1TgGl797HaTynH4nyLDgHODJ8fj7HbJ4Y)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 RecentSwatchPanel switchPanel = new RecentSwatchPanel();
 switchPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -61,7 +61,7 @@ button.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JColorChooser`をシリアライズしてもサンプル(`Swatches`)タブで使用される最新(`Recent`)カラーパレットは保存、復元不可(未対応？)
 - また、サンプル(`Swatches`)タブで使用される`DefaultSwatchChooserPanel`はパッケージプライベートなので、これをコピーして`MySwatchChooserPanel`を作成
 -- 最新(`Recent`)カラーパレット用の`RecentSwatchPanel`もパッケージプライベートなのでこれをパブリックに変更し、外部から操作可能に変更
@@ -71,9 +71,9 @@ button.addActionListener(e -> {
 -- 親パネルへの追加イベントで最新(`Recent`)カラーパレットへの色配列復元を実行
 -- 親パネルからの削除イベントで最新(`Recent`)カラーパレットからの色配列取得を実行
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/10793916/jcolorchooser-save-restore-recent-colors-in-swatches-panel java - JColorChooser: Save/restore recent colors in Swatches panel - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

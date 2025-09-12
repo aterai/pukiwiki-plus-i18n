@@ -8,12 +8,12 @@ pubdate: 2014-09-01T00:14:35+09:00
 description: JTableのセルを選択してクリップボードにHTMLテキストをコピーするとき、そのセルのクラスに応じて生成するタグを変更します。
 image: https://lh5.googleusercontent.com/-VsQ_pmP_GKM/VAM3IR6IvyI/AAAAAAAACMI/97dngpaAQn8/s800/HtmlTableTransferHandler.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルを選択してクリップボードに`HTML`テキストをコピーするとき、そのセルのクラスに応じて生成するタグを変更します。
 
 #download(https://lh5.googleusercontent.com/-VsQ_pmP_GKM/VAM3IR6IvyI/AAAAAAAACMI/97dngpaAQn8/s800/HtmlTableTransferHandler.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class HtmlTableTransferHandler extends TransferHandler {
   // @see javax/swing/plaf/basic/
@@ -98,7 +98,7 @@ class HtmlTableTransferHandler extends TransferHandler {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上`JTable`:
 -- デフォルトの`BasicTableUI.TableTransferHandler`を使用
 - 下`JTable`:
@@ -110,10 +110,10 @@ class HtmlTableTransferHandler extends TransferHandler {
 --- `Date`: `<time>...</time>`で囲む
 --- `Color`: `<td>`に`style='background-color:#%06x'>`で背景色を設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://www.ne.jp/asahi/hishidama/home/tech/java/swing/TransferHandler.html Java Swing「ドラッグ&ドロップ」メモ(Hishidama's Swing-TransferHandler Memo)]
 - [[JTableでプロパティ一覧表を作成する>Swing/PropertyTable]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

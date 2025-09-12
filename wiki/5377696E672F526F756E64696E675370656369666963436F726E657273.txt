@@ -8,12 +8,12 @@ pubdate: 2024-03-04T01:43:01+09:00
 description: Path2Dを使用して指定した隅のみをベジェ曲線で丸めたランウド矩形図形を作成します。
 image: https://drive.google.com/uc?id=1F3aKQ3EgrQD9MXA8sJoeXRKXWj-gB6h2
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Path2D`を使用して指定した隅のみをベジェ曲線で丸めたランウド矩形図形を作成します。
 
 #download(https://drive.google.com/uc?id=1F3aKQ3EgrQD9MXA8sJoeXRKXWj-gB6h2)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 enum Corner { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT }
 
@@ -70,7 +70,7 @@ public Shape makeRoundedRect2(
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `ROUND_RECTANGLE2D`
 -- `new RoundRectangle2D.Double(x, y, w, h, aw, ah)`で生成した図形を黒線で描画
 
@@ -160,11 +160,11 @@ public static Path2D makeRoundedRect1(
 -- `Path2D#curveTo(...)`を使用して指定した隅を丸めたランウド矩形を作成し青線で描画
 -- `RoundRectangle2D`などの円で使用するベジェ制御点と同じラウンド半径を`4d * (Math.sqrt(2d) - 1d) / 3d`倍(約`0.55228...`倍)した点を使用するため指定して丸めた隅は上記の黒色で描画した`RoundRectangle2D`と完全に一致する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Path2Dで額縁風の図形を作成しBorderとして使用する>Swing/PlaqueBorder]]
 - [https://cat-in-136.github.io/2014/03/bezier-1-kappa.html ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?]
 - [https://stackoverflow.com/questions/77889724/how-to-make-half-rounded-border java - How to make half rounded border? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

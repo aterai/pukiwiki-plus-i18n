@@ -1,0 +1,89 @@
+---
+category: swing
+folder: TextOnPath
+title: Shape上に文字列を配置する
+tags: [Font, GlyphVector, Shape, Path2D, FlatteningPathIterator]
+author: aterai
+pubdate: 2024-09-23T07:31:47+09:00
+description: Path2Dなどの曲線上に添うよう文字列を移動・回転して配置します。
+image: https://drive.google.com/uc?id=1kBK9anV1EnAjXes9rjN3o57Cyk_Qinnw
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2024/10/move-and-rotate-strings-to-place-them.html
+    lang: en
+---
+* Summary [#summary]
+`Path2D`などの曲線上に添うよう文字列を移動・回転して配置します。
+
+#download(https://drive.google.com/uc?id=1kBK9anV1EnAjXes9rjN3o57Cyk_Qinnw)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+public static Shape createTextOnPath(Shape shape, GlyphVector gv) {
+  double[] points = new double[6];
+  Point2D prevPt = new Point2D.Double();
+  double nextAdvance = 0d;
+  double next = 0d;
+  Path2D result = new Path2D.Double();
+  int length = gv.getNumGlyphs();
+  int idx = 0;
+  PathIterator pi = new FlatteningPathIterator(
+      shape.getPathIterator(null), 1d);
+  while (idx < length && !pi.isDone()) {
+    switch (pi.currentSegment(points)) {
+      case PathIterator.SEG_MOVETO:
+        result.moveTo(points[0], points[1]);
+        prevPt.setLocation(points[0], points[1]);
+        nextAdvance = gv.getGlyphMetrics(idx).getAdvance() * .5;
+        next = nextAdvance;
+        break;
+
+      case PathIterator.SEG_LINETO:
+        double dx = points[0] - prevPt.getX();
+        double dy = points[1] - prevPt.getY();
+        double distance = Math.hypot(dx, dy);
+        if (distance >= next) {
+          double r = 1d / distance;
+          double angle = Math.atan2(dy, dx);
+          while (idx < length && distance >= next) {
+            double x = prevPt.getX() + next * dx * r;
+            double y = prevPt.getY() + next * dy * r;
+            double advance = nextAdvance;
+            nextAdvance = getNextAdvance(gv, idx, length);
+            AffineTransform at = AffineTransform.getTranslateInstance(x, y);
+            at.rotate(angle);
+            Point2D pt = gv.getGlyphPosition(idx);
+            at.translate(-pt.getX() - advance, -pt.getY());
+            Shape s = gv.getGlyphOutline(idx);
+            result.append(at.createTransformedShape(s), false);
+            next += advance + nextAdvance;
+            idx++;
+          }
+        }
+        next -= distance;
+        prevPt.setLocation(points[0], points[1]);
+        break;
+
+      default:
+    }
+    pi.next();
+  }
+  return result;
+}
+}}
+
+* Description [#description]
+- `Arc2D`で作成した曲線を[https://docs.oracle.com/javase/jp/8/docs/api//java/awt/geom/FlatteningPathIterator.html FlatteningPathIterator]で平坦化(パスを直線に変更)した`PathIterator`に変換
+-- [[FlatteningPathIteratorでShape上の点を取得する>Swing/FlatteningPathIterator]]
+- 文字列を`Font#createGlyphVector(...)`で`GlyphVector`に変換
+- `GlyphVector#getGlyphOutline(...)`で文字のアウトライン図形を取得
+- `Math.hypot(dx, dy)`で移動距離、`Math.atan2(dy, dx)`で回転角度を取得して`AffineTransform`で文字のアウトライン図形を変換
+-- [http://www.jhlabs.com/java/java2d/strokes/ Fun with Java2D - Strokes]の[http://www.jhlabs.com/java/java2d/strokes/ShapeStroke.java ShapeStroke.java]から繰り返しなし、文字間拡張なしを参考
+- `Path2D#append(...)`で変換した文字アウトラインを追加して、`Shape`上に文字列を配置した`Path2D`を生成
+
+* Reference [#reference]
+- [http://www.jhlabs.com/java/java2d/strokes/ Fun with Java2D - Strokes]
+- [[FlatteningPathIteratorでShape上の点を取得する>Swing/FlatteningPathIterator]]
+
+* Comment [#comment]
+#comment
+#comment

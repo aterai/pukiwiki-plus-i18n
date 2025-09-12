@@ -8,12 +8,12 @@ pubdate: 2005-03-28T02:50:10+09:00
 description: JTableのTooltipsが、カーソルのある行の内容などを表示するように設定します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSbfFU7HI/AAAAAAAAAiw/EPWumbZCrr0/s800/RowTooltips.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の`Tooltips`が、カーソルのある行の内容などを表示するように設定します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSbfFU7HI/AAAAAAAAAiw/EPWumbZCrr0/s800/RowTooltips.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   @Override public String getToolTipText(MouseEvent e) {
@@ -25,7 +25,7 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JTable#getToolTipText()`メソッドをオーバーライドして、カーソルがある行の情報を表示しています。
 
 - `JTable#convertRowIndexToModel(...)`メソッドを使用して`viewRowIndex`を`modelRowIndex`に変更し、モデルから行情報を取得
@@ -65,12 +65,12 @@ table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#celltooltip How to Use Tables (The Java™ Tutorials > Creating a GUI with JFC/Swing > Using Swing Components)]
 - [[JTableHeaderのTooltipsを列ごとに変更>Swing/HeaderTooltips]]
 - [[JTableのセルがクリップされている場合のみJToolTipを表示>Swing/ClippedCellTooltips]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 名前もコメントも空の場合は、空のツールチップが表示されないように、`null`を返すようにした方がいいかも。 -- &user(aterai); &new{2007-04-04 (水) 19:26:19};
 

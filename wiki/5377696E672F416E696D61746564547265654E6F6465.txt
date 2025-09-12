@@ -8,16 +8,14 @@ pubdate: 2016-06-27T01:54:58+09:00
 description: JTreeのノードに設定したAnimated GIFのImageIconがアニメーションを行えるようにImageObserverを設定します。
 image: https://lh3.googleusercontent.com/-U9WtOD4nOug/V3AE4msfadI/AAAAAAAAOcY/VDwIROM5Ju4gNFBm47FDBJTOtIazp7iyACCo/s800/AnimatedTreeNode.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードに設定した`Animated GIF`の`ImageIcon`がアニメーションを行えるように`ImageObserver`を設定します。
 
 #download(https://lh3.googleusercontent.com/-U9WtOD4nOug/V3AE4msfadI/AAAAAAAAOcY/VDwIROM5Ju4gNFBm47FDBJTOtIazp7iyACCo/s800/AnimatedTreeNode.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 TreePath path = new TreePath(s1.getPath());
-// icon.setImageObserver(new ImageObserver() {
-//   @Override public boolean imageUpdate(Image img, int infoflags, ...) {
 icon.setImageObserver((img, infoflags, x, y, w, h) -> {
   if (!tree.isShowing()) {
     return false;
@@ -30,7 +28,7 @@ icon.setImageObserver((img, infoflags, x, y, w, h) -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `DefaultMutableTreeNode`の`UserObject`として`Animated GIF`画像から生成した`ImageIcon`を設定し、これを`DefaultTreeCellRenderer#setIcon(...)`でノードに表示
 -- 自動的に再描画されないためアニメーションが開始されない
@@ -38,9 +36,9 @@ icon.setImageObserver((img, infoflags, x, y, w, h) -> {
 -- 同様に設定した`ImageIcon`に`setImageObserver(ImageObserver)`メソッドで`ImageObserver`を追加し、正常にアニメーションが行えるように画像の更新に合わせて`JTree#repaint(Rectangle)`でノードを再描画
 -- 再描画する領域は対象のノードのみになるよう`JTree.getPathBounds(TreePath)`で取得される領域に制限
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのセルにAnimated GIFを表示する>Swing/AnimatedIconInTableCell]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

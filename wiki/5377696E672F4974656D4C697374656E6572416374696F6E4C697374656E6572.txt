@@ -8,12 +8,12 @@ pubdate: 2018-04-23T18:28:12+09:00
 description: JComboBoxやJCheckBoxなどに設定したItemListenerとActionListenerの動作を比較テストします。
 image: https://drive.google.com/uc?id=1xpBmSl-frNjI1eCiUe2pzY2vo6Zp_FpKjA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`や`JCheckBox`などに設定した`ItemListener`と`ActionListener`の動作を比較テストします。
 
 #download(https://drive.google.com/uc?id=1xpBmSl-frNjI1eCiUe2pzY2vo6Zp_FpKjA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JComboBox<DayOfWeek> combo = new JComboBox<>(DayOfWeek.values());
 combo.addItemListener(e -> {
@@ -30,7 +30,7 @@ combo.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JComboBox`
 - `ItemListener`
 -- `ItemEvent#getItemSelectable()`でイベント元の`JComboBox`が取得可能
@@ -67,9 +67,9 @@ combo.addActionListener(e -> {
 -- デフォルトの`JRadioButton`は`ActionEvent#getActionCommand()`で`JRadioButton#getText()`と同じ値を返す
 -- `JRadioButton#setSelected(...)`メソッドなどを使用して`JRadioButton`の状態を変更しても`ActionEvent`は発生しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/9882845/jcheckbox-actionlistener-and-itemlistener java - JCheckbox - ActionListener and ItemListener? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

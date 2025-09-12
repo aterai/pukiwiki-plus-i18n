@@ -8,12 +8,12 @@ pubdate: 2006-03-06T19:15:08+09:00
 description: JTextAreaなどのコンポーネントの背景に、Borderを使って中心揃えした画像を表示します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIyAIY_mI/AAAAAAAAATU/GovGMBqjzRo/s800/CentredBackgroundBorder.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`などのコンポーネントの背景に、`Border`を使って中心揃えした画像を表示します。[https://community.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]のコードを引用しています。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIyAIY_mI/AAAAAAAAATU/GovGMBqjzRo/s800/CentredBackgroundBorder.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CentredBackgroundBorder implements Border {
   private final Insets insets = new Insets(0, 0, 0, 0);
@@ -42,7 +42,7 @@ class CentredBackgroundBorder implements Border {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下のようにして`JTextArea`の背景に画像を表示しています。
 
 - 画像を中央に表示するようにした`Border`を作成してこれを`Viewport`に設定
@@ -54,12 +54,12 @@ textarea.setBackground(new Color(0x0, true)));
 
 - `Border`を使って背景に画像を表示する方法は`JDesktopPane`(参考: [[JInternalFrameを半透明にする>Swing/TransparentFrame]])や、その他の`JComponent`でも使用可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]
 - [[JInternalFrameを半透明にする>Swing/TransparentFrame]]
 - [http://www.bekkoame.ne.jp/~bootan/free2.html デジタル出力工房　絵写楽]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `centre`は英式の`center`のこと？らしいです。 -- &user(aterai); &new{2006-03-23 (木) 00:00:58};
 

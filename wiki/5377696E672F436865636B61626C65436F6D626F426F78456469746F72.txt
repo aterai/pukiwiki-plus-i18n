@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/11/add-editable-jcheckbox-to.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`を編集可能に設定し、`ComboBoxEditor`として複数の`JCheckBox`と`JTextField`を配置した`JPanel`を設定します。
 
 #download(https://drive.google.com/uc?id=1f3vhPqkXg-Jg6AK0p01Pn7aGRTo-Wlv0pw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CheckComboBoxEditor implements ComboBoxEditor {
   private final EditorPanel editor = new EditorPanel(new ComboItem());
@@ -165,7 +165,7 @@ final class EditorPanel extends JPanel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `setEditable(false), setRenderer(...)`
 -- 編集不可の`JComboBox`にレンダラーとして複数の`JCheckBox`と`JTextField`を配置した`JPanel`を使用
 -- 編集不可の`JComboBox`やドロップダウンリストの描画にのみ(このためイベントなどは無効)レンダラーとして設定した`JPanel`が使用される
@@ -196,11 +196,11 @@ class CheckComboBoxRenderer<E extends ComboItem> implements ListCellRenderer<E> 
 --- 左`JCheckBox`: 右`JCheckBox`と`JTextField`の`setEnabled(...)`を切り替える
 --- 右`JCheckBox`: `JTextField`の`setEditable(...)`を切り替える
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxのEditorComponentにJButtonを配置>Swing/ButtonInComboEditor]]
 - [[JComboBoxのアイテムとして表示したJCheckBoxを複数選択する>Swing/CheckedComboBox]]
 - [https://stackoverflow.com/questions/53037906/using-the-comboboxeditor-interface-with-custom-jcomponent-and-allow-edit-and-d java - Using the ComboBoxEditor interface with Custom JComponent, and allow edit, and display the List - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

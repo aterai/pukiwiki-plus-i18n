@@ -8,12 +8,12 @@ pubdate: 2018-10-01T01:53:21+09:00
 description: Base64エンコーダで画像ファイルを文字列、デコーダで文字列をImageIconに変換します。
 image: https://drive.google.com/uc?id=1Q3H7o8qNXeAHstp2cSIgG5--D-bC41DgOA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Base64`エンコーダで画像ファイルを文字列、デコーダで文字列を`ImageIcon`に変換します。
 
 #download(https://drive.google.com/uc?id=1Q3H7o8qNXeAHstp2cSIgG5--D-bC41DgOA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton encode = new JButton("encode");
 encode.addActionListener(e -> {
@@ -49,7 +49,7 @@ decode.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JDK 1.8.0`から導入された[https://docs.oracle.com/javase/jp/8/docs/api/java/util/Base64.html Base64]クラスを使用して、画像ファイルの`Base64`形式文字列へのエンコードや`Base64`形式文字列から`byte`配列へのデコードを行っています。
 
 - `encode`
@@ -59,11 +59,11 @@ decode.addActionListener(e -> {
 -- `JTextArea`から取得した文字列を`Base64.Decoder`の[https://docs.oracle.com/javase/jp/8/docs/api/java/util/Base64.Decoder.html#decode-java.lang.String- decode(String)]メソッドで`byte`配列に変換、さらに`new ImageIcon(ImageIO.read(new ByteArrayInputStream(byte[])))`で`ImageIcon`に変換して`JLabel`に設定
 --- `decode(src)`は`decode(src.getBytes(StandardCharsets.ISO_8859_1))`と同等
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/util/Base64.html Base64 (Java Platform SE 8)]
 - [https://stackoverflow.com/questions/51103717/jeditorpane-content-type-for-html-embedded-base64-images java - JEditorPane Content Type for HTML Embedded Base64 Images - Stack Overflow]
 -- `<img src='data:image/png;base64,iVBOR...' />`のように`HTML`テキスト中に埋め込まれた`Base64`文字列を`JEditorPane`(`HTMLEditorKit`)で画像として表示するサンプルが回答されている
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

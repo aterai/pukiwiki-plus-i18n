@@ -8,12 +8,12 @@ pubdate: 2016-08-29T01:50:21+09:00
 description: JTableの各行に配置したJCheckBoxが選択されている場合、その行を別のJTableに表示するRowFilterを作成します。
 image: https://drive.google.com/uc?id=1NvW9GHFg1_ENevzp5ohu8q4HugyKpkpZdw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の各行に配置した`JCheckBox`が選択されている場合、その行を別の`JTable`に表示する`RowFilter`を作成します。
 
 #download(https://drive.google.com/uc?id=1NvW9GHFg1_ENevzp5ohu8q4HugyKpkpZdw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 TableModel model = new DefaultTableModel(data, columnNames) {
   @Override public Class<?> getColumnClass(int column) {
@@ -50,7 +50,7 @@ model.addTableModelListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、選択用と表示用の`2`つの`JTable`を作成しています。どちらの`JTable`もモデルは同じものを共有していますが、以下のような異なる設定をしています。
 
 - 選択用の`JTable`:
@@ -62,9 +62,9 @@ model.addTableModelListener(e -> {
 - 共有の`TableModel`:
 -- `TableModelListener`を設定し、`JCheckBox`の選択などでモデルが更新された場合は`TableRowSorter#allRowsChanged()`を実行してフィルタリングの更新を行う
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのRowFilterを一旦解除してソート>Swing/ResetRowFilter]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

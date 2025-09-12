@@ -8,12 +8,12 @@ pubdate: 2011-01-03T14:25:13+09:00
 description: MetalLookAndFeelのJTabbedPaneで、タブエリアの背景色などを変更するテストをしています。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TSFbcaeJLEI/AAAAAAAAAw0/zQFscoerEGk/s800/TabAreaBackground.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `MetalLookAndFeel`の`JTabbedPane`で、タブエリアの背景色などを変更するテストをしています。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TSFbcaeJLEI/AAAAAAAAAw0/zQFscoerEGk/s800/TabAreaBackground.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("TabbedPane.shadow",                Color.GRAY);
 UIManager.put("TabbedPane.darkShadow",            Color.GRAY);
@@ -32,7 +32,7 @@ UIManager.put("TabbedPane.selectHighlight",       Color.WHITE);
 UIManager.put("TabbedPane.borderHightlightColor",  Color.WHITE);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`UIManager.put("TabbedPane.unselectedBackground", Color.GREEN);`などを利用して`MetalLookAndFeel`でのタブエリアの背景色などを変更可能です。
 
 - `BasicLookAndFeel`、`MetalLookAndFeel`でのみ有効
@@ -42,11 +42,11 @@ UIManager.put("TabbedPane.borderHightlightColor",  Color.WHITE);
 - `TabbedPane.borderHightlightColor`はおそらく`TabbedPane.borderHighlightColor`の書き間違い
 -- 現状(`Java 11`で確認)の`MetalTabbedPaneUI`では`TabbedPane.borderHightlightColor`が定義されているため、こちらで色変更する必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneの選択文字色を変更>Swing/ColorTab]]
 - [[JTabbedPaneのタブ文字列をハイライト>Swing/TabTitleHighlight]]
 - [https://bugs.openjdk.org/browse/JDK-8078269 JDK-8078269 JTabbedPane UI Property TabbedPane.tabAreaBackground no longer works - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

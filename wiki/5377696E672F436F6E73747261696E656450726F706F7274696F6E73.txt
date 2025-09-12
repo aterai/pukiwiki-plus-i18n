@@ -8,12 +8,12 @@ pubdate: 2006-11-06T14:28:33+09:00
 description: JFrameの幅と高さの比率が一定になるように制限します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKJeWlAAI/AAAAAAAAAVg/GMclfo0TYBM/s800/ConstrainedProportions.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFrame`の幅と高さの比率が一定になるように制限します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKJeWlAAI/AAAAAAAAAVg/GMclfo0TYBM/s800/ConstrainedProportions.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static final int MW = 320;
 private static final int MH = 200;
@@ -27,16 +27,16 @@ frame.addComponentListener(new ComponentAdapter() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JFrame`のサイズを変更した後その幅から縦横比が変更前と同じになるような高さを計算して`JFrame#setSize(int,int)`で設定し直しています。
 
 - `Windows 10` + `Java 8`以降では正常に動作しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFrameの最小サイズ>Swing/MinimumFrame]]
 - [[DynamicLayoutでレイアウトの動的評価>Swing/DynamicLayout]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - これはドラッグ中は自由なサイズでボタンを離したときにサイズが正しく変更されます。ドラッグ中も正しい比率になるのは無理でしょうか？ --  &new{2007-11-10 (土) 00:17:13};
 -- ども。今の`Java`だけだと難しいかもしれません。すこし調べてみます。 -- &user(aterai); &new{2007-11-12 (月) 11:45:22};

@@ -8,12 +8,12 @@ pubdate: 2016-02-15T00:00:57+09:00
 description: JInternalFrameをアイコン化したときに使用されるJDesktopIconのサイズを変更します。
 image: https://lh3.googleusercontent.com/-TEU2w7fUDtA/VsCIqEiNtoI/AAAAAAAAONk/VP5SO5nYnuw/s800-Ic42/DesktopIconSize.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`をアイコン化したときに使用される`JDesktopIcon`のサイズを変更します。
 
 #download(https://lh3.googleusercontent.com/-TEU2w7fUDtA/VsCIqEiNtoI/AAAAAAAAONk/VP5SO5nYnuw/s800-Ic42/DesktopIconSize.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("DesktopIcon.width", 150);
 // ...
@@ -25,7 +25,7 @@ f.setDesktopIcon(new JInternalFrame.JDesktopIcon(f) {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JInternalFrame`をアイコン化したときに使用される`JDesktopIcon`のサイズ変更を`LookAndFeel`毎にテストしています。
 
 - `UIManager.put("DesktopIcon.width", DESKTOPICON_WIDTH);`
@@ -61,11 +61,11 @@ desktop.setDesktopManager(new DefaultDesktopManager() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/35287367/changing-desktopicon-width-on-nimbus java - Changing DesktopIcon.width on nimbus - Stack Overflow]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JInternalFrame.JDesktopIcon.html JInternalFrame.JDesktopIcon (Java Platform SE 8)]
 - [[JInternalFrameのタイトル文字列幅を取得し、その値でJDesktopIconの幅を調整する>Swing/ComputeTitleWidth]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

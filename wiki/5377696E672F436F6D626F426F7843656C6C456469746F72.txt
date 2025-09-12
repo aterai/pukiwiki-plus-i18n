@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2017/05/use-jcombobox-as-jtrees-node-cell-editor.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のセルエディタ、セルレンダラーとして、`JComboBox`などを配置した`JPanel`を使用します。
 
 #download(https://lh4.googleusercontent.com/-kNa0cfgyvbY/U5SIYOWjVtI/AAAAAAAACHM/XkjN37IzSas/s800/ComboBoxCellEditor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class PluginCellEditor extends DefaultCellEditor {
   private final PluginPanel panel;
@@ -96,16 +96,16 @@ class PluginCellEditor extends DefaultCellEditor {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JLabel`と`JComboBox`を配置した`JPanel`を描画や編集に移譲する`TreeCellRenderer`と`TreeCellEditor`を作成して、それぞれ、`JTree#setCellRenderer(...)`、`JTree#setCellEditor(...)`で設定しています。
 
 - `TreeCellEditor`にはコンストラクタで`JComboBox`を設定する`DefaultCellEditor`を使用しているが、この`JComboBox`は`JPanel`の子要素になるため一回目のクリックでノードが編集開始されたときに`JComboBox`のドロップダウンリストを開くことができない
 -- 二回目ならすでにセルエディタとして`JPanel`自体が`JTree`の前面に表示されているので子コンポーネントの`JComboBox`をクリックすればドロップダウンリストが開く
 - そのため、このサンプルでは`TreeCellEditor#isCellEditable(...)`をオーバーライドし、ノード(`JPanel`)のクリックされた位置に存在するコンポーネントが`JComboBox`(または`JComboBox`内にある`ArrowButton`)の場合は、編集が開始された後(`EventQueue.invokeLater(...)`を使用してセルエディタが表示された後で実行)、`JComboBox.showPopup()`メソッドを実行してドロップダウンリストを開くように設定している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/23900512/jtree-selection-issue java - JTree selection issue - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

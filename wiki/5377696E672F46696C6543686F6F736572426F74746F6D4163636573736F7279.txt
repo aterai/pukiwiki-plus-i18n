@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2017/09/add-jcombobox-that-selects-encoding-at.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `MetalLookAndFeel`を適用している`JFileChooser`のファイルフィルタとボタンパネルの間に`JComboBox`のような横長のコンポーネントを追加します。
 
 #download(https://drive.google.com/uc?id=1Nyb4wo_ryaaCsJEgpGBxbIlYazx3FQVFfw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class EncodingFileChooserUI extends MetalFileChooserUI {
   public final JComboBox<String> combo = new JComboBox<>(
@@ -62,7 +62,7 @@ class EncodingFileChooserUI extends MetalFileChooserUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JFileChooser#setAccessory(JComponent)`を使用すると`JFileChooser`の右側にコンポーネントが追加されるので、横長のコンポーネントを追加すると`JFileChooser`全体の幅が広がってしまう
 -- [[JFileChooserに画像プレビューを追加>Swing/PreviewAccessory]]
 - `BasicFileChooserUI#getBottomPanel()`メソッドでファイル名入力欄、ファイルフィルタ、ボタンなどを格納している下部パネルを取得し、「ファイルのタイプ(`T`)」パネルとボタンパネルの間に`JComboBox`のような横長のコンポーネントを設定した別パネルを追加
@@ -76,11 +76,11 @@ class EncodingFileChooserUI extends MetalFileChooserUI {
 -- `setUI(...)`の後で`JFileChooser#resetChoosableFileFilters()`を実行するか、`super.updateUI()`を実行しないことで回避可能
 --- 個別のファイルフィルタ追加などの設定は`JFileChooser#updateUI()`メソッド内で実施する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFileChooserに画像プレビューを追加>Swing/PreviewAccessory]]
 - [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Container.html#add-java.awt.Component-int- Container#add(Component, int) (Java Platform SE 8)] 
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

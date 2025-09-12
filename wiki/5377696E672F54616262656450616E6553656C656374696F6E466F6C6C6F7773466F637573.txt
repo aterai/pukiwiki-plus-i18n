@@ -8,12 +8,12 @@ pubdate: 2023-04-03T03:44:40+09:00
 description: JTabbedPaneのキー入力によるタブ移動で選択タブとフォーカスタブを一致させるか、または別々に扱うかを設定で切り替えます。
 image: https://drive.google.com/uc?id=1mS3Bmh6B7dAqMMBMM3TiCTRLVoHZzxiy
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のキー入力によるタブ移動で選択タブとフォーカスタブを一致させるか、または別々に扱うかを設定で切り替えます。
 
 #download(https://drive.google.com/uc?id=1mS3Bmh6B7dAqMMBMM3TiCTRLVoHZzxiy)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTabbedPane tabs = new JTabbedPane() {
   @Override public void updateUI() {
@@ -81,7 +81,7 @@ add(new JLayer<>(tabs, new LayerUI<JTabbedPane>() {
 }));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `TabbedPane.selectionFollowsFocus`: `true`
 -- `MetalLookAndFeel`, `WindowsLookAndFeel`, `GTKLookAndFeel`などのデフォルトでカーソルキーなどによるタブ選択移動にフォーカスタブも追従する
 -- マウスクリックでのタブ選択ではこの設定に関係なく選択タブとフォーカスタブは一致する
@@ -98,11 +98,11 @@ InputMap im = tabs.getInputMap(WHEN_FOCUSED);
 im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "selectTabWithFocus");
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicTabbedPaneUI.html#getFocusIndex-- BasicTabbedPaneUI#getFocusIndex() (Java Platform SE 8)]
 - [[JLayerを使ってJTabbedPaneのタブの挿入位置を描画する>Swing/DnDLayerTabbedPane]]
 - [[JTabbedPaneのカーソルキーによるタブ選択遷移の動作を変更する>Swing/NavigateSelectedTab]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

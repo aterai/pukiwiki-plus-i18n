@@ -8,12 +8,12 @@ pubdate: 2019-10-14T03:01:26+09:00
 description: JMenuから開いたJPopupMenuをキャンセルした場合、カレントのサブメニューから閉じるか、すべてのメニューツリーを閉じるかを設定します。
 image: https://drive.google.com/uc?id=1KMgWDSQkZS95tcgDW87x4bzZd4_M3mdV
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenu`から開いた`JPopupMenu`をキャンセルした場合、カレントのサブメニューから閉じるか、すべてのメニューツリーを閉じるかを設定します。
 
 #download(https://drive.google.com/uc?id=1KMgWDSQkZS95tcgDW87x4bzZd4_M3mdV)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String key = "Menu.cancelMode";
 
@@ -40,7 +40,7 @@ Stream.of(hideLastSubmenuRadio, hideMenuTreeRadio).forEach(r -> {
 add(box);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `UIManager.put("Menu.cancelMode", "hideLastSubmenu");`
 -- `BasicLookAndFeel`、`MetalLookAndFeel`、`WindowsLookAndFeel`などのデフォルト
 -- KBD{ESC}キー入力によるキャンセルでメニューツリーの最後に開かれた`JPopupMenu`のみ閉じる
@@ -48,9 +48,9 @@ add(box);
 -- `MotifLookAndFeel`、`GTKLookAndFeel`のデフォルト
 -- KBD{ESC}キー入力によるキャンセルですべてのメニューツリーの`JPopupMenu`を閉じる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JMenuBar内のJMenuをキャンセルした場合にその選択状態を維持する>Swing/PreserveTopLevelSelection]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

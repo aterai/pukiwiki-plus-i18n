@@ -1,0 +1,118 @@
+---
+category: swing
+folder: NumericKeypad
+title: JButton内に複数のJLabelをBorderLayoutで配置する
+tags: [GridBagLayout, BorderLayout, JButton, LayoutManager]
+author: aterai
+pubdate: 2024-10-07T06:51:52+09:00
+description: JLabelをBorderLayoutでJButton内に2つ配置したキーキャップを作成し、それをJPanel内にGridBagLayoutでテンキー状にレイアウトします。
+image: https://drive.google.com/uc?id=10kZwvZ1VvIWSHcNZcCwCsdJ0nb_Mus-b
+---
+* Summary [#summary]
+`JLabel`を`BorderLayout`で`JButton内`に`2`つ配置したキーキャップを作成し、それを`JPanel`内に`GridBagLayout`でテンキー状にレイアウトします。
+
+#download(https://drive.google.com/uc?id=10kZwvZ1VvIWSHcNZcCwCsdJ0nb_Mus-b)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+private static JButton makeButton(String... s) {
+  String key = s[0];
+  String sub = s.length > 1 ? s[1] : " ";
+  int gap = 2;
+  Border border = BorderFactory.createEmptyBorder(gap, gap, gap, gap);
+  JLabel l1 = new JLabel(key);
+  l1.setFont(l1.getFont().deriveFont(12f));
+  l1.setBorder(border);
+  JLabel l2 = new JLabel(sub);
+  l2.setFont(l2.getFont().deriveFont(9.5f));
+  l2.setBorder(border);
+  JButton button = new JButton() {
+    @Override public void updateUI() {
+      super.updateUI();
+      setLayout(new BorderLayout());
+      setMargin(border.getBorderInsets(this));
+    }
+
+    @Override public Dimension getPreferredSize() {
+      int sz = SIZE - gap * 2;
+      return new Dimension(sz, sz);
+    }
+  };
+  if (Objects.equals(key, sub)) {
+    button.add(l1);
+  } else {
+    button.add(l1, BorderLayout.NORTH);
+    button.add(l2, BorderLayout.SOUTH);
+  }
+  return button;
+}
+}}
+
+* Description [#description]
+- `JButton`でキーキャップを作成
+-- `JButton#getPreferredSize()`をオーバーライドして指定したサイズの正方形になるよう設定
+-- 文字列やアイコンなしの空`JButton`に`BorderLayout`を設定
+--- キーキャップの印字を`2`つの`JLabel`で別々に作成して`JButton#add(..., BorderLayout.NORTH)`、`JButton#add(..., BorderLayout.SOUTH)`で`JButton`にレイアウト
+- `JPanel`にキーキャップを配置してテンキーを作成
+-- `JPanel`に`GridBagLayout`を設定
+-- `GridBagConstraints.gridwidth`、`GridBagConstraints.gridheight`でキーキャップが占有する領域のセル行数、列数を指定して`JPanel`にレイアウト
+-- [[GridBagLayoutを使ってJButtonをキーボード状に配置する>Swing/KeyboardLayout]]
+
+#code{{
+GridBagConstraints c = new GridBagConstraints();
+c.insets = new Insets(1, 1, 1, 1);
+c.fill = GridBagConstraints.BOTH;
+c.gridx = 0;
+c.gridy = 0;
+JPanel panel = new JPanel(new GridBagLayout());
+panel.add(makeButton("<html>Num<br>Lock"), c);
+c.gridx = GridBagConstraints.RELATIVE;
+panel.add(makeButton("/"), c);
+panel.add(makeButton("*"), c);
+panel.add(makeButton("-"), c);
+c.gridx = 0;
+c.gridy++;
+panel.add(makeButton("7", "Home"), c);
+c.gridx = GridBagConstraints.RELATIVE;
+panel.add(makeButton("8", "↑"), c);
+panel.add(makeButton("9", "PgUp"), c);
+c.gridheight = 2;
+panel.add(makeButton("+", "+"), c);
+c.gridx = 0;
+c.gridy++;
+c.gridheight = 1;
+panel.add(makeButton("4", "←"), c);
+c.gridx = GridBagConstraints.RELATIVE;
+panel.add(makeButton("5"), c);
+panel.add(makeButton("6", "→"), c);
+c.gridx = 0;
+c.gridy++;
+panel.add(makeButton("1", "End"), c);
+c.gridx = GridBagConstraints.RELATIVE;
+panel.add(makeButton("2", "↓"), c);
+panel.add(makeButton("3", "PgDn"), c);
+c.gridheight = 2;
+JButton enter = makeButton("Enter", "Enter");
+panel.add(enter, c);
+EventQueue.invokeLater(() -> {
+  getRootPane().setDefaultButton(enter);
+  enter.requestFocusInWindow();
+});
+c.gridx = 0;
+c.gridy++;
+c.gridwidth = 2;
+c.gridheight = 1;
+panel.add(makeButton("0", "Insert"), c);
+c.gridx = GridBagConstraints.RELATIVE;
+c.gridwidth = 1;
+panel.add(makeButton(".", "Delete"), c);
+panel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+}}
+
+* Reference [#reference]
+- [[GridBagLayoutを使ってJButtonをキーボード状に配置する>Swing/KeyboardLayout]]
+- [[GridBagLayoutを使ってレンガ状に配置>Swing/BrickLayout]]
+
+* Comment [#comment]
+#comment
+#comment

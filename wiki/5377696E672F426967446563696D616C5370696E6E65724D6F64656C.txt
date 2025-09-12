@@ -8,12 +8,12 @@ pubdate: 2014-01-20T02:06:20+09:00
 description: JSpinnerで浮動小数点型のモデルを使用する場合、最大値と最小値の比較をBigDecimalで行うよう変更します。
 image: https://lh6.googleusercontent.com/-JztoRl3kot0/UtvN48iHZ3I/AAAAAAAAB-g/D3QcAYgr_ks/s800/BigDecimalSpinnerModel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`で浮動小数点型のモデルを使用する場合、最大値と最小値の比較を`BigDecimal`で行うよう変更します。
 
 #download(https://lh6.googleusercontent.com/-JztoRl3kot0/UtvN48iHZ3I/AAAAAAAAB-g/D3QcAYgr_ks/s800/BigDecimalSpinnerModel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class BigDecimalSpinnerModel extends SpinnerNumberModel {
   public BigDecimalSpinnerModel(
@@ -48,7 +48,7 @@ class BigDecimalSpinnerModel extends SpinnerNumberModel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `SpinnerNumberModel`
 -- `Double`型の`SpinnerNumberModel`では最大・最小値の比較に`Double#compare(...)`が使用されている
 -- `stepSize`に指定した`0.1`などが持つ浮動小数点誤差のため、このサンプルの`JSpinner`の場合下限(`2.0`や`29.6`)にダウンボタンで遷移できない
@@ -56,11 +56,11 @@ class BigDecimalSpinnerModel extends SpinnerNumberModel {
 - 下: `BigDecimalSpinnerModel`
 -- `SpinnerNumberModel#getPreviousValue()`などをオーバーライドして、`Double#compareTo(Double)`ではなく`BigDecimal#compareTo(BigDecimal)`で最小値との比較を行う
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://raigar.main.jp/java/faq/S029.html JavaFAQ: 浮動小数 float/double]
 - [https://stackoverflow.com/questions/21158043/jspinner-not-showing-minimum-value-on-pressing-down-arrow java - JSpinner not showing minimum value on pressing down arrow - Stack Overflow]
 - [[SpinnerNumberModelに上限値を超える値を入力>Swing/SpinnerNumberModel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

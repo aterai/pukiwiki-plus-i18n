@@ -8,12 +8,12 @@ pubdate: 2020-07-27T14:26:21+09:00
 description: JTableで作成したカレンダーの日付が休日の場合はJLabelで作成した囲み数字に変更します。
 image: https://drive.google.com/uc?id=1IB7S5IsGExXoSW_OMAlD3EDmmjUWGsjN
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`で作成したカレンダーの日付が休日の場合は`JLabel`で作成した囲み数字に変更します。
 
 #download(https://drive.google.com/uc?id=1IB7S5IsGExXoSW_OMAlD3EDmmjUWGsjN)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class EnclosedLabel extends JLabel {
   protected EnclosedLabel() {
@@ -53,7 +53,7 @@ class EnclosedLabel extends JLabel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTable`で作成したカレンダーの日付が日曜または祝日の場合は`CUD(Color Universal Design)`を考慮してラウンド矩形などで囲んだ数字(`JLabel`で作成)に変更しています。
 
 - 日曜、祝日
@@ -62,13 +62,13 @@ class EnclosedLabel extends JLabel {
 -- 祝日は日本の`2020`年`7`月のみ対応
 - 土曜
 -- `Ellipse2D`で`JLabel`の背景を塗りつぶして日付を丸付き数字で表示
--- `Unicode`には①から㊿までの白丸数字のコードポイントは用意されているが黒丸数字は⓴までなのでカレンダーの日付にはそのまま利用しづらい
+-- `Unicode`には①から㊿までの白丸数字のコードポイントは用意されているが黒丸数字は⓴までなのでカレンダーの日付としては利用しづらい
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://note.com/ogf4s2lks/n/n8d84452c36cd シャニマスのチェックボックスから見る色弱者の世界｜謝罪Ｐ｜note]
 - [[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]
 - [[JLabel内のアイコンにJLayerを使用してバッジを表示する>Swing/NotificationBadge]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

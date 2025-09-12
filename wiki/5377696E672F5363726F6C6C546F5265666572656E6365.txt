@@ -8,12 +8,12 @@ pubdate: 2019-10-28T02:33:24+09:00
 description: JEditorPaneのHTMLDocument内に配置されたリンクのアンカータグが表示される位置までスクロールします。
 image: https://drive.google.com/uc?id=1dnBj5zunBtGVHQ4iD2Kgwqe6IbWCjYSV
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`の`HTMLDocument`内に配置されたリンクのアンカータグが表示される位置までスクロールします。
 
 #download(https://drive.google.com/uc?id=1dnBj5zunBtGVHQ4iD2Kgwqe6IbWCjYSV)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
 JEditorPane editor = new JEditorPane();
@@ -33,7 +33,7 @@ tree.addTreeSelectionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTree`のノードが選択されるとそのノードの`UserObject`と一致する`<a>`アンカータグの`name`属性をもつリンクをまで`JEditorPane#scrollToReference(ref)`メソッドを使用してビューをスクロールする
 -- `id`属性や`href`属性などを指定しても`JEditorPane#scrollToReference(ref)`メソッドでは効果がない
 - `bottom`ボタンをクリックすると、ドキュメントの末尾に記述した`<p id='bottom'>`タグが表示される位置までスクロール
@@ -61,11 +61,11 @@ private static void scrollToId(JEditorPane editor, String id) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JEditorPane.html#scrollToReference-java.lang.String- JEditorPane (Java Platform SE 8)]
 - [[JScrollPane内にあるJTableなどで追加した行が可視化されるようにスクロールする>Swing/ScrollRectToVisible]]
 - [[JTreeとCardLayoutでサイドメニューを作成する>Swing/VerticalNavigationMenu]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

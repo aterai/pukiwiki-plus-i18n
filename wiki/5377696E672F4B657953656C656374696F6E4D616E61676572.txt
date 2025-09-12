@@ -8,12 +8,12 @@ pubdate: 2018-08-27T16:10:35+09:00
 description: JComboBoxのドロップダウンリストで項目の先頭文字などがキー入力と一致する場合の項目選択を無効にします。
 image: https://drive.google.com/uc?id=114_GR1TDfMUrd7kaOi0H3VyK1g_fTZ60sQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`のドロップダウンリストで項目の先頭文字などがキー入力と一致する場合の項目選択を無効にします。
 
 #download(https://drive.google.com/uc?id=114_GR1TDfMUrd7kaOi0H3VyK1g_fTZ60sQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JComboBox<String> combo1 = new JComboBox<String>(makeModel()) {
   @Override public boolean selectWithKeyChar(char keyChar) {
@@ -31,7 +31,7 @@ combo2.setKeySelectionManager((key, model) -> -1);
 // });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `BasicComboBoxUI#DefaultKeySelectionManager`
 -- 編集不可に設定された`JComboBox`のデフォルト`KeySelectionManager`は`BasicComboBoxUI#DefaultKeySelectionManager`
 --- 内部で`JList#getNextMatch(...)`メソッドを使用している
@@ -49,10 +49,10 @@ combo2.setKeySelectionManager((key, model) -> -1);
  エラー: <anonymous example.MainPanel$2>はabstractでなく、KeySelectionManager内のabstractメソッドselectionForKey(char,ComboBoxModel)をオーバーライドしません
          combo3.setKeySelectionManager(new JComboBox.KeySelectionManager() {
                                                                            ^
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComboBox.KeySelectionManager.html JComboBox.KeySelectionManager (Java Platform SE 8)]
 - [[JListの先頭文字キー入力による検索選択を無効にする>Swing/DisablePrefixMatchSelection]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

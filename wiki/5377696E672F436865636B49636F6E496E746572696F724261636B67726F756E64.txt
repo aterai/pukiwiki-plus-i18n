@@ -1,0 +1,53 @@
+---
+category: swing
+folder: CheckIconInteriorBackground
+title: JCheckBoxとJRadioButtonのチェックアイコン背景色を変更する
+tags: [JCheckBox, JRadioButton, UIManager, WindowsClassicLookAndFeel]
+author: aterai
+pubdate: 2024-09-09T00:11:57+09:00
+description: JCheckBoxとJRadioButtonのチェックアイコン内部の描画に使用するインテリア背景色などを変更します。
+image: https://drive.google.com/uc?id=1JzmCMnRBtZ-wg0qef5-CsU8WgTo2XAF-
+---
+* Summary [#summary]
+`JCheckBox`と`JRadioButton`のチェックアイコン内部の描画に使用するインテリア背景色などを変更します。
+
+#download(https://drive.google.com/uc?id=1JzmCMnRBtZ-wg0qef5-CsU8WgTo2XAF-)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+try {
+  UIManager.setLookAndFeel(
+    "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+} catch (Exception ignored) {
+  Toolkit.getDefaultToolkit().beep();
+}
+// System.setProperty("swing.noxp", "true");
+UIManager.put("CheckBox.foreground", Color.RED);
+UIManager.put("CheckBox.background", Color.GREEN);
+UIManager.put("CheckBox.interiorBackground", Color.BLUE);
+
+UIManager.put("RadioButton.foreground", Color.RED);
+UIManager.put("RadioButton.background", Color.GREEN);
+UIManager.put("RadioButton.interiorBackground", Color.BLUE);
+}}
+
+* Description [#description]
+- `CheckBox.interiorBackground`、`RadioButton.interiorBackground`: `BLUE`
+-- `JCheckBox`と`JRadioButton`のチェックアイコン内部の`ButtonModel#isPressed()`でない、かつ`ButtonModel#isArmed()`でない状態の背景色
+-- `WindowsClassicLookAndFeel`でのみ有効
+-- `CheckBoxMenuItem.interiorBackground`、`RadioButtonMenuItem.interiorBackground`は存在せず無効
+- `CheckBox.background`、`RadioButton.background`: `GREEN`
+-- `JCheckBox`と`JRadioButton`のラベル背景色
+--- このサンプルでは`JCheckBox#setOpaque(false)`を設定してラベルの背景を描画しないよう設定している
+-- `WindowsClassicLookAndFeel`の場合、`ButtonModel#isPressed()`、かつ`ButtonModel#isArmed()`状態のチェックアイコン内部の背景色も共有している
+- `CheckBox.foreground`、`RadioButton.foreground`: `RED`
+-- `JCheckBox`と`JRadioButton`のラベル文字色
+-- `WindowsClassicLookAndFeel`の場合、チェックアイコンのチェックマーク色も共有している
+-- `MotifLookAndFeel`の場合、`JCheckBox`のチェックマーク色のみ変更可能で、`JRadioButton`のチェックマーク色は変更不可
+
+* Reference [#reference]
+- [[JCheckBoxのチェックアイコンを変更>Swing/CheckBoxColor]]
+
+* Comment [#comment]
+#comment
+#comment

@@ -8,12 +8,12 @@ pubdate: 2013-10-21T00:16:35+09:00
 description: JListのセルに配置されているコンポーネントをマウスの座標から検索し、それに設定されたカーソルをJListに適用します。
 image: https://lh3.googleusercontent.com/-v3ugRz81Y0Q/UmPxM3SwOYI/AAAAAAAAB4Y/PqZaNMCPgN0/s800/CursorOfCellComponent.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`のセルに配置されているコンポーネントをマウスの座標から検索し、それに設定されたカーソルを`JList`に適用します。
 
 #download(https://lh3.googleusercontent.com/-v3ugRz81Y0Q/UmPxM3SwOYI/AAAAAAAAB4Y/PqZaNMCPgN0/s800/CursorOfCellComponent.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class LinkCellList<E> extends JList<E> {
   private int prevIndex = -1;
@@ -53,7 +53,7 @@ class LinkCellList<E> extends JList<E> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下の手順でイベントを取得しないセルレンダラー中のコンポーネントに応じたカーソルの変更を行っています。
 
 - `JList`上をマウスカーソルを移動した時にカーソルのある行を取得
@@ -68,9 +68,9 @@ class LinkCellList<E> extends JList<E> {
 - `SwingUtilities.getDeepestComponentAt(...)`メソッドで描画用コンポーネントから変更した座標の直下にある子コンポーネントを取得
 - 取得した子コンポーネントのカーソルを`JList`のカーソルとして設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 [[JListのセルレンダラーとして設定したJEditorPaneからHyperlinkEventを取得する>Swing/ListCellHyperlinkListener]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

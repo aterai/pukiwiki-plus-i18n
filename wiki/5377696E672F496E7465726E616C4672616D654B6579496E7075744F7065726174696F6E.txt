@@ -8,12 +8,12 @@ pubdate: 2018-11-26T16:07:53+09:00
 description: JInternalFrameのカーソルキー入力による移動、リサイズをテストします。
 image: https://drive.google.com/uc?id=1xHC1_oVY3HI0SGcsd2zG2jsWp2CPMhMucg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`のカーソルキー入力による移動、リサイズをテストします。
 
 #download(https://drive.google.com/uc?id=1xHC1_oVY3HI0SGcsd2zG2jsWp2CPMhMucg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 InputMap im = desktop.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 int modifiers = InputEvent.CTRL_DOWN_MASK;
@@ -23,7 +23,7 @@ im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, modifiers), "shrinkLeft");
 im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, modifiers), "shrinkRight");
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `move`: `ctrl pressed F7`
 -- KBD{Ctrl+F7}で現在フォーカスが存在する`JInternalFrame`をカーソルキーで移動可能なモードになる
 -- `JInternalFrame`を完全に`JDesktopPane`の範囲外にカーソルキーで移動は不可
@@ -37,6 +37,7 @@ im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, modifiers), "shrinkRight");
 --- `JInternalFrame`ではなく`JDesktopPane`の`InputMap`に設定を追加する必要がある
 -- `NimbusLookAndFeel`ではカーソルキーによるリサイズで`NullPointerException`が発生する
 --- `1.8.0_192`、`11.0.1`ともにエラーになる
+--- `Java 21`で修正済
 
 #code{{
 Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
@@ -86,11 +87,11 @@ Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
 - `maximize`: `ctrl pressed F10`
 -- マウスによる最大化が不可の場合、キー入力による最大化も不可
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComponentのKeyBinding一覧を取得する>Swing/KeyBinding]]
 - [https://bugs.openjdk.org/browse/JDK-6603771 JDK-6603771 Nimbus L&F: Ctrl+F7 keybinding for JInternal Frame throws a NPE. - Java Bug System]
 -- リサイズなどで`NullPointerException`になるのは`NimbusLookAndFeel`が入った最初からのバグらしい
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

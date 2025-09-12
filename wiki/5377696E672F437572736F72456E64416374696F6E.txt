@@ -1,0 +1,69 @@
+---
+category: swing
+folder: CursorEndAction
+title: JTextAreaのキャレットを右端の折り返し位置、改行記号位置の順に移動する
+tags: [JTextArea, ActionMap, InputMap]
+author: aterai
+pubdate: 2025-04-14T03:58:17+09:00
+description: JTextAreaのキャレット移動アクションを表示上での右端の折り返し位置、その次に改行記号位置の順番で遷移するよう設定します。
+image: https://drive.google.com/uc?id=1tYpLg5fssmJ-s25V6xB7KDeP1VDXNHfE
+---
+* Summary [#summary]
+`JTextArea`のキャレット移動アクションを表示上での右端の折り返し位置、その次に改行記号位置の順番で遷移するよう設定します。
+
+#download(https://drive.google.com/uc?id=1tYpLg5fssmJ-s25V6xB7KDeP1VDXNHfE)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class CursorEndAction extends AbstractAction {
+  @Override public void actionPerformed(ActionEvent e) {
+    Object src = e.getSource();
+    if (src instanceof JTextComponent) {
+      JTextComponent target = (JTextComponent) src;
+      int offs = target.getCaretPosition();
+      int rowEndOffs;
+      try {
+        rowEndOffs = Utilities.getRowEnd(target, offs);
+      } catch (BadLocationException ex) {
+        Logger.getGlobal().severe(ex::getMessage);
+        return;
+      }
+      if (rowEndOffs == offs) {
+        int length = target.getDocument().getLength();
+        int end = Utilities.getParagraphElement(target, offs).getEndOffset();
+        target.setCaretPosition(Math.min(length, end - 1));
+      } else {
+        target.setCaretPosition(rowEndOffs);
+      }
+    }
+  }
+}
+}}
+
+* Description [#description]
+- `cursor-end`: KBD{Ctrl+E}
+-- `Utilities.getRowEnd(...)`を使用して、指定されたモデル位置を含む行の終了行モデル位置を取得
+--- `JTextArea#setLineWrap(true)`で行折返しが有効の場合、`Utilities.getRowEnd(...)`は右端の折り返し位置を返す
+-- このアクションを実行したときのキャレット位置(指定されたモデル位置)が取得した行の終了行モデル位置より手前に存在する場合は行の終了行モデル位置まで移動
+-- 現在のキャレット位置と取得した行の終了行モデル位置が等しい場合は改行記号位置(段落末尾)を`Utilities.getParagraphElement(...).getEndOffset()`で取得しそのひとつ手前に移動
+-- `JTextArea#setLineWrap(false)`で行折返しが無効の場合終了行モデル位置と改行記号位置は等しくなるので、デフォルトで用意されている`caret-end-line`アクション(KBD{END})と同じ動作になる
+- `caret-end-line`(`default`): KBD{END}(`default`)
+-- 行末まで移動
+-- 行折返しが有効の場合、行末は表示上での右端の折り返し位置、無効の場合は改行記号位置(パラグラフ末尾)
+- `caret-end-paragraph`(`default`): KBD{Ctrl+P}
+-- パラグラフ末尾まで移動
+-- デフォルトではキーバインドは未設定なので、このサンプルではKBD{Ctrl+P}で追加
+-- 改行記号の後にキャレットが移動するので、実質次のパラグラフ先頭へのキャレット移動になる？
+--- このため、`caret-end-line`、`caret-end-paragraph`アクションを連続して実行しても、このサンプルで自作した`cursor-end`アクションと同じキャレット位置までの移動にはならない
+- `caret-end`(`default`): KBD{Ctrl+END}(`default`)
+-- 全テキストの末尾までキャレットを移動
+
+// - `caret-next-word`(`default`): KBD{Ctrl RIGHT}, KBD{Ctrl+KP_RIGHT}(`default`)
+// - `caret-end-word`(`default`): KBD{Ctrl+D}
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Utilities.html#getRowEnd-javax.swing.text.JTextComponent-int- Utilities#getRowEnd(...) (Java Platform SE 8)]
+
+* Comment [#comment]
+#comment
+#comment

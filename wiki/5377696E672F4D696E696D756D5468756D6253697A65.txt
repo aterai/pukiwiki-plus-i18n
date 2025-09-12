@@ -8,17 +8,17 @@ pubdate: 2012-03-19T15:02:42+09:00
 description: JScrollBarのKnobの最小サイズを設定します。
 image: https://lh4.googleusercontent.com/-A8TRDbOQ1p4/T2bKeM8dcvI/AAAAAAAABKI/iBKMsL6eGfM/s800/MinimumThumbSize.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollBar`の`Knob`の最小サイズを設定します。
 
 #download(https://lh4.googleusercontent.com/-A8TRDbOQ1p4/T2bKeM8dcvI/AAAAAAAABKI/iBKMsL6eGfM/s800/MinimumThumbSize.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左: デフォルト
 - 右: `JScrollBar`のつまみ(`Thumb`、`Knob`)に最小サイズを設定
 -- `Horizontal`の場合の最小サイズは幅、`Vertical`の場合は高さ
@@ -60,11 +60,11 @@ protected Dimension getMinimumThumbSize() {
 ----
 - `Windows 11`環境では`UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32))`を設定しても無効？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/2754306/java-swing-rendering-bug-on-windows-7-look-and-feel Java Swing rendering bug on Windows 7 look-and-feel? - Stack Overflow]
 - [[JSliderのつまみの形状を変更>Swing/ThumbArrowShape]]
 - [[JScrollBarのKnobの最小サイズをJScrollPaneのサイズ相対に変更する>Swing/MinimumThumbRatio]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

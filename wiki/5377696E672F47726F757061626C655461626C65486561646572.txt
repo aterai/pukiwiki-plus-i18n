@@ -8,12 +8,12 @@ pubdate: 2016-05-02T00:35:46+09:00
 description: TableColumnのグループ化を可能にし、JTableHeaderでの列結合を実現します。
 image: https://lh3.googleusercontent.com/-DIZZyiOX9YU/VyYbXr9opNI/AAAAAAAAOTs/QhLBqtw5Z34ULclU9aZHnVjnEZMJvhJmgCCo/s800/GroupableTableHeader.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TableColumn`のグループ化を可能にし、`JTableHeader`での列結合を実現します。%%[http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html Groupable Header - JTable Examples 1]%%からの引用です。
 
 #download(https://lh3.googleusercontent.com/-DIZZyiOX9YU/VyYbXr9opNI/AAAAAAAAOTs/QhLBqtw5Z34ULclU9aZHnVjnEZMJvhJmgCCo/s800/GroupableTableHeader.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 /** GroupableTableHeader
  * http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html
@@ -59,7 +59,7 @@ class GroupableTableHeader extends JTableHeader {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTableHeader`に列のグループ化設定を追加し、`BasicTableHeaderUI#paint(...)`をオーバーライドしてヘッダセルの描画領域を変更することで、`TableColumn`の列結合を実現しています。
 
 - %%[http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html オリジナル]%%からの主な変更点:
@@ -68,12 +68,12 @@ class GroupableTableHeader extends JTableHeader {
 -- グループ化しない場合は`null`ではなく`Collections.emptyList()`を返す
 -- `BasicTableHeaderUI`からコピーしている各`private`メソッドを最新版に更新
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - %%[http://www2.gol.com/users/tame/swing/examples/JTableExamples1.html Groupable Header - JTable Examples 1]%%
 -- オリジナル版
 - [http://www.java2s.com/Code/Java/Swing-Components/GroupableGroupHeaderExample.htm Groupable(Group) Header Example : Grid Table « Swing Components « Java]
 -- `revised by Java2s.com`でいくつか変更点がある模様
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

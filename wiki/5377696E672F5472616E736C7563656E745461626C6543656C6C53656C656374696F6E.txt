@@ -1,0 +1,89 @@
+---
+category: swing
+folder: TranslucentTableCellSelection
+title: JTableのセル選択を半透明化して上書き
+tags: [JTable, JLayer]
+author: aterai
+pubdate: 2025-06-30T01:26:30+09:00
+description: JTableのセル選択をJLayer側で描画してセル選択状態を半透明色で上書きとセル選択領域へのフチ設定を実行しています。
+image: https://drive.google.com/uc?id=1dhXJnmTucVK3IYYVJdtIY14URoQ4w-fL
+---
+* Summary [#summary]
+`JTable`のセル選択を`JLayer`側で描画してセル選択状態を半透明色で上書きとセル選択領域へのフチ設定を実行しています。
+
+#download(https://drive.google.com/uc?id=1dhXJnmTucVK3IYYVJdtIY14URoQ4w-fL)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class TranslucentCellSelectionLayerUI extends LayerUI<JScrollPane> {
+  private static final Stroke BORDER_STROKE = new BasicStroke(2f);
+
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    JTable table = getTable(c);
+    int cc = table.getSelectedColumnCount();
+    int rc = table.getSelectedRowCount();
+    if (cc != 0 && rc != 0 && !table.isEditing()) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(
+          RenderingHints.KEY_ANTIALIASING,
+          RenderingHints.VALUE_ANTIALIAS_ON);
+      Area area = new Area();
+      for (int row : table.getSelectedRows()) {
+        for (int col : table.getSelectedColumns()) {
+          addArea(c, table, area, row, col);
+        }
+      }
+      Dimension ics = table.getIntercellSpacing();
+      Color v = table.getSelectionBackground();
+      Color sbc = new Color(v.getRed(), v.getGreen(), v.getBlue(), 0x32);
+      for (Area a : GeomUtils.singularization(area)) {
+        Rectangle r = a.getBounds();
+        r.width -= ics.width - 1;
+        r.height -= ics.height - 1;
+        g2.setPaint(sbc);
+        g2.fill(r);
+        g2.setPaint(v);
+        g2.setStroke(BORDER_STROKE);
+        g2.draw(r);
+      }
+      g2.dispose();
+    }
+  }
+
+  private static void addArea(Component c, JTable table, Area area, int row, int col) {
+    if (table.isCellSelected(row, col)) {
+      Rectangle r = table.getCellRect(row, col, true);
+      area.add(new Area(SwingUtilities.convertRectangle(table, r, c)));
+    }
+  }
+
+  private static JTable getTable(Component c) {
+    JTable table = null;
+    if (c instanceof JLayer) {
+      Component c1 = ((JLayer<?>) c).getView();
+      if (c1 instanceof JScrollPane) {
+        table = (JTable) ((JScrollPane) c1).getViewport().getView();
+      }
+    }
+    return table;
+  }
+}
+}}
+
+* Description [#description]
+- `JTable`のセル選択を半透明化して上書き
+-- [[JTableのヘッダを透明化>Swing/TransparentTableHeader]]のようにセルレンダラーを半透明にするのではなく、`JTable`側の選択背景色は完全に透明、選択文字色は文字色と同一に設定し、セル選択の描画は`JLayer`を適用して`LayerUI#paint(...)`メソッド内で実行する
+--- `NumberRenderer`、`BooleanRenderer`、`IconRenderer`などのセルレンダラーごとに半透明化や罫線の設定を適用する必要がない
+-- `JLayer`ではなく`JTable#paintComponent(...)`をオーバーライドして同様の上書きを描画する場合は、`JTable#setOpaque(false)`で`JTable`の背景を描画しないよう設定する必要がある
+- `JTable`のセル選択領域にフチを描画
+-- [[JTableのセル選択背景描画をラウンド矩形に変更する>Swing/RoundedCellSelectionTable]]と同様にセル選択領域をセグメントごとの`Area`に分割し、上記の`LayerUI#paint(...)`メソッド内でそれぞれの領域にフチを描画する
+
+* Reference [#reference]
+- [[JTableのヘッダを透明化>Swing/TransparentTableHeader]]
+- [[JTableのセル選択背景描画をラウンド矩形に変更する>Swing/RoundedCellSelectionTable]]
+- [[JTableの水平罫線を描画する位置とその色をソート条件に応じて変更する>Swing/StandingsTables]]
+
+* Comment [#comment]
+#comment
+#comment

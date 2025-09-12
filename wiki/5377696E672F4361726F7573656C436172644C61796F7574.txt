@@ -8,12 +8,12 @@ pubdate: 2019-11-04T01:52:24+09:00
 description: CardLayoutを設定したContainerからカレントカードの前後に存在するカードを取得し、半透明でカレントカードの左右に表示します。
 image: https://drive.google.com/uc?id=1P9cXLzg4aUWv4LS9XptuChDgsprRayp5
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `CardLayout`を設定した`Container`からカレントカードの前後に存在するカードを取得し、半透明でカレントカードの左右に表示します。
 
 #download(https://drive.google.com/uc?id=1P9cXLzg4aUWv4LS9XptuChDgsprRayp5)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 CardLayout cardLayout = new CardLayout(50, 5);
 
@@ -52,7 +52,7 @@ JPanel cards = new JPanel(cardLayout) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Container#getComponents()`メソッドで`CardLayout`を設定したコンテナ内の全コンポーネントを取得
 - `Component#isVisible()`が`true`になるコンポーネントが現在表示されているカードになる
 - `Container#getComponentZOrder(c)`メソッドでカレントカードのコンポーネントの配置番号を取得
@@ -61,10 +61,10 @@ JPanel cards = new JPanel(cardLayout) {
 - `CardLayout#setHgap(int hgap)`などで設定したコンポーネント間の水平方向の間隔上に前後のカードを`Component#print()`メソッドで描画
 -- 描画位置は`Graphics#translate(...)`を使用して移動
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[GridLayoutとJScrollPaneを使ったグリッド単位での表示切り替え>Swing/GridScrollAnimation]]
 - [https://tips4java.wordpress.com/2008/10/31/card-layout-focus/ Card Layout Focus « Java Tips Weblog]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

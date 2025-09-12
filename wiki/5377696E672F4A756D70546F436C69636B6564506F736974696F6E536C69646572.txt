@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2009/11/jump-to-clicked-position-jslider.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`をマウスでクリックした場合、その位置にノブをスライド、続けてドラッグ可能にします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOt05WV7I/AAAAAAAAAc0/Eobj6KIAQzk/s800/JumpToClickedPositionSlider.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 slider.setUI(new MetalSliderUI() {
   @Override protected TrackListener createTrackListener(JSlider slider) {
@@ -51,7 +51,7 @@ slider.setUI(new MetalSliderUI() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 縦左、横上の`JSlider`:
 -- デフォルト
 -- ノブを直接クリックするとドラッグ可能
@@ -60,11 +60,11 @@ slider.setUI(new MetalSliderUI() {
 -- クリックした位置までスライドし継続してドラッグ可能
 --- 目盛の間隔が広い場合、ノブがスナップされてマウスカーソルからはずれてしまい継続ドラッグがキャンセルされる場合がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/518471/jslider-question-position-after-leftclick JSlider question: Position after leftclick - Stack Overflow]
 - [[JScrollBarのトラック内でクリックした位置につまみを移動する>Swing/AllowsAbsolutePositioning]]
 -- `JScrollBar`の場合、`UIManager.put("ScrollBar.allowsAbsolutePositioning", Boolean.TRUE);`を設定すると中ボタンクリックで絶対位置移動と続けてドラッグが可能になる
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

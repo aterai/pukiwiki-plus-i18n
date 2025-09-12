@@ -11,30 +11,30 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2019/05/draw-color-wheel-on-jpanel.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPanel`に明度を最大値に固定した色相環を描画します。
 
 #download(https://drive.google.com/uc?id=1ab5yQit9V_ffTOwkOV9zxIehv-q8yUnuow)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // Colors: a Color Dialog | Java Graphics
 // https://javagraphics.blogspot.com/2007/04/jcolorchooser-making-alternative.html
 private BufferedImage updateImage() {
-  BufferedImage image = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
+  BufferedImage image = new BufferedImage(
+    SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
   int[] row = new int[SIZE];
   float size = (float) SIZE;
   float radius = size / 2f;
-
   for (int yidx = 0; yidx < SIZE; yidx++) {
-    float y = yidx - size / 2f;
+    float y = yidx - radius;
     for (int xidx = 0; xidx < SIZE; xidx++) {
-      float x = xidx - size / 2f;
+      float x = xidx - radius;
       double theta = Math.atan2(y, x) - 3d * Math.PI / 2d;
       if (theta < 0) {
         theta += 2d * Math.PI;
       }
-      double r = Math.sqrt(x * x + y * y);
+      double r = Math.hypot(x, y); // Math.sqrt(x * x + y * y);
       float hue = (float) (theta / (2d * Math.PI));
       float sat = Math.min((float) (r / radius), 1f);
       float bri = 1f;
@@ -46,7 +46,7 @@ private BufferedImage updateImage() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、色相環をサイズ固定で`JPanel`の中央に描画しています。
 
 - 色相(`hue`): `new Color(Color.HSBtoRGB(0f, 1f, 1f))`は赤で、これを頂点に角度に応じて色相を変更
@@ -59,11 +59,14 @@ private BufferedImage updateImage() {
 #code{{
 // Soft Clipping
 GraphicsConfiguration gc = g2.getDeviceConfiguration();
-BufferedImage buf = gc.createCompatibleImage(s, s, Transparency.TRANSLUCENT);
+BufferedImage buf = gc.createCompatibleImage(
+    s, s, Transparency.TRANSLUCENT);
 Graphics2D g2d = buf.createGraphics();
 
 g2d.setComposite(AlphaComposite.Src);
-g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+g2d.setRenderingHint(
+    RenderingHints.KEY_ANTIALIASING,
+    RenderingHints.VALUE_ANTIALIAS_ON);
 g2d.fill(new Ellipse2D.Float(0f, 0f, s, s));
 
 g2d.setComposite(AlphaComposite.SrcAtop);
@@ -91,12 +94,12 @@ if (r > radius - k) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://javagraphics.blogspot.com/2007/04/jcolorchooser-making-alternative.html Colors: a Color Dialog | Java Graphics]
 -- カラーピッカー機能付きだが、このサンプルでは描画機能部分を参考にした
 -- java.netが無くなってリポジトリが参照不可になっているので、githubのクローンや[http://www.javased.com/index.php?source_dir=SPREAD/src/colorpicker/swing/ColorPickerPanel.java Java Source Code: colorpicker.swing.ColorPickerPanel]などでソースを参照
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Color.html#HSBtoRGB-float-float-float- Color.HSBtoRGB(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

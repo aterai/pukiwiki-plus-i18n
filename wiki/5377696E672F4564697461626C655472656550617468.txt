@@ -8,12 +8,12 @@ pubdate: 2024-02-26T02:07:52+09:00
 description: JTreeのノードエディタが編集を開始できるかどうかをTreePathやMouseEventから状態を取得して判断します。
 image: https://drive.google.com/uc?id=1oHmohICOAH5TjHT3z4sAl7gJY0z9imbB
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードエディタが編集を開始できるかどうかを`TreePath`や`MouseEvent`から状態を取得して判断します。
 
 #download(https://drive.google.com/uc?id=1oHmohICOAH5TjHT3z4sAl7gJY0z9imbB)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTree tree = new JTree() {
   @Override public void updateUI() {
@@ -66,7 +66,7 @@ JTree tree = new JTree() {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTree#isPathEditable(TreePath)`
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#isPathEditable-javax.swing.tree.TreePath- JTree#isPathEditable(TreePath) (Java Platform SE 8)]
 -- デフォルトの`JTree`では引数の`TreePath`は参照せずに常に`JTree#isEditable()`を返すだけの関数のため、この関数は通常オーバーライドして使用する
@@ -87,7 +87,7 @@ JTree tree = new JTree() {
 -- `MouseEvent#getComponent()`で親`JTree`を参照し`JTree#getPathForLocation(x, y)`で`TreePath`、`JTree#getLastSelectedPathComponent()`で`TreeNode`を取得する方法もあるが、それだけの場合は`JTree#isPathEditable(TreePath)`を使用すべき？
 --- たとえば[[JCheckBoxをグループでまとめて有効化する>Swing/CheckBoxGroupEnabling]]のように編集対象ノードのユーザーオブジェクトの状態で編集可・不可を判断する場合、`JTree#isPathEditable(TreePath)`よりあとに実行される`TreeCellEditor#isCellEditable(EventObject)`で調査するとユーザーオブジェクトが編集不可なのに一瞬デフォルトの？(または直前に使用された？)編集可`TreeCellEditor`が表示されてしまう
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#isPathEditable-javax.swing.tree.TreePath- JTree#isPathEditable(TreePath) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/CellEditor.html#isCellEditable-java.util.EventObject- CellEditor#isCellEditable(EventObject) (Java Platform SE 8)]
 - [[JCheckBoxをグループでまとめて有効化する>Swing/CheckBoxGroupEnabling]]
@@ -97,6 +97,6 @@ JTree tree = new JTree() {
 - [[JTreeのノードにクリック可能なJButtonを複数配置する>Swing/MultipleButtonsInTreeNode]]
 -- `TreeCellEditor#isCellEditable(EventObject)`をオーバーライドして`EventObject`が`MouseEvent`、かつクリック位置がセルレンダラー内に配置されたボタン上の場合のみノードエディタを起動
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2007-04-09T15:16:42+09:00
 description: JCheckBoxで使用するチェックアイコンの色や形を変更します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTI225hC_I/AAAAAAAAATc/YxhkQ5Bq2sk/s800/CheckBoxColor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JCheckBox`で使用するチェックアイコンの色や形を変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTI225hC_I/AAAAAAAAATc/YxhkQ5Bq2sk/s800/CheckBoxColor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CheckBoxIcon2 implements Icon {
   private final Icon orgIcon = UIManager.getIcon("CheckBox.icon");
@@ -52,7 +52,7 @@ class CheckBoxIcon2 implements Icon {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- デフォルトの`JCheckBox`
 - `WindowsIconFactory`
@@ -65,18 +65,19 @@ class CheckBoxIcon2 implements Icon {
 
 ----
 - `Windows XP`スタイル以外を使用する環境で色を変更する場合は以下のような方法もある
-
+-- [[JCheckBoxとJRadioButtonのチェックアイコン背景色を変更する>Swing/CheckIconInteriorBackground]]
 #code{{
 System.setProperty("swing.noxp", "true");
 UIManager.put("CheckBox.interiorBackground", new ColorUIResource(Color.GREEN));
 UIManager.put("CheckBox.darkShadow", new ColorUIResource(Color.RED));
-JCheckBox cb = new JCheckBox("check box");
+JCheckBox check = new JCheckBox("check box");
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://www.ibm.com/developerworks/jp/java/library/j-synth/ 進歩したSynth]
 -- `SynthLookAndFeel`を使って、画像でチェックを描画するサンプルなどが紹介されている
+- [[JCheckBoxとJRadioButtonのチェックアイコン背景色を変更する>Swing/CheckIconInteriorBackground]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

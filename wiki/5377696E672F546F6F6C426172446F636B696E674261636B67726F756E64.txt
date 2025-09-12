@@ -8,12 +8,12 @@ pubdate: 2022-06-27T01:42:33+09:00
 description: JToolBarが移動中、または移動中でドッキング可能な位置に存在する場合の背景色とボーダー色を変更します。
 image: https://drive.google.com/uc?id=13l5qJIaST0HOipZjBRB3UVTEsAw5OYH9
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolBar`が移動中、または移動中でドッキング可能な位置に存在する場合の背景色とボーダー色を変更します。
 
 #download(https://drive.google.com/uc?id=13l5qJIaST0HOipZjBRB3UVTEsAw5OYH9)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("ToolBar.dockingBackground", new Color(0x64_FF_00_00, true));
 UIManager.put("ToolBar.floatingBackground", new Color(0x64_00_00_FF, true));
@@ -32,7 +32,7 @@ check.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `ToolBar.dockingBackground`
 -- `JToolBar`がドッキング可能な位置に存在する場合の背景色を`UIManager.put("ToolBar.dockingBackground", bgc1)`で設定
 -- `BasicToolBarUI#setDockingColor(...)`で変更することも可能
@@ -46,11 +46,11 @@ check.addActionListener(e -> {
 - `ToolBar.floatingForeground`
 -- `JToolBar`が移動中の場合のボーダー色を`UIManager.put("ToolBar.floatingForeground", fgc2)`で設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicToolBarUI.html#setDockingColor-java.awt.Color- BasicToolBarUI#setDockingColor(Color) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicToolBarUI.html#setFloatingColor-java.awt.Color- BasicToolBarUI#setFloatingColor(Color) (Java Platform SE 8)]
 - [[JToolBarのドッキングを上下のみに制限>Swing/DockingConstraint]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

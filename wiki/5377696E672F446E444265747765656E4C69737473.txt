@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2010/08/drag-and-drop-between-jlists.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`間でのドラッグ＆ドロップによるアイテムの移動や並べ替えを行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLUTkzH4I/AAAAAAAAAXY/tSQriEN1G_Y/s800/DnDBetweenLists.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ListItemTransferHandler extends TransferHandler {
   protected final DataFlavor localObjectFlavor;
@@ -96,17 +96,17 @@ class ListItemTransferHandler extends TransferHandler {
   // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、一つの`JList`内でのアイテムの並べ替えを行う[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]を元に`ListItemTransferHandler`を作成し、`JList`間でのアイテム移動も可能にしています。
 
 - ドロップ先がドラッグ元と同じコンポーネントかどうかを調査する処理を変更
 -- [[TransferHandlerを使ってJTableの行をドラッグ＆ドロップ、並べ替え>Swing/DnDReorderTable]]から[[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]と同様
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]
 - [[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - リストアイテムをカット(KBD{Ctrl+X})すると`ClassCastException`が発生するバグを修正。 -- &user(aterai); &new{2011-02-25 (金) 20:28:45};
 

@@ -8,12 +8,12 @@ pubdate: 2008-05-05T20:51:51+09:00
 description: 選択中のJInternalFrameをDesktopManagerなどを使用して外部から閉じる(JDesktopPaneから除去する)方法をテストします。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJcTXtdNI/AAAAAAAAAUY/zL_wkJJa_Ks/s800/CloseInternalFrame.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 選択中の`JInternalFrame`を`DesktopManager`などを使用して外部から閉じる(`JDesktopPane`から除去する)方法をテストします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJcTXtdNI/AAAAAAAAAUY/zL_wkJJa_Ks/s800/CloseInternalFrame.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 closeSelectedFrameAction1 = new AbstractAction() {
   @Override public void actionPerformed(ActionEvent e) {
@@ -56,7 +56,7 @@ disposeSelectedFrameAction = new AbstractAction() {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、選択されている`JInternalFrame`をツールバーのボタンやKBD{Esc}キー(`OS`が`Windows`の場合のデフォルトはKBD{Ctrl+F4})で閉じることができます。
 
 - `RED`
@@ -72,10 +72,10 @@ disposeSelectedFrameAction = new AbstractAction() {
 ----
 - `JDK 1.5` + `WindowsLookAndFeel`では`JInternalFrame`を閉じたときアイコン化されている`JInternalFrame`には選択状態は移動しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://mail.openjdk.org/pipermail/swing-dev/2013-April/002688.html <Swing Dev> 8 Review request for 8012004: JINTERNALFRAME NOT BEING FINALIZED AFTER CLOSING]
 - [https://bugs.openjdk.org/browse/JDK-4759312 JDK-4759312 JInternalFrame Not Being Finalized After Closing - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

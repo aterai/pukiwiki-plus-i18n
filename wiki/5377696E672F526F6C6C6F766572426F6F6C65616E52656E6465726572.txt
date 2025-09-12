@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2010/07/create-jcheckbox-rollover-effect-in.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルに`JCheckBox`を使用したときでも、マウスカーソルでロールオーバーするように設定します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSCUU481I/AAAAAAAAAiI/LzyeHFbwP40/s800/RolloverBooleanRenderer.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RolloverBooleanRenderer extends JCheckBox implements TableCellRenderer, UIResource {
   private static final Border noFocusBorder = new EmptyBorder(1, 1, 1, 1);
@@ -55,7 +55,7 @@ class RolloverBooleanRenderer extends JCheckBox implements TableCellRenderer, UI
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上:
 -- デフォルト
 - 下:
@@ -63,9 +63,9 @@ class RolloverBooleanRenderer extends JCheckBox implements TableCellRenderer, UI
 -- これらのセルレンダラーはデフォルトの`JTable$BooleanRenderer`クラスなどを参考に作成
 -- `JCheckBox`のロールオーバー表示は`JCheckBox#getModel()#setRollover(boolean)`メソッドを使用
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableが使用するBooleanCellEditorの背景色を変更>Swing/BooleanCellEditor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2024-03-25T02:42:05+09:00
 description: JTextArea内でマウスカーソルが乗った単語の開始オフセットなどをJToolTipで表示します。
 image: https://drive.google.com/uc?id=1G7tL6PLzVdyUZ9P6PlMM1sFE1QngbLup
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`内でマウスカーソルが乗った単語の開始オフセットなどを`JToolTip`で表示します。
 
 #download(https://drive.google.com/uc?id=1G7tL6PLzVdyUZ9P6PlMM1sFE1QngbLup)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextArea textArea = new JTextArea(txt) {
   @Override public String getToolTipText(MouseEvent e) {
@@ -36,7 +36,7 @@ JTextArea textArea = new JTextArea(txt) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTextArea#getToolTipText(MouseEvent)`をオーバーライドして以下の手順で単語を取得
 -- `JTextComponent#viewToModel(Point)`でマウスカーソル位置(`MouseEvent.getPoint()`)のドキュメントの先頭からのオフセットを取得
 -- `Utilities.getWordStart(textArea, offset)`で指定したオフセット近くの単語の開始オフセットを取得
@@ -51,10 +51,10 @@ JTextArea textArea = new JTextArea(txt) {
 - `Utilities.getWordStart(...)`などの内部では`BreakIterator.getWordInstance(c.getLocale())`を使用して単語を取得してからその開始オフセット、終了オフセットを取得している
 -- そのため`Utilities.getWordStart(...)`、`Utilities.getWordEnd(...)`、`JTextComponent#getText(...)`を実行しなくても一回の`BreakIterator.getWordInstance(c.getLocale())`で最寄りの単語とその開始オフセット、終了オフセットが取得可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextAreaで単語選択を実行した場合の区切り文字を変更する>Swing/SelectWordAction]]
 - [[JTextAreaのCaretを変更してマウスのダブルクリックによる単語選択の動作を変更する>Swing/ContinuouslySelectWords]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

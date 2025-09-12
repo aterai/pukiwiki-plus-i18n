@@ -8,12 +8,12 @@ pubdate: 2022-05-30T00:27:33+09:00
 description: JComboBoxのドロップダウンリストでアイテム選択状態がカーソルキー入力で変化してもJComboBox本体のアイテム表示を変更しないよう設定します。
 image: https://drive.google.com/uc?id=1dObku__RdVH8sTpYyBpbGRWFwumlZBmU
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`のドロップダウンリストでアイテム選択状態がカーソルキー入力で変化しても`JComboBox`本体のアイテム表示を変更しないよう設定します。
 
 #download(https://drive.google.com/uc?id=1dObku__RdVH8sTpYyBpbGRWFwumlZBmU)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String key1 = "ComboBox.noActionOnKeyNavigation";
 JCheckBox check1 = new JCheckBox(key1, UIManager.getBoolean(key1));
@@ -36,7 +36,7 @@ JComboBox<String> combo2 = new JComboBox<>(makeModel());
 combo2.setEditable(true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `ComboBox.noActionOnKeyNavigation`
 -- `false`: デフォルト
 --- `JComboBox`のドロップダウンリストの選択状態がカーソルキー入力で変更されると`JComboBox`本体のアイテム表示が変化する
@@ -49,9 +49,9 @@ combo2.setEditable(true);
 -- `ComboBox.noActionOnKeyNavigation`が`true`の場合、`ComboBox.isEnterSelectablePopup`の設定は無視される
 -- [[JComboBoxのポップアップメニューでEnterキーが入力された場合のActionListenerの動作をテストする>Swing/ComboBoxEnterSelectablePopup]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxのポップアップメニューでEnterキーが入力された場合のActionListenerの動作をテストする>Swing/ComboBoxEnterSelectablePopup]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,17 +8,17 @@ pubdate: 2017-12-18T14:37:03+09:00
 description: JButtonの連続クリックを防止するため、後続イベントが発生可能になるまでのクリック間隔をミリ秒単位で設定します。
 image: https://drive.google.com/uc?id=1lZG2M7FhA2stxNChg3nd2r7NSrsXeb4ohg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JButton`の連続クリックを防止するため、後続イベントが発生可能になるまでのクリック間隔をミリ秒単位で設定します。
 
 #download(https://drive.google.com/uc?id=1lZG2M7FhA2stxNChg3nd2r7NSrsXeb4ohg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 button.setMultiClickThreshhold(500);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、マウスでの連続クリックを実行した場合に後続イベントが発生可能になるまでの間隔をミリ秒単位で変更できます。
 
 - `0`: `JButton`のデフォルトは`0`ミリ秒
@@ -27,9 +27,9 @@ button.setMultiClickThreshhold(500);
 -- `UIManager.getInt("OptionPane.buttonClickThreshhold")`で取得できる値は`LookAndFeel`に依存する？
 -- `500`ミリ秒より短い間隔でボタンを連打しても後続のイベントは無視されるため`JInternalFrame`は最初の一つしか生成されない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#setMultiClickThreshhold-long- AbstractButton#setMultiClickThreshhold(long) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

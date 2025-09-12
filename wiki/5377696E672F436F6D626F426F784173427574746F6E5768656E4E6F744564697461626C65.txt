@@ -8,12 +8,12 @@ pubdate: 2022-04-04T00:39:59+09:00
 description: NimbusLookAndFeelで編集不可のJComboBox上にマウスカーソルが乗るとJButtonのようにロールオーバー状態を描画するかを切り替えます。
 image: https://drive.google.com/uc?id=1xVBgDBbUhT_vj3ZWTBj_2wsijPDBy-I6
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`で編集不可の`JComboBox`上にマウスカーソルが乗ると`JButton`のようにロールオーバー状態を描画するかを切り替えます。
 
 #download(https://drive.google.com/uc?id=1xVBgDBbUhT_vj3ZWTBj_2wsijPDBy-I6)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JComboBox<String> combo = new JComboBox<>(model);
 UIDefaults d = UIManager.getLookAndFeelDefaults();
@@ -22,7 +22,7 @@ combo.putClientProperty("Nimbus.Overrides", d);
 combo.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `UIManager.put("ComboBox.buttonWhenNotEditable", true)`
 -- `NimbusLookAndFeel`のデフォルトで編集不可の`JComboBox`は`JComboBox`内部の`ArrowButton(JButton)`と合わせてマウスカーソルでのロールオーバーやプレス状態で描画が変化する
 -- `WindowsLookAndFeel`では`ComboBox.buttonWhenNotEditable`の設定には依存せず常にロールオーバー状態で描画が変化する
@@ -32,9 +32,9 @@ combo.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
 -- `JComboBox`内部の`ArrowButton(JButton)`もロールオーバー描画が無効になる
 -- `MetalLookAndFeel`では`ComboBox.buttonWhenNotEditable`の設定には依存せず常にロールオーバー状態で描画は変化しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[NimbusLookAndFeelを使用する>Swing/NimbusLookAndFeel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

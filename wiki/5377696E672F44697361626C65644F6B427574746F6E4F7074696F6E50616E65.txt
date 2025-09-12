@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2020/05/disable-joptionpane-ok-button-until.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JOptionPane`の`ConfirmDialog`に表示される`OK`ボタンを文字列が入力されるまで選択不可に設定します。
 
 #download(https://drive.google.com/uc?id=1blPT1pPi2dsuRd88JceWb8mITDHT9Yd1)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPanel panel2 = new JPanel(new GridLayout(2, 1));
 JTextField field2 = new JTextField();
@@ -84,7 +84,7 @@ button2.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 文字列入力用の`JTextField`を作成
 - `HierarchyListener`を`JTextField`に追加し、`ConfirmDialog`が開いたときの初期フォーカスをデフォルトボタンからこの`JTextField`に移動
 -- [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]
@@ -93,9 +93,9 @@ button2.addActionListener(e -> {
 -- このサンプルでは`JTextField`の`Border`なども切り替えている
 - `JOptionPane.showConfirmDialog(...)`のメッセージに`JTextField`を含むコンポーネントを設定して`ConfirmDialog`を開く
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JOptionPaneのデフォルトフォーカス>Swing/OptionPaneDefaultFocus]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

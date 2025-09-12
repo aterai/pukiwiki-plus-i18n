@@ -8,12 +8,12 @@ pubdate: 2005-09-19T09:10:06+09:00
 description: JComboBoxのアイテムをBorderを使用して修飾してグループ分けします。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTIMVjWegI/AAAAAAAAASY/yM_W_tfnios/s800/BorderSeparator.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`のアイテムを`Border`を使用して修飾してグループ分けします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTIMVjWegI/AAAAAAAAASY/yM_W_tfnios/s800/BorderSeparator.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JComboBox combobox = new JComboBox();
 JSeparator sep = new JSeparator();
@@ -65,7 +65,7 @@ class MyItem {
 // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 レンダラーの中で`JLabel`を`MatteBorder`で修飾し、`JSeparator`を使用せずに`Item`をグループ分けしているように見せかけています。
 
 - `JComboBox`が編集可
@@ -91,11 +91,11 @@ combobox.setRenderer(new ListCellRenderer() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxにJSeparatorを挿入>Swing/ComboBoxSeparator]]
 - [http://www.jroller.com/santhosh/entry/jcombobox_items_with_separators JComboBox Items with Separators - Santhosh Kumar's Weblog]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `index!=-1`を追加、スクリーンショットを更新 -- &user(aterai); &new{2008-09-04 (木) 17:53:47};
 

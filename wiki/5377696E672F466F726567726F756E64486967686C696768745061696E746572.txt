@@ -1,0 +1,166 @@
+---
+category: swing
+folder: ForegroundHighlightPainter
+title: JTextComponentのハイライトを文字色の変更で描画する
+tags: [JTextComponent, Highlighter, HighlightPainter, JTextField, JPasswordField]
+author: aterai
+pubdate: 2025-09-01T00:03:06+09:00
+description: JTextComponentのハイライトを背景の塗りつぶしではなく、文字色を変更して描画するHighlighterを作成します。
+image: https://drive.google.com/uc?id=1LjRWMxhjZx8pty5YDBgbx9zZl0vk2mWN
+---
+* Summary [#summary]
+`JTextComponent`のハイライトを背景の塗りつぶしではなく、文字色を変更して描画する`Highlighter`を作成します。
+
+#download(https://drive.google.com/uc?id=1LjRWMxhjZx8pty5YDBgbx9zZl0vk2mWN)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class ForegroundPainter extends DefaultHighlighter.DefaultHighlightPainter {
+  protected ForegroundPainter(Color color) {
+    super(color);
+  }
+
+  @Override public Shape paintLayer(
+      Graphics g, int offs0, int offs1, Shape bounds,
+      JTextComponent c, View view) {
+    Rectangle r = getDrawingArea(offs0, offs1, bounds, view);
+    if (!r.isEmpty()) {
+      try {
+        String s = c.getDocument().getText(offs0, offs1 - offs0);
+        Graphics2D g2 = (Graphics2D) g.create();
+        Font font = c.getFont();
+        FontMetrics metrics = g2.getFontMetrics(font);
+        int ascent = metrics.getAscent();
+        g2.setColor(getColor());
+        g2.drawString(s, (float) r.x, (float) (r.y + ascent));
+        g2.dispose();
+      } catch (BadLocationException ex) {
+        Logger.getGlobal().severe(ex::getMessage);
+      }
+    }
+    return r;
+  }
+
+  // @see javax.swing.text.DefaultHighlighter.DefaultHighlightPainter#paintLayer(...)
+  private Rectangle getDrawingArea(int offs0, int offs1, Shape bounds, View view) {
+    Rectangle r = new Rectangle();
+    if (offs0 == view.getStartOffset() && offs1 == view.getEndOffset()) {
+      // Contained in view, can just use bounds.
+      if (bounds instanceof Rectangle) {
+        r.setBounds((Rectangle) bounds);
+      } else {
+        r.setBounds(bounds.getBounds());
+      }
+    } else {
+      // Should only render part of View.
+      try {
+        // --- determine locations ---
+        Shape s = view.modelToView(
+            offs0, Position.Bias.Forward, offs1, Position.Bias.Backward, bounds);
+        r.setBounds(s instanceof Rectangle ? (Rectangle) s : s.getBounds());
+      } catch (BadLocationException ex) {
+        // can't render
+        r.setSize(0, 0);
+      }
+    }
+    return r;
+  }
+}
+}}
+
+* Description [#description]
+- `JTextField`の文字色ハイライト
+-- `DefaultHighlighter.DefaultHighlightPainter#paintLayer(...)`をオーバーライドして指定した色で背景矩形をハイライト描画するのではなく、文字色として描画することでハイライト
+-- `JTextField`の文字色、選択文字色を透明化
+-- `JTextField`は`Highlighter`に追加したハイライトを末尾から順に描画し、最後に文字列が描画するので、このサンプルでは以下の順で文字列が描画される
+--- 全文字列を`JTextField`のデフォルト文字色でハイライト描画
+--- 文字列`quick`が文字色赤で上書きハイライト描画
+--- `JTextField`の文字色、または選択文字色が透明色で描画(なにも描画されない)
+
+#code{{
+String txt = "The quick brown fox jumps over the lazy dog.";
+JTextField field = new JTextField(txt) {
+  @Override public void updateUI() {
+    super.updateUI();
+    Color fg = UIManager.getColor("TextField.foreground");
+    setForeground(new Color(0x0, true));
+    setSelectedTextColor(new Color(0x0, true));
+    Highlighter.HighlightPainter painter0 = new ForegroundPainter(fg);
+    Highlighter.HighlightPainter painter1 = new ForegroundPainter(Color.RED);
+    Highlighter highlighter = getHighlighter();
+    highlighter.removeAllHighlights();
+    try {
+      highlighter.addHighlight(txt.indexOf("quick"), txt.indexOf("brown"), painter1);
+      highlighter.addHighlight(0, txt.length(), painter0);
+    } catch (BadLocationException ex) {
+      Logger.getGlobal().severe(ex::getMessage);
+    }
+  }
+};
+}}
+
+- `JPasswordField`の文字色ハイライト
+-- [[JPasswordFieldの可視化で数字の色のみ変更>Swing/DigitColoredPasswordField]]で使用する`DefaultHighlighter.DefaultHighlightPainter`を文字色のハイライトを行う`ForegroundPainter`に変更
+-- `JPasswordFeild#setEchoChar(...)`実行でのパスワード可視化で文字色や選択文字色を切り替えるよう変更
+-- `LookAndFeel`変更で選択文字色が再描画されるよう`JPasswordFeild#setSelectionStart(...)`、`JPasswordFeild#setSelectionEnd(...)`で選択状態を復元するよう変更
+
+#code{{
+class DigitHighlightPasswordField extends JPasswordField {
+  protected DigitHighlightPasswordField(int columns) {
+    super(columns);
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    Document doc = getDocument();
+    if (doc instanceof AbstractDocument) {
+      updateHighlightFilter((AbstractDocument) doc);
+    }
+  }
+
+  @Override public void setEchoChar(char c) {
+    super.setEchoChar(c);
+    boolean hasCaret = getCaret() != null;
+    int start = hasCaret ? getSelectionStart() : 0;
+    int end = hasCaret ? getSelectionEnd() : 0;
+    Document doc = getDocument();
+    if (doc instanceof AbstractDocument) {
+      updateHighlightFilter((AbstractDocument) doc);
+    }
+    if (hasCaret) {
+      setSelectionStart(start);
+      setSelectionEnd(end);
+    }
+  }
+
+  private void updateHighlightFilter(AbstractDocument doc) {
+    boolean reveal = getEchoChar() == '\u0000';
+    if (reveal) {
+      setForeground(new Color(0x0, true));
+      setSelectedTextColor(new Color(0x0, true));
+      doc.setDocumentFilter(new HighlightFilter(this));
+      try {
+        doc.remove(0, 0);
+      } catch (BadLocationException ex) {
+        UIManager.getLookAndFeel().provideErrorFeedback(this);
+      }
+    } else {
+      Highlighter highlighter = getHighlighter();
+      if (highlighter != null) {
+        highlighter.removeAllHighlights();
+      }
+      setForeground(UIManager.getColor("PasswordField.foreground"));
+      setSelectedTextColor(UIManager.getColor("PasswordField.selectionForeground"));
+      doc.setDocumentFilter(null);
+    }
+  }
+}
+}}
+
+* Reference [#reference]
+- [[Highlighterで文字列をハイライト>Swing/Highlighter]]
+- [[JPasswordFieldの可視化で数字の色のみ変更>Swing/DigitColoredPasswordField]]
+
+* Comment [#comment]
+#comment
+#comment

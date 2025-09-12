@@ -1,0 +1,67 @@
+---
+category: swing
+folder: CommonParentTreePath
+title: JTreeで選択したノードの共通の親ノードを取得する
+tags: [JTree, TreePath, TreeNode]
+author: aterai
+pubdate: 2025-05-26T04:25:44+09:00
+description: JTree内で選択した複数ノードのTreePathから最長の共通パスを検索することで共通の親TreeNodeを取得します。
+image: https://drive.google.com/uc?id=1Jdg36t-_4B0y2uF349YzS7m-N7EZVsyU
+---
+* Summary [#summary]
+`JTree`内で選択した複数ノードの`TreePath`から最長の共通パスを検索することで共通の親`TreeNode`を取得します。
+
+#download(https://drive.google.com/uc?id=1Jdg36t-_4B0y2uF349YzS7m-N7EZVsyU)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+  private void showCommonParent() {
+private void showCommonParent() {
+  JTree tree = (JTree) getInvoker();
+  Optional.ofNullable(tree.getSelectionPaths())
+      .filter(paths -> paths.length > 1)
+      .map(TreeUtils::findCommonParent)
+      .ifPresent(p -> {
+        Object node = p.getLastPathComponent();
+        String title = "common parent";
+        JOptionPane.showMessageDialog(
+            tree, node, title, JOptionPane.INFORMATION_MESSAGE);
+      });
+}
+
+// class TreeUtils ...
+public static TreePath findCommonParent(TreePath... paths) {
+  return Stream.of(paths)
+      .map(TreePath::getPath)
+      .reduce(TreeUtils::getCommonPath)
+      .map(TreePath::new)
+      .orElse(null);
+}
+
+public static <T> T[] getCommonPath(T[] node1, T[] node2) {
+  int min = Math.min(node1.length, node2.length);
+  for (int len = min; len > 0; len--) {
+    T[] a1 = Arrays.copyOf(node1, len);
+    T[] a2 = Arrays.copyOf(node2, len);
+    if (Arrays.deepEquals(a1, a2)) {
+      return a1;
+    }
+  }
+  return Arrays.copyOf(node1, 1);
+}
+}}
+
+* Description [#description]
+- `JTree#getSelectionPaths()`で取得した選択`TreePath`が複数存在する場合、それらを`TreePath#getPath()`でルートノードからの`TreeNode`の配列に変換
+- `Stream.reduce(...)`で`TreeNode`配列を`2`つ取り出し、それらを`Arrays.copyOf(...)`を使用して短い`TreeNode`配列の長さに揃えてから`Arrays.deepEquals(a, b)`で一致するかチェック
+-- 一致しなければ`TreeNode`配列の長さを`1`レベル短くして再比較
+-- `TreeNode`配列の長さが`1`になるまで一致しない場合はルートノードが共通の親`TreeNode`となる
+
+* Reference [#reference]
+- [[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]]
+- [https://stackoverflow.com/questions/79610079/common-parent-of-defaultmutabletreenode-collection java - Common parent of DefaultMutableTreeNode collection - Stack Overflow]
+-- `TreePath`は使用せず、`TreeNode.getParent()`などで`TreeNode`の`Stream`を作成して共通親ノードを探すサンプルなど
+
+* Comment [#comment]
+#comment
+#comment

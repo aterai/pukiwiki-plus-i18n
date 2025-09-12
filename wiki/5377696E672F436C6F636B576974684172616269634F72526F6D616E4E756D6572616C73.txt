@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2022/08/use-affinetransform-to-place-roman.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `AffineTransform`を使用してアナログ時計の文字盤にアラビア数字やローマ数字を配置します。
 
 #download(https://drive.google.com/uc?id=1lJ0MWGTsDflFSRzI8m5spBQZ6Ls_RT1m)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private final String[] arabicNumerals = {
   "12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
@@ -67,7 +67,7 @@ private static TextLayout getTextLayout(
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - アラビア数字
 -- `Font`に負のトラッキング値(字送り、文字間)を設定して文字列幅を縮小
 -- アラビア数字文字列から`Font`や`TextLayout`を使用して文字図形を取得
@@ -75,16 +75,18 @@ private static TextLayout getTextLayout(
 -- 時計盤の中心を原点にプラス`30°`回転を`AffineTransform`に追加して`Point`を回転
 -- `Point`が文字図形の中心になるよう座標を調整して%%`Graphics#drawString(...)`メソッドで数字文字列%%文字図形を描画
 - ローマ数字
--- `Font`に負のトラッキング値(字送り、文字間)を設定して文字列幅を縮小
+-- ローマ数字の`4`は`Ⅳ`(`U+2163`)ではなく時計盤用に`I`を`4`つ並べた`IIII`を使用
+--- その他のローマ数字も`Ⅰ`(`U+2160`)、`Ⅴ`(`U+2164`)、`Ⅻ`(`U+216B`)などは使用せず`I`, `V`, `X`を組み合わせて使用
+--- この文字列の`Font`に負のトラッキング値(字送り、文字間)を設定して文字列幅を縮小
 -- ローマ数字文字列から`Font`や`TextLayout`を使用して高さのみ`200%`拡大した文字図形を取得
 -- 時計盤の中心から`12`時の位置まで文字図形を移動
 -- 時計盤の中心を原点にプラス`30°`回転を`AffineTransform`に追加して文字図形を回転
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Timerを使用してJPanelにアナログ時計の針を描画する>Swing/AnalogClock]]
 - [[Fontにトラッキングを設定して文字列幅を詰めて描画する>Swing/Tracking]]
 - [[AffineTransformを使用してアラビア数字を回転して時計盤に配置する>Swing/ArabicClockFace]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

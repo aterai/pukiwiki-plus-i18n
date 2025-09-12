@@ -1,0 +1,176 @@
+---
+category: swing
+folder: DarkMode
+title: JEditorPaneのStyleSheetをLight・Darkテーマに合わせて切り替える
+tags: [JEditorPane, StyleSheet, LookAndFeel, Toolkit, PropertyChangeListener]
+author: aterai
+pubdate: 2025-04-07T09:41:23+09:00
+description: JEditorPaneのStyleSheetを起動時のシステムテーマがLightかDarkかなどに応じて切り替えるよう設定します。
+image: https://drive.google.com/uc?id=1rNhaj-mqEkjn2ntU4yNaMPj-DJOdzBfW
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2025/04/switch-jeditorpanes-stylesheet-to-light.html
+    lang: en
+---
+* Summary [#summary]
+`JEditorPane`の`StyleSheet`を起動時のシステムテーマが`Light`か`Dark`かなどに応じて切り替えるよう設定します。
+
+#download(https://drive.google.com/uc?id=1rNhaj-mqEkjn2ntU4yNaMPj-DJOdzBfW)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+public static void updateTheme(JEditorPane editor) {
+  updateTheme(editor, isDarkMode());
+}
+
+public static void updateTheme(JEditorPane editor, boolean isDark) {
+  EditorKit kit = editor.getEditorKit();
+  HTMLEditorKit htmlEditorKit;
+  if (kit instanceof HTMLEditorKit) {
+    htmlEditorKit = (HTMLEditorKit) kit;
+  } else {
+    htmlEditorKit = new HTMLEditorKit();
+  }
+  if (isDark) {
+    htmlEditorKit.setStyleSheet(makeDarkStyleSheet());
+    editor.setBackground(new Color(0x1E_1F_22));
+  } else {
+    htmlEditorKit.setStyleSheet(makeLightStyleSheet());
+    editor.setBackground(new Color(0xEE_EE_EE));
+  }
+  editor.setEditorKit(htmlEditorKit);
+}
+
+public static boolean isDarkMode() {
+  boolean isDark;
+  String os = System.getProperty("os.name").toLowerCase(Locale.ENGLISH);
+  if (os.contains("windows")) {
+    isDark = isWindowsDarkMode();
+  } else if (os.contains("linux")) {
+    isDark = isLinuxDarkMode();
+  } else if (os.contains("mac")) {
+    isDark = isMackDarkMode();
+  } else {
+    isDark = false;
+  }
+  return isDark;
+}
+
+public static String getProcessOutput(String... cmd)
+      throws IOException, InterruptedException {
+  ProcessBuilder builder = new ProcessBuilder(cmd);
+  builder.redirectErrorStream(true);
+  Process p = builder.start();
+  String str;
+  try (BufferedReader pr = new BufferedReader(
+            new InputStreamReader(p.getInputStream()))) {
+    str = pr.lines().collect(Collectors.joining(System.lineSeparator()));
+  }
+  return str;
+}
+
+public static boolean isWindowsDarkMode() {
+  String[] cmd = {
+      "powershell.exe",
+      "Get-ItemPropertyValue",
+      "-Path",
+      "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+      "-Name",
+      "AppsUseLightTheme;"
+  };
+  boolean isDarkMode;
+  try {
+    String str = getProcessOutput(cmd).trim();
+    isDarkMode = Objects.equals("0", str);
+  } catch (IOException | InterruptedException ex) {
+    Logger.getGlobal().severe(ex::getMessage);
+    isDarkMode = false;
+  }
+  return isDarkMode;
+}
+
+public static boolean isLinuxDarkMode() {
+  Toolkit tk = Toolkit.getDefaultToolkit();
+  Object theme = tk.getDesktopProperty("gnome.Net/ThemeName");
+  return Objects.toString(theme).contains("dark");
+}
+
+public static boolean isMackDarkMode() {
+  return false;
+}
+
+// https://raw.githack.com/google/code-prettify/master/styles/index.html
+// Prettify Themes Gallery
+public static StyleSheet makeLightStyleSheet() {
+  StyleSheet styleSheet = new StyleSheet();
+  styleSheet.addRule("pre{background:#eeeeee}");
+  styleSheet.addRule(".str{color:#008800}");
+  styleSheet.addRule(".kwd{color:#000088}");
+  styleSheet.addRule(".com{color:#880000}");
+  styleSheet.addRule(".typ{color:#660066}");
+  styleSheet.addRule(".lit{color:#006666}");
+  styleSheet.addRule(".pun{color:#666600}");
+  styleSheet.addRule(".pln{color:#000000}");
+  styleSheet.addRule(".tag{color:#000088}");
+  styleSheet.addRule(".atn{color:#660066}");
+  styleSheet.addRule(".atv{color:#008800}");
+  styleSheet.addRule(".dec{color:#660066}");
+  return styleSheet;
+}
+
+public static StyleSheet makeDarkStyleSheet() {
+  StyleSheet styleSheet = new StyleSheet();
+  styleSheet.addRule("pre{background:#1e1f22}");
+  styleSheet.addRule(".str{color:#ffa0a0}");
+  styleSheet.addRule(".kwd{color:#f0e68c;font-weight:bold}");
+  styleSheet.addRule(".com{color:#87ceeb}");
+  styleSheet.addRule(".typ{color:#98fb98}");
+  styleSheet.addRule(".lit{color:#cd5c5c}");
+  styleSheet.addRule(".pun{color:#ffffff}");
+  styleSheet.addRule(".pln{color:#ffffff}");
+  styleSheet.addRule(".tag{color:#f0e68c;font-weight:bold}");
+  styleSheet.addRule(".atn{color:#bdb76b;font-weight:bold}");
+  styleSheet.addRule(".atv{color:#ffa0a0}");
+  styleSheet.addRule(".dec{color:#98fb98}");
+  return styleSheet;
+}
+}}
+
+* Description [#description]
+- `OS`が`Windows`の場合、個人用設定の色をライト、ダークで切り替えても`Swing`アプリ側でそのイベントを取得できない
+-- `Windows 7`などでは[[DesktopPropertyの変更を監視する>Swing/DesktopProperty]]のように`Toolkit`に`PropertyChangeListener`を追加することで画面の配色変更を取得可能だったが、`Windows 10`や`Windows 11`では動作しない？
+-- このサンプルでは、起動時や`JRadioButtonMenuItem`でテーマを手動切り替えしたときに、レジストリから`HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize`の値を取得して`0`の場合は`Dark`テーマと判断し、`StyleSheet`の切り替えを実行
+-- [https://www.tenforums.com/tutorials/24038-change-default-app-windows-mode-light-dark-theme-windows-10-a.html Change Default App & Windows Mode to Light or Dark Theme in Windows 10 | Tutorials]
+-- [https://gist.github.com/HanSolo/7cf10b86efff8ca2845bf5ec2dd0fe1d Detector: A plain Java class that offers some utility methods to detect dark theme on MacOS and Windows · GitHub]
+
+- `OS`が`Linux(Ubuntu+gnome)`の場合、設定の外観、スタイルをデフォルト(ライト)、ダークで切り替えると、`Swing`アプリ側でもそのイベントを取得可能
+-- `GTKLookAndFeel`はデフォルトでスタイル切り替えが発生すると`SynthTheme`を切り替えて各コンポーネントの配色を変更している
+--- [https://docs.oracle.com/javase/jp/6/technotes/guides/swing/1.4/Post1.4.html#gtk GTK+ の Look & Feel - Java 2 SDK, v1.4 からの Swing の変更点]
+-- そのため以下のように`Toolkit`にデスクトッププロパティを`gnome.Net/ThemeName`として`PropertyChangeListener`を追加すればスタイル切り替えイベントを取得可能で、このサンプルではテーマ名に`dark`が含まれる場合は`Dark`テーマと判断し`StyleSheet`の切り替えを実行している
+#code{{
+String key = "gnome.Net/ThemeName";
+Toolkit.getDefaultToolkit().addPropertyChangeListener(key, e -> {
+  if (sys.isSelected()) {
+    boolean dark = Objects.toString(e.getNewValue()).contains("dark");
+    ThemeUtils.updateTheme(editor, dark);
+    loadHtml(editor);
+  }
+});
+}}
+
+- `OS`が`Mac`の場合には、このサンプルは未対応だが、以下のサイトの方法で対応可能
+-- [https://github.com/Dansoftowner/jSystemThemeDetector Dansoftowner/jSystemThemeDetector: Java library for detecting that the (desktop) operating system uses dark UI theme or not]
+-- [https://gist.github.com/HanSolo/7cf10b86efff8ca2845bf5ec2dd0fe1d Detector: A plain Java class that offers some utility methods to detect dark theme on MacOS and Windows · GitHub]
+
+* Reference [#reference]
+- [https://github.com/Dansoftowner/jSystemThemeDetector Dansoftowner/jSystemThemeDetector: Java library for detecting that the (desktop) operating system uses dark UI theme or not]
+- [https://gist.github.com/HanSolo/7cf10b86efff8ca2845bf5ec2dd0fe1d Detector: A plain Java class that offers some utility methods to detect dark theme on MacOS and Windows · GitHub]
+-- via: [https://harmoniccode.blogspot.com/2021/02/poor-mans-dark-mode-detection.html Harmonic Code: "Poor man's" dark mode detection]
+- [https://stackoverflow.com/questions/8149828/read-the-output-from-java-exec runtime - read the output from java exec - Stack Overflow]
+- [https://www.tenforums.com/tutorials/24038-change-default-app-windows-mode-light-dark-theme-windows-10-a.html Change Default App & Windows Mode to Light or Dark Theme in Windows 10 | Tutorials]
+- [https://raw.githack.com/google/code-prettify/master/styles/index.html Prettify Themes Gallery]
+- [[DesktopPropertyの変更を監視する>Swing/DesktopProperty]]
+- [https://docs.oracle.com/javase/jp/6/technotes/guides/swing/1.4/Post1.4.html#gtk GTK+ の Look & Feel - Java 2 SDK, v1.4 からの Swing の変更点]
+
+* Comment [#comment]
+#comment
+#comment

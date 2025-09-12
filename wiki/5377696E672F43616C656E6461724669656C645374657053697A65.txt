@@ -8,12 +8,12 @@ pubdate: 2017-02-27T15:54:24+09:00
 description: JSpinnerにSpinnerDateModelを設定し、スピンボタンをクリックした際の増減サイズを各日付フィールドごとに指定します。
 image: https://drive.google.com/uc?id=1TPoA7k0gp-SsdcPNfoTDKvN4bZikpOkgrA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`に`SpinnerDateModel`を設定し、スピンボタンをクリックした際の増減サイズを各日付フィールドごとに指定します。
 
 #download(https://drive.google.com/uc?id=1TPoA7k0gp-SsdcPNfoTDKvN4bZikpOkgrA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 HashMap<Integer, Integer> stepSizeMap = new HashMap<>();
 stepSizeMap.put(Calendar.HOUR_OF_DAY, 1);
@@ -43,14 +43,14 @@ JSpinner spinner2 = new JSpinner(new SpinnerDateModel(d, null, null, Calendar.SE
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Calendar.MINUTE`や`Calendar.SECOND`などの各日付フィールドごとに増加、減少のステップサイズを指定した`HashMap`を作成
 - `SpinnerDateModel#getNextValue()`と`SpinnerDateModel#getPreviousValue()`の内部でこの`HashMap`を参照して`JSpinner`のスピンボタンなどでの値変更に利用
 -- 上記のサンプルでは秒フィールドにカーソルがある場合は`30`秒、ミリ秒の場合は`500`ミリ秒、マッピングされていないフィールドの場合は`1`ずつ増減
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SpinnerDateModel.html#getNextValue-- SpinnerDateModel#getNextValue() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

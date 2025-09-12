@@ -2,18 +2,18 @@
 category: swing
 folder: ExportAsDragOrExportToClipboard
 title: JListでマウスドラッグとクリップボード経由のアイテム移動が可能かを個別に設定する
-tags: [TransferHandler, DnD, JList]
+tags: [TransferHandler, DragAndDrop, JList]
 author: aterai
 pubdate: 2023-05-29T04:25:09+09:00
 description: TransferHandlerを設定したJListでマウスドラッグ、またはクリップボード経由のアイテム移動を許可するかどうかを切り替えます。
 image: https://drive.google.com/uc?id=1wp4ANGfODIJb47xCpCoT7OSVL7783dR8
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TransferHandler`を設定した`JList`でマウスドラッグ、またはクリップボード経由のアイテム移動を許可するかどうかを切り替えます。
 
 #download(https://drive.google.com/uc?id=1wp4ANGfODIJb47xCpCoT7OSVL7783dR8)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 @Override public void exportAsDrag(
     JComponent comp, InputEvent e, int action) {
@@ -32,7 +32,7 @@ image: https://drive.google.com/uc?id=1wp4ANGfODIJb47xCpCoT7OSVL7783dR8
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `canExportAsDrag`
 -- マウスドラッグによるリストアイテム移動の可・不可を切り替える
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/TransferHandler.html#exportAsDrag-javax.swing.JComponent-java.awt.event.InputEvent-int- TransferHandler#exportAsDrag(...)]をオーバーライドしてドラッグ元の`JList`に`ClientProperty`で`canExportAsDrag`が設定されているかどうかで判断
@@ -60,10 +60,10 @@ am.put(TransferHandler.getCopyAction().getValue(Action.NAME), empty);
 am.put(TransferHandler.getPasteAction().getValue(Action.NAME), empty);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JList間でのコピー＆ペーストによるアイテムの移動>Swing/ExportToClipboard]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/TransferHandler.html TransferHandler (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

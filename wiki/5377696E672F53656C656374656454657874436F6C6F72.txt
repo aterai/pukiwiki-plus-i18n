@@ -8,12 +8,12 @@ pubdate: 2018-12-17T15:32:38+09:00
 description: JEditorPaneで選択した文字のレンダリングに使用する色をnullにして選択文字色の変更を無効化します。
 image: https://drive.google.com/uc?id=1Jv8dY71xTfQSscUwHdO-aekbqgRTFmfzwA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`で選択した文字のレンダリングに使用する色を`null`にして選択文字色の変更を無効化します。
 
 #download(https://drive.google.com/uc?id=1Jv8dY71xTfQSscUwHdO-aekbqgRTFmfzwA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
 htmlEditorKit.setStyleSheet(styleSheet);
@@ -24,19 +24,19 @@ editor.setSelectionColor(new Color(0x64_88_AA_AA, true));
 editor.setBackground(new Color(0xEE_EE_EE));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上:
 -- 選択した文字をレンダリングする色は`LookAndFeel`でのデフォルト
 --- たとえば`WindowsLookAndFeel`の場合選択文字色は`Color.WHITE`になる
 - 下:
 -- 選択した文字のレンダリングを`JTextComponent#setSelectedTextColor(null)`で無効化して`CSS`で設定した文字色を変更しないよう設定
--- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setSelectedTextColor-java.awt.Color- JTextComponent#setSelectedTextColor(Color) (Java Platform SE 8)]のドキュメントには「色に`null`を設定することは、`Color.black`と同じです。」と記述されているが、実際の`JEditorPane`で`null`を設定すると選択文字色の変更は無効になる
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setSelectedTextColor-java.awt.Color- JTextComponent#setSelectedTextColor(Color) (Java Platform SE 8)]のドキュメントには「色に`null`を設定することは、`Color.black`と同じです。」と記述されており、`JTextArea`などは`Color.black`になるが、`JEditorPane`では`null`を設定すると選択文字色の変更は無効になる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JEditorPaneで選択色を半透明化>Swing/SelectionColor]]
 - [[JEditorPaneにソースコードをシンタックスハイライトして表示する>Swing/SyntaxHighlightingEditorPane]]
 - [https://stackoverflow.com/questions/22605666/java-access-files-in-jar-causes-java-nio-file-filesystemnotfoundexception Java access files in jar causes java.nio.file.FileSystemNotFoundException - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

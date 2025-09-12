@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/06/move-items-by-copying-and-pasting.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`間でコピー＆ペーストによるアイテムの複製・移動を行います。
 
 #download(https://drive.google.com/uc?id=1wNH_7qaS-YirfMG-vli1p7sETt3v5oaciA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ListPopupMenu extends JPopupMenu {
   private final JMenuItem cutItem;
@@ -51,7 +51,7 @@ class ListPopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、[[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]を元にし、ドラッグ＆ドロップに加えてクリップボード経由でのアイテム移動や複製が可能になるような`ListItemTransferHandler`を作成して、`JList`に設定しています。
 
 - [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]では`TransferHandler.TransferSupport#isDrop()`が`false`の場合はインポート不可(`TransferHandler#canImport(...) == false`)とし、また`ActionMap`でもキーボードによるコピーなどを無効に設定している
@@ -81,11 +81,11 @@ private static int getIndex(TransferHandler.TransferSupport info) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/TransferHandler.TransferSupport.html#isDrop-- TransferHandler.TransferSupport#isDrop() (Java Platform SE 8)]
 - [[TransferHandlerを使ったJListのドラッグ＆ドロップによる並べ替え>Swing/DnDReorderList]]
 - [[JListでマウスドラッグとクリップボード経由のアイテム移動が可能かを個別に設定する>Swing/ExportAsDragOrExportToClipboard]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

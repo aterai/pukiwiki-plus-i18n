@@ -8,12 +8,12 @@ pubdate: 2010-04-12T18:23:41+09:00
 description: JTreeのノードラベル編集が、葉ノードの場合だけ可能になるよう設定します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPB-TVk9I/AAAAAAAAAdU/Aq5YDSMvqaY/s800/LeafTreeCellEditor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードラベル編集が、葉ノードの場合だけ可能になるよう設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTPB-TVk9I/AAAAAAAAAdU/Aq5YDSMvqaY/s800/LeafTreeCellEditor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class LeafTreeCellEditor extends DefaultTreeCellEditor {
   protected LeafTreeCellEditor(JTree tree, DefaultTreeCellRenderer renderer) {
@@ -31,7 +31,7 @@ class LeafTreeCellEditor extends DefaultTreeCellEditor {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`CellEditor#isCellEditable(...)`メソッドをオーバーライドして葉ノードのみ編集が可能にしたセルエディタを作成し、これを以下のように`JTree#setCellEditor(...)`メソッドで設定しています。
 
 #code{{
@@ -39,10 +39,10 @@ tree.setCellEditor(
   new LeafTreeCellEditor(tree, (DefaultTreeCellRenderer) tree.getCellRenderer()));
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/CellEditor.html#isCellEditable-java.util.EventObject- CellEditor#isCellEditable(EventObject) (Java Platform SE 8)]
 - [https://community.oracle.com/thread/1371600 Swing - How can I persist all changes I made to these edited leaves and nodes??]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

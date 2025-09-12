@@ -8,17 +8,17 @@ pubdate: 2017-05-15T16:03:21+09:00
 description: JFileChooserのPlacesBarでローカライズされたシステムフォルダ名が表示されないように設定します。
 image: https://drive.google.com/uc?id=1tvYX3gC3OiwWr8vnG5346sqWtA5k3G29cg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`の`PlacesBar`でローカライズされたシステムフォルダ名が表示されないように設定します。
 
 #download(https://drive.google.com/uc?id=1tvYX3gC3OiwWr8vnG5346sqWtA5k3G29cg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("FileChooser.useSystemExtensionHiding", Boolean.FALSE);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左: `FileChooser.useSystemExtensionHiding`: `false`
 -- `JFileChooser`の`PlacesBar`でローカライズされたシステムフォルダ名を使用しない
 --- 例: 「最近使った項目」が「`Recent`」
@@ -32,10 +32,10 @@ UIManager.put("FileChooser.useSystemExtensionHiding", Boolean.FALSE);
 -- `WindowsLookAndFeel`のデフォルト
 -- `JFileChooser`の`PlacesBar`でローカライズされたシステムフォルダ名が使用される
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFileChooserのPlacesBarを非表示にする>Swing/NoPlacesBarFileChooser]]
 - [https://bugs.openjdk.org/browse/JDK-8183529 JDK-8183529 JFilleChooser in "Detail view" does not change the Language of the column headings - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

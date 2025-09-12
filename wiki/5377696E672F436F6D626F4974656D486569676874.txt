@@ -8,12 +8,12 @@ pubdate: 2009-03-02T12:37:58+09:00
 description: JComboBox自体の高さや、ドロップダウンリスト内にあるアイテムの高さを変更します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJ6VVptrI/AAAAAAAAAVI/x72zWGymqHk/s800/ComboItemHeight.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`自体の高さや、ドロップダウンリスト内にあるアイテムの高さを変更します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJ6VVptrI/AAAAAAAAAVI/x72zWGymqHk/s800/ComboItemHeight.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JComboBox<String> combo2 = new JComboBox<>(items);
 combo2.setRenderer(new DefaultListCellRenderer() {
@@ -35,7 +35,7 @@ combo2.setRenderer(new DefaultListCellRenderer() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `setPreferredSize`
 -- セルレンダラーに`setPreferredSize(...)`メソッドで高さを設定
 #code{{
@@ -108,10 +108,10 @@ combo4.setRenderer(new DefaultListCellRenderer() {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/30755058/defaultlistcellrenderer-does-not-render-empty-string-correctly-when-using-an-edi java - DefaultListCellRenderer does not render empty String correctly when using an editable combo box - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `html`タグを使用するサンプルなどを追加。 -- &user(aterai); &new{2013-12-20 (金) 20:06:03};
 - 幅ゼロのアイコンを使用するサンプルなどを追加。 -- &user(aterai); &new{2015-06-11 (金) 11:23:55};

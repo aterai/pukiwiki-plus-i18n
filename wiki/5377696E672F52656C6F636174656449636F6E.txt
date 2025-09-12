@@ -8,12 +8,12 @@ pubdate: 2007-01-15T12:27:58+09:00
 description: JDesktopPaneのサイズが変更されたとき、アイコン化しているJInternalFrameの再配置を行います。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRm01W30I/AAAAAAAAAhc/eBhL-DDKkSo/s800/RelocatedIcon.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JDesktopPane`のサイズが変更されたとき、アイコン化している`JInternalFrame`の再配置を行います。[https://bugs.openjdk.org/browse/JDK-4765256 &#91;JDK-4765256&#93; REGRESSION: Icons in JDesktopPane not repositioned when pane is resized - Java Bug System]からソースコードの大部分を引用しています。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTRm01W30I/AAAAAAAAAhc/eBhL-DDKkSo/s800/RelocatedIcon.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ReIconifyDesktopManager extends DefaultDesktopManager {
   public void reIconifyFrame(JInternalFrame jif) {
@@ -37,7 +37,7 @@ private void doReIconify(JDesktopPane desktopPane) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JDesktopPane`がリサイズされた場合、以下のような手順で再配置を実行
 -- `GTKLookAndFeel`を使用する場合、アイコンの移動自体がデフォルトでは不可なのでこの設定は無意味になる
 
@@ -46,14 +46,14 @@ private void doReIconify(JDesktopPane desktopPane) {
 + 再びアイコン化
 + 再計算した位置への移動
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://bugs.openjdk.org/browse/JDK-4765256 &#91;JDK-4765256&#93; REGRESSION: Icons in JDesktopPane not repositioned when pane is resized - Java Bug System]
 -- via: [https://community.oracle.com/thread/1374482 Swing - JInternalFrame - iconify in a JDesktopPane]
 - [https://bugs.openjdk.org/browse/JDK-4110799 &#91;JDK-4110799&#93; JInternalFrame icon position unchanged w/ resize - Java Bug System]
 -- [http://d.hatena.ne.jp/tori31001/20060901 JInternalFrameは最初にアイコン化しておかないと位置が更新されない]
 -- [[JInternalFrameを一番手前に表示>Swing/LayeredPane]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - [https://bugs.openjdk.org/browse/JDK-6647340 &#91;JDK-6647340&#93; Minimized JInternalFrame icons appear in incorrect positions if the main frame is resized - Java Bug System]は、`1.7.0 b38`で修正済み。 -- &user(aterai); &new{2008-12-10 (水) 21:27:26};
 - `Windows7` + `WindowsLookAndFeel`で`JDesktopPane`の背景が黒になる: [https://bugs.openjdk.org/browse/JDK-7012008 Bug ID: JDK-7012008 JDesktopPane - Wrong background color with Win7+WindowsLnf] -- &user(aterai); &new{2011-10-04 (火) 16:58:32};

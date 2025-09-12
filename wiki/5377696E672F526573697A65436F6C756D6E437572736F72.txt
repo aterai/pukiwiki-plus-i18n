@@ -8,12 +8,12 @@ pubdate: 2021-07-19T02:42:38+09:00
 description: JSplitPaneのDividerやJTableHeaderのTableColumnでコンボーネントをリサイズ中に表示されるマウスカーソルを変更します。
 image: https://drive.google.com/uc?id=16YsnRoba4Fln-RrWN_rd1V_81Hiw3q4l
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSplitPane`の`Divider`や`JTableHeader`の`TableColumn`でコンボーネントをリサイズ中に表示されるマウスカーソルを変更します。
 
 #download(https://drive.google.com/uc?id=16YsnRoba4Fln-RrWN_rd1V_81Hiw3q4l)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSplitPane sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 BasicSplitPaneDivider divider = ((BasicSplitPaneUI) sp2.getUI()).getDivider();
@@ -30,7 +30,7 @@ JSplitPane sp3 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `JSplitPane`
 -- デフォルトは左右分割の場合`Cursor.E_RESIZE_CURSOR`、上下分割の場合`Cursor.S_RESIZE_CURSOR`を使用するよう`BasicSplitPaneDivider`でハードコーディングされている
 -- `Ubuntu`環境の`Cursor.E_RESIZE_CURSOR`はホットスポットがカーソルの中央ではなく左端に存在するため、左右分割の`Divider`上にカーソルを置くと左コンポーネント上にカーソルがジャンプ？してしまう
@@ -73,9 +73,9 @@ class MyBasicTableHeaderUI extends BasicTableHeaderUI {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Cursorオブジェクトの生成>Swing/CustomCursor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -1,0 +1,81 @@
+---
+category: swing
+folder: TintsAndShadesColors
+title: Colorを明るめ、暗めにパーセント単位で変換する
+tags: [Color, JColorChooser]
+author: aterai
+pubdate: 2025-02-17T06:13:11+09:00
+description: JColorChooserで選択したColorを指定したパーセントで明るめたり、暗めてカラーパレットを生成します。
+image: https://drive.google.com/uc?id=1xYYclXB2UtoSoyLt7H3MXOSr28s-wq40
+---
+* Summary [#summary]
+`JColorChooser`で選択した`Color`を指定したパーセントで明るめたり、暗めてカラーパレットを生成します。
+
+#download(https://drive.google.com/uc?id=1xYYclXB2UtoSoyLt7H3MXOSr28s-wq40)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+public static Color getTintColor(Color color, float tint) {
+  Color c;
+  boolean positive = tint > 0f;
+  if (positive) {
+    int v = (int) (tint * 255f + .5f);
+    float t = 1f - tint;
+    int r = (int) (color.getRed() * t) + v;
+    int g = (int) (color.getGreen() * t) + v;
+    int b = (int) (color.getBlue() * t) + v;
+    c = new Color(r, g, b);
+  } else {
+    c = getShadeColor(color, 1f + tint);
+  }
+  return c;
+}
+
+public static Color getShadeColor(Color color, float shade) {
+  float r = color.getRed() * shade;
+  float g = color.getGreen() * shade;
+  float b = color.getBlue() * shade;
+  return new Color((int) r, (int) g, (int) b);
+}
+}}
+
+* Description [#description]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Color.html#brighter-- Color#brighter()]や[https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Color.html#darker-- Color#darker()]を使用すると`private static final double FACTOR = 0.7;`固定で明暗を変更する
+- このサンプルでは`JColorChooser`で選択した`Color`を以下のパーセント単位で明暗を変更するテストが実行可能
+-- `Word`などのテーマカラーを`Lighter 80%`した色とは微妙に誤差？がでて完全には一致しない
+-- `rgb`から`hsl`に変換して`lumMod`、`lumOff`を適用すれば`Word`の変換と%%完全に一致する%% → サンプルを追加してテスト中だが、一致しない場合もある → デバッグ中
+
+----
+- `shade(..., 1f, "")`
+-- 変換元の色
+- `shade(..., .95f, "Darker 5%")`
+-- `Shade`陰影を`5%`暗くした色を生成
+- `shade(..., .85f, "Darker 15%")`
+-- `Shade`陰影を`15%`暗くした色を生成
+- `shade(..., .75f, "Darker 25%")`
+-- `Shade`陰影を`25%`暗くした色を生成
+- `shade(..., .65f, "Darker 35%")`
+-- `Shade`陰影を`35%`暗くした色を生成
+- `shade(..., .5f, "Darker 50%")`
+-- `Shade`陰影を`50%`暗くした色を生成
+- `tint(..., 0f, "")`
+-- 変換元の色
+- `tint(..., .8f, "Lighter 80%")`
+-- `Tint`色合いを`80%`明るくした色を生成
+- `tint(..., .6f, "Lighter 60%")`
+-- `Tint`色合いを`60%`明るくした色を生成
+- `tint(..., .4f, "Lighter 40%")`
+-- `Tint`色合いを`40%`明るくした色を生成
+- `tint(..., -.25f, "Darker 25%")`
+-- `Tint`色合いを`-25%`明るくした色を生成
+-- `Shade`陰影を`25%`暗くして生成した色と同じ
+- `tint(..., -.5f, "Darker 50%")`
+-- `Tint`色合いを`-50%`明るくした色を生成
+-- `Shade`陰影を`50%`暗くして生成した色と同じ
+
+* Reference [#reference]
+- [https://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors javascript - Programmatically Lighten or Darken a hex color (or rgb, and blend colors) - Stack Overflow]
+
+* Comment [#comment]
+#comment
+#comment

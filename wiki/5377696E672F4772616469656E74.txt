@@ -8,12 +8,12 @@ pubdate: 2004-03-29T04:50:14+09:00
 description: GradientPaintを使ったグラデーションで、徐々に背景色に溶け込んでいくJSeparatorを作成します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNgUSWNnI/AAAAAAAAAa4/92SfYb-Z3zs/s800/Gradient.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `GradientPaint`を使ったグラデーションで、徐々に背景色に溶け込んでいく`JSeparator`を作成します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNgUSWNnI/AAAAAAAAAa4/92SfYb-Z3zs/s800/Gradient.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class GradientSeparatorUI extends BasicSeparatorUI {
   private Color bgc, ssc, shc;
@@ -58,17 +58,17 @@ class GradientSeparatorUI extends BasicSeparatorUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上、左:
 -- デフォルトの`JSeparator`
 - 下、右:
 -- `BasicSeparatorUI`を継承する`GradientSeparatorUI`を`JSeparator`に設定して元色から親パネルの背景色へとグラデーションする`GradientPaint`で直線を描画
 -- `JSeparator`に`Border`を設定すると`JSeparator`が表示されない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSeparator.html JSeparator (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JSeparator.VERTICAL`に対応。 -- &user(aterai); &new{2008-04-11 (金) 14:32:04};
 

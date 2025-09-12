@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2009/04/animating-jtable-rows.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の行追加や削除をスライドアニメーションで強調します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTP0i2yxI/AAAAAAAAAkE/DQKpmn3BIQo/s800/SlideTableRows.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public void createActionPerformed(JTable table, DefaultTableModel model) {
   model.addRow(new Object[] {"New name", model.getRowCount(), false});
@@ -54,7 +54,7 @@ public void deleteActionPerformed(JTable table, DefaultTableModel model) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`javax.swing.Timer`を使用して徐々に行の高さを拡大、または縮小することで、追加と削除のアニメーションを行っています。
 
 - 行の追加アニメーション
@@ -63,10 +63,10 @@ public void deleteActionPerformed(JTable table, DefaultTableModel model) {
 -- 選択された行の高さを`JTable#setRowHeight(int, int)`メソッドを使用して縮小
 -- 高さが一定以下になったらその行を削除
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableの行を追加、削除>Swing/AddRow]]
 - [[JTableの行の高さを変更する>Swing/FishEyeTable]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

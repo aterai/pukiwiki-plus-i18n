@@ -8,12 +8,12 @@ pubdate: 2008-06-23T13:43:43+09:00
 description: IMEが直接入力以外で、一時ウィンドウが表示されていても、入力確定でセル編集を開始します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKG6DmuHI/AAAAAAAAAVc/WfOft65kSaQ/s800/CompositionEnabled.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `IME`が直接入力以外で、一時ウィンドウが表示されていても、入力確定でセル編集を開始します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKG6DmuHI/AAAAAAAAAVc/WfOft65kSaQ/s800/CompositionEnabled.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   @Override protected boolean processKeyBinding(
@@ -40,15 +40,15 @@ JTable table = new JTable(model) {
 // table.setSurrendersFocusOnKeystroke(true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - KBD{Tab}やKBD{Enter}キーでのセルフォーカス移動では編集開始しない
 - `JTable#processKeyBinding(...)`メソッドをオーバーライドして入力モードが確定したら選択セルの編集開始
 - インプットメソッドが起動中かどうかは`Component#getInputContext#isCompositionEnabled()`メソッドで判断可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/imf/index.html Java Input Method Framework]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/im/InputContext.html#isCompositionEnabled-- InputContext#isCompositionEnabled() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

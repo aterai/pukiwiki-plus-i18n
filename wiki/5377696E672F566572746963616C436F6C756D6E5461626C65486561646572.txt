@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2022/11/rotate-jtableheader-column-title-string.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTableHeader`の列タイトル文字列を反時計回りに`90`度回転して垂直表示します。
 
 #download(https://drive.google.com/uc?id=1-KX81FoU4eiaGBTgO_1Qig3ZUfn_lb3P)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class VerticalTableHeaderRenderer implements TableCellRenderer {
   private static final String ASCENDING = "Table.ascendingSortIcon";
@@ -100,19 +100,19 @@ class VerticalTableHeaderRenderer implements TableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTable#getColumnModel()#getColumn(idx)`ですべての列に垂直表示用の`TableCellRenderer`を設定
 - `JTable#getTableHeader()#setDefaultRenderer(...)`で全体のヘッダレンダラーを変更可能だが、`LookAndFeel`の描画を上記の垂直表示用`TableCellRenderer`で使用するため変更しない
 - ヘッダレンダラーを垂直表示用にまとめて反時計回りに`90`度回転するとソートアイコンが左右矢印になるので、事前に時計回りに`90`度回転しておく必要がある
 - 列タイトル文字列は[[JTabbedPaneのタブタイトル文字列を回転して縦組表示する>Swing/RotatedVerticalTextTabs]]と同様に回転した`Icon`に変換して`JLabel#setIcon(...)`で設定し、元の文字列は`JLabel#setText(null)`で非表示に変更
 -- `NimbusLookAndFeel`で回転した列タイトル文字列アイコンが表示されないバグがある？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブタイトル文字列を回転して縦組表示する>Swing/RotatedVerticalTextTabs]]
 - [[Iconを回転する>Swing/RotatedIcon]]
 - [[TitledBorderのタイトルを縦(左側)に表示する>Swing/VerticalTitledBorder]]
 - [[JTableHeaderのソートアイコンをヘッダセルの左上に表示する>Swing/SortIconLayoutHeaderRenderer]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

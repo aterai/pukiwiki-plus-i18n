@@ -8,12 +8,12 @@ pubdate: 2024-04-08T04:32:15+09:00
 description: JTableの行選択背景が行全体でラウンド矩形になるよう先頭・末尾セルのTableCellRendererで角を丸めて描画します。
 image: https://drive.google.com/uc?id=1qsuWnjpaJmbyjNO6RsU9kv_JSIUpxTGY
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の行選択背景が行全体でラウンド矩形になるよう先頭・末尾セルの`TableCellRenderer`で角を丸めて描画します。
 
 #download(https://drive.google.com/uc?id=1qsuWnjpaJmbyjNO6RsU9kv_JSIUpxTGY)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RoundSelectionRenderer extends DefaultTableCellRenderer {
   private static final double ARC = 6d;
@@ -89,7 +89,7 @@ class RoundSelectionRenderer extends DefaultTableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTable#setShowGrid(false)`で罫線を非表示、`JTable#setRowHeight(24)`で行の高さを拡大、`JTable#setIntercellSpacing(new Dimension(0, 3))`で列の隙間を`0`に縮小、行の隙間を`3`に拡大して行選択描画が重ならないよう設定(`Windows 11`のファイルエクスプローラー風)
 - `DefaultTableCellRenderer#paintComponent(...)`をオーバーライドして先頭、末尾、それ以外のセルで選択背景の描画を変更
 -- 先頭セル(`column == 0`)の場合は左端を`RoundRectangle2D`、右端をセル幅を右側方向にはみ出す`Rectangle2D`で作成した`Area`で選択背景を描画
@@ -100,10 +100,12 @@ class RoundSelectionRenderer extends DefaultTableCellRenderer {
 -- それ以外の中間セルの場合そのセル領域を左右にはみ出す`Rectangle2D`を作成して選択背景として描画
 --- 左右の罫線はセル外で非表示
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableHeaderの角を丸める>Swing/RoundedCornerTableHeader]]
 -- 同様に先頭・末尾ヘッダセルの`TableCellRenderer`で角を丸めているが、ヘッダなのでフォーカス罫線は考慮していない
+- [[JTableのセル選択背景描画をラウンド矩形に変更する>Swing/RoundedCellSelectionTable]]
+-- 行選択ではなくセル選択でラウンド矩形化するサンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

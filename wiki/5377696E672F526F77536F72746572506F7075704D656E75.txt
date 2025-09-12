@@ -8,12 +8,12 @@ pubdate: 2009-12-07T14:24:46+09:00
 description: JTableHeaderにJPopupMenuを追加してソートします。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSY9WWpNI/AAAAAAAAAis/Z0YqvftAIh8/s800/RowSorterPopupMenu.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTableHeader`に`JPopupMenu`を追加してソートします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSY9WWpNI/AAAAAAAAAis/Z0YqvftAIh8/s800/RowSorterPopupMenu.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private class TablePopupMenu extends JPopupMenu {
   private final List<SortAction> actions = Arrays.asList(
@@ -64,7 +64,7 @@ private class SortAction extends AbstractAction {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、マウスカーソルの下にある`JTableHeader`カラムをクリック(`WindowsLookAndFeel`:右クリック)して`JPopupMenu`を表示し、昇順か降順の`JMenuItem`を指定してのソートが可能になっています。デフォルトのカラム左クリックによるソートは`TableRowSorter#toggleSortOrder(...)`をオーバーライドして無効にしています。
 
 - %%ソートに`JTableHeader`のフォーカスペイントをクリアするために以下のような`PopupMenuListener`を追加%%
@@ -92,9 +92,9 @@ pop.addPopupMenuListener(new PopupMenuListener() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultRowSorter.html#toggleSortOrder-int- DefaultRowSorter#toggleSortOrder(int) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

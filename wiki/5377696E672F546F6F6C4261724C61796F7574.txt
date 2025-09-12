@@ -8,12 +8,12 @@ pubdate: 2006-01-23T14:20:11+09:00
 description: JToolBarでアイコンボタンを右寄せ、下寄せで表示します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVb-HPZjI/AAAAAAAAAno/dMILsHzlipk/s800/ToolBarLayout.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolBar`でアイコンボタンを右寄せ、下寄せで表示します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVb-HPZjI/AAAAAAAAAno/dMILsHzlipk/s800/ToolBarLayout.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // jlfgr-1_0.jar
 String path = "/toolbarButtonGraphics/general/";
@@ -33,7 +33,7 @@ private static JButton createToolbarButton(URL url) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JToolBar`や`JMenuBar`のデフォルトレイアウトは`BoxLayout`のため`Box.createGlue()`を間に挟むことでボタンやメニューの右寄せが可能
 - ボタンとボタンの間隔を固定値で空けたい場合は`Box.createRigidArea`を使用する
 -- `Box.createHorizontalStrut(...)`や`Box.createVerticalStrut(...)`を使うとツールバーの水平・垂直が切り替わった時に余計な余白が発生する場合がある
@@ -49,14 +49,14 @@ private static JButton createToolbarButton(URL url) {
 - 参考: [https://community.oracle.com/thread/1358842 Swing - JTextPane selection color problem]の camickr さんの投稿(2008/10/25 0:34)
 - `%JAVA_HOME%/demo/jfc/Notepad/src/Notepad.java`
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://web.archive.org/web/20120818143859/http://java.sun.com/developer/techDocs/hi/repository/ Java look and feel Graphics Repository]
 - [https://community.oracle.com/thread/1365522 Swing - Buttons like Netbeans']
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/menu.html#custom Customizing Menu Layout - How to Use Menus (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#setRequestFocusEnabled-boolean- JComponent#setRequestFocusEnabled(boolean) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#setFocusPainted-boolean- AbstractButton#setFocusPainted(boolean) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 環境によって、上記のサンプルが右寄せにならない場合もあるようです。 -- &user(aterai); &new{2006-03-22 (水) 15:58:10};
 - `setRequestFocusEnabled(false)`、スクリーンショット更新。 -- &user(aterai); &new{2008-10-27 (月) 15:20:38};

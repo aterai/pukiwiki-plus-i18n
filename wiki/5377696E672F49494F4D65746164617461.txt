@@ -8,12 +8,12 @@ pubdate: 2007-11-12T12:24:17+09:00
 description: JPEGファイルからコメントなどのメタデータ(XML)を取り出してJTreeで表示します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOUrdw9GI/AAAAAAAAAcM/4rakKDY0jI0/s800/IIOMetadata.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPEG`ファイルからコメントなどのメタデータ(`XML`)を取り出して`JTree`で表示します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTOUrdw9GI/AAAAAAAAAcM/4rakKDY0jI0/s800/IIOMetadata.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 InputStream source = getClass().getResourceAsStream("test.jpg");
 Iterator readers = ImageIO.getImageReadersByFormatName("jpeg");
@@ -41,7 +41,7 @@ if (com != null && com.getLength() > 0) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルは、コメント付きの`JPEG`画像から以下の手順でコメントを抽出しています。
 
 + `ImageReader`から`IIOMetadata`を取得
@@ -55,7 +55,7 @@ if (com != null && com.getLength() > 0) {
 - `JTree`
 -- 参考: [https://community.oracle.com/thread/1373824 Swing - XMLViewer]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/imageio/metadata/doc-files/jpeg_metadata.html JPEG メタデータ形式の仕様および使用上の注意]
 -- via: [https://docs.oracle.com/javase/jp/8/docs/api/javax/imageio/metadata/package-summary.html javax.imageio.metadata (Java Platform SE 8)]
 -- 標準の (プラグインに依存しない) 形式やその他のメタデータ(`PNG`、`GIF`、`BMP`)もこちらから
@@ -64,6 +64,6 @@ if (com != null && com.getLength() > 0) {
 // - [http://www.utilz.jp/wiki/ExifGps Utilz: 画像の位置情報]
 // -- via: [http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=42083&forum=12&4 Jpegのexif形式ファイルからの画像解像度（幅高）取得について - Java Solution]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

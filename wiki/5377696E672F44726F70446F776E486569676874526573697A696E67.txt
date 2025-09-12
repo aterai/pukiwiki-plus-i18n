@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2022/06/change-height-of-drop-down-list-of.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`のドロップダウンリスト下部にドラッグ可能なアイコンを追加し、その高さをマウスドラッグで変更します。
 
 #download(https://drive.google.com/uc?id=1UN09ThQIcw2H8XpxI6ZpY2HOzFytr1-J)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPopupMenu popup = new JPopupMenu();
 popup.setBorder(BorderFactory.createEmptyBorder());
@@ -41,7 +41,7 @@ JPopupMenu popup = new JPopupMenu();
 popup.add(resizePanel);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JPopupMenu`
 -- `JPopupMenu`内に`JMenuItem`ではなく`BorderLayout`を設定した`JPanel`をひとつ配置
 --- この`JPanel`は`BorderLayout.CENTER`に`JList`、`BorderLayout.SOUTH`に自身の親フレームの高さのみリサイズ可能にする`MouseInputListener`を設定した`JLabel`を追加
@@ -94,12 +94,12 @@ class ResizePopupMenuListener extends MouseInputAdapter {
 -- `JList`に`MouseListener`を追加してダブルクリックで`JComboBox`の選択状態更新と`JPopupMenu`の非表示化を実行
 -- `GraphicsEnvironment#getAllFonts()`で取得したフォント名を一覧表示
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JToggleButtonからポップアップメニューを開く>Swing/ToolButtonPopup]]
 - [[JWindow内にフォーカス可能なコンポーネントを配置する>Swing/JWindowFocus]]
 - [[JComboBoxのドロップダウンリストでセル配置をニュースペーパー・スタイルに設定する>Swing/HorizontalWrapComboPopup]]
 - [[Fontの一覧を取得する>Swing/AllFonts]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

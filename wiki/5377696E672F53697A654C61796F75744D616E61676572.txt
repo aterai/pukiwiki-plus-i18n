@@ -8,12 +8,12 @@ pubdate: 2017-04-10T14:38:31+09:00
 description: LayoutManagerを使用して、コンポーネントの状態に応じてそのサイズや位置を変更します。
 image: https://drive.google.com/uc?id=1nYydwcffL9ElwLnTcopf0y05pAU6chdG4w
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `LayoutManager`を使用して、コンポーネントの状態に応じてそのサイズや位置を変更します。
 
 #download(https://drive.google.com/uc?id=1nYydwcffL9ElwLnTcopf0y05pAU6chdG4w)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPanel p = new JPanel(new GridBagLayout());
 p.setLayout(new FlowLayout() {
@@ -52,7 +52,7 @@ Stream.of("b1", "b2", "b3").forEach(s -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Override JToggleButton#getPreferredSize(...)`
 -- `JToggleButton#getPreferredSize(...)`をオーバーライドし、自身が選択されているかどうかで推奨サイズを変更
 - `Override FlowLayout#layoutContainer(...)`
@@ -61,11 +61,11 @@ Stream.of("b1", "b2", "b3").forEach(s -> {
 --- `LayoutManager`以外での`setSize(...)`、`setPreferredSize(...)`、`setMaximumSize(...)`などの使用は非推奨
 --- [http://stackoverflow.com/questions/7229226/should-i-avoid-the-use-of-setpreferredmaximumminimumsize-methods-in-java-swi Should I avoid the use of set(Preferred|Maximum|Minimum)Size methods in Java Swing? - Stack Overflow]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://stackoverflow.com/questions/7229226/should-i-avoid-the-use-of-setpreferredmaximumminimumsize-methods-in-java-swi Should I avoid the use of set(Preferred|Maximum|Minimum)Size methods in Java Swing? - Stack Overflow]
 - [[JTreeのノードを検索する>Swing/SearchBox]]
 -- `Timer`を使用してサイズ変更のアニメーションを行う`BorderLayout`のサンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

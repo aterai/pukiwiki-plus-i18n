@@ -8,12 +8,12 @@ pubdate: 2015-09-28T01:33:50+09:00
 description: TitledBorderのタイトルが設定したコンポーネントの幅より長くなって末尾の文字列が省略される場合、JToolTipでタイトル全体を表示します。
 image: https://lh3.googleusercontent.com/-_haLcd_rxx8/VggXa21_nHI/AAAAAAAAOCo/FLlSmRfIUqo/s800-Ic42/TitledBorderToolTip.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TitledBorder`のタイトルが設定したコンポーネントの幅より長くなって末尾の文字列が省略される場合、`JToolTip`でタイトル全体を表示します。
 
 #download(https://lh3.googleusercontent.com/-_haLcd_rxx8/VggXa21_nHI/AAAAAAAAOCo/FLlSmRfIUqo/s800-Ic42/TitledBorderToolTip.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPanel panel1 = new JPanel() {
   private final JLabel label = new JLabel();
@@ -43,7 +43,7 @@ panel1.setBorder(BorderFactory.createTitledBorder("aaaaa...aaaaa"));
 panel1.setToolTipText("JPanel");
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `TitledBorder`を設定する`JPanel`の`getToolTipText(...)`メソッドをオーバーライド
 -- サイズ計算用の仮`JLabel`に`TitledBorder`のフォントや文字列を設定してその幅を`getPreferredSize()`メソッドで取得
 --- `TitledBorder`が内部で使用している`JLabel`は`private`なのでアクセスできない
@@ -53,9 +53,9 @@ panel1.setToolTipText("JPanel");
 -- このサンプルはタイトルの位置が`TOP`の場合のみに対応
 -- タイトルに`html`タグを使用して省略ではなく折り返しが発生する場合には未対応
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#getToolTipText-java.awt.event.MouseEvent- JComponent#getToolTipText(MouseEvent) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

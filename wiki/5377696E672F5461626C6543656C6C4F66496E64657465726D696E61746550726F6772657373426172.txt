@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2024/01/paint-jprogressbar-with-indeterminate.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルに一定期間だけ不確定進捗状態のアニメーションを描画する`JProgressBar`を適用します。
 
 #download(https://drive.google.com/uc?id=1j8bfUbhh4at4824_s2NPQ89sjHUw6N49)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private final JTable table = new JTable(model) {
   @Override public void updateUI() {
@@ -91,7 +91,7 @@ class BackgroundTask extends SwingWorker<Integer, Object> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `SwingWorker`で`JProgressBar#setIndeterminate(true)`を設定して不確定進捗状態にした`JProgressBar`を生成して`TableModel`の対象セルに設定
 - `SwingWorker`から進捗状況を`Integer`で受け取る場合はセルレンダラーとして進捗状態を表示する`JProgressBar`を一つだけ使いまわして使用する([[JTableのセルにJProgressBarを表示>Swing/TableCellProgressBar]]参照)が、不確定進捗状態アニメーションを表示する場合は`SwingWorker`からセルごとに異なる`JProgressBar`自体を受け取ってセルレンダラーにする必要がある
 -- 一つだけの`JProgressBar`を使用すると複数行で不確定進捗状態アニメーションを実行する場合やセルサイズが変更されて再描画する場合にアニメーション速度が速くなるなどの不具合が発生する
@@ -127,10 +127,10 @@ public static Icon makeImageIcon(URL url, JTable table, int row, int col) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのセルにJProgressBarを表示>Swing/TableCellProgressBar]]
 - [[JTableのセルにAnimated GIFを表示する>Swing/AnimatedIconInTableCell]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

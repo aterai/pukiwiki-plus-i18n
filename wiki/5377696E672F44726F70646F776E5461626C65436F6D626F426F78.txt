@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/05/use-jtable-instead-of-jlist-as-drop.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`のドロップダウンリストとして`JList`の代わりに`JTable`を使用します。
 
 #download(https://drive.google.com/uc?id=170XdYlh7LDQaucke8xUxSSN1qlcPWcrGrw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DropdownTableComboBox<E extends List<Object>> extends JComboBox<E> {
   protected final transient HighlightListener highlighter =
@@ -80,7 +80,7 @@ class DropdownTableComboBox<E extends List<Object>> extends JComboBox<E> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JList`ではなく`JTable`を使用する`BasicComboPopup`を作成
 -- `JTable`なのでヘッダや複数列の設定などが可能
 - `MetalComboBoxUI#createPopup()`メソッドをオーバーライドして`JComboBox`のドロップダウンリストとして設定
@@ -142,10 +142,10 @@ class ComboTablePopup extends BasicComboPopup {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxのItemを左右にクリップして配置>Swing/ClippedLRComboBox]]
 - [[JTableのセルのハイライト>Swing/CellHighlight]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

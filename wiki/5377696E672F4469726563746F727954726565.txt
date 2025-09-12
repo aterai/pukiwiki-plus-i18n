@@ -8,64 +8,64 @@ pubdate: 2011-07-04T16:26:25+09:00
 description: FileSystemViewを使ってディレクトリ構造をJTree上に表示します。
 image: https://lh3.googleusercontent.com/-FkX-8X4KxDo/ThFoeY8M64I/AAAAAAAAA-Y/Ry_RA9yVCxc/s800/DirectoryTree.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `FileSystemView`を使ってディレクトリ構造を`JTree`上に表示します。主に[https://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]を参考にしています。
 
 #download(https://lh3.googleusercontent.com/-FkX-8X4KxDo/ThFoeY8M64I/AAAAAAAAA-Y/Ry_RA9yVCxc/s800/DirectoryTree.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class FolderSelectionListener implements TreeSelectionListener {
   private final FileSystemView fileSystemView;
-  public FolderSelectionListener(FileSystemView fileSystemView) {
+
+  protected FolderSelectionListener(FileSystemView fileSystemView) {
     this.fileSystemView = fileSystemView;
   }
 
   @Override public void valueChanged(TreeSelectionEvent e) {
-    JTree tree = (JTree) e.getSource();
     DefaultMutableTreeNode node =
       (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
-    DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-    // TreePath path = e.getPath();
-
-    if (!node.isLeaf()) return;
     File parent = (File) node.getUserObject();
-    if (!parent.isDirectory()) return;
-
-    SwingWorker<String, File> worker = new SwingWorker<String, File>() {
-      @Override public String doInBackground() {
-        File[] children = fileSystemView.getFiles(parent, true);
-        for (File child: children) {
-          if (child.isDirectory()) {
-            publish(child);
-          }
-        }
-        return "done";
-      }
-
+    // Java 9:
+    // // https://ateraimemo.com/Swing/ResolveShortcutsLinkLocation.html
+    // if (fileSystemView.isLink(parent)) {
+    //   try {
+    //     parent = fileSystemView.getLinkLocation(parent);
+    //   } catch (FileNotFoundException ex) {
+    //     return;
+    //   }
+    // }
+    if (!node.isLeaf() || !parent.isDirectory()) {
+      return;
+    }
+    JTree tree = (JTree) e.getSource();
+    DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+    new BackgroundTask(fileSystemView, parent) {
       @Override protected void process(List<File> chunks) {
-        for (File file: chunks) {
-          node.add(new DefaultMutableTreeNode(file));
+        if (tree.isDisplayable() && !isCancelled()) {
+          chunks.stream().map(DefaultMutableTreeNode::new)
+              .forEach(child -> model.insertNodeInto(
+                       child, node, node.getChildCount()));
+        } else {
+          cancel(true);
         }
-        model.nodeStructureChanged(node);
-        // tree.expandPath(path);
       }
-    };
-    worker.execute();
+    }.execute();
   }
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 このサンプルでは、[https://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]のディレクトリ表示部分を参考にルートパーティション(`Windows`の場合`Desktop`フォルダ)をルートノードにして`JTree`で表示しています。
 
 - クリックされたノードがディレクトリの場合、子ファイルの検索と`JTree`へのそれらの追加を`SwingWorker`を使用して別スレッドで実行するよう変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/filechooser/FileSystemView.html FileSystemView (Java Platform SE 8)]
 - [https://stackoverflow.com/questions/6182110/file-browser-gui java - File Browser GUI - Stack Overflow]
 - [http://www.pushing-pixels.org/2007/07/22/showing-the-file-system-as-a-swing-jtree.html Showing the file system as a Swing JTree ・ Pushing Pixels]
+- [[JTreeで表示したフォルダ構造でWindowsのlnkショートカット先に移動する>Swing/ResolveShortcutsLinkLocation]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

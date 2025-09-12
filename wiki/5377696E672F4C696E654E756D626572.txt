@@ -8,12 +8,12 @@ pubdate: 2006-02-20T20:26:20+09:00
 description: JTextAreaの行番号を表示するコンポーネントを作成し、これを対象となるJTextAreaと同じJScrollPaneのRowHeaderViewに設定します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPV_bkDWI/AAAAAAAAAd0/Jktuzx5j5gU/s800/LineNumber.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`の行番号を表示するコンポーネントを作成し、これを対象となる`JTextArea`と同じ`JScrollPane`の`RowHeaderView`に設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPV_bkDWI/AAAAAAAAAd0/Jktuzx5j5gU/s800/LineNumber.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class LineNumberView extends JComponent {
   private static final int MARGIN = 5;
@@ -105,7 +105,7 @@ class LineNumberView extends JComponent {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 [https://community.oracle.com/thread/1479759 Swing (Archive) - Advice for editor gutter implementation...]を参考にして、`JTextArea`に行番号を表示しています。
 
 上記のサンプルで使用する`JTextArea`は、使用するフォントや余白などは変更不可で各行の高さはすべて同一で不変と想定しています。
@@ -119,12 +119,12 @@ class LineNumberView extends JComponent {
 --- [https://community.oracle.com/thread/1493292 Swing - line number in jtextpane]
 --- `EditorKit`を使って行番号を表示し、`JTextPane`で折り返された行でも表示に従って行番号を割り当てる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1479759 Swing (Archive) - Advice for editor gutter implementation...]
 - [https://community.oracle.com/thread/1369109 Swing - Line Number in JTextPane]
 - [https://community.oracle.com/thread/1493292 Swing - line number in jtextpane]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - すごいね！私はこのような資料を探しています、どうも　ありがとうございます。 -- &user(ＣＫ); &new{2007-04-21 (Sat) 18:29:31};
 -- どういたしまして。 -- &user(aterai); &new{2007-04-23 (月) 09:47:47};

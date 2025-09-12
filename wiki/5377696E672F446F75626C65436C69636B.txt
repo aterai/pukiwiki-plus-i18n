@@ -8,12 +8,12 @@ pubdate: 2004-06-28T05:48:37+09:00
 description: JTableのセルをダブルクリックして内容を表示します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLv3qaXoI/AAAAAAAAAYE/aAnkonlteYo/s800/DoubleClick.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルをダブルクリックして内容を表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLv3qaXoI/AAAAAAAAAYE/aAnkonlteYo/s800/DoubleClick.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 table.setAutoCreateRowSorter(true);
 table.addMouseListener(new MouseAdapter() {
@@ -33,14 +33,15 @@ table.addMouseListener(new MouseAdapter() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTable`に`MouseListener`を設定して`MouseEvent#getClickCount()`メソッドでマウスクリック数を取得し、これが`2`以上になる場合はセルがダブルクリックされたと判断
 - `JTable`のセルはダブルクリックで編集開始がデフォルトなのですべてのセルを編集不可に設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/MouseEvent.html#getClickCount-- MouseEvent#getClickCount() (Java Platform SE 8)]
+- [[TrayIconがシングルまたはダブルクリックされたかを区別する>Swing/SingleAndDoubleClicksOnTrayIcon]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 行以外の場所をダブルクリックすると`IndexOutOfBoundsException`が発生する不具合を修正。 -- &user(aterai); &new{2011-02-02 (水) 19:09:18};
 

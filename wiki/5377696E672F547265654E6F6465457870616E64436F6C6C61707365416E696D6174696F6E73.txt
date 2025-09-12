@@ -1,0 +1,163 @@
+---
+category: swing
+folder: TreeNodeExpandCollapseAnimations
+title: JTreeにノード展開、折り畳みアニメーションを実装する
+tags: [JTree, Animation, TreeWillExpandListener]
+author: aterai
+pubdate: 2024-07-22T02:27:36+09:00
+description: JTreeのノード展開、折り畳みでその子ノードの高さを増減するアニメーションを実行します。
+image: https://drive.google.com/uc?id=1hHsf6k4Zt-UnrvuI-GIZWmu8NDCd6Yii
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2024/07/animates-effect-of-expanding-and.html
+    lang: en
+---
+* Summary [#summary]
+`JTree`のノード展開、折り畳みでその子ノードの高さを増減するアニメーションを実行します。
+
+#download(https://drive.google.com/uc?id=1hHsf6k4Zt-UnrvuI-GIZWmu8NDCd6Yii)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JTree tree = new JTree() {
+  @Override public void updateUI() {
+    super.updateUI();
+    setRowHeight(-1);
+    setCellRenderer(new HeightTreeCellRenderer());
+  }
+};
+tree.addTreeWillExpandListener(new TreeWillExpandListener() {
+  @Override public void treeWillExpand(TreeExpansionEvent e) {
+    Object o = e.getPath().getLastPathComponent();
+    if (o instanceof DefaultMutableTreeNode) {
+      DefaultMutableTreeNode parent = (DefaultMutableTreeNode) o;
+      List<DefaultMutableTreeNode> list = getTreeNodes(parent);
+      parent.setUserObject(makeUserObject(parent, END_HEIGHT));
+      list.forEach(n -> n.setUserObject(makeUserObject(n, START_HEIGHT)));
+      startExpandTimer(e, list);
+    }
+  }
+
+  @Override public void treeWillCollapse(TreeExpansionEvent e)
+      throws ExpandVetoException {
+    Object c = e.getPath().getLastPathComponent();
+    if (c instanceof DefaultMutableTreeNode) {
+      DefaultMutableTreeNode p = (DefaultMutableTreeNode) o;
+      List<DefaultMutableTreeNode> list = getTreeNodes(p);
+      boolean b = list
+          .stream()
+          .anyMatch(n -> {
+            Object obj = n.getUserObject();
+            return obj instanceof SizeNode
+              && ((SizeNode) obj).height == END_HEIGHT;
+          });
+      if (b) {
+        startCollapseTimer(e, list);
+        throw new ExpandVetoException(e);
+      }
+    }
+  }
+});
+
+class HeightTreeCellRenderer extends DefaultTreeCellRenderer {
+  @Override public Component getTreeCellRendererComponent(
+      JTree tree,
+      Object value,
+      boolean selected,
+      boolean expanded,
+      boolean leaf,
+      int row,
+      boolean hasFocus) {
+    Component c = super.getTreeCellRendererComponent(
+        tree, value, selected, expanded, leaf, row, hasFocus);
+    DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+    Object uo = node.getUserObject();
+    if (c instanceof JLabel && uo instanceof SizeNode) {
+      JLabel l = (JLabel) c;
+      SizeNode n = (SizeNode) uo;
+      l.setPreferredSize(null); // reset prev preferred size
+      l.setText(n.label); // recalculate preferred size
+      Dimension d = l.getPreferredSize();
+      d.height = n.height;
+      l.setPreferredSize(d);
+    }
+    return c;
+  }
+}
+
+class SizeNode {
+  public final String label;
+  public final int height;
+
+  protected SizeNode(String label, int height) {
+    this.label = label;
+    this.height = height;
+  }
+
+  @Override public String toString() {
+    return label;
+  }
+}
+}}
+
+* Description [#description]
+- `JTree#setRowHeight(-1)`を設定して各表示行の高さを固定サイズではなくセルレンダラーの推奨サイズの高さを使用するよう設定
+-- [[JTreeのノードを名前で検索して表示のフィルタリングを行う>Swing/TreeNodeFilter]]
+- セルレンダラーの推奨サイズを`DefaultMutableTreeNode`のユーザーオブジェクトで指定した高さを指定することで展開・折り畳み中のアニメーションを実行
+-- ユーザーオブジェクトの設定は`DefaultMutableTreeNode#setUserObject(obj)`ではなく`TreeModel#valueForPathChanged(path, obj)`を使用しないと`TreeModelListener`などにノード更新イベントが伝わらない
+--- [[JTreeのノード追加、削除>Swing/AddNode]]
+-- `JLabel#setPreferredSize(null)`を実行してからノードの文字列を設定しないと推奨サイズの幅が正しく取得できない
+-- `JTree`のノードサイズキャッシュが影響している？
+- `JTree`に`TreeWillExpandListener`を追加してノードの展開・折り畳み前にその子ノードの高さを増減するアニメーションを実行
+-- `TreeWillExpandListener#treeWillExpand(...)`で展開前に子ノードすべての高さを縮小してから、`Timer`をスタートして段階的に元の高さに戻すことでアニメーションを表現
+-- `TreeWillExpandListener#treeWillCollapse(...)`で子ノードの高さが元の高さの場合は、一旦`throw new ExpandVetoException(...)`で折り畳みを中止してから`Timer`をスタートして段階的に高さを縮小するアニメーションを実行し、一定の高さまで縮小されたら`JTree#collapsePath(TreePath)`で再度アニメーションなしの折り畳みを実行
+
+#code{{
+private static void startExpandTimer(
+    TreeExpansionEvent e, List<DefaultMutableTreeNode> list) {
+  JTree tree = (JTree) e.getSource();
+  TreeModel model = tree.getModel();
+  AtomicInteger height = new AtomicInteger(START_HEIGHT);
+  new Timer(DELAY, ev -> {
+    int h = height.getAndIncrement();
+    if (h <= END_HEIGHT) {
+      list.forEach(n -> {
+        Object uo = makeUserObject(n, h);
+        model.valueForPathChanged(new TreePath(n.getPath()), uo);
+      });
+    } else {
+      ((Timer) ev.getSource()).stop();
+    }
+  }).start();
+}
+
+private static void startCollapseTimer(
+    TreeExpansionEvent e, List<DefaultMutableTreeNode> list) {
+  JTree tree = (JTree) e.getSource();
+  TreePath path = e.getPath();
+  TreeModel model = tree.getModel();
+  AtomicInteger height = new AtomicInteger(END_HEIGHT);
+  new Timer(DELAY, ev -> {
+    int h = height.getAndDecrement();
+    if (h >= START_HEIGHT) {
+      list.forEach(n -> {
+        Object uo = makeUserObject(n, h);
+        model.valueForPathChanged(new TreePath(n.getPath()), uo);
+      });
+    } else {
+      ((Timer) ev.getSource()).stop();
+      tree.collapsePath(path);
+    }
+  }).start();
+}
+}}
+
+* Reference [#reference]
+- [[JTreeのノードを名前で検索して表示のフィルタリングを行う>Swing/TreeNodeFilter]]
+- [[JTreeで親ノードが展開されたときに子ノードの選択状態を変更する>Swing/TreeSelectionPaths]]
+- [[JTableで行の追加、削除アニメーション>Swing/SlideTableRows]]
+- [[JTreeのノードを折り畳み不可に設定する>Swing/TreeNodeCollapseVeto]]
+- [[JTreeのノード追加、削除>Swing/AddNode]]
+
+* Comment [#comment]
+#comment
+#comment

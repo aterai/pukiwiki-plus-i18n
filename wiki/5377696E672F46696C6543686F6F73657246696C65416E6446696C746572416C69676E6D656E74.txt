@@ -8,12 +8,12 @@ pubdate: 2017-08-28T15:46:15+09:00
 description: JFileChooserの下部に表示されるファイル名とフィルタのラベルを左揃えから右揃えに変更します。
 image: https://drive.google.com/uc?id=
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`の下部に表示されるファイル名とフィルタのラベルを左揃えから右揃えに変更します。
 
 #download(https://drive.google.com/uc?id=1U4T22tNO7N5NZJUDujh3ZUh68fe-xyvbPw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RightAlignmentMetalFileChooserUI extends MetalFileChooserUI {
   protected RightAlignmentMetalFileChooserUI(JFileChooser fc) {
@@ -47,7 +47,7 @@ class RightAlignmentWindowsFileChooserUI extends WindowsFileChooserUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `MetalLookAndFeel`
 -- `MetalFileChooserUI#getBottomPanel()`で取得できる`JPanel`のレイアウトを`BoxLayout.Y_AXIS`に設定し、以下の`3`つの`JPanel`を縦並びで配置
 --- ファイル名ラベルとファイル名入力欄を配置した`fileNamePanel`(`BoxLayout.LINE_AXIS`)
@@ -61,10 +61,10 @@ class RightAlignmentWindowsFileChooserUI extends WindowsFileChooserUI {
 --- `approveButton`などを配置した`ButtonPanel`(`BoxLayout.Y_AXIS`)
 -- 各ラベルは`BoxLayout.Y_AXIS`の`JPanel`にまとめられているので`JComponent.html#setAlignmentX(1f)`で右揃えに変更可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[MetalLookAndFeelでJFileChooserの下部にコンポーネントを追加する>Swing/FileChooserBottomAccessory]]
 - [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

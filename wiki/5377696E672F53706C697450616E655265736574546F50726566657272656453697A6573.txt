@@ -1,0 +1,64 @@
+---
+category: swing
+folder: SplitPaneResetToPreferredSizes
+title: JSplitPaneのDivider位置を推奨サイズでリセットする
+tags: [JSplitPane]
+author: aterai
+pubdate: 2025-01-13T07:48:08+09:00
+description: JSplitPaneのDivider位置を子コンポーネントの推奨サイズに基づいた初期状態に戻します。
+image: https://drive.google.com/uc?id=1Hc0OMtVR8BJKRoCgCOtn7t-sEfZtLVI-
+---
+* Summary [#summary]
+`JSplitPane`の`Divider`位置を子コンポーネントの推奨サイズに基づいた初期状態に戻します。
+
+#download(https://drive.google.com/uc?id=1Hc0OMtVR8BJKRoCgCOtn7t-sEfZtLVI-)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+SpinnerNumberModel model1 = new SpinnerNumberModel(100, 10, 300, 10);
+JScrollPane scroll1 = makeScrollPane(new JTree(), model1);
+SpinnerNumberModel model2 = new SpinnerNumberModel(150, 10, 300, 10);
+JTextArea textArea = new JTextArea();
+JScrollPane scroll2 = makeScrollPane(textArea, model2);
+JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll1, scroll2);
+split.setOneTouchExpandable(true);
+split.setContinuousLayout(true);
+JMenu menu1 = new JMenu("JSplitPane");
+menu1.add(makeSpinner("L: ", model1));
+menu1.add(makeSpinner("R: ", model2));
+menu1.addSeparator();
+menu1.add("resetToPreferredSizes").addActionListener(e -> {
+  split.resetToPreferredSizes();
+  info(split, textArea);
+});
+menu1.addSeparator();
+// ...
+JMenu menu2 = new JMenu("ResizeWeight");
+JRadioButtonMenuItem r0 = new JRadioButtonMenuItem("0.0", true);
+menu2.add(r0).addActionListener(e -> split.setResizeWeight(0d));
+JRadioButtonMenuItem r1 = new JRadioButtonMenuItem("0.5");
+menu2.add(r1).addActionListener(e -> split.setResizeWeight(.5));
+JRadioButtonMenuItem r2 = new JRadioButtonMenuItem("1.0");
+menu2.add(r2).addActionListener(e -> split.setResizeWeight(1d));
+ButtonGroup group = new ButtonGroup();
+for (AbstractButton r : Arrays.asList(r0, r1, r2)) {
+  group.add(r);
+}
+JMenuBar menuBar = new JMenuBar();
+menuBar.add(menu1);
+menuBar.add(menu2);
+}}
+
+* Description [#description]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSplitPane.html#resetToPreferredSizes-- JSplitPane#resetToPreferredSizes()]を実行すれば、`Divider`の位置を左右の子コンポーネントの推奨サイズに基づいた初期位置にリセット可能
+- 左右の推奨サイズ(幅)の合計が`JSplitPane`の幅以下の場合はその余りスペースを[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSplitPane.html#getResizeWeight-- JSplitPane#getResizeWeight()]の値で配分した位置にリセット
+- 左右の推奨サイズ(幅)の合計が`JSplitPane`の幅以上の場合は、その推奨サイズ(`getPreferredSize()`)ではなく最小サイズ(`getMinimumSizes()`)に基づいた余りスペースを計算し、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSplitPane.html#getResizeWeight-- JSplitPane#getResizeWeight()]の値でそれぞれ配分した位置にリセット
+-- たとえばJSplitPaneの幅を`300px`、左コンポーネントの推奨サイズを`200px`、右を`250px`、リサイズウェイトを`0.0`とした状態で`JSplitPane#getResizeWeight()`を実行すると左コンポーネントの最小サイズ`23px`の位置に`Divider`は配置される
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSplitPane.html#getResizeWeight-- JSplitPane#getResizeWeight()]
+- [[JSplitPaneのDividerにJPopupMenuやMouseListenerを追加してその位置を変更する>Swing/DividerMouseEvent]]
+
+* Comment [#comment]
+#comment
+#comment

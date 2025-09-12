@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2020/09/creating-statusbar-with-size-grips-to.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTableHeader`の`TableColumn`が表示・非表示状態かを`JCheckBoxMenuItem`を使用して切り替えます。
 
 #download(https://drive.google.com/uc?id=1s7b9r9oP8o0El5Ti3e1xM84anoj5r_Te)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TableHeaderPopupMenu extends JPopupMenu {
   protected TableHeaderPopupMenu(JTable table) {
@@ -69,7 +69,7 @@ class TableHeaderPopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 初期状態では`TableModel`から生成された`TableColumn`がすべて表示されている
 -- `JCheckBoxMenuItem`もすべて選択状態になる
 - `JCheckBoxMenuItem`で選択解除されたら`TableColumnModel#removeColumn(TableColumn)`メソッドで`TableColumn`を非表示
@@ -82,12 +82,12 @@ class TableHeaderPopupMenu extends JPopupMenu {
 - `Java 9`以上で有効な`UIManager.put("CheckBoxMenuItem.doNotCloseOnMouseClick", true)`を設定し、`JPopupMenu`を開いたまま現在選択状態の`TableColumn`を`JCheckBoxMenuItem`で非表示に切り替えると`ArrayIndexOutOfBoundsException`が発生する
 -- `PopupMenuListener`を`JPopupMenu`に追加、または`JPopupMenu#show(...)`メソッドをオーバーライドして`JTableHeader.setDraggedColumn(null)`で選択状態をクリアすれば回避が可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableHeaderにJPopupMenuを追加してソート>Swing/RowSorterPopupMenu]]
 - [[JCheckBoxMenuItemをクリックしてもJPopupMenuを閉じないように設定する>Swing/StayOpenCheckBoxMenuItem]]
 - [[JTableのColumn名を変更する>Swing/EditColumnName]]
 - [https://tips4java.wordpress.com/2011/05/08/table-column-manager/ Table Column Manager « Java Tips Weblog]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

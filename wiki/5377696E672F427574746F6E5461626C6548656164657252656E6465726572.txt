@@ -1,0 +1,140 @@
+---
+category: swing
+folder: ButtonTableHeaderRenderer
+title: JTableHeaderのセルレンダラーとしてJButtonを使用する
+tags: [JTableHeader, JTable, JButton, TableCellRenderer]
+author: aterai
+pubdate: 2024-08-19T06:27:02+09:00
+description: JTableHeaderのカラムセルを描画するセルレンダラーとしてJButtonを適用します。
+image: https://drive.google.com/uc?id=1QrljK9CDJh8m8kIyKSn06XROFHxP1Vty
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2024/08/set-jbutton-as-cell-renderer-for.html
+    lang: en
+---
+* Summary [#summary]
+`JTableHeader`のカラムセルを描画するセルレンダラーとして`JButton`を適用します。
+
+#download(https://drive.google.com/uc?id=1QrljK9CDJh8m8kIyKSn06XROFHxP1Vty)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class ButtonHeaderRenderer extends JButton implements TableCellRenderer {
+  private int pushedColumn = -1;
+  private int rolloverColumn = -1;
+
+  @Override public void updateUI() {
+    super.updateUI();
+    setHorizontalTextPosition(LEFT);
+  }
+
+  @Override public Component getTableCellRendererComponent(
+      JTable table, Object value,
+      boolean isSelected, boolean hasFocus,
+      int row, int column) {
+    setText(Objects.toString(value, ""));
+    int modelColumn = table.convertColumnIndexToModel(column);
+    JTableHeader header = table.getTableHeader();
+    if (header != null) {
+      // setColor(header, hasFocus);
+      boolean isPressed = modelColumn == pressedColumn;
+      getModel().setPressed(isPressed);
+      getModel().setArmed(isPressed);
+      getModel().setRollover(modelColumn == rolloverColumn);
+      setFont(header.getFont());
+    }
+
+    Icon sortIcon = null;
+    if (table.getRowSorter() != null) {
+      List<? extends RowSorter.SortKey> sortKeys =
+          table.getRowSorter().getSortKeys();
+      if (!sortKeys.isEmpty() &&
+          sortKeys.get(0).getColumn() == modelColumn) {
+        SortOrder sortOrder = sortKeys.get(0).getSortOrder();
+        switch (sortOrder) {
+          case ASCENDING:
+            sortIcon = UIManager.getIcon("Table.ascendingSortIcon");
+            break;
+          case DESCENDING:
+            sortIcon = UIManager.getIcon("Table.descendingSortIcon");
+            break;
+          // case UNSORTED:
+          //   sortIcon = UIManager.getIcon("Table.naturalSortIcon");
+          //   break;
+          default:
+            sortIcon = UIManager.getIcon("Table.naturalSortIcon");
+        }
+      }
+    }
+    setIcon(sortIcon);
+    return this;
+  }
+
+  public void setPressedColumn(int column) {
+    pushedColumn = column;
+  }
+
+  public void setRolloverColumn(int column) {
+    rolloverColumn = column;
+  }
+}
+
+class HeaderMouseListener extends MouseAdapter {
+  @Override public void mousePressed(MouseEvent e) {
+    JTableHeader header = (JTableHeader) e.getComponent();
+    JTable table = header.getTable();
+    TableCellRenderer renderer = header.getDefaultRenderer();
+    int viewColumn = table.columnAtPoint(e.getPoint());
+    if (viewColumn >= 0 && renderer instanceof ButtonHeaderRenderer) {
+      int column = table.convertColumnIndexToModel(viewColumn);
+      ((ButtonHeaderRenderer) renderer).setPressedColumn(column);
+    }
+  }
+
+  @Override public void mouseReleased(MouseEvent e) {
+    JTableHeader header = (JTableHeader) e.getComponent();
+    TableCellRenderer renderer = header.getDefaultRenderer();
+    if (renderer instanceof ButtonHeaderRenderer) {
+      ((ButtonHeaderRenderer) renderer).setPressedColumn(-1);
+    }
+  }
+
+  @Override public void mouseMoved(MouseEvent e) {
+    JTableHeader header = (JTableHeader) e.getComponent();
+    JTable table = header.getTable();
+    TableCellRenderer renderer = header.getDefaultRenderer();
+    int viewColumn = table.columnAtPoint(e.getPoint());
+    if (viewColumn >= 0 && renderer instanceof ButtonHeaderRenderer) {
+      int column = table.convertColumnIndexToModel(viewColumn);
+      ((ButtonHeaderRenderer) renderer).setRolloverColumn(column);
+    }
+  }
+
+  @Override public void mouseExited(MouseEvent e) {
+    JTableHeader header = (JTableHeader) e.getComponent();
+    TableCellRenderer renderer = header.getDefaultRenderer();
+    if (renderer instanceof ButtonHeaderRenderer) {
+      ((ButtonHeaderRenderer) renderer).setRolloverColumn(-1);
+    }
+  }
+}
+}}
+
+* Description [#description]
+- 上:
+-- `JTableHeader`のデフォルトセルレンダラーは`sun.swing.table.DefaultTableCellHeaderRenderer`で`JLabel`でセルを描画
+-- `DefaultTableCellRenderer`をそのまま使用しないのは、ソートアイコン描画を`Java 6`から追加したため？
+- 下:
+-- `JButton`を継承するセルレンダラーを作成して`JTableHeader#setDefaultRenderer(...)`で設定
+-- `JButton#setHorizontalTextPosition(LEFT)`を設定してソートアイコンをテキストの右側に表示するよう設定
+-- クリック時などのセル描画を`JButton#setForeground(...)`、`JButton#setBackground(...)`ではなく`ButtonModel#setSelected(...)`、`ButtonModel#setPressed(...)`、`ButtonModel#setArmed(...)`で変更
+-- ロールオーバー状態やプレス状態は`TableCellRenderer#getTableCellRendererComponent(...)`内で取得できないので、`JTableHeader`に`MouseListener`、`MouseMotionListener`を追加して現在ロールオーバー状態やプレス状態を描画する列を記憶することで対応
+-- `MotifLookAndFeel`に切り替えると`JTableHeader`のデフォルトカーソルが列幅リサイズカーソルに固定されてしまう場合がある？
+--- `JTable#updateUI()`をオーバーライドし、`JTableHeader#setCursor(Cursor.getDefaultCursor())`を実行して回避
+
+* Reference [#reference]
+- [[JTableのソート>Swing/SortableTable]]
+- [[JTableHeaderのソートアイコンをヘッダセルの左上に表示する>Swing/SortIconLayoutHeaderRenderer]]
+
+* Comment [#comment]
+#comment
+#comment

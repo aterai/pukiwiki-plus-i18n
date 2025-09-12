@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/03/create-week-calendar-in-jlist-and.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`を垂直方向ニュースペーパー・スタイルレイアウトに設定してウィークカレンダーを作成し、これにヒートマップを表示します。
 
 #download(https://drive.google.com/uc?id=1QjS8lhibD62Bltz4Mn3LXAUhBk1b4U1fmg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JList<Contribution> weekList = new JList<Contribution>() {
   @Override public void updateUI() {
@@ -54,7 +54,7 @@ private class ContributionListRenderer implements ListCellRenderer<Contribution>
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、セルが垂直方向の次に水平方向の順で並ぶ「ニュースペーパー・スタイル」レイアウトの`JList`を使用して、`GitHub`で表示されている`Contribution activity`風のヒートマップカレンダーを作成しています。
 
 - `1`列で`1`週間になるよう`JList.VERTICAL_WRAP`スタイルでの行数を`JList#setVisibleRowCount(7)`で指定
@@ -82,7 +82,7 @@ startDate = today.minusWeeks(WEEK_VIEW - 1).minusDays(dow - 1);
 --- 月内の週が`4`列、`5`列になる場合でも月名`JLabel`は`3`列分のみ使用し、空列はガイドグリッドで幅を確保
 --- `27 - 3 + 1`列目以降は`3`列確保できないので月が変わっても月名`JLabel`を表示しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JListで月のカーソルキー移動や、週を跨いた日付を範囲選択が可能なカレンダーを作成する>Swing/CalendarViewList]]
 -- こちらはセルが水平方向の次に垂直方向の順で並ぶ「ニュースペーパー・スタイル」レイアウトの`JList`で月カレンダーを表示
 - [https://harmoniccode.blogspot.jp/2017/10/friday-fun-xlviii-calendar-heatmap.html Harmonic Code: Friday Fun XLVIII - Calendar Heatmap]
@@ -90,6 +90,6 @@ startDate = today.minusWeeks(WEEK_VIEW - 1).minusDays(dow - 1);
 -- `ToolTip`も`GitHub`の`Contribution activity`風に半透明の吹き出しを上側に表示するよう変更
 - [[JListでドットマトリクスLEDデジタル時計を作成する>Swing/DotMatrixLedDigitalClock]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

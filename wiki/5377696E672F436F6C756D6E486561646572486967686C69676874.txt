@@ -8,12 +8,12 @@ pubdate: 2014-12-29T00:02:59+09:00
 description: JTableのセルが選択されている場合、そのセルが存在するカラムヘッダにフォーカスを設定します。
 image: https://lh6.googleusercontent.com/-g01DwekSNRs/VKAYFMHxxEI/AAAAAAAANtw/OwiMQuJ3gQY/s800/ColumnHeaderHighlight.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルが選択されている場合、そのセルが存在するカラムヘッダにフォーカスを設定します。
 
 #download(https://lh6.googleusercontent.com/-g01DwekSNRs/VKAYFMHxxEI/AAAAAAAANtw/OwiMQuJ3gQY/s800/ColumnHeaderHighlight.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ColumnHeaderRenderer implements TableCellRenderer {
   @Override public Component getTableCellRendererComponent(
@@ -28,7 +28,7 @@ class ColumnHeaderRenderer implements TableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTable`のセルが選択されてリードインデックスが存在する(`-1`ではない)場合はフォーカスありで自身を描画するヘッダセルレンダラーを作成し、これを`TableColumn#setHeaderRenderer(...)`ですべてのカラムに設定しています。
 
 - `JTable`内にあるセルの選択状態が変更されても`JTableHeader`の描画には影響しない
@@ -40,9 +40,9 @@ table.getColumnModel().getSelectionModel().addListSelectionListener(e -> {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/TableColumn.html#setHeaderRenderer-javax.swing.table.TableCellRenderer- TableColumn#setHeaderRenderer(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

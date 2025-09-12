@@ -8,12 +8,12 @@ pubdate: 2019-05-20T15:44:11+09:00
 description: JTreeのノードからアイコンやテキストを取得してJToolTipを生成し、それをノードセル上に重ねて表示します。
 image: https://drive.google.com/uc?id=1tZNDwTfyPmQ6OctKkz3Badsbl0DSSO6L1A
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードからアイコンやテキストを取得して`JToolTip`を生成し、それをノードセル上に重ねて表示します。
 
 #download(https://drive.google.com/uc?id=1tZNDwTfyPmQ6OctKkz3Badsbl0DSSO6L1A)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TooltipTree extends JTree {
   protected final JLabel label = new JLabel() {
@@ -74,7 +74,7 @@ class TooltipTree extends JTree {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Draw directly above the cell`
 -- `JTree`のノードセル上に重ねて`JToolTip`を表示
 -- `JTree#getRowBounds(int index)`メソッドで取得した領域上に`JToolTip`を表示する
@@ -88,11 +88,11 @@ class TooltipTree extends JTree {
 -- デフォルト位置に`JToolTip`を表示
 -- [[JTreeのToolTipsを表示>Swing/TreeToolTips]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのToolTipsを表示>Swing/TreeToolTips]]
 - [[JListのセル上にToolTipを表示する>Swing/ToolTipOnCellBounds]]
 - [[JListのセルのToolTipをMouseWheelEventに対応した表示位置に修正>Swing/ToolTipAfterMouseWheelEvent]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

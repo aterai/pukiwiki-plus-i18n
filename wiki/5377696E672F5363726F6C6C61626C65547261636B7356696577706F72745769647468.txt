@@ -8,12 +8,12 @@ pubdate: 2019-04-15T14:10:59+09:00
 description: JTableの幅が一定以下の場合は列幅を維持して水平スクロールバーを表示し、それ以上になる場合は列幅の自動調整を実行してJTableの幅まで拡張するよう設定します。
 image: https://drive.google.com/uc?id=1eCpohELZxCaXX2bowhwY668e4Ww3hn326A
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の幅が一定以下の場合は列幅を維持して水平スクロールバーを表示し、それ以上になる場合は列幅の自動調整を実行して`JTable`の幅まで拡張するよう設定します。
 
 #download(https://drive.google.com/uc?id=1eCpohELZxCaXX2bowhwY668e4Ww3hn326A)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table3 = new JTable(1, 3) {
   @Override public boolean getScrollableTracksViewportWidth() {
@@ -31,7 +31,7 @@ JTable table3 = new JTable(1, 3) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `AUTO_RESIZE_SUBSEQUENT_COLUMNS(Default)`
 -- `JTable`のデフォルト
 -- `JTable`の幅が変更された場合列幅の合計が`JTable`の幅と等しくなるよう各列を均等にサイズ変更
@@ -44,11 +44,11 @@ JTable table3 = new JTable(1, 3) {
 -- `JTable`の幅が一定以上に拡張された場合は列幅の自動調整を実行して列幅の合計が`JTable`の幅と等しくなるよう各列を均等にサイズ変更
 --- 上記のサンプルでは`JTable`の推奨サイズ幅で切り替えるよう設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/Scrollable.html#getScrollableTracksViewportWidth-- Scrollable#getScrollableTracksViewportWidth() (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#getScrollableTracksViewportWidth-- JTable#getScrollableTracksViewportWidth() (Java Platform SE 8)]
 - [https://stackoverflow.com/questions/6104916/how-to-make-jtable-both-autoresize-and-horizontall-scrollable java - How to make JTable both AutoResize and horizontall scrollable? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

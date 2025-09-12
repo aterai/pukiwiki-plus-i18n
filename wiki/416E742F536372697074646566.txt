@@ -6,10 +6,10 @@ description: スクリプト言語(Javascript)を使用して、FTPS(File Transf
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 スクリプト言語(`Javascript`)を使用して、`FTPS`(`File Transfer Protocol over SSL/TLS`)で通信する`Ant`タスクを定義します。
 
-* サンプルコード [#target]
+* Source Code Examples [#target]
 #code{{
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="example" default="ftps" basedir=".">
@@ -23,7 +23,7 @@ description: スクリプト言語(Javascript)を使用して、FTPS(File Transf
     <property name="ssh.inkey" value="${env.SSH_INKEY}" />
     <property name="ssh.in" value="${env.SSH_IN}" />
     <exec executable="openssl" outputproperty="ftp.password" failonerror="true">
-      <arg value="rsautl" />
+      <arg value="pkeyutl" />
       <arg value="-decrypt" />
       <arg value="-inkey" />
       <arg value="${ssh.inkey}" />
@@ -36,7 +36,7 @@ description: スクリプト言語(Javascript)を使用して、FTPS(File Transf
     </fileset>
     <ftp server="${ftp.server}" remotedir="${ftp.remotedir}"
          userid="${ftp.userid}" password="${ftp.password}"
-         passive="yes" verbose="yes">
+         passive="yes" verbose="yes" useFtps="true">
       <fileset refid="ftp.upload.fileset" />
     </ftp>
   </target>
@@ -49,7 +49,7 @@ description: スクリプト言語(Javascript)を使用して、FTPS(File Transf
     <property name="ssh.inkey" value="${env.SSH_INKEY}" />
     <property name="ssh.in" value="${env.SSH_IN}" />
     <exec executable="openssl" outputproperty="ftp.password" failonerror="true">
-      <arg value="rsautl" />
+      <arg value="pkeyutl" />
       <arg value="-decrypt" />
       <arg value="-inkey" />
       <arg value="${ssh.inkey}" />
@@ -120,16 +120,27 @@ description: スクリプト言語(Javascript)を使用して、FTPS(File Transf
 </project>
 }}
 
-* 解説 [#explanation]
-- さくらレンタルサーバのライトプランでは、`scp`や`SFTP`が使用不可だが、`FTPS`は使用可能
-- `Ant`の`ftp`タスクは、`FTPS`に対応していない？
+* Description [#description]
+- さくらレンタルサーバのライトプランでは`scp`や`SFTP`が使用不可だが`FTPS`は使用可能
+- `Ant`の`ftp`タスクは%%`FTPS`に対応していない？%%
+-- `Ant 1.10.13`から`ftp`タスクは`useFtps="true"`が利用可能になった
 - `ftp`タスクが使用する`Apache commons-net`には、`FTPSClient`が用意されているので、代わりにこれを使用するタスクを`Javascript`で作成する
+-- `Java 15`以上では`Nashorn`が削除されたのでこの`ftps`タスクは以下のようなエラーになる
 
-* 参考リンク [#reference]
+#code{{
+Java 15 has removed Nashorn, you must provide an engine for running JavaScript yourself. GraalVM JavaScript currently is
+ the preferred option.
+
+BUILD FAILED
+build.xml:429: Unable to create javax script engine for javascript
+}}
+
+* Reference [#reference]
+- [https://ant.apache.org/manual/Tasks/ftp.html FTP Task]
 - [https://ant.apache.org/manual/Tasks/scriptdef.html Scriptdef Task]
 - [https://github.com/apache/commons-net/blob/master/src/main/java/org/apache/commons/net/examples/ftp/FTPClientExample.java commons-net/FTPClientExample.java at master · apache/commons-net]
 - [https://stackoverflow.com/questions/3145768/transfer-raw-binary-with-apache-commons-net-ftpclient java - Transfer raw binary with apache commons-net FTPClient? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2010/01/make-explorer-like-jtable-file-list.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の文字列以外の場所がクリックされた場合、そのセルが選択されないようにします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUdT6R-SI/AAAAAAAAAmE/AYebcaiE77Y/s800/TableFileList.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // @see SwingUtilities2.pointOutsidePrefSize(...)
 private static Rectangle getCellRect2(JTable table, int row, int col) {
@@ -37,15 +37,15 @@ private static Rectangle getCellRect2(JTable table, int row, int col) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `0`列目の`Name`カラムのセル中にあるアイコンと文字列の上でクリックされた場合のみ、そのセルが選択されるよう設定
 - `JTable.putClientProperty("Table.isFileList", Boolean.TRUE)`を設定して`0`列目の文字列以外がクリックされても選択されないように変更
 -- `Table.isFileList`は`WindowsLookAndFeel`のみ有効？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのセルをエクスプローラ風に表示する>Swing/ExplorerLikeTable]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JTable#columnAtPoint(Point)`メソッドをオーバーライドする方法では、`CPU`が`100%`になってしまうので、クリック、ドラッグした場合だけ、評価するように修正しました。 -- &user(aterai); &new{2007-04-16 (月) 18:46:39};
 - `JTable#getToolTipText(MouseEvent)`メソッドをオーバーライドして、`Name`カラムのセルの余白では、ツールチップも表示しないように変更しました。 -- &user(aterai); &new{2007-04-16 (月) 18:49:02};

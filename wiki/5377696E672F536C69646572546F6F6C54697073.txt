@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2015/10/display-tooltip-while-dragging-jslider.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`のノブをドラッグ中に`ToolTip`でその現在値を表示します。
 
 #download(https://lh6.googleusercontent.com/-RBRHhAqSA3A/UM3gOvnmIOI/AAAAAAAABZM/LdLir_Y4dQc/s800/SliderToolTips.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SliderPopupListener extends MouseAdapter {
   private final JWindow toolTip = new JWindow();
@@ -61,7 +61,7 @@ class SliderPopupListener extends MouseAdapter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、ノブをマウスでドラッグ中の場合のみ値を表示するために、`JToolTip`ではなく`JWindow`を使用しています。
 
 - `JWindow`
@@ -76,11 +76,11 @@ class SliderPopupListener extends MouseAdapter {
 - [[JSliderでクリックした位置にノブをスライド>Swing/JumpToClickedPositionSlider]]を使用してクリック直後にその位置にノブ移動するように設定
 - 垂直スクロールバー(`SwingConstants.VERTICAL)`には未対応
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSliderの上部に現在値を常時表示する>Swing/SliderPaintValue]]
 - [[JSliderでクリックした位置にノブをスライド>Swing/JumpToClickedPositionSlider]]
 - [[JToolTipの表示位置>Swing/ToolTipLocation]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

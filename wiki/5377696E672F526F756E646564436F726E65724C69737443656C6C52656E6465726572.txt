@@ -8,12 +8,12 @@ pubdate: 2024-02-19T03:05:38+09:00
 description: JComboBoxで使用するドロップダウンリストのアイテム選択状態表示をラウンド矩形に変更するListCellRendererを作成します。
 image: https://drive.google.com/uc?id=1rMdApPD-7KgcOs2jLFTbRXqcI_SUe6IR
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`で使用するドロップダウンリストのアイテム選択状態表示をラウンド矩形に変更する`ListCellRenderer`を作成します。
 
 #download(https://drive.google.com/uc?id=1rMdApPD-7KgcOs2jLFTbRXqcI_SUe6IR)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RoundedCornerListCellRenderer<E> implements ListCellRenderer<E> {
   private static final Icon GAP = new GapIcon();
@@ -21,7 +21,8 @@ class RoundedCornerListCellRenderer<E> implements ListCellRenderer<E> {
     @Override protected void paintComponent(Graphics g) {
       if (getIcon() != null) {
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                            RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setPaint(getBackground());
         Rectangle r = SwingUtilities.calculateInnerArea(this, null);
         g2.fill(new RoundRectangle2D.Float(r.x, r.y, r.width, r.height, 10f, 10f));
@@ -33,7 +34,9 @@ class RoundedCornerListCellRenderer<E> implements ListCellRenderer<E> {
     }
   };
 
-  @Override public Component getListCellRendererComponent(JList<? extends E> list, E value, int index, boolean isSelected, boolean cellHasFocus) {
+  @Override public Component getListCellRendererComponent(
+      JList<? extends E> list, E value, int index,
+      boolean isSelected, boolean cellHasFocus) {
     Component c = renderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     if (c instanceof JLabel) {
@@ -67,19 +70,19 @@ class GapIcon implements Icon {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `DefaultListCellRenderer#paintComponent(...)`をオーバーライドしてアイテム選択時(このサンプルでは左余白として使用している`Icon`が設定されている場合)選択状態表示を矩形ではなくラウンド矩形で描画するよう変更
--- `JLabel#setOpaque(false)`で背景を描画しないよう設定し、ラウンド矩形の上にアイテムテキストのみ描画する必要がある
+-- `JLabel#setOpaque(false)`でセルの背景を描画しないよう設定し、ラウンド矩形の上にアイテムテキストのみ描画する必要がある
 -- ラウンド矩形とアイテムのテキストの間隔は空のアイコンと`JLabel#setIconTextGap(...)`で調整
 - `NimbusLookAndFeel`で`SynthComboBoxRenderer`ではなく`DefaultListCellRenderer`を使用すると`JList#getSelectionBackground()`が`DerivedColor`を返すので選択文字色が黒になってしまう？
 -- このサンプルでは`new Color(JList#getSelectionForeground()#getRGB())`と`DerivedColor`を`Color`に変換してレンダラーに渡すことで回避している
 -- [[NimbusLookAndFeelでセル選択色をJListから取得するよう変更する>Swing/RendererUseListColors]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxのドロップダウンリストでの選択背景色を変更する>Swing/ComboBoxSelectionBackground]]
 - [[JComboBoxの文字色を変更する>Swing/ComboBoxForegroundColor]]
 - [[NimbusLookAndFeelでセル選択色をJListから取得するよう変更する>Swing/RendererUseListColors]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

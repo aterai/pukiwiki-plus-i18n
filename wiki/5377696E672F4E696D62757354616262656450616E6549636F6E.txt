@@ -8,12 +8,12 @@ pubdate: 2022-02-28T01:26:03+09:00
 description: NimbusLookAndFeelを設定したJTabbedPaneのタブテキストとアイコンの水平方向の配置方法やその間隔を変更します。
 image: https://drive.google.com/uc?id=18bc9dKdXmMqpLIy13KYlR9rv1CqvtGSq
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`を設定した`JTabbedPane`のタブテキストとアイコンの水平方向の配置方法やその間隔を変更します。
 
 #download(https://drive.google.com/uc?id=18bc9dKdXmMqpLIy13KYlR9rv1CqvtGSq)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // UIManager.put("TabbedPane.textIconGap", 4);
 JTabbedPane tabbedPane0 = new JTabbedPane() {
@@ -26,7 +26,9 @@ JTabbedPane tabbedPane0 = new JTabbedPane() {
     // putClientProperty("Nimbus.Overrides.InheritDefaults", true);
   }
 };
-add(makeTitledPanel("Default addTab(title, icon, c)", initTabbedPane(tabbedPane0)));
+add(makeTitledPanel(
+    "Default addTab(title, icon, c)",
+    initTabbedPane(tabbedPane0)));
 
 JTabbedPane tabbedPane1 = new JTabbedPane() {
   @Override public void insertTab(
@@ -36,10 +38,12 @@ JTabbedPane tabbedPane1 = new JTabbedPane() {
     setTabComponentAt(getTabCount() - 1, label);
   }
 };
-add(makeTitledPanel("TabComponent + JLabel + LEADING", initTabbedPane(tabbedPane1)));
+add(makeTitledPanel(
+    "TabComponent + JLabel + LEADING",
+    initTabbedPane(tabbedPane1)));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default addTab(title, icon, c)`
 -- `JTabbedPane#addTab(title, icon, c)`メソッドでタブテキストとアイコンを追加した場合、`NimbusLookAndFeel`でのデフォルト水平方向配置はテキスト、アイコンの順番になる
 -- `MetalLookAndFeel`や`WindowsLookAndFeel`のデフォルトはアイコン、テキストの順番になる
@@ -51,12 +55,14 @@ add(makeTitledPanel("TabComponent + JLabel + LEADING", initTabbedPane(tabbedPane
 - `TabComponent + JLabel + LEADING`
 -- `new JLabel(title, icon, SwingConstants.LEADING)`などでテキストとアイコンをもつ`JLabel`を作成し、`JTabbedPane#setTabComponentAt(...)`で設定することで`LookAndFeel`に依存せずにタブテキストとアイコンの水平方向配置方法などを使用可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブエリアに余白を設定する>Swing/TabAreaContentMargins]]
 - [[JTabbedPaneで選択されたタブのみタイトルを表示する>Swing/SelectedTabTitleText]]
 - [https://bugs.openjdk.org/browse/JDK-6875229 &#91;JDK-6875229&#93; Wrong placement of icons in JTabbedPane in Nimbus - Java Bug System]
 -- [https://github.com/openjdk/jdk/pull/14596 6875229: Wrong placement of icons in JTabbedPane in Nimbus by prsadhuk · Pull Request #14596 · openjdk/jdk · GitHub]
+-- `Java 22`で修正されて`NimbusLookAndFeel`でもアイコン、テキストの順番になった
+-- `Java 22`以外へバックポートされるかは不明
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

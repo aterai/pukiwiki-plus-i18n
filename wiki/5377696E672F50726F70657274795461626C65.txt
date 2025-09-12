@@ -8,12 +8,12 @@ pubdate: 2014-01-06T00:25:50+09:00
 description: JTableの行ごとにクラスに応じたセルエディタなどを適用することで、プロパティ一覧表を作成します。
 image: https://lh4.googleusercontent.com/-ZueCWsZFbOQ/UslO6WVldNI/AAAAAAAAB9g/53vsd2t0OPo/s800/PropertyTable.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の行ごとにクラスに応じたセルエディタなどを適用することで、プロパティ一覧表を作成します。
 
 #download(https://lh4.googleusercontent.com/-ZueCWsZFbOQ/UslO6WVldNI/AAAAAAAAB9g/53vsd2t0OPo/s800/PropertyTable.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String[] columnNames = {"Type", "Value"};
 Object[][] data = {
@@ -73,7 +73,7 @@ table.setDefaultEditor(Color.class, new ColorEditor());
 table.setDefaultEditor(Date.class, new DateEditor());
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTable#getCellRenderer(...)`、`JTable#getCellEditor(...)`をオーバーライドして実際のモデル値からクラスを取得し、そのクラスに応じて行ごとに使用するセルレンダラー、セルエディタを変更しています。
 
 - セルレンダラー
@@ -92,11 +92,11 @@ table.setDefaultEditor(Date.class, new DateEditor());
 - `JTable#getColumnClass(int)`メソッドの引数は列のみのため、`1`列目の場合は`JTable#getCellEditor(...)`で取得したクラスを返すようにオーバーライド
 -- 参考: [https://stackoverflow.com/questions/1464691/property-list-gui-component-in-swing java - Property list GUI component in Swing - Stack Overflow]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/1464691/property-list-gui-component-in-swing java - Property list GUI component in Swing - Stack Overflow]
 - [[CellEditorをJSpinnerにして日付を変更>Swing/DateCellEditor]]
 - [https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html#TableDialogEditDemo TableDialogEditDemo - Using Swing Components: Examples (The Java™ Tutorials > Creating a GUI with Swing > Using Swing Components)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

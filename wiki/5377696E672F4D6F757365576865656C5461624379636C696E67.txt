@@ -8,12 +8,12 @@ pubdate: 2020-06-15T02:56:24+09:00
 description: JTabbedPaneのタブ選択をマウスホイールの上下回転で変更します。
 image: https://drive.google.com/uc?id=1o0WYONVZxnE60UMRtEN7JBE5NOsbpwTI
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブ選択をマウスホイールの上下回転で変更します。
 
 #download(https://drive.google.com/uc?id=1o0WYONVZxnE60UMRtEN7JBE5NOsbpwTI)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private class TabWheelHandler implements MouseWheelListener {
   @Override public void mouseWheelMoved(MouseWheelEvent e) {
@@ -36,7 +36,7 @@ private class TabWheelHandler implements MouseWheelListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTabbedPane`に上方向のホイール回転で前のタブ、下方向のホイール回転で次のタブを選択する`MouseWheelListener`を追加しています。
 
 - マウスカーソルがタブエリア上にある場合のみホイール回転でタブ選択を変更
@@ -52,10 +52,10 @@ private class TabWheelHandler implements MouseWheelListener {
 --- `WRAP_TAB_LAYOUT`レイアウトでタブ配置位置が`TOP`の`JTabbedPane`の場合、左右カーソルキーでタブ選択は同一ラン内でタブ選択が変更可能(先頭から末尾へのループなどは不可)、上下キーは上下のタブランへの移動になる
 - `scroll tabs`をチェックすると`scrollTabsForwardAction|scrollTabsBackwardAction`アクションを使用してタブ選択は実行せずにタブエリアのスクロールのみホイール回転で実行する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPane間でタブのドラッグ＆ドロップ移動>Swing/DnDExportTabbedPane]]
 - [[JTabbedPaneのTabAreaをスクロール>Swing/ScrollTabToVisible]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

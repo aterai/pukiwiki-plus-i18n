@@ -8,12 +8,12 @@ pubdate: 2006-10-30T12:57:51+09:00
 description: Fontから文字のアウトラインを取得し、その中心をアンカーポイントに設定して回転します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTVtRPTfJI/AAAAAAAAAoE/Qiy0jcMt_l0/s800/TransformedShape.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Font`から文字のアウトラインを取得し、その中心をアンカーポイントに設定して回転します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTVtRPTfJI/AAAAAAAAAoE/Qiy0jcMt_l0/s800/TransformedShape.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class FontRotateAnimation extends JComponent implements ActionListener {
   private final Timer animator;
@@ -65,17 +65,17 @@ class FontRotateAnimation extends JComponent implements ActionListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、対象文字、`Font`、`FontRenderContext`から`TextLayout`を生成し、`TextLayout#getOutline()`メソッドで文字のアウトラインを`Shape`として取得しています。
 
 ----
 - `OpenJDK Corretto-8.212`で実行すると回転中にフォント表示が乱れる件は、[https://github.com/corretto/corretto-8/issues/127 Java2D rendering may break when using soft clipping effects · Issue #127 · corretto/corretto-8]、`8u222`で修正済み %%される予定%%
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/TextLayout.html TextLayout (Java Platform SE 8)]
 - [[TextLayoutでFontのメトリック情報を取得する>Swing/TextLayout]]
 - [[Timerを使用してJPanelにアナログ時計の針を描画する>Swing/AnalogClock]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

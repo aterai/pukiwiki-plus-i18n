@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/12/fade-out-jtabbedpane-tab-title-on.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブ文字列があふれる場合、`…`記号で省略するのではなく、端付近の文字をフェードアウト効果で透明化します。
 
 #download(https://drive.google.com/uc?id=1HfDHTs2CpOVyU6avrOnjFGJrLoyN6veqSg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TextOverflowFadeTabbedPane extends ClippedTitleTabbedPane {
   @Override public void insertTab(
@@ -32,17 +32,17 @@ class TextOverflowFadeTabbedPane extends ClippedTitleTabbedPane {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: デフォルトの`JLabel`を使用してタブタイトル文字列を表示
 -- [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]を使用してタブ幅を等幅にし、あふれは`JLabel`デフォルトの省略記号`…`で置換される
 - 下: `JTabbedPane`のタブタイトル文字列を表示する`JLabel`をフェードアウト効果であふれを表現する`TextOverflowFadeLabel`に変更
 -- `TextOverflowFadeLabel`は[[JLabelで文字列のあふれをフェードアウト効果に変更する>Swing/TextOverflowFadeLabel]]を参照
 -- `TextOverflowFadeLabel`は`Icon`表示などに未対応のため`JTabbedPane#setTabComponentAt(...)`で設定するタブタイトル用のコンポーネントには`Icon`のみ表示する`JLabel`と文字列のみ表示する`TextOverflowFadeLabel`の`2`種類のコンポーネントを`JPanel`に配置して代用
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JLabelで文字列のあふれをフェードアウト効果に変更する>Swing/TextOverflowFadeLabel]]
 - [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

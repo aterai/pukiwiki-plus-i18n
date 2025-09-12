@@ -8,12 +8,12 @@ pubdate: 2009-03-16T13:43:23+09:00
 description: JLabelのアイコンと文字列の位置をテストします。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVPS5wBUI/AAAAAAAAAnU/2hri1cAlfoM/s800/TextPositionAndAlignment.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLabel`のアイコンと文字列の位置をテストします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTVPS5wBUI/AAAAAAAAAnU/2hri1cAlfoM/s800/TextPositionAndAlignment.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JLabel label = new JLabel("Test Test", icon, SwingConstants.CENTER);
 label.setVerticalAlignment(SwingConstants.CENTER);
@@ -22,13 +22,13 @@ label.setHorizontalAlignment(SwingConstants.RIGHT);
 label.setHorizontalTextPosition(SwingConstants.LEFT);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JLabel#setVerticalAlignment(...)`、`JLabel#setVerticalTextPosition(...)`、`JLabel#setHorizontalAlignment(...)`、`JLabel#setHorizontalTextPosition(...)`メソッドを使用して`JLabel`のアイコンと文字列の位置関係を変更しています。
 
 - `AbstractButton`を継承する`JButton`などにもアイコンと文字列の位置を設定する同名のメソッドが存在する
 -- 引数は`SwingConstants`インタフェースで定義された共通の定数が使用可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JLabel.html#setVerticalAlignment-int- JLabel#setVerticalAlignment(int) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JLabel.html#setVerticalTextPosition-int- JLabel#setVerticalTextPosition(int) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JLabel.html#setHorizontalAlignment-int- JLabel#setHorizontalAlignment(int) (Java Platform SE 8)]
@@ -38,6 +38,6 @@ label.setHorizontalTextPosition(SwingConstants.LEFT);
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#setHorizontalAlignment-int- AbstractButton#setHorizontalAlignment(int) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#setHorizontalTextPosition-int- AbstractButton#setHorizontalTextPosition(int) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

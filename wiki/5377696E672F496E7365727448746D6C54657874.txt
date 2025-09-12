@@ -8,12 +8,12 @@ pubdate: 2014-04-28T15:00:16+09:00
 description: JEditorPaneのHTMLDocumentからtable要素を取得し、その子要素としてtr要素などを追加します。
 image: https://lh5.googleusercontent.com/-hU9bkPgb4Q8/U10bg5XoDfI/AAAAAAAACEI/BJrmelBz93M/s800/InsertHtmlText.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`の`HTMLDocument`から`table`要素を取得し、その子要素として`tr`要素などを追加します。
 
 #download(https://lh5.googleusercontent.com/-hU9bkPgb4Q8/U10bg5XoDfI/AAAAAAAACEI/BJrmelBz93M/s800/InsertHtmlText.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String HTML_TEXT = "<html><body>head<table id='log' border='1'></table>tail</body></html>";
 HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
@@ -33,17 +33,17 @@ try {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `insertAfterStart`
 -- `table`要素の開始タグの直後に子要素として`tr`要素を追加
 -- 挿入後のスクロールで表示が乱れる場合がある？
 - `insertBeforeEnd`
 -- `table`要素の終了タグの直前に子要素として`tr`要素を追加
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.coma/javase/jp/8/docs/api/javax/swing/text/html/HTMLDocument.html#insertAfterStart-javax.swing.text.Element-java.lang.String- HTMLDocument#insertAfterStart(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - メモ: [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/HTMLEditorKit.html#insertHTML-javax.swing.text.html.HTMLDocument-int-java.lang.String-int-int-javax.swing.text.html.HTML.Tag- HTMLEditorKit.html#insertHTML(HTMLDocument, int, String, int, int, HTML.Tag) (Java Platform SE 8)]よりは簡単？速度的にどちらが速いかなどは未検証。 -- &user(aterai); &new{2014-04-28 (月) 15:00:16};
 

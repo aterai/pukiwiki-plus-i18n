@@ -8,12 +8,12 @@ pubdate: 2021-08-09T13:56:12+09:00
 description: JMenuをクリックして開くポップアップウィンドウのレイアウトにGridLayoutを変更してJMenuItemなどを2列で表示します。
 image: https://drive.google.com/uc?id=1WUozvYw68yZx1vvlEWPNmIrTO_-0wA6A
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenu`をクリックして開くポップアップウィンドウのレイアウトを`GridLayout`に変更して`JMenuItem`などを`2`列で表示します。
 
 #download(https://drive.google.com/uc?id=1WUozvYw68yZx1vvlEWPNmIrTO_-0wA6A)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JMenu menu2 = new JMenu("LookAndFeel");
 // = LookAndFeelUtil.createLookAndFeelMenu();
@@ -25,7 +25,7 @@ menu2.add("Windows");
 menu2.add("Windows Classic");
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JMenu#getPopupMenu()`メソッドでポップアップウィンドウ(`JPopupMenu`)を取得
 - `JPopupMenu#setLayout(new GridLayout(0, 2, 2, 0));`でレイアウトをデフォルトの`BoxLayout`から`2`列の`GridLayout`に変更し、`JMenuItem`や`JRadioButtonMenuItem`などの表示を`2`列に変更
 -- [[JPopupMenuをボタンの長押しで表示>Swing/PressAndHoldButton]]
@@ -62,11 +62,11 @@ class ColumnRulesBorder implements Border {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JPopupMenuをボタンの長押しで表示>Swing/PressAndHoldButton]]
 - [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
 - [https://stackoverflow.com/questions/7913938/java-swing-how-to-align-menu-items-in-rows-and-columns Java swing: how to align menu items in rows and columns? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

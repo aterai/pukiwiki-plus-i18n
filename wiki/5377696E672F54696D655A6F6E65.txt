@@ -8,12 +8,12 @@ pubdate: 2004-04-19T10:36:59+09:00
 description: TimeZoneなどを使って、日付の表示を変換します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVW5Ljb9I/AAAAAAAAAng/mMDH4E_v9ZQ/s800/TimeZone.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TimeZone`などを使って、日付の表示を変換します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTVW5Ljb9I/AAAAAAAAAng/mMDH4E_v9ZQ/s800/TimeZone.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.US);
 DateFormat df = DateFormat.getDateTimeInstance();
@@ -32,7 +32,7 @@ parseButton.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルは、`Locale.US`の日付文字列を`SimpleDateFormat#parse(...)`メソッドを使用して一旦`Date`に変換し、`DateFormat#format(...)`メソッドでデフォルトロケール`TimeZone`のフォーマットスタイルに変換しています。
 
 - `dateFormat.setTimeZone(TimeZone.getTimeZone("JST"))`のような`3`文字のタイムゾーン`ID`の使用は非推奨
@@ -47,10 +47,10 @@ System.out.println("pubdate: " + format.format(new Date()));
 // pubdate: 2014-09-08T00:05:45+09:00
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/util/TimeZone.html TimeZone (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/text/SimpleDateFormat.html SimpleDateFormat (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

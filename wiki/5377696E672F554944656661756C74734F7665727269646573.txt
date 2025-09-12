@@ -8,12 +8,12 @@ pubdate: 2013-05-27T01:49:34+09:00
 description: NimbusLookAndFeelの外観をUIDefaultsを使って部分的に変更します。
 image: https://lh4.googleusercontent.com/-iuOm0KmZLK4/UaIp6IGdL4I/AAAAAAAABso/TUvbvWNNQuI/s800/UIDefaultsOverrides.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`の外観を`UIDefaults`を使って部分的に変更します。
 
 #download(https://lh4.googleusercontent.com/-iuOm0KmZLK4/UaIp6IGdL4I/AAAAAAAABso/TUvbvWNNQuI/s800/UIDefaultsOverrides.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIDefaults d = new UIDefaults();
 d.put("TextArea.borderPainter", new Painter<JComponent>() {
@@ -26,7 +26,7 @@ r.putClientProperty("Nimbus.Overrides", d);
 r.putClientProperty("Nimbus.Overrides.InheritDefaults", false);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JCheckBoxMenuItem`
 -- `CheckBoxMenuItem[Enabled].checkIconPainter`、`CheckBoxMenuItem[MouseOver].checkIconPainter`、`CheckBoxMenuItem[Enabled+Selected].checkIconPainter`、`CheckBoxMenuItem[MouseOver+Selected].checkIconPainter`の`Painter`(これらの状態を独自に描画)を置き換えた`UIDefaults`を作成し、`putClientProperty("Nimbus.Overrides", d)`を使用して上書き
 - `JTextArea`
@@ -46,12 +46,12 @@ d.put("TextArea.NotInScrollPane", new State("NotInScrollPane") {
 r.putClientProperty("Nimbus.Overrides", d);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
 -- `NimbusLookAndFeel`のプロパティ一覧
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/nimbus/package-summary.html javax.swing.plaf.nimbus (Java Platform SE 8)]
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/nimbus/NimbusStyle.html NimbusStyle (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

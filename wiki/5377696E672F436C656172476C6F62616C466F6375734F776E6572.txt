@@ -8,25 +8,25 @@ pubdate: 2010-01-25T13:19:35+09:00
 description: GlobalFocusをクリアして、フォーカスをもつコンポーネントがない状態に戻します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTJA-Nc1vI/AAAAAAAAATs/mH0hhS2R1n8/s800/ClearGlobalFocusOwner.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `GlobalFocus`をクリアして、フォーカスをもつコンポーネントがない状態に戻します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTJA-Nc1vI/AAAAAAAAATs/mH0hhS2R1n8/s800/ClearGlobalFocusOwner.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JFrame`の余白をマウスでクリックしたときに`KeyboardFocusManager#clearGlobalFocusOwner()`メソッドを使用して`GlobalFocus`をクリアしています。
 
 - `JDK1.8.0`以降の場合は[https://docs.oracle.com/javase/jp/8/docs/api/java/awt/KeyboardFocusManager.html#clearFocusOwner-- KeyboardFocusManager#clearFocusOwner()]も使用可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/KeyboardFocusManager.html#clearGlobalFocusOwner-- KeyboardFocusManager#clearGlobalFocusOwner() (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/KeyboardFocusManager.html#clearFocusOwner-- KeyboardFocusManager#clearFocusOwner() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

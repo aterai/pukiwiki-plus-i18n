@@ -8,12 +8,12 @@ pubdate: 2014-10-13T03:04:26+09:00
 description: JTableのモデルをXMLEncoderとXMLDecoderを使って、XMLファイルで保存、復元します。
 image: https://lh4.googleusercontent.com/-QHfYzslScHI/VDq8gaSQpBI/AAAAAAAACO4/AI-q_jZ-qpA/s800/PersistenceDelegate.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のモデルを`XMLEncoder`と`XMLDecoder`を使って、`XML`ファイルで保存、復元します。
 
 #download(https://lh4.googleusercontent.com/-QHfYzslScHI/VDq8gaSQpBI/AAAAAAAACO4/AI-q_jZ-qpA/s800/PersistenceDelegate.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DefaultTableModelPersistenceDelegate extends DefaultPersistenceDelegate {
   @Override protected void initialize(
@@ -30,7 +30,7 @@ class DefaultTableModelPersistenceDelegate extends DefaultPersistenceDelegate {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `XMLEncoder`ボタンをクリック
 -- `XMLEncoder#setPersistenceDelegate(...)`で`DefaultTableModel`の書き出しを自作の`DefaultTableModelPersistenceDelegate`に設定
 -- テンポラリディレクトリに`XML`ファイルの書き出しと`JTextArea`にその`XML`ファイルの読み込み
@@ -70,7 +70,7 @@ try (XMLDecoder xd = new XMLDecoder(new BufferedInputStream(
 - `clear`ボタンをクリック
 -- 初期状態の`DefaultTableModel`を`JTable`に設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://web.archive.org/web/20090806075316/http://java.sun.com/products/jfc/tsc/articles/persistence4/ Using XMLEncoder (web.archive.org)]
 -- [http://www.oracle.com/technetwork/java/persistence4-140124.html Using XMLEncoder]
 - [[JTable Inhalte speichern – Byte-Welt Wiki>http://wiki.byte-welt.net/wiki/JTable_speichern]]
@@ -78,6 +78,6 @@ try (XMLDecoder xd = new XMLDecoder(new BufferedInputStream(
 - [[JTableのSortKeyを永続化し、ソート状態の保存と復元を行う>Swing/SortKeyPersistence]]
 - [[TableColumnModelをXMLファイルで保存、復元する>Swing/ColumnModelPersistence]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

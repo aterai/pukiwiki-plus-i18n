@@ -1,0 +1,87 @@
+---
+category: swing
+folder: FilterPopupMenuItems
+title: JPopupMenuに追加したJTextFieldを使用してJMenuItemの表示をフィルタリングする
+tags: [JPopupMenu, JMenu, JMenuItem, JTextField, DocumentListener]
+author: aterai
+pubdate: 2025-09-08T01:34:51+09:00
+description: JPopupMenuの先頭にJTextFieldを配置し入力された正規表現パターンを使用して、同じくJPopupMenu内に配置されたJMenuItemの表示状態をフィルタリングします。
+image: https://drive.google.com/uc?id=1azsXn2VAy9skJaGxbQL6qDiwBZiMz7Nb
+---
+* Summary [#summary]
+`JPopupMenu`の先頭に`JTextField`を配置し入力された正規表現パターンを使用して、同じく`JPopupMenu`内に配置された`JMenuItem`の表示状態をフィルタリングします。
+
+#download(https://drive.google.com/uc?id=1azsXn2VAy9skJaGxbQL6qDiwBZiMz7Nb)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+private static JMenu makeRecentMenu() {
+  JMenu menu = new JMenu("Recent Files");
+  JTextField field = new JTextField(20);
+  menu.add(field);
+  field.getDocument().addDocumentListener(new DocumentListener() {
+    @Override public void insertUpdate(DocumentEvent e) {
+      filter(menu, field);
+    }
+
+    @Override public void removeUpdate(DocumentEvent e) {
+      filter(menu, field);
+    }
+
+    @Override public void changedUpdate(DocumentEvent e) {
+      /* not needed */
+    }
+  });
+  menu.add("aa001.txt");
+  menu.add("aa002.log");
+  menu.add("aabb33.txt");
+  menu.add("abc4.md");
+  menu.add("b5.markdown");
+  menu.add("ccc6.txt");
+  return menu;
+}
+
+private static Pattern getPattern(JTextField field) {
+  String regex = field.getText();
+  Pattern pattern = null;
+  if (Objects.nonNull(regex) && !regex.isEmpty()) {
+    try {
+      pattern = Pattern.compile(regex);
+    } catch (PatternSyntaxException ex) {
+      UIManager.getLookAndFeel().provideErrorFeedback(field);
+    }
+  }
+  return pattern;
+}
+
+private static void filter(JMenu menu, JTextField field) {
+  Pattern ptn = getPattern(field);
+  Stream.of(menu.getPopupMenu().getSubElements())
+      .filter(JMenuItem.class::isInstance)
+      .map(JMenuItem.class::cast)
+      .forEach(mi ->
+          mi.setVisible(ptn == null || ptn.matcher(mi.getText()).find()));
+  menu.getPopupMenu().pack();
+  EventQueue.invokeLater(field::requestFocusInWindow);
+}
+}}
+
+* Description [#description]
+- `JMenu`(`JMenu`が使用する`JPopupMenu`)に正規表現`Pattern`を入力するための`JTextField`を挿入
+-- [[JPopupMenuのMenuItemとしてJSpinnerを配置する>Swing/SpinnerMenuItem]]のように`JMenuItem`の子要素として`JSpinner`ではなく`JTextField`を使用すると`JTextField`にフォーカス移動不可となって編集できない？ → 調査中
+- `JTextField`の編集を`DocumentListener`で取得し、入力された正規表現`Pattern`にマッチするタイトルの`JMenuItem`を検索する
+-- `JMenu#getPopupMenu()#getSubElements()`で`JTextField`を除く`MenuElement`一覧を取得して`JMenuItem`のタイトルを調査
+--- マッチする場合は`JMenuItem#setVisible(true)`で可視化、それ以外を`JMenuItem#setVisible(false)`で非表示化
+--- [[JMenuBarからあふれたJMenuをオーバーフローメニューに移動する>Swing/MenuBarOverflowMenu]]のように`JMenuItem`を移動(追加、削除)する必要はないので、`JMenuItem#setVisible(...)`での表示・非表示の切り替えでフィルタリングを実行している
+- 表示される`JMenuItem`の数が変化するので、`JMenu#getPopupMenu()#pack()`を実行して親`JPopupMenu`のサイズを更新
+-- `pack()`後に`EventQueue.invokeLater(field::requestFocusInWindow)`を実行して`JTextField`側にフォーカスを戻す
+
+* Reference [#reference]
+- [[JListのアイテムをフィルタリングして表示>Swing/FilterListItems]]
+- [[JPopupMenuに追加したJSliderの表示・非表示をチェックボックスで切り替える>Swing/SliderMenuItem]]
+- [[JPopupMenuのMenuItemとしてJSpinnerを配置する>Swing/SpinnerMenuItem]]
+- [[JMenuBarからあふれたJMenuをオーバーフローメニューに移動する>Swing/MenuBarOverflowMenu]]
+
+* Comment [#comment]
+#comment
+#comment

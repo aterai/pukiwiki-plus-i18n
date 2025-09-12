@@ -8,12 +8,12 @@ pubdate: 2012-01-09T13:16:40+09:00
 description: TextLayoutからFontのAscent、Descent、Leadingなどのメトリック情報を取得して描画します。
 image: https://lh4.googleusercontent.com/--iErOVV0RYk/TwpnJGdl4OI/AAAAAAAABHs/pHLpQWbpTWg/s800/TextLayout.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TextLayout`から`Font`の`Ascent`、`Descent`、`Leading`などのメトリック情報を取得して描画します。
 
 #download(https://lh4.googleusercontent.com/--iErOVV0RYk/TwpnJGdl4OI/AAAAAAAABHs/pHLpQWbpTWg/s800/TextLayout.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String text = "abcdefthijklmnopqrstuvwxyz";
 Font font = new Font(Font.SERIF, Font.ITALIC, 64);
@@ -48,7 +48,7 @@ TextLayout tl = new TextLayout(text, font, frc);
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、上の文字列は`TextLayout`を使用して、下は`GlyphVector` + `LineMetrics`で`Font`のメトリック情報を取得してガイドラインを描画しています。
 
 - `Color.RED`
@@ -62,10 +62,10 @@ TextLayout tl = new TextLayout(text, font, frc);
 - `Color.CYAN`: `x-height`
 -- ベースライン - 小文字`x`の高さ
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/TextLayout.html TextLayout (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/tutorial/2d/text/index.html Lesson: Working with Text APIs (The Java™ Tutorials > 2D Graphics)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

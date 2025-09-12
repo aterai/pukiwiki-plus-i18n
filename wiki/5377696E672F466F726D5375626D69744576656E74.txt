@@ -8,12 +8,12 @@ pubdate: 2019-01-28T16:21:00+09:00
 description: JEditorPaneに表示されたフォームの送信データを取得し、パーセントエンコーディングされた文字列をデコードします。
 image: https://drive.google.com/uc?id=1yNsrqYvmMYj9LVvDEEoyCpo-jKwfVcylKg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`に表示されたフォームの送信データを取得し、パーセントエンコーディングされた文字列をデコードします。
 
 #download(https://drive.google.com/uc?id=1yNsrqYvmMYj9LVvDEEoyCpo-jKwfVcylKg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JEditorPane editor = new JEditorPane();
 HTMLEditorKit kit = new HTMLEditorKit();
@@ -42,7 +42,7 @@ editor.addHyperlinkListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JEditorPane`に表示されたフォームの送信データを`HyperlinkListener`で取得し、`application/x-www-form-urlencoded`形式でパーセントエンコーディングで符号化された文字列をデコードするテストを行っています。
 
 - `HTMLEditorKit#setAutoFormSubmission(false)`で`html`フォームの送信を自動的に処理ではなく、`FormSubmitEvent`がトリガーされるように設定して`HyperlinkListener`でデータを取得
@@ -52,7 +52,7 @@ editor.addHyperlinkListener(e -> {
 -- このサンプルではファイルエンコーディングを`UTF-8`に設定しているが、日本語Windows環境のデフォルトでは`Shift_JIS`(`windows-31j`)のためその範囲外の文字は文字化けする
 - `application/x-www-form-urlencoded`形式でパーセントエンコーディングされているので半角スペースは`%20`ではなく`+`になっている
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/FormSubmitEvent.html FormSubmitEvent (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/HTMLEditorKit.html#setAutoFormSubmission-boolean- HTMLEditorKit#setAutoFormSubmission(boolean) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/net/URLDecoder.html URLDecoder (Java Platform SE 8)]
@@ -60,6 +60,6 @@ editor.addHyperlinkListener(e -> {
 - [https://stackoverflow.com/questions/27131420/making-hyperlinklistener-work-with-jeditorpane-nullpointerexception java - Making HyperlinkListener Work with JeditorPane NullPointerException - Stack Overflow]
 - [https://pieceofnostalgia-bd472.firebaseapp.com/java/jeditorpane_submit.html submitイベントでフォームの入力内容を取得]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

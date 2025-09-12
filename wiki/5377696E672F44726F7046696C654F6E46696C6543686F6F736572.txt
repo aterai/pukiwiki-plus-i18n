@@ -8,12 +8,12 @@ pubdate: 2019-10-21T16:31:38+09:00
 description: JFileChooserにTransferHandlerを設定してFileやDirectoryをドロップ可能にします。
 image: https://drive.google.com/uc?id=1NA-vGQgCHGvMjG9nrxYwpTVuYCIgeFFZ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`に`TransferHandler`を設定して`File`や`Directory`をドロップ可能にします。
 
 #download(https://drive.google.com/uc?id=1NA-vGQgCHGvMjG9nrxYwpTVuYCIgeFFZ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 chooser.setTransferHandler(new FileChooserTransferHandler());
 // ...
@@ -27,7 +27,8 @@ class FileChooserTransferHandler extends TransferHandler {
   @Override public boolean importData(TransferSupport support) {
     try {
       JFileChooser fc = (JFileChooser) support.getComponent();
-      List<?> list = (List<?>) support.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+      List<?> list = (List<?>) support.getTransferable()
+          .getTransferData(DataFlavor.javaFileListFlavor);
       File[] files = new File[list.size()];
       for (int i = 0; i < list.size(); i++) {
         files[i] = (File) list.get(i);
@@ -50,7 +51,7 @@ class FileChooserTransferHandler extends TransferHandler {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `JFileChooser`の`JTextField`に文字列はドロップ可能だがファイルはドロップ不可
 - `TransferHandler`
@@ -83,9 +84,9 @@ class FileChooserTransferHandler extends TransferHandler {
   }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFileChooserを開いた時のカレントディレクトリを設定する>Swing/FileChooserCurrentDirectory]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2018-04-30T18:00:57+09:00
 description: Componentを3列配置し、中央は常に幅固定、左右は均等に水平引き伸ばしを行うLayoutManagerを作成します。
 image: https://drive.google.com/uc?id=1fYOmz2pJNyjhyvSGvLkvh-G1PQtL3_U2Kg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Component`を`3`列配置し、中央は常に幅固定、左右は均等に水平引き伸ばしを行う`LayoutManager`を作成します。
 
 #download(https://drive.google.com/uc?id=1fYOmz2pJNyjhyvSGvLkvh-G1PQtL3_U2Kg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // SpringLayout
 SpringLayout layout = new SpringLayout();
@@ -85,7 +85,7 @@ panel.add(box, BorderLayout.CENTER);
 panel.add(rsp, BorderLayout.EAST);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `SpringLayout`
 -- 中央の`JButton`の入った`Box`は以下のように常に推奨サイズの固定サイズになるような制約を設定
 #code{{
@@ -113,10 +113,10 @@ centerConstraints.setHeight(height);
 -- デフォルトの`BorderLayout`は`3`列レイアウトの場合、左右は常に推奨サイズの幅で固定、中央は水平・垂直両方向に引き伸ばし
 -- 上下配置や`ComponentOrientation`などは考慮していない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JListからの大量アイテム削除を高速化する>Swing/FastRemoveOfListItems]]
 - [https://stackoverflow.com/questions/49978526/java-swing-how-to-make-jlists-resize-properly-when-gridbaglayout-column-is-set/50009817#50009817 Java Swing: How to make JLists resize properly when GridBagLayout column is set to grow, ignoring the JList's item widths? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

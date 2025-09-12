@@ -8,12 +8,12 @@ pubdate: 2016-10-17T00:34:37+09:00
 description: NimbusLookAndFeelを使用しているJFileChooserを開いた場合、ファイル名表示用のJTextFieldに初期フォーカスを設定します。
 image: https://drive.google.com/uc?id=1uW5FnfU0V3Yi9iBBMFV7uoN8M9IA2sskmg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`を使用している`JFileChooser`を開いた場合、ファイル名表示用の`JTextField`に初期フォーカスを設定します。
 
 #download(https://drive.google.com/uc?id=1uW5FnfU0V3Yi9iBBMFV7uoN8M9IA2sskmg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 fileChooser.setSelectedFile(new File(field.getText().trim()));
 if (r2.isSelected()) {
@@ -43,7 +43,7 @@ private static Optional<Component> findFileNameTextField(JFileChooser fileChoose
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`NimbusLookAndFeel`(`SynthLookAndFeel`)を使用している場合、`JFileChooser`を開いたときの初期フォーカスは、フォルダ選択用の`JComboBox`になっているので、これをファイル名表示用の`JTextField`に変更するテストを行っています。
 
 - `JFileChooser`を開いた後でフォーカスを移動するため`EventQueue.invokeLater(...)`を使用
@@ -101,9 +101,9 @@ fileChooser = new JFileChooser() {
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Windowを開いたときのフォーカスを指定>Swing/DefaultFocus]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

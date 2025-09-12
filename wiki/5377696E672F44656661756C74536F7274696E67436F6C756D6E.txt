@@ -8,12 +8,12 @@ pubdate: 2011-06-06T18:40:01+09:00
 description: JTableがデフォルトでソートする列とその方向を設定します。
 image: https://lh5.googleusercontent.com/-qvzRq_TxwSg/Texuvm22ELI/AAAAAAAAA84/DhfjZ3TEATk/s800/DefaultSortingColumn.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`がデフォルトでソートする列とその方向を設定します。
 
 #download(https://lh5.googleusercontent.com/-qvzRq_TxwSg/Texuvm22ELI/AAAAAAAAA84/DhfjZ3TEATk/s800/DefaultSortingColumn.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(model);
 table.setAutoCreateRowSorter(true);
@@ -23,7 +23,7 @@ RowSorter.SortKey key = new RowSorter.SortKey(index, SortOrder.DESCENDING);
 table.getRowSorter().setSortKeys(Collections.singletonList(key));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、マウスでヘッダをクリックすることなく、起動後の初期状態で`JTable`のソートを実行する列を指定しています。
 
 - `RowSorter#setSortKeys(...)`を使用するので列のソート順序が指定可能
@@ -32,10 +32,10 @@ table.getRowSorter().setSortKeys(Collections.singletonList(key));
 - `RowSorter#setSortKeys(null)`でソート無し状態になる
 -- [[TableRowSorterのSortKeysをクリアする>Swing/ClearSortingState]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/RowSorter.html#setSortKeys-java.util.List- RowSorter#setSortKeys(...) (Java Platform SE 8)]
 - [[TableRowSorterのSortKeysをクリアする>Swing/ClearSortingState]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

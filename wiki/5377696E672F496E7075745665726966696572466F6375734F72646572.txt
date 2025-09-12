@@ -8,12 +8,12 @@ pubdate: 2016-08-15T02:09:37+09:00
 description: InputVerifierを設定したコンポーネントの入力の検証とフォーカス移動イベントの順番をテストします。
 image: https://drive.google.com/uc?id=19ojUQl6rF4StwHNdQO_xPRlqnkOognwULw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `InputVerifier`を設定したコンポーネントの入力の検証とフォーカス移動イベントの順番をテストします。
 
 #download(https://drive.google.com/uc?id=19ojUQl6rF4StwHNdQO_xPRlqnkOognwULw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextField textField = new JTextField(24);
 textField.setInputVerifier(new InputVerifier() {
@@ -55,7 +55,7 @@ setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
 setFocusCycleRoot(true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、パネル内の`JTextField`がすべて入力検証に成功した場合、`JButton`をクリック可能に更新する`UI`のテストを行っています。
 
 - KBD{Tab}キーを押してフォーカス移動するときすべての`JTextField`がすべて入力検証に成功する場合は、`JButton`をクリック可能に更新、`JButton`にフォーカスを移動、直後にKBD{Space}キーなどでクリックしたい
@@ -65,9 +65,9 @@ setFocusCycleRoot(true);
 -- `InputVerifier#shouldYieldFocus(...)`や`FocusListener#focusLost(...)`内で`EventQueue.invokeLater(() -> button.requestFocusInWindow() );`などを実行し、一番後でフォーカスを強制的に`JButton`に移動する
 -- または`LayoutFocusTraversalPolicy#getComponentAfter(...)`をオーバーライドして事前に`JButton#setEnabled(true)`を実行する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/InputVerifier.html#shouldYieldFocus-javax.swing.JComponent- InputVerifier#shouldYieldFocus(JComponent) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

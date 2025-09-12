@@ -8,12 +8,12 @@ pubdate: 2004-08-16T00:28:04+09:00
 description: AudioSystemを使って、AudioInputStream、Clip(Line)などを作成取得し、wavファイルを演奏します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTj2hYTjI/AAAAAAAAAko/8dQ-XleMZBc/s800/Sound.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `AudioSystem`を使って、`AudioInputStream`、`Clip`(`Line`)などを作成取得し、`wav`ファイルを演奏します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTj2hYTjI/AAAAAAAAAko/8dQ-XleMZBc/s800/Sound.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 URL url = getClass().getResource("notice1.wav");
 try (AudioInputStream sound = AudioSystem.getAudioInputStream(url);
@@ -34,14 +34,14 @@ try (AudioInputStream sound = AudioSystem.getAudioInputStream(url);
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `AudioSystem`を使用すれば、`WAVE`、`AU`、`AIFF`、`SND`形式のサウンドファイルが演奏可能です。
 
 - `AudioInputStream`や`Clip`を`AutoCloseable`で自動的に開放するため`try-with-resources`ブロックで作成
 - 演奏開始後に`SecondaryLoop`で現在のスレッドをブロックし新しいセカンダリイベントループで演奏を継続
 - 演奏終了イベントを`LineListener`で受け取るとセカンダリイベントループを終了して現在のスレッドに戻り`close()`が自動的に実行される
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/sound/sampled/AudioSystem.html AudioSystem (Java Platform SE 8)]
 - %%"taitai studio" フリーWav素材集%%
 -- %%上記のサイトの`wav`ファイルをサンプルとして利用しています。%% サイトが移転しているようなので、別の素材を探す予定
@@ -49,7 +49,7 @@ try (AudioInputStream sound = AudioSystem.getAudioInputStream(url);
 - [[Beep音を鳴らす>Swing/Beep]]
 - [[AuditoryCuesでイベント音を設定する>Swing/AuditoryCues]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - こんなところからすみません。こちらのシステムの応用(というほどすごいものでもありませんが)を作ってもよろしいでしょうか。 -- &user(学生S); &new{2012-10-15 (月) 17:29:22};
 - 使用したい箇所は、ソースプログラムの`loadAndPlayAudio`というところになります。 -- &user(学生S); &new{2012-10-15 (月) 17:34:40};

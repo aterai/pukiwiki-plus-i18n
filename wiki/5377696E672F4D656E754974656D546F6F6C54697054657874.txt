@@ -8,12 +8,12 @@ pubdate: 2023-06-26T02:57:21+09:00
 description: JMenuItemやJMenu、JCheckBoxMenuItemなどのMenuElementにToolTipテキストを設定します。
 image: https://drive.google.com/uc?id=1bQbmZoUzxYPFYxgUeEql4ont7_e_w2o5
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenuItem`や`JMenu`、`JCheckBoxMenuItem`などの`MenuElement`に`ToolTip`テキストを設定します。
 
 #download(https://drive.google.com/uc?id=1bQbmZoUzxYPFYxgUeEql4ont7_e_w2o5)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static JMenuBar createMenuBar() {
   JMenu menu = new JMenu("File");
@@ -47,18 +47,16 @@ private static JMenuBar createMenuBar() {
 }
 }}
 
-* 解説 [#explanation]
-- `JMenuItem`、`JCheckBoxMenuItem`、`JRadioButtonMenuItem`、`JMenuBar`
--- `JComponent#setToolTipText(...)`で`ToolTip`テキストを設定可能
-- `JMenu`
--- `JComponent#setToolTipText(...)`で`ToolTip`テキストを設定可能
--- `JMenu(Default)`: `JMenu`をクリックするまで`JPopupMenu`が表示されない`MotifLookAndFeel`以外では`JMenu`の`JPopupMenu`表示のタイミングによってその背後に`JToolTip`が表示される場合がある
--- `JMenu#getToolTipText()`: `JMenu#getToolTipText()`をオーバーライドして`JMenu`の`JPopupMenu`が表示されている場合は`ToolTip`テキストを表示しないよう設定
---- 別メニューの`ToolTip`テキストが表示されている状態でこの`JMenu`上にマウスカーソルを移動すると`JPopupMenu`と`JToolTip`の両方が表示状態になる場合がある
+* Description [#description]
+- `ToolTip`テキストを設定した`JMenu(Default)`:
+-- `JMenu`をクリックするまで`JPopupMenu`が表示されない`MotifLookAndFeel`以外では`JMenu`の`JPopupMenu`表示のタイミングによってその背後に`JToolTip`が表示される場合がある
+- `JMenu#getToolTipText()`をオーバーライドした`JMenu`:
+-- `JMenu#getToolTipText()`をオーバーライドして`JMenu`の`JPopupMenu`が表示されている場合は`ToolTip`テキストを表示しないよう設定
+-- 別メニューの`ToolTip`テキストが表示されている状態でこの`JMenu`上にマウスカーソルを移動すると`JPopupMenu`と`JToolTip`の両方が表示状態になる場合がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JMenuの領域内にマウスカーソルでポップアップメニューを表示する>Swing/PopupWithoutClickOnMenu]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

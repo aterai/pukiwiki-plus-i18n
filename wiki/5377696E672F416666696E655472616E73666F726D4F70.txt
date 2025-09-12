@@ -8,12 +8,12 @@ pubdate: 2010-01-11T23:59:17+09:00
 description: AffineTransformOpなどを使って、画像の上下反転、左右反転を行います。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHczsN2NI/AAAAAAAAARM/D8gpa0-KfEI/s800/AffineTransformOp.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `AffineTransformOp`などを使って、画像の上下反転、左右反転を行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHczsN2NI/AAAAAAAAARM/D8gpa0-KfEI/s800/AffineTransformOp.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String path = "example/test.jpg";
 ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -36,7 +36,7 @@ AffineTransformOp atOp = new AffineTransformOp(at, null);
 g.drawImage(atOp.filter(img, null), 0, 0, w, h, this);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`AffineTransformOp#filter(...)`メソッドを使用して左右反転した`BufferedImage`を生成しています。
 
 - 上下反転の場合:
@@ -48,10 +48,10 @@ at.translate(0, -h);
 g2.drawImage(img , at, this);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/geom/AffineTransform.html#getScaleInstance-double-double- AffineTransform#getScaleInstance(...) (Java Platform SE 8)]
 - [[Shapeの反転>Swing/HorizontalFlip]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

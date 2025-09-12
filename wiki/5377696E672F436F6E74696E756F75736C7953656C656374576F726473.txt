@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2019/11/change-word-selection-behavior-by.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`の`Caret`を変更してマウスのダブルクリックで単語を選択したあとの継続ドラッグで次の単語まで選択範囲を拡張するよう変更します。
 
 #download(https://drive.google.com/uc?id=1O1N1ZcEKZi7XbOU5jOojctlGn3hY5MJ7)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SelectWordCaret extends DefaultCaret {
   private SelectingMode selectingMode = SelectingMode.CHAR;
@@ -84,7 +84,7 @@ class SelectWordCaret extends DefaultCaret {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `default`
 -- ダブルクリックで単語選択可能
 -- ダブルプレスでも単語選択可能だが、継続してマウスを左側にドラッグすると単語選択が解除されて通常の文字選択モードになり単語先頭からドラッグ位置までが選択状態になる
@@ -121,7 +121,7 @@ private void continuouslySelectRows(MouseEvent e) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextAreaで単語選択を実行した場合の区切り文字を変更する>Swing/SelectWordAction]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Utilities.html#getWordStart-javax.swing.text.JTextComponent-int- Utilities#getWordStart(...) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Utilities.html#getWordEnd-javax.swing.text.JTextComponent-int- Utilities#getWordEnd(...) (Java Platform SE 8)]
@@ -129,6 +129,6 @@ private void continuouslySelectRows(MouseEvent e) {
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Utilities.html#getRowEnd-javax.swing.text.JTextComponent-int- Utilities#getRowEnd(...) (Java Platform SE 8)]
 - [https://stackoverflow.com/questions/58690711/jtextarea-selection-behavior-on-double-triple-click-moving-mouse java - JTextArea - selection behavior on double / triple click + moving mouse - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

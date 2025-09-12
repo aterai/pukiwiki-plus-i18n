@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2022/01/change-selection-focus-border-of.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブが選択されている場合のフォーカス`Border`をドットの囲み罫ではなく下線に変更します。
 
 #download(https://drive.google.com/uc?id=1IT_j78FMubgNQJySR_897nnxNwD_9mDU)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class UnderlineFocusTabbedPane extends JTabbedPane {
   private static final Border DEFAULT_BORDER =
@@ -73,7 +73,7 @@ class UnderlineFocusTabbedPane extends JTabbedPane {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - デフォルトのフォーカス`Border`を非表示にし、代わりに選択されたタブのタブタイトルに設定した`JLabel`に`MatteBorder`で作成した下線を適用
 -- [[CardLayoutで作成したJTabbedPane風コンポーネントのタブエリアに水平JScrollBarを表示する>Swing/TabAreaScrollBar]]
 - `JTabbedPane`に`ChangeListener`を追加してタブの切り替えイベントを取得して`MatteBorder`を切り替え
@@ -82,11 +82,11 @@ class UnderlineFocusTabbedPane extends JTabbedPane {
 -- [[JTabbedPaneのタブ描画をフラットデザイン風に変更する>Swing/FlatTabbedPane]]
 -- `UIManager.put("TabbedPane.focus", new ColorUIResource(new Color(0x0, true)));`でフォーカス`Border`を非表示にする方法もある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneの選択文字色を変更>Swing/ColorTab]]
 - [[JTabbedPaneのタブ描画をフラットデザイン風に変更する>Swing/FlatTabbedPane]]
 - [[CardLayoutで作成したJTabbedPane風コンポーネントのタブエリアに水平JScrollBarを表示する>Swing/TabAreaScrollBar]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

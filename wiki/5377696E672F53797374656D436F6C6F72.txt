@@ -8,12 +8,12 @@ pubdate: 2003-10-20
 description: Swingコンポーネントの色をSystemColorクラスから取得します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUESCOFBI/AAAAAAAAAlc/eXW_0wilSew/s800/SystemColor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Swing`コンポーネントの色を`SystemColor`クラスから取得します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUESCOFBI/AAAAAAAAAlc/eXW_0wilSew/s800/SystemColor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Box box = Box.createVerticalBox();
 box.add(makeSystemColorPanel(SystemColor.desktop, "desktop"));
@@ -43,17 +43,17 @@ box.add(makeSystemColorPanel(SystemColor.info, "info"));
 box.add(makeSystemColorPanel(SystemColor.infoText, "infoText"));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 各プラットフォームのデスクトップデザインに対応したシステムカラーは、`SystemColor`クラスの`static`フィールドにまとめて定義されています。例えば`Windows`プラットフォームでデスクトップのカスタマイズでテーマなどを変更すると、この`SystemColor`も動的にその変更に追従します。
 
 - `LookAndFeel`を変更しても`SystemColor`は変化しない
 - `GTKLookAndFeel`がシステムデフォルトになる環境では`SystemColor`を取得不可
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/SystemColor.html SystemColor (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Color.html#getColor-java.lang.String- Color#getColor(...) (Java Platform SE 8)]
 // - [http://www.asahi-net.or.jp/~dp8t-asm/java/tips/SystemColor.html システムカラー]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

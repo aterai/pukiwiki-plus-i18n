@@ -8,12 +8,12 @@ pubdate: 2017-06-12T17:11:53+09:00
 description: JComboBoxのドロップダウンリスト中に設定されたアイテムの状態と描画を更新します。
 image: https://drive.google.com/uc?id=1R3XuZTHSo7KbYggs0QI2iKVrHHBawo6f2A
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`のドロップダウンリスト中に設定されたアイテムの状態と描画を更新します。
 
 #download(https://drive.google.com/uc?id=1R3XuZTHSo7KbYggs0QI2iKVrHHBawo6f2A)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CheckableComboBoxModel<E> extends DefaultComboBoxModel<E> {
   protected CheckableComboBoxModel(E[] items) {
@@ -43,7 +43,7 @@ class CheckedComboBox4<E extends CheckableItem> extends CheckedComboBox<E> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JComboBox`の`BasicComboPopup`に表示されるリストは`JList`を使用しているため、マウスでクリックされたアイテムの状態を更新(上記のサンプルでは`JCheckBox`の選択状態の切替)してもセルレンダラーでの描画は更新されません(同じアイテムがクリックされても再描画しないため)。
 
 このサンプルでは、`JComboBox`のアイテムの更新を描画に反映させるために以下のような方法をテストしています。
@@ -63,11 +63,11 @@ class CheckedComboBox4<E extends CheckableItem> extends CheckedComboBox<E> {
 + `fireContentsChanged(...)`
 -- `DefaultComboBoxModel#fireContentsChanged(...)`メソッドは`protected`で直接呼び出せないため、これを呼び出し可能するラッパー`ComboBoxModel`を作成して`JComboBox`に設定してクリックされたアイテムのみ描画を更新
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxのアイテムとして表示したJCheckBoxを複数選択する>Swing/CheckedComboBox]]
 - [[JListのセルにJCheckBoxを使用する>Swing/CheckBoxCellList]]
 -- こちらは`JList#processMouseEvent(...)`をオーバーライドして対応
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

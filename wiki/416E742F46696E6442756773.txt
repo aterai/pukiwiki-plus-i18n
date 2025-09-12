@@ -6,7 +6,7 @@ description: 静的解析で潜在的なエラーを検査するFindBugsをAnt�
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 `Ant`から`FindBugs`を実行します。
 
 * サンプルターゲット [#target]
@@ -37,7 +37,7 @@ description: 静的解析で潜在的なエラーを検査するFindBugsをAnt�
 </target>
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 ** Windows 7 [#a1262f75]
 + [http://findbugs.sourceforge.net/downloads.html FindBugs Downloads]からダウンロードした`findbugs-x.x.x.zip`を適当な場所に展開し、環境変数`FINDBUGS_HOME`に設定
 -- 変数名: `FINDBUGS_HOME`
@@ -153,10 +153,10 @@ public class UnparseableDateTest {
 //findbugs-noUpdateChecks-2.0.0.zip を使っても ParseException が発生する
 //> The following versions of FindBugs are pre-configured to disable checks for updated versions of FindBugs, and the plugin tha allows communication with the FindBugs community cloud is disabled by default. Such configurations are appropriate in situations where it is important that no information about the use of FindBugs be disclosed outside of the organization where it is used.
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://findbugs.sourceforge.net/ FindBugs™ - Find Bugs in Java Programs]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `MacOSX`でも同じ症状が出ました（`MacOSX 10.6.8`, `Java 1.6.0_29`, `FindBugs 2.0.0`）。`UpdateChecker.java`の修正の方が楽かもです。 -- &user(norachlo); &new{2012-02-16 (木) 21:43:15};
 -- 情報ありがとうございます。特に実害はないようなのですが、気になるので早く修正されるといいですね。 -- &user(aterai); &new{2012-02-17 (金) 14:28:16};

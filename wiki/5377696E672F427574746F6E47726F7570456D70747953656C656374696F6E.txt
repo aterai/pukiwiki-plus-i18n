@@ -8,12 +8,12 @@ pubdate: 2018-12-10T16:19:43+09:00
 description: ButtonGroup内のボタンが1つも選択されていない状態かどうかを確認します。
 image: https://drive.google.com/uc?id=1EFXEFMWUlrctxFnVQEQbK1zeW3wSIhoROw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `ButtonGroup`内のボタンが`1`つも選択されていない状態かどうかを確認します。
 
 #download(https://drive.google.com/uc?id=1EFXEFMWUlrctxFnVQEQbK1zeW3wSIhoROw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 ButtonGroup bg = new ToggleButtonGroup();
 JPanel p = new JPanel();
@@ -33,16 +33,16 @@ button.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `ButtonGroup`内のボタンが`1`つも選択されていない状態かどうかを`ButtonModel#getSelection()`メソッドが`null`を返すかどうかで確認
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ButtonGroup.html#getSelection-- ButtonGroup#getSelection()]メソッドのドキュメントには「選択されたボタンのモデルを返します。」とだけ解説されており、`1`つも選択されていない場合は何を返すかの記述がない
 -- `ButtonModel`のソースコードではその場合`null`を返す実装になっている
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/ButtonGroup.html#getSelection-- ButtonGroup#getSelection() (Java Platform SE 8)]
 - [[ButtonGroup中にある選択状態のJToggleButtonをクリックして選択解除可能にする>Swing/ToggleButtonGroup]]
 - [[ButtonGroup内のJRadioButtonなどの選択をクリア>Swing/ClearGroupSelection]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

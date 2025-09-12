@@ -8,12 +8,12 @@ pubdate: 2021-07-26T02:28:40+09:00
 description: JSplitPaneのDividerにJPopupMenuやMouseListenerを追加してその位置を中央、最小、最大位置に変更するためのActionを設定します。
 image: https://drive.google.com/uc?id=1JNqfni40ogZAmYoqP76Sw3gg8BvdRMVK
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSplitPane`の`Divider`に`JPopupMenu`や`MouseListener`を追加してその位置を中央、最小、最大位置に変更するための`Action`を設定します。
 
 #download(https://drive.google.com/uc?id=1JNqfni40ogZAmYoqP76Sw3gg8BvdRMVK)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JCheckBox check = new JCheckBox("Show JPopupMenu only on Divider", true);
 JPopupMenu popup = new JPopupMenu() {
@@ -28,9 +28,12 @@ JPopupMenu popup = new JPopupMenu() {
     }
   }
 };
-popup.add("center").addActionListener(e -> splitPane.setDividerLocation(.5));
-popup.add("selectMin").addActionListener(e -> selectMinMax(splitPane, "selectMin"));
-popup.add("selectMax").addActionListener(e -> selectMinMax(splitPane, "selectMax"));
+popup.add("center").addActionListener(e ->
+    splitPane.setDividerLocation(.5));
+popup.add("selectMin").addActionListener(e ->
+    selectMinMax(splitPane, "selectMin"));
+popup.add("selectMax").addActionListener(e ->
+    selectMinMax(splitPane, "selectMax"));
 splitPane.setComponentPopupMenu(popup);
 
 BasicSplitPaneUI ui = (BasicSplitPaneUI) splitPane.getUI();
@@ -50,7 +53,7 @@ divider.addMouseListener(new MouseAdapter() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JPopupMenu`
 -- `BasicSplitPaneUI#getDivider()`で取得可能な`BasicSplitPaneDivider`は`JComponent`を継承していないため、`JComponent#setComponentPopupMenu(...)`が使用不可
 -- 代わりに`BasicLookAndFeel.AWTEventHelper#eventDispatched(...)`で`getParent()`で取得した親コンポーネントから`JPopupMenu`を取得して表示するよう特別処理されている
@@ -61,10 +64,10 @@ divider.addMouseListener(new MouseAdapter() {
 -- マウスの左ボタンでダブルクリックすると`Divider`の位置を中央に移動する`MouseListener`を設定
 -- たとえば`Windows`環境だけ考慮すればよい場合、`JComponent#setComponentPopupMenu(...)`を使用せずに`MouseListener#mouseReleased(...)`で`if (e.isPopupTrigger()) { popup.show(divider, e.getX(), e.getY()); }`を実行して`JPopupMenu`を表示する方法もある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSplitPaneを等分割する>Swing/DividerLocation]]
 - [[JSplitPaneの収納状態を維持する>Swing/KeepHiddenDivider]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

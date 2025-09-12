@@ -2,18 +2,18 @@
 category: swing
 folder: RemoveAllHighlights
 title: JTextAreaに設定したHighlightをすべて削除する
-tags: [JTextArea, JTextComoponent, Highlighter, Caret]
+tags: [JTextArea, JTextComponent, Highlighter, Caret]
 author: aterai
 pubdate: 2021-12-06T00:41:02+09:00
 description: JTextAreaに設定したHighlightをすべて削除、または選択ハイライトを除いてすべて削除します。
 image: https://drive.google.com/uc?id=13EoqnIUuuaRLWAFig-StZjIE9KsRyQaU
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`に設定した`Highlight`をすべて削除、または選択ハイライトを除いてすべて削除します。
 
 #download(https://drive.google.com/uc?id=13EoqnIUuuaRLWAFig-StZjIE9KsRyQaU)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 textArea.getHighlighter().removeAllHighlights();
 // ...
@@ -28,7 +28,7 @@ public static void removeWordHighlights(JTextComponent tc) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `removeAllHighlights`
 -- `JTextComponent#getHighlighter()#removeAllHighlights()`ですべてのハイライトを削除
 -- マウスやカーソルキーで文字列選択した場合のハイライトも削除される
@@ -36,11 +36,11 @@ public static void removeWordHighlights(JTextComponent tc) {
 -- 文字列選択のハイライト以外のハイライトを削除
 -- このサンプルではキャレット下の単語で全テキストを検索して一致する単語を黄色の`HighlightPainter`でハイライトしているので、このペインターを使用している`Highlighter.Highlight`を`Highlighter#getHighlights()`から検索し`Highlighter#removeHighlight(...)`で削除
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Highlighter.html#removeAllHighlights-- Highlighter#removeAllHighlights() (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Highlighter.html#removeHighlight-java.lang.Object- Highlighter##removeHighlight(Object) (Java Platform SE 8)]
 - [[JTextPaneで検索結果のハイライト表示と文字色変更を同時に行う>Swing/HighlightTextForeground]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

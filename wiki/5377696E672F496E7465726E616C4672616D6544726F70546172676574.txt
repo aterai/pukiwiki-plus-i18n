@@ -8,12 +8,12 @@ pubdate: 2014-05-19T00:37:47+09:00
 description: JInternalFrame間でJTableの行をドラッグ＆ドロップを使って入れ替えます。
 image: https://lh5.googleusercontent.com/-UP_I_iTgtpc/U3jPL_jhwuI/AAAAAAAACFg/olJ1Sf-P_lU/s800/InternalFrameDropTarget.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`間で`JTable`の行をドラッグ＆ドロップを使って入れ替えます。
 
 #download(https://lh5.googleusercontent.com/-UP_I_iTgtpc/U3jPL_jhwuI/AAAAAAAACFg/olJ1Sf-P_lU/s800/InternalFrameDropTarget.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private boolean isDroppableTableIntersection(TransferSupport info) {
   Component c = info.getComponent();
@@ -47,16 +47,16 @@ private boolean isDroppableTableIntersection(TransferSupport info) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、異なる`JInternalFrame`に配置した`JTable`の行をドラッグ＆ドロップで入れ替え可能にしています。
 
 - 使用する`TransferHandler`は[[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]のものとほぼ同等
 - 前面の`JInternalFrame`内にある`JTable`からドラッグを開始した場合その`JTableHeader`や`JInternalFrame`のタイトルバー上でも背面にある`JInternalFrame`に反応してドロップ可能になってしまう
 - `TransferHandler#canImport(...)`をオーバーライドしてドラッグ元とドロップ先の`JInternalFrame`の重なる共通領域では背面にドロップ出来ないように変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableの行を別のJTableにドラッグして移動>Swing/DragRowsAnotherTable]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

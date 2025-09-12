@@ -8,12 +8,12 @@ pubdate: 2021-01-04T20:28:21+09:00
 description: TreeModelから親JCheckBoxと子JCheckBoxのグループを作成し、親JCheckBoxが選択されている場合のみ子JCheckBoxのグループを有効化します。
 image: https://drive.google.com/uc?id=1t8K1EM6LtL0qO4ZXhONIZNp-Bu4l9u2v
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TreeModel`から親`JCheckBox`と子`JCheckBox`のグループを作成し、親`JCheckBox`が選択されている場合のみ子`JCheckBox`のグループを有効化します。
 
 #download(https://drive.google.com/uc?id=1t8K1EM6LtL0qO4ZXhONIZNp-Bu4l9u2v)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CheckBoxStatusUpdateListener implements TreeModelListener {
   private boolean adjusting;
@@ -65,7 +65,7 @@ class CheckBoxStatusUpdateListener implements TreeModelListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Box`
 -- `Box.createVerticalBox()`で作成した垂直`Box`に`JCheckBox`を配置して作成
 -- フォルダノードを親`JCheckBox`、葉ノードを子`JCheckBox`のグループとして作成
@@ -80,10 +80,10 @@ class CheckBoxStatusUpdateListener implements TreeModelListener {
 -- `TreeModelListener`を追加してフォルダノードから作成した親`JCheckBox`の選択状態が変更されたら葉ノードから作成された子`JCheckBox`の有効化・無効化を切り替える
 -- 孫ノードから作成された`JCheckBox`の有効化・無効化は考慮していない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのすべてのノードにJCheckBoxを追加する>Swing/CheckBoxNodeEditor]]
 - [[JTreeのノードを折り畳み不可に設定する>Swing/TreeNodeCollapseVeto]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

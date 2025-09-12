@@ -8,12 +8,12 @@ pubdate: 2017-05-08T14:26:08+09:00
 description: JPopupMenuを設定したコンポーネントの表示領域内に収まるように、JPopupMenuの表示位置を調整します。
 image: https://drive.google.com/uc?id=1P6r7-2s31EBtrsPd4FGrzQidQKTrYhS7Wg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPopupMenu`を設定したコンポーネントの表示領域内に収まるように、`JPopupMenu`の表示位置を調整します。
 
 #download(https://drive.google.com/uc?id=1P6r7-2s31EBtrsPd4FGrzQidQKTrYhS7Wg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPopupMenu popup = new JPopupMenu() {
   @Override public void show(Component c, int x, int y) {
@@ -42,17 +42,17 @@ label.setOpaque(true);
 label.setComponentPopupMenu(popup);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JPopupMenu#show(...)`メソッドをオーバーライドし、`JPopupMenu`の表示位置を調整することでコンポーネント(この場合`JLabel`)の表示領域内に`JPopupMenu`全体が収まるように設定しています。
 
 - 親コンポーネントの右下で右クリックによる`JPopupMenu`の表示を行った場合、そのクリック位置に`JPopupMenu`の右下隅が重なるように表示
 - `JPopupMenu`のサイズが親コンポーネントの表示上のサイズより大きくなる場合は考慮していない
 -- `JPopupMenu`の高さが親コンポーネントの高さより高い場合、クリックした位置とは無関係に`JPopupMenu`の上辺が親コンポーネントの上辺と同じ位置になるよう表示
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[TrayIconでJPopupMenuを使用する>Swing/TrayIconPopupMenu]]
 - [[JPopupMenuをキー入力で開く場合の表示位置を調整する>Swing/PopupLocation]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

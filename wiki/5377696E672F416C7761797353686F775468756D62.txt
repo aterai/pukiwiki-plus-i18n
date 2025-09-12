@@ -8,12 +8,12 @@ pubdate: 2022-03-28T07:58:55+09:00
 description: JScrollBarのノブの長さがトラックと同じ長さになっても非表示にせず、常に表示されるよう設定します。
 image: https://drive.google.com/uc?id=1BeoM_Wcry_psyXpkeTSdy9Wh0nDP_XtW
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollBar`のノブの長さがトラックと同じ長さになっても非表示にせず、常に表示されるよう設定します。
 
 #download(https://drive.google.com/uc?id=1BeoM_Wcry_psyXpkeTSdy9Wh0nDP_XtW)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // UIManager.put("ScrollBar.alwaysShowThumb", Boolean.TRUE);
 JScrollPane scroll = new JScrollPane(new JTree());
@@ -33,7 +33,7 @@ check.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `UIManager.put("ScrollBar.alwaysShowThumb", Boolean.TRUE)`
 -- `GTKLookAndFeel`のデフォルト
 -- `GTKLookAndFeel`以外でも`UIManager.put("ScrollBar.alwaysShowThumb", Boolean.TRUE)`を設定すれば`JScrollBar`のノブが常に表示状態になる
@@ -42,9 +42,9 @@ check.addActionListener(e -> {
 -- `GTKLookAndFeel`以外のデフォルト
 -- 例えば`JScrollPane`のビューコンテンツの高さが`JViewport`の高さより小さく全高が表示されてスクロールの必要がない場合は、`JScrollBar`のノブは非表示になる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollBarのKnobの最小サイズを設定する>Swing/MinimumThumbSize]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

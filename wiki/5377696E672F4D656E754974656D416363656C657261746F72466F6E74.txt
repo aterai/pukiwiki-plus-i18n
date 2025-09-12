@@ -8,12 +8,12 @@ pubdate: 2023-11-13T06:14:06+09:00
 description: JMenuItemに設定されたAcceleratorの文字サイズや色を変更します。
 image: https://drive.google.com/uc?id=1yw38bWwIYd05dmP11IRoVcc-YF740hoh
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenuItem`に設定された`Accelerator`の文字サイズや色を変更します。
 
 #download(https://drive.google.com/uc?id=1yw38bWwIYd05dmP11IRoVcc-YF740hoh)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Color color1;
 Color color2;
@@ -44,22 +44,24 @@ for (String prefix : list) {
 SwingUtilities.updateComponentTreeUI(popup);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `UIManager.put("MenuItem.acceleratorForeground", color)`
 -- `JMenuItem#setAccelerator(KeyStroke)`で設定した`accelerator`の文字色を変更
 -- `MetalLookAndFeel`、`WindowsLookAndFeel`などで有効、`NimbusLookAndFeel`、`GTKLookAndFeel`などでは無効
+--- [https://bugs.openjdk.org/browse/JDK-8365625 &#91;JDK-8365625&#93; Can't change accelerator colors in Windows L&F - Java Bug System]
 -- `JCheckBoxMenuItem`、`JRadioButtonMenuItem`には影響しないため、別途`CheckBoxMenuItem.acceleratorForeground`などで設定する必要がある
 -- `BasicLookAndFeel`で`Menu.acceleratorForeground`、`Menu.acceleratorSelectionForeground`、`Menu.acceleratorSelectionFont`が設定されているが、`JMenu`に`accelerator`を設定しても実行時に`java.lang.Error: setAccelerator() is not defined for JMenu.  Use setMnemonic() instead.`とエラーになるので無意味
 --- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JMenu.html#setAccelerator-javax.swing.KeyStroke- JMenu#setAccelerator(KeyStroke) (Java Platform SE 8)]
 - `UIManager.put("MenuItem.acceleratorSelectionForeground", color)`
 -- `accelerator`の選択文字色を変更
+-- [https://bugs.openjdk.org/browse/JDK-8365375 &#91;JDK-8365375&#93; Method SU3.setAcceleratorSelectionForeground assigns to acceleratorForeground - Java Bug System]
 - `UIManager.put("MenuItem.acceleratorSelectionFont", font)`
 -- `accelerator`の`Font`を変更
 -- このサンプルでは`Font`サイズを`Font#deriveFont(10f)`で縮小している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JMenuItemのAccelerator表示を右揃えにする>Swing/MenuItemAcceleratorAlignment]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

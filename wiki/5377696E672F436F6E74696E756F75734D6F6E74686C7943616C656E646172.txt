@@ -8,12 +8,12 @@ pubdate: 2023-02-27T01:05:27+09:00
 description: JScrollPaneにJTableを配置してマウスホイールなどでスクロール可能な連続月間カレンダーを作成します。
 image: https://drive.google.com/uc?id=1t_loMpWjMtdCAC6iCBzebKnkdJoiV7pj
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollPane`に`JTable`を配置してマウスホイールなどでスクロール可能な連続月間カレンダーを作成します。
 
 #download(https://drive.google.com/uc?id=1t_loMpWjMtdCAC6iCBzebKnkdJoiV7pj)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JScrollBar verticalScrollBar = new JScrollBar(Adjustable.VERTICAL) {
   @Override public Dimension getPreferredSize() {
@@ -38,7 +38,7 @@ verticalScrollBar.getModel().addChangeListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 表示用の`JTable`や`JTableHeader`、`TableCellRenderer`は[[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]とほぼ同じものを使用
 -- 行の高さを`32px`固定に変更している
 - `TableModel`は`1`月`6`週分の`6`行ではなく、現在の日付から前後`500`週分の`1000`行分保持するよう変更し、スクロールで表示する週を変更可能にしている
@@ -61,14 +61,14 @@ public void updateMonthView(LocalDate localDate, Locale locale) {
 
 - 縦`JScrollBar`はその幅を`0`に設定して不可視化しているが`MouseWheel`でスクロール可能になるよう設定
 -- [[JScrollBarが非表示でもMouseWheelでScrollする>Swing/MouseWheelScroll]]
-- 縦`JScrollBar``ChangeListener`を設定し`MouseWheel`などでスクロールしたとき右上隅に表示されるセルの日付の月を取得して月表示`JLabel`に設定
+- 縦`JScrollBar`に`ChangeListener`を追加し`MouseWheel`などでスクロールしたとき右上隅に表示されるセルの日付の月を取得して月表示`JLabel`を更新
 -- [[JEditorPaneのスクロールに連動してJTreeのノードを選択する>Swing/Scrollspy]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]
 - [[JScrollBarが非表示でもMouseWheelでScrollする>Swing/MouseWheelScroll]]
 - [[JEditorPaneのスクロールに連動してJTreeのノードを選択する>Swing/Scrollspy]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

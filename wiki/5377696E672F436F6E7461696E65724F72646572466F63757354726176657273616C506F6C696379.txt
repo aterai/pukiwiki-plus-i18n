@@ -8,12 +8,12 @@ pubdate: 2024-01-01T12:39:23+09:00
 description: ComponentのFocus移動を親Containerに追加した順番で循環するContainerOrderFocusTraversalPolicyを設定します。
 image: https://drive.google.com/uc?id=1lG6lBzr-HmSWdfylbxnJpFOe7x-0HfBZ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Component`の`Focus`移動を親`Container`に追加した順番で循環する`ContainerOrderFocusTraversalPolicy`を設定します。
 
 #download(https://drive.google.com/uc?id=1lG6lBzr-HmSWdfylbxnJpFOe7x-0HfBZ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPanel p = new JPanel(new GridBagLayout());
 p.setFocusTraversalPolicy(new ContainerOrderFocusTraversalPolicy());
@@ -43,7 +43,7 @@ gbc.weightx = 1.0;
 list.forEach(c -> p.add(new JTextField(), gbc));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `LayoutFocusTraversalPolicy`
 -- `Swing`の軽量コンポーネントのデフォルト
 --- `ContainerOrderFocusTraversalPolicy`を継承する`DefaultFocusTraversalPolicy`は`AWT`の重量コンポーネント用のデフォルト
@@ -57,13 +57,13 @@ list.forEach(c -> p.add(new JTextField(), gbc));
 - `ContainerOrderFocusTraversalPolicy` + `ButtonGroupFocusTraversalPolicy`
 -- [[ButtonGroup内で最初にフォーカスを取得するJRadioButtonを変更する>Swing/ButtonGroupFocusTraversalPolicy]]同様、`ContainerOrderFocusTraversalPolicy#getDefaultComponent(...)`をオーバーライドして選択状態の`JRadioButton`に初期フォーカスを設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Focusの移動>Swing/FocusTraversal]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/doc-files/FocusSpec.html AWTフォーカス・サブシステム]
 - [[JRadioButtonの選択アイコンを除いたテキスト先頭をJLabelと揃える>Swing/RadioButtonsLabelAlignment]]
 -- `JColorChooser`の色選択パネルに`ContainerOrderFocusTraversalPolicy`が使用されている
 - [[ButtonGroup内で最初にフォーカスを取得するJRadioButtonを変更する>Swing/ButtonGroupFocusTraversalPolicy]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

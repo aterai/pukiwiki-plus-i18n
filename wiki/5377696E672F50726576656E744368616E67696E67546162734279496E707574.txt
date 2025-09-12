@@ -8,12 +8,12 @@ pubdate: 2018-05-14T16:52:16+09:00
 description: JTabbedPaneでマウスクリックやキー入力といったユーザ操作イベントによるタブ切替を無効にします。
 image: https://drive.google.com/uc?id=16r3rq9ec_trXinEuHffylP6ycwwlGFUGaw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`でマウスクリックやキー入力といったユーザ操作イベントによるタブ切替を無効にします。
 
 #download(https://drive.google.com/uc?id=16r3rq9ec_trXinEuHffylP6ycwwlGFUGaw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DisableInputLayerUI extends LayerUI<Component> {
   @Override public void installUI(JComponent c) {
@@ -41,7 +41,7 @@ class DisableInputLayerUI extends LayerUI<Component> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `setEnabled(false)`
 -- `JTabbedPane#setEnabled(false)`ですべてのタブの切替を禁止
 --- 内部タブコンポーネントには影響しない
@@ -64,10 +64,10 @@ public void eventDispatched(AWTEvent e, JLayer<? extends Component> l) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setEnabledAt-int-boolean- JTabbedPane#setEnabledAt(boolean) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/LayerUI.html#eventDispatched-java.awt.AWTEvent-javax.swing.JLayer- LayerUI#eventDispatched(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

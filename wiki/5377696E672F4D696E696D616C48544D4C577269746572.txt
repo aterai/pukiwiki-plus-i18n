@@ -8,12 +8,12 @@ pubdate: 2023-06-05T03:07:49+09:00
 description: JTextPaneから取得したStyledDocumentをMinimalHTMLWriterで変換してhtmlテキストを生成します。
 image: https://drive.google.com/uc?id=1vmydUsUDHmnZMDK1ZRv5Ww-K7NjwCC1F
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextPane`から取得した`StyledDocument`を`MinimalHTMLWriter`で変換して`html`テキストを生成します。
 
 #download(https://drive.google.com/uc?id=1vmydUsUDHmnZMDK1ZRv5Ww-K7NjwCC1F)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public void copyHtmlTextToClipboard(JTextPane textPane) {
   Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -39,7 +39,7 @@ public void copyHtmlTextToClipboard(JTextPane textPane) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `copy-to-clipboard`
 -- `DefaultEditorKit.CopyAction()`を使用して選択テキストをコピー
 -- KBD{Ctrl+C}でのコピーと同じ
@@ -102,11 +102,11 @@ class HtmlTransferable implements Transferable {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/MinimalHTMLWriter.html MinimalHTMLWriter (Java Platform SE 8)]
 - [[JTextPaneで修飾したテキストをJTextAreaにHtmlソースとして表示する>Swing/HTMLEditorKit]]
 - [[JTextPaneでキーワードのSyntaxHighlight>Swing/SimpleSyntaxHighlight]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

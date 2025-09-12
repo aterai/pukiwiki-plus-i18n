@@ -1,0 +1,227 @@
+---
+category: swing
+folder: CompactSlider
+title: JSliderとテキスト入力欄を重ねて配置する
+tags: [JSlider, JSpinner, JProgressBar, JButton, OverlayLayout]
+author: aterai
+pubdate: 2024-11-11T00:36:23+09:00
+description: JSliderとJFormattedTextFieldをOverlayLayoutで重ねて配置した数値入力コンポーネントを作成します。
+image: https://drive.google.com/uc?id=167ykESFUCmExYLbelyFvvxEAk7O6ghkT
+---
+* Summary [#summary]
+`JSlider`と`JFormattedTextField`を`OverlayLayout`で重ねて配置した数値入力コンポーネントを作成します。
+
+#download(https://drive.google.com/uc?id=167ykESFUCmExYLbelyFvvxEAk7O6ghkT)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+private static Component makeCompactSlider4() {
+  JSlider slider = new JSlider(0, 100, 50) {
+    @Override public void updateUI() {
+      super.updateUI();
+      setForeground(Color.LIGHT_GRAY);
+      setUI(new FlatSliderUI(this));
+      setFocusable(false);
+      setAlignmentX(RIGHT_ALIGNMENT);
+    }
+  };
+  JFormattedTextField field = new JFormattedTextField() {
+    @Override public void updateUI() {
+      super.updateUI();
+      setFormatterFactory(new NumberFormatterFactory());
+      setHorizontalAlignment(RIGHT);
+      setOpaque(false);
+      setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+    }
+
+    @Override public void commitEdit() throws ParseException {
+      super.commitEdit();
+      Optional.ofNullable(getValue())
+          .filter(Integer.class::isInstance)
+          .map(Integer.class::cast)
+          .ifPresent(slider::setValue);
+    }
+
+    @Override public Dimension getMaximumSize() {
+      return super.getPreferredSize();
+    }
+  };
+  field.setColumns(3);
+  field.setValue(slider.getValue());
+  field.setHorizontalAlignment(SwingConstants.RIGHT);
+  field.setAlignmentX(RIGHT_ALIGNMENT);
+  slider.addChangeListener(e -> {
+    JSlider source = (JSlider) e.getSource();
+    field.setValue(source.getValue());
+    source.repaint();
+  });
+  slider.addMouseWheelListener(e -> {
+    JSlider source = (JSlider) e.getComponent();
+    int oldValue = source.getValue();
+    int intValue = oldValue - e.getWheelRotation();
+    int max = source.getMaximum();
+    int min = source.getMinimum();
+    if (min <= intValue && intValue <= max) {
+      source.setValue(intValue);
+      field.setValue(intValue);
+    }
+  });
+  JPanel p = new JPanel() {
+    @Override public boolean isOptimizedDrawingEnabled() {
+      return false;
+    }
+
+    @Override public Dimension getPreferredSize() {
+      return slider.getPreferredSize();
+    }
+  };
+  p.setLayout(new OverlayLayout(p));
+  p.setOpaque(false);
+  p.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+  p.add(field);
+  p.add(slider);
+  Box box = Box.createHorizontalBox();
+  box.add(p);
+  box.add(Box.createHorizontalStrut(2));
+  box.add(makeButton(-5, field, slider.getModel()));
+  box.add(makeButton(+5, field, slider.getModel()));
+  box.add(Box.createHorizontalGlue());
+  JPanel panel = new JPanel(new BorderLayout());
+  panel.add(p);
+  panel.add(box, BorderLayout.EAST);
+  return panel;
+}
+}}
+
+* Description [#description]
+- `JSpinner#paintComponent(...)`をオーバーライドして`SwingUtilities.paintComponent(...)`で`JSpinner`のエディタ上に`JProgressBar`を描画
+-- `JSpinner`のエディタなどの背景を`setOpaque(false)`で描画しないよう設定し、`JProgressBar`を描画
+-- `WindowsLookAndFeel`では`setOpaque(false)`を設定しても常に`JSpinner`の背景が描画されるバグ？が存在するため、`Windows 11`環境では`JSpinner`のテキストが`JProgressBar`の背後に隠れてしまう場合がある
+
+#code{{
+private static JSpinner makeSpinner(JProgressBar progressBar) {
+  BoundedRangeModel m = progressBar.getModel();
+  int value = m.getValue();
+  int min = m.getMinimum();
+  int max = m.getMaximum();
+  return new JSpinner(new SpinnerNumberModel(value, min, max, 5)) {
+    private final JPanel renderer = new JPanel();
+
+    @Override public void updateUI() {
+      super.updateUI();
+      setOpaque(false);
+      JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) getEditor();
+      editor.setOpaque(false);
+      JTextField field = editor.getTextField();
+      field.setOpaque(false);
+      field.setBorder(BorderFactory.createEmptyBorder());
+    }
+
+    @Override protected void paintComponent(Graphics g) {
+      super.paintComponent(g);
+      Graphics2D g2 = (Graphics2D) g.create();
+      JComponent editor = getEditor();
+      Rectangle r = editor.getBounds();
+      SwingUtilities.paintComponent(g2, progressBar, renderer, r);
+      g2.dispose();
+    }
+  };
+}
+}}
+
+- `JLayer`を`JSpinner`に設定し、`LayerUI#paint(...)`をオーバーライドして`SwingUtilities.paintComponent(...)`で`JSpinner`のエディタ上に`JProgressBar`を描画
+
+#code{{
+private static Component makeCompactSlider2() {
+  BoundedRangeModel m = new DefaultBoundedRangeModel(50, 0, 0, 100);
+  JProgressBar progressBar = makeProgressBar(m);
+  JSpinner spinner = makeSpinner2(m);
+  // JSpinner spinner = makeSpinner(progressBar);
+  initListener(spinner, progressBar);
+  LayerUI<JSpinner> layerUI = new LayerUI<JSpinner>() {
+    private final JPanel renderer = new JPanel();
+
+    @Override public void paint(Graphics g, JComponent c) {
+      // super.paint(g, c);
+      if (c instanceof JLayer) {
+        Component view = ((JLayer<?>) c).getView();
+        if (view instanceof JSpinner) {
+          JComponent editor = ((JSpinner) view).getEditor();
+          Rectangle r = editor.getBounds();
+          Graphics2D g2 = (Graphics2D) g.create();
+          SwingUtilities.paintComponent(g2, progressBar, renderer, r);
+          g2.dispose();
+        }
+      }
+      super.paint(g, c);
+    }
+  };
+  return new JLayer<>(spinner, layerUI);
+}
+}}
+
+- `JFormattedTextField#paintComponent(...)`をオーバーライドして`SwingUtilities.paintComponent(...)`で`JFormattedTextField`上に`JProgressBar`を描画
+-- 増減ボタンは[[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]と同様の`JButton`で作成
+
+#code{{
+private static JTextField makeSpinner3(JProgressBar progressBar) {
+  JFormattedTextField field = new JFormattedTextField() {
+    private final JPanel renderer = new JPanel();
+
+    @Override public void updateUI() {
+      super.updateUI();
+      setOpaque(false);
+      setFormatterFactory(new NumberFormatterFactory());
+      setHorizontalAlignment(RIGHT);
+    }
+
+    @Override protected void paintComponent(Graphics g) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      Rectangle r = SwingUtilities.calculateInnerArea(this, null);
+      SwingUtilities.paintComponent(g2, progressBar, renderer, r);
+      g2.dispose();
+      super.paintComponent(g);
+    }
+
+    @Override public void commitEdit() throws ParseException {
+      super.commitEdit();
+      Optional.ofNullable(getValue())
+          .filter(Integer.class::isInstance)
+          .map(Integer.class::cast)
+          .ifPresent(progressBar::setValue);
+    }
+  };
+  field.setHorizontalAlignment(SwingConstants.RIGHT);
+  field.setOpaque(false);
+  field.setColumns(16);
+  field.setValue(50);
+  field.addMouseWheelListener(e -> {
+    JFormattedTextField source = (JFormattedTextField) e.getComponent();
+    BoundedRangeModel model = progressBar.getModel();
+    Integer oldValue = (Integer) source.getValue();
+    int intValue = oldValue - e.getWheelRotation();
+    int max = model.getMaximum();
+    int min = model.getMinimum();
+    if (min <= intValue && intValue <= max) {
+      source.setValue(intValue);
+      progressBar.setValue(intValue);
+    }
+  });
+  return field;
+}
+}}
+
+- `OverlayLayout`を設定した`JPanel`に`JSlider`と`JFormattedTextField`を重ねて配置
+-- [[OverlayLayoutの使用>Swing/OverlayLayout]]
+-- `JSlider`はフォーカス不可とすることでマウスイベントでの増減は可能だが、フォーカスやキー入力イベントは`JFormattedTextField`が優先して編集可能になるよう設定
+-- 増減ボタンは[[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]と同様の`JButton`で作成
+
+* Reference [#reference]
+- [https://static.gimp.org/news/2020/11/06/gimp-2-99-2-released/#compact-sliders Compact sliders - Development release GIMP 2.99.2 is out - GIMP]
+-- このサンプルは`GIMP 3.0`の`Compact slider`を参考に作成
+- [[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]
+- [[OverlayLayoutの使用>Swing/OverlayLayout]]
+
+* Comment [#comment]
+#comment
+#comment

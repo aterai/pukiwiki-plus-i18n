@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2019/12/create-speedometer-by-changing-shape-of.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JProgressBar`の形状をドーナツ状の半円に変更して、その値に応じてゲージの色を変更するスピードメーターを作成します。
 
 #download(https://drive.google.com/uc?id=1MSxJ37yRyZGWHdJFNWAWMYXdEfyZyixR)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SolidGaugeUI extends BasicProgressBarUI {
   private final int[] pallet;
@@ -127,7 +127,7 @@ class SolidGaugeUI extends BasicProgressBarUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JProgressBar`の形状を半円に変更し、その値に応じてゲージの色を変化させるスピードメーター風のコンポーネントを作成しています。
 
 - ドーナツ状の半円は`Arc2D.PIE`を使用
@@ -138,10 +138,10 @@ class SolidGaugeUI extends BasicProgressBarUI {
 - 値に応じた色の変更は`LinearGradientPaint`から生成したパレットから取得
 -- 参考: [[JSliderのスタイルを変更する>Swing/GradientTrackSlider]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JProgressBarの進捗状況を円形で表示する>Swing/ProgressCircle]]
 - [[JSliderのスタイルを変更する>Swing/GradientTrackSlider]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

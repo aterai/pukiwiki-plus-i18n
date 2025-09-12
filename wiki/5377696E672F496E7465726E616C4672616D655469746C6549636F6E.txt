@@ -8,12 +8,12 @@ pubdate: 2014-12-22T00:07:25+09:00
 description: JInternalFrameのタイトルバー左上隅に表示されるアイコンを各JInternalFrame毎に設定します。
 image: https://lh3.googleusercontent.com/-rFS_L31nMfg/VJbgMqwW0UI/AAAAAAAANtY/z1JvoM0odco/s800/InternalFrameTitleIcon.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`のタイトルバー左上隅に表示されるアイコンを各`JInternalFrame`毎に設定します。
 
 #download(https://lh3.googleusercontent.com/-rFS_L31nMfg/VJbgMqwW0UI/AAAAAAAANtY/z1JvoM0odco/s800/InternalFrameTitleIcon.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 int idx = 0;
 for (Color c: Arrays.asList(Color.RED, Color.GREEN, Color.BLUE)) {
@@ -27,14 +27,14 @@ for (Color c: Arrays.asList(Color.RED, Color.GREEN, Color.BLUE)) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JInternalFrame#setFrameIcon(Icon)`メソッドを使用して各`JInternalFrame`に異なる色の`16x16`アイコンを設定
 -- `WindowsLookAndFeel`ではアイコン化したとき`JInternalFrame#setFrameIcon(Icon)`で設定した`Icon`を拡大した画像が`JInternalFrame.JDesktopIcon`として使用される
 -- `MotifLookAndFeel`では`JInternalFrame#setFrameIcon(Icon)`で設定したアイコンは無視され表示されない(デフォルトアイコンも表示しない)
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JInternalFrame.html#setFrameIcon-javax.swing.Icon- JInternalFrame#setFrameIcon(Icon) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

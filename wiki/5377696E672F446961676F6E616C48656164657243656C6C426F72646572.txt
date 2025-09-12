@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2023/11/split-tablecolumn-of-jtableheader-with.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTableHeader`の第`0`番目の`TableColumn`を斜め線で分割して行と列で異なる見出しを表示します。
 
 #download(https://drive.google.com/uc?id=1ZYw3qU1gbO_gq4-6YrfXTlkH35QLEAyf)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 int size = 32;
 JTable table = new JTable(model) {
@@ -68,7 +68,7 @@ class DiagonallySplitBorder extends MatteBorder {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JScrollPane`の`ColumnHeader`の高さを変更してその内部に配置される`JTableHeader`の高さも変更して列タイトル文字列を回転して垂直表示
 -- [[JTableHeaderの高さを変更>Swing/TableHeaderHeight]]
 -- [[JTableHeaderの列タイトル文字列を回転して垂直表示する>Swing/VerticalColumnTableHeader]]
@@ -80,13 +80,13 @@ class DiagonallySplitBorder extends MatteBorder {
 -- 列見出し用の`JLabel`は`SwingConstants.RIGHT`で右寄せで表示するよう設定し、`BorderLayout.NORTH`で`JPanel`の上辺に配置
 -- 行見出し用の`JLabel`は`SwingConstants.LEFT`で左寄せで表示するよう設定し、`BorderLayout.SOUTH`で`JPanel`の下辺に配置
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのセルを斜めに分割する>Swing/DiagonallySplitCellCalendar]]
 -- `JLayer`を使用して斜め線を描画する方法もある
 - [[JTableHeaderの高さを変更>Swing/TableHeaderHeight]]
 - [[JTableHeaderの列タイトル文字列を回転して垂直表示する>Swing/VerticalColumnTableHeader]]
 - [[JTextAreaの背景に画像を表示>Swing/CentredBackgroundBorder]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

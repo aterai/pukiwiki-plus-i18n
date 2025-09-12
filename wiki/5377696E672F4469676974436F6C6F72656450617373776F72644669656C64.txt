@@ -1,0 +1,138 @@
+---
+category: swing
+folder: DigitColoredPasswordField
+title: JPasswordFieldの可視化で数字の色のみ変更
+tags: [JPasswordField, JTextPane, CardLayout]
+author: aterai
+pubdate: 2025-08-11T02:08:27+09:00
+description: JPasswordFieldに入力されたパスワードを可視化したとき、数値のみ色を変更して字形が似たアルファベットとの判別を簡単にします。
+image: https://drive.google.com/uc?id=10UgQx9mHQ6E7ukNbuwvmDNPzHu6EZ4Xb
+---
+* Summary [#summary]
+`JPasswordField`に入力されたパスワードを可視化したとき、数値のみ色を変更して字形が似たアルファベットとの判別を簡単にします。
+
+#download(https://drive.google.com/uc?id=10UgQx9mHQ6E7ukNbuwvmDNPzHu6EZ4Xb)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JPasswordField password = new JPasswordField(40);
+password.setFont(FONT);
+password.setText("!1l2c$%34e5&6#7=8g9O0");
+JTextPane revealPassword = makeRevealPassword(password);
+CardLayout cardLayout = new CardLayout();
+JPanel p = new JPanel(cardLayout) {
+  @Override public void updateUI() {
+    super.updateUI();
+    setAlignmentX(RIGHT_ALIGNMENT);
+  }
+};
+p.add(password, PasswordField.HIDE.toString());
+p.add(revealPassword, PasswordField.SHOW.toString());
+
+AbstractButton button = new JToggleButton();
+button.addActionListener(e -> {
+  boolean b = ((AbstractButton) e.getSource()).isSelected();
+  if (b) {
+    copyText(password.getDocument(), revealPassword.getStyledDocument());
+    cardLayout.show(p, PasswordField.SHOW.toString());
+  } else {
+    copyText(revealPassword.getStyledDocument(), password.getDocument());
+    cardLayout.show(p, PasswordField.HIDE.toString());
+  }
+});
+initEyeButton(button);
+
+JPanel panel = new OverlayLayoutPanel();
+panel.add(button);
+panel.add(p);
+
+// ...
+class HighlightDocumentFilter extends DocumentFilter {
+  private final SimpleAttributeSet defAttr = new SimpleAttributeSet();
+  private final SimpleAttributeSet numAttr = new SimpleAttributeSet();
+  private final Pattern pattern = Pattern.compile("\\d");
+
+  protected HighlightDocumentFilter() {
+    super();
+    StyleConstants.setForeground(defAttr, Color.BLACK);
+    StyleConstants.setForeground(numAttr, Color.RED);
+  }
+
+  @Override public void insertString(
+      FilterBypass fb, int offset, String text, AttributeSet attr)
+      throws BadLocationException {
+    super.insertString(fb, offset, text, attr);
+    update(fb);
+  }
+
+  @Override public void remove(
+      FilterBypass fb, int offset, int length)
+      throws BadLocationException {
+    super.remove(fb, offset, length);
+    update(fb);
+  }
+
+  @Override public void replace(
+      FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+      throws BadLocationException {
+    super.replace(fb, offset, length, text, attrs);
+    update(fb);
+  }
+
+  private void update(FilterBypass fb) throws BadLocationException {
+    StyledDocument doc = (StyledDocument) fb.getDocument();
+    String text = doc.getText(0, doc.getLength());
+    doc.setCharacterAttributes(0, doc.getLength(), defAttr, true);
+    Matcher m = pattern.matcher(text);
+    while (m.find()) {
+      doc.setCharacterAttributes(m.start(), m.end() - m.start(), numAttr, true);
+    }
+  }
+}
+}}
+
+* Description [#description]
+- `JPasswordField#setEchoChar(...) + HighlightFilter`
+-- `JPasswordField#setEchoChar(...)`をオーバーライドし、エコー文字として`0`(ヌル文字、`\u0000`)が設定されパスワードが可視化された場合は、数値のみ`Highlighter`を使用して強調表示する`DocumentFilter`を追加
+-- `0`以外のエコー文字(このサンプルでは`UIManager.get("PasswordField.echoChar")`で取得した文字)が設定された場合は、`Highlighter#removeAllHighlights()`で全ハイライトの削除と上記の`DocumentFilter`の削除を実行
+
+#code{{
+class DigitHighlightPasswordField extends JPasswordField {
+  protected DigitHighlightPasswordField(int columns) {
+    super(columns);
+  }
+
+  @Override public void setEchoChar(char c) {
+    super.setEchoChar(c);
+    Document doc = getDocument();
+    if (doc instanceof AbstractDocument) {
+      boolean reveal = c == '\u0000';
+      if (reveal) {
+        ((AbstractDocument) doc).setDocumentFilter(new HighlightFilter(this));
+        try {
+          doc.remove(0, 0);
+        } catch (BadLocationException ex) {
+          UIManager.getLookAndFeel().provideErrorFeedback(this);
+        }
+      } else {
+        getHighlighter().removeAllHighlights();
+        ((AbstractDocument) doc).setDocumentFilter(null);
+      }
+    }
+  }
+}
+}}
+
+- `CardLayout + (JPasswordField <> JTextPane)`
+-- [[JPasswordFieldでパスワードを可視化する>Swing/ShowHidePasswordField]]と同様に`CardLayout`で`JPasswordField`と数値のみ文字色(スタイル)を変更する`DocumentFilter`を設定した`JTextPane`を使用して可視状態を切り替える
+-- `JTextPane`は[[JTextPaneを一行に制限してスタイル可能なJTextFieldとして使用する>Swing/OneLineTextPane]]と同様に一行に制限
+-- `JPasswordField`と`JTextPane`の`Document`は共有できないので切り替え時に`Document#getText(...)`、`Document#insertString(...)`でパスワードをコピーしている
+
+* Reference [#reference]
+- [[JPasswordFieldでパスワードを可視化する>Swing/ShowHidePasswordField]]
+- [[JTextPaneを一行に制限してスタイル可能なJTextFieldとして使用する>Swing/OneLineTextPane]]
+- [[JTextComponentのハイライトを文字色の変更で描画する>Swing/ForegroundHighlightPainter]]
+
+* Comment [#comment]
+#comment
+#comment

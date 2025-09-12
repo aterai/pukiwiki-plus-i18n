@@ -8,12 +8,12 @@ pubdate: 2006-09-25T03:59:45+09:00
 description: JTextAreaのマウスカーソルがある行をロールオーバー表示します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTQFUVNyQI/AAAAAAAAAfA/cTsyoFPSNEg/s800/MouseOverPainter.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`のマウスカーソルがある行をロールオーバー表示します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTQFUVNyQI/AAAAAAAAAfA/cTsyoFPSNEg/s800/MouseOverPainter.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class HighlightCursorTextArea extends JTextArea {
   private static final Color LINE_COLOR = new Color(250, 250, 220);
@@ -64,13 +64,13 @@ class HighlightCursorTextArea extends JTextArea {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `MouseAdapter`を継承した`RollOverListener`でマウスカーソルのある行を記憶
 - `JTextArea#paintComponent`メソッドをオーバーライドしてその行の背景色を変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Element.html#getElementIndex-int- Element#getElementIndex(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

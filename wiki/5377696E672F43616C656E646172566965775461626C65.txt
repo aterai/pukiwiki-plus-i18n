@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/01/apply-localdate-considering-locale-to.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`に週の最初の曜日が`Locale`に応じて変化するカレンダーを表示します。
 
 #download(https://drive.google.com/uc?id=1jXZtiYFaA5ABWsdaRBnPUKqS2_VBDkFqQA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CalendarViewTableModel extends DefaultTableModel {
   private final LocalDate startDate;
@@ -56,11 +56,11 @@ class CalendarViewTableModel extends DefaultTableModel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`Java 8`から`java.time`パッケージに追加された`LocalDate`を`JTable`のモデルとして使用し、月のカレンダーを表示しています。
 
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/time/temporal/WeekFields.html#getFirstDayOfWeek-- WeekFields#getFirstDayOfWeek()]メソッドで`Locale`に応じた週の最初の曜日を取得して`JTable`の`0`列目を設定
--- 例: 週の最初の曜日はロケールがフランスや`ISO-8601`標準の場合は月曜日、アラビアなら土曜日になる
+-- 週の最初の曜日はロケールがフランスや`ISO-8601`標準の場合は月曜日、アラビアなら土曜日になる
 
 #twocolumn
 `java -Duser.language=fr -jar example.jar`
@@ -104,12 +104,13 @@ private class CalendarTableRenderer extends DefaultTableCellRenderer {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/time/temporal/WeekFields.html#getFirstDayOfWeek-- WeekFields#getFirstDayOfWeek() (Java Platform SE 8)]
 - [https://tips4java.wordpress.com/2015/04/22/local-date-combo/ Local Date Combo « Java Tips Weblog]
 - [[JListで月のカーソルキー移動や、週を跨いた日付を範囲選択が可能なカレンダーを作成する>Swing/CalendarViewList]]
 -- `JTable`ではなく、`JList`を使用すると上下カーソルキーで週を跨いだ日付の範囲選択が可能
+- [[Localeに対応した順序の年月パターンでカレンダータイトルを表示する>Swing/LocalizedYearMonthPattern]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

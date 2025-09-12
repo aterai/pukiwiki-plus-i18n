@@ -1,0 +1,63 @@
+---
+category: swing
+folder: RadioCard
+title: JToggleButton内に選択状態を同期したJRadioButtonを描画する
+tags: [JToggleButton, JRadioButton, JLayer]
+author: aterai
+pubdate: 2024-11-04T06:54:59+09:00
+description: JTobbleButton内に選択状態を同期したJRadioButtonと複数行テキストを描画してRadioCardを作成します。
+image: https://drive.google.com/uc?id=1tPWnvgh7N8d-190hKXGddYm9Q71HdwoN
+---
+* Summary [#summary]
+`JTobbleButton`内に選択状態を同期した`JRadioButton`と複数行テキストを描画して`RadioCard`を作成します。
+
+#download(https://drive.google.com/uc?id=1tPWnvgh7N8d-190hKXGddYm9Q71HdwoN)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+private static Component makeRadioIconLayer(AbstractButton button) {
+  JRadioButton radio = new JRadioButton();
+  radio.setOpaque(false);
+  Dimension d = radio.getPreferredSize();
+  Insets i = button.getInsets();
+  button.setMargin(new Insets(i.top, d.width, i.bottom, i.right));
+  button.setPreferredSize(button.getPreferredSize());
+  button.setVerticalAlignment(SwingConstants.TOP);
+  LayerUI<AbstractButton> layer = new LayerUI<AbstractButton>() {
+    @Override public void paint(Graphics g, JComponent c) {
+      super.paint(g, c);
+      if (c instanceof JLayer) {
+        AbstractButton b = (AbstractButton) ((JLayer<?>) c).getView();
+        Graphics2D g2 = (Graphics2D) g.create();
+        radio.setSelected(b.isSelected());
+        int x = i.left - d.width + 8;
+        int y = i.top + 8;
+        SwingUtilities.paintComponent(
+            g2, radio, b, x, y, d.width, d.height);
+        g2.dispose();
+      }
+    }
+  };
+  return new JLayer<>(button, layer);
+}
+}}
+
+* Description [#description]
+- `JTobbleButton`に`<html>`タグで複数行のテキストを設定してカードを作成
+- `JTobbleButton`に`JLayer`を設定してその左余白に`JRadioButton`を描画
+-- `JTobbleButton`に`JLayer`を適用するとその高さが一行分？まで縮小してしまう？
+-- `JLayer`を適用する前の推奨サイズを`JTobbleButton#setPreferredSize(...)`で設定してこれを回避
+-- この回避方法は`LookAndFeel`の変更には対応していない
+- `LayerUI#paint(...)`をオーバーライドして`SwingUtilities.paintComponent(...)`で`JRadioButton`を描画しているので`JRadioButton`のクリックは親の`JTobbleButton`のクリックになる
+-- `LayerUI#paint(...)`内で`radio.setSelected(toggle.isSelected())`を実行して`JRadioButton`と`JTobbleButton`の選択状態が同期するよう設定
+
+* Reference [#reference]
+- [[OverlayLayoutの使用>Swing/OverlayLayout]]
+-- `OverlayLayout`で`JRadioButton`と`JTobbleButton`を重ねて配置する方法もある
+- [[HTMLEditorKitを適用したJEditorPaneのフォームにコンポーネントを表示する>Swing/FormViewInputComponent]]
+-- `<input type='radio' ...>`のような`html`タグで`JRadioButton`を配置する方法もある？
+- [[JRadioButtonのデフォルトアイコンをサムネイルに変更する>Swing/RadioButtonSelectedBorder]]
+
+* Comment [#comment]
+#comment
+#comment

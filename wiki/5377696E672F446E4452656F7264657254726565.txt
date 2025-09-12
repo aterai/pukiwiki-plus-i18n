@@ -1,0 +1,306 @@
+---
+category: swing
+folder: DnDReorderTree
+title: JTreeのノードをドラッグ＆ドロップで並べ替える
+tags: [JTree, TransferHandler, DragAndDrop]
+author: aterai
+pubdate: 2024-06-10T03:24:38+09:00
+description: JTreeのノードをドラッグ＆ドロップで並べ替え可能なTransferHandlerを作成します。
+image: https://drive.google.com/uc?id=14E0UrPnB-drw7GaVDD-qvAaXYYul5Bwd
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2024/06/drag-and-drop-to-rearrange-nodes-in.html
+    lang: en
+---
+* Summary [#summary]
+`JTree`のノードをドラッグ＆ドロップで並べ替え可能な`TransferHandler`を作成します。
+
+#download(https://drive.google.com/uc?id=14E0UrPnB-drw7GaVDD-qvAaXYYul5Bwd)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class TreeTransferHandler extends TransferHandler {
+  private final DataFlavor nodesFlavor = new DataFlavor(
+      List.class, "List of TreeNode");
+
+  @Override public int getSourceActions(JComponent c) {
+    return c instanceof JTree
+        && TreeUtils.canStartDrag((JTree) c) ? COPY_OR_MOVE : NONE;
+  }
+
+  @Override protected Transferable createTransferable(JComponent c) {
+    Transferable transferable = null;
+    if (c instanceof JTree && ((JTree) c).getSelectionPaths() != null) {
+      List<MutableTreeNode> copies = new ArrayList<>();
+      Arrays.stream(((JTree) c).getSelectionPaths()).forEach(path -> {
+        DefaultMutableTreeNode node =
+            (DefaultMutableTreeNode) path.getLastPathComponent();
+        DefaultMutableTreeNode clone =
+            new DefaultMutableTreeNode(node.getUserObject());
+        copies.add(TreeUtils.deepCopy(node, clone));
+      });
+      transferable = new Transferable() {
+        @Override public DataFlavor[] getTransferDataFlavors() {
+          return new DataFlavor[] {nodesFlavor};
+        }
+
+        @Override public boolean isDataFlavorSupported(
+            DataFlavor flavor) {
+          return Objects.equals(nodesFlavor, flavor);
+        }
+
+        @Override public Object getTransferData(DataFlavor flavor)
+            throws UnsupportedFlavorException {
+          if (isDataFlavorSupported(flavor)) {
+            return copies;
+          } else {
+            throw new UnsupportedFlavorException(flavor);
+          }
+        }
+      };
+    }
+    return transferable;
+  }
+
+  @Override public boolean canImport(TransferSupport support) {
+    DropLocation dl = support.getDropLocation();
+    Component c = support.getComponent();
+    return support.isDrop()
+        && support.isDataFlavorSupported(nodesFlavor)
+        && c instanceof JTree
+        && dl instanceof JTree.DropLocation
+        && TreeUtils.canImportDropLocation(
+            (JTree) c, (JTree.DropLocation) dl);
+  }
+
+  @Override public boolean importData(TransferSupport support) {
+    Component c = support.getComponent();
+    DropLocation dl = support.getDropLocation();
+    Transferable transferable = support.getTransferable();
+    return canImport(support)
+        && c instanceof JTree
+        && dl instanceof JTree.DropLocation
+        && insertNode((JTree) c, (JTree.DropLocation) dl, transferable);
+  }
+
+  private boolean insertNode(
+      JTree tree, JTree.DropLocation dl, Transferable transferable) {
+    TreePath path = dl.getPath();
+    Object p = path.getLastPathComponent();
+    TreeModel m = tree.getModel();
+    List<?> nodes = getTransferData(transferable);
+    if (p instanceof MutableTreeNode && m instanceof DefaultTreeModel) {
+      MutableTreeNode parent = (MutableTreeNode) p;
+      DefaultTreeModel model = (DefaultTreeModel) m;
+      int childIndex = dl.getChildIndex();
+      AtomicInteger index = new AtomicInteger(
+          getDropIndex(parent, childIndex));
+      nodes.stream()
+          .filter(MutableTreeNode.class::isInstance)
+          .map(MutableTreeNode.class::cast)
+          .forEach(n -> model.insertNodeInto(
+               n, parent, index.getAndIncrement()));
+    }
+    return !nodes.isEmpty();
+  }
+
+  private static int getDropIndex(
+      MutableTreeNode parent, int childIndex) {
+    // Configure for drop mode.
+    int index = childIndex; // DropMode.INSERT
+    if (childIndex == -1) { // DropMode.ON
+      index = parent.getChildCount();
+    }
+    return index;
+  }
+
+  private List<?> getTransferData(Transferable t) {
+    List<?> nodes;
+    try {
+      nodes = (List<?>) t.getTransferData(nodesFlavor);
+    } catch (UnsupportedFlavorException | IOException ex) {
+      nodes = Collections.emptyList();
+    }
+    return nodes;
+  }
+
+  @Override protected void exportDone(
+      JComponent src, Transferable data, int action) {
+    if (src instanceof JTree && (action & MOVE) == MOVE) {
+      cleanup((JTree) src);
+    }
+  }
+
+  private void cleanup(JTree tree) {
+    DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+    TreePath[] selectionPaths = tree.getSelectionPaths();
+    if (selectionPaths != null) {
+      for (TreePath path : selectionPaths) {
+        model.removeNodeFromParent(
+            (MutableTreeNode) path.getLastPathComponent());
+      }
+    }
+  }
+}
+}}
+
+* Description [#description]
+- `TreeSelectionModel.CONTIGUOUS_TREE_SELECTION`を設定して複数の連続パス(選択範囲の項目は連続している)を選択可能に変更
+- `TransferHandler.getCutAction().getValue(Action.NAME)`キーで実行するアクションを空アクションに変更して、KBD{Ctrl-X}キーでのノードカットを無効化
+- `TransferHandler#getSourceActions(...)`をオーバーライドしてルートノード(ノードレベルが`0`)ではない、かつ選択されているノードはすべて兄弟ノード(ノードレベルが同じ)となる場合はドラッグ開始可能に設定
+
+#code{{
+@Override public int getSourceActions(JComponent c) {
+  return c instanceof JTree && TreeUtils.canStartDrag((JTree) c) ? MOVE : NONE;
+}
+
+public static boolean canStartDrag(JTree tree) {
+  TreePath[] paths = tree.getSelectionPaths();
+  return paths != null && canStartDragPaths(paths);
+}
+
+public static boolean canStartDragPaths(TreePath... paths) {
+  return Arrays.stream(paths)
+      .map(TreePath::getLastPathComponent)
+      .filter(DefaultMutableTreeNode.class::isInstance)
+      .map(DefaultMutableTreeNode.class::cast)
+      .map(DefaultMutableTreeNode::getLevel)
+      .distinct()
+      .filter(level -> level != 0)
+      .count() == 1;
+}
+}}
+
+- `TransferHandler#canImport(...)`をオーバーライドしてドロップ先がドラッグ元の子孫ノードではない、かつドラッグ元の選択ノード範囲外の場合ドロップ可能に設定
+
+#code{{
+@Override public boolean canImport(TransferSupport support) {
+  DropLocation dl = support.getDropLocation();
+  Component c = support.getComponent();
+  return support.isDrop()
+      && support.isDataFlavorSupported(nodesFlavor)
+      && c instanceof JTree
+      && dl instanceof JTree.DropLocation
+      && TreeUtils.canImportDropLocation(
+          (JTree) c, (JTree.DropLocation) dl);
+}
+
+public static boolean canImportDropLocation(
+    JTree tree, JTree.DropLocation dl) {
+  // Do not allow drop to descendant and drag-source selections
+  // int dropRow = tree.getRowForPath(dl.getPath());
+  Point pt = dl.getDropPoint();
+  int dropRow = tree.getRowForLocation(pt.x, pt.y);
+  int[] selRows = tree.getSelectionRows();
+  return selRows != null && IntStream
+      .of(selRows)
+      .noneMatch(r -> r == dropRow || isDescendant(tree, r, dropRow));
+}
+
+private static boolean isDescendant(JTree tree, int selRow, int dropRow) {
+  Object node = tree.getPathForRow(selRow).getLastPathComponent();
+  return node instanceof DefaultMutableTreeNode
+      && isDescendant2(tree, dropRow, (DefaultMutableTreeNode) node);
+}
+
+private static boolean isDescendant2(
+    JTree tree, int dropRow, DefaultMutableTreeNode node) {
+  Enumeration<?> e = node.depthFirstEnumeration();
+  return Collections.list(e)
+      .stream()
+      .filter(DefaultMutableTreeNode.class::isInstance)
+      .map(DefaultMutableTreeNode.class::cast)
+      .map(DefaultMutableTreeNode::getPath)
+      .map(TreePath::new)
+      .map(tree::getRowForPath)
+      .anyMatch(row -> row == dropRow);
+  }
+}}
+
+- `TransferHandler#importData(...)`をオーバーライドして`DefaultTreeModel#insertNodeInto()`でドラッグされた選択ノードをコピー
+-- [[JTreeのノードをドラッグ＆ドロップ>Swing/DnDTree]]
+-- `JTree.DropLocation#getChildIndex()`が`-1`になる場合はノード上にドロップ、それ以外の場合はノード間にドロップされる
+
+#code{{
+@Override public boolean importData(TransferSupport support) {
+  Component c = support.getComponent();
+  DropLocation dl = support.getDropLocation();
+  Transferable transferable = support.getTransferable();
+  return canImport(support)
+      && c instanceof JTree
+      && dl instanceof JTree.DropLocation
+      && insertNode((JTree) c, (JTree.DropLocation) dl, transferable);
+}
+
+private boolean insertNode(
+    JTree tree, JTree.DropLocation dl, Transferable transferable) {
+  TreePath path = dl.getPath();
+  Object p = path.getLastPathComponent();
+  TreeModel m = tree.getModel();
+  List<?> nodes = getTransferData(transferable);
+  if (p instanceof MutableTreeNode && m instanceof DefaultTreeModel) {
+    MutableTreeNode parent = (MutableTreeNode) p;
+    DefaultTreeModel model = (DefaultTreeModel) m;
+    int childIndex = dl.getChildIndex();
+    AtomicInteger index = new AtomicInteger(
+        getDropIndex(parent, childIndex));
+    nodes.stream()
+        .filter(MutableTreeNode.class::isInstance)
+        .map(MutableTreeNode.class::cast)
+        .forEach(n -> model.insertNodeInto(
+            n, parent, index.getAndIncrement()));
+  }
+  return !nodes.isEmpty();
+}
+
+private static int getDropIndex(MutableTreeNode parent, int childIndex) {
+  // Configure for drop mode.
+  int index = childIndex; // DropMode.INSERT
+  if (childIndex == -1) { // DropMode.ON
+    index = parent.getChildCount();
+  }
+  return index;
+}
+
+private List<?> getTransferData(Transferable t) {
+  List<?> nodes;
+  try {
+    nodes = (List<?>) t.getTransferData(nodesFlavor);
+  } catch (UnsupportedFlavorException | IOException ex) {
+    nodes = Collections.emptyList();
+  }
+  return nodes;
+}
+}}
+
+- `TransferHandler#exportDone(...)`をオーバーライドしてドロップアクションが`MOVE`の場合はドロップ元の選択ノードを削除
+-- KBD{Ctrl}キーが押下されてドロップアクションが`COPY`の場合はなにも実行しない
+
+#code{{
+@Override protected void exportDone(
+    JComponent src, Transferable data, int action) {
+  if (src instanceof JTree && (action & MOVE) == MOVE) {
+    cleanup((JTree) src);
+  }
+}
+
+private void cleanup(JTree tree) {
+  DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+  TreePath[] selectionPaths = tree.getSelectionPaths();
+  if (selectionPaths != null) {
+    for (TreePath path : selectionPaths) {
+      model.removeNodeFromParent(
+          (MutableTreeNode) path.getLastPathComponent());
+    }
+  }
+}
+}}
+
+* Reference [#reference]
+- [https://www.coderanch.com/t/346509/java/JTree-drag-drop-tree-Java JTree - drag and drop inside one tree - Java 1.6 (Swing / AWT / SWT forum at Coderanch)]
+- [https://stackoverflow.com/questions/4588109/drag-and-drop-nodes-in-jtree java - Drag and Drop nodes in JTree - Stack Overflow]
+- [[JTreeのノードをドラッグ＆ドロップ>Swing/DnDTree]]
+
+
+* Comment [#comment]
+#comment
+#comment

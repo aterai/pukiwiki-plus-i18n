@@ -8,12 +8,12 @@ pubdate: 2011-10-10T19:26:38+09:00
 description: JDK 7で導入されたJLayerを利用して指定したコンポーネントへの入力を禁止します。
 image: https://lh3.googleusercontent.com/-fJbneWE3WB4/TpLGoNbk1TI/AAAAAAAABDk/GJWfhRR4UB0/s800/DisableInputLayer.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JDK 7`で導入された`JLayer`を利用して指定したコンポーネントへの入力を禁止します。
 
 #download(https://lh3.googleusercontent.com/-fJbneWE3WB4/TpLGoNbk1TI/AAAAAAAABDk/GJWfhRR4UB0/s800/DisableInputLayer.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DisableInputLayerUI extends LayerUI<JPanel> {
   private static final String CMD_REPAINT = "repaint";
@@ -80,7 +80,7 @@ class DisableInputLayerUI extends LayerUI<JPanel> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JLayer`を設定した任意のコンポーネントへの入力可・不可を切り替えることができます。
 
 - 入力禁止中に半透明グレー表示
@@ -90,9 +90,9 @@ class DisableInputLayerUI extends LayerUI<JPanel> {
 - マウスカーソルを砂時計に変更
 -- `Cursor.WAIT_CURSOR`を設定した`GlassPane`の表示を切り替える
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Cursorを砂時計に変更>Swing/WaitCursor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

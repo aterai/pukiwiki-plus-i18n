@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2009/11/add-jinternalframe-to-undecorated.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFrame`のタイトルバーなどを非表示にし、`JInternalFrame`のタイトルバーでこれらを代用します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTOo9LcVwI/AAAAAAAAAcs/fUEpKhXr_aI/s800/InternalFrameTitleBar.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JInternalFrame internal = new JInternalFrame("@title@");
 BasicInternalFrameUI ui = (BasicInternalFrameUI) internal.getUI();
@@ -53,7 +53,7 @@ focusManager.addPropertyChangeListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JInternalFrame`のタイトルバーを使用することでタイトルバーに閉じるボタンのないフレームを作成しています。
 
 - `JFrame#setUndecorated(true)`で`JFrame`のタイトルバーなどを非表示
@@ -66,12 +66,12 @@ focusManager.addPropertyChangeListener(e -> {
 - %%角の透明化には未対応%%
 -- 目立たなくするために、`LookAndFeel`は`Nimbus`に変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JWindowをマウスで移動>Swing/DragWindow]]
 - [[JFrameのタイトルバーなどの装飾を独自のものにカスタマイズする>Swing/CustomDecoratedFrame]]
 - [[JRootPaneにリサイズのための装飾を設定する>Swing/WindowDecorationStyle]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JFrame`のアクティブ状態が変わったら、`JInternalFrame`の選択状態も変化するように変更。 -- &user(aterai); &new{2009-11-13 (金) 14:57:18};
 - リサイズ可能？にする場合のテスト。 -- &user(aterai); &new{2010-06-10 (木) 15:07:18};

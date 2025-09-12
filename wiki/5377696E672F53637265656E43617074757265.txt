@@ -8,12 +8,12 @@ pubdate: 2021-12-13T00:03:40+09:00
 description: Robotでスクリーンショット画像を取得し、背景画像として描画することでJFrameを半透明に見せかけます。
 image: https://drive.google.com/uc?id=1e9aL18WI4SjJp5iHgshLy4Kx0XGw0nMD
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Robot`をでスクリーンショット画像を取得し、背景画像として描画することで`JFrame`を半透明に見せかけます。
 
 #download(https://drive.google.com/uc?id=1e9aL18WI4SjJp5iHgshLy4Kx0XGw0nMD)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private final transient Robot robot;
 private final Rectangle screenRect;
@@ -46,7 +46,7 @@ public void updateBackground() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは`Robot#createScreenCapture(...)`メソッドを使用してデスクトップのスクリーンショットを取得して`JPanel`の背景として描画することで`JFrame`が半透明であるかのように表示しています。
 
 - `Robot#createScreenCapture(...)`で取得した画像に`ConvolveOp`でぼかし効果を設定
@@ -59,11 +59,11 @@ public void updateBackground() {
 - `JFrame`に`WindowListener`を追加してアイコン化が解除されるとスクリーン画像を更新
 - たとえば別ウィンドウにフォーカス移動してその位置を変更したりマウスホイールなどでバックグラウンドのウィンドウを更新してもスクリーン画像は更新していないので`JFrame`に描画している背景画像とずれが発生する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFrameを半透明化>Swing/WindowOpacity]]
 -- `JFrame.setDefaultLookAndFeelDecorated(true); JFrame#setBackground(new Color(0x0, true));`などで`JFrame`を半透明化する場合は`SystemLookAndFeel`などで使用不可、また`ConvolveOp`などを適用してぼかし効果なども不可となる
 - [https://stackoverflow.com/questions/70234904/how-to-make-the-jframe-contentpane-transparent-but-the-jframe-visible java - How to make the JFrame contentPane transparent but the JFrame visible? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

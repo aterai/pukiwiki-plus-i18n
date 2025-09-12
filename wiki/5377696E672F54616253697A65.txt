@@ -8,12 +8,12 @@ pubdate: 2005-04-25T00:01:26+09:00
 description: JTextPaneのStyledDocumentが使用するパラグラフ属性として、タブストップが展開する文字数を設定します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTUxfmvVtI/AAAAAAAAAmk/hIXOEpGYKYw/s800/TabSize.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextPane`の`StyledDocument`が使用するパラグラフ属性として、タブストップが展開する文字数を設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTUxfmvVtI/AAAAAAAAAmk/hIXOEpGYKYw/s800/TabSize.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 textpane.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 FontMetrics fm = textpane.getFontMetrics(textpane.getFont());
@@ -30,18 +30,18 @@ int l = textpane.getDocument().getLength();
 textpane.getStyledDocument().setParagraphAttributes(0, l, attrs, false);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTextArea`
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextArea.html#setTabSize-int- JTextArea#setTabSize(int)]メソッドでタブサイズの指定が可能
 - `JTextPane`
 -- `JTextPane`から`StyledDocument`を取得し、`TabStop`から作成した`TabSet`をパラグラフ属性として追加することでタブの幅を指定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/TabSet.html TabSet (Java Platform SE 8)]
 // - [https://community.oracle.com/thread/1507037 Swing (Archive) - tabsize in JTextPane]
 - [[JTextPaneにTabSetを設定してTabStopの文字列揃えをテストする>Swing/TabSet]]
 - [[JTextFieldにタブ文字を挿入する>Swing/InsertTabIntoTextField]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

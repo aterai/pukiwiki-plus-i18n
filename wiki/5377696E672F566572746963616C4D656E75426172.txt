@@ -1,0 +1,75 @@
+---
+category: swing
+folder: VerticalMenuBar
+title: JMenuBarのレイアウトを変更して垂直方向にJMenuを配置する
+tags: [JMenuBar, LayoutManager, BoxLayout, JMenu, JPopupMenu]
+author: aterai
+pubdate: 2024-07-15T05:50:16+09:00
+description: JMenuBarのレイアウトを垂直BoxLayoutに変更してJMenuを垂直方向に並べて配置するサイドバーを作成します。
+image: https://drive.google.com/uc?id=1VnITMJfQEzvdh732gTpWAwrSRpBGKkYF
+---
+* Summary [#summary]
+`JMenuBar`のレイアウトを垂直`BoxLayout`に変更して`JMenu`を垂直方向に並べて配置するサイドバーを作成します。
+
+#download(https://drive.google.com/uc?id=1VnITMJfQEzvdh732gTpWAwrSRpBGKkYF)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JMenuBar menuBar = new JMenuBar() {
+  @Override public void updateUI() {
+    super.updateUI();
+    setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+    // setLayout(new GridLayout(0, 1, 2, 2));
+    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+  }
+};
+initMenuBar(menuBar);
+MenuListener listener = new MenuListener() {
+  @Override public void menuSelected(MenuEvent e) {
+    Object src = e.getSource();
+    if (src instanceof JMenu && ((JMenu) src).isTopLevelMenu()) {
+      EventQueue.invokeLater(() -> {
+        JMenu menu = (JMenu) src;
+        Point loc = menu.getLocationOnScreen();
+        loc.x += menu.getWidth();
+        menu.getPopupMenu().setLocation(loc);
+      });
+    }
+  }
+
+  @Override public void menuDeselected(MenuEvent e) {
+    // Do nothing
+  }
+
+  @Override public void menuCanceled(MenuEvent e) {
+    // Do nothing
+  }
+};
+for (MenuElement m : menuBar.getSubElements()) {
+  if (m instanceof JMenu) {
+    JMenu menu = (JMenu) m;
+    menu.addMenuListener(listener);
+    Dimension d = menu.getMaximumSize();
+    d.width = Short.MAX_VALUE;
+    menu.setMaximumSize(d);
+  }
+}
+}}
+
+* Description [#description]
+- `JMenuBar#setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))`して`JMenuBar`のレイアウトを水平`BoxLayout`から垂直`BoxLayout`に変更
+-- [[BoxLayoutでリスト状に並べる>Swing/ComponentList]]
+-- `JSeparator`などを使用せず、縦`JMenuBar`のすべての子`Component`の高さが同じでよい場合は、`JMenuBar#setLayout(new GridLayout(0, 1))`で`JMenuBar`のレイアウトを行数指定なしで`1`列のグリッドに変更する方法もある
+- `JMenuBar`の子`MenuElement`でトップレベル`JMenu`を`JMenuBar#getSubElements()`で取得し、その`JMenu`が開く`JPopupMenu`の表示位置を修正する`MenuListener`を追加
+-- このサンプルでは`MenuListener#menuSelected(MenuEvent)`で親フレームの左側に配置された場合を想定して`JMenuBar`の幅だけ`x`座標を右に移動
+-- [[JToolBar内にJMenuBarを配置して分離・移動可能に設定する>Swing/FloatableMenuBar]]
+-- トップレベル`JMenu`以外は表示位置の修正は不要
+
+* Reference [#reference]
+- [[JTreeとCardLayoutでサイドメニューを作成する>Swing/VerticalNavigationMenu]]
+- [[BoxLayoutでリスト状に並べる>Swing/ComponentList]]
+- [[JToolBar内にJMenuBarを配置して分離・移動可能に設定する>Swing/FloatableMenuBar]]
+
+* Comment [#comment]
+#comment
+#comment

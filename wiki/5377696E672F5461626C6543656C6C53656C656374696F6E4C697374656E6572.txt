@@ -8,12 +8,12 @@ pubdate: 2018-02-26T17:40:02+09:00
 description: JTableの行と列のSelectionModelにListSelectionListenerを追加し、選択されたセルの情報を書き出すテストを行っています。
 image: https://drive.google.com/uc?id=1d_wUBKZrFO5wKccZ3b2qiE0J8zKc-Q9QVQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の行と列の`SelectionModel`に`ListSelectionListener`を追加し、選択されたセルの情報を書き出すテストを行っています。
 
 #download(https://drive.google.com/uc?id=1d_wUBKZrFO5wKccZ3b2qiE0J8zKc-Q9QVQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table1 = new JTable(model);
 table1.setCellSelectionEnabled(true);
@@ -47,7 +47,7 @@ abstract class AbstractTableCellSelectionListener implements ListSelectionListen
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTable`
 -- `JTable#getSelectionModel()`と`JTable#getColumnModel()#getSelectionModel()`で取得した行と列の`SelectionModel`に共通の`ListSelectionListener`を追加し、選択されたセルの内容と行列番号を表示
 -- `JTable#getSelectedRow()`と`JTable#getSelectedColumn()`を使用しているため、KBD{Shift}+クリックなどで範囲選択した場合アンカーインデックスが現在選択しているセルになる
@@ -68,7 +68,7 @@ abstract class AbstractTableCellSelectionListener implements ListSelectionListen
 -- `JTable#changeSelection(...)`メソッドをオーバーライドして選択セル情報を書き出す
 -- 範囲選択中(`ListSelectionEvent#getValueIsAdjusting()`)を除外していないため、マウスでドラッグされたセル情報などもすべて書き出される
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableで行を選択>Swing/RowSelection]]
 - [[JTableの選択状態を変更>Swing/ChangeSelection]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/ListSelectionEvent.html#getFirstIndex-- ListSelectionEvent#getFirstIndex() (Java Platform SE 8)]
@@ -76,6 +76,6 @@ abstract class AbstractTableCellSelectionListener implements ListSelectionListen
  <code>getFirstIndex()&amp;lt;= getLastIndex()</code>
  getFirstIndex()&lt;= getLastIndex()
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

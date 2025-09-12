@@ -8,12 +8,12 @@ pubdate: 2022-06-13T00:28:07+09:00
 description: TitledBorderを背景色を変更する方法をテストします。
 image: https://drive.google.com/uc?id=1zy01CxlpcrOEL_AdTSgJlNpKaq75VB5f
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TitledBorder`を背景色を変更する方法をテストします。
 
 #download(https://drive.google.com/uc?id=1zy01CxlpcrOEL_AdTSgJlNpKaq75VB5f)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPanel p1 = new JPanel() {
   @Override protected void paintComponent(Graphics g) {
@@ -29,7 +29,7 @@ p1.setOpaque(false);
 p1.setBorder(BorderFactory.createTitledBorder(title));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default TitledBorder`
 -- デフォルトでは`TitledBorder`で使用される`JLabel`は`isOpaque() == true`なので`TitledBorder`を設定した`JPanel`ではなくその親`JPanel`の背景色が表示される
 
@@ -90,7 +90,7 @@ panel.add(box);
 panel.add(p);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/72578926/how-to-set-background-within-the-titled-border java - How to set background within the titled border? - Stack Overflow]
 - [[Borderの右下にJComponentを配置>Swing/RightAlignComponentBorder]]
 - [[BorderにJComponentを配置>Swing/ComponentTitledBorder]]
@@ -98,6 +98,6 @@ panel.add(p);
 - [[TitledBorderにタイトル文字列までの内余白を設定する>Swing/TitledBorderHorizontalInsetOfText]]
 - [https://bugs.openjdk.org/browse/JDK-8213531 &#91;JDK-8213531&#93; Test javax/swing/border/TestTitledBorderLeak.java fails - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

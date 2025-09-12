@@ -8,12 +8,12 @@ pubdate: 2011-01-31T15:26:03+09:00
 description: TrayIconをクリックしてJPopupMenuを表示します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TUZUBCgOGJI/AAAAAAAAA0A/Ox5g3HoxmoI/s800/TrayIconPopupMenu.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TrayIcon`をクリックして`JPopupMenu`を表示します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TUZUBCgOGJI/AAAAAAAAA0A/Ox5g3HoxmoI/s800/TrayIconPopupMenu.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 SystemTray tray  = SystemTray.getSystemTray();
 Image image = new ImageIcon(getClass().getResource("16x16.png")).getImage();
@@ -55,7 +55,7 @@ icon.addMouseListener(new MouseAdapter() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JDK 1.6.0`の`TrayIcon`は`java.awt.PopupMenu`のみ設定可能で`javax.swing.JPopupMenu`は使用不可になっています。そのため上記のサンプルでは、装飾なし(`setUndecorated(true)`)でサイズが`0x0`の`JDialog`を適当な位置(`TrayIcon`のクリックで`JPopupMenu`が開いたように見える場所)に配置し、これを親にして`javax.swing.JPopupMenu`を表示しています。
 
 - `PopupMenu`ではなく`JPopupMenu`が使用できるので以下が可能
@@ -120,14 +120,14 @@ private static Point adjustPopupLocation(
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://web.archive.org/web/20090327054056/http://weblogs.java.net/blog/alexfromsun/archive/2008/02/jtrayicon_updat.html Alexander Potochkin's Blog: JTrayIcon update]
 -- [https://github.com/floscher/swinghelper/blob/master/src/java/org/jdesktop/swinghelper/tray/JXTrayIcon.java swinghelper/JXTrayIcon.java at master · floscher/swinghelper · GitHub]
 - [https://docs.oracle.com/javase/tutorial/uiswing/misc/systemtray.html How to Use the System Tray (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Other Swing Features)]
 - [https://bugs.openjdk.org/browse/JDK-6285881 Bug ID: 6285881 JTrayIcon: support Swing JPopupMenus for tray icons]
 - [https://bugs.openjdk.org/browse/JDK-6453521 Bug ID: 6453521 TrayIcon should support transparency]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - ソースを上げ忘れていたのを修正。 -- &user(aterai); &new{2011-02-02 (水) 19:07:51};
 - `JRE1.6.0u3`で`2`度連続で右クリックすると`ClassCastException`起きちゃうんですよね・・・`BugParade`でも見つけらんなかったです -- &user(sawshun); &new{2011-10-25 (火) 18:45:38};

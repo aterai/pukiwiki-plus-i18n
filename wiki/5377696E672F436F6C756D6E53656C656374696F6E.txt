@@ -8,12 +8,12 @@ pubdate: 2005-04-04T03:22:43+09:00
 description: JTableHeaderをクリックしたとき、そのColumn以下にあるセルを全選択します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTJrC8DyhI/AAAAAAAAAUw/SO1wMAudBiE/s800/ColumnSelection.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTableHeader`をクリックしたとき、その`Column`以下にあるセルを全選択します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTJrC8DyhI/AAAAAAAAAUw/SO1wMAudBiE/s800/ColumnSelection.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(model);
 table.setCellSelectionEnabled(true);
@@ -33,16 +33,16 @@ header.addMouseListener(new MouseAdapter() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTableHeader`に`MouseListener`を追加し、`JTableHeader#columnAtPoint(Point)`メソッドを使ってマウスでクリックされた位置にある`TableColumn`を取得しています。
 
 - `TableColumn`全体の選択は`changeSelection`メソッドを`2`回使用することで実現している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableに行ヘッダを追加>Swing/TableRowHeader]]
 -- 行ヘッダをクリックして行の全選択
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - メモ: `2008-03-11`に[[JTableのセルにあるフォーカスを解除>Swing/AnchorSelection]]から移動でこのページを作成。 -- &user(aterai); &new{2013-02-20 (水) 15:21:27};
 

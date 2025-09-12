@@ -8,12 +8,12 @@ pubdate: 2006-05-15T09:36:24+09:00
 description: JListのレンダラーにJTextAreaを使って、異なる高さのセルを作成します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTK2Z8UOTI/AAAAAAAAAWo/7GoDkuVX8Fc/s800/DifferentCellHeight.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`のレンダラーに`JTextArea`を使って、異なる高さのセルを作成します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTK2Z8UOTI/AAAAAAAAAWo/7GoDkuVX8Fc/s800/DifferentCellHeight.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TextAreaRenderer<E extends String> extends JTextArea
                                          implements ListCellRenderer<E> {
@@ -64,16 +64,16 @@ private DefaultListModel makeList() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 右: デフォルトの`JList`
 - 左: 複数行に対応した`JList`
 -- `JList#getFixedCellHeight()`が`-1`で`ListCellRenderer`に`JTextArea`を使用しているため、テキストに`\n`を含めることで複数行が表示可能
 - セルの選択状態
 -- `UIManager.getBorder("List.focusCellHighlightBorder")`を使用するように変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#setFixedCellHeight-int- JList#setFixedCellHeight(int) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

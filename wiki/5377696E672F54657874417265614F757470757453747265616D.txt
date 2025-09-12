@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2015/02/logging-into-jtextarea.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Logger`のログ出力を`JTextArea`に表示するための`OutputStream`と`StreamHandler`を作成します。
 
 #download(https://lh3.googleusercontent.com/-SjJO0dTl1jg/VOChTiK0lPI/AAAAAAAANw4/elD2Gb4uBd0/s800/TextAreaOutputStream.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TextAreaOutputStream extends OutputStream {
   private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -48,7 +48,7 @@ class TextAreaOutputStream extends OutputStream {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `TextAreaOutputStream`
 -- `ByteArrayOutputStream`を使用して`JTextArea`に一行ずつ書き込みを行う
 -- これを`System.setOut(new PrintStream(new TextAreaOutputStream(textArea), true, "UTF-8"));`のように標準出力ストリームに割り当てると`System.out.println(...)`などで改行文字が書き込まれたときにバッファの`flush()`が呼び出され、`textArea.append(buf.toString("UTF-8"));`メソッドで`JTextArea`に文字列が追記される
@@ -78,12 +78,12 @@ class TextAreaHandler extends StreamHandler {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1366824 System.out.println() Print to JFrame | Oracle Community]
 - [http://www.dreamincode.net/forums/topic/117537-external-program-output-to-jtextarea/ External Program Output To JTextArea - Java | Dream.In.Code]
 - [https://altcla.hatenadiary.org/entry/20091029/1256824750 標準出力を JTextArea に出力する - As I like it.]
 - [https://tips4java.wordpress.com/2008/11/08/message-console/ Message Console « Java Tips Weblog]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

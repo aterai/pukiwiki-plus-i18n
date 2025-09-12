@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2021/02/create-jlist-heavyweight-cell-editor.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextPane`で中央揃え、行折返し可能なエディタを作成し、`JWindow`に追加してリストセルの編集に使用します。
 
 #download(https://drive.google.com/uc?id=1rvx8N6fXs-31JKGBXFSd18bMepyvmIqN)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class WrapLabelView extends LabelView {
   protected WrapLabelView(Element element) {
@@ -36,7 +36,7 @@ class WrapLabelView extends LabelView {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTextArea`
 -- `JTextArea#setLineWrap(true)`で行折返しが設定可能
 -- デフォルト左揃え、`JTextArea#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`で右揃えは可能だが、中央揃えは設定不可
@@ -52,11 +52,11 @@ StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
 doc.setParagraphAttributes(0, doc.getLength(), center, false);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextAreaとJFrameで幅固定、文字列の折り返し、親枠外まで高さ拡大可能なセルエディタを作成する>Swing/LineWrapListEditor]]
 - [https://stackoverflow.com/questions/30590031/jtextpane-line-wrap-behavior java - JTextPane line wrap behavior - Stack Overflow]
 - [[JWindow内にフォーカス可能なコンポーネントを配置する>Swing/JWindowFocus]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

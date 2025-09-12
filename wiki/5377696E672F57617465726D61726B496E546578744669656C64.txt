@@ -8,12 +8,12 @@ pubdate: 2009-10-26T13:04:26+09:00
 description: JTextFieldの文字列が空でフォーカスがない場合、透かし画像を表示するように設定します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWh1Qjh4I/AAAAAAAAApY/bLarzjLy7-8/s800/WatermarkInTextField.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`の文字列が空でフォーカスがない場合、透かし画像を表示するように設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWh1Qjh4I/AAAAAAAAApY/bLarzjLy7-8/s800/WatermarkInTextField.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class WatermarkTextField extends JTextField implements FocusListener {
   private final ImageIcon image;
@@ -48,18 +48,18 @@ class WatermarkTextField extends JTextField implements FocusListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上
 -- [[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]
 - 下
 -- `JTextField`の文字列が空でフォーカスも無い場合は文字列ではなく画像を表示
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]
 - [[JPasswordFieldにヒント文字列を描画する>Swing/InputHintPasswordField]]
 -- [[JTextFieldにフォーカスと文字列が無い場合の表示>Swing/GhostText]]の方法は`JPasswordField`に応用できないので、`JLabel`を配置することでヒント文字列を表示
 - [[JComboBoxでアイテムが選択されていない場合のプレースホルダ文字列を設定する>Swing/ComboBoxPlaceholder]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

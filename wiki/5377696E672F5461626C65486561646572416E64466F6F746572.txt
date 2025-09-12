@@ -1,0 +1,55 @@
+---
+category: swing
+folder: TableHeaderAndFooter
+title: JTableにフッターを追加する
+tags: [JTable, JTableHeader]
+author: aterai
+pubdate: 2024-08-26T15:27:13+09:00
+description: JTableにヘッダーとJTableHeaderで作成したソートやカラムの並び替え可能なフッターの両方を表示します。
+image: https://drive.google.com/uc?id=1QJk4oz_eDxOed_YbNINBidafY3YhM4WE
+---
+* Summary [#summary]
+`JTable`にヘッダーと`JTableHeader`で作成したソートやカラムの並び替え可能なフッターの両方を表示します。
+
+#download(https://drive.google.com/uc?id=1QJk4oz_eDxOed_YbNINBidafY3YhM4WE)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JTable table = new JTable(makeModel());
+table.setAutoCreateRowSorter(true);
+JTableHeader footer = new JTableHeader(table.getColumnModel());
+footer.setTable(table);
+JScrollPane south = new JScrollPane();
+JViewport vp = new JViewport();
+vp.setView(footer);
+south.setColumnHeader(vp);
+JPanel p = new JPanel(new BorderLayout());
+p.add(new JScrollPane(table));
+p.add(south, BorderLayout.SOUTH);
+}}
+
+* Description [#description]
+- `new JTableHeader(table.getColumnModel())`で`ColumnModel`を共有する`JTableHeader`を作成してフッターとして`JPanel`に配置
+-- `ColumnModel`の共有でヘッダー、フッターの両方でマウスでのカラム移動が同期可能
+-- フッターで`JTableHeader#setTable(table)`と親`JTable`を設定することでカラムクリックによるソートの同期が可能
+-- フッターカラムの幅をマウスでリサイズの不可
+--- ヘッダーカラムの幅をリサイズするとフッターカラムの幅も同期してリサイズは可能
+--- `BasicTableHeaderUI#changeColumnWidth(...)`で親の親が`JScrollPane`かをチェックしているのでフッターを`JScrollPane#setColumnHeader(...)`で`JScrollPane`に配置してもリサイズは不可のまま？
+
+#code{{
+Container container;
+JTable table;
+if ((th.getParent() == null) ||
+    ((container = th.getParent().getParent()) == null) ||
+    !(container instanceof JScrollPane) ||
+    ((table = th.getTable()) == null)) {
+    return 0;
+}
+}}
+
+* Reference [#reference]
+- [[JTableHeaderを非表示にする>Swing/RemoveTableHeader]]
+
+* Comment [#comment]
+#comment
+#comment

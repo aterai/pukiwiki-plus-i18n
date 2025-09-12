@@ -1,0 +1,79 @@
+---
+category: swing
+folder: TextFieldCaretScrollSapn
+title: JTextFieldでカーソルキーによる水平スクロールのスパンを変更する
+tags: [JTextField, Caret, LookAndFeel]
+author: aterai
+pubdate: 2025-01-06T01:05:24+09:00
+description: JTextFieldへのカーソルキー入力で水平スクロールが発生する場合のスクロールスパンを変更します。
+image: https://drive.google.com/uc?id=1tdPGBll2KYlWEut4sUdnNRs43VwGgBU5
+---
+* Summary [#summary]
+`JTextField`へのカーソルキー入力で水平スクロールが発生する場合のスクロールスパンを変更します。
+
+#download(https://drive.google.com/uc?id=1tdPGBll2KYlWEut4sUdnNRs43VwGgBU5)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+// @see WindowsTextFieldUI.WindowsFieldCaret
+class HorizontalScrollCaret extends DefaultCaret {
+  @Override protected void adjustVisibility(Rectangle r) {
+    EventQueue.invokeLater(() -> {
+      JTextComponent c = getComponent();
+      if (c instanceof JTextField) {
+        horizontalScroll((JTextField) c, r);
+      }
+    });
+  }
+
+  private void horizontalScroll(JTextField field, Rectangle r) {
+    TextUI ui = field.getUI();
+    int dot = getDot();
+    Position.Bias bias = Position.Bias.Forward;
+    Rectangle startRect = null;
+    try {
+      startRect = ui.modelToView(field, dot, bias);
+    } catch (BadLocationException ble) {
+      UIManager.getLookAndFeel().provideErrorFeedback(field);
+    }
+    Insets i = field.getInsets();
+    BoundedRangeModel vis = field.getHorizontalVisibility();
+    int x = r.x + vis.getValue() - i.left;
+    int n = 8;
+    int span = vis.getExtent() / n;
+    if (r.x < i.left) {
+      vis.setValue(x - span);
+    } else if (r.x + r.width > i.left + vis.getExtent()) {
+      vis.setValue(x - (n - 1) * span);
+    }
+    if (startRect != null) {
+      try {
+        Rectangle endRect = ui.modelToView(field, dot, bias);
+        if (endRect != null && !endRect.equals(startRect)) {
+          damage(endRect);
+        }
+      } catch (BadLocationException ble) {
+        UIManager.getLookAndFeel().provideErrorFeedback(field);
+      }
+    }
+  }
+}
+}}
+
+* Description [#description]
+- `LookAndFeel Default`
+-- デフォルトの`JTextField`では現在の`LookAndFeel`が使用する`Caret`に依存してカーソルキー入力による水平スクロールスパン(移動量)が決まる
+-- `MetalLookAndFeel`や`NimbusLookAndFeel`の場合、`DefaultCaret`が`JTextComponent#scrollRectToVisible(...)`を使用して`1`文字分ずつ滑らかにスクロールする
+-- `WindowsTextFieldUI`の場合、`WindowsTextFieldUI.WindowsFieldCaret`が同様に`JTextComponent#scrollRectToVisible(...)`を使用してスクロールするが、その移動量は`JTextField`に設定された`BoundedRangeModel`のエクステント(`JTextField`の表示可能なサイズ)の`1/4`(`int quarterSpan = vis.getExtent() / 4;`)ずつのスパンでジャンプ・スクロールになる
+- `DefaultCaret`
+-- `WindowsLookAndFeel`でも`1`文字分ずつスクロールするよう`JTextField`に`DefaultCaret`を設定
+- `override DefaultCaret#adjustVisibility(...)`
+-- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultCaret.html#adjustVisibility-java.awt.Rectangle- DefaultCaret#adjustVisibility(Rectangle)]をオーバーライドしてエクステントの`1/8`ずつのスパンでジャンプ・スクロールする`Caret`を作成し、`JTextField`に設定
+
+* Reference [#reference]
+- [[JTextFieldの表示領域をJScrollBarでスクロールする>Swing/HorizontalVisibility]]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultCaret.html#adjustVisibility-java.awt.Rectangle- DefaultCaret#adjustVisibility(Rectangle) (Java Platform SE 8 )]
+
+* Comment [#comment]
+#comment
+#comment

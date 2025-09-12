@@ -8,18 +8,18 @@ pubdate: 2017-06-19T14:42:19+09:00
 description: JTextFieldにActionListenerを追加して、Enterキーの入力を取得します。
 image: https://drive.google.com/uc?id=1JdoY_yKanCFgfCAle83WU8bgTJ7L4E4Cbg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`に`ActionListener`を追加して、KBD{Enter}キーの入力を取得します。
 
 #download(https://drive.google.com/uc?id=1JdoY_yKanCFgfCAle83WU8bgTJ7L4E4Cbg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextField textField2 = new JTextField("addActionListener");
 textField2.addActionListener(e -> append(((JTextField) e.getSource()).getText()));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTextField`に`ActionListener`などを追加してKBD{Enter}キーを入力した場合の動作をテストしています。
 
 - 上: `Default`
@@ -34,9 +34,9 @@ textField2.addActionListener(e -> append(((JTextField) e.getSource()).getText())
 -- 親の`JRootPane`に`DefaultButton`が設定されているかどうかに関わらずKBD{Enter}キー入力で自身に追加された`ActionListener`が実行される
 -- この`ActionListener`はマウスクリックには反応しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextField.html#addActionListener-java.awt.event.ActionListener- JTextField#addActionListener(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

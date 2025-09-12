@@ -8,12 +8,12 @@ pubdate: 2016-11-21T02:08:30+09:00
 description: JTreeのルートノードアイコンのみ、そのサイズを拡大し、アイコンの中央に垂直の接続線が描画されるように設定します。
 image: https://drive.google.com/uc?id=1L1Zx1voPr1qT2nXuxhHn1hJ8Kzqg1mK95A
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のルートノードアイコンのみ、そのサイズを拡大し、アイコンの中央に垂直の接続線が描画されるように設定します。
 
 #download(https://drive.google.com/uc?id=1L1Zx1voPr1qT2nXuxhHn1hJ8Kzqg1mK95A)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 int ow = UIManager.getIcon("Tree.openIcon").getIconWidth();
 int iw = 32;
@@ -46,7 +46,7 @@ LayerUI<JTree> layerUI = new LayerUI<JTree>() {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左: デフォルト
 -- `tree.setRowHeight(0)`で`TreeCellRenderer`が行の高さを決めるように設定
 -- ルートノードのアイコンのみサイズを変更する`TreeCellRenderer`を設定
@@ -60,9 +60,9 @@ LayerUI<JTree> layerUI = new LayerUI<JTree>() {
 -- 本来`JTree`のルートノードアイコンとして設定したいアイコンを`JLayer`を使用して描画
 -- ルートノードアイコンを繋ぐ垂直の接続線は中央に描画される
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/40544376/jtree-move-nodes-to-the-right java - JTree - Move nodes to the right - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

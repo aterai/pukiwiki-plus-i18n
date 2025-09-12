@@ -8,12 +8,12 @@ pubdate: 2007-08-27T12:33:13+09:00
 description: JDK 6で導入されたTableRowSorterでの行ソートを、テーブルヘッダのKBD{Shift}+クリックでクリアします。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJF8YbgvI/AAAAAAAAAT0/NDSO1fqmVNw/s800/ClearSortingState.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JDK 6`で導入された`TableRowSorter`での行ソートを、テーブルヘッダのKBD{Shift}+クリックでクリアします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJF8YbgvI/AAAAAAAAAT0/NDSO1fqmVNw/s800/ClearSortingState.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 table.setAutoCreateRowSorter(true);
 table.getTableHeader().addMouseListener(new MouseAdapter() {
@@ -40,17 +40,17 @@ table.getTableHeader().addMouseListener(new MouseAdapter() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`TableHeader`をKBD{Shift}キーを押しながらマウスクリックしたときに`TableRowSorter#setSortKeys`メソッドを使ってソートキーを空にすることでソート無しの状態に戻す機能を追加しています。
 
 - ソートキーになっていないカラムヘッダをKBD{Shift}+クリックした場合でもソート状態をクリアしてしまう
 - ドラッグ＆ドロップでの入れ替えは無効化する必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSorterDemoProject/src/components/TableSorter.java TableSorter.java]
 - [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
 - [[TableRowSorterのソートをヘッダクリックで昇順、降順、初期状態に変更>Swing/TriStateSorting]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

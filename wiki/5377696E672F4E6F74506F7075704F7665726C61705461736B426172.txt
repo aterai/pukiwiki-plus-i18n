@@ -8,12 +8,12 @@ pubdate: 2023-01-30T06:05:32+09:00
 description: JPopupMenuがTaskBarと重なる場合、マウスカーソル位置がその右下隅になるよう表示位置を調整し、内部のJMenuItemの配置も反転します。
 image: https://drive.google.com/uc?id=1qKrSZUuSGcLCP3cebYbv07ITdlv5w2_I
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPopupMenu`が`TaskBar`と重なる場合、マウスカーソル位置がその右下隅になるよう表示位置を調整し、内部の`JMenuItem`の配置も反転します。
 
 #download(https://drive.google.com/uc?id=1qKrSZUuSGcLCP3cebYbv07ITdlv5w2_I)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 List<Component> list = Arrays.asList(
     new JMenuItem("JMenuItem 1"),
@@ -44,7 +44,7 @@ list.forEach(popup::add);
 setComponentPopupMenu(popup);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JPopupMenu`の親コンポーネントが表示されている`GraphicsConfiguration`を取得
 -- `JPopupMenu#getCurrentGraphicsConfiguration(Point)`を参考
 
@@ -98,9 +98,9 @@ private static Rectangle getScreenBounds(Component c, Point popupLocation) {
 -- 左上隅から右下隅にマウスカーソル配置が変更されるので`JPopupMenu`内部の`JMenuItem`の配置もマウスカーソル移動距離が短くなるよう昇順から降順に変更
 -- `JPopupMenu#show(...)`内などで参照されている`popupPostionFixDisabled`は`popupPositionFixDisabled`の`typo`？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JPopupMenuの表示を親コンポーネント領域内のみに制限する>Swing/AdjustPopupLocation]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

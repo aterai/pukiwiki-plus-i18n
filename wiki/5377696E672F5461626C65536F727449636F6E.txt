@@ -8,12 +8,12 @@ pubdate: 2008-07-07T11:40:12+09:00
 description: JTableのソートアイコンを非表示にしたり、別の画像に変更します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUsaUYVkI/AAAAAAAAAmc/34Qz14LqOGc/s800/TableSortIcon.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のソートアイコンを非表示にしたり、別の画像に変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTUsaUYVkI/AAAAAAAAAmc/34Qz14LqOGc/s800/TableSortIcon.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class EmptyIcon implements Icon {
   @Override public void paintIcon(Component c, Graphics g, int x, int y) {
@@ -33,7 +33,7 @@ UIManager.put("Table.ascendingSortIcon", new IconUIResource(new EmptyIcon()));
 UIManager.put("Table.descendingSortIcon", new IconUIResource(new EmptyIcon()));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`UIManager`を使用して`JTable`のヘッダに表示されるソートアイコンを変更しています。
 
 - `Default`
@@ -43,10 +43,10 @@ UIManager.put("Table.descendingSortIcon", new IconUIResource(new EmptyIcon()));
 - `Custom`
 -- 透過`png`画像から生成したソートアイコンを表示
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/Icon.html Icon (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/UIManager.html#getLookAndFeelDefaults-- UIManager#getLookAndFeelDefaults() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

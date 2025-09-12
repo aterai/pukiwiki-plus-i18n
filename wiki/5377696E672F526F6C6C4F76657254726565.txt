@@ -8,12 +8,12 @@ pubdate: 2007-05-21T05:44:50+09:00
 description: JTreeのノード上にマウスカーソルがきたら、ハイライト表示します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTSHWXxwwI/AAAAAAAAAiQ/MP7tLgM--lo/s800/RollOverTree.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノード上にマウスカーソルがきたら、ハイライト表示します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTSHWXxwwI/AAAAAAAAAiQ/MP7tLgM--lo/s800/RollOverTree.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private final JTree tree = new JTree(makeModel()) {
   private final Color rolloverRowColor = new Color(220, 240, 255);
@@ -54,15 +54,15 @@ private final JTree tree = new JTree(makeModel()) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTree`に`MouseMotionListener`を設定して現在マウスカーソルが存在する行を記録
 - `DefaultTreeCellRenderer#getTreeCellRendererComponent(...)`メソッドをオーバーライドし、カーソル行の場合は`setOpaque(true)`でノードの不透明設定と`setForeground(Color)`で背景色を変更
 - `DefaultTreeCellRenderer`は`DefaultTableCellRenderer`とは異なり`DefaultTreeCellRenderer#getTextNonSelectionColor()`などのメソッドが使用可能
 -- `DefaultTableCellRenderer`には選択時の文字色や背景色を取得するメソッドが存在しないので`JTable#getSelectionBackground()`などを使用する必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeで条件に一致するノードを検索しハイライト>Swing/TreeNodeHighlightSearch]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

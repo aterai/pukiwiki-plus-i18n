@@ -8,12 +8,12 @@ pubdate: 2014-07-28T00:18:57+09:00
 description: NimbusLookAndFeelを使用している場合、コンポーネントの表示サイズをクライアントプロパティ設定で変更可能です。
 image: https://lh6.googleusercontent.com/-Uru9Oco4olg/U9T5RHzJ_5I/AAAAAAAACKY/7N7a3Ya3sYw/s800/ComponentSizeVariant.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`を使用している場合、コンポーネントの表示サイズをクライアントプロパティ設定で変更可能です。
 
 #download(https://lh6.googleusercontent.com/-Uru9Oco4olg/U9T5RHzJ_5I/AAAAAAAACKY/7N7a3Ya3sYw/s800/ComponentSizeVariant.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JMenu menu = new JMenu("Resizing a Component");
 ButtonGroup bg = new ButtonGroup();
@@ -23,7 +23,7 @@ Stream.of("regular", "mini", "small", "large")
 booleanRenderer.putClientProperty("JComponent.sizeVariant", "mini");
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `NimbusLookAndFeel`を使用している場合`JComponent#putClientProperty("JComponent.sizeVariant", "mini")`のようにクライアントプロパティを設定することでコンポーネントの表示サイズが変更可能
 -- デフォルトは`regular`、その他は小さい順に`mini`、`small`、`large`が設定可能
 -- `JComponent#updateUI()`を実行しないと更新されない
@@ -33,9 +33,9 @@ booleanRenderer.putClientProperty("JComponent.sizeVariant", "mini");
 -- `JTable`の`BooleanRenderer`が二回目以降変更されない
 --- 初回の`JCheckBox booleanRenderer = (JCheckBox) table.getDefaultRenderer(Boolean.class); booleanRenderer.putClientProperty("JComponent.sizeVariant", "mini");`は、正常に動作しているように見える
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/size.html Resizing a Component (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/04/move-large-numbers-of-items-to-another.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`の`ListModel`からの大量のアイテムを高速に削除する方法をテストします。
 
 #download(https://drive.google.com/uc?id=1w4uURJH6pPCGk68BT_XlCjxnZQlOxv1n7w)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static <E> void move1(JList<E> from, JList<E> to) {
   ListSelectionModel sm = from.getSelectionModel();
@@ -43,7 +43,7 @@ private static <E> void move1(JList<E> from, JList<E> to) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、大量のアイテムをもつ`JList`を左右に配置し、選択アイテムを「`>`」と「`<`」ボタンで移動するテストを行っています。
 
 - `default remove`(`5000`件)
@@ -103,10 +103,10 @@ unselectedRows.forEach(model::addRow);
 ----
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JList.html#setValueIsAdjusting-boolean- JList#setValueIsAdjusting(boolean)]は`ListSelectionModel`用なので`ListModel`のアイテム削除には無関係
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultListModel.html DefaultListModel (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractListModel.html AbstractListModel (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

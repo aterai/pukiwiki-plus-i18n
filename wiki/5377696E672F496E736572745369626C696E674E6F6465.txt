@@ -8,12 +8,12 @@ pubdate: 2016-07-04T00:56:54+09:00
 description: JTreeのノードを選択してポップアップメニューを開き、その前または後ろに新規ノードを挿入します。
 image: https://lh3.googleusercontent.com/-P_GnYongQ64/V3kweryY25I/AAAAAAAAOdI/CqWS6tum8402qaWo1130iBF5r1tVPkJCwCCo/s800/InsertSiblingNode.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードを選択してポップアップメニューを開き、その前または後ろに新規ノードを挿入します。
 
 #download(https://lh3.googleusercontent.com/-P_GnYongQ64/V3kweryY25I/AAAAAAAAOdI/CqWS6tum8402qaWo1130iBF5r1tVPkJCwCCo/s800/InsertSiblingNode.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Action addAboveAction = new AbstractAction("insert preceding sibling node") {
   @Override public void actionPerformed(ActionEvent e) {
@@ -43,7 +43,7 @@ Action addBelowAction = new AbstractAction("insert following sibling node") {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `add child node`
 -- 選択されたノードの子ノードとして新規ノードを追加
 -- [[JTreeのノード追加、削除>Swing/AddNode]]
@@ -52,10 +52,10 @@ Action addBelowAction = new AbstractAction("insert following sibling node") {
 - `insert following sibling node`
 -- 選択されたノードの弟ノードとして新規ノードを追加
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのノード追加、削除>Swing/AddNode]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/MutableTreeNode.html#insert-javax.swing.tree.MutableTreeNode-int- MutableTreeNode#insert(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

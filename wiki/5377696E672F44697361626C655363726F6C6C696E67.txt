@@ -8,12 +8,12 @@ pubdate: 2005-10-03T10:00:11+09:00
 description: JScrollPaneのスクロールを一時的に禁止します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLM6S99OI/AAAAAAAAAXM/9r2e_2JRA5g/s800/DisableScrolling.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollPane`のスクロールを一時的に禁止します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLM6S99OI/AAAAAAAAAXM/9r2e_2JRA5g/s800/DisableScrolling.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JCheckBox check = new JCheckBox("Disable Scrolling");
 check.addItemListener(new ItemListener() {
@@ -33,7 +33,7 @@ check.addItemListener(new ItemListener() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Disable Scrolling`をチェックして無効状態にする
 -- スクロールバーを取得し`JScrollBar#setEnabled(boolean)`メソッドを使用してこれを無効化
 -- `JScrollPane#setWheelScrollingEnabled(boolean)`メソッドでマウスホイールによるスクロールを無効化
@@ -43,11 +43,13 @@ check.addItemListener(new ItemListener() {
 -- `JTable`に設定した`JPopupMenu`が表示される
 -- `JTable`に設定した`JToolTip`が表示される
 
-* 参考リンク [#reference]
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JScrollPane.html#setWheelScrollingEnabled-boolean- JScrollPane#setWheelScrollingEnabled(boolean) (Java Platform SE 8)]
 - [[JLayerで子コンポーネントへの入力を制限する>Swing/PopupMenuBlockLayer]]
 -- `JDK 1.7.0`で追加された`JLayer`を使用して入力を制限する方法もある
+-- `JScrollPane`がネストする場合は`JLayer`を使用しないと内外の`JScrollPane`のスクロールを個別に制御できない
 - [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

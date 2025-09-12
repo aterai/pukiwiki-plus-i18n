@@ -2,18 +2,18 @@
 category: swing
 folder: FileChooserListViewWindowsStyle
 title: JFileChooserのファイル一覧で選択状態をWindowsスタイルに設定する
-tags: [FileChooser, UIManager, WindowsLookAndFeel]
+tags: [JFileChooser, UIManager, WindowsLookAndFeel]
 author: aterai
 pubdate: 2023-05-15T01:33:15+09:00
 description: JFileChooserのファイル一覧でファイルの選択状態やポップアップメニューのセパレータなどをWindows風の表示に変更します。
 image: https://drive.google.com/uc?id=1h9w0k8twLfHOwzNGtvXLIWL5SP75W68w
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`のファイル一覧でファイルの選択状態やポップアップメニューのセパレータなどを`Windows`風の表示に変更します。
 
 #download(https://drive.google.com/uc?id=1h9w0k8twLfHOwzNGtvXLIWL5SP75W68w)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String key = "FileChooser.listViewWindowsStyle";
 JCheckBox check = new JCheckBox("listViewWindowsStyle") {
@@ -36,7 +36,7 @@ button.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `FileChooser.listViewWindowsStyle`: `Boolean.TRUE`
 -- スクリーンショット下
 -- `WindowsLookAndFeel`でのデフォルトで、`JFileChooser`のファイル一覧の選択状態などを以下のような`Windows`スタイル？で表示する
@@ -53,9 +53,9 @@ button.addActionListener(e -> {
 -- `JList`を使用した`ListView`、`JTable`を使用した`DetailsView`でファイルなどを選択し、右クリックなどでポップアップメニューを開いても選択状態の表示が保持される
 -- ポップアップメニューのセパレーターが非表示になる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFileChooserのDetails Viewで行全体を選択可能にする>Swing/FileViewFullRowSelection]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2015-11-23T04:24:22+09:00
 description: JEditorPaneに表示したリンクで:hover擬似クラスのような効果を行うためのHyperlinkListenerを設定します。
 image: https://lh3.googleusercontent.com/-8YH7U9Pzs_c/VlITNjFkBKI/AAAAAAAAOHM/9wWxL-OhdoE/s800-Ic42/HyperlinkHoverEffect.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`に表示したリンクで`:hover`擬似クラスのような効果を行うための`HyperlinkListener`を設定します。
 
 #download(https://lh3.googleusercontent.com/-8YH7U9Pzs_c/VlITNjFkBKI/AAAAAAAAOHM/9wWxL-OhdoE/s800-Ic42/HyperlinkHoverEffect.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 editor.setEditable(false);
 // @see: BasicEditorPaneUI#propertyChange(PropertyChangeEvent evt) {
@@ -35,7 +35,7 @@ editor.addHyperlinkListener(new HyperlinkListener() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - [[JLabelで表示するHtmlアンカータグの文字色を変更する>Swing/AnchorTextColor]]のように`StyleSheet`を使用して`addRule("a:hover{color:#FF0000;}")`を設定しても効果がない
 - `HyperlinkListener`を`JEditorPane`に設定して`HyperlinkEvent.EventType.ENTERED`イベントでリンク文字色を赤に変更、`HyperlinkEvent.EventType.EXITED`イベントで青に戻すよう設定
 - リンク文字色の変更は`HyperlinkEvent`から取得した`Element`の属性に以下のように`addAttribute(HTML.Attribute.COLOR, color)`メソッドを使用して設定
@@ -50,9 +50,9 @@ private void setElementColor(Element element, String color) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JLabelで表示するHtmlアンカータグの文字色を変更する>Swing/AnchorTextColor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

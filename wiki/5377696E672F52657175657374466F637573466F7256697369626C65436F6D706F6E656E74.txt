@@ -8,12 +8,12 @@ pubdate: 2021-06-14T00:11:58+09:00
 description: JTabbedPaneのタブをマウスの左プレスで選択したとき、表示状態になったタブコンポーネントにフォーカスを移動するよう設定します。
 image: https://drive.google.com/uc?id=19lig34E-Uyjig7Q_tJB-IpcHpNKl_Wgv
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブをマウスの左プレスで選択したとき、表示状態になったタブコンポーネントにフォーカスを移動するよう設定します。
 
 #download(https://drive.google.com/uc?id=19lig34E-Uyjig7Q_tJB-IpcHpNKl_Wgv)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TabSelectionMouseListener extends MouseAdapter {
   private final BasicTabbedPaneUI ui;
@@ -43,7 +43,7 @@ class TabSelectionMouseListener extends MouseAdapter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `Default`
 -- デフォルトの`JTabbedPane`では自身のタブコンポーネントにフォーカスがない(自身のタブ、または別コンポーネントにフォーカスが存在する)場合、現在選択されているタブ以外のタブをクリックしてタブ選択状態が切り替わってもフォーカスは移動しない
 -- 自身のタブコンポーネントにフォーカスが存在する場合は、タブ選択で表示状態になったタブコンポーネントにフォーカスが移動する
@@ -64,11 +64,11 @@ boolean requestFocusForVisibleComponent() {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブをマウスの中ボタンクリックで閉じる>Swing/MaskForButton]]
 - [https://bugs.openjdk.org/browse/JDK-4799919 &#91;JDK-4799919&#93; 4799919: RFE: Make BasicTabbedPaneUI.requestFocusForVisibleComponent protected - Java Bug System]
 - [[JComboBoxのドロップダウンリストで右クリックを無効化>Swing/DisableRightClick]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

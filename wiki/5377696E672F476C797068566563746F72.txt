@@ -8,12 +8,12 @@ pubdate: 2004-03-01T11:56:19+09:00
 description: GlyphVectorを使って、ラベルの文字列を折り返して表示します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNbQw2SHI/AAAAAAAAAaw/AApL8KKml8E/s800/GlyphVector.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `GlyphVector`を使って、ラベルの文字列を折り返して表示します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNbQw2SHI/AAAAAAAAAaw/AApL8KKml8E/s800/GlyphVector.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class WrappedLabel extends JLabel {
   private GlyphVector gvtext;
@@ -76,7 +76,7 @@ class WrappedLabel extends JLabel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `JLabel`
 -- デフォルトの`JLabel`で折り返しせずに右側から`...`で省略
 - 中: `GlyphVector`
@@ -121,12 +121,12 @@ class WrappingLabel extends JLabel {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/2d/text/drawmulstring.html Drawing Multiple Lines of Text (The Java™ Tutorials > 2D Graphics > Working with Text APIs)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/LineBreakMeasurer.html LineBreakMeasurer (Java Platform SE 8)]
 - [https://bugs.openjdk.org/browse/JDK-6479801 JDK-6479801 java.awt.font.LineBreakMeasurer code incorrect - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JTextArea#setLineWrap(true);`を使う方法を追加、スクリーンショットの更新。 -- &user(aterai); &new{2009-01-05 (月) 17:15:36};
 - `LineBreakMeasurer`を使用する方法を追加。 -- &user(aterai); &new{2013-01-01 (火) 22:38:47};

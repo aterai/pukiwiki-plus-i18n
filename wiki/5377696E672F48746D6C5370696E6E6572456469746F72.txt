@@ -8,12 +8,12 @@ pubdate: 2018-04-09T14:48:47+09:00
 description: JSpinnerのListEditorをJLabelに変更してテキストをHTMLで表示します。
 image: https://drive.google.com/uc?id=1SC3ViNpsTsIE2fgR1wtXawwKHpOD8P1PYg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`の`ListEditor`を`JLabel`に変更してテキストを`HTML`で表示します。
 
 #download(https://drive.google.com/uc?id=1SC3ViNpsTsIE2fgR1wtXawwKHpOD8P1PYg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class HtmlListEditor extends JLabel implements ChangeListener {
   protected HtmlListEditor(JSpinner spinner) {
@@ -53,7 +53,7 @@ class HtmlListEditor extends JLabel implements ChangeListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `ListEditor(default)`
 -- デフォルトの`ListEditor`を使用
 -- エディタは`JFormattedTextField`なので`HTML`タグは使用不可
@@ -73,11 +73,11 @@ JSpinner spinner = new JSpinner(new SpinnerListModel(items)) {
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://www.java2s.com/Tutorials/Java/Swing_How_to/JSpinner/Create_custom_renderer_for_JSpinner_to_show_customized_content_icons.htm Java Swing How to - Create custom renderer for JSpinner to show customized content icons]
 - [[JComboBoxをJSpinnerの代わりに使用する>Swing/SpinnerTextColor]]
 -- `JComboBox`を使用することで同様に`HTML`を表示可能だが`LookAndFeel`が変化してしまう
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

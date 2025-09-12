@@ -8,12 +8,12 @@ pubdate: 2012-09-03T06:06:39+09:00
 description: JTextPaneに追加するコンポーネントのベースラインが他の文字列などとを揃うように設定します。
 image: https://lh3.googleusercontent.com/-JveOiooEbAg/UEPEjv1VW2I/AAAAAAAABR4/qts-97h_JuA/s800/InsertComponentBaseline.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextPane`に追加するコンポーネントのベースラインが他の文字列などとを揃うように設定します。
 
 #download(https://lh3.googleusercontent.com/-JveOiooEbAg/UEPEjv1VW2I/AAAAAAAABR4/qts-97h_JuA/s800/InsertComponentBaseline.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JCheckBox check1 = new JCheckBox("JComponent.setAlignmentY(...)");
 Dimension d = check1.getPreferredSize();
@@ -23,7 +23,7 @@ textPane.replaceSelection("\n\n Baseline: ");
 textPane.insertComponent(check1);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `JTextPane#insertComponent(...)`メソッドで`JCheckBox`を追加
 -- `JCheckBox`のデフォルト`AlignmentY`は`0.5`のため、テキストのベースラインと揃わない
@@ -37,12 +37,12 @@ check2.setOpaque(false);
 check2.setFocusable(false);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTextPane.html#insertComponent-java.awt.Component- JTextPane#insertComponent(Component) (Java Platform SE 8)]
 > 「コンポーネントは、`Component.getAlignmentY`によって返された値に従って、テキストベースラインに相対的に配置されます。`Swing`コンポーネントの場合、`JComponent.setAlignmentY`メソッドを使うと、この値を簡単に設定できます。たとえば、値を`0.75`に設定すると、コンポーネントの`75%`がベースラインの上に、`25%`がベースラインの下になります。」
 
 - [https://stackoverflow.com/questions/12151158/how-to-appropriately-adding-jlabel-to-jeditorpane java - How to appropriately adding JLabel to JEditorPane? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

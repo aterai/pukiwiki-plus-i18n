@@ -8,12 +8,12 @@ pubdate: 2023-02-06T00:00:22+09:00
 description: JButtonが無効な状態でのhtmlテキスト色をデフォルトのグレーではなく半透明にした元のhtmlテキスト色で上書きします。
 image: https://drive.google.com/uc?id=1mgt_pyZzOZXnXY6jG1irUzIbvmKiJO1R
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JButton`が無効な状態での`html`テキスト色をデフォルトのグレーではなく半透明にした元の`html`テキスト色で上書きします。
 
 #download(https://drive.google.com/uc?id=1mgt_pyZzOZXnXY6jG1irUzIbvmKiJO1R)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DisabledHtmlTextLayerUI<V extends AbstractButton> extends LayerUI<V> {
   private final JLabel label = new JLabel();
@@ -58,7 +58,7 @@ class DisabledHtmlTextLayerUI<V extends AbstractButton> extends LayerUI<V> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `html`タグで文字色を変更している場合でも`JButton#setEnabled(false)`で文字列すべてがグレーアウトになる
 -- `UIManager.put("Button.disabledText", Color.RED)`などの設定も無効になる
@@ -71,12 +71,12 @@ class DisabledHtmlTextLayerUI<V extends AbstractButton> extends LayerUI<V> {
 -- `JLayer`を追加し`JButton#setEnabled(false)`の場合は`JButton`のプロパティをコピーした背景は透明、テキストは半透明の`JLabel`を重ねて描画
 -- [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JCheckBoxなどが無効な状態での文字色を変更>Swing/DisabledTextColor]]
 - [[JLayerを使用して無効時のコンポーネントの文字色を変更する>Swing/JLayerDisabledText]]
 - [[JLayerで指定したコンポーネントへの入力を禁止>Swing/DisableInputLayer]]
 - [[JProgressBarの文字列をJLayerを使って表示する>Swing/ProgressStringLayer]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2016-07-18T01:53:49+09:00
 description: JMenuに追加したJMenuItemやJLabelなどのコンポーネントのテキスト位置を揃えて表示します。
 image: https://lh3.googleusercontent.com/-S49YgtIvzc8/V4upKl0JAFI/AAAAAAAAOd4/9vWtFW4DvY4xR0bL0sM9iGRBvHz_u7AcQCCo/s800/MenuItemTextAlignment.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenu`に追加した`JMenuItem`や`JLabel`などのコンポーネントのテキスト位置を揃えて表示します。
 
 #download(https://lh3.googleusercontent.com/-S49YgtIvzc8/V4upKl0JAFI/AAAAAAAAOd4/9vWtFW4DvY4xR0bL0sM9iGRBvHz_u7AcQCCo/s800/MenuItemTextAlignment.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // U+200B zero width space
 JMenuItem item3 = new JMenuItem("\u200B"); //, HSTRUT);
@@ -28,7 +28,7 @@ item3.add(new JMenuItem("JMenuItem(disabled) with JMenuItem", HSTRUT) {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JMenu`や`JPopupMenu`にクリック不可の項目として`JMenuItem`の代わりに`JLabel`を追加すると、`WindowsLookAndFeel`を使用している場合や他の`JMenuItem`にアイコンが設定されている場合にテキストの開始位置が揃わないので、これを回避するために以下の方法をテストしています。
 
 - `JMenuItem.setEnabled(false);`
@@ -47,12 +47,12 @@ item3.add(new JMenuItem("JMenuItem(disabled) with JMenuItem", HSTRUT) {
 - `MetalLookAndFeel`の場合、文字列もアイコンも存在しない`JMenuItem`は他の`JMenuItem`と高さが異なる(幅ゼロ空白文字`\u200B`で回避)
 - `NimbusLookAndFeel`の`JPanel`は、デフォルトでは背景が不透明
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/38360595/jlabel-with-icon-in-jpopupmenu-doesnt-follow-other-jmenuitem-alignment java - JLabel with icon in JPopupMenu doesn't follow other JMenuItem alignment - Stack Overflow]
 - [https://bugs.openjdk.org/browse/JDK-8152981 JDK-8152981 Double icons with JMenuItem setHorizontalTextPosition on Win 10 - Java Bug System]
 - [[JCheckBoxMenuItemのチェックアイコンの位置を調整する>Swing/AfterCheckIconGap]]
 -- `Java 8`から`CheckBoxMenuItem.afterCheckIconGap`や`CheckBoxMenuItem.minimumTextOffset`などが追加されているため、揃えやすくなった
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

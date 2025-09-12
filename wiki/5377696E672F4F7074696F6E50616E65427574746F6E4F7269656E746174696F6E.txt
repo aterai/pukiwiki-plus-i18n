@@ -8,18 +8,18 @@ pubdate: 2017-12-11T14:36:25+09:00
 description: JOptionPaneの下部に表示されるオプションボタンの揃えを右揃えなどに変更します。
 image: https://drive.google.com/uc?id=1GfIGoZXfe9MpKMUVblmQ68ek4z5tU-4cPw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JOptionPane`の下部に表示されるオプションボタンの揃えを右揃えなどに変更します。
 
 #download(https://drive.google.com/uc?id=1GfIGoZXfe9MpKMUVblmQ68ek4z5tU-4cPw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("OptionPane.buttonOrientation", SwingConstants.RIGHT);
 }}
 
 
-* 解説 [#explanation]
+* Description [#description]
 - `CENTER`
 -- `UIManager.put("OptionPane.buttonOrientation", SwingConstants.CENTER)`で右揃えに変更
 -- `MetalLookAndFeel`や`WindowsLookAndFeel`でのデフォルトは中央揃え
@@ -40,9 +40,9 @@ op.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 op.createDialog(getRootPane(), "title").setVisible(true);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JOptionPaneで使用するボタンのサイズを揃える>Swing/SameSizeButtons]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

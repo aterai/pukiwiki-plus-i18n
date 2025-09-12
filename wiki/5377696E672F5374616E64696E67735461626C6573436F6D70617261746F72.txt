@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2023/10/sort-jtable-rows-with-multiple.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の列に複数のソートキーを使用する`Comparator`を設定して複合ソートを実行します。
 
 #download(https://drive.google.com/uc?id=1LcVXjsezO1iupUupSIZ29iykap7BqIrj)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 RowSorter<? extends TableModel> sorter = table.getRowSorter();
 if (sorter instanceof TableRowSorter) {
@@ -37,7 +37,7 @@ if (sorter instanceof TableRowSorter) {
 add(new JScrollPane(table));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - [[JTableの水平罫線を描画する位置とその色をソート条件に応じて変更する>Swing/StandingsTables]]に以下のような修正を追加して同様の列表示が可能な順位表を作成
 -- 実際の順位やチーム名、勝ち点、得失点ではなく、これらをまとめた`RowData`を以下のように列数分コピーして`DefaultTableModel`を作成するよう変更
 --- `DefaultTableModel#addRow(Collections.nCopies(10, new RowData(1, "Team", 33, 20, 7, 6, 57, 27)).toArray());`
@@ -46,11 +46,11 @@ add(new JScrollPane(table));
 - `TableRowSorter#setComparator(int column, Comparator<?> comparator)`で`RowData`ではなく列に対応した順位などを`RowData`から取得してソートする`Comparator`を作成して設定
 -- たとえば`9`列目の勝ち点用の`Comparator`はソートキー`RowData::getPoints`で比較し、さらに勝ち点が等しい場合は得失点差`RowData::getGoalDifference`で比較するよう設定している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableでファイルとディレクトリを別々にソート>Swing/FileDirectoryComparator]]
 - [[JTableの水平罫線を描画する位置とその色をソート条件に応じて変更する>Swing/StandingsTables]]
 - [[JTableの複数キーを使ったソートをヘッダに表示する>Swing/MultisortHeaderRenderer]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

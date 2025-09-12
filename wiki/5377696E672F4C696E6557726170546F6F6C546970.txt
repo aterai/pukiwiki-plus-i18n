@@ -1,0 +1,139 @@
+---
+category: swing
+folder: LineWrapToolTip
+title: JToolTipにJTextAreaを配置して自動的に行折返しする
+tags: [JToolTip, JTextArea]
+author: aterai
+pubdate: 2024-12-23T01:04:04+09:00
+description: JToolTipにJTextAreaを配置して割当て幅に収まりきらない長さの行を自動的に折り返します。
+image: https://drive.google.com/uc?id=1jP4wQX4NE_Be8XMG1WNw_pMQ2IX_wf8v
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2024/12/create-multi-line-jtooltip-using.html
+    lang: en
+---
+* Summary [#summary]
+`JToolTip`に`JTextArea`を配置して割当て幅に収まりきらない長さの行を自動的に折り返します。
+
+#download(https://drive.google.com/uc?id=1jP4wQX4NE_Be8XMG1WNw_pMQ2IX_wf8v)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class LineWrapToolTip extends JToolTip {
+  private final JTextArea textArea = new JTextArea(0, 20);
+  private final JLabel label = new JLabel(" ");
+
+  protected LineWrapToolTip() {
+    super();
+    textArea.setLineWrap(true);
+    textArea.setWrapStyleWord(true);
+    // textArea.setColumns(20);
+    textArea.setOpaque(true);
+    LookAndFeel.installColorsAndFont(
+        textArea, "ToolTip.background", "ToolTip.foreground", "ToolTip.font");
+    setLayout(new BorderLayout());
+    add(textArea);
+  }
+
+  @Override public final void setLayout(LayoutManager mgr) {
+    super.setLayout(mgr);
+  }
+
+  @Override public final Component add(Component comp) {
+    return super.add(comp);
+  }
+
+  @Override public Dimension getPreferredSize() {
+    // return getLayout().preferredLayoutSize(this);
+    Dimension d = getLayout().preferredLayoutSize(this);
+    label.setText(textArea.getText());
+    // @see BasicTextUI.java
+    // margin required to show caret in the rightmost position
+    int caretMargin = -1;
+    Object property = UIManager.get("Caret.width");
+    if (property instanceof Number) {
+      caretMargin = ((Number) property).intValue();
+    }
+    property = textArea.getClientProperty("caretWidth");
+    if (property instanceof Number) {
+      caretMargin = ((Number) property).intValue();
+    }
+    if (caretMargin < 0) {
+      caretMargin = 1;
+    }
+    Insets i = getInsets();
+    Insets ti = textArea.getInsets();
+    int pad = i.left + i.right + ti.left + ti.right + caretMargin;
+    // Insets tm = textArea.getMargin();
+    // int pad = i.left + i.right + ti.left + ti.right + tm.left + tm.right;
+    d.width = Math.min(d.width, label.getPreferredSize().width + pad);
+    return d;
+  }
+
+  @Override public void setTipText(String tipText) {
+    String oldValue = textArea.getText();
+    if (!Objects.equals(oldValue, tipText)) {
+      textArea.setText(tipText);
+      firePropertyChange("tiptext", oldValue, tipText);
+      revalidate();
+      repaint();
+    }
+  }
+
+  @Override public String getTipText() {
+    return Optional.ofNullable(textArea).map(JTextArea::getText).orElse(null);
+  }
+}
+}}
+
+* Description [#description]
+- `JTextArea#setLineWrap(true)`、`JTextArea#setWrapStyleWord(true)`で行の折り返しを設定した`JTextArea`を`JToolTip`に配置
+-- [[JToolTipのアニメーション>Swing/AnimatedToolTip]]
+- `JComponent#getToolTipText(...)`をオーバーライドして`JToolTip`が親`JFrame`の外に表示されて重量ポップアップウィンドウ(共用)が使用される場合は現在の`JToolTip`の推奨サイズに合わせてリサイズされるよう`Window#pack()`を実行
+
+#code{{
+JTextField field = new JTextField(20) {
+  private transient JToolTip tip;
+
+  @Override public JToolTip createToolTip() {
+    if (tip == null) {
+      tip = new LineWrapToolTip();
+      tip.setComponent(this);
+    }
+    return tip;
+  }
+
+  @Override public String getToolTipText(MouseEvent e) {
+    String tipText = getText();
+    EventQueue.invokeLater(() ->
+        Optional.ofNullable(SwingUtilities.getWindowAncestor(tip))
+            .filter(w -> w.getType() == Window.Type.POPUP)
+            .ifPresent(Window::pack));
+    return tipText;
+  }
+};
+}}
+
+- 文字列の長さが割当て幅に収まるかどうかは`JLabel`に文字列を設定してその推奨サイズと比較して判断
+-- [[Fontから文字列の境界を取得する>Swing/StringBounds]]
+-- 推奨サイズの計算に`JTextArea`の`Caret`幅を考慮するよう修正
+- 割当て幅は`JTextArea#setColumns(...)`で設定
+-- `Windows 10` + `Java 1.8.0_432`環境では一度`JToolTip`が重量ポップアップウィンドウとして表示されると`JTextArea`に配置する文字列が変更されてもその推奨サイズが正しく更新されない？ため割り当て幅は`200px`固定で設定
+--- `Java 8.0.432`: `NG`
+- 初回の`JTextArea`の表示で正しい推奨サイズの高さが取得できない場合があるため、`LineBreakMeasurer`を使用して`JTextArea`とは別に高さを計算して使用
+-- [[JLabelの文字列を折り返し>Swing/GlyphVector]]
+-- `Java 21.0.5`以上では初回でも正しい推奨サイズが取得可能なことを確認したが、いつどの修正で正しく動作するようになったかは不明 → `Java 9`でデグレードして`Java 17`で元に戻された？
+-- `JTextArea`の推奨サイズの高さが初回だけおかしくなるのは[https://bugs.openjdk.org/browse/JDK-8226513 &#91;JDK-8226513&#93; JEditorPane is shown with incorrect size - Java Bug System]が影響している？
+--- `Java 21.0.5`: `OK`
+--- `Java 20.0.2`: `OK`
+--- `Java 19.0.2`: `OK`
+--- `Java 18.0.2.1`: `OK`
+--- `Java 17.0.12`: `OK`
+--- `Java 11.0.25`: `NG`
+
+* Reference [#reference]
+- [https://stackoverflow.com/questions/79290104/multi-line-tooltip-dynamically java - Multi-line tooltip, dynamically - Stack Overflow]
+- [[JToolTipのアニメーション>Swing/AnimatedToolTip]]
+
+* Comment [#comment]
+#comment
+#comment

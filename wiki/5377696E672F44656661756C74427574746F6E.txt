@@ -8,17 +8,17 @@ pubdate: 2008-05-12T14:39:12+09:00
 description: 自身の親となるJRootPaneを取得し、これにEnterキー入力で起動するデフォルトのJButtonを設定します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTKiSOjSTI/AAAAAAAAAWI/e462LXNNrYU/s800/DefaultButton.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 自身の親となる`JRootPane`を取得し、これにKBD{Enter}キー入力で起動するデフォルトの`JButton`を設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTKiSOjSTI/AAAAAAAAAWI/e462LXNNrYU/s800/DefaultButton.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 button1.getRootPane().setDefaultButton(button1);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JRootPane#setDefaultButton()`メソッドを使用して、デフォルトボタンを切り替えています。
 
 - フォーカスが設定したデフォルトボタンにない場合でもKBD{Enter}キーの入力で起動する
@@ -27,11 +27,11 @@ button1.getRootPane().setDefaultButton(button1);
 --- `JTextArea`内にフォーカスがある場合はKBD{Enter}キーを押しても起動しない(改行が入力される)
 - デフォルトボタンの設定を削除する場合は`JRootPane#setDefaultButton(null)`を使用する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JRootPane.html#setDefaultButton-javax.swing.JButton- JRootPane#setDefaultButton(JButton) (Java Platform SE 8)]
 - [[Windowを開いたときのフォーカスを指定>Swing/DefaultFocus]]
 - [[DefaultButtonをフォーカスが存在するJButtonに設定する>Swing/DefaultButtonFollowsFocus]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

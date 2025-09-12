@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2023/08/hide-check-icon-on-jradiobuttonmenuitem.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JRadioButtonMenuItem`のチェックアイコンの非表示化し、その余白を最小テキストオフセットを変更することで縮小します。
 
 #download(https://drive.google.com/uc?id=1voGvv6Yy431WG3LEjHojVfno6PURUbTe)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put(PRE + "minimumTextOffset", 10);
 UIManager.put(PRE + "afterCheckIconGap", 0);
@@ -40,7 +40,7 @@ Arrays.asList(
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `UIManager.put("RadioButtonMenuItem.minimumTextOffset", 10)`
 -- 最小テキストオフセットで`RadioButtonMenuItem`のチェックアイコンが表示される領域の幅を指定
 -- `WindowsLookAndFeel`のデフォルトは`31`
@@ -83,10 +83,11 @@ private static JMenuItem makeMenuItem(String txt, float width, Dimension d) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JCheckBoxMenuItemのチェックアイコンの位置を調整する>Swing/AfterCheckIconGap]]
 - [[JCheckBoxMenuItemのチェックアイコンを変更する>Swing/CheckBoxMenuItemIcon]]
+- [https://bugs.openjdk.org/browse/JDK-8216329 &#91;JDK-8216329&#93; Cannot resize CheckBoxItemMenu in Synth L&F with setHorizontalTextPosition - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

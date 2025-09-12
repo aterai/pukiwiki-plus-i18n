@@ -8,12 +8,12 @@ pubdate: 2004-07-19T11:14:52+09:00
 description: JSpinnerのエディタを編集不可にして、ボタンでしか値を変更できないようにします。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTTojxcMLI/AAAAAAAAAkw/BznS8i5Xfp4/s800/SpinnerEditor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`のエディタを編集不可にして、ボタンでしか値を変更できないようにします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTTojxcMLI/AAAAAAAAAkw/BznS8i5Xfp4/s800/SpinnerEditor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 SpinnerModel model = new SpinnerNumberModel(10, 0, 1000, 1);
 JSpinner spinner = new JSpinner(model);
@@ -22,7 +22,7 @@ field.setEditable(false);
 field.setBackground(UIManager.getColor("FormattedTextField.background"));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 
 - `Default`
 -- デフォルトの`JSpinner`
@@ -32,9 +32,9 @@ field.setBackground(UIManager.getColor("FormattedTextField.background"));
 -- `( (JSpinner.DefaultEditor) spinner.getEditor()).getTextField()`で`JSpinner`のテキスト入力欄を取得し、これを`JTextComponent#setEditable(false)`で編集不可に設定
 -- 増減ボタンで値を変更可能だがキーボードでの値の入力は不可
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSpinner.html#getEditor-- JSpinner#getEditor() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

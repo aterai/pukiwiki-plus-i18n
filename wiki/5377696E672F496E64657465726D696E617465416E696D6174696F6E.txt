@@ -8,12 +8,12 @@ pubdate: 2018-12-31T17:42:54+09:00
 description: MetalLookAndFeelを適用したJProgressBarの不確定モードアニメーションを跳ね返りではなく左から右への一方向繰り返しに変更します。
 image: https://drive.google.com/uc?id=18dq3XCJzHrT69mJQQafMAz808GvXj2vTPQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `MetalLookAndFeel`を適用した`JProgressBar`の不確定モードアニメーションを跳ね返りではなく左から右への一方向繰り返しに変更します。
 
 #download(https://drive.google.com/uc?id=18dq3XCJzHrT69mJQQafMAz808GvXj2vTPQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class OneDirectionIndeterminateProgressBarUI extends BasicProgressBarUI {
   // @see com/sun/java/swing/plaf/windows/WindowsProgressBarUI.java
@@ -38,7 +38,7 @@ class OneDirectionIndeterminateProgressBarUI extends BasicProgressBarUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: デフォルト
 -- `BasicLookAndFeel`や`MetalLookAndFeel`の不確定モードは矩形が左右に往復するアニメーションがデフォルト
 - 下: `Windows`風
@@ -47,7 +47,7 @@ class OneDirectionIndeterminateProgressBarUI extends BasicProgressBarUI {
 ---フレーム数を半分にして「行き」分だけアニメーションを表示する
 -- 元の`WindowsProgressBarUI`で`JProgressBar#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`を設定しても不確定モードのアニメーションは右から左へには変化しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/53957264/java-swing-indeterminate-jprogressbar-starting-from-the-left-when-reaching-end-i Java swing indeterminate JProgressBar starting from the left when reaching end instead of bouncing - Stack Overflow]
 - [[JProgressBarの不確定状態でのアニメーションパターンを変更する>Swing/StripedProgressBar]]
 -- `JProgressBar`全体が不確定モードでアニメーションするよう変更するサンプル
@@ -55,6 +55,6 @@ class OneDirectionIndeterminateProgressBarUI extends BasicProgressBarUI {
 -- `NimbusLookAndFeel`で不確定モードのアニメーションを変更するサンプル
 - [[JProgressBarの進捗方向を右から左に変更する>Swing/InvertedProgressBar]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2013/10/scrollable-list-of-jcheckboxes.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`のセルに`JCheckBox`を使用して、チェックボックスの一覧を作成します。
 
 #download(https://lh3.googleusercontent.com/-EfbwsqycTvg/UlyukvM4ivI/AAAAAAAAB3o/NJBvrfM4xPA/s800/CheckBoxCellList.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CheckBoxCellRenderer<E extends CheckBoxNode> extends JCheckBox
     implements ListCellRenderer<E>, MouseListener, MouseMotionListener {
@@ -90,7 +90,7 @@ class CheckBoxCellRenderer<E extends CheckBoxNode> extends JCheckBox
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Box`
 -- `Box.createVerticalBox()`に`JCheckBox`を追加
 -- `JCheckBox#setAlignmentX(Component.LEFT_ALIGNMENT);`で左揃えに設定
@@ -225,11 +225,11 @@ class CheckBoxNodeEditor extends JCheckBox implements TreeCellEditor {
     // ...
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeの葉ノードをJCheckBoxにする>Swing/CheckBoxNodeTree]]
 - [[JTreeのルートノードを非表示に設定する>Swing/TreeRootVisible]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 補足として追記していた`JTree`を使用するサンプルを本体に取り込んで、スクリーンショットなどを更新。 -- &user(aterai); &new{2013-10-15 (火) 11:56:41};
 

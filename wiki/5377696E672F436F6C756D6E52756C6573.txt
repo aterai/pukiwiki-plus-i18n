@@ -8,12 +8,12 @@ pubdate: 2021-08-16T01:18:16+09:00
 description: GridLayoutなどで作成した列の間に罫線としてJSeparatorを描画します。
 image: https://drive.google.com/uc?id=1n9PtghYLYyFH2fXRweyIthvJhNYfa2Mz
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `GridLayout`などで作成した列の間に罫線として`JSeparator`を描画します。
 
 #download(https://drive.google.com/uc?id=1n9PtghYLYyFH2fXRweyIthvJhNYfa2Mz)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPanel p1 = new JPanel(new GridBagLayout());
 p1.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -52,7 +52,7 @@ Stream.of(p2, p3).forEach(p -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `GridBagLayout`
 -- `JPanel`に`3`列の`GridBagLayout`を設定
 -- 中央の余分の水平スペースを分配を`0`に設定して縦`JSeparator`を追加
@@ -123,11 +123,11 @@ class ColumnRulesLayerUI extends LayerUI<JComponent> {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Componentの3列配置、中央幅固定、左右均等引き伸ばしを行うLayoutManagerを作成する>Swing/ThreeColumnLayout]]
 - [[JMenuから開くポップアップウィンドウのレイアウトを2列に変更する>Swing/TwoColumnsMenu]]
 - [[JSplitPaneのDividerを円形半透明のつまみに変更して中央に配置する>Swing/TranslucentThumbDivider]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

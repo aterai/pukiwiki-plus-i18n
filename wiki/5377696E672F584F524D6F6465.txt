@@ -8,12 +8,12 @@ pubdate: 2020-11-09T16:09:28+09:00
 description: Graphicsの論理ピクセル操作をXORモードで実行するように指定して、XOR変更色と現在の色のXORで生成したマスクでピクセルの色を再度XOR反転して描画します。
 image: https://drive.google.com/uc?id=1v9U6zlJ5fCokh8Px9MzbK4etBt-euSyc
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Graphics`の論理ピクセル操作を`XOR`モードで実行するように指定して、`XOR`変更色と現在の色の`XOR`で生成したマスクでピクセルの色を再度`XOR`反転して描画します。
 
 #download(https://drive.google.com/uc?id=1v9U6zlJ5fCokh8Px9MzbK4etBt-euSyc)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 @Override protected void paintComponent(Graphics g) {
   super.paintComponent(g);
@@ -55,7 +55,7 @@ image: https://drive.google.com/uc?id=1v9U6zlJ5fCokh8Px9MzbK4etBt-euSyc
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 現在の色: `Graphics#setPaint(...)`で設定した色
 -- このサンプルでは`Color.ORANGE`、`#FFC800`、`1111 1111 1100 1000 0000 0000`
 - `XOR`変更色: `Graphics#setXORMode(...)`で設定した色
@@ -75,12 +75,12 @@ image: https://drive.google.com/uc?id=1v9U6zlJ5fCokh8Px9MzbK4etBt-euSyc
  　　青: 0000 0000 0000 0000 1111 1111
  変換後: 0000 0000 0110 0111 0101 0000
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics.html#setXORMode-java.awt.Color- Graphics#setXORMode(...) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics2D.html Graphics2D (Java Platform SE 8)]
 -- `Graphics`ではなく`Graphics2D`のドキュメントに「`setXORMode(Color xorcolor)`メソッドは、ソース・カラーの`Alpha`成分を無視し、デスティネーション・カラーをその値に設定する特殊な`Composite`オブジェクトを設定するための簡易メソッドとして実装されます。 `dstpixel = (PixelOf(srccolor) ^ PixelOf(xorcolor) ^ dstpixel);`」と説明されている
 -- このため`Graphics#setComposite(...)`を設定していると`setXORMode(...)`は無視される
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

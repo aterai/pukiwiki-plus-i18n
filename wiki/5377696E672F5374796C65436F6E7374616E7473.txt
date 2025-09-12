@@ -8,12 +8,12 @@ pubdate: 2004-01-12
 description: JTextPaneにスタイル付けした文字列を挿入してログ風に表示します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTT31r9lEI/AAAAAAAAAlI/7PqL2Aa3UJU/s800/StyleConstants.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextPane`にスタイル付けした文字列を挿入してログ風に表示します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTT31r9lEI/AAAAAAAAAlI/7PqL2Aa3UJU/s800/StyleConstants.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 StyledDocument doc = jtp.getStyledDocument();
 Style def = doc.getStyle(StyleContext.DEFAULT_STYLE);
@@ -32,17 +32,17 @@ private void append(String str, boolean flg) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下の手順で`JTextPane`にスタイルを設定した文字列を追加しています。
 
 - `JTextPane`から`StyledDocument`を取得
 - 予め設定しておいたエラー表示用の文字属性スタイルを`StyledDocument#getStyle("error")`メソッドで取得
 - このスタイルと文字列と合わせて`Document#insertString(...)`メソッドで挿入
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/text.html Using Text Components (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 一々、`SimpleAttributeSet`を生成していたのを修正。 -- &user(aterai); &new{2010-12-06 (月) 22:24:36};
 

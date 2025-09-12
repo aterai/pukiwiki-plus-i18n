@@ -8,30 +8,30 @@ pubdate: 2018-06-25T16:59:19+09:00
 description: JSpinnerの値が上限または下限になった場合、対応するArrowButtonを無効にしてクリック不可にします。
 image: https://drive.google.com/uc?id=17ihoEGjXqC5qVXXM1yWqjYO93QjilZQHRw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`の値が上限または下限になった場合、対応する`ArrowButton`を無効にしてクリック不可にします。
 
 #download(https://drive.google.com/uc?id=17ihoEGjXqC5qVXXM1yWqjYO93QjilZQHRw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("Spinner.disableOnBoundaryValues", Boolean.TRUE);
 }}
 
 
-* 解説 [#explanation]
+* Description [#description]
 - `UIManager.put("Spinner.disableOnBoundaryValues", Boolean.FALSE)`
 -- 境界値になっても`ArrowButton`はクリック可能だが値は変更されない
 -- `MetalLookAndFeel`、`NimbusLookAndFeel`、`WindowsLookAndFeel`などでのデフォルト
 - `UIManager.put("Spinner.disableOnBoundaryValues", Boolean.TRUE)`
--- 境界値になると`ArrowButton`は無効になりクリック不可で値は変更されない
+-- 境界値になると`ArrowButton`は無効になりクリック不可で値の変更も不可になる
 -- `GTKLookAndFeel`でのデフォルト
 -- `MetalLookAndFeel`の場合のみ？起動中に切替可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSliderでマウスドラッグによる値の変更が可能な範囲を制限する>Swing/DragLimitedSlider]]
 - [[JScrollBarのノブ位置が境界上かどうかでその矢印ボタンの有効・無効を切り替える>Swing/DisableScrollArrowsOnBoundaryValues]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

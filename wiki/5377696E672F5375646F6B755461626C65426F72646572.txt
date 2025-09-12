@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2017/10/set-sudoku-style-border-lines-created.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセル罫線を`MatteBorder`で描画することで`3x3`のブロック罫線を太さを変更しています。
 
 #download(https://drive.google.com/uc?id=17i0Wt64_TblvMzPrEX2YBqxGvdF7_L74Ew)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 static class SudokuCellRenderer extends DefaultTableCellRenderer {
   private final Font font;
@@ -70,7 +70,7 @@ static class SudokuCellRenderer extends DefaultTableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下のような設定で`3x3`のブロック罫線の太さを変更し、数独風のセル罫線をもつ`JTable`を作成しています。
 
 - すべてのセルの罫線を非表示、かつセルの内余白を`0`に設定
@@ -85,10 +85,10 @@ static class SudokuCellRenderer extends DefaultTableCellRenderer {
 - `JTable`を`JScrollPane`に追加、`JTable`のヘッダを非表示、`JViewport`の上辺と左辺にブロック罫線を描画
 -- `JScrollPane`に追加した`JTable`自体に`Border`を設定すると`JTable`内部に`Border`が表示されてしまう
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JLabelに表示するtableタグの罫線を変更する>Swing/HtmlTableBorderStyle]]
 - [[JTableの罫線の有無とセルの内余白を変更>Swing/IntercellSpacing]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

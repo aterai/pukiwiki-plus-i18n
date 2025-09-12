@@ -8,12 +8,12 @@ pubdate: 2023-11-27T03:52:23+09:00
 description: JColorChooserのRGB色選択パネル内に配置されたRGB選択用JRadioButtonのテキストに表示されたMnemonicを有効化します。
 image: https://drive.google.com/uc?id=1PCMoVMxkXTzrdR85EBmOo36H_oe08ryp
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JColorChooser`の`RGB`色選択パネル内に配置された`RGB`選択用`JRadioButton`のテキストに表示された`Mnemonic`を有効化します。
 
 #download(https://drive.google.com/uc?id=1PCMoVMxkXTzrdR85EBmOo36H_oe08ryp)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JColorChooser cc = new JColorChooser();
 cc.setColor(label.getBackground());
@@ -49,7 +49,7 @@ if (rgbChooser != null) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `MetalLookAndFeel`などで使用可能な`RGB`色選択パネルの`RGB`選択用`JRadioButton`テキストにはそれぞれ`赤(D)`、`緑(N)`、`青(B)`と`Mnemonic`が表示されているが、KBD{Alt+B}などをキー入力しても効果がない
 -- [https://bugs.openjdk.org/browse/JDK-4917411 &#91;JDK-4917411&#93; RGB dialog of JColorChooser missing mnemonics for Red and Blue colors in French - Java Bug System]のようなバグレポートが存在するので少なくとも`Java 1.4`ではこれらの`Mnemonic`が有効だったようだが、いつから無効になったのかは不明
@@ -65,11 +65,11 @@ UIManager.put("ColorChooser.rgbBlueText", "Blue");
 -- 取得した`JRadioButton`のタイトルが、たとえば`UIManager.get("ColorChooser.rgbRedText")`と一致する場合は`UIManager.get("ColorChooser.rgbRedMnemonic")`で`Mnemonic`を取得して設定
 --- 赤選択用`JRadioButton`のテキストと`Mnemonic`は`java.desktop/com/sun/swing/internal/plaf/basic/resources/basic.java`で`{ "ColorChooser.rgbRed.textAndMnemonic", "Re&d" },`のような形式でまとめて定義されている
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JColorChooserのRGB色選択パネル内に表示される16進数カラーコードにAlpha値を追加する>Swing/ColorChooserRgbaHexCode]]
 -- `RGB`色選択パネルの取得方法は上記と同様
 - [https://bugs.openjdk.org/browse/JDK-4917411 &#91;JDK-4917411&#93; RGB dialog of JColorChooser missing mnemonics for Red and Blue colors in French - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

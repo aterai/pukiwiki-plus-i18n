@@ -8,12 +8,12 @@ pubdate: 2021-04-12T03:23:04+09:00
 description: JTableを配置したJScrollPaneから水平JScrollBarを取り出し、JSplitPaneに再配置してリサイズ可能にします。
 image: https://drive.google.com/uc?id=182ApSMU7uEGWzk3ANEO3L_RRDbn7U2W7
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`を配置した`JScrollPane`から水平`JScrollBar`を取り出し、`JSplitPane`に再配置してリサイズ可能にします。
 
 #download(https://drive.google.com/uc?id=182ApSMU7uEGWzk3ANEO3L_RRDbn7U2W7)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 DefaultTableModel m1 = new DefaultTableModel(100, 256);
 JTable table = new JTable(m1);
@@ -46,16 +46,16 @@ divider.add(tripleColon);
 divider.setDividerSize(8);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTable`を`JScrollPane`に追加し`JScrollPane#getHorizontalScrollBar()`で水平スクロールバーを取得
 - `JSplitPane`の右コンポーネントとして上記の水平スクロールバーを再配置
 -- `JSplitPane`の`Divider`をマウスでドラッグして水平スクロールバーの幅を変更可能
 - `JSplitPane`の左コンポーネントとして`JTable`のモデル切り替えを実行する`JRadioButton`などを配置
 -- `JTable`のモデル切り替えで`JSplitPane`に移動した水平スクロールバーの`BoundedRangeModel`も自動的に更新される
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollBarをJScrollPaneの左と上に配置>Swing/LeftScrollBar]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

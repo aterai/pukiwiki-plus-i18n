@@ -6,7 +6,7 @@ description: Conditionタスクを使って、Targetタスクを実行するか�
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 `Condition`タスクを使って、例えばディレクトリの有無などによる条件で、`Target`タスクを実行するかどうかを振り分けます。
 
 `Script`タスクを使用する方法は、[[AntのScriptタスク中でif文を使った条件分岐を行う>Ant/Script]]に移動しました。
@@ -46,7 +46,7 @@ description: Conditionタスクを使って、Targetタスクを実行するか�
 
 - [[Resourceファイルからメニューバーを生成>Swing/ResourceMenuBar]]の[https://ateraimemo.com/swing/resourcemenubar/src.zip src.zip]などを参照
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは`Condition`タスクを使用して`have.resources`プロパティに真偽を代入しています。
 
 - `prepare-resource`ターゲットは`properties`ファイルをユニコードエスケープし、`have.resources`プロパティが真(`if="have.resources"`)の場合のみ実行
@@ -76,12 +76,12 @@ description: Conditionタスクを使って、Targetタスクを実行するか�
 
 - [[JToolBarでアイコンボタンを右寄せ>Swing/ToolBarLayout]]の、[https://ateraimemo.com/swing/toolbarlayout/src.zip src.zip]などを参照
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://ant.apache.org/manual/Tasks/conditions.html Conditions Task]
 - [https://ant.apache.org/manual/ifunless.html If and Unless on all tasks/nested elements]
 -- `Ant 1.9.1`からタスクなどに`if`、`unless`属性を使用可能になった
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `Script`タスクを使用する方法は、[[AntのScriptタスク中でif文を使った条件分岐を行う>Ant/Script]]に移動しました。 -- &user(aterai); &new{2011-01-18 (火) 22:46:59};
 

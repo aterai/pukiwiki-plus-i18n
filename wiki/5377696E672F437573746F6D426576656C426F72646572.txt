@@ -8,12 +8,12 @@ pubdate: 2017-02-13T15:04:11+09:00
 description: BevelBorderの射影のサイズを変更し、それをJButtonに設定します。
 image: https://drive.google.com/uc?id=1fuHYW5tx-oxLY2qD2ARNOmLzj85ZtxEzjg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `BevelBorder`の射影のサイズを変更し、それを`JButton`に設定します。
 
 #download(https://drive.google.com/uc?id=1fuHYW5tx-oxLY2qD2ARNOmLzj85ZtxEzjg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CustomBevelBorder extends BevelBorder {
   private final Insets i = new Insets(8, 8, 8, 8);
@@ -112,7 +112,7 @@ class CustomBevelBorder extends BevelBorder {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default BevelBorder`
 -- 射影の高さは`2px`で固定
 -- このサイズは`BevelBorder#getBorderInsets(...)`をオーバーライドして内余白を変更しても変化しない
@@ -126,11 +126,11 @@ class CustomBevelBorder extends BevelBorder {
 - `JButton`の`ContentArea`の描画が`LookAndFeel`や初期値の関係で不正になる場合がある？
 -- `SwingUtilities.updateComponentTreeUI(...)`を使用して回避
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/border/BevelBorder.html BevelBorder (Java Platform SE 8)]
 - [https://stackoverflow.com/questions/38967517/create-bevelborder-of-certain-width-in-java-swing Create BevelBorder of certain width in Java Swing - Stack Overflow]
 - [[JButtonの描画>Swing/ButtonPainted]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2016/01/save-and-load-state-of-jtable-and.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のヘッダから`TableColumnModel`を取得し、`XMLEncoder`と`XMLDecoder`を使って、`XML`ファイルで保存、復元します。
 
 #download(https://lh3.googleusercontent.com/-3ZhmTqRFkgU/Vm2uUZ4_gCI/AAAAAAAAOI4/bY9IRX-guT4/s800-Ic42/ColumnModelPersistence.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TableColumnModelPersistenceDelegate extends DefaultPersistenceDelegate {
   @Override protected void initialize(
@@ -31,15 +31,15 @@ class TableColumnModelPersistenceDelegate extends DefaultPersistenceDelegate {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTableHeader`から`TableColumnModel`を取得して`XMLEncoder`で`XML`ファイルに保存
 - 保存した`XML`ファイルを`XMLDecoder`で復元することでマウスドラッグによる列の入れ替え、幅の変更、カラム名の変更など復元
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのモデルをXMLファイルで保存、復元する>Swing/PersistenceDelegate]]
 - [[JTableのSortKeyを永続化し、ソート状態の保存と復元を行う>Swing/SortKeyPersistence]]
 - [[JTableのColumn名を変更する>Swing/EditColumnName]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

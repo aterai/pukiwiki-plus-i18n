@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/02/create-range-selectable-calendar-with.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`を使用してカーソルキーで次の週や月に移動したり、週を跨いだ`LocalDate`日付の範囲選択が可能なカレンダーを作成します。
 
 #download(https://drive.google.com/uc?id=1_8OMdhND7t1WDGW6aZl-xq9BV3ZUKNtCWQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public final LocalDate realLocalDate = LocalDate.now();
 public LocalDate currentLocalDate;
@@ -59,7 +59,7 @@ class CalendarViewListModel extends AbstractListModel<LocalDate> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 カレンダーの週や日付モデルは[[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]とほぼ同じですが、上記のサンプルでは表示に`JTable`ではなく`JList`を使用しているため左右カーソルキーでの週を跨いだ日付移動などが可能になっています。
 
 - `JList#setLayoutOrientation(JList.HORIZONTAL_WRAP)`を設定し、セルが水平方向の次に垂直方向の順で並ぶ「ニュースペーパー・スタイル」レイアウトを使用
@@ -86,11 +86,11 @@ monthList.getActionMap().put("selectNextIndex", new AbstractAction() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableにLocaleを考慮したLocalDateを適用してカレンダーを表示する>Swing/CalendarViewTable]]
 - [[JListでウィークカレンダーを作成してヒートマップを表示する>Swing/CalendarHeatmapList]]
 -- セルが垂直方向の次に水平方向の順で並ぶ「ニュースペーパー・スタイル」レイアウトの`JList`で週カレンダーを表示
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

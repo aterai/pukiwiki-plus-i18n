@@ -8,12 +8,12 @@ pubdate: 2022-08-08T02:07:09+09:00
 description: JSplitPaneをすばやく展開/収納するためのJButtonがDividerサイズの中央に配置されるよう設定します。
 image: https://drive.google.com/uc?id=1csOObqMc4lv3Xr4RDwhPjPeb7sMFomEa
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSplitPane`をすばやく展開/収納するための`JButton`が`Divider`サイズの中央に配置されるよう設定します。
 
 #download(https://drive.google.com/uc?id=1csOObqMc4lv3Xr4RDwhPjPeb7sMFomEa)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSplitPane splitPane = new JSplitPane();
 splitPane.setTopComponent(new JScrollPane(new JTable(8, 3)));
@@ -41,7 +41,7 @@ check.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは`JSplitPane#setOneTouchExpandable(true)`で`OneTouchButton`を`Divider`内に表示するよう設定し、その配置位置を`UIManager.put("SplitPane.centerOneTouchButtons", Boolean)`で中央か左端(水平分割の場合)かを変更するテストを実施しています。
 
 - `Divider`中央
@@ -53,9 +53,9 @@ check.addActionListener(e -> {
 -- その他`BasicLookAndFeel`、`MetalLookAndFeel`、`WindowsLookAndFeel`などの初期値は`false`で、設定変更後に`SwingUtilities.updateComponentTreeUI(splitPane)`などで`UI`を更新すると表示に反映される
 -- `GTKLookAndFeel`では`JSplitPane#setOneTouchExpandable(true)`を設定しても`OneTouchButton`は表示されない？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSplitPaneのDividerを展開収納するOneTouchButtonのサイズ、色などを変更>Swing/OneTouchButton]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

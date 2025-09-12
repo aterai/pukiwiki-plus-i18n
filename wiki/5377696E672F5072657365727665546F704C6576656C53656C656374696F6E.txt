@@ -8,12 +8,12 @@ pubdate: 2019-06-24T15:54:33+09:00
 description: JMenuBar直下のJMenuをキャンセルで閉じた場合にその選択状態を維持するかどうかを設定します。
 image: https://drive.google.com/uc?id=1T6g79tQY4xA9kVjE53DiRWGIfHgIQs6p
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenuBar`直下の`JMenu`をキャンセルで閉じた場合にその選択状態を維持するかどうかを設定します。
 
 #download(https://drive.google.com/uc?id=1T6g79tQY4xA9kVjE53DiRWGIfHgIQs6p)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // UIManager.put("Menu.preserveTopLevelSelection", Boolean.TRUE);
 String key = "Menu.preserveTopLevelSelection";
@@ -29,13 +29,13 @@ preserveTopLevelSelectionCheck.addActionListener(e ->
     UIManager.put(key, ((JCheckBox) e.getSource()).isSelected()));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JMenuBar`直下の`JMenu`から開いた`JPopupMenu`をKBD{ESC}キー入力でキャンセルして閉じた場合その`JMenu`の選択状態を維持するかどうかを切り替えてテストできます。
 
 - `WindowsLookAndFeel`
 -- `UIManager.getLookAndFeelDefaults().getBoolean("Menu.preserveTopLevelSelection")`の初期値は`Boolean.TRUE`
 -- `JMenuBar`直下の`JMenu`から開いた`JPopupMenu`をキャンセルで閉じた場合その`JMenu`の選択状態を維持する
---- この状態からもう一度キャンセルキー(KBD{ESC})を入力すると選択状態はクリアされる
+--- この状態からもう一度KBD{ESC}キー入力などで選択状態はクリアされる
 -- マウスクリックでキャンセルした場合は常に`JMenu`の選択状態はクリアされ`Menu.preserveTopLevelSelection`の設定には影響されない
 -- サブメニューをキャンセルした場合は常に`JMenu`の選択状態は維持され`Menu.preserveTopLevelSelection`の設定には影響されない
 - その他の`LookAndFeel`(`MetalLookAndFeel`、`NimbusLookAndFeel`など)
@@ -47,10 +47,10 @@ preserveTopLevelSelectionCheck.addActionListener(e ->
 --- `UIManager.put("Menu.cancelMode", "hideLastSubmenu");`で最後の`JPopupMenu`のみ閉じるよう切り替え可能
 --- [[JMenuから開いたJPopupMenuをキャンセルした場合の動作を変更する>Swing/MenuCancelMode]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[DisabledなJMenuItemのハイライトをテスト>Swing/DisabledAreNavigable]]
 - [[JMenuから開いたJPopupMenuをキャンセルした場合の動作を変更する>Swing/MenuCancelMode]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

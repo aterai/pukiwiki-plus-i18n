@@ -8,12 +8,12 @@ pubdate: 2006-04-10T12:01:31+09:00
 description: BorderにJCheckBoxやJButtonなどを配置します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKEdJmyzI/AAAAAAAAAVY/FTQKJ7__MnE/s800/ComponentTitledBorder.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Border`に`JCheckBox`や`JButton`などを配置します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKEdJmyzI/AAAAAAAAAVY/FTQKJ7__MnE/s800/ComponentTitledBorder.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JCheckBox c = new JCheckBox("CheckBox", true);
 c.setFocusPainted(false);
@@ -22,10 +22,11 @@ Border eb = BorderFactory.createEtchedBorder();
 l1.setBorder(new ComponentTitledBorder(c, l1, eb));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `SwingUtilities.paintComponent`で`Border`にコンポーネントを描画
 -- 描画しているだけなので`JCheckBox`などのコンポーネントが選択されてもイベントが伝わらない
 -- このためこの`ComponentTitledBorder`ではマウスリスナーを設定して`Component#dispatchEvent`メソッドで描画しているコンポーネントに以下のようにマウスイベントを転送
+-- 動作中に`LookAndFeel`が変更された場合、`Border`に描画するコンポーネントは`ComponentTree`に含まれないので手動で更新(`SwingUtilities.updateComponentTreeUI(...)`を適用)する必要がある
 
 #code{{
 @Override public void mouseClicked(MouseEvent me) {
@@ -35,11 +36,11 @@ l1.setBorder(new ComponentTitledBorder(c, l1, eb));
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://github.com/santhosh-tekuri/MyBlog/tree/master/ComponentTitledBorder MyBlog/ComponentTitledBorder at master · santhosh-tekuri/MyBlog]
 - [[Borderの右下にJComponentを配置>Swing/RightAlignComponentBorder]]
 - [[TitledBorderにタイトル文字列までの内余白を設定する>Swing/TitledBorderHorizontalInsetOfText]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

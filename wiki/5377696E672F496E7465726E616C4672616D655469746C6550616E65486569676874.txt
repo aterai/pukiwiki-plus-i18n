@@ -8,12 +8,12 @@ pubdate: 2023-07-03T04:21:21+09:00
 description: JInternalFrameの上部に配置されるタイトルバーの高さを変更します
 image: https://drive.google.com/uc?id=1rKBPX_SKlksz0KpPKuL_DdfwkBonnm7Q
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`の上部に配置されるタイトルバーの高さを変更します
 
 #download(https://drive.google.com/uc?id=1rKBPX_SKlksz0KpPKuL_DdfwkBonnm7Q)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // InternalFrame.titleFont
 // InternalFrame.titleButtonHeight
@@ -40,15 +40,15 @@ JSpinner spinner = new JSpinner(model) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `WindowsLookAndFeel`でのみ`UIManager.put("InternalFrame.titlePaneHeight", 22)`で`JInternalFrame`の`TitlePane`の高さを変更可能
 -- 左端の`SystemMenu`アイコンはタイトルバーの高さに応じて拡大縮小するが、閉じるアイコンなどのサイズは自動的に変化しない
 -- `UIManager.put("InternalFrame.titleButtonHeight", ...)`などで更新する必要がある
 - `JComponent titleBar = ( (BasicInternalFrameUI) frame.getUI() ).getNorthPane()`で個別の`TitlePane`を取得し`titleBar.setPreferredSize(...)`でサイズ変更しても効果がない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JInternalFrameのTitleButtonでJToolTipを表示するかを切り替える>Swing/InternalFrameTitleButtonToolTipsOn]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

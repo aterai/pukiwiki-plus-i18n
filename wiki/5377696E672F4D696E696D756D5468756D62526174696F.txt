@@ -8,12 +8,12 @@ pubdate: 2020-11-16T02:40:38+09:00
 description: JScrollBarのKnobの最小サイズを固定値ではなく、JScrollPaneのサイズ相対になるよう設定します。
 image: https://drive.google.com/uc?id=1I8jjLmU0nT0Rj2Gf8l9Z2X7nhKvlPKfz
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollBar`の`Knob`の最小サイズを固定値ではなく、`JScrollPane`のサイズ相対になるよう設定します。
 
 #download(https://drive.google.com/uc?id=1I8jjLmU0nT0Rj2Gf8l9Z2X7nhKvlPKfz)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JScrollPane scroll = new JScrollPane(textArea);
 scroll.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL) {
@@ -32,7 +32,7 @@ scroll.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL) {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左: `default`
 -- `UIManager.put("ScrollBar.minimumThumbSize", new Dimension(32, 32))`でノブの最小サイズを設定
 --- `BasicLookAndFeel`、`NimbusLookAndFeel`で有効
@@ -43,9 +43,9 @@ scroll.setVerticalScrollBar(new JScrollBar(Adjustable.VERTICAL) {
 -- `BasicScrollBarUI#getMinimumThumbSize()`をオーバーライドして最小値を指定
 -- このサンプルでは`JScrollBar`のノブの最小サイズは可変で`JScrollPane`の高さの`1/12`になるよう設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollBarのKnobの最小サイズを設定する>Swing/MinimumThumbSize]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

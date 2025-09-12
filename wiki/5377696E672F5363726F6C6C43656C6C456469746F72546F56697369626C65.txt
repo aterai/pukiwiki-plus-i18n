@@ -1,0 +1,66 @@
+---
+category: swing
+folder: ScrollCellEditorToVisible
+title: JTableのセル編集が開始でセルエディタ全体が表示される位置までスクロールする
+tags: [JTable, JScrollPane, JViewport, TableCellEditor]
+author: aterai
+pubdate: 2024-05-06T05:18:36+09:00
+description: JTableへのキー入力でセル編集が開始したとき、セルエディタ全体が表示される位置までスクロールするよう設定します。
+image: https://drive.google.com/uc?id=1cqUhtVPjoPu6nyHG7qeLj_uRBChIQpoW
+---
+* Summary [#summary]
+`JTable`へのキー入力でセル編集が開始したとき、セルエディタ全体が表示される位置までスクロールするよう設定します。
+
+#download(https://drive.google.com/uc?id=1cqUhtVPjoPu6nyHG7qeLj_uRBChIQpoW)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JTable table2 = new JTable(50, 50) {
+  @Override public Component prepareEditor(
+      TableCellEditor editor, int row, int column) {
+    Rectangle r = getCellRect(row, column, true);
+    Container p = SwingUtilities.getAncestorOfClass(
+        JViewport.class, this);
+    if (p instanceof JViewport) {
+      Rectangle viewRect = ((JViewport) p).getViewRect();
+      if (viewRect.intersects(r)) {
+        r.grow(r.width / 4, 0);
+      } else {
+        r.grow((viewRect.width - r.width) / 2, 0);
+      }
+      scrollRectToVisible(r);
+    }
+    return super.prepareEditor(editor, row, column);
+  }
+
+  @Override public void changeSelection(
+      int rowIndex, int columnIndex, boolean toggle, boolean extend) {
+    super.changeSelection(rowIndex, columnIndex, toggle, extend);
+    Rectangle r = getCellRect(rowIndex, columnIndex, true);
+    r.grow(r.width / 4, 0);
+    scrollRectToVisible(r);
+  }
+};
+table2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+}}
+
+* Description [#description]
+- `Default: F2:startEditing not scroll`
+-- デフォルトでは、たとえば`A`列のセルを選択したあと水平スクロールバーで`AX`列が表示されるまで移動してKBD{F2}キーなどでセル編集を開始してもスクロールは発生しない
+-- KBD{Tab}キーやカーソルキーで選択状態が変化したときデフォルトでは、たとえば右方向にセル選択を変更した場合新規選択セルの右辺が`JViewport`の右辺に重なる位置までスクロール
+-- `JTree`はキー入力でセル編集が開始したとき、`BasicTreeUI#startEditingAtPath(...)`で`JTree#scrollPathToVisible(...)`
+を実行しているため、デフォルトでセルエディタ全体が表示される位置までスクロール
+- `F2:startEditing scrollRectToVisible(...)`
+-- `JTable#prepareEditor(...)`をオーバーライドしてセルエディタ全体が表示される位置までスクロール
+-- セルエディタが水平方向に見切れている場合はセル幅の`1/4`だけ拡大した領域が表示されるまで`JTable#scrollRectToVisible(...)`でスクロール
+-- セルエディタが完全に見えない状態の場合は可能な限り`JViewport`水平方向中央にセルエディタが表示されるようスクロール
+--- 垂直方向は上記の水平方向のような補正は適用せず、`JTable#getCellRect(...)`で取得した領域までスクロール
+-- KBD{Tab}キーやカーソルキーで選択状態が変化したとき余白を持った位置までスクロールするように変更
+-- マウスクリック、またはカーソルキー入力などによるセル選択状態変化のスクロールは`JTable#changeSelection(...)`内で`JTable#scrollRectToVisible(...)`を実行することで発生するので、`JTable#changeSelection(...)`をオーバーライドして水平方向にセル幅の`1/4`だけ拡大した領域が表示されるまで`JTable#scrollRectToVisible(...)`でスクロール
+
+* Reference [#reference]
+- [[JTreeの選択されたノードが表示される位置まで水平スクロールする>Swing/TreeScrollsHorizontallyAndVertically]]
+
+* Comment [#comment]
+#comment
+#comment

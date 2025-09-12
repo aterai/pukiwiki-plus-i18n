@@ -8,12 +8,12 @@ pubdate: 2017-05-29T15:18:45+09:00
 description: JColorChooserから指定したColorChooserPanelのタブなどを削除してJDialogに設定します。
 image: https://drive.google.com/uc?id=1p2IZZ3_HwzjhI5u3SOnYFzYqi-orR6a9MQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JColorChooser`から指定した`ColorChooserPanel`のタブなどを削除して`JDialog`に設定します。
 
 #download(https://drive.google.com/uc?id=1p2IZZ3_HwzjhI5u3SOnYFzYqi-orR6a9MQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JCheckBox swatches = new JCheckBox(UIManager.getString("ColorChooser.swatchesNameText", getLocale()));
 JCheckBox hsv = new JCheckBox(UIManager.getString("ColorChooser.hsvNameText", getLocale()));
@@ -45,7 +45,7 @@ button.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - すべてのチェックボックスが未選択の場合:
 -- `JColorChooser.showDialog(...)`でデフォルトのカラー・チューザを表示
 --- `static`なメソッドなので、`JColorChooser#removeChooserPanel(...)`などで`ColorChooserPanel`を削除しても反映されない
@@ -68,9 +68,9 @@ button.addActionListener(e -> {
 - `JColorChooser`のタブなどに表示される`AbstractColorChooserPanel#getDisplayName()`の値は`Locale`に依存する
 - %%上記のサンプルの「すべて未選択」以外で表示される`JDialog`の`OK`ボタンなどはクリックしても無効%% `JColorChooser.createDialog(...)`メソッドを使用するよう修正
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/colorchooser.html How to Use Color Choosers (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

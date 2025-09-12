@@ -8,12 +8,12 @@ pubdate: 2013-02-25T00:50:43+09:00
 description: JLabelに表示したAnimated GIFのアニメーションを停止します。
 image: https://lh6.googleusercontent.com/-pYT15pLG7KY/USoyuJzLxUI/AAAAAAAABfo/JgO7-MbsL5U/s800/DisableAnimatedGif.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLabel`に表示した`Animated GIF`のアニメーションを停止します。
 
 #download(https://lh6.googleusercontent.com/-pYT15pLG7KY/USoyuJzLxUI/AAAAAAAABfo/JgO7-MbsL5U/s800/DisableAnimatedGif.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JLabel label2 = new JLabel() {
   @Override public boolean imageUpdate(Image img, int infoflags, int x, int y, int w, int h) {
@@ -25,7 +25,7 @@ JLabel label2 = new JLabel() {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JLabel#isEnabled()`が`false`の場合は`setIcon()`メソッドで設定した`Animated Gif`のアニメーションを停止するなどのテストを行っています。
 
 - `Default`
@@ -37,12 +37,12 @@ JLabel label2 = new JLabel() {
 -- 別途用意した静止画像を使って`JLabel#setDisabledIcon(...)`を設定
 -- `GrayFilter.createDisabledImage(Image)`でアイコンをグレースケール化
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://duke.kenai.com/iconSized/index.html Duke Images: iconSized]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/image/ImageObserver.html ImageObserver (Java Platform SE 8)]
 - [[ColorConvertOpで画像をグレースケールに変換>Swing/ColorConvertOp]]
 - [[Animated Gifからフレーム画像を抽出する>Swing/ExtractFramesFromAnimatedGif]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

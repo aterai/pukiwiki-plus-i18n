@@ -8,12 +8,12 @@ pubdate: 2013-01-07T00:31:26+09:00
 description: JRootPaneの背景として画像を表示しています。
 image: https://lh6.googleusercontent.com/-2HEcpl-4XqA/UOmSieyPnxI/AAAAAAAABaI/KBA4i6QGH3E/s800/RootPaneBackground.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JRootPane`の背景として画像を表示しています。
 
 #download(https://lh6.googleusercontent.com/-2HEcpl-4XqA/UOmSieyPnxI/AAAAAAAABaI/KBA4i6QGH3E/s800/RootPaneBackground.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JFrame frame = new JFrame("@title@") {
   @Override protected JRootPane createRootPane() {
@@ -45,7 +45,7 @@ frame.setJMenuBar(createMenubar());
 frame.getContentPane().add(new MainPanel());
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 このサンプルでは、`JFrame#createRootPane()`メソッドをオーバーライドして、以下の方法で背景に画像を描画する`JRootPane`を作成しています。
 
 - 背景画像を中央に配置: [https://community.oracle.com/thread/1395763 CentredBackgroundBorder]を使用
@@ -60,10 +60,10 @@ frame.getContentPane().add(new MainPanel());
 --- 参考: [[JMenuBarの背景に画像を表示する>Swing/MenuBarBackground]]
 -- `JPopupMenu`: [[JMenuなどから開くPopupMenuを半透明化>Swing/TranslucentSubMenu]]などで半透明化
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1395763 Swing - How can I use TextArea with Background Picture ?]
 -- [[JTextAreaの背景に画像を表示>Swing/CentredBackgroundBorder]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

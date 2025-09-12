@@ -8,12 +8,12 @@ pubdate: 2021-09-20T08:26:03+09:00
 description: JPopupMenuに追加したJSliderの表示・非表示などを同じくJPopupMenuに追加したJCheckBoxやJCheckBoxMenuItemを使用して切り替えます。
 image: https://drive.google.com/uc?id=1uAnPEgCDZO7xZ812Tsh5v-cqu5miTVJv
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPopupMenu`に追加した`JSlider`の表示・非表示などを同じく`JPopupMenu`に追加した`JCheckBox`や`JCheckBoxMenuItem`を使用して切り替えます。
 
 #download(https://drive.google.com/uc?id=1uAnPEgCDZO7xZ812Tsh5v-cqu5miTVJv)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static void addCheckBoxMenuItemAndSlider(JComponent popup) {
   JMenuItem slider = makeBorderLayoutMenuItem();
@@ -36,7 +36,7 @@ private static void addCheckBoxMenuItemAndSlider(JComponent popup) {
 }}
 
 
-* 解説 [#explanation]
+* Description [#description]
 - `JCheckBox` + `JSlider` + `JMenuItem`
 -- テキストなどが空の`JMenuItem`に`BorderLayout`を設定して`JCheckBox`と無効化した`JSlider`を追加し、`JCheckBox`が選択されたら`JSlider`を有効化
 --- [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
@@ -53,11 +53,12 @@ private static void addCheckBoxMenuItemAndSlider(JComponent popup) {
 -- [[JCheckBoxMenuItemをクリックしてもJPopupMenuを閉じないように設定する>Swing/StayOpenCheckBoxMenuItem]]のように`UIManager.put("CheckBoxMenuItem.doNotCloseOnMouseClick", true)`などでクリックしても親`JPopupMenu`が閉じないよう設定した`JCheckBoxMenuItem`と、非表示化した`JSlider`と並べて`JPopupMenu`などに追加
 -- 上記の`JCheckBox`と同様の`ActionListener`を`JCheckBoxMenuItem`に追加
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/69212399/dynamic-resizing-of-jmenu-after-adding-items-at-runtime java - Dynamic resizing of JMenu after adding items at runtime - Stack Overflow]
 - [[JCheckBoxMenuItemをクリックしてもJPopupMenuを閉じないように設定する>Swing/StayOpenCheckBoxMenuItem]]
 - [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
+- [[JPopupMenuのMenuItemとしてJSpinnerを配置する>Swing/SpinnerMenuItem]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

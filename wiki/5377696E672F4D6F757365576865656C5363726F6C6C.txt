@@ -8,12 +8,12 @@ pubdate: 2012-01-02T15:22:30+09:00
 description: JScrollBarが非表示の場合のMouseWheelによるScrollをテストします。
 image: https://lh6.googleusercontent.com/-65-zGNk3eWU/TwFLJU_DP4I/AAAAAAAABHg/mEXoePs30sk/s800/MouseWheelScroll.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollBar`が非表示の場合の`MouseWheel`による`Scroll`をテストします。
 
 #download(https://lh6.googleusercontent.com/-65-zGNk3eWU/TwFLJU_DP4I/AAAAAAAABHg/mEXoePs30sk/s800/MouseWheelScroll.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JScrollBar vsb = new JScrollBar(Adjustable.VERTICAL) {
   @Override public Dimension getPreferredSize() {
@@ -24,7 +24,7 @@ JScrollBar vsb = new JScrollBar(Adjustable.VERTICAL) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `PreferredSize: 0, shift pressed: Horizontal WheelScrolling`
 -- `ScrollBarPolicy`はそれぞれ`ALWAYS`で常に表示
 --- `VerticalScrollBarPolicy`: `VERTICAL_SCROLLBAR_ALWAYS`
@@ -41,10 +41,10 @@ JScrollBar vsb = new JScrollBar(Adjustable.VERTICAL) {
 --- `VerticalScrollBarPolicy`: `VERTICAL_SCROLLBAR_NEVER`
 --- `HorizontalScrollBarPolicy`: `HORIZONTAL_SCROLLBAR_NEVER`
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://bugs.openjdk.org/browse/JDK-6911375 JDK-6911375 mouseWheel has no effect without vertical scrollbar - Java Bug System]
 -- [https://github.com/openjdk/jdk/pull/7585/files 6911375: mouseWheel has no effect without vertical scrollbar by prsadhuk · Pull Request #7585 · openjdk/jdk]で垂直スクロールバーが非表示でもホイールスクロール可能になるよう修正される予定
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

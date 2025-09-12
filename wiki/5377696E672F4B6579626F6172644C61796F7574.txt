@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2019/04/use-gridbaglayout-to-layout-jbutton.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `GridBagLayout`を使用して`JButton`をキーボード状に配置します。
 
 #download(https://drive.google.com/uc?id=1U-lm1O1GYxe612eOeM5DwMWUdIUpD2JXnQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static final String[][] KEYS = {
   {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "BS"},
@@ -61,7 +61,7 @@ private static Component makeKeyboardPanel() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`GridBagLayout`を使用して高さ`0`で列幅のみの非表示セルを配置したガイド行を作成し、`1`文字のデフォルトキーはその`2`列分占有する`JButton`を配置してキーボード風のレイアウトを表現しています。
 
 - スペースキーは`14`列分占有する`JButton`を配置
@@ -71,10 +71,11 @@ private static Component makeKeyboardPanel() {
 - 空文字列は`1`列分占有する不可視の固定幅コンポーネントを配置
 - このサンプルの各`JButton`にはイベントを設定していないのでクリックしても無反応
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/24622279/laying-out-a-keyboard-in-swing java - Laying out a keyboard in Swing - Stack Overflow]
 - [[GridBagLayoutを使ってレンガ状に配置>Swing/BrickLayout]]
+- [[JButton内に複数のJLabelをBorderLayoutで配置する>Swing/NumericKeypad]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

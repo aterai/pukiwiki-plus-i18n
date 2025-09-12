@@ -8,12 +8,12 @@ pubdate: 2019-08-26T15:08:32+09:00
 description: JTabbedPaneで複数のランにタブをラップする場合でもタブ選択によるランの回転を無効にします。
 image: https://drive.google.com/uc?id=16rk3I7OgmEfeRwOrYTrLp-3WcplBDOet
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`で複数のランにタブをラップする場合でもタブ選択によるランの回転を無効にします。
 
 #download(https://drive.google.com/uc?id=16rk3I7OgmEfeRwOrYTrLp-3WcplBDOet)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("TabbedPane.tabRunOverlay", 0);
 UIManager.put("TabbedPane.selectedLabelShift", 0);
@@ -32,7 +32,7 @@ JTabbedPane tabbedPane = new JTabbedPane() {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `Default`
 -- `MetalLookAndFeel`以外の`LookAndFeel`では`JTabbedPane`レイアウトが`WRAP_TAB_LAYOUT`で複数のランにタブをラップするレイアウトモードの場合、選択されたタブがタブコンテンツに接地するようランの回転が発生する
 -- `MetalLookAndFeel`の場合、`MetalTabbedPaneUI.TabbedPaneLayout#rotateTabRuns(int tabPlacement, int selectedRun)`メソッドがオーバーライドされて空(なにも実行しない)になっているため、タブ・ランの回転は発生しない
@@ -45,11 +45,11 @@ JTabbedPane tabbedPane = new JTabbedPane() {
 --- [[JTabbedPaneのタブのテキストシフト量を変更する>Swing/TabbedPaneLabelShift]]
 -- `UIManager.put("TabbedPane.selectedTabPadInsets", new Insets(0, 0, 0, 0));`を設定して選択タブのサイズ拡張を無効化
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicTabbedPaneUI.html#shouldRotateTabRuns-int- BasicTabbedPaneUI#shouldRotateTabRuns(int) (Java Platform SE 8)]
 - [[JTabbedPaneのタブのテキストシフト量を変更する>Swing/TabbedPaneLabelShift]]
 - [https://bugs.openjdk.org/browse/JDK-6855659 &#91;JDK-6855659&#93; Ability to disable tab run rotation - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

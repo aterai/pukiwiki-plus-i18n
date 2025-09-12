@@ -8,12 +8,12 @@ pubdate: 2021-02-22T08:23:09+09:00
 description: JWindowや装飾なしのJFrame、JPopupMenuなどにフォーカス可能なコンポーネントを配置するテストを実行します。
 image: https://drive.google.com/uc?id=1tjnD9mtXy7CD07S9aW8kNU7FyC25yk00
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JWindow`や装飾なしの`JFrame`、`JPopupMenu`などにフォーカス可能なコンポーネントを配置するテストを実行します。
 
 #download(https://drive.google.com/uc?id=1tjnD9mtXy7CD07S9aW8kNU7FyC25yk00)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton button4 = new JButton("JWindow(owner)");
 button4.addActionListener(e -> {
@@ -34,7 +34,7 @@ button4.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JPopupMenu`
 -- `JPopupMenu`内にフォーカス可能なコンポーネントとして`JTextArea`を配置
 -- 親`JFrame`のタイトルバーなどをクリックすると自動的に`JPopupMenu`が非表示になる
@@ -117,10 +117,10 @@ button3.addActionListener(e -> {
 --- 装飾なしの`JFrame`と同様に親`JFrame`のタイトルバーをクリックしてもそのイベントを取得する方法がない？ため、その動作で`JTextArea`を閉じることができない
 -- `JWindow#setAlwaysOnTop(true)`を設定していると別アプリケーションのウィンドウが重なってもその手前にセルエディタが表示されることになるので、代わりに`Window#setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE)`を設定して回避
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html How to Use the Focus Subsystem (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Other Swing Features)]
 - [[JTextAreaとJFrameで幅固定、文字列の折り返し、親枠外まで高さ拡大可能なセルエディタを作成する>Swing/LineWrapListEditor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

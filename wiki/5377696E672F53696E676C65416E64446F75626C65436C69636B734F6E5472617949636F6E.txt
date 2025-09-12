@@ -1,0 +1,74 @@
+---
+category: swing
+folder: SingleAndDoubleClicksOnTrayIcon
+title: TrayIconがシングルまたはダブルクリックされたかを区別する
+tags: [SystemTray, TrayIcon, JPopupMenu, MouseListener]
+author: aterai
+pubdate: 2024-10-14T17:42:19+09:00
+description: TrayIconがマウスでシングルクリックされたか、ダブルクリックされたかを区別して開くウィンドウを切り替えます。
+image: https://drive.google.com/uc?id=1idiEouAZmnYlDXavCugINT9wzbkTSz-z
+---
+* Summary [#summary]
+`TrayIcon`がマウスでシングルクリックされたか、ダブルクリックされたかを区別して開くウィンドウを切り替えます。
+
+#download(https://drive.google.com/uc?id=1idiEouAZmnYlDXavCugINT9wzbkTSz-z)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JDialog tmp = new JDialog();
+tmp.setUndecorated(true);
+tmp.setAlwaysOnTop(true);
+Point loc = new Point();
+Image image = makeDefaultTrayImage();
+TrayIcon icon = new TrayIcon(image, "TRAY", null);
+icon.addMouseListener(new TrayIconPopupMenuHandler(popup, tmp));
+icon.addMouseListener(new MouseAdapter() {
+  private final Timer timer = new Timer(500, e -> {
+    ((Timer) e.getSource()).stop();
+    openLookAndFeelBox(lnf, tmp, loc);
+  });
+
+  @Override public void mousePressed(MouseEvent e) {
+    loc.setLocation(e.getPoint());
+    if (SwingUtilities.isLeftMouseButton(e)) {
+      timer.setDelay(500);
+      timer.setRepeats(false);
+      timer.start();
+    }
+  }
+
+  @Override public void mouseClicked(MouseEvent e) {
+    boolean isDoubleClick = e.getClickCount() >= 2;
+    if (SwingUtilities.isLeftMouseButton(e) && isDoubleClick) {
+      timer.stop();
+      lnf.setVisible(false);
+      frame.setVisible(true);
+    }
+  }
+});
+try {
+  SystemTray.getSystemTray().add(icon);
+} catch (AWTException ex) {
+  throw new IllegalStateException(ex);
+}
+}}
+
+* Description [#description]
+- `TrayIcon`を右クリックした場合に開くポップアップメニューとして`java.awt.PopupMenu`ではなく`javax.swing.JPopupMenu`を使用するよう設定
+-- [[TrayIconでJPopupMenuを使用する>Swing/TrayIconPopupMenu]]
+- `JMenuItem`のタイトルに`<table>`タグを使用して`mnemonics`や`accelerators`ではなくマウスクリックの種類をヘルプ表示
+- `JPopupMenu`表示用の`MouseListener`とは別にマウス左ボタンクリック用の`MouseListener`を`TrayIcon`に追加
+-- [[TrayIconのダブルクリック>Swing/ClickTrayIcon]]
+-- `MouseListener#mousePressed(...)`で繰り返し無効(`Timer#setRepeats(false)`)に設定した`Timer`をスタート
+--- 指定時間後にシングルクリック向けのウィンドウ(`JPopupMenu`で作成)を開く
+-- `MouseListener#mouseClicked(...)`ではダブルクリックのみ検知してシングルクリック用の`Timer`をストップし、ダブルクリック向けのウィンドウ(`JFrame`)を開く
+--- シングルクリックの場合ここでは何も実行しない
+
+* Reference [#reference]
+- [[TrayIconのダブルクリック>Swing/ClickTrayIcon]]
+- [[TrayIconでJPopupMenuを使用する>Swing/TrayIconPopupMenu]]
+- [[JButtonの連続クリックを防止するためのしきい値を設定する>Swing/MultiClickThreshhold]]
+
+* Comment [#comment]
+#comment
+#comment

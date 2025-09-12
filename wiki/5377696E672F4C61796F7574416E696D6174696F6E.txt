@@ -8,12 +8,12 @@ pubdate: 2010-11-22T14:41:14+09:00
 description: パネルの展開・収納をアニメーションで行うLayoutManagerを作成します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTO_fTHG-I/AAAAAAAAAdQ/9SHzG18aVW0/s800/LayoutAnimation.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 パネルの展開・収納をアニメーションで行う`LayoutManager`を作成します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTO_fTHG-I/AAAAAAAAAdQ/9SHzG18aVW0/s800/LayoutAnimation.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private Timer animator;
 private boolean isHidden = true;
@@ -65,16 +65,16 @@ private Action makeShowHideAction() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Timer`を使用して`5ms`ごとに子パネルの高さを更新
 - `LayoutManager#preferredLayoutSize(...)`メソッドをオーバーライドして子パネルの高さの変更を展開アニメーションとして表現
 - 内部の`JTree`の高さを縮小せずに重ねる状態で検索パネルを表示する場合は`BorderLayout`ではなく`OverlayLayout`を[[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]のように使用する方法がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのノードを検索する>Swing/SearchBox]]
 -- `JTree`のノードを検索するサンプル
 - [[JTextAreaをキャプションとして画像上にスライドイン>Swing/EaseInOut]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

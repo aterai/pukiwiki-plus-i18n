@@ -8,15 +8,16 @@ pubdate: 2019-09-02T18:04:32+09:00
 description: JScrollBar上へのマウスカーソルの出入りをJLayerで取得してその幅を拡大・縮小します。
 image: https://drive.google.com/uc?id=1BAF8wRV7pfhmJTBiE9_cun0SbMVR2XFQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollBar`上へのマウスカーソルの出入りを`JLayer`で取得してその幅を拡大・縮小します。
 
 #download(https://drive.google.com/uc?id=1BAF8wRV7pfhmJTBiE9_cun0SbMVR2XFQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JScrollPane scroll = new JScrollPane(makeList());
-scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+scroll.setHorizontalScrollBarPolicy(
+    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 JPanel controls = new JPanel();
 Timer animator = new Timer(10, e -> controls.revalidate());
@@ -61,8 +62,9 @@ pp.add(new JLayer<>(p, new LayerUI<JPanel>() {
   @Override public void installUI(JComponent c) {
     super.installUI(c);
     if (c instanceof JLayer) {
-      ((JLayer<?>) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK
-                                      | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+      ((JLayer<?>) c).setLayerEventMask(
+         AWTEvent.MOUSE_EVENT_MASK
+         | AWTEvent.MOUSE_MOTION_EVENT_MASK);
     }
   }
 
@@ -73,7 +75,8 @@ pp.add(new JLayer<>(p, new LayerUI<JPanel>() {
     super.uninstallUI(c);
   }
 
-  @Override protected void processMouseMotionEvent(MouseEvent e, JLayer<? extends JPanel> l) {
+  @Override protected void processMouseMotionEvent(
+      MouseEvent e, JLayer<? extends JPanel> l) {
     int id = e.getID();
     Component c = e.getComponent();
     if (c instanceof JScrollBar && id == MouseEvent.MOUSE_DRAGGED) {
@@ -81,7 +84,8 @@ pp.add(new JLayer<>(p, new LayerUI<JPanel>() {
     }
   }
 
-  @Override protected void processMouseEvent(MouseEvent e, JLayer<? extends JPanel> l) {
+  @Override protected void processMouseEvent(
+      MouseEvent e, JLayer<? extends JPanel> l) {
     if (e.getComponent() instanceof JScrollBar) {
       switch (e.getID()) {
       case MouseEvent.MOUSE_ENTERED:
@@ -100,7 +104,8 @@ pp.add(new JLayer<>(p, new LayerUI<JPanel>() {
         break;
       case MouseEvent.MOUSE_RELEASED:
         isDragging = false;
-        if (!animator.isRunning() && !e.getComponent().getBounds().contains(e.getPoint())) {
+        if (!animator.isRunning()
+            && !e.getComponent().getBounds().contains(e.getPoint())) {
           willExpand = false;
           animator.setInitialDelay(500);
           animator.start();
@@ -113,10 +118,12 @@ pp.add(new JLayer<>(p, new LayerUI<JPanel>() {
     }
   }
 }));
-pp.add(new JLayer<>(makeTranslucentScrollBar(makeList()), new ScrollBarOnHoverLayerUI()));
+pp.add(new JLayer<>(
+    makeTranslucentScrollBar(makeList()),
+    new ScrollBarOnHoverLayerUI()));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左:
 -- `JPanel`に`JScrollPane`と縦`JScrollBar`を分けて配置
 -- `JPanel`に縦`JScrollBar`の幅を`Timer`を使用して拡大・縮小するレイアウトマネージャを設定
@@ -132,9 +139,9 @@ pp.add(new JLayer<>(makeTranslucentScrollBar(makeList()), new ScrollBarOnHoverLa
 -- マウスカーソルの出入りで縦`JScrollBar`の色と幅を変更
 --- [[JScrollBarをJTable上に重ねて表示するJScrollPaneを作成する>Swing/OverlappedScrollBar]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollPane上にマウスカーソルが存在する場合のみJScrollBarを表示する>Swing/ScrollBarOnHover]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

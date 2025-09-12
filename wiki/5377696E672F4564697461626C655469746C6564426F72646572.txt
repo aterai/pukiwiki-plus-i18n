@@ -8,12 +8,12 @@ pubdate: 2018-07-23T17:10:16+09:00
 description: TitledBorderのタイトルをダブルクリックすると、GlassPaneに配置したJTextFieldをその上に表示して文字列を編集可能にします。
 image: https://drive.google.com/uc?id=1Js7r-iMG7F3VdWkVGB0A6jcfSadZCxBz3A
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TitledBorder`のタイトルをダブルクリックすると、`GlassPane`に配置した`JTextField`をその上に表示して文字列を編集可能にします。
 
 #download(https://drive.google.com/uc?id=1Js7r-iMG7F3VdWkVGB0A6jcfSadZCxBz3A)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class EditableTitledBorder extends TitledBorder implements MouseListener {
   protected final Container glassPane = new EditorGlassPane();
@@ -55,7 +55,7 @@ class EditableTitledBorder extends TitledBorder implements MouseListener {
   // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`TitledBorder`のタイトルをマウスでダブルクリックすると`GlassPane`に配置した`JTextField`を重ねて表示されてタイトル文字列が編集可能になります。
 
 - タイトル文字列をダブルクリックで編集開始
@@ -139,10 +139,10 @@ private Rectangle getTitleBounds(Component c, int x, int y, int width, int heigh
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブタイトルを変更>Swing/EditTabTitle]]
 - [[TitledBorderにタイトル文字列までの内余白を設定する>Swing/TitledBorderHorizontalInsetOfText]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

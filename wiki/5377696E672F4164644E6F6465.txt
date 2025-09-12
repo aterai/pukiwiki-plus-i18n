@@ -8,12 +8,12 @@ pubdate: 2011-05-02T16:45:24+09:00
 description: JTreeのノードを選択してJPopupMenuを開き、そのノードの削除や名前変更、子ノードの追加を行います。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/Tb5bkDzXJHI/AAAAAAAAA6c/qxz0Vzwy4Ts/s800/AddNode.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のノードを選択して`JPopupMenu`を開き、そのノードの削除や名前変更、子ノードの追加を行います。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/Tb5bkDzXJHI/AAAAAAAAA6c/qxz0Vzwy4Ts/s800/AddNode.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TreePopupMenu extends JPopupMenu {
   private TreePath path;
@@ -57,17 +57,17 @@ class TreePopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JPopupMenu`を使用して選択したノードに対して子ノードの追加、削除、名前変更ができます。
 
-- 追加
+- `add`(追加)
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeModel.html#insertNodeInto-javax.swing.tree.MutableTreeNode-javax.swing.tree.MutableTreeNode-int- DefaultTreeModel#insertNodeInto(...)]メソッドを使用して、ノードを追加
-- 追加とリロード
+- `add & reload`(追加とリロード)
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultMutableTreeNode.html#add-javax.swing.tree.MutableTreeNode- DefaultMutableTreeNode#add(MutableTreeNode)]メソッドを使ってノードを追加し、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeModel.html#reload-javax.swing.tree.TreeNode- DefaultTreeModel#reload(...)]、または[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeModel.html#nodeStructureChanged-javax.swing.tree.TreeNode- DefaultTreeModel#nodeStructureChanged(TreeNode)]メソッドで更新を通知
 --- 兄弟ノードの展開状態などがリセットされてしまう
-- 削除
--- ルートノード以外の場合(`DefaultMutableTreeNode#isRoot()`が`false`)[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeModel.html#removeNodeFromParent-javax.swing.tree.MutableTreeNode- DefaultTreeModel#removeNodeFromParent(MutableTreeNode)]メソッドで削除
-- 名前変更
+- `remove`(削除)
+-- ルートノード以外(`DefaultMutableTreeNode#isRoot()==false`)の場合[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultTreeModel.html#removeNodeFromParent-javax.swing.tree.MutableTreeNode- DefaultTreeModel#removeNodeFromParent(MutableTreeNode)]メソッドで削除
+- `edit`(名前変更)
 -- [[JTreeのノード編集をJPopupMenuからのみに制限する>Swing/StartEditingPopupMenu]]と同じ
 #code{{
 model.valueForPathChanged(path, str);
@@ -76,12 +76,12 @@ model.valueForPathChanged(path, str);
 // model.nodeChanged(leaf);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのノード上でJPopupMenuを表示 >Swing/TreeNodePopupMenu]]
 - [[JTreeのノード編集をJPopupMenuからのみに制限する>Swing/StartEditingPopupMenu]]
 - [[JTreeの選択されたノードの前後に新規ノードを挿入する>Swing/InsertSiblingNode]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - ソースなどのリンク切れを修正。 -- &user(aterai); &new{2011-05-06 (金) 18:46:23};
 

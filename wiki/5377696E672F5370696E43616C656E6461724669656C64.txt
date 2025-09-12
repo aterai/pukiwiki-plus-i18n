@@ -8,12 +8,12 @@ pubdate: 2017-02-20T14:23:45+09:00
 description: JSpinnerのスピンボタンで変更可能な日付フィールドを、カーソルで指定したフィールドではなく、初期値で指定したフィールドのみに制限します。
 image: https://drive.google.com/uc?id=1iKgUTqT5ugWKrxJ_KXkjbe-2rNjsGwujLw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`のスピンボタンで変更可能な日付フィールドを、カーソルで指定したフィールドではなく、初期値で指定したフィールドのみに制限します。
 
 #download(https://drive.google.com/uc?id=1iKgUTqT5ugWKrxJ_KXkjbe-2rNjsGwujLw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSpinner spinner2 = new JSpinner(new SpinnerDateModel(d, null, null, Calendar.SECOND) {
   @Override public void setCalendarField(int calendarField) {
@@ -24,15 +24,15 @@ JSpinner spinner2 = new JSpinner(new SpinnerDateModel(d, null, null, Calendar.SE
 ((JSpinner.DefaultEditor) spinner2.getEditor()).getTextField().setFormatterFactory(factory);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default SpinnerDateModel`
 -- スピンボタンをクリックすると`Caret`が存在するフィールドの値が増減する
 - `Override SpinnerDateModel#setCalendarField(...)`
 -- スピンボタンをクリックすると`Caret`が存在する位置には無関係に初期値で指定した`Calendar.SECOND`のフィールド値が増減する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/SpinnerDateModel.html#setCalendarField-int- SpinnerDateModel#setCalendarField(int) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

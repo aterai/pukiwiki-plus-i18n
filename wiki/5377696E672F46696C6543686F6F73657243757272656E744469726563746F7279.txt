@@ -8,12 +8,12 @@ pubdate: 2012-09-17T13:37:55+09:00
 description: JFileChooserを開いた時のカレントディレクトリを設定します。
 image: https://lh5.googleusercontent.com/-L0xUhPSuu1Y/UFaopCvyPFI/AAAAAAAABSg/JUQJkTi-0BI/s800/FileChooserCurrentDirectory.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`を開いた時のカレントディレクトリを設定します。
 
 #download(https://lh5.googleusercontent.com/-L0xUhPSuu1Y/UFaopCvyPFI/AAAAAAAABSg/JUQJkTi-0BI/s800/FileChooserCurrentDirectory.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 File f = new File(field.getText().trim());
 JFileChooser fc = check1.isSelected() ? fc2 : fc0;
@@ -24,7 +24,7 @@ if (retvalue == JFileChooser.APPROVE_OPTION) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JFileChooser.DIRECTORIES_ONLY`で、ディレクトリのみ表示する場合のカレントディレクトリの設定をテストします。
 
 - `setCurrentDirectory`
@@ -58,9 +58,9 @@ JFileChooser fc2 = new JFileChooser() {
 // - メモ
 // -- `UIManager.getBoolean("FileChooser.usesSingleFilePane")`の動作が良く分からない...
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://bugs.openjdk.org/browse/JDK-8184272 JDK-8184272 JFileChooserOperator.enterSubDir does not navigate to sub directory - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2021/10/show-horizontal-jscrollbar-in-tab-area.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `CardLayout`を使用して`JTabbedPane`風のコンポーネントを作成し、そのタブエリアに水平`JScrollBar`を表示してスクロール可能にします。
 
 #download(https://drive.google.com/uc?id=1WdXMZxIVNrLcy56T7et_nqcCcsWWtqAq)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CardLayoutTabbedPane extends JPanel {
   private final CardLayout cardLayout = new CardLayout();
@@ -141,7 +141,7 @@ class CardLayoutTabbedPane extends JPanel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `CardLayoutTabbedPane`
 -- [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]と同様のコンポーネントを使用
 - `TabPanel`
@@ -161,12 +161,12 @@ class CardLayoutTabbedPane extends JPanel {
 -- 隠れているタブが存在するかどうかは`JScrollPane#doLayout()`メソッドをオーバーライドし、水平`JScrollBar`のノブが表示されているかどうかで判断する
 -- 隠れているタブの一覧表示機能は未実装
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]
 - [[JComboBoxのドロップダウンリストで使用するJScrollBarを変更する>Swing/ComboBoxScrollBar]]
 - [[JScrollBar上にマウスカーソルが入ったらその幅を拡張する>Swing/ChangeScrollBarWidthOnHover]]
 - [[JTabbedPaneのタブエリアレイアウトを変更して一覧表示ボタンなどを追加する>Swing/TabAreaLayout]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2023-06-12T00:32:36+09:00
 description: JTextAreaにMouseListenerを追加し、マウス左ボタンの長押しで単語選択、右クリックでのフォーカス移動などの機能を追加します。
 image: https://drive.google.com/uc?id=1F3ifdFQfWTnhHiZrEL5ScH5MD8wDXc9i
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`に`MouseListener`を追加し、マウス左ボタンの長押しで単語選択、右クリックでのフォーカス移動などの機能を追加します。
 
 #download(https://drive.google.com/uc?id=1F3ifdFQfWTnhHiZrEL5ScH5MD8wDXc9i)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TextComponentMouseHandler extends MouseAdapter {
   private final AtomicInteger count = new AtomicInteger(0);
@@ -71,7 +71,7 @@ class TextComponentMouseHandler extends MouseAdapter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - マウス左ボタンの長押し
 -- `1.5`秒後に`getActionMap().get(DefaultEditorKit.selectWordAction)`アクションを実行して単語選択
 -- 左ボタンの長押しが継続している場合は`2.5`秒後に`getActionMap().get(DefaultEditorKit.selectLineAction)`アクションを実行して行選択
@@ -86,11 +86,11 @@ class TextComponentMouseHandler extends MouseAdapter {
 - `MouseListener#mouseReleased(...)`、`MouseMotionListener#mouseDragged(...)`をオーバーライド
 -- 長押しのタイマーを停止、リセット
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextArea内の文字列がマウス操作で選択されたら自動的にコピーする>Swing/CopyOnSelect]]
 - [[JTextAreaで単語選択を実行した場合の区切り文字を変更する>Swing/SelectWordAction]]
 - [[JPopupMenuをボタンの長押しで表示>Swing/PressAndHoldButton]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2020-05-25T18:25:26+09:00
 description: JLabelがマウスでクリックされたらこのラベルに割り当てられているコンポーネントにフォーカスを移動します。
 image: https://drive.google.com/uc?id=1BInMW2eZh0dX_W7qu-ZUCa11qjYC3woq
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLabel`がマウスでクリックされたらこのラベルに割り当てられているコンポーネントにフォーカスを移動します。
 
 #download(https://drive.google.com/uc?id=1BInMW2eZh0dX_W7qu-ZUCa11qjYC3woq)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 MouseListener focusHandler = new MouseAdapter() {
   @Override public void mouseClicked(MouseEvent e) {
@@ -31,14 +31,14 @@ Component textField1 = new JTextField(12);
 label1.setLabelFor(textField1);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JLabel#setLabelFor(...)`メソッドで`JLabel`にコンポーネントを割り当てるとニーモニックがアクティブになったときそのコンポーネントにフォースが移動する
 --- 参考: [[JLabelに設定したニーモニックでフォーカス移動>Swing/LabelForDisplayedMnemonic]]
 - 上記のサンプルでは`JLabel`に`MouseListener`を追加してマウスで`JLabel`がクリックされた場合も同様にフォースを割り当てられたコンポーネントに移動するよう設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JLabelに設定したニーモニックでフォーカス移動>Swing/LabelForDisplayedMnemonic]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

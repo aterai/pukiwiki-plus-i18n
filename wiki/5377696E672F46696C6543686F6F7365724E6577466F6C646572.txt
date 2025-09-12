@@ -8,12 +8,12 @@ pubdate: 2023-07-24T01:40:47+09:00
 description: JFileChooserで新規フォルダを作成するときに使用するテンプレートフォルダ名を変更します。
 image: https://drive.google.com/uc?id=1R2Ntdo5TiC-L9M31OVIzgq-U7J4nxixK
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`で新規フォルダを作成するときに使用するテンプレートフォルダ名を変更します。
 
 #download(https://drive.google.com/uc?id=1R2Ntdo5TiC-L9M31OVIzgq-U7J4nxixK)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String newFolderKey = "FileChooser.win32.newFolder";
 String subsequentKey = "FileChooser.win32.newFolder.subsequent";
@@ -25,7 +25,7 @@ info(log, newFolderKey);
 info(log, subsequentKey);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `FileChooser.win32.newFolder`
 -- このキーで`JFileChooser`の「新規フォルダの作成」ボタンや「新規フォルダ」メニューで新しいフォルダを作成する場合のテンプレート新規フォルダ名を設定、変更可能
 --- `Windows`環境以外では`FileChooser.other.newFolder`が使用される
@@ -42,11 +42,11 @@ info(log, subsequentKey);
 [https://stackoverflow.com/questions/76640899/java-jfilechooser-new-folder-translation swing - Java JFileChooser "New Folder" translation - Stack Overflow]
 [https://docs.oracle.com/javase/jp/8/docs/api/java/text/MessageFormat.html MessageFormat (Java Platform SE 8)]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/76640899/java-jfilechooser-new-folder-translation swing - Java JFileChooser "New Folder" translation - Stack Overflow]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/text/MessageFormat.html MessageFormat (Java Platform SE 8)]
 - [https://bugs.openjdk.org/browse/JDK-8312075 &#91;JDK-8312075&#93; FileChooser.win32.newFolder is not updated when changing Locale - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

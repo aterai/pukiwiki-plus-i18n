@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/07/syntax-highlighting-source-code-in.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`の`HTMLEditorKit`に`StyleSheet`を設定して、ソースコードをシンタックスハイライト表示します。
 
 #download(https://drive.google.com/uc?id=1b_texG1scFcKnOIcUNUHQPdquKal_Fu6OQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private void loadFile(String path) {
   try (Stream<String> lines = Files.lines(
@@ -43,7 +43,7 @@ private static String prettify(ScriptEngine engine, String src) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`ScriptEngine`で`google-prettify.js`を実行し、`Open`ボタンで選択したソースコードをハイライト済みの`HTML`テキストに変換して`JEditorPane`で表示しています。
 
 - `ScriptEngine`で`HTML`テキストに変換する前にソースコード中の`&`、`<`、`>`を文字実体参照に変換する必要がある
@@ -54,12 +54,12 @@ private static String prettify(ScriptEngine engine, String src) {
 -- このため、このサンプルでは古いバージョンの`prettify.js`([https://github.com/google/code-prettify/blob/f5ad44e3253f1bc8e288477a36b2ce5972e8e161/src/prettify.js Fixed prettyPrintOne by removing requirement that a job have a source node. Fixes issues 133 and 134.])を添付して利用している
 -- [https://raw.githubusercontent.com/google/code-prettify/f5ad44e3253f1bc8e288477a36b2ce5972e8e161/src/prettify.js prettify.js(r120)]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://github.com/google/code-prettify google/code-prettify: Automatically exported from code.google.com/p/google-code-prettify]
 - [[Rhinoでgoogle-code-prettifyを実行する>Tips/GooglePrettifyRhino]]
 - [https://stackoverflow.com/questions/22605666/java-access-files-in-jar-causes-java-nio-file-filesystemnotfoundexception Java access files in jar causes java.nio.file.FileSystemNotFoundException - Stack Overflow]
 - [https://bugs.openjdk.org/browse/JDK-8293776 &#91;JDK-8293776&#93; Adds CSS 4 and 8 digits hex coded Color - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

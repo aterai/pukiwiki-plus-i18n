@@ -8,12 +8,12 @@ pubdate: 2013-03-11T17:04:49+09:00
 description: JPopupMenuや、JToolBarなどに親Windowを閉じるためのActionを作成します。
 image: https://lh6.googleusercontent.com/-xWsEbhvjfDY/UT2P-83x0FI/AAAAAAAABmc/7isd5KoGMQc/s800/WindowClosingAction.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPopupMenu`や、`JToolBar`などに親`Window`を閉じるための`Action`を作成します。
 
 #download(https://lh6.googleusercontent.com/-xWsEbhvjfDY/UT2P-83x0FI/AAAAAAAABmc/7isd5KoGMQc/s800/WindowClosingAction.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static class ExitAction extends AbstractAction {
   public ExitAction() {
@@ -47,7 +47,7 @@ private static class ExitAction extends AbstractAction {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、親となる`JFrame`を取得して`window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));`を使用し、これを閉じるためのイベントを実行しています。
 
 コンポーネントの親`Window`を取得する場合、`SwingUtilities.getWindowAncestor(...)`などが使用可能ですが、`HeavyWeightWindow`な`JPopupMenu`や`Floating`中の`JToolBar`では親`Window`とは異なる`Window`が使用されるので注意が必要です。
@@ -60,10 +60,10 @@ private static class ExitAction extends AbstractAction {
 -- 移動中の場合、`JComponent#setComponentPopupMenu(toolbar)`メソッドで取得した移動中の`Window`の親`Window`を`Window#getOwner()`で取得
 -- 移動中では無い場合、`SwingUtilities.getWindowAncestor(toolbar)`メソッドで自身の親`Window`を取得
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JFrameの終了をキャンセル>Swing/WindowClosing]]
 - [[WindowAncestor(親ウィンドウ)の取得>Swing/WindowAncestor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2009-05-18T14:51:20+09:00
 description: JTabbedPaneのTabAreaをJSliderを使ってスクロールします。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTSn6mtDdI/AAAAAAAAAjE/ja_v92IXLsU/s800/ScrollTabToVisible.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`の`TabArea`を`JSlider`を使ってスクロールします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTSn6mtDdI/AAAAAAAAAjE/ja_v92IXLsU/s800/ScrollTabToVisible.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static void scrollTabAt(JTabbedPane tp, int index) {
   Component cmp = null;
@@ -37,15 +37,15 @@ private static void scrollTabAt(JTabbedPane tp, int index) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JTabbedPane`のタブレイアウトを`JTabbedPane#setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT)`でスクロールタブレイアウトに設定した場合、各タブを格納するための`JViewport`コンポーネント(名前は`TabbedPane.scrollableViewport`)が作成され、これが`JTabbedPane`のタブ領域(`TabArea`)として配置されます。
 
 上記のサンプルでは、このタブ領域の`JViewport`を取得して`JViewport#scrollRectToVisible(Rectangle)`メソッドを実行し、矢印ボタンをクリックせずにタブのスクロールを行っています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JViewport.html#scrollRectToVisible-java.awt.Rectangle- JViewport#scrollRectToVisible(Rectangle) (Java Platform SE 8)]
 - [[JTabbedPaneのスクロールレイアウトポリシーですべてのタブが非表示にならないよう設定する>Swing/VisibilityOfTab]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

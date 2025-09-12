@@ -9,12 +9,12 @@ description: JSliderのノブのドラッグとカーソルキーでのみ値変
 image: https://drive.google.com/uc?id=1ifIQLyAQgYQFw_5p3MbXRm4Z9j5VB33lSg
 
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`のノブのドラッグとカーソルキーでのみ値変更を許可し、トラックのマウスクリックによる値変更を無効にします。
 
 #download(https://drive.google.com/uc?id=1ifIQLyAQgYQFw_5p3MbXRm4Z9j5VB33lSg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 slider.setUI(new MetalSliderUI() {
   @Override protected TrackListener createTrackListener(JSlider slider) {
@@ -27,7 +27,7 @@ slider.setUI(new MetalSliderUI() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下の`2`種類の方法で`Slider`のトラックをマウスでクリックしても値変更が発生しないように設定しています。
 
 - `Override TrackListener#shouldScroll(...): false`
@@ -72,9 +72,9 @@ class DisableLeftPressedLayerUI extends LayerUI<JSlider> {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/39904127/stopping-the-jslider-from-moving-when-clicked java - Stopping the jslider from moving when clicked - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

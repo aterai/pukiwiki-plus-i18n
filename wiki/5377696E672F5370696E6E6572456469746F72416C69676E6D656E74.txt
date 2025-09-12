@@ -8,12 +8,12 @@ pubdate: 2020-01-27T18:24:59+09:00
 description: JSpinnerのJSpinner.DefaultEditorに適用する字揃えを変更します。
 image: https://drive.google.com/uc?id=1BaBJZRpqnXT9rQAEs-72Ds38UaSekO7V
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`の`JSpinner.DefaultEditor`に適用する字揃えを変更します。
 
 #download(https://drive.google.com/uc?id=1BaBJZRpqnXT9rQAEs-72Ds38UaSekO7V)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // UIManager.put("Spinner.editorAlignment", SwingConstants.CENTER);
 // System.out.println(UIManager.get("Spinner.editorAlignment"));
@@ -55,7 +55,7 @@ JSpinner spinner2 = new JSpinner(new SpinnerNumberModel(5, 0, 10, 1));
 // text.setHorizontalAlignment(SwingConstants.LEADING);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `UIManager.put("Spinner.editorAlignment", SwingConstants.CENTER)`などで`JSpinner`のエディタの字揃えをまとめて変更可能
 -- `SwingUtilities.updateComponentTreeUI(spinner)`などで`UI`プロパティを初期化するまでこの変更は反映されない
 - `Spinner.editorAlignment`の初期値は`LookAndFeel`に依存する
@@ -71,9 +71,9 @@ JTextField field = ((JSpinner.DefaultEditor) spinner1.getEditor()).getTextField(
 field.setHorizontalAlignment(SwingConstants.CENTER);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSpinner.DefaultEditor.html JSpinner.DefaultEditor (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

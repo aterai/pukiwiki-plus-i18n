@@ -8,12 +8,12 @@ pubdate: 2016-02-22T00:58:53+09:00
 description: JTree間でのドラッグ＆ドロップによるノードの移動を行います。
 image: https://lh3.googleusercontent.com/-orv222AWr0E/VsnVITv64uI/AAAAAAAAOPE/vGmbPDCu4nY/s800-Ic42/DnDBetweenTrees.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`間でのドラッグ＆ドロップによるノードの移動を行います。
 
 #download(https://lh3.googleusercontent.com/-orv222AWr0E/VsnVITv64uI/AAAAAAAAOPE/vGmbPDCu4nY/s800-Ic42/DnDBetweenTrees.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TreeTransferHandler extends TransferHandler {
   private static final DataFlavor FLAVOR = new DataFlavor(
@@ -119,7 +119,7 @@ class TreeTransferHandler extends TransferHandler {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTree`間でのノード移動を可能にする`TransferHandler`を作成して、`JTree#setTransferHandler(...)`で設定しています。
 
 - `TransferHandler#importData(...)`メソッド内でドラッグして移動する`DefaultMutableTreeNode`をドラッグ元の`DefaultTreeModel`から削除せずに`DefaultTreeModel#insertNodeInto(...)`メソッドでドロップ先の`JTree`の`DefaultTreeModel`に挿入すると、ノードの親子関係がおかしくなってドラッグ元の`JTree`から`DefaultTreeModel#removeNodeFromParent(...)`メソッドでノードを削除できなくなる
@@ -131,9 +131,10 @@ class TreeTransferHandler extends TransferHandler {
 -- `TransferHandler.MOVE`で移動のみに対応
 -- ルートノードは、`JTree#setRootVisible(false)`で非表示にして移動禁止
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのノードをドラッグ＆ドロップ>Swing/DnDTree]]
+- [[JTreeのノードをドラッグ＆ドロップで並べ替える>Swing/DnDReorderTree]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

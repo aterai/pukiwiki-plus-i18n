@@ -8,14 +8,15 @@ pubdate: 2006-04-03T01:35:12+09:00
 description: JTabbedPaneの余白にJCheckBoxを配置して特定のタブの開閉を行います。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUQ8ALIWI/AAAAAAAAAlw/7jfCbNrxWK8/s800/TabbedPaneWithCheckBox.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`の余白に`JCheckBox`を配置して特定のタブの表示・非表示を切り替えます。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTUQ8ALIWI/AAAAAAAAAlw/7jfCbNrxWK8/s800/TabbedPaneWithCheckBox.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
-class TabbedPaneWithCompBorder implements Border, MouseListener, SwingConstants {
+class TabbedPaneWithCompBorder
+      implements Border, MouseListener, SwingConstants {
   private final JCheckBox checkBox;
   private final JTabbedPane tab;
   private final Container rubberStamp = new JPanel();
@@ -77,11 +78,11 @@ class TabbedPaneWithCompBorder implements Border, MouseListener, SwingConstants 
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTabbedPane`の`Border`に`SwingUtilities.paintComponent(...)`メソッドを使って`JCheckBox`を描画
-- `JCheckBox`が`JTabbedPane`の子になってタブが増えないように、別途レンダリング用パネルを作成して中間コンテナに指定
-- `JTabbedPane`で受け取ったマウスイベントを`SwingUtilities.convertMouseEvent(...)`メソッドを利用し、チェックボックス用に座標などを変換してイベント転送
-- タブとチェックボックスが重ならないようにフレームの最小サイズを設定
+- `JCheckBox`が`JTabbedPane`の子になってタブが増えないように、別途レンダリング用`JPanel`を作成して中間コンテナに指定
+- `JTabbedPane`で受け取ったマウスイベントを`SwingUtilities.convertMouseEvent(...)`メソッドを利用し、`JCheckBox`用に座標などを変換してイベント転送
+- タブと`JCheckBox`が重ならないように親`JFrame`の最小サイズを設定
 #code{{
 frame.setMinimumSize(new Dimension(240, 80));
 }}
@@ -92,10 +93,10 @@ frame.setMinimumSize(new Dimension(240, 80));
 --- レイアウトマネージャーを自作するweebibさんの投稿 (reply 1)
 --- `OverlayLayout`を利用するcamickrさんの投稿 (reply 2)
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneの余白に文字列を表示>Swing/TabbedPaneWithText]]
 - [[JTabbedPaneの余白にJButtonを配置>Swing/TabbedPaneWithButton]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

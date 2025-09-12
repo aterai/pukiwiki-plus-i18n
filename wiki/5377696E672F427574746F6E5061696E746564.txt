@@ -8,12 +8,12 @@ pubdate: 2009-08-24T12:58:07+09:00
 description: JButtonの設定を変更し、コンテンツ領域、フチ、フォーカスやロールオーバー状態がどう描画されるかをテストします。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIWYXt9eI/AAAAAAAAASo/se2OKkQA83U/s800/ButtonPainted.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JButton`の設定を変更し、コンテンツ領域、フチ、フォーカスやロールオーバー状態がどう描画されるかをテストします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTIWYXt9eI/AAAAAAAAASo/se2OKkQA83U/s800/ButtonPainted.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 List<JCheckBox> clist = Arrays.asList(
   new JCheckBox(new AbstractAction("setFocusPainted") {
@@ -55,7 +55,7 @@ List<JCheckBox> clist = Arrays.asList(
 );
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、フォーカスの有無を表示するかなどの設定を切り替えて`JButton`の描画をテストしています。これらは`Look & Feel`に依存しそれぞれ有効か無効かなどが異なります。
 
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#setFocusPainted-boolean- setFocusPainted]
@@ -67,9 +67,9 @@ List<JCheckBox> clist = Arrays.asList(
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#setRolloverEnabled-boolean- setRolloverEnabled]
 -- ロールオーバー効果の描画
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html AbstractButton (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,24 +8,25 @@ pubdate: 2004-05-31T04:43:10+09:00
 description: JTableのカラムヘッダをマウスによるドラッグ＆ドロップで並べ替え可能かどうかを切り替えます。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRr3AzfQI/AAAAAAAAAhk/mfgsIhuaEz0/s800/Reordering.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のカラムヘッダをマウスによるドラッグ＆ドロップで並べ替え可能かどうかを切り替えます。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRr3AzfQI/AAAAAAAAAhk/mfgsIhuaEz0/s800/Reordering.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // 列の入れ替えを禁止
 table.getTableHeader().setReorderingAllowed(false);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/JTableHeader.html#setReorderingAllowed-boolean- JTableHeader#setReorderingAllowed(false)]を設定してマウスドラッグによる列の入れ替えを禁止
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#setDragEnabled-boolean- JTable#setDragEnabled(...)]は自動ドラッグ処理用のメソッドで列の入れ替えには無関係
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/JTableHeader.html#setReorderingAllowed-boolean- JTableHeader#setReorderingAllowed(boolean) (Java Platform SE 8)]
+- [[TableColumnのドラッグによる順序変更が可能な領域を制限する>Swing/TableColumnReorderingIcon]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2018-01-15T14:42:52+09:00
 description: JOptionPaneのYesボタンがCancelボタンなどの後に追加されて一番右に配置されるよう設定します。
 image: https://drive.google.com/uc?id=12DSo9IIp_Ah9F2FlvkEjjREEwZXyNNLWhA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JOptionPane`の`Yes`ボタンが`Cancel`ボタンなどの後に追加されて一番右に配置されるよう設定します。
 
 #download(https://drive.google.com/uc?id=12DSo9IIp_Ah9F2FlvkEjjREEwZXyNNLWhA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static final String KEY = "OptionPane.isYesLast";
 
@@ -32,7 +32,7 @@ yesLastButton.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `OptionPane.isYesLast: false(default)`
 -- `WindowsLookAndFeel`でのデフォルトで`Yes`ボタン(`YES_OPTION`)や`OK`ボタン(`OK_OPTION`)を各オプションボタンの中で先頭(左端)に配置する
 -- `JOptionPane#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`が設定されている場合、先頭は右端に反転する
@@ -41,9 +41,9 @@ yesLastButton.addActionListener(e -> {
 -- `MotifLookAndFeel`や`NimbusLookAndFeel`でもこの設定は有効
 -- `JOptionPane#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`が設定されている場合、末尾は左端に反転する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JOptionPaneのボタンの揃えを変更する>Swing/OptionPaneButtonOrientation]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

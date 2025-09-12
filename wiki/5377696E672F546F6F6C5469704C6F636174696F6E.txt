@@ -8,12 +8,12 @@ pubdate: 2010-05-03T22:32:22+09:00
 description: JToolTipの表示位置がドラッグでマウスカーソルに追従するように設定します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTVoUwnbfI/AAAAAAAAAn8/lAHqv08RJKA/s800/ToolTipLocation.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolTip`の表示位置がドラッグでマウスカーソルに追従するように設定します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTVoUwnbfI/AAAAAAAAAn8/lAHqv08RJKA/s800/ToolTipLocation.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private void updateTipText(MouseEvent e) {
   Point pt = e.getPoint();
@@ -43,7 +43,7 @@ private void updateTipText(MouseEvent e) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左クリックしてドラッグ
 -- `JWindow`に`JToolTip`を追加して`Window#setLocation()`メソッドで移動
 -- テキスト文字数が変更された場合のみ`JWindow#pack()`メソッドを呼び出してサイズを更新
@@ -52,9 +52,9 @@ private void updateTipText(MouseEvent e) {
 -- `Popup`の位置が変更できずこれを再作成しているため、親フレームの外に`JToolTip`が表示される場合は非表示に設定
 --- フレーム外では`HeavyWeight`の`JWindow`で`JToolTip`が表示されるため、再作成すると表示がチラついてしまう
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSliderのノブをドラッグ中にToolTipで値を表示>Swing/SliderToolTips]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

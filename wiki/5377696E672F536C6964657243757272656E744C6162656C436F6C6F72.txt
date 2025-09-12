@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2016/06/change-color-of-label-represents.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`の大目盛りなどに設定した値ラベルが現在値を表すノブにもっとも近い場合、その色を変更します。
 
 #download(https://lh3.googleusercontent.com/-QQwUIqqviTE/VI2lBcawp1I/AAAAAAAANtA/VWJPpQJoyyo/s800/SliderCurrentLabelColor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 slider.getModel().addChangeListener(new ChangeListener() {
   private int prev = -1;
@@ -41,7 +41,7 @@ slider.getModel().addChangeListener(new ChangeListener() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JSlider`の`BoundedRangeModel`に`ChangeListener`を追加し、ノブにもっとも近い値ラベルの文字色をハイライトするように設定しています。
 
 - 上: デフォルト
@@ -52,9 +52,9 @@ slider.getModel().addChangeListener(new ChangeListener() {
 -- 現在値をハイライトするための`ChangeListener`を追加
 -- `slider.getMajorTickSpacing()`が`0`なので現在値に対応する`JLabel`を`JSlider#getLabelTable()`から取得してその文字色を変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSlider.html#getLabelTable-- JSlider#getLabelTable() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

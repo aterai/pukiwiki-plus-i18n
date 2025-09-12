@@ -8,12 +8,12 @@ pubdate: 2016-10-03T00:51:19+09:00
 description: JTableのTableColumnの表示順が入れ替えられていた場合、それを初期状態(モデル順)に戻します。
 image: https://drive.google.com/uc?id=1uR48L0Uvm0mBLPOYXx8IR1VJYp0KVzuiAQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の`TableColumn`の表示順が入れ替えられていた場合、それを初期状態(モデル順)に戻します。
 
 #download(https://drive.google.com/uc?id=1uR48L0Uvm0mBLPOYXx8IR1VJYp0KVzuiAQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 TableColumnModel m = table.getColumnModel();
 if (m instanceof SortableTableColumnModel) {
@@ -30,7 +30,7 @@ class SortableTableColumnModel extends DefaultTableColumnModel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`DefaultTableColumnModel`の`protected Vector<TableColumn> tableColumns`を`TableColumn`のモデル・インデックス(`TableColumn#getModelIndex()`メソッドで取得可能)で直接ソートすることで入れ替え前の初期状態を復元しています。
 
 - `tableColumns`メソッドは`protected`なので、ソートは`DefaultTableColumnModel`を継承するクラス内で実行する
@@ -56,10 +56,10 @@ public static void sortTableColumn(TableColumnModel model) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/event/TableColumnModelEvent.html TableColumnModelEvent (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/TableColumnModel.html#moveColumn-int-int- TableColumnModel#moveColumn(int, int) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

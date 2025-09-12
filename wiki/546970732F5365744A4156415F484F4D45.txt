@@ -6,7 +6,7 @@ description: 環境変数JAVA_HOMEを変更するバッチファイルやシェ�
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 環境変数`JAVA_HOME`を変更するバッチファイルやシェルスクリプトを作成し、コンソールで使用する`JDK`を切り替えます。
 
 #ref(https://lh6.googleusercontent.com/_9Z4BYR88imo/TUKZTxK0pwI/AAAAAAAAAz4/qohiEl4CJss/s800/JAVA_HOME.png)
@@ -30,7 +30,7 @@ description: 環境変数JAVA_HOMEを変更するバッチファイルやシェ�
 
  $ . jdk.sh 1.7.0_09
 
-* 解説 [#explanation]
+* Description [#description]
 `ant.bat`や`jruby.bat`などは、`JAVA_HOME`環境変数を使って使用する`JDK`のパスを取得しているので、これらのコマンドを実行する前に、`set JAVA_HOME`すれば、そのコマンドプロンプト内で使用する`JDK`を簡単に切り替えることができます。
 
 上記のバッチファイルは、その際、`set JAVA_HOME=C:\Program Files\...`と一々入力しなくてすむようにするためのものです。
@@ -101,7 +101,7 @@ Java(TM) SE Runtime Environment (build 1.7.0-ea-b31)
 Java HotSpot(TM) Client VM (build 14.0-b01, mixed mode, sharing)
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://masanobuimai.hatenadiary.org/entry/20070221/1172050845 ローカルのJava環境の管理について - marsのメモ]
 -- 参考にした管理方法
 - [http://www.02.246.ne.jp/~torutk/java/install/jdk7onwindows7.html#SEC18 Windows 7へJDK 7をインストール - Object-Oriented & Java maneuver 別室]
@@ -109,6 +109,6 @@ Java HotSpot(TM) Client VM (build 14.0-b01, mixed mode, sharing)
 - [https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/java_home.1.html java_home(1) Mac OS X Developer Tools Manual Page]
 - [http://www.markhneedham.com/blog/2013/06/15/java-findingsetting-jdkjava_home-on-mac-os-x/ Java: Finding/Setting JDK/$JAVA_HOME on Mac OS X at Mark Needham]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

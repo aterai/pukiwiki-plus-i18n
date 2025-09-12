@@ -8,12 +8,12 @@ pubdate: 2018-07-09T15:06:13+09:00
 description: JFileChooserの詳細ファイル一覧でファイル名が省略されている場合にJToolTipでそれを表示します。
 image: https://drive.google.com/uc?id=1GzSb_32IGNEjqMVqMCqzG2K8j41cSeKrdQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`の詳細ファイル一覧でファイル名が省略されている場合に`JToolTip`でそれを表示します。
 
 #download(https://drive.google.com/uc?id=1GzSb_32IGNEjqMVqMCqzG2K8j41cSeKrdQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton button3 = new JButton("JTable tooltips");
 button3.addActionListener(e -> {
@@ -46,8 +46,8 @@ class TooltipTableCellRenderer implements TableCellRenderer {
     Insets i = l.getInsets();
     Rectangle rect = table.getCellRect(row, column, false);
     rect.width -= i.left + i.right;
-    Optional.ofNullable(l.getIcon())
-      .ifPresent(icon -> rect.width -= icon.getIconWidth() + l.getIconTextGap());
+    Optional.ofNullable(l.getIcon()).ifPresent(icon ->
+        rect.width -= icon.getIconWidth() + l.getIconTextGap());
     FontMetrics fm = l.getFontMetrics(l.getFont());
     String str = Objects.toString(value, "");
     l.setToolTipText(fm.stringWidth(str) > rect.width ? str : null);
@@ -56,7 +56,7 @@ class TooltipTableCellRenderer implements TableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `JFileChooser`のリスト一覧、詳細一覧ともに`JToolTip`は設定されていない
 - `JList tooltips`
@@ -68,11 +68,11 @@ class TooltipTableCellRenderer implements TableCellRenderer {
 -- セルが省略されている場合のみ`JToolTip`を表示
 --- [[JTableのセルがクリップされている場合のみJToolTipを表示>Swing/ClippedCellTooltips]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]
 - [[JFileChooserのデフォルトをDetails Viewに設定>Swing/DetailsViewFileChooser]]
 - [[JTableのセルがクリップされている場合のみJToolTipを表示>Swing/ClippedCellTooltips]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

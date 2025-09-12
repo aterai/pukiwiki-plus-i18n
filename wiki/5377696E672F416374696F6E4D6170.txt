@@ -8,12 +8,12 @@ pubdate: 2005-07-18T15:40:10+09:00
 description: JTextFieldへのコピー、貼り付け、切り取りを禁止します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTHX8kSixI/AAAAAAAAARE/cRSBUI5TJWo/s800/ActionMap.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`へのコピー、貼り付け、切り取りを禁止します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTHX8kSixI/AAAAAAAAARE/cRSBUI5TJWo/s800/ActionMap.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Action beep  = new DefaultEditorKit.BeepAction();
 ActionMap am = field.getActionMap();
@@ -22,7 +22,7 @@ am.put(DefaultEditorKit.copyAction, beep);
 am.put(DefaultEditorKit.pasteAction, beep);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTextField`の`ActionMap`からコピーなどの`Action`を取得し、これらをビープ音を鳴らす`DefaultEditorKit.BeepAction()`に置き換えています。
 
 - 以下のように`copy`メソッドなどをオーバーライドする方法もある
@@ -35,11 +35,11 @@ JTextField field = new JTextField() {
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[DefaultEditorKitでポップアップメニューからコピー>Swing/DefaultEditorKit]]
 - [[JComponentのKeyBinding一覧を取得する>Swing/KeyBinding]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultEditorKit.html DefaultEditorKit (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

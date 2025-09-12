@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/09/expand-zip-file-selected-by-jfilechooser.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`で選択した`zip`ファイルを展開、またはディレクトリを`zip`圧縮します。
 
 #download(https://drive.google.com/uc?id=11d4t5QVL41puZ84CA-a3BBWz6zx7_4dy1A)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton button1 = new JButton("unzip");
 button1.addActionListener(e -> {
@@ -78,7 +78,7 @@ public static void unzip(Path zipFilePath, Path destDir) throws IOException {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Zip`
 -- `JFileChooser#setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)`を設定し、ディレクトリ表示用`JFileChooser`で`zip`圧縮対象ディレクトリを選択
 -- `Files.walk(...)`で対象ディレクトリ内を検索しパスを`ZipEntry`に変換して`ZipOutputStream`に追加、`Files.copy(...)`で書き出し
@@ -104,10 +104,10 @@ public static void zip(Path srcDir, Path zip) throws IOException {
 -- `Files.copy(zipFile.getInputStream(zipEntry), path, StandardCopyOption.REPLACE_EXISTING)`メソッドで展開
 --- `StandardCopyOption.REPLACE_EXISTING`オプションで同名ファイルは上書き
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/util/zip/ZipFile.html ZipFile (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/util/zip/ZipOutputStream.html ZipOutputStream (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

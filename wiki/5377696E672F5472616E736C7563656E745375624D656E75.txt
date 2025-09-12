@@ -8,12 +8,12 @@ pubdate: 2012-10-22T18:38:06+09:00
 description: JPopupMenuの親のJWindow、JMenuやJMenuItemなどを透明にして、JPopupMenuを半透明にします。
 image: https://lh5.googleusercontent.com/-MKRZgWcSrRw/UIT3NRGfX9I/AAAAAAAABUk/fOYdfJmIt4g/s800/TranslucentSubMenu.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPopupMenu`の親の`JWindow`、`JMenu`や`JMenuItem`などを透明にして、`JPopupMenu`を半透明にします。
 
 #download(https://lh5.googleusercontent.com/-MKRZgWcSrRw/UIT3NRGfX9I/AAAAAAAABUk/fOYdfJmIt4g/s800/TranslucentSubMenu.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TransparentMenu extends JMenu {
   private JPopupMenu popupMenu;
@@ -87,7 +87,7 @@ class TransparentMenu extends JMenu {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JMenu`を継承する`TransparentMenu`を作成して`JMenu`自身と子の`JMenuItem`などを透明化しています。また`JMenu`から開く`JPopupMenu`も[[JPopupMenuを半透明にする>Swing/TranslucentPopupMenu]]を使用して半透明になるよう設定しています。
 
 - [http://today.java.net/pub/a/today/2008/03/18/translucent-and-shaped-swing-windows.html Translucent and Shaped Swing Windows | Java.net] を参考に `PopupFactory#getPopup(...)`をオーバーライドし、常に`JPopupMenu`(半透明)の親に`JWindow`(完全に透明、`Heavy weight`)を使用するように設定
@@ -150,12 +150,12 @@ class TranslucentPopupMenu extends JPopupMenu {
   // ...
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://today.java.net/pub/a/today/2008/03/18/translucent-and-shaped-swing-windows.html Translucent and Shaped Swing Windows | Java.net]
 - [https://bugs.openjdk.org/browse/JDK-7156657 JDK-7156657 Version 7 doesn't support translucent popup menus against a translucent window]
 - [[JPopupMenuを半透明にする>Swing/TranslucentPopupMenu]]
 - [[JRootPaneの背景として画像を表示>Swing/RootPaneBackground]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

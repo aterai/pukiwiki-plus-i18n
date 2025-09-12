@@ -8,12 +8,12 @@ pubdate: 2022-01-10T02:47:34+09:00
 description: JTabbedPaneのタブエリアレイアウトを変更して余白や右端にタブの一覧表示ボタンなどを追加します。
 image: https://drive.google.com/uc?id=1J3-SXZfSQEEuctw_T-zb8dsSiSDeoIeJ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブエリアレイアウトを変更して余白や右端にタブの一覧表示ボタンなどを追加します。
 
 #download(https://drive.google.com/uc?id=1J3-SXZfSQEEuctw_T-zb8dsSiSDeoIeJ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 protected CardLayoutTabbedPane() {
   super(new BorderLayout());
@@ -62,7 +62,7 @@ private JMenuItem makeRadioMenuItem(Container c, int i) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `JTabbedPane` + `Box` + `OverlayLayout`
 -- タブエリアの右端に余白を設定した`JTabbedPane`と、右端に`JButton`を配置した透明な`Box`を`OverlayLayout`で同じサイズで重ねて表示
 --- [[JTabbedPaneの余白にJButtonを配置>Swing/TabbedPaneWithButton]]の余白と配置を右端に変更
@@ -74,10 +74,10 @@ private JMenuItem makeRadioMenuItem(Container c, int i) {
 --- [[CardLayoutで作成したJTabbedPane風コンポーネントのタブエリアに水平JScrollBarを表示する>Swing/TabAreaScrollBar]]
 -- 右端に追加した`JButton`をクリックすると`JViewport`外のタブを選択し`scrollRectToVisible(...)`メソッドを実行してスクロール表示可能な`JPopupMenu`が開く
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneの余白にJButtonを配置>Swing/TabbedPaneWithButton]]
 - [[CardLayoutで作成したJTabbedPane風コンポーネントのタブエリアに水平JScrollBarを表示する>Swing/TabAreaScrollBar]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

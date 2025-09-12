@@ -8,12 +8,12 @@ pubdate: 2014-02-03T12:43:56+09:00
 description: JTreeにノード追加をした場合、兄弟ノードの展開状態などがどうなるかをテストします。
 image: https://lh3.googleusercontent.com/-siBaGX1oXx8/Uu8JPWZaA7I/AAAAAAAAB_Y/fzV1VSKYg9I/s800/InsertNodeInto.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`にノード追加をした場合、兄弟ノードの展開状態などがどうなるかをテストします。
 
 #download(https://lh3.googleusercontent.com/-siBaGX1oXx8/Uu8JPWZaA7I/AAAAAAAAB_Y/fzV1VSKYg9I/s800/InsertNodeInto.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 DefaultTreeModel model1 = (DefaultTreeModel) tree1.getModel();
 DefaultMutableTreeNode parent1 = (DefaultMutableTreeNode) model1.getRoot();
@@ -29,7 +29,7 @@ model2.insertNodeInto(child2, parent2, parent2.getChildCount());
 tree2.scrollPathToVisible(new TreePath(child2.getPath()));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`add`ボタンのクリックで左右の`JTree`のルートノードの子ノード末尾に新規ノードを追加し、それぞれの描画などをテストしています。
 
 - `p.add(c) & m.reload(p)`
@@ -41,12 +41,12 @@ tree2.scrollPathToVisible(new TreePath(child2.getPath()));
 -- `DefaultTreeModel#insertNodeInto(...)`メソッドを使用して子ノードを親ノードの指定した位置に挿入
 --- 内部で`nodesWereInserted(...)`メソッドが呼び出されて適切なイベントが生成されるので、他ノードの展開状態などは維持される
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのノード追加、削除>Swing/AddNode]]
 -- ポップアップメニューで任意の位置にノードを追加
 - [[JScrollPane内にあるJTableなどで追加した行が可視化されるようにスクロールする>Swing/ScrollRectToVisible]]
 -- 追加したノードが表示されるようにスクロール
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

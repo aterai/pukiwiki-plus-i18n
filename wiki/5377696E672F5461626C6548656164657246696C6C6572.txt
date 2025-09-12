@@ -8,12 +8,12 @@ pubdate: 2019-03-11T15:07:56+09:00
 description: JTableHeaderの列幅を自動調整しない場合に発生する余白に疑似ヘッダを描画します。
 image: https://drive.google.com/uc?id=1S2FqsLneoDTvkP2Xx-RLfsgLXGkFcduAaw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTableHeader`の列幅を自動調整しない場合に発生する余白に疑似ヘッダを描画します。
 
 #download(https://drive.google.com/uc?id=1S2FqsLneoDTvkP2Xx-RLfsgLXGkFcduAaw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TableHeaderFillerLayerUI extends LayerUI<JScrollPane> {
   private final JTable tempTable = new JTable(
@@ -68,7 +68,7 @@ class TableHeaderFillerLayerUI extends LayerUI<JScrollPane> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: デフォルト
 -- 列幅の自動調整を`AUTO_RESIZE_OFF`で無効にした`JTable`
 - 下: `TableHeaderFiller`
@@ -77,10 +77,10 @@ class TableHeaderFillerLayerUI extends LayerUI<JScrollPane> {
 -- `JLayer`は`JTable`や`JTableHeader`ではなく親の`JScrollPane`に設定
 -- `JLayer`で疑似ヘッダへの`MouseEvent`などは無効化、`JTableHeader`がリサイズされて`ComponentEvent`が発生した場合は`LayerUI#processComponentEvent(...)`をオーバーライドして疑似ヘッダの幅を更新
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://web.archive.org/web/20120126055437/http://l2fprod.com/blog/2008/08/30/the-fun-of-swing-jtable-column-resizing/ the fun of Swing JTable column resizing - blog@l2fprod.com(web.archive.org)]
 -- `JLayer`を使用せず直接`JTableHeader`にリスナーなどを変更した疑似ヘッダを追加する場合のサンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2023-12-18T01:53:08+09:00
 description: NimbusLookAndFeelでJComboBoxの背景色、セル選択色や選択文字色などを変更します。
 image: https://drive.google.com/uc?id=1JemJqu62MW3KY-ZTqk7XGk_JB7XjAWl3
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`で`JComboBox`の背景色、セル選択色や選択文字色などを変更します。
 
 #download(https://drive.google.com/uc?id=1JemJqu62MW3KY-ZTqk7XGk_JB7XjAWl3)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("ComboBox.forceOpaque", Boolean.FALSE);
 Insets ins = UIManager.getInsets("ComboBox.padding");
@@ -69,7 +69,7 @@ private static JComboBox<String> makeComboBox2() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `UIDefaults`
 -- 以下の色を`JComboBox`のセルレンダラーに設定
 --- `UIDefaults#put("ComboBox:\"ComboBox.listRenderer\".background", BACKGROUND)`
@@ -90,12 +90,12 @@ private static JComboBox<String> makeComboBox2() {
 -- `(ComboPopup) JComboBox#getAccessibleContext().getAccessibleChild(0)`で`ComboPopup`を取得し、さらに`ComboPopup#getList()`でドロップダウンリストで使用する`JList`を取得してその背景色、文字色、選択背景色、選択文字色を変更
 -- 上記の`DefaultListCellRenderer`同様、`UIManager.put("ComboBox.padding", new Insets(3, 3, 3, 0))`を設定して右余白を除去しないと矢印ボタンとの間に設定した背景色で描画されない領域が生成されてしまう？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With Swing > Modifying the Look and Feel)]
 - [[JComboBoxの内余白>Swing/PaddingComboBox]]
 - [https://stackoverflow.com/questions/64580527/jcombobox-background-is-not-painted-untill-hover-over-it java - JComboBox background is not painted untill hover over it - Stack Overflow]
 - [[NimbusLookAndFeelでセル選択色をJListから取得するよう変更する>Swing/RendererUseListColors]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

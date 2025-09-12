@@ -8,12 +8,12 @@ pubdate: 2008-05-19T13:41:14+09:00
 description: JLayeredPaneに、マウスで移動、リサイズ可能なコンポーネントを追加します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRw-M85QI/AAAAAAAAAhs/BFyVP2IYoak/s800/ResizableComponents.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLayeredPane`に、マウスで移動、リサイズ可能なコンポーネントを追加します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRw-M85QI/AAAAAAAAAhs/BFyVP2IYoak/s800/ResizableComponents.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 @Override public void mouseDragged(MouseEvent e) {
   if (startPos == null || startingBounds == null) return;
@@ -53,7 +53,7 @@ image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRw-M85QI/AAAAAAAAAhs/BF
 // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、ツールバーやポップアップメニューから、移動、リサイズ可能な`JTable`や`JTree`を`JLayeredPane`(`JLayeredPane`のデフォルトレイアウトマネージャは`null`)に追加できます。
 
 - リサイズボーダーの描画などは[https://github.com/santhosh-tekuri/MyBlog/tree/master/ResizableBorder MyBlog/ResizableBorder at master · santhosh-tekuri/MyBlog · GitHub]を参考
@@ -74,9 +74,10 @@ layer.addMouseListener(new MouseAdapter() {});
 
 #ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRzAZnaVI/AAAAAAAAAhw/t9TWz3YYv6U/s800/ResizableComponents1.png)
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://github.com/santhosh-tekuri/MyBlog/tree/master/ResizableBorder MyBlog/ResizableBorder at master · santhosh-tekuri/MyBlog · GitHub]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
+- コピペミスで南西のコントロールポイントでのリサイズが不可能になっていたバグを修正。 -- &user(aterai); &new{2024-07-26 (金) 02:59:29};
 #comment

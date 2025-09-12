@@ -8,12 +8,12 @@ pubdate: 2022-01-17T05:22:52+09:00
 description: JInternalFrameがマウスドラッグで移動中の場合はそのフレームを半透明に変更して背景が確認できるよう設定します。
 image: https://drive.google.com/uc?id=190_fQzLU52FgANH4SrQqL-psTVSgQ0RS
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`がマウスドラッグで移動中の場合はそのフレームを半透明に変更して背景が確認できるよう設定します。
 
 #download(https://drive.google.com/uc?id=190_fQzLU52FgANH4SrQqL-psTVSgQ0RS)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JDesktopPane desktop = new JDesktopPane();
 desktop.setDesktopManager(new DefaultDesktopManager() {
@@ -42,7 +42,7 @@ desktop.setDesktopManager(new DefaultDesktopManager() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `DesktopManager#beginDraggingFrame(...)`をオーバーライドしてマウスでドラッグ中の`JInternalFrame`を記憶
 -- `DefaultDesktopManager`では`JInternalFrame#isDragging`を切り替えているが、このフィールドはパッケージプライベートなのでこのサンプルでは使用できない
 
@@ -69,10 +69,10 @@ JInternalFrame frame = new JInternalFrame(title, true, true, true, true) {
 - このサンプルではリサイズ中の半透明と合わせて`JDesktop#setDragMode(...)`でリサイズ中開始時に`JDesktopPane.OUTLINE_DRAG_MODE`、リサイズ終了時に`JDesktopPane.LIVE_DRAG_MODE`に切り替えている
 -- [[JInternalFrameのリサイズ中に表示されるアウトラインを点線に変更する>Swing/OutlineDragStroke]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JInternalFrameを半透明にする>Swing/TransparentFrame]]
 - [[JInternalFrameのリサイズ中に表示されるアウトラインを点線に変更する>Swing/OutlineDragStroke]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

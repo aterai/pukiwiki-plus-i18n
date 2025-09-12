@@ -1,0 +1,74 @@
+---
+category: swing
+folder: OptionPaneSeparatorPadding
+title: JOptionPaneのメッセージエリアとボタンエリアの間の内余白を変更する
+tags: [JOptionPane, NimbusLookAndFeel]
+author: aterai
+pubdate: 2024-12-16T01:54:36+09:00
+description: NimbusLookAndFeelのJOptionPaneでそのメッセージエリアとボタンエリアの間の内余白や全体の外余白を変更します。
+image: https://drive.google.com/uc?id=1EIQNyh8JYazie0dhndQG2Qc-oZyfFzZH
+---
+* Summary [#summary]
+`NimbusLookAndFeel`の`JOptionPane`でそのメッセージエリアとボタンエリアの間の内余白や全体の外余白を変更します。
+
+#download(https://drive.google.com/uc?id=1EIQNyh8JYazie0dhndQG2Qc-oZyfFzZH)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JOptionPane op = makeOptionPane();
+JButton button = new JButton("separatorPadding");
+button.addActionListener(e -> {
+  UIDefaults d = new UIDefaults();
+  int p = padding.getNumber().intValue();
+  d.put("OptionPane.separatorPadding", p);
+  int m = margin.getNumber().intValue();
+  d.put("OptionPane.contentMargins", new InsetsUIResource(m, m, m, m));
+  op.putClientProperty("Nimbus.Overrides", d);
+  op.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+  SwingUtilities.updateComponentTreeUI(op);
+  String t1 = "separatorPadding: " + p;
+  String t2 = "contentMargins: " + m;
+  JDialog dialog = op.createDialog(getRootPane(), t1 + " / " + t2);
+  dialog.setVisible(true);
+});
+}}
+
+* Description [#description]
+- `OptionPane.separatorPadding`
+-- `JOptionPane`のメッセージエリアとボタンエリアの間の内余白を設定
+-- `NimbusLookAndFeel`(`SynthLookAndFeel`)でのみ有効
+-- `NimbusLookAndFeel`での初期値は`0`
+-- 以下のように`Box.createVerticalStrut(UIManager.getInt("OptionPane.separatorPadding"))`で不可視の高さ固定コンポーネントが作成される
+-- 名前が`setName("OptionPane.separator")`の`JSeparator`もこの`VerticalStrut`の上に挿入される？
+-- `JOptionPane`のアイコンとメッセージエリアの間に同名`setName("OptionPane.separator")`の`JPanel`が挿入されるがその幅は固定`new Dimension(15, 1)`で`OptionPane.separatorPadding`の設定とは無関係
+
+#code{{
+// javax/swing/plaf/synth/SynthOptionPaneUI.java
+@Override protected void installComponents() {
+  optionPane.add(createMessageArea());
+  Container separator = createSeparator();
+  if (separator != null) {
+    optionPane.add(separator);
+    SynthContext context = getContext(optionPane, ENABLED);
+    optionPane.add(Box.createVerticalStrut(context.getStyle().
+      getInt(context, "OptionPane.separatorPadding", 6)));
+  }
+  optionPane.add(createButtonArea());
+  optionPane.applyComponentOrientation(optionPane.getComponentOrientation());
+}
+}}
+
+- `OptionPane.contentMargins`
+-- `JOptionPane`本体の外余白を設定
+-- `NimbusLookAndFeel`(`SynthLookAndFeel`)でのみ有効、その他の`LookAndFeel`では`JOptionPane#setBorder(BorderFactory.createEmptyBorder(...))`などで変更？
+-- `NimbusLookAndFeel`での初期値は`new InsetsUIResource(15, 15, 15, 15)`
+-- `NimbusDefaults`で設定されている`OptionPane:\"OptionPane.separator\".contentMargins`は変更しても効果がない？
+--- 同名のコンポーネントが`2`つ存在するから？
+-- 同じく`OptionPane:\"OptionPane.messageArea\".contentMargins`や`OptionPane:\"OptionPane.messageArea\":\"OptionPane.label\".contentMargins`を変更しても初期値から変更不可能？
+
+* Reference [#reference]
+- [[JOptionPaneで使用するボタンのサイズを揃える>Swing/SameSizeButtons]]
+
+* Comment [#comment]
+#comment
+#comment

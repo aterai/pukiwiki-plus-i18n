@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2023/02/draw-projection-transformed-regular.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPanel`に正六面体ワイヤーフレームを投影変換で描画し、マウスドラッグして各頂点を変換して空間内で回転します。
 
 #download(https://drive.google.com/uc?id=1akdvf9FZNwNey03l7ZI-DW9ZTtgAvtdY)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class Vertex {
   private double dx;
@@ -54,7 +54,7 @@ class Vertex {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 頂点を表す`Vertex`クラスを`8`個使用して辺の長さが`100`の正六面体ワイヤーフレームを作成
 #code{{
 List<Vertex> cube = new ArrayList<>(8);
@@ -134,13 +134,13 @@ private class DragRotateHandler extends MouseAdapter {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://www.amazon.co.jp/dp/B09Q8WLRZ9 Designing Math.　数学とデザインをむすぶプログラミング入門 | 古堅 真彦 | 工学 | Kindleストア | Amazon]
-- [https://apcs.mathorama.com/index.php?n=Main.Perspective APCS wiki - Perspective]
+- [https://mathorama.com/apcs/pmwiki.php?n=Main.Perspective APCS wiki - Perspective]
 - `jdk-8-windows-x64-demos.zip\jdk1.8.0_341\demo\jfc\Java2D\src.zip\java2d\demos\Colors\Rotator3D.java`
 -- `Java 2D`デモの`Colors`タブの`demos.Colors.Rotator3D`に色付き正六面体が回転移動するアニメーションデモがある
 -- [https://nowokay.hatenablog.com/entry/2022/12/09/164437 Java2Dデモを最新JDKで動かす - きしだのHatena]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

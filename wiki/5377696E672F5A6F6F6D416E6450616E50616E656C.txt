@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2015/06/an-image-inside-jscrollpane-zooming-by.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollPane`内に配置した`JPanel`をマウスホイールを使った拡大縮小とスクロールバーを使った表示領域の移動が可能になるように設定します。
 
 #download(https://lh3.googleusercontent.com/-Um9j8O0t3Kg/VYdMPIUOfwI/AAAAAAAAN7A/LAJ5KRiDdp0/s800/ZoomAndPanPanel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ZoomAndPanePanel extends JPanel {
   private final AffineTransform zoomTransform = new AffineTransform();
@@ -99,7 +99,9 @@ class ZoomAndPanePanel extends JPanel {
                                          .createTransformedShape(ovr)
                                          .getBounds();
           Point vp = nvr.getLocation();
-          vp.translate((nvr.width - ovr.width) / 2, (nvr.height - ovr.height) / 2);
+          vp.translate(
+              (nvr.width - ovr.width) / 2,
+              (nvr.height - ovr.height) / 2);
           vport.setViewPosition(vp);
           c.revalidate();
           c.repaint();
@@ -110,7 +112,7 @@ class ZoomAndPanePanel extends JPanel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JPanel#getPreferredSize()`を拡大後の画像サイズを返すようにオーバーライドすることで、画像が`JViewport`より大きくなる場合はスクロールバーが表示されるように設定しています。
 
 - マウスホイールによるズーム自体は[[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]で使用しているものとほぼ同じ`MouseWheelListener`を使用
@@ -122,7 +124,7 @@ g2.setTransform(zoomTransform);
 g2.drawImage(img, 0, 0, this);
 }}
 
-- `2`つの`AffineTransform`を`AffineTransform#concatenate(AffineTransform)`で連結してから、`Graphics2D#setTransform(AffineTransform)`で設定することで回避
+- `2`つの`AffineTransform`を`AffineTransform#concatenate(AffineTransform)`で連結してから、`Graphics2D#setTransform(AffineTransform)`で設定することで回避可能
 #code{{
 AffineTransform at = g2.getTransform();
 at.concatenate(zoomTransform);
@@ -130,12 +132,12 @@ g2.setTransform(at);
 g2.drawImage(img, 0, 0, this);
 }}
 
-- または[https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics2D.html#drawImage-java.awt.Image-java.awt.geom.AffineTransform-java.awt.image.ImageObserver- Graphics2D#drawImage(Image, AffineTransform, ImageObserver)]メソッドを使用し、`Graphics2D`コンテキスト内の`AffineTransform`が適用される前にイメージにズーム変換を適用しておくことで回避
+- または[https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics2D.html#drawImage-java.awt.Image-java.awt.geom.AffineTransform-java.awt.image.ImageObserver- Graphics2D#drawImage(Image, AffineTransform, ImageObserver)]メソッドを使用し、`Graphics2D`コンテキスト内の`AffineTransform`が適用される前にイメージにズーム変換を適用しておくことで回避する方法もある
 #code{{
 g2.drawImage(img, zoomTransform, this);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JPanelに表示した画像のズームとスクロール>Swing/ZoomingAndPanning]]
 -- マウスホイールによるズーム用のリスナを引用
 - [[JScrollPaneのViewportをマウスで掴んでスクロール>Swing/HandScroll]]
@@ -143,7 +145,7 @@ g2.drawImage(img, zoomTransform, this);
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Graphics2D.html#drawImage-java.awt.Image-java.awt.geom.AffineTransform-java.awt.image.ImageObserver- Graphics2D#drawImage(Image, AffineTransform, ImageObserver) (Java Platform SE 8)]
 - [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - %%画像上でのマウスドラッグによる移動のあとで、スクロールバーを使用した移動を行うと表示位置がおかしくなるバグがある。%% -- &user(aterai); &new{2015-06-22 (月) 17:57:58};
 -- ズームによるビュー移動には`JViewport#setViewPosition(Point)`を使用するように変更し、またマウスドラッグによるスクロールは別のリスナを使用するよう修正。 -- &user(aterai); &new{2015-06-23 (火) 17:57:58};

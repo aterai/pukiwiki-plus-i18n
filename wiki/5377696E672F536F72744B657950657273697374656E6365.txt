@@ -8,12 +8,12 @@ pubdate: 2015-09-21T01:26:03+09:00
 description: JTableのSortKeyを永続化して、そのソート状態をXMLファイルで保存、復元できるように設定します。
 image: https://lh3.googleusercontent.com/-x9GESOvXeyc/Vf7c-CY1veI/AAAAAAAAOCE/lUO7hcq8-fw/s800-Ic42/SortKeyPersistence.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の`SortKey`を永続化して、そのソート状態を`XML`ファイルで保存、復元できるように設定します。
 
 #download(https://lh3.googleusercontent.com/-x9GESOvXeyc/Vf7c-CY1veI/AAAAAAAAOCE/lUO7hcq8-fw/s800-Ic42/SortKeyPersistence.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 File file = File.createTempFile("output", ".xml");
 try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(file)))) {
@@ -24,7 +24,7 @@ try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStrea
   // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTable`のソート状態を表す`RowSorter.SortKey`を永続化するため、以下のような設定を行っています。
 
 - `RowSorter.SortKey`クラスのコンストラクタの引数をプロパティ名として`DefaultPersistenceDelegate`を作成
@@ -34,11 +34,11 @@ try (XMLEncoder xe = new XMLEncoder(new BufferedOutputStream(new FileOutputStrea
 -- [http://wiki.byte-welt.net/wiki/JTable_Inhalte_speichern JTable Inhalte speichern – Byte-Welt Wiki]
 -- [[TableColumnModelをXMLファイルで保存、復元する>Swing/ColumnModelPersistence]]のような`DefaultPersistenceDelegate`を使ってカラムヘッダの幅や順序を保存する方法もある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのモデルをXMLファイルで保存、復元する>Swing/PersistenceDelegate]]
 - [[TableColumnModelをXMLファイルで保存、復元する>Swing/ColumnModelPersistence]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 大変勉強になります。`JTable`の列入替え(`Drag&Drop`操作による)の状態も保存することは可能なのでしょうか？ -- &user(hirohiro); &new{2015-11-11 (水) 17:57:58};
 -- @hirohiro さん、こんばんは。`JTable`の列入替えの状態を保存する場合、`DefaultTableColumnModel`用の`DefaultPersistenceDelegate`を作成してヘッダカラムの幅や順序を保存する方法があります(記事の解説も追加・修正しました)。 -- &user(aterai); &new{2015-11-13 (金) 17:57:58};

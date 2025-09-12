@@ -8,12 +8,12 @@ pubdate: 2021-05-24T06:11:30+09:00
 description: JRootPaneの子コンポーネントを検索してSystemMenuとして使用されているJMenuを取得します。
 image: https://drive.google.com/uc?id=17deOtbw1m68IowpoVASZ4QGOeM1WJBnq
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JRootPane`の子コンポーネントを検索して`SystemMenu`として使用されている`JMenu`を取得します。
 
 #download(https://drive.google.com/uc?id=17deOtbw1m68IowpoVASZ4QGOeM1WJBnq)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextArea log = new JTextArea();
 EventQueue.invokeLater(() -> {
@@ -34,7 +34,7 @@ EventQueue.invokeLater(() -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `OS`依存の`SystemLookAndFeel`では`SystemMenu`は`JNI`などを使用しないと取得不可能
 - `JFrame.setDefaultLookAndFeelDecorated(true)`で`DefaultLookAndFeel`を使用する場合、`SystemMenu`は以下のようなコンポーネント階層を辿って取得可能
 #code{{
@@ -49,9 +49,9 @@ javax.swing.JFrame
 - 取得した`JMenu`のサイズが小さく、システムアイコンを右クリックしてもシステムメニューがポップアップできない場合がある
 -- 上記のサンプルではシステムアイコンを再設定してクリック可能な領域を拡大している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/12815659/add-item-to-windows-system-menu-without-winapi java - Add item to windows system menu without winapi - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

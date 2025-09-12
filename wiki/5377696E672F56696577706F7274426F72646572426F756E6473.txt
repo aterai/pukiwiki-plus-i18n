@@ -8,12 +8,12 @@ pubdate: 2019-05-06T02:13:15+09:00
 description: JScrollPaneに追加したコンポーネントのコンテンツ幅がJViewportの幅より大きく、水平スクロールバーが表示される状態の場合その右端に影を表示します。
 image: https://drive.google.com/uc?id=1lQS2oCVJtFYtbAKfXuQLKqKv1FIE2rGBkg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollPane`に追加したコンポーネントのコンテンツ幅が`JViewport`の幅より大きく、水平スクロールバーが表示される状態の場合その右端に影を表示します。
 
 #download(https://drive.google.com/uc?id=1lQS2oCVJtFYtbAKfXuQLKqKv1FIE2rGBkg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ScrollPaneLayerUI extends LayerUI<JScrollPane> {
   @Override public void paint(Graphics g, JComponent c) {
@@ -45,17 +45,17 @@ class ScrollPaneLayerUI extends LayerUI<JScrollPane> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JScrollPane`に`JLayer`を設定しコンテンツである`JEditorPane`の右側が非表示になっていることを示唆するために`JViewport`の右端に影を描画する
 -- コンテンツが`JViewport`の幅より小さい場合や`JViewport`の表示領域がコンテンツの右端まで到達している場合は影を描画しない
 -- コンテンツの右側が非表示になっているかどうかは`JScrollPane#getHorizontalScrollBar()#getModel()`で`BoundedRangeModel`を取得し`m.getValue() + m.getExtent() < m.getMaximum()`かどうかで判断
 --- 水平スクロールバーが`ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER`で非表示の場合も判別可能
 -- 影の描画位置は垂直・水平スクロールバーの表示・非表示に影響されないよう`JScrollPane#getViewportBorderBounds()`メソッドで`JViewport`のボーダーの境界を取得して決定する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JScrollPane.html#getViewportBorderBounds-- JScrollPane#getViewportBorderBounds() (Java Platform SE 8)]
 - [[JScrollBarが最後までスクロールしたことを確認する>Swing/DetectScrollToBottom]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

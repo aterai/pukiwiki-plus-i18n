@@ -8,12 +8,12 @@ pubdate: 2017-07-31T16:08:05+09:00
 description: JScrollPane上にマウスカーソルが存在する場合だけ、縦JScrollBarが表示されるように設定します。
 image: https://drive.google.com/uc?id=19tpZyfx24XIIJHmLNjzpSlSQg_GAPDwkUA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollPane`上にマウスカーソルが存在する場合だけ、縦`JScrollBar`が表示されるように設定します。
 
 #download(https://drive.google.com/uc?id=19tpZyfx24XIIJHmLNjzpSlSQg_GAPDwkUA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ScrollBarOnHoverLayerUI extends LayerUI<JScrollPane> {
   @Override public void installUI(JComponent c) {
@@ -48,7 +48,7 @@ class ScrollBarOnHoverLayerUI extends LayerUI<JScrollPane> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `MouseListener`
 -- `JScrollPane`内部に配置した`JTextArea`に`MouseListener`を設定
 --- `JTextArea`上にマウスカーソルが入ったら`JScrollPane#setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS)`で`JScrollBar`を表示
@@ -60,10 +60,10 @@ class ScrollBarOnHoverLayerUI extends LayerUI<JScrollPane> {
 --- `JLayer`上にマウスカーソルが入ったら`JScrollPane#setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS)`で`JScrollBar`を表示
 --- `JLayer`外にマウスカーソルが出たら`JScrollPane#setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER)`で`JScrollBar`を非表示
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JLayer.html#setLayerEventMask-long- JLayer#setLayerEventMask(long) (Java Platform SE 8)]
 - [[JScrollBarを半透明にする>Swing/TranslucentScrollBar]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

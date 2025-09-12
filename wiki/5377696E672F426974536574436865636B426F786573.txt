@@ -8,12 +8,12 @@ pubdate: 2018-03-26T16:22:10+09:00
 description: 複数のJCheckBoxの選択状態をBitSetを使用して管理します。
 image: https://drive.google.com/uc?id=1u_RLXjvLSINB0mb0ar_COqlBq5jbVhPByg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 複数の`JCheckBox`の選択状態を`BitSet`を使用して管理します。
 
 #download(https://drive.google.com/uc?id=1u_RLXjvLSINB0mb0ar_COqlBq5jbVhPByg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // Long.MAX_VALUE
 // 0b111_1111_1111_1111_1111_1111_1111_1111_1111_1111_1111_1111_1111_1111_1111_1111
@@ -35,7 +35,7 @@ IntStream.range(0, BIT_LENGTH).forEach(i -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JCheckBox`の選択状態を`BitSet`で管理
 - `UndoManager`を使用した`Undo`、`Redo`は[[JCheckBoxの選択状態をBigIntegerで記憶し、UndoManagerを使用して元に戻したりやり直したりする>Swing/UndoRedoCheckBoxes]]と同じ
 - `JCheckBox`がクリックされて値が変化した場合`BitSet`内のビットを`2`進数の形で`JLabel`に表示
@@ -61,7 +61,7 @@ private static String print(BitSet bitSet) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/util/BitSet.html BitSet (Java Platform SE 8)]
 - [[JCheckBoxの選択状態をBigIntegerで記憶し、UndoManagerを使用して元に戻したりやり直したりする>Swing/UndoRedoCheckBoxes]]
 -- `BigInteger`を使用する場合のサンプル
@@ -69,6 +69,6 @@ private static String print(BitSet bitSet) {
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/lang/Long.html#toUnsignedString-long-int- Long#toUnsignedString(...) (Java Platform SE 8)]
 -- `JDK 1.8.0`で符号なし整数として扱うために追加された
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

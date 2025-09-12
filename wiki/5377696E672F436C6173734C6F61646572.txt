@@ -8,12 +8,12 @@ pubdate: 2006-05-22T09:59:23+09:00
 description: クラスパスからのエントリ(相対パス風)を使って、ClassLoaderからURLを取得します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTI-UTFN-I/AAAAAAAAATo/6sdQoVO0Kc4/s800/ClassLoader.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 クラスパスからのエントリ(相対パス風)を使って、`ClassLoader`から`URL`を取得します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTI-UTFN-I/AAAAAAAAATo/6sdQoVO0Kc4/s800/ClassLoader.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 URL url = getClass().getClassLoader().getResource("example/test.png");
 // URL url = Thread.currentThread().getContextClassLoader().getResource("example/test.png");
@@ -22,7 +22,7 @@ JLabel icon = new JLabel(new ImageIcon(url));
 JLabel path = new JLabel(url.toString());
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `ClassLoader`を使用して、位置に依存しない方法でリソース(`URL`)を取得します。
 
 - 例えば`new ImageIcon(String filename)`のようにファイルパスを文字列で指定した場合、このファイルパスが位置(カレントディレクトリ)に依存しているため、実行時に別のディレクトリから起動したり、`jar`ファイルにまとめたりするとファイルが参照できなくなる
@@ -80,11 +80,11 @@ set CLASSPATH=c:\temp;.\target\classes
 
 この場合、`src.zip`に元々入っていた`適当な場所/test.png`ではなく、`file:/C:/temp/example/test.png`という`URL`が`getResource`で取得できます。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/lang/resources.html 位置に依存しない方法でのリソースへのアクセス]
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/icon.html#getresource Loading Images Using getResource]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 「クラスパスからのパス」などの意味が分かり辛いので、[https://docs.oracle.com/javase/jp/8/docs/api/java/net/JarURLConnection.html JarURLConnection (Java Platform SE 8)]を参考にして「パス」を「エントリ」に変更してみました。 -- &user(aterai); &new{2008-02-15 (金) 18:04:14};
 - `.jar`ファイルのクラスで -- &user(kind); &new{2012-03-02 (金) 14:04:06};

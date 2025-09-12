@@ -8,12 +8,12 @@ pubdate: 2011-04-11T15:20:36+09:00
 description: JTreeの各ノードで改行を使用し、タイトルを複数行表示します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TaKbyMKLtkI/AAAAAAAAA5M/NoozvykYAUE/s800/MultiLineTree.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`の各ノードで改行を使用し、タイトルを複数行表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TaKbyMKLtkI/AAAAAAAAA5M/NoozvykYAUE/s800/MultiLineTree.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class MultiLineCellRenderer extends JPanel implements TreeCellRenderer {
   private DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
@@ -102,7 +102,7 @@ class CellTextArea2 extends JTextArea {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTree#setRowHeight(0)`を実行して`JTree`のデフォルトの行の高さを`0`にすることでセルレンダラーが行の高さを決めるように設定し、以下の`2`つの方法で改行を行っています。
 
 - `Html`
@@ -113,9 +113,9 @@ class CellTextArea2 extends JTextArea {
 -- `parent.add(new DefaultMutableTreeNode("blue\nblue, blue"));`
 -- `JTree#getRowHeight()`の初期値は`LookAndFeel`で異なり、例えば`WindowsLookAndFeel`の場合`0`以下ではない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://www.codeguru.com/java/articles/141.shtml Multi-line tree items]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

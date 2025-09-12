@@ -8,12 +8,12 @@ pubdate: 2018-08-13T14:59:12+09:00
 description: SynthLookAndFeelのスタイルをXMLファイルで設定します。
 image: https://drive.google.com/uc?id=1yPNRdiUSVu_8dPLvMFdctKzE9Tnp-hSXDA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `SynthLookAndFeel`のスタイルを`XML`ファイルで設定します。
 
 #download(https://drive.google.com/uc?id=1yPNRdiUSVu_8dPLvMFdctKzE9Tnp-hSXDA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Class<?> clz = MainPanel.class;
 try (InputStream is = clz.getResourceAsStream("button.xml")) {
@@ -25,7 +25,7 @@ try (InputStream is = clz.getResourceAsStream("button.xml")) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下のような`XML`ファイルで`SynthLookAndFeel`のスタイルを設定しています。
 
 #code{{
@@ -81,11 +81,11 @@ try (InputStream is = clz.getResourceAsStream("button.xml")) {
 --- 「非`Swing`コンポーネントをペイントする」では以下のように`bind`要素の`type`属性に`key`ではなく`name`を設定した場合の説明があるが、`Java 8`のソースコード(`javax/swing/plaf/synth/DefaultSynthStyleFactory#getMatchingStyles(...)`)を確認した限りではコンポーネントのクラス名を対象にする機能は存在しない(`1.4`では可能だった？のかもしれない)
 > `<bind>`タグを`<bind style="mystyle" type="name" key="Custom.*"/>`に変更すると、`mystyle`スタイルを使うためには、クラス名が`Custom`で始まる全コンポーネント（例えば`CustomTextField`や`CustomLabel`など）を変更することになります。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/synth.html The Synth Look and Feel (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
 - [https://www.ibm.com/developerworks/jp/java/library/j-synth/index.html 進歩したSynth]
 -- 現在は無効になっている「`<bind>`要素のクラス名関係」以外は正確で有用と思われる
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2010-11-08T16:26:30+09:00
 description: JRadioButtonMenuItemのチェックアイコンを変更します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRVf_tDmI/AAAAAAAAAhA/1F6GcDuJmcg/s800/RadioButtonMenuItemIcon.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JRadioButtonMenuItem`のチェックアイコンを変更します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTRVf_tDmI/AAAAAAAAAhA/1F6GcDuJmcg/s800/RadioButtonMenuItemIcon.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // com.sun.java.swing.plaf.windows.WindowsIconFactory.java
 class RadioButtonMenuItemIcon1 implements Icon, UIResource, Serializable {
@@ -60,7 +60,7 @@ class RadioButtonMenuItemIcon2 implements Icon, UIResource, Serializable {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`UIManager.put("RadioButtonMenuItem.checkIcon", icon)`を使用して`JRadioButtonMenuItem`のチェックアイコンを変更しています。
 
 - `default`
@@ -71,11 +71,11 @@ class RadioButtonMenuItemIcon2 implements Icon, UIResource, Serializable {
 - `fillOval`
 -- `fillRoundRect`ではなく`fillOval`を使用するチェックアイコンを設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JRadioButtonMenuItem.html JRadioButtonMenuItem (Java Platform SE 8)]
 - [[JCheckBoxMenuItemのチェックアイコンを変更する>Swing/CheckBoxMenuItemIcon]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `Windows 7`でテストするとアイコンの歪みはないので、修正された模様。 -- &user(aterai); &new{2012-08-08 (水) 19:51:09};
 

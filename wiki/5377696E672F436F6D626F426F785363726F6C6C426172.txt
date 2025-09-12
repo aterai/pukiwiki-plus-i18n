@@ -8,12 +8,12 @@ pubdate: 2021-03-08T16:39:18+09:00
 description: JComboBoxのドロップダウンリストで使用する縦JScrollBarの幅やスタイル、増減ボタンの有無などを変更します。
 image: https://drive.google.com/uc?id=1OrhP_jMrcyzy5mrKVnhaw3Qb1iH_mttw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`のドロップダウンリストで使用する縦`JScrollBar`の幅やスタイル、増減ボタンの有無などを変更します。
 
 #download(https://drive.google.com/uc?id=1OrhP_jMrcyzy5mrKVnhaw3Qb1iH_mttw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JComboBox<String> combo2 = new JComboBox<String>(makeModel()) {
   @Override public void updateUI() {
@@ -121,7 +121,7 @@ class WithoutArrowButtonScrollBarUI extends BasicScrollBarUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `MetalLookAndFeel`デフォルトの編集不可`JComboBox`
 - 下: `BasicComboBoxUI`をオーバーライドしてドロップダウンリストのスタイルなどを変更した編集不可`JComboBox`
 -- `BasicComboBoxUI#createPopup()`メソッドをオーバーライドして`BasicComboPopup`を生成、さらにその`BasicComboPopup#createScroller()`メソッドをオーバーライドして`JScrollPane`を生成、縦`JScrollBar`などを取得し以下の`UI`を変更
@@ -133,13 +133,13 @@ class WithoutArrowButtonScrollBarUI extends BasicScrollBarUI {
 -- `JScrollBar`のハイライト色、背景色など: `BasicScrollBarUI#paintThumb(...)`をオーバーライドして変更
 --- [[ScrollBarの表示を変更>Swing/IconScrollBar]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollPaneの角を丸める>Swing/RoundedScrollPane]]
 -- 角を丸めるなどのコードを除去して簡素化したサンプルをこの記事に移動
 - [[JScrollBar上にマウスカーソルが入ったらその幅を拡張する>Swing/ChangeScrollBarWidthOnHover]]
 - [[JScrollBarのArrowButtonを非表示にする>Swing/ArrowButtonlessScrollBar]]
 - [[ScrollBarの表示を変更>Swing/IconScrollBar]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

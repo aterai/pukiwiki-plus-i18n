@@ -8,12 +8,12 @@ pubdate: 2013-04-29T08:31:48+09:00
 description: JSpinnerの代わりにJComboBoxを使用することで、アイテムの文字色などを変更しています。
 image: https://lh6.googleusercontent.com/-kpruQCgOnLE/UX2r6exfrII/AAAAAAAABqo/JZnFlTBy1zw/s800/SpinnerTextColor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`の代わりに`JComboBox`を使用することで、アイテムの文字色などを変更しています。
 
 #download(https://lh6.googleusercontent.com/-kpruQCgOnLE/UX2r6exfrII/AAAAAAAABqo/JZnFlTBy1zw/s800/SpinnerTextColor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton nb = createArrowButton(SwingConstants.NORTH);
 nb.addActionListener(e -> {
@@ -41,7 +41,7 @@ p.add(comboBox);
 p.add(box, BorderLayout.EAST);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、ドロップダウンリストの表示を無効にした`JComboBox`と`2`つの`ArrowButton`を組み合わせて、`JSpinner`風のコンポーネントを作成しています。`JComboBox`のデフォルトセルレンダラーは`JLabel`を継承していて`Html`タグが使用可能なので、各アイテムの文字色を`<font>`タグで部分的に変更しています。
 
 - `BasicComboBoxUI#createArrowButton()`メソッドをオーバーライドして`JComboBox`の`ArrowButton`を非表示に設定
@@ -53,7 +53,7 @@ p.add(box, BorderLayout.EAST);
 - ボタンをクリックしたままの場合、値変更が繰り返し実行されるリピート機能には未対応
 -- [[JButtonがマウスで押されている間、アクションを繰り返すTimerを設定する>Swing/AutoRepeatTimer]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxのArrowButtonを隠す>Swing/HideComboArrowButton]]
 - [[JTableを別コンポーネントから操作>Swing/SelectAllButton]]
 - [[JComponentのKeyBinding一覧を取得する>Swing/KeyBinding]]
@@ -61,6 +61,6 @@ p.add(box, BorderLayout.EAST);
 - [[JSpinnerのエディタをJLabelに変更してHTMLを表示する>Swing/HtmlSpinnerEditor]]
 -- `JSpinner`の`Editor`を`JFormattedTextField`から`JLabel`に変更して同様の文字色変更を行うサンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

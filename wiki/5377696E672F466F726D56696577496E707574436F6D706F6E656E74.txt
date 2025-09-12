@@ -8,12 +8,12 @@ pubdate: 2022-03-07T01:49:33+09:00
 description: HTMLEditorKitを適用したJEditorPaneのフォームにinputやselectタグで表示可能なコンポーネントをテストします。
 image: https://drive.google.com/uc?id=1GjiSPlLuu6chdSwJIj4-lLAAyPrSXsT-
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `HTMLEditorKit`を適用した`JEditorPane`のフォームに`input`や`select`タグで表示可能なコンポーネントをテストします。
 
 #download(https://drive.google.com/uc?id=1GjiSPlLuu6chdSwJIj4-lLAAyPrSXsT-)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JEditorPane editor = new JEditorPane();
 HTMLEditorKit kit = new HTMLEditorKit();
@@ -76,7 +76,7 @@ private static String makeHtml() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `<input type='button' ...>`
 -- %%`JButton`が使用される%% 空白になる
 -- `type`属性が`button`の場合はドキュメントに記述されているがソースコードでは実装されていない
@@ -114,12 +114,12 @@ private static String makeHtml() {
 -- `JScrollPane`内に配置された`JTextArea`が使用される
 -- `rows`、`cols`属性で`JTextArea`の行数と列数を指定可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/html/FormView.html FormView (Java Platform SE 8 )]
 -- 日本語ドキュメントでは`select`要素、`size`属性、`multiple`属性などが次のように翻訳されてしまい少しわかりづらい
 --「選択、サイズは> 1、または複数の属性を定義」
 - [[JEditorPaneに表示されたフォームからの送信データを取得する>Swing/FormSubmitEvent]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

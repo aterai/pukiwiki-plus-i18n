@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2023/07/click-on-jcheckbox-placed-in-jtable.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセル内に`JCheckBox`を配置し、これをクリックしたらとなりのセルの推奨サイズまで行の高さを展開します。
 
 #download(https://drive.google.com/uc?id=16vOMLYeg5yf607l6d6z-mU1d6GMU96m2)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 int defaultHeight = 20;
 JTable table = new JTable(model) {
@@ -53,7 +53,7 @@ table.getModel().addTableModelListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `0`列目
 -- 「タイトル文字列」、「展開・折り畳み可能か」、「現在展開されているか」の`3`つのデータを保持する`RowHeader`クラスを`ColumnClass`として設定
 -- `JTable#setDefaultRenderer(RowHeader.class, new RowHeaderRenderer())`で`RowHeader`クラスのセルレンダラを設定
@@ -68,11 +68,11 @@ table.getModel().addTableModelListener(e -> {
 -- 実際の行の高さの展開・折り畳みは`RowHeader`の選択状態が変化して`TableModelEvent`が発生したときに`JTable#setRowHeight(...)`メソッドで実行する
 -- [[JTableの行の高さを変更する>Swing/FishEyeTable]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableの行の高さを変更する>Swing/FishEyeTable]]
 - [[JTableのセルの高さを自動調整>Swing/AutoWrapTableCell]]
 - [[JTableのセル内部にあるJCheckBoxのみクリック可能にする>Swing/CheckBoxCellEditor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

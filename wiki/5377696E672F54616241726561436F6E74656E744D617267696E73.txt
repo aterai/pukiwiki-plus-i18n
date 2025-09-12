@@ -8,12 +8,12 @@ pubdate: 2018-09-24T22:51:27+09:00
 description: JTabbedPaneのタブエリア余白を取得、変更するテストを行います。
 image: https://drive.google.com/uc?id=1WORPot3oeRdnLbFIDh6BcBmJpFVrLASoOw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブエリア余白を取得、変更するテストを行います。
 
 #download(https://drive.google.com/uc?id=1WORPot3oeRdnLbFIDh6BcBmJpFVrLASoOw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 UIDefaults d = UIManager.getLookAndFeelDefaults();
@@ -24,7 +24,7 @@ Insets i = d.getInsets("TabbedPane:TabbedPaneTabArea.contentMargins");
 d.put("TabbedPane:TabbedPaneTabArea.contentMargins", new Insets(i.top, 0, i.bottom, 0));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`NimbusLookAndFeel`を設定した`JTabbedPane`のタブエリア余白を設定するテストを行っています。
 
 - 上:
@@ -55,15 +55,16 @@ if (Objects.nonNull(insets)) {
 } else {
   // MetalLookAndFeelなどでは使用できない
   SynthStyle style = SynthLookAndFeel.getStyle(this, Region.TABBED_PANE_TAB_AREA);
-  SynthContext context = new SynthContext(this, Region.TABBED_PANE_TAB_AREA, style, SynthConstants.ENABLED);
+  SynthContext context = new SynthContext(
+    this, Region.TABBED_PANE_TAB_AREA, style, SynthConstants.ENABLED);
   return style.getInsets(context, null);
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのNimbusLookAndFeelにおけるスタイルを変更する>Swing/NimbusTabbedPanePainter]]
 - [[JTabbedPaneのタイトルをクリップ>Swing/ClippedTabLabel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2020/11/create-switchable-buttons-in-jslider.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`を使用してマウスクリックやつまみのドラッグでオン・オフの切り替え可能なスイッチボタンを作成します。
 
 #download(https://drive.google.com/uc?id=1eHKdswGa47y1nDw6S6vz_3ogSY7RxHFJ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIDefaults d = new UIDefaults();
 d.put("Slider.thumbHeight", 40);
@@ -76,7 +76,7 @@ slider.putClientProperty("Nimbus.Overrides", d);
 }}
 
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `JSlider`を最小値`0`、最大値`1`に設定
 -- コンポーネントのサイズを`getPreferredSize()`をオーバーライドして変更
@@ -139,10 +139,10 @@ class ToggleSwitchLayerUI extends LayerUI<JSlider> {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSliderのトラックをクリックしても値の変更が発生しないように設定する>Swing/DisableScrollDueToClickInTrack]]
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

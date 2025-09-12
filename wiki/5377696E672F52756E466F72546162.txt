@@ -1,0 +1,80 @@
+---
+category: swing
+folder: RunForTab
+title: JTabbedPaneのタブが配置されたランの位置を取得する
+tags: [JTabbedPane, JToolTip]
+author: aterai
+pubdate: 2024-05-13T02:06:27+09:00
+description: JTabbedPaneのタブがどのタブランに配置されているかを取得してJToolTipで表示します。
+image: https://drive.google.com/uc?id=1vWgaN_19hU6g1Sl-27Hot6sztSydBsfY
+---
+* Summary [#summary]
+`JTabbedPane`のタブがどのタブランに配置されているかを取得して`JToolTip`で表示します。
+
+#download(https://drive.google.com/uc?id=1vWgaN_19hU6g1Sl-27Hot6sztSydBsfY)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JTabbedPane tabs = new JTabbedPane() {
+  @Override public void addTab(String title, Icon icon, Component component) {
+    super.addTab(title, icon, component, title);
+  }
+
+  @Override public String getToolTipText(MouseEvent e) {
+    String tip = super.getToolTipText(e);
+    int idx = indexAtLocation(e.getX(), e.getY());
+    if (idx >= 0 && isHorizontalTabPlacement()) {
+      int run = getRunForTab(getTabCount(), idx);
+      tip = String.format("%s: Run: %d", tip, run);
+    }
+    return tip;
+  }
+
+  private int getRunForTab(int tabCount, int tabIndex) {
+    int runCount = getTabRunCount();
+    Rectangle taRect = getTabAreaRect(tabCount);
+    int runHeight = taRect.height / runCount;
+    Rectangle tabRect = getBoundsAt(tabIndex);
+    Point2D pt = new Point2D.Double(
+        tabRect.getCenterX(), tabRect.getCenterY());
+    Rectangle runRect = new Rectangle(
+        taRect.x, taRect.y, taRect.width, runHeight);
+    int run = -1;
+    for (int i = 0; i < runCount; i++) {
+      if (runRect.contains(pt)) {
+        run = i;
+      }
+      runRect.translate(0, runHeight);
+    }
+    return getTabPlacement() == TOP ? runCount - run - 1 : run;
+  }
+
+  private Rectangle getTabAreaRect(int tabCount) {
+    Rectangle rect = getBoundsAt(0);
+    for (int i = 0; i < tabCount; i++) {
+      rect.add(getBoundsAt(i));
+    }
+    return rect;
+  }
+
+  private boolean isHorizontalTabPlacement() {
+    return getTabPlacement() == TOP || getTabPlacement() == BOTTOM;
+  }
+};
+}}
+
+* Description [#description]
+- `JTabbedPane`にラップタブレイアウト(`WRAP_TAB_LAYOUT`)が設定されて複数ランが生成される場合、任意のタブがどのランに配置されているかを計算する
+-- このサンプルではタブ配置(`tabPlacement`)が`TOP`または`BOTTOM`でランが行になる場合のみ対応し、`LEFT`、`RIGHT`で列になる場合は未対応
+- タブエリア領域を計算して取得し、その高さを`JTabbedPane#getTabRunCount()`で取得したランの行数で割ってランの高さを計算し、ひとつのランが占める領域を求める
+-- 対象タブの中心が上で求めた何番目のラン領域に含まれるかを調査する
+-- タブ配置が`TOP`の場合、表示上タブコンテンツ領域に接するランを`0`とした順番になるよう`runCount - run - 1`と反転する
+- `BasicTabbedPaneUI#getRunForTab(...)`で配置されたラン位置を求める方法もあるが、このメソッドは`protected`かつタブランの入れ替え(`BasicTabbedPaneUI#shouldRotateTabRuns() == true`)発生前のラン位置を返すのでこのサンプルでは使用不可
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#getTabRunCount-- JTabbedPane#getTabRunCount() (Java Platform SE 8)]
+- [[JTabbedPaneのタブ・ランの回転を無効にする>Swing/RotateTabRuns]]
+
+* Comment [#comment]
+#comment
+#comment

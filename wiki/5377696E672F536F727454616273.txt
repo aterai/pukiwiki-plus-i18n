@@ -8,12 +8,12 @@ pubdate: 2006-04-24T15:47:22+09:00
 description: JTabbedPaneのタブタイトルでその並び順をソートします。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTe98QmaI/AAAAAAAAAkc/w7tzozy5FqM/s800/SortTabs.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブタイトルでその並び順をソートします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTe98QmaI/AAAAAAAAAkc/w7tzozy5FqM/s800/SortTabs.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SortAction extends AbstractAction {
   @Override public void actionPerformed(ActionEvent e) {
@@ -46,7 +46,7 @@ class ComparableTab {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、タブを追加、削除、ダブルクリックで名前変更してタブタイトルでのソートがテスト可能です。
 
 - タブのソートは以下の手順で実行
@@ -54,9 +54,9 @@ class ComparableTab {
 + `JTabbedPane`から一旦タブをすべて削除
 + ソート済みのリストから`JTabbedPane`にタブを戻す
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#removeAll-- JTabbedPane#removeAll() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

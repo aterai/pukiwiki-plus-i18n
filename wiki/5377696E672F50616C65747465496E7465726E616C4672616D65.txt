@@ -8,14 +8,15 @@ pubdate: 2016-03-21T22:17:29+09:00
 description: パレット化したJInternalFrameをJDesktopPaneのパレットレイヤーに追加します。
 image: https://lh3.googleusercontent.com/-WI8tV2GL8no/Vu_vV8kqSCI/AAAAAAAAOQ4/Os6hBhlLlCYP7L87Qkn_RBlFp8qkUEZrwCCo/s800-Ic42/PaletteInternalFrame.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 パレット化した`JInternalFrame`を`JDesktopPane`のパレットレイヤーに追加します。
 
 #download(https://lh3.googleusercontent.com/-WI8tV2GL8no/Vu_vV8kqSCI/AAAAAAAAOQ4/Os6hBhlLlCYP7L87Qkn_RBlFp8qkUEZrwCCo/s800-Ic42/PaletteInternalFrame.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
-JInternalFrame palette = new JInternalFrame("Palette", true, false, true, true);
+JInternalFrame palette = new JInternalFrame(
+    "Palette", true, false, true, true);
 palette.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
 palette.setBounds(0, 0, 120, 120);
 palette.setMinimumSize(new Dimension(50, 50));
@@ -24,18 +25,18 @@ palette.setVisible(true);
 desktop.add(palette, JDesktopPane.PALETTE_LAYER);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JInternalFrame#putClientProperty("JInternalFrame.isPalette", Boolean.TRUE)`でパレット化
 -- `MetalLookAndFeel`でのみ有効
 - `JDesktopPane#add(palette, JDesktopPane.PALETTE_LAYER)`でパレットレイヤーに追加
 -- パレットレイヤーはデフォルトレイヤー(`JDesktopPane.DEFAULT_LAYER`)の一つ上のレイヤーで常にその下のレイヤーに配置れさたコンポーネントより上に表示される
-- パレット化した`JInternalFrame`をデフォルトではマウス操作でアイコン化することはできない？
--- `JInternalFrame#setIcon(boolean)`メソッドを使用すればアイコン化することは可能
+- パレット化した`JInternalFrame`はデフォルトのマウス操作でアイコン化が不可になる
+-- `JInternalFrame#setIcon(boolean)`メソッドを使用すればアイコン化可能
 -- 最大化はパレットのタイトルバーをダブルクリック、クローズはタイトルバー右端のボタンをクリックで可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/metal/MetalInternalFrameUI.html#IS_PALETTE MetalInternalFrameUI.IS_PALETTE (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

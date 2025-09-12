@@ -8,12 +8,12 @@ pubdate: 2020-12-07T00:54:13+09:00
 description: EmptyBorderをオーバーライドしてその余白に角丸図形を配置し、LinearGradientPaintで塗りつぶします。
 image: https://drive.google.com/uc?id=1Uf81NkP_e89c6zzffZQPGTyWFRUmqKfy
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `EmptyBorder`をオーバーライドしてその余白に角丸図形を配置し、`LinearGradientPaint`で塗りつぶします。
 
 #download(https://drive.google.com/uc?id=1Uf81NkP_e89c6zzffZQPGTyWFRUmqKfy)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RoundGradientBorder extends EmptyBorder {
   private final float[] fractions = {0f, .25f, .5f, .75f, 1f};
@@ -57,7 +57,7 @@ class RoundGradientBorder extends EmptyBorder {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JLabel + MatteBorder(Gradient Icon)`
 -- グラデーションを描画する`Icon`を`MatteBorder`に設定して使用
 -- 右辺は`Icon`の開始位置からの描画になるのでグラデーションがうまく繋がらない
@@ -67,10 +67,10 @@ class RoundGradientBorder extends EmptyBorder {
 -- 親の`JLabel`のサイズと`EmptyBorder`の余白を変更して`RoundGradientBorder`を設定
 // -- `RoundGradientBorder`のフチの幅は同じ値を使用
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://medhatdawoud.net/blog/gradient-borders-with-curves-and-3d-animation-in-css Gradient borders with curves and 3D animation in CSS]
 - [https://twitter.com/shin_5_9/status/1293544547302088704 つだしんごさんはTwitterを使っています 「ネオンデザインを多分1番魅せる配色の一覧 https://t.co/7noLZWCukP」 / Twitter]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

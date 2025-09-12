@@ -1,0 +1,58 @@
+---
+category: swing
+folder: FadingOutWindow
+title: JWindowを透明効果アニメーション付きでフェードアウトする
+tags: [JWindow, Timer, Animation]
+author: aterai
+pubdate: 2025-05-19T01:29:28+09:00
+description: JWindowの透明度をTimerを使用して変更し、フェードアウトで非表示化するよう設定します。
+image: https://drive.google.com/uc?id=1gRpRc-O2DPW5PKmTF1Ric4TObdc4V0u5
+---
+* Summary [#summary]
+`JWindow`の透明度を`Timer`を使用して変更し、フェードアウトで非表示化するよう設定します。
+
+#download(https://drive.google.com/uc?id=1gRpRc-O2DPW5PKmTF1Ric4TObdc4V0u5)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JWindow window = new JWindow();
+GraphicsConfiguration gc = window.getGraphicsConfiguration();
+if (gc != null && gc.isTranslucencyCapable()) {
+  window.setBackground(new Color(0x0, true));
+}
+AtomicInteger alpha = new AtomicInteger(100);
+Timer animator = new Timer(50, null);
+animator.addActionListener(e -> {
+  int a = alpha.addAndGet(-10);
+  if (a < 0) {
+    window.dispose();
+    animator.stop();
+    log.append("JWindow.dispose()\n");
+  } else {
+    float opacity = a / 100f;
+    window.setOpacity(opacity);
+    log.append(String.format("JWindow.setOpacity(%f)%n", opacity));
+  }
+});
+Shape shape = new RoundRectangle2D.Float(0f, 0f, 240f, 64f, 32f, 32f);
+window.getContentPane().add(makePanel(shape, animator));
+window.pack();
+window.setLocationRelativeTo(c.getRootPane());
+window.setVisible(true);
+}}
+
+* Description [#description]
+- `JWindow`の背景色に`Window#setBackground(...)`で`new Color(0x0, true)`を設定して透明化
+-- `JWindow#getContentPane()`で取得したコンテンツペインに半透明の図形を描画する`JPanel`を追加
+-- `JPanel`には背景のみ透明なアイコンと親`JWindow`を閉じる`JButton`を追加
+- `JButton`がクリックされたら`Timer`を起動して`JWindow#setOpacity(float)`でウィンドウの不透明性を設定
+-- このウィンドウの不透明性設定はウィンドウ背景色のアルファ成分とは異なり子コンポーネントを含めて適用される
+-- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#setOpacity-float- Window#setOpacity(float) (Java Platform SE 8)]
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Window.html#setOpacity-float- Window#setOpacity(float) (Java Platform SE 8)]
+- [[JWindowを半透明の滑らかな図形で切り抜きする>Swing/TranslucentFrameShape]]
+
+* Comment [#comment]
+#comment
+#comment

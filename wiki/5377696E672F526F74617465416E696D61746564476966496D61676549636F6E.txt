@@ -8,12 +8,12 @@ pubdate: 2021-05-03T02:08:34+09:00
 description: Animated Gifから生成したImageIconを回転して表示する方法をテストします。
 image: https://drive.google.com/uc?id=1tb2ZehKojq1kL-8mxiEbwtYaQUfPmLzX
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Animated Gif`から生成した`ImageIcon`を回転して表示する方法をテストします。
 
 #download(https://drive.google.com/uc?id=1tb2ZehKojq1kL-8mxiEbwtYaQUfPmLzX)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Icon icon3 = new ImageIcon(url) {
   @SuppressWarnings("PMD.AvoidSynchronizedAtMethodLevel")
@@ -37,7 +37,7 @@ JLabel label3 = new JLabel(icon3);
 label3.setBorder(BorderFactory.createTitledBorder("Override ImageIcon#paintIcon(...)"));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default ImageIcon`
 -- `Animated GIF`ファイルから`ImageIcon`を作成して比較用に表示
 - `Wrapping with another Icon`
@@ -53,12 +53,12 @@ label3.setBorder(BorderFactory.createTitledBorder("Override ImageIcon#paintIcon(
 - `Override ImageIcon#paintIcon(...)`
 -- `ImageIcon#paintIcon(...)`をオーバーライドして画像を`90`度回転して表示する`ImageIcon`を作成
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Iconを回転する>Swing/RotatedIcon]]
 - [[Iconを指定した数の四分円だけ回転して表示する>Swing/QuadrantRotateIcon]]
 - [https://stackoverflow.com/questions/26005726/rotate-an-animated-gif-imageicon-using-affinetransform java - Rotate an animated GIF (ImageIcon) using AffineTransform - Stack Overflow]
 - [[ImageIconのリソースを開放してAnimatedGifを最初から再生する>Swing/RestartAnimatedGif]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

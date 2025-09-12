@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2008/03/horizontally-fill-tab-of-jtabbedpane.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JDK 6`で導入されたタブにコンポーネントを追加する機能を使って、長いタイトルのタブは文字列をクリップして表示します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTJU-PNaRI/AAAAAAAAAUM/yAbkpSgRNVY/s800/ClippedTabLabel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ClippedTitleTabbedPane extends JTabbedPane {
   public ClippedTitleTabbedPane() {
@@ -79,7 +79,8 @@ class ClippedTitleTabbedPane extends JTabbedPane {
     for (int i = 0; i < tabCount; i++) {
       JComponent l = (JComponent) getTabComponentAt(i);
       if (l == null) break;
-      l.setPreferredSize(new Dimension(tabWidth + (i < gap ? 1 : 0), l.getPreferredSize().height));
+      l.setPreferredSize(new Dimension(
+          tabWidth + (i < gap ? 1 : 0), l.getPreferredSize().height));
     }
     super.doLayout();
   }
@@ -90,24 +91,25 @@ class ClippedTitleTabbedPane extends JTabbedPane {
     JLabel label = new JLabel(title, SwingConstants.CENTER);
     Dimension dim = label.getPreferredSize();
     Insets tabInsets = getTabInsets();
-    label.setPreferredSize(new Dimension(0, dim.height + tabInsets.top + tabInsets.bottom));
+    label.setPreferredSize(new Dimension(
+        0, dim.height + tabInsets.top + tabInsets.bottom));
     setTabComponentAt(index, label);
   }
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記の`JTabbedPane`では、`JTabbedPane#setTabComponentAt(...)`メソッドを使って各タブ内に`JLabel`を追加し、そのクリップ機能を利用して長いタイトル文字列の後半を省略しています。
 
 - 機能は[[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]とほぼ同等
 -- 文字列の長さに依存せず左右にタブを配置した場合は全体の`1/4`の幅に、上下にタブを配置した場合はすべてのタブ幅を均等になるよう設定
 -- [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]のように`TabbedPaneUI#paintText(...)`メソッドをオーバーライドして文字列の描画を上書きする必要がないためシンプルに実装可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブを等幅にしてタイトルをクリップ>Swing/ClippedTitleTab]]
 - [[JTabbedPaneのTabTitleを左揃えに変更>Swing/TabTitleAlignment]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `tabAreaInsets`を考慮するように修正し、`TOP-LEFT`の切り替え機能を追加しました。 -- &user(aterai); &new{2008-02-26 (火) 22:15:27};
 - `SynthLookAndFeel`に仮？対応。 -- &user(aterai); &new{2008-03-22 (土) 12:49:05};

@@ -8,12 +8,12 @@ pubdate: 2020-03-09T18:26:14+09:00
 description: JTextPaneのCaret位置に存在する文字に適用されているスタイルの属性セットを取得します。
 image: https://drive.google.com/uc?id=1LVro6tfG-PGrN80BWtx-Fmwupx2D3t0w
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextPane`の`Caret`位置に存在する文字に適用されているスタイルの属性セットを取得します。
 
 #download(https://drive.google.com/uc?id=1LVro6tfG-PGrN80BWtx-Fmwupx2D3t0w)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 StyleContext style = new StyleContext();
 StyledDocument doc = new DefaultStyledDocument(style);
@@ -42,17 +42,17 @@ textPane.addCaretListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTextPane`に`CaretListener`を設定してカーソル位置の`CharacterElement`を取得
 - `Element#getAttributes()`メソッドを使用してこの文字が保持する属性セットを取得
 - 取得した属性セットに以下の属性キーが存在するかなどを`StyleConstants`のスタティックメソッドを使用してテスト
 -- `isBold`、`isUnderline`、`Foreground`、`FontFamily`、`FontSize`
 -- `FontFamily`を文字列で取得するのではなく`Font`自体を取得する場合は[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/StyleContext.html#getFont-javax.swing.text.AttributeSet- StyleContext#getFont(AttributeSet)]を使用する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/60410481/how-can-i-get-the-fontisbold-isunderline-of-a-specific-character-in-jtextpane java - How can I get the font(isBold,isUnderline) of a specific character in jTextPane? - Stack Overflow]
 - [[JTextArea内にあるCaret位置の文字のUnicodeコードポイントを表示する>Swing/CodePointAtCaret]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

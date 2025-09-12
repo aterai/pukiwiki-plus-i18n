@@ -8,18 +8,18 @@ pubdate: 2011-02-07T16:27:51+09:00
 description: TrayIconのポップアップメッセージ表示をテストします。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TU-dbe20pkI/AAAAAAAAA0g/3fG2yE_NmHw/s800/DisplayMessage.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TrayIcon`のポップアップメッセージ表示をテストします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TU-dbe20pkI/AAAAAAAAA0g/3fG2yE_NmHw/s800/DisplayMessage.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // TrayIcon.MessageType: ERROR, WARNING, INFO, NONE
 trayIcon.displayMessage("caption", "text text...", TrayIcon.MessageType.ERROR);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`TrayIcon#displayMessage(...)`メソッドを使用してポップアップメッセージを表示しています。
 
 - `TrayIcon`に`ActionListener`を追加しておくと、ポップアップメッセージのクリックイベントが取得可能
@@ -28,9 +28,9 @@ trayIcon.displayMessage("caption", "text text...", TrayIcon.MessageType.ERROR);
 -- 修正中になっているが`8u66`で修正されているらしい
 - `Windows 10`で通知が「集中モード」になっている場合、`TrayIcon#displayMessage(...)`メソッドを使用してもポップアップメッセージは表示されない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/TrayIcon.html#displayMessage-java.lang.String-java.lang.String-java.awt.TrayIcon.MessageType- TrayIcon#displayMessage(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

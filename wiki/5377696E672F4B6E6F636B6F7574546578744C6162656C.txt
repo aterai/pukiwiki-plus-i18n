@@ -8,12 +8,12 @@ pubdate: 2020-12-14T02:32:02+09:00
 description: JLabelに描画した背景画像をテキストの図形で切り抜いたように表示します。
 image: https://drive.google.com/uc?id=1KAsr3O8es4_eQzJc8N4DLBs9vIB-eJMx
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLabel`に描画した背景画像をテキストの図形で切り抜いたように表示します。
 
 #download(https://drive.google.com/uc?id=1KAsr3O8es4_eQzJc8N4DLBs9vIB-eJMx)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JLabel label = new JLabel("ABC") {
   @Override protected void paintComponent(Graphics g) {
@@ -43,7 +43,7 @@ label.setBackground(new Color(0xE6_00_00_32, true));
 label.setFont(new Font(Font.SERIF, Font.BOLD, 140));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JLabel#paintComponent(...)`をオーバーライドして背景画像を描画
 - `Font#createGlyphVector(frc, "ABC")`で`GlyphVector`を生成
 - `GlyphVector#getOutline()`でテキストの図形(`Shape`)を取得
@@ -51,9 +51,9 @@ label.setFont(new Font(Font.SERIF, Font.BOLD, 140));
 - `JLabel`の矩形からテキストの図形を切り抜いた図形を`Area#subtract(...)`で生成して背景色で塗り潰す
 -- 背景色は`hasAlpha`にチェックがある場合は半透明に設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Fontのアウトラインを取得して文字列の内部を修飾する>Swing/LineSplittingLabel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

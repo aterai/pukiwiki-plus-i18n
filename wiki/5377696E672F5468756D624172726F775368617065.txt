@@ -8,17 +8,17 @@ pubdate: 2014-04-07T00:03:19+09:00
 description: JSliderのつまみの形状を目盛り表示ありの場合と同じになるよう変更します。
 image: https://lh3.googleusercontent.com/-wnMCy-QjKqI/U0Fp9vKfehI/AAAAAAAACDE/fem_kGyz1KM/s800/ThumbArrowShape.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`のつまみの形状を目盛り表示ありの場合と同じになるよう変更します。
 
 #download(https://lh3.googleusercontent.com/-wnMCy-QjKqI/U0Fp9vKfehI/AAAAAAAACDE/fem_kGyz1KM/s800/ThumbArrowShape.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE)`を使用して、つまみの形状を目盛り表示ありの場合に使用する矢印型に変更しています。
 
 - この設定で矢印型に変化するかどうかは`LookAndFeel`に依存する
@@ -36,10 +36,10 @@ slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);
 -- 目盛り側に三角形の底辺が向いたままになる
 -- [[JSliderの目盛り表示位置をトラック上部に変更する>Swing/SliderTicksPosition]]のように自前で左右反転する必要がある？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JScrollBarのKnobの最小サイズを設定する>Swing/MinimumThumbSize]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 
 #comment

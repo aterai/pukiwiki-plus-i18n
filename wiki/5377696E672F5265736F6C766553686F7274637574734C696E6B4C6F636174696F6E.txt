@@ -1,0 +1,80 @@
+---
+category: swing
+folder: ResolveShortcutsLinkLocation
+title: JTreeで表示したフォルダ構造でWindowsのlnkショートカット先に移動する
+tags: [JFileChooser, JTree, File, WindowsLookAndFeel]
+author: aterai
+pubdate: 2025-06-09T00:31:20+09:00
+description: JTreeを使用して作成したフォルダ構造のTreeNodeがWindowsのlnkショートカットの場合、JFileChooserのShellFolderを利用してリンク先フォルダに移動可能にします。
+image: https://drive.google.com/uc?id=1GJkQrkphv_RF2UiMWmc-6wkSimFmnpQu
+---
+* Summary [#summary]
+`JTree`を使用して作成したフォルダ構造の`TreeNode`が`Windows`の`lnk`ショートカットの場合、`JFileChooser`の`ShellFolder`を利用してリンク先フォルダに移動可能にします。
+
+#download(https://drive.google.com/uc?id=1GJkQrkphv_RF2UiMWmc-6wkSimFmnpQu)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+private File getRealFile8(File file) {
+  try {
+    ShellFolder sf = ShellFolder.getShellFolder(file);
+    if (sf.isLink()) {
+      file = sf.getLinkLocation();
+    }
+  } catch (FileNotFoundException ex) {
+    file = null;
+  }
+  return file;
+}
+
+// private File getRealFile9(File file) {
+//   if (fileSystemView.isLink(file)) {
+//     try {
+//       file = fileSystemView.getLinkLocation(file);
+//     } catch (FileNotFoundException ex) {
+//       file = null;
+//     }
+//   }
+//   return file;
+// }
+
+// private File getRealFile(File file) {
+//   String version = System.getProperty("java.specification.version");
+//   if (Double.parseDouble(version) >= 9.0) {
+//     file = getRealFile9(file);
+//   } else {
+//     file = getRealFile8(file);
+//   }
+//   return file;
+// }
+}}
+
+* Description [#description]
+上記のサンプルでは、[[FileSystemViewを使ってディレクトリ構造をJTreeに表示する>Swing/DirectoryTree]]のように`JTree`を使用してディレクトリ構造を表示した場合でも`JFileChooser`と同様に`Windows`環境で作成された`lnk`ショートカットのリンク先を参照可能になるよう設定しています。
+
+- `Java 8`とそれ以前の場合:
+-- `ShellFolder#isLink()`でリンクファイルかどうかをチェック可能
+-- `ShellFolder#getLinkLocation()`で指定されたリンクファイルが参照する通常のファイル(`ShellFolder`)を取得可能
+-- `WindowsLoodAndFeel`環境の`JFileChooser`では`ShellFolder`を実装した`sun.awt.shell.Win32ShellFolder2`でリンク先ファイルを取得している
+- `Java 9`以降の場合:
+-- [https://docs.oracle.com/javase/jp/9/docs/api/javax/swing/filechooser/FileSystemView.html#isLink-java.io.File- FileSystemView#isLink(File)]でリンクファイルかどうかをチェック可能
+-- [https://docs.oracle.com/javase/jp/9/docs/api/javax/swing/filechooser/FileSystemView.html#getLinkLocation-java.io.File- FileSystemView#getLinkLocation(File)]で指定されたリンクファイルが参照する通常のファイルを取得可能
+-- [https://bugs.openjdk.org/browse/JDK-8081722 &#91;JDK-8081722&#93; Provide public access to sun.awt.shell.ShellFolder methods which are required for implementing javax.swing.JFileChooser - Java Bug System]
+-- `Java 9`以降で`ShellFolder#getLinkLocation()`を使用する場合は`--add-exports=java.desktop/sun.awt.shell=ALL-UNNAMED`としてパッケージ`sun.awt.shell`をエクスポートする必要がある
+
+* Reference [#reference]
+- [[FileSystemViewを使ってディレクトリ構造をJTreeに表示する>Swing/DirectoryTree]]
+- [https://bugs.openjdk.org/browse/JDK-8081722 &#91;JDK-8081722&#93; Provide public access to sun.awt.shell.ShellFolder methods which are required for implementing javax.swing.JFileChooser - Java Bug System]
+- [https://docs.oracle.com/javase/jp/9/docs/api/javax/swing/filechooser/FileSystemView.html#isLink-java.io.File- FileSystemView#isLink(File) (Java SE 9 & JDK 9)]
+- [https://docs.oracle.com/javase/jp/9/docs/api/javax/swing/filechooser/FileSystemView.html#getLinkLocation-java.io.File- FileSystemView#getLinkLocation(File) (Java SE 9 & JDK 9)]
+- [https://docs.oracle.com/javase/tutorial/essential/io/links.html Links, Symbolic or Otherwise (The Java™ Tutorials > Essential Java Classes > Basic I/O)]
+-- [https://docs.oracle.com/javase/jp/8/docs/api/java/nio/file/Files.html#readSymbolicLink-java.nio.file.Path- Files#readSymbolicLink(Path) (Java Platform SE 8)]
+-- シンボリックリンクなどは`Java 8`でも`Files#readSymbolicLink(Path)`などが使用可能だが、`.lnk`によるショートカットリンクは対応しない
+-- [https://stackoverflow.com/questions/309495/windows-shortcut-lnk-parser-in-java Windows shortcut (.lnk) parser in Java? - Stack Overflow]に`ShellFolder`を使用せず`.lnk`を解析してリンク先を探すサンプルなどがある
+- [https://bugs.openjdk.org/browse/JDK-4356160 &#91;JDK-4356160&#93; JFileChooser doesn't support shortcuts (.lnk files) - Java Bug System]
+-- `JFileChooser`で`.lnk`によるショートカットリンクが移動可能になったのは`Java 5`から
+- [https://torutk.hatenablog.jp/entry/20110327/p1 Windows 7でJava/SwingのJFileChooserがシンボリックリンクをたどれない - torutkのブログ]
+
+* Comment [#comment]
+#comment
+#comment

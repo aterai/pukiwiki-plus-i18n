@@ -8,20 +8,22 @@ pubdate: 2007-04-23T09:48:54+09:00
 description: JToolTipが表示されたとき、内部のJLabelでアイコンのアニメーションを行う方法をテストします。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHpat_rFI/AAAAAAAAARg/fzkRLOHGb7I/s800/AnimatedToolTip.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolTip`が表示されたとき、内部の`JLabel`でアイコンのアニメーションを行う方法をテストします。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTHpat_rFI/AAAAAAAAARg/fzkRLOHGb7I/s800/AnimatedToolTip.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
+ClassLoader cl = Thread.currentThread().getContextClassLoader();
+URL url = cl.getResource("example/anime.gif");
 JLabel l3 = new JLabel("Gif Animated ToolTip(html)");
-l3.setToolTipText("<html><img src='" + url + "'>Test3</html>");
+l3.setToolTipText(String.format("<html><img src='%s'>Test3", url));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Timer Animated ToolTip`
--- `javax.swing.Timer`を使ってアニメーションを行う`JLabel`を作成し`JToolTip`にその`JLabel`を追加
+-- `javax.swing.Timer`を使ってアニメーションを実行する`JLabel`を作成して`JToolTip`に配置
 -- [[Timerでアニメーションするアイコンを作成>Swing/AnimeIcon]]
 #code{{
 JLabel l1 = new JLabel("Timer Animated ToolTip") {
@@ -35,7 +37,7 @@ l1.setToolTipText(" ");
 }}
 
 - `Gif Animated ToolTip`
--- `Animated GIF`ファイルを`JLabel#setIcon(Icon)`で設定し`JToolTip`にその`JLabel`を追加
+-- `Animated GIF`ファイルを`JLabel#setIcon(Icon)`で設定した`JLabel`を`JToolTip`に配置
 #code{{
 JLabel l2 = new JLabel("Gif Animated ToolTip") {
   @Override public JToolTip createToolTip() {
@@ -50,11 +52,11 @@ JLabel l2 = new JLabel("Gif Animated ToolTip") {
 - `Gif Animated ToolTip(html)`
 -- `Animated GIF`ファイルを`<html>`タグを使って`setToolTipText(...)`メソッドで設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JToolTipにアイコンを表示>Swing/ToolTipIcon]]
 - [[Timerでアニメーションするアイコンを作成>Swing/AnimeIcon]]
 - [[TrayIconのアニメーション>Swing/AnimatedTrayIcon]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

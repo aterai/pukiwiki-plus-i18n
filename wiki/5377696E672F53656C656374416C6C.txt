@@ -8,12 +8,12 @@ pubdate: 2005-05-02T06:05:25+09:00
 description: フォーカスがJTextFieldに移動したとき、そのテキストがすべて選択された状態にします。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSvQx8j-I/AAAAAAAAAjQ/iXgBbTGTGuw/s800/SelectAll.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 フォーカスが`JTextField`に移動したとき、そのテキストがすべて選択された状態にします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSvQx8j-I/AAAAAAAAAjQ/iXgBbTGTGuw/s800/SelectAll.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextField field = new JTextField();
 field.addFocusListener(new FocusAdapter() {
@@ -23,15 +23,15 @@ field.addFocusListener(new FocusAdapter() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `focusGained: selectAll`
 -- `JTextField`にフォーカスが移動したとき`JTextComponent#selectAll()`メソッドを使って内部のテキストがすべて選択状態になるように`FocusListener`を設定
 - `default`
 -- デフォルトの`JTextField`
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#selectAll-- JTextComponent#selectAll() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

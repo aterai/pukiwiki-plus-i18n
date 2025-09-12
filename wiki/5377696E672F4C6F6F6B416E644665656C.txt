@@ -8,12 +8,12 @@ pubdate: 2003-11-24
 description: メニューバーから選択したLook and Feelを起動中のアプリケーションに適用します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPf78s81I/AAAAAAAAAeE/DIOTnqtAOnY/s800/LookAndFeel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 メニューバーから選択した`Look and Feel`を起動中のアプリケーションに適用します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPf78s81I/AAAAAAAAAeE/DIOTnqtAOnY/s800/LookAndFeel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // %JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java
 // Possible Look & Feels
@@ -74,7 +74,7 @@ private void setLookAndFeel(String laf) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`metal`、`motif`、`windows`などの`LookAndFeel`を予め用意しておき、`isAvailableLookAndFeel(...)`メソッドでそれらが実行した環境で使用できるかを調べてメニューの選択可・不可を変更しています。
 
 - `Look and Feel`を切り替えて各種コンポーネントの表示などを比較したい場合は`%JAVA_HOME%/demo/jfc/SwingSet2/SwingSet2.jar`が便利
@@ -99,13 +99,13 @@ try {
 // -- [http://blogs.sun.com/katakai/entry/omegat_in_mdi_mode JDK1.6 で使うと JDK 側のバグ (6389282) に引っかかってしまうのか NPE]
 // -- [http://blogs.sun.com/katakai/entry/bad_issue_for_swing_gtk Java6 の痛いバグ… NetBeans デスクトップアプリが Linux で動かず… - Masaki Katakai's Weblog]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - `%JAVA_HOME%/demo/jfc/SwingSet2/src/SwingSet2.java`
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html How to Set the Look and Feel]
 - [[LookAndFeelの一覧を取得する>Swing/InstalledLookAndFeels]]
 -- `SwingSet3`からコードを引用したサンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - スクリーンショットなどを更新。 -- &user(aterai); &new{2008-03-28 (金) 21:37:52};
 

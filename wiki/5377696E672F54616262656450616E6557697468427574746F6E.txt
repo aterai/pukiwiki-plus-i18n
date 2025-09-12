@@ -8,51 +8,52 @@ pubdate: 2008-03-03T14:07:59+09:00
 description: JTabbedPaneのタブエリアに余白を作成し、そこにOverlayLayoutを使ってJButtonを配置します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTUOdUT3wI/AAAAAAAAAls/N2JYE_Dcr_Y/s800/TabbedPaneWithButton.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブエリアに余白を作成し、そこに`OverlayLayout`を使って`JButton`を配置します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTUOdUT3wI/AAAAAAAAAls/N2JYE_Dcr_Y/s800/TabbedPaneWithButton.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
-JButton b = new ToolBarButton(icon);
-b.addActionListener(new ActionListener() {
-  @Override public void actionPerformed(ActionEvent e) {
-    tabs.addTab("qwerqwer", new JLabel("yetyet"));
-  }
-});
-tabs = new ClippedTitleTabbedPane() {
+ClippedTitleTabbedPane tabs = new ClippedTitleTabbedPane() {
   @Override public void updateUI() {
-    UIManager.put("TabbedPane.tabAreaInsets", null); // uninstall
+    String key = "TabbedPane.tabAreaInsets";
+    UIManager.put(key, null); // uninstall
     super.updateUI();
-    setAlignmentX(Component.LEFT_ALIGNMENT);
-    setAlignmentY(Component.TOP_ALIGNMENT);
-    b.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-    setAlignmentX(Component.LEFT_ALIGNMENT);
-    setAlignmentY(Component.TOP_ALIGNMENT);
-    tabAreaInsets = getTabAreaInsets();
-    UIManager.put("TabbedPane.tabAreaInsets",
-                  getButtonPaddingTabAreaInsets(b, getTabInsets(), tabAreaInsets));
-    super.updateUI();
+    // setAlignmentX(Component.LEFT_ALIGNMENT);
+    // setAlignmentY(Component.TOP_ALIGNMENT);
+    // System.out.println(button.getAlignmentY());
+    // button.setAlignmentY(Component.TOP_ALIGNMENT);
+    // System.out.println(button.getAlignmentY());
+    UIManager.put(key, getButtonPaddingTabAreaInsets());
+    super.updateUI(); // reinstall
   }
-  private Insets tabAreaInsets = null;
-};
-JPanel p = new JPanel();
-p.setLayout(new OverlayLayout(p));
-p.add(button);
-p.add(tabs);
-// ...
 
-// Insets ti = UIManager.getInsets("TabbedPane.tabInsets");
-// Insets ai = UIManager.getInsets("TabbedPane.tabAreaInsets");
-public Insets getButtonPaddingTabAreaInsets(JButton b, Insets ti, Insets ai) {
-  FontMetrics fm = b.getFontMetrics(b.getFont());
-  int tih = b.getPreferredSize().height - fm.getHeight() - ti.top - ti.bottom - ai.bottom;
-  return new Insets(Math.max(ai.top, tih), b.getPreferredSize().width + ai.left, ai.bottom, ai.right);
+  @Override public float getAlignmentX() {
+    return LEFT_ALIGNMENT;
+  }
+
+  @Override public float getAlignmentY() {
+    return TOP_ALIGNMENT;
+  }
+
+  private Insets getButtonPaddingTabAreaInsets() {
+    Insets ti = getTabInsets();
+    Insets ai = getTabAreaInsets();
+    Dimension d = button.getPreferredSize();
+    FontMetrics fm = getFontMetrics(getFont());
+    int tih = d.height - fm.getHeight()
+              - ti.top - ti.bottom - ai.bottom;
+    return new Insets(
+      Math.max(ai.top, tih),
+      d.width + ai.left,
+      ai.bottom,
+      ai.right);
+  }
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルは、`JTabbedPane`でタブブラウザ風の動作を実現するために、以下のような設定を行っています。
 
 - タブエリアの左上にあるボタンをクリックするとタブが追加する
@@ -112,7 +113,7 @@ public class TabbedPaneWithButtonTest {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://www.famfamfam.com/lab/icons/mini/ famfamfam.com: Mini Icons]
 -- アイコンを借用
 - [[OverlayLayoutの使用>Swing/OverlayLayout]]
@@ -121,6 +122,6 @@ public class TabbedPaneWithButtonTest {
 - [https://community.oracle.com/thread/1389350 Swing - Any layout suggestions for this?]
 - [[JTabbedPaneのタブエリアレイアウトを変更して一覧表示ボタンなどを追加する>Swing/TabAreaLayout]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

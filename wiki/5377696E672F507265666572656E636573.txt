@@ -8,12 +8,12 @@ pubdate: 2003-09-29
 description: Preferences(レジストリなど)にフレーム(パネル)の位置・サイズを記憶しておきます。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRGT4S7mI/AAAAAAAAAgo/GDUrxdRJ4x4/s800/Preferences.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Preferences`(レジストリなど)にフレーム(パネル)の位置・サイズを記憶しておきます。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRGT4S7mI/AAAAAAAAAgo/GDUrxdRJ4x4/s800/Preferences.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public MainPanel(JFrame frame) {
   super(new BorderLayout());
@@ -81,17 +81,17 @@ private void saveLocation() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、対象フレームが最大化、最小化された状態で終了した場合、その前の位置サイズを記憶するよう設定しています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/util/prefs/Preferences.html Preferences (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/preferences/overview.html Preferences APIの概要]
 -- メモ: `Java 6`の[https://docs.oracle.com/javase/jp/6/technotes/guides/preferences/overview.html Preferences API の概要]にある「`Java` コレクション `API` の設計に関する `FAQ`」は「`Preferences API` の設計に関する `FAQ`」の間違い
 -- `Java 8`の「`Preferences API`の概要」で修正済み
 - [[PersistenceServiceを使ってJFrameの位置・サイズを記憶>Swing/PersistenceService]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - メモ: [http://sqs.cmr.sfc.keio.ac.jp/tdiary/20070212.html#p01 Preferences APIがJava6上では動かない - 日々是開発: SQS Development(2007-02-12)] -- &user(aterai); &new{2007-06-14 (木) 14:42:00};
 - 最大化した状態で終了すると、`(x, y)`が`(-4, -4)`で記録される。最大化すると、どうやら`Frame.NORMAL`のまま左端に移動してそれから最大扱いになってるようです。だから`componentMoved`が誤爆してる。 -- &user(Tomopy); &new{2007-10-26 (金) 12:20:16};

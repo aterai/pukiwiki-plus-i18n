@@ -1,0 +1,71 @@
+---
+category: swing
+folder: FileChooserSortKeys
+title: JFileChooserの詳細表示でソートする列を指定する
+tags: [JFileChooser, JTable]
+author: aterai
+pubdate: 2024-07-08T01:45:40+09:00
+description: JFileChooserの詳細表示で使用するJTableが初期状態でソートする列を指定します。
+image: https://drive.google.com/uc?id=1LTwHuFGMBhjtnq2DZ4NSR765DYOeqXjW
+---
+* Summary [#summary]
+`JFileChooser`の詳細表示で使用する`JTable`が初期状態でソートする列を指定します。
+
+#download(https://drive.google.com/uc?id=1LTwHuFGMBhjtnq2DZ4NSR765DYOeqXjW)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+private JFileChooser makeFileChooser() {
+  return new JFileChooser() {
+    private transient AncestorListener handler = null;
+
+    @Override public void updateUI() {
+      removeAncestorListener(handler);
+      super.updateUI();
+      handler = new AncestorListener() {
+        @Override public void ancestorAdded(AncestorEvent e) {
+          JFileChooser fc = (JFileChooser) e.getComponent();
+          SwingUtils.setViewTypeDetails(fc);
+          SwingUtils.descendants(fc)
+              .filter(JTable.class::isInstance)
+              .map(JTable.class::cast)
+              .findFirst()
+              .ifPresent(table -> {
+                List<?> sortKeys = table.getRowSorter().getSortKeys();
+                int col = model.getNumber().intValue();
+                if (col < 0) {
+                  table.getRowSorter().setSortKeys(Collections.emptyList());
+                } else if (sortKeys.isEmpty() && col < table.getColumnCount()) {
+                  SortOrder order = combo.getItemAt(combo.getSelectedIndex());
+                  RowSorter.SortKey key = new RowSorter.SortKey(col, order);
+                  table.getRowSorter().setSortKeys(Collections.singletonList(key));
+                }
+              });
+        }
+        // ...
+      };
+      addAncestorListener(handler);
+    }
+  };
+}
+}}
+
+* Description [#description]
+- `JFileChooser`に`AncestorListener`を追加
+-- [[JFileChooserを開いたときの初期フォーカスを設定する>Swing/FileChooserInitialFocus]]
+- `JFileChooser`の親ダイアログで`setVisible(true)`が呼び出されたときに実行される`ancestorAdded(AncestorEvent)`で詳細表示用の`JTable`を検索
+-- [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]
+- 詳細表示用`JTable`から`RowSorter`を取得し`RowSorter#setSortKeys(...)`でソートする列を指定
+-- [[JTableがデフォルトでソートする列を設定する>Swing/DefaultSortingColumn]]
+- このサンプルでは初回やソートキーが空の場合`JSpinner`でソートする列、`JComboBox<SortOrder>`でソート方向を指定可能
+-- それ以外の場合は前回設定したソート状態を維持する
+-- ソートする列を`-1`にした場合、`table.getRowSorter().setSortKeys(Collections.emptyList())`で空のソートキーを設定してソート状態をリセットする
+
+* Reference [#reference]
+- [[JFileChooserを開いたときの初期フォーカスを設定する>Swing/FileChooserInitialFocus]]
+- [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]
+- [[JTableがデフォルトでソートする列を設定する>Swing/DefaultSortingColumn]]
+
+* Comment [#comment]
+#comment
+#comment

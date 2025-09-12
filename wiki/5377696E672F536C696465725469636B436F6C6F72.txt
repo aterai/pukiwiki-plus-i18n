@@ -8,12 +8,12 @@ pubdate: 2022-08-01T00:27:38+09:00
 description: JSliderの目盛りの色変更をLookAndFeelごとにテストします。
 image: https://drive.google.com/uc?id=1Cf9CFyGMxx4esEAIv644pqKWVvQvd77c
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`の目盛りの色変更を`LookAndFeel`ごとにテストします。
 
 #download(https://drive.google.com/uc?id=1Cf9CFyGMxx4esEAIv644pqKWVvQvd77c)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSlider slider = new JSlider() {
   @Override public void updateUI() {
@@ -24,16 +24,16 @@ JSlider slider = new JSlider() {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `UIManager.put("Slider.tickColor", color)`で`JSlider`の目盛りの色を変更可能
 -- この設定は`LookAndFeel`に依存し、`BasicLookAndFeel`、`NimbusLookAndFeel`、`MotifLookAndFeel`で有効
 -- `WindowsLookAndFeel`はクラシックの場合のみ有効
 -- `MetalLookAndFeel`、`GTKLookAndFeel`では無効
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSliderのUIや色を変更する>Swing/VolumeSlider]]
 - [[JSliderの目盛りをアイコンに変更する>Swing/TriangleTickSlider]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

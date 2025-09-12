@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2022/01/fix-jtooltip-display-of-jlist-cells-to.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollPane`内の`JList`を`MouseWheel`で移動した後に表示される`ToolTip`の対象セルとその位置に修正します。
 
 #download(https://drive.google.com/uc?id=1wqY3utjMezRBlJ9j8WIest2ResTWWTMF)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JList<String> list1 = new JList<String>(model) {
   @Override public void updateUI() {
@@ -33,7 +33,7 @@ scroll1.addMouseWheelListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- たとえば先頭の`0: 11111`セルにマウスカーソルを移動した直後にすばやくマウスホイールを下方向に回転して別セル上にマウスカーソルが配置された状態でもツールチップ表示される内容は`0: 11111`で、その表示位置も現在のマウスカーソル付近ではなく`JScrollPane`で隠されている`0: 11111`セルの位置になる
 -- マウスホイール対応以前の実装なのでマウス移動イベント以外でカーソル直下のセルが変化することは想定されていない
@@ -92,11 +92,11 @@ class TooltipList<E> extends JList<E> {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/tech/developers/discussion/1353509/tooltips-the-mouse-wheel-and-jscrollpane Tooltips, the mouse wheel and JScrollPane — oracle-tech]
 - [[JListのセル上にToolTipを表示する>Swing/ToolTipOnCellBounds]]
 - [[Screen上にあるMouseの位置を取得する>Swing/MouseInfo]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

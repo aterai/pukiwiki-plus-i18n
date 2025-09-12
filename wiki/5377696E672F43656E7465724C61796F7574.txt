@@ -8,12 +8,12 @@ pubdate: 2022-01-03T03:39:01+09:00
 description: LayoutManagerを実装して子コンポーネントのサイズを推奨サイズに設定し、位置を常に中央になるよう配置します。
 image: https://drive.google.com/uc?id=1Ehb-rycwWuewQ2Ti2QkNeidSiGXqL0hj
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `LayoutManager`を実装して子コンポーネントのサイズを推奨サイズに設定し、位置を常に中央になるよう配置します。
 
 #download(https://drive.google.com/uc?id=1Ehb-rycwWuewQ2Ti2QkNeidSiGXqL0hj)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // @see javax.swing.colorchooser.CenterLayout
 class CenterLayout implements LayoutManager {
@@ -53,7 +53,7 @@ class CenterLayout implements LayoutManager {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `GridBagLayout`
 -- `GridBagLayout`のセルがひとつで制約オブジェクトのアンカーがデフォルトの`GridBagConstraints.CENTER`の場合、推奨サイズの子コンポーネントをそのセルの中央に配置することが可能
 -- 複数コンポーネントを追加すると列方向にセルが追加されて各コンポーネントがそこに配置される
@@ -64,10 +64,10 @@ class CenterLayout implements LayoutManager {
 -- `Border`の内余白を除く領域(`SwingUtilities.calculateInnerArea(...)`メソッドで取得)の中央に子コンポーネントを配置する
 -- `CenterLayout`を設定した親コンテナから`getComponent(0)`メソッドで取得した子コンポーネントのみレイアウトするので、これ以降追加したコンポーネントはレイアウト(表示)されない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableが空の場合、中央にJComponentを表示する>Swing/PlaceholderForEmptyTable]]
 - [[LayoutManagerを拡張して曲線上にコンポーネントを配置>Swing/CurveLayout]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

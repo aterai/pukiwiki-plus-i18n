@@ -8,12 +8,12 @@ pubdate: 2017-10-16T14:31:34+09:00
 description: JProgressBarのインジケータが通常とは逆方向に増加するよう変更します。
 image: https://drive.google.com/uc?id=1XzVC-95p_4o-iBXzUkOONJ1lHT6qmjImDQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JProgressBar`のインジケータが通常とは逆方向に増加するよう変更します。
 
 #download(https://drive.google.com/uc?id=1XzVC-95p_4o-iBXzUkOONJ1lHT6qmjImDQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JProgressBar progress = new JProgressBar(m);
 progress.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -21,7 +21,7 @@ progress.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 // progress.setOrientation(SwingConstants.VERTICAL);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Orientation`: `SwingConstants.HORIZONTAL`
 -- 水平`JProgressBar`の場合、`JProgressBar#setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)`で右から左に進捗方向を変更可能
 -- `JProgressBar`には[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSlider.html#setInverted-boolean- JSlider#setInverted(boolean)]のようなメソッドは用意されていない
@@ -56,10 +56,10 @@ progress7.setStringPainted(true);
 --- [[MouseListenerなどを削除してコンポーネントの入力操作を制限する>Swing/UninstallListeners]]
 --- [[JSliderの順序を反転>Swing/InvertedSlider]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Component.html#setComponentOrientation-java.awt.ComponentOrientation- Component#setComponentOrientation(...) (Java Platform SE 8)]
 - [[JSliderの順序を反転>Swing/InvertedSlider]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

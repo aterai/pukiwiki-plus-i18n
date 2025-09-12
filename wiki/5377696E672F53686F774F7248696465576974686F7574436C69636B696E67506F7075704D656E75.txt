@@ -1,0 +1,122 @@
+---
+category: swing
+folder: ShowOrHideWithoutClickingPopupMenu
+title: JPopupMenuをマウスクリックなしで自動的に開閉する
+tags: [JPopupMenu, JButton, MouseListener, AWTEventListener]
+author: aterai
+pubdate: 2025-06-16T00:17:25+09:00
+description: JButton領域内にマウスカーソルが入ったら自動的にJPopupMenuを開き、JButtonやJPopupMenu領域外にマウスカーソルが出たら自動的にそれを閉じるようイベントリスナーを設定します。
+image: https://drive.google.com/uc?id=1odXX2KrOXAp4sWUzbhLpi1bp4SxjIaaY
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2025/06/automatically-open-and-close-jpopupmenu.html
+    lang: en
+---
+* Summary [#summary]
+`JButton`領域内にマウスカーソルが入ったら自動的に`JPopupMenu`を開き、`JButton`や`JPopupMenu`領域外にマウスカーソルが出たら自動的にそれを閉じるようイベントリスナーを設定します。
+
+#download(https://drive.google.com/uc?id=1odXX2KrOXAp4sWUzbhLpi1bp4SxjIaaY)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class AutoClosePopupMenu extends JPopupMenu {
+  private transient PopupMenuListener listener;
+
+  @Override public void updateUI() {
+    removePopupMenuListener(listener);
+    super.updateUI();
+    listener = new AwtPopupMenuListener();
+    addPopupMenuListener(listener);
+  }
+
+  private void checkAutoClose(MouseEvent e) {
+    Component c = e.getComponent();
+    Rectangle r = getBounds();
+    r.grow(0, 5);
+    Point pt = SwingUtilities.convertPoint(c, e.getPoint(), this);
+    if (!r.contains(pt) && !(c instanceof JButton)) {
+      setVisible(false);
+    }
+  }
+
+  private final class AwtPopupMenuListener implements PopupMenuListener {
+    private final AWTEventListener handler = e -> {
+      if (e instanceof MouseEvent) {
+        int id = e.getID();
+        if (id == MouseEvent.MOUSE_MOVED || id == MouseEvent.MOUSE_EXITED) {
+          checkAutoClose((MouseEvent) e);
+        }
+      }
+    };
+
+    @Override public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+      long mask = AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK;
+      Toolkit.getDefaultToolkit().addAWTEventListener(handler, mask);
+    }
+
+    @Override public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+      Toolkit.getDefaultToolkit().removeAWTEventListener(handler);
+    }
+
+    @Override public void popupMenuCanceled(PopupMenuEvent e) {
+      /* not needed */
+    }
+  }
+}
+}}
+
+* Description [#description]
+- 左: `MouseListener`
+-- `JPopupMenu`に`MouseListener`を追加し、`mouseExited`イベントで`JPopupMenu`を閉じる
+-- `JPopupMenu`から内部の`JMenuItem`にマウスカーソルが移動した際にも`mouseExited`イベントが発生するので、`mouseExited`イベントが発生かつエイム状態の`JMenuItem`が存在しない場合は`JPopupMenu`を閉じるよう設定
+-- マウスカーソルを高速移動すると`mouseExited`イベントが発生せず、`JPopupMenu`が閉じない場合がある
+--- `JPopupMenu`の親`Window`を半透明化、サイズ拡張して`mouseExited`イベントが発生しやすくすれば回避が可能？
+
+#code{{
+JPopupMenu popup = new JPopupMenu();
+initPopupMenu(popup);
+popup.addMouseListener(new MouseAdapter() {
+  @Override public void mouseExited(MouseEvent e) {
+    EventQueue.invokeLater(() -> {
+    popup.addMouseListener(new MouseAdapter() {
+      @Override public void mouseExited(MouseEvent e) {
+        EventQueue.invokeLater(() -> {
+          boolean isArmed = Stream.of(popup.getSubElements())
+              .filter(AbstractButton.class::isInstance)
+              .map(AbstractButton.class::cast)
+              .map(AbstractButton::getModel)
+              .anyMatch(ButtonModel::isArmed);
+          if (!isArmed) {
+            popup.setVisible(false);
+          }
+        });
+      }
+    });
+  }
+});
+JButton button = new JButton(UIManager.getIcon("FileChooser.listViewIcon"));
+button.setFocusPainted(false);
+button.addActionListener(e -> {
+  popup.show(button, 0, button.getHeight());
+  popup.requestFocusInWindow();
+});
+button.addMouseListener(new MouseAdapter() {
+  @Override public void mouseEntered(MouseEvent e) {
+    ((AbstractButton) e.getComponent()).doClick();
+  }
+});
+}}
+
+- 右: `AWTEventListener`
+-- `JPopupMenu`に`PopupMenuListener`を追加し、`popupMenuWillBecomeVisible`イベントで`Toolkit.getDefaultToolkit().addAWTEventListener(...)`でアプリケーション全体のマウスイベントを取得する`AWTEventListener`を`Toolkit`に追加
+--- この`AWTEventListener`は`popupMenuWillBecomeInvisible`イベントで削除する
+-- %%`JToolTip`%% `JMenu`から開くサブ`JPopupMenu`と同じ手法？
+-- `AWTEventListener#eventDispatched(...)`イベントで`JButton`や`JPopupMenu`領域外にマウスカーソルが移動したら`JPopupMenu`を閉じる
+-- `JPopupMenu`が`JButton`の親`JFrame`外にはみ出して`HeavyWeightWindow`で表示されている状態で`JPopupMenu`領域から直接アプリケーション領域外にマウスカーソルを移動すると`MouseEvent.MOUSE_MOVED`イベントが発生しないため、代わりに`MouseEvent.MOUSE_EXITED`イベントでアプリケーション領域外にマウスカーソルが存在するかを調査している
+
+* Reference [#reference]
+- [[AWTEventを取得して入力イベントを監視>Swing/DispatchEvent]]
+- [[JMenuの領域内にマウスカーソルでポップアップメニューを表示する>Swing/PopupWithoutClickOnMenu]]
+
+* Comment [#comment]
+#comment
+#comment

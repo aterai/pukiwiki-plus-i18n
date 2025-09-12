@@ -8,12 +8,12 @@ pubdate: 2022-09-19T14:21:23+09:00
 description: JTableHeaderの任意の列のソートアイコンをtableタグを使用してヘッダセルの左上に表示するよう設定します。
 image: https://drive.google.com/uc?id=1f31_xhhURzzecQrFMY_jHDhCwvXngzFa
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTableHeader`の任意の列のソートアイコンを`table`タグを使用してヘッダセルの左上に表示するよう設定します。
 
 #download(https://drive.google.com/uc?id=1f31_xhhURzzecQrFMY_jHDhCwvXngzFa)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SortIconLayoutHeaderRenderer implements TableCellRenderer {
   private static final String ASCENDING = "Table.ascendingSortIcon";
@@ -104,17 +104,17 @@ class SortIconLayoutHeaderRenderer implements TableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTable#getColumnModel().getColumn(index)#setHeaderRenderer(...)`で`index`列目のヘッダレンダラーをラップし、ヘッダ文字列内に`table`タグを使用して一行目の文字列の左にソートアイコンを描画するよう設定
 - 元のソートアイコンは`JTable#getTableHeader()#getDefaultRenderer()#getTableCellRendererComponent(...)`でヘッダ描画用コンポーネントを取得する直前に空アイコンを`UIManager.put("Table.ascendingSortIcon", emptyIcon)`などで非表示に設定、ヘッダ描画用コンポーネントを取得後に`UIManager.put("Table.ascendingSortIcon", UIManager.getLookAndFeelDefaults().getIcon("Table.ascendingSortIcon"))`で`LookAndFeel`デフォルトのソートアイコンに復元
 -- `TableCellRenderer#getTableCellRendererComponent(...)`内で上記の一時的なソートアイコンの置換を実行しないと指定した列以外のソートアイコンも非表示になる
 -- `DefaultTableCellHeaderRenderer`を継承する`WindowsTableHeaderUI.XPDefaultRenderer`は`paint(...)`をオーバーライドしてヘッダセルを描画しているので`LayoutManager`を設定したり`JLayer`でアイコンを上書きするとフォーカス背景色などが描画されなくなる
 - `html`タグで`Icon`を直接指定する方法がないので一旦ソートアイコンを`ImageIO.write(...)`で一時ファイルに書き出し、`File.toURI()`で`URI`に変換してから`<img src='file:/C:/Users/.../AppData/Local/Temp/icon1056940121138232542.png'>`のようなタグを生成して使用している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのソートアイコンを変更>Swing/TableSortIcon]]
 - [[JTableHeaderのソートアイコンをヘッダセル右揃えで表示する>Swing/TableHeaderRightAlignSortArrow]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

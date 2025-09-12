@@ -8,12 +8,12 @@ pubdate: 2015-01-26T00:15:23+09:00
 description: BoxLayoutを設定したJPanelに、最小サイズを設定したJLabelを中央揃えで配置するテストを行います。
 image: https://lh3.googleusercontent.com/-OKh2kmuDUus/VMUE-LLN_NI/AAAAAAAANvk/FtPEqk8f820/s800/BoxLayoutAlignment.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `BoxLayout`を設定した`JPanel`に、最小サイズを設定した`JLabel`を中央揃えで配置するテストを行います。
 
 #download(https://lh3.googleusercontent.com/-OKh2kmuDUus/VMUE-LLN_NI/AAAAAAAANvk/FtPEqk8f820/s800/BoxLayoutAlignment.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JLabel l2 = new JLabel("abc") {
   @Override public Dimension getPreferredSize() {
@@ -46,7 +46,7 @@ p2.add(l2);
 p2.add(Box.createVerticalGlue());
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルは、[https://stackoverflow.com/questions/27790417/alignment-of-single-characters-in-java-boxlayout-on-y-axis-is-off-center swing - Alignment of Single Characters in Java BoxLayout on Y-Axis Is Off-Center - Stack Overflow]を参考にして`BoxLayout`の中央揃えのバグ？を検証するために作成しています。
 
 - `setAlignmentX(Component.CENTER_ALIGNMENT)`、`setAlignmentY(Component.CENTER_ALIGNMENT)`を設定した`JLabel`を作成
@@ -62,10 +62,10 @@ p2.add(Box.createVerticalGlue());
 -- `setAlignmentX`、`getAlignmentX`、`getAlignmentY`も同様に逆の説明になっている
 -- `java 9`のドキュメントは修正済み
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/layout/box.html How to Use BoxLayout (The Java™ Tutorials > Creating a GUI With JFC/Swing > Laying Out Components Within a Container)]
 - [https://stackoverflow.com/questions/27790417/alignment-of-single-characters-in-java-boxlayout-on-y-axis-is-off-center swing - Alignment of Single Characters in Java BoxLayout on Y-Axis Is Off-Center - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

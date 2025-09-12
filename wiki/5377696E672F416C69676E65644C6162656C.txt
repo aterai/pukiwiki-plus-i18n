@@ -8,12 +8,12 @@ pubdate: 2018-02-19T16:26:52+09:00
 description: JLabelの垂直位置を異なるパネル間でも揃えるため、最大幅のJLabelを検索してこれをすべての推奨サイズとして使用します。
 image: https://drive.google.com/uc?id=1OYxUdKX7mxvEzkX5pjBjy2IFjYRLtfmKMw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLabel`の垂直位置を異なるパネル間でも揃えるため、最大幅の`JLabel`を検索してこれをすべての推奨サイズとして使用します。
 
 #download(https://drive.google.com/uc?id=1OYxUdKX7mxvEzkX5pjBjy2IFjYRLtfmKMw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // @see javax/swing/plaf/metal/MetalFileChooserUI.java
 class AlignedLabel extends JLabel {
@@ -56,7 +56,7 @@ class AlignedLabel extends JLabel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`javax/swing/plaf/metal/MetalFileChooserUI.java`の`AlignedLabel`を参考にして異なるパネル間で`JLabel`の垂直位置揃えを行っています。
 
 - `AlignedLabel`
@@ -67,11 +67,11 @@ class AlignedLabel extends JLabel {
 -- `FileChooser`と`HTTP Proxy`のタイトルを`TitledBorder`で設定した`Box`を`2`個作成し、上記の`AlignedLabel`を配置した`Box`をそれぞれ追加
 -- 複数の`Box`に`AlignedLabel`が配置されていても各`AlignedLabel`の推奨サイズの幅はすべて同じになっているため垂直位置は揃う
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[GroupLayoutの使用>Swing/GroupLayout]]
 - [[GridBagLayoutの使用>Swing/GridBagLayout]]
 -- `1`つのパネル内で垂直位置揃えを行う場合は`GroupLayout`や`GridBagLayout`が使用可能
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

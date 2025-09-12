@@ -1,0 +1,69 @@
+---
+category: swing
+folder: AlternateRowColorTree
+title: JTreeのセル背景を縞模様で描画する
+tags: [JTree]
+author: aterai
+pubdate: 2024-10-21T00:24:07+09:00
+description: JTreeのセル背景を交互に別の色で描画して縞模様になるよう設定します。
+image: https://drive.google.com/uc?id=1AgnshjkEEJpHs_GF_eCyNjOwklnBsjhd
+---
+* Summary [#summary]
+`JTree`のセル背景を交互に別の色で描画して縞模様になるよう設定します。
+
+#download(https://drive.google.com/uc?id=1AgnshjkEEJpHs_GF_eCyNjOwklnBsjhd)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class AlternateRowColorTree extends JTree {
+  private static final Color SELECTED_COLOR = new Color(0x64_32_64_FF, true);
+
+  @Override protected void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setPaint(new Color(0xCC_CC_CC));
+    IntStream.range(0, getRowCount())
+        .filter(i -> i % 2 == 0)
+        .mapToObj(this::getRowBounds)
+        .forEach(r -> g2.fillRect(0, r.y, getWidth(), r.height));
+
+    int[] selections = getSelectionRows();
+    if (selections != null) {
+      g2.setPaint(SELECTED_COLOR);
+      Arrays.stream(selections)
+          .mapToObj(this::getRowBounds)
+          .forEach(r -> g2.fillRect(0, r.y, getWidth(), r.height));
+      super.paintComponent(g);
+      if (hasFocus()) {
+        Optional.ofNullable(getLeadSelectionPath()).ifPresent(path -> {
+          Rectangle r = getRowBounds(getRowForPath(path));
+          g2.setPaint(SELECTED_COLOR.darker());
+          g2.drawRect(0, r.y, getWidth() - 1, r.height - 1);
+        });
+      }
+    }
+    super.paintComponent(g);
+    g2.dispose();
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    UIManager.put("Tree.repaintWholeRow", Boolean.TRUE);
+    setCellRenderer(new TransparentTreeCellRenderer());
+    setOpaque(false);
+  }
+}
+}}
+
+* Description [#description]
+- `JTree#paintComponent(...)`をオーバーライドして縞模様を描画
+-- `TreeCellRenderer`で選択状態の背景は描画せず、代わりに`JTree#paintComponent(...)`で縞模様のあとに選択状態を行全体に拡張して描画
+-- [[JTreeを行クリックで選択し、行全体を選択状態の背景色で描画>Swing/TreeRowSelection]]
+
+* Reference [#reference]
+- [[JTreeを行クリックで選択し、行全体を選択状態の背景色で描画>Swing/TreeRowSelection]]
+- [[TableCellRendererでセルの背景色を変更>Swing/StripeTable]]
+- [https://github.com/JFormDesigner/FlatLaf/issues/900 Feature Request: custom alternate row color on Tree · Issue #900 · JFormDesigner/FlatLaf]
+
+* Comment [#comment]
+#comment
+#comment

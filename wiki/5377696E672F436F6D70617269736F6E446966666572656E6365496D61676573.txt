@@ -8,12 +8,12 @@ pubdate: 2014-11-24T00:02:03+09:00
 description: 2つの画像からそれぞれピクセル配列を取得して比較を行い、完全に一致するピクセルのアルファ値を下げることで違いを強調表示します。
 image: https://lh3.googleusercontent.com/-wz-vsrJ2L3Y/VHHvorDnjaI/AAAAAAAANp0/i3riWECvTsA/s800/ComparisonDifferenceImages.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `2`つの画像からそれぞれピクセル配列を取得して比較を行い、完全に一致するピクセルのアルファ値を下げることで違いを強調表示します。
 
 #download(https://lh3.googleusercontent.com/-wz-vsrJ2L3Y/VHHvorDnjaI/AAAAAAAANp0/i3riWECvTsA/s800/ComparisonDifferenceImages.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 int w = iia.getIconWidth();
 int h = iia.getIconHeight();
@@ -31,11 +31,25 @@ private static int[] getData(Image img, int w, int h) {
   Graphics g = image.createGraphics();
   g.drawImage(img, 0, 0, null);
   g.dispose();
-  return ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+  // XXX?: return ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+  int[] pixels = new int[w * h];
+  EventQueue systemEventQueue = Toolkit.getDefaultToolkit().getSystemEventQueue();
+  SecondaryLoop loop = systemEventQueue.createSecondaryLoop();
+  Thread worker = new Thread(() -> {
+    try {
+      new PixelGrabber(image, 0, 0, w, h, pixels, 0, w).grabPixels();
+    } catch (InterruptedException ex) {
+      Thread.currentThread().interrupt();
+    }
+    loop.exit();
+  });
+  worker.start();
+  loop.enter();
+  return pixels;
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、以下の手順で同サイズの画像から、それぞれのピクセル配列を取得して比較を行っています。
 
 + 画像ファイルから`ImageIO.read(...)`で`Image`を取得
@@ -45,13 +59,14 @@ private static int[] getData(Image img, int w, int h) {
 + `DataBuffer`を`DataBufferInt`にキャストして`DataBufferInt#getData()`で`int`のピクセル配列を取得
 
 - 比較結果は`MemoryImageSource`に格納し`Component#createImage(ImageProducer)`メソッドで`Image`に変換
-- `ImageIO.read(...)`で取得した`BufferedImage`から`getRaster().getDataBuffer()`で`DataBuffer`を取り出すと`DataBufferByte`になる？
+- %%`ImageIO.read(...)`で取得した`BufferedImage`から`getRaster().getDataBuffer()`で`DataBuffer`を取り出すと`DataBufferByte`になる？%%
+- `getRaster().getDataBuffer().getData()`で`int`配列を取得すると空になる？ため、代わりに`PixelGrabber`を使用するよう修正
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[MemoryImageSourceで配列から画像を生成>Swing/MemoryImageSource]]
 - [[PixelGrabberで画像を配列として取得し編集、書出し>Swing/PixelGrabber]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/image/MemoryImageSource.html MemoryImageSource (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

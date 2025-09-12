@@ -8,12 +8,12 @@ pubdate: 2018-10-29T16:08:36+09:00
 description: JTabbedPaneで現在選択されているタブの幅は拡張、その他のタブは縮小するよう設定します。
 image: https://drive.google.com/uc?id=1NIZXoyEHh-K_H-BZ83l3pG5phVRjpmOzbQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`で現在選択されているタブの幅は拡張、その他のタブは縮小するよう設定します。
 
 #download(https://drive.google.com/uc?id=1NIZXoyEHh-K_H-BZ83l3pG5phVRjpmOzbQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public static void updateTabWidth(JTabbedPane tabs) {
   int tp = tabs.getTabPlacement();
@@ -53,17 +53,17 @@ class ShrinkLabel extends JLabel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTabbedPane#setTabComponentAt(...)`メソッドを使用してタブコンポーネントに`JLabel`を設定
 - `JLabel#getPreferredSize()`メソッドをオーバーライドして選択されていない場合はその`JLabel`の推奨サイズを縮小
 -- 選択されている場合は、`super.getPreferredSize()`メソッドで`JLabel`の元サイズを返す
 - `JTabbedPane`に`ChangeListener`を追加し、タブ選択が変更されたらすべてのタブコンポーネントの選択状態(推奨サイズ)を更新
 - タブの配置が左右の場合は、選択されたタブの幅のみ変更しても意味がないのでこの処理は実行しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneの選択文字色を変更>Swing/ColorTab]]
 - [[JTabbedPaneで選択されたタブのみタイトルを表示する>Swing/SelectedTabTitleText]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

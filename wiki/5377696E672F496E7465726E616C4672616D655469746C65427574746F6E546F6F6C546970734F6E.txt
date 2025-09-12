@@ -8,12 +8,12 @@ pubdate: 2023-02-13T01:33:32+09:00
 description: JInternalFrameのタイトルバーに配置された閉じる、最大化、最小化JButtonでJToolTipの表示・非表示を切り替えます。
 image: https://drive.google.com/uc?id=1SLM6oYpp38PKBED36pr5cj4VOAeXEq4I
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`のタイトルバーに配置された閉じる、最大化、最小化`JButton`で`JToolTip`の表示・非表示を切り替えます。
 
 #download(https://drive.google.com/uc?id=1SLM6oYpp38PKBED36pr5cj4VOAeXEq4I)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String key = "InternalFrame.titleButtonToolTipsOn";
 boolean def = UIManager.getLookAndFeelDefaults().getBoolean(key);
@@ -34,7 +34,7 @@ check.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `InternalFrame.titleButtonToolTipsOn: true`
 -- `WindowsLookAndFeel`のデフォルト
 -- `WindowsLookAndFeel.java`で`Object hotTrackingOn = new WindowsDesktopProperty("win.item.hotTrackingOn", true);`と設定されており、`Windows`デスクトップのプロパティ変更と連動している？
@@ -46,10 +46,10 @@ check.addActionListener(e -> {
 -- `MetalLookAndFeel`や`NimbusLookAndFeel`ではこの設定は無視されて常に`JInternalFrame`のタイトルバーに配置された閉じる、最大化、最小化`JButton`で`JToolTip`は表示される
 -- `MotifLookAndFeel`ではこの設定は無視されて常に`JInternalFrame`のタイトルバーに配置された最大化、最小化`JButton`で`JToolTip`は非表示になる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[DesktopPropertyの変更を監視する>Swing/DesktopProperty]]
 - [https://docs.oracle.com/javase/jp/8/docs/technotes/guides/swing/1.4/w2k_props.html Windowsデスクトップ関連のプロパティのサポート]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

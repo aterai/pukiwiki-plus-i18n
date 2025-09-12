@@ -8,17 +8,17 @@ pubdate: 2014-09-15T00:00:21+09:00
 description: JSplitPaneのDividerがドラッグ中の場合に、その移動先を示す矩形の色を変更します。
 image: https://lh5.googleusercontent.com/-M9cMsnuWpL0/VBWl0TfGYyI/AAAAAAAACNI/qvejKL7NGVk/s800/DividerDraggingColor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSplitPane`の`Divider`がドラッグ中の場合に、その移動先を示す矩形の色を変更します。
 
 #download(https://lh5.googleusercontent.com/-M9cMsnuWpL0/VBWl0TfGYyI/AAAAAAAACNI/qvejKL7NGVk/s800/DividerDraggingColor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 UIManager.put("SplitPaneDivider.draggingColor", new Color(255, 100, 100, 100));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JSplitPane`の`Divider`がドラッグ中でその移動先を示す矩形の色を変更する場合`SplitPaneDivider.draggingColor`を変更する
 -- `JSplitPane#setContinuousLayout(false)`が設定されている`JSplitPane`のみ半透明色は有効
 - ドラッグ中ではない`Divider`の色は`LookAndFeel`に依存するが以下のような方法で変更可能
@@ -27,10 +27,11 @@ BasicSplitPaneDivider divider = ((BasicSplitPaneUI) getUI()).getDivider();
 divider.setBackground(Color.ORANGE);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSplitPaneでディバイダの移動を連続的に再描画>Swing/ContinuousLayout]]
 - [https://bugs.openjdk.org/browse/JDK-7175397 &#91;JDK-7175397&#93; The divider color is not changed to green when dragging for Nimbus LaF. - Java Bug System]
+- [https://bugs.openjdk.org/browse/JDK-4820080 &#91;JDK-4820080&#93; RFE: Cannot Change the JSplitPane Divider Color while dragging - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

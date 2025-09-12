@@ -1,13 +1,16 @@
 ---
-title: JFileChooser JOptionPane JColorChooser
-tags: [JFileChooser, JOptionPane, JColorChooser]
-description: JFileChooser、JOptionPane、JColorChooser関係の記事へのスクリーンショット付きリンク一覧
+title: JFileChooser
+tags: [JFileChooser]
+description: JFileChooser関係の記事へのスクリーンショット付きリンク一覧
 ---
-このページでは、`JFileChooser`、`JOptionPane`、`JColorChooser`の使い方を集めて一覧にしています。
+このページでは、`JFileChooser`のカスタマイズ、使用方法などを集めて一覧にしています。
+
+- `JOptionPane`は[[JOptionPane>Swing/_JOptionPane]]に移動
+- `JColorChooser`は[[JColorChooser>Swing/_JColorChooser]]に移動
 
 #contents
 
-* JFileChooser JOptionPane JColorChooser [#JFileChooser]
+* JFileChooser [#JFileChooser]
 ** JFileChooserを開いたままファイルの上書き警告ダイアログを表示する [#FileAlreadyExistsDialog]
 #swingdescription(Swing/FileAlreadyExistsDialog,JFileChooserを開いたままファイルの上書き警告ダイアログを表示する,JFileChooserで名前を付けて保存する場合、すでに存在するファイルを選択してセーブボタンを押すと上書き警告ダイアログを表示するように設定します。,https://lh6.googleusercontent.com/-77H8Wl7UgV0/T_E-hZznv2I/AAAAAAAABOo/RIVqWmchCfw/s200/FileAlreadyExistsDialog.png)
 
@@ -38,7 +41,7 @@ description: JFileChooser、JOptionPane、JColorChooser関係の記事へのス�
 ** JFileChooserで読み取り専用ファイルのリネームを禁止 [#RenameIfCanWriteFileChooser]
 #swingdescription(Swing/RenameIfCanWriteFileChooser,JFileChooserで読み取り専用ファイルのリネームを禁止,JFileChooserで読み取り専用属性ファイルのリネームを禁止します。,https://lh5.googleusercontent.com/-7ODSj6DaIig/TpsQEay0NqI/AAAAAAAABDs/8fz14wjADj0/s200/RenameIfCanWriteFileChooser.png)
 
-* ↑10 ↓11 [#ka822185]
+* ↑10 ↓11 [#n0582bc7]
 #adsensebar
 
 ** JFileChooserを開いた時のカレントディレクトリを設定する [#FileChooserCurrentDirectory]
@@ -47,23 +50,8 @@ description: JFileChooser、JOptionPane、JColorChooser関係の記事へのス�
 ** JFileChooserでの隠しファイルの非表示設定を変更する [#FileHidingEnabled]
 #swingdescription(Swing/FileHidingEnabled,JFileChooserでの隠しファイルの非表示設定を変更する,JFileChooserで隠しファイルを表示するかどうかをポップアップメニューから切り替えます。,https://lh4.googleusercontent.com/-TSMPljQ02Ao/UyWixahVFzI/AAAAAAAACBw/n_Ctee0FJGQ/s200/FileHidingEnabled.png)
 
-** JOptionPaneを自動的に閉じる [#AutomaticallyCloseDialog]
-#swingdescription(Swing/AutomaticallyCloseDialog,JOptionPaneを自動的に閉じる,JOptionPaneにカウントダウンと自動クローズを行うためのJLabelを追加します。,https://lh6.googleusercontent.com/-NvrpIdRXy8M/UiMOJmS8OMI/AAAAAAAABzg/6QK49B0s-NE/s200/AutomaticallyCloseDialog.png)
-
-** JOptionPaneで使用するボタンのサイズを揃える [#SameSizeButtons]
-#swingdescription(Swing/SameSizeButtons,JOptionPaneで使用するボタンのサイズを揃える,NimbusLookAndFeelでJOptionPaneを使用した場合、そのJButtonのサイズを揃えるかどうかを設定します。,https://lh3.googleusercontent.com/-vidT_rr0mcE/VU97kF6HGpI/AAAAAAAAN4A/ByrWGh41AQg/s200/SameSizeButtons.png)
-
-** JWindowをデスクトップにスライドインで表示する [#SlideInNotificationWindow]
-#swingdescription(Swing/SlideInNotificationWindow,JWindowをデスクトップにスライドインで表示する,JOptionPaneを追加したJWindowを、スライドインアニメーションを使ってデスクトップ上に表示します。,https://lh4.googleusercontent.com/-axruZWDGZys/U98iB0eZi8I/AAAAAAAACK0/hh_jWt5nsi4/s200/SlideInNotificationWindow.png)
-
-** JOptionPaneのデフォルトフォーカス [#OptionPaneDefaultFocus]
-#swingdescription(Swing/OptionPaneDefaultFocus,JOptionPaneのデフォルトフォーカス,JOptionPaneにデフォルトでフォーカスをもつコンポーネントを追加します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTQoUaDrDI/AAAAAAAAAf4/nUnrCrmb5io/s200/OptionPaneDefaultFocus.png)
-
 ** JFileChooserを開いたときの初期フォーカスを設定する [#FileChooserInitialFocus]
 #swingdescription(Swing/FileChooserInitialFocus,JFileChooserを開いたときの初期フォーカスを設定する,NimbusLookAndFeelを使用しているJFileChooserを開いた場合、ファイル名表示用のJTextFieldに初期フォーカスを設定します。,https://drive.google.com/thumbnail?id=1uW5FnfU0V3Yi9iBBMFV7uoN8M9IA2sskmg)
-
-** JOptionPaneに配置するJTextAreaの最大幅を指定してサイズ調整を行う [#MaxWidthWrapOptionPane]
-#swingdescription(Swing/MaxWidthWrapOptionPane,JOptionPaneに配置するJTextAreaの最大幅を指定してサイズ調整を行う,JOptionPaneに配置するJTextAreaの最大幅を指定し、テキストが複数行になってもその幅を超えず、スクロールバーも表示されない高さまで拡張されるよう設定します。,https://lh3.googleusercontent.com/-wvgqUKEkJe8/VwE0eREDhVI/AAAAAAAAOSM/aEgf3UtLBX0g-u9CKBFg_8nCbt7-0CLngCCo/s200-Ic42/MaxWidthWrapOptionPane.png)
 
 ** Containerの子Componentを再帰的にすべて取得する [#GetComponentsRecursively]
 #swingdescription(Swing/GetComponentsRecursively,Containerの子Componentを再帰的にすべて取得する,Containerの子Componentを再帰的にすべて取得するメソッドを作成し、JFileChooserに配置されたJTableを取得します。,https://drive.google.com/thumbnail?id=1NedWhPhVuMDTwrHRaFdW-YXZjdH-019yuw)
@@ -71,14 +59,8 @@ description: JFileChooser、JOptionPane、JColorChooser関係の記事へのス�
 ** JFileChooserで複数ファイルの選択を行う [#FileChooserMultiSelection]
 #swingdescription(Swing/FileChooserMultiSelection,JFileChooserで複数ファイルの選択を行う,JFileChooserで複数ファイルの選択ができるように設定します。,https://drive.google.com/thumbnail?id=1-cun-rfsw3qiGmb6K8Fp5hlrAArduvrQHw)
 
-* ↑20 ↓21 [#vff3414c]
-#adsensebar
-
 ** JFileChooserでローカライズされたシステムフォルダ名を使用しないよう設定 [#SystemExtensionHiding]
 #swingdescription(Swing/SystemExtensionHiding,JFileChooserでローカライズされたシステムフォルダ名を使用しないよう設定,JFileChooserのPlacesBarでローカライズされたシステムフォルダ名が表示されないように設定します。,https://drive.google.com/thumbnail?id=1tvYX3gC3OiwWr8vnG5346sqWtA5k3G29cg)
-
-** JColorChooserから指定したColorChooserPanelを削除して表示する [#ColorChooserPanel]
-#swingdescription(Swing/ColorChooserPanel,JColorChooserから指定したColorChooserPanelを削除して表示する,JColorChooserから指定したColorChooserPanelのタブなどを削除してJDialogに設定します。,https://drive.google.com/thumbnail?id=1p2IZZ3_HwzjhI5u3SOnYFzYqi-orR6a9MQ)
 
 ** MetalLookAndFeelでJFileChooserの下部にコンポーネントを追加する [#FileChooserBottomAccessory]
 #swingdescription(Swing/FileChooserBottomAccessory,MetalLookAndFeelでJFileChooserの下部にコンポーネントを追加する,MetalLookAndFeelを適用しているJFileChooserのファイルフィルタとボタンパネルの間にJComboBoxのような横長のコンポーネントを追加します。,https://drive.google.com/thumbnail?id=1Nyb4wo_ryaaCsJEgpGBxbIlYazx3FQVFfw)
@@ -89,23 +71,17 @@ description: JFileChooser、JOptionPane、JColorChooser関係の記事へのス�
 ** JFileChooserのリスト表示を垂直1列に変更する [#FileChooserLayoutOrientation]
 #swingdescription(Swing/FileChooserLayoutOrientation,JFileChooserのリスト表示を垂直1列に変更する,JFileChooserのリスト表示をデフォルトの垂直優先ニュースペーパースタイルから、JListのデフォルトである垂直1列スタイルに変更します。,https://drive.google.com/thumbnail?id=1h6JaUr4zBG52EWKWwBHP2unFTL_rm_r9HA)
 
-** JOptionPaneのボタンの揃えを変更する [#OptionPaneButtonOrientation]
-#swingdescription(Swing/OptionPaneButtonOrientation,JOptionPaneのボタンの揃えを変更する,JOptionPaneの下部に表示されるオプションボタンの揃えを右揃えなどに変更します。,https://drive.google.com/thumbnail?id=1GfIGoZXfe9MpKMUVblmQ68ek4z5tU-4cPw)
-
-** JOptionPaneのYesボタンがCancelボタンなどの中で末尾に配置されるよう設定する [#YesLastOptionPane]
-#swingdescription(Swing/YesLastOptionPane,JOptionPaneのYesボタンがCancelボタンなどの中で末尾に配置されるよう設定する,JOptionPaneのYesボタンがCancelボタンなどの後に追加されて一番右に配置されるよう設定します。,https://drive.google.com/thumbnail?id=12DSo9IIp_Ah9F2FlvkEjjREEwZXyNNLWhA)
-
 ** JFileChooserのファイル一覧にJToolTipを設定する [#FileChooserToolTips]
 #swingdescription(Swing/FileChooserToolTips,JFileChooserのファイル一覧にJToolTipを設定する,JFileChooserの詳細ファイル一覧でファイル名が省略されている場合にJToolTipでそれを表示します。,https://drive.google.com/thumbnail?id=1GzSb_32IGNEjqMVqMCqzG2K8j41cSeKrdQ)
 
 ** JFileChooserで選択したzipファイルを展開する [#ZipFile]
 #swingdescription(Swing/ZipFile,JFileChooserで選択したzipファイルを展開する,JFileChooserで選択したzipファイルを展開、またはディレクトリをzip圧縮します。,https://drive.google.com/thumbnail?id=11d4t5QVL41puZ84CA-a3BBWz6zx7_4dy1A)
 
+* ↑20 ↓21 [#j653cefe]
+#adsensebar
+
 ** JFileChooserのタイトルバーのIconImageを変更する [#FileChooserIconImage]
 #swingdescription(Swing/FileChooserIconImage,JFileChooserのタイトルバーのIconImageを変更する,JFileChooserのタイトルバーアイコンを親のJFrameとは別のアイコンに変更します。,https://drive.google.com/thumbnail?id=1eUMSRA3bh0DZYC2DrIVsGRXTqW_ZsGmHCA)
-
-* ↑30 ↓31 [#v1592eda]
-#adsensebar
 
 ** JComboBox、JList、JTreeなどの先頭文字列検索に使用するキー入力遅延時間を設定する [#TimeFactor]
 #swingdescription(Swing/TimeFactor,JComboBox、JList、JTreeなどの先頭文字列検索に使用するキー入力遅延時間を設定する,JComboBox、JList、JTree、JFileChooserの詳細ビューなどで、キー入力による先頭文字列検索に使用する複数キー入力遅延時間を設定します。,https://drive.google.com/thumbnail?id=1tAZ74eWWmKaypcoCeBn4AGGjdHlb-j1KiA)
@@ -116,41 +92,14 @@ description: JFileChooser、JOptionPane、JColorChooser関係の記事へのス�
 ** JFileChooserにTransferHandlerを設定してFileをドロップ可能にする [#DropFileOnFileChooser]
 #swingdescription(Swing/DropFileOnFileChooser,JFileChooserにTransferHandlerを設定してFileをドロップ可能にする,JFileChooserにTransferHandlerを設定してFileやDirectoryをドロップ可能にします。,https://drive.google.com/thumbnail?id=1NA-vGQgCHGvMjG9nrxYwpTVuYCIgeFFZ)
 
-** JColorChooserのSwatchサイズを変更する [#ColorChooserSwatchSize]
-#swingdescription(Swing/ColorChooserSwatchSize,JColorChooserのSwatchサイズを変更する,JColorChooserのSwatchChooserPanelで使用される各Swatchのサイズを変更します。,https://drive.google.com/thumbnail?id=1ZXY57mdtRubzvYCnvj-eoSmfsUvPPmlU)
-
-** JOptionPaneのOKボタンを文字列が入力されるまで選択不可に設定する [#DisabledOkButtonOptionPane]
-#swingdescription(Swing/DisabledOkButtonOptionPane,JOptionPaneのOKボタンを文字列が入力されるまで選択不可に設定する,JOptionPaneのConfirmDialogに表示されるOKボタンを文字列が入力されるまで選択不可に設定します。,https://drive.google.com/thumbnail?id=1blPT1pPi2dsuRd88JceWb8mITDHT9Yd1)
-
-** JOptionPaneの背景色を変更する [#OptionPaneBackground]
-#swingdescription(Swing/OptionPaneBackground,JOptionPaneの背景色を変更する,JOptionPaneで使用されている子JPanelをすべて透明化して背景色を指定した色に変更します。,https://drive.google.com/thumbnail?id=1jUaaox2WyFYAqVow6MbfH7o9rGY-7WqC)
-
 ** JFileChooserがディレクトリ選択モードの場合ファイルフィルタ用のJComboBoxを無効化する [#DisableFilterComboBox]
 #swingdescription(Swing/DisableFilterComboBox,JFileChooserがディレクトリ選択モードの場合ファイルフィルタ用のJComboBoxを無効化する,JFileChooserがディレクトリのみ選択可能に設定されている場合、ファイルフィルタ用のJComboBoxを無効化します。,https://drive.google.com/thumbnail?id=1Ed1zBEdBgvUiUOVeBr4rXbopF_1aJgBg)
-
-** JOptionPaneで使用するメッセージダイアログのOKボタンテキストを変更する [#OptionPaneOkButtonText]
-#swingdescription(Swing/OptionPaneOkButtonText,JOptionPaneで使用するメッセージダイアログのOKボタンテキストを変更する,JOptionPaneから作成、使用可能なメッセージダイアログのOKボタンテキストを変更します。,https://drive.google.com/thumbnail?id=1ngT9-9mnVJgjE-wARclMMawkfYmQ0G86)
 
 ** JFileChooserのPlacesBarショートカットの初期値を変更する [#FileChooserShortcutPanelFolders]
 #swingdescription(Swing/FileChooserShortcutPanelFolders,JFileChooserのPlacesBarショートカットの初期値を変更する,JFileChooserのPlacesBarショートカットフォルダの初期値をドキュメントからPCに変更します。,https://drive.google.com/thumbnail?id=1u-38lQnqii8nemRJxB3MkP1OoPDrgaZs)
 
 ** JFileChooserで新規フォルダ作成を無効化する [#DisableNewFolderAction]
 #swingdescription(Swing/DisableNewFolderAction,JFileChooserで新規フォルダ作成を無効化する,JFileChooserで既存ファイルの名前変更は有効のまま新規フォルダの作成のみ無効に設定します。,https://drive.google.com/thumbnail?id=1a7Lm2pVbgfsEnORKxYiekYuJz_rAwCCI)
-
-* ↑30 ↓31 [#l69cf77c]
-#adsensebar
-
-** JColorChooserのプレビューパネルにTitledBorderでテキストを表示する [#ColorChooserPreviewText]
-#swingdescription(Swing/ColorChooserPreviewText,JColorChooserのプレビューパネルにTitledBorderでテキストを表示する,JColorChooserのプレビューパネルにTitledBorderでテキストを表示するかを切り替えます。,https://drive.google.com/thumbnail?id=1WZCnjXziIrbnu75REm5tT6mjk5Mwdujc)
-
-** JColorChooserのRGB色選択パネルでアルファ設定用のJSliderとJSpinnerを無効化する [#ColorTransparencySelectionEnabled]
-#swingdescription(Swing/ColorTransparencySelectionEnabled,JColorChooserのRGB色選択パネルでアルファ設定用のJSliderとJSpinnerを無効化する,JColorChooserのRGB色選択パネルでアルファ設定用のJSliderとJSpinnerを無効化、または非表示に変更します。,https://drive.google.com/thumbnail?id=1nww921FRgkdq2p5cjnEw1g7CBSXvt54I)
-
-** JOptionPaneのタイトルバー背景色をMessageTypeに応じて変更する [#OptionPaneMessageTypeColor]
-#swingdescription(Swing/OptionPaneMessageTypeColor,JOptionPaneのタイトルバー背景色をMessageTypeに応じて変更する,JOptionPaneのタイトルバー背景色や縁色などをMessageTypeに対応した色に変更します。,https://drive.google.com/thumbnail?id=1AVd6cPRb_L98qWsiVXcNaQ8LYNvJB9T_)
-
-** JOptionPaneの最小サイズを設定する [#OptionPaneMinimumSize]
-#swingdescription(Swing/OptionPaneMinimumSize,JOptionPaneの最小サイズを設定する,JOptionPaneの最小サイズをUIManagerを使用して変更します。,https://drive.google.com/thumbnail?id=1VDOBP5adm7znzjkXMCd2ew2SKGJGgQW_)
 
 ** JFileChooserのDetails Viewで行全体を選択可能にする [#FileViewFullRowSelection]
 #swingdescription(Swing/FileViewFullRowSelection,JFileChooserのDetails Viewで行全体を選択可能にする,JFileChooserの詳細表示を行うJTableで行全体の選択状態表示とマウスによる行選択を可能に変更します。,https://drive.google.com/thumbnail?id=1Kmm_cFFBn4Ox_HtiEZwK3-cmZbWG7BkD)
@@ -161,14 +110,17 @@ description: JFileChooser、JOptionPane、JColorChooser関係の記事へのス�
 ** JFileChooserのテンプレート新規フォルダ名を変更する [#FileChooserNewFolder]
 #swingdescription(Swing/FileChooserNewFolder,JFileChooserのテンプレート新規フォルダ名を変更する,JFileChooserで新規フォルダを作成するときに使用するテンプレートフォルダ名を変更します。,https://drive.google.com/thumbnail?id=1R2Ntdo5TiC-L9M31OVIzgq-U7J4nxixK)
 
-** JColorChooserのSwatchesタブに配置されたRecentカラーパレットを保存、復元する [#SaveRestoreRecentSwatch]
-#swingdescription(Swing/SaveRestoreRecentSwatch,JColorChooserのSwatchesタブに配置されたRecentカラーパレットを保存、復元する,JColorChooserのサンプル(Swatches)タブに配置されている最新(Recent)カラーパレットを保存、復元可能になるよう設定します。,https://drive.google.com/thumbnail?id=1TgGl797HaTynH4nyLDgHODJ8fj7HbJ4Y)
-
-** JColorChooserのRGB色選択パネル内に表示される16進数カラーコードにAlpha値を追加する [#ColorChooserRgbaHexCode]
-#swingdescription(Swing/ColorChooserRgbaHexCode,JColorChooserのRGB色選択パネル内に表示される16進数カラーコードにAlpha値を追加する,JColorChooserのRGB色選択パネル内に表示される16進数カラーコードをRGB6桁からAlpha値を追加したRGBA8桁に変更します。,https://drive.google.com/thumbnail?id=1iY0SMrR9hzzjHE-HLO6DOsXwlKRxLNyg)
+* ↑30 ↓31 [#hdc6275a]
+#adsensebar
 
 ** JFileChooserのセルエディタでリネームを開始したとき拡張子を除くファイル名を選択状態にする [#SelectFileNameWithoutExtension]
 #swingdescription(Swing/SelectFileNameWithoutExtension,JFileChooserのセルエディタでリネームを開始したとき拡張子を除くファイル名を選択状態にする,JFileChooserのListViewやDetailsViewでリネーム可能なセルエディタとして使用されるJTextFieldを取得し、ファイル名全体ではなく拡張子を除くファイル名が選択状態になるよう設定します。,https://drive.google.com/thumbnail?id=1Q83JplI4_5QHhy5qekG6vSDpBZmQYuQv)
 
-** JColorChooserのRGB色選択JRadioButtonにMnemonicを設定する [#RgbRadioButtonMnemonic]
-#swingdescription(Swing/RgbRadioButtonMnemonic,JColorChooserのRGB色選択JRadioButtonにMnemonicを設定する,JColorChooserのRGB色選択パネル内に配置されたRGB選択用JRadioButtonのテキストに表示されたMnemonicを有効化します。,https://drive.google.com/thumbnail?id=1PCMoVMxkXTzrdR85EBmOo36H_oe08ryp)
+** JFileChooserの詳細表示でソートする列を指定する [#FileChooserSortKeys]
+#swingdescription(Swing/FileChooserSortKeys,JFileChooserの詳細表示でソートする列を指定する,JFileChooserの詳細表示で使用するJTableが初期状態でソートする列を指定します。,https://drive.google.com/thumbnail?id=1LTwHuFGMBhjtnq2DZ4NSR765DYOeqXjW)
+
+** JFileChooserのリサイズでファイル名編集をキャンセルする [#CancelFilePaneCellEditor]
+#swingdescription(Swing/CancelFilePaneCellEditor,JFileChooserのリサイズでファイル名編集をキャンセルする,JFileChooserのFilePaneでCellEditorが表示中にJFileChooserのサイズ変更が発生した場合、そのリネームをキャンセルするComponentListenerを作成します。,https://drive.google.com/thumbnail?id=1g0K3CSMMj_MdIGjzm1Ofd3_qWPQR_Exe)
+
+** JTreeで表示したフォルダ構造でWindowsのlnkショートカット先に移動する [#ResolveShortcutsLinkLocation]
+#swingdescription(Swing/ResolveShortcutsLinkLocation,JTreeで表示したフォルダ構造でWindowsのlnkショートカット先に移動する,JTreeを使用して作成したフォルダ構造のTreeNodeがWindowsのlnkショートカットの場合、JFileChooserのShellFolderを利用してリンク先フォルダに移動可能にします。,https://drive.google.com/thumbnail?id=1GJkQrkphv_RF2UiMWmc-6wkSimFmnpQu)

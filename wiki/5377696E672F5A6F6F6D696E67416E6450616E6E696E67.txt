@@ -8,12 +8,12 @@ pubdate: 2014-04-21T00:28:49+09:00
 description: JPanelに表示した画像にAffineTransformによる変換を適用して、マウスを使った拡大・縮小・移動を実行します。
 image: https://lh3.googleusercontent.com/-c5Y9hCoRQbU/U1PhhnitgFI/AAAAAAAACD0/ZXIcyPywcr0/s800/ZoomingAndPanning.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPanel`に表示した画像に`AffineTransform`による変換を適用して、マウスを使った拡大・縮小・移動を実行します。
 
 #download(https://lh3.googleusercontent.com/-c5Y9hCoRQbU/U1PhhnitgFI/AAAAAAAACD0/ZXIcyPywcr0/s800/ZoomingAndPanning.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ZoomAndPanHandler extends MouseAdapter {
   private static final double ZOOM_FACTOR = 1.2;
@@ -83,7 +83,7 @@ class ZoomAndPanHandler extends MouseAdapter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `AffineTransform#createInverse()`で取得した`AffineTransform`オブジェクトでマウス位置の逆変換を行い、現在表示されている倍率でのズームの中心や移動距離などを計算しています。
 
 - ズーム
@@ -92,7 +92,7 @@ class ZoomAndPanHandler extends MouseAdapter {
 - スクロール
 -- マウスドラッグで移動
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1263955 How to implement Zoom & Pan in Java using Graphics2D]
 - [http://codezine.jp/article/detail/174 ズームとパンの機能を備えたドローソフトを作成する：CodeZine]
 - [http://sozai-free.com/ 2000ピクセル以上のフリー写真素材集]
@@ -101,7 +101,7 @@ class ZoomAndPanHandler extends MouseAdapter {
 - [[JScrollPane内に配置したJPanelをマウスで拡大、縮小、移動する>Swing/ZoomAndPanPanel]]
 - [https://medium.com/@benjamin.botto/zooming-at-the-mouse-coordinates-with-affine-transformations-86e7312fd50b Zooming at the Mouse Coordinates with Affine Transformations | by Ben Botto | Medium]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 表示画面の中心を基準に拡大縮小するように変更。 -- &user(aterai); &new{2014-04-21 (月) 14:55:12};
 - KBD{Ctrl}キーを押しながらホイールスクロールで表示画面の中心、それ以外はマウスカーソルを基準に拡大縮小するように変更。 -- &user(aterai); &new{2022-12-31 (土) 21:05:12};

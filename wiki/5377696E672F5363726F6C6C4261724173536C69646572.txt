@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2009/02/use-jscrollbar-as-jslider.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollBar`を`JSlider`の代わりとして使用します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTSgYVysvI/AAAAAAAAAi4/5UjLktCUVb8/s800/ScrollBarAsSlider.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 int step = 5;
 int extent = 20;
@@ -35,7 +35,7 @@ scrollbar.getModel().addChangeListener(new ChangeListener() {
 JSpinner spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JScrollBar`を`JSlider`として使用し、`JSpinner`と連動させています。
 
 - `JScrollBar`に設定する最大値は、ノブ(`extent`はノブの幅)の右端ではなく左端になるように調整する必要がある
@@ -45,10 +45,10 @@ JSpinner spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 - 目盛りなどは自前で描画する必要がある
 -- [[JScrollBarに検索結果をハイライト表示>Swing/ScrollBarSearchHighlighter]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JScrollBar.html JScrollBar (Java Platform SE 8)]
 - [[JScrollBarのトラック内でクリックした位置につまみを移動する>Swing/AllowsAbsolutePositioning]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

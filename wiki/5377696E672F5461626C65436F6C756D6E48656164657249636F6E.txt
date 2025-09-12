@@ -8,12 +8,12 @@ pubdate: 2016-01-25T01:26:15+09:00
 description: JTableの各カラムヘッダにアイコンとタイトル文字列を表示するよう設定します。
 image: https://lh3.googleusercontent.com/-yQYpkrDnAcQ/VqT3Oq7tovI/AAAAAAAAOL8/YbbgnXgZ9B4/s800-Ic42/TableColumnHeaderIcon.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の各カラムヘッダにアイコンとタイトル文字列を表示するよう設定します。
 
 #download(https://lh3.googleusercontent.com/-yQYpkrDnAcQ/VqT3Oq7tovI/AAAAAAAAOL8/YbbgnXgZ9B4/s800-Ic42/TableColumnHeaderIcon.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 URL[] icons = {
     getIconURL("wi0062-16.png"),
@@ -32,7 +32,7 @@ for (int i = 0; i < m.getColumnCount(); i++) {
 table.setAutoCreateRowSorter(true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、カラムヘッダにアイコンを表示するために、タイトル文字列として`<img>`タグでアイコンを表示する`html`文字列を設定しています。
 
 - `html`文字列として`String.format("<html><img src='%s'/>&nbsp;%s", url, str)`を使用するとアイコンと文字列のベースラインが揃わない場合があるので`<table>`タグを使用
@@ -54,10 +54,10 @@ class IconColumnHeaderRenderer implements TableCellRenderer {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://xp-style-icons.en.softonic.com/ XP Style Icons - Download]
 - [[JTableHeaderのソートアイコンをヘッダセル右揃えで表示する>Swing/TableHeaderRightAlignSortArrow]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

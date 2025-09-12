@@ -8,12 +8,12 @@ pubdate: 2023-05-01T04:13:48+09:00
 description: Enum定数の一覧からJRadioButtonのButtonGroupやJComboBox、JSpinnerなどの選択コンポーネントを作成し、指定したenum定数を取得します。
 image: https://drive.google.com/uc?id=1rClNFi7Ho6S142h4FccGE2d0RYNZyKhA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Enum`定数の一覧から`JRadioButton`の`ButtonGroup`や`JComboBox`、`JSpinner`などの選択コンポーネントを作成し、指定した`enum`定数を取得します。
 
 #download(https://drive.google.com/uc?id=1rClNFi7Ho6S142h4FccGE2d0RYNZyKhA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 enum TabPlacement {
   TOP(SwingConstants.TOP),
@@ -43,12 +43,11 @@ combo.addItemListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTabbedPane`のタブ配置を設定する定数を置き換える`Enum`列挙型の`TabPlacement`を作成
 -- `TabPlacement.values()`で定数一覧を取得し以下のような選択コンポーネントを作成
 -- これらの選択コンポーネントで指定された`enum`定数から取得した元の`int`定数を`JTabbedPane#setTabPlacement(int)`に適用して`JTabbedPane`のタブ配置を変更可能
 
-----
 - `JRadioButtonMenuItem`、`JRadioButton`
 -- `enum`定数の名前をボタンのアクションコマンドに設定し、`ItemListener`で選択されたボタンのアクションコマンドを取得して`TabPlacement.valueOf(...)`で対応する`enum`定数を取得
 #code{{
@@ -112,9 +111,9 @@ spinner.addChangeListener(e -> {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxのモデルとしてenumを使用する>Swing/SortingAnimations]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

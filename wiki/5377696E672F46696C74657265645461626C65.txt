@@ -8,12 +8,12 @@ pubdate: 2005-01-31T07:28:18+09:00
 description: JTableに表示する行をフィルタを使用して切り替えます。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMpQqDR4I/AAAAAAAAAZg/vitkhyUoKkI/s800/FilteredTable.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`に表示する行をフィルタを使用して切り替えます。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMpQqDR4I/AAAAAAAAAZg/vitkhyUoKkI/s800/FilteredTable.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TestModel extends DefaultTableModel {
   public static final String NUMBER = "番号";
@@ -48,14 +48,14 @@ class TestModel extends DefaultTableModel {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `DefaultTableModel`のフィールドにある`dataVector`を表示用に使用し、これとは別にすべての行を保持する`Vector`を作成
 -- 例えば奇数行だけ表示するという条件が選択された場合、この条件に適合する行だけを保持用`Vector`から表示用の`dataVector`にコピーすることでフィルタリングを実施
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[RowFilterでJTableの行をフィルタリング>Swing/RowFilter]]
 -- `JDK 1.6.0`以上の場合、標準で実装されている`TableRowSorter`のフィルタリング機能が使用可能
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

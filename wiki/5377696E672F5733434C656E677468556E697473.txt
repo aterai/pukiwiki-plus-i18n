@@ -8,12 +8,12 @@ pubdate: 2020-10-12T03:21:41+09:00
 description: JEditorPaneのHTMLレンダリングでフォントサイズなどに指定された絶対単位をw3c準拠の長さで表示します。
 image: https://drive.google.com/uc?id=1j_CUQjXi2KjzpbM-AlCQME1ZInedQArw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`の`HTML`レンダリングでフォントサイズなどに指定された絶対単位を`w3c`準拠の長さで表示します。
 
 #download(https://drive.google.com/uc?id=1j_CUQjXi2KjzpbM-AlCQME1ZInedQArw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JEditorPane editor = new JEditorPane("text/html", "");
 
@@ -36,7 +36,7 @@ check.addActionListener(e -> editor.putClientProperty(
     JEditorPane.W3C_LENGTH_UNITS, ((JCheckBox) e.getSource()).isSelected()));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JEditorPane.W3C_LENGTH_UNITS`: `false`
 -- デフォルト
 - `JEditorPane.W3C_LENGTH_UNITS`: `true`
@@ -77,12 +77,12 @@ static class LengthUnit implements Serializable {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JEditorPane.html#W3C_LENGTH_UNITS JEditorPane.W3C_LENGTH_UNITS (Java Platform SE 8)]
 - [https://www.w3.org/TR/CSS21/syndata.html#length-units 4.3.2 Lengths - Syntax and basic data types - Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification]
 - [https://github.com/openjdk/jdk/pull/1628 8231286: HTML font size too large with high-DPI scaling and W3C_UNIT_LENGTHS by prsadhuk · Pull Request #1628 · openjdk/jdk]
 -- [https://bugs.openjdk.org/browse/JDK-8231286 &#91;JDK-8231286&#93; HTML font size too large with high-DPI scaling and W3C_UNIT_LENGTHS - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

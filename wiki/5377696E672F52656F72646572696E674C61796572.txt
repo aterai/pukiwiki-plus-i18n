@@ -8,12 +8,12 @@ pubdate: 2015-04-06T00:00:32+09:00
 description: JPanel内に配置したコンポーネントの並べ替えで、ドラッグ中のコンポーネントをJLayerで描画します。
 image: https://lh3.googleusercontent.com/-gW9pryNmoYY/VSFFArmXElI/AAAAAAAAN2A/CYZqhoCR0EE/s800/ReorderingLayer.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPanel`内に配置したコンポーネントの並べ替えで、ドラッグ中のコンポーネントを`JLayer`で描画します。
 
 #download(https://lh3.googleusercontent.com/-gW9pryNmoYY/VSFFArmXElI/AAAAAAAAN2A/CYZqhoCR0EE/s800/ReorderingLayer.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ReorderingLayerUI<V extends JComponent> extends LayerUI<V> {
   private static final Rectangle TOP_HALF_RECT = new Rectangle();
@@ -169,7 +169,7 @@ class ReorderingLayerUI<V extends JComponent> extends LayerUI<V> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルの並べ替えの処理などは[[JPanelの並び順をドラッグ＆ドロップで入れ替える>Swing/RearrangeOrderOfPanels]]とほぼ同じものを使用していますが、こちらはドラッグ中のコンポーネントの移動可能領域を親の`JPanel`内のみに制限しているので`JWindow`ではなく`JLayer`を使用します。
 
 - ドラッグ中のコンポーネントの位置・サイズ
@@ -177,10 +177,10 @@ class ReorderingLayerUI<V extends JComponent> extends LayerUI<V> {
 -- サイズ: `LayerUI#paint(...)`内でのドラッグ中のコンポーネントの描画には、`SwingUtilities.paintComponent(...)`を使用しているが、この時ドラッグ中のコンポーネントは親の`JPanel`の子ではなくなっているため、`getSize()`で大きさを取得できない
 --- そのためドラッグ開始前にそのサイズを別途記憶しておく必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JPanelの並び順をドラッグ＆ドロップで入れ替える>Swing/RearrangeOrderOfPanels]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `src.zip`などがダウンロードできない不具合を修正。 -- &user(aterai); &new{2015-04-20 (月) 17:57:58};
 

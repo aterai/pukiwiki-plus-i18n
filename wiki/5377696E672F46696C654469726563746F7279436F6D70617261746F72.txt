@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2011/11/jtable-group-directories-first-sorting.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`でファイルとディレクトリをグループ化して別々にソートし、ディレクトリグループが常に先頭になるように設定します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQXAQuafMsI/AAAAAAAAAqU/BDQdRbMeSnE/s800/FileDirectoryComparator.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // > dir /O:GN
 // > ls --group-directories-first
@@ -30,7 +30,8 @@ class FileGroupComparator extends DefaultFileComparator {
 
   @Override public int compare(File a, File b) {
     int flag = 1;
-    List<? extends TableRowSorter.SortKey> keys = table.getRowSorter().getSortKeys();
+    List<? extends TableRowSorter.SortKey> keys =
+        table.getRowSorter().getSortKeys();
     if (!keys.isEmpty()) {
       TableRowSorter.SortKey sortKey = keys.get(0);
       if (sortKey.getColumn() == column &&
@@ -49,7 +50,7 @@ class FileGroupComparator extends DefaultFileComparator {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTable`にドラッグ＆ドロップで追加したファイルやディレクトリを以下の`3`種類の`Comparator`でソートが可能です。
 
 - `Default`
@@ -61,11 +62,11 @@ class FileGroupComparator extends DefaultFileComparator {
 -- ディレクトリ同士、ファイル同士の場合はファイル名で比較する
 -- `ls`コマンドの`--group-directories-first`オプションを付けた状態と同じソート
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのソート>Swing/SortTree]]
 - [[JTableで同一内容のセルを空表示にしてグループ化を表現する>Swing/RowGroupInTable]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `WindowsLookAndFeel`, `JDK 1.7.0`で`UIManager.getIcon("FileView.directoryIcon")`が取得できない？ので、`FileSystemView.getSystemIcon(...)`で`Icon`を取得するように変更。 -- &user(aterai); &new{2012-05-14 (月) 16:33:14};
 

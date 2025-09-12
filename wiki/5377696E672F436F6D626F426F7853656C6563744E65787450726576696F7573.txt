@@ -1,0 +1,84 @@
+---
+category: swing
+folder: ComboBoxSelectNextPrevious
+title: JComboBoxの上下矢印キーによる選択移動アクションを変更する
+tags: [JComboBox, LookAndFeel, InputMap]
+author: aterai
+pubdate: 2024-06-24T00:29:41+09:00
+description: JComboBoxの上下矢印キーによる選択上下移動アクションがLookAndFeelごとに異なるのでこれを統一します。
+image: https://drive.google.com/uc?id=17ce0OSRkHHvvMyxaQhIwckLzwHYcA5Ll
+---
+* Summary [#summary]
+`JComboBox`の上下矢印キーによる選択上下移動アクションが`LookAndFeel`ごとに異なるのでこれを統一します。
+
+#download(https://drive.google.com/uc?id=17ce0OSRkHHvvMyxaQhIwckLzwHYcA5Ll)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JComboBox<LookAndFeelInfo> combo = new LookAndFeelComboBox(model) {
+  @Override public void updateUI() {
+    super.updateUI();
+    String name = getUI().getClass().getName();
+    if (name.contains("MetalComboBoxUI") || name.contains("MotifComboBoxUI")) {
+      InputMap im = getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+      im.put(KeyStroke.getKeyStroke("DOWN"), "selectNext2");
+      im.put(KeyStroke.getKeyStroke("UP"), "selectPrevious2");
+    }
+  }
+};
+}}
+
+* Description [#description]
+- `MetalLookAndFeel`、`MotifLookAndFeel`
+-- デフォルトはKBD{↓}(`DOWN`)キーに`selectNext`アクション、KBD{↑}(`UP`)キーに`selectPrevious`アクションが割り当てられている
+-- `selectNext`アクションはドロップダウンリストが表示されている場合は下のアイテムに選択を移動、非表示の場合はドロップダウンリストを開く(選択状態は変化しない)
+-- [[JComboBoxのドロップダウンリストを上矢印キーでも開くよう設定する>Swing/ShowPopupOnNavigation]]
+
+#code{{
+// @see javax/swing/plaf/basic/BasicComboBoxUI.java
+else if (key == DOWN) {
+  if (comboBox.isShowing() ) {
+    if (comboBox.isPopupVisible()) {
+      if (ui != null) {
+        ui.selectNextPossibleValue();
+      }
+    } else {
+      comboBox.setPopupVisible(true);
+    }
+  }
+}
+}}
+
+- `BasicLookAndFeel`、`WindowsLookAndFeel`、`NimbusLookAndFeel`
+-- デフォルトはKBD{↓}(`DOWN`)キーに`selectNext2`アクション、KBD{↑}(`UP`)キーに`selectPrevious2`アクションが割り当てられている
+-- `selectNext2`、`selectPrevious2`アクションではドロップダウンリストは開かずに選択アイテム移動が可能
+--- 編集可能な`JComboBox`や`JTable`のセルエディタとなる`JComboBox`の場合は`selectNext2`、`selectPrevious2`アクションでもドロップダウンリストが開く
+-- 上記のサンプル右側の`JComboBox`では`MetalLookAndFeel`、`MotifLookAndFeel`の場合も`InputMap#put(KeyStroke.getKeyStroke("DOWN"), "selectNext2")`などで上下矢印キーで`selectNext2`、`selectPrevious2`アクションを使用するよう変更
+--- このため選択された`LookAndFeel`への`UIManager.setLookAndFeel(lookAndFeelName)`での切り替えがドロップダウンリストを開かずに上下矢印キーのみで可能になる
+
+#code{{
+// @see javax/swing/plaf/basic/BasicComboBoxUI.java
+else if (key == DOWN_2) {
+  // Special case in which pressing the arrow keys will not
+  // make the popup appear - except for editable combo boxes
+  // and combo boxes inside a table.
+  if (comboBox.isShowing()) {
+    if ((comboBox.isEditable() || (ui != null && ui.isTableCellEditor()))
+        && !comboBox.isPopupVisible()) {
+      comboBox.setPopupVisible(true);
+    } else {
+      if (ui != null) {
+        ui.selectNextPossibleValue();
+      }
+    }
+  }
+}
+}}
+
+* Reference [#reference]
+- [[JComboBoxのドロップダウンリストを上矢印キーでも開くよう設定する>Swing/ShowPopupOnNavigation]]
+- [[LookAndFeelの一覧を取得する>Swing/InstalledLookAndFeels]]
+
+* Comment [#comment]
+#comment
+#comment

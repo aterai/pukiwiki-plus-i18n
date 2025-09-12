@@ -8,12 +8,12 @@ pubdate: 2022-05-16T02:25:26+09:00
 description: GlyphVectorを使用して5段階評価の★のアウトラインを作成し、その内部を評価値の小数点一位まで塗りつぶします。
 image: https://drive.google.com/uc?id=1qWNar6LNSc0eR0JQQL9exGtmmmNfL-ki
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `GlyphVector`を使用して`5`段階評価の★のアウトラインを作成し、その内部を評価値の小数点一位まで塗りつぶします。
 
 #download(https://drive.google.com/uc?id=1qWNar6LNSc0eR0JQQL9exGtmmmNfL-ki)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // JComponent label1 = new FiveStarRatingLabel("3.5");
 class FiveStarRatingLabel extends JComponent {
@@ -66,7 +66,7 @@ class FiveStarRatingLabel extends JComponent {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `5`段階評価用に★を`5`文字分用意
 - `Font#createGlyphVector(...)`でその文字列★★★★★から`GlyphVector`を作成
 - `GlyphVector#getGlyphMetrics(index)`で一文字ごとに`GlyphMetrics`を取得
@@ -74,11 +74,11 @@ class FiveStarRatingLabel extends JComponent {
 -- 評価値の小数部は小数点一位を`10`倍して`BigDecimal`で整数として取得し、`GlyphMetrics#getBounds2D()#getWidth() * fractionalPart / 10d`で幅に変換
 - この合計幅の矩形で`Clip`した領域のみ文字列★のアウトラインを塗りつぶして評価値を描画
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[RGBImageFilterでアイコンの色調を変更>Swing/RatingLabel]]
 - [[Fontのアウトラインを取得して文字列の内部を修飾する>Swing/LineSplittingLabel]]
 - [[Fontに長体をかけてJTextAreaで使用する>Swing/CondensedFontLabel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

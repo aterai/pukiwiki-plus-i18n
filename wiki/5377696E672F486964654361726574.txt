@@ -8,12 +8,12 @@ pubdate: 2017-01-02T02:13:16+09:00
 description: JTextAreaなどのCaretを非表示にするテストを行います。
 image: https://drive.google.com/uc?id=1K6e6fysV1_WfG9uuYpD3nh1eKFVrGTfr6g
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`などの`Caret`を非表示にするテストを行います。
 
 #download(https://drive.google.com/uc?id=1K6e6fysV1_WfG9uuYpD3nh1eKFVrGTfr6g)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 textArea.setCaret(new DefaultCaret() {
   @Override public boolean isVisible() {
@@ -22,7 +22,7 @@ textArea.setCaret(new DefaultCaret() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Hide Caret`
 -- `DefaultCaret#isVisible()`が常に`false`を返すようにオーバーライドした`Caret`を`JTextArea`に設定することで非表示化
 -- `JTextArea#setCaret(null)`のように`null`を設定すると`NullPointerException`が発生する
@@ -35,10 +35,10 @@ textArea.setCaret(new DefaultCaret() {
 - `Focusable`
 -- `JTextArea#setFocusable(false)`を設定すると選択不可になり、結果`Caret`も選択ハイライトも非表示になる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultCaret.html#isVisible-- DefaultCaret#isVisible() (Java Platform SE 8)]
 - [https://bugs.openjdk.org/browse/JDK-4512626 &#91;JDK-4512626&#93; Non-editable JTextArea provides no visual indication of keyboard focus - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2016/08/use-editable-jcombobox-as.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のセルエディタとして編集可能な`JComboBox`を適用し、セルの値の追加などを行います。
 
 #download(https://lh3.googleusercontent.com/-qEx3-yOwZzY/V5Td7p-XE0I/AAAAAAAAOeI/Ac2sgZB4y1E7pW5x33cb_KxNhv1x9AN5QCCo/s800/EditableComboCellEditor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ComboCellEditor extends AbstractCellEditor implements TableCellEditor {
   private final JComboBox<String> combo = new JComboBox<>();
@@ -52,7 +52,7 @@ class ComboCellEditor extends AbstractCellEditor implements TableCellEditor {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JComboBox#setEditable(true)`で編集可能にした`JComboBox`を`JTable`のセルエディタに設定し、セルの値の追加・編集を可能にしています。
 
 - 各行で`JComboBox`の所有するアイテムが異なりまたそれらのアイテムの選択位置も保持する必要があるため`TableModel`には`DefaultComboBoxModel`をモデルデータとして保存
@@ -60,9 +60,9 @@ class ComboCellEditor extends AbstractCellEditor implements TableCellEditor {
 - `JComboBox`を`JTable`のセルエディタとして使用する場合、`combo.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);`を設定する
 -- この設定はドロップダウンリストでカーソルキーによる選択変更しても`ActionEvent`などが発生して編集中止にしないために必要
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのCellEditorにJComboBoxを設定>Swing/ComboCellEditor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

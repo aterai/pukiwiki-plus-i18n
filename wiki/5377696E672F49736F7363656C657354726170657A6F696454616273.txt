@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2017/01/change-tab-shape-of-jtabbedpane-to.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブの形を台形に変更し、左側にあるタブが上に表示されるよう設定します。
 
 #download(https://drive.google.com/uc?id=1NeVPi85J0fLf7nSH0xB03Rk9tclob08S7w)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class IsoscelesTrapezoidTabbedPaneUI extends BasicTabbedPaneUI {
   private static final int ADJ2 = 3;
@@ -98,7 +98,7 @@ class IsoscelesTrapezoidTabbedPaneUI extends BasicTabbedPaneUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、タブの形が台形で左側にあるタブが上に表示されるように`BasicTabbedPaneUI`の各描画メソッドをオーバーライドし、これを`setUI(...)`メソッドで`JTabbedPane`に設定しています。
 
 - `BasicTabbedPaneUI#paintTabArea(...)`をオーバーライドして右側のタブを先に描画するよう変更
@@ -110,12 +110,12 @@ class IsoscelesTrapezoidTabbedPaneUI extends BasicTabbedPaneUI {
 - `BasicTabbedPaneUI#paintTabBackground(...)`をオーバーライドしてタブの形を台形に変更
 -- タブ矩形の外側に台形がはみ出すので`Graphics2D#setClip(...)`で描画領域を拡大する必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブエリア背景色などをテスト>Swing/TabAreaBackground]]
 - [[JTabbedPaneのNimbusLookAndFeelにおけるスタイルを変更する>Swing/NimbusTabbedPanePainter]]
 -- `SynthLookAndFeel`などの場合は、`javax.swing.plaf.Painter`を変更する
 - [https://stackoverflow.com/questions/41566659/tabs-rendering-order-in-custom-jtabbedpane java - Tabs Rendering Order in Custom JTabbedPane - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

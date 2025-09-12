@@ -8,17 +8,18 @@ pubdate: 2020-08-10T06:20:47+09:00
 description: JTableのヘッダ背景色、セル罫線、セルエディタ罫線の色を統一して、セルが編集状態になっても全体の罫線の幅が変化しないよう設定します。
 image: https://drive.google.com/uc?id=17yLTgJ-JfE8Pb12xmERIagJ-mQgyDao8
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のヘッダ背景色、セル罫線、セルエディタ罫線の色を統一して、セルが編集状態になっても全体の罫線の幅が変化しないよう設定します。
 
 #download(https://drive.google.com/uc?id=17yLTgJ-JfE8Pb12xmERIagJ-mQgyDao8)
 
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(10, 3) {
   private final CellBorder border = new CellBorder(2, 2, 1, 2);
-  @Override public Component prepareEditor(TableCellEditor editor, int row, int column) {
+  @Override public Component prepareEditor(
+      TableCellEditor editor, int row, int column) {
     Component c = super.prepareEditor(editor, row, column);
     if (c instanceof JTextField) {
       ((JComponent) c).setBorder(border);
@@ -66,7 +67,7 @@ header.setDefaultRenderer(new DefaultTableCellRenderer() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTable`
 -- `JTable#setShowVerticalLines(false)`として縦罫線を非表示化
 - `JTableHeader`
@@ -82,11 +83,11 @@ header.setDefaultRenderer(new DefaultTableCellRenderer() {
 --- 参考: [[JScrollBarをJTable上に重ねて表示するJScrollPaneを作成する>Swing/OverlappedScrollBar]]
 
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableの本体、ヘッダ、親JScrollPaneなどにBorderを設定する>Swing/TableBorder]]
 - [[CellEditorのBorderを変更>Swing/CellEditorBorder]]
 - [[JScrollBarをJTable上に重ねて表示するJScrollPaneを作成する>Swing/OverlappedScrollBar]]
 - [[JTableのセル罫線をMatteBorderで描画する>Swing/SudokuTableBorder]]
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

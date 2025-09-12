@@ -8,12 +8,12 @@ pubdate: 2007-09-17T14:41:19+09:00
 description: JTextPaneに表示した文字列中の全角スペースやタブを可視化します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWpb1ogMI/AAAAAAAAApk/3IWJ2qvvECo/s800/WhitespaceMark.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextPane`に表示した文字列中の全角スペースやタブを可視化します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWpb1ogMI/AAAAAAAAApk/3IWJ2qvvECo/s800/WhitespaceMark.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class WhitespaceLabelView extends LabelView {
   private static final String IDEOGRAPHIC_SPACE = "\u3000";
@@ -58,13 +58,13 @@ class WhitespaceLabelView extends LabelView {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`LabelView`を継承し、`LabelView#paint`メソッドをオーバーライドして全角スペースやタブの場合だけそれぞれの図形を描画しています。
 
 - タブ表示図形のドット数は適当(`4`タブの場合に`4`点表示している訳ではない)
 - `LabelView`を使用する`EditorKit(ViewFactory)`の作成方法は[[JEditorPaneで改行を表示>Swing/ParagraphMark]]と同様
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1374478 Swing - JTextPane View Problem]
 - [http://web.archive.org/web/20120216035951/http://java.sun.com/products/jlf/ed1/dg/higo.htm Design Guidelines: Text Components]
 - [http://www.javafaq.nu/java-book-30.html Swing Chapter 19. (Advanced topics) Inside Text Components. Easy for reading, Click here!]
@@ -72,6 +72,6 @@ class WhitespaceLabelView extends LabelView {
 - [[JTextPaneでタブサイズを設定>Swing/TabSize]]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/LabelView.html LabelView (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

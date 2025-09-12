@@ -8,12 +8,12 @@ pubdate: 2023-12-25T00:59:23+09:00
 description: Path2Dのベジェ曲線を使用して角を内側に丸めた額縁風の図形を描画するBorderを作成し、JTextFieldなどのコンポーネントに設定します。
 image: https://drive.google.com/uc?id=1jyF7GgJ28kyMLA1wtG9pR6LotgncjhKs
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Path2D`のベジェ曲線を使用して角を内側に丸めた額縁風の図形を描画する`Border`を作成し、`JTextField`などのコンポーネントに設定します。
 
 #download(https://drive.google.com/uc?id=1jyF7GgJ28kyMLA1wtG9pR6LotgncjhKs)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JScrollPane scroll = new JScrollPane(new JTable(8, 5)) {
   private static final int ARC = 8;
@@ -53,7 +53,6 @@ JScrollPane scroll = new JScrollPane(new JTable(8, 5)) {
         path.lineTo(x + r, y + h);
         path.curveTo(
             x + r, y + h - rr, x + rr, y + h - r, x, y + h - r);
-        // path.lineTo(x, y + r);
         path.closePath();
         return path;
       }
@@ -62,7 +61,7 @@ JScrollPane scroll = new JScrollPane(new JTable(8, 5)) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Path2D#curveTo(...)`
 -- `EmptyBorder`を継承する`PlaqueBorder`を作成
 -- `PlaqueBorder#paintBorder(...)`をオーバーライドしてその余白に`Path2D#curveTo(...)`と`Path2D#lineTo(...)`で作成した額縁風の図形を描画
@@ -109,11 +108,11 @@ class PlaqueBorder extends EmptyBorder {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextFieldの角を丸める>Swing/RoundedTextField]]
 - [https://cat-in-136.github.io/2014/03/bezier-1-kappa.html ベジェ曲線による円の描画の制御点の位置はなぜ0.55228…なのか?]
 - [https://stackoverflow.com/questions/1734745/how-to-create-circle-with-b%25c3%25a9zier-curves geometry - How to create circle with Bézier curves? - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

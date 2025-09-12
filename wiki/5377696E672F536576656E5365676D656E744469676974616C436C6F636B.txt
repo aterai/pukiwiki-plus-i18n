@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2023/01/create-numbers-for-7-segment-digital.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `AffineTransform`を使用して`Path2D`を変換、組み合わせて`7`セグメントデジタル時計用の数字を作成します。
 
 #download(https://drive.google.com/uc?id=12UqbyhXtbTzdZn657FSX_--dt9R08RRQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DigitalNumber {
   private final double isosceles;
@@ -75,7 +75,7 @@ class DigitalNumber {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - [https://en.wikipedia.org/wiki/Seven-segment_display Seven-segment display - Wikipedia]のセグメント配置を参考にセグメント`A..G`を`enum`で作成
 -- `enum Seg { A, B, C, D, E, F, G }`
 - `EnumSet`を使用して数字に対してどのセグメントが点灯しているかを定義
@@ -142,7 +142,7 @@ double sv = getWidth() / (h1.getBounds().width * 8d);
 g2.scale(sv, sv);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://en.wikipedia.org/wiki/Seven-segment_display Seven-segment display - Wikipedia]
 - [https://www.youtube.com/watch?v=KdIwrBQhYHw Java Digital Clock - YouTube]
 - [http://kiunwong.blogspot.com/2012/09/seven-segments-display-in-java.html Seven Segments Display in Java | Java Programming]
@@ -151,6 +151,6 @@ g2.scale(sv, sv);
 - [[AffineTransformを使用してアナログ時計の文字盤に数字を配置する>Swing/ClockWithArabicOrRomanNumerals]]
 - [[JListでドットマトリクスLEDデジタル時計を作成する>Swing/DotMatrixLedDigitalClock]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

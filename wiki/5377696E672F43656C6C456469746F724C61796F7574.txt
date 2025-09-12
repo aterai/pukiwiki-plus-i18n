@@ -8,12 +8,12 @@ pubdate: 2009-02-02T14:08:34+09:00
 description: TableCellEditorのレイアウトを変更して、CellEditorの隣にJButtonを配置します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTIlcF-6vI/AAAAAAAAATA/mS6Q_BfuY6c/s800/CellEditorLayout.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TableCellEditor`のレイアウトを変更して、`CellEditor`の隣に`JButton`を配置します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTIlcF-6vI/AAAAAAAAATA/mS6Q_BfuY6c/s800/CellEditorLayout.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CustomComponentCellEditor extends DefaultCellEditor {
   protected final JTextField field;
@@ -68,7 +68,7 @@ class CustomComponentCellEditor extends DefaultCellEditor {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `0`列目
 -- `DefaultCellEditor`を継承する`CustomComponentCellEditor`を作成
 -- `JTextField`をコンストラクタの引数にしているがこれは使用せず、実際のセルエディタは`JPanel`で作成して使用
@@ -167,11 +167,11 @@ class CustomComponentCellEditor2 extends DefaultCellEditor {
 - `3`列目
 -- デフォルト
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1354286 Swing - JTable editor issue]
 - [[JTextField内にアイコンを追加>Swing/IconTextField]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - KBD{F2}で編集開始した場合、フォーカスできない問題を修正。 -- &user(aterai); &new{2009-08-10 (月) 15:50:27};
 - ソースコードだけ変更して、こちらのページの修正を忘れていたので、新しく追加した`2`列目の解説などを追記。スクリーンショットは面倒なので更新しない。 -- &user(aterai); &new{2011-08-30 (火) 18:26:59};

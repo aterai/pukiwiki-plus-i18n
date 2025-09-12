@@ -8,12 +8,12 @@ pubdate: 2014-01-13T00:01:30+09:00
 description: JViewportにBorderを設定して余白を作成します。
 image: https://lh6.googleusercontent.com/-dtdRJtfyQqs/UtKoFiKxRVI/AAAAAAAAB-A/QmWEeAHNlmE/s800/ViewportBorder.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JViewport`に`Border`を設定して余白を作成します。
 
 #download(https://lh6.googleusercontent.com/-dtdRJtfyQqs/UtKoFiKxRVI/AAAAAAAAB-A/QmWEeAHNlmE/s800/ViewportBorder.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextArea textArea1 = new JTextArea("JTextArea#setMargin(Insets)\n\n" + INIT_TXT);
 textArea1.setMargin(new Insets(5, 5, 5, 5));
@@ -33,7 +33,7 @@ JScrollPane scroll2 = new JScrollPane(textArea2) {
 // scroll2.setViewportBorder(BorderFactory.createLineBorder(textArea2.getBackground(), 5));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左: `JTextArea#setMargin(Insets)`
 -- `JTextArea`に`setMargin(Insets)`で余白を設定
 -- 行変更などのカーソル移動で先頭や末尾の余白分まではスクロールせず、上記のスクリーンショットのように余白が見えない状態になる場合がある
@@ -47,10 +47,10 @@ JScrollPane scroll2 = new JScrollPane(textArea2) {
 -- 余白は`View`に設定したコンポーネントの背景色と色の`LineBorder`で描画
 --- `EmptyBorder`にすると`JScrollPane`の背景色が表示されてしまう
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#setMargin-java.awt.Insets- JTextComponent#setMargin(...) (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JScrollPane.html#setViewportBorder-javax.swing.border.Border- JScrollPane#setViewportBorder(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

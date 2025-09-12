@@ -1,0 +1,103 @@
+---
+category: swing
+folder: TableHeaderRolloverSeparator
+title: JTableHeaderのTableColumn間にロールオーバーするSeparatorを追加
+tags: [JTableHeader, JLayer]
+author: aterai
+pubdate: 2024-09-16T06:28:08+09:00
+description: JTableHeaderの各TableColumn間にロールオーバー時のみ出現するSeparatorをJLayerを使用して描画します。
+image: https://drive.google.com/uc?id=1jKFaoPm60O8pk452XYFwtC1NgNvCwPp4
+---
+* Summary [#summary]
+`JTableHeader`の各`TableColumn`間にロールオーバー時のみ出現する`Separator`を`JLayer`を使用して描画します。
+
+#download(https://drive.google.com/uc?id=1jKFaoPm60O8pk452XYFwtC1NgNvCwPp4)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class TableHeaderRolloverLayerUI extends LayerUI<JScrollPane> {
+  private boolean rollover;
+
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    if (c instanceof JLayer && rollover) {
+      JScrollPane scroll = (JScrollPane) ((JLayer<?>) c).getView();
+      JTable table = (JTable) scroll.getViewport().getView();
+      JTableHeader header = table.getTableHeader();
+      TableColumnModel cm = header.getColumnModel();
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setPaint(Color.GRAY);
+      Line2D s = new Line2D.Double();
+      int size = cm.getColumnCount();
+      double gap = 2d;
+      for (int i = 0; i < size; i++) {
+        Rectangle r = header.getHeaderRect(i);
+        double y1 = r.getY() + gap;
+        double y2 = r.getY() + r.getHeight() - gap - gap;
+        s.setLine(r.getX(), y1, r.getX(), y2);
+        if (i != 0) {
+          g2.draw(s);
+        }
+        if (i < size - 1) {
+          double xx = r.getX() + r.getWidth() - gap;
+          s.setLine(xx, y1, xx, y2);
+          g2.draw(s);
+        }
+      }
+      g2.dispose();
+    }
+  }
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(
+          AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override protected void processMouseEvent(
+      MouseEvent e, JLayer<? extends JScrollPane> l) {
+    super.processMouseEvent(e, l);
+    Component c = e.getComponent();
+    if (e.getID() == MouseEvent.MOUSE_RELEASED) {
+      rollover = c.getBounds().contains(e.getPoint());
+      c.repaint();
+    }
+  }
+
+  @Override protected void processMouseMotionEvent(
+      MouseEvent e, JLayer<? extends JScrollPane> l) {
+    super.processMouseMotionEvent(e, l);
+    Component c = e.getComponent();
+    int id = e.getID();
+    boolean b = id == MouseEvent.MOUSE_MOVED || id == MouseEvent.MOUSE_DRAGGED;
+    rollover = b && c instanceof JTableHeader;
+    l.repaint(c.getBounds());
+  }
+}
+}}
+
+* Description [#description]
+- `JTableHeader#setDefaultRenderer(...)`で`LookAndFeel`デフォルトの`Border`やフォーカス描画を除去したフラットなセルレンダラーを設定
+-- `JTable#setShowGrid(false)`などは`JTableHeader`のグリッド表示などには影響しない
+- `JTable`を配置した`JScrollPane`に`JLayer`をラップして現在ロールオーバー状態の`TableColumn`だけではなくすべての`TableColumn`間に`Separator`を描画する
+-- `LayerUI#installUI()`で`AWTEvent.MOUSE_EVENT_MASK`と`AWTEvent.MOUSE_MOTION_EVENT_MASK`を設定してマウスイベントを`JLayer`で取得するよう設定
+-- `LayerUI#processMouseMotionEvent(...)`などで`JTableHeader`上にマウスカーソルが乗ったらロールオーバー状態を`true`に設定して`JTableHeader`をリペイント
+-- `LayerUI#paint()`をオーバーライドして`JTableHeader`がロールオーバー状態の場合は`JTableHeader#getHeaderRect(int)`で取得した各領域の左右辺に`Line2D`で`Separator`を描画
+-- `TableColumn`をリサイズ中に`JTableHeader`外でマウスリリースした場合は`Separator`を非表示に変更
+
+* Reference [#reference]
+- [[JTableHeaderの余白にヘッダを描画する>Swing/TableHeaderFiller]]
+- [[JTableHeaderをリンク風に表示しセル内余白のクリックを無効にする>Swing/HyperlinkHeaderCellRenderer]]
+
+* Comment [#comment]
+#comment
+#comment

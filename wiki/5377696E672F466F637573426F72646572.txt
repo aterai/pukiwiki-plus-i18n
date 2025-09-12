@@ -8,12 +8,12 @@ pubdate: 2023-10-30T00:32:37+09:00
 description: JTextFieldにフォーカスが適用されたらそのフチ色を変更してハイライトするBorderを設定します。
 image: https://drive.google.com/uc?id=1uxBRQ_jk5WrG6Q6E7Jqg0BaaVQFLgrYD
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`にフォーカスが適用されたらそのフチ色を変更してハイライトする`Border`を設定します。
 
 #download(https://drive.google.com/uc?id=1uxBRQ_jk5WrG6Q6E7Jqg0BaaVQFLgrYD)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextField field2 = new JTextField(20) {
   private transient FocusListener handler;
@@ -101,7 +101,7 @@ class FocusBorderListener implements FocusListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTextField`に角丸の`Border`を設定
 -- [[JTextFieldの角を丸める>Swing/RoundedTextField]]
 - この`FocusBorder`の`paintBorder(...)`メソッドをオーバーライドし、`Component#hasFocus()`の場合はフチ色を変更するよう設定
@@ -124,12 +124,12 @@ public class MotifTextUI {
 // ...
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Borderのアニメーション>Swing/RippleBorder]]
 - [[JComboBoxのFocusBorderの対象を内部のアイテムではなくJComboBox自体に変更する>Swing/ComboBoxFocusBorder]]
 - [[JTextFieldにフォーカスがある場合の背景色を設定>Swing/FocusColor]]
 - [[JTextFieldの角を丸める>Swing/RoundedTextField]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2020/05/make-text-in-jtooltip-selectable-and.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolTip`の代わりに`JPopupMenu`を表示し、その内部に配置したコンポーネントのクリックや文字列の選択・コピーを可能にします。
 
 #download(https://drive.google.com/uc?id=1gSgkKvGUaTX9rESzzcCHyhNRREYr22cq)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JEditorPane hint = new JEditorPane();
 hint.setEditorKit(new HTMLEditorKit());
@@ -71,7 +71,7 @@ editor.addHyperlinkListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JComponent#createToolTip()`メソッドをオーバーライドして`JToolTip`に`HierarchyListener`を追加
 - `JToolTip`が表示状態になったらその`JToolTip`を親にして`JPopupMenu`を表示
 -- `JToolTip`は`JPopupMenu`の背後に隠れている
@@ -79,9 +79,9 @@ editor.addHyperlinkListener(e -> {
 - マウスカーソルを移動して親の`JToolTip`が非表示になっても`JPopupMenu`は閉じないので、内部の`JCheckBox`をクリックしたり`JEditorPane`の文字列を選択しKBD{Ctrl+C}などでコピー可能
 -- 通常の`JPopupMenu`なので親`JFrame`などをクリックしてフォーカスが移動すると非表示になる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://coderanch.com/t/538128/java/JButtons-JTooltip JButtons inside JTooltip (Swing / AWT / SWT forum at Coderanch)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

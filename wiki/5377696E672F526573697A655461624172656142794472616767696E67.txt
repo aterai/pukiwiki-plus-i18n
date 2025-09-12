@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2021/04/resize-tab-area-of-jtabbedpane-by.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブ領域をマウスで選択、ドラッグしてリサイズします。
 
 #download(https://drive.google.com/uc?id=1DBiqXVRK0G9xkVo1UzHNtdb_kVoW8jLJ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TabAreaResizeLayer extends LayerUI<ClippedTitleTabbedPane> {
   private int offset;
@@ -100,7 +100,7 @@ class TabAreaResizeLayer extends LayerUI<ClippedTitleTabbedPane> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTabbedPane`
 -- `JTabbedPane#doLayout()`メソッドをオーバーライドしてすべてのタブコンポーネントの推奨サイズを変更することでタブ領域のサイズを変更
 -- ただしタブコンポーネントなどの最小サイズ、最大サイズは考慮せず固定値でタブ領域の最小・最大サイズを決定している
@@ -109,11 +109,11 @@ class TabAreaResizeLayer extends LayerUI<ClippedTitleTabbedPane> {
 -- `JTabbedPane`に`JLayer`を設定してタブ領域とコンポーネント領域の境界をドラッグ可能に設定
 -- `LayerUI#processMouseEvent(...)`ではタブの子コンポーネントへのマウスイベントも取得可能なので、マウスカーソルの位置は`SwingUtilities.convertPoint(e.getComponent(), pt, layer.getView())`でイベントソースコンポーネント(`e.getComponent()`で取得した`JTabbedPane`自身、またはその子コンポーネント)から`JTabbedPane`(`JLayer#getView()`で取得可能)の座標に変換する必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableの行の高さをマウスドラッグで変更する>Swing/ResizeRowHeightByDragging]]
 - [[JTabbedPane風のタブ配置をレイアウトマネージャーで変更>Swing/NewTabButton]]
 -- 上記のサンプルのように`CardLayout`と`JButton`などの組み合わせで`JTabbedPane`風のコンポーネントを自作する場合は`JSplitPane`に配置することで同様のリサイズが可能
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2004-04-12T03:14:13+09:00
 description: javax.swing.Timerを使って文字列が点滅するJLabelを作成します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTIHWUuKaI/AAAAAAAAASQ/gfrtJsq0Xck/s800/BlinkLabel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `javax.swing.Timer`を使って文字列が点滅する`JLabel`を作成します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTIHWUuKaI/AAAAAAAAASQ/gfrtJsq0Xck/s800/BlinkLabel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JLabel label = new JLabel();
 Timer timer = new Timer(300, e -> {
@@ -22,14 +22,14 @@ Timer timer = new Timer(300, e -> {
 timer.start();
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `javax.swing.Timer`を使って`JLabel`にテキスト文字列と空文字列を交互に設定することで点滅を表現している
 - `Swing`などの`GUI`コンポーネントを更新する場合、汎用的で多機能な`java.util.Timer`はでなくアクションが`EDT`(イベント・ディスパッチ・スレッド)で実行される`javax.swing.Timer`を使用する必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/Timer.html Timer (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `Timer`があいまいなら`javax.swing.Timer`で解決 -- &user(666); &new{2007-06-22 (金) 11:51:42};
 -- ですね。 -- &user(aterai); &new{2007-06-26 (火) 14:53:53};

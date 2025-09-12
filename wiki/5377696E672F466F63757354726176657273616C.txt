@@ -8,12 +8,12 @@ pubdate: 2004-04-26T12:45:56+09:00
 description: FocusTraversalPolicyを使って、KBD{Tab}キーなどによるフォーカスの移動を制御します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNE9BAwqI/AAAAAAAAAaM/57d2rzX7ixk/s800/FocusTraversal.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `FocusTraversalPolicy`を使って、KBD{Tab}キーなどによるフォーカスの移動を制御します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTNE9BAwqI/AAAAAAAAAaM/57d2rzX7ixk/s800/FocusTraversal.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton nb = new JButton("NORTH");
 JButton sb = new JButton("SOUTH");
@@ -56,7 +56,7 @@ frame.setFocusTraversalPolicy(policy);
 // setFocusTraversalPolicy(policy);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`FocusTraversalPolicy`を使用してキー入力によるフォーカスの移動を制御しています。また、`JRadioButton`で以下のような`FocusTraversalPolicy`に切り替えが可能です。
 
 - `Default`
@@ -80,12 +80,12 @@ frame.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/doc-files/FocusSpec.html AWTフォーカス・サブシステム]
 - [https://www.ibm.com/developerworks/jp/java/library/j-mer07153/ Merlinの魔術: フォーカス、フォーカス、フォーカス]
 - [[Windowを開いたときのフォーカスを指定>Swing/DefaultFocus]]
 - [[FocusTraversalKeysに矢印キーを追加してフォーカス移動>Swing/FocusTraversalKeys]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2022-11-14T00:20:01+09:00
 description: JColorChooserのRGB色選択パネルでアルファ設定用のJSliderとJSpinnerを無効化、または非表示に変更します。
 image: https://drive.google.com/uc?id=1nww921FRgkdq2p5cjnEw1g7CBSXvt54I
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JColorChooser`の`RGB`色選択パネルでアルファ設定用の`JSlider`と`JSpinner`を無効化、または非表示に変更します。
 
 #download(https://drive.google.com/uc?id=1nww921FRgkdq2p5cjnEw1g7CBSXvt54I)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private void setTransparencySelectionEnabled(AbstractColorChooserPanel p) {
   String alphaName = UIManager.getString("ColorChooser.rgbAlphaText", p.getLocale());
@@ -48,7 +48,7 @@ private void setEnabledOrVisible(Component c) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`RGB`色選択パネルの子コンポーネントをすべて取得し、`0`番目に赤、`1`番目に緑、`2`番目に青、`3`番目にアルファ用のコンポーネントが出現すると想定してそれぞれ`3`番目に出現する
 `JSlider`と`JSpinner`を無効化、または非表示化しています。
 
@@ -63,29 +63,32 @@ private void setEnabledOrVisible(Component c) {
 -- 名前が`UIManager.getString("ColorChooser.rgbAlphaText", getLocale())`と一致する`JLabel`を`c.setVisible(false)`で非表示化
 -- `3`番目のアルファ用`JSlider`を`setVisible(false)`で非表示化
 -- `3`番目のアルファ用`JSpinner`を`setVisible(false)`で非表示化
--- [[[JDK-8051548] JColorChooser should have a way to disable transparency controls - Java Bug System>https://bugs.openjdk.org/browse/JDK-8051548]]
---- `Java 9`から`JColorChooser.showDialog(...)`の引数が追加されて、`RGB`色選択パネルのアルファや`HSV`色選択パネルで透明度を非表示にして`JColorChooser`を開くことが可能になった
 
+----
+- `Java 9`から`JColorChooser.showDialog(...)`の引数が追加されて、`RGB`色選択パネルのアルファや`HSV`色選択パネルで透明度を非表示にして`JColorChooser`を開くことが可能になった
+-- [[[JDK-8051548] JColorChooser should have a way to disable transparency controls - Java Bug System>https://bugs.openjdk.org/browse/JDK-8051548]]
 #code{{
 JButton button2 = new JButton("JColorChooser");
 button2.addActionListener(e -> {
   Component rp = getRootPane();
-  // JColorChooser should have a way to disable transparency controls - Java Bug System
+  // JColorChooser should have a way to disable transparency controls
   // https://bugs.openjdk.org/browse/JDK-8051548
   // Java 9:
-  Color c = JColorChooser.showDialog(rp, "", label.getBackground(), check.isSelected());
+  Color c = JColorChooser.showDialog(
+      rp, "", label.getBackground(), check.isSelected());
   label.setBackground(c);
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[[JDK-8051548] JColorChooser should have a way to disable transparency controls - Java Bug System>https://bugs.openjdk.org/browse/JDK-8051548]]
 - [https://docs.oracle.com/javase/jp/9/docs/api/javax/swing/JColorChooser.html#showDialog-java.awt.Component-java.lang.String-java.awt.Color-boolean- JColorChooser#showDialog(...) (Java SE 9 & JDK 9)]
 -- なぜか`@since 9`が付いていない？
+-- [https://bugs.openjdk.org/browse/JDK-8343037 &#91;JDK-8343037&#93; Missing @since tag on JColorChooser.showDialog overload - Java Bug System]で修正される模様
 - [https://stackoverflow.com/questions/12026767/java-7-jcolorchooser-disable-transparency-slider swing - Java 7 JColorChooser: Disable Transparency Slider - Stack Overflow]
 -- リフレクションを使用してアルファ用コンポーネントを取得し無効化、非表示化を行っている
 - [[JFileChooserがディレクトリ選択モードの場合ファイルフィルタ用のJComboBoxを無効化する>Swing/DisableFilterComboBox]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

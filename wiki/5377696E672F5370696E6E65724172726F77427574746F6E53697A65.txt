@@ -8,12 +8,12 @@ pubdate: 2018-07-02T15:35:14+09:00
 description: JSpinnerのArrowButtonの幅と高さを変更します。
 image: https://drive.google.com/uc?id=1McNGUqRAnh6645Jnm2JMAuKtzxtsD-B56w
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`の`ArrowButton`の幅と高さを変更します。
 
 #download(https://drive.google.com/uc?id=1McNGUqRAnh6645Jnm2JMAuKtzxtsD-B56w)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSpinner spinner4 = new JSpinner(model) {
   @Override public void updateUI() {
@@ -31,7 +31,7 @@ JSpinner spinner4 = new JSpinner(model) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `default`
 -- `JSpinner`で使用する`BasicArrowButton`の推奨サイズは幅が`16px`で固定、高さは`JSpinner`の高さの半分
 - `Spinner.arrowButtonSize`
@@ -45,7 +45,7 @@ JSpinner spinner4 = new JSpinner(model) {
 -- `LookAndFeel`に関係なく幅を変更可能
 - `setPreferredSize`での幅変更と合わせて`JSpinner`のフォントサイズを変更して`ArrowButton`の高さも変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Containerの子Componentを再帰的にすべて取得する>Swing/GetComponentsRecursively]]
 -- `JButton`の検索に使用
 - [[JComboBoxのArrowButtonを隠す>Swing/HideComboArrowButton]]
@@ -53,6 +53,6 @@ JSpinner spinner4 = new JSpinner(model) {
 - [[JSpinnerのボタンを左右に配置する>Swing/SpinnerButtonLayout]]
 -- `JSpinner`のレイアウト変更方法
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

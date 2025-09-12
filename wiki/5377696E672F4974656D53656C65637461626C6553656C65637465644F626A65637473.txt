@@ -1,0 +1,76 @@
+---
+category: swing
+folder: ItemSelectableSelectedObjects
+title: ItemListenerからItemSelectableを実装するコンポーネントを取得する
+tags: [ItemListener, JComboBox, JCheckBox, JRadioButton]
+author: aterai
+pubdate: 2024-07-29T02:16:27+09:00
+description: ItemListenerからこれを設定したItemSelectableを実装する元コンポーネントや、選択アイテムなどを取得するテストを実行します。
+image: https://drive.google.com/uc?id=1NfhtYz1TlJhjNGAZQovpF0t31QE61POZ
+---
+* Summary [#summary]
+`ItemListener`からこれを設定した`ItemSelectable`を実装する元コンポーネントや、選択アイテムなどを取得するテストを実行します。
+
+#download(https://drive.google.com/uc?id=1NfhtYz1TlJhjNGAZQovpF0t31QE61POZ)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+ItemListener listener = e -> {
+  Object item = e.getItem();
+  ItemSelectable selectable = e.getItemSelectable();
+  Object[] objects = selectable.getSelectedObjects();
+  if (e.getStateChange() == ItemEvent.SELECTED) {
+    log.append("Item: " + item + "\n");
+    log.append("ItemSelectable: " + selectable.getClass().getName() + "\n");
+  }
+  log.append("SelectedObjects:");
+  if (objects != null) {
+    Arrays.stream(objects).forEach(o -> {
+      String str = Objects.toString(o);
+      if (o instanceof AbstractButton) {
+        str = ((AbstractButton) o).getText();
+      }
+      log.append(" " + str);
+    });
+  }
+  log.append("\n----\n");
+};
+}}
+
+* Description [#description]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/ItemEvent.html#getItem-- ItemEvent#getItem()]
+-- 選択状態が変化したアイテムを返す
+-- `JRadioButton`や`JCheckBox`、`JToggleButton`などの`AbstractButton`ではイベント発生元のコンポーネント自体(`ItemEvent#getItemSelectable()`と同じ)が返される
+-- `JComboBox`では`ComboBoxModel#getSelectedItem()`で取得可能なアイテムが返される
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/ItemEvent.html#getItemSelectable-- ItemEvent (Java Platform SE 8 )]
+-- イベント発生元の`ItemSelectable`コンポーネントオブジェクトを返す
+-- `EventObject#getSource()`で取得可能なオブジェクトと同一
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/ItemSelectable.html#getSelectedObjects-- ItemSelectable#getSelectedObjects()]
+-- 選択されたアイテム、またはアイテムが選択されていない場合は`null`を返す
+-- `ItemSelectable`を実装するコンポーネントで複数選択可能なのは`java.awt.List`のみ？なので、それ以外のコンポーネントでは`ItemEvent#getItem()`で取得可能なアイテムひとつのオブジェクト配列が返される
+--- `javax.swing.JList`は`ItemSelectable`を実装せず、`ItemListener`は利用不可
+-- `ButtonGroup`に追加した`JRadioButton`でも選択可能なボタンはひとつのみなので複数選択アイテムが返されることはない
+-- 上記のサンプルでは同一の親`JPanel`に配置された`JCheckBox`を検索して選択状態のボタン配列を返すよう`JCheckBox#getSelectedObjects()`をオーバーライド
+-- [[JComboBoxのアイテムとして表示したJCheckBoxを複数選択する>Swing/CheckedComboBox]]を利用して`JComboBox`を複数選択可能に変更し、選択アイテムをオブジェクト配列として返すよう`JCheckBox#getSelectedObjects()`をオーバーライド
+--- アイテムが選択されていない場合は`null`ではなく空配列を返すよう変更
+
+#code{{
+@Override public Object[] getSelectedObjects() {
+  ListModel<E> model = getModel();
+  return IntStream.range(0, model.getSize())
+      .mapToObj(model::getElementAt)
+      .filter(CheckItem::isSelected)
+      .toArray();
+}
+}}
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/event/ItemEvent.html ItemEvent (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/ItemSelectable.html ItemSelectable (Java Platform SE 8)]
+- [[ItemListenerとActionListenerの動作の違いを比較する>Swing/ItemListenerActionListener]]
+- [[JComboBoxのアイテムとして表示したJCheckBoxを複数選択する>Swing/CheckedComboBox]]
+- [https://docs.oracle.com/javase/jp/10/docs/api/javax/swing/ButtonModel.html#getGroup() ButtonModel#getGroup() (Java SE 10 & JDK 10)]
+
+* Comment [#comment]
+#comment
+#comment

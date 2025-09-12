@@ -8,18 +8,18 @@ pubdate: 2017-07-17T23:29:21+09:00
 description: JPopupMenuに下限となる最小幅を固定値で設定します。
 image: https://drive.google.com/uc?id=1SYHBxJoZ2kPCmF9HQVhg0esnQTnpSZpq5w
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPopupMenu`に下限となる最小幅を固定値で設定します。
 
 #download(https://drive.google.com/uc?id=1SYHBxJoZ2kPCmF9HQVhg0esnQTnpSZpq5w)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 menu = new JMenu("BoxHStrut");
 menu.add(Box.createHorizontalStrut(200));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `JMenu`に配置されたコンポーネントの最も大きな推奨サイズの幅から`JPopupMenu`の幅が決まる
 - `BoxHStrut`
@@ -48,9 +48,9 @@ popup.setLayout(new DefaultMenuLayout(popup, BoxLayout.Y_AXIS) {
 -- 文字列自体の幅が`<table>`で指定した幅になるので`Accelerator`などが存在するとその幅も追加される
 -- `html`タグを使用するので`Mnemonic`が表示できない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/DefaultMenuLayout.html DefaultMenuLayout (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

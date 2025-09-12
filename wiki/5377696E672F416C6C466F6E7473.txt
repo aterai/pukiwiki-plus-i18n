@@ -8,17 +8,17 @@ pubdate: 2010-03-15T14:27:52+09:00
 description: Font一覧を取得して、Fontのファミリ名、論理名などを表示します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHfZb6u3I/AAAAAAAAARQ/8XzwOvBod-Q/s800/AllFonts.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Font`一覧を取得して、`Font`のファミリ名、論理名などを表示します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTHfZb6u3I/AAAAAAAAARQ/8XzwOvBod-Q/s800/AllFonts.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`GraphicsEnvironment#getAllFonts()`メソッドを使って、この環境で利用可能なフォントの一覧を取得しています。
 このメソッドは、ユーザーに特定のフォントを選択させる場合によく使用されます。
 
@@ -35,11 +35,11 @@ Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 ----
 - `GraphicsEnvironment#getAvailableFontFamilyNames()`メソッドでフォントファミリ名の配列を取得可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/GraphicsEnvironment.html#getAllFonts-- GraphicsEnvironment#getAllFonts() (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/1.4/guide/2d/spec/j2d-fonts.fm2.html Java 2D API: 4.2 フォントのコンセプト]
 - [https://docs.oracle.com/javase/tutorial/2d/text/fonts.html Physical and Logical Fonts (The Java™ Tutorials > 2D Graphics > Working with Text APIs)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

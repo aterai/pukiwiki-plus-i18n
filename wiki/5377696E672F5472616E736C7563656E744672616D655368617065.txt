@@ -8,12 +8,12 @@ pubdate: 2020-08-24T00:57:03+09:00
 description: JWindowを半透明に設定し、その形状を滑らかな縁の図形に変更します。
 image: https://drive.google.com/uc?id=1uukYgcQrWU5d2YRZ1KB2oy830BDRxnYl
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JWindow`を半透明に設定し、その形状を滑らかな縁の図形に変更します。
 
 #download(https://drive.google.com/uc?id=1uukYgcQrWU5d2YRZ1KB2oy830BDRxnYl)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Shape shape = new RoundRectangle2D.Float(0f, 0f, 240f, 64f, 32f, 32f);
 
@@ -38,7 +38,8 @@ private Component makePanel(Shape shape) {
     @Override protected void paintComponent(Graphics g) {
       Graphics2D g2 = (Graphics2D) g.create();
       g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, .5f));
-      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
       g2.setPaint(Color.RED);
       g2.fill(shape);
       g2.dispose();
@@ -52,7 +53,7 @@ private Component makePanel(Shape shape) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `use Window#setShape(...)`
 -- `JWindow`の形状を`Window#setShape(...)`メソッドで切り抜いて変更
 -- フチにジャギーが発生して滑らかにならない
@@ -64,11 +65,12 @@ private Component makePanel(Shape shape) {
 -- 参考: [[JFrameの透明化と再描画>Swing/TranslucentFrameRepaint]]
 -- このサンプルでは画像を切り抜きする必要はないので、[[Windowの縁をソフトクリッピングでなめらかにする>Swing/SoftClippedWindow]]のようなソフトクリッピング処理は不要
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Windowの形を変更>Swing/WindowShape]]
 - [[JFrameの透明化と再描画>Swing/TranslucentFrameRepaint]]
 - [[Windowの縁をソフトクリッピングでなめらかにする>Swing/SoftClippedWindow]]
+- [[JWindowを透明効果アニメーション付きでフェードアウトする>Swing/FadingOutWindow]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

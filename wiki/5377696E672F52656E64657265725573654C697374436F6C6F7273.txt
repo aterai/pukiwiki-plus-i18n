@@ -8,12 +8,12 @@ pubdate: 2022-04-11T04:12:31+09:00
 description: NimbusLookAndFeelでセル選択色をUIDefaultsで設定された色ではなくJListから取得するよう変更します。
 image: https://drive.google.com/uc?id=18L0O-5XjxIFGLpTCKDqLk4voZpSmNMoc
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`でセル選択色を`UIDefaults`で設定された色ではなく`JList`から取得するよう変更します。
 
 #download(https://drive.google.com/uc?id=18L0O-5XjxIFGLpTCKDqLk4voZpSmNMoc)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 String[] model = {"Red", "Green", "Blue"};
 JList<String> list = new JList<>(model);
@@ -23,7 +23,7 @@ String key = "Nimbus.Overrides";
 list.putClientProperty(key, d);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `List.rendererUseListColors`
 -- この設定のデフォルトは`false`(左)で`NimbusLookAndFeel`でのみ有効
 -- `true`(右)に設定すると`UIDefaults`ではなく`JList#getSelectionBackground()`と`JList#getSelectionForeground()`で取得される色でセル選択を描画する
@@ -40,9 +40,9 @@ list.putClientProperty(key, d);
 --- `ComboBox.rendererUseListColors`を`ture`に設定している別`JComboBox`が存在すると`LookAndFeel`を変更したときにその値が影響してしまうバグ？があるため、`JComboBox#updateUI()`をオーバーライドして常に`ComboBox.rendererUseListColors`を`false`に再設定している
 --- `List.rendererUseListColors`は`LookAndFeel`を変更しても他の`JList`の設定に影響しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxのドロップダウンリストでの選択背景色を変更する>Swing/ComboBoxSelectionBackground]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

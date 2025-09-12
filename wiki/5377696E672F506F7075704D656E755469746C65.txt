@@ -1,0 +1,68 @@
+---
+category: swing
+folder: PopupMenuTitle
+title: JPopupMenuのラベルをタイトルとして表示する
+tags: [JPopupMenu, LookAndFeel, MotifLookAndFeel, TitledBorder]
+author: aterai
+pubdate: 2025-07-28T14:17:38+09:00
+description: JPopupMenuのラベルをTitledBorderを使用してタイトル表示するよう設定します。
+image: https://drive.google.com/uc?id=1GgN8x16yD3hLWcKJIHvMmzoSQYn1tDww
+---
+* Summary [#summary]
+`JPopupMenu`のラベルを`TitledBorder`を使用してタイトル表示するよう設定します。
+
+#download(https://drive.google.com/uc?id=1GgN8x16yD3hLWcKJIHvMmzoSQYn1tDww)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JPopupMenu popup1 = new JPopupMenu("JPopupMenu#setLabel(...)") {
+  @Override public void updateUI() {
+    setBorder(null);
+    super.updateUI();
+    Border border = getBorder();
+    String title = getLabel();
+    if (!isCompoundMotifBorderBorder(border) && title != null) {
+      Color color = UIManager.getColor("Separator.foreground");
+      Border underline = BorderFactory.createMatteBorder(1, 0, 0, 0, color);
+      Border labelBorder = BorderFactory.createTitledBorder(
+          underline,
+          title,
+          TitledBorder.CENTER,
+          TitledBorder.ABOVE_TOP,
+          getFont(),
+          getForeground());
+      setBorder(BorderFactory.createCompoundBorder(border, labelBorder));
+    }
+  }
+};
+
+private static boolean isCompoundMotifBorderBorder(Border border) {
+  boolean b0 = border instanceof CompoundBorder;
+  boolean b1 = b0 && isMotifBorder(((CompoundBorder) border).getInsideBorder());
+  boolean b2 = b0 && isMotifBorder(((CompoundBorder) border).getOutsideBorder());
+  return b1 || b2;
+}
+
+private static boolean isMotifBorder(Border border) {
+  return border.getClass().getName().contains("MotifBorders");
+}
+}}
+
+* Description [#description]
+- 左:
+-- `MotifLookAndFeel`ではデフォルトで`JPopupMenu#setLabel(title)`で設定したタイトルが`MotifBorders$MotifPopupMenuBorder`を使用して`Border`として表示される
+-- `MotifLookAndFeel`以外では`JPopupMenu#setLabel(title)`でタイトルを設定しても表示には使用されない
+- 右:
+-- `MotifLookAndFeel`以外でも`JPopupMenu#setLabel(title)`で設定されたタイトルを表示するよう`TitledBorder`や`MatteBorder`、`JPopupMenu`の`LookAndFeel`デフォルト`Border`を`CompoundBorder`で組み合わせてタイトル表示する`Border`を作成
+-- `MotifLookAndFeel`の場合はタイトル表示が重複しないよう上記の`Border`は設定しないが、`LookAndFeel`が`JPopupMenu`に設定したタイトルを表示するかどうかをチェックする方法が存在しない？
+--- このため、このサンプルでは`CompoundBorder`の`InsideBorder`、`OutsideBorder`のどちらかのクラス名に`MotifBorders`が含まれているかどうかで判断している
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8//docs/api/javax/swing/JPopupMenu.html#setLabel-java.lang.String- JPopupMenu#setLabel(String)]
+- [https://stackoverflow.com/questions/8546073/how-to-force-jpopupmenu-to-show-title-even-if-look-and-feel-ui-dictates-otherwis java - How to force JPopupMenu to show title even if Look and Feel UI dictates otherwise? - Stack Overflow]
+- [[JPopupMenuにマウスドラッグで位置変更を可能にするヘッダを追加する>Swing/DraggablePopupMenu]]
+-- こちらは`TitledBorder`ではなく`JLabel`を`JPopupMenu`先頭に追加してヘッダにタイトルを表示している
+
+* Comment [#comment]
+#comment
+#comment

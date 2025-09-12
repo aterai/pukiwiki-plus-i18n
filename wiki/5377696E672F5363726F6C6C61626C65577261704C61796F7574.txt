@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2019/10/wraps-jpanel-child-components.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPanel`に配置した子コンポーネントを水平方向で折り返し、またそれらの水平間隔を動的に均等になるよう拡大します。
 
 #download(https://drive.google.com/uc?id=1Dnd-KMM4YnctkKvawDVGeCtPqD1fZfEO)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ScrollableWrapLayout extends FlowLayout {
   private final int fixedHorizontalGap;
@@ -72,7 +72,7 @@ class ScrollableWrapLayout extends FlowLayout {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `JPanel` + `FlowLayout`
 -- デフォルトの`JPanel`に`FlowLayout`を設定して`JScrollPane`に配置
 -- 水平方向に`JPanel`が拡張されて水平`ScrollBar`が表示される
@@ -82,11 +82,11 @@ class ScrollableWrapLayout extends FlowLayout {
 --- 最小値は初期水平間隔
 --- 子コンポーネントはすべて同じ推奨サイズと想定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]
 -- 子コンポーネントのレイアウト方法は`JList.HORIZONTAL_WRAP`を使用する場合と水平間隔以外はほぼ同じになる
 - [https://tips4java.wordpress.com/2008/11/06/wrap-layout/ Wrap Layout « Java Tips Weblog]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

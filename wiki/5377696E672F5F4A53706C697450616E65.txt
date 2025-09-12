@@ -1,0 +1,72 @@
+---
+title: JSplitPane Divider
+tags: [JSplitPane, Divider]
+description: JSplitPane関係の記事へのスクリーンショット付きリンク一覧
+---
+このページでは、`JSplitPane`とその内部の`Divider`の使い方を集めて一覧にしています。
+
+#contents
+
+* JSplitPane [#JSplitPane]
+** JSplitPaneでディバイダの移動を連続的に再描画 [#ContinuousLayout]
+#swingdescription(Swing/ContinuousLayout,JSplitPaneでディバイダの移動を連続的に再描画,二つのJSplitPaneのディバイダで、移動の同期と連続的な再描画を行います。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKL-SYs6I/AAAAAAAAAVk/pXv9HlMSLf0/s200/ContinuousLayout.png)
+
+** JSplitPaneの収納状態を維持する [#KeepHiddenDivider]
+#swingdescription(Swing/KeepHiddenDivider,JSplitPaneの収納状態を維持する,JSplitPaneのサイズが変更されても、ディバイダの収納状態を維持するように設定します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTOy71x7HI/AAAAAAAAAc8/gLDHiIJS_Yw/s200/KeepHiddenDivider.png)
+
+** JSplitPaneのDividerの位置を最大化後に変更する [#DividerSplitRatio]
+#swingdescription(Swing/DividerSplitRatio,JSplitPaneのDividerの位置を最大化後に変更する,JFrameを最大化した後でJSplitPaneのDividerの位置を変更する場合のテストをします。,https://lh3.googleusercontent.com/-w5-YQDwojUs/TsB7EdoVlLI/AAAAAAAABEw/p_PcxHKKeRk/s200/DividerSplitRatio.png)
+
+** JSplitPaneに2つのJTableを配置してスクロールを同期する [#SynchronizedScrollingTables]
+#swingdescription(Swing/SynchronizedScrollingTables,JSplitPaneに2つのJTableを配置してスクロールを同期する,JSplitPaneの左右に、JTableをそれぞれ配置し、スクロールや追加などが同期するようにモデルを共有します。,https://lh4.googleusercontent.com/-mAnvPJlUJSI/UJ_bYI_kJsI/AAAAAAAABWo/a_jdyUqFLwM/s200/SynchronizedScrollingTables.png)
+
+** JSplitPaneのDividerを展開収納するOneTouchButtonのサイズ、色などを変更 [#OneTouchButton]
+#swingdescription(Swing/OneTouchButton,JSplitPaneのDividerを展開収納するOneTouchButtonのサイズ、色などを変更,JSplitPaneのDividerをワンクリックで展開・収納するためのOneTouchButtonのサイズ、オフセット、背景色などを変更します。,https://lh4.googleusercontent.com/-_zdaiM8x6a4/VAxzwh3xxFI/AAAAAAAACM0/hBR-P4Nn56A/s200/OneTouchButton.png)
+
+** JSplitPaneでドラッグ中のDividerの背景色を設定する [#DividerDraggingColor]
+#swingdescription(Swing/DividerDraggingColor,JSplitPaneでドラッグ中のDividerの背景色を設定する,JSplitPaneのDividerがドラッグ中の場合に、その移動先を示す矩形の色を変更します。,https://lh5.googleusercontent.com/-M9cMsnuWpL0/VBWl0TfGYyI/AAAAAAAACNI/qvejKL7NGVk/s200/DividerDraggingColor.png)
+
+** JSplitPaneを等分割する [#DividerLocation]
+#swingdescription(Swing/DividerLocation,JSplitPaneを等分割する,JSplitPaneのディバイダが中央にくるように設定します。,https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTLR0Z5M_I/AAAAAAAAAXU/R6r6dvVJa9M/s200/DividerLocation.png)
+
+** JSplitPaneのディバイダを展開、収納する [#OneTouchExpandable]
+#swingdescription(Swing/OneTouchExpandable,JSplitPaneのディバイダを展開、収納する,JSplitPaneのディバイダをマウスのクリックなどで一気に展開、収納できるように設定します。,https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTQl4nQ4PI/AAAAAAAAAf0/y7DMbOexVWs/s200/OneTouchExpandable.png)
+
+** JSplitPaneのDividerをマウスで移動できないように設定する [#FixedDividerSplitPane]
+#swingdescription(Swing/FixedDividerSplitPane,JSplitPaneのDividerをマウスで移動できないように設定する,JSplitPaneのDividerをマウスやキー入力などで移動不可になるように設定します。,https://drive.google.com/thumbnail?id=1eHpxPFoB6tM1nQoTdo1jYb29F6W2IyIwyw)
+
+** JSplitPaneで画像を差分を比較表示する [#ImageComparisonSplitPane]
+#swingdescription(Swing/ImageComparisonSplitPane,JSplitPaneで画像を差分を比較表示する,JSplitPaneに加工前の画像と加工後の画像を重ねて表示し、Dividerで表示範囲を変更してその差分を確認します。,https://drive.google.com/thumbnail?id=1BQoqm6sZEKeuDdnJ9jxCugkg6-CHyo1-Ag)
+
+* ↑10 ↓11 [#separator1]
+#adsensebar
+
+** JSplitPaneのDividerを円形半透明のつまみに変更して中央に配置する [#TranslucentThumbDivider]
+#swingdescription(Swing/TranslucentThumbDivider,JSplitPaneのDividerを円形半透明のつまみに変更して中央に配置する,JSplitPaneの元のDividerを非表示に設定し、代わりにJLayerを使って半透明の円形つまみを作成して中央に配置します。,https://drive.google.com/thumbnail?id=1a-kjbBV4L-gJzGRMBijfxYxSJhiZBppZHg)
+
+** JSplitPaneに設定した子コンポーネントの位置を入れ替える [#SwappingSplitPane]
+#swingdescription(Swing/SwappingSplitPane,JSplitPaneに設定した子コンポーネントの位置を入れ替える,JSplitPaneに設定した子コンポーネントの位置と余分なスペースの配分率を入れ替えます。,https://drive.google.com/thumbnail?id=1TMNOHO7KVS63zeFEW4xasYw5TX-ZNqTL9w)
+
+** JSplitPaneのDividerをマウスクリックで選択状態にする [#DividerFocus]
+#swingdescription(Swing/DividerFocus,JSplitPaneのDividerをマウスクリックで選択状態にする,JSplitPaneのDividerをマウスでクリックしたとき選択状態になるよう設定します。,https://drive.google.com/thumbnail?id=1KMTrAVDblIUSfTjTvu0s_fBYMckaaF9Z)
+
+** JTableの水平JScrollBarをリサイズ可能にするためJSplitPaneに再配置する [#ResizableHorizontalScrollBar]
+#swingdescription(Swing/ResizableHorizontalScrollBar,JTableの水平JScrollBarをリサイズ可能にするためJSplitPaneに再配置する,JTableを配置したJScrollPaneから水平JScrollBarを取り出し、JSplitPaneに再配置してリサイズ可能にします。,https://drive.google.com/thumbnail?id=182ApSMU7uEGWzk3ANEO3L_RRDbn7U2W7)
+
+** JSplitPaneのDividerにJPopupMenuやMouseListenerを追加してその位置を変更する [#DividerMouseEvent]
+#swingdescription(Swing/DividerMouseEvent,JSplitPaneのDividerにJPopupMenuやMouseListenerを追加してその位置を変更する,JSplitPaneのDividerにJPopupMenuやMouseListenerを追加してその位置を中央、最小、最大位置に変更するためのActionを設定します。,https://drive.google.com/thumbnail?id=1JNqfni40ogZAmYoqP76Sw3gg8BvdRMVK)
+
+** JSplitPaneやTableColumnのリサイズカーソルを変更する [#ResizeColumnCursor]
+#swingdescription(Swing/ResizeColumnCursor,JSplitPaneやTableColumnのリサイズカーソルを変更する,JSplitPaneのDividerやJTableHeaderのTableColumnでコンボーネントをリサイズ中に表示されるマウスカーソルを変更します。,https://drive.google.com/thumbnail?id=16YsnRoba4Fln-RrWN_rd1V_81Hiw3q4l)
+
+** JTabbedPaneのタブコンポーネントが異なるサイズで表示可能になるようJSplitPaneに配置する [#TabComponentsOfDifferentSizes]
+#swingdescription(Swing/TabComponentsOfDifferentSizes,JTabbedPaneのタブコンポーネントが異なるサイズで表示可能になるようJSplitPaneに配置する,JTabbedPaneをJSplitPaneに配置し、各タブコンポーネントごとに異なるサイズで表示可能になるようDividerの位置などを調整します。,https://drive.google.com/thumbnail?id=1PhwFToigKUQ-AKOEaVaCNp-j7b_75HAe)
+
+** JSplitPaneの展開・収納ボタンをDividerサイズの中央に配置する [#CenterOneTouchButtons]
+#swingdescription(Swing/CenterOneTouchButtons,JSplitPaneの展開・収納ボタンをDividerサイズの中央に配置する,JSplitPaneをすばやく展開/収納するためのJButtonがDividerサイズの中央に配置されるよう設定します。,https://drive.google.com/thumbnail?id=1csOObqMc4lv3Xr4RDwhPjPeb7sMFomEa)
+
+** JSplitPaneの分割割合を維持する [#KeepSplitRatioSplitPane]
+#swingdescription(Swing/KeepSplitRatioSplitPane,JSplitPaneの分割割合を維持する,JSplitPaneのサイズが変更されてもその分割割合を維持するよう設定します。,https://drive.google.com/thumbnail?id=1ZYkS0KjkqWHvUzF1ERFkalqoOdVZVH6R)
+
+** JSplitPaneのDivider位置を推奨サイズでリセットする [#SplitPaneResetToPreferredSizes]
+#swingdescription(Swing/SplitPaneResetToPreferredSizes,JSplitPaneのDivider位置を推奨サイズでリセットする,JSplitPaneのDivider位置を子コンポーネントの推奨サイズに基づいた初期状態に戻します。,https://drive.google.com/thumbnail?id=1Hc0OMtVR8BJKRoCgCOtn7t-sEfZtLVI-)

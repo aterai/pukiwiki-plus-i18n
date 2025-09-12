@@ -1,0 +1,137 @@
+---
+category: swing
+folder: TableColumnReorderingIcon
+title: TableColumnのドラッグによる順序変更が可能な領域を制限する
+tags: [JTableHeader, TableColumn, JLayer, JScrollPane]
+author: aterai
+pubdate: 2024-12-02T05:51:25+09:00
+description: JTableHeaderの列順序変更ドラッグが開始可能な領域をTableColumnの上半分に限定し、マウスカーソルの変更とドラッグハンドルアイコンの描画をJLayer上で実行します。
+image: https://drive.google.com/uc?id=1ZSFDxmNan-Z-rsR76tSbYhy5Iz05r6-T
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2025/01/limit-area-where-tablecolumns-can-be.html
+    lang: en
+---
+* Summary [#summary]
+`JTableHeader`の列順序変更ドラッグが開始可能な領域を`TableColumn`の上半分に限定し、マウスカーソルの変更とドラッグハンドルアイコンの描画を`JLayer`上で実行します。
+
+#download(https://drive.google.com/uc?id=1ZSFDxmNan-Z-rsR76tSbYhy5Iz05r6-T)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class ColumnDragLayerUI extends LayerUI<JScrollPane> {
+  private final Rectangle draggableRect = new Rectangle();
+
+  @Override public void installUI(JComponent c) {
+    super.installUI(c);
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(
+          AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+    }
+  }
+
+  @Override public void uninstallUI(JComponent c) {
+    if (c instanceof JLayer) {
+      ((JLayer<?>) c).setLayerEventMask(0);
+    }
+    super.uninstallUI(c);
+  }
+
+  @Override public void paint(Graphics g, JComponent c) {
+    super.paint(g, c);
+    if (!draggableRect.isEmpty()) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      // g2.fill(draggableRect);
+      Icon icon = new DragAreaIcon();
+      int x = (int) (draggableRect.getCenterX() - icon.getIconWidth() / 2d);
+      int y = draggableRect.y + 1;
+      icon.paintIcon(c, g2, x, y);
+      g2.dispose();
+    }
+  }
+
+  @Override protected void processMouseEvent(
+      MouseEvent e, JLayer<? extends JScrollPane> l) {
+    super.processMouseEvent(e, l);
+    Component c = e.getComponent();
+    if (c instanceof JTableHeader) {
+      JTableHeader header = (JTableHeader) c;
+      if (e.getID() == MouseEvent.MOUSE_PRESSED) {
+        Point pt = e.getPoint();
+        updateIconAndCursor(header, pt, l);
+      } else if (e.getID() == MouseEvent.MOUSE_RELEASED) {
+        header.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        draggableRect.setSize(0, 0);
+      }
+    }
+  }
+
+  @Override protected void processMouseMotionEvent(
+      MouseEvent e, JLayer<? extends JScrollPane> l) {
+    Component c = e.getComponent();
+    if (c instanceof JTableHeader) {
+      JTableHeader header = (JTableHeader) c;
+      if (e.getID() == MouseEvent.MOUSE_DRAGGED) {
+        TableColumn draggedColumn = header.getDraggedColumn();
+        if (!draggableRect.isEmpty() && draggedColumn != null) {
+          EventQueue.invokeLater(() -> {
+            int modelIndex = draggedColumn.getModelIndex();
+            int viewIndex = header
+                .getTable()
+                .convertColumnIndexToView(modelIndex);
+            Rectangle rect = header.getHeaderRect(viewIndex);
+            rect.x += header.getDraggedDistance();
+            draggableRect.setRect(
+                SwingUtilities.convertRectangle(header, rect, l));
+            header.repaint(rect);
+          });
+        } else {
+          e.consume(); // Refuse to start drag
+        }
+      } else if (e.getID() == MouseEvent.MOUSE_MOVED) {
+        Point pt = e.getPoint();
+        updateIconAndCursor(header, pt, l);
+        header.repaint();
+      }
+    } else {
+      c.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+      draggableRect.setSize(0, 0);
+    }
+  }
+
+  private void updateIconAndCursor(
+      JTableHeader header, Point pt, JLayer<?> l) {
+    Rectangle r = header.getHeaderRect(header.columnAtPoint(pt));
+    r.height /= 2;
+    if (r.contains(pt)) {
+      header.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+      draggableRect.setRect(SwingUtilities.convertRectangle(header, r, l));
+    } else {
+      header.setCursor(
+          Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+      draggableRect.setSize(0, 0);
+    }
+  }
+}
+}}
+
+* Description [#description]
+上記のサンプルでは、`JTableHeader`に直接ではなく親`JScrollPane`に`JLayer`を設定してマウスカーソルの変更、ドラッグハンドルアイコンの描画、ドラッグ開始可能領域`draggableRect`かの判断を実行しています。
+
+- `LayerUI#processMouseEvent(...)`をオーバーライド
+-- マウスクリックしたポイントが`JTableHeader#getHeaderRect(JTableHeader#columnAtPoint(Point))`で取得した領域の上半分に含まれる場合マウスカーソルを`Cursor.HAND_CURSOR`に変更してその領域を`draggableRect`に記憶、下半分の場合は`Cursor.DEFAULT_CURSOR`に戻して`draggableRect`を空にリセット
+-- マウスリリースの場合は下半分の場合と同じく`Cursor.DEFAULT_CURSOR`に戻して`draggableRect`を空にリセット
+- `LayerUI#processMouseEvent(...)`をオーバーライド
+-- マウスドラッグしたとき`JTableHeader#getDraggedColumn()`で取得した`TableColumn`が`null`ではない、かつマウスクリック、マウス移動などで記憶した`draggableRect`が空ではない場合、移動中の`TableColumn`の位置を`JTableHeader#getDraggedDistance()`で取得して`draggableRect`を更新
+--- 移動中の`TableColumn`のインデックスは`JTableHeader#columnAtPoint(Point)`で取得すると列順序の入れ替えが発生する瞬間に領域が飛んでしまう場合があるため、`TableColumn#getModelIndex()`で取得したモデルインデックスを`JTable#convertColumnIndexToView(modelIndex)`でビューインデックスに変換して使用する必要がある
+- `LayerUI#paint(...)`をオーバーライド
+-- `draggableRect`が空ではない場合、その領域の中央にドラッグハンドルアイコンを描画
+-- `TableCellRenderer`ではなく`JLayer`でドラッグハンドルアイコンを描画するため、`JLabel#setIcon(...)`を使用するソートアイコンとは競合しないが`LookAndFeel`依存の描画位置は重なる場合がある
+
+* Reference [#reference]
+- [https://techcommunity.microsoft.com/blog/excelblog/modernized-excel-grid/4176473 Drag & drop to rearrange elements | Modernized Excel Grid | Microsoft Community Hub]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/JTableHeader.html#getDraggedDistance-- JTableHeader#getDraggedDistance()]
+- [[JTableの列の境界上に追加挿入カーソルを表示する>Swing/InsertTableColumn]]
+
+* Comment [#comment]
+#comment
+#comment

@@ -14,96 +14,99 @@ pubdate: 2003-09-25
 
 #contents
 
-* Swingとは [#about]
-`Swing`は、`GUI`(グラフィカル・ユーザ・インタフェース)を作成するための、`Java`標準のコンポーネントセット(ライブラリ、`UI`ツールキット)です。
+* Swing [#about]
+`Swing`は`GUI`(グラフィカル・ユーザ・インタフェース)を作成するための`Java`標準のコンポーネントセット(ライブラリ、`UI`ツールキット)です。
 
 RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About the JFC and Swing (The Java™ Tutorials)]
 
-* 新着記事 [#whatsnew]
-- 2024-04-08
-#swingdescription(Swing/RoundedCornerTableRowSelection,JTableの行選択背景描画をラウンド矩形に変更する,JTableの行選択背景が行全体でラウンド矩形になるよう先頭・末尾セルのTableCellRendererで角を丸めて描画します。,https://drive.google.com/thumbnail?id=1qsuWnjpaJmbyjNO6RsU9kv_JSIUpxTGY)
+* Latest Articles [#whatsnew]
+- 2025-09-08
+#swingdescription(Swing/FilterPopupMenuItems,JPopupMenuに追加したJTextFieldを使用してJMenuItemの表示をフィルタリングする,JPopupMenuの先頭にJTextFieldを配置し入力された正規表現パターンを使用して、同じくJPopupMenu内に配置されたJMenuItemの表示状態をフィルタリングします。,https://drive.google.com/thumbnail?id=1azsXn2VAy9skJaGxbQL6qDiwBZiMz7Nb)
 
-- 2024-04-01
-#swingdescription(Swing/RoundedSelectionTree,JTreeの選択領域描画をラウンド矩形に変更する,JTreeの選択を行全体に拡張し、その隅を丸めてラウンド矩形で描画します。,https://drive.google.com/thumbnail?id=11-4gPgFYz6fegNlPLellh5ZExqAoFeDc)
+- 2025-09-01
+#swingdescription(Swing/ForegroundHighlightPainter,JTextComponentのハイライトを文字色の変更で描画する,JTextComponentのハイライトを背景の塗りつぶしではなく、文字色を変更して描画するHighlighterを作成します。,https://drive.google.com/thumbnail?id=1LjRWMxhjZx8pty5YDBgbx9zZl0vk2mWN)
 
-- 2024-03-25
-#swingdescription(Swing/ToolTipOnMouseOverOfWord,JTextArea内の単語上にマウスカーソルでJToolTipを表示する,JTextArea内でマウスカーソルが乗った単語の開始オフセットなどをJToolTipで表示します。,https://drive.google.com/thumbnail?id=1G7tL6PLzVdyUZ9P6PlMM1sFE1QngbLup)
+- 2025-08-25
+#swingdescription(Swing/InputContextCaretColor,InputContextが使用可能な状態でCaretの色を変更,JTextComponentなどで使用中のインプット・メソッドが変換のために使用可能な場合はCaretの色を変更するよう設定します。,https://drive.google.com/thumbnail?id=1QlI0riqRCNwR88VEVcdO-beHF0MhWHIO)
 
-- 2024-03-18
-#swingdescription(Swing/MenuAndToolBarSwitching,JToolBarとJMenuBarを切り替える,JToolBarに配置したハンバーガーメニュー風のJButtonをクリックしてこれをJMenuBarと切り替えます。,https://drive.google.com/thumbnail?id=1Qpanq4RDxRa_VHcMRdzG0OxBomIumTwl)
+- 2025-08-18
+#swingdescription(Swing/MenuBarOverflowMenu,JMenuBarからあふれたJMenuをオーバーフローメニューに移動する,JMenuBarの表示幅に収まらずにあふれてしまうJMenuを新規作成したオーバーフロー用メニューに移動して表示可能にします。,https://drive.google.com/thumbnail?id=1awkuBPpsKphzVEF-qzWtIGBO9Ec8rdh7)
 
-- 2024-03-11
-#swingdescription(Swing/VariableRoundedBorderOnComboBox,JComboBoxのBorderをドロップダウンリストの表示状態で切り替える,JComboBoxのBorderをドロップダウンリストの表示状態で切り替えて左右の辺が直線で描画されるよう設定します。,https://drive.google.com/thumbnail?id=1srDCMSHQw2olzIC8t0q1MQjJRHhVR4y_)
+- 2025-08-11
+#swingdescription(Swing/DigitColoredPasswordField,JPasswordFieldの可視化で数字の色のみ変更,JPasswordFieldに入力されたパスワードを可視化したとき、数値のみ色を変更して字形が似たアルファベットとの判別を簡単にします。,https://drive.google.com/thumbnail?id=10UgQx9mHQ6E7ukNbuwvmDNPzHu6EZ4Xb)
 
-** 更新履歴 [#changelog]
+** Update List [#changelog]
 - [https://ateraimemo.com/archive Archive]
-- [[以前の更新履歴>Swing/_ChangeLog]]
+- [[Old Change Log>Swing/_ChangeLog]]
 
-* Tips一覧 [#listoftips]
+* List of Tips [#listoftips]
 #twocolumn
 ** `javax.swing.JComponent` [#jcomponent]
-- [[JTable(68)>Swing/_JTable]]
--- [[CellEditor CellRenderer(53)>Swing/_CellEditor]]
--- [[JTableHeader TableColumn(42)>Swing/_JTableHeader]]
--- [[TableRowSorter RowFilter(28)>Swing/_TableRowSorter]]
+- [[JTable(76)>Swing/_JTable]]
+-- [[CellEditor CellRenderer(55)>Swing/_CellEditor]]
+-- [[JTableHeader TableColumn(49)>Swing/_JTableHeader]]
+-- [[TableRowSorter RowFilter(31)>Swing/_TableRowSorter]]
 -- [[JDK1.5.0(6)>Swing/_JTable1.5.0]]
-- [[JTree(56)>Swing/_JTree]]
+- [[JTree(65)>Swing/_JTree]]
 -- [[TreeCellEditor(11)>Swing/_TreeCellEditor]]
 -- [[TreeCellRenderer(13)>Swing/_TreeCellRenderer]]
-- [[JTextComponent(30)>Swing/_JTextComponent]]
--- [[JTextArea(30)>Swing/_JTextArea]]
--- [[JTextPane JEditorPane(39)>Swing/_JTextPane]]
-- [[JButton AbstractButton(35)>Swing/_JButton]]
--- [[JCheckBox JCheckBoxMenuItem(27)>Swing/_JCheckBox]]
--- [[JRadioButton JToggleButton ButtonGroup(19)>Swing/_JRadioButton]]
-- [[JComboBox(78)>Swing/_JComboBox]]
-- [[JTabbedPane(73)>Swing/_JTabbedPane]]
-- [[JScrollPane JViewport JScrollBar(65)>Swing/_JScrollPane]]
-- [[JMenuBar JToolBar JMenu JMenuItem JSeparator(57)>Swing/_JMenuBar]]
-- [[JList(51)>Swing/_JList]]
-- [[JFileChooser JOptionPane JColorChooser(51)>Swing/_JFileChooser]]
-- [[JPopupMenu(48)>Swing/_JPopupMenu]]
-- [[JFrame JDialog JWindow(46)>Swing/_JFrame]]
-- [[JTextField JPasswordField JFormattedTextField(46)>Swing/_JTextField]]
-- [[JLayer(45)>Swing/_JLayer]]
-- [[JLabel(45)>Swing/_JLabel]]
-- [[JPanel JSplitPane(40)>Swing/_JPanel]]
+- [[JTextComponent(36)>Swing/_JTextComponent]]
+-- [[JTextField JPasswordField JFormattedTextField(50)>Swing/_JTextField]]
+-- [[JTextPane JEditorPane(41)>Swing/_JTextPane]]
+-- [[JTextArea(34)>Swing/_JTextArea]]
+- [[JButton AbstractButton(37)>Swing/_JButton]]
+-- [[JCheckBox JCheckBoxMenuItem(29)>Swing/_JCheckBox]]
+-- [[JRadioButton JToggleButton ButtonGroup(22)>Swing/_JRadioButton]]
+- [[JComboBox(82)>Swing/_JComboBox]]
+- [[JTabbedPane(77)>Swing/_JTabbedPane]]
+- [[JScrollPane JViewport JScrollBar(69)>Swing/_JScrollPane]]
+- [[JMenuBar JToolBar JMenu JMenuItem JSeparator(64)>Swing/_JMenuBar]]
+- [[JPopupMenu(60)>Swing/_JPopupMenu]]
+- [[JList(55)>Swing/_JList]]
+- [[JLayer(53)>Swing/_JLayer]]
+- [[JFrame JDialog JWindow(48)>Swing/_JFrame]]
+- [[JLabel(46)>Swing/_JLabel]]
+- [[JToolTip(37)>Swing/_JToolTip]]
 - [[JInternalFrame JLayeredPane JDesktopPane(35)>Swing/_JInternalFrame]]
-- [[JToolTip(35)>Swing/_JToolTip]]
-- [[JSlider(32)>Swing/_JSlider]]
-- [[JProgressBar ProgressMonitor(32)>Swing/_JProgressBar]]
-- [[JSpinner(28)>Swing/_JSpinner]]
+- [[JSlider(34)>Swing/_JSlider]]
+- [[JFileChooser(34)>Swing/_JFileChooser]]
+- [[JProgressBar ProgressMonitor(33)>Swing/_JProgressBar]]
+- [[JSpinner(31)>Swing/_JSpinner]]
+- [[JPanel(22)>Swing/_JPanel]]
+- [[JSplitPane(20)>Swing/_JSplitPane]]
+- [[JOptionPane(13)>Swing/_JOptionPane]]
+- [[JColorChooser(7)>Swing/_JColorChooser]]
 
 #twocolumn
 
 ** `Others` [#others]
-- [[Graphics(62)>Swing/_Graphics]]
-- [[LayoutManager(52)>Swing/_Layout]]
+- [[Graphics(67)>Swing/_Graphics]]
+- [[LayoutManager(55)>Swing/_Layout]]
+- [[Border(47)>Swing/_Border]]
 - [[Focus(45)>Swing/_Focus]]
-- [[Border(45)>Swing/_Border]]
-- [[Animation(43)>Swing/_Animation]]
+- [[Animation(45)>Swing/_Animation]]
+- [[LookAndFeel(44)>Swing/_LookAndFeel]]
 - [[Hyperlink Html(40)>Swing/_Hyperlink]]
-- [[LookAndFeel(39)>Swing/_LookAndFeel]]
-- [[Drag & Drop(32)>Swing/_DnD]]
-- [[Font(28)>Swing/_Font]]
+- [[Drag & Drop(34)>Swing/_DnD]]
+- [[Font(30)>Swing/_Font]]
 - [[SwingWorker(22)>Swing/_SwingWorker]]
+- [[Calendar(17)>Swing/_Calendar]]
 - [[File(14)>Swing/_File]]
-- [[Calendar(13)>Swing/_Calendar]]
 - [[Cursor(9)>Swing/_Cursor]]
-- [[TrayIcon(7)>Swing/_TrayIcon]]
+- [[TrayIcon(8)>Swing/_TrayIcon]]
 - [[Clock(6)>Swing/_Clock]]
 - [[Sound(5)>Swing/_Sound]]
 - [[Others(24)>Swing/_Others]]
 
 ** `JDK 6`, `JDK 7` [#jdk6jdk7]
-- [[JDK 6, 7 での Swing 新機能(37)>Swing/_JDK6]]
+- [[JDK 6, 7 での Swing 新機能(38)>Swing/_JDK6]]
 
 ** `Screenshot` [#screenshot]
-- [https://drive.google.com/drive/folders/1ZiLGUiAv4olCMNUvlTWhkfrTCezfC6pa?usp=sharing スクリーンショット一覧(1075)]
+- [https://drive.google.com/drive/folders/1ZiLGUiAv4olCMNUvlTWhkfrTCezfC6pa?usp=sharing スクリーンショット一覧(1148)]
 
 #twocolumn
 
-* ダウンロード [#download]
+* Download [#download]
  git clone https://github.com/aterai/java-swing-tips.git
 
 // - `Git`リポジトリを取得する場合:
@@ -112,10 +115,10 @@ RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About th
 //  # 例えばSurrogatePair以下のサンプルコードのみ取得する
 //  svn co https://github.com/aterai/java-swing-tips/trunk/SurrogatePair
 
-* ライセンス [#licence]
+* Licence [#licence]
 このページ以下のすべてのソースコードは[https://github.com/aterai/java-swing-tips GitHub]で、[https://github.com/aterai/java-swing-tips/blob/master/LICENSE.txt MITライセンス]のもと公開しています。
 
-* 編集方針 [#policy]
+* Policy [#policy]
 - ''最も欲しいものはサンプル'' ([https://bn.dodgson.org/bn/2007/07/06/ あるチュートリアルの思い出 - Backnumbers: Steps to Phantasien])
 -- 各ページからダブルクリックなどで実行可能な`JAR`ファイルをダウンロードが可能
 - ''SSCCE'' ([http://sscce.org/ Short, Self Contained, Correct Example])
@@ -126,17 +129,17 @@ RIGHT:[https://docs.oracle.com/javase/tutorial/uiswing/start/about.html About th
 // -- [https://www.java.com/ja/download/help/signed_code.html ブラウザのJavaセキュリティ・メッセージの変更]
 // -- `7u51`から、署名が無い場合や、自己署名の場合は`JavaWebStart`で実行不可になったので、&ref(https://lh4.googleusercontent.com/_9Z4BYR88imo/TRD2KGq73BI/AAAAAAAAAwA/N8-6EXongNk/s800/webstart.png);ボタンをすべてのページから削除
 
-* 動作環境 [#environments]
+* Environments [#environments]
 - [[動作環境、サンプルの実行方法などについて>Swing/_TestedEnvironments]]
 -- このサイトにあるサンプルの動作・テスト環境や`JDK`のダウンロード・利用方法、質問・不具合報告についてのお願いなど
 - [[Swing関係のバグについて>Swing/_Bug]]
 -- このサイトのサンプルの不具合ではなく`Swing`自体の不具合についてのメモ
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Java Swing 参考リンク>Swing/_Link]]
 -- 参考にしたサイトなどの一覧
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - [[SPAM対策で閉鎖する前のコメントのログ>Comments/Swing]]
 - `forums.oracle.com`を、`community.oracle.com`に一括置換。 -- &user(aterai); &new{2014-11-25 (火) 17:57:58};

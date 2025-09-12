@@ -8,12 +8,12 @@ pubdate: 2023-12-11T00:16:30+09:00
 description: JRadioButtonやJCheckBoxの選択アイコンを除いたテキスト先頭が垂直配置したJLabelのテキスト先頭と揃うよう配置します。
 image: https://drive.google.com/uc?id=1RKs4YswczAS_MAwgDe8zfp2Cwr_et1cS
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JRadioButton`や`JCheckBox`の選択アイコンを除いたテキスト先頭が垂直配置した`JLabel`のテキスト先頭と揃うよう配置します。
 
 #download(https://drive.google.com/uc?id=1RKs4YswczAS_MAwgDe8zfp2Cwr_et1cS)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JPanel p = new JPanel(new GridBagLayout());
 p.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
@@ -68,7 +68,7 @@ gbc.insets.right = 5;
 list.forEach(c -> p.add(new JTextField(), gbc));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `GridBagLayout`を使用して`JRadioButton`、`JLabel`、`JCheckBox`を垂直配置
 -- `JFileChooser`の色選択パネル(`javax.swing.colorchooser.ColorPanel`)も同様に`GridBagLayout`を使用して赤・緑・青用の`JRadioButton`とアルファ用の`JLabel`を垂直配置している
 - `UIManager.getIcon("RadioButton.icon")`で`JRadioButton`の選択アイコンを取得し、その幅と`JRadioButton`の左余白、テキストと選択アイコンとの距離を記憶
@@ -76,10 +76,10 @@ list.forEach(c -> p.add(new JTextField(), gbc));
 -- `JColorChooser`の色選択パネルでは`GridBagConstraints#insets#left`ではなく`EmptyBorder`を使用して左余白を設定している
 -- `ComponentOrientation`で`GridBagLayout`のレイアウトや`GridBagConstraints#insets`の左右が入れ替わることを回避するためか？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JLabelの最大幅を共有して異なるパネル間で垂直位置を揃える>Swing/AlignedLabel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment
 

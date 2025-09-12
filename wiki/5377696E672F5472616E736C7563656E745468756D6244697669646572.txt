@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2018/10/create-image-comparison-slider-with.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSplitPane`の元の`Divider`を非表示に設定し、代わりに`JLayer`を使って半透明の円形つまみを作成して中央に配置します。
 
 #download(https://drive.google.com/uc?id=1a-kjbBV4L-gJzGRMBijfxYxSJhiZBppZHg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DividerLocationDragLayerUI extends LayerUI<JSplitPane> {
   private static final int R = 25;
@@ -118,7 +118,7 @@ class DividerLocationDragLayerUI extends LayerUI<JSplitPane> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JSplitPane#setDividerSize(0)`で`Divider`を非表示に設定
 -- [[JSplitPaneのDividerをマウスで移動できないように設定する>Swing/FixedDividerSplitPane]]
 - `JLayer`を使用して半透明の円形つまみを作成して`Divider`の中央に配置
@@ -160,10 +160,10 @@ Component afterCanvas = new JComponent() {
 split.setRightComponent(afterCanvas);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSplitPaneで画像を差分を比較表示する>Swing/ImageComparisonSplitPane]]
 - [https://bugs.openjdk.org/browse/JDK-4797982 &#91;JDK-4797982&#93; Setting negative size of JSplitPane divider leads to unexpected results. - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

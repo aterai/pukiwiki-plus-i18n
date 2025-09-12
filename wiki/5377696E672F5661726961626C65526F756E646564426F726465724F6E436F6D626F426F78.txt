@@ -8,12 +8,12 @@ pubdate: 2024-03-11T02:49:30+09:00
 description: JComboBoxのBorderをドロップダウンリストの表示状態で切り替えて左右の辺が直線で描画されるよう設定します。
 image: https://drive.google.com/uc?id=1srDCMSHQw2olzIC8t0q1MQjJRHhVR4y_
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`の`Border`をドロップダウンリストの表示状態で切り替えて左右の辺が直線で描画されるよう設定します。
 
 #download(https://drive.google.com/uc?id=1srDCMSHQw2olzIC8t0q1MQjJRHhVR4y_)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JComboBox<String> combo1 = new JComboBox<String>(model) {
   private transient PopupMenuListener listener;
@@ -65,17 +65,17 @@ class HeavyWeightContainerListener implements PopupMenuListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JComboBox`本体には`RoundedCornerBorder`(`4`隅を丸めたラウンド矩形`Border`)を設定
 - `BasicComboPopup`(ドロップダウンリスト用)には`BottomRoundedCornerBorder`(左右下の`2`隅を丸めたラウンド矩形`Border`)を設定
 - `PopupMenuListener`を`JComboBox`に追加してドロップダウンリストが開いたとき(`PopupMenuListener#popupMenuWillBecomeVisible(...)`)、`JComboBox`本体に`TopRoundedCornerBorder`(左右上の`2`隅を丸めたラウンド矩形`Border`)を設定
 -- `JComboBox`本体の左辺とドロップダウンリストの左辺、`JComboBox`本体の右辺とドロップダウンリストの右辺が直線でつながり、本体とドロップダウンリスト全体でひとつの`RoundRectangle2D`を描画する`Border`になる
 - ドロップダウンリストが閉じるとき(`PopupMenuListener#popupMenuWillBecomeInvisible(...)`)、`JComboBox`本体の`Border`を`RoundedCornerBorder`に戻す
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxのドロップダウンリストに角丸のBorderを設定する>Swing/RoundedDropDownList]]
 - [[JComboBoxのドロップダウンリストでアイテム選択状態表示をラウンド矩形に変更する>Swing/RoundedCornerListCellRenderer]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

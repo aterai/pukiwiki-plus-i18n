@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2021/03/add-header-and-footer-in-jcombobox.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`のドロップダウンリストに`JLabel`のヘッダと`JMenuItem`のフッタを追加します。
 
 #download(https://drive.google.com/uc?id=1EnxytV3-0UkzPYBy4iSqtRw6thFCOI5B)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class HeaderFooterComboPopup extends BasicComboPopup {
   protected transient JLabel header;
@@ -53,7 +53,7 @@ class HeaderFooterComboPopup extends BasicComboPopup {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `BasicComboPopup`のデフォルトレイアウトマネージャーは垂直`BoxLayout`
 -- `BasicComboPopup#configurePopup()`をオーバーライドしてドロップダウンリストとして使用される`JScrollPane`のほかにコンポーネントを追加可能
 - ヘッダとして`JLabel`を`Container#add(label, 0)`で`BasicComboPopup`の先頭に追加
@@ -63,10 +63,10 @@ class HeaderFooterComboPopup extends BasicComboPopup {
 -- `JButton`を使用する場合マウスクリックでイベントが実行できない
 -- `JMenuItem`を使用すればマウスクリック後にイベントが実行され、`Accelerator`などの設定も可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JPopupMenuのレイアウトを変更して上部にメニューボタンを追加する>Swing/PopupMenuLayout]]
 - [[BoxLayoutでリスト状に並べる>Swing/ComponentList]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

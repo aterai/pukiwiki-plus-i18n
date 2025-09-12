@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2023/12/create-4-digit-numeric-pin-code-input.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPasswordField`を使用して数字`4`桁の`PIN`コード入力欄を作成します。
 
 #download(https://drive.google.com/uc?id=1RCDFeR52kFEbUARNAfQjvMDjCLrm3UiH)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class PinCodeDocumentFilter extends DocumentFilter {
   public static final int MAX = 4;
@@ -83,7 +83,7 @@ class PasswordView2 extends PasswordView {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `PinCodeDocumentFilter`を`JPasswordField`に設定して`4`桁の`0-9`数字のみ入力可能になるよう制限
 -- `JPasswordField#setColumns(4)`で表示桁を`4`桁に設定する`4`文字目のエコー文字が見切れてしまう？
 - `PlaceholderLayerUI`を`JPasswordField`に設定して入力欄が空の場合はヒント文字列を表示する
@@ -107,12 +107,12 @@ JPasswordField password = new JPasswordField(6) {
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://bugs.openjdk.org/browse/JDK-8296878 &#91;JDK-8296878&#93; Document Filter attached to JPasswordField and setText("") is not cleared instead inserted characters replaced with unicode null characters - Java Bug System]
 - [[ComboBoxEditorにJLayerを設定してプレースホルダ文字列を表示する>Swing/ComboEditorPlaceholder]]
 - [[JTextFieldが編集不可状態でもCaretが点滅するよう設定する>Swing/NonEditableTextFieldCaret]]
 - [[JPasswordFieldでパスワードを可視化する>Swing/ShowHidePasswordField]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

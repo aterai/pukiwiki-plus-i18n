@@ -8,12 +8,12 @@ pubdate: 2022-12-12T02:15:41+09:00
 description: JTableを配置したJScrollPaneの右上コーナー区画に配置されるコンポーネントを取得し、JTableの幅よりJViewportの幅が大きくなる場合はそれを非表示に切り替えます。
 image: https://drive.google.com/uc?id=1nqCfEV8SYYSqtuDAamPo_CR8a7ECIc7s
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`を配置した`JScrollPane`の右上コーナー区画に配置されるコンポーネントを取得し、`JTable`の幅より`JViewport`の幅が大きくなる場合はそれを非表示に切り替えます。
 
 #download(https://drive.google.com/uc?id=1nqCfEV8SYYSqtuDAamPo_CR8a7ECIc7s)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // System.out.println(UIManager.get("Table.scrollPaneCornerComponent"));
 JTable table = new JTable(15, 3) {
@@ -33,7 +33,7 @@ JTable table = new JTable(15, 3) {
 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上:
 -- `NimbusLookAndFeel`のデフォルトでは`JTable`を配置した`JScrollPane`の右上コーナー区画に`UIManager.put("Table.scrollPaneCornerComponent", c)`でコンポーネントが配置されている
 -- `MetalLookAndFeel`や`WindowsLookAndFeel`のデフォルトは`null`
@@ -42,10 +42,10 @@ table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 --- [[JTableの幅が一定以下で水平スクロールバー、以上で列幅を自動拡張するよう設定>Swing/ScrollableTracksViewportWidth]]
 -- `MetalLookAndFeel`や`WindowsLookAndFeel`のデフォルト右上コーナーコンポーネントは`null`なので常に非表示状態
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JScrollPane.html#getCorner-java.lang.String- JScrollPane#getCorner(...) (Java Platform SE 8)]
 - [[JTableの幅が一定以下で水平スクロールバー、以上で列幅を自動拡張するよう設定>Swing/ScrollableTracksViewportWidth]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -1,0 +1,61 @@
+---
+category: swing
+folder: PopupMenuBackground
+title: JPopupMenuの背景色を変更する
+tags: [JPopupMenu, LookAndFeel]
+author: aterai
+pubdate: 2024-05-20T04:39:47+09:00
+description: JPopupMenuの背景色、縁色とその子要素として配置されたJMenuItemなどの文字色を変更します。
+image: https://drive.google.com/uc?id=1mWrQkp8xsggKT-l2SXbNvWOWtClPPPeT
+---
+* Summary [#summary]
+`JPopupMenu`の背景色、縁色とその子要素として配置された`JMenuItem`などの文字色を変更します。
+
+#download(https://drive.google.com/uc?id=1mWrQkp8xsggKT-l2SXbNvWOWtClPPPeT)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class DarkModePopupMenu extends JPopupMenu {
+  @Override public void updateUI() {
+    super.updateUI();
+    setUI(new BasicPopupMenuUI());
+    setBackground(Color.DARK_GRAY);
+    setBorder(new BorderUIResource(
+        BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
+    EventQueue.invokeLater(() -> {
+      for (MenuElement m : getSubElements()) {
+        Component c = m.getComponent();
+        c.setForeground(Color.WHITE);
+        // for Metal, Windows Classic LookAndFeel
+        ((JComponent) c).setOpaque(false);
+      }
+    });
+  }
+}
+}}
+
+* Description [#description]
+- `Default`
+-- デフォルトの`JPopupMenu`で、`LookAndFeel`で設定された背景色などで描画される
+- `setBackground(...)`
+-- `JPopupMenu#setBackground(...)`などで背景色を設定
+--- `UIManager.put("PopupMenu.background", Color.DARK_GRAY)`ですべての`JPopupMenu`の文字色をまとめて変更可能
+--- `WindowsLookAndFeel`、`NimbusLookAndFeel`などでは上記の`JPopupMenu#setBackground(...)`の設定は無効
+-- `JPopupMenu#setForeground(...)`を設定しても子要素として配置された`JMenuItem`などの文字色には影響しない
+--- このサンプルでは指定した`JPopupMenu`の子要素の文字色のみ変更するため、`JPopupMenu#getSubElements()`で`MenuElement`を取得しその`Component`に`Component#setForeground(Color.WHITE)`で文字色を設定している
+--- `UIManager.put("MenuItem.foreground", Color.WHITE)`などですべての`MenuItem`の文字色をまとめて変更可能
+--- `JMenuItem`を継承する`JCheckBoxMenuItem`などには適用されないので、別途`CheckBoxMenuItem.foreground`、`RadioButtonMenuItem.foreground`を使用する必要がある
+- `BasicPopupMenuUI`
+-- `JPopupMenu#setBackground(...)`などで設定した色で背景全体を塗りつぶす`BasicPopupMenuUI`を設定して`LookAndFeel`依存を排除
+-- `JPopupMenu#paintComponent(...)`をオーバーライドして背景を描画する方法と同等
+--- [[JPopupMenuを半透明にする>Swing/TranslucentPopupMenu]]
+-- `NimbusLookAndFeel`などで`JCheckBoxMenuItem`のチェックアイコン色を変更する方法がない？
+--- `RadioButtonMenuItemPainter`の`private Color color3 = decodeColor("nimbusBlueGrey", ...);`を変更したいが難しい
+
+* Reference [#reference]
+- [[JPopupMenuを半透明にする>Swing/TranslucentPopupMenu]]
+- [[JTreeの選択背景色を変更>Swing/TreeBackgroundSelectionColor]]
+
+* Comment [#comment]
+#comment
+#comment

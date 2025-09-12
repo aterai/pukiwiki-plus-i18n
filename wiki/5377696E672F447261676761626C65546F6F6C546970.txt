@@ -1,0 +1,104 @@
+---
+category: swing
+folder: DraggableToolTip
+title: JToolTipの表示位置をマウスドラッグで変更可能にする
+tags: [JToolTip, JPopupMenu, MouseListener, JLabel, JWindow]
+author: aterai
+pubdate: 2025-08-04T01:44:23+09:00
+description: JToolTipを親にして背景色などをJToolTip風に設定したJPopupMenuを作成し、その内部に配置したJLabelをドラッグして表示位置を変更します。
+image: https://drive.google.com/uc?id=1T8mhF2H2r51ljwO7NFHvbpUY0AS7kLUD
+---
+* Summary [#summary]
+`JToolTip`を親にして背景色などを`JToolTip`風に設定した`JPopupMenu`を作成し、その内部に配置した`JLabel`をドラッグして表示位置を変更します。
+
+#download(https://drive.google.com/uc?id=1T8mhF2H2r51ljwO7NFHvbpUY0AS7kLUD)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class ToolTipEditorPane extends JEditorPane {
+  private final JPanel panel;
+
+  protected ToolTipEditorPane(JPanel panel) {
+    super();
+    this.panel = panel;
+  }
+
+  @Override public JToolTip createToolTip() {
+    JToolTip tip = super.createToolTip();
+    tip.addHierarchyListener(e -> {
+      boolean showing = e.getComponent().isShowing();
+      if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0 && showing) {
+        panel.setBackground(tip.getBackground());
+        Container p = SwingUtilities.getAncestorOfClass(JPopupMenu.class, panel);
+        if (p instanceof JPopupMenu) {
+          // ((JPopupMenu) p).setLightWeightPopupEnabled(false);
+          ((JPopupMenu) p).show(tip, 0, 0);
+        }
+      }
+    });
+    return tip;
+  }
+}
+
+class DragLabel extends JLabel {
+  private transient MouseAdapter handler;
+
+  @Override public void updateUI() {
+    removeMouseListener(handler);
+    removeMouseMotionListener(handler);
+    super.updateUI();
+    handler = new PopupDragListener();
+    addMouseListener(handler);
+    addMouseMotionListener(handler);
+    Color bgc = UIManager.getColor("ToolTip.background");
+    if (bgc != null) {
+      setBackground(bgc.darker());
+    }
+    setOpaque(true);
+  }
+
+  @Override public Dimension getPreferredSize() {
+    return new Dimension(16, 64);
+  }
+}
+
+class PopupDragListener extends MouseAdapter {
+  private final Point startPt = new Point();
+
+  @Override public void mousePressed(MouseEvent e) {
+    if (SwingUtilities.isLeftMouseButton(e)) {
+      Component c = e.getComponent();
+      Container popup = SwingUtilities.getAncestorOfClass(JPopupMenu.class, c);
+      SwingUtilities.convertMouseEvent(c, e, popup);
+      startPt.setLocation(e.getPoint());
+    }
+  }
+
+  @Override public void mouseDragged(MouseEvent e) {
+    if (SwingUtilities.isLeftMouseButton(e)) {
+      Component c = e.getComponent();
+      Window w = SwingUtilities.getWindowAncestor(c);
+      // Popup$HeavyWeightWindow
+      if (w != null && w.getType() == Window.Type.POPUP) {
+        Point pt = e.getLocationOnScreen();
+        w.setLocation(pt.x - startPt.x, pt.y - startPt.y);
+      }
+    }
+  }
+}
+}}
+
+* Description [#description]
+- `JToolTip`が表示状態になったらその`JToolTip`を親にして`JPopupMenu#.show(tip, 0, 0)`で`JPopupMenu`を表示するよう`JEditorPane#createToolTip()`をオーバーライド
+-- [[JToolTipの文字列を選択・コピー可能にする>Swing/SelectableToolTip]]と同様の方法
+- `JPopupMenu`にドラッグ可能な`JLabel`を配置
+-- [[JPopupMenuにマウスドラッグで位置変更を可能にするヘッダを追加する>Swing/DraggablePopupMenu]]の`MouseAdapter`とほぼ同一だが、親が`JFrame`などではなく`JToolTip`になるので`LightWeightWindow`を使用する`JPopupMenu`で位置変更ができない
+-- これを回避するため、`JPopupMenu#setLightWeightPopupEnabled(false)`で常に`HeavyWeightWindow`を使用して`JPopupMenu`を開くよう設定
+
+* Reference [#reference]
+- [[JToolTipの文字列を選択・コピー可能にする>Swing/SelectableToolTip]]
+- [[JPopupMenuにマウスドラッグで位置変更を可能にするヘッダを追加する>Swing/DraggablePopupMenu]]
+
+* Comment [#comment]
+#comment
+#comment

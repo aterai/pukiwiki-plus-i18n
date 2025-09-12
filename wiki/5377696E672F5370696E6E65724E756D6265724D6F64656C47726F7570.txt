@@ -8,12 +8,12 @@ pubdate: 2023-09-04T08:13:40+09:00
 description: 複数のSpinnerNumberModelをセットしたグループを作成し、グループ内でその数値の合計が一定になるよう設定します。
 image: https://drive.google.com/uc?id=1zvtUOV-9xdUWI6Ybl6ZCMS52aBabjAjV
 ---
-* 概要 [#summary]
+* Summary [#summary]
 複数の`SpinnerNumberModel`をセットしたグループを作成し、グループ内でその数値の合計が一定になるよう設定します。
 
 #download(https://drive.google.com/uc?id=1zvtUOV-9xdUWI6Ybl6ZCMS52aBabjAjV)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SpinnerNumberModelGroup {
   private final int expectedSum;
@@ -114,7 +114,7 @@ class SpinnerNumberModelGroup {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Deque<SpinnerNumberModel>`で`SpinnerNumberModel`のグループを作成
 -- [https://stackoverflow.com/questions/21388255/multiple-jsliders-reacting-to-each-other-to-always-equal-100-percent java - Multiple JSliders reacting to each other to always equal 100 percent - Stack Overflow]の`JSlider`のサンプルを参考に`SpinnerNumberModel`を使用するよう変更
 - グループ内の`SpinnerNumberModel`に`ChangeListener`を追加し、値の更新イベントを取得
@@ -123,10 +123,10 @@ class SpinnerNumberModelGroup {
 -- 取り出した`SpinnerNumberModel`が更新イベント元の`SpinnerNumberModel`の場合はなにもせずに先頭に戻す
 -- 差分が`0`になるまでこの処理を繰り返す
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/21388255/multiple-jsliders-reacting-to-each-other-to-always-equal-100-percent java - Multiple JSliders reacting to each other to always equal 100 percent - Stack Overflow]
 - [https://stackoverflow.com/questions/53416274/multiple-jsliders-activating-and-deactivating-sharing-values java - Multiple JSliders activating and deactivating - Sharing values - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

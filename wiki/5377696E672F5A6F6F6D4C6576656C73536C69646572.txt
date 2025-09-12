@@ -8,17 +8,18 @@ pubdate: 2022-04-18T00:31:55+09:00
 description: JSliderのノブをダブルクリックして値を初期値にリセットしたり、初期値近辺でノブの吸着を実行します。
 image: https://drive.google.com/uc?id=1UUf36GRObxKK0Insuq9_W2-OhKEIRYmH
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`のノブをダブルクリックして値を初期値にリセットしたり、初期値近辺でノブの吸着を実行します。
 
 #download(https://drive.google.com/uc?id=1UUf36GRObxKK0Insuq9_W2-OhKEIRYmH)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 @Override protected TrackListener createTrackListener(JSlider slider) {
   return new TrackListener() {
     @Override public void mouseClicked(MouseEvent e) {
-      boolean doubleClick = SwingUtilities.isLeftMouseButton(e) && e.getClickCount() >= 2;
+      boolean doubleClick = SwingUtilities.isLeftMouseButton(e)
+          && e.getClickCount() >= 2;
       if (doubleClick && thumbRect.contains(e.getPoint())) {
         slider.setValue(0);
       } else {
@@ -36,7 +37,8 @@ image: https://drive.google.com/uc?id=1UUf36GRObxKK0Insuq9_W2-OhKEIRYmH
       int tickPixels = trackLength * tickSp / possibleTickPos;
       int tickPixels2 = tickPixels / 2;
       int trackCenter = (int) trackRect.getCenterX();
-      if (trackCenter - tickPixels2 < pos && pos < trackCenter + tickPixels2) {
+      if (trackCenter - tickPixels2 < pos
+          && pos < trackCenter + tickPixels2) {
         e.translatePoint(trackCenter - halfThumbWidth - e.getX(), 0);
         offset = 0;
       }
@@ -46,7 +48,7 @@ image: https://drive.google.com/uc?id=1UUf36GRObxKK0Insuq9_W2-OhKEIRYmH
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - ノブのダブルクリック
 -- `TrackListener#mouseClicked(MouseEvent)`をオーバーライドして、ノブ領域(`BasicSliderUI.thumbRect`)がマウスの左ボタンでダブルクリックされたら`JSlider`の値を初期値にリセット
 -- `WindowsSliderUI`で使用する`WindowsTrackListener`はノブのロールオーバーを描画しているがプライベートクラスなのでこのサンプルでは使用しない
@@ -56,10 +58,10 @@ image: https://drive.google.com/uc?id=1UUf36GRObxKK0Insuq9_W2-OhKEIRYmH
 -- 各目盛りのラベルが最小値`-100`で`5%`、初期値`0`で`100%`、最大値`100`で`800%`、その他は空白文字になるよう変更
 -- [[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]
 - [[JSliderの値を増減するJButtonを作成する>Swing/SliderWithArrowButtons]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

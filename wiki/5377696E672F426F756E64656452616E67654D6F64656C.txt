@@ -8,12 +8,12 @@ pubdate: 2014-02-17T02:41:10+09:00
 description: JScrollBarからBoundedRangeModelを取得し、JLabelとIconで表示した検索位置表示バーをマウスで操作可能にします。
 image: https://lh4.googleusercontent.com/-EN1vcmWX7Gs/UwDyGP5n91I/AAAAAAAACAE/tb9w7pHxtk8/s800/BoundedRangeModel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollBar`から`BoundedRangeModel`を取得し、`JLabel`と`Icon`で表示した検索位置表示バーをマウスで操作可能にします。
 
 #download(https://lh4.googleusercontent.com/-EN1vcmWX7Gs/UwDyGP5n91I/AAAAAAAACAE/tb9w7pHxtk8/s800/BoundedRangeModel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class HighlightBarHandler extends MouseAdapter {
   private void processMouseEvent(MouseEvent e) {
@@ -35,17 +35,17 @@ class HighlightBarHandler extends MouseAdapter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Icon`に検索結果をハイライト表示し`JLabel#setIcon(...)`で設定
 -- この`JLabel`は`JScrollPane`の子コンポーネントではないので縦`JScrollBar`の`BoundedRangeModel`に`ChangeListener`を追加して更新ごとに`JLabel#repaint()`を実行して再描画する必要がある
 - `JLabel`上の表示範囲をマウスで操作可能にするため`MouseListener`などを追加
 -- 位置は`JScrollBar`から`BoundedRangeModel`を取得して計算する
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/BoundedRangeModel.html BoundedRangeModel (Java Platform SE 8)]
 - [[JScrollBarに検索結果をハイライト表示>Swing/ScrollBarSearchHighlighter]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - ハイライトのサンプルとして`JTable`を使用しているが、実際に`JTable`の行数が多くなるなら[[JTableの検索結果をRowFilterとHighlighterで強調表示する>Swing/TableHighlightRegexFilter]]のようにフィルタを使用するほうが見やすそう。 -- &user(aterai); &new{2014-02-17 (月) 02:41:10};
 

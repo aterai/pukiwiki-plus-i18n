@@ -6,7 +6,7 @@ description: AntのScriptタスク中でif文を使った条件分岐を行う�
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 `Condition`タスク([[AntでConditionタスクを使った条件分岐を行う>Ant/Condition]])の条件が複雑になるようなら、以下のようにして`<script language="javascript">`タスクなどの中で`if`文を使う方法もあります。
 
 * サンプルターゲット [#target]
@@ -27,18 +27,18 @@ description: AntのScriptタスク中でif文を使った条件分岐を行う�
 </target>
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`Script`タスクで`Javascript`(`Rhino`)の`if`文を使用しています。
 - `res.dir`プロパティ(`build.xml`などで設定済み)で指定したディレクトリ(文字列)を、`project.getProperty("res.dir")`で取得
 - `importClass(java.io.File);`でインポートした`Java`の`File.class`を使って、存在するかどうかを判断
 -- `new File(project.getProperty("res.dir")).exists()`
 - 存在する場合は、`project.executeTarget("copy-resource");`で、`copy-resource`ターゲットを取得し、実行
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://ant.apache.org/manual/Tasks/script.html Script Task]
 - [https://ant.apache.org/manual/api/org/apache/tools/ant/Project.html Project (Apache Ant API)]
 // - [http://weblogs.java.net/blog/emcmanus/archive/2010/09/20/using-javascript-make-apache-ant-less-painful Using JavaScript to make Apache Ant less painful]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

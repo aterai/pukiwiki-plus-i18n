@@ -8,12 +8,12 @@ pubdate: 2010-02-01T01:53:39+09:00
 description: JSpinnerのモデルで値が最大、最小を超えるとループするように設定します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKYcCKxAI/AAAAAAAAAV4/T8OdovAF6EY/s800/CyclingSpinnerModel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`のモデルで値が最大、最小を超えるとループするように設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKYcCKxAI/AAAAAAAAAV4/T8OdovAF6EY/s800/CyclingSpinnerModel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 spinner03.setModel(new SpinnerNumberModel(20, 0, 59, 1) {
   @Override public Object getNextValue() {
@@ -28,7 +28,7 @@ spinner03.setModel(new SpinnerNumberModel(20, 0, 59, 1) {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、各`SpinnerModel`の`getNextValue()`、`getPreviousValue()`メソッドをオーバーライドすることで、例えば下限値に達した場合は上限値にループするよう設定しています。
 
 - 数値モデル(`SpinnerNumberModel`)
@@ -50,9 +50,9 @@ spinner04.setModel(new SpinnerListModel(weeks) {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/spinner.html#model Creating Custom Spinner Models and Editors]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

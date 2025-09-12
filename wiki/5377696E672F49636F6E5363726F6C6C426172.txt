@@ -8,12 +8,12 @@ pubdate: 2006-06-26T12:08:46+09:00
 description: JScrollPaneから縦JScrollBarを取得し、そのノブ上にアイコンを追加表示します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOPy62F7I/AAAAAAAAAcE/M4J9GIXdfBY/s800/IconScrollBar.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JScrollPane`から縦`JScrollBar`を取得し、そのノブ上にアイコンを追加表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTOPy62F7I/AAAAAAAAAcE/M4J9GIXdfBY/s800/IconScrollBar.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class BasicIconScrollBarUI extends BasicScrollBarUI {
   @Override protected void paintThumb(
@@ -50,7 +50,7 @@ class BasicIconScrollBarUI extends BasicScrollBarUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`WindowsScrollBarUI`を取得して垂直スクロールバーに円形アイコンを表示しています。
 
 - `WindowsLookAndFeel`が使用されている場合以下の状態の変化に応じてアイコンの色を変更
@@ -59,9 +59,9 @@ class BasicIconScrollBarUI extends BasicScrollBarUI {
 -- ロールオーバー中
 - スクロールバーの長さが足りない場合このアイコンは表示しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicScrollBarUI.html#paintThumb-java.awt.Graphics-javax.swing.JComponent-java.awt.Rectangle- BasicScrollBarUI#paintThumb(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

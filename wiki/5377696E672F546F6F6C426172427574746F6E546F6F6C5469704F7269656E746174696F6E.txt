@@ -8,12 +8,12 @@ pubdate: 2024-01-15T04:17:32+09:00
 description: JToolBarの配置位置、縦横の方向、言語依存の方向によって内部に配置したJButtonのJToolTip表示位置が常に内側になるよう切り替えます。
 image: https://drive.google.com/uc?id=1u9OhK9Xb_egsfQ-hog8kHOP4gKoMon9Y
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolBar`の配置位置、縦横の方向、言語依存の方向によって内部に配置した`JButton`の`JToolTip`表示位置が常に内側になるよう切り替えます。
 
 #download(https://drive.google.com/uc?id=1u9OhK9Xb_egsfQ-hog8kHOP4gKoMon9Y)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private Component createToolBarButton(ColorItem item) {
   JButton button = new JButton(item.getIcon()) {
@@ -109,7 +109,7 @@ private static Point getToolTipPoint(
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JToolBar`が`BorderLayout`を設定した`JPanel`内に配置されている場合:
 -- その配置位置(`BorderLayout.NORTH`、`BorderLayout.SOUTH`、`BorderLayout.WEST`、`BorderLayout.EAST`)を`BorderLayout#getConstraints(toolBar)`メソッドで取得
 -- `JToolTip`が親`JPanel`内に表示されるよう`JButton#getToolTipLocation(MouseEvent)`をオーバーライドし、`JPanel`内配置位置に対応した表示位置となるよう`getToolTipPoint(...)`で計算
@@ -120,10 +120,10 @@ private static Point getToolTipPoint(
 --- 言語依存の方向(`JToolBar#getComponentOrientation()`)が左から右(`ComponentOrientation.LEFT_TO_RIGHT`)の場合は`BorderLayout.WEST`に配置されていた場合と同様にその右側に`JToolTip`を表示
 --- 言語依存の方向(`JToolBar#getComponentOrientation()`)が右から左(`ComponentOrientation.RIGHT_TO_LEFT`)の場合は`BorderLayout.EAST`に配置されていた場合と同様にその左側に`JToolTip`を表示
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのツールヒントをタブ位置に対応したふきだしに変更する>Swing/SpeechBalloonToolTipTail]]
 -- ふきだし型の`JToolTip`の使用方法、タブ配置位置(`JTabbedPane.TOP`、`JTabbedPane.BOTTOM`、`JTabbedPane.LEFT`、`JTabbedPane.RIGHT`)に応じた表示位置の変更などはこのサンプルとほぼ同等
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

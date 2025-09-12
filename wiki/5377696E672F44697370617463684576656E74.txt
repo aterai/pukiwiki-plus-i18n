@@ -8,12 +8,12 @@ pubdate: 2008-02-11T21:32:38+09:00
 description: AWTEventを取得して、マウスやキーボードの入力イベントを監視します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLPUOE2MI/AAAAAAAAAXQ/5qrFGk7E5GM/s800/DispatchEvent.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `AWTEvent`を取得して、マウスやキーボードの入力イベントを監視します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTLPUOE2MI/AAAAAAAAAXQ/5qrFGk7E5GM/s800/DispatchEvent.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static int DELAY = 10 * 1000; //10s
 private final Timer timer = new Timer(DELAY, new ActionListener() {
@@ -42,7 +42,7 @@ JButton button = new JButton(new AbstractAction("Connect") {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、一定時間(`10`秒)マウスやキーボードからの入力が無い場合は接続(実際はなにも実行しない)を終了するよう`AWTEventListener`を`Toolkit`に設定しています。
 
 ----
@@ -53,10 +53,10 @@ JButton button = new JButton(new AbstractAction("Connect") {
 -- 時間がきたら`Toolkit.getDefaultToolkit().removeAWTEventListener`で`AWTEvent`を取り除く
 -- `JDK 1.7.0`以上の場合、[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/LayerUI.html LayerUI (Java Platform SE 8)]で同様の処理が可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://tips4java.wordpress.com/2008/10/24/application-inactivity/ Application Inactivity « Java Tips Weblog]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `java.security.AccessControlException: access denied ("java.awt.AWTPermission" "listenToAllAWTEvents")`が発生するので、`Web Start`起動のリンクを削除。 -- &user(aterai); &new{2014-01-14 (火) 13:57:01};
 

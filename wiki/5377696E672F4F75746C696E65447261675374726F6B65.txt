@@ -8,12 +8,12 @@ pubdate: 2022-01-31T01:00:12+09:00
 description: JInternalFrameのリサイズ中に表示されるアウトラインを色反転の直線から点線に変更してJLayer上に描画します。
 image: https://drive.google.com/uc?id=1Y3cl7vxAZV2wJi_LJTA_1ove7_kicMum
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JInternalFrame`のリサイズ中に表示されるアウトラインを色反転の直線から点線に変更して`JLayer`上に描画します。
 
 #download(https://drive.google.com/uc?id=1Y3cl7vxAZV2wJi_LJTA_1ove7_kicMum)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Rectangle rubberBand = new Rectangle();
 JDesktopPane desktop = new JDesktopPane();
@@ -59,7 +59,7 @@ add(new JLayer<>(desktop, new LayerUI<JDesktopPane>() {
 }));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `DefaultDesktopManager#beginResizingFrame(...)`をオーバーライドして`JInternalFrame`のリサイズが開始されたらドラッグスタイルを`JDesktopPane.OUTLINE_DRAG_MODE`に変更
 - `DefaultDesktopManager#resizeFrame(...)`をオーバーライドしてデフォルトのリサイズアウトラインを幅高さ`0`に変更して非表示化
 -- 別途`JLayer`でアウトラインを描画するため、アウトラインの位置とサイズを`Rectangle`に記憶して`JDesktopPane#repaint()`を実行
@@ -68,9 +68,9 @@ add(new JLayer<>(desktop, new LayerUI<JDesktopPane>() {
 - `DefaultDesktopManager#beginResizingFrame(...)`をオーバーライドしてドラッグスタイルを`JDesktopPane.LIVE_DRAG_MODE`に戻す
 -- 記憶した`Rectangle`に`JInternalFrame`をリサイズするため最後に一回`super.resizeFrame(f, rubberBand.x, rubberBand.y, rubberBand.width, rubberBand.height)`を実行する必要がある
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JInternalFrameがマウスドラッグで移動中はそのフレームを半透明に変更する>Swing/DragInternalFrameTranslucency]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

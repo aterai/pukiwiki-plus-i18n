@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2023/04/change-tooltip-of-tab-in-jtabbedpane-to.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブ用ツールヒントの形状をふきだしにし、そのしっぽの方向をタブ位置に応じて変更します。
 
 #download(https://drive.google.com/uc?id=1WbgFj8zOssgmjFU6rsL0vXNgW5Lsw7OO)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class BalloonToolTip extends JToolTip {
   private static final int SIZE = 4;
@@ -98,7 +98,7 @@ class BalloonToolTip extends JToolTip {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JToolTip`の形状変更は[[JToolTipの形状を吹き出し風に変更する>Swing/BalloonToolTip]]と同様の方法を使用
 -- `JToolTip`テキストが長くなると`JToolTip`を常に親`JFrame`内に表示される方向に設定しても`HeavyWeightWindow`が使用される可能性があるので`JWindow`を透明する設定をそのまま使用している
 - `JToolTip`が初回表示される前に`JToolTip#getVisibleRect()`を実行してもその正しいサイズが取得できないので代わりに`JToolTip#getPreferredSize()`を使用する必要がある
@@ -180,11 +180,11 @@ JTabbedPane tabs = new JTabbedPane(
 };
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JToolTipの形状を吹き出し風に変更する>Swing/BalloonToolTip]]
 - [[JToolTipを半透明にする>Swing/TranslucentToolTips]]
 - [[JTabbedPaneのサムネイルをJToolTipで表示>Swing/TabThumbnail]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

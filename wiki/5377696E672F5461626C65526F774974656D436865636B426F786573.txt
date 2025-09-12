@@ -1,0 +1,133 @@
+---
+category: swing
+folder: TableRowItemCheckBoxes
+title: JTableのセルに行選択チェックボックスを追加する
+tags: [JTable, JCheckBox]
+author: aterai
+pubdate: 2024-08-05T03:22:18+09:00
+description: JTableのセルに行選択チェックボックスを設定してキー操作なしで複数行選択を可能にします。
+image: https://drive.google.com/uc?id=1K5Gl035_2hTt_NeinlxeuuotRXsHDT3n
+---
+* Summary [#summary]
+`JTable`のセルに行選択チェックボックスを設定してキー操作なしで複数行選択を可能にします。
+
+#download(https://drive.google.com/uc?id=1K5Gl035_2hTt_NeinlxeuuotRXsHDT3n)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class CheckBoxTable extends JTable {
+  private static final int CHECKBOX_COLUMN = 2;
+  private transient MouseListener handler;
+  private transient ListSelectionListener listener;
+  private int checkedIndex = -1;
+
+  protected CheckBoxTable(TableModel model) {
+    super(model);
+  }
+
+  @Override public void updateUI() {
+    addMouseListener(handler);
+    getSelectionModel().removeListSelectionListener(listener);
+    super.updateUI();
+    setSelectionModel(new CheckBoxListSelectionModel());
+    handler = new CheckBoxListener();
+    addMouseListener(handler);
+    listener = e -> {
+      if (checkedIndex < 0) { // e.getValueIsAdjusting();
+        ListSelectionModel sm = (ListSelectionModel) e.getSource();
+        TableModel model = getModel();
+        for (int i = 0; i < getRowCount(); i++) {
+          model.setValueAt(sm.isSelectedIndex(i), i, CHECKBOX_COLUMN);
+        }
+      }
+    };
+    getSelectionModel().addListSelectionListener(listener);
+  }
+
+  @Override public Component prepareEditor(
+      TableCellEditor editor, int row, int column) {
+    Component c = super.prepareEditor(editor, row, column);
+    if (c instanceof JCheckBox) {
+      JCheckBox b = (JCheckBox) c;
+      boolean selected = getSelectionModel().isSelectedIndex(row);
+      b.setBackground(
+        selected ? getBackground() : getSelectionBackground());
+      checkedIndex = row;
+    } else {
+      checkedIndex = -1;
+    }
+    return c;
+  }
+
+  private final class CheckBoxListSelectionModel
+      extends DefaultListSelectionModel {
+    @Override public void setSelectionInterval(int anchor, int lead) {
+      if (checkedIndex < 0) {
+        super.setSelectionInterval(anchor, lead);
+      } else {
+        EventQueue.invokeLater(() -> {
+          if (checkedIndex >= 0
+              && lead == anchor
+              && checkedIndex == anchor) {
+            super.addSelectionInterval(checkedIndex, checkedIndex);
+          } else {
+            super.setSelectionInterval(anchor, lead);
+          }
+        });
+      }
+    }
+
+    @Override public void removeSelectionInterval(
+        int index0, int index1) {
+      if (checkedIndex < 0) {
+        super.removeSelectionInterval(index0, index1);
+      } else {
+        EventQueue.invokeLater(() ->
+          super.removeSelectionInterval(index0, index1));
+      }
+    }
+  }
+
+  private final class CheckBoxListener extends MouseAdapter {
+    @Override public void mousePressed(MouseEvent e) {
+      JTable table = (JTable) e.getComponent();
+      Point pt = e.getPoint();
+      if (table.columnAtPoint(pt) == CHECKBOX_COLUMN) {
+        int row = table.rowAtPoint(pt);
+        checkedIndex = row;
+        ListSelectionModel sm = table.getSelectionModel();
+        if (sm.isSelectedIndex(row)) {
+          sm.removeSelectionInterval(row, row);
+        } else {
+          sm.addSelectionInterval(row, row);
+        }
+      } else {
+        checkedIndex = -1;
+      }
+      table.repaint();
+    }
+  }
+}
+}}
+
+* Description [#description]
+- `JTable#prepareEditor(...)`をオーバーライドして`JCheckBox`をセルレンダラー、セルエディタとして使用する列がクリックされたかを判断
+-- 対象列がクリックされた場合はその行、そうでない場合は`-1`を`checkedIndex`に記憶
+- `ListSelectionListener`
+-- `JTable#getSelectionModel()`で取得した行選択モデル`ListSelectionModel`に`ListSelectionListener`を追加し、`JCheckBox`の選択状態と行選択状態を同期させる
+-- `checkedIndex < 0`で以外のセルが選択された場合、全行に`TableModel#setValueAt(ListSelectionModel#isSelectedIndex(i), i, CHECKBOX_COLUMN)`を実行することで同期
+- `DefaultListSelectionModel`
+-- `DefaultListSelectionModel#setSelectionInterval(...)`、`DefaultListSelectionModel#removeSelectionInterval(...)`をオーバーライドして`JCheckBox`が設定された対象列が選択された場合(`checkedIndex >= 0`)の動作を変更
+-- これらの選択状態の設定、削除を`EventQueue.invokeLater(...)`であとで実行することで通常の選択動作を上書き
+-- `DefaultListSelectionModel#setSelectionInterval(...)`での選択状態設定をKBD{Ctrl}+クリックと同じになるよう`DefaultListSelectionModel#addSelectionInterval(...)`に変更して他の行の選択状態を維持したままクリックした行を選択状態に追加
+- `MouseListener`
+-- `JTable`に`MouseListener`を追加し、`JCheckBox`の選択状態と行選択状態を同期させる
+-- `MouseListener#mousePressed(...)`をオーバーライドして行が選択状態なら`DefaultListSelectionModel#removeSelectionInterval(...)`、未選択状態なら`DefaultListSelectionModel#addSelectionInterval(...)`を実行
+
+* Reference [#reference]
+- [[JListのセルに項目選択チェックボックスを追加する>Swing/ListCellItemCheckBoxes]]
+- [[JTableのセルにJCheckBoxを表示して行背景色を変更>Swing/CheckedRowColor]]
+
+* Comment [#comment]
+#comment
+#comment

@@ -31,63 +31,65 @@ description: このサイトにあるサンプルの動作・テスト環境や�
 
 - `Windows 10 64bit` + `Cygwin x86_64`
  $ bash -version
- GNU bash, バージョン 4.4.12(3)-release (x86_64-unknown-cygwin)
- Copyright (C) 2016 Free Software Foundation, Inc.
- ライセンス GPLv3+: GNU GPL バージョン 3 またはそれ以降 <http://gnu.org/licenses/gpl.html>
- ...
- $ "$JAVA_HOME/bin/java" -version
- openjdk version "1.8.0_402"
- OpenJDK Runtime Environment Corretto-8.402.06.1 (build 1.8.0_402-b06)
- OpenJDK 64-Bit Server VM Corretto-8.402.06.1 (build 25.402-b06, mixed mode)
-
-** `Windows 10`で`Swing`アプリケーションのスケール・フォントサイズがおかしくなる [#b18868b2]
-- `Windows 10`の高解像度環境で`Swing`アプリのスケールがおかしくなる場合の対処方法
--- [https://superuser.com/questions/988379/how-do-i-run-java-apps-upscaled-on-a-high-dpi-display windows 10 - How do I run Java apps upscaled on a high-DPI display? - Super User]
-- 高解像度でフォントが小さすぎる、または表示スケールが`100%`でも`JDK`を更新するとフォントが以前より大きくなるなどの現状が発生する場合、`java -jar example.jar -Dsun.java2d.uiScale.enabled=false`などで回避可能？
--- [https://intellij-support.jetbrains.com/hc/en-us/articles/115001260010-Troubleshooting-IDE-scaling-DPI-issues-on-Windows Troubleshooting IDE scaling (DPI) issues on Windows – IDEs Support (IntelliJ Platform) | JetBrains]
-- `file.encoding`の設定で使用するフォントが変化する？
--- たとえば[[JTextAreaのCaretを変更してマウスのダブルクリックによる単語選択の動作を変更する>Swing/ContinuouslySelectWords]]の`jar`ファイルを`Windows 10`環境で実行するとデフォルトの`Windows-31J`では`MSゴシック`が使用されるが、`UTF-8`にすると日本語は`MSゴシック`だがアルファベットは`Courier New`？になる
-
-#twocolumn
-- `java.exe -Dfile.encoding=Windows-31J -jar example.jar`
-#img2(https://drive.google.com/uc?id=1O1N1ZcEKZi7XbOU5jOojctlGn3hY5MJ7)
-#twocolumn
-- `java.exe -Dfile.encoding=UTF-8 -jar example.jar`
-#img2(https://drive.google.com/uc?id=1DZZjQgnedLylrIsWY_CRCh_QQcyJ8wnR)
-#twocolumn
-
- Microsoft Windows [Version 10.0.18362.418]
+ GNU bash, バージョン 5.2.21(1)-release (x86_64-pc-cygwin)
+ Copyright (C) 2022 Free Software Foundation, Inc.
+ ライセンス GPLv3+: GNU GPL バージョン 3 またはそれ以降
+ <http://gnu.org/licenses/gpl.html>
  
- openjdk version "1.8.0_232"
- OpenJDK Runtime Environment Corretto-8.232.09.1 (build 1.8.0_232-b09)
- OpenJDK 64-Bit Server VM Corretto-8.232.09.1 (build 25.232-b09, mixed mode)
+ $ "$JAVA_HOME/bin/java" -version
+ openjdk version "1.8.0_462"
+ OpenJDK Runtime Environment Corretto-8.462.08.1 (build 1.8.0_462-b08)
+ OpenJDK 64-Bit Server VM Corretto-8.462.08.1 (build 25.462-b08, mixed mode)
+ 
+ $ "$ANT_HOME/bin/ant" -version
+ Apache Ant(TM) version 1.10.15 compiled on August 25 2024
 
-- `%JAVA_HOME%\jre\lib\fontconfig.properties.src`で`sequence.monospaced.windows-31j`だけ`japanese,alphabetic`の順になっているので正しい動作だが、`%JAVA_HOME%\jre\lib\fontconfig.properties.src`は以前から変更されていないので`Courier New`フォントが`Windows Update`か何か(`ClearType`？)で更新されたのかもしれない？
-- フォントが変化していないなら、レンダラーが更新されたことが影響している？
+// ** `Windows 10`で`Swing`アプリケーションのスケール・フォントサイズがおかしくなる [#b18868b2]
+// - `Windows 10`の高解像度環境で`Swing`アプリのスケールがおかしくなる場合の対処方法
+// -- [https://superuser.com/questions/988379/how-do-i-run-java-apps-upscaled-on-a-high-dpi-display windows 10 - How do I run Java apps upscaled on a high-DPI display? - Super User]
+// - 高解像度でフォントが小さすぎる、または表示スケールが`100%`でも`JDK`を更新するとフォントが以前より大きくなるなどの現状が発生する場合、`java -jar example.jar -Dsun.java2d.uiScale.enabled=false`などで回避可能？
+// -- [https://intellij-support.jetbrains.com/hc/en-us/articles/115001260010-Troubleshooting-IDE-scaling-DPI-issues-on-Windows Troubleshooting IDE scaling (DPI) issues on Windows ? IDEs Support (IntelliJ Platform) | JetBrains]
+// - `file.encoding`の設定で使用するフォントが変化する？
+// -- たとえば[[JTextAreaのCaretを変更してマウスのダブルクリックによる単語選択の動作を変更する>Swing/ContinuouslySelectWords]]の`jar`ファイルを`Windows 10`環境で実行するとデフォルトの`Windows-31J`では`MSゴシック`が使用されるが、`UTF-8`にすると日本語は`MSゴシック`だがアルファベットは`Courier New`？になる
+//
+// #twocolumn
+// - `java.exe -Dfile.encoding=Windows-31J -jar example.jar`
+// #img2(https://drive.google.com/uc?id=1O1N1ZcEKZi7XbOU5jOojctlGn3hY5MJ7)
+// #twocolumn
+// - `java.exe -Dfile.encoding=UTF-8 -jar example.jar`
+// #img2(https://drive.google.com/uc?id=1DZZjQgnedLylrIsWY_CRCh_QQcyJ8wnR)
+// #twocolumn
+//
+//  Microsoft Windows [Version 10.0.18362.418]
+//  
+//  openjdk version "1.8.0_232"
+//  OpenJDK Runtime Environment Corretto-8.232.09.1 (build 1.8.0_232-b09)
+//  OpenJDK 64-Bit Server VM Corretto-8.232.09.1 (build 25.232-b09, mixed mode)
+//
+// - `%JAVA_HOME%\jre\lib\fontconfig.properties.src`で`sequence.monospaced.windows-31j`だけ`japanese,alphabetic`の順になっているので正しい動作だが、`%JAVA_HOME%\jre\lib\fontconfig.properties.src`は以前から変更されていないので`Courier New`フォントが`Windows Update`か何か(`ClearType`？)で更新されたのかもしれない？
+// - フォントが変化していないなら、レンダラーが更新されたことが影響している？
+//
+//  monospaced.plain.alphabetic=Courier New
+//  monospaced.plain.japanese=MS Gothic
+//  ...
+//  sequence.allfonts.UTF-8.ja=alphabetic,japanese,devanagari,dingbats,symbol
+//  ...
+//  sequence.serif.windows-31j=alphabetic,japanese,dingbats,symbol
+//  sequence.sansserif.windows-31j=alphabetic,japanese,dingbats,symbol
+//  sequence.monospaced.windows-31j=japanese,alphabetic,dingbats,symbol
+//  sequence.dialog.windows-31j=alphabetic,japanese,dingbats,symbol
+//  sequence.dialoginput.windows-31j=alphabetic,japanese,dingbats,symbol
 
- monospaced.plain.alphabetic=Courier New
- monospaced.plain.japanese=MS Gothic
- ...
- sequence.allfonts.UTF-8.ja=alphabetic,japanese,devanagari,dingbats,symbol
- ...
- sequence.serif.windows-31j=alphabetic,japanese,dingbats,symbol
- sequence.sansserif.windows-31j=alphabetic,japanese,dingbats,symbol
- sequence.monospaced.windows-31j=japanese,alphabetic,dingbats,symbol
- sequence.dialog.windows-31j=alphabetic,japanese,dingbats,symbol
- sequence.dialoginput.windows-31j=alphabetic,japanese,dingbats,symbol
-
-** OpenJDKのダウンロードについて [#openjdk-download]
+** OpenJDKのインストール [#openjdk-install]
+- [https://learn.microsoft.com/ja-jp/java/openjdk/install OpenJDK の Microsoft Build をインストールする | Microsoft Learn]
+-- `PowerShell`などから`winget install Microsoft.OpenJDK.21`でインストール可能
 - [https://sdkman.io/ SDKMAN! the Software Development Kit Manager]
 -- `sdk install java [version]`などでインストール可能
-- [http://jdk.java.net/11/ JDK 11 GA Release]
-- [https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/what-is-corretto-8.html What Is Amazon Corretto 8? - Amazon Corretto 8]
--- `Swing`も問題なく動作可能
-// -- %%`Corretto 1.8.0_212`で[[Windowの縁をソフトクリッピングでなめらかにする>Swing/SoftClippedWindow]]や[[JSpinnerの表記を16進数にする>Swing/HexFormatterSpinner]]のように`Java 2D`周りで不具合が発生する場合がある？%%
 
 * サイト内検索について [#search]
-- `search`プラグインを使った簡易検索
--- 入力した単語を含むページを、その単語を含むパラグラフとともに一覧表示が可能
--- 複数単語を入力して`and`、`or`検索しても、現在正常に動作しない
+// - `search`プラグインを使った簡易検索
+- 入力した単語を含むページをその単語を含むパラグラフとともに一覧表示
+- 複数単語を入力して`and`、`or`検索しても現在正常に動作しない
 
 * 質問、不具合報告 [#report]
 「サンプルがうまく動かない」、「説明が間違っている」といった、各`Tips`に関連するものはそれぞれのページのコメントで指摘して頂けると助かります。`Swing`全体に関する話題や、このサイトに対する要望、雑談などは、[[Swing]]の下部にあるコメントでお願いします。

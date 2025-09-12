@@ -8,12 +8,12 @@ pubdate: 2007-06-04T19:46:36+09:00
 description: ノード毎に内容の異なるJToolTipを表示するJTreeを作成します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWQe1RL2I/AAAAAAAAAo8/6HFqbUb3UZ8/s800/TreeToolTips.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 ノード毎に内容の異なる`JToolTip`を表示する`JTree`を作成します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTWQe1RL2I/AAAAAAAAAo8/6HFqbUb3UZ8/s800/TreeToolTips.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 tree = new JTree() {
   @Override public String getToolTipText(MouseEvent e) {
@@ -29,7 +29,7 @@ tree = new JTree() {
 ToolTipManager.sharedInstance().registerComponent(tree);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTree#getToolTipText(MouseEvent)`メソッドをオーバーライドして`JToolTip`で表示する文字列を変更
 - ツールチップ表示を有効にするには`JTree`オブジェクトを`ToolTipManager`に登録するか、`JTree#setToolTipText(...)`メソッドで`null`以外を指定しておく必要がある
 #code{{
@@ -56,8 +56,8 @@ class MyTreeCellRenderer implements TreeCellRenderer {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#getToolTipText-java.awt.event.MouseEvent- JTree#getToolTipText() (Java Platform SE 8)]
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

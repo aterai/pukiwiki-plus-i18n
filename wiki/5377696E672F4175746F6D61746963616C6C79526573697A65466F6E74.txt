@@ -8,12 +8,12 @@ pubdate: 2011-10-31T15:45:05+09:00
 description: JTextPaneのフォントサイズをその幅に応じて自動変更します。
 image: https://lh6.googleusercontent.com/-RTjWJaRHh4E/Tq4_8nk91OI/AAAAAAAABEY/mwfxMScDHec/s800/AutomaticallyResizeFont.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextPane`のフォントサイズをその幅に応じて自動変更します。
 
 #download(https://lh6.googleusercontent.com/-RTjWJaRHh4E/Tq4_8nk91OI/AAAAAAAABEY/mwfxMScDHec/s800/AutomaticallyResizeFont.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private final Font font = new Font(Font.MONOSPACED, Font.PLAIN, 12);
 private final JTextPane editor = new JTextPane() {
@@ -30,12 +30,12 @@ private final JTextPane editor = new JTextPane() {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTextPane#doLayout()`メソッドをオーバーライドし、その幅のリサイズに応じて使用するフォントのサイズを`Font#deriveFont(float)`メソッドで変更しています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://harmoniccode.blogspot.com/2011/10/friday-fun-component-xi.html Harmonic Code: Friday Fun Component XI]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

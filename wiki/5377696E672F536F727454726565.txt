@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2013/09/how-to-sort-jtree-nodes.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`を葉ノードより親ノード優先でノード名を比較する`Comparator`を使用してソートします。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTThR240sI/AAAAAAAAAkg/h3mIbDu9xa4/s800/SortTree.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public static void sortTree(DefaultMutableTreeNode root) {
   Enumeration e = root.depthFirstEnumeration();
@@ -77,7 +77,7 @@ public static void sort3(DefaultMutableTreeNode parent) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、チェックボックスがクリックされると以下の手順でソートを実行します。
 
 - `DefaultTreeModel`から`deep copy`でクローンを作成
@@ -149,7 +149,7 @@ public static <T> void sort(T[] a, Comparator<? super T> c) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1355435 Swing - How to sort jTree Nodes]
 -- 以下のコメントにバグの指摘あり
 //-- `#6`のHamedさんの投稿 (以下のコメントにバグの指摘あり)
@@ -160,7 +160,7 @@ public static <T> void sort(T[] a, Comparator<? super T> c) {
 - [[JTableでファイルとディレクトリを別々にソート>Swing/FileDirectoryComparator]]
 -- ディレクトリが先になる比較について
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - ソースにバグあります。 `root.insert(prevNode, i);`の後に`i--;`を入れる必要あり -- &user(a); &new{2013-07-02 (火) 15:54:09};
 -- ご指摘ありがとうございます。たしかに`i--;break`などがないと、入れ替えられてソートされないノードが出来てしまいますね。効率も悪いので、深さ優先で探索した親ノードから別の方法でソートするように変更した方がいいかもしれません。 %%しばらくテストしてこのサンプルは修正したいと思います。%% 修正しました。 -- &user(aterai); &new{2013-07-03 (水) 13:11:51};

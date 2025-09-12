@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2017/04/disable-any-items-in-jlist.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`の任意の`Item`を選択不可にする`ListCellRenderer`を設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTLAYVmo3I/AAAAAAAAAW4/3MUtTm4ixyo/s800/DisabledItem.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JList<String> list = new JList<>(model);
 list.setCellRenderer(new DefaultListCellRenderer() {
@@ -46,14 +46,14 @@ am.put("selectNextRow", new AbstractAction() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JList`のアイテムの選択可・不可はリストセルレンダラーの`ListCellRenderer#getListCellRendererComponent(...)`メソッド中で判断する
 - インデックスが選択不可の場合オリジナルのリストセルレンダラーから選択無し、かつフォーカス無しのコンポーネントを取得し、さらに`setEnabled(false)`として返す
 - KBD{Up}、KBD{Down}キーで`JList`のアイテムの選択を移動する場合、選択不可にしたアイテムを飛ばすように`selectNextRow`などのアクションを変更
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxのアイテムを選択不可にする>Swing/DisableItemComboBox]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

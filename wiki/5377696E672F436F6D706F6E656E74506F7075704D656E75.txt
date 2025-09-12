@@ -8,12 +8,12 @@ pubdate: 2008-03-10T01:39:57+09:00
 description: JComponentに右クリックなどでポップアップするJPopupMenuを追加します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKBw4_YtI/AAAAAAAAAVU/J_aFRLSj-VU/s800/ComponentPopupMenu.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComponent`に右クリックなどでポップアップする`JPopupMenu`を追加します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTKBw4_YtI/AAAAAAAAAVU/J_aFRLSj-VU/s800/ComponentPopupMenu.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTextArea textArea = new JTextArea("ComponentPopupMenu Test");
 textArea.setComponentPopupMenu(new TextComponentPopupMenu());
@@ -62,7 +62,7 @@ class TextComponentPopupMenu extends JPopupMenu {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTextArea`に`setComponentPopupMenu(JPopupMenu)`メソッドで、ポップアップメニューを追加しています。
 
 - `JDK 1.5`でこのメソッドが追加されたため、各コンポーネントにマウスリスナーを設定して`e.isPopupTrigger()`でポップアップを表示するクリックの判断が不要になった
@@ -114,13 +114,13 @@ textArea.setComponentPopupMenu(popup);
 -- このため、`JTabbedPane`などでどのタブの上でポップアップが表示されるかなどを取得したい場合は`JPopupMenu#show(...)`をオーバーライドする必要がある
 -- [[JTabbedPaneでタブを追加削除>Swing/TabbedPane]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JComponent.html#setComponentPopupMenu-javax.swing.JPopupMenu- JComponent#setComponentPopupMenu(JPopupMenu) (Java Platform SE 8)]
 - [[JPopupMenuの取得を親に委譲>Swing/InheritsPopupMenu]]
 - [[JTabbedPaneでタブを追加削除>Swing/TabbedPane]]
 - [https://bugs.openjdk.org/browse/JDK-6675802 Bug ID: 6675802 Regression: heavyweight popups cause SecurityExceptions in applets]
 - [https://bugs.openjdk.org/browse/JDK-6299213 Bug ID: 6299213 The PopupMenu is not updated if the LAF is changed (incomplete fix of 4962731)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

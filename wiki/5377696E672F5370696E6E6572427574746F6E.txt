@@ -8,12 +8,12 @@ pubdate: 2007-07-23T15:06:56+09:00
 description: JSpinnerの上下ボタンにJToolTipを付けます。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTmW4UoMI/AAAAAAAAAks/SXmtS71QSg0/s800/SpinnerButton.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`の上下ボタンに`JToolTip`を付けます。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTTmW4UoMI/AAAAAAAAAks/SXmtS71QSg0/s800/SpinnerButton.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static class MySpinnerUI extends BasicSpinnerUI {
   @Override protected Component createNextButton() {
@@ -42,7 +42,7 @@ private static void searchSpinnerButtons(Container comp) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `BasicSpinnerUI`
 -- `BasicSpinnerUI`を継承する`SpinnerUI`を作成し、`createNextButton()`、`createPreviousButton()`メソッドをオーバーライドして`ToolTipText`を設定
 - 中: `getName()`
@@ -51,12 +51,12 @@ private static void searchSpinnerButtons(Container comp) {
 - 下: `WindowsSpinnerUI`
 -- `Windows`環境の場合は`WindowsSpinnerUI`を継承してそれ以外の場合は名前で検索して`ToolTipText`を設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicSpinnerUI.html#createNextButton-- BasicSpinnerUI#createNextButton() (Java Platform SE 8)]
 - [https://bugs.openjdk.org/browse/JDK-5036022 Bug ID: 5036022 JSpinner does not reflect new font on subsequent calls to setFont]
 - [https://kaiseh.hatenadiary.org/entry/20071120/1195560201 JSpinnerのフォント指定 - kaisehのブログ]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - [https://bugs.openjdk.org/browse/JDK-5036022 Bug ID: 5036022 JSpinner does not reflect new font on subsequent calls to setFont] -- &user(aterai); &new{2007-11-26 (月) 12:10:19};
 

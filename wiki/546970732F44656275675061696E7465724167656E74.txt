@@ -6,7 +6,7 @@ description: JXLayerのDebugPainterを使用したコンポーネントの再描
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 `JXLayer`の`DebugPainter`を使用したコンポーネントの再描画を可視化する`javaagent`でデバッグを行います。
 
 - [https://ateraimemo.com/data/swing/debugpainter.jar debugpainter.jar]
@@ -71,7 +71,7 @@ public class DebugPainterAgent {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 例えば、`repaint`が無限ループしているバグのあるサンプルを以下のように起動すると、`JLabel`の描画が無駄に繰り返され、`CPU`の使用率も異常になっている様子がすぐに分かります。
 //--debugpainter.batをクリックします。
 //--このデモに添付している TableCellProgressBar などは、JTableのセルや、ポップアップメニューを開いたときの再描画が分かりやすくて面白いかも。
@@ -138,7 +138,7 @@ public class RepaintLoopTest {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - %%[https://jxlayer.dev.java.net/ jxlayer: Project Home Page]%%
 - %%[https://java.net/projects/jxlayer Jxlayer — Project Kenai]%%
 - %%[http://weblogs.java.net/blog/alexfromsun/archive/2007/11/debug_swing_rep.html Alexander Potochkin's Blog: Debug Swing repainting]%%
@@ -147,6 +147,6 @@ public class RepaintLoopTest {
 -- `DebugGraphicsOptions`を設定してコンポーネントの描画を逐次遅延してデバックする
 - [http://www.java2s.com/Tutorial/Java/0240__Swing/DebugGraphics.htm DebugGraphics : DebugGraphics « Swing « Java Tutorial]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

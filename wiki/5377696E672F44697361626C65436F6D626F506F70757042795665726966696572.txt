@@ -8,12 +8,12 @@ pubdate: 2022-05-23T00:52:07+09:00
 description: JComboBoxへのマウスクリックによるフォーカス移動が別コンポーネントに設定されているInputVerifierの検証で拒否された場合、そのドロップダウンリストの表示をキャンセルします。
 image: https://drive.google.com/uc?id=1xn-FG-x8N-VW-HcaW1ch4c-QcMoMkYzk
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`へのマウスクリックによるフォーカス移動が別コンポーネントに設定されている`InputVerifier`の検証で拒否された場合、そのドロップダウンリストの表示をキャンセルします。
 
 #download(https://drive.google.com/uc?id=1xn-FG-x8N-VW-HcaW1ch4c-QcMoMkYzk)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class BasicComboPopup2 extends BasicComboPopup {
   private transient MouseListener handler2;
@@ -82,7 +82,7 @@ class BasicComboPopup2 extends BasicComboPopup {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `InputVerifier`
 -- `JTextField`に少なくとも`5`文字以上の入力が必要な`InputVerifier`を設定
 -- `5`文字以下の場合は他のコンポーネントへのフォーカス移動が不可となる
@@ -98,7 +98,7 @@ class BasicComboPopup2 extends BasicComboPopup {
 -- `BasicComboPopup`で`mousePressed`が実行されたとき`requestFocus()`の戻り値が無視されているので、この戻り値がフォーカス変更要求が確実に失敗する場合(`InputVerifier`の検証で拒否されるなど)の`false`なら`BasicComboPopup#togglePopup()`を実行しないよう修正
 -- `ArrowButton`がクリックされた場合はその選択状態描画が残る場合がある？のでドロップダウンリストの表示がキャンセルされた場合は`JButton#getModel()#setPressed(false)`で選択状態をクリア
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html How to Use the Focus Subsystem (The Java™ Tutorials > Creating a GUI With Swing > Using Other Swing Features)]
 - [https://stackoverflow.com/questions/72240670/prevent-a-jcombobox-popup-from-appearing-passing-inputverifier java - Prevent a JComboBox popup from appearing. Passing InputVerifier - Stack Overflow]
 -- `PopupMenuListener`を`JComboBox`に設定して`InputVerifier`でフォーカス移動が拒否されたらドロップダウンリスト表示をキャンセルする方法もある
@@ -106,6 +106,6 @@ class BasicComboPopup2 extends BasicComboPopup {
 - [[ComboBoxEditorにJLayerを設定し入力の妥当性を表示する>Swing/ComboBoxEditorVerifier]]
 - [https://bugs.openjdk.org/browse/JDK-8285698 &#91;JDK-8285698&#93; Create a test to check the focus stealing of JPopupMenu from JComboBox - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

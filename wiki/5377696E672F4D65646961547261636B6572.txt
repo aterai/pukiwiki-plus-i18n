@@ -8,12 +8,12 @@ pubdate: 2004-12-13T02:15:06+09:00
 description: MediaTrackerを使って画像ファイルからイメージの幅と高さを取得します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPsQMGUsI/AAAAAAAAAeY/B8MAwtKhshY/s800/MediaTracker.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `MediaTracker`を使って画像ファイルからイメージの幅と高さを取得します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPsQMGUsI/AAAAAAAAAeY/B8MAwtKhshY/s800/MediaTracker.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private Dimension getImageDimension(Image img, int id) {
   MediaTracker tracker = new MediaTracker((Container) this);
@@ -27,15 +27,15 @@ private Dimension getImageDimension(Image img, int id) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `MediaTracker`を使って画像ファイルをロードし、イメージが描画される領域の幅と高さを取得
 - `JTable`にファイルをドロップすると画像の幅や高さなどを一覧表示
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/MediaTracker.html MediaTracker (Java Platform SE 8)]
 - [[Jpegファイルのコメントを取り出す>Swing/IIOMetadata]]
 - [[Fileのドラッグ＆ドロップ>Swing/FileListFlavor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2021-12-27T01:14:01+09:00
 description: JListで作成したカレンダーでマウスドラッグによる日付の範囲選択を実行します。
 image: https://drive.google.com/uc?id=1f36wJuNyEM2Y1q80GHrW97uGZfTUfsNU
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`で作成したカレンダーでマウスドラッグによる日付の範囲選択を実行します。
 
 #download(https://drive.google.com/uc?id=1f36wJuNyEM2Y1q80GHrW97uGZfTUfsNU)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class SingleIntervalMouseSelectionListener extends MouseInputAdapter {
   private int start = -1;
@@ -32,8 +32,8 @@ class SingleIntervalMouseSelectionListener extends MouseInputAdapter {
 }
 }}
 
-* 解説 [#explanation]
-上記のサンプルでは[[JListで月のカーソルキー移動や、週を跨いた日付を範囲選択が可能なカレンダーを作成する>Swing/CalendarViewList]]で作成した「ニュースペーパー・スタイル」レイアウトを適用した`JList`カレンダーにMouseListener`、`MouseMotionListener`を追加してマウスドラッグによる日付の範囲選択を可能にしています。
+* Description [#description]
+上記のサンプルでは[[JListで月のカーソルキー移動や、週を跨いた日付を範囲選択が可能なカレンダーを作成する>Swing/CalendarViewList]]で作成した「ニュースペーパー・スタイル」レイアウトを適用した`JList`カレンダーに`MouseListener`、`MouseMotionListener`を追加してマウスドラッグによる日付の範囲選択を可能にしています。
 
 - 日付の範囲なので連続範囲はひとつになるよう`ListSelectionModel.SINGLE_INTERVAL_SELECTION`をセレクションモードに設定
 - 選択範囲の更新は[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultListSelectionModel.html#addSelectionInterval-int-int- DefaultListSelectionModel#addSelectionInterval(int, int) (Java Platform SE 8)]や[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/DefaultListSelectionModel.html#setSelectionInterval-int-int- DefaultListSelectionModel#setSelectionInterval(int, int) (Java Platform SE 8)]などで開始日と終了日を順不同でまとめて設定可能
@@ -41,11 +41,11 @@ class SingleIntervalMouseSelectionListener extends MouseInputAdapter {
 -- `int min = Math.min(start, end); int max = Math.max(start, end); l.setSelectedIndices(IntStream.rangeClosed(min, max).toArray());`
 -- [[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JListで月のカーソルキー移動や、週を跨いた日付を範囲選択が可能なカレンダーを作成する>Swing/CalendarViewList]]
 - [[JListのアイテムを範囲指定で選択>Swing/RubberBanding]]
 - [[JListをマウスクリックのみで複数選択する>Swing/ListMouseSelection]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

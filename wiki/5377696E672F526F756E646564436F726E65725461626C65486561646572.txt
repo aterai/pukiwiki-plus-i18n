@@ -11,18 +11,19 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2021/06/round-corners-of-jtableheader.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTableHeader`にその角を丸める`TableCellRenderer`を設定し、月に応じてその背景色を変更するカレンダーを作成します。
 
 #download(https://drive.google.com/uc?id=1G12861FsnGgdiq4go-9ECD8xbj5BU8pW)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RoundedHeaderRenderer extends DefaultTableCellRenderer {
   private final JLabel firstLabel = new JLabel() {
     @Override public void paintComponent(Graphics g) {
       Graphics2D g2 = (Graphics2D) g.create();
-      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
       g2.setPaint(getBackground());
       float r = 8f;
       float x = 0f;
@@ -45,7 +46,8 @@ class RoundedHeaderRenderer extends DefaultTableCellRenderer {
   private final JLabel lastLabel = new JLabel() {
     @Override public void paintComponent(Graphics g) {
       Graphics2D g2 = (Graphics2D) g.create();
-      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                          RenderingHints.VALUE_ANTIALIAS_ON);
       g2.setPaint(getBackground());
       float r = 8f;
       float x = 0f;
@@ -76,8 +78,11 @@ class RoundedHeaderRenderer extends DefaultTableCellRenderer {
   }
 
   @Override public Component getTableCellRendererComponent(
-        JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    JLabel l = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        JTable table, Object value,
+        boolean isSelected, boolean hasFocus,
+        int row, int column) {
+    JLabel l = (JLabel) super.getTableCellRendererComponent(
+        table, value, isSelected, hasFocus, row, column);
     if (column == 0) {
       l = firstLabel;
     } else if (column == table.getColumnCount() - 1) {
@@ -93,17 +98,19 @@ class RoundedHeaderRenderer extends DefaultTableCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTableHeader`は透明に設定して背景を描画しないよう設定
 - `JTableHeader`に設定した`DefaultTableCellRenderer`で列位置に応じた図形を`JTableHeader`の背景色で描画する`JLabel`を作成
 -- 先頭列セルは左側、末尾列セルは右側を丸めた図形を`Path2D`で作成して`JLabel#paintComponent(...)`内で描画
 -- カレンダーなので`JTableHeader`の列の移動やリサイズは禁止しているが、列の入れ替えを実行しても先頭と末尾にきたセルの図形を丸めるよう`TableCellRenderer#getTableCellRendererComponent(...)`メソッドをオーバーライド
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JRadioButtonを使ってToggleButtonBarを作成>Swing/ToggleButtonBar]]
 - [[JTableのセルを斜めに分割する>Swing/DiagonallySplitCellCalendar]]
 - [[JTableのヘッダやセル罫線の色を統一して罫線の幅が変化しないよう設定する>Swing/FlatTable]]
+- [[JTableHeaderのセルレンダラーとしてJButtonを使用する>Swing/ButtonTableHeaderRenderer]]
+-- `JTableHeader`全体を角丸にするのではなく`TableColumn`個々に角丸を設定する場合は、上記リンク先のサンプルのように角丸`JButton`をヘッダーレンダラーに使用する方法がある
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

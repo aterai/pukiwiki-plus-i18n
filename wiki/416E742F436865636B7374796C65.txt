@@ -6,7 +6,7 @@ description: ソースコードを静的解析してコーディングルール�
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 `Ant`から`Checkstyle`を実行してソースコードのコーディングルールをチェックします。
 
 * サンプルターゲット [#target]
@@ -33,7 +33,7 @@ description: ソースコードを静的解析してコーディングルール�
   </target>
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 + [https://github.com/checkstyle/checkstyle/releases/ Releases · checkstyle/checkstyle]からダウンロードした`checkstyle-x.x-all.jar`を環境変数`%CHECKSTYLE_HOME%`を設定した場所にコピー
 + 上記のような`checkstyle`ターゲットを`build.xml`に追加し、`ant checkstyle`で`checkstyle-result.xml`を生成、`jenkins`の`Checkstyle`プラグインなどで読み込む
 + チェックするルールをカスタマイズする場合は、任意の`${sca.dir}`ディレクトリ以下に`checks.xml`を記述し、これを`config`属性で参照する
@@ -94,11 +94,11 @@ description: ソースコードを静的解析してコーディングルール�
 
  "$JAVA_HOME/bin/java" -Dfile.encoding=utf-8 -jar "$CHECKSTYLE_HOME/checkstyle-8.7-all.jar" -c ./checks.xml OverTypeMode/src/java/
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://github.com/checkstyle/checkstyle checkstyle/checkstyle: Checkstyle]
 - [https://checkstyle.org/ checkstyle – Checkstyle]
 - [https://checkstyle.org/style_configs.html checkstyle – Style Configurations]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

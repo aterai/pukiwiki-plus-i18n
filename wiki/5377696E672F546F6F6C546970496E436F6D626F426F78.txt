@@ -8,12 +8,12 @@ pubdate: 2017-04-24T14:34:47+09:00
 description: JComboBoxの各リストアイテムやArrowButtonに、それぞれ異なるToolTipTextを設定します。
 image: https://drive.google.com/uc?id=1-hvVHO5A6M8VTO8QPye3epe-ZazLLTzfDQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`の各リストアイテムや`ArrowButton`に、それぞれ異なる`ToolTipText`を設定します。
 
 #download(https://drive.google.com/uc?id=1-hvVHO5A6M8VTO8QPye3epe-ZazLLTzfDQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static JComponent makeComboBox() {
   JComboBox<String> combo = new JComboBox<>(new String[] {"aaa", "bbbbb", "c"});
@@ -60,7 +60,7 @@ class ToolTipLayerUI<V extends JComboBox> extends LayerUI<V> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JComboBox`本体
 -- `JComboBox#setToolTipText(...)`メソッドで`ToolTipText`を設定した場合、`ArrowButton`や編集可の場合の`JTextField`などのすべての子コンポーネントに同じテキストが設定される
 --- 参考: `BasicComboBoxUI#updateToolTipTextForChildren()`
@@ -109,9 +109,9 @@ public class CustomJComboBoxTest2 {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/LayerUI.html#processMouseMotionEvent-java.awt.event.MouseEvent-javax.swing.JLayer- LayerUI#processMouseMotionEvent(MouseEvent, JLayer) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

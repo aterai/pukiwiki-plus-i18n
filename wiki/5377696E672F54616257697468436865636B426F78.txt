@@ -8,12 +8,12 @@ pubdate: 2016-06-13T01:27:42+09:00
 description: JTabbedPaneのタブ内にクリック可能なJCheckBoxを追加します。
 image: https://lh3.googleusercontent.com/-b5jcwNkPYZc/V12KPOBZsFI/AAAAAAAAObI/5fJ6EGqkXMg7fYFyLSDa_MwGJ3hXZGE-QCCo/s800/TabWithCheckBox.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のタブ内にクリック可能な`JCheckBox`を追加します。
 
 #download(https://lh3.googleusercontent.com/-b5jcwNkPYZc/V12KPOBZsFI/AAAAAAAAObI/5fJ6EGqkXMg7fYFyLSDa_MwGJ3hXZGE-QCCo/s800/TabWithCheckBox.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTabbedPane tabs = new JTabbedPane() {
   @Override public void addTab(String title, Component content) {
@@ -30,16 +30,16 @@ JTabbedPane tabs = new JTabbedPane() {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JDK 6`で追加された`JTabbedPane`のタブにコンポーネントを配置する機能を使用して`JCheckBox`を各タブの内部に追加しています。
 
 - タブタイトル文字列を`JCheckBox#setText(...)`で設定した`JCheckBox`を`JTabbedPane#setTabComponentAt(...)`で追加するのではなく、タブタイトル用の`JLabel`とチェックアイコンのみの`JCheckBox`に分割して`JPanel`に配置
 - タブタイトル文字列用の`JLabel`はクリックイベントを処理しないよう設定
 - このためタブタイトルをクリックしても別コンポーネントである`JCheckBox`のチェック状態は変化せずタブの切り替えが実行可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTabbedPane.html#setTabComponentAt-int-java.awt.Component- JTabbedPane#setTabComponentAt(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2018-02-12T19:19:08+09:00
 description: JTreeのセルエディタとしてクリック可能なJButtonを複数したJPanelを設定します。
 image: https://drive.google.com/uc?id=1av1tLvTqv_249jfJdwdsuhEyB5i3zikC7Q
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のセルエディタとしてクリック可能な`JButton`を複数した`JPanel`を設定します。
 
 #download(https://drive.google.com/uc?id=1av1tLvTqv_249jfJdwdsuhEyB5i3zikC7Q)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ButtonCellEditor extends AbstractCellEditor implements TreeCellEditor {
   private final ButtonPanel panel = new ButtonPanel();
@@ -82,7 +82,7 @@ class ButtonCellEditor extends AbstractCellEditor implements TreeCellEditor {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`3`つの`JButton`と`JLabel`を継承する`DefaultTreeCellRenderer`を`FlowLayout`で配置する`JPanel`を`2`つ作成し、それぞれを`JTree`のセルエディタとセルレンダラーとして設定しています。
 
 - セルレンダラーの`JButton`は表示にのみ使用するため`ActionListener`などは設定しない
@@ -93,9 +93,9 @@ class ButtonCellEditor extends AbstractCellEditor implements TreeCellEditor {
 -- `JButton`の表示領域がクリックされたかどうかの判断は編集開始前なのでセルエディタではなく、セルレンダラー内を`SwingUtilities.getDeepestComponentAt(...)`で検索して`JButton`が返されるかを調査している
 - 編集中のノードの`JButton`のみマウスでクリック可能
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeのセルエディタにJComboBoxなどを配置したJPanelを使用する>Swing/ComboBoxCellEditor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2009-07-06T15:24:09+09:00
 description: Htmlで文字列を修飾するとクリップされなくなるので、予めクリップした文字列を作成してからHtmlを使用します。
 image: https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJP6CTKHI/AAAAAAAAAUE/aD5gF_0luwI/s800/ClippedHtmlLabel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `Html`で文字列を修飾するとクリップされなくなるので、予めクリップした文字列を作成してから`Html`を使用します。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTJP6CTKHI/AAAAAAAAAUE/aD5gF_0luwI/s800/ClippedHtmlLabel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class URLRenderer extends DefaultTableCellRenderer
     implements MouseListener, MouseMotionListener {
@@ -67,7 +67,7 @@ class URLRenderer extends DefaultTableCellRenderer
   // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上
 -- `setText("<html><font color='blue'>"+str);`メソッドを使用して文字列に下線を引く
 -- 文字列は省略されない
@@ -75,9 +75,9 @@ class URLRenderer extends DefaultTableCellRenderer
 -- `SwingUtilities.layoutCompoundLabel(...)`メソッドを使用して文字列をセル幅分のみに省略
 -- `setText("<html><font color='blue'>"+clippedTxt);`メソッドを使用して省略済みの文字列に下線を引く
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのセルにHyperlinkを表示>Swing/HyperlinkInTableCell]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

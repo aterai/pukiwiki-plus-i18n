@@ -8,12 +8,12 @@ pubdate: 2019-12-09T17:24:04+09:00
 description: JComboBoxのアイテム文字列がJComboBox本体またはドロップダウンリストのセルから溢れる場合のみJToolTipを表示可能に設定します。
 image: https://drive.google.com/uc?id=1Gm4SDovuAp3RO8gdLagvzxvj5wComdW3
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`のアイテム文字列が`JComboBox`本体またはドロップダウンリストのセルから溢れる場合のみ`JToolTip`を表示可能に設定します。
 
 #download(https://drive.google.com/uc?id=1Gm4SDovuAp3RO8gdLagvzxvj5wComdW3)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static <E> JComboBox<E> makeComboBox(ComboBoxModel<E> model) {
   return new JComboBox<E>(model) {
@@ -64,7 +64,7 @@ private static <E> JComboBox<E> makeComboBox(ComboBoxModel<E> model) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JComboBox`の本体またはドロップダウンリストで文字列の溢れが発生する場合のみ`JToolTip`を表示するよう`ListCellRenderer`を設定しています。
 
 - `JComboBox`のドロップダウンリスト
@@ -74,11 +74,11 @@ private static <E> JComboBox<E> makeComboBox(ComboBoxModel<E> model) {
 -- `ArrowButton`の幅は`UIManager.getBoolean("ComboBox.squareButton")`が`true`で正方形になる場合は`JComboBox`の高さから取得可能だが、このサンプルでは`JComboBox`の子`JButton`を検索して直接その幅を取得している
 --- 参考: [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicComboBoxUI.html#squareButton BasicComboBoxUI#squareButton (Java Platform SE 8)]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxの各アイテムやArrowButtonにそれぞれToolTipTextを設定する>Swing/ToolTipInComboBox]]
 - [[JComboBoxのアイテム文字列を左側からクリップ>Swing/LeftClippedComboBox]]
 - [https://stackoverflow.com/questions/59157543/jcombobox-with-tooltip-if-display-area-too-small-while-maintaining-look-and-fee java - JComboBox with tooltip if display area too small, while maintaining look and feel - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2008-02-18T16:46:47+09:00
 description: ServerSocketを使ってポートをロック代わりに使用し、アプリケーションの複数起動を禁止します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTF6N0NjI/AAAAAAAAAj0/Ld2Nyv4QXsI/s800/SingleInstanceApplication.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `ServerSocket`を使ってポートをロック代わりに使用し、アプリケーションの複数起動を禁止します。[https://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks #68 単一インスタンスのアプリケーションを作る] を参考にしています。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTTF6N0NjI/AAAAAAAAAj0/Ld2Nyv4QXsI/s800/SingleInstanceApplication.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 ServerSocket socket = null;
 try {
@@ -27,7 +27,7 @@ if (socket == null) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `Java Swing Hacks #68`で紹介されているポートをロックとして使用する方法(任意のポートにバインドできるアプリケーションは一つだけ)で起動できるアプリケーションを一つに制限しています。
 
 上記のサンプルでは、警告ダイアログを表示して二番目のアプリケーションは終了するだけですが、`#68`のサンプルではポートへの接続要求が来るまで待機し要求が発生するとソケット入力ストリームを開いてコマンドラインオプションを取得する例(タブブラウザなどのように既に起動しているアプリケーションで別のコンテンツを開く場合に使用する)も記述されています。
@@ -37,11 +37,11 @@ if (socket == null) {
 -- [https://kazzz.hatenablog.com/entry/20071218/p1 PseudoFileSemaphore (アプリケーションのインスタンス数を制御するには-その3) - KazzzのJとNのはざまで]
 -- [https://kazzz.hatenablog.com/entry/20071221/p1 Attach API (アプリケーションのインスタンス数を制御するには-その4) - KazzzのJとNのはざまで]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks #68 単一インスタンスのアプリケーションを作る]
 - [[SingleInstanceServiceを使って Web Start アプリケーションの重複起動を禁止>Swing/SingleInstanceService]]
 -- `javax.jnlp.SingleInstanceService`を使用して複数起動を禁止する
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

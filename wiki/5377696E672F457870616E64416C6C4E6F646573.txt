@@ -8,12 +8,12 @@ pubdate: 2007-05-07T17:11:21+09:00
 description: JTreeのすべてのノードに対して、展開、折り畳みを行います。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMS3T9nvI/AAAAAAAAAY8/ooi4QMbp6fA/s800/ExpandAllNodes.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のすべてのノードに対して、展開、折り畳みを行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMS3T9nvI/AAAAAAAAAY8/ooi4QMbp6fA/s800/ExpandAllNodes.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private void expandAll(JTree tree) {
   int row = 0;
@@ -57,7 +57,7 @@ private void visitAll(JTree tree, TreePath parent, boolean expand) {
 // }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `expandAll(A)`
 -- `JTree`をリストとみなして`expandAll`では先頭から順番に`JTree#expandRow(int)`メソッドを実行
 -- ループは全展開された時の`JTree`の行数だけ繰り返す
@@ -71,11 +71,11 @@ private void visitAll(JTree tree, TreePath parent, boolean expand) {
 -- `visitAll(tree, new TreePath(root), false);`
 -- 再帰的に`TreePath`を辿って折り畳み(`JTree#collapsePath(TreePath)`メソッド)を実行
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://www.rgagnon.com/javadetails/java-0210.html Expand or collapse a JTree - Real's Java How-to]
 - [[JTreeのノードを検索する>Swing/SearchBox]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 解説中のラベル`A`と`B`が、ソースコードとは逆になっていたので、これをソースコードと同じになるよう修正。 -- &user(aterai); &new{2008-02-05 (火) 19:31:53};
 

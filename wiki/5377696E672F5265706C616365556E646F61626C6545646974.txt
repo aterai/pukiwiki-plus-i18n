@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2014/06/merge-replaceeditremove-and.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextField`などに`UndoManager`を設定し、文字列を選択してペーストした後の`Undo`の動作を変更します。
 
 #download(https://lh5.googleusercontent.com/-GEc9R-QZvos/UKt2czK61tI/AAAAAAAABXk/vqH8TKxkqCM/s800/ReplaceUndoableEdit.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class CustomUndoPlainDocument extends PlainDocument {
   private CompoundEdit compoundEdit;
@@ -46,7 +46,7 @@ class CustomUndoPlainDocument extends PlainDocument {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: `Default`
 -- `JTextComponent#setText(String)`メソッドや文字列を選択してペーストした場合、`Document#replace(...)`で実行される`Document#remove(...)`と`Document#insertString(...)`が別々に`UndoManager`に登録される仕様なので`2`回`Undo`しないとペースト前の状態まで戻らない
 - 中: `Document#replace()+AbstractDocument#fireUndoableEditUpdate()`
@@ -85,7 +85,7 @@ class DocumentFilterUndoManager extends UndoManager {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1509622 Undo two or more actions at once | Oracle Community]
 - [http://www.java2s.com/Code/Java/Swing-JFC/Undomanager.htm Undo manager : Undo Redo « Swing JFC « Java]
 - [https://tips4java.wordpress.com/2008/10/27/compound-undo-manager/ Compound Undo Manager ≪ Java Tips Weblog]
@@ -97,6 +97,6 @@ class DocumentFilterUndoManager extends UndoManager {
 - [http://bakagaiku.hsbt.org/entry/20100316 バカが征く on Rails 2010年03月16日()]
 - [[UndoManagerでJTextFieldのUndo、Redoを行う>Swing/UndoManager]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

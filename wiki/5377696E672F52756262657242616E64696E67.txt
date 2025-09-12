@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2008/10/using-rubber-band-selection-in-jlist.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JList`のアイテムをラバーバンドで範囲指定して選択します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTSd-lu2aI/AAAAAAAAAi0/AQTsBqR1OUc/s800/RubberBanding.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RubberBandSelectionList<E extends ListItem> extends JList<E> {
   private static final AlphaComposite ALPHA =
@@ -71,7 +71,7 @@ class RubberBandSelectionList<E extends ListItem> extends JList<E> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JList`にマウスリスナーを設定してドラッグに応じた矩形を描画しています。
 
 - `JList`内のアイテムの配置は`JList#setLayoutOrientation(JList.HORIZONTAL_WRAP)`メソッドを使っているため水平方向で整列される
@@ -99,13 +99,13 @@ private int[] getIntersectsIcons(JList l, Shape p) {
 }
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1378164 Swing - Can someone optimise the following code ?]
 - [https://xp-style-icons.en.softonic.com/ XP Style Icons - Download]
 - [[JListのアイテムをラバーバンドで複数選択、ドラッグ＆ドロップで並べ替え>Swing/DragSelectDropReordering]]
 -- このラバーバンドで選択したアイテムを実際にドラッグして並べ替えるサンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 点線のアニメーション: [http://programamemo2.blogspot.com/2007/08/java.html プログラマメモ2: java ラバーバンドを表現するためのした調べ] -- &user(aterai); &new{2008-08-01 (金) 16:24:28};
 - スクリーンショットなどを更新 -- &user(aterai); &new{2008-10-06 (月) 21:29:19};

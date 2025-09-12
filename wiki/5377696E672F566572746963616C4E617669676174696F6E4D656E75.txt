@@ -8,12 +8,12 @@ pubdate: 2017-10-02T15:53:07+09:00
 description: JTreeのスタイルを変更してサイドメニュー風のコンポーネントを作成し、ノード選択に応じてCardLayoutでのパネル切り替えを実行します。
 image: https://drive.google.com/uc?id=1HtdjEFvmcBet6Qv2s2zHMZWTgzkb2rcqqQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`のスタイルを変更してサイドメニュー風のコンポーネントを作成し、ノード選択に応じて`CardLayout`でのパネル切り替えを実行します。
 
 #download(https://drive.google.com/uc?id=1HtdjEFvmcBet6Qv2s2zHMZWTgzkb2rcqqQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 TreeModel model = makeModel();
 CardLayout cardLayout = new CardLayout();
@@ -41,7 +41,7 @@ tree.addTreeSelectionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTree`のスタイルをサイドメニュー風に変更
 -- ルートノードを非表示: [[JTreeのルートノードを非表示に設定する>Swing/TreeRootVisible]]
 -- ノード選択をシングルセレクションモードに変更: [[JTreeの選択モードを切り替える>Swing/TreeSelection]]
@@ -54,10 +54,10 @@ tree.addTreeSelectionListener(e -> {
 -- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#addTreeSelectionListener-javax.swing.event.TreeSelectionListener- JTree#addTreeSelectionListener(...)]メソッドを使用してノード選択イベントを取得
 -- ノードタイトルをキーに`CardLayout`で右パネルの切り替えを実行
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#addTreeSelectionListener-javax.swing.event.TreeSelectionListener- JTree#addTreeSelectionListener(...) (Java Platform SE 8)]
 - [[CardLayoutを使ってJTabbedPane風のコンポーネントを作成>Swing/CardLayoutTabbedPane]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

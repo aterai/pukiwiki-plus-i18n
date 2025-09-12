@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2009/08/jmenubar-background-image.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenu`が未選択状態の場合はその背景を透明にし、`JMenuBar`の背景に設定した画像を表示可能にします。
 
 #download(https://lh3.googleusercontent.com/_9Z4BYR88imo/TQTPxQA13fI/AAAAAAAAAeg/SAN79wHPkQc/s800/MenuBarBackground.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public JMenuBar createMenubar() {
   final TexturePaint texture = makeTexturePaint();
@@ -66,7 +66,7 @@ private JMenu createMenu(String key) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JMenuBar`に画像を描画し、これに追加する`JMenu`を通常は透明、選択されたときなどは不透明となるように`setOpaque`メソッドで切り替えています。
 
 - `WindowsLookAndFeel`の場合、`JMenu#setBackground(new Color(0x0, true))`を設定する必要がある
@@ -284,11 +284,11 @@ public class MenuBarRootPaneTest {
 // class TranslucentPopupMenu extends JPopupMenu {
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/AbstractButton.html#fireStateChanged-- AbstractButton#fireStateChanged() (Java Platform SE 8)]
 - [[JRootPaneの背景として画像を表示>Swing/RootPaneBackground]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - 選択状態を半透明にするテスト -- &user(aterai); &new{2010-01-09 (土) 23:08:42};
 -- `Windows7`での`WindowsLookAndFeel`でうまくいかない場合があるようなので、すこし修正。 -- &user(aterai); &new{2011-09-26 (月) 21:13:47};

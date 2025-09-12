@@ -6,7 +6,7 @@ description: Subversionのステータス表示で、bakファイル(*.bak、*.B
 ---
 #contents
 
-* 概要 [#ka3cbecd]
+* Summary [#ka3cbecd]
 例として`bak`ファイル(`*.bak`、`*.BAK`)などを、ステータス表示(`svn status`)で無視する設定方法を、以下に`3`つ紹介しています。
 
 - `config`ファイルで`global-ignores`を設定する(ローカル)
@@ -95,7 +95,7 @@ Windows Registry Editor Version 5.00
 --- [http://subversion.tigris.org/issues/show_bug.cgi?id=1794 subversion: #1794 Recursive propset corrupt WC]
 -- `svn add *.BAK`のようにした場合は、無視せずリポジトリに追加される
 
-* コメント [#x340b5c4]
+* Comment [#x340b5c4]
 #comment
 - `Emacs`などで生成される自動バックアップ中のファイル`#Hoge.java#`を`.hgignore`で無視する場合のメモ:  `#`がコメントになるので、`\#*\#`とエスケープする -- &user(aterai); &new{2013-07-16 (火) 16:27:59};
 

@@ -8,12 +8,12 @@ pubdate: 2016-06-20T00:15:58+09:00
 description: JTableの指定した列を編集は可能、ただし選択は不可になるよう設定します。
 image: https://lh3.googleusercontent.com/-goXZsRlvEdI/V2a1zMod1iI/AAAAAAAAOcA/ZX8_9YIkBwYS45vkDbZRBa6wf2PyjUS1QCCo/s800/DisableColumnSelection.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`の指定した列を編集は可能、ただし選択は不可になるよう設定します。
 
 #download(https://lh3.googleusercontent.com/-goXZsRlvEdI/V2a1zMod1iI/AAAAAAAAOcA/ZX8_9YIkBwYS45vkDbZRBa6wf2PyjUS1QCCo/s800/DisableColumnSelection.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table1 = new JTable(model) {
   @Override public void changeSelection(
@@ -58,7 +58,7 @@ table2.getColumnModel().setSelectionModel(new DefaultListSelectionModel() {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTable#changeSelection(...)`をオーバーライドするなどの方法で、`0`列目以外を編集は可能、ただし選択は不可となるように設定しています。
 
 - 上: `Override JTable#prepareRenderer(...)`
@@ -67,11 +67,11 @@ table2.getColumnModel().setSelectionModel(new DefaultListSelectionModel() {
 - 下: `table.setCellSelectionEnabled(true);` + `Override ListSelectionModel#isSelectedIndex(...)`
 -- カラムモデルに`ListSelectionModel#isSelectedIndex(...)`をオーバーライドした`ListSelectionModel`を設定し`0`列目以外は選択されないように設定
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableで選択可能な列を制限する>Swing/ColumnSelectability]]
 -- こちらは編集、選択ともに不可の列を設定する場合のサンプル
 - [https://stackoverflow.com/questions/37690017/jtable-disable-column-selection/37741006#37741006 java - JTable disable Column Selection - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

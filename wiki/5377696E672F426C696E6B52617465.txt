@@ -8,25 +8,25 @@ pubdate: 2011-02-21T14:49:17+09:00
 description: JTextComponentのCaretが点滅する速さを変更します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TWH8aAgoyiI/AAAAAAAAA1o/J-ljyl_h_i8/s800/BlinkRate.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextComponent`の`Caret`が点滅する速さを変更します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TWH8aAgoyiI/AAAAAAAAA1o/J-ljyl_h_i8/s800/BlinkRate.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 textField.getCaret().setBlinkRate(0);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTextField#getCaret()`で取得した`Caret`に`setBlinkRate(...)`メソッドでミリ秒単位の点滅間隔を設定
 -- 上: デフォルト
 -- 下: `Caret#setBlinkRate(0)`で点滅間隔を`0`に設定してキャレットの点滅を停止
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/Caret.html#setBlinkRate-int- Caret#setBlinkRate(int) (Java Platform SE 8)]
 - [https://bugs.openjdk.org/browse/JDK-6289635 &#91;JDK-6289635&#93; getDesktopProperty("awt.cursorBlinkRate") returns null - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

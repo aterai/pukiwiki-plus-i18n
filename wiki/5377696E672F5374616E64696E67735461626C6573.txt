@@ -8,12 +8,12 @@ pubdate: 2023-09-18T02:49:36+09:00
 description: JTableで順位表を作成し、上位と下位のグループ分けを表す水平罫線をJLayerを使用して描画するよう設定します。
 image: https://drive.google.com/uc?id=1UqHCznb6MioPHeaYVnk1_lj3IKz4EM5w
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`で順位表を作成し、上位と下位のグループ分けを表す水平罫線を`JLayer`を使用して描画するよう設定します。
 
 #download(https://drive.google.com/uc?id=1UqHCznb6MioPHeaYVnk1_lj3IKz4EM5w)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class BorderPaintLayerUI extends LayerUI<JScrollPane> {
   @Override public void paint(Graphics g, JComponent c) {
@@ -67,7 +67,7 @@ class BorderPaintLayerUI extends LayerUI<JScrollPane> {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JTable`のデフォルト罫線を非表示化して順位表を作成
 - `JTable`を配置する`JScrollPane`を`JLayer`でラップし、`LayerUI#paint(...)`をオーバーライド
 -- ソートなし、または`0`列目(順位)が昇順ソート、`9`列目(勝ち点)が降順ソートされている場合、`1`行目(`2`位)セルと`5`行目(`6`位)セルの下部、`21`行目(`20`位)セルの上部に罫線を描画
@@ -80,11 +80,11 @@ class BorderPaintLayerUI extends LayerUI<JScrollPane> {
 - %%たとえば勝点が同じ場合は得失点でソートするような処理には未対応%%
 -- [[JTableの行を複数条件でソートする>Swing/StandingsTablesComparator]]のサンプルに勝点が同じ場合は得失点でソートする処理を追加
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableのセルを斜めに分割する>Swing/DiagonallySplitCellCalendar]]
 - [[JTableが空の場合、中央にJComponentを表示する>Swing/PlaceholderForEmptyTable]]
 - [[JTableの行を複数条件でソートする>Swing/StandingsTablesComparator]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

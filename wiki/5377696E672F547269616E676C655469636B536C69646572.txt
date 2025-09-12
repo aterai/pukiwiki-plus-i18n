@@ -8,12 +8,12 @@ pubdate: 2010-05-24T15:00:41+09:00
 description: JSliderの目盛りに使用するJLabelを取得し、アイコンを追加したり文字色を変更するなどの変更を行います。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWS_t-t1I/AAAAAAAAApA/78UrJyqx8og/s800/TriangleTickSlider.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`の目盛りに使用する`JLabel`を取得し、アイコンを追加したり文字色を変更するなどの変更を行います。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTWS_t-t1I/AAAAAAAAApA/78UrJyqx8og/s800/TriangleTickSlider.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSlider slider = new JSlider(0, 100);
 slider.setMajorTickSpacing(10);
@@ -39,15 +39,14 @@ if (dictionary != null) {
 }
 }}
 
-* 解説 [#explanation]
-上記のサンプルでは、`JSlider`のラベル(`JLabel`)一覧を`JSlider#getLabelTable()`メソッドで取得し、この各`JLabel`に三角形のアイコンを追加して目盛り(`MajorTick`)の代替としています。
-
+* Description [#description]
+- `JSlider`のラベル(`JLabel`)一覧を`JSlider#getLabelTable()`メソッドで取得し、この各`JLabel`に三角形のアイコンを追加して目盛り(`MajorTick`)として使用
 - `JSlider#setOrientation(SwingConstants.VERTICAL)`で作成した垂直`JSlider`には未対応
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JSliderのUIや色を変更する>Swing/VolumeSlider]]
 - [[JSliderの目盛にアイコンや文字列を追加する>Swing/SliderLabelTable]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

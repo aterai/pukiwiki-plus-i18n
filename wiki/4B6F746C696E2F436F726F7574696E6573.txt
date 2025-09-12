@@ -6,7 +6,7 @@ description: Java Swing の SwingWorker を Kotlin の Coroutines に置き換�
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 [https://www.pushing-pixels.org/2018/08/07/replacing-swingworker-with-kotlin-coroutines.html Replacing SwingWorker with Kotlin coroutines ・ Pushing Pixels]を参考に、`Java Swing`の`SwingWorker`を`Kotlin`の`Coroutines`に置き換えるソースコードや`build.gradle`のサンプルなどについて記述、テストしています。
 
 * ビルト [#build]
@@ -63,7 +63,7 @@ dependencies {
 }
 }}
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 ** `Java`(`SwingWorker`) [#s48c74fa]
 #code{{
 import java.awt.*;
@@ -497,7 +497,7 @@ internal class ProgressCircleUI : BasicProgressBarUI() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Java`版は[[JProgressBarの進捗状況を円形で表示する>Swing/ProgressCircle]]とほぼ同一なので、コンパイル、実行なども同様の方法で可能
 - `Kotlin`版の実行方法
 -- `OpenJDK 1.8.0_192`などをインストール
@@ -505,13 +505,13 @@ internal class ProgressCircleUI : BasicProgressBarUI() {
 -- 適当なディレクトリを作成して、上記の`build.gradle`、`src/main/kotlin/Example.kt`を配置
 - 作成したディレクトリで、`gradle run`を実行
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://www.pushing-pixels.org/2018/08/07/replacing-swingworker-with-kotlin-coroutines.html Replacing SwingWorker with Kotlin coroutines ・ Pushing Pixels]
 - [https://github.com/Kotlin/kotlinx.coroutines/blob/master/COMPATIBILITY.md#migration-to-100-version-with-kotlin-13 kotlinx.coroutines/COMPATIBILITY.md at master · Kotlin/kotlinx.coroutines]
 - [https://github.com/Kotlin/kotlinx.coroutines/blob/master/ui/coroutines-guide-ui.md kotlinx.coroutines/coroutines-guide-ui.md at master · Kotlin/kotlinx.coroutines]
 - [[JProgressBarの進捗状況を円形で表示する>Swing/ProgressCircle]]
 - [http://d.hatena.ne.jp/nowokay/20180809#1533777641 Project LoomでJavaでの継続(Continuation)を試す - きしだのはてな]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2015-06-08T00:00:32+09:00
 description: JButtonがマウスで押されている間は指定したアクションを繰り返し実行するTimerを設定します。
 image: https://lh3.googleusercontent.com/-zp2-TOEE4JE/VXRXk25rFUI/AAAAAAAAN6I/_Kn4GsC9a1g/s800/AutoRepeatTimer.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JButton`がマウスで押されている間は指定したアクションを繰り返し実行する`Timer`を設定します。
 
 #download(https://lh3.googleusercontent.com/-zp2-TOEE4JE/VXRXk25rFUI/AAAAAAAAN6I/_Kn4GsC9a1g/s800/AutoRepeatTimer.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class AutoRepeatHandler extends MouseAdapter implements ActionListener {
   private final Timer autoRepeatTimer;
@@ -63,17 +63,17 @@ class AutoRepeatHandler extends MouseAdapter implements ActionListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JButton`をクリックすると編集不可の`JTextField`に表示される数値を増減する`ActionListener`と、`JButton`が押されている間はこのアクションを自動的にリピートする`Timer`を起動するための`MouseListener`のふたつのリスナーを設定しています。
 
 - `JSpinner`で使用されている`javax.swing.plaf.basic.BasicSpinnerUI`内の`ArrowButtonHandler`と、このサンプルで使用している`Timer`のリピート間隔(`60ms`)や初回起動までの時間(`300ms`)は同じ値を使用している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/plaf/basic/BasicSpinnerUI.html BasicSpinnerUI (Java Platform SE 8)]
 - [[JSliderの値を増減するJButtonを作成する>Swing/SliderWithArrowButtons]]
 - [[JTabbedPaneのタブスクロールボタンで連続スクロールを実行する>Swing/ScrollTabsActionRepeater]]
 - [https://github.com/openjdk/jdk/blob/master/src/java.desktop/share/classes/javax/swing/plaf/basic/BasicSpinnerUI.java jdk/src/java.desktop/share/classes/javax/swing/plaf/basic/BasicSpinnerUI.java at master · openjdk/jdk]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

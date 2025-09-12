@@ -1,0 +1,75 @@
+---
+category: swing
+folder: PopupMenuSeparator
+title: JPopupMenu用JSeparatorの高さを変更する
+tags: [JPopupMenu, JSeparator, LookAndFeel]
+author: aterai
+pubdate: 2024-05-27T01:52:12+09:00
+description: JPopupMenuに追加するJSeparatorの高さや長さを変更します。
+image: https://drive.google.com/uc?id=133kEDpTOr25bBa3L5VQrmfzaVlacitZs
+---
+* Summary [#summary]
+`JPopupMenu`に追加する`JSeparator`の高さや長さを変更します。
+
+#download(https://drive.google.com/uc?id=133kEDpTOr25bBa3L5VQrmfzaVlacitZs)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+popup.add("↓ addSeparator()");
+popup.addSeparator();
+popup.add("↓ add(new JPopupMenu.Separator()");
+popup.add(new JPopupMenu.Separator() {
+  @Override public Dimension getPreferredSize() {
+    Dimension d = super.getPreferredSize();
+    d.height = 4;
+    return d;
+  }
+});
+popup.add("↓ JPopupMenu.Separator(): font size 16f");
+popup.add(new JPopupMenu.Separator() {
+  @Override public Font getFont() {
+    return super.getFont().deriveFont(16f);
+  }
+});
+popup.add("↓ PopupMenuSeparator.contentMargins");
+popup.add(new JPopupMenu.Separator() {
+  @Override public void updateUI() {
+    super.updateUI();
+    UIDefaults d = new UIDefaults();
+    d.put("PopupMenuSeparator.contentMargins", new Insets(3, 0, 3, 0));
+    putClientProperty("Nimbus.Overrides", d);
+    putClientProperty("Nimbus.Overrides.InheritDefaults", true);
+  }
+});
+}}
+
+* Description [#description]
+- `add(new JSeparator()`
+-- `new JSeparator()`でセパレータを作成して`JPopupMenu`に追加
+-- `WindowsLookAndFeel`でも`JSeparator`の長さは`JPopupMenu`の幅まで描画される
+- `JSeparator(): height = 8`
+-- `new JSeparator()`でセパレータを作成して`JPopupMenu`に追加
+-- `JSeparator#getPreferredSize()`をオーバーライドしてその高さを`8px`に拡大
+- `addSeparator()`
+-- `JPopupMenu#addSeparator()`で`JPopupMenu`固有のセパレータを追加
+-- `JPopupMenu#add(new JPopupMenu.Separator())`と同等
+-- `WindowsLookAndFeel`の場合`JSeparator`の長さはメニューアイコンの幅だけ短く描画される
+- `JPopupMenu.Separator(): height = 4`
+-- `new JPopupMenu.Separator()`で`JPopupMenu`固有のセパレータを作成して`JPopupMenu`に追加
+-- `JPopupMenu.Separator#getPreferredSize()`をオーバーライドしてその高さを`4px`に縮小
+- `JPopupMenu.Separator(): font size 16f`
+-- `new JPopupMenu.Separator()`で`JPopupMenu`固有のセパレータを作成して`JPopupMenu`に追加
+-- `JPopupMenu.Separator#getFont()`をオーバーライドしてフォントサイズを`16pt`に拡大
+-- `WindowsLookAndFeel`の場合`JPopupMenu`固有のセパレータの推奨サイズは`fontHeight / 2 + 2`で計算されるのでセパレータの高さが変化する
+-- `com.sun.java.swing.plaf.windows.WindowsPopupMenuSeparatorUI#getPreferredSize()`を参照
+- `PopupMenuSeparator.contentMargins`
+-- `NimbusLookAndFeel`の場合`PopupMenuSeparator.contentMargins`で`JPopupMenu`固有のセパレータのマージンを変更可能
+-- このサンプルでは`new Insets(3, 0, 3, 0)`で上下`3px`の余白を追加している
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JPopupMenu.Separator.html JPopupMenu.Separator (Java Platform SE 8)]
+- [[JToolBar専用JSeparatorのサイズを指定する>Swing/ToolBarSeparatorSize]]
+
+* Comment [#comment]
+#comment
+#comment

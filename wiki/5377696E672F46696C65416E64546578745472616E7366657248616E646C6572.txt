@@ -8,12 +8,12 @@ pubdate: 2022-11-21T00:21:27+09:00
 description: JTextComponentにデフォルトの文字列だけでなくファイルもドロップ可能になるようなTransferHandlerを設定します。
 image: https://drive.google.com/uc?id=19UPpYiiOmU-vIAHpCt35QmXdofVKz3nO
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextComponent`にデフォルトの文字列だけでなくファイルもドロップ可能になるような`TransferHandler`を設定します。
 
 #download(https://drive.google.com/uc?id=19UPpYiiOmU-vIAHpCt35QmXdofVKz3nO)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public void addTab(File file) {
   JTextArea textArea = new JTextArea();
@@ -91,7 +91,7 @@ private class FileTransferHandler extends TransferHandler {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `FileTransferHandler`を設定した`JFrame`
 -- 子コンポーネントやタイトルバーを含む領域にファイルをドロップ可能
 #code{{
@@ -130,9 +130,9 @@ textArea.setTransferHandler(new TransferHandler() {
 });
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Fileのドラッグ＆ドロップ>Swing/FileListFlavor]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

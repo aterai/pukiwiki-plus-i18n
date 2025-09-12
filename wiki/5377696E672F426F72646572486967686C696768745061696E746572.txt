@@ -2,18 +2,18 @@
 category: swing
 folder: BorderHighlightPainter
 title: JTextAreaの検索ハイライトに縁を描画する
-tags: [JTextArea, Highlighter, Highlighter.HighlightPainter, Border]
+tags: [JTextArea, Highlighter, HighlightPainter, Border]
 author: aterai
 pubdate: 2024-02-12T19:09:38+09:00
 description: JTextAreaの検索文字列に適用するハイライトに縁色を設定します。
 image: https://drive.google.com/uc?id=1GPgC3RJq-ZBoxlGhY6xMpwQDo7OlXOgQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`の検索文字列に適用するハイライトに縁色を設定します。
 
 #download(https://drive.google.com/uc?id=1GPgC3RJq-ZBoxlGhY6xMpwQDo7OlXOgQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Highlighter.Highlight hh = highlighter.getHighlights()[idx];
 highlighter.removeHighlight(hh);
@@ -46,20 +46,20 @@ try {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 検索にマッチした文字列のハイライト
 -- `DefaultHighlighter.DefaultHighlightPainter(Color.ORANGE)`でハイライト背景色を`Color.ORANGE`に設定した`HighlightPainter`を使用
 - 検索にマッチした文字列のうち現在選択されているハイライト
 -- `DefaultHighlighter.DefaultHighlightPainter#paintLayer(...)`をオーバーライドして、ハイライト図形の縁を追加描画
 -- `paintLayer(...)`メソッドの引数の`Shape bounds`は`JTextComponent`の現在表示されている領域で戻り値が`offs0...offs1`の範囲の文字列領域となるので、`super.paintLayer(g, offs0, offs1, bounds, c, view)`を実行して取得した図形に縁を描画している
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextComponentの選択ハイライトを変更>Swing/SelectionHighlightPainter]]
 - [[JTextAreaでハイライト付き検索を行う>Swing/HighlightSearch]]
 -- 検索ハイライト機能はこちらのサンプルと同一
 - [[JTextPaneで検索結果のハイライト表示と文字色変更を同時に行う>Swing/HighlightTextForeground]]
 -- こちらは`JTextPane`で`HighlightPainter`ではなく`html`タグでハイライトの描画を変更するサンプル
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

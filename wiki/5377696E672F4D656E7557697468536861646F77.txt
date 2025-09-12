@@ -8,12 +8,12 @@ pubdate: 2006-10-23T14:11:21+09:00
 description: JMenuから開くJPopupMenuにBorderを設定して半透明の影を付けます。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPz0ZEG6I/AAAAAAAAAek/pd0ErBB9eBg/s800/MenuWithShadow.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JMenu`から開く`JPopupMenu`に`Border`を設定して半透明の影を付けます。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTPz0ZEG6I/AAAAAAAAAek/pd0ErBB9eBg/s800/MenuWithShadow.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 public class CustomPopupMenuUI extends BasicPopupMenuUI {
   public static ComponentUI createUI(JComponent c) {
@@ -46,7 +46,7 @@ public class CustomPopupMenuUI extends BasicPopupMenuUI {
 // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`BasicPopupMenuUI`を継承した`CustomPopupMenuUI`を作成して`UIManager`で登録しています。
 
 #code{{
@@ -68,13 +68,13 @@ UIManager.put("PopupMenuUI","example.CustomPopupMenuUI");
 contrib.com.jgoodies.looks.common.ShadowPopupFactory.install();
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://www.oreilly.co.jp/books/4873112788/ Java Swing Hacks #11 ドロップシャドウ付きのメニューを作る]
 - [http://www.jgoodies.com/ JGoodies | We make Java look good and work well]
 -- `contrib.com.jgoodies.looks.common.ShadowPopupFactory`
 - [[JPopupMenuに半透明の影を付ける>Swing/DropShadowPopup]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - ポップアップメニューがフレーム内にあるかどうかではなく、`HeavyWeightContainer`かどうかで影のつけ方を切り替えるように変更。 -- &user(aterai); &new{2008-05-29 (木) 16:13:30};
 

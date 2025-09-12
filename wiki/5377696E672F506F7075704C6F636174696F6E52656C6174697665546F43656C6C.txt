@@ -1,0 +1,125 @@
+---
+category: swing
+folder: PopupLocationRelativeToCell
+title: JPopupMenuがキー入力で開く位置を選択セル基準に変更する
+tags: [JPopupMenu, JTable, JTree]
+author: aterai
+pubdate: 2025-06-23T02:20:54+09:00
+description: JTableやJTreeに設定したJPopupMenuがキー入力で開く場合、その表示位置が選択セル基準になるよう設定します。
+image: https://drive.google.com/uc?id=1ygP91Udeh85p7GTZ7PWNL3brntM4FSPf
+---
+* Summary [#summary]
+`JTable`や`JTree`に設定した`JPopupMenu`がキー入力で開く場合、その表示位置が選択セル基準になるよう設定します。
+
+#download(https://drive.google.com/uc?id=)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class PopupLocationTable extends JTable {
+  private static final List<Integer> IGNORE_KEYS = Arrays.asList(
+      KeyEvent.VK_F1, KeyEvent.VK_F2, KeyEvent.VK_F3,
+      KeyEvent.VK_F4, KeyEvent.VK_F5, KeyEvent.VK_F6,
+      KeyEvent.VK_F7, KeyEvent.VK_F8, KeyEvent.VK_F9,
+      KeyEvent.VK_F10, KeyEvent.VK_F11, KeyEvent.VK_F12,
+      KeyEvent.VK_F13, KeyEvent.VK_F14, KeyEvent.VK_F15,
+      KeyEvent.VK_F16, KeyEvent.VK_F17, KeyEvent.VK_F18,
+      KeyEvent.VK_F19, KeyEvent.VK_F20, KeyEvent.VK_F21,
+      KeyEvent.VK_F22, KeyEvent.VK_F23, KeyEvent.VK_CONTEXT_MENU);
+
+  protected PopupLocationTable(int numRows, int numColumns) {
+    super(numRows, numColumns);
+  }
+
+  @Override public Point getPopupLocation(MouseEvent e) {
+    Rectangle r = getLeadSelectionCellRect();
+    boolean b = e == null && !r.isEmpty();
+    return b ? getKeyPopupLocation(r) : super.getPopupLocation(e);
+  }
+
+  @Override public boolean editCellAt(int row, int column, EventObject e) {
+    return !isIgnoreKeys(e) && super.editCellAt(row, column, e);
+  }
+
+  private Point getKeyPopupLocation(Rectangle r) {
+    double px = getCellSelectionEnabled()
+        ? r.getMaxX()
+        : getBounds().getCenterX();
+    return new Point((int) px, (int) r.getMaxY());
+  }
+
+  private Rectangle getLeadSelectionCellRect() {
+    int row = getSelectionModel().getLeadSelectionIndex();
+    int col = getColumnModel().getSelectionModel().getLeadSelectionIndex();
+    return getCellRect(row, col, false);
+  }
+
+  private static boolean isIgnoreKeys(EventObject e) {
+    return e instanceof KeyEvent &&
+           IGNORE_KEYS.contains(((KeyEvent) e).getKeyCode());
+  }
+}
+
+final class TablePopupMenu extends JPopupMenu {
+  /* default */ TablePopupMenu() {
+    super();
+    JMenuItem check = new JCheckBoxMenuItem("setCellSelectionEnabled", true);
+    add(check).addActionListener(e -> {
+      boolean b = ((JCheckBoxMenuItem) e.getSource()).isSelected();
+      JTable table = (JTable) getInvoker();
+      table.setCellSelectionEnabled(b);
+      table.setRowSelectionAllowed(true);
+    });
+    add("clearSelectionAndLeadAnchor").addActionListener(e -> {
+      JTable table = (JTable) getInvoker();
+      clearSelectionAndLeadAnchor(table);
+    });
+  }
+
+  private static void clearSelectionAndLeadAnchor(JTable table) {
+    ListSelectionModel selectionModel = table.getSelectionModel();
+    ListSelectionModel colSelectionModel = table.getColumnModel().getSelectionModel();
+    selectionModel.setValueIsAdjusting(true);
+    colSelectionModel.setValueIsAdjusting(true);
+    table.clearSelection();
+    selectionModel.setAnchorSelectionIndex(-1);
+    selectionModel.setLeadSelectionIndex(-1);
+    colSelectionModel.setAnchorSelectionIndex(-1);
+    colSelectionModel.setLeadSelectionIndex(-1);
+    selectionModel.setValueIsAdjusting(false);
+    colSelectionModel.setValueIsAdjusting(false);
+  }
+
+  @Override public void show(Component c, int x, int y) {
+    if (c instanceof JTable) {
+      super.show(c, x, y);
+    }
+  }
+}
+}}
+
+* Description [#description]
+- `JTable`上:
+-- デフォルトの`JTable`でKBD{ContextMenu}キー(アプリケーションキー)やKBD{Shift+F10}キー入力で`JPopupMenu`を開くと、セル選択状態に関係なく常に`JTable`の中央に`JPopupMenu`の左上が来るよう配置される
+-- キー入力によるセル編集が可能な状態では、KBD{ContextMenu}キー入力で`JPopupMenu`のオープンとセルの編集開始が同時に発生してしまう
+- `JTable`下:
+-- `JTable#getPopupLocation(MouseEvent)`をオーバーライドしてKBD{ContextMenu}キー入力で`JPopupMenu`を開く場合はリード選択セルを基準になるよう設定
+--- [[JPopupMenuをキー入力で開く場合の表示位置を調整する>Swing/PopupLocation]]
+--- `JTable#getCellSelectionEnabled()`が`true`でセル選択可能の場合はリード選択セルの右下が`JPopupMenu`の左上となるよう配置
+--- `JTable#getRowSelectionAllowed()`が`true`で行選択可能の場合はリード選択行の%%左下%%中央下が`JPopupMenu`の左上となるよう配置
+--- リード選択セルが存在しない(`JTable#getCellRect(row, col, ...)`が空領域)場合はデフォルトの`JTable`の中央が`JPopupMenu`の左上となるよう配置
+-- `JTable#editCellAt(...)`をオーバーライドしてKBD{ContextMenu}キーやKBD{F1}～KBD{F12}キーなどでセルの編集を開始しないよう設定
+--- [[JTableでキー入力によるセル編集自動開始を一部禁止する>Swing/FunctionKeyStartEditing]]
+- `JTree`上:
+-- デフォルトの`JTree`でKBD{ContextMenu}キー(アプリケーションキー)やKBD{Shift+F10}キー入力で`JPopupMenu`を開くと、セル選択状態に関係なく常に`JTree`の中央に`JPopupMenu`の左上となるよう配置される
+- `JTree`下:
+-- `JTree#getPopupLocation(MouseEvent)`をオーバーライドしてKBD{ContextMenu}キー入力で`JPopupMenu`を開く場合はリード選択セルを基準になるよう設定
+--- リード選択セルが存在する場合はその右下が`JPopupMenu`の左上となるよう配置
+--- リード選択セルが存在しない場合はデフォルトの`JTree`の中央が`JPopupMenu`の左上となるよう配置
+
+* Reference [#reference]
+- [[JPopupMenuをキー入力で開く場合の表示位置を調整する>Swing/PopupLocation]]
+- [[JTableでキー入力によるセル編集自動開始を一部禁止する>Swing/FunctionKeyStartEditing]]
+
+* Comment [#comment]
+#comment
+#comment

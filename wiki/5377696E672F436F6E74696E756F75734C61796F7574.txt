@@ -8,12 +8,12 @@ pubdate: 2010-07-12T15:30:54+09:00
 description: 二つのJSplitPaneのディバイダで、移動の同期と連続的な再描画を行います。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKL-SYs6I/AAAAAAAAAVk/pXv9HlMSLf0/s800/ContinuousLayout.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 二つの`JSplitPane`のディバイダで、移動の同期と連続的な再描画を行います。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTKL-SYs6I/AAAAAAAAAVk/pXv9HlMSLf0/s800/ContinuousLayout.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSplitPane leftPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 JSplitPane rightPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -45,7 +45,7 @@ leftPane.addPropertyChangeListener(pcl);
 rightPane.addPropertyChangeListener(pcl);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、各`JSplitPane`に`JSplitPane#setContinuousLayout(true)`を設定し、ディバイダの移動に応じて子コンポーネントを連続的に再描画しています。
 
 - `JSplitPane`を`3`つ使用し`4`つに分割された領域を表示
@@ -53,10 +53,10 @@ rightPane.addPropertyChangeListener(pcl);
 -- 片方のディバイダが上下移動したら残りも移動するように`PropertyChangeListener`を追加
 -- `JSplitPane#setContinuousLayout(true)`を設定して移動を連続的に再描画
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSplitPane.html#setContinuousLayout-boolean- JSplitPane#setContinuousLayout(boolean) (Java Platform SE 8)]
 - [https://community.oracle.com/thread/1376808 Swing - Regading SplitPanes]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

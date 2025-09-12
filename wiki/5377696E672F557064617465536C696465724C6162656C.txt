@@ -8,12 +8,12 @@ pubdate: 2015-02-23T00:36:42+09:00
 description: JSliderの数値テキストラベルの値を変更した場合、その位置やサイズが正しく描画されるように更新を行うメソッドを実行します。
 image: https://lh5.googleusercontent.com/-xP4QgpDpRec/VOn2C7a0GLI/AAAAAAAANxQ/HQ3F4rVgoUI/s800/UpdateSliderLabel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`の数値テキストラベルの値を変更した場合、その位置やサイズが正しく描画されるように更新を行うメソッドを実行します。
 
 #download(https://lh5.googleusercontent.com/-xP4QgpDpRec/VOn2C7a0GLI/AAAAAAAANxQ/HQ3F4rVgoUI/s800/UpdateSliderLabel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JSlider slider = new JSlider(0, 10000);
 slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.TRUE);
@@ -22,19 +22,19 @@ slider.setMinorTickSpacing(500);
 slider.setPaintLabels(true);
 slider.setPaintTicks(true);
 slider.setSnapToTicks(true);
-// slider.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
-Dictionary<?, ?> labelTable = slider.getLabelTable();
-Collections.list(labelTable.keys()).stream()
-    .filter(Integer.class::isInstance)
-    .map(Integer.class::cast)
-    .forEach(i -> {
-      JLabel label = (JLabel) labelTable.get(i);
-      label.setText(Objects.toString(i / 100));
-    });
+Object labelTable = slider.getLabelTable();
+if (labelTable instanceof Map) {
+  ((Map<?, ?>) labelTable).forEach((key, value) -> {
+    if (key instanceof Integer && value instanceof JLabel) {
+      JLabel label = (JLabel) value;
+      label.setText(Integer.toString((Integer) key / 100));
+    }
+  });
+}
 slider.setLabelTable(labelTable);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- 最小`0`、最大`10000`で作成した`JSlider`のラベルをその`1/100`で表示
 -- 各ラベルの文字数が変更されてもその幅が更新されないので目盛り中央に数字(文字列)が配置されない
@@ -44,10 +44,10 @@ slider.setLabelTable(labelTable);
 -- `JSlider#updateLabelUIs()`は`protected`なので内部でこれを呼び出している`JSlider#setLabelTable(...)`を実行する
 -- `JSlider#updateUI()`内でも`JSlider#updateLabelUIs()`を呼び出しているので、代わりに`SwingUtilities.updateComponentTreeUI(slider);`を実行しても可
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://stackoverflow.com/questions/28491041/jslider-is-drawn-incomplete-working-with-netbeans java - JSlider is drawn incomplete, Working with Netbeans - Stack Overflow]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JSlider.html#updateLabelUIs-- JSlider#updateLabelUIs() (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

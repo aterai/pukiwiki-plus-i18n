@@ -1,0 +1,97 @@
+---
+category: swing
+folder: RoundDownToHalfSpinner
+title: JSpinnerの数値を0.5単位で切り捨てる
+tags: [JSpinner, JFormattedTextField]
+author: aterai
+pubdate: 2025-02-10T03:12:04+09:00
+description: JSpinnerに表示する数値を0.5単位で切り捨て、または二捨三入するよう設定します。
+image: https://drive.google.com/uc?id=1NUCQ7kUpaVRdhJC4OGlXAQwU0x-FdRnZ
+---
+* Summary [#summary]
+`JSpinner`に表示する数値を`0.5`単位で切り捨て、または%%四捨五入%%二捨三入・七捨八入するよう設定します。
+
+#download(https://drive.google.com/uc?id=1NUCQ7kUpaVRdhJC4OGlXAQwU0x-FdRnZ)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+private static DefaultFormatter makeDownFormatter() {
+  return new DefaultFormatter() {
+    @Override public Object stringToValue(String text) {
+      return roundToDown(new BigDecimal(text)).doubleValue();
+   }
+
+   @Override public String valueToString(Object value) {
+      return roundToDown(BigDecimal.valueOf((Double) value)).toString();
+    }
+  };
+}
+
+private static BigDecimal roundToDown(BigDecimal value) {
+  return value.multiply(BigDecimal.valueOf(2))
+      .setScale(0, RoundingMode.DOWN)
+      .multiply(BigDecimal.valueOf(.5));
+}
+}}
+
+* Description [#description]
+- `Default, stepSize: 0.5`
+-- デフォルトの`SpinnerNumberModel`にステップサイズを`0.5`として使用
+-- 矢印ボタンで`JSpinner`の数値を変更すると`0.5`単位で増減するが、たとえば直接`8.85`を入力しても`0.5`単位の端数処理などは適用されない
+
+- `Override SpinnerNumberModel`
+-- `SpinnerNumberModel#setValue(...)`メソッドをオーバーライドして値を丸め幅`0.5`単位で切り捨て
+-- コンストラクタで初回の現在値を設定する場合は`SpinnerNumberModel#setValue(...)`が使用されないので、`super(roundDownToHalf(value), min, max, step);`のように切り捨てを実行している
+#code{{
+class RoundToHalfSpinnerModel extends SpinnerNumberModel {
+  protected RoundToHalfSpinnerModel(
+      double value, double min, double max, double step) {
+    super(roundDownToHalf(value), min, max, step);
+  }
+
+  @Override public void setValue(Object value) {
+    if (value instanceof Double) {
+      Double v = roundDownToHalf((Double) value);
+      if (!v.equals(getValue())) {
+        super.setValue(v);
+        fireStateChanged();
+      }
+    } else {
+      throw new IllegalArgumentException("illegal value");
+    }
+  }
+
+  private static double roundDownToHalf(Double value) {
+    return BigDecimal.valueOf(value)
+        .multiply(BigDecimal.valueOf(2))
+        .setScale(0, RoundingMode.DOWN)
+        .multiply(BigDecimal.valueOf(.5))
+        .doubleValue();
+  }
+}
+}}
+
+- `Round down to half Formatter`
+-- `JSpinner.DefaultEditor`から`JFormattedTextField`を取得して、`0.5`単位で切り捨てを実行する`DefaultFormatterFactory`を設定
+-- `0.5`単位の切り捨ては、`BigDecimal`の値を`2`倍したあと`BigDecimal#setScale(0, RoundingMode.DOWN)`で小数点以下を切り捨てし、`0.5`倍することで実行している
+
+- `Round to half Formatter`
+-- `JSpinner.DefaultEditor`から`JFormattedTextField`を取得して、二捨三入・七捨八入(丸め幅`0.5`単位の五捨六入？)を実行する`DefaultFormatterFactory`を設定
+-- `0.5`単位の二捨三入・七捨八入は、`BigDecimal`の値を`2`倍したあと`BigDecimal#setScale(0, RoundingMode.HALF_UP)`で小数点以下を四捨五入し、`0.5`倍することで実行している
+-- [https://ja.wikipedia.org/wiki/%25E3%2582%25B9%25E3%2582%25A6%25E3%2582%25A7%25E3%2583%2587%25E3%2582%25A3%25E3%2583%2583%25E3%2582%25B7%25E3%2583%25A5%25E3%2583%25BB%25E3%2583%25A9%25E3%2582%25A6%25E3%2583%25B3%25E3%2583%2587%25E3%2582%25A3%25E3%2583%25B3%25E3%2582%25B0 スウェディッシュ・ラウンディング - Wikipedia]
+#code{{
+private static BigDecimal roundToUp(BigDecimal value) {
+  return value.multiply(BigDecimal.valueOf(2))
+      .setScale(0, RoundingMode.HALF_UP)
+      .multiply(BigDecimal.valueOf(.5));
+}
+}}
+
+* Reference [#reference]
+- [[JSpinnerの上下限値をBigDecimalで比較する>Swing/BigDecimalSpinnerModel]]
+- [[JColorChooserのRGB色選択パネル内に表示される16進数カラーコードにAlpha値を追加する>Swing/ColorChooserRgbaHexCode]]
+- [https://ja.wikipedia.org/wiki/%25E3%2582%25B9%25E3%2582%25A6%25E3%2582%25A7%25E3%2583%2587%25E3%2582%25A3%25E3%2583%2583%25E3%2582%25B7%25E3%2583%25A5%25E3%2583%25BB%25E3%2583%25A9%25E3%2582%25A6%25E3%2583%25B3%25E3%2583%2587%25E3%2582%25A3%25E3%2583%25B3%25E3%2582%25B0 スウェディッシュ・ラウンディング - Wikipedia]
+
+* Comment [#comment]
+#comment
+#comment

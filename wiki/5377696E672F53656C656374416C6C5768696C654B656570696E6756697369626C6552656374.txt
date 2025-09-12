@@ -1,0 +1,62 @@
+---
+category: swing
+folder: SelectAllWhileKeepingVisibleRect
+title: JTextAreaの全選択で表示領域を維持する
+tags: [JTextArea, JScrollPane, JTextComponent, ActionMap, InputMap, Caret]
+author: aterai
+pubdate: 2025-03-10T00:52:54+09:00
+description: JTextAreaの複数行テキストをすべて選択したとき、末尾のキャレット位置までスクロールするのではなく、全選択前の表示領域を維持する全選択アクションを作成します。
+image: https://drive.google.com/uc?id=1vbNvUI8-oiwqmf9KVlVeoZCBpsmvZHMb
+---
+* Summary [#summary]
+`JTextArea`の複数行テキストをすべて選択したとき、末尾のキャレット位置までスクロールするのではなく、全選択前の表示領域を維持する全選択アクションを作成します。
+
+#download(https://drive.google.com/uc?id=1vbNvUI8-oiwqmf9KVlVeoZCBpsmvZHMb)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+@Override public void selectAll() {
+  Rectangle r = getVisibleRect();
+  Document doc = getDocument();
+  if (doc != null) {
+    if (isEmacs) {
+      setCaretPosition(doc.getLength());
+      moveCaretPosition(0);
+    } else { // Visual Studio Code
+      setCaretPosition(0);
+      moveCaretPosition(doc.getLength());
+    }
+  }
+  EventQueue.invokeLater(() -> scrollRectToVisible(r));
+}
+}}
+
+* Description [#description]
+- `Default`
+-- デフォルトの`JTextComponent`の`select-all`アクションは全選択で`Caret`は全テキスト末尾に移動し、表示領域もその末尾までスクロールする
+-- `Apache NetBeans`やメモ帳(`notepad.exe`)の動作と同じ
+- `Override selectAll`
+-- `JTextComponent#selectAll()`、または`DefaultEditorKit#SelectAllAction`をオーバーライドし、全選択前の表示領域を`JTextComponent#getVisibleRect()`で保存、全選択後にその領域を`JTextComponent#scrollRectToVisible(...)`で復元
+-- `JTextComponent#selectAll()`メソッドとKBD{Ctrl+A}で実行される`DefaultEditorKit#SelectAllAction`はどちらも同じように`setCaretPosition(0); moveCaretPosition(doc.getLength());`を実行しているが、別々に実装されているので注意が必要
+-- `Visual Studio Code`などと同様で全選択後の`Caret`は全テキスト末尾に移動するが、表示領域は移動しない
+-- 選択状態でKBD{↑}、KBD{←}キー入力すると選択していた文字列の先頭に`Caret`移動するよう`InputMap`、`ActionMap`を調節
+- `move Caret top`
+-- `Override selectAll`と同様の表示領域を維持する処理に加えて、全選択後の`Caret`位置を全テキスト先頭に変更
+-- `GNU Emacs`や`xyzzy`などの動作と同じになる
+-- 選択状態でKBD{↓}、KBD{→}キー入力すると選択していた文字列の末尾に`Caret`移動するよう`InputMap`、`ActionMap`を調節
+
+----
+- `IntelliJ IDEA`のように全選択で`Caret`位置を移動しないようにする方法を`JTextComponent`で再現するのは無理そう？
+-- [https://github.com/JetBrains/intellij-community/blob/master/platform/platform-impl/src/com/intellij/openapi/editor/ex/util/EditorUtil.java#L1256 intellij-community/platform/platform-impl/src/com/intellij/openapi/editor/ex/util/EditorUtil.java at master · JetBrains/intellij-community]
+-- [https://github.com/JetBrains/intellij-community/blob/master/platform/editor-ui-api/src/com/intellij/openapi/editor/Caret.java intellij-community/platform/editor-ui-api/src/com/intellij/openapi/editor/Caret.java at master · JetBrains/intellij-community]
+-- [https://github.com/JetBrains/intellij-community/blob/master/platform/platform-impl/src/com/intellij/openapi/editor/impl/CaretImpl.java intellij-community/platform/platform-impl/src/com/intellij/openapi/editor/impl/CaretImpl.java at master · JetBrains/intellij-community]
+-- [https://github.com/JetBrains/intellij-community/blob/master/platform/editor-ui-api/src/com/intellij/openapi/editor/Editor.java intellij-community/platform/editor-ui-api/src/com/intellij/openapi/editor/Editor.java at master · JetBrains/intellij-community]
+-- [https://github.com/JetBrains/intellij-community/blob/master/platform/platform-impl/src/com/intellij/openapi/editor/impl/EditorImpl.java intellij-community/platform/platform-impl/src/com/intellij/openapi/editor/impl/EditorImpl.java at master · JetBrains/intellij-community]
+
+* Reference [#reference]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#selectAll-- JTextComponent#selectAll() (Java Platform SE 8)]
+- [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DefaultEditorKit.html#selectAllAction DefaultEditorKit#selectAllAction (Java Platform SE 8)]
+
+* Comment [#comment]
+#comment
+#comment

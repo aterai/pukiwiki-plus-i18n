@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2019/09/change-drawing-area-of-selected.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JEditorPane`の`Caret`を変更して改行のみのパラグラフ上でも選択ハイライトが描画されるよう変更します。
 
 #download(https://drive.google.com/uc?id=1bwJ-w1zk4C_2cpxyF6t0Ky6K3Grn1Z8T)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ParagraphMarkHighlightPainter extends DefaultHighlightPainter {
   protected ParagraphMarkHighlightPainter(Color color) {
@@ -50,7 +50,7 @@ class WholeLineHighlightPainter extends DefaultHighlightPainter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `DefaultHighlightPainter`
 -- デフォルトの選択ハイライトは改行マークのみのパラグラフは幅`1px`だけ描画する
 - `ParagraphMarkHighlightPainter`
@@ -60,12 +60,12 @@ class WholeLineHighlightPainter extends DefaultHighlightPainter {
 -- `JEditorPane`ではなく、`JTextArea`の場合は`DefaultHighlighter#setDrawsLayeredHighlights(false)`が使用可能
 --- [[DefaultHighlighterの描画方法を変更する>Swing/DrawsLayeredHighlights]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextComponentの選択ハイライトを変更>Swing/SelectionHighlightPainter]]
 - [[JEditorPaneで改行を表示>Swing/ParagraphMark]]
 - [[JTextAreaでのCaretによる選択状態表示を維持する>Swing/CaretSelectionHighlight]]
 - [[DefaultHighlighterの描画方法を変更する>Swing/DrawsLayeredHighlights]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

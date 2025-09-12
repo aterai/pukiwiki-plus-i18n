@@ -8,12 +8,12 @@ pubdate: 2017-03-06T15:12:27+09:00
 description: JTreeの各ノードに章番号を自動的に追加し、タイトル先頭にそれを表示するTreeCellRendererを作成します。
 image: https://drive.google.com/uc?id=1sr9avobwqRpWX2bNvLVutxduLQa66KvKTg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`の各ノードに章番号を自動的に追加し、タイトル先頭にそれを表示する`TreeCellRenderer`を作成します。
 
 #download(https://drive.google.com/uc?id=1sr9avobwqRpWX2bNvLVutxduLQa66KvKTg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTree tree = new JTree(makeModel()) {
   @Override public void updateUI() {
@@ -46,7 +46,7 @@ class ChapterNumberingTreeCellRenderer extends DefaultTreeCellRenderer {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、ルートノードを除く各ノードに章番号を自動付加する`TreeCellRenderer`を作成して`JTree`に設定しています。
 
 - `JTree#setRootVisible(false)`でルートノードを非表示に設定
@@ -55,10 +55,10 @@ class ChapterNumberingTreeCellRenderer extends DefaultTreeCellRenderer {
 -- ルートノードを除く各ノードで自ノードが何番目のノードかを`TreeNode#getIndex()`メソッドで取得して文字列に変換
 -- 変換した各番号文字列を「`.`(`U+2E`)」で連結してノードタイトルの先頭に追加
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeで目次を作成する>Swing/TableOfContentsTree]]
 - [[JTreeでノード階層の深さを取得する>Swing/TreeNodeMaxLevel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2016-09-12T01:36:56+09:00
 description: JTreeでノード階層の深さ(TreePath内の要素数)を取得し、それに応じてノード追加の制限を行います。
 image: https://drive.google.com/uc?id=1ozunqsWtmzdel3isGcmth6R1GRxkSju28Q
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTree`でノード階層の深さ(`TreePath`内の要素数)を取得し、それに応じてノード追加の制限を行います。
 
 #download(https://drive.google.com/uc?id=1ozunqsWtmzdel3isGcmth6R1GRxkSju28Q)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private void updateLabel(TreePath path) {
   countLabel.setText("PathCount: " + path.getPathCount());
@@ -41,17 +41,17 @@ if (path.getPathCount() < 3) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`TreePath#getPathCount()`、または`DefaultMutableTreeNode#getLevel()`メソッドを使用してノード階層の深さを取得し、指定したレベルを超えるノードを作成できないように制限しています。
 
 - ルートパスの`TreePath#getPathCount()`は`1`、ルートノードの`DefaultMutableTreeNode#getLevel()`は`0`
 - `TreePath#getPathCount()`と`DefaultMutableTreeNode#getLevel()`の戻り値は[https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTree.html#setRootVisible-boolean- JTree#setRootVisible(boolean)]で設定したルートノードの可視・不可視には依存しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/TreePath.html#getPathCount-- TreePath#getPathCount() (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/tree/DefaultMutableTreeNode.html#getLevel-- DefaultMutableTreeNode#getLevel() (Java Platform SE 8)]
 - [[JTreeの各ノードタイトルに章番号を自動追加して表示する>Swing/AutoChapterNumberingTreeNode]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2006-11-13T04:01:26+09:00
 description: GlyphVectorを生成して、これを電光掲示板のようにスクロールさせます。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTSlbxO22I/AAAAAAAAAjA/SJLXTaAYArY/s800/ScrollingMessage.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `GlyphVector`を生成して、これを電光掲示板のようにスクロールさせます。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTSlbxO22I/AAAAAAAAAjA/SJLXTaAYArY/s800/ScrollingMessage.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class MarqueePanel extends JComponent implements ActionListener {
   public final javax.swing.Timer animator;
@@ -47,7 +47,7 @@ class MarqueePanel extends JComponent implements ActionListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`GlyphVector`や`LineMetrics`からテキストの`VisualBounds`や`Ascent`を取得して文字列を描画する位置などを計算しています。
 
 ----
@@ -58,10 +58,10 @@ Rectangle2D b = tl.getBounds();
 yy = tl.getAscent() / 2f + (float) b.getY();
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/GlyphVector.html GlyphVector (Java Platform SE 8)]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/font/TextLayout.html TextLayout (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

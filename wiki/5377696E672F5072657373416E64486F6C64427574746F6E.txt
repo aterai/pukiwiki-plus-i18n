@@ -11,26 +11,23 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2014/03/long-pressing-jbutton-to-get-jpopupmenu.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolBar`に、長押しで`JPopupMenu`、クリックで選択されたメニューを表示するボタンを追加します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRIzHMLNI/AAAAAAAAAgs/0_PwsyZOl-I/s800/PressAndHoldButton.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class PressAndHoldHandler extends AbstractAction implements MouseListener {
   public final JPopupMenu pop = new JPopupMenu();
   public final ButtonGroup bg = new ButtonGroup();
   private AbstractButton arrowButton;
-  private final Timer holdTimer = new Timer(1000, new ActionListener() {
-    @Override public void actionPerformed(ActionEvent e) {
-      System.out.println("InitialDelay(1000)");
-      if (arrowButton != null && arrowButton.getModel().isPressed()
-          && holdTimer.isRunning()) {
-        holdTimer.stop();
-        pop.show(arrowButton, 0, arrowButton.getHeight());
-        pop.requestFocusInWindow();
-      }
+  private final Timer holdTimer = new Timer(1000, e -> {
+    if (arrowButton != null && arrowButton.getModel().isPressed()
+        && holdTimer.isRunning()) {
+      holdTimer.stop();
+      pop.show(arrowButton, 0, arrowButton.getHeight());
+      pop.requestFocusInWindow();
     }
   });
 
@@ -43,11 +40,9 @@ class PressAndHoldHandler extends AbstractAction implements MouseListener {
       b.setActionCommand(m.command);
       b.setForeground(m.color);
       b.setBorder(BorderFactory.createEmptyBorder());
-      b.addActionListener(new ActionListener() {
-        @Override public void actionPerformed(ActionEvent e) {
-          System.out.println(bg.getSelection().getActionCommand());
-          pop.setVisible(false);
-        }
+      b.addActionListener(e -> {
+        System.out.println(e.getActionCommand());
+        pop.setVisible(false);
       });
       pop.add(b);
       bg.add(b);
@@ -107,16 +102,16 @@ class PressAndHoldHandler extends AbstractAction implements MouseListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 長押し
 -- ボタンクリックが`1000`ミリ秒以上継続すると`JRadioButton`を配置した`JPopupMenu`を表示
 --- `JPopupMenu`のレイアウトを`pop.setLayout(new GridLayout(0, 3))`で変更し`JRadioButton`を`3`列並べて表示
 - シングルクリック
 -- 現在選択されている`JRadioButton`の色をコンソールに出力
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/Timer.html#setInitialDelay-int- Timer#setInitialDelay(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

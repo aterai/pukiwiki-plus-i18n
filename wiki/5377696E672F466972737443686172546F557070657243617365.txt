@@ -8,12 +8,12 @@ pubdate: 2010-03-01T12:38:41+09:00
 description: DocumentFilterを使って、文字列の先頭が常に大文字になるように設定します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTMuU7OQ-I/AAAAAAAAAZo/jnaPTnPJY4w/s800/FirstCharToUpperCase.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `DocumentFilter`を使って、文字列の先頭が常に大文字になるように設定します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTMuU7OQ-I/AAAAAAAAAZo/jnaPTnPJY4w/s800/FirstCharToUpperCase.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class FirstCharToUpperCaseDocumentFilter extends DocumentFilter {
   private final JTextComponent textField;
@@ -46,7 +46,7 @@ class FirstCharToUpperCaseDocumentFilter extends DocumentFilter {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JTextField`に入力された文字列の先頭一文字が、常に大文字になるように変換する`DocumentFilter`を設定しています。
 
 - `JFormattedTextField` + `MaskFormatter`を使用すると指定した文字列長に足りない場合などでアンドゥが実行される
@@ -54,9 +54,9 @@ class FirstCharToUpperCaseDocumentFilter extends DocumentFilter {
 field1 = new JFormattedTextField(new MaskFormatter("ULLLLLLLLLL"));
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/DocumentFilter.html DocumentFilter (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

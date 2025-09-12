@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2015/05/dynamically-change-color-of.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JProgressBar`のインジケータの色を進行に応じてパレットから取得した色に変更します。
 
 #download(https://lh5.googleusercontent.com/-EjSzEK0Wc6g/UHJrTUTxG9I/AAAAAAAABT8/4AKSHxe6PNE/s800/GradientPalletProgressBar.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class GradientPalletProgressBarUI extends BasicProgressBarUI {
   private final int[] pallet;
@@ -90,16 +90,16 @@ class GradientPalletProgressBarUI extends BasicProgressBarUI {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは高さ`1px`の画像をパレットとして予め作成し、それから`JProgressBar`の進捗に応じた色を取得して`BasicProgressBarUI#paintDeterminate(...)`内で使用することで色の変更を行なっています。
 
 - パレット用の画像は[[JSliderのスタイルを変更する>Swing/GradientTrackSlider]]と同様のものを作成
 - 不確定モードには未対応
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [http://harmoniccode.blogspot.jp/2011/05/varying-gradients.html Harmonic Code: Varying gradients...]
 - [[JSliderのスタイルを変更する>Swing/GradientTrackSlider]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2004-06-21T07:16:58+09:00
 description: JLayeredPaneを使って、常に一番手前に表示されるJInternalFrameを作成します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTO8wLpaZI/AAAAAAAAAdM/mML3cGeQwrg/s800/LayeredPane.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JLayeredPane`を使って、常に一番手前に表示される`JInternalFrame`を作成します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTO8wLpaZI/AAAAAAAAAdM/mML3cGeQwrg/s800/LayeredPane.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JInternalFrame iframe = new JInternalFrame(
   "AlwaysOnTop", // title
@@ -26,15 +26,15 @@ desktop.add(iframe, Integer.valueOf(JLayeredPane.MODAL_LAYER + 1));
 iframe.setVisible(true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JDesktopPane`は`JLayeredPane`を継承しているため、`JInternalFrame`を追加するレイヤーを指定可能です。このサンプルでは、タイトルが`AlwaysOnTop`の`JInternalFrame`を`JLayeredPane.MODAL_LAYER`の一つ上に設定し、他の`JInternalFrame`(ここでは後から追加する`JInternalFrame`)より常に手前に表示されるように設定しています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JLayeredPane.html JLayeredPane (Java Platform SE 8)]
 - [http://d.hatena.ne.jp/tori31001/20060901 JInternalFrameは最初にアイコン化しておかないと位置が更新されない]
 -- [https://bugs.openjdk.org/browse/JDK-4110799 JDK-4110799 JInternalFrame icon position unchanged w/ resize - Java Bug System]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JDK 1.5.0`で`JFrame`などは、`frame.setAlwaysOnTop(true)`が使えるようになっています。 -- &user(aterai); &new{2004-10-08 (金) 17:00:59};
 - ありがとうございます。現在`GUI`の作成をしていて、目下この情報を探していました。ありがとうございました -- &user(G); &new{2004-12-24 (金) 12:00:00};

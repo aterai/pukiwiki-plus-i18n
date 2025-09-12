@@ -8,12 +8,12 @@ pubdate: 2006-11-20T10:35:42+09:00
 description: JFileChooserに選択した画像ファイルのプレビューを表示する機能を追加します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRN6_UpeI/AAAAAAAAAg0/eJZas5kcb34/s800/PreviewAccessory.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`に選択した画像ファイルのプレビューを表示する機能を追加します。プレビューを表示するコンポーネントは、チュートリアルの[https://docs.oracle.com/javase/tutorial/uiswing/examples/components/FileChooserDemo2Project/src/components/ImagePreview.java ImagePreview.java]をそのまま利用しています。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTRN6_UpeI/AAAAAAAAAg0/eJZas5kcb34/s800/PreviewAccessory.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 fileChooser = new JFileChooser();
 fileChooser.setAccessory(new ImagePreview(fileChooser));
@@ -91,17 +91,17 @@ class ImagePreview extends JComponent implements PropertyChangeListener {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JFileChooser`のファイルリストで画像ファイルを選択すると、そのプレビューを`JFileChooser`内に表示する
 - プレビュー表示に使用するコンポーネント(`JLabel`)は`JFileChooser#setAccessory(JComponent)`メソッドで追加
 - プレビューコンポーネントは`PropertyChangeListener`を実装してファイルの選択、解除などのイベントを受け取る
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html How to Use File Choosers (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Swing Components)]
 - [https://community.oracle.com/docs/DOC-983611 The Perils of Image.getScaledInstance() Blog | Oracle Community]
 - [http://www.bekkoame.ne.jp/~bootan/free2.html デジタル出力工房　絵写楽]
 - [[MetalLookAndFeelでJFileChooserの下部にコンポーネントを追加する>Swing/FileChooserBottomAccessory]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

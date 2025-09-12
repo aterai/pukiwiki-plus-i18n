@@ -8,12 +8,12 @@ pubdate: 2021-09-27T00:10:53+09:00
 description: JSliderのノブの上部などに現在値を常時表示するよう設定します。
 image: https://drive.google.com/uc?id=1_If8hmAB7ec08-gyZvzCvFP5vEDfjGtT
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSlider`のノブの上部などに現在値を常時表示するよう設定します。
 
 #download(https://drive.google.com/uc?id=1_If8hmAB7ec08-gyZvzCvFP5vEDfjGtT)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // UIManager.put("Slider.paintValue", Boolean.TRUE)
 JSlider slider = new JSlider();
@@ -27,7 +27,7 @@ d.put("Slider.paintValue", Boolean.TRUE);
 slider.putClientProperty("Nimbus.Overrides", d);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `Default`
 -- `SynthLookAndFeel`を継承する`LookAndFeel`は`Slider.paintValue`で`JSlider`の上部に現在値を表示可能
 -- `BasicLookAndFeel`を継承する`MetalLookAndFeel`などでは`Slider.paintValue`の設定は無効でこの設定での`JSlider`の現在値表示は不可能
@@ -43,11 +43,11 @@ slider.putClientProperty("Nimbus.Overrides", d);
 -- `JToolTip`を使用してノブのドラッグ中のみ現在値を表示
 -- [[JSliderのノブをドラッグ中にToolTipで値を表示>Swing/SliderToolTips]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JPopupMenuに追加したJSliderの表示・非表示をチェックボックスで切り替える>Swing/SliderMenuItem]]
 - [[JSliderのノブをドラッグ中にToolTipで値を表示>Swing/SliderToolTips]]
 - [https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html Nimbus Defaults (The Java™ Tutorials > Creating a GUI With JFC/Swing > Modifying the Look and Feel)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

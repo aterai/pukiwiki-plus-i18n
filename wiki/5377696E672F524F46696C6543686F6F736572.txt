@@ -8,12 +8,12 @@ pubdate: 2005-05-16T06:02:26+09:00
 description: JFileChooser内でのファイル名変更や新規フォルダ作成などの編集を不可にします。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTR_zuU1UI/AAAAAAAAAiE/nZgj97xKO24/s800/ROFileChooser.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JFileChooser`内でのファイル名変更や新規フォルダ作成などの編集を不可にします。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTR_zuU1UI/AAAAAAAAAiE/nZgj97xKO24/s800/ROFileChooser.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JButton readOnlyButton = new JButton("readOnly");
 readOnlyButton.addActionListener(e -> {
@@ -26,16 +26,16 @@ readOnlyButton.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JDK 1.5.0`以上で`UIManager.put("FileChooser.readOnly", Boolean.TRUE);`を設定すると、`JFileChooser`がリードオンリーになり、ファイル名の変更や新規フォルダの作成などが禁止されます。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://community.oracle.com/thread/1377535 Swing - disabling "rename" on JFileChooser]
 - [[JFileChooserで読み取り専用ファイルのリネームを禁止>Swing/RenameIfCanWriteFileChooser]]
 - [https://bugs.openjdk.org/browse/JDK-8021379 &#91;JDK-8021379&#93; JFileChooser Create New Folder button enabled in write proteced directory - Java Bug System]
 -- `Java 8`で修正済み
 - [[JFileChooserで新規フォルダ作成を無効化する>Swing/DisableNewFolderAction]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2019-04-29T15:55:58+09:00
 description: JComboBoxのComboBoxEditorにJLayerを設定し、そのテキストが空の場合はプレースホルダ文字列を表示します。
 image: https://drive.google.com/uc?id=1tj1SR1p6B8munrw_eO-ktRIB0pyl4h2-kw
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`の`ComboBoxEditor`に`JLayer`を設定し、そのテキストが空の場合はプレースホルダ文字列を表示します。
 
 #download(https://drive.google.com/uc?id=1tj1SR1p6B8munrw_eO-ktRIB0pyl4h2-kw)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 combo2.setEditor(new BasicComboBoxEditor() {
   private Component editorComponent;
@@ -32,7 +32,7 @@ combo2.setBorder(BorderFactory.createCompoundBorder(
     BorderFactory.createEmptyBorder(0, 2, 0, 0)));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上:
 -- デフォルトの編集可能な`JComboBox`
 -- 編集可能な`JComboBox`の場合は、[[JComboBoxでアイテムが選択されていない場合のプレースホルダ文字列を設定する>Swing/ComboBoxPlaceholder]]のようにセルレンダラーを使用したプレースホルダ文字列の表示は不可
@@ -43,10 +43,10 @@ combo2.setBorder(BorderFactory.createCompoundBorder(
 -- `WindowsLookAndFeel`でエディタの内余白が適用されない場合がある？ため`JComboBox`本体の縁を変更
 --- このため、他の`LookAndFeel`に切り替えると縁や内余白がおかしくなる
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JComboBoxでアイテムが選択されていない場合のプレースホルダ文字列を設定する>Swing/ComboBoxPlaceholder]]
 - [[ComboBoxEditorにJLayerを設定し入力の妥当性を表示する>Swing/ComboBoxEditorVerifier]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

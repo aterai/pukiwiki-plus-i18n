@@ -8,12 +8,12 @@ pubdate: 2010-09-06T11:51:11+09:00
 description: JTableがデフォルトで使用するBooleanCellEditorの背景色を選択色に変更します。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIJ0rZk-I/AAAAAAAAASU/JvYohArvFpU/s800/BooleanCellEditor.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`がデフォルトで使用する`BooleanCellEditor`の背景色を選択色に変更します。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTIJ0rZk-I/AAAAAAAAASU/JvYohArvFpU/s800/BooleanCellEditor.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTable table = new JTable(model) {
   @Override public Component prepareEditor(
@@ -29,16 +29,16 @@ JTable table = new JTable(model) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 上: デフォルト
 -- セルをクリックして編集状態になると`CellEditor`として背景色が`JTable`と同じ白色になる`JCheckBox`が表示される
 - 下: `JTable#getSelectionBackground()`
 -- `BooleanCellEditor`として使用する`JCheckBox`の背景色が常に`JTable#getSelectionBackground()`になるように`JTable#prepareEditor(...)`メソッドをオーバーライド
 
-* 参考リンク [#reference]
+* Reference [#reference]
 [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JTable.html#prepareEditor-javax.swing.table.TableCellEditor-int-int- JTable#prepareEditor(...) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - KBD{Ctrl}キーを押しながら選択されている行にある`JCheckBox`をマウスで選択するとリリースするまで`JCheckBox`の背景色が残る、または`NimbusLookAndFeel`から別の`LookAndFeel`に変更すると選択色が残るなどの問題に対応。 -- &user(aterai); &new{2012-02-23 (木) 15:05:20};
 

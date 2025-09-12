@@ -11,12 +11,12 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2011/07/pause-and-resume-swingworker.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `SwingWorker`で処理の一時停止と再開を行います。
 
 #download(https://lh6.googleusercontent.com/-3BCjKLnQbGM/Ti0AQV5nkwI/AAAAAAAAA_s/RY75ol3pFak/s800/PauseResumeSwingWorker.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class RunAction extends AbstractAction {
   public RunAction() {
@@ -125,13 +125,13 @@ class PauseAction extends AbstractAction {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`SwingWorker#doInBackground()`内のループで一時停止のフラグを参照し、一時停止状態の場合は本来の処理(上記のサンプルではカウントアップするだけ)を行わずに`Thread.sleep(...)`と停止中を表現するコンポーネントの更新(`JTextArea`の文字列を点滅)のみ繰り返す`SwingWorker`を使用しています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[SwingWorkerを使った処理の中断と進捗状況表示>Swing/SwingWorker]]
 - [[SwingWorkerで複数のJProgressBarを使用する>Swing/TwoProgressBars]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

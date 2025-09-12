@@ -8,12 +8,12 @@ pubdate: 2016-11-07T03:34:14+09:00
 description: FocusTraversalPolicyを使用してフォーカスをもつコンポーネントを取得し、その全体が表示されるまでスクロールします。
 image: https://drive.google.com/uc?id=1FEs_WslEqQzxCPS7bxq_smwC8Ao3j6-JcA
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `FocusTraversalPolicy`を使用してフォーカスをもつコンポーネントを取得し、その全体が表示されるまでスクロールします。
 
 #download(https://drive.google.com/uc?id=1FEs_WslEqQzxCPS7bxq_smwC8Ao3j6-JcA)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Box box = Box.createVerticalBox();
 box.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -45,7 +45,7 @@ box.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy() {
 add(new JScrollPane(box));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`JScrollPane`内に配置されているコンポーネントにフォーカスが移動した場合、そのコンポーネント全体が表示されるようにスクロールを行う`FocusTraversalPolicy`を作成しています。
 
 - 左: `Default`
@@ -53,11 +53,11 @@ add(new JScrollPane(box));
 - 右: `LayoutFocusTraversalPolicy#getComponentAfter(...)`
 -- `LayoutFocusTraversalPolicy#getComponentAfter(...)`メソッドなどをオーバーライドしてフォーカスを取得するコンポーネントを取得し、`JComponent#scrollRectToVisible(...)`メソッドでそのコンポーネントの領域が表示されるまでスクロールを実行
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTextFieldを編集不可のJTextPaneに追加する>Swing/TextFieldOnReadOnlyTextPane]]
 -- 同様に`JComponent#scrollRectToVisible(...)`を使用しているが、こちらは`FocusListener`を各`JTextField`に設定している
 - [https://tips4java.wordpress.com/2010/05/09/scrolling-a-form/ Scrolling a Form « Java Tips Weblog]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

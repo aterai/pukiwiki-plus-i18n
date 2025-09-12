@@ -8,12 +8,12 @@ pubdate: 2005-03-07T02:07:13+09:00
 description: TrueTypeフォントをファイルから読み込み、ASCII artを表示します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKOUJYB7I/AAAAAAAAAVo/K2rl3dXD4ic/s800/CreateFont.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TrueType`フォントをファイルから読み込み、`ASCII art`を表示します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTKOUJYB7I/AAAAAAAAAVo/K2rl3dXD4ic/s800/CreateFont.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Font makeFont(URL url) {
   Font font = null;
@@ -48,15 +48,15 @@ Font makeFont(URL url) {
 // }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`Font.createFont(...)`メソッドで`.ttf`ファイルからフォントを作成しています。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/Font.html#createFont-int-java.io.File- Font (Java Platform SE 8)]
 - [http://monafont.sourceforge.net/index.html モナーフォント]
 - [https://community.oracle.com/thread/1483177 Swing (Archive) - Loading TYPE1 fonts with JRE 1.5.0]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - `JDK 1.5.0_01`でずれる？ -- &user(aterai); &new{2005-03-07 11:19:11 (月)};
 -- 応急処置済み -- &user(aterai); &new{2005-03-07 11:32:44 (月)};

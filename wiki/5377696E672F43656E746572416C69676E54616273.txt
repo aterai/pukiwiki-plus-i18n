@@ -1,0 +1,56 @@
+---
+category: swing
+folder: CenterAlignTabs
+title: JTabbedPaneの各タブを中央揃えで配置する
+tags: [JTabbedPane, NimbusLookAndFeel]
+author: aterai
+pubdate: 2025-04-28T07:44:55+09:00
+description: JTabbedPaneの各タブ幅合計がタブエリア以下の場合は左揃えではなく、中央揃えで配置するよう設定します。
+image: https://drive.google.com/uc?id=1xxL4mJpXKojjnDuSVOX361sDI0GGRO1q
+---
+* Summary [#summary]
+`JTabbedPane`の各タブ幅合計がタブエリア以下の場合は左揃えではなく、中央揃えで配置するよう設定します。
+
+#download(https://drive.google.com/uc?id=1xxL4mJpXKojjnDuSVOX361sDI0GGRO1q)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class CenteredTabbedPane extends JTabbedPane {
+  @Override public void doLayout() {
+    int placement = getTabPlacement();
+    if (placement == TOP || placement == BOTTOM) {
+      EventQueue.invokeLater(this::updateTabAreaMargins);
+    }
+    super.doLayout();
+  }
+
+  private void updateTabAreaMargins() {
+    int allWidth = IntStream.range(0, getTabCount())
+        .map(i -> getBoundsAt(i).width).sum();
+    Rectangle r = SwingUtilities.calculateInnerArea(this, null);
+    int w2 = Math.max(0, (r.width - allWidth) / 2);
+    Insets ins = new Insets(3, w2, 4, 0);
+    UIDefaults d = new UIDefaults();
+    d.put("TabbedPane:TabbedPaneTabArea.contentMargins", ins);
+    putClientProperty("Nimbus.Overrides", d);
+    putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+  }
+}
+}}
+
+* Description [#description]
+- タブが追加、削除されたり、`JTabbedPane`自体がリサイズされると実行される`JTabbedPane#doLayout()`をオーバーライドして、タブ配置が上下、かつタブエリアに左右余白が存在する場合はその値を変更して中央揃えを行う
+-- [[JTabbedPaneのタイトルをクリップ>Swing/ClippedTabLabel]]
+- `JTabbedPane#getBoundsAt(int)`でタブ領域を取得してすべてのタブ幅の合計を求め、その値がタブエリアの幅以下かを調査する
+- タブ幅の合計がタブエリアの幅以下の場合、その半分を左余白として設定することで中央揃えになる
+- タブエリアの余白変更は`UIDefaults`を`JTabbedPane#putClientProperty(...)`に設定することで実行しているので`NimbusLookAndFeel`以外では効果がない
+-- [[JTabbedPaneのタブエリアに余白を設定する>Swing/TabAreaContentMargins]]
+
+* Reference [#reference]
+- [[JTabbedPaneのタブエリアに余白を設定する>Swing/TabAreaContentMargins]]
+- [[Nimbusの外観をUIDefaultsで変更する>Swing/UIDefaultsOverrides]]
+- [[JTabbedPaneのタイトルをクリップ>Swing/ClippedTabLabel]]
+
+* Comment [#comment]
+#comment
+#comment

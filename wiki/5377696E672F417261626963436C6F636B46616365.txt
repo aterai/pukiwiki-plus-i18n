@@ -8,12 +8,12 @@ pubdate: 2022-10-03T00:30:06+09:00
 description: AffineTransformを使用して時計盤の上半分と下半分で異なる回転でアラビア数字を配置します。
 image: https://drive.google.com/uc?id=1KzFKziZV4Y0zs-b2nE4d8_Y92mdUGZAO
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `AffineTransform`を使用して時計盤の上半分と下半分で異なる回転でアラビア数字を配置します。
 
 #download(https://drive.google.com/uc?id=1KzFKziZV4Y0zs-b2nE4d8_Y92mdUGZAO)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 for (String txt : arabicNumerals) {
   double m00 = at.getScaleX();
@@ -30,7 +30,7 @@ for (String txt : arabicNumerals) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 時計盤の上半分(`9, 10, 11, 12, 1, 2, 3`)
 -- アラビア数字文字列から`Font`や`TextLayout`を使用して文字図形を取得
 -- 時計盤の中央から`12`時の位置まで文字図形を移動
@@ -41,9 +41,9 @@ for (String txt : arabicNumerals) {
 -- 時計の中心から`12`時の位置まで文字図形を移動
 -- 時計の中心を原点にプラス`30°`回転を`AffineTransform`に追加して文字図形を回転
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[AffineTransformを使用してアナログ時計の文字盤に数字を配置する>Swing/ClockWithArabicOrRomanNumerals]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

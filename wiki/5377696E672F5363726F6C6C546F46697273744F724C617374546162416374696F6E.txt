@@ -8,12 +8,12 @@ pubdate: 2022-06-06T00:51:31+09:00
 description: JTabbedPaneのスクロールタブレイアウトで矢印ボタンにCtrlキーを押しながらクリックすると先頭もしくは末尾のタブまでスクロールするアクションを追加します。
 image: https://drive.google.com/uc?id=1eNSI9wDlm4F4yA6Xm0Df6YOcHqmTYlHS
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のスクロールタブレイアウトで矢印ボタンにKBD{Ctrl}キーを押しながらクリックすると先頭もしくは末尾のタブまでスクロールするアクションを追加します。
 
 #download(https://drive.google.com/uc?id=1eNSI9wDlm4F4yA6Xm0Df6YOcHqmTYlHS)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class ScrollTabsAction extends AbstractAction {
   private final JTabbedPane tabbedPane;
@@ -62,7 +62,7 @@ class ScrollTabsAction extends AbstractAction {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `scrollTabsForwardAction`
 -- `JTabbedPane.getActionMap().get("scrollTabsForwardAction")`でアクションを取得
 -- `AbstractAction#actionPerformed(...)`をオーバーライドしてKBD{Ctrl}キーが押されている`(ActionEvent#getModifiers() & ActionEvent.CTRL_MASK) != 0`場合は、末尾タブ`tabbedPane.getTabCount() - 1`までスクロール、それ以外は先に取得した`scrollTabsForwardAction`を実行するよう設定
@@ -75,10 +75,10 @@ class ScrollTabsAction extends AbstractAction {
 ----
 - `scrollTabsForwardAction`、`scrollTabsBackwardAction`はスクロールするだけなので、このサンプルで置換したアクションでも先頭末尾へのスクロールのみ実行してタブの選択状態は変化しない
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのTabAreaをスクロール>Swing/ScrollTabToVisible]]
 - [[JTabbedPaneのタブスクロールボタンで連続スクロールを実行する>Swing/ScrollTabsActionRepeater]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

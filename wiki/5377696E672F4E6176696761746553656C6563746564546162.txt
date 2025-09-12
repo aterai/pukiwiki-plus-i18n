@@ -8,12 +8,12 @@ pubdate: 2022-11-07T00:04:34+09:00
 description: JTabbedPaneのカーソルキーによるタブ選択遷移を変更してループ不可、またはタブにフォーカスがない場合でも移動可能に設定します。
 image: https://drive.google.com/uc?id=14CLheWN2b7q8Q531gPA1Mn1g05BEBuzQ
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のカーソルキーによるタブ選択遷移を変更してループ不可、またはタブにフォーカスがない場合でも移動可能に設定します。
 
 #download(https://drive.google.com/uc?id=14CLheWN2b7q8Q531gPA1Mn1g05BEBuzQ)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 InputMap im0 = tabs.getInputMap(JComponent.WHEN_FOCUSED);
 InputMap im1 = tabs.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -61,7 +61,7 @@ class TabNavigateAction extends AbstractAction {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - タブ自体にフォーカスが存在し、かつタブレイアウトが`JTabbedPane.SCROLL_TAB_LAYOUT`の場合:
 -- KBD{←}、KBD{↑}キーにループ不可に設定した`navigatePrevious`アクションを割り当て
 -- KBD{→}、KBD{↓}キーにループ不可に設定した`navigateNext`アクションを割り当て
@@ -69,11 +69,11 @@ class TabNavigateAction extends AbstractAction {
 -- KBD{Alt + ←}、KBD{Alt + ↑}キーにデフォルトの`navigatePrevious`アクションを割り当て
 -- KBD{Alt + →}、KBD{Alt + ↓}キーにデフォルトの`navigateNext`アクションを割り当て
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのタブ選択をマウスホイールで変更する>Swing/MouseWheelTabCycling]]
 - [[JTabbedPaneのタブスクロールボタンで連続スクロールを実行する>Swing/ScrollTabsActionRepeater]]
 - [[JTabbedPaneのタブ選択で表示状態になったタブコンポーネントにフォーカスを移動する>Swing/RequestFocusForVisibleComponent]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

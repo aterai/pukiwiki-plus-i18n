@@ -8,12 +8,12 @@ pubdate: 2013-06-03T04:18:20+09:00
 description: JSpinnerの表記を16進数にして、そのUnicodeコードポイントに割り当てられた文字を表示します。
 image: https://lh4.googleusercontent.com/-eTZU_kuJGK4/UauUgRcPuTI/AAAAAAAABtc/7FNouA9JcLI/s800/HexFormatterSpinner.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JSpinner`の表記を`16`進数にして、その`Unicode`コードポイントに割り当てられた文字を表示します。
 
 #download(https://lh4.googleusercontent.com/-eTZU_kuJGK4/UauUgRcPuTI/AAAAAAAABtc/7FNouA9JcLI/s800/HexFormatterSpinner.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private static DefaultFormatterFactory makeFFactory() {
   DefaultFormatter formatter = new DefaultFormatter() {
@@ -47,7 +47,7 @@ private static DefaultFormatterFactory makeFFactory() {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`DefaultFormatter#stringToValue(String)`と`DefaultFormatter#valueToString(Object)`をオーバーライドして、`0x0`から`0x10FFFF`(`Character.MAX_CODE_POINT`)までの整数を`16`進数で表示する`Formatter`を作成して`JSpinner`に設定しています。
 
 - [https://moji.or.jp/mojikiban/font/ IPAmj明朝]と[https://moji.or.jp/ipafont/ IPAex明朝]フォントがインストールされている場合、その文字の形の違いが比較可能
@@ -64,12 +64,12 @@ String str = new String(Character.toChars(code));
 -- `11.0.3-amzn`は正常
 -- パネルのリサイズで再描画されると正常に戻ったり壊れたりする場合がある？
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[Fontのアウトラインを取得して文字列の内部を修飾する>Swing/LineSplittingLabel]]
 - [https://moji.or.jp/mojikiban/font/ IPAmj明朝フォント | 一般社団法人 文字情報技術促進協議会]
 - [https://moji.or.jp/ipafont/ IPAexフォントおよびIPAフォントについて | 一般社団法人 文字情報技術促進協議会]
 - [https://f.hatena.ne.jp/NAOI/20130411131759 IPAmj明朝とIPAex明朝で形の違う字 NAOI's fotolife - 20130411131759]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

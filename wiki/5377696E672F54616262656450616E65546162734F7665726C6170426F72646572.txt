@@ -8,12 +8,12 @@ pubdate: 2022-11-28T06:14:07+09:00
 description: JTabbedPaneのコンテナBorderを選択したタブで上書きするかを設定で切り替えます。
 image: https://drive.google.com/uc?id=1sfAb3nfsGQIrtx4cdPc2PJhOF2oqow25
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTabbedPane`のコンテナ`Border`を選択したタブで上書きするかを設定で切り替えます。
 
 #download(https://drive.google.com/uc?id=1sfAb3nfsGQIrtx4cdPc2PJhOF2oqow25)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JTabbedPane tabs = makeTabbedPane();
 tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -36,7 +36,7 @@ check.addActionListener(e -> {
 });
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `WindowsLookAndFeel`
 -- デフォルトは`TabbedPane.tabsOverlapBorder: true`で`JTabbedPane`のコンテナ`Border`を選択したタブで上書きしてコンテナと選択タブが一体化した状態で描画される
 -- `UIManager.put("TabbedPane.tabsOverlapBorder", false)`を設定すると選択タブのサイズが非選択タブと同じサイズまで縮小してコンテナ`Border`で区切られた状態で描画される
@@ -54,9 +54,9 @@ check.addActionListener(e -> {
 -- デフォルトは`TabbedPane.tabsOverlapBorder`は`false`だが、`true`を設定しても描画は変化しない
 -- [[JTabbedPaneのNimbusLookAndFeelにおけるスタイルを変更する>Swing/NimbusTabbedPanePainter]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTabbedPaneのNimbusLookAndFeelにおけるスタイルを変更する>Swing/NimbusTabbedPanePainter]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

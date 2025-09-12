@@ -8,12 +8,12 @@ pubdate: 2008-06-30T17:25:49+09:00
 description: ファイル、ディレクトリなどのSystemIconを取得します。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUG6tI4SI/AAAAAAAAAlg/bci1geT80EM/s800/SystemIcon.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 ファイル、ディレクトリなどの`SystemIcon`を取得します。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTUG6tI4SI/AAAAAAAAAlg/bci1geT80EM/s800/SystemIcon.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // 16x16
 smallLabel.setIcon(FileSystemView.getFileSystemView().getSystemIcon(file));
@@ -21,7 +21,7 @@ smallLabel.setIcon(FileSystemView.getFileSystemView().getSystemIcon(file));
 largeLabel.setIcon(new ImageIcon(ShellFolder.getShellFolder(file).getIcon(true)));
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`Windows`環境などからファイルをパネルにドロップするとそのファイルの`SystemIcon`を表示できます。
 
 - `16x16`
@@ -34,11 +34,11 @@ largeLabel.setIcon(new ImageIcon(ShellFolder.getShellFolder(file).getIcon(true))
 --- [https://bugs.openjdk.org/browse/JDK-8182043 &#91;JDK-8182043&#93; Access to Windows Large Icons - Java Bug System]
 --- [https://github.com/openjdk/jdk/pull/2875 8182043: Access to Windows Large Icons by azuev-java · Pull Request #2875 · openjdk/jdk · GitHub]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/filechooser/FileSystemView.html#getSystemIcon-java.io.File- FileSystemView#getSystemIcon(File) (Java Platform SE 8)]
 - [http://blog.codebeach.com/2008/02/get-file-type-icon-with-java.html Code Beach: Get the File Type Icon with Java]
 - [https://github.com/openjdk/jdk/pull/2875 8182043: Access to Windows Large Icons by azuev-java · Pull Request #2875 · openjdk/jdk · GitHub]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

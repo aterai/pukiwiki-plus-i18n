@@ -6,10 +6,10 @@ description: AntのTaskを自作し、これを利用する方法をテストし
 ---
 #contents
 
-* 概要 [#summary]
+* Summary [#summary]
 `Ant`の`Task`を自作し、これを利用する方法をテストします。
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code{{
 import java.io.*;
 import java.util.*;
@@ -104,7 +104,7 @@ public class MoveImportDirTask extends Task {
 
 - [[アーカイブのダウンロード>https://ateraimemo.com/data/ant/importdir.zip]]
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルは、`java`ファイルを`import`に対応するディレクトリに移動するプラグインです。何処かで(失念)拾ってきたサンプルを改造して作ったものです。マニュアルの[https://ant.apache.org/manual/develop.html Developing with Ant(Writing Your Own Task)]なども参考にしてください。
 
 生成された`jar`ファイルを`%ANT_HOME%\lib`に置き、以下の要領でタスクを定義します。
@@ -118,9 +118,9 @@ public class MoveImportDirTask extends Task {
 </target>
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://ant.apache.org/manual/develop.html Developing with Ant(Writing Your Own Task)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

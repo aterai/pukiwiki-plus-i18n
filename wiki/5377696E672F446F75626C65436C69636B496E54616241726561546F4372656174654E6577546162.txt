@@ -1,0 +1,73 @@
+---
+category: swing
+folder: DoubleClickInTabAreaToCreateNewTab
+title: JTabbedPaneのタブエリアをダブルクリックして新規タブを作成する
+tags: [JTabbedPane, MouseListener, ActionMap]
+author: aterai
+pubdate: 2024-06-17T01:40:53+09:00
+description: JTabbedPaneのタブエリアをマウスの左ボタンでダブルクリックして新規タブを作成します。
+image: https://drive.google.com/uc?id=11tTBEcjuqdSfXjTvNvg2Z5SVquiKtX_J
+---
+* Summary [#summary]
+`JTabbedPane`のタブエリアをマウスの左ボタンでダブルクリックして新規タブを作成します。
+
+#download(https://drive.google.com/uc?id=11tTBEcjuqdSfXjTvNvg2Z5SVquiKtX_J)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JTabbedPane tabbedPane = new JTabbedPane();
+tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+Action addAction = new AbstractAction() {
+  @Override public void actionPerformed(ActionEvent e) {
+    JTabbedPane tabs = (JTabbedPane) e.getSource();
+    int cnt = tabs.getTabCount();
+    tabs.addTab("Untitled-" + cnt, new JScrollPane(new JTextArea()));
+    tabs.setSelectedIndex(cnt);
+  }
+};
+InputMap im = tabbedPane.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+ActionMap am = tabbedPane.getActionMap();
+String addKey = "AddTab";
+addAction.putValue(Action.ACTION_COMMAND_KEY, addKey);
+im.put(KeyStroke.getKeyStroke("ctrl N"), addKey);
+am.put(addKey, addAction);
+
+tabbedPane.addMouseListener(new MouseAdapter() {
+  @Override public void mouseClicked(MouseEvent e) {
+    boolean leftButton = e.getButton() == MouseEvent.BUTTON1;
+    boolean doubleClick = e.getClickCount() >= 2;
+    JTabbedPane tabs = (JTabbedPane) e.getComponent();
+    int idx = tabs.indexAtLocation(e.getX(), e.getY());
+    Rectangle r = getTabAreaBounds(tabs);
+    if (leftButton && doubleClick && idx < 0 && r.contains(e.getPoint())) {
+      Optional.ofNullable(tabs.getActionMap().get(addKey)).ifPresent(a -> {
+        ActionEvent ae = new ActionEvent(
+            tabs, ActionEvent.ACTION_PERFORMED, addKey);
+        a.actionPerformed(ae);
+      });
+    }
+  }
+});
+}}
+
+* Description [#description]
+- 適当なタブタイトルでコンテンツが`JTextArea`のタブを`JTabbedPane`に追加する`AbstractAction`を作成し、`JTabbedPane`の`ActionMap`に追加
+-- `JPopupMenu`からの新規タブ追加もこのアクションを実行する
+- `JTabbedPane`に`MouseListener`を追加し、各タブ上を除くタブエリア内でマウス左ボタンのダブルクリックが実行されたら上記のタブ追加アクションを取得して実行
+-- `JTabbedPane#indexAtLocation(x, y)`が`-1`の場合タブ上ではない
+-- タブエリア内かどうかは`TabbedPane.tabAreaInsets`と`TabbedPane.contentBorderInsets`の余白を考慮してタブエリア領域を取得して判断
+--- [[JTabbedPaneのTabAreaで開くJPopupMenuを設定する>Swing/TabAreaPopupMenu]]
+--- `TabbedPane.contentBorderInsets`をすべて`0`にする、またはコンテンツエリアの余白をダブルクリックで新規タブ生成を許可する場合はこのチェックは不要
+-- 左ボタンのクリックかどうかは`MouseEvent#getButton() == MouseEvent.BUTTON1`で判断
+--- [[JTabbedPaneのタブをマウスの中ボタンクリックで閉じる>Swing/MaskForButton]]
+-- ダブルクリックかどうかは`MouseEvent#getClickCount() >= 2`で判断
+--- [[JTableのセルをダブルクリック>Swing/DoubleClick]]
+
+* Reference [#reference]
+- [[JTabbedPaneのタブをマウスの中ボタンクリックで閉じる>Swing/MaskForButton]]
+- [[JTabbedPaneのTabAreaで開くJPopupMenuを設定する>Swing/TabAreaPopupMenu]]
+- [[JTableのセルをダブルクリック>Swing/DoubleClick]]
+
+* Comment [#comment]
+#comment
+#comment

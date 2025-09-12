@@ -11,14 +11,16 @@ hreflang:
     href: https://java-swing-tips.blogspot.com/2015/12/copy-on-select-for-jtextarea.html
     lang: en
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTextArea`内の文字列がマウス操作で選択された場合のイベントを取得する`MouseListener`と`CaretListener`を設定し、その選択文字列を自動的にクリップボードにコピーする機能を追加します。
 
 #download(https://lh3.googleusercontent.com/-HoabV0pfQ0M/VZlcgaYfaeI/AAAAAAAAN8g/BTN-tzs9aUw/s800/CopyOnSelect.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
-class CopyOnSelectListener extends MouseAdapter implements CaretListener, KeyListener {
+class CopyOnSelectListener
+    extends MouseAdapter
+    implements CaretListener, KeyListener {
   private boolean dragActive;
   private boolean shiftActive;
   private int dot;
@@ -76,8 +78,8 @@ class CopyOnSelectListener extends MouseAdapter implements CaretListener, KeyLis
 }
 }}
 
-* 解説 [#explanation]
-上記のサンプルでは、マウス操作を使って文字列を選択する場合、選択文字列を自動的にクリップボードにコピーするリスナーを`JTextArea`に設定しています。
+* Description [#description]
+上記のサンプルでは、マウス操作を使って文字列を選択する場合、選択文字列を自動的にクリップボードにコピーする`MouseListener`、`CaretListener`、`KeyListener`などのリスナーを`JTextArea`に設定しています。
 
 - マウスのドラッグで文字列選択:
 -- マウスドラッグ終了後クリップボードに選択文字列をコピー
@@ -88,9 +90,10 @@ class CopyOnSelectListener extends MouseAdapter implements CaretListener, KeyLis
 - マウスのダブルクリックによる文字列選択:
 -- ダブルクリック終了後クリップボードに選択文字列をコピー
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/text/JTextComponent.html#copy-- JTextComponent#copy() (Java Platform SE 8)]
+- [[System選択文字列のマウス中央ボタンクリックによるペーストを無効化>Swing/DisableMiddleMouseClickPaste]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

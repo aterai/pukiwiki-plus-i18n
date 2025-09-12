@@ -1,0 +1,78 @@
+---
+category: swing
+folder: LimitNumberOfCheckBoxSelections
+title: JCheckBoxのグループ内で選択可能な上限を設定する
+tags: [JCheckBox, JComboBox, ButtonGroup]
+author: aterai
+pubdate: 2024-09-02T00:04:12+09:00
+description: JCheckBoxを同一JPanel、またはJComboBox内に配置されているかでグループ化し、そのグループ内で選択可能なJCheckBoxの数を制限します。
+image: https://drive.google.com/uc?id=1j3DOxjm7kwL8x6CX4Mdb1vrFahk-3Ntj
+hreflang:
+    href: https://java-swing-tips.blogspot.com/2024/09/set-maximum-number-of-items-that-can-be.html
+    lang: en
+---
+* Summary [#summary]
+`JCheckBox`を同一`JPanel`、または`JComboBox`内に配置されているかでグループ化し、そのグループ内で選択可能な`JCheckBox`の数を制限します。
+
+#download(https://drive.google.com/uc?id=1j3DOxjm7kwL8x6CX4Mdb1vrFahk-3Ntj)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+class GroupCheckBox extends JCheckBox {
+  protected GroupCheckBox(String title) {
+    super(title);
+  }
+
+  @Override public void updateUI() {
+    super.updateUI();
+    setModel(new ToggleButtonModel() {
+      private static final int GROUP_SIZE = 3;
+
+      @Override public void setSelected(boolean selected) {
+        if (selected) {
+          if (getSelectedObjects().length == GROUP_SIZE) {
+            UIManager.getLookAndFeel()
+                .provideErrorFeedback(GroupCheckBox.this);
+          } else {
+            super.setSelected(true);
+          }
+        } else {
+          super.setSelected(false);
+        }
+      }
+
+      @Override public Object[] getSelectedObjects() {
+        Container parent = getParent();
+        return Arrays.stream(parent.getComponents())
+            .filter(AbstractButton.class::isInstance)
+            .map(AbstractButton.class::cast)
+            .filter(AbstractButton::isSelected)
+            .toArray();
+      }
+    });
+  }
+}
+}}
+
+* Description [#description]
+- `JPanel`でグループ化して選択可能な`JCheckBox`の数を`3`に制限
+-- `ToggleButtonModel#getSelectedObjects()`をオーバーライドして、親が同じ`JPanel`に配置された選択状態の`JCheckBox`の配列を取得
+--- [[ItemListenerからItemSelectableを実装するコンポーネントを取得する>Swing/ItemSelectableSelectedObjects]]
+-- `ToggleButtonModel#setSelected(boolean)`をオーバーライドして、選択状態の`JCheckBox`の数が`3`の場合は`super.setSelected(true)`を実行せずに選択を取り消す
+-- ビューである`JCheckBox`の`getSelectedObjects()`や`setSelected(boolean)`をオーバーライドしても選択の取り消しなどが実行不可なので、モデル側の`ToggleButtonModel`で`getSelectedObjects()`や`setSelected(boolean)`をオーバーライドし、`JCheckBox#setModel(...)`で設定している
+- `JComboBox`のドロップダウンリストでグループ化して選択可能な`JCheckBox`の数を`3`に制限
+-- [[JComboBoxのアイテムとして表示したJCheckBoxを複数選択する>Swing/CheckedComboBox]]のようにドロップダウンリストに`JCheckBox`を表示して複数選択可能に設定
+-- ドロップダウンリストに表示する`JCheckBox`は表示用の`ListCellRenderer`として使い回しているため、上記の`GroupCheckBox`を使用しても効果がない
+-- `JComboBox#getSelectedObjects()`をオーバーライドして、選択状態のリストアイテム配列を取得
+-- ドロップダウンリストに`MouseListener`を追加し、クリック時に`JComboBox#getSelectedObjects()`で選択状態のリストアイテムを取得し、その数がすでに`3`の場合はリストアイテムの選択を取り消す
+
+* Reference [#reference]
+- [[ItemListenerからItemSelectableを実装するコンポーネントを取得する>Swing/ItemSelectableSelectedObjects]]
+- [[JComboBoxのアイテムとして表示したJCheckBoxを複数選択する>Swing/CheckedComboBox]]
+- [https://stackoverflow.com/questions/26156310/how-can-i-limit-the-check-box-selected java - How can I limit the check box selected? - Stack Overflow]
+- [https://docs.oracle.com/javase/jp/8/docs/api/java/awt/CheckboxGroup.html CheckboxGroup (Java Platform SE 8)]
+-- `java.awt.Checkbox`をグループ化する`CheckboxGroup`が存在するが、選択可能な`Checkbox`は`1`つのみになる
+
+* Comment [#comment]
+#comment
+#comment

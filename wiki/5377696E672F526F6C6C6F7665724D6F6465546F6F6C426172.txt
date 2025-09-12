@@ -8,19 +8,19 @@ pubdate: 2017-08-07T14:35:07+09:00
 description: JToolBarのロールオーバー状態を設定し、内部に設定したJToggleButtonなどの表示を変更します。
 image: https://drive.google.com/uc?id=10xjTu8RF7AgkHSL9kzraWAKN5bmfcUON0A
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JToolBar`のロールオーバー状態を設定し、内部に設定した`JToggleButton`などの表示を変更します。
 
 #download(https://drive.google.com/uc?id=10xjTu8RF7AgkHSL9kzraWAKN5bmfcUON0A)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 JToolBar toolbar = new JToolBar();
 // System.out.println(toolbar.isRollover());
 toolbar.setRollover(true);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JToolBar#setRollover(true)`
 -- `JToolBar`に追加された`JButton`などのロールオーバーが有効になる
 -- この設定は`LookAndFeel`の実装に依存し、無視される場合がある
@@ -32,9 +32,9 @@ toolbar.setRollover(true);
 -- `JToolBar`に追加された`JButton`などのロールオーバーが無効になる
 -- `WindowsLookAndFeel`では`JToggleButton`のフチが`BevelBorder`に変更される
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/JToolBar.html#setRollover-boolean- JToolBar#setRollover(boolean) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

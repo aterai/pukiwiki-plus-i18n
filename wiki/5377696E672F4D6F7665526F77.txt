@@ -8,12 +8,12 @@ pubdate: 2004-02-23
 description: ツールバーや、ポップアップメニューを使って、JTableの行を上下に移動します。
 image: https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTQMwXadCI/AAAAAAAAAfM/mZbfFQ513GI/s800/MoveRow.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 ツールバーや、ポップアップメニューを使って、`JTable`の行を上下に移動します。
 
 #download(https://lh6.googleusercontent.com/_9Z4BYR88imo/TQTQMwXadCI/AAAAAAAAAfM/mZbfFQ513GI/s800/MoveRow.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class DownAction extends AbstractAction {
   public DownAction(String str) {
@@ -81,13 +81,13 @@ public void showRowPop(MouseEvent e) {
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、`DefaultTableModel#moveRow(...)`メソッドを使用して選択した行を上下に動かしています。KBD{Shift}キーを押しながらツールバーの移動ボタンを押すとそれぞれ、先頭、末尾に移動します。
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/jp/8/docs/api/javax/swing/table/DefaultTableModel.html#moveRow-int-int-int- DefaultTableModel#moveRow(int, int, int) (Java Platform SE 8)]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 - いつもお世話になっております。違うカテゴリに投稿して、すみません。`JTable`のカラムの幅をマウスで広げたり、縮んだりする際、イベントで検出し、その幅を変数に取っておく方法はご存知でしょうか？当方は`JDK 1.5`を使っています。よろしくお願いいたします。 -- &user(Panda); &new{2011-03-01 (火) 15:12:21};
 - こんばんは。`TableColumnModelListener`を使うのはどうでしょうか。 -- &user(aterai); &new{2011-03-01 (火) 16:48:43};

@@ -8,12 +8,12 @@ pubdate: 2021-02-01T01:11:16+09:00
 description: JComboBoxのセルレンダラーにJTextFieldを使用して、エディタで入力中の文字列とマッチするリストアイテム内の文字列をハイライト表示します。
 image: https://drive.google.com/uc?id=1FjuhJPu1Jn_OKtfkldsPN1t5ElhgLJot
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JComboBox`のセルレンダラーに`JTextField`を使用して、エディタで入力中の文字列とマッチするリストアイテム内の文字列をハイライト表示します。
 
 #download(https://drive.google.com/uc?id=1FjuhJPu1Jn_OKtfkldsPN1t5ElhgLJot)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 Highlighter.HighlightPainter highlightPainter =
     new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
@@ -32,7 +32,8 @@ JComboBox<String> combo = new JComboBox<String>(model) {
         String txt = Objects.toString(value, "");
         field.setText(txt);
         addHighlight(highlighter, Pattern.compile(pattern).matcher(txt));
-        field.setBackground(isSelected ? new Color(0xAA_64_AA_FF, true) : Color.WHITE);
+        field.setBackground(isSelected ? new Color(0xAA_64_AA_FF, true)
+                                       : Color.WHITE);
         return field;
       }
       return renderer.getListCellRendererComponent(
@@ -51,7 +52,8 @@ JComboBox<String> combo = new JComboBox<String>(model) {
       }
     } catch (BadLocationException ex) {
       // should never happen
-      RuntimeException wrap = new StringIndexOutOfBoundsException(ex.offsetRequested());
+      RuntimeException wrap = new StringIndexOutOfBoundsException(
+          ex.offsetRequested());
       wrap.initCause(ex);
       throw wrap;
     }
@@ -59,17 +61,17 @@ JComboBox<String> combo = new JComboBox<String>(model) {
 };
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - `JComboBox`を編集可能に設定し、そのエディタで入力中の文字列から`Pattern`を生成
 - `ListCellRenderer`でリストアイテム文字列を上記のパターンで検索
 -- 一致する場合は`JTextField#getHighlighter().addHighlight(...)`でハイライトを追加した`JTextField`をセルレンダラーコンポーネントとして返す
 -- 一致しない場合はデフォルトの`JLabel`をセルレンダラーコンポーネントとして返す
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableの検索結果をRowFilterとHighlighterで強調表示する>Swing/TableHighlightRegexFilter]]
 - [[JComboBoxで候補一覧を表示>Swing/ComboBoxSuggestion]]
 -- `JComboBox`のリストアイテムのフィルタリングは、このリンク先のサンプルとほぼ同じものを使用
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2005-12-12T11:20:10+09:00
 description: TableSorter.javaを使ってソートしても、行の選択状態を保存しておきます。
 image: https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTS229Uo9I/AAAAAAAAAjc/ay3eckOCWco/s800/SelectionKeeper.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `TableSorter.java`を使ってソートしても、行の選択状態を保存しておきます。
 
 #download(https://lh4.googleusercontent.com/_9Z4BYR88imo/TQTS229Uo9I/AAAAAAAAAjc/ay3eckOCWco/s800/SelectionKeeper.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private class MouseHandler extends MouseAdapter {
   public void mouseClicked(MouseEvent e) {
@@ -49,7 +49,7 @@ void loadSelectedRow(JTable table, Vector list, int keyCol) {
 // ...
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 `JTableHeader`がクリックされてソートが行われる前に選択されている行のあるカラムの値を保存し、ソートが終わった後でその値をキーに選択し直しています。
 
 - カラムは一意で重複しない値をもつ必要がある
@@ -57,10 +57,10 @@ void loadSelectedRow(JTable table, Vector list, int keyCol) {
 - `JDK 1.6.0`の`TableRowSorter`でソートを行う場合は標準で選択状態が保存される
 -- [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [https://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSorterDemoProject/src/components/TableSorter.java TableSorter.java]
 - [[TableRowSorterでJTableのソート>Swing/TableRowSorter]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

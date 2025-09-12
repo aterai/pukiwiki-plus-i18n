@@ -8,12 +8,12 @@ pubdate: 2019-07-15T19:32:33.964+09:00
 description: JTableのドラッグスクロールをタッチスクリーンで実行可能にするためのリスナーを作成します。
 image: https://drive.google.com/uc?id=1pV73QkefF37JYOx942N2Vr8Yq7FsoJHb
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JTable`のドラッグスクロールをタッチスクリーンで実行可能にするためのリスナーを作成します。
 
 #download(https://drive.google.com/uc?id=1pV73QkefF37JYOx942N2Vr8Yq7FsoJHb)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 class TableTouchScreenHandler extends MouseAdapter implements ListSelectionListener {
   public static final int VELOCITY = 5;
@@ -90,7 +90,7 @@ class TableTouchScreenHandler extends MouseAdapter implements ListSelectionListe
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 上記のサンプルでは、ドラッグによるスクロールは[[JTableをスクロールバー無しのドラッグでスクロールする>Swing/HandDragScrollableTable]]と同じマウスリスナーを使用していますが、タッチスクリーン上で実行するために以下の変更を追加しています。
 
 - タッチした時点ではそのタッチイベントが取得できない？ため、`ListSelectionListener`を追加して行が選択されたらスクロールを中断する
@@ -98,10 +98,10 @@ class TableTouchScreenHandler extends MouseAdapter implements ListSelectionListe
 -- 編集終了のタッチの場合でもスクロールが開始されないようにするため、編集開始時点で移動量を`0`に設定する必要がある
 -- この設定をしない場合、例えば`0`列`0`行目のセルを編集状態にしたあと`2`列`10`行目のチェックボックスをタッチすると自動スクロールが開始されてしまう
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTableをスクロールバー無しのドラッグでスクロールする>Swing/HandDragScrollableTable]]
 -- こちらのサンプルではタッチスクリーンを指で操作した場合、セル編集やスクロールの停止に不具合がある
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

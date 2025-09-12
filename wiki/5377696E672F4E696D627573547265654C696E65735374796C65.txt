@@ -8,12 +8,12 @@ pubdate: 2017-06-26T14:46:25+09:00
 description: NimbusLookAndFeelでのJTreeのノード間の接続線を表示し、そのスタイルを点線に変更します。
 image: https://drive.google.com/uc?id=1u-SlKhxho10TFLrR_OwXc4RJ39aWzk4hkg
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `NimbusLookAndFeel`での`JTree`のノード間の接続線を表示し、そのスタイルを点線に変更します。
 
 #download(https://drive.google.com/uc?id=1u-SlKhxho10TFLrR_OwXc4RJ39aWzk4hkg)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 // UIManager.put("Tree.drawVerticalLines", true);
 UIManager.getLookAndFeelDefaults().put("Tree.drawVerticalLines", true);
@@ -28,7 +28,7 @@ d.put("Tree.linesStyle", "dashed");
 tree.putClientProperty("Nimbus.Overrides", d);
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 左: `Default`
 -- `NimbusLookAndFeel`でのデフォルトは`JTree`のノード接続線は水平、垂直ともに非表示
 - 右: `linesStyle: dashed`
@@ -44,11 +44,11 @@ UIManager.put("Tree.paintLines", true);
 UIManager.put("Tree.lineTypeDashed", true);
 }}
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JTreeの水平垂直線を表示しない>Swing/TreePaintLines]]
 - [[JTreeのノード間の接続線のスタイルを変更する>Swing/TreeLineStyle]]
 - [https://stackoverflow.com/questions/44655203/nimbus-jtree-presentation-error-under-java-version-1-8 swing - Nimbus JTree presentation error under java version 1.8 - Stack Overflow]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment

@@ -8,12 +8,12 @@ pubdate: 2004-11-01T01:05:24+09:00
 description: JPanelにBorderLayoutを設定し、JButtonのクリックで子コンポーネントの配置を入れ替えることで、それらの展開と折り畳みを行います。
 image: https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMQbS7ipI/AAAAAAAAAY4/xXDc9VVk87A/s800/ExpandablePanel.png
 ---
-* 概要 [#summary]
+* Summary [#summary]
 `JPanel`に`BorderLayout`を設定し、`JButton`のクリックで子コンポーネントの配置を入れ替えることで、それらの展開と折り畳みを行います。
 
 #download(https://lh5.googleusercontent.com/_9Z4BYR88imo/TQTMQbS7ipI/AAAAAAAAAY4/xXDc9VVk87A/s800/ExpandablePanel.png)
 
-* サンプルコード [#sourcecode]
+* Source Code Examples [#sourcecode]
 #code(link){{
 private void initComps(
     List<? extends AbstractExpansionPanel> list,
@@ -40,14 +40,14 @@ private void initComps(
 }
 }}
 
-* 解説 [#explanation]
+* Description [#description]
 - 各`JButton`が押されるたびに対象パネルの展開(子コンポーネントの追加)と折り畳み(子コンポーネントの削除)を実行
 -- 同時に`BorderLayout`の`NORTH`、`CENTER`、`SOUTH`に各パネルを振り分け
 -- 展開されるパネル一つだけが推奨サイズ(`PreferredSize`)が無視されて任意の高さに拡張される`CENTER`に配置
 
-* 参考リンク [#reference]
+* Reference [#reference]
 - [[JPanelをアコーディオン風に展開>Swing/AccordionPanel]]
 
-* コメント [#comment]
+* Comment [#comment]
 #comment
 #comment
