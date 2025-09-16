@@ -1,0 +1,57 @@
+---
+category: swing
+folder: SpinnerEditorBorderPainted
+title: JSpinner内で使用するEditorの縁を描画する
+tags: [JSpinner, JTextField, Border, UIManager]
+author: aterai
+pubdate: 2025-09-15T09:40:54+09:00
+description: JSpinnerの内部で使用するEditorコンポーネントのBorderを描画するかを切り替えます。
+image: https://drive.google.com/uc?id=1EPRPY8C3TNOo13_7tay_P0Rzhp5xxsc9
+---
+* Summary [#summary]
+`JSpinner`の内部で使用する`Editor`コンポーネントの`Border`を描画するかを切り替えます。
+
+#download(https://drive.google.com/uc?id=1EPRPY8C3TNOo13_7tay_P0Rzhp5xxsc9)
+
+* Source Code Examples [#sourcecode]
+#code(link){{
+JSpinner spinner = new JSpinner();
+String key = "Spinner.editorBorderPainted";
+JCheckBox check = new JCheckBox(key) {
+  @Override public void updateUI() {
+    super.updateUI();
+    UIDefaults def = UIManager.getLookAndFeelDefaults();
+    boolean b = def.getBoolean(key);
+    Object o = def.get(key);
+    String lnf = UIManager.getLookAndFeel().getClass().getName();
+    String name = lnf.substring(lnf.lastIndexOf('.') + 1);
+    info.append(String.format("%s: %s=%s%n", name, key, o == null ? null : b));
+    setSelected(b);
+    UIManager.put(key, b);
+    SwingUtilities.updateComponentTreeUI(spinner);
+  }
+};
+check.addActionListener(e -> {
+  JCheckBox src = (JCheckBox) e.getSource();
+  UIManager.put(key, src.isSelected());
+  SwingUtilities.updateComponentTreeUI(spinner);
+});
+}}
+
+* Description [#description]
+- `UIManager.put("Spinner.editorBorderPainted", false)`
+-- `JSpinner`の内部で使用する`Editor`コンポーネントの`Border`を非表示
+--- `JSpinner#getEditor()`で取得した`DefaultEditor`からさらに`DefaultEditor#getTextField()`などで取得できる`JTextField`の`Border`に`null`が設定される
+-- `MetalLookAndFeel`、`WindowsLookAndFeel`などのデフォルト
+-- `SynthLookAndFeel`、`NimbusLookAndFeel`では`Spinner.editorBorderPainted`は未設定で`UIManager.getLookAndFeelDefaults()#get("Spinner.editorBorderPainted")`は`null`となり、変更しても効果がない？
+- `UIManager.put("Spinner.editorBorderPainted", true)`
+-- `JSpinner`の内部で使用する`Editor`コンポーネントの`Border`を表示
+-- 一度この`Border`を表示状態にしてから、`SynthLookAndFeel`を継承する`NimbusLookAndFeel`などに切り替えると`JSpinner`自体の高さが不正になる → 原因調査中
+--- `NimbusLookAndFeel`では`Editor`コンポーネントにフォーカス移動で`SynthBorder`の描画を変更する必要があるので、`Border`に`null`が設定されるとこれを回避しようとしてサイズがおかしくなる？
+
+* Reference [#reference]
+- [[JSpinnerを編集不可にした場合の内余白>Swing/InactiveSpinnerInsets]]
+
+* Comment [#comment]
+#comment
+#comment
