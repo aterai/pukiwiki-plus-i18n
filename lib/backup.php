@@ -24,61 +24,60 @@
  * バックアップを作成する
  *
  * @access    public
- * @param     String    $page        ページ名
- * @param     Boolean   $delete      TRUE:バックアップを削除する
+ * @param String $page ページ名
+ * @param Boolean $delete TRUE:バックアップを削除する
  *
  * @return    Void
  */
 
-function make_backup($page, $delete = FALSE)
+function make_backup(string $page, bool $delete = FALSE): void
 {
-	global $cycle, $maxage;
-	global $do_backup, $del_backup;
+    global $cycle, $maxage;
+    global $do_backup, $del_backup;
 
-	// if (PKWK_READONLY || ! $do_backup) return;
-	if (auth::check_role('readonly') || ! $do_backup) return;
+    // if (PKWK_READONLY || ! $do_backup) return;
+    if (auth::check_role('readonly') || !$do_backup) return;
 
-	if ($del_backup && $delete) {
-		_backup_delete($page);
-		return;
-	}
+    if ($del_backup && $delete) {
+        _backup_delete($page);
+        return;
+    }
 
-	if (! is_page($page)) return;
+    if (!is_page($page)) return;
 
-	$lastmod = _backup_get_filetime($page);
-	if ($lastmod == 0 || UTIME - $lastmod > 60 * 60 * $cycle)
-	{
-		$backups = get_backup($page);
-		$count   = count($backups) + 1;
+    $lastmod = _backup_get_filetime($page);
+    if ($lastmod == 0 || UTIME - $lastmod > 60 * 60 * $cycle) {
+        $backups = get_backup($page);
+        $count = count($backups) + 1;
 
-		// 直後に1件追加するので、(最大件数 - 1)を超える要素を捨てる
-		if ($count > $maxage)
-			array_splice($backups, 0, $count - $maxage);
+        // 直後に1件追加するので、(最大件数 - 1)を超える要素を捨てる
+        if ($count > $maxage)
+            array_splice($backups, 0, $count - $maxage);
 
-		$strout = '';
-		foreach($backups as $age=>$data) {
-			// BugTrack/685 by UPK
-			//$strout .= PKWK_SPLITTER . ' ' . $data['time'] . "\n"; // Splitter format
-			$strout .= PKWK_SPLITTER . ' ' . $data['time'] . ' ' . $data['real'] . "\n"; // Splitter format
-			$strout .= join('', $data['data']);
-			unset($backups[$age]);
-		}
-		$strout = preg_replace("/([^\n])\n*$/", "$1\n", $strout);
+        $strout = '';
+        foreach ($backups as $age => $data) {
+            // BugTrack/685 by UPK
+            //$strout .= PKWK_SPLITTER . ' ' . $data['time'] . "\n"; // Splitter format
+            $strout .= PKWK_SPLITTER . ' ' . $data['time'] . ' ' . $data['real'] . "\n"; // Splitter format
+            $strout .= join('', $data['data']);
+            unset($backups[$age]);
+        }
+        $strout = preg_replace("/([^\n])\n*$/", "$1\n", $strout);
 
-		// Escape 'lines equal to PKWK_SPLITTER', by inserting a space
-		$body = preg_replace('/^(' . preg_quote(PKWK_SPLITTER) . "\s\d+(\s(\d+)|))$/", '$1 ', get_source($page));
-		// BugTrack/685 by UPK
-		// $body = PKWK_SPLITTER . ' ' . get_filetime($page) . "\n" . join('', $body);
-		$body = PKWK_SPLITTER . ' ' . get_filetime($page) . ' ' . UTIME . "\n" . join('', $body);
-		$body = preg_replace("/\n*$/", "\n", $body);
+        // Escape 'lines equal to PKWK_SPLITTER', by inserting a space
+        $body = preg_replace('/^(' . preg_quote(PKWK_SPLITTER) . "\s\d+(\s(\d+)|))$/", '$1 ', get_source($page));
+        // BugTrack/685 by UPK
+        // $body = PKWK_SPLITTER . ' ' . get_filetime($page) . "\n" . join('', $body);
+        $body = PKWK_SPLITTER . ' ' . get_filetime($page) . ' ' . UTIME . "\n" . join('', $body);
+        $body = preg_replace("/\n*$/", "\n", $body);
 
-		$fp = _backup_fopen($page, 'wb')
-			or die_message('Cannot open ' . htmlspecialchars(_backup_get_filename($page), ENT_QUOTES, 'UTF-8') .
-			'<br />Maybe permission is not writable or filename is too long');
-		_backup_fputs($fp, $strout);
-		_backup_fputs($fp, $body);
-		_backup_fclose($fp);
-	}
+        $fp = _backup_fopen($page, 'wb')
+        or die_message('Cannot open ' . htmlspecialchars(_backup_get_filename($page), ENT_QUOTES, 'UTF-8') .
+            '<br />Maybe permission is not writable or filename is too long');
+        _backup_fputs($fp, $strout);
+        _backup_fputs($fp, $body);
+        _backup_fclose($fp);
+    }
 }
 
 /**
@@ -88,45 +87,45 @@ function make_backup($page, $delete = FALSE)
  * $age > 0           : 指定した世代のバックアップデータを取得する
  *
  * @access    public
- * @param     String    $page        ページ名
- * @param     Integer   $age         バックアップの世代番号 省略時は全て
+ * @param String $page ページ名
+ * @param Integer $age バックアップの世代番号 省略時は全て
  *
  * @return    String    バックアップ       ($age != 0)
  *            Array     バックアップの配列 ($age == 0)
  */
 function get_backup($page, $age = 0)
 {
-	$lines = _backup_file($page);
-	if (! is_array($lines)) return array();
+    $lines = _backup_file($page);
+    if (!is_array($lines)) return array();
 
-	$_age = 0;
-	$retvars = $match = array();
-	$regex_splitter = '/^' . preg_quote(PKWK_SPLITTER) . '\s(\d+)$/';
-	// BugTrack/685 by UPK
-	$regex_splitter_new = '/^' . preg_quote(PKWK_SPLITTER) . '\s(\d+)\s(\d+)$/';
-	foreach($lines as $index=>$line) {
-		// BugTrack/685 by UPK
-		// if (preg_match($regex_splitter, $line, $match)) {
-		if (preg_match($regex_splitter, $line, $match) ||
-		    preg_match($regex_splitter_new, $line, $match)) {
-	    	// A splitter, tells new data of backup will come
-			++$_age;
-			if ($age > 0 && $_age > $age)
-				return $retvars[$age];
+    $_age = 0;
+    $retvars = $match = array();
+    $regex_splitter = '/^' . preg_quote(PKWK_SPLITTER) . '\s(\d+)$/';
+    // BugTrack/685 by UPK
+    $regex_splitter_new = '/^' . preg_quote(PKWK_SPLITTER) . '\s(\d+)\s(\d+)$/';
+    foreach ($lines as $index => $line) {
+        // BugTrack/685 by UPK
+        // if (preg_match($regex_splitter, $line, $match)) {
+        if (preg_match($regex_splitter, $line, $match) ||
+            preg_match($regex_splitter_new, $line, $match)) {
+            // A splitter, tells new data of backup will come
+            ++$_age;
+            if ($age > 0 && $_age > $age)
+                return $retvars[$age];
 
-			// BugTrack/685 by UPK
-			// $retvars[$_age] = array('time'=>$match[1], 'data'=>array());
-			$now = (isset($match[2])) ? $match[2] : $match[1];
-			// Allocate
-			$retvars[$_age] = array('time'=>$match[1], 'real'=>$now, 'data'=>array());
-		} else {
-			// The first ... the last line of the data
-			$retvars[$_age]['data'][] = $line;
-		}
-		unset($lines[$index]);
-	}
+            // BugTrack/685 by UPK
+            // $retvars[$_age] = array('time'=>$match[1], 'data'=>array());
+            $now = (isset($match[2])) ? $match[2] : $match[1];
+            // Allocate
+            $retvars[$_age] = array('time' => $match[1], 'real' => $now, 'data' => array());
+        } else {
+            // The first ... the last line of the data
+            $retvars[$_age]['data'][] = $line;
+        }
+        unset($lines[$index]);
+    }
 
-	return $retvars;
+    return $retvars;
 }
 
 /**
@@ -134,13 +133,13 @@ function get_backup($page, $age = 0)
  * バックアップファイル名を取得する
  *
  * @access    private
- * @param     String    $page        ページ名
+ * @param String $page ページ名
  *
  * @return    String    バックアップのファイル名
  */
 function _backup_get_filename($page)
 {
-	return BACKUP_DIR . encode($page) . BACKUP_EXT;
+    return BACKUP_DIR . encode($page) . BACKUP_EXT;
 }
 
 /**
@@ -148,13 +147,13 @@ function _backup_get_filename($page)
  * バックアップファイルが存在するか
  *
  * @access    private
- * @param     String    $page        ページ名
+ * @param String $page ページ名
  *
  * @return    Boolean   TRUE:ある FALSE:ない
  */
 function _backup_file_exists($page)
 {
-	return file_exists(_backup_get_filename($page));
+    return file_exists(_backup_get_filename($page));
 }
 
 /**
@@ -162,15 +161,15 @@ function _backup_file_exists($page)
  * バックアップファイルの更新時刻を得る
  *
  * @access    private
- * @param     String    $page        ページ名
+ * @param String $page ページ名
  *
  * @return    Integer   ファイルの更新時刻(GMT)
  */
 
-function _backup_get_filetime($page)
+function _backup_get_filetime($page): int
 {
-	return _backup_file_exists($page) ?
-		filemtime(_backup_get_filename($page)) : 0;
+    return _backup_file_exists($page) ?
+        filemtime(_backup_get_filename($page)) - date('Z') : 0;
 }
 
 /**
@@ -178,146 +177,144 @@ function _backup_get_filetime($page)
  * バックアップファイルを削除する
  *
  * @access    private
- * @param     String    $page        ページ名
+ * @param String $page ページ名
  *
  * @return    Boolean   FALSE:失敗
  */
 function _backup_delete($page)
 {
-	return unlink(_backup_get_filename($page));
+    return unlink(_backup_get_filename($page));
 }
 
 /////////////////////////////////////////////////
 
 if (extension_loaded('zlib')) {
-	// ファイルシステム関数
-	// zlib関数を使用
-	define('BACKUP_EXT', '.gz');
+    // ファイルシステム関数
+    // zlib関数を使用
+    define('BACKUP_EXT', '.gz');
 
-/**
- * _backup_fopen
- * バックアップファイルを開く
- *
- * @access    private
- * @param     String    $page        ページ名
- * @param     String    $mode        モード
- *
- * @return    Boolean   FALSE:失敗
- */
-	function _backup_fopen($page, $mode)
-	{
-		return gzopen(_backup_get_filename($page), $mode);
-	}
+    /**
+     * _backup_fopen
+     * バックアップファイルを開く
+     *
+     * @access    private
+     * @param String $page ページ名
+     * @param String $mode モード
+     *
+     * @return    Boolean   FALSE:失敗
+     */
+    function _backup_fopen($page, $mode)
+    {
+        return gzopen(_backup_get_filename($page), $mode);
+    }
 
-/**
- * _backup_fputs
- * バックアップファイルに書き込む
- *
- * @access    private
- * @param     Integer   $zp          ファイルポインタ
- * @param     String    $str         文字列
- *
- * @return    Boolean   FALSE:失敗 その他:書き込んだバイト数
- */
-	function _backup_fputs($zp, $str)
-	{
-		return gzputs($zp, $str);
-	}
+    /**
+     * _backup_fputs
+     * バックアップファイルに書き込む
+     *
+     * @access    private
+     * @param Integer $zp ファイルポインタ
+     * @param String $str 文字列
+     *
+     * @return    Boolean   FALSE:失敗 その他:書き込んだバイト数
+     */
+    function _backup_fputs($zp, $str)
+    {
+        return gzputs($zp, $str);
+    }
 
-/**
- * _backup_fclose
- * バックアップファイルを閉じる
- *
- * @access    private
- * @param     Integer   $zp          ファイルポインタ
- *
- * @return    Boolean   FALSE:失敗
- */
-	function _backup_fclose($zp)
-	{
-		return gzclose($zp);
-	}
+    /**
+     * _backup_fclose
+     * バックアップファイルを閉じる
+     *
+     * @access    private
+     * @param Integer $zp ファイルポインタ
+     *
+     * @return    Boolean   FALSE:失敗
+     */
+    function _backup_fclose($zp)
+    {
+        return gzclose($zp);
+    }
 
-/**
- * _backup_file
- * バックアップファイルの内容を取得する
- *
- * @access    private
- * @param     String    $page        ページ名
- *
- * @return    Array     ファイルの内容
- */
-	function _backup_file($page)
-	{
-		return _backup_file_exists($page) ?
-			gzfile(_backup_get_filename($page)) :
-			array();
-	}
+    /**
+     * _backup_file
+     * バックアップファイルの内容を取得する
+     *
+     * @access    private
+     * @param String $page ページ名
+     *
+     * @return    Array     ファイルの内容
+     */
+    function _backup_file($page)
+    {
+        return _backup_file_exists($page) ?
+            gzfile(_backup_get_filename($page)) :
+            array();
+    }
+} /////////////////////////////////////////////////
+else {
+    // ファイルシステム関数
+    define('BACKUP_EXT', '.txt');
+
+    /**
+     * _backup_fopen
+     * バックアップファイルを開く
+     *
+     * @access    private
+     * @param String $page ページ名
+     * @param String $mode モード
+     *
+     * @return    Boolean   FALSE:失敗
+     */
+    function _backup_fopen($page, $mode)
+    {
+        return fopen(_backup_get_filename($page), $mode);
+    }
+
+    /**
+     * _backup_fputs
+     * バックアップファイルに書き込む
+     *
+     * @access    private
+     * @param Integer $zp ファイルポインタ
+     * @param String $str 文字列
+     *
+     * @return    Boolean   FALSE:失敗 その他:書き込んだバイト数
+     */
+    function _backup_fputs($zp, $str)
+    {
+        return fputs($zp, $str);
+    }
+
+    /**
+     * _backup_fclose
+     * バックアップファイルを閉じる
+     *
+     * @access    private
+     * @param Integer $zp ファイルポインタ
+     *
+     * @return    Boolean   FALSE:失敗
+     */
+    function _backup_fclose($zp)
+    {
+        return fclose($zp);
+    }
+
+    /**
+     * _backup_file
+     * バックアップファイルの内容を取得する
+     *
+     * @access    private
+     * @param String $page ページ名
+     *
+     * @return    Array     ファイルの内容
+     */
+    function _backup_file($page)
+    {
+        return _backup_file_exists($page) ?
+            file(_backup_get_filename($page)) :
+            array();
+    }
 }
-/////////////////////////////////////////////////
-else
-{
-	// ファイルシステム関数
-	define('BACKUP_EXT', '.txt');
 
-/**
- * _backup_fopen
- * バックアップファイルを開く
- *
- * @access    private
- * @param     String    $page        ページ名
- * @param     String    $mode        モード
- *
- * @return    Boolean   FALSE:失敗
- */
-	function _backup_fopen($page, $mode)
-	{
-		return fopen(_backup_get_filename($page), $mode);
-	}
-
-/**
- * _backup_fputs
- * バックアップファイルに書き込む
- *
- * @access    private
- * @param     Integer   $zp          ファイルポインタ
- * @param     String    $str         文字列
- *
- * @return    Boolean   FALSE:失敗 その他:書き込んだバイト数
- */
-	function _backup_fputs($zp, $str)
-	{
-		return fputs($zp, $str);
-	}
-
-/**
- * _backup_fclose
- * バックアップファイルを閉じる
- *
- * @access    private
- * @param     Integer   $zp          ファイルポインタ
- *
- * @return    Boolean   FALSE:失敗
- */
-	function _backup_fclose($zp)
-	{
-		return fclose($zp);
-	}
-
-/**
- * _backup_file
- * バックアップファイルの内容を取得する
- *
- * @access    private
- * @param     String    $page        ページ名
- *
- * @return    Array     ファイルの内容
- */
-	function _backup_file($page)
-	{
-		return _backup_file_exists($page) ?
-			file(_backup_get_filename($page)) :
-			array();
-	}
-}
-?>

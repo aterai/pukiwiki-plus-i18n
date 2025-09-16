@@ -12,4 +12,4 @@ function plugin_nolink_convert()
 	$data = $argv[ --$argc ];
 	return strip_a(convert_html(line2array($data)));
 }
-?>
+

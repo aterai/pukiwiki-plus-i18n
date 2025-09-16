@@ -416,4 +416,4 @@ function plugin_minicalendar_viewer_isValidDate($aStr, $aSepList='-/ .')
 
 	return FALSE;
 }
-?>
+

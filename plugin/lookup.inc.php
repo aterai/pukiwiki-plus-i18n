@@ -62,4 +62,4 @@ function plugin_lookup_action()
 	header('Location: ' . $url); // Publish as GET method
 	exit;
 }
-?>
+

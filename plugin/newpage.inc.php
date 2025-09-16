@@ -68,4 +68,4 @@ function plugin_newpage_action()
 		exit;
 	}
 }
-?>
+

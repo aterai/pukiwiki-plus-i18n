@@ -111,4 +111,4 @@ function doc_ini_file_exist($page)
 	return ($backup || $diff);
 }
 
-?>
+

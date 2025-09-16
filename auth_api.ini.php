@@ -50,5 +50,3 @@ $auth_api = array(
 	),
 
 );
-
-?>

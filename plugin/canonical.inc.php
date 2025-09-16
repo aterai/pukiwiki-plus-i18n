@@ -17,4 +17,4 @@ function plugin_canonical_convert() {
         }
     }
 }
-?>
+

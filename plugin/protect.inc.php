@@ -168,4 +168,4 @@ function protect_body($plugin)
 	return $body;
 }
 
-?>
+

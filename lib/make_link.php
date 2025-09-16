@@ -35,9 +35,11 @@ class InlineConverter
 
 		if (! isset($clone_func)) {
 			if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-				$clone_func = create_function('$a', 'return $a;');
+				// $clone_func = create_function('$a', 'return $a;');
+                $clone_func = function ($a) { return $a; };
 			} else {
-				$clone_func = create_function('$a', 'return clone $a;');
+				// $clone_func = create_function('$a', 'return clone $a;');
+                $clone_func = function($a) { return clone $a; };
 			}
 		}
 		return $clone_func($obj);
@@ -52,6 +54,10 @@ class InlineConverter
 	}
 
 	function InlineConverter($converters = NULL, $excludes = NULL)
+	{
+		$this->__construct($converters, $excludes);
+	}
+	function __construct($converters = NULL, $excludes = NULL)
 	{
 		if ($converters === NULL) {
 			$converters = array(
@@ -139,7 +145,8 @@ class InlineConverter
 			if ($arr[$start] == $arr[0])
 				return $this->converters[$start];
 		}
-		return NULL;
+        $NULL = NULL;
+        return $NULL;
 	}
 }
 
@@ -159,6 +166,10 @@ class Link
 
 	// Constructor
 	function Link($start)
+	{
+		$this->__construct($start);
+	}
+	function __construct($start)
 	{
 		$this->start = $start;
 		$this->redirect = (PKWK_USE_REDIRECT) ? get_cmd_uri('redirect','','','u=') : '';
@@ -219,7 +230,11 @@ class Link_plugin extends Link
 
 	function Link_plugin($start)
 	{
-		parent::Link($start);
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
+		parent::__construct($start);
 	}
 
 	function get_pattern()
@@ -288,7 +303,11 @@ class Link_note extends Link
 {
 	function Link_note($start)
 	{
-		parent::Link($start);
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
+		parent::__construct($start);
 	}
 
 	function get_pattern()
@@ -359,7 +378,11 @@ class Link_url extends Link
 {
 	function Link_url($start)
 	{
-		parent::Link($start);
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
+		parent::__construct($start);
 	}
 
 	function get_pattern()
@@ -408,7 +431,11 @@ class Link_url_interwiki extends Link
 {
 	function Link_url_interwiki($start)
 	{
-		parent::Link($start);
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
+		parent::__construct($start);
 	}
 
 	function get_pattern()
@@ -451,7 +478,11 @@ class Link_mailto extends Link
 
 	function Link_mailto($start)
 	{
-		parent::Link($start);
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
+		parent::__construct($start);
 	}
 
 	function get_pattern()
@@ -493,7 +524,11 @@ class Link_interwikiname extends Link
 
 	function Link_interwikiname($start)
 	{
-		parent::Link($start);
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
+		parent::__construct($start);
 	}
 
 	function get_pattern()
@@ -564,7 +599,11 @@ class Link_bracketname extends Link
 
 	function Link_bracketname($start)
 	{
-		parent::Link($start);
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
+		parent::__construct($start);
 	}
 
 	function get_pattern()
@@ -626,7 +665,11 @@ class Link_wikiname extends Link
 {
 	function Link_wikiname($start)
 	{
-		parent::Link($start);
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
+		parent::__construct($start);
 	}
 
 	function get_pattern()
@@ -667,9 +710,13 @@ class Link_autolink extends Link
 
 	function Link_autolink($start)
 	{
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
 		global $autolink;
 
-		parent::Link($start);
+		parent::__construct($start);
 
 		if (! $autolink || ! file_exists(CACHE_DIR . PKWK_AUTOLINK_REGEX_CACHE))
 			return;
@@ -713,7 +760,11 @@ class Link_autolink_a extends Link_autolink
 {
 	function Link_autolink_a($start)
 	{
-		parent::Link_autolink($start);
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
+		parent::__construct($start);
 	}
 
 	function get_pattern()
@@ -732,9 +783,13 @@ class Link_autoalias extends Link
 
 	function Link_autoalias($start)
 	{
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
 		global $autoalias, $aliaspage;
 
-		parent::Link($start);
+		parent::__construct($start);
 
 		if (! $autoalias || ! file_exists(CACHE_DIR . PKWK_AUTOALIAS_REGEX_CACHE) || $this->page == $aliaspage)
 		{
@@ -779,7 +834,11 @@ class Link_autoalias_a extends Link_autoalias
 {
 	function Link_autoalias_a($start)
 	{
-		parent::Link_autoalias($start);
+		$this->__construct($start);
+	}
+	function __construct($start)
+	{
+		parent::__construct($start);
 	}
 	function get_pattern()
 	{
@@ -956,7 +1015,7 @@ function get_fullname($name, $refer)
 	if ($name == '' || $name == './') return $refer;
 
 	// Absolute path
-	if ($name{0} == '/') {
+	if ($name[0] == '/') {
 		$name = substr($name, 1);
 		return ($name == '') ? $defaultpage : $name;
 	}
@@ -1030,7 +1089,12 @@ function get_interwiki_url($name, $param)
 		if (isset($encode_aliases[$opt])) $opt = & $encode_aliases[$opt];
 
 		// Encoding conversion into specified encode, and URLencode
-		$param = rawurlencode(mb_convert_encoding($param, $opt, SOURCE_ENCODING));
+		if (strpos($url, '$1') === FALSE && substr($url, -1) === '?') {
+			// PukiWiki site
+			$param = pagename_urlencode(mb_convert_encoding($param, $opt, SOURCE_ENCODING));
+		} else {
+			$param = rawurlencode(mb_convert_encoding($param, $opt, SOURCE_ENCODING));
+		}
 	}
 
 	// Replace or Add the parameter
@@ -1045,4 +1109,91 @@ function get_interwiki_url($name, $param)
 
 	return $url;
 }
-?>
+
+function get_autoticketlink_def_page()
+{
+	return 'AutoTicketLinkName';
+}
+
+/**
+ * Get AutoTicketLink - JIRA projects from AutoTiketLinkName page
+ */
+function get_ticketlink_jira_projects()
+{
+	$autoticketlink_def_page = get_autoticketlink_def_page();
+	$active_jira_base_url = null;
+	$jira_projects = array();
+	foreach (get_source($autoticketlink_def_page) as $line) {
+		if (substr($line, 0, 1) !== '-') {
+			$active_jira_base_url = null;
+			continue;
+		}
+		$m = null;
+		if (preg_match('/^-\s*(jira)\s+(https?:\/\/[!~*\'();\/?:\@&=+\$,%#\w.-]+)\s*$/', $line, $m)) {
+			$active_jira_base_url = $m[2];
+		} else if (preg_match('/^--\s*([A-Z][A-Z0-9]{1,10}(?:_[A-Z0-9]{1,10}){0,2})(\s+(.+?))?\s*$/', $line, $m)) {
+			if ($active_jira_base_url) {
+				$project_key = $m[1];
+				$title = isset($m[2]) ? $m[2] : '';
+				array_push($jira_projects, array(
+					'key' => $m[1],
+					'title' => $title,
+					'base_url' => $active_jira_base_url,
+				));
+			}
+		} else {
+			$active_jira_base_url = null;
+		}
+	}
+	return $jira_projects;
+}
+
+function init_autoticketlink_def_page()
+{
+	$autoticketlink_def_page = get_autoticketlink_def_page();
+	if (is_page($autoticketlink_def_page)) {
+		return;
+	}
+    $ticket_jira_default_site = '';
+    $body = <<<EOS
+#freeze
+* AutoTicketLink definition [#def]
+
+Reference: https://pukiwiki.osdn.jp/?AutoTicketLink
+
+ - jira https://site1.example.com/jira/browse/
+ -- AAA Project title \$1
+ -- BBB Project title \$1
+ - jira https://site2.example.com/jira/browse/
+ -- PROJECTA Site2 \$1
+
+ (Default definition) pukiwiki.ini.php
+ $ticket_jira_default_site = array(
+   'title' => 'My JIRA - \$1',
+   'base_url' => 'https://issues.example.com/jira/browse/',
+ );
+EOS;
+	page_write($autoticketlink_def_page, $body);
+}
+
+function init_autoalias_def_page()
+{
+	global $aliaspage; // 'AutoAliasName'
+	$autoticketlink_def_page = get_autoticketlink_def_page();
+	if (is_page($aliaspage)) {
+		return;
+	}
+	$body = <<<EOS
+#freeze
+*AutoAliasName [#qf9311bb]
+AutoAlias definition
+
+Reference: https://pukiwiki.osdn.jp/?AutoAlias
+
+* PukiWiki [#ee87d39e]
+-[[pukiwiki.official>https://pukiwiki.osdn.jp/]]
+-[[pukiwiki.dev>https://pukiwiki.osdn.jp/dev/]]
+EOS;
+	page_write($aliaspage, $body);
+	update_autoalias_cache_file();
+}

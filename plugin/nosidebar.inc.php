@@ -11,4 +11,4 @@ function plugin_nosidebar_convert()
 	$sidebar = '';
 	return '';
 }
-?>
+

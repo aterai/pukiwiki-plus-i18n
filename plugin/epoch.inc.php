@@ -20,4 +20,4 @@ function plugin_epoch_inline()
 	return htmlspecialchars(format_date($time));
 }
 
-?>
+

@@ -237,4 +237,4 @@ function plugin_hatena_get_user_name()
 	return array('role'=>ROLE_GUEST,'nick'=>'');
 }
 
-?>
+

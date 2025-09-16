@@ -56,4 +56,4 @@ function plugin_related_action()
 	}
 	return array('msg'=>$msg, 'body'=>$retval);
 }
-?>
+

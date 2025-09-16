@@ -25,4 +25,4 @@ function plugin_lastmod_inline()
 		return FALSE;
 	return format_date(get_filetime($_page));
 }
-?>
+

@@ -54,4 +54,4 @@ function i18n_setlocale($name,$lang,$msg)
 	return $text;
 }
 
-?>
+

@@ -1,6 +1,7 @@
 <?php
 //-*- mode:java; Encoding:utf8n -*-
-function plugin_tags_convert() {
+function plugin_tags_convert(): string
+{
     global $page_tags, $head_tags;
 
     $num = func_num_args();
@@ -12,14 +13,15 @@ function plugin_tags_convert() {
     return '';
 }
 
-function plugin_tags_inline() {
-    global $vars, $page_tags;
-    $page = isset($vars['page']) ? $vars['page'] : '';
+function plugin_tags_inline(): string
+{
+    global $vars, $page_tags, $defaultpage;
+    $page = $vars['page'] ?? '';
     if($page == '' || $page == $defaultpage) return '';
 
     $buf = '';
     //$args = func_get_args();
-    $page_tags = & func_get_args();
+    $page_tags = func_get_args();
     foreach ( $page_tags as $arg ) {
         $arg = trim($arg);
         $buf = $buf . '<li><a href="/tags.html#' . $arg . '-ref">' . $arg . '</a></li>';
@@ -31,4 +33,4 @@ $buf
 </ul>
 EOD;
 }
-?>
+

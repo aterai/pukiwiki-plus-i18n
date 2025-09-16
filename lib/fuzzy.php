@@ -5,7 +5,7 @@
 // 'Search' main function
 function do_search_fuzzy($word, $type = 'AND', $non_format = FALSE, $non_fuzzy = FALSE)
 {
-	global $whatsnew, $non_list, $search_non_list;
+	global $whatsnew, $non_list, $search_non_list, $_string;
  	global $search_auth, $search_fuzzy;
 
 	static $fuzzypattern = array(
@@ -89,4 +89,4 @@ function do_search_fuzzy($word, $type = 'AND', $non_format = FALSE, $non_fuzzy =
 
 	return $retval;
 }
-?>
+

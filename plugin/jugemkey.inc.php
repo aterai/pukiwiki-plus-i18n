@@ -256,4 +256,4 @@ function plugin_jugemkey_get_user_name()
 	return array('role'=>ROLE_GUEST,'nick'=>'');
 }
 
-?>
+

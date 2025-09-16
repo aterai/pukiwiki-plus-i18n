@@ -14,4 +14,4 @@ function plugin_naviurl_inline()
 	}
 	return '<a href="'. $_LINK['reload'] .'"><span class="small">'. $_LINK['reload'] .'</span></a>';
 }
-?>
+

@@ -20,4 +20,4 @@ function plugin_relaxml_inline() {
 <a class="ext" href="$rujurl">[relax-users-j: $number] $title</a>
 EOD;
 }
-?>
+

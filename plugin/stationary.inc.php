@@ -76,4 +76,4 @@ function plugin_stationary_action()
 
 	return array('msg'=>htmlspecialchars($msg), 'body'=>htmlspecialchars($body));
 }
-?>
+

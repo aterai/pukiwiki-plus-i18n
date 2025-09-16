@@ -211,6 +211,7 @@ function plugin_comment_convert()
     return <<<EOD
 <br />
 <!-- div id="livefyre-comments"></div -->
+<!--
 <div id="disqus_thread"></div>
 <script>
 var disqus_config = function () {
@@ -225,6 +226,7 @@ s.setAttribute('data-timestamp', +new Date());
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+-->
 </aside>
 EOD;
 }
@@ -281,4 +283,4 @@ EOD;
 // </div> <!-- row -->
 // EOD;
 // }
-?>
+

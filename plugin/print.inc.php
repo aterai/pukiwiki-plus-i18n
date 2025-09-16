@@ -279,4 +279,4 @@ function print_qr_code($page)
 	return plugin_qrcode_inline(1, $script.'?'.$a_page);
 }
 
-?>
+

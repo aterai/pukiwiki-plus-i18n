@@ -23,6 +23,12 @@ RewriteBase /
 RewriteRule ^sitemap\.xml$ index.php?cmd=sitemaps [QSA,PT,L]
 RewriteRule ^rssdiff\.xml$ index.php?cmd=rssdiff [QSA,PT,L]
 
+RewriteRule ^404\.html$ 404.html.gz [QSA,PT,L]
+RewriteRule ^archive\.html$ archive.html.gz [QSA,PT,L]
+RewriteRule ^categories\.html$ categories.html.gz [QSA,PT,L]
+RewriteRule ^pages\.html$ pages.html.gz [QSA,PT,L]
+RewriteRule ^tags\.html$ tags.html.gz [QSA,PT,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !/\.html$
@@ -45,6 +51,9 @@ RewriteRule ^.+$ %{REQUEST_URI}.gz
   Header set X-Robots-Tag "noindex"
 </Files>
 
+<files *.html.gz>
+AddType "text/html; charset=UTF-8" .gz
+</files>
 <files *.js.gz>
 AddType "text/javascript; charset=UTF-8" .gz
 </files>

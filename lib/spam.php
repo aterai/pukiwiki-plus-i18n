@@ -1023,4 +1023,4 @@ function pkwk_spamnotify($action, $page, $target = array('title' => ''), $progre
 	pkwk_mail_notify($notify_subject,  var_export($target, TRUE), $summary, TRUE);
 }
 
-?>
+

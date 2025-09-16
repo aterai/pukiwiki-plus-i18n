@@ -52,4 +52,4 @@ function plugin_img_convert()
 		' <img src="' . $url . '" alt="" />' . "\n" .
 		'</div>' . $clear;
 }
-?>
+

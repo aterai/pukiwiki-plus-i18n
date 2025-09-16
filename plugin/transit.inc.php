@@ -35,4 +35,4 @@ function plugin_transit_inline()
 
 	return $result;
 }
-?>
+

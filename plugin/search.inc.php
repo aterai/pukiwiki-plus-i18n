@@ -355,4 +355,4 @@ function plugin_search_do_search($word, $type = 'AND', $non_format = FALSE)
 
 	return $ticktime;
 }
-?>
+

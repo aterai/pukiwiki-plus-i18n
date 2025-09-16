@@ -633,4 +633,4 @@ function plugin_dav_proppatch_dummy_response($path)
 	return $doc;
 }
 
-?>
+

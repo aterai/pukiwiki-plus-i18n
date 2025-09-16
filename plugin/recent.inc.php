@@ -32,7 +32,8 @@ function plugin_recent_convert()
 	static $exec_count = 1;
 
 	$_recent_plugin_frame_s = _('recent(%d)');
-	$_recent_plugin_frame   = sprintf('<h3>%s</h3><div>%%s</div>', $_recent_plugin_frame_s);
+	// $_recent_plugin_frame   = sprintf('<h3>%s</h3><div>%%s</div>', $_recent_plugin_frame_s);
+	$_recent_plugin_frame   = '<h3>Recent %d</h3><div>%s</div>';
 
 	$recent_lines = PLUGIN_RECENT_DEFAULT_LINES;
 	if (func_num_args()) {
@@ -217,4 +218,4 @@ function plugin_recent_getlist($offset, $recent_lines, $varpage)
 
 	return $retval;
 }
-?>
+

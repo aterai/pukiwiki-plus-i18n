@@ -80,4 +80,4 @@ function greybox_set_head_tags()
 	$head_tags[] = ' <script type="text/javascript" src="'.SKIN_URI.'greybox/gb_scripts.js"></script>';
 	$head_tags[] = ' <link rel="stylesheet" href="'.SKIN_URI.'greybox/gb_styles.css" type="text/css" media="all" charset="'.$css_charset.'" />';
 }
-?>
+

@@ -111,4 +111,3 @@ $code_keyword = Array(
 		'__declspec' => 4,
 		'__FILE__' => 4,
   );
-?>

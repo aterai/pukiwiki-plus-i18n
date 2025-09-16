@@ -122,4 +122,3 @@ $code_keyword = Array(
  '>' => 9,     // 引用
 
   );
-?>

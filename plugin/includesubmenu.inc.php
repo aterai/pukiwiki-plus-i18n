@@ -58,4 +58,4 @@ function plugin_includesubmenu_convert()
   }
   return $body;
 }
-?>
+

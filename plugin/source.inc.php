@@ -29,4 +29,4 @@ function plugin_source_action()
 		'body' => '<pre id="source">' . htmlspecialchars($source) . '</pre>'
 	);
 }
-?>
+

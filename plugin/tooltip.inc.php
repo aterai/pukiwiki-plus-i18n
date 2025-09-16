@@ -140,4 +140,4 @@ function plugin_tooltip_get_glossary($term,$g_page,$plain)
 	if ( $out == '' ) return FALSE;
 	return $out;
 }
-?>
+

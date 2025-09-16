@@ -74,4 +74,4 @@ function plugin_num_inline()
 	return $ret;
 }
 
-?>
+

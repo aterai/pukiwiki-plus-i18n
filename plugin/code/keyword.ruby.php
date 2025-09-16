@@ -93,4 +93,3 @@ $code_keyword = Array(
   	'require' => 3,
   //'system',		// 処理系組み込みの奴 __stdcall とか
   );
-?>

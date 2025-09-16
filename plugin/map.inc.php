@@ -220,4 +220,4 @@ class MapNode
 		return implode("\n", $retval);
 	}
 }
-?>
+

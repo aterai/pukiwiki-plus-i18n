@@ -228,4 +228,3 @@ $code_keyword = Array(
     '_virtual_inheritance' => 4,
     '__virtual_inheritance' => 4,
   );
-?>

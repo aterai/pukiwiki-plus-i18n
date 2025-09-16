@@ -77,4 +77,4 @@ function plugin_yetlist_action()
 
 	return $retval;
 }
-?>
+

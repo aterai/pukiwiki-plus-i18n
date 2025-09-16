@@ -12,4 +12,4 @@ function plugin_notopicpath_convert()
 	global $topicpath;
 	$topicpath = false;
 }
-?>
+

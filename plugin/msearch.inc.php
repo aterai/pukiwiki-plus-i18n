@@ -308,4 +308,4 @@ function plugin_msearch_parse_html($ary,$ct,$site,$html,$type)
 	}
 	return array($ary, $ct, $ctall, $ctfound);
 }
-?>
+

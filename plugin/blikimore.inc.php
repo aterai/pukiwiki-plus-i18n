@@ -45,4 +45,4 @@ function plugin_blikimore_convert()
 {
     return '<a name="more"></a>'."\n";
 }
-?>
+

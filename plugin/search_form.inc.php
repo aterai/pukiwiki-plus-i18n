@@ -30,9 +30,9 @@ function plugin_search_form_convert() {
     return <<<EOD
     <form class="d-flex" action="$url?cmd=search" method="post" role="search">
       <input type="hidden" name="encode_hint" value="ぷ" />
-      <input class="form-control me-2" type="search" name="word" value="" placeholder="サイト内検索" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <input class="form-control me-2" type="search" name="word" value="" placeholder="Search..." aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">🔍</button>
     </form>
 EOD;
 }
-?>
+

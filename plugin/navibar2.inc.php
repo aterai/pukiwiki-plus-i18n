@@ -276,4 +276,4 @@ function _navigator2($key, $val = '')
 
 	return array('url' => $link[$key], 'img' => $img, 'text' => $text);
 }
-?>
+

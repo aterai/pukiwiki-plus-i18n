@@ -287,4 +287,4 @@ function paint_insert_ref($filename)
 
 	return $ret;
 }
-?>
+

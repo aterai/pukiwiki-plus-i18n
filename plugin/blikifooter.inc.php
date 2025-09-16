@@ -112,4 +112,4 @@ function count_comment($page)
 
 	return preg_match_all("/^-$comment_format/m", $source, $dumy);
 }
-?>
+

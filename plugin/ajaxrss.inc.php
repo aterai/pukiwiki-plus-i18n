@@ -168,4 +168,4 @@ function plugin_ajaxrss_convert()
 	++$ajaxcount;
 	return $output;
 }
-?>
+

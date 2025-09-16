@@ -25,4 +25,4 @@ function plugin_author_inline() {
 <a rel="author" href="$url"><span itemprop="nickname">$page_author</span></a>
 EOD;
 }
-?>
+

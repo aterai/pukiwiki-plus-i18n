@@ -60,4 +60,4 @@ function plugin_headarea_convert()
         $headhtml = str_replace("\n",'',$headhtml);
 	return preg_replace('/<ul class="list[^>]*>/','<ul class="head">',$headhtml);
 }
-?>
+

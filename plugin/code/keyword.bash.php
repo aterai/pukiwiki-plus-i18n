@@ -166,4 +166,3 @@ $code_keyword = Array(
 		'show-all-if-ambiguous' => 5,
 		'expand-tilde' => 5,
 );
-?>

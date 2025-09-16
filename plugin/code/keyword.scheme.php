@@ -52,4 +52,3 @@ $code_keyword = Array(
 'syntax' => 2,
 'syntax-rules' => 2,
   );
-?>

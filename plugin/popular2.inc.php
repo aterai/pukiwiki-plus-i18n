@@ -160,4 +160,4 @@ function plugin_popular2_convert()
 	}
 	return sprintf($frame, count($counters), $items);
 }
-?>
+

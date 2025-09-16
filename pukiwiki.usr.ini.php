@@ -1,6 +1,6 @@
 <?php
 $language_considering_setting_level = 1;
-$page_title = 'てんぷらメモ';
+$page_title = 'AteraiMemo';
 $script = 'https:'.ROOT_URI;
 $modifier = 'aterai';
 $modifierlink = ROOT_URI.'aterai.html';
@@ -28,5 +28,3 @@ $rss_description = $page_title . ' RecentChanges';
 
 $auto_template_func = 0;
 
-define('PLUGIN_REF_URL_GET_IMAGE_SIZE', FALSE);
-?>

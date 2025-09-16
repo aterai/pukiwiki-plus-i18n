@@ -76,4 +76,3 @@ function plugin_siteimage_make($url, $nolink, $target='')
 	}
 	return $ret;
 }
-?>

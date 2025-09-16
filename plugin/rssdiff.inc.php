@@ -528,4 +528,4 @@ class plugin_rssdiff_item {
     }
   }
 } // End of class plugin_rssdiff_item
-?>
+

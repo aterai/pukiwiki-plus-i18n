@@ -11,4 +11,3 @@ function plugin_pagebreak_convert()
 	// FIXME: Only IE will operate.
 	return '<div style="page-break-before: always;">&nbsp;</div>'."\n";
 }
-?>

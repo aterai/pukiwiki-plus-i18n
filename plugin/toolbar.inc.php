@@ -163,4 +163,4 @@ $_IMAGE['skin']['full']       = 'plus/full.png';
 	                'alt="' . $lang[$key] . '" title="' . $lang[$key] . '" />' .
 	       '</a>';
 }
-?>
+

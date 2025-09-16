@@ -243,4 +243,4 @@ function linklist_testipaddress ($host)
 	return 1; // IP アドレス変換できた
 }
 
-?>
+

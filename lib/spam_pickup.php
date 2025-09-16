@@ -440,7 +440,8 @@ function file_normalize($file = 'index.html.en')
 	$body = array_shift($suffixes);
 	if ($suffixes) {
 		// Remove the last .gz/.z
-		$last_key = end(array_keys($suffixes));
+        $array = array_keys($suffixes);
+        $last_key = end($array);
 		if (isset($encoding_suffix[$suffixes[$last_key]])) {
 			unset($suffixes[$last_key]);
 		}
@@ -793,4 +794,4 @@ function spam_uri_pickup($string = '', $method = array())
 	return $array;
 }
 
-?>
+

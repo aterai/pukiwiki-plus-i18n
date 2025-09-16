@@ -221,4 +221,4 @@ function plugin_ls2_check_arg($value, &$params)
 
 	$params['_args'][] = htmlspecialchars($value); // Link title
 }
-?>
+

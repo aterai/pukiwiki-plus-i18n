@@ -23,4 +23,4 @@ function plugin_preview_action()
 	}
 	exit;
 }
-?>
+

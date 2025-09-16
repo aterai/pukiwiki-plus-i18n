@@ -10,4 +10,4 @@ function plugin_help_action()
 	header('Location: '. get_page_location_uri($help_page));
 	die();
 }
-?>
+

@@ -54,4 +54,4 @@ class user_agent
 	}
 }
 
-?>
+

@@ -9,22 +9,21 @@
 //
 // Showing colored-diff plugin
 
-function plugin_diff_action()
+function plugin_diff_action(): array
 {
 	global $vars;
 
-	$page = isset($vars['page']) ? $vars['page'] : '';
+    $page = $vars['page'] ?? '';
 	check_readable($page, true, true);
 
-	$action = isset($vars['action']) ? $vars['action'] : '';
-	switch ($action) {
-		case 'delete': $retval = plugin_diff_delete($page);	break;
-		default:       $retval = plugin_diff_view($page);	break;
-	}
-	return $retval;
+    $action = $vars['action'] ?? '';
+    return match ($action) {
+        'delete' => plugin_diff_delete($page),
+        default => plugin_diff_view($page),
+    };
 }
 
-function plugin_diff_view($page)
+function plugin_diff_view($page): array
 {
 	global $script, $hr;
 //	global $_msg_notfound, $_msg_goto, $_msg_deleted, $_msg_addline, $_msg_delline;
@@ -86,7 +85,7 @@ EOD;
 	return array('msg'=>$_title_diff, 'body'=>$body . $msg);
 }
 
-function plugin_diff_delete($page)
+function plugin_diff_delete($page): array
 {
 	global $script, $vars;
 //	global $_title_diff_delete, $_msg_diff_deleted;
@@ -142,4 +141,4 @@ EOD;
 
 	return array('msg'=>$_title_diff_delete, 'body'=>$body);
 }
-?>
+

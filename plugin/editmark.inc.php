@@ -14,4 +14,4 @@ function plugin_editmark_inline()
 {
 	return PLUGIN_EDITMARK_TAG;
 }
-?>
+

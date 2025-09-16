@@ -25,4 +25,4 @@ function plugin_pubdate_inline() {
 <time pubdate="$isotime">$pubdate</time>
 EOD;
 }
-?>
+

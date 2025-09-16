@@ -416,4 +416,4 @@ function plugin_openid_get_call_func($openid)
 	return '';
 }
 
-?>
+

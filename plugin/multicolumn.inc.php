@@ -25,4 +25,4 @@ function plugin_multicolumn_convert() {
     $times = 0;
     return "</div><div style=\"clear:both;\"><br style=\"display:none;\" /></div>";
 }
-?>
+

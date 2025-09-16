@@ -270,4 +270,4 @@ function plugin_livedoor_get_user_name()
 	return array('role'=>ROLE_GUEST,'nick'=>'');
 }
 
-?>
+

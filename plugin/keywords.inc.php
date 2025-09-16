@@ -17,4 +17,4 @@ function plugin_keywords_convert()
 	$head_tags[] = '<meta name="keywords" content="'.join(',', $contents).'" />';
 	return '';
 }
-?>
+

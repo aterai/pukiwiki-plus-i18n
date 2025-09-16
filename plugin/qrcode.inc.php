@@ -733,4 +733,4 @@ function QRcode($qr)
 		ImagePng($output_image);
 	}
 }
-?>
+

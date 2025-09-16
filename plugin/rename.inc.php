@@ -477,4 +477,4 @@ function plugin_rename_getselecttag($page)
 EOD;
 
 }
-?>
+

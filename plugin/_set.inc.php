@@ -29,4 +29,4 @@ function i18n_set_param($argc, $argv)
 	return $rc;
 }
 
-?>
+

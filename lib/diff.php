@@ -8,26 +8,25 @@
 //
 
 // Show more information when it conflicts
-define('PKWK_DIFF_SHOW_CONFLICT_DETAIL', 1);
+const PKWK_DIFF_SHOW_CONFLICT_DETAIL = 1;
 
 // Create diff-style data between arrays
-function do_diff($strlines1, $strlines2)
+function do_diff($strlines1, $strlines2): string
 {
 	$obj = new line_diff();
-	$str = $obj->str_compare($strlines1, $strlines2);
-	return $str;
+    return $obj->str_compare($strlines1, $strlines2);
 }
 
 // Visualize diff-style-text to text-with-CSS
 //   '+Added'   => '<span added>Added</span>'
 //   '-Removed' => '<span removed>Removed</span>'
 //   ' Nothing' => 'Nothing'
-function diff_style_to_css($str = '')
+function diff_style_to_css($str = ''): array|string|null
 {
 	// Cut diff markers ('+' or '-' or ' ')
 	return preg_replace(
 		array(
-			'/^\-(.*)$/m',
+            '/^-(.*)$/m',
 			'/^\+(.*)$/m',
 			'/^ (.*)$/m'
 		),
@@ -41,7 +40,7 @@ function diff_style_to_css($str = '')
 }
 
 // Merge helper (when it conflicts)
-function do_update_diff($pagestr, $poststr, $original)
+function do_update_diff($pagestr, $poststr, $original): array
 {
 	$obj = new line_diff();
 
@@ -73,7 +72,7 @@ EOD;
 			$table[] = ' <tr>';
 			$params = array($_obj->get('left'), $_obj->get('right'), $_obj->text());
 			foreach ($params as $key => $text) {
-				$text = htmlspecialchars(rtrim($text), ENT_QUOTES, 'UTF-8');
+				$text = htmlsc(rtrim($text));
 				if (empty($text)) $text = '&nbsp;';
 				$table[] = 
 					'  <' . $tags[$key] . ' class="style_' . $tags[$key] . '">' .
@@ -111,12 +110,16 @@ class line_diff
 
 	function line_diff($plus = '+', $minus = '-', $equal = ' ')
 	{
+		$this->__construct($plus, $minus, $equal);
+	}
+	function __construct($plus = '+', $minus = '-', $equal = ' ')
+	{
 		$this->plus  = $plus;
 		$this->minus = $minus;
 		$this->equal = $equal;
 	}
 
-	function arr_compare($key, $arr1, $arr2)
+    function arr_compare($key, $arr1, $arr2): array
 	{
 		$this->key  = $key;
 		$this->arr1 = $arr1;
@@ -153,7 +156,7 @@ class line_diff
 		return $str;
 	}
 
-	function compare()
+    function compare(): void
 	{
 		$this->m = count($this->arr1);
 		$this->n = count($this->arr2);
@@ -172,8 +175,12 @@ class line_diff
 		$this->reverse = ($this->n < $this->m);
 		if ($this->reverse) {
 			// Swap
-			$tmp = $this->m; $this->m = $this->n; $this->n = $tmp;
-			$tmp = $this->arr1; $this->arr1 = $this->arr2; $this->arr2 = $tmp;
+            $tmp = $this->m;
+            $this->m = $this->n;
+            $this->n = $tmp;
+            $tmp = $this->arr1;
+            $this->arr1 = $this->arr2;
+            $this->arr2 = $tmp;
 			unset($tmp);
 		}
 
@@ -214,21 +221,29 @@ class line_diff
 		$this->path[$k] = $this->path[$_k];// ここまでの経路をコピー
 		$x = $y - $k;
 		while ((($x + 1) < $this->m) && (($y + 1) < $this->n)
-			and $this->arr1[$x + 1]->compare($this->arr2[$y + 1]))
-		{
-			++$x; ++$y;
+            and $this->arr1[$x + 1]->compare($this->arr2[$y + 1])) {
+            ++$x;
+            ++$y;
 			$this->path[$k][] = array('x'=>$x, 'y'=>$y); // 経路を追加
 		}
 		return $y;
 	}
 
-	function toArray()
+    function toArray(): array
 	{
 		$arr = array();
 		if ($this->reverse) { //姑息な…
-			$_x = 'y'; $_y = 'x'; $_m = $this->n; $arr1 =& $this->arr2; $arr2 =& $this->arr1;
+            $_x = 'y';
+            $_y = 'x';
+            $_m = $this->n;
+            $arr1 =& $this->arr2;
+            $arr2 =& $this->arr1;
 		} else {
-			$_x = 'x'; $_y = 'y'; $_m = $this->m; $arr1 =& $this->arr1; $arr2 =& $this->arr2;
+            $_x = 'x';
+            $_y = 'y';
+            $_m = $this->m;
+            $arr1 =& $this->arr1;
+            $arr2 =& $this->arr2;
 		}
 
 		$x = $y = 1;
@@ -253,7 +268,8 @@ class line_diff
 				$arr1[$x]->set($this->key, $this->equal);
 				$arr[] = $arr1[$x];
 			}
-			++$x; ++$y;
+            ++$x;
+            ++$y;
 		}
 		return $arr;
 	}
@@ -261,38 +277,42 @@ class line_diff
 
 class DiffLine
 {
-	var $text;
-	var $status;
+    var string $text;
+    var array $status;
 
 	function DiffLine($text)
+	{
+		$this->__construct($text);
+	}
+	function __construct($text)
 	{
 		$this->text   = $text . "\n";
 		$this->status = array();
 	}
 
-	function compare($obj)
+    function compare($obj): bool
 	{
 		return $this->text == $obj->text;
 	}
 
-	function set($key, $status)
+    function set($key, $status): void
 	{
 		$this->status[$key] = $status;
 	}
 
 	function get($key)
 	{
-		return isset($this->status[$key]) ? $this->status[$key] : '';
+        return $this->status[$key] ?? '';
 	}
 
-	function merge($obj)
+    function merge($obj): void
 	{
 		$this->status += $obj->status;
 	}
 
-	function text()
+    function text(): string
 	{
 		return $this->text;
 	}
 }
-?>
+

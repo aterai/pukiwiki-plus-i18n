@@ -15,4 +15,4 @@ function plugin_title_inline() {
         return $title." - ".$page_title;
     }
 }
-?>
+

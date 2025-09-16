@@ -68,4 +68,4 @@ function plugin_brokenlink_action()
 	return $retval;
 }
 
-?>
+

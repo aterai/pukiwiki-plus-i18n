@@ -42,4 +42,4 @@ function a_rel_check($href)
 	return preg_match('/^(\.|\/|index.php|\?)/i', $href);
 }
 
-?>
+

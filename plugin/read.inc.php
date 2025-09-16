@@ -62,4 +62,4 @@ function plugin_read_action()
 		);
 	}
 }
-?>
+

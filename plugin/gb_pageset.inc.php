@@ -41,4 +41,4 @@ function plugin_gb_pageset_inline()
 	array_pop($args);
 	return call_user_func_array('plugin_gb_pageset_convert', $args);
 }
-?>
+

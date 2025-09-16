@@ -126,4 +126,4 @@ function plugin_multilang_convert()
 	return '';
 }
 
-?>
+

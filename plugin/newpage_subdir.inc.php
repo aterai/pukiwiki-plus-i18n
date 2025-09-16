@@ -174,4 +174,4 @@ function plugin_newpage_subdir_action()
 	header('Location: '.get_page_location_uri($dir.$page));
 	die();
 }
-?>
+

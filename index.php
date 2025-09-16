@@ -26,14 +26,14 @@ error_reporting(E_ERROR | E_PARSE); // Avoid E_WARNING, E_NOTICE, etc
 // Directory definition
 // (Ended with a slash like '../path/to/pkwk/', or '')
 // define('SITE_HOME',     '../wiki-common/');
-define('SITE_HOME',	'');
+const SITE_HOME = '';
 // define('DATA_HOME',     '../../wiki-data/contents/');
-define('DATA_HOME',	'');
+const DATA_HOME = '';
 
-define('ROOT_URI', '//ateraimemo.com/');
-define('WWW_HOME', '');
+const ROOT_URI = '//ateraimemo.com/';
+const WWW_HOME = '';
 
-define('LIB_DIR',	SITE_HOME . 'lib/');
+const LIB_DIR = SITE_HOME . 'lib/';
 
 require(LIB_DIR . 'pukiwiki.php');
-?>
+

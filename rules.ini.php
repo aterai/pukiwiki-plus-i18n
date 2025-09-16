@@ -58,4 +58,4 @@ $str_rules = array(
 	'&fpage;'	=> $vars['page'],
 	'&t;'   	=> "\t",
 );
-?>
+

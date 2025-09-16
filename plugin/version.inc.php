@@ -24,4 +24,3 @@ function plugin_version_inline()
 {
 	return plugin_version_value();
 }
-?>

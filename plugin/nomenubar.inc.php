@@ -11,4 +11,4 @@ function plugin_nomenubar_convert()
 	$menubar = '';
 	return '';
 }
-?>
+

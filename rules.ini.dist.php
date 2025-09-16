@@ -55,4 +55,3 @@ $str_rules = array(
 	'&t;'   	=> "\t",
 );
 
-?>

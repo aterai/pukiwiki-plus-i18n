@@ -127,4 +127,3 @@ function plugin_counter_get_count($page)
 
 	return $counters[$page];
 }
-?>

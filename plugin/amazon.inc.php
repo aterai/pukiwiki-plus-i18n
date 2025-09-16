@@ -513,4 +513,4 @@ class amazon_getimage {
   }
 }
 
-?>
+

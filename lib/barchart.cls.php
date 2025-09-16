@@ -123,4 +123,4 @@ class BARCHART {
 		return $output;
 	}
 }
-?>
+

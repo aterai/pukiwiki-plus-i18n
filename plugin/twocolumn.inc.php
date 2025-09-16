@@ -11,4 +11,3 @@ function plugin_twocolumn_convert() {
     $times = 0;
     return '</div></div>';
 }
-?>
