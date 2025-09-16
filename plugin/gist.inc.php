@@ -7,4 +7,4 @@ function plugin_gist_convert() {
 <div><script src="https://gist.github.com/aterai/$id.js"></script></div>
 EOD;
 }
-?>
+

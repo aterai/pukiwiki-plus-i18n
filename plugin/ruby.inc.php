@@ -26,4 +26,4 @@ function plugin_ruby_inline()
 		'<rt>' .  htmlspecialchars($ruby) . '</rt>' . '<rp>)</rp>' .
 		'</ruby>';
 }
-?>
+

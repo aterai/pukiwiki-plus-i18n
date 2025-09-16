@@ -53,4 +53,4 @@ function plus_readfile($filename)
 	}
 	fclose($fp);
 }
-?>
+

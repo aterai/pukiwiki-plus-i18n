@@ -625,4 +625,4 @@ $_msg_collided = _("It seems that someone has already updated this page while yo
 	unset($postdata_old,$postdata);
 	return $retvars;
 }
-?>
+

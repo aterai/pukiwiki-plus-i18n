@@ -23,4 +23,4 @@ function plugin_add_action()
 		          '</ul>' . "\n" . edit_form($page, '')
 	);
 }
-?>
+

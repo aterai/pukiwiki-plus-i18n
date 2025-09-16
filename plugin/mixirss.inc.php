@@ -275,4 +275,4 @@ function plugin_mixirss_isValidDate($aStr, $aSepList="-/ .")
 	}
 	return false;
 }
-?>
+

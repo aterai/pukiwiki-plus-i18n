@@ -57,7 +57,8 @@ function plugin_loglist_convert()
 		);
 	}
 
-	usort($data,create_function('$a,$b','return $b[0] - $a[0];')); // D
+	usort($data,function($a,$b){return $b[0] - $a[0];}); // D
+	// usort($data,create_function('$a,$b','return $b[0] - $a[0];')); // D
 	// usort($data,create_function('$a,$b','return $a[0] - $b[0];')); // A
 
 	$str_view = $script.'?plugin=logview&kind='.$kind.'&page=';
@@ -89,4 +90,4 @@ function plugin_loglist_convert()
 	return convert_html($rc);
 }
 
-?>
+

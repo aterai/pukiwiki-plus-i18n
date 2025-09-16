@@ -79,4 +79,3 @@ $search_auth = 0;
 // Check Role
 $check_role = 1;
 
-?>

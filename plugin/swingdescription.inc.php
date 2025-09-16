@@ -35,4 +35,4 @@ function plugin_swingdescription_convert() {
 </div>
 EOD;
 }
-?>
+

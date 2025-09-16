@@ -170,4 +170,4 @@ function _navigator($key, $val = '')
 	}
 	return '<a href="' . $link[$key] . '"><img src="' . IMAGE_URI . $image[$key] . '" style="vertical-align:middle;" alt="' . $text . '"/>' . $text . '</a>';
 }
-?>
+

@@ -51,4 +51,4 @@ function plugin_ls_convert()
 
 	return convert_html($ls);
 }
-?>
+

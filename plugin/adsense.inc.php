@@ -88,4 +88,4 @@ function plugin_adsense_convert()
 	$url = "$script?plugin=adsense&amp;type=$type&amp;w=$width&amp;h=$height";
 	return '<div class="adsense"><script type="text/javascript" src="'.$url.'"></script><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>';
 }
-?>
+

@@ -126,4 +126,4 @@ function plugin_aname_tag($args = array(), $convert = TRUE)
 	return '<a class="' . $class . '"' . $attr_id . $href . $title . '>' .
 		$body . '</a>';
 }
-?>
+

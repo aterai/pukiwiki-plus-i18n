@@ -19,4 +19,4 @@ function plugin_description_convert()
 	//$head_tags[] = '<meta http-equiv="Description" content="'.$content.'" />';
 	return '';
 }
-?>
+

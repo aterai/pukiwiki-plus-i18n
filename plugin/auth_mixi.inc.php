@@ -278,4 +278,4 @@ function auth_mixi_get_role_auth_api($type,$id)
 	return ROLE_AUTH_OPENID;
 }
 
-?>
+

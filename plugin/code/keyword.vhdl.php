@@ -208,4 +208,3 @@ $code_keyword = Array(
   'abs' => 2,
   'not' => 2,
   );
-?>

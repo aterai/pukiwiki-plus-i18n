@@ -1147,4 +1147,3 @@ function _plugin_code_column(& $text, $number=null, $outline=null)
 	return $html;
 }
 
-?>

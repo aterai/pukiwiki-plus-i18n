@@ -340,4 +340,4 @@ function bliki_get_more($page)
 		get_page_uri($page,'','','more'));
 }
 
-?>
+

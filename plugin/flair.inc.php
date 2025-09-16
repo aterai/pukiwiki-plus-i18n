@@ -9,4 +9,4 @@ return <<<EOD
 </span>
 EOD;
 }
-?>
+

@@ -154,7 +154,7 @@ defined('THEME_TDIARY_NAME') or define('THEME_TDIARY_NAME','tdiary-theme/');	// 
 /////////////////////////////////////////////////
 // Title of your Wikisite (Name this)
 // Also used as RSS feed's channel name etc
-$page_title = 'てんぷらメモ';
+$page_title = 'AteraiMemo';
 
 // Specify PukiWiki Plus! URI(absoluteURI or relativeURI) (default: auto)
 // 必要であれば、絶対URIまたは相対URIを指定して下さい。
@@ -458,7 +458,7 @@ $time_format = 'H:i:s';
 // Max number of RSS feed
 $rss_max = 50;
 // Description
-$rss_description = 'てんぷらメモ RecentChanges';
+$rss_description = $page_title . ' RecentChanges';
 
 /////////////////////////////////////////////////
 // Backup related settings
@@ -624,4 +624,3 @@ $open_uri_in_new_window_oposi = '_blank';     // pukiwikiの外で外部サー�
 // User-Agent settings
 //require_once(add_homedir('profile.ini.php'));
 
-?>

@@ -43,4 +43,4 @@ function check_role_die($msg)
 	die($msg);
 }
 
-?>
+

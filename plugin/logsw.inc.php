@@ -19,4 +19,4 @@ function plugin_logsw_convert()
 	$log['browse']['use'] = 1;
 }
 
-?>
+

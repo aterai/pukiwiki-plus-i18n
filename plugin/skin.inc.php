@@ -227,4 +227,4 @@ function skin_search_tdiary()
 	return $retval;
 }
 
-?>
+

@@ -1,8 +1,9 @@
 <?php
 //-*- mode:java; Encoding:utf8n -*-
-include_once(PLUGIN_DIR.'ref.inc.php');
+include_once(PLUGIN_DIR . 'ref.inc.php');
 
-function plugin_download_convert() {
+function plugin_download_convert(): string
+{
     global $vars, $defaultpage;
     $args = func_get_args();
     $imgpath = '';
@@ -11,8 +12,8 @@ function plugin_download_convert() {
     $image = htmlspecialchars(trim($path[0]));
     //$head_tags[] = '<meta property="og:image" content="' . $image . '" />';
 
-    $page = isset($vars['page']) ? $vars['page'] : '';
-    if($page == '' || $page == $defaultpage) return '';
+    $page = $vars['page'] ?? '';
+    if ($page == '' || $page == $defaultpage) return '';
 
 //     if (strstr($image, 'googleusercontent')) {
 //         $params = plugin_ref_body($args);
@@ -27,7 +28,7 @@ function plugin_download_convert() {
 //     }
 
     $ads = '';
-    if (! strstr($page, 'JLayeredPane1')) {
+    if (!str_contains($page, 'JLayeredPane1')) {
         $ads = <<<EOD
 <aside class="col-md-6 col-md-offset-1 col-xs-12">
 <!-- ateraimemo.com, 336x280, 09/11/04 -->
@@ -49,7 +50,7 @@ EOD;
     $zip = $url . '/src.zip';
     $dir = str_replace('Swing/', '', $page);
     //$low = strtolower($dir);
-    $git = "https://github.com/aterai/java-swing-tips/tree/master/" . $dir;
+    $git = "https://github.com/aterai/java-swing-tips/blob/main/examples/" . $dir;
     $imgpath = '<img src="' . $url . '/screenshot.png" class="img-fluid" itemprop="image" alt="screenshot" title="' . $page . '" />';
 
     return <<<EOD
@@ -75,4 +76,4 @@ EOD;
 </div>
 EOD;
 }
-?>
+

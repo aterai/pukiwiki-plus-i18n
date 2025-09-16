@@ -380,4 +380,4 @@ function logview_user_list(& $fld, $page,$kind)
 	return $ret;
 }
 
-?>
+

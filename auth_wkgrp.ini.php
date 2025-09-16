@@ -35,5 +35,3 @@ $auth_wkgrp_user = array(
 		// 'https://id.mixi.jp/YOUR_ID'            => array('role'=>ROLE_ADM),
 	),
 );
-
-?>

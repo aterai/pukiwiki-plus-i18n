@@ -57,4 +57,3 @@ $code_keyword = Array(
   'select' => 2,
   'case' => 2,
   );
-?>

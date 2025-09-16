@@ -37,4 +37,4 @@ function plugin_partedit_convert()
 	}
 	return '';
 }
-?>
+

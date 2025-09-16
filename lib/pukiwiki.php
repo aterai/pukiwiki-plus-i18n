@@ -34,12 +34,12 @@
 //
 // Plus!NOTE:(policy)not merge official cvs(1.16->1.17) See Question/181
 
-if (! defined('DATA_HOME')) define('DATA_HOME', '');
+if (!defined('DATA_HOME')) define('DATA_HOME', '');
 
 /////////////////////////////////////////////////
 // Include subroutines
 
-if (! defined('LIB_DIR')) define('LIB_DIR', '');
+if (!defined('LIB_DIR')) define('LIB_DIR', '');
 
 require(LIB_DIR . 'Spyc.php'); //https://github.com/mustangostang/spyc/
 
@@ -67,16 +67,23 @@ require(LIB_DIR . 'auth.cls.php');
 require(LIB_DIR . 'netbios.cls.php');
 require(LIB_DIR . 'ua/user_agent.cls.php');
 
-if (! extension_loaded('mbstring')) {
-	die(_('PHP module "mbstring" is not found.'));
+if (!extension_loaded('mbstring')) {
+    die(_('PHP module "mbstring" is not found.'));
 }
-if (! extension_loaded('gettext')) {
-	require(LIB_DIR . 'gettext.php');
+if (!extension_loaded('gettext')) {
+    require(LIB_DIR . 'gettext.php');
 } else {
-	function N_($message) { return $message; }
-	if (! function_exists('bind_textdomain_codeset')) {
-		function bind_textdomain_codeset($domain, $codeset) { return; }
-	}
+    function N_($message)
+    {
+        return $message;
+    }
+
+    if (!function_exists('bind_textdomain_codeset')) {
+        function bind_textdomain_codeset($domain, $codeset)
+        {
+            return;
+        }
+    }
 }
 
 // Defaults
@@ -87,96 +94,106 @@ require(LIB_DIR . 'init.php');
 
 // Load optional libraries
 if ($notify) {
-	require(LIB_DIR . 'mail.php'); // Mail notification
+    require(LIB_DIR . 'mail.php'); // Mail notification
 }
 if ($trackback) {
-	require(LIB_DIR . 'trackback.php'); // TrackBack
+    require(LIB_DIR . 'trackback.php'); // TrackBack
 }
 if ($referer) {
-	require(LIB_DIR . 'referer.php');
+    require(LIB_DIR . 'referer.php');
 }
 
 /////////////////////////////////////////////////
 // Main
 
 $retvars = array();
-$page  = isset($vars['page'])  ? $vars['page']  : '';
+$page = isset($vars['page']) ? $vars['page'] : '';
 $refer = isset($vars['refer']) ? $vars['refer'] : '';
 
 if (isset($vars['cmd'])) {
-	$plugin = & $vars['cmd'];
+    $plugin = &$vars['cmd'];
 } else if (isset($vars['plugin'])) {
-	$plugin = & $vars['plugin'];
+    $plugin = &$vars['plugin'];
 } else {
-	$plugin = '';
+    $plugin = '';
 }
 
 // SPAM
 if (SpamCheckBAN($_SERVER['REMOTE_ADDR'])) die();
 
 // Spam filtering
-if ($spam && $method != 'GET') {
-	// Block SPAM countory
-        if (isset($_SERVER['GEOIP_COUNTRY_CODE'])) {
-                if (isset($deny_countory) && !empty($deny_countory)) {
-                        if (in_array($_SERVER['GEOIP_COUNTRY_CODE'], $deny_countory)) {
-                                die('Sorry');
-                        }
-                }
-                if (isset($allow_countory) && !empty($allow_countory)) {
-                        if (!in_array($_SERVER['GEOIP_COUNTRY_CODE'], $allow_countory)) {
-                                die('Sorry');
-                        }
-                }
-        }
-	// Adjustment
-	$_spam   = ! empty($spam);
-	$_plugin = strtolower($plugin);
-	$_ignore = array();
-	switch ($_plugin) {
-		case 'search': $_spam = FALSE; break;
-		case 'edit':
-			$_page = & $page;
-			if (isset($vars['add']) && $vars['add']) {
-				$_plugin = 'add';
-			} else {
-				$_ignore[] = 'original';
-			}
-			break;
-		case 'bugtrack': $_page = & $vars['base'];  break;
-		case 'tracker':  $_page = & $vars['_base']; break;
-		case 'read':     $_page = & $page;  break;
-		default: $_page = & $refer; break;
-	}
-
-	if ($_spam) {
-		require(LIB_DIR . 'spam.php');
-		require(LIB_DIR . 'spam_pickup.php');
-
-		if (isset($spam['method'][$_plugin])) {
-			$_method = & $spam['method'][$_plugin];
-		} else if (isset($spam['method']['_default'])) {
-			$_method = & $spam['method']['_default'];
-		} else {
-			$_method = array();
-		}
-		$exitmode = isset($spam['exitmode']) ? $spam['exitmode'] : '';
-
-		// Hack: ignorance several keys
-		if ($_ignore) {
-			$_vars = array();
-			foreach($vars as $key => $value) {
-				$_vars[$key] = & $vars[$key];
-			}
-			foreach($_ignore as $key) {
-				unset($_vars[$key]);
-			}
-		} else {
-			$_vars = & $vars;
-		}
-		pkwk_spamfilter($method . ' to #' . $_plugin, $_page, $_vars, $_method, $exitmode);
-	}
-}
+//if ($spam && $method != 'GET') {
+//    // Block SPAM countory
+//    if (isset($_SERVER['GEOIP_COUNTRY_CODE'])) {
+//        if (isset($deny_countory) && !empty($deny_countory)) {
+//            if (in_array($_SERVER['GEOIP_COUNTRY_CODE'], $deny_countory)) {
+//                die('Sorry');
+//            }
+//        }
+//        if (isset($allow_countory) && !empty($allow_countory)) {
+//            if (!in_array($_SERVER['GEOIP_COUNTRY_CODE'], $allow_countory)) {
+//                die('Sorry');
+//            }
+//        }
+//    }
+//    // Adjustment
+//    $_spam = !empty($spam);
+//    $_plugin = strtolower($plugin);
+//    $_ignore = array();
+//    switch ($_plugin) {
+//        case 'search':
+//            $_spam = FALSE;
+//            break;
+//        case 'edit':
+//            $_page = &$page;
+//            if (isset($vars['add']) && $vars['add']) {
+//                $_plugin = 'add';
+//            } else {
+//                $_ignore[] = 'original';
+//            }
+//            break;
+//        case 'bugtrack':
+//            $_page = &$vars['base'];
+//            break;
+//        case 'tracker':
+//            $_page = &$vars['_base'];
+//            break;
+//        case 'read':
+//            $_page = &$page;
+//            break;
+//        default:
+//            $_page = &$refer;
+//            break;
+//    }
+//
+//    if ($_spam) {
+//        require(LIB_DIR . 'spam.php');
+//        require(LIB_DIR . 'spam_pickup.php');
+//
+//        if (isset($spam['method'][$_plugin])) {
+//            $_method = &$spam['method'][$_plugin];
+//        } else if (isset($spam['method']['_default'])) {
+//            $_method = &$spam['method']['_default'];
+//        } else {
+//            $_method = array();
+//        }
+//        $exitmode = isset($spam['exitmode']) ? $spam['exitmode'] : '';
+//
+//        // Hack: ignorance several keys
+//        if ($_ignore) {
+//            $_vars = array();
+//            foreach ($vars as $key => $value) {
+//                $_vars[$key] = &$vars[$key];
+//            }
+//            foreach ($_ignore as $key) {
+//                unset($_vars[$key]);
+//            }
+//        } else {
+//            $_vars = &$vars;
+//        }
+//        pkwk_spamfilter($method . ' to #' . $_plugin, $_page, $_vars, $_method, $exitmode);
+//    }
+//}
 
 // If page output, enable session.
 // NOTE: if action plugin(command) use session, call pkwk_session_start()
@@ -185,110 +202,110 @@ pkwk_session_start();
 
 // auth remoteip
 if (isset($auth_api['remoteip']['use']) && $auth_api['remoteip']['use']) {
-        if (exist_plugin_inline('remoteip')) do_plugin_inline('remoteip');
+    if (exist_plugin_inline('remoteip')) do_plugin_inline('remoteip');
 }
 
 $is_protect = auth::is_protect();
 
 // Plugin execution
 if ($plugin != '') {
-	if ($is_protect) {
-		$plugin_arg = '';
-		if (auth::is_protect_plugin_action($plugin)) {
-			if (exist_plugin_action($plugin)) do_plugin_action($plugin);
-			// Location で飛ばないプラグインの場合
-			$plugin_arg = $plugin;
-		}
-		if (exist_plugin_convert('protect')) do_plugin_convert('protect',$plugin_arg);
-	}
+    if ($is_protect) {
+        $plugin_arg = '';
+        if (auth::is_protect_plugin_action($plugin)) {
+            if (exist_plugin_action($plugin)) do_plugin_action($plugin);
+            // Location で飛ばないプラグインの場合
+            $plugin_arg = $plugin;
+        }
+        if (exist_plugin_convert('protect')) do_plugin_convert('protect', $plugin_arg);
+    }
 
-	if (exist_plugin_action($plugin)) {
-		$retvars = do_plugin_action($plugin);
-		if ($retvars === FALSE) exit; // Done
-		// Rescan $vars (Some plugins rewrite it)
-		/*
-		if (isset($vars['cmd'])) {
-			$base = isset($vars['page'])  ? $vars['page']  : '';
-		} else {
-			$base = isset($vars['refer']) ? $vars['refer'] : '';
-		}
-		*/
-		$base = (!empty($page)) ? $page : $refer;
-	} else {
-		$msg = 'plugin=' . htmlspecialchars($plugin, ENT_QUOTES, 'UTF-8') . ' is not implemented.';
-		$retvars = array('msg'=>$msg,'body'=>$msg);
-		$base    = & $defaultpage;
-	}
+    if (exist_plugin_action($plugin)) {
+        $retvars = do_plugin_action($plugin);
+        if ($retvars === FALSE) exit; // Done
+        // Rescan $vars (Some plugins rewrite it)
+        /*
+        if (isset($vars['cmd'])) {
+            $base = isset($vars['page'])  ? $vars['page']  : '';
+        } else {
+            $base = isset($vars['refer']) ? $vars['refer'] : '';
+        }
+        */
+        $base = (!empty($page)) ? $page : $refer;
+    } else {
+        $msg = 'plugin=' . htmlspecialchars($plugin, ENT_QUOTES, 'UTF-8') . ' is not implemented.';
+        $retvars = array('msg' => $msg, 'body' => $msg);
+        $base = &$defaultpage;
+    }
 }
 
 // Location で飛ぶようなプラグインの対応のため
 // 上のアクションプラグインの実行後に処理を実施
 if ($is_protect) {
- 	if (exist_plugin_convert('protect')) do_plugin_convert('protect');
-	die('PLUS_PROTECT_MODE is set.');
+    if (exist_plugin_convert('protect')) do_plugin_convert('protect');
+    die('PLUS_PROTECT_MODE is set.');
 }
 
 // WebDAV
 if (is_webdav() && exist_plugin('dav')) {
-	do_plugin_action('dav');
-	exit;
+    do_plugin_action('dav');
+    exit;
 }
 
 // Set Home
 $auth_key = auth::get_user_info();
 if (!empty($auth_key['home'])) {
-	if ($base == $defaultpage || $base == $auth_key['home'])
-		$base = $defaultpage = $auth_key['home'];
+    if ($base == $defaultpage || $base == $auth_key['home'])
+        $base = $defaultpage = $auth_key['home'];
 }
 
 // Page output
 $title = htmlspecialchars(strip_bracket($base), ENT_QUOTES, 'UTF-8');
-$page  = make_search($base);
+$page = make_search($base);
 if (isset($retvars['msg']) && $retvars['msg'] != '') {
-	$title = str_replace('$1', $title, $retvars['msg']);
-	$page  = str_replace('$1', $page,  $retvars['msg']);
+    $title = str_replace('$1', $title, $retvars['msg']);
+    $page = str_replace('$1', $page, $retvars['msg']);
 }
 
 if (isset($retvars['body']) && $retvars['body'] != '') {
-	$body = & $retvars['body'];
+    $body = &$retvars['body'];
 } else {
-	if ($base == '' || ! is_page($base)) {
-		$base  = & $defaultpage;
-		$title = htmlspecialchars(strip_bracket($base), ENT_QUOTES, 'UTF-8');
-		$page  = make_search($base);
-	}
+    if ($base == '' || !is_page($base)) {
+        $base = &$defaultpage;
+        $title = htmlspecialchars(strip_bracket($base), ENT_QUOTES, 'UTF-8');
+        $page = make_search($base);
+    }
 
-	$vars['cmd']  = 'read';
-	$vars['page'] = & $base;
+    $vars['cmd'] = 'read';
+    $vars['page'] = &$base;
 
-	global $fixed_heading_edited;
-	$source = get_source($base);
+    global $fixed_heading_edited;
+    $source = get_source($base);
 
-	// Virtual action plugin(partedit).
-	// NOTE: Check wiki source only.(*NOT* call convert_html() function)
-	$lines = $source;
-	while (! empty($lines)) {
-		$line = array_shift($lines);
-		if (preg_match("/^\#(partedit)(?:\((.*)\))?/", $line, $matches)) {
-			if ( !isset($matches[2]) || $matches[2] == '') {
-				$fixed_heading_edited = ($fixed_heading_edited ? 0:1);
-			} else if ( $matches[2] == 'on') {
-				$fixed_heading_edited = 1;
-			} else if ( $matches[2] == 'off') {
-				$fixed_heading_edited = 0;
-			}
-		}
-	}
+    // Virtual action plugin(partedit).
+    // NOTE: Check wiki source only.(*NOT* call convert_html() function)
+    $lines = $source;
+    while (!empty($lines)) {
+        $line = array_shift($lines);
+        if (preg_match("/^\#(partedit)(?:\((.*)\))?/", $line, $matches)) {
+            if (!isset($matches[2]) || $matches[2] == '') {
+                $fixed_heading_edited = ($fixed_heading_edited ? 0 : 1);
+            } else if ($matches[2] == 'on') {
+                $fixed_heading_edited = 1;
+            } else if ($matches[2] == 'off') {
+                $fixed_heading_edited = 0;
+            }
+        }
+    }
 
     global $frontmatter;
     list($source, $frontmatter) = extract_yaml_frontmatter($source);
 
-	$body = convert_html($source);
+    $body = convert_html($source);
 
-	//if ($trackback) $body .= tb_get_rdf($base); // Add TrackBack-Ping URI
-	if ($referer) ref_save($base);
-	log_write('check',$vars['page']);
-	log_write('browse',$vars['page']);
+    //if ($trackback) $body .= tb_get_rdf($base); // Add TrackBack-Ping URI
+    if ($referer) ref_save($base);
+    log_write('check', $vars['page']);
+    log_write('browse', $vars['page']);
 }
 
 
@@ -296,11 +313,11 @@ if (isset($retvars['body']) && $retvars['body'] != '') {
 if (arg_check('read')) $always_menu_displayed = 1;
 $body_menu = $body_side = '';
 if ($always_menu_displayed) {
-	if (exist_plugin_convert('menu')) $body_menu = do_plugin_convert('menu');
-	if (exist_plugin_convert('side')) $body_side = do_plugin_convert('side');
+    if (exist_plugin_convert('menu')) $body_menu = do_plugin_convert('menu');
+    if (exist_plugin_convert('side')) $body_side = do_plugin_convert('side');
 }
 
 // Output
 catbody($title, $page, $body);
 exit;
-?>
+

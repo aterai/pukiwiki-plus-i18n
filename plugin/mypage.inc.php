@@ -45,4 +45,4 @@ function plugin_mypage_convert()
 	die_message($_mypage_msg['err_jump']);
 }
 
-?>
+

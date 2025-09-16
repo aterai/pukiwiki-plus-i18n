@@ -39,4 +39,4 @@ function plugin_list_getlist($withfilename = FALSE, $listcmd = 'read')
 	$cmd = ($listcmd == 'read' || $listcmd == 'edit') ? $listcmd : 'read';
 	return page_list($pages,$cmd,$withfilename);
 }
-?>
+

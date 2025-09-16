@@ -27,4 +27,4 @@ function plugin_size_inline()
 		'px;display:inline-block;line-height:130%;text-indent:0px">' .
 		$body . '</span>';
 }
-?>
+

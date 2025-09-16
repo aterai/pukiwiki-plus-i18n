@@ -17,4 +17,4 @@ function plugin_pg_passage_inline()
 	return get_pg_passage($page, $paren);
 }
 
-?>
+

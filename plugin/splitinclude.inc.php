@@ -59,4 +59,4 @@ function plugin_splitinclude_convert()
 
 	return $incbody;
 }
-?>
+

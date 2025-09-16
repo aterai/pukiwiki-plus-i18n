@@ -407,4 +407,4 @@ function plugin_cvscheck_greaterp($ver1,$ver2)
 	return FALSE;
 }
 
-?>
+

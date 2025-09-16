@@ -377,4 +377,4 @@ function plugin_tb_recent($page,$line)
 	return $body;
 }
 
-?>
+

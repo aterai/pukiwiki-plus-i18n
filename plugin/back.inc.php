@@ -70,4 +70,4 @@ function plugin_back_convert()
 			'">?</a></span> ]</div>' . "\n";
 	}
 }
-?>
+

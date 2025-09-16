@@ -211,4 +211,3 @@ function plugin_urlbookmark_get_title($url) {
 
 	return trim($tmpary[2]);
 }
-?>

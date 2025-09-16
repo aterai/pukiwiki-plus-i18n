@@ -320,4 +320,4 @@ function adm_auth_wkgrp_role2define($role)
 	return (isset($array_role[$role])) ? $array_role[$role] : $role;
 }
 
-?>
+

@@ -313,4 +313,4 @@ function plugin_typekey_get_user_name()
 	return array('role'=>ROLE_GUEST,'nick'=>'');
 }
 
-?>
+

@@ -113,4 +113,4 @@ function i18n_ConfMsgGet($lang, $msg, $no = 0)
 	return $msg;
 }
 
-?>
+

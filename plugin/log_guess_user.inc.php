@@ -60,4 +60,4 @@ function plugin_log_guess_user_convert()
 
 }
 
-?>
+

@@ -321,4 +321,4 @@ function plugin_showrss_get_timestamp($str)
 	$time = strtotime($str);
 	return ($time == -1 || $time === FALSE) ? UTIME : $time;
 }
-?>
+

@@ -100,4 +100,3 @@ $code_keyword = array(
   //'pragma',		// module, import と pragma
   //'system',		// 処理系組み込みの奴 __stdcall とか
   );
-?>

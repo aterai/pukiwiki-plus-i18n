@@ -57,4 +57,4 @@ function plugin_cache_ref_action()
 	plus_readfile($ref);
 	exit;
 }
-?>
+

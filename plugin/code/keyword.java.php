@@ -93,4 +93,3 @@ $code_keyword = Array(
   	'import' => 3,
   	'package' => 3,
   );
-?>

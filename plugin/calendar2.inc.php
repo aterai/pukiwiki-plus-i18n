@@ -204,4 +204,4 @@ function plugin_calendar2_action()
 
 	return $ret;
 }
-?>
+

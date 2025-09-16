@@ -9,4 +9,4 @@ return <<<EOD
 <a xmlns:cc="https://creativecommons.org/ns#" href="//ateraimemo.com/" property="cc:attributionName" rel="cc:attributionURL">ateraimemo.com</a>以下のコンテンツは<a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">クリエイティブ・コモンズ 表示 - 継承 4.0 国際 ライセンス</a>で提供されています。
 EOD;
 }
-?>
+

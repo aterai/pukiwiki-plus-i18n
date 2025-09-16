@@ -8,7 +8,7 @@
 // PukiWiki setting file (Cell phones, PDAs and other thin clients)
 
 // for XHTML Basic/Cellular phones Patch
-define('UA_MOBILE', 1);	// 1 or 0
+const UA_MOBILE = 1;    // 1 or 0
 
 // PukiWiki.org Compat.
 require_once('keitai.ini.php');

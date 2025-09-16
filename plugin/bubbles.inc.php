@@ -44,4 +44,4 @@ function plugin_bubbles_convert()
   </div>
 EOD;
 }
-?>
+

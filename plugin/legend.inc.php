@@ -68,4 +68,4 @@ function legend_set_parm($argv)
 	}
 	return $parm;
 }
-?>
+

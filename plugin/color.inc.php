@@ -46,4 +46,4 @@ function plugin_color_inline()
 		return '<font color="' . $color . '">' . $text . '</font>';
 	}
 }
-?>
+

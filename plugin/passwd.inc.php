@@ -496,4 +496,4 @@ function passwd_get_auth_file()
 	return $auth_users;
 }
 
-?>
+

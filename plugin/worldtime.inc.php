@@ -30,4 +30,4 @@ function plugin_worldtime_inline()
 	return $x;
 }
 
-?>
+

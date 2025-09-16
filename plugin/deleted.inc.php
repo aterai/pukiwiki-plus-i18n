@@ -42,4 +42,4 @@ function plugin_deleted_action()
 
 	return $retval;
 }
-?>
+

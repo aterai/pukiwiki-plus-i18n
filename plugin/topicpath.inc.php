@@ -91,4 +91,4 @@ EOD;
     // return join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path));
     return join('', array_reverse($topic_path));
 }
-?>
+

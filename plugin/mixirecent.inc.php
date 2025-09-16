@@ -124,4 +124,4 @@ function plugin_mixirecent_isValidDate($aStr, $aSepList="-/ .")
 	}
 	return false;
 }
-?>
+

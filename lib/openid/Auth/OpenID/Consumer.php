@@ -2227,4 +2227,4 @@ class Auth_OpenID_SetupNeededResponse extends Auth_OpenID_ConsumerResponse {
     }
 }
 
-?>
+

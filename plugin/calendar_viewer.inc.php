@@ -335,4 +335,4 @@ function plugin_calendar_viewer_isValidDate($aStr, $aSepList = '-/ .')
 		return FALSE;
 	}
 }
-?>
+

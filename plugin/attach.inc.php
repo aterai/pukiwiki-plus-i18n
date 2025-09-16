@@ -1241,4 +1241,4 @@ class AttachPages
 		return "\n" . '<table>' . "\n" . $ret . '</table>' . "\n";
 	}
 }
-?>
+

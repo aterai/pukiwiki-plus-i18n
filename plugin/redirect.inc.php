@@ -72,4 +72,4 @@ function plugin_redirect_convert()
 		$redirect.'\', \'_blank\');" /></a>';
 }
 
-?>
+

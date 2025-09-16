@@ -17,4 +17,4 @@ function plugin_passage_inline()
 	return get_passage($time, $paren);
 }
 
-?>
+

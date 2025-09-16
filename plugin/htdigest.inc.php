@@ -355,4 +355,4 @@ function htdigest_save($username,$p_realm,$hash,$role)
 	return $_htdigest_msg['msg_update'];
 }
 
-?>
+

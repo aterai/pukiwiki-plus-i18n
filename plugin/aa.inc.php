@@ -14,4 +14,4 @@ function plugin_aa_convert() {
     // 文字実体参照が効かなかったので修正(thx tokageさん)
     return sprintf(PLUGIN_AA_FORMAT, preg_replace('/&(#\d{2,4}|[a-zA-Z]+);/i', '&$1;', htmlspecialchars($arg)));
 }
-?>
+

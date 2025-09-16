@@ -14,4 +14,4 @@ function plugin_navititle_inline()
 
 	return '<h1 class="title">' . (($newtitle!='' && $is_read)?$newtitle:$page) . '</h1>';
 }
-?>
+

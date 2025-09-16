@@ -34,4 +34,3 @@ function plugin_nonprint_convert()
 	$head_tags[] = $rc;
 }
 
-?>

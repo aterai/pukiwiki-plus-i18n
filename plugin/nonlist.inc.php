@@ -66,4 +66,4 @@ function plugin_nonlist_getlist($cmd=0)
 	if (empty($pages)) return '';
 	return page_list($pages,'read',false);
 }
-?>
+

@@ -63,4 +63,4 @@ function filelist_adm($pass)
 EOD;
 	return array('msg' => $_filelist_msg['msg_H0_filelist'],'body' => $body);
 }
-?>
+

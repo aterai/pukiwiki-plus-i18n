@@ -584,4 +584,3 @@ $code_keyword = Array(
   'in' => 2,
   'out' => 2,
 );
-?>

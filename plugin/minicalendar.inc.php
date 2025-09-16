@@ -336,4 +336,4 @@ function plugin_minicalendar_action()
 	return $ret;
 }
 
-?>
+

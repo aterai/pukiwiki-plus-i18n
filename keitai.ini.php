@@ -556,4 +556,3 @@ $use_trans_sid_address = array(
 
 unset($matches, $ua_name, $ua_vers, $ua_agent, $special_rules);
 
-?>

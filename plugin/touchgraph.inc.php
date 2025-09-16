@@ -70,4 +70,4 @@ function plugin_touchgraph_ref()
 		}
 	}
 }
-?>
+

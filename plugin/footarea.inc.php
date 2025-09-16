@@ -60,4 +60,4 @@ function plugin_footarea_convert()
 	$foothtml = str_replace("\n",'',$foothtml);
 	return preg_replace('/<ul class="list[^>]*>/','<ul class="foot">',$foothtml);
 }
-?>
+

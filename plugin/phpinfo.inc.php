@@ -56,4 +56,4 @@ function plugin_phpinfo_action()
 	die();
 
 }
-?>
+

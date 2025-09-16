@@ -32,4 +32,4 @@ function plugin_interwiki_invalid()
 			make_pagelink('InterWikiName')),
 			_(' $1 is not a valid $2.')));
 }
-?>
+

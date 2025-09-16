@@ -89,4 +89,4 @@ function img3_set_image_size($filename,$ratio=1)
 	return $size;
 }
 
-?>
+

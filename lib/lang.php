@@ -33,7 +33,16 @@ function set_language()
 	if (($pos = strrpos($path, '/')) !== FALSE) {
 		$path = substr($path, 0, $pos + 1);
 	}
-	setcookie('lang', $language, 0, $path);
+	$arr_cookie_options = array (
+		'expires' => 0,
+		'path' => $path, 
+		'domain' => '.ateraimemo.com',
+		'secure' => true,
+		'httponly' => true,
+		'samesite' => 'Strict' // None || Lax  || Strict
+	);
+	setcookie('lang', $language, $arr_cookie_options);
+	// setcookie('lang', $language, 0, $path);
 	$_COOKIE['lang'] = $language;
 
 	// PUBLIC HOLIDAY
@@ -514,9 +523,9 @@ class accept_language
 			}
 		}
 		if ($sort) {
-			uasort($rc,create_function('$a,$b','return ($a[1] == $b[1]) ? 0 : (($a[1] > $b[1]) ? -1 : 1);'));
+			uasort($rc,function($a,$b){return ($a[1] == $b[1]) ? 0 : (($a[1] > $b[1]) ? -1 : 1);});
 			// usort: 比較結果が等しい場合、 配列の順番は定義されない
-			usort($rc,create_function('$a,$b','return ($a[1] == $b[1]) ? 0 : (($a[1] > $b[1]) ? -1 : 1);'));
+			usort($rc,function($a,$b){return ($a[1] == $b[1]) ? 0 : (($a[1] > $b[1]) ? -1 : 1);});
 		}
 		return $rc;
 	}
@@ -579,4 +588,4 @@ class lang2country
 	}
 
 }
-?>
+
