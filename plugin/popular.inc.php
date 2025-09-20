@@ -29,135 +29,123 @@
 
 defined('PLUGIN_POPULAR_DEFAULT') or define('PLUGIN_POPULAR_DEFAULT', 10);
 
-function plugin_popular_convert()
+function plugin_popular_convert(): string
 {
-	global $vars;
+    global $vars;
 //	global $_popular_plugin_frame, $_popular_plugin_today_frame;
-	static $localtime;
+    static $localtime;
 
-	$_popular_plugin_frame_s       = _('popular(%d)');
-	$_popular_plugin_today_frame_s = _('today\'s(%d)');
-	$_popular_plugin_yesterday_frame_s = _('yesterday\'s(%d)');
-	$_popular_plugin_recent_frame_s    = _('recent\'s(%d)');
-	$_popular_plugin_frame         = sprintf('<h5>%s</h5><div>%%s</div>', $_popular_plugin_frame_s);
-	$_popular_plugin_today_frame   = sprintf('<h5>%s</h5><div>%%s</div>', $_popular_plugin_today_frame_s);
-	$_popular_plugin_yesterday_frame = sprintf('<h5>%s</h5><div>%%s</div>', $_popular_plugin_yesterday_frame_s);
-	$_popular_plugin_recent_frame    = sprintf('<h5>%s</h5><div>%%s</div>', $_popular_plugin_recent_frame_s);
-	$view   = 'total';
-	$max    = PLUGIN_POPULAR_DEFAULT;
-	$except = '';
+    $_popular_plugin_frame_s = _('popular(%d)');
+    $_popular_plugin_today_frame_s = _('today\'s(%d)');
+    $_popular_plugin_yesterday_frame_s = _('yesterday\'s(%d)');
+    $_popular_plugin_recent_frame_s = _('recent\'s(%d)');
+    $_popular_plugin_frame = sprintf('<h5>%s</h5><div>%%s</div>', $_popular_plugin_frame_s);
+    $_popular_plugin_today_frame = sprintf('<h5>%s</h5><div>%%s</div>', $_popular_plugin_today_frame_s);
+    $_popular_plugin_yesterday_frame = sprintf('<h5>%s</h5><div>%%s</div>', $_popular_plugin_yesterday_frame_s);
+    $_popular_plugin_recent_frame = sprintf('<h5>%s</h5><div>%%s</div>', $_popular_plugin_recent_frame_s);
+    $view = 'total';
+    $max = PLUGIN_POPULAR_DEFAULT;
+    $except = '';
 
-	if (! isset($localtime)) {
-		list($zone, $zonetime) = set_timezone(DEFAULT_LANG);
-		$localtime = UTIME + $zonetime;
-	}
+    if (!isset($localtime)) {
+        list($zone, $zonetime) = set_timezone(DEFAULT_LANG);
+        $localtime = UTIME + $zonetime;
+    }
 
-	$today = date('Y/m/d', $localtime);
-	// $yesterday = gmdate('Y/m/d', strtotime('yesterday', $localtime));
-        $yesterday = date('Y/m/d',mktime(0,0,0, date('m',$localtime), date('d',$localtime)-1, date('Y',$localtime)));
+    $today = date('Y/m/d', $localtime);
+    // $yesterday = gmdate('Y/m/d', strtotime('yesterday', $localtime));
+    $yesterday = date('Y/m/d', mktime(0, 0, 0, date('m', $localtime), date('d', $localtime) - 1, date('Y', $localtime)));
 
-	$array = func_get_args();
-	switch (func_num_args()) {
-	case 3:
-		switch ($array[2]) {
-		case 'today':
-		case 'true' :
-			$view = 'today';
-			break;
-		case 'yesterday':
-			$view = 'yesterday';
-			break;
-		case 'recent':
-			$view = 'recent';
-			break;
-		case 'total':
-		case 'false':
-		default:
-			$view = 'total';
-			break;
-		}
-	case 2: $except = '/'.$array[1].'/';
-	case 1: $max    = $array[0];
-	}
+    $array = func_get_args();
+    switch (func_num_args()) {
+        case 3:
+            $view = match ($array[2]) {
+                'today', 'true' => 'today',
+                'yesterday' => 'yesterday',
+                'recent' => 'recent',
+                default => 'total',
+            };
+            $except = '/' . $array[1] . '/';
+            $max = $array[0];
+            break;
+        case 2:
+            $except = '/' . $array[1] . '/';
+            $max = $array[0];
+            break;
+        case 1:
+            $max = $array[0];
+            break;
+    }
 
-	$counters = array();
-	foreach (auth::get_existpages(COUNTER_DIR, '.count') as $file=>$page) {
-		if (($except != '' && preg_match($except, $page)===1) ||
-		    is_cantedit($page) || check_non_list($page) ||
-		    ! is_page($page))
-			continue;
+    $counters = array();
+    foreach (auth::get_existpages(COUNTER_DIR, '.count') as $file => $page) {
+        if (($except != '' && preg_match($except, $page) === 1) ||
+            is_cantedit($page) || check_non_list($page) ||
+            !is_page($page))
+            continue;
 
-		$array = file(COUNTER_DIR . $file);
-		$count = rtrim($array[0]);
-		$date  = rtrim($array[1]);
-		$today_count = rtrim($array[2]);
-		$yesterday_count = rtrim($array[3]);
+        $array = file(COUNTER_DIR . $file);
+        $count = rtrim($array[0]);
+        $date = rtrim($array[1]);
+        $today_count = rtrim($array[2]);
+        $yesterday_count = rtrim($array[3]);
 
-		$counters['_' . $page] = 0;
-		if ($view == 'today' or $view == 'recent') {
-			// $pageが数値に見える(たとえばencode('BBS')=424253)とき、
-			// array_splice()によってキー値が変更されてしまうのを防ぐ
-			// ため、キーに '_' を連結する
-			if ($today == $date) $counters['_' . $page] = $today_count;
-		} 
-		if ($view == 'yesterday' or $view == 'recent') {
-			if ($today == $date) {
-				$counters['_' . $page] += $yesterday_count;
-			} elseif ($yesterday == $date) {
-				$counters['_' . $page] += $today_count;
-			}
-		}
-		if ($view == 'total') {
-			$counters['_' . $page] = $count;
-		}
-		if ($counters['_' . $page] == 0) {
-			unset($counters['_' . $page]);
-		}
-	}
-	asort($counters, SORT_NUMERIC);
+        $counters['_' . $page] = 0;
+        if ($view == 'today' or $view == 'recent') {
+            // $pageが数値に見える(たとえばencode('BBS')=424253)とき、
+            // array_splice()によってキー値が変更されてしまうのを防ぐ
+            // ため、キーに '_' を連結する
+            if ($today == $date) $counters['_' . $page] = $today_count;
+        }
+        if ($view == 'yesterday' or $view == 'recent') {
+            if ($today == $date) {
+                $counters['_' . $page] .= $yesterday_count;
+            } elseif ($yesterday == $date) {
+                $counters['_' . $page] .= $today_count;
+            }
+        }
+        if ($view == 'total') {
+            $counters['_' . $page] = $count;
+        }
+        if ($counters['_' . $page] == 0) {
+            unset($counters['_' . $page]);
+        }
+    }
+    asort($counters, SORT_NUMERIC);
 
-	// BugTrack2/106: Only variables can be passed by reference from PHP 5.0.5
-	$counters = array_reverse($counters, TRUE); // with array_splice()
-	$counters = array_splice($counters, 0, $max);
+    // BugTrack2/106: Only variables can be passed by reference from PHP 5.0.5
+    $counters = array_reverse($counters, TRUE); // with array_splice()
+    $counters = array_splice($counters, 0, $max);
 
-	$items = '';
-	if (! empty($counters)) {
-		$items = '<ul class="popular_list">' . "\n";
+    $items = '';
+    if (!empty($counters)) {
+        $items = '<ul class="popular_list">' . "\n";
 
-		foreach ($counters as $page=>$count) {
-			$page = substr($page, 1);
+        foreach ($counters as $page => $count) {
+            $page = substr($page, 1);
 
-			$s_page = htmlspecialchars($page);
-			if ($page == $vars['page']) {
-				// No need to link itself, notifies where you just read
-				$pg_passage = get_pg_passage($page,FALSE);
-				$items .= ' <li><span title="' . $s_page . ' ' . $pg_passage . '">' .
-					$s_page . '<span class="counter">(' . $count .
-					')</span></span></li>' . "\n";
-			} else {
-				$items .= ' <li>' . make_pagelink($page,
-					$s_page . '<span class="counter">(' . $count . ')</span>') .
-					'</li>' . "\n";
-			}
-		}
-		$items .= '</ul>' . "\n";
-	}
+            $s_page = htmlspecialchars($page);
+            if ($page == $vars['page']) {
+                // No need to link itself, notifies where you just read
+                $pg_passage = get_pg_passage($page, FALSE);
+                $items .= ' <li><span title="' . $s_page . ' ' . $pg_passage . '">' .
+                    $s_page . '<span class="counter">(' . $count .
+                    ')</span></span></li>' . "\n";
+            } else {
+                $items .= ' <li>' . make_pagelink($page,
+                        $s_page . '<span class="counter">(' . $count . ')</span>') .
+                    '</li>' . "\n";
+            }
+        }
+        $items .= '</ul>' . "\n";
+    }
 
-	switch ($view) {
-	case 'today':
-		$frame = $_popular_plugin_today_frame;
-		break;
-	case 'yesterday':
-		$frame = $_popular_plugin_yesterday_frame;
-		break;
-	case 'recent':
-		$frame = $_popular_plugin_recent_frame;
-		break;
-	case 'total':
-	default:
-		$frame = $_popular_plugin_frame;
-		break;
-	}
-	return sprintf($frame, count($counters), $items);
+    $frame = match ($view) {
+        'today' => $_popular_plugin_today_frame,
+        'yesterday' => $_popular_plugin_yesterday_frame,
+        'recent' => $_popular_plugin_recent_frame,
+        default => $_popular_plugin_frame,
+    };
+    return sprintf($frame, count($counters), $items);
 }
 
