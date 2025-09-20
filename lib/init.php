@@ -242,7 +242,7 @@ $arg = input_filter($arg); // \0 除去
 $arg = str_replace('+', '%20', $arg);
 
 // unset QUERY_STRINGs
-//foreach (array('QUERY_STRING', 'argv', 'argc') as $key) 
+//foreach (array('QUERY_STRING', 'argv', 'argc') as $key)
 // For OpenID Lib (use QUERY_STRING).
 foreach (array('argv', 'argc') as $key) {
     unset(${$key}, $_SERVER[$key], $HTTP_SERVER_VARS[$key]);
