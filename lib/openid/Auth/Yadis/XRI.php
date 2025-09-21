@@ -26,10 +26,9 @@ function Auth_Yadis_getXRIAuthorities()
 function Auth_Yadis_getEscapeRE()
 {
     $parts = array();
-    foreach (array_merge(Auth_Yadis_getUCSChars(),
-                         Auth_Yadis_getIPrivateChars()) as $pair) {
+    foreach (array_merge(Auth_Yadis_getUCSChars(), Auth_Yadis_getIPrivateChars()) as $pair) {
         list($m, $n) = $pair;
-        $parts[] = sprintf("%s-%s", chr($m), chr($n));
+        $parts[] = sprintf('%s-%s', chr($m), chr($n));
     }
 
     return sprintf('/[%s]/', implode('', $parts));
@@ -42,12 +41,13 @@ function Auth_Yadis_getXrefRE()
 
 function Auth_Yadis_identifierScheme($identifier)
 {
-    if (Auth_Yadis_startswith($identifier, 'xri://') ||
-        ($identifier &&
-          in_array($identifier[0], Auth_Yadis_getXRIAuthorities()))) {
-        return "XRI";
+    if (
+        Auth_Yadis_startswith($identifier, 'xri://') ||
+            $identifier && in_array($identifier[0], Auth_Yadis_getXRIAuthorities())
+    ) {
+        return 'XRI';
     } else {
-        return "URI";
+        return 'URI';
     }
 }
 
@@ -72,8 +72,7 @@ function _escape_xref($xref_match)
 function Auth_Yadis_escapeForIRI($xri)
 {
     $xri = str_replace('%', '%25', $xri);
-    $xri = preg_replace_callback(Auth_Yadis_getXrefRE(),
-                                 '_escape_xref', $xri);
+    $xri = preg_replace_callback(Auth_Yadis_getXrefRE(), '_escape_xref', $xri);
     return $xri;
 }
 
@@ -88,11 +87,9 @@ function Auth_Yadis_iriToURI($iri)
         return $iri;
     } else {
         // According to RFC 3987, section 3.1, "Mapping of IRIs to URIs"
-        return preg_replace_callback(Auth_Yadis_getEscapeRE(),
-                                     'Auth_Yadis_pct_escape_unicode', $iri);
+        return preg_replace_callback(Auth_Yadis_getEscapeRE(), 'Auth_Yadis_pct_escape_unicode', $iri);
     }
 }
-
 
 function Auth_Yadis_XRIAppendArgs($url, $args)
 {
@@ -106,8 +103,7 @@ function Auth_Yadis_XRIAppendArgs($url, $args)
 
     // Non-empty array; if it is an array of arrays, use multisort;
     // otherwise use sort.
-    if (array_key_exists(0, $args) &&
-        is_array($args[0])) {
+    if (array_key_exists(0, $args) && is_array($args[0])) {
         // Do nothing here.
     } else {
         $keys = array_keys($args);
@@ -165,10 +161,10 @@ function Auth_Yadis_rootAuthority($xri)
         $root = $authority[0];
     } else {
         // IRI reference.
-        $_segments = explode("!", $authority);
+        $_segments = explode('!', $authority);
         $segments = array();
         foreach ($_segments as $s) {
-            $segments = array_merge($segments, explode("*", $s));
+            $segments = array_merge($segments, explode('*', $s));
         }
         $root = $segments[0];
     }
@@ -190,7 +186,7 @@ function Auth_Yadis_getCanonicalID($iname, $xrds)
 
     // Now nodes are in reverse order.
     $xrd_list = array_reverse($xrds->allXrdNodes);
-    $parser =& $xrds->parser;
+    $parser = &$xrds->parser;
     $node = $xrd_list[0];
 
     $canonicalID_nodes = $parser->evalXPath('xrd:CanonicalID', $node);
@@ -230,5 +226,3 @@ function Auth_Yadis_getCanonicalID($iname, $xrds)
 
     return $canonicalID;
 }
-
-

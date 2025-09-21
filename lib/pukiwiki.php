@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 // $Id: pukiwiki.php,v 1.21.20 2010/05/30 23:01:00 upk Exp $
 //
@@ -32,46 +33,48 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
-// Plus!NOTE:(policy)not merge official cvs(1.16->1.17) See Question/181
+// Plus!NOTE: (policy) not merge official cvs(1.16->1.17) See Question/181
 
-if (!defined('DATA_HOME')) define('DATA_HOME', '');
+if (!defined('DATA_HOME'))
+    define('DATA_HOME', '');
 
 /////////////////////////////////////////////////
 // Include subroutines
 
-if (!defined('LIB_DIR')) define('LIB_DIR', '');
+if (!defined('LIB_DIR'))
+    define('LIB_DIR', '');
 
-require(LIB_DIR . 'Spyc.php'); //https://github.com/mustangostang/spyc/
+require LIB_DIR . 'Spyc.php'; //https://github.com/mustangostang/spyc/
 
-require(LIB_DIR . 'func.php');
-require(LIB_DIR . 'file.php');
-require(LIB_DIR . 'funcplus.php');
-require(LIB_DIR . 'fileplus.php');
-require(LIB_DIR . 'plugin.php');
-require(LIB_DIR . 'html.php');
-require(LIB_DIR . 'backup.php');
+require LIB_DIR . 'func.php';
+require LIB_DIR . 'file.php';
+require LIB_DIR . 'funcplus.php';
+require LIB_DIR . 'fileplus.php';
+require LIB_DIR . 'plugin.php';
+require LIB_DIR . 'html.php';
+require LIB_DIR . 'backup.php';
 
-require(LIB_DIR . 'convert_html.php');
-require(LIB_DIR . 'make_link.php');
-require(LIB_DIR . 'diff.php');
-require(LIB_DIR . 'config.php');
-require(LIB_DIR . 'link.php');
-require(LIB_DIR . 'auth.php');
-require(LIB_DIR . 'proxy.php');
-require(LIB_DIR . 'lang.php');
-require(LIB_DIR . 'timezone.php');
-require(LIB_DIR . 'log.php');
-require(LIB_DIR . 'spamplus.php');
-require(LIB_DIR . 'proxy.cls.php');
-require(LIB_DIR . 'auth.cls.php');
-require(LIB_DIR . 'netbios.cls.php');
-require(LIB_DIR . 'ua/user_agent.cls.php');
+require LIB_DIR . 'convert_html.php';
+require LIB_DIR . 'make_link.php';
+require LIB_DIR . 'diff.php';
+require LIB_DIR . 'config.php';
+require LIB_DIR . 'link.php';
+require LIB_DIR . 'auth.php';
+require LIB_DIR . 'proxy.php';
+require LIB_DIR . 'lang.php';
+require LIB_DIR . 'timezone.php';
+require LIB_DIR . 'log.php';
+require LIB_DIR . 'spamplus.php';
+require LIB_DIR . 'proxy.cls.php';
+require LIB_DIR . 'auth.cls.php';
+require LIB_DIR . 'netbios.cls.php';
+require LIB_DIR . 'ua/user_agent.cls.php';
 
 if (!extension_loaded('mbstring')) {
     die(_('PHP module "mbstring" is not found.'));
 }
 if (!extension_loaded('gettext')) {
-    require(LIB_DIR . 'gettext.php');
+    require LIB_DIR . 'gettext.php';
 } else {
     function N_($message)
     {
@@ -90,17 +93,17 @@ if (!extension_loaded('gettext')) {
 $notify = $trackback = $referer = 0;
 
 // Load *.ini.php files and init PukiWiki
-require(LIB_DIR . 'init.php');
+require LIB_DIR . 'init.php';
 
 // Load optional libraries
 if ($notify) {
-    require(LIB_DIR . 'mail.php'); // Mail notification
+    require LIB_DIR . 'mail.php'; // Mail notification
 }
 if ($trackback) {
-    require(LIB_DIR . 'trackback.php'); // TrackBack
+    require LIB_DIR . 'trackback.php'; // TrackBack
 }
 if ($referer) {
-    require(LIB_DIR . 'referer.php');
+    require LIB_DIR . 'referer.php';
 }
 
 /////////////////////////////////////////////////
@@ -119,7 +122,8 @@ if (isset($vars['cmd'])) {
 }
 
 // SPAM
-if (SpamCheckBAN($_SERVER['REMOTE_ADDR'])) die();
+if (SpamCheckBAN($_SERVER['REMOTE_ADDR']))
+    die();
 
 // Spam filtering
 //if ($spam && $method != 'GET') {
@@ -202,7 +206,8 @@ pkwk_session_start();
 
 // auth remoteip
 if (isset($auth_api['remoteip']['use']) && $auth_api['remoteip']['use']) {
-    if (exist_plugin_inline('remoteip')) do_plugin_inline('remoteip');
+    if (exist_plugin_inline('remoteip'))
+        do_plugin_inline('remoteip');
 }
 
 $is_protect = auth::is_protect();
@@ -212,25 +217,28 @@ if ($plugin != '') {
     if ($is_protect) {
         $plugin_arg = '';
         if (auth::is_protect_plugin_action($plugin)) {
-            if (exist_plugin_action($plugin)) do_plugin_action($plugin);
+            if (exist_plugin_action($plugin))
+                do_plugin_action($plugin);
             // Location で飛ばないプラグインの場合
             $plugin_arg = $plugin;
         }
-        if (exist_plugin_convert('protect')) do_plugin_convert('protect', $plugin_arg);
+        if (exist_plugin_convert('protect'))
+            do_plugin_convert('protect', $plugin_arg);
     }
 
     if (exist_plugin_action($plugin)) {
         $retvars = do_plugin_action($plugin);
-        if ($retvars === FALSE) exit; // Done
+        if ($retvars === false)
+            exit(); // Done
         // Rescan $vars (Some plugins rewrite it)
         /*
-        if (isset($vars['cmd'])) {
-            $base = isset($vars['page'])  ? $vars['page']  : '';
-        } else {
-            $base = isset($vars['refer']) ? $vars['refer'] : '';
-        }
-        */
-        $base = (!empty($page)) ? $page : $refer;
+         * if (isset($vars['cmd'])) {
+         * $base = isset($vars['page'])  ? $vars['page']  : '';
+         * } else {
+         * $base = isset($vars['refer']) ? $vars['refer'] : '';
+         * }
+         */
+        $base = !empty($page) ? $page : $refer;
     } else {
         $msg = 'plugin=' . htmlspecialchars($plugin, ENT_QUOTES, 'UTF-8') . ' is not implemented.';
         $retvars = array('msg' => $msg, 'body' => $msg);
@@ -241,14 +249,15 @@ if ($plugin != '') {
 // Location で飛ぶようなプラグインの対応のため
 // 上のアクションプラグインの実行後に処理を実施
 if ($is_protect) {
-    if (exist_plugin_convert('protect')) do_plugin_convert('protect');
+    if (exist_plugin_convert('protect'))
+        do_plugin_convert('protect');
     die('PLUS_PROTECT_MODE is set.');
 }
 
 // WebDAV
 if (is_webdav() && exist_plugin('dav')) {
     do_plugin_action('dav');
-    exit;
+    exit();
 }
 
 // Set Home
@@ -286,9 +295,9 @@ if (isset($retvars['body']) && $retvars['body'] != '') {
     $lines = $source;
     while (!empty($lines)) {
         $line = array_shift($lines);
-        if (preg_match("/^\#(partedit)(?:\((.*)\))?/", $line, $matches)) {
+        if (preg_match("/^#(partedit)(?:\((.*)\))?/", $line, $matches)) {
             if (!isset($matches[2]) || $matches[2] == '') {
-                $fixed_heading_edited = ($fixed_heading_edited ? 0 : 1);
+                $fixed_heading_edited = $fixed_heading_edited ? 0 : 1;
             } else if ($matches[2] == 'on') {
                 $fixed_heading_edited = 1;
             } else if ($matches[2] == 'off') {
@@ -303,21 +312,23 @@ if (isset($retvars['body']) && $retvars['body'] != '') {
     $body = convert_html($source);
 
     //if ($trackback) $body .= tb_get_rdf($base); // Add TrackBack-Ping URI
-    if ($referer) ref_save($base);
+    if ($referer)
+        ref_save($base);
     log_write('check', $vars['page']);
     log_write('browse', $vars['page']);
 }
 
-
 // global $always_menu_displayed;
-if (arg_check('read')) $always_menu_displayed = 1;
+if (arg_check('read'))
+    $always_menu_displayed = 1;
 $body_menu = $body_side = '';
 if ($always_menu_displayed) {
-    if (exist_plugin_convert('menu')) $body_menu = do_plugin_convert('menu');
-    if (exist_plugin_convert('side')) $body_side = do_plugin_convert('side');
+    if (exist_plugin_convert('menu'))
+        $body_menu = do_plugin_convert('menu');
+    if (exist_plugin_convert('side'))
+        $body_side = do_plugin_convert('side');
 }
 
 // Output
 catbody($title, $page, $body);
-exit;
-
+exit();

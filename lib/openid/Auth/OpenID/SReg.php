@@ -48,15 +48,16 @@ require_once 'Auth/OpenID/Extension.php';
 // The data fields that are listed in the sreg spec
 global $Auth_OpenID_sreg_data_fields;
 $Auth_OpenID_sreg_data_fields = array(
-                                      'fullname' => 'Full Name',
-                                      'nickname' => 'Nickname',
-                                      'dob' => 'Date of Birth',
-                                      'email' => 'E-mail Address',
-                                      'gender' => 'Gender',
-                                      'postcode' => 'Postal Code',
-                                      'country' => 'Country',
-                                      'language' => 'Language',
-                                      'timezone' => 'Time Zone');
+    'fullname' => 'Full Name',
+    'nickname' => 'Nickname',
+    'dob' => 'Date of Birth',
+    'email' => 'E-mail Address',
+    'gender' => 'Gender',
+    'postcode' => 'Postal Code',
+    'country' => 'Country',
+    'language' => 'Language',
+    'timezone' => 'Time Zone',
+);
 
 /**
  * Check to see that the given value is a valid simple registration
@@ -96,8 +97,9 @@ Auth_OpenID_registerNamespaceAlias(Auth_OpenID_SREG_NS_URI_1_1, 'sreg');
  */
 function Auth_OpenID_supportsSReg(&$endpoint)
 {
-    return ($endpoint->usesExtension(Auth_OpenID_SREG_NS_URI_1_1) ||
-            $endpoint->usesExtension(Auth_OpenID_SREG_NS_URI_1_0));
+    return (
+        $endpoint->usesExtension(Auth_OpenID_SREG_NS_URI_1_1) || $endpoint->usesExtension(Auth_OpenID_SREG_NS_URI_1_0)
+    );
 }
 
 /**
@@ -106,7 +108,8 @@ function Auth_OpenID_supportsSReg(&$endpoint)
  *
  * @package OpenID
  */
-class Auth_OpenID_SRegBase extends Auth_OpenID_Extension {
+class Auth_OpenID_SRegBase extends Auth_OpenID_Extension
+{
     /**
      * Extract the simple registration namespace URI from the given
      * OpenID message. Handles OpenID 1 and 2, as well as both sreg
@@ -129,8 +132,7 @@ class Auth_OpenID_SRegBase extends Auth_OpenID_Extension {
 
         // See if there exists an alias for one of the two defined
         // simple registration types.
-        foreach (array(Auth_OpenID_SREG_NS_URI_1_1,
-                       Auth_OpenID_SREG_NS_URI_1_0) as $sreg_ns_uri) {
+        foreach (array(Auth_OpenID_SREG_NS_URI_1_1, Auth_OpenID_SREG_NS_URI_1_0) as $sreg_ns_uri) {
             $alias = $message->namespaces->getAlias($sreg_ns_uri);
             if ($alias !== null) {
                 $found_ns_uri = $sreg_ns_uri;
@@ -142,8 +144,7 @@ class Auth_OpenID_SRegBase extends Auth_OpenID_Extension {
             // There is no alias for either of the types, so try to
             // add one. We default to using the modern value (1.1)
             $found_ns_uri = Auth_OpenID_SREG_NS_URI_1_1;
-            if ($message->namespaces->addAlias(Auth_OpenID_SREG_NS_URI_1_1,
-                                               'sreg') === null) {
+            if ($message->namespaces->addAlias(Auth_OpenID_SREG_NS_URI_1_1, 'sreg') === null) {
                 // An alias for the string 'sreg' already exists, but
                 // it's defined for something other than simple
                 // registration
@@ -166,18 +167,20 @@ class Auth_OpenID_SRegBase extends Auth_OpenID_Extension {
  *
  * @package OpenID
  */
-class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
-
+class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase
+{
     var $ns_alias = 'sreg';
 
     /**
      * Initialize an empty simple registration request.
      */
-    function build($required=null, $optional=null,
-                   $policy_url=null,
-                   $sreg_ns_uri=Auth_OpenID_SREG_NS_URI,
-                   $cls='Auth_OpenID_SRegRequest')
-    {
+    function build(
+        $required = null,
+        $optional = null,
+        $policy_url = null,
+        $sreg_ns_uri = Auth_OpenID_SREG_NS_URI,
+        $cls = 'Auth_OpenID_SRegRequest',
+    ) {
         $obj = new $cls();
 
         $obj->required = array();
@@ -213,11 +216,9 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
      *
      * Returns the newly created simple registration request
      */
-    function fromOpenIDRequest($request, $cls='Auth_OpenID_SRegRequest')
+    function fromOpenIDRequest($request, $cls = 'Auth_OpenID_SRegRequest')
     {
-
-        $obj = call_user_func_array(array($cls, 'build'),
-                 array(null, null, null, Auth_OpenID_SREG_NS_URI, $cls));
+        $obj = call_user_func_array(array($cls, 'build'), array(null, null, null, Auth_OpenID_SREG_NS_URI, $cls));
 
         // Since we're going to mess with namespace URI mapping, don't
         // mutate the object that was passed in.
@@ -259,10 +260,10 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
      * the simple registration specification should be tolerated (and
      * ignored)
      */
-    function parseExtensionArgs($args, $strict=false)
+    function parseExtensionArgs($args, $strict = false)
     {
         foreach (array('required', 'optional') as $list_name) {
-            $required = ($list_name == 'required');
+            $required = $list_name == 'required';
             $items = Auth_OpenID::arrayGet($args, $list_name);
             if ($items) {
                 foreach (explode(',', $items) as $field_name) {
@@ -302,8 +303,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
      */
     function contains($field_name)
     {
-        return (in_array($field_name, $this->required) ||
-                in_array($field_name, $this->optional));
+        return in_array($field_name, $this->required) || in_array($field_name, $this->optional);
     }
 
     /**
@@ -317,8 +317,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
      * strict: whether to raise an exception when a field is added to
      * a request more than once
      */
-    function requestField($field_name,
-                          $required=false, $strict=false)
+    function requestField($field_name, $required = false, $strict = false)
     {
         if (!Auth_OpenID_checkFieldName($field_name)) {
             return false;
@@ -335,8 +334,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
 
             if (in_array($field_name, $this->optional)) {
                 if ($required) {
-                    unset($this->optional[array_search($field_name,
-                                                       $this->optional)]);
+                    unset($this->optional[array_search($field_name, $this->optional)]);
                 } else {
                     return true;
                 }
@@ -363,14 +361,14 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
      * strict: whether to raise an exception when a field is added to
      * a request more than once
      */
-    function requestFields($field_names, $required=false, $strict=false)
+    function requestFields($field_names, $required = false, $strict = false)
     {
         if (!is_array($field_names)) {
             return false;
         }
 
         foreach ($field_names as $field_name) {
-            if (!$this->requestField($field_name, $required, $strict=$strict)) {
+            if (!$this->requestField($field_name, $required, $strict = $strict)) {
                 return false;
             }
         }
@@ -414,12 +412,11 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
  *
  * @package OpenID
  */
-class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
-
+class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase
+{
     var $ns_alias = 'sreg';
 
-    function Auth_OpenID_SRegResponse($data=null,
-                                      $sreg_ns_uri=Auth_OpenID_SREG_NS_URI)
+    function Auth_OpenID_SRegResponse($data = null, $sreg_ns_uri = Auth_OpenID_SREG_NS_URI)
     {
         if ($data === null) {
             $this->data = array();
@@ -471,7 +468,7 @@ class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
      * Returns a simple registration response containing the data that
      * was supplied with the C{id_res} response.
      */
-    function fromSuccessResponse(&$success_response, $signed_only=true)
+    function fromSuccessResponse(&$success_response, $signed_only = true)
     {
         global $Auth_OpenID_sreg_data_fields;
 
@@ -503,7 +500,7 @@ class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
     }
 
     // Read-only dictionary interface
-    function get($field_name, $default=null)
+    function get($field_name, $default = null)
     {
         if (!Auth_OpenID_checkFieldName($field_name)) {
             return null;
@@ -517,5 +514,3 @@ class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
         return $this->data;
     }
 }
-
-

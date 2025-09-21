@@ -64,8 +64,8 @@ require_once 'Auth/OpenID/Nonce.php';
  *
  * @package OpenID
  */
-class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
-
+class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore
+{
     /**
      * This creates a new SQLStore instance.  It requires an
      * established database connection be given to it, and it allows
@@ -85,24 +85,30 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
      * the name of the table used for storing nonces.  The default
      * value is 'oid_nonces'.
      */
-    function Auth_OpenID_SQLStore($connection,
-                                  $associations_table = null,
-                                  $nonces_table = null)
+    function Auth_OpenID_SQLStore($connection, $associations_table = null, $nonces_table = null)
     {
         global $__Auth_OpenID_PEAR_AVAILABLE;
 
-        $this->associations_table_name = "oid_associations";
-        $this->nonces_table_name = "oid_nonces";
+        $this->associations_table_name = 'oid_associations';
+        $this->nonces_table_name = 'oid_nonces';
 
         // Check the connection object type to be sure it's a PEAR
         // database connection.
-        if (!(is_object($connection) &&
-              (is_subclass_of($connection, 'db_common') ||
-               is_subclass_of($connection,
-                              'auth_openid_databaseconnection')))) {
-            trigger_error("Auth_OpenID_SQLStore expected PEAR connection " .
-                          "object (got ".get_class($connection).")",
-                          E_USER_ERROR);
+        if (
+            !(
+
+                    is_object($connection) &&
+                    (
+                        is_subclass_of($connection, 'db_common') ||
+                            is_subclass_of($connection, 'auth_openid_databaseconnection')
+                    )
+
+            )
+        ) {
+            trigger_error(
+                'Auth_OpenID_SQLStore expected PEAR connection ' . 'object (got ' . get_class($connection) . ')',
+                E_USER_ERROR,
+            );
             return;
         }
 
@@ -147,16 +153,12 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
         list($missing, $empty) = $this->_verifySQL();
 
         if ($missing) {
-            trigger_error("Expected keys in SQL query list: " .
-                          implode(", ", $missing),
-                          E_USER_ERROR);
+            trigger_error('Expected keys in SQL query list: ' . implode(', ', $missing), E_USER_ERROR);
             return;
         }
 
         if ($empty) {
-            trigger_error("SQL list keys have no SQL strings: " .
-                          implode(", ", $empty),
-                          E_USER_ERROR);
+            trigger_error('SQL list keys have no SQL strings: ' . implode(', ', $empty), E_USER_ERROR);
             return;
         }
 
@@ -166,10 +168,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 
     function tableExists($table_name)
     {
-        return !$this->isError(
-                      $this->connection->query(
-                          sprintf("SELECT * FROM %s LIMIT 0",
-                                  $table_name)));
+        return !$this->isError($this->connection->query(sprintf('SELECT * FROM %s LIMIT 0', $table_name)));
     }
 
     /**
@@ -210,11 +209,9 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
      */
     function reset()
     {
-        $this->connection->query(sprintf("DELETE FROM %s",
-                                         $this->associations_table_name));
+        $this->connection->query(sprintf('DELETE FROM %s', $this->associations_table_name));
 
-        $this->connection->query(sprintf("DELETE FROM %s",
-                                         $this->nonces_table_name));
+        $this->connection->query(sprintf('DELETE FROM %s', $this->nonces_table_name));
     }
 
     /**
@@ -226,13 +223,13 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
         $empty = array();
 
         $required_sql_keys = array(
-                                   'nonce_table',
-                                   'assoc_table',
-                                   'set_assoc',
-                                   'get_assoc',
-                                   'get_assocs',
-                                   'remove_assoc'
-                                   );
+            'nonce_table',
+            'assoc_table',
+            'set_assoc',
+            'get_assoc',
+            'get_assocs',
+            'remove_assoc',
+        );
 
         foreach ($required_sql_keys as $key) {
             if (!array_key_exists($key, $this->sql)) {
@@ -251,22 +248,15 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
     function _fixSQL()
     {
         $replacements = array(
-                              array(
-                                    'value' => $this->nonces_table_name,
-                                    'keys' => array('nonce_table',
-                                                    'add_nonce',
-                                                    'clean_nonce')
-                                    ),
-                              array(
-                                    'value' => $this->associations_table_name,
-                                    'keys' => array('assoc_table',
-                                                    'set_assoc',
-                                                    'get_assoc',
-                                                    'get_assocs',
-                                                    'remove_assoc',
-                                                    'clean_assoc')
-                                    )
-                              );
+            array(
+                'value' => $this->nonces_table_name,
+                'keys' => array('nonce_table', 'add_nonce', 'clean_nonce'),
+            ),
+            array(
+                'value' => $this->associations_table_name,
+                'keys' => array('assoc_table', 'set_assoc', 'get_assoc', 'get_assocs', 'remove_assoc', 'clean_assoc'),
+            ),
+        );
 
         foreach ($replacements as $item) {
             $value = $item['value'];
@@ -275,8 +265,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
             foreach ($keys as $k) {
                 if (is_array($this->sql[$k])) {
                     foreach ($this->sql[$k] as $part_key => $part_value) {
-                        $this->sql[$k][$part_key] = sprintf($part_value,
-                                                            $value);
+                        $this->sql[$k][$part_key] = sprintf($part_value, $value);
                     }
                 } else {
                     $this->sql[$k] = sprintf($this->sql[$k], $value);
@@ -330,30 +319,30 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
     /**
      * @access private
      */
-    function _set_assoc($server_url, $handle, $secret, $issued,
-                        $lifetime, $assoc_type)
+    function _set_assoc($server_url, $handle, $secret, $issued, $lifetime, $assoc_type)
     {
-        return $this->connection->query($this->sql['set_assoc'],
-                                        array(
-                                              $server_url,
-                                              $handle,
-                                              $secret,
-                                              $issued,
-                                              $lifetime,
-                                              $assoc_type));
+        return $this->connection->query($this->sql['set_assoc'], array(
+            $server_url,
+            $handle,
+            $secret,
+            $issued,
+            $lifetime,
+            $assoc_type,
+        ));
     }
 
     function storeAssociation($server_url, $association)
     {
-        if ($this->resultToBool($this->_set_assoc(
-                                            $server_url,
-                                            $association->handle,
-                                            $this->blobEncode(
-                                                  $association->secret),
-                                            $association->issued,
-                                            $association->lifetime,
-                                            $association->assoc_type
-                                            ))) {
+        if (
+            $this->resultToBool($this->_set_assoc(
+                $server_url,
+                $association->handle,
+                $this->blobEncode($association->secret),
+                $association->issued,
+                $association->lifetime,
+                $association->assoc_type,
+            ))
+        ) {
             $this->connection->commit();
         } else {
             $this->connection->rollback();
@@ -365,8 +354,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
      */
     function _get_assoc($server_url, $handle)
     {
-        $result = $this->connection->getRow($this->sql['get_assoc'],
-                                            array($server_url, $handle));
+        $result = $this->connection->getRow($this->sql['get_assoc'], array($server_url, $handle));
         if ($this->isError($result)) {
             return null;
         } else {
@@ -379,8 +367,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
      */
     function _get_assocs($server_url)
     {
-        $result = $this->connection->getAll($this->sql['get_assocs'],
-                                            array($server_url));
+        $result = $this->connection->getAll($this->sql['get_assocs'], array($server_url));
 
         if ($this->isError($result)) {
             return array();
@@ -395,9 +382,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
             return false;
         }
 
-        if ($this->resultToBool($this->connection->query(
-                              $this->sql['remove_assoc'],
-                              array($server_url, $handle)))) {
+        if ($this->resultToBool($this->connection->query($this->sql['remove_assoc'], array($server_url, $handle)))) {
             $this->connection->commit();
         } else {
             $this->connection->rollback();
@@ -419,17 +404,19 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
             $assocs = $this->_get_assocs($server_url);
         }
 
-        if (!$assocs || (count($assocs) == 0)) {
+        if (!$assocs || count($assocs) == 0) {
             return null;
         } else {
             $associations = array();
 
             foreach ($assocs as $assoc_row) {
-                $assoc = new Auth_OpenID_Association($assoc_row['handle'],
-                                                     $assoc_row['secret'],
-                                                     $assoc_row['issued'],
-                                                     $assoc_row['lifetime'],
-                                                     $assoc_row['assoc_type']);
+                $assoc = new Auth_OpenID_Association(
+                    $assoc_row['handle'],
+                    $assoc_row['secret'],
+                    $assoc_row['issued'],
+                    $assoc_row['lifetime'],
+                    $assoc_row['assoc_type'],
+                );
 
                 $assoc->secret = $this->blobDecode($assoc->secret);
 
@@ -448,8 +435,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
                     $assocs[$key] = $assoc[1];
                 }
 
-                array_multisort($issued, SORT_DESC, $assocs, SORT_DESC,
-                                $associations);
+                array_multisort($issued, SORT_DESC, $assocs, SORT_DESC, $associations);
 
                 // return the most recently issued one.
                 list($issued, $assoc) = $associations[0];
@@ -466,9 +452,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
     function _add_nonce($server_url, $timestamp, $salt)
     {
         $sql = $this->sql['add_nonce'];
-        $result = $this->connection->query($sql, array($server_url,
-                                                       $timestamp,
-                                                       $salt));
+        $result = $this->connection->query($sql, array($server_url, $timestamp, $salt));
         if ($this->isError($result)) {
             $this->connection->rollback();
         } else {
@@ -481,8 +465,8 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
     {
         global $Auth_OpenID_SKEW;
 
-        if ( abs($timestamp - time()) > $Auth_OpenID_SKEW ) {
-            return False;
+        if (abs($timestamp - time()) > $Auth_OpenID_SKEW) {
+            return false;
         }
 
         return $this->_add_nonce($server_url, $timestamp, $salt);
@@ -497,7 +481,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
      */
     function _octify($str)
     {
-        $result = "";
+        $result = '';
         for ($i = 0; $i < Auth_OpenID::bytes($str); $i++) {
             $ch = substr($str, $i, 1);
             if ($ch == "\\") {
@@ -519,7 +503,7 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
      */
     function _unoctify($str)
     {
-        $result = "";
+        $result = '';
         $i = 0;
         while ($i < strlen($str)) {
             $char = $str[$i];
@@ -558,12 +542,9 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
 
     function cleanupAssociations()
     {
-        $this->connection->query($this->sql['clean_assoc'],
-                                 array(time()));
+        $this->connection->query($this->sql['clean_assoc'], array(time()));
         $num = $this->connection->affectedRows();
         $this->connection->commit();
         return $num;
     }
 }
-
-

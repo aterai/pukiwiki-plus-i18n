@@ -8,20 +8,15 @@
  * http://openid.net/developers/specs/
  */
 
-require_once "Auth/OpenID/Extension.php";
+require_once 'Auth/OpenID/Extension.php';
 
-define('Auth_OpenID_PAPE_NS_URI',
-       "http://specs.openid.net/extensions/pape/1.0");
+define('Auth_OpenID_PAPE_NS_URI', 'http://specs.openid.net/extensions/pape/1.0');
 
-define('PAPE_AUTH_MULTI_FACTOR_PHYSICAL',
-       'http://schemas.openid.net/pape/policies/2007/06/multi-factor-physical');
-define('PAPE_AUTH_MULTI_FACTOR',
-       'http://schemas.openid.net/pape/policies/2007/06/multi-factor');
-define('PAPE_AUTH_PHISHING_RESISTANT',
-       'http://schemas.openid.net/pape/policies/2007/06/phishing-resistant');
+define('PAPE_AUTH_MULTI_FACTOR_PHYSICAL', 'http://schemas.openid.net/pape/policies/2007/06/multi-factor-physical');
+define('PAPE_AUTH_MULTI_FACTOR', 'http://schemas.openid.net/pape/policies/2007/06/multi-factor');
+define('PAPE_AUTH_PHISHING_RESISTANT', 'http://schemas.openid.net/pape/policies/2007/06/phishing-resistant');
 
-define('PAPE_TIME_VALIDATOR',
-       '^[0-9]{4,4}-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]Z$');
+define('PAPE_TIME_VALIDATOR', '^[0-9]{4,4}-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]Z$');
 /**
  * A Provider Authentication Policy request, sent from a relying party
  * to a provider
@@ -32,13 +27,12 @@ define('PAPE_TIME_VALIDATOR',
  * max_auth_age: The maximum time, in seconds, that the relying party
  * wants to allow to have elapsed before the user must re-authenticate
  */
-class Auth_OpenID_PAPE_Request extends Auth_OpenID_Extension {
-
+class Auth_OpenID_PAPE_Request extends Auth_OpenID_Extension
+{
     var $ns_alias = 'pape';
     var $ns_uri = Auth_OpenID_PAPE_NS_URI;
 
-    function Auth_OpenID_PAPE_Request($preferred_auth_policies=null,
-                                      $max_auth_age=null)
+    function Auth_OpenID_PAPE_Request($preferred_auth_policies = null, $max_auth_age = null)
     {
         if ($preferred_auth_policies === null) {
             $preferred_auth_policies = array();
@@ -67,9 +61,8 @@ class Auth_OpenID_PAPE_Request extends Auth_OpenID_Extension {
     function getExtensionArgs()
     {
         $ns_args = array(
-                         'preferred_auth_policies' =>
-                           implode(' ', $this->preferred_auth_policies)
-                         );
+            'preferred_auth_policies' => implode(' ', $this->preferred_auth_policies),
+        );
 
         if ($this->max_auth_age !== null) {
             $ns_args['max_auth_age'] = strval($this->max_auth_age);
@@ -156,13 +149,12 @@ class Auth_OpenID_PAPE_Request extends Auth_OpenID_Extension {
  * A Provider Authentication Policy response, sent from a provider to
  * a relying party
  */
-class Auth_OpenID_PAPE_Response extends Auth_OpenID_Extension {
-
+class Auth_OpenID_PAPE_Response extends Auth_OpenID_Extension
+{
     var $ns_alias = 'pape';
     var $ns_uri = Auth_OpenID_PAPE_NS_URI;
 
-    function Auth_OpenID_PAPE_Response($auth_policies=null, $auth_time=null,
-                                       $nist_auth_level=null)
+    function Auth_OpenID_PAPE_Response($auth_policies = null, $auth_time = null, $nist_auth_level = null)
     {
         if ($auth_policies) {
             $this->auth_policies = $auth_policies;
@@ -233,12 +225,12 @@ class Auth_OpenID_PAPE_Response extends Auth_OpenID_Extension {
      *
      * @return null The data is parsed into the internal fields of
      * this object.
-    */
-    function parseExtensionArgs($args, $strict=false)
+     */
+    function parseExtensionArgs($args, $strict = false)
     {
         $policies_str = Auth_OpenID::arrayGet($args, 'auth_policies');
-        if ($policies_str && $policies_str != "none") {
-            $this->auth_policies = explode(" ", $policies_str);
+        if ($policies_str && $policies_str != 'none') {
+            $this->auth_policies = explode(' ', $policies_str);
         }
 
         $nist_level_str = Auth_OpenID::arrayGet($args, 'nist_auth_level');
@@ -297,4 +289,3 @@ class Auth_OpenID_PAPE_Response extends Auth_OpenID_Extension {
         return $ns_args;
     }
 }
-

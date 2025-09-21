@@ -19,13 +19,15 @@ require_once 'Auth/OpenID/BigMath.php';
 
 function Auth_OpenID_getDefaultMod()
 {
-    return '155172898181473697471232257763715539915724801'.
-        '966915404479707795314057629378541917580651227423'.
-        '698188993727816152646631438561595825688188889951'.
-        '272158842675419950341258706556549803580104870537'.
-        '681476726513255747040765857479291291572334510643'.
-        '245094715007229621094194349783925984760375594985'.
-        '848253359305585439638443';
+    return (
+        '155172898181473697471232257763715539915724801' .
+        '966915404479707795314057629378541917580651227423' .
+        '698188993727816152646631438561595825688188889951' .
+        '272158842675419950341258706556549803580104870537' .
+        '681476726513255747040765857479291291572334510643' .
+        '245094715007229621094194349783925984760375594985' .
+        '848253359305585439638443'
+    );
 }
 
 function Auth_OpenID_getDefaultGen()
@@ -40,20 +42,19 @@ function Auth_OpenID_getDefaultGen()
  * @access private
  * @package OpenID
  */
-class Auth_OpenID_DiffieHellman {
-
+class Auth_OpenID_DiffieHellman
+{
     var $mod;
     var $gen;
     var $private;
     var $lib = null;
 
-    function Auth_OpenID_DiffieHellman($mod = null, $gen = null,
-                                       $private = null, $lib = null)
+    function Auth_OpenID_DiffieHellman($mod = null, $gen = null, $private = null, $lib = null)
     {
         if ($lib === null) {
-            $this->lib =& Auth_OpenID_getMathLib();
+            $this->lib = &Auth_OpenID_getMathLib();
         } else {
-            $this->lib =& $lib;
+            $this->lib = &$lib;
         }
 
         if ($mod === null) {
@@ -75,8 +76,7 @@ class Auth_OpenID_DiffieHellman {
             $this->private = $private;
         }
 
-        $this->public = $this->lib->powmod($this->gen, $this->private,
-                                           $this->mod);
+        $this->public = $this->lib->powmod($this->gen, $this->private, $this->mod);
     }
 
     function getSharedSecret($composite)
@@ -91,8 +91,7 @@ class Auth_OpenID_DiffieHellman {
 
     function usingDefaultValues()
     {
-        return ($this->mod == Auth_OpenID_getDefaultMod() &&
-                $this->gen == Auth_OpenID_getDefaultGen());
+        return $this->mod == Auth_OpenID_getDefaultMod() && $this->gen == Auth_OpenID_getDefaultGen();
     }
 
     function xorSecret($composite, $secret, $hash_func)
@@ -101,7 +100,7 @@ class Auth_OpenID_DiffieHellman {
         $dh_shared_str = $this->lib->longToBinary($dh_shared);
         $hash_dh_shared = $hash_func($dh_shared_str);
 
-        $xsecret = "";
+        $xsecret = '';
         for ($i = 0; $i < Auth_OpenID::bytes($secret); $i++) {
             $xsecret .= chr(ord($secret[$i]) ^ ord($hash_dh_shared[$i]));
         }
@@ -109,5 +108,3 @@ class Auth_OpenID_DiffieHellman {
         return $xsecret;
     }
 }
-
-

@@ -16,15 +16,14 @@
 /**
  * Require logging functionality
  */
-require_once "Auth/OpenID.php";
+require_once 'Auth/OpenID.php';
 
 define('Auth_OpenID_FETCHER_MAX_RESPONSE_KB', 1024);
-define('Auth_OpenID_USER_AGENT', 
-       'php-openid/'.Auth_OpenID_VERSION.' (php/'.phpversion().')');
+define('Auth_OpenID_USER_AGENT', 'php-openid/' . Auth_OpenID_VERSION . ' (php/' . phpversion() . ')');
 
-class Auth_Yadis_HTTPResponse {
-    function Auth_Yadis_HTTPResponse($final_url = null, $status = null,
-                                         $headers = null, $body = null)
+class Auth_Yadis_HTTPResponse
+{
+    function Auth_Yadis_HTTPResponse($final_url = null, $status = null, $headers = null, $body = null)
     {
         $this->final_url = $final_url;
         $this->status = $status;
@@ -41,8 +40,8 @@ class Auth_Yadis_HTTPResponse {
  * @access private
  * @package OpenID
  */
-class Auth_Yadis_HTTPFetcher {
-
+class Auth_Yadis_HTTPFetcher
+{
     var $timeout = 20; // timeout in seconds.
 
     /**
@@ -55,14 +54,12 @@ class Auth_Yadis_HTTPFetcher {
     function canFetchURL($url)
     {
         if ($this->isHTTPS($url) && !$this->supportsSSL()) {
-            Auth_OpenID::log("HTTPS URL unsupported fetching %s",
-                             $url);
+            Auth_OpenID::log('HTTPS URL unsupported fetching %s', $url);
             return false;
         }
 
         if (!$this->allowedURL($url)) {
-            Auth_OpenID::log("URL fetching not allowed for '%s'",
-                             $url);
+            Auth_OpenID::log("URL fetching not allowed for '%s'", $url);
             return false;
         }
 
@@ -89,7 +86,7 @@ class Auth_Yadis_HTTPFetcher {
      */
     function supportsSSL()
     {
-        trigger_error("not implemented", E_USER_ERROR);
+        trigger_error('not implemented', E_USER_ERROR);
     }
 
     /**
@@ -99,7 +96,7 @@ class Auth_Yadis_HTTPFetcher {
      */
     function isHTTPS($url)
     {
-        return (bool)preg_match('/^https:\/\//i', $url);
+        return (bool) preg_match('/^https:\/\//i', $url);
     }
 
     /**
@@ -109,7 +106,7 @@ class Auth_Yadis_HTTPFetcher {
      */
     function URLHasAllowedScheme($url)
     {
-        return (bool)preg_match('/^https?:\/\//i', $url);
+        return (bool) preg_match('/^https?:\/\//i', $url);
     }
 
     /**
@@ -118,8 +115,8 @@ class Auth_Yadis_HTTPFetcher {
     function _findRedirect($headers)
     {
         foreach ($headers as $line) {
-            if (strpos(strtolower($line), "location: ") === 0) {
-                $parts = explode(" ", $line, 2);
+            if (strpos(strtolower($line), 'location: ') === 0) {
+                $parts = explode(' ', $line, 2);
                 return $parts[1];
             }
         }
@@ -140,7 +137,6 @@ class Auth_Yadis_HTTPFetcher {
      */
     function get($url, $headers = null)
     {
-        trigger_error("not implemented", E_USER_ERROR);
+        trigger_error('not implemented', E_USER_ERROR);
     }
 }
-

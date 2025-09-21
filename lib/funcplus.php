@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 // $Id: funcplus.php,v 0.1.58 2010/05/31 00:21:00 upk Exp $
 // Copyright (C)
@@ -7,10 +8,14 @@
 //
 // Plus! extension function(s)
 
-defined('FUNC_POSTLOG') or define('FUNC_POSTLOG', FALSE);
-defined('FUNC_SPAMLOG') or define('FUNC_SPAMLOG', FALSE);
-defined('FUNC_BLACKLIST') or define('FUNC_BLACKLIST', TRUE);
-defined('FUNC_SPAMREGEX') or define('FUNC_SPAMREGEX', '#(?:cialis|hydrocodone|viagra|levitra|tramadol|xanax|johnharoldbrowne|happier|\[/link\]|\[/url\])#i');
+defined('FUNC_POSTLOG') or define('FUNC_POSTLOG', false);
+defined('FUNC_SPAMLOG') or define('FUNC_SPAMLOG', false);
+defined('FUNC_BLACKLIST') or define('FUNC_BLACKLIST', true);
+defined('FUNC_SPAMREGEX') or
+    define(
+        'FUNC_SPAMREGEX',
+        '#(?:cialis|hydrocodone|viagra|levitra|tramadol|xanax|johnharoldbrowne|happier|\[/link\]|\[/url\])#i',
+    );
 defined('FUNC_SPAMCOUNT') or define('FUNC_SPAMCOUNT', 2);
 
 // Session start
@@ -22,7 +27,8 @@ function pkwk_session_start()
     if (!isset($use_session)) {
         $use_session = PLUS_ALLOW_SESSION;
         if ($use_session > 0) {
-            if (!is_array($use_trans_sid_address)) $use_trans_sid_address = array();
+            if (!is_array($use_trans_sid_address))
+                $use_trans_sid_address = array();
             if (in_the_net($use_trans_sid_address, $_SERVER['REMOTE_ADDR'])) {
                 ini_set('session.use_cookies', 0);
             } else {
@@ -65,13 +71,13 @@ function is_spampost($array, $count = 0): bool
             $encount++;
         }
         if (preg_match_all(FUNC_SPAMREGEX, $vars[$idx], $matches) >= $count)
-            return TRUE;
+            return true;
     }
     if (count($array) === $encount) {
         //die_message('英数のみのコメントは書き込みできません。');
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 // POST logging
@@ -82,11 +88,15 @@ function postdata_write(): void
     // Logging for POST Report
     if (FUNC_POSTLOG && version_compare(PHP_VERSION, '4.2.0', '>=')) {
         error_log("\n\n----" . date('Y-m-d H:i:s', time()) . "\n", 3, CACHE_DIR . 'postdata.log');
-        error_log("[ADDR]" . $_SERVER['REMOTE_ADDR'] . "\t" . $_SERVER['HTTP_USER_AGENT'] . "\n", 3, CACHE_DIR . 'postdata.log');
-        error_log("[SESS]\n" . var_export($cookie, TRUE) . "\n", 3, CACHE_DIR . 'postdata.log');
-        error_log("[GET]\n" . var_export($get, TRUE) . "\n", 3, CACHE_DIR . 'postdata.log');
-        error_log("[POST]\n" . var_export($post, TRUE) . "\n", 3, CACHE_DIR . 'postdata.log');
-        error_log("[VARS]\n" . var_export($vars, TRUE) . "\n", 3, CACHE_DIR . 'postdata.log');
+        error_log(
+            '[ADDR]' . $_SERVER['REMOTE_ADDR'] . "\t" . $_SERVER['HTTP_USER_AGENT'] . "\n",
+            3,
+            CACHE_DIR . 'postdata.log',
+        );
+        error_log("[SESS]\n" . var_export($cookie, true) . "\n", 3, CACHE_DIR . 'postdata.log');
+        error_log("[GET]\n" . var_export($get, true) . "\n", 3, CACHE_DIR . 'postdata.log');
+        error_log("[POST]\n" . var_export($post, true) . "\n", 3, CACHE_DIR . 'postdata.log');
+        error_log("[VARS]\n" . var_export($vars, true) . "\n", 3, CACHE_DIR . 'postdata.log');
     }
 }
 
@@ -97,19 +107,27 @@ function honeypot_write()
 
     // Logging for SPAM Address
     // NOTE: Not recommended use Rental Server
-    if ((FUNC_SPAMLOG === TRUE || FUNC_BLACKLIST === TRUE) && version_compare(PHP_VERSION, '4.2.0', '>=')) {
-        error_log($_SERVER['REMOTE_ADDR'] . "\t" . UTIME . "\t" . $_SERVER['HTTP_USER_AGENT'] . "\n", 3, CACHE_DIR . 'blacklist.log');
+    if ((FUNC_SPAMLOG === true || FUNC_BLACKLIST === true) && version_compare(PHP_VERSION, '4.2.0', '>=')) {
+        error_log(
+            $_SERVER['REMOTE_ADDR'] . "\t" . UTIME . "\t" . $_SERVER['HTTP_USER_AGENT'] . "\n",
+            3,
+            CACHE_DIR . 'blacklist.log',
+        );
     }
 
     // Logging for SPAM Report
     // NOTE: Not recommended use Rental Server
-    if (FUNC_SPAMLOG === TRUE && version_compare(PHP_VERSION, '4.2.0', '>=')) {
-        error_log("----" . date('Y-m-d H:i:s', time()) . "\n", 3, CACHE_DIR . 'honeypot.log');
-        error_log("[ADDR]" . $_SERVER['REMOTE_ADDR'] . "\t" . $_SERVER['HTTP_USER_AGENT'] . "\n", 3, CACHE_DIR . 'honeypot.log');
-        error_log("[SESS]\n" . var_export($cookie, TRUE) . "\n", 3, CACHE_DIR . 'honeypot.log');
-        error_log("[GET]\n" . var_export($get, TRUE) . "\n", 3, CACHE_DIR . 'honeypot.log');
-        error_log("[POST]\n" . var_export($post, TRUE) . "\n", 3, CACHE_DIR . 'honeypot.log');
-        error_log("[VARS]\n" . var_export($vars, TRUE) . "\n", 3, CACHE_DIR . 'honeypot.log');
+    if (FUNC_SPAMLOG === true && version_compare(PHP_VERSION, '4.2.0', '>=')) {
+        error_log('----' . date('Y-m-d H:i:s', time()) . "\n", 3, CACHE_DIR . 'honeypot.log');
+        error_log(
+            '[ADDR]' . $_SERVER['REMOTE_ADDR'] . "\t" . $_SERVER['HTTP_USER_AGENT'] . "\n",
+            3,
+            CACHE_DIR . 'honeypot.log',
+        );
+        error_log("[SESS]\n" . var_export($cookie, true) . "\n", 3, CACHE_DIR . 'honeypot.log');
+        error_log("[GET]\n" . var_export($get, true) . "\n", 3, CACHE_DIR . 'honeypot.log');
+        error_log("[POST]\n" . var_export($post, true) . "\n", 3, CACHE_DIR . 'honeypot.log');
+        error_log("[VARS]\n" . var_export($vars, true) . "\n", 3, CACHE_DIR . 'honeypot.log');
     }
 }
 
@@ -146,7 +164,8 @@ function get_remoteip()
 {
     static $array_var = array('HTTP_X_REMOTE_ADDR', 'REMOTE_ADDR'); // HTTP_X_FORWARDED_FOR
     foreach ($array_var as $x) {
-        if (isset($_SERVER[$x])) return $_SERVER[$x];
+        if (isset($_SERVER[$x]))
+            return $_SERVER[$x];
     }
     return '';
 }
@@ -159,12 +178,14 @@ function mb_ereg_quote($str)
 // タグの追加
 function open_uri_in_new_window($anchor, $which)
 {
-    global $use_open_uri_in_new_window,        // この関数を使うか否か
-           $open_uri_in_new_window_opis,        // 同一サーバー(Farm?)
-           $open_uri_in_new_window_opisi,        // 同一サーバー(Farm?)のInterWiki
-           $open_uri_in_new_window_opos,        // 外部サーバー
-           $open_uri_in_new_window_oposi;        // 外部サーバーのInterWiki
-    global $_symbol_extanchor, $_symbol_innanchor;    // 新規ウィンドウを開くアイコン
+    global
+        $use_open_uri_in_new_window,
+        $open_uri_in_new_window_opis,
+        $open_uri_in_new_window_opisi,
+        $open_uri_in_new_window_opos,
+        $open_uri_in_new_window_oposi // この関数を使うか否か // 同一サーバー(Farm?) // 同一サーバー(Farm?)のInterWiki // 外部サーバー // 外部サーバーのInterWiki
+    ;
+    global $_symbol_extanchor, $_symbol_innanchor; // 新規ウィンドウを開くアイコン
 
     // この関数を使わない OR 呼び出し元が不正な場合はスルーする
     if (!$use_open_uri_in_new_window || !$which || !$_symbol_extanchor || !$_symbol_innanchor) {
@@ -175,31 +196,31 @@ function open_uri_in_new_window($anchor, $which)
     $frame = '';
     // 質問箱/115 対応
     /*
-    if ($which == 'link_interwikiname') {
-        $frame = (is_inside_uri($anchor) ? $open_uri_in_new_window_opisi:$open_uri_in_new_window_oposi);
-        $symbol = (is_inside_uri($anchor) ? $_symbol_innanchor:$_symbol_extanchor);
-        $aclass = (is_inside_uri($anchor) ? 'class="inn" ':'class="ext" ');
-    } elseif ($which == 'link_url_interwiki') {
-        $frame = (is_inside_uri($anchor) ? $open_uri_in_new_window_opisi:$open_uri_in_new_window_oposi);
-        $symbol = (is_inside_uri($anchor) ? $_symbol_innanchor:$_symbol_extanchor);
-        $aclass = (is_inside_uri($anchor) ? 'class="inn" ':'class="ext" ');
-    } elseif ($which == 'link_url') {
-        $frame = (is_inside_uri($anchor) ? $open_uri_in_new_window_opis:$open_uri_in_new_window_opos);
-        $symbol = (is_inside_uri($anchor) ? $_symbol_innanchor:$_symbol_extanchor);
-        $aclass = (is_inside_uri($anchor) ? 'class="inn" ':'class="ext" ');
-    }
-    */
+     * if ($which == 'link_interwikiname') {
+     * $frame = (is_inside_uri($anchor) ? $open_uri_in_new_window_opisi:$open_uri_in_new_window_oposi);
+     * $symbol = (is_inside_uri($anchor) ? $_symbol_innanchor:$_symbol_extanchor);
+     * $aclass = (is_inside_uri($anchor) ? 'class="inn" ':'class="ext" ');
+     * } elseif ($which == 'link_url_interwiki') {
+     * $frame = (is_inside_uri($anchor) ? $open_uri_in_new_window_opisi:$open_uri_in_new_window_oposi);
+     * $symbol = (is_inside_uri($anchor) ? $_symbol_innanchor:$_symbol_extanchor);
+     * $aclass = (is_inside_uri($anchor) ? 'class="inn" ':'class="ext" ');
+     * } elseif ($which == 'link_url') {
+     * $frame = (is_inside_uri($anchor) ? $open_uri_in_new_window_opis:$open_uri_in_new_window_opos);
+     * $symbol = (is_inside_uri($anchor) ? $_symbol_innanchor:$_symbol_extanchor);
+     * $aclass = (is_inside_uri($anchor) ? 'class="inn" ':'class="ext" ');
+     * }
+     */
     switch (strtolower($which)) {
         case 'link_interwikiname':
         case 'link_url_interwiki':
-            $frame = (is_inside_uri($anchor) ? $open_uri_in_new_window_opisi : $open_uri_in_new_window_oposi);
-            $symbol = (is_inside_uri($anchor) ? $_symbol_innanchor : $_symbol_extanchor);
-            $aclass = (is_inside_uri($anchor) ? 'class="inn" ' : 'class="ext" ');
+            $frame = is_inside_uri($anchor) ? $open_uri_in_new_window_opisi : $open_uri_in_new_window_oposi;
+            $symbol = is_inside_uri($anchor) ? $_symbol_innanchor : $_symbol_extanchor;
+            $aclass = is_inside_uri($anchor) ? 'class="inn" ' : 'class="ext" ';
             break;
         case 'link_url':
-            $frame = (is_inside_uri($anchor) ? $open_uri_in_new_window_opis : $open_uri_in_new_window_opos);
-            $symbol = (is_inside_uri($anchor) ? $_symbol_innanchor : $_symbol_extanchor);
-            $aclass = (is_inside_uri($anchor) ? 'class="inn" ' : 'class="ext" ');
+            $frame = is_inside_uri($anchor) ? $open_uri_in_new_window_opis : $open_uri_in_new_window_opos;
+            $symbol = is_inside_uri($anchor) ? $_symbol_innanchor : $_symbol_extanchor;
+            $aclass = is_inside_uri($anchor) ? 'class="inn" ' : 'class="ext" ';
     }
 
     if ($frame == '')
@@ -211,9 +232,13 @@ function open_uri_in_new_window($anchor, $which)
     $insertpos = mb_strpos($anchor, '</a>', $aclasspos, mb_detect_encoding($anchor));
     preg_match('#href="([^"]+)"#', $anchor, $href);
 
-    return (mb_substr($anchor, 0, $aclasspos) . $aclass .
-        mb_substr($anchor, $aclasspos, $insertpos - $aclasspos)
-        . str_replace('$1', $href[1], str_replace('$2', $frame, $symbol)) . mb_substr($anchor, $insertpos));
+    return (
+        mb_substr($anchor, 0, $aclasspos) .
+        $aclass .
+        mb_substr($anchor, $aclasspos, $insertpos - $aclasspos) .
+        str_replace('$1', $href[1], str_replace('$2', $frame, $symbol)) .
+        mb_substr($anchor, $insertpos)
+    );
 }
 
 function is_inside_uri($anchor)
@@ -248,20 +273,21 @@ function load_init_value($name, $must = 0)
     foreach ($read_dir as $key => $val) {
         if (file_exists($key . $init_data)) {
             if ($must)
-                require_once($key . $init_data);
-            else
-                include_once($key . $init_data);
-            return TRUE;
+                    require_once $key . $init_data;
+                else
+                include_once $key . $init_data;
+            return true;
         }
     }
 
-    return FALSE;
+    return false;
 }
 
 function add_homedir($file)
 {
     foreach (array(DATA_HOME, SITE_HOME) as $dir) {
-        if (file_exists($dir . $file) && is_readable($dir . $file)) return $dir . $file;
+        if (file_exists($dir . $file) && is_readable($dir . $file))
+            return $dir . $file;
     }
     return $file;
 }
@@ -269,10 +295,18 @@ function add_homedir($file)
 function add_skindir($skin_name)
 {
     $file = basepagename($skin_name) . '.skin.php';
-    foreach (array(EXT_SKIN_DIR, EXT_SKIN_DIR . THEME_PLUS_NAME, EXT_SKIN_DIR . THEME_PLUS_NAME . $skin_name . '/',
-                 SKIN_DIR, SKIN_DIR . THEME_PLUS_NAME, SKIN_DIR . THEME_PLUS_NAME . $skin_name . '/',
-                 SKIN_URI, DATA_HOME . SKIN_DIR) as $dir) {
-        if (file_exists($dir . $file) && is_readable($dir . $file)) return $dir . $file;
+    foreach (array(
+        EXT_SKIN_DIR,
+        EXT_SKIN_DIR . THEME_PLUS_NAME,
+        EXT_SKIN_DIR . THEME_PLUS_NAME . $skin_name . '/',
+        SKIN_DIR,
+        SKIN_DIR . THEME_PLUS_NAME,
+        SKIN_DIR . THEME_PLUS_NAME . $skin_name . '/',
+        SKIN_URI,
+        DATA_HOME . SKIN_DIR,
+    ) as $dir) {
+        if (file_exists($dir . $file) && is_readable($dir . $file))
+            return $dir . $file;
     }
     return $file;
 }
@@ -281,24 +315,40 @@ function is_ignore_page($page): bool
 {
     global $navigation, $whatsnew, $whatsdeleted, $interwiki, $menubar, $sidebar, $headarea, $footarea;
 
-    $ignore_regrex = '(' . $navigation . '$)|(' . $whatsnew . '$)|(' . $whatsdeleted . '$)|(' .
-        $interwiki . '$)|' . $menubar . '$)|(' . $sidebar . '$)|(' . $headarea . '$)|(' . $footarea . '$)';
+    $ignore_regrex =
+        '(' .
+        $navigation .
+        '$)|(' .
+        $whatsnew .
+        '$)|(' .
+        $whatsdeleted .
+        '$)|(' .
+        $interwiki .
+        '$)|' .
+        $menubar .
+        '$)|(' .
+        $sidebar .
+        '$)|(' .
+        $headarea .
+        '$)|(' .
+        $footarea .
+        '$)';
     //$ereg = ereg($ignore_regrex, $page);
     return preg_match($ignore_regrex, $page) == 1;
-
 }
 
 function is_localIP($ip)
 {
     static $localIP = array('127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16');
-    if (is_ipaddr($ip) === FALSE) return FALSE;
+    if (is_ipaddr($ip) === false)
+        return false;
     return ip_scope_check($ip, $localIP);
 }
 
 function is_ipaddr($ip)
 {
     $valid = ip2long($ip);
-    return ($valid == -1 || $valid == FALSE) ? FALSE : $valid;
+    return $valid == -1 || $valid == false ? false : $valid;
 }
 
 // IP の判定
@@ -310,30 +360,35 @@ function ip_scope_check($ip, $networks)
         $range = explode('/', $network);
         $l_network = ip2long(ip2arrangement($range[0]));
         // $l_network = ip2long( $range[0] );
-        if (empty($range[1])) $range[1] = 32;
+        if (empty($range[1]))
+            $range[1] = 32;
         $subnetmask = pow(2, 32) - pow(2, 32 - $range[1]);
-        if (($l_ip & $subnetmask) == $l_network) return TRUE;
+        if (($l_ip & $subnetmask) == $l_network)
+            return true;
     }
-    return FALSE;
+    return false;
 }
 
 // ex. ip=192.168.101.1 from=192.168.0.0 to=192.168.211.12
 function ip_range_check($ip, $from, $to)
 {
-    if (empty($to)) return ip_scope_check($ip, array($from));
+    if (empty($to))
+        return ip_scope_check($ip, array($from));
     $l_ip = ip2long($ip);
     $l_from = ip2long(ip2arrangement($from));
     $l_to = ip2long(ip2arrangement($to));
-    return ($l_from <= $l_ip && $l_ip <= $l_to);
+    return $l_from <= $l_ip && $l_ip <= $l_to;
 }
 
 // ex. 10 -> 10.0.0.0, 192.168 -> 192.168.0.0
 function ip2arrangement($ip)
 {
     $x = explode('.', $ip);
-    if (count($x) == 4) return $ip;
+    if (count($x) == 4)
+        return $ip;
     for ($i = 0; $i < 4; $i++) {
-        if (empty($x[$i])) $x[$i] = 0;
+        if (empty($x[$i]))
+            $x[$i] = 0;
     }
     return sprintf('%d.%d.%d.%d', $x[0], $x[1], $x[2], $x[3]);
 }
@@ -342,9 +397,9 @@ function ip2arrangement($ip)
 function is_ReservedTLD($host)
 {
     // RFC2606
-    static $ReservedTLD = array('example' => '', 'invalid' => '', 'localhost' => '', 'test' => '',);
+    static $ReservedTLD = array('example' => '', 'invalid' => '', 'localhost' => '', 'test' => '');
     $x = array_reverse(explode('.', strtolower($host)));
-    return (isset($ReservedTLD[$x[0]])) ? TRUE : FALSE;
+    return isset($ReservedTLD[$x[0]]) ? true : false;
 }
 
 function path_check($url1, $url2)
@@ -353,8 +408,10 @@ function path_check($url1, $url2)
     $u2 = parse_url(strtolower($url2));
 
     // http = https とする
-    if (!empty($u1['scheme']) && $u1['scheme'] == 'https') $u1['scheme'] = 'http';
-    if (!empty($u2['scheme']) && $u2['scheme'] == 'https') $u2['scheme'] = 'http';
+    if (!empty($u1['scheme']) && $u1['scheme'] == 'https')
+        $u1['scheme'] = 'http';
+    if (!empty($u2['scheme']) && $u2['scheme'] == 'https')
+        $u2['scheme'] = 'http';
 
     // path の手当て
     if (!empty($u1['path'])) {
@@ -365,12 +422,13 @@ function path_check($url1, $url2)
     }
 
     foreach (array('scheme', 'host', 'path') as $x) {
-        $u1[$x] = (empty($u1[$x])) ? '' : $u1[$x];
-        $u2[$x] = (empty($u2[$x])) ? '' : $u2[$x];
-        if ($u1[$x] == $u2[$x]) continue;
-        return FALSE;
+        $u1[$x] = empty($u1[$x]) ? '' : $u1[$x];
+        $u2[$x] = empty($u2[$x]) ? '' : $u2[$x];
+        if ($u1[$x] == $u2[$x])
+            continue;
+        return false;
     }
-    return TRUE;
+    return true;
 }
 
 // Check CGI/CLI(true) or MOD_PHP(false)
@@ -378,8 +436,8 @@ function is_sapi_clicgi()
 {
     $sapiname = php_sapi_name();
     if ($sapiname == 'cgi' || $sapiname == 'cli')
-        return TRUE;
-    return FALSE;
+        return true;
+    return false;
 }
 
 // get "GD" extension version
@@ -398,29 +456,34 @@ function get_gdversion()
 }
 
 // create thumbnail (required "GD" extension)
-function make_thumbnail($ofile, $sfile, $maxw, $maxh, $refresh = FALSE, $zoom = '10,90', $quality = '75')
+function make_thumbnail($ofile, $sfile, $maxw, $maxh, $refresh = false, $zoom = '10,90', $quality = '75')
 {
-    static $gdversion = FALSE;
-    if ($gdversion === FALSE) {
+    static $gdversion = false;
+    if ($gdversion === false) {
         $gdversion = get_gdversion();
     }
 
-    if (!$refresh && file_exists($sfile)) return $sfile;
-    if ($gdversion < 1 || !function_exists('imagecreate')) return $ofile; // Not Supported
+    if (!$refresh && file_exists($sfile))
+        return $sfile;
+    if ($gdversion < 1 || !function_exists('imagecreate'))
+        return $ofile; // Not Supported
 
-    $imagecreate = ($gdversion >= 2) ? 'imagecreatetruecolor' : 'imagecreate';
-    $imageresize = ($gdversion >= 2) ? 'imagecopyresampled' : 'imagecopyresized';
+    $imagecreate = $gdversion >= 2 ? 'imagecreatetruecolor' : 'imagecreate';
+    $imageresize = $gdversion >= 2 ? 'imagecopyresampled' : 'imagecopyresized';
 
     $imagesiz = @getimagesize($ofile);
-    if (!$imagesiz) return $ofile; // Not Picture
+    if (!$imagesiz)
+        return $ofile; // Not Picture
 
     $orgw = $imagesiz[0];
     $orgh = $imagesiz[1];
-    if ($maxw >= $orgw && $maxh >= $orgh) return $ofile; // so big. why?
+    if ($maxw >= $orgw && $maxh >= $orgh)
+        return $ofile; // so big. why?
 
-    list($minz, $maxz) = explode(",", $zoom);
-    $zoom = min(($maxw / $orgw), ($maxh / $orgh));
-    if (!$zoom || $zoom < $minz / 100 || $zoom > $maxz / 100) return $ofile; // Invalid Zoom value
+    list($minz, $maxz) = explode(',', $zoom);
+    $zoom = min($maxw / $orgw, $maxh / $orgh);
+    if (!$zoom || $zoom < ($minz / 100) || $zoom > ($maxz / 100))
+        return $ofile; // Invalid Zoom value
     $w = $orgw * $zoom;
     $h = $orgh * $zoom;
 
@@ -443,9 +506,9 @@ function make_thumbnail($ofile, $sfile, $maxw, $maxh, $refresh = FALSE, $zoom = 
                     imagecopyresized($imdst, $imsrc, 0, 0, 0, 0, $w, $h, $orgw, $orgh);
                 } else {
                     // Unuse transparent
-//                    $imdst = $imagecreate($w, $h);
-//                    $imageresize($imdst, $imsrc, 0, 0, 0, 0, $w, $h, $orgw, $orgh);
-//                    imagetruecolortopalette($dst_im, imagecolorstotal($imsrc));
+                    //                    $imdst = $imagecreate($w, $h);
+                    //                    $imageresize($imdst, $imsrc, 0, 0, 0, 0, $w, $h, $orgw, $orgh);
+                    //                    imagetruecolortopalette($dst_im, imagecolorstotal($imsrc));
                 }
                 touch($sfile);
                 if ($s_ext == 'jpg') {
@@ -479,10 +542,10 @@ function make_thumbnail($ofile, $sfile, $maxw, $maxh, $refresh = FALSE, $zoom = 
                     imagecolortransparent($imdst, $colortransparent);
                     imagecopyresized($imdst, $imsrc, 0, 0, 0, 0, $w, $h, $orgw, $orgh);
                 } else {
-//                    // Unuse transparent
-//                    $imdst = $imagecreate($w, $h);
-//                    $imageresize($imdst, $imsrc, 0, 0, 0, 0, $w, $h, $orgw, $orgh);
-//                    imagetruecolortopalette($dst_im, imagecolorstotal($imsrc));
+                    //                    // Unuse transparent
+                    //                    $imdst = $imagecreate($w, $h);
+                    //                    $imageresize($imdst, $imsrc, 0, 0, 0, 0, $w, $h, $orgw, $orgh);
+                    //                    imagetruecolortopalette($dst_im, imagecolorstotal($imsrc));
                 }
             } else {
                 // TrueColor
@@ -507,7 +570,7 @@ function make_thumbnail($ofile, $sfile, $maxw, $maxh, $refresh = FALSE, $zoom = 
 
 function is_mobile()
 {
-    return (UA_PROFILE == 'mobile' || UA_PROFILE == 'keitai');
+    return UA_PROFILE == 'mobile' || UA_PROFILE == 'keitai';
 }
 
 function get_mimeinfo($filename)
@@ -515,7 +578,8 @@ function get_mimeinfo($filename)
     $type = '';
     if (function_exists('finfo_open')) {
         $finfo = finfo_open(FILEINFO_MIME);
-        if (!$finfo) return $type;
+        if (!$finfo)
+            return $type;
         $type = finfo_file($finfo, $filename);
         finfo_close($finfo);
         return $type;
@@ -537,7 +601,8 @@ function get_mimeinfo($filename)
 function get_main_pluginname()
 {
     $pos = strpos($_SERVER['REQUEST_URI'], '?');
-    if ($pos === false) return 'read';
+    if ($pos === false)
+        return 'read';
 
     $query_string = explode('&', rawurldecode(substr($_SERVER['REQUEST_URI'], $pos + 1)));
 
@@ -548,11 +613,14 @@ function get_main_pluginname()
     }
 
     // 優先順位 (cmd -> plugin)
-    if (!empty($query['cmd'])) return $query['cmd'];
-    if (!empty($query['plugin'])) return $query['plugin'];
+    if (!empty($query['cmd']))
+        return $query['cmd'];
+    if (!empty($query['plugin']))
+        return $query['plugin'];
 
-    if (empty($query['page'])) return 'read';
-    return (is_page($query['page'])) ? 'read' : 'edit';
+    if (empty($query['page']))
+        return 'read';
+    return is_page($query['page']) ? 'read' : 'edit';
 }
 
 //function get_main_pagename(): string
@@ -610,16 +678,17 @@ function get_baseuri($path = '')
             if (isset($parsed_url['user'])) {
                 $ret .= $pref . $parsed_url['user'];
                 $pref = '';
-                $ret .= (isset($parsed_url['pass'])) ? ':' . $parsed_url['pass'] : '';
+                $ret .= isset($parsed_url['pass']) ? (':' . $parsed_url['pass']) : '';
                 $ret .= '@';
             }
             if (isset($parsed_url['host'])) {
                 $ret .= $pref . $parsed_url['host'];
                 $pref = '';
             }
-            $ret .= (isset($parsed_url['port'])) ? ':' . $parsed_url['port'] : '';
+            $ret .= isset($parsed_url['port']) ? (':' . $parsed_url['port']) : '';
         case 'abs': // abs_path      = "/"  path_segments
-            if ($path === 'abs') $parsed_url = parse_url(get_script_absuri());
+            if ($path === 'abs')
+                $parsed_url = parse_url(get_script_absuri());
             if (isset($parsed_url['path']) && ($pos = strrpos($parsed_url['path'], '/')) !== false) {
                 $ret .= substr($parsed_url['path'], 0, $pos + 1);
             } else {
@@ -650,16 +719,22 @@ function change_uri($cmd = '', $force = 0)
 {
     global $script, $script_abs, $absolute_uri, $script_directory_index;
     static $onece, $bkup, $bkup_script, $bkup_script_abs, $bkup_absolute_uri;
-    static $target_fields = array('script' => 'bkup_script', 'script_abs' => 'bkup_script_abs', 'absolute_uri' => 'bkup_absolute_uri');
+    static $target_fields = array(
+        'script' => 'bkup_script',
+        'script_abs' => 'bkup_script_abs',
+        'absolute_uri' => 'bkup_absolute_uri',
+    );
 
     if (!isset($bkup)) {
         $bkup = true;
         foreach ($target_fields as $org => $bkup) {
-            if (!isset($$bkup) && isset($org)) $$bkup = $$org;
+            if (!isset($$bkup) && isset($org))
+                $$bkup = $$org;
         }
     }
 
-    if (isset($onece)) return;
+    if (isset($onece))
+        return;
 
     switch ($cmd) {
         case 'reset':
@@ -667,7 +742,8 @@ function change_uri($cmd = '', $force = 0)
                 if (isset($$bkup)) {
                     $$org = $$bkup;
                 } else {
-                    if (isset($$org)) unset($$org);
+                    if (isset($$org))
+                        unset($$org);
                 }
             }
             return;
@@ -682,8 +758,10 @@ function change_uri($cmd = '', $force = 0)
     }
 
     $script = get_baseuri($cmd);
-    if (!isset($script_directory_index)) $script .= init_script_filename();
-    if ($force === 1) $onece = 1;
+    if (!isset($script_directory_index))
+        $script .= init_script_filename();
+    if ($force === 1)
+        $onece = 1;
     return;
 }
 
@@ -731,10 +809,11 @@ if (!function_exists('http_build_query')) {
         // arg_separator.output -> PHP 4.0.5
         if (empty($arg_separator)) {
             $arg_separator = ini_get('arg_separator.output');
-            if (empty($arg_separator)) $arg_separator = '&';
+            if (empty($arg_separator))
+                $arg_separator = '&';
         }
         foreach ($formdata as $key => $val) {
-            $key1 = (is_numeric($key)) ? $numeric_prefix . $key : $key;
+            $key1 = is_numeric($key) ? ($numeric_prefix . $key) : $key;
             $retval .= $flag . $key1 . '=' . rawurlencode($val);
             $flag = $arg_separator;
         }
@@ -745,40 +824,38 @@ if (!function_exists('http_build_query')) {
 // インラインパラメータのデータを１行毎に分割する
 function line2array($x)
 {
-    $x = preg_replace(
-        array("[\\r\\n]", "[\\r]"),
-        array("\n", "\n"),
-        $x
-    ); // 行末の統一
+    $x = preg_replace(array("[\\r\\n]", "[\\r]"), array("\n", "\n"), $x); // 行末の統一
     return explode("\n", $x);
 }
 
 function dat2html($x)
 {
-    return preg_replace(
-        array("'<p>'si", "'</p>'si"),
-        array('', ''),
-        trim(convert_html($x))
-    );
+    return preg_replace(array("'<p>'si", "'</p>'si"), array('', ''), trim(convert_html($x)));
 }
 
 function tbl2dat($data)
 {
     $x = explode('|', $data);
-    if (substr($data, 0, 1) == '|') array_shift($x);
-    if (substr($data, -1) == '|') array_pop($x);
+    if (substr($data, 0, 1) == '|')
+        array_shift($x);
+    if (substr($data, -1) == '|')
+        array_pop($x);
     return $x;
 }
 
 function is_header($x)
 {
-    return (substr($x, -2) == '|h') ? true : false;
+    return substr($x, -2) == '|h' ? true : false;
 }
 
 function strip_a($x)
 {
     $x = preg_replace('#<a href="(.*?)"[^>]*>(.*?)</a>#si', '$2', $x);
-    $x = preg_replace('#<a class="ext" href="(.*?)" .*?>(.*?)<img src="' . IMAGE_URI . 'plus/ext.png".*?</a>#si', '$2', $x);
+    $x = preg_replace(
+        '#<a class="ext" href="(.*?)" .*?>(.*?)<img src="' . IMAGE_URI . 'plus/ext.png".*?</a>#si',
+        '$2',
+        $x,
+    );
     return $x;
 }
 
@@ -786,7 +863,8 @@ function is_webdav()
 {
     global $log_ua;
     static $status = false;
-    if ($status) return true;
+    if ($status)
+        return true;
 
     static $ua_dav = array(
         'Microsoft-WebDAV-MiniRedir\/',
@@ -830,7 +908,7 @@ function extract_yaml_frontmatter($source)
 {
     //static $front_matter_regex = "/^;;;[\r\n](.*)[\r\n];;;[\r\n](.*)/s";
     $meta_data = array();
-    if (preg_match("/^---$/s", $source[0]) === 0) {
+    if (preg_match('/^---$/s', $source[0]) === 0) {
         return array($source, $meta_data);
     }
     //$source    = ltrim($source);
@@ -838,12 +916,12 @@ function extract_yaml_frontmatter($source)
     $idx = 1;
     while ($idx < $max) {
         $meta_data[] = $source[$idx];
-        if (preg_match("/^---$/s", $source[$idx])) {
+        if (preg_match('/^---$/s', $source[$idx])) {
             break;
         }
         $idx++;
     }
-    if ($idx === 1 || $idx === $max - 1) {
+    if ($idx === 1 || $idx === ($max - 1)) {
         return array($source, array());
     }
 
@@ -860,5 +938,3 @@ function extract_yaml_frontmatter($source)
     $ret = array_slice($source, $idx + 1);
     return array($ret, $meta_data2);
 }
-
-

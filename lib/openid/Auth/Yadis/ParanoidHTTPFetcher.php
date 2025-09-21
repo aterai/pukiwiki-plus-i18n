@@ -16,9 +16,9 @@
 /**
  * Interface import
  */
-require_once "Auth/Yadis/HTTPFetcher.php";
+require_once 'Auth/Yadis/HTTPFetcher.php';
 
-require_once "Auth/OpenID.php";
+require_once 'Auth/OpenID.php';
 
 /**
  * A paranoid {@link Auth_Yadis_HTTPFetcher} class which uses CURL
@@ -26,7 +26,8 @@ require_once "Auth/OpenID.php";
  *
  * @package OpenID
  */
-class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
+class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher
+{
     function Auth_Yadis_ParanoidHTTPFetcher()
     {
         $this->reset();
@@ -35,7 +36,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
     function reset()
     {
         $this->headers = array();
-        $this->data = "";
+        $this->data = '';
     }
 
     /**
@@ -52,7 +53,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
      */
     function _writeData($ch, $data)
     {
-        if (strlen($this->data) > 1024*Auth_OpenID_FETCHER_MAX_RESPONSE_KB) {
+        if (strlen($this->data) > (1024 * Auth_OpenID_FETCHER_MAX_RESPONSE_KB)) {
             return 0;
         } else {
             $this->data .= $data;
@@ -66,7 +67,7 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
     function supportsSSL()
     {
         $v = curl_version();
-        if(is_array($v)) {
+        if (is_array($v)) {
             return in_array('https', $v['protocols']);
         } elseif (is_string($v)) {
             return preg_match('/OpenSSL/i', $v);
@@ -86,15 +87,13 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 
         $redir = true;
 
-        while ($redir && ($off > 0)) {
+        while ($redir && $off > 0) {
             $this->reset();
 
             $c = curl_init();
 
             if ($c === false) {
-                Auth_OpenID::log(
-                    "curl_init returned false; could not " .
-                    "initialize for URL '%s'", $url);
+                Auth_OpenID::log('curl_init returned false; could not ' . "initialize for URL '%s'", $url);
                 return null;
             }
 
@@ -103,28 +102,24 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
             }
 
             if (!$this->allowedURL($url)) {
-                Auth_OpenID::log("Fetching URL not allowed: %s",
-                                 $url);
+                Auth_OpenID::log('Fetching URL not allowed: %s', $url);
                 return null;
             }
 
-            curl_setopt($c, CURLOPT_WRITEFUNCTION,
-                        array(&$this, "_writeData"));
-            curl_setopt($c, CURLOPT_HEADERFUNCTION,
-                        array(&$this, "_writeHeader"));
+            curl_setopt($c, CURLOPT_WRITEFUNCTION, array(&$this, '_writeData'));
+            curl_setopt($c, CURLOPT_HEADERFUNCTION, array(&$this, '_writeHeader'));
 
             if ($extra_headers) {
                 curl_setopt($c, CURLOPT_HTTPHEADER, $extra_headers);
             }
 
             $cv = curl_version();
-            if(is_array($cv)) {
-              $curl_user_agent = 'curl/'.$cv['version'];
+            if (is_array($cv)) {
+                $curl_user_agent = 'curl/' . $cv['version'];
             } else {
-              $curl_user_agent = $cv;
+                $curl_user_agent = $cv;
             }
-            curl_setopt($c, CURLOPT_USERAGENT,
-                        Auth_OpenID_USER_AGENT.' '.$curl_user_agent);
+            curl_setopt($c, CURLOPT_USERAGENT, Auth_OpenID_USER_AGENT . ' ' . $curl_user_agent);
             curl_setopt($c, CURLOPT_TIMEOUT, $off);
             curl_setopt($c, CURLOPT_URL, $url);
 
@@ -135,9 +130,8 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
             $headers = $this->headers;
 
             if (!$code) {
-                Auth_OpenID::log("Got no response code when fetching %s", $url);
-                Auth_OpenID::log("CURL error (%s): %s",
-                                 curl_errno($c), curl_error($c));
+                Auth_OpenID::log('Got no response code when fetching %s', $url);
+                Auth_OpenID::log('CURL error (%s): %s', curl_errno($c), curl_error($c));
                 return null;
             }
 
@@ -157,12 +151,9 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
                     }
                 }
 
-                Auth_OpenID::log(
-                    "Successfully fetched '%s': GET response code %s",
-                    $url, $code);
+                Auth_OpenID::log("Successfully fetched '%s': GET response code %s", $url, $code);
 
-                return new Auth_Yadis_HTTPResponse($url, $code,
-                                                    $new_headers, $body);
+                return new Auth_Yadis_HTTPResponse($url, $code, $new_headers, $body);
             }
 
             $off = $stop - time();
@@ -189,15 +180,14 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
         curl_setopt($c, CURLOPT_POSTFIELDS, $body);
         curl_setopt($c, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($c, CURLOPT_URL, $url);
-        curl_setopt($c, CURLOPT_WRITEFUNCTION,
-                    array(&$this, "_writeData"));
+        curl_setopt($c, CURLOPT_WRITEFUNCTION, array(&$this, '_writeData'));
 
         curl_exec($c);
 
         $code = curl_getinfo($c, CURLINFO_HTTP_CODE);
 
         if (!$code) {
-            Auth_OpenID::log("Got no response code when fetching %s", $url);
+            Auth_OpenID::log('Got no response code when fetching %s', $url);
             return null;
         }
 
@@ -212,14 +202,10 @@ class Auth_Yadis_ParanoidHTTPFetcher extends Auth_Yadis_HTTPFetcher {
                 list($name, $value) = explode(': ', $header, 2);
                 $new_headers[$name] = $value;
             }
-
         }
 
-        Auth_OpenID::log("Successfully fetched '%s': POST response code %s",
-                         $url, $code);
+        Auth_OpenID::log("Successfully fetched '%s': POST response code %s", $url, $code);
 
-        return new Auth_Yadis_HTTPResponse($url, $code,
-                                           $new_headers, $body);
+        return new Auth_Yadis_HTTPResponse($url, $code, $new_headers, $body);
     }
 }
-

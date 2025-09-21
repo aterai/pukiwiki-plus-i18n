@@ -25,10 +25,10 @@ define('Auth_OpenID_VERSION', '2.1.2');
 /**
  * Require the fetcher code.
  */
-require_once "Auth/Yadis/PlainHTTPFetcher.php";
-require_once "Auth/Yadis/ParanoidHTTPFetcher.php";
-require_once "Auth/OpenID/BigMath.php";
-require_once "Auth/OpenID/URINorm.php";
+require_once 'Auth/Yadis/PlainHTTPFetcher.php';
+require_once 'Auth/Yadis/ParanoidHTTPFetcher.php';
+require_once 'Auth/OpenID/BigMath.php';
+require_once 'Auth/OpenID/URINorm.php';
 
 /**
  * Status code returned by the server when the only option is to show
@@ -93,14 +93,11 @@ define('Auth_OpenID_DO_ABOUT', 'do_about');
 /**
  * Defines for regexes and format checking.
  */
-define('Auth_OpenID_letters',
-       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+define('Auth_OpenID_letters', 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
-define('Auth_OpenID_digits',
-       "0123456789");
+define('Auth_OpenID_digits', '0123456789');
 
-define('Auth_OpenID_punct',
-       "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
+define('Auth_OpenID_punct', "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
 
 if (Auth_OpenID_getMathLib() === null) {
     Auth_OpenID_setNoMathSupport();
@@ -112,8 +109,8 @@ if (Auth_OpenID_getMathLib() === null) {
  * @package OpenID
  * @access private
  */
-class Auth_OpenID {
-
+class Auth_OpenID
+{
     /**
      * Return true if $thing is an Auth_OpenID_FailureResponse object;
      * false if not.
@@ -141,7 +138,7 @@ class Auth_OpenID {
      *
      * @access private
      */
-    function getQuery($query_str=null)
+    function getQuery($query_str = null)
     {
         $data = array();
 
@@ -150,28 +147,28 @@ class Auth_OpenID {
         } else if (!array_key_exists('REQUEST_METHOD', $_SERVER)) {
             // Do nothing.
         } else {
-          // XXX HACK FIXME HORRIBLE.
-          //
-          // POSTing to a URL with query parameters is acceptable, but
-          // we don't have a clean way to distinguish those parameters
-          // when we need to do things like return_to verification
-          // which only want to look at one kind of parameter.  We're
-          // going to emulate the behavior of some other environments
-          // by defaulting to GET and overwriting with POST if POST
-          // data is available.
-          $data = Auth_OpenID::params_from_string($_SERVER['QUERY_STRING']);
+            // XXX HACK FIXME HORRIBLE.
+            //
+            // POSTing to a URL with query parameters is acceptable, but
+            // we don't have a clean way to distinguish those parameters
+            // when we need to do things like return_to verification
+            // which only want to look at one kind of parameter.  We're
+            // going to emulate the behavior of some other environments
+            // by defaulting to GET and overwriting with POST if POST
+            // data is available.
+            $data = Auth_OpenID::params_from_string($_SERVER['QUERY_STRING']);
 
-          if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $str = file_get_contents('php://input');
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $str = file_get_contents('php://input');
 
-            if ($str === false) {
-              $post = array();
-            } else {
-              $post = Auth_OpenID::params_from_string($str);
+                if ($str === false) {
+                    $post = array();
+                } else {
+                    $post = Auth_OpenID::params_from_string($str);
+                }
+
+                $data = array_merge($data, $post);
             }
-
-            $data = array_merge($data, $post);
-          }
         }
 
         return $data;
@@ -179,11 +176,11 @@ class Auth_OpenID {
 
     function params_from_string($str)
     {
-        $chunks = explode("&", $str);
+        $chunks = explode('&', $str);
 
         $data = array();
         foreach ($chunks as $chunk) {
-            $parts = explode("=", $chunk, 2);
+            $parts = explode('=', $chunk, 2);
 
             if (count($parts) != 2) {
                 continue;
@@ -215,7 +212,7 @@ class Auth_OpenID {
                 return true;
             }
 
-            return (Auth_OpenID::ensureDir($parent_dir) && @mkdir($dir_name));
+            return Auth_OpenID::ensureDir($parent_dir) && @mkdir($dir_name);
         }
     }
 
@@ -250,9 +247,14 @@ class Auth_OpenID {
                 return $fallback;
             }
         } else {
-            trigger_error("Auth_OpenID::arrayGet (key = ".$key.") expected " .
-                          "array as first parameter, got " .
-                          gettype($arr), E_USER_WARNING);
+            trigger_error(
+                'Auth_OpenID::arrayGet (key = ' .
+                $key .
+                ') expected ' .
+                'array as first parameter, got ' .
+                gettype($arr),
+                E_USER_WARNING,
+            );
 
             return false;
         }
@@ -300,12 +302,12 @@ class Auth_OpenID {
         $pairs = array();
         foreach ($data as $key => $value) {
             if (is_array($value)) {
-                $pairs[] = urlencode($value[0])."=".urlencode($value[1]);
+                $pairs[] = urlencode($value[0]) . '=' . urlencode($value[1]);
             } else {
-                $pairs[] = urlencode($key)."=".urlencode($value);
+                $pairs[] = urlencode($key) . '=' . urlencode($value);
             }
         }
-        return implode("&", $pairs);
+        return implode('&', $pairs);
     }
 
     /**
@@ -331,8 +333,7 @@ class Auth_OpenID {
 
         // Non-empty array; if it is an array of arrays, use
         // multisort; otherwise use sort.
-        if (array_key_exists(0, $args) &&
-            is_array($args[0])) {
+        if (array_key_exists(0, $args) && is_array($args[0])) {
             // Do nothing here.
         } else {
             $keys = array_keys($args);
@@ -367,10 +368,8 @@ class Auth_OpenID {
      * @return string $url The URL resulting from assembling the
      * specified components.
      */
-    function urlunparse($scheme, $host, $port = null, $path = '/',
-                        $query = '', $fragment = '')
+    function urlunparse($scheme, $host, $port = null, $path = '/', $query = '', $fragment = '')
     {
-
         if (!$scheme) {
             $scheme = 'http';
         }
@@ -383,20 +382,20 @@ class Auth_OpenID {
             $path = '';
         }
 
-        $result = $scheme . "://" . $host;
+        $result = $scheme . '://' . $host;
 
         if ($port) {
-            $result .= ":" . $port;
+            $result .= ':' . $port;
         }
 
         $result .= $path;
 
         if ($query) {
-            $result .= "?" . $query;
+            $result .= '?' . $query;
         }
 
         if ($fragment) {
-            $result .= "#" . $fragment;
+            $result .= '#' . $fragment;
         }
 
         return $result;
@@ -414,14 +413,13 @@ class Auth_OpenID {
      */
     function normalizeUrl($url)
     {
-        @$parsed = parse_url($url);
+        @($parsed = parse_url($url));
 
         if (!$parsed) {
             return null;
         }
 
-        if (isset($parsed['scheme']) &&
-            isset($parsed['host'])) {
+        if (isset($parsed['scheme']) && isset($parsed['host'])) {
             $scheme = strtolower($parsed['scheme']);
             if (!in_array($scheme, array('http', 'https'))) {
                 return null;
@@ -488,10 +486,10 @@ class Auth_OpenID {
 
     function urldefrag($url)
     {
-        $parts = explode("#", $url, 2);
+        $parts = explode('#', $url, 2);
 
         if (count($parts) == 1) {
-            return array($parts[0], "");
+            return array($parts[0], '');
         } else {
             return $parts;
         }
@@ -531,22 +529,23 @@ class Auth_OpenID {
         error_log($message);
     }
 
-    function autoSubmitHTML($form, $title="OpenId transaction in progress")
+    function autoSubmitHTML($form, $title = 'OpenId transaction in progress')
     {
-        return("<html>".
-               "<head><title>".
-               $title .
-               "</title></head>".
-               "<body onload='document.forms[0].submit();'>".
-               $form .
-               "<script>".
-               "var elements = document.forms[0].elements;".
-               "for (var i = 0; i < elements.length; i++) {".
-               "  elements[i].style.display = \"none\";".
-               "}".
-               "</script>".
-               "</body>".
-               "</html>");
+        return (
+            '<html>' .
+            '<head><title>' .
+            $title .
+            '</title></head>' .
+            "<body onload='document.forms[0].submit();'>" .
+            $form .
+            '<script>' .
+            'var elements = document.forms[0].elements;' .
+            'for (var i = 0; i < elements.length; i++) {' .
+            "  elements[i].style.display = \"none\";" .
+            '}' .
+            '</script>' .
+            '</body>' .
+            '</html>'
+        );
     }
 }
-

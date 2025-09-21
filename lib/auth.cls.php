@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PukiWiki Plus! 認証処理
  *
@@ -6,7 +7,7 @@
  * @version     $Id: auth.cls.php,v 0.68 2009/05/03 18:01:00 upk Exp $
  * @license    http://opensource.org/licenses/gpl-license.php GNU Public License (GPL2)
  */
-require_once(LIB_DIR . 'auth.def.php');
+require_once LIB_DIR . 'auth.def.php';
 
 /**
  * 認証クラス
@@ -20,7 +21,7 @@ class auth
      *	AUTH_TYPE		- 認証タイプ
      *	HTTP_AUTHORIZATION	- パスワードのダイジェスト
      *	LOGON_USER		- サーバへのログオンユーザ名
-    */
+     */
 
     /*
      * 認証者名を取得
@@ -29,15 +30,18 @@ class auth
     public static function check_auth()
     {
         $login = auth::check_auth_pw();
-        if (!empty($login)) return $login;
+        if (!empty($login))
+            return $login;
 
         // 外部認証API
         $auth_key = auth::get_user_name();
 
         // 暫定管理者(su)
         global $vars;
-        if (!isset($vars['pass'])) return $auth_key['nick'];
-        if (pkwk_login($vars['pass'])) return UNAME_ADM_CONTENTS_TEMP;
+        if (!isset($vars['pass']))
+            return $auth_key['nick'];
+        if (pkwk_login($vars['pass']))
+            return UNAME_ADM_CONTENTS_TEMP;
         return $auth_key['nick'];
     }
 
@@ -55,7 +59,8 @@ class auth
                 break;
         }
 
-        if (!empty($login)) return $login;
+        if (!empty($login))
+            return $login;
 
         // NTLM対応
         list($domain, $login, $host, $pass) = auth::ntlm_decode();
@@ -85,10 +90,12 @@ class auth
                 break;
             }
         }
-        if (empty($user)) return '';
+        if (empty($user))
+            return '';
 
         // 未定義ユーザは、サーバ側で認証時または、ＯＳでの認証時のワークグループ接続的なイメージ
-        if (!isset($auth_users[$user])) return $user;
+        if (!isset($auth_users[$user]))
+            return $user;
 
         // 定義ユーザならパスワードのチェックを行う
         $pass = '';
@@ -99,18 +106,22 @@ class auth
                 break;
             }
         }
-        if (empty($pass)) return '';
-        if (empty($auth_users[$user][0])) return ''; // パスワードが空は除く
-        return (pkwk_hash_compute($pass, $auth_users[$user][0]) === $auth_users[$user][0]) ? $user : '';
+        if (empty($pass))
+            return '';
+        if (empty($auth_users[$user][0]))
+            return ''; // パスワードが空は除く
+        return pkwk_hash_compute($pass, $auth_users[$user][0]) === $auth_users[$user][0] ? $user : '';
     }
 
     public static function check_auth_digest()
     {
         global $auth_users;
 
-        if (!auth::auth_digest($auth_users)) return '';
+        if (!auth::auth_digest($auth_users))
+            return '';
         $data = auth::http_digest_parse($_SERVER['PHP_AUTH_DIGEST']);
-        if (!empty($data['username'])) return $data['username'];
+        if (!empty($data['username']))
+            return $data['username'];
         return '';
     }
 
@@ -127,9 +138,19 @@ class auth
     public static function get_auth_pw_info()
     {
         global $auth_users, $defaultpage;
-        $retval = array('role' => ROLE_GUEST, 'nick' => '', 'key' => '', 'api' => '', 'group' => '', 'displayname' => '', 'home' => '', 'mypage' => '');
+        $retval = array(
+            'role' => ROLE_GUEST,
+            'nick' => '',
+            'key' => '',
+            'api' => '',
+            'group' => '',
+            'displayname' => '',
+            'home' => '',
+            'mypage' => '',
+        );
         $user = auth::check_auth_pw();
-        if (empty($user)) return $retval;
+        if (empty($user))
+            return $retval;
 
         $retval['api'] = 'plus';
         $retval['key'] = $retval['nick'] = $user;
@@ -142,10 +163,10 @@ class auth
             return $retval;
         }
 
-        $retval['role'] = (empty($auth_users[$user][1])) ? ROLE_ENROLLEE : $auth_users[$user][1];
-        $retval['group'] = (empty($auth_users[$user][2])) ? '' : $auth_users[$user][2];
-        $retval['home'] = (empty($auth_users[$user][3])) ? $defaultpage : $auth_users[$user][3];
-        $retval['mypage'] = (empty($auth_users[$user][4])) ? '' : $auth_users[$user][4];
+        $retval['role'] = empty($auth_users[$user][1]) ? ROLE_ENROLLEE : $auth_users[$user][1];
+        $retval['group'] = empty($auth_users[$user][2]) ? '' : $auth_users[$user][2];
+        $retval['home'] = empty($auth_users[$user][3]) ? $defaultpage : $auth_users[$user][3];
+        $retval['mypage'] = empty($auth_users[$user][4]) ? '' : $auth_users[$user][4];
         return $retval;
     }
 
@@ -155,12 +176,14 @@ class auth
 
         foreach ($auth_api as $api => $val) {
             // どうしても必要な場合のみ開始
-            if (!$val['use']) continue;
-            if (function_exists('pkwk_session_start')) pkwk_session_start();
+            if (!$val['use'])
+                continue;
+            if (function_exists('pkwk_session_start'))
+                pkwk_session_start();
             break;
         }
 
-        require_once(LIB_DIR . 'auth_api.cls.php');
+        require_once LIB_DIR . 'auth_api.cls.php';
         $obj = new auth_api();
         $msg = $obj->auth_session_get();
         if (isset($msg['api']) && $auth_api[$msg['api']]['use']) {
@@ -168,32 +191,47 @@ class auth
                 $call_func = 'plugin_' . $msg['api'] . '_get_user_name';
                 $auth_key = $call_func();
                 $auth_key['api'] = $msg['api'];
-                if (empty($auth_key['nick'])) return array('role' => ROLE_GUEST, 'nick' => '', 'key' => '', 'group' => '', 'displayname' => '', 'home' => '', 'mypage' => '', 'api' => '');
+                if (empty($auth_key['nick']))
+                    return array(
+                        'role' => ROLE_GUEST,
+                        'nick' => '',
+                        'key' => '',
+                        'group' => '',
+                        'displayname' => '',
+                        'home' => '',
+                        'mypage' => '',
+                        'api' => '',
+                    );
 
                 // 上書き・追加する項目
                 if (!empty($auth_wkgrp_user[$auth_key['api']][$auth_key['key']])) {
                     $val = &$auth_wkgrp_user[$auth_key['api']][$auth_key['key']];
-                    $auth_key['role']
-                        = (empty($val['role'])) ? ROLE_ENROLLEE : $val['role'];
-                    $auth_key['group']
-                        = (empty($val['group'])) ? '' : $val['group'];
-                    $auth_key['displayname']
-                        = (empty($val['displayname'])) ? $user : $val['displayname'];
-                    $auth_key['home']
-                        = (empty($val['home'])) ? $defaultpage : $val['home'];
-                    $auth_key['mypage']
-                        = (empty($val['mypage'])) ? '' : $val['mypage'];
+                    $auth_key['role'] = empty($val['role']) ? ROLE_ENROLLEE : $val['role'];
+                    $auth_key['group'] = empty($val['group']) ? '' : $val['group'];
+                    $auth_key['displayname'] = empty($val['displayname']) ? $user : $val['displayname'];
+                    $auth_key['home'] = empty($val['home']) ? $defaultpage : $val['home'];
+                    $auth_key['mypage'] = empty($val['mypage']) ? '' : $val['mypage'];
                 }
                 return $auth_key;
             }
         }
-        return array('role' => ROLE_GUEST, 'nick' => '', 'key' => '', 'group' => '', 'displayname' => '', 'home' => '', 'mypage' => '', 'api' => '');
+        return array(
+            'role' => ROLE_GUEST,
+            'nick' => '',
+            'key' => '',
+            'group' => '',
+            'displayname' => '',
+            'home' => '',
+            'mypage' => '',
+            'api' => '',
+        );
     }
 
     public static function get_user_name()
     {
         $auth_key = auth::get_user_info();
-        if (empty($auth_key['nick'])) return $auth_key;
+        if (empty($auth_key['nick']))
+            return $auth_key;
         if (!empty($auth_key['displayname'])) {
             $auth_key['nick'] = $auth_key['displayname'];
         }
@@ -219,14 +257,15 @@ class auth
         global $auth_users;
         $rc = array();
         foreach ($auth_users as $user => $val) {
-            $def_role = (empty($val[1])) ? ROLE_AUTH : $val[1];
-            if ($def_role > $role) continue;
+            $def_role = empty($val[1]) ? ROLE_AUTH : $val[1];
+            if ($def_role > $role)
+                continue;
             $rc[] = $user;
         }
 
         $now_role = auth::get_role_level();
         // if (($now_role == ROLE_AUTH_TEMP && $role == ROLE_AUTH) || ($now_role == ROLE_ADM_CONTENTS_TEMP && $role == ROLE_ADM_CONTENTS))
-        if (($now_role == ROLE_AUTH_TEMP && $role == ROLE_AUTH)) {
+        if ($now_role == ROLE_AUTH_TEMP && $role == ROLE_AUTH) {
             $rc[] = auth::check_auth();
         }
 
@@ -242,10 +281,11 @@ class auth
     {
         global $adminpass;
         // 管理者パスワードなのかどうか？
-        $temp_admin = (pkwk_hash_compute($_SERVER['PHP_AUTH_PW'], $adminpass) !== $adminpass) ? false : true;
+        $temp_admin = pkwk_hash_compute($_SERVER['PHP_AUTH_PW'], $adminpass) !== $adminpass ? false : true;
         if (!$temp_admin && $login == UNAME_ADM_CONTENTS_TEMP) {
             global $vars;
-            if (isset($vars['pass']) && pkwk_login($vars['pass'])) $temp_admin = true;
+            if (isset($vars['pass']) && pkwk_login($vars['pass']))
+                $temp_admin = true;
         }
         return $temp_admin;
     }
@@ -261,19 +301,20 @@ class auth
 
         switch ($func) {
             case 'readonly':
-                $chk_role = (defined('PKWK_READONLY')) ? PKWK_READONLY : ROLE_GUEST;
+                $chk_role = defined('PKWK_READONLY') ? PKWK_READONLY : ROLE_GUEST;
                 break;
             case 'safemode':
-                $chk_role = (defined('PKWK_SAFE_MODE')) ? PKWK_SAFE_MODE : ROLE_GUEST;
+                $chk_role = defined('PKWK_SAFE_MODE') ? PKWK_SAFE_MODE : ROLE_GUEST;
                 break;
             case 'su':
                 $now_role = auth::get_role_level();
-                if ($now_role == 2 || (int)$now_role == ROLE_ADM_CONTENTS) return FALSE; // 既に権限有
+                if ($now_role == 2 || ((int) $now_role) == ROLE_ADM_CONTENTS)
+                    return false; // 既に権限有
                 $chk_role = ROLE_ADM_CONTENTS;
                 switch ($now_role) {
                     case ROLE_AUTH_TEMP:
                         // FIXME:
-                        return TRUE;
+                        return true;
                     case ROLE_GUEST:
                         // 未認証者は、単に管理者パスワードを要求
                         $user = UNAME_ADM_CONTENTS_TEMP;
@@ -294,7 +335,7 @@ class auth
                         break;
                     }
                     // ESC : 認証失敗
-                    return TRUE;
+                    return true;
                 }
                 break;
             case 'role_adm':
@@ -319,13 +360,17 @@ class auth
     public static function is_check_role($chk_role)
     {
         static $now_role;
-        if ($chk_role == ROLE_GUEST) return FALSE;      // 機能無効
-        if ($chk_role == ROLE_FORCE) return TRUE;       // 強制
+        if ($chk_role == ROLE_GUEST)
+            return false; // 機能無効
+        if ($chk_role == ROLE_FORCE)
+            return true; // 強制
 
         // 役割に応じた挙動の設定
-        if (!isset($now_role)) $now_role = (int)auth::get_role_level();
-        if ($now_role == ROLE_GUEST) return TRUE;
-        return ($now_role <= $chk_role) ? FALSE : TRUE;
+        if (!isset($now_role))
+            $now_role = (int) auth::get_role_level();
+        if ($now_role == ROLE_GUEST)
+            return true;
+        return $now_role <= $chk_role ? false : true;
     }
 
     /**
@@ -334,46 +379,79 @@ class auth
      */
     public static function auth_ntlm()
     {
-        if ($_SERVER['HTTP_AUTHORIZATION'] == NULL) {
-            header("HTTP/1.0 401 Unauthorized");
-            header("WWW-Authenticate: NTLM");
-            exit;
-        };
+        if ($_SERVER['HTTP_AUTHORIZATION'] == null) {
+            header('HTTP/1.0 401 Unauthorized');
+            header('WWW-Authenticate: NTLM');
+            exit();
+        }
 
-        if (!isset($_SERVER['HTTP_AUTHORIZATION'])) return 0;
+        ;
+
+        if (!isset($_SERVER['HTTP_AUTHORIZATION']))
+            return 0;
 
         list($auth_type, $digest64) = explode(' ', $_SERVER['HTTP_AUTHORIZATION']);
         switch (strtoupper($auth_type)) {
-            case 'NTLM':      // IIS 4.0
+            case 'NTLM': // IIS 4.0
                 return 1;
             case 'NEGOTIATE': // IIS 5.0 ('Negotiate')
                 return 2;
 
             // IIS用 phpMyAdmin-2.6.2-pl1/libraries/auth/http.auth.lib.php
-            case 'BASIC':     // 'Basic'
-                if (!function_exists('base64_decode')) return array('', '');
+            case 'BASIC': // 'Basic'
+                if (!function_exists('base64_decode'))
+                    return array('', '');
                 return explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
         }
 
         $digest = 'NTL' . base64_decode(substr($digest64, 4));
 
-        if (ord($digest[8]) != 1) return 0;
-        if (ord($digest[13]) != 178) return 0;
+        if (ord($digest[8]) != 1)
+            return 0;
+        if (ord($digest[13]) != 178)
+            return 0;
 
-        $strAuth = 'NTLMSSP'
-            . chr(0) . chr(2) . chr(0) . chr(0) . chr(0)
-            . chr(0) . chr(0) . chr(0) . chr(0) . chr(40)
-            . chr(0) . chr(0) . chr(0) . chr(1) . chr(130)
-            . chr(0) . chr(0) . chr(0) . chr(2) . chr(2)
-            . chr(2) . chr(0) . chr(0) . chr(0) . chr(0)
-            . chr(0) . chr(0) . chr(0) . chr(0) . chr(0)
-            . chr(0) . chr(0) . chr(0);
+        $strAuth =
+            'NTLMSSP' .
+            chr(0) .
+            chr(2) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(40) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(1) .
+            chr(130) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(2) .
+            chr(2) .
+            chr(2) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0) .
+            chr(0);
 
         $strAuth64 = base64_encode($strAuth);
         $strAuth64 = trim($strAuth64);
         header('HTTP/1.0 401 Unauthorized');
         header("WWW-Authenticate: NTLM $strAuth64");
-        exit;
+        exit();
 
         return 0;
     }
@@ -385,18 +463,20 @@ class auth
     public static function ntlm_decode()
     {
         $rc = array('', '', '', '');
-        if (!function_exists('base64_decode')) return $rc;
-        if (!isset($_SERVER['HTTP_AUTHORIZATION'])) return $rc;
+        if (!function_exists('base64_decode'))
+            return $rc;
+        if (!isset($_SERVER['HTTP_AUTHORIZATION']))
+            return $rc;
         // if (substr($_SERVER['HTTP_AUTHORIZATION'],0,4) != 'MSSP') return $rc;
 
         list($auth_type, $x) = explode(' ', $_SERVER['HTTP_AUTHORIZATION']);
 
         switch (strtoupper($auth_type)) {
             // IIS用 (http://homepage1.nifty.com/yito/namazu/gbook/20021127.1530.html)
-            case 'BASIC':     // 'Basic'
+            case 'BASIC': // 'Basic'
                 list($login, $pass) = explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
                 return array('', $login, '', $pass);
-            case 'NTLM':      // IIS 4.0
+            case 'NTLM': // IIS 4.0
                 break;
             case 'NEGOTIATE': // IIS 5.0 ('Negotiate')
                 break;
@@ -406,13 +486,14 @@ class auth
 
         $x = 'NTL' . base64_decode(substr($x, 4));
 
-        if (ord($x[8]) != 3) return $rc;
+        if (ord($x[8]) != 3)
+            return $rc;
 
         $rc = array();
         for ($i = 30; $i <= 46; $i += 8) {
             // domain login host
-            $len = (ord($x[$i + 1]) * 256 + ord($x[$i]));    // 31,30  39,38 47,46
-            $offset = (ord($x[$i + 3]) * 256 + ord($x[$i + 2]));    // 33,32  41,40 49,48
+            $len = (ord($x[$i + 1]) * 256) + ord($x[$i]); // 31,30  39,38 47,46
+            $offset = (ord($x[$i + 3]) * 256) + ord($x[$i + 2]); // 33,32  41,40 49,48
             $rc[] = substr($x, $offset, $len);
         }
         $rc[] = ''; // pass
@@ -444,8 +525,10 @@ class auth
                 if ($x == 'HTTP_AUTHORIZATION') {
                     // NTLM対応 (domain, login, host, pass)
                     $tmp_ntlm = auth::ntlm_decode();
-                    if ($tmp_ntlm[3] == '') continue;
-                    if (empty($user)) $user = $tmp_ntlm[1];
+                    if ($tmp_ntlm[3] == '')
+                        continue;
+                    if (empty($user))
+                        $user = $tmp_ntlm[1];
                     $pass = $tmp_ntlm[3];
                     unset($tmp_ntml);
                     break;
@@ -455,26 +538,35 @@ class auth
             }
         }
 
-        if (empty($user) && empty($pass)) return false;
-        if (empty($auth_users[$user][0])) return false;
-        if (pkwk_hash_compute($pass, $auth_users[$user][0]) !== $auth_users[$user][0]) return false;
+        if (empty($user) && empty($pass))
+            return false;
+        if (empty($auth_users[$user][0]))
+            return false;
+        if (pkwk_hash_compute($pass, $auth_users[$user][0]) !== $auth_users[$user][0])
+            return false;
         return true;
     }
 
     public static function auth_digest($auth_users)
     {
-        if (!isset($_SERVER['PHP_AUTH_DIGEST']) || empty($_SERVER['PHP_AUTH_DIGEST'])) return false;
+        if (!isset($_SERVER['PHP_AUTH_DIGEST']) || empty($_SERVER['PHP_AUTH_DIGEST']))
+            return false;
         $data = auth::http_digest_parse($_SERVER['PHP_AUTH_DIGEST']);
-        if ($data === false) return false;
+        if ($data === false)
+            return false;
 
         list($scheme, $salt, $role) = auth::get_data($data['username'], $auth_users);
-        if ($scheme != '{x-digest-md5}') return false;
+        if ($scheme != '{x-digest-md5}')
+            return false;
 
         // $A1 = md5($data['username'] . ':' . $realm . ':' . $auth_users[$data['username']]);
         $A1 = $salt;
         $A2 = md5($_SERVER['REQUEST_METHOD'] . ':' . $data['uri']);
-        $valid_response = md5($A1 . ':' . $data['nonce'] . ':' . $data['nc'] . ':' . $data['cnonce'] . ':' . $data['qop'] . ':' . $A2);
-        if ($data['response'] != $valid_response) return false;
+        $valid_response = md5(
+            $A1 . ':' . $data['nonce'] . ':' . $data['nc'] . ':' . $data['cnonce'] . ':' . $data['qop'] . ':' . $A2,
+        );
+        if ($data['response'] != $valid_response)
+            return false;
         return true;
     }
 
@@ -486,7 +578,15 @@ class auth
     public static function http_digest_parse($txt)
     {
         // protect against missing data
-        $needed_parts = array('nonce' => 1, 'nc' => 1, 'cnonce' => 1, 'qop' => 1, 'username' => 1, 'uri' => 1, 'response' => 1);
+        $needed_parts = array(
+            'nonce' => 1,
+            'nc' => 1,
+            'cnonce' => 1,
+            'qop' => 1,
+            'username' => 1,
+            'uri' => 1,
+            'response' => 1,
+        );
         $data = array();
 
         // url に含まれる文字列を含む必要がある
@@ -499,7 +599,7 @@ class auth
             unset($needed_parts[$m[1]]);
         }
 
-        return $needed_parts ? FALSE : $data;
+        return $needed_parts ? false : $data;
     }
 
     /**
@@ -513,7 +613,7 @@ class auth
             return array('', '', '');
         }
 
-        $role = (empty($auth_users[$user][1])) ? '' : $auth_users[$user][1];
+        $role = empty($auth_users[$user][1]) ? '' : $auth_users[$user][1];
         list($scheme, $salt) = auth::passwd_parse($auth_users[$user][0]);
         return array($scheme, $salt, $role);
     }
@@ -538,13 +638,13 @@ class auth
     public static function get_signature($lines)
     {
         $patterns = array(
-            "'.*? -- \[\[(.*?)\]\] &new{.*?};'si",    // -- [[xxx]] &new{xxx};
-            "'.*? -- (.*?) &new{.*?};'si",        // -- xxx &new{xxx};
-            "'.*? - \[\[(.*?)\]\] &new{.*?}'si",    // - [[xxx]] &new{xxx};
-            "'.*? - (.*?) &new{.*?}'si",        // - xxx &new{xxx};
-            "'.*? -- \[\[(.*?)\]\]'si",        // -- [[xxx]]
-            "'.*? -- \[(.*?)\]'si",            // -- [xxx]
-            "'.*? -- (.*?)'si",            // -- xxx
+            "'.*? -- \[\[(.*?)\]\] &new{.*?};'si", // -- [[xxx]] &new{xxx};
+            "'.*? -- (.*?) &new{.*?};'si", // -- xxx &new{xxx};
+            "'.*? - \[\[(.*?)\]\] &new{.*?}'si", // - [[xxx]] &new{xxx};
+            "'.*? - (.*?) &new{.*?}'si", // - xxx &new{xxx};
+            "'.*? -- \[\[(.*?)\]\]'si", // -- [[xxx]]
+            "'.*? -- \[(.*?)\]'si", // -- [xxx]
+            "'.*? -- (.*?)'si", // -- xxx
         );
 
         foreach ($lines as $_line) {
@@ -572,7 +672,8 @@ class auth
     {
         global $edit_auth, $edit_auth_pages;
         global $read_auth, $read_auth_pages;
-        if (!auth::is_page_auth($page, $read_auth, $read_auth_pages, $uname, $gname)) return false;
+        if (!auth::is_page_auth($page, $read_auth, $read_auth_pages, $uname, $gname))
+            return false;
         return auth::is_page_auth($page, $edit_auth, $edit_auth_pages, $uname, $gname);
     }
 
@@ -580,9 +681,11 @@ class auth
     {
         global $auth_method_type;
         static $info;
-        if (!$auth_flag) return true;
+        if (!$auth_flag)
+            return true;
 
-        if (!isset($info)) $info = auth::get_user_info();
+        if (!isset($info))
+            $info = auth::get_user_info();
 
         $target_str = '';
         switch ($auth_method_type) {
@@ -598,27 +701,32 @@ class auth
         foreach ($auth_pages as $key => $val) {
             if (preg_match($key, $target_str)) {
                 if (is_array($val)) {
-                    $user_list = (empty($val['user'])) ? '' : explode(',', $val['user']);
-                    $group_list = (empty($val['group'])) ? '' : explode(',', $val['group']);
-                    $role = (empty($val['role'])) ? '' : $val['role'];
+                    $user_list = empty($val['user']) ? '' : explode(',', $val['user']);
+                    $group_list = empty($val['group']) ? '' : explode(',', $val['group']);
+                    $role = empty($val['role']) ? '' : $val['role'];
                 } else {
-                    $user_list = (empty($val)) ? '' : explode(',', $val);
+                    $user_list = empty($val) ? '' : explode(',', $val);
                 }
                 break;
             }
         }
 
         // No limit
-        if (empty($user_list) && empty($group_list) && empty($role)) return true;
+        if (empty($user_list) && empty($group_list) && empty($role))
+            return true;
         // 未認証者
-        if (empty($uname)) return false;
+        if (empty($uname))
+            return false;
 
         // ユーザ名検査
-        if (!empty($user_list) && in_array($uname, $user_list)) return true;
+        if (!empty($user_list) && in_array($uname, $user_list))
+            return true;
         // グループ検査
-        if (!empty($group_list) && !empty($gname) && in_array($gname, $group_list)) return true;
+        if (!empty($group_list) && !empty($gname) && in_array($gname, $group_list))
+            return true;
         // role 検査
-        if (!empty($role) && !auth::is_check_role($role)) return true;
+        if (!empty($role) && !auth::is_check_role($role))
+            return true;
         return false;
     }
 
@@ -637,14 +745,16 @@ class auth
         // $now_role = auth::get_role_level();
 
         foreach ($pages as $file => $page) {
-            if (!auth::is_page_readable($page, $auth_key['key'], $auth_key['group'])) continue;
+            if (!auth::is_page_readable($page, $auth_key['key'], $auth_key['group']))
+                continue;
             if (substr($page, 0, 1) != ':') {
                 $rc[$file] = $page;
                 continue;
             }
 
             // colon page
-            if ($is_colon) continue;
+            if ($is_colon)
+                continue;
             $rc[$file] = $page;
         }
         return $rc;
@@ -653,11 +763,13 @@ class auth
     public static function is_role_page($lines)
     {
         global $check_role;
-        if (!$check_role) return FALSE;
+        if (!$check_role)
+            return false;
         $cmd = use_plugin('check_role', $lines);
-        if ($cmd === FALSE) return FALSE;
+        if ($cmd === false)
+            return false;
         convert_html($cmd); // die();
-        return TRUE;
+        return true;
     }
 
     public static function des_session_get($session_name)
@@ -669,7 +781,7 @@ class auth
 
         // des化された内容を平文に戻す
         if (isset($_SESSION[$session_name])) {
-            require_once(LIB_DIR . 'des.php');
+            require_once LIB_DIR . 'des.php';
             return des($salt, base64_decode($_SESSION[$session_name]), 0, 0, null);
         }
         return '';
@@ -681,7 +793,7 @@ class auth
 
         // adminpass の処理
         list($scheme, $salt) = auth::passwd_parse($adminpass);
-        require_once(LIB_DIR . 'des.php');
+        require_once LIB_DIR . 'des.php';
         $_SESSION[$session_name] = base64_encode(des($salt, $val, 1, 0, null));
         session_write_close();
     }
@@ -694,7 +806,17 @@ class auth
         $nonce = hex2bin(md5(rand() . UTIME));
         $created = gmdate('Y-m-d\TH:i:s\Z', UTIME);
         $digest = auth::b64_sha1($nonce . $created . $pass);
-        return 'UsernameToken Username="' . $uid . '", PasswordDigest="' . $digest . '", Nonce="' . base64_encode($nonce) . '", Created="' . $created . '"';
+        return (
+            'UsernameToken Username="' .
+            $uid .
+            '", PasswordDigest="' .
+            $digest .
+            '", Nonce="' .
+            base64_encode($nonce) .
+            '", Created="' .
+            $created .
+            '"'
+        );
     }
 
     public static function b64_sha1($x)
@@ -708,21 +830,24 @@ class auth
         static $plugin_list = array('login', 'redirect');
 
         foreach ($plugin_list as $val) {
-            if ($val == $x) return true;
+            if ($val == $x)
+                return true;
         }
 
         foreach ($auth_api as $api => $val) {
-            if ($api == $x) return true;
+            if ($api == $x)
+                return true;
         }
 
         // auth_X plugin OK.
-        if (strpos($x, 'auth_') === 0 && strlen($x) > 5) return true;
+        if (strpos($x, 'auth_') === 0 && strlen($x) > 5)
+            return true;
         return false;
     }
 
     public static function is_protect()
     {
-        return (PLUS_PROTECT_MODE && auth::is_check_role(PLUS_PROTECT_MODE));
+        return PLUS_PROTECT_MODE && auth::is_check_role(PLUS_PROTECT_MODE);
     }
 
     public static function user_list()
@@ -731,21 +856,27 @@ class auth
         $rc = array();
 
         foreach ($auth_users as $user => $val) {
-            $role = (empty($val[1])) ? ROLE_ENROLLEE : $val[1];
-            $group = (empty($val[2])) ? '' : $val[2];
-            $home = (empty($val[3])) ? $defaultpage : $val[3];
-            $mypage = (empty($val[4])) ? '' : $val[4];
-            $rc['plus'][$user] = array('role' => $role, 'displayname' => $user, 'group' => $group, 'home' => $home, 'mypage' => $mypage);
+            $role = empty($val[1]) ? ROLE_ENROLLEE : $val[1];
+            $group = empty($val[2]) ? '' : $val[2];
+            $home = empty($val[3]) ? $defaultpage : $val[3];
+            $mypage = empty($val[4]) ? '' : $val[4];
+            $rc['plus'][$user] = array(
+                'role' => $role,
+                'displayname' => $user,
+                'group' => $group,
+                'home' => $home,
+                'mypage' => $mypage,
+            );
         }
 
         foreach ($auth_wkgrp_user as $api => $val1) {
             foreach ($val1 as $user => $val) {
                 if (is_array($val)) {
-                    $role = (empty($val['role'])) ? ROLE_ENROLLEE : $val['role'];
-                    $group = (empty($val['group'])) ? '' : $val['group'];
-                    $name = (empty($val['displayname'])) ? $user : $val['displayname'];
-                    $home = (empty($val['home'])) ? $defaultpage : $val['home'];
-                    $mypage = (empty($val['mypage'])) ? '' : $val['mypage'];
+                    $role = empty($val['role']) ? ROLE_ENROLLEE : $val['role'];
+                    $group = empty($val['group']) ? '' : $val['group'];
+                    $name = empty($val['displayname']) ? $user : $val['displayname'];
+                    $home = empty($val['home']) ? $defaultpage : $val['home'];
+                    $mypage = empty($val['mypage']) ? '' : $val['mypage'];
                 } else {
                     $role = $val;
                     $group = '';
@@ -753,11 +884,15 @@ class auth
                     $home = $defaultpage;
                     $mypage = '';
                 }
-                $rc[$api][$user] = array('role' => $role, 'displayname' => $name, 'group' => $group, 'home' => $home, 'mypage' => $mypage);
+                $rc[$api][$user] = array(
+                    'role' => $role,
+                    'displayname' => $name,
+                    'group' => $group,
+                    'home' => $home,
+                    'mypage' => $mypage,
+                );
             }
         }
         return $rc;
     }
 }
-
-
