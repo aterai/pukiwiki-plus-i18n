@@ -1482,59 +1482,59 @@ $blocklist['A-2'] = array(
 // Please notify us about this list with reason:
 // http://pukiwiki.sourceforge.jp/dev/?BugTrack2%2F208
 
-$blocklist['B-1'] = array(
-
-	// B-1: Web spaces
-	//
-	//   Messages from forerunners:
-	//     activefreehost.com
-	//       "We regret to inform you that ActiveFreeHost
-	//        free hosting service has is now closed (as of
-	//        September 18). We have been online for over
-	//        two and half years, but have recently decided
-	//        to take time for software improvement to fight
-	//        with server abuse, Spam advertisement and
-	//        fraud."
-	//
-	'*.0000host.com',		// 68.178.200.154, ns *.3-hosting.net
-	'*.007ihost.com',		// 195.242.99.199(s199.softwarelibre.nl)
-	'*.00bp.com',			// 74.86.20.224(layeredpanel.com -> 195.242.99.195) by admin at 1kay.com
-	'0Catch.com related' => array(
-		'*.0catch.com',		// 209.63.57.4 by Sam Parkinson (sam at 0catch.com), also zerocatch.com
-
-		// 209.63.57.10(www1.0catch.com) by dan at 0catch.com, ns *.0catch.com
-		'*.100freemb.com',		// by Danny Ashworth
-		'*.exactpages.com',
-		'*.fcpages.com',
-		'*.wtcsites.com',
-
-		// 209.63.57.10(www1.0catch.com) by domains at netgears.com, ns *.0catch.com
-		'*.741.com',
-		'*.freecities.com',
-		'*.freesite.org',
-		'*.freewebpages.org',
-		'*.freewebsitehosting.com',
-		'*.jvl.com',
-
-		// 209.63.57.10(www1.0catch.com) by luke at dcpages.com, ns *.0catch.com
-		'*.freespaceusa.com',
-		'*.usafreespace.com',
-
-		// 209.63.57.10(www1.0catch.com) by rickybrown at usa.com, ns *.0catch.com
-		'*.dex1.com',
-		'*.questh.com',
-
-		// 209.63.57.10(www1.0catch.com), ns *.0catch.com
-		'*.00freehost.com',		// by David Mccall (superjeeves at yahoo.com)
-		'*.012webpages.com',	// by support at 0catch.com
-		'*.150m.com',
-		'*.1sweethost.com',		// by whois at bluehost.com
-		'*.250m.com',			// by jason at fahlman.net
-		'*.9cy.com',			// by paulw0t at gmail.com
-		'*.angelcities.com',	// by cliff at eccentrix.com
-		'*.arcadepages.com',	// by admin at site-see.com
-		'*.e-host.ws',			// by dns at jomax.net
-		'*.envy.nu',			// by Dave Ellis (dave at larryblackandassoc.com)
-		'*.fw.bz',				// by ben at kuehl.as
-		'*.freewebportal.com',	// by mmouneeb at hotmail.com
-		'*.g0g.net',			// by 
+// $blocklist['B-1'] = array(
+//
+// 	// B-1: Web spaces
+// 	//
+// 	//   Messages from forerunners:
+// 	//     activefreehost.com
+// 	//       "We regret to inform you that ActiveFreeHost
+// 	//        free hosting service has is now closed (as of
+// 	//        September 18). We have been online for over
+// 	//        two and half years, but have recently decided
+// 	//        to take time for software improvement to fight
+// 	//        with server abuse, Spam advertisement and
+// 	//        fraud."
+// 	//
+// 	'*.0000host.com',		// 68.178.200.154, ns *.3-hosting.net
+// 	'*.007ihost.com',		// 195.242.99.199(s199.softwarelibre.nl)
+// 	'*.00bp.com',			// 74.86.20.224(layeredpanel.com -> 195.242.99.195) by admin at 1kay.com
+// 	'0Catch.com related' => array(
+// 		'*.0catch.com',		// 209.63.57.4 by Sam Parkinson (sam at 0catch.com), also zerocatch.com
+//
+// 		// 209.63.57.10(www1.0catch.com) by dan at 0catch.com, ns *.0catch.com
+// 		'*.100freemb.com',		// by Danny Ashworth
+// 		'*.exactpages.com',
+// 		'*.fcpages.com',
+// 		'*.wtcsites.com',
+//
+// 		// 209.63.57.10(www1.0catch.com) by domains at netgears.com, ns *.0catch.com
+// 		'*.741.com',
+// 		'*.freecities.com',
+// 		'*.freesite.org',
+// 		'*.freewebpages.org',
+// 		'*.freewebsitehosting.com',
+// 		'*.jvl.com',
+//
+// 		// 209.63.57.10(www1.0catch.com) by luke at dcpages.com, ns *.0catch.com
+// 		'*.freespaceusa.com',
+// 		'*.usafreespace.com',
+//
+// 		// 209.63.57.10(www1.0catch.com) by rickybrown at usa.com, ns *.0catch.com
+// 		'*.dex1.com',
+// 		'*.questh.com',
+//
+// 		// 209.63.57.10(www1.0catch.com), ns *.0catch.com
+// 		'*.00freehost.com',		// by David Mccall (superjeeves at yahoo.com)
+// 		'*.012webpages.com',	// by support at 0catch.com
+// 		'*.150m.com',
+// 		'*.1sweethost.com',		// by whois at bluehost.com
+// 		'*.250m.com',			// by jason at fahlman.net
+// 		'*.9cy.com',			// by paulw0t at gmail.com
+// 		'*.angelcities.com',	// by cliff at eccentrix.com
+// 		'*.arcadepages.com',	// by admin at site-see.com
+// 		'*.e-host.ws',			// by dns at jomax.net
+// 		'*.envy.nu',			// by Dave Ellis (dave at larryblackandassoc.com)
+// 		'*.fw.bz',				// by ben at kuehl.as
+// 		'*.freewebportal.com',	// by mmouneeb at hotmail.com
+// 		'*.g0g.net',			// by

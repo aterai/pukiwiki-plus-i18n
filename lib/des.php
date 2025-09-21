@@ -626,9 +626,10 @@ function des($key, $message, $encrypt, $mode, $iv, $padding = 2)
         $message .= $temp . $temp . $temp . $temp . $temp . $temp . $temp . $temp;
         if ($temp == 8)
             $len += 8;
-    } else if (!$padding)//PKCS7 padding
-
+    } else if (!$padding) {
+    	//PKCS7 padding
         $message .= chr(0) . chr(0) . chr(0) . chr(0) . chr(0) . chr(0) . chr(0) . chr(0); //pad the message out with null bytes
+    }
 
     //store the result here
     $result = '';

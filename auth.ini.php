@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki Plus! - Yet another WikiWikiWeb clone
 // $Id: auth.ini.php,v 0.0.15 2008/08/05 01:09:00 upk Exp $
 // Copyright (C)
@@ -30,15 +31,15 @@ $adminpass = '{x-php-md5}75a6e3b52be2e4eb7a2db00914002691'; // md5('pass')
 //
 // プラグインによりデータを管理
 define('PKWK_AUTH_FILE', add_homedir('auth_users.ini.php'));
-require_once(PKWK_AUTH_FILE);
+require_once PKWK_AUTH_FILE;
 
 define('PKWK_AUTH_WKGRP_FILE', add_homedir('auth_wkgrp.ini.php'));
-require_once(PKWK_AUTH_WKGRP_FILE);
+require_once PKWK_AUTH_WKGRP_FILE;
 
 /////////////////////////////////////////////////
 // Auth API
 define('PKWK_AUTH_API_FILE', add_homedir('auth_api.ini.php'));
-require_once(PKWK_AUTH_API_FILE);
+require_once PKWK_AUTH_API_FILE;
 
 /////////////////////////////////////////////////
 // Authentication method
@@ -51,10 +52,10 @@ $auth_method_type = 'pagename'; // By Page name
 $read_auth = 0;
 
 $read_auth_pages = array(
-	// Regex                   Username or array('user'=>Username,'group'=>Groupname,'role'=>Role),
-	'/:log/'		=> 'hoge',
-	'#ひきこもるほげ#'	=> 'hoge',
-	'#(ネタバレ|ねたばれ)#'	=> 'foo,bar,hoge',
+    // Regex                   Username or array('user'=>Username,'group'=>Groupname,'role'=>Role),
+    '/:log/' => 'hoge',
+    '#ひきこもるほげ#' => 'hoge',
+    '#(ネタバレ|ねたばれ)#' => 'foo,bar,hoge',
 );
 
 /////////////////////////////////////////////////
@@ -62,11 +63,11 @@ $read_auth_pages = array(
 $edit_auth = 0;
 
 $edit_auth_pages = array(
-	// Regex                   Username or array('user'=>Username,'group'=>Groupname,'role'=>Role),
-	'#.+#'	=> 'aterai',
-	'#Barの公開日記#'	=> 'bar',
-	'#ひきこもるほげ#'	=> 'hoge',
-	'#(ネタバレ|ねたばれ)#'	=> 'foo,bar,hoge',
+    // Regex                   Username or array('user'=>Username,'group'=>Groupname,'role'=>Role),
+    '#.+#' => 'aterai',
+    '#Barの公開日記#' => 'bar',
+    '#ひきこもるほげ#' => 'hoge',
+    '#(ネタバレ|ねたばれ)#' => 'foo,bar,hoge',
 );
 
 /////////////////////////////////////////////////
@@ -78,4 +79,3 @@ $search_auth = 0;
 /////////////////////////////////////////////////
 // Check Role
 $check_role = 1;
-

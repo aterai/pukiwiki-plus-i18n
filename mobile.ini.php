@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 // $Id: mobile.ini.php,v 1.24.2 2005/05/16 13:25:43 miko Exp $
 // Copyright (C)
@@ -8,7 +9,7 @@
 // PukiWiki setting file (Cell phones, PDAs and other thin clients)
 
 // for XHTML Basic/Cellular phones Patch
-const UA_MOBILE = 1;    // 1 or 0
+const UA_MOBILE = 1; // 1 or 0
 
 // PukiWiki.org Compat.
-require_once('keitai.ini.php');
+require_once 'keitai.ini.php';

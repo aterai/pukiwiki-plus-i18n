@@ -8,8 +8,8 @@
 // License: GPL v2 or (at your option) any later version
 //
 // PukiWiki main setting file
-// Plus!NOTE:(policy)not merge official cvs(1.139->1.140)
-// Plus!NOTE:(policy)not merge official cvs(1.147->1.148) See Question/181
+// Plus!NOTE: (policy) not merge official cvs(1.139->1.140)
+// Plus!NOTE: (policy) not merge official cvs(1.147->1.148) See Question/181
 
 /////////////////////////////////////////////////
 // Functionality settings
@@ -35,7 +35,7 @@ defined('PLUS_PROTECT_MODE') or define('PLUS_PROTECT_MODE', 0); // 0,2,3,4,5
 //   NOTE: Counter-related functions will work now (counter, attach count, etc)
 defined('PKWK_READONLY') or define('PKWK_READONLY', 0); // 0,1,2,3,4,5
 
-// PKWK_SAFE_MODE - Prohibits some unsafe(but compatible) functions 
+// PKWK_SAFE_MODE - Prohibits some unsafe(but compatible) functions
 defined('PKWK_SAFE_MODE') or define('PKWK_SAFE_MODE', 0); // 0,1,2,3,4,5
 
 // PKWK_CREATE_PAGE - New page making is prohibited.
@@ -161,7 +161,7 @@ $page_title = 'AteraiMemo';
 // 省略時は、絶対URIが自動で設定されます。
 //$script = 'http://example.com/pukiwiki/';
 //$script = './';
-$script = 'https:'.ROOT_URI;
+$script = 'https:' . ROOT_URI;
 
 // Shorten $script: Cut its file name (default: not cut)
 //$script_directory_index = 'index.php';
@@ -185,7 +185,7 @@ $modifier = 'aterai';
 // Site admin's Web page (CHANGE THIS)
 //$modifierlink = get_script_absuri();
 //$modifierlink = dirname($_SCRIPT_NAME);
-$modifierlink = ROOT_URI.'aterai.html';
+$modifierlink = ROOT_URI . 'aterai.html';
 
 // Default page name
 $defaultpage  = 'FrontPage';     // Top / Default page
@@ -229,11 +229,11 @@ defined('PKWK_ALLOW_JAVASCRIPT') or define('PKWK_ALLOW_JAVASCRIPT', 1);
 // Javascript Async Library Extenstion
 $ajax = 0;
 
-// Control of form unloading which you do not intend 
+// Control of form unloading which you do not intend
 $ctrl_unload = 0;
 
 // LOG
-require_once(add_homedir('config-log.ini.php'));
+require_once add_homedir('config-log.ini.php');
 
 /////////////////////////////////////////////////
 // Blocking SPAM
@@ -366,7 +366,7 @@ $function_freeze = 1;
 $notimeupdate = 2;
 
 // Authentication
-require_once(add_homedir('auth.ini.php'));
+require_once add_homedir('auth.ini.php');
 
 /////////////////////////////////////////////////
 // Page-reading feature settings
@@ -401,10 +401,10 @@ $pagereading_config_dict = ':config/PageReading/dict';
 /////////////////////////////////////////////////
 // Exclude plugin for this site-policy.
 $exclude_plugin = array(
-	'server',
-	'cvscheck',
-	'version',
-	'versionlist',
+    'server',
+    'cvscheck',
+    'version',
+    'versionlist',
 );
 
 /////////////////////////////////////////////////
@@ -416,8 +416,8 @@ $exclude_plugin = array(
 // TrackBack Ping および SPAMチェックの処理の際に、
 // null プラグインに置換されます。
 $exclude_link_plugin = array(
-	'showrss',
-	'rssreader',
+    'showrss',
+    'rssreader',
 );
 
 /////////////////////////////////////////////////
@@ -441,7 +441,7 @@ $maxshow_deleted = 0;
 
 /////////////////////////////////////////////////
 // Page names can't be edit via PukiWiki
-$cantedit = array( $whatsnew, $whatsdeleted );
+$cantedit = array($whatsnew, $whatsdeleted);
 
 /////////////////////////////////////////////////
 // HTTP: Output Last-Modified header
@@ -470,7 +470,7 @@ $do_backup = 1;
 $del_backup = 0;
 
 // Bacukp interval and generation
-$cycle  = 1;    // Wait N hours between backup (0 = no wait)
+$cycle = 1; // Wait N hours between backup (0 = no wait)
 $maxage = 360; // Stock latest N backups
 
 // NOTE: $cycle x $maxage / 24 = Minimum days to lost your data
@@ -542,7 +542,7 @@ $notify_header = '';
 
 // No Mail for Remote Host.
 $notify_exclude = array(
-//	'192.168.0.',
+    //	'192.168.0.',
 );
 
 /////////////////////////////////////////////////
@@ -552,7 +552,7 @@ $notify_exclude = array(
 $smtp_auth = 0;
 
 $pop_server = 'localhost';
-$pop_port   = 110;
+$pop_port = 110;
 $pop_userid = '';
 $pop_passwd = '';
 
@@ -576,7 +576,7 @@ $search_non_list = 1;
 
 $auto_template_func = 0;
 $auto_template_rules = array(
-	'((.+)\/([^\/]+))' => '\2/template'
+    '((.+)\/([^\/]+))' => '\2/template',
 );
 
 /////////////////////////////////////////////////
@@ -596,7 +596,7 @@ $line_break = 0;
 $usedatetime = 1;
 
 /////////////////////////////////////////////////
-// 見出しごとの編集を可能にする 
+// 見出しごとの編集を可能にする
 //
 // 見出し行の固有のアンカ自動挿入されているとき
 // のみ有効です
@@ -606,12 +606,12 @@ $fixed_heading_edited = 0;
 
 /////////////////////////////////////////////////
 // ページを任意のフレームに開く時に使う設定
-$use_open_uri_in_new_window  = 1;
+$use_open_uri_in_new_window = 1;
 
 // 同一サーバーとしてみなすホストのURI
 $open_uri_in_new_window_servername = array(
-      'http://localhost/',
-      'http://localhost.localdomain/',
+    'http://localhost/',
+    'http://localhost.localdomain/',
 );
 // URIの種類によって開く動作を設定。
 // "_blank"で別窓へ表示、falseを指定すると無効
@@ -623,4 +623,3 @@ $open_uri_in_new_window_oposi = '_blank';     // pukiwikiの外で外部サー�
 
 // User-Agent settings
 //require_once(add_homedir('profile.ini.php'));
-
