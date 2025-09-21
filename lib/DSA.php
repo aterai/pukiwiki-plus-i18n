@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Security_DSA
- * 
+ *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -14,14 +15,14 @@
  * @package   Security
  * @license    http://opensource.org/licenses/bsd-license.php  New BSD License
  * @copyright (c) 2004 Daiji Hriata All Right Reserved.
- * 
+ *
  * Author: Daiji Hriata (DSA verify logic in Auth_TypeKey)
  * Author: ishinao <ishinao@ishinao.net> (repackage to Security_DSA)
  * $Id$
  *
  * MODIFICATION
  * 2006-11-19 Katsumi Saito <katsumi@jo1upk.ymt.prug.or.jp>
- * 
+ *
  * = how to use =
  * if (Security_DSA::verify($message, $sig, $sigKey)) {
  *   echo 'verify success';
@@ -33,7 +34,7 @@ class Security_DSA
 {
     /**
      * DSA verify
-     * 
+     *
      * @param string $message message
      * @param string $sig     signature
      * @param array $sigKeys key
@@ -61,7 +62,7 @@ class Security_DSA
         $g = $sigKeys['g'];
         $pubKey = $sigKeys['pub_key'];
 
-        list ($r_sig, $s_sig) = explode(":", $sig);
+        list($r_sig, $s_sig) = explode(':', $sig);
         $r_sig = base64_decode($r_sig);
         $s_sig = base64_decode($s_sig);
 
@@ -74,23 +75,14 @@ class Security_DSA
         $s2 = Security_DSA::_bindecGmp($s_sig);
 
         $w = gmp_invert($s2, $q);
-        $hash_m = gmp_init('0x'.sha1($message));
+        $hash_m = gmp_init('0x' . sha1($message));
 
         $u1 = gmp_mod(gmp_mul($hash_m, $w), $q);
         $u2 = gmp_mod(gmp_mul($s1, $w), $q);
 
-        $v =
-            gmp_mod(
-                gmp_mod(
-                    gmp_mul(
-                        gmp_powm($g, $u1, $p),
-                        gmp_powm($pubKey, $u2, $p)
-                    ),
-                $p),
-                $q
-            );
+        $v = gmp_mod(gmp_mod(gmp_mul(gmp_powm($g, $u1, $p), gmp_powm($pubKey, $u2, $p)), $p), $q);
 
-        return (gmp_cmp($v, $s1) == 0);
+        return gmp_cmp($v, $s1) == 0;
     }
 
     /**
@@ -99,8 +91,8 @@ class Security_DSA
     function _bindecGmp($bin)
     {
         $dec = gmp_init(0);
-        for ($i = 0; $i < strlen($bin); $i ++) {
-            $dec = gmp_add(gmp_mul($dec, 256), ord($bin{$i}));
+        for ($i = 0; $i < strlen($bin); $i++) {
+            $dec = gmp_add(gmp_mul($dec, 256), ord($bin[$i]));
         }
         return $dec;
     }
@@ -115,7 +107,7 @@ class Security_DSA
         $g = $sigKeys['g'];
         $pubKey = $sigKeys['pub_key'];
 
-        list ($r_sig, $s_sig) = explode(':', $sig);
+        list($r_sig, $s_sig) = explode(':', $sig);
 
         $r_sig = base64_decode($r_sig);
         $s_sig = base64_decode($s_sig);
@@ -129,25 +121,18 @@ class Security_DSA
         $u1 = bcmod(bcmul($hash_m, $w), $q);
         $u2 = bcmod(bcmul($s1, $w), $q);
 
-        $v = 
+        $v = bcmod(
             bcmod(
-                bcmod(
-                    bcmul(
-                        bcmod(
-                            Security_DSA::_powmodBcmath($g, $u1, $p),
-                            $p
-                        ),
-                        bcmod(
-                            Security_DSA::_powmodBcmath($pubKey, $u2, $p),
-                            $p
-                        )
-                    ), 
-                    $p
-                ), 
-                $q
-            );
+                bcmul(
+                    bcmod(Security_DSA::_powmodBcmath($g, $u1, $p), $p),
+                    bcmod(Security_DSA::_powmodBcmath($pubKey, $u2, $p), $p),
+                ),
+                $p,
+            ),
+            $q,
+        );
 
-        return (bccomp($v, $s1) == 0);
+        return bccomp($v, $s1) == 0;
     }
 
     /**
@@ -168,8 +153,8 @@ class Security_DSA
     function _bindecBcmath($bin)
     {
         $dec = '0';
-        for ($i = 0; $i < strlen($bin); $i ++) {
-            $dec = bcadd(bcmul($dec, 256), ord($bin{$i}));
+        for ($i = 0; $i < strlen($bin); $i++) {
+            $dec = bcadd(bcmul($dec, 256), ord($bin[$i]));
         }
         return $dec;
     }
@@ -216,7 +201,7 @@ class Security_DSA
             $b0 = $b1;
             $b1 = $b2;
         }
-        return array ($a0, $b0, $x);
+        return array($a0, $b0, $x);
     }
 
     /**
