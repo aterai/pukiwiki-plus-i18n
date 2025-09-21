@@ -74,21 +74,15 @@ function limit_plugin($name)
         $count[$name] = 1;
     }
     if (++$count[$name] > PKWK_PLUGIN_CALL_TIME_LIMIT) {
-        die(
+        $str =
             'Alert: plugin "' .
             htmlspecialchars($name, ENT_QUOTES, 'UTF-8') .
-                '" was called over ' .
-                PKWK_PLUGIN_CALL_TIME_LIMIT .
-                ' times. SPAM or someting?<br />' .
-                "\n" .
-                '<a href="' .
-                get_cmd_uri('edit', $vars['page']) .
-                '">Try to edit this page</a><br />' .
-                "\n" .
-                '<a href="' .
-                get_cmd_uri() .
-                '">Return to frontpage</a>'
-        );
+            '" was called over ' .
+            PKWK_PLUGIN_CALL_TIME_LIMIT .
+            ' times. SPAM or someting?<br />';
+        $str1 = '<a href="' . get_cmd_uri('edit', $vars['page']) . '">Try to edit this page</a><br />';
+        $str2 = '<a href="' . get_cmd_uri() . '">Return to frontpage</a>';
+        die($str . "\n" . $str1 . "\n" . $str2);
     }
     return true;
 }

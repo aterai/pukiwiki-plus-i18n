@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 // $Id: rules.ini.php,v 1.9.5 2005/10/02 16:15:05 miko Exp $
 // Copyright (C)
@@ -8,7 +9,9 @@
 // License: GPL v2 or (at your option) any later version
 //
 // PukiWiki setting file
-if (!defined('DATA_HOME')) { exit; }
+if (!defined('DATA_HOME')) {
+    exit();
+}
 
 /////////////////////////////////////////////////
 // フィルタルール
@@ -21,9 +24,9 @@ if (!defined('DATA_HOME')) { exit; }
 /////////////////////////////////////////////////
 // フィルタルール(直接ソースを置換)
 $filter_rules = array(
-	"^(TITLE):(.*)$" => "",
-	"#tboff(.*)$" => "",
-	"#skin(.*)$" => "",
+    '^(TITLE):(.*)$' => '',
+    '#tboff(.*)$' => '',
+    '#skin(.*)$' => '',
 );
 
 /////////////////////////////////////////////////
@@ -31,9 +34,9 @@ $filter_rules = array(
 // $usedatetime = 1なら日時置換ルールが適用されます
 // 必要のない方は $usedatetimeを0にしてください。
 $datetime_rules = array(
-	'&amp;_now;'	=> format_date(UTIME),
-	'&amp;_date;'	=> get_date($date_format),
-	'&amp;_time;'	=> get_date($time_format),
+    '&amp;_now;' => format_date(UTIME),
+    '&amp;_date;' => get_date($date_format),
+    '&amp;_time;' => get_date($time_format),
 );
 
 /////////////////////////////////////////////////
@@ -44,14 +47,13 @@ $datetime_rules = array(
 //  行末指定は $ を後ろに。
 //
 $str_rules = array(
-	'now\?' 	=> format_date(UTIME),
-	'date\?'	=> get_date($date_format),
-	'time\?'	=> get_date($time_format),
-	'&now;' 	=> format_date(UTIME),
-	'&date;'	=> get_date($date_format),
-	'&time;'	=> get_date($time_format),
-	'&page;'	=> get_short_pagename($vars['page']),
-	'&fpage;'	=> $vars['page'],
-	'&t;'   	=> "\t",
+    'now\?' => format_date(UTIME),
+    'date\?' => get_date($date_format),
+    'time\?' => get_date($time_format),
+    '&now;' => format_date(UTIME),
+    '&date;' => get_date($date_format),
+    '&time;' => get_date($time_format),
+    '&page;' => get_short_pagename($vars['page']),
+    '&fpage;' => $vars['page'],
+    '&t;' => "\t",
 );
-

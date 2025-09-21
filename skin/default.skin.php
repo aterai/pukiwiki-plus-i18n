@@ -1,6 +1,8 @@
 <?php
+
 // Prohibit direct access
-if (! defined('DATA_DIR')) die('DATA_DIR is not set');
+if (!defined('DATA_DIR'))
+    die('DATA_DIR is not set');
 //$css_charset = 'UTF-8';
 //$link  = & $_LINK;
 //$image = & $_IMAGE['skin'];
@@ -9,14 +11,14 @@ if (! defined('DATA_DIR')) die('DATA_DIR is not set');
 //$is_404page  = ! is_page($_page);
 //$is_page  = is_page($_page) && ! arg_check('backup') && ! arg_check('edit');
 //if($is_page && ! file_exists(get_filename($_page))) {
-$is_page = ! arg_check('list') && ! arg_check('recent');
-if($is_page && ! file_exists(get_filename($_page))) {
-header("HTTP/1.0 404 Not Found");
-}else{
-pkwk_common_headers();
-header('Cache-Control: private, max-age=0'); //: no-cache');
-header('Content-Type: text/html; charset=' . CONTENT_CHARSET);
-header('ETag: ' . md5(MUTIME));
+$is_page = !arg_check('list') && !arg_check('recent');
+if ($is_page && !file_exists(get_filename($_page))) {
+    header('HTTP/1.0 404 Not Found');
+} else {
+    pkwk_common_headers();
+    header('Cache-Control: private, max-age=0'); //: no-cache');
+    header('Content-Type: text/html; charset=' . CONTENT_CHARSET);
+    header('ETag: ' . md5(MUTIME));
 }
 ?>
 <!doctype html>
@@ -203,7 +205,8 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:var(--bs-seco
               </ul>
             </li>
           </ul>
-          <?php include_once(PLUGIN_DIR.'search_form.inc.php'); echo plugin_search_form_convert(); ?>
+          <?php include_once PLUGIN_DIR . 'search_form.inc.php';
+          echo plugin_search_form_convert(); ?>
         </div>
       </div>
     </nav>
@@ -214,7 +217,8 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:var(--bs-seco
       <div class="col-md-9">
         <article class="blog-post">
           <header>
-            <?php include_once(PLUGIN_DIR.'header.inc.php'); echo plugin_header_convert(); ?>
+            <?php include_once PLUGIN_DIR . 'header.inc.php';
+            echo plugin_header_convert(); ?>
           </header>
 
           <?php echo $body ?>
@@ -228,7 +232,9 @@ thead th.style_th,tfoot th.style_th{color:inherit;background-color:var(--bs-seco
       </div>
       <div class="col-md-3 col-xs-12 blog-sidebar sidebar" itemscope="itemscope" itemtype="https://schema.org/WPSideBar"> 
         <nav>
-          <?php if (exist_plugin_convert('menu')) { echo do_plugin_convert('menu'); } ?>
+          <?php if (exist_plugin_convert('menu')) {
+              echo do_plugin_convert('menu');
+          } ?>
         </nav>
       </div>
     </div>

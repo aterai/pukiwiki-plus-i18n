@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki - Yet another WikiWikiWeb clone.
 // $Id: pukiwiki.skin.php,v 1.52.6 2009/04/04 14:28:00 upk Exp $
 // Copyright (C)
@@ -13,42 +14,47 @@
 // Settings (define before here, if you want)
 
 // Set site identities
-$_IMAGE['skin']['logo']     = 'pukiwiki.png';
-$_IMAGE['skin']['favicon']  = ''; // Sample: 'image/favicon.ico';
+$_IMAGE['skin']['logo'] = 'pukiwiki.png';
+$_IMAGE['skin']['favicon'] = ''; // Sample: 'image/favicon.ico';
 
 // SKIN_DEFAULT_DISABLE_TOPICPATH
 //   1 = Show reload URL
 //   0 = Show topicpath
-if (! defined('SKIN_DEFAULT_DISABLE_TOPICPATH'))
-	define('SKIN_DEFAULT_DISABLE_TOPICPATH', 1); // 1, 0
+if (!defined('SKIN_DEFAULT_DISABLE_TOPICPATH'))
+    define('SKIN_DEFAULT_DISABLE_TOPICPATH', 1); // 1, 0
 
 // Show / Hide navigation bar UI at your choice
 // NOTE: This is not stop their functionalities!
-if (! defined('PKWK_SKIN_SHOW_NAVBAR'))
-	define('PKWK_SKIN_SHOW_NAVBAR', 1); // 1, 0
+if (!defined('PKWK_SKIN_SHOW_NAVBAR'))
+    define('PKWK_SKIN_SHOW_NAVBAR', 1); // 1, 0
 
 // Show / Hide toolbar UI at your choice
 // NOTE: This is not stop their functionalities!
-if (! defined('PKWK_SKIN_SHOW_TOOLBAR'))
-	define('PKWK_SKIN_SHOW_TOOLBAR', 1); // 1, 0
+if (!defined('PKWK_SKIN_SHOW_TOOLBAR'))
+    define('PKWK_SKIN_SHOW_TOOLBAR', 1); // 1, 0
 
 // ------------------------------------------------------------
 // Code start
 
 // Prohibit direct access
-if (! defined('UI_LANG')) die('UI_LANG is not set');
-if (! isset($_LANG)) die('$_LANG is not set');
-if (! defined('PKWK_READONLY')) die('PKWK_READONLY is not set');
+if (!defined('UI_LANG'))
+    die('UI_LANG is not set');
+if (!isset($_LANG))
+    die('$_LANG is not set');
+if (!defined('PKWK_READONLY'))
+    die('PKWK_READONLY is not set');
 
-$lang  = & $_LANG['skin'];
-$link  = & $_LINK;
-$image = & $_IMAGE['skin'];
-$rw    = ! PKWK_READONLY;
+$lang = &$_LANG['skin'];
+$link = &$_LINK;
+$image = &$_IMAGE['skin'];
+$rw = !PKWK_READONLY;
 
 // Decide charset for CSS
 $css_charset = 'iso-8859-1';
-switch(UI_LANG){
-	case 'ja': $css_charset = 'Shift_JIS'; break;
+switch (UI_LANG) {
+    case 'ja':
+        $css_charset = 'Shift_JIS';
+        break;
 }
 
 // ------------------------------------------------------------
@@ -62,24 +68,30 @@ header('Content-Type: text/html; charset=' . CONTENT_CHARSET);
 
 // HTML DTD, <html>, and receive content-type
 if (isset($pkwk_dtd)) {
-	$meta_content_type = pkwk_output_dtd($pkwk_dtd);
+    $meta_content_type = pkwk_output_dtd($pkwk_dtd);
 } else {
-	$meta_content_type = pkwk_output_dtd();
+    $meta_content_type = pkwk_output_dtd();
 }
 
 ?>
 <head>
  <?php echo $meta_content_type ?>
  <meta http-equiv="content-style-type" content="text/css" />
-<?php if ($nofollow || ! $is_read)  { ?> <meta name="robots" content="NOINDEX,NOFOLLOW" /><?php } ?>
+<?php if ($nofollow || !$is_read) { ?> <meta name="robots" content="NOINDEX,NOFOLLOW" /><?php } ?>
 <?php if (PKWK_ALLOW_JAVASCRIPT && isset($javascript)) { ?> <meta http-equiv="Content-Script-Type" content="text/javascript" /><?php } ?>
 
  <title><?php echo $title ?> - <?php echo $page_title ?></title>
 
  <link rel="SHORTCUT ICON" href="<?php echo $image['favicon'] ?>" />
- <link rel="stylesheet" type="text/css" media="screen" href="<?php echo SKIN_URI.THEME_PLUS_NAME ?>pukiwiki/pukiwiki.css.php?charset=<?php echo $css_charset ?>" charset="<?php echo $css_charset ?>" />
- <link rel="stylesheet" type="text/css" media="print"  href="<?php echo SKIN_URI.THEME_PLUS_NAME ?>pukiwiki/pukiwiki.css.php?charset=<?php echo $css_charset ?>&amp;media=print" charset="<?php echo $css_charset ?>" />
- <link rel="alternate" type="application/rss+xml" title="RSS" href="<?php echo $link['rss'] ?>" /><?php // RSS auto-discovery ?>
+ <link rel="stylesheet" type="text/css" media="screen" href="<?php echo SKIN_URI . THEME_PLUS_NAME ?>pukiwiki/pukiwiki.css.php?charset=<?php echo
+     $css_charset
+  ?>" charset="<?php echo $css_charset ?>" />
+ <link rel="stylesheet" type="text/css" media="print"  href="<?php echo SKIN_URI . THEME_PLUS_NAME ?>pukiwiki/pukiwiki.css.php?charset=<?php echo
+     $css_charset
+  ?>&amp;media=print" charset="<?php echo $css_charset ?>" />
+ <link rel="alternate" type="application/rss+xml" title="RSS" href="<?php echo $link['rss'] ?>" /><?php // RSS auto-discovery
+
+ ?>
 
 <?php echo $head_tag ?>
 </head>
@@ -91,11 +103,12 @@ if (isset($pkwk_dtd)) {
  <h1 class="title"><?php echo $page ?></h1>
 
 <?php if ($is_page) { ?>
- <?php if(SKIN_DEFAULT_DISABLE_TOPICPATH) { ?>
+ <?php if (SKIN_DEFAULT_DISABLE_TOPICPATH) { ?>
    <a href="<?php echo $link['reload'] ?>"><span class="small"><?php echo $link['reload'] ?></span></a>
  <?php } else { ?>
    <span class="small">
-   <?php require_once(PLUGIN_DIR . 'topicpath.inc.php'); echo plugin_topicpath_inline(); ?>
+   <?php require_once PLUGIN_DIR . 'topicpath.inc.php';
+   echo plugin_topicpath_inline(); ?>
    </span>
  <?php } ?>
 <?php } ?>
@@ -103,22 +116,30 @@ if (isset($pkwk_dtd)) {
 </div>
 
 <div id="navigator">
-<?php if(PKWK_SKIN_SHOW_NAVBAR) { ?>
+<?php if (PKWK_SKIN_SHOW_NAVBAR) { ?>
 <?php
-function _navigator($key, $value = '', $javascript = ''){
-	$lang = & $GLOBALS['_LANG']['skin'];
-	$link = & $GLOBALS['_LINK'];
-	if (! isset($lang[$key])) { echo 'LANG NOT FOUND'; return FALSE; }
-	if (! isset($link[$key])) { echo 'LINK NOT FOUND'; return FALSE; }
-	if (! PKWK_ALLOW_JAVASCRIPT) $javascript = '';
 
-	echo '<a href="' . $link[$key] . '" ' . $javascript . '>' .
-		(($value === '') ? $lang[$key] : $value) .
-		'</a>';
+    function _navigator($key, $value = '', $javascript = '')
+    {
+        $lang = &$GLOBALS['_LANG']['skin'];
+        $link = &$GLOBALS['_LINK'];
+        if (!isset($lang[$key])) {
+            echo 'LANG NOT FOUND';
+            return false;
+        }
+        if (!isset($link[$key])) {
+            echo 'LINK NOT FOUND';
+            return false;
+        }
+        if (!PKWK_ALLOW_JAVASCRIPT)
+            $javascript = '';
 
-	return TRUE;
-}
-?>
+        echo '<a href="' . $link[$key] . '" ' . $javascript . '>' . ($value === '' ? $lang[$key] : $value) . '</a>';
+
+        return true;
+    }
+
+    ?>
  [ <?php _navigator('top') ?> ] &nbsp;
 
 <?php if ($is_page) { ?>
@@ -126,14 +147,14 @@ function _navigator($key, $value = '', $javascript = ''){
  <?php if ($rw) { ?>
 	<?php _navigator('edit') ?> |
 	<?php if ($is_read && $function_freeze) { ?>
-		<?php (! $is_freeze) ? _navigator('freeze') : _navigator('unfreeze') ?> |
+		<?php !$is_freeze ? _navigator('freeze') : _navigator('unfreeze') ?> |
 	<?php } ?>
  <?php } ?>
  <?php _navigator('diff') ?>
  <?php if ($do_backup) { ?>
 	| <?php _navigator('backup') ?>
  <?php } ?>
- <?php if ($rw && (bool)ini_get('file_uploads')) { ?>
+ <?php if ($rw && ((bool) ini_get('file_uploads'))) { ?>
 	| <?php _navigator('upload') ?>
  <?php } ?>
  | <?php _navigator('reload') ?>
@@ -150,7 +171,7 @@ function _navigator($key, $value = '', $javascript = ''){
  <?php } ?>
  | <?php _navigator('search') ?>
  | <?php _navigator('recent') ?>
- | <?php _navigator('help')   ?>
+ | <?php _navigator('help') ?>
  ]
 <?php } // PKWK_SKIN_SHOW_NAVBAR ?>
 </div>
@@ -192,42 +213,68 @@ function _navigator($key, $value = '', $javascript = ''){
 <div id="toolbar">
 <?php
 
-// Set toolbar-specific images
-$_IMAGE['skin']['reload']   = 'reload.png';
-$_IMAGE['skin']['new']      = 'new.png';
-$_IMAGE['skin']['edit']     = 'edit.png';
-$_IMAGE['skin']['freeze']   = 'freeze.png';
-$_IMAGE['skin']['unfreeze'] = 'unfreeze.png';
-$_IMAGE['skin']['diff']     = 'diff.png';
-$_IMAGE['skin']['upload']   = 'file.png';
-$_IMAGE['skin']['copy']     = 'copy.png';
-$_IMAGE['skin']['rename']   = 'rename.png';
-$_IMAGE['skin']['top']      = 'top.png';
-$_IMAGE['skin']['list']     = 'list.png';
-$_IMAGE['skin']['search']   = 'search.png';
-$_IMAGE['skin']['recent']   = 'recentchanges.png';
-$_IMAGE['skin']['backup']   = 'backup.png';
-$_IMAGE['skin']['help']     = 'help.png';
-$_IMAGE['skin']['rss']      = 'rss.png';
-$_IMAGE['skin']['rss10']    = & $_IMAGE['skin']['rss'];
-$_IMAGE['skin']['rss20']    = 'rss20.png';
-$_IMAGE['skin']['rdf']      = 'rdf.png';
+    // Set toolbar-specific images
+    $_IMAGE['skin']['reload'] = 'reload.png';
+    $_IMAGE['skin']['new'] = 'new.png';
+    $_IMAGE['skin']['edit'] = 'edit.png';
+    $_IMAGE['skin']['freeze'] = 'freeze.png';
+    $_IMAGE['skin']['unfreeze'] = 'unfreeze.png';
+    $_IMAGE['skin']['diff'] = 'diff.png';
+    $_IMAGE['skin']['upload'] = 'file.png';
+    $_IMAGE['skin']['copy'] = 'copy.png';
+    $_IMAGE['skin']['rename'] = 'rename.png';
+    $_IMAGE['skin']['top'] = 'top.png';
+    $_IMAGE['skin']['list'] = 'list.png';
+    $_IMAGE['skin']['search'] = 'search.png';
+    $_IMAGE['skin']['recent'] = 'recentchanges.png';
+    $_IMAGE['skin']['backup'] = 'backup.png';
+    $_IMAGE['skin']['help'] = 'help.png';
+    $_IMAGE['skin']['rss'] = 'rss.png';
+    $_IMAGE['skin']['rss10'] = &$_IMAGE['skin']['rss'];
+    $_IMAGE['skin']['rss20'] = 'rss20.png';
+    $_IMAGE['skin']['rdf'] = 'rdf.png';
 
-function _toolbar($key, $x = 20, $y = 20){
-	$lang  = & $GLOBALS['_LANG']['skin'];
-	$link  = & $GLOBALS['_LINK'];
-	$image = & $GLOBALS['_IMAGE']['skin'];
-	if (! isset($lang[$key]) ) { echo 'LANG NOT FOUND';  return FALSE; }
-	if (! isset($link[$key]) ) { echo 'LINK NOT FOUND';  return FALSE; }
-	if (! isset($image[$key])) { echo 'IMAGE NOT FOUND'; return FALSE; }
+    function _toolbar($key, $x = 20, $y = 20)
+    {
+        $lang = &$GLOBALS['_LANG']['skin'];
+        $link = &$GLOBALS['_LINK'];
+        $image = &$GLOBALS['_IMAGE']['skin'];
+        if (!isset($lang[$key])) {
+            echo 'LANG NOT FOUND';
+            return false;
+        }
+        if (!isset($link[$key])) {
+            echo 'LINK NOT FOUND';
+            return false;
+        }
+        if (!isset($image[$key])) {
+            echo 'IMAGE NOT FOUND';
+            return false;
+        }
 
-	echo '<a href="' . $link[$key] . '">' .
-		'<img src="' . IMAGE_URI . $image[$key] . '" width="' . $x . '" height="' . $y . '" ' .
-			'alt="' . $lang[$key] . '" title="' . $lang[$key] . '" />' .
-		'</a>';
-	return TRUE;
-}
-?>
+        echo
+            '<a href="' .
+            $link[$key] .
+                '">' .
+                '<img src="' .
+                IMAGE_URI .
+                $image[$key] .
+                '" width="' .
+                $x .
+                '" height="' .
+                $y .
+                '" ' .
+                'alt="' .
+                $lang[$key] .
+                '" title="' .
+                $lang[$key] .
+                '" />' .
+                '</a>'
+        ;
+        return true;
+    }
+
+    ?>
  <?php _toolbar('top') ?>
 
 <?php if ($is_page) { ?>
@@ -235,7 +282,11 @@ function _toolbar($key, $x = 20, $y = 20){
  <?php if ($rw) { ?>
 	<?php _toolbar('edit') ?>
 	<?php if ($is_read && $function_freeze) { ?>
-		<?php if (! $is_freeze) { _toolbar('freeze'); } else { _toolbar('unfreeze'); } ?>
+		<?php if (!$is_freeze) {
+    		_toolbar('freeze');
+		} else {
+    		_toolbar('unfreeze');
+		} ?>
 	<?php } ?>
  <?php } ?>
  <?php _toolbar('diff') ?>
@@ -243,7 +294,7 @@ function _toolbar($key, $x = 20, $y = 20){
 	<?php _toolbar('backup') ?>
 <?php } ?>
 <?php if ($rw) { ?>
-	<?php if ((bool)ini_get('file_uploads')) { ?>
+	<?php if ((bool) ini_get('file_uploads')) { ?>
 		<?php _toolbar('upload') ?>
 	<?php } ?>
 	<?php _toolbar('copy') ?>
@@ -255,7 +306,7 @@ function _toolbar($key, $x = 20, $y = 20){
 <?php if ($rw) { ?>
 	<?php _toolbar('new') ?>
 <?php } ?>
- <?php _toolbar('list')   ?>
+ <?php _toolbar('list') ?>
  <?php _toolbar('search') ?>
  <?php _toolbar('recent') ?>
  &nbsp; <?php _toolbar('help') ?>

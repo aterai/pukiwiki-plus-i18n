@@ -48,7 +48,7 @@ RewriteRule ^.+$ %{REQUEST_URI}.gz
 </FilesMatch>
 
 <Files ~ "\.(jnlp|java|rb|bat)$">
-  Header set X-Robots-Tag "noindex"
+Header set X-Robots-Tag "noindex"
 </Files>
 
 <files *.html.gz>

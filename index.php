@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 // $Id: index.php,v 1.9.4 2009/04/07 00:53:00 upk Exp $
 // Copyright (C)
@@ -35,5 +36,4 @@ const WWW_HOME = '';
 
 const LIB_DIR = SITE_HOME . 'lib/';
 
-require(LIB_DIR . 'pukiwiki.php');
-
+require LIB_DIR . 'pukiwiki.php';

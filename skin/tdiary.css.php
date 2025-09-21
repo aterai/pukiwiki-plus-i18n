@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki - Yet another WikiWikiWeb clone.
 // $Id: tdiary.css.php,v 1.6 2005/05/01 02:43:27 henoheno Exp $
 // Copyright (C)
@@ -11,21 +12,27 @@
 // Send header
 header('Content-Type: text/css');
 $matches = array();
-if(ini_get('zlib.output_compression') && preg_match('/\b(gzip|deflate)\b/i', $_SERVER['HTTP_ACCEPT_ENCODING'], $matches)) {
-	header('Content-Encoding: ' . $matches[1]);
-	header('Vary: Accept-Encoding');
+if (
+    ini_get('zlib.output_compression') &&
+        preg_match('/\b(gzip|deflate)\b/i', $_SERVER['HTTP_ACCEPT_ENCODING'], $matches)
+) {
+    header('Content-Encoding: ' . $matches[1]);
+    header('Vary: Accept-Encoding');
 }
 
 // Default charset
-$charset = isset($_GET['charset']) ? $_GET['charset']  : '';
+$charset = isset($_GET['charset']) ? $_GET['charset'] : '';
 switch ($charset) {
-	case 'Shift_JIS': break; /* this @charset is for Mozilla's bug */
-	default: $charset ='iso-8859-1';
+    case 'Shift_JIS':
+        break; /* this @charset is for Mozilla's bug */
+    default:
+        $charset = 'iso-8859-1';
 }
 
 // Media
 $media = isset($_GET['media']) ? $_GET['media'] : '';
-if ($media != 'print') $media = 'screen';
+if ($media != 'print')
+    $media = 'screen';
 
 // Color theme
 $color_theme = isset($_GET['color']) ? $_GET['color'] : '';
@@ -33,64 +40,64 @@ $color_theme = isset($_GET['color']) ? $_GET['color'] : '';
 // Color theme: Design structure
 $c_background = $c_background2 = $c_background3 = $c_background4 = '';
 $c_line1 = $c_line2 = $c_preview = $c_color1 = $c_color2 = $c_color3 = $c_dangling = '';
-$_COLOR['.style_table']      = & $c_line1;
-$_COLOR['thead th.style_th'] = & $c_background4;
-$_COLOR['thead td.style_td'] = & $c_background3;
-$_COLOR['.style_th'   ]      = & $c_background2;
-$_COLOR['.style_td'   ]      = & $c_background;
-$_COLOR['span.noexists'] = & $c_dangling;
-$_COLOR['div#preview']   = & $c_preview;
-$_COLOR['.style_calendar' ] = & $c_line1;
-$_COLOR['.style_td_caltop'] = & $c_background;
-$_COLOR['.style_td_week'  ] = & $c_color1;
-$_COLOR['.style_td_blank' ] = & $c_background;
-$_COLOR['.style_td_day'   ] = & $c_background;
-$_COLOR['.style_td_sat'   ] = & $c_color2; // NOTE: Blue flavour for Saturday
-$_COLOR['.style_td_sun'   ] = & $c_color3; // NOTE: Red  flavour for Sunday
-$_COLOR['.style_td_today' ] = & $c_dangling;
-$_COLOR['hr.short_line'] = & $c_line1;
-$_COLOR['td.vote_label'] = & $c_color1;
-$_COLOR['td.vote_td1'  ] = & $c_color3;
-$_COLOR['td.vote_td2'  ] = & $c_color2;
-$color = & $_COLOR;
+$_COLOR['.style_table'] = &$c_line1;
+$_COLOR['thead th.style_th'] = &$c_background4;
+$_COLOR['thead td.style_td'] = &$c_background3;
+$_COLOR['.style_th'] = &$c_background2;
+$_COLOR['.style_td'] = &$c_background;
+$_COLOR['span.noexists'] = &$c_dangling;
+$_COLOR['div#preview'] = &$c_preview;
+$_COLOR['.style_calendar'] = &$c_line1;
+$_COLOR['.style_td_caltop'] = &$c_background;
+$_COLOR['.style_td_week'] = &$c_color1;
+$_COLOR['.style_td_blank'] = &$c_background;
+$_COLOR['.style_td_day'] = &$c_background;
+$_COLOR['.style_td_sat'] = &$c_color2; // NOTE: Blue flavour for Saturday
+$_COLOR['.style_td_sun'] = &$c_color3; // NOTE: Red  flavour for Sunday
+$_COLOR['.style_td_today'] = &$c_dangling;
+$_COLOR['hr.short_line'] = &$c_line1;
+$_COLOR['td.vote_label'] = &$c_color1;
+$_COLOR['td.vote_td1'] = &$c_color3;
+$_COLOR['td.vote_td2'] = &$c_color2;
+$color = &$_COLOR;
 
 // Color theme: Theme selector
-switch($color_theme){
-case 'black':
-	// Beauty black
-	$c_background  = '111111'; //
-	$c_background2 = '333333'; ///
-	$c_background3 = '223333'; ////
-	$c_background4 = '332200'; /////
-	$c_line1       = '999999'; ///////////
-	$c_line2       = '999999';
-	$c_preview     = '222200'; ///
-	$c_color1      = '333333'; ////
-	$c_color2      = '223333'; /////
-	$c_color3      = '332200'; //////
-	$c_dangling    = '333355'; ///////
-	break;
+switch ($color_theme) {
+    case 'black':
+        // Beauty black
+        $c_background = '111111'; //
+        $c_background2 = '333333'; ///
+        $c_background3 = '223333'; ////
+        $c_background4 = '332200'; /////
+        $c_line1 = '999999'; ///////////
+        $c_line2 = '999999';
+        $c_preview = '222200'; ///
+        $c_color1 = '333333'; ////
+        $c_color2 = '223333'; /////
+        $c_color3 = '332200'; //////
+        $c_dangling = '333355'; ///////
+        break;
 
-default:
-	// Default skyblue
-	$c_background  = 'EEF5FF';
-	$c_background2 = 'EEEEEE';
-	$c_background3 = 'D0D8E0';
-	$c_background4 = 'E0E8F0';
-	$c_line1       = 'CCD5DD';
-	$c_line2       = '333333';
-	$c_preview     = 'F5F8FF';
-	$c_color1      = 'DDE5EE';
-	$c_color2      = 'DDE5FF';
-	$c_color3      = 'FFEEEE';
-	$c_dangling    = 'FFFACC';
-	$_td_today     = 'FFFFDD';
-	$_vote_label   = 'FFCCCC';
-	$_COLOR['.style_td_today' ] = & $_td_today;
-	$_COLOR['td.vote_label'   ] = & $_vote_label;
-	$_COLOR['td.vote_td1'     ] = & $c_color2;
-	$_COLOR['td.vote_td2'     ] = & $c_background;
-	break;
+    default:
+        // Default skyblue
+        $c_background = 'EEF5FF';
+        $c_background2 = 'EEEEEE';
+        $c_background3 = 'D0D8E0';
+        $c_background4 = 'E0E8F0';
+        $c_line1 = 'CCD5DD';
+        $c_line2 = '333333';
+        $c_preview = 'F5F8FF';
+        $c_color1 = 'DDE5EE';
+        $c_color2 = 'DDE5FF';
+        $c_color3 = 'FFEEEE';
+        $c_dangling = 'FFFACC';
+        $_td_today = 'FFFFDD';
+        $_vote_label = 'FFCCCC';
+        $_COLOR['.style_td_today'] = &$_td_today;
+        $_COLOR['td.vote_label'] = &$_vote_label;
+        $_COLOR['td.vote_td1'] = &$c_color2;
+        $_COLOR['td.vote_td2'] = &$c_background;
+        break;
 }
 
 // Output CSS ----
@@ -285,35 +292,35 @@ div#header {
 }
 
 div#navigator {
-<?php   if ($media == 'print') { ?>
+<?php if ($media == 'print') { ?>
 	display:none;
-<?php   } else { ?>
+<?php } else { ?>
 	clear:both;
 	padding:4px 0px 0px 0px;
 	margin:0px;
-<?php   } ?>
+<?php } ?>
 }
 
 td.menubar {
-<?php   if ($media == 'print') { ?>
+<?php if ($media == 'print') { ?>
 	display:none;
-<?php   } else { ?>
+<?php } else { ?>
 	width:9em;
 	vertical-align:top;
-<?php   } ?>
+<?php } ?>
 }
 
 div#menubar {
-<?php   if ($media == 'print') { ?>
+<?php if ($media == 'print') { ?>
 	display:none;
-<?php   } else { ?>
+<?php } else { ?>
 	width:9em;
 	padding:0px;
 	margin:4px;
 	word-break:break-all;
 	font-size:90%;
 	overflow:hidden;
-<?php   } ?>
+<?php } ?>
 }
 
 div#menubar ul {
@@ -335,24 +342,24 @@ div#note {
 }
 
 div#attach {
-<?php   if ($media == 'print') { ?>
+<?php if ($media == 'print') { ?>
 	display:none;
-<?php   } else { ?>
+<?php } else { ?>
 	clear:both;
 	padding:0px;
 	margin:0px;
-<?php   } ?>
+<?php } ?>
 }
 
 div#toolbar {
-<?php   if ($media == 'print') { ?>
+<?php if ($media == 'print') { ?>
         display:none;
-<?php   } else { ?>
+<?php } else { ?>
 	clear:both;
 	padding:0px;
 	margin:0px;
 	text-align:right;
-<?php   } ?>
+<?php } ?>
 }
 
 div#lastmodified {
@@ -363,13 +370,13 @@ div#lastmodified {
 
 /* for tDiary theme */
 div#related {
-<?php   if ($media == 'print') { ?>
+<?php if ($media == 'print') { ?>
         display:none;
-<?php   } else { ?>
+<?php } else { ?>
 	font-size:80%;
 	padding:0px;
 	margin:0px 0px 0px 0px;
-<?php   } ?>
+<?php } ?>
 }
 
 div#footer {
@@ -389,12 +396,12 @@ div#preview {
 }
 
 img#logo {
-<?php   if ($media == 'print') { ?>
+<?php if ($media == 'print') { ?>
 	display:none;
-<?php   } else { ?>
+<?php } else { ?>
 	float:left;
 	margin-right:20px;
-<?php   } ?>
+<?php } ?>
 }
 
 /* aname.inc.php */

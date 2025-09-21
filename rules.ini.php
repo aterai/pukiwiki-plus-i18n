@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 // $Id: rules.ini.php,v 1.10.5 2007/06/10 02:08:40 miko Exp $
 // Copyright (C)
@@ -8,7 +9,9 @@
 // License: GPL v2 or (at your option) any later version
 //
 // PukiWiki setting file
-if (!defined('DATA_HOME')) { exit; }
+if (!defined('DATA_HOME')) {
+    exit();
+}
 
 /////////////////////////////////////////////////
 // フィルタルール
@@ -46,16 +49,15 @@ $datetime_rules = array();
 //  行末指定は $ を後ろに。
 //
 $str_rules = array(
-	// Compat 1.3.x
-	//'now\?' 	=> format_date(UTIME),
-	//'date\?'	=> get_date($date_format),
-	//'time\?'	=> get_date($time_format),
+    // Compat 1.3.x
+    //'now\?' 	=> format_date(UTIME),
+    //'date\?'	=> get_date($date_format),
+    //'time\?'	=> get_date($time_format),
 
-	'&now;' 	=> format_date(UTIME),
-	'&date;'	=> get_date($date_format),
-	'&time;'	=> get_date($time_format),
-	'&page;'	=> get_short_pagename($vars['page']),
-	'&fpage;'	=> $vars['page'],
-	'&t;'   	=> "\t",
+    '&now;' => format_date(UTIME),
+    '&date;' => get_date($date_format),
+    '&time;' => get_date($time_format),
+    '&page;' => get_short_pagename($vars['page']),
+    '&fpage;' => $vars['page'],
+    '&t;' => "\t",
 );
-

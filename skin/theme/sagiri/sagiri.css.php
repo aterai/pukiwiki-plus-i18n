@@ -1,47 +1,73 @@
 <?php
-// デフォルトの色に戻したい場合 = 1, 
+
+// デフォルトの色に戻したい場合 = 1,
 // カスタマイズするぞー = 0, おまけの春色ｗ = 2
 $defaultnimodoshitai = 1;
 
 // :::::: タイトル :::::: //
-$title_fontsize  = '20px';		// タイトルの文字の大きさ
-$title_fontcolor = '#ccd5dd';		// タイトルの色
+$title_fontsize = '20px';
+// タイトルの文字の大きさ
+$title_fontcolor = '#ccd5dd';
+// タイトルの色
 // :::::: 基本配色 :::::: //
-$bgcolor_htmlbody	= '#EFEFEF';	// HTMLのbodyの色
-$bgcolor_contents	= 'White';	// 中身の色
-$bgcolor_aLink1		= 'inherit';	// リンクの背景色(親要素の継承色なので変更しないほうが良い)
-$bgcolor_aLink2		= '#CCDDEE';	// リンクのhoverの背景色
+$bgcolor_htmlbody = '#EFEFEF';
+// HTMLのbodyの色
+$bgcolor_contents = 'White';
+// 中身の色
+$bgcolor_aLink1 = 'inherit';
+// リンクの背景色(親要素の継承色なので変更しないほうが良い)
+$bgcolor_aLink2 = '#CCDDEE';
+// リンクのhoverの背景色
 // :::::: ナビバーの配色 :::::: //
-$bgcolor_naviborder = '1px #ccd5dd solid';			// Navibar2の枠
-$bgcolor_navigator  = '#EEF5FF'; 				// Navibar2の基本色
-$bgcolor_naviblock	= '1px '.$bgcolor_navigator.' solid';	// Navibar2の文字ブロックの枠
-$bgcolor_naviborder2 ='1px Navy solid'; 			// Navibar2の文字ブロックの枠(hover)
-$bgcolor_navigator2  = '#F5F9FF'; 				// Naviber2の文字ブロックの背景色(hover)
+$bgcolor_naviborder = '1px #ccd5dd solid';
+// Navibar2の枠
+$bgcolor_navigator = '#EEF5FF';
+// Navibar2の基本色
+$bgcolor_naviblock = '1px ' . $bgcolor_navigator . ' solid';
+// Navibar2の文字ブロックの枠
+$bgcolor_naviborder2 = '1px Navy solid';
+// Navibar2の文字ブロックの枠(hover)
+$bgcolor_navigator2 = '#F5F9FF';
+// Naviber2の文字ブロックの背景色(hover)
 // :::::: メニュー・サイドバーの配色 :::::: //
-$bgcolor_menuborder = $bgcolor_naviborder;		// Menubar, Sidebarの見出しの枠
-$bgcolor_menutitle	= $bgcolor_navigator;		// Menuber, Sidebarの見出しの背景色
-$bgcolor_barcolor	= '#F5F9FF';			// Menuber, Sidebarの背景色
+$bgcolor_menuborder = $bgcolor_naviborder;
+// Menubar, Sidebarの見出しの枠
+$bgcolor_menutitle = $bgcolor_navigator;
+// Menuber, Sidebarの見出しの背景色
+$bgcolor_barcolor = '#F5F9FF';
+// Menuber, Sidebarの背景色
 // :::::: 見出しの配色 :::::: //
-$bgcolor_finding	= '#116EAA';			// 大見出し
-$bgcolor_findline	= '#999999';			// 見出しの下のライン
-$bgcolor_finding1	= '#3BB6D7';			// 中見出し
-$bgcolor_findline1	= $bgcolor_findline;		// 中見出しの下のライン(個別に設定したい場合は変更)
-$bgcolor_finding2	= '#AEE4E9';			// 小見出し
-$bgcolor_findline2	= $bgcolor_findline;		// 小見出しの下のライン(個別に設定したい場合は変更)
+$bgcolor_finding = '#116EAA';
+// 大見出し
+$bgcolor_findline = '#999999';
+// 見出しの下のライン
+$bgcolor_finding1 = '#3BB6D7';
+// 中見出し
+$bgcolor_findline1 = $bgcolor_findline;
+// 中見出しの下のライン(個別に設定したい場合は変更)
+$bgcolor_finding2 = '#AEE4E9';
+// 小見出し
+$bgcolor_findline2 = $bgcolor_findline;
+// 小見出しの下のライン(個別に設定したい場合は変更)
 // :::::: テーブルの配色 :::::: //
-$bgcolor_tableline	= 'Black';
+$bgcolor_tableline = 'Black';
 $bgcolor_tablecolor = 'White';
 
 // :::::: 文字配色 :::::: //
-$fontcolor_default	= '#333322';			// デフォルトの文字色
-$fontcolor_inherit	= 'inherit';			// 親要素の継承色
-$fontcolor_aLink1	= '#a63d21';			// 未訪問リンクの文字色
-$fontcolor_aLink2	= '#116EAA';			// 訪問済みリンク文字色
-$fontcolor_aLink3	= $fontcolor_aLink1;		// リンクのhover文字色
+$fontcolor_default = '#333322';
+// デフォルトの文字色
+$fontcolor_inherit = 'inherit';
+// 親要素の継承色
+$fontcolor_aLink1 = '#a63d21';
+// 未訪問リンクの文字色
+$fontcolor_aLink2 = '#116EAA';
+// 訪問済みリンク文字色
+$fontcolor_aLink3 = $fontcolor_aLink1;
+
+// リンクのhover文字色
 
 // :::::: フォント指定 :::::: //
 $default_fontfamily = 'verdana, arial, helvetica, Sans-Serif';
-
 
 // ---------- ここから下は設定ではないです ------------
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
@@ -52,84 +78,91 @@ $default_fontfamily = 'verdana, arial, helvetica, Sans-Serif';
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 $default_fontfamily2 = $default_fontfamily;
 
-if ( $defaultnimodoshitai == 1){
-	// デフォルト
-	$title_fontsize		= '30px';
-	$title_fontcolor	= '#cc0000';
-	$bgcolor_htmlbody	= 'Cornsilk';
-	$bgcolor_contents	= 'White';
-	$bgcolor_aLink1		= 'inherit';
-	$bgcolor_aLink2		= '#CCDDEE';
-	$bgcolor_naviborder	= '1px #ffcc99 solid';
-	$bgcolor_navigator	= '#fff0dd';
-	$bgcolor_naviblock	= '1px '.$bgcolor_navigator.' solid';
-	$bgcolor_naviborder2	='1px #ff9933 solid';
-	$bgcolor_navigator2	= '#ffeecc';
-	$bgcolor_menuborder	= $bgcolor_naviborder;
-	$bgcolor_menutitle	= $bgcolor_navigator;
-	$bgcolor_barcolor	= '#FFFCEE';
-	$bgcolor_finding	= '#ff7711';
-	$bgcolor_findline	= '#999999';
-	$bgcolor_finding1	= '#ff9933';
-	$bgcolor_findline1	= $bgcolor_findline;
-	$bgcolor_finding2	= '#ffcc66';
-	$bgcolor_findline2	= $bgcolor_findline;
-	$bgcolor_tableline	= '#ccd5dd';
-	$bgcolor_tablecolor	= '#EEF5FF';
-	$fontcolor_default	= '#333322';
-	$fontcolor_inherit	= 'inherit';
-	$fontcolor_aLink1	= '#215dc6';
-	$fontcolor_aLink2	= '#a63d21';
-	$fontcolor_aLink3	= $fontcolor_aLink1;
-	$default_fontfamily	= '"Trebuchet MS", arial, helvetica, Sans-Serif';
-	$default_fontfamily2	= 'verdana, arial, sans-serif';
-} elseif ( $defaultnimodoshitai == 2 ){
-	// 春色設定
-	$title_fontsize		= '20px';
-	$title_fontcolor	= '#CC0099';
-	$bgcolor_htmlbody	= '#E7F8E5';
-	$bgcolor_contents	= 'White';
-	$bgcolor_aLink1		= 'inherit';
-	$bgcolor_aLink2		= '#F0BFE0';
-	$bgcolor_naviborder	= '1px #F0BFE0 solid';
-	$bgcolor_navigator	= '#FFEDF7';
-	$bgcolor_naviblock	= '1px '.$bgcolor_navigator.' solid';
-	$bgcolor_naviborder2	='1px Navy solid';
-	$bgcolor_navigator2	= '#F5F9FF';
-	$bgcolor_menuborder	= $bgcolor_naviborder;
-	$bgcolor_menutitle	= $bgcolor_navigator;
-	$bgcolor_barcolor	= '#FEF7F9';
-	$bgcolor_finding	= '#CC0099';
-	$bgcolor_findline	= '#999999';
-	$bgcolor_finding1	= '#F2AAF5';
-	$bgcolor_findline1	= $bgcolor_findline;
-	$bgcolor_finding2	= '#F2AAF5';
-	$bgcolor_findline2	= $bgcolor_findline;
-	$bgcolor_tableline	= 'Black';
-	$bgcolor_tablecolor	= 'White';
-	$fontcolor_default	= '#333322';
-	$fontcolor_inherit	= 'inherit';
-	$fontcolor_aLink1	= '#66CD58';
-	$fontcolor_aLink2	= '#D11A56';
-	$fontcolor_aLink3	= 'black';
-	$default_fontfamily	= 'verdana, arial, helvetica, Sans-Serif';
+if ($defaultnimodoshitai == 1) {
+    // デフォルト
+    $title_fontsize = '30px';
+    $title_fontcolor = '#cc0000';
+    $bgcolor_htmlbody = 'Cornsilk';
+    $bgcolor_contents = 'White';
+    $bgcolor_aLink1 = 'inherit';
+    $bgcolor_aLink2 = '#CCDDEE';
+    $bgcolor_naviborder = '1px #ffcc99 solid';
+    $bgcolor_navigator = '#fff0dd';
+    $bgcolor_naviblock = '1px ' . $bgcolor_navigator . ' solid';
+    $bgcolor_naviborder2 = '1px #ff9933 solid';
+    $bgcolor_navigator2 = '#ffeecc';
+    $bgcolor_menuborder = $bgcolor_naviborder;
+    $bgcolor_menutitle = $bgcolor_navigator;
+    $bgcolor_barcolor = '#FFFCEE';
+    $bgcolor_finding = '#ff7711';
+    $bgcolor_findline = '#999999';
+    $bgcolor_finding1 = '#ff9933';
+    $bgcolor_findline1 = $bgcolor_findline;
+    $bgcolor_finding2 = '#ffcc66';
+    $bgcolor_findline2 = $bgcolor_findline;
+    $bgcolor_tableline = '#ccd5dd';
+    $bgcolor_tablecolor = '#EEF5FF';
+    $fontcolor_default = '#333322';
+    $fontcolor_inherit = 'inherit';
+    $fontcolor_aLink1 = '#215dc6';
+    $fontcolor_aLink2 = '#a63d21';
+    $fontcolor_aLink3 = $fontcolor_aLink1;
+    $default_fontfamily = '"Trebuchet MS", arial, helvetica, Sans-Serif';
+    $default_fontfamily2 = 'verdana, arial, sans-serif';
+} elseif ($defaultnimodoshitai == 2) {
+    // 春色設定
+    $title_fontsize = '20px';
+    $title_fontcolor = '#CC0099';
+    $bgcolor_htmlbody = '#E7F8E5';
+    $bgcolor_contents = 'White';
+    $bgcolor_aLink1 = 'inherit';
+    $bgcolor_aLink2 = '#F0BFE0';
+    $bgcolor_naviborder = '1px #F0BFE0 solid';
+    $bgcolor_navigator = '#FFEDF7';
+    $bgcolor_naviblock = '1px ' . $bgcolor_navigator . ' solid';
+    $bgcolor_naviborder2 = '1px Navy solid';
+    $bgcolor_navigator2 = '#F5F9FF';
+    $bgcolor_menuborder = $bgcolor_naviborder;
+    $bgcolor_menutitle = $bgcolor_navigator;
+    $bgcolor_barcolor = '#FEF7F9';
+    $bgcolor_finding = '#CC0099';
+    $bgcolor_findline = '#999999';
+    $bgcolor_finding1 = '#F2AAF5';
+    $bgcolor_findline1 = $bgcolor_findline;
+    $bgcolor_finding2 = '#F2AAF5';
+    $bgcolor_findline2 = $bgcolor_findline;
+    $bgcolor_tableline = 'Black';
+    $bgcolor_tablecolor = 'White';
+    $fontcolor_default = '#333322';
+    $fontcolor_inherit = 'inherit';
+    $fontcolor_aLink1 = '#66CD58';
+    $fontcolor_aLink2 = '#D11A56';
+    $fontcolor_aLink3 = 'black';
+    $default_fontfamily = 'verdana, arial, helvetica, Sans-Serif';
 }
 // 整形など
-$bgcolor_finding = $bgcolor_contents.' '.$bgcolor_contents.' '.$bgcolor_findline.' '.$bgcolor_finding;
-$bgcolor_finding1 = $bgcolor_contents.' '.$bgcolor_contents.' '.$bgcolor_findline1.' '.$bgcolor_finding1;
-$bgcolor_finding2 = $bgcolor_contents.' '.$bgcolor_contents.' '.$bgcolor_findline2.' '.$bgcolor_finding2;
+$bgcolor_finding = $bgcolor_contents . ' ' . $bgcolor_contents . ' ' . $bgcolor_findline . ' ' . $bgcolor_finding;
+$bgcolor_finding1 = $bgcolor_contents . ' ' . $bgcolor_contents . ' ' . $bgcolor_findline1 . ' ' . $bgcolor_finding1;
+$bgcolor_finding2 = $bgcolor_contents . ' ' . $bgcolor_contents . ' ' . $bgcolor_findline2 . ' ' . $bgcolor_finding2;
 
 // CSSとして吐き出すためのおまじない？ｗ
 // Send header
 header('Content-Type: text/css');
 $matches = array();
-if(ini_get('zlib.output_compression') && preg_match('/\b(gzip|deflate)\b/i', $_SERVER['HTTP_ACCEPT_ENCODING'], $matches)) {
-	header('Content-Encoding: ' . $matches[1]); header('Vary: Accept-Encoding');
+if (
+    ini_get('zlib.output_compression') &&
+        preg_match('/\b(gzip|deflate)\b/i', $_SERVER['HTTP_ACCEPT_ENCODING'], $matches)
+) {
+    header('Content-Encoding: ' . $matches[1]);
+    header('Vary: Accept-Encoding');
 }
 // Default charset
-$charset = isset($_GET['charset']) ? $_GET['charset']  : '';
+$charset = isset($_GET['charset']) ? $_GET['charset'] : '';
 switch ($charset) {
-	case 'Shift_JIS': break; default: $charset ='iso-8859-1';
+    case 'Shift_JIS':
+        break;
+    default:
+        $charset = 'iso-8859-1';
 }
 ?>
 @charset "<?php echo $charset ?>";
