@@ -1,4 +1,5 @@
 <?php
+
 //
 //	guiedit - PukiWiki Plugin
 //
@@ -17,12 +18,11 @@
 //	  FCKeditor の編集エリアに適用させる CSS
 //
 
-
 header('Content-Type: text/css');
 
 //	PukiWiki の CSS の読み込み
 // require_once('../theme/pukiwiki/pukiwiki.css.php');
-require_once('plus.css.php');
+require_once 'plus.css.php';
 
 ?>
 

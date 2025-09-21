@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 //
@@ -6,42 +7,45 @@
 // Original is ari-
 
 // Prohibit direct access
-if (! defined('UI_LANG')) exit;
+if (!defined('UI_LANG'))
+    exit();
 
 // Set skin-specific images
-$_IMAGE['skin']['logo']     = 'pukiwiki.png';
-$_IMAGE['skin']['reload']   = 'reload.png';
-$_IMAGE['skin']['new']      = 'new.png';
-$_IMAGE['skin']['newsub']   = 'new_sub.png';
-$_IMAGE['skin']['edit']     = 'edit.png';
-$_IMAGE['skin']['freeze']   = 'freeze.png';
+$_IMAGE['skin']['logo'] = 'pukiwiki.png';
+$_IMAGE['skin']['reload'] = 'reload.png';
+$_IMAGE['skin']['new'] = 'new.png';
+$_IMAGE['skin']['newsub'] = 'new_sub.png';
+$_IMAGE['skin']['edit'] = 'edit.png';
+$_IMAGE['skin']['freeze'] = 'freeze.png';
 $_IMAGE['skin']['unfreeze'] = 'unfreeze.png';
-$_IMAGE['skin']['diff']     = 'diff.png';
-$_IMAGE['skin']['upload']   = 'file.png';
-$_IMAGE['skin']['copy']     = 'copy.png';
-$_IMAGE['skin']['rename']   = 'rename.png';
-$_IMAGE['skin']['top']      = 'top.png';
-$_IMAGE['skin']['list']     = 'list.png';
-$_IMAGE['skin']['search']   = 'search.png';
-$_IMAGE['skin']['recent']   = 'recentchanges.png';
-$_IMAGE['skin']['backup']   = 'backup.png';
-$_IMAGE['skin']['help']     = 'help.png';
-$_IMAGE['skin']['rss']      = 'rss.png';
-$_IMAGE['skin']['top']      = 'plus/home.png';
-$_IMAGE['skin']['trackback']= 'plus/trackback.png';
-$_IMAGE['skin']['refer']    = 'plus/referer.png';
+$_IMAGE['skin']['diff'] = 'diff.png';
+$_IMAGE['skin']['upload'] = 'file.png';
+$_IMAGE['skin']['copy'] = 'copy.png';
+$_IMAGE['skin']['rename'] = 'rename.png';
+$_IMAGE['skin']['top'] = 'top.png';
+$_IMAGE['skin']['list'] = 'list.png';
+$_IMAGE['skin']['search'] = 'search.png';
+$_IMAGE['skin']['recent'] = 'recentchanges.png';
+$_IMAGE['skin']['backup'] = 'backup.png';
+$_IMAGE['skin']['help'] = 'help.png';
+$_IMAGE['skin']['rss'] = 'rss.png';
+$_IMAGE['skin']['top'] = 'plus/home.png';
+$_IMAGE['skin']['trackback'] = 'plus/trackback.png';
+$_IMAGE['skin']['refer'] = 'plus/referer.png';
 $_IMAGE['skin']['skeylist'] = 'plus/skeylist.png';
 $_IMAGE['skin']['linklist'] = 'plus/linklist.png';
 
-$lang  = & $_LANG['skin'];
-$link  = & $_LINK;
-$image = & $_IMAGE['skin'];
+$lang = &$_LANG['skin'];
+$link = &$_LINK;
+$image = &$_IMAGE['skin'];
 
 // Decide charset for CSS
 // $css_charset = 'iso-8859-1';
 $css_charset = 'utf-8';
-switch(UI_LANG){
-        case 'ja_JP': $css_charset = 'Shift_JIS'; break;
+switch (UI_LANG) {
+    case 'ja_JP':
+        $css_charset = 'Shift_JIS';
+        break;
 }
 
 // Output header
@@ -53,37 +57,43 @@ header('ETag: ' . md5(MUTIME));
 
 // Output HTML DTD, <html>, and receive content-type
 if (isset($pkwk_dtd)) {
-	$meta_content_type = pkwk_output_dtd($pkwk_dtd);
+    $meta_content_type = pkwk_output_dtd($pkwk_dtd);
 } else {
-	$meta_content_type = pkwk_output_dtd();
+    $meta_content_type = pkwk_output_dtd();
 }
 // Plus! not use $meta_content_type. because meta-content-type is most browser not used. umm...
 ?>
 <head>
- <meta http-equiv="content-type" content="application/xhtml+xml; charset=<?php echo(CONTENT_CHARSET); ?>" />
+ <meta http-equiv="content-type" content="application/xhtml+xml; charset=<?php echo CONTENT_CHARSET; ?>" />
  <meta http-equiv="content-style-type" content="text/css" />
  <meta http-equiv="content-script-type" content="text/javascript" />
-<?php if ($nofollow || ! $is_read)  { ?> <meta name="robots" content="NOINDEX,NOFOLLOW" /><?php } ?>
+<?php if ($nofollow || !$is_read) { ?> <meta name="robots" content="NOINDEX,NOFOLLOW" /><?php } ?>
 <?php if ($title == $defaultpage) { ?>
  <title><?php echo $page_title ?></title>
 <?php } elseif ($newtitle != '' && $is_read) { ?>
- <title><?php echo $newtitle.' - '.$page_title ?></title>
+ <title><?php echo $newtitle . ' - ' . $page_title ?></title>
 <?php } else { ?>
- <title><?php echo $title.' - '.$page_title ?></title>
+ <title><?php echo $title . ' - ' . $page_title ?></title>
 <?php } ?>
- <link rel="stylesheet" href="<?php echo SKIN_URI.THEME_PLUS_NAME ?>orangebox/orangebox.css" type="text/css" media="screen,print" charset="<?php echo $css_charset ?>" />
+ <link rel="stylesheet" href="<?php echo SKIN_URI . THEME_PLUS_NAME ?>orangebox/orangebox.css" type="text/css" media="screen,print" charset="<?php echo
+    
+ $css_charset
+
+  ?>" />
  <link rel="alternate" type="application/rss+xml" title="RSS" href="<?php echo $link['rss'] ?>" />
  <script type="text/javascript">
  <!--
-<?php if (exist_plugin_convert('js_init')) echo do_plugin_convert('js_init'); ?>
+<?php if (exist_plugin_convert('js_init'))
+    
+echo do_plugin_convert('js_init'); ?>
  // -->
  </script>
- <script type="text/javascript" src="<?php echo SKIN_URI.'lang/'.$language ?>.js"></script>
+ <script type="text/javascript" src="<?php echo SKIN_URI . 'lang/' . $language ?>.js"></script>
  <script type="text/javascript" src="<?php echo SKIN_URI ?>default.js"></script>
  <script type="text/javascript" src="<?php echo SKIN_URI ?>kanzaki.js"></script>
  <script type="text/javascript" src="<?php echo SKIN_URI ?>ajax/textloader.js"></script>
  <script type="text/javascript" src="<?php echo SKIN_URI ?>ajax/glossary.js"></script>
-<?php if (! $use_local_time) { ?>
+<?php if (!$use_local_time) { ?>
  <script type="text/javascript" src="<?php echo SKIN_URI ?>tzCalculation_LocalTimeZone.js"></script>
 <?php } ?>
 <?php echo $head_tag ?>
@@ -95,17 +105,30 @@ if (isset($pkwk_dtd)) {
 <div id="logo"><a href="<?php echo $link_top ?>"><?php echo $page_title ?></a></div>
 </div>
 <?php
- if (exist_plugin('navibar2')) {
-  echo do_plugin_convert('navibar2');
- } else if (exist_plugin('navibar')) {
-  echo do_plugin_convert('navibar','top,list,search,recent,help,|,new,edit,upload,|,trackback');
-  echo $hr;
- }
+
+
+
+if (exist_plugin('navibar2')) {
+    
+echo do_plugin_convert('navibar2');
+
+} else if (exist_plugin('navibar')) {
+    
+echo do_plugin_convert('navibar', 'top,list,search,recent,help,|,new,edit,upload,|,trackback');
+    
+
+    
+echo $hr;
+
+}
+
+
+
 ?>
 <div id="main">
 <div id="center_bar">
 <div id="content">
-<h1 class="title"><?php echo(($newtitle!='' && $is_read)?$newtitle:$page) ?></h1>
+<h1 class="title"><?php echo $newtitle != '' && $is_read ? $newtitle : $page ?></h1>
 <?php if ($lastmodified) { ?>
 <div id="lastmodified"><?php echo $lastmodified ?></div>
 <?php } ?>
@@ -115,9 +138,8 @@ if (isset($pkwk_dtd)) {
 <div id="note"><?php echo $notes ?></div>
 <?php } ?>
 <div id="trackback">
-<?php if ($trackback) {
-?>
-<a href="<?php echo $link_trackback ?>"><?php echo $lang['trackback'].'('.tb_count($_page).')' ?></a> |
+<?php if ($trackback) { ?>
+<a href="<?php echo $link_trackback ?>"><?php echo $lang['trackback'] . '(' . tb_count($_page) . ')' ?></a> |
 <?php } ?>
 <?php if ($referer) { ?>
 <a href="<?php echo $link_refer ?>"><?php echo $lang['refer'] ?></a>
@@ -129,7 +151,11 @@ if (isset($pkwk_dtd)) {
 <?php } ?>
 
 <?php if ($attaches) { ?>
-<div id="attach"><?php echo $hr ?><?php echo $attaches ?></div>
+<div id="attach"><?php echo $hr;
+
+
+
+echo $attaches ?></div>
 <?php } ?>
 
 </div>
@@ -154,14 +180,30 @@ if (isset($pkwk_dtd)) {
 <h2><?php echo $lang['edit'] ?></h2>
 <ul>
 <?php if ($is_page) { ?>
-	<li><a href="<?php echo $link_edit ?>"><img src="<?php echo IMAGE_URI ?>edit.png" width="20" height="20" alt="<?php echo $lang['edit'] ?>" title="<?php echo $lang['edit'] ?>" /><?php echo $lang['edit'] ?></a></li>
-<?php   if ((bool)ini_get('file_uploads')) { ?>
-	<li><a href="<?php echo $link_upload ?>"><img src="<?php echo IMAGE_URI ?>file.png" width="20" height="20" alt="<?php echo $lang['upload'] ?>" title="<?php echo $lang['upload'] ?>" /><?php echo $lang['upload'] ?></a></li>
-<?php   } ?>
-	<li><a href="<?php echo $link_diff ?>"><img src="<?php echo IMAGE_URI ?>diff.png" width="20" height="20" alt="<?php echo $lang['diff'] ?>" title="<?php echo $lang['diff'] ?>" /><?php echo $lang['diff'] ?></a></li>
+	<li><a href="<?php echo $link_edit ?>"><img src="<?php echo IMAGE_URI ?>edit.png" width="20" height="20" alt="<?php echo
+    
+	$lang['edit']
+
+	 ?>" title="<?php echo $lang['edit'] ?>" /><?php echo $lang['edit'] ?></a></li>
+<?php if ((bool) ini_get('file_uploads')) { ?>
+	<li><a href="<?php echo $link_upload ?>"><img src="<?php echo IMAGE_URI ?>file.png" width="20" height="20" alt="<?php echo
+    
+	$lang['upload']
+
+	 ?>" title="<?php echo $lang['upload'] ?>" /><?php echo $lang['upload'] ?></a></li>
+<?php } ?>
+	<li><a href="<?php echo $link_diff ?>"><img src="<?php echo IMAGE_URI ?>diff.png" width="20" height="20" alt="<?php echo
+    
+	$lang['diff']
+
+	 ?>" title="<?php echo $lang['diff'] ?>" /><?php echo $lang['diff'] ?></a></li>
 <?php } ?>
 <?php if ($do_backup) { ?>
-	<li><a href="<?php echo $link_backup ?>"><img src="<?php echo IMAGE_URI ?>backup.png" width="20" height="20" alt="<?php echo $lang['backup'] ?>" title="<?php echo $lang['backup'] ?>" /><?php echo $lang['backup'] ?></a></li>
+	<li><a href="<?php echo $link_backup ?>"><img src="<?php echo IMAGE_URI ?>backup.png" width="20" height="20" alt="<?php echo
+    
+	$lang['backup']
+
+	 ?>" title="<?php echo $lang['backup'] ?>" /><?php echo $lang['backup'] ?></a></li>
 <?php } ?>
 </ul>
 </div>
@@ -189,7 +231,9 @@ if (isset($pkwk_dtd)) {
 
 </div>
 
-<?php if (exist_plugin_convert('tz')) echo do_plugin_convert('tz'); ?>
+<?php if (exist_plugin_convert('tz'))
+    
+echo do_plugin_convert('tz'); ?>
 <?php echo $foot_tag ?>
 </body>
 </html>
