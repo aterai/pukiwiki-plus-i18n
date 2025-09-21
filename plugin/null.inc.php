@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////
 // PukiWiki - Yet another WikiWikiWeb clone.
 //
@@ -7,11 +8,10 @@
 
 function plugin_null_convert()
 {
-	return '';
+    return '';
 }
 
 function plugin_null_inline()
 {
-	return '';
+    return '';
 }
-

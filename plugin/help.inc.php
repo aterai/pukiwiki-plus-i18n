@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////
 // PukiWiki - Yet another WikiWikiWeb clone.
 //
@@ -6,8 +7,7 @@
 //
 function plugin_help_action()
 {
-	global $help_page;
-	header('Location: '. get_page_location_uri($help_page));
-	die();
+    global $help_page;
+    header('Location: ' . get_page_location_uri($help_page));
+    die();
 }
-

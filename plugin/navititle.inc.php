@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////
 // PukiWiki - Yet another WikiWikiWeb clone.
 //
@@ -7,11 +8,10 @@
 
 function plugin_navititle_inline()
 {
-	global $newtitle;
-	global $page;
+    global $newtitle;
+    global $page;
 
-        $is_read = (arg_check('read') && is_page($vars['page']));
+    $is_read = arg_check('read') && is_page($vars['page']);
 
-	return '<h1 class="title">' . (($newtitle!='' && $is_read)?$newtitle:$page) . '</h1>';
+    return '<h1 class="title">' . ($newtitle != '' && $is_read ? $newtitle : $page) . '</h1>';
 }
-

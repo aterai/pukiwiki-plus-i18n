@@ -1,43 +1,51 @@
 <?php
+
 /**
  * Perl
  */
 
-$switchHash['$'] = PLUGIN_CODE_ESCAPE;            // $ はエスケープ
+$switchHash['$'] = PLUGIN_CODE_ESCAPE; // $ はエスケープ
 $switchHash['\''] = PLUGIN_CODE_NONESCAPE_LITERAL; // ' はエスケープしない文字列リテラル
 
 // コメント定義
-$switchHash['#'] = PLUGIN_CODE_COMMENT;	// コメントは # から改行まで (例外あり)
-$switchHash['='] = PLUGIN_CODE_COMMENT;	// コメントは =pod から =cut まで
-$switchHash['('] = PLUGIN_CODE_COMMENT;	// コメントは (?# から ) まで (正規表現内)
-$code_comment = Array(
-					  '#' => Array(
-								   Array('/^#[^{]/', "\n", 1),
-								   ),
-					  '=' => Array(
-								   Array('/^=pod/', '=cut', 4),
-								   ),
-					  '(' => Array(
-								   Array('/^\(\?#/', ')', 1),
-								   )
-					  );
+$switchHash['#'] = PLUGIN_CODE_COMMENT;
+// コメントは # から改行まで (例外あり)
+$switchHash['='] = PLUGIN_CODE_COMMENT;
+// コメントは =pod から =cut まで
+$switchHash['('] = PLUGIN_CODE_COMMENT;
+// コメントは (?# から ) まで (正規表現内)
+$code_comment = array(
+    '#' => array(
+        array('/^#[^{]/', "\n", 1),
+    ),
+    '=' => array(
+        array('/^=pod/', '=cut', 4),
+    ),
+    '(' => array(
+        array('/^\(\?#/', ')', 1),
+    ),
+);
 
 // アウトライン用
-if($mkoutline){
-  $switchHash['{'] = PLUGIN_CODE_BLOCK_START;
-  $switchHash['}'] = PLUGIN_CODE_BLOCK_END;
+if ($mkoutline) {
+    $switchHash['{'] = PLUGIN_CODE_BLOCK_START;
+    $switchHash['}'] = PLUGIN_CODE_BLOCK_END;
 }
 
-$code_css = Array(
-  'operator',		// オペレータ関数
-  'identifier',	// その他の識別子
-  'pragma',		// module, import と pragma
-  'system',		// 処理系組み込みの奴 __stdcall とか
-  );
+$code_css = array(
+    'operator',
+    // オペレータ関数
+    'identifier',
+    // その他の識別子
+    'pragma',
+    // module, import と pragma
+    'system',
+    // 処理系組み込みの奴 __stdcall とか
+);
 
-$code_keyword = Array(
-  //'operator',		// オペレータ関数
-  //'identifier',	// その他の識別子
+$code_keyword = array(
+    //'operator',		// オペレータ関数
+    //'identifier',	// その他の識別子
     'lt' => 2,
     'gt' => 2,
     'le' => 2,
@@ -56,7 +64,6 @@ $code_keyword = Array(
     'for' => 2,
     'foreach' => 2,
     'continue' => 2,
-
     'abs' => 2,
     'accept' => 2,
     'alarm' => 2,
@@ -251,6 +258,6 @@ $code_keyword = Array(
     'wantarray' => 2,
     'warn' => 2,
     'write' => 2,
-  //'pragma',		// module, import と pragma
-  //'system',		// 処理系組み込みの奴 __stdcall とか
-  );
+    //'pragma',		// module, import と pragma
+    //'system',		// 処理系組み込みの奴 __stdcall とか
+);

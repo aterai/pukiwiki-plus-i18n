@@ -1,4 +1,5 @@
 <?php
+
 //////////////////////////////////////////////////////////////////////
 // PukiWiki - Yet another WikiWikiWeb clone.
 //
@@ -16,14 +17,19 @@ function plugin_replace_init(): void
     // global $_replace_msg;
     $messages = array(
         '_replace_msg' => array(
-            'msg_input_pass' => _('Please input the retrieval character string, the substitution character string, and the password for the Administrator.'),
+            'msg_input_pass' => _(
+                'Please input the retrieval character string, the substitution character string, and the password for the Administrator.',
+            ),
             'msg_input_str' => _('Please input the retrieval character string, the substitution character string.'),
             'msg_input_search_word' => _('Retrieval character string:'),
             'msg_input_replace_word' => _('Substitution character string:'),
             'btn_exec' => _('Exec'),
-            'msg_warn_pass' => _('SECURITY ERROR:') .
-                _('It remains as the Administrator password distributes it.') .
-                _('Please change the password.'),
+            'msg_warn_pass' =>
+
+                    _('SECURITY ERROR:') .
+                    _('It remains as the Administrator password distributes it.') .
+                    _('Please change the password.')
+                ,
             'msg_no_pass' => _('The password is wrong.'),
             'msg_no_search' => _('The retrieval character string to substitute it is empty.'),
             'msg_H0_replace' => _('All page character string substitution'),
@@ -31,7 +37,7 @@ function plugin_replace_init(): void
             'msg_replaced' => _('The following pages were substituted.'),
             'msg_H0_replaced' => _('Replaced.'),
             'msg_H0_no_data' => _('No search data.'),
-        )
+        ),
     );
     set_plugin_messages($messages);
 }
@@ -41,8 +47,8 @@ function plugin_replace_action(): array
     global $post, $vars; // , $cycle, $cantedit;
 
     $pass = $post['pass'] ?? '__nopass__';
-    $search = $post['search'] ?? NULL;
-    $replace = $post['replace'] ?? NULL;
+    $search = $post['search'] ?? null;
+    $replace = $post['replace'] ?? null;
     $notimestamp = isset($post['notimestamp']);
 
     if ($search != '' && !auth::check_role('role_adm_contents'))
@@ -67,14 +73,9 @@ function replace_do($search, $replace, $notimestamp): array
     $replaced_pages = array();
     foreach ($pages as $page) {
         if (REPLACE_IGNORE_FREEZE) {
-            $editable = (
-                !in_array($page, $cantedit)
-            );
+            $editable = !in_array($page, $cantedit);
         } else {
-            $editable = (
-                !is_freeze($page) and
-                !in_array($page, $cantedit)
-            );
+            $editable = (!is_freeze($page) and !in_array($page, $cantedit));
         }
         if ($editable) {
             // パスワード一致
@@ -97,12 +98,12 @@ function replace_do($search, $replace, $notimestamp): array
     if (count($replaced_pages) == 0) {
         return array(
             'msg' => $_replace_msg['msg_H0_no_data'],
-            'body' => '<p>' . $_replace_msg['msg_no_replaced'] . '</p>'
+            'body' => '<p>' . $_replace_msg['msg_no_replaced'] . '</p>',
         );
     }
     return array(
         'msg' => $_replace_msg['msg_H0_replaced'],
-        'body' => '<p>' . $_replace_msg['msg_replaced'] . "</p>\n<p>" . join("<br />\n", $replaced_pages) . '</p>'
+        'body' => '<p>' . $_replace_msg['msg_replaced'] . "</p>\n<p>" . join("<br />\n", $replaced_pages) . '</p>',
     );
 }
 
@@ -125,10 +126,10 @@ function replace_adm($pass, $search): array
     } else {
         $msg = $_replace_msg['msg_input_pass'];
         $body_pass = <<<EOD
-  Password<br />
-  <input type="password" name="pass" size="12" /> <br />
+          Password<br />
+          <input type="password" name="pass" size="12" /> <br />
 
-EOD;
+        EOD;
         if ($pass == 'pass') {
             $body .= '<p><strong>' . $_replace_msg['msg_warn_pass'] . "</strong></p>\n";
         } elseif ($pass != '__nopass__') {
@@ -141,20 +142,19 @@ EOD;
     }
 
     $body .= <<<EOD
-<p>$msg</p>
-<form action="$script" method="post">
- <div>
-  <input type="hidden" name="cmd" value="replace" />
-  $label1<br />
-  <input type="text" name="search" size="24" /> <br />
-  $label2<br />
-  <input type="text" name="replace" size="24" /> <br />
-$body_pass
-  <input type="checkbox" name="notimestamp" />$label3
-  <input type="submit" name="ok" value="$btn" />
- </div>
-</form>
-EOD;
+    <p>$msg</p>
+    <form action="$script" method="post">
+     <div>
+      <input type="hidden" name="cmd" value="replace" />
+      $label1<br />
+      <input type="text" name="search" size="24" /> <br />
+      $label2<br />
+      <input type="text" name="replace" size="24" /> <br />
+    $body_pass
+      <input type="checkbox" name="notimestamp" />$label3
+      <input type="submit" name="ok" value="$btn" />
+     </div>
+    </form>
+    EOD;
     return array('msg' => $_replace_msg['msg_H0_replace'], 'body' => $body);
 }
-

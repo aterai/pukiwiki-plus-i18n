@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PukiWiki Plus! ログインプラグイン
  *
@@ -12,12 +13,12 @@
  */
 function plugin_phpinfo_init()
 {
-	$messages = array(
-	'_phpinfo_msg' => array(
-		'btn_phpinfo'		=> _('PHPINFO'),
-		)
-	);
-	set_plugin_messages($messages);
+    $messages = array(
+        '_phpinfo_msg' => array(
+            'btn_phpinfo' => _('PHPINFO'),
+        ),
+    );
+    set_plugin_messages($messages);
 }
 
 /*
@@ -25,24 +26,25 @@ function plugin_phpinfo_init()
  */
 function plugin_phpinfo_convert()
 {
-	global $script;
-	global $_phpinfo_msg;
+    global $script;
+    global $_phpinfo_msg;
 
-	// if (auth::check_role('role_adm_contents') return '';
-	if (auth::check_role('role_adm')) return '';
+    // if (auth::check_role('role_adm_contents') return '';
+    if (auth::check_role('role_adm'))
+        return '';
 
-	// ボタンを表示するだけ
-	$rc = <<<EOD
-<form action="$script" method="post">
-	<div>
-		<input type="hidden" name="plugin" value="phpinfo" />
-		<input type="submit" value="{$_phpinfo_msg['btn_phpinfo']}" />
-	</div>
-</form>
+    // ボタンを表示するだけ
+    $rc = <<<EOD
+    <form action="$script" method="post">
+    	<div>
+    		<input type="hidden" name="plugin" value="phpinfo" />
+    		<input type="submit" value="{$_phpinfo_msg['btn_phpinfo']}" />
+    	</div>
+    </form>
 
-EOD;
+    EOD;
 
-	return $rc;
+    return $rc;
 }
 
 /*
@@ -50,10 +52,9 @@ EOD;
  */
 function plugin_phpinfo_action()
 {
-	// if (auth::check_role('role_adm_contents') return '';
-	if (auth::check_role('role_adm')) return '';
-	phpinfo();
-	die();
-
+    // if (auth::check_role('role_adm_contents') return '';
+    if (auth::check_role('role_adm'))
+        return '';
+    phpinfo();
+    die();
 }
-

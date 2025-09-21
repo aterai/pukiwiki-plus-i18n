@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki - Yet another WikiWikiWeb clone
 // $Id: topicpath.inc.php,v 1.7.6 2008/01/05 18:54:00 upk Exp $
 // Copyright (C)
@@ -21,67 +22,74 @@ defined('PLUGIN_TOPICPATH_THIS_PAGE_LINK') or define('PLUGIN_TOPICPATH_THIS_PAGE
 
 function plugin_topicpath_convert()
 {
-	global $topicpath;
-	if (isset($topicpath) && $topicpath == false) return '';
-	return '<ol id="topicpath" class="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">' . plugin_topicpath_inline() . '</ol>';
+    global $topicpath;
+    if (isset($topicpath) && $topicpath == false)
+        return '';
+    return (
+        '<ol id="topicpath" class="breadcrumb" itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList">' .
+        plugin_topicpath_inline() .
+        '</ol>'
+    );
 }
 
 function plugin_topicpath_inline()
 {
-	global $vars, $defaultpage, $topicpath;
+    global $vars, $defaultpage, $topicpath;
 
-	if (isset($topicpath) && $topicpath == false) return '';
+    if (isset($topicpath) && $topicpath == false)
+        return '';
 
-	$page = isset($vars['page']) ? $vars['page'] : '';
-	if ($page == '' || $page == $defaultpage) return '';
+    $page = isset($vars['page']) ? $vars['page'] : '';
+    if ($page == '' || $page == $defaultpage)
+        return '';
 
-	$parts = explode('/', $page);
+    $parts = explode('/', $page);
 
-	$b_link = TRUE;
-	if (PLUGIN_TOPICPATH_THIS_PAGE_DISPLAY) {
-		$b_link = PLUGIN_TOPICPATH_THIS_PAGE_LINK;
-	} else {
-		array_pop($parts); // Remove the page itself
-	}
+    $b_link = true;
+    if (PLUGIN_TOPICPATH_THIS_PAGE_DISPLAY) {
+        $b_link = PLUGIN_TOPICPATH_THIS_PAGE_LINK;
+    } else {
+        array_pop($parts); // Remove the page itself
+    }
 
-// 	$topic_path = array();
-// 	while (! empty($parts)) {
-// 		$_landing = join('/', $parts);
-// 		$element = htmlspecialchars(array_pop($parts));
-// 		if (! $b_link)  {
-// 			// This page ($_landing == $page)
-// 			$b_link = TRUE;
-// 			$topic_path[] = '<span itemprop="title">' . $element . '</span>';
-// 		// } else if (PKWK_READONLY && ! is_page($_landing)) {
-// 		} else if (auth::check_role('readonly') && ! is_page($_landing)) {
-// 			// Page not exists
-// 			$topic_path[] = $element;
-// 		} else {
-// 			// Page exists or not exists
-// 			$topic_path[] = '<a  itemprop="url" href="' . get_page_uri($_landing) . '"><span itemprop="title">' .
-// 				$element . '</span></a>';
-// 		}
-// 	}
+    // 	$topic_path = array();
+    // 	while (! empty($parts)) {
+    // 		$_landing = join('/', $parts);
+    // 		$element = htmlspecialchars(array_pop($parts));
+    // 		if (! $b_link)  {
+    // 			// This page ($_landing == $page)
+    // 			$b_link = TRUE;
+    // 			$topic_path[] = '<span itemprop="title">' . $element . '</span>';
+    // 		// } else if (PKWK_READONLY && ! is_page($_landing)) {
+    // 		} else if (auth::check_role('readonly') && ! is_page($_landing)) {
+    // 			// Page not exists
+    // 			$topic_path[] = $element;
+    // 		} else {
+    // 			// Page exists or not exists
+    // 			$topic_path[] = '<a  itemprop="url" href="' . get_page_uri($_landing) . '"><span itemprop="title">' .
+    // 				$element . '</span></a>';
+    // 		}
+    // 	}
     $topic_path = array();
     $pos = count($parts);
-    while (! empty($parts)) {
+    while (!empty($parts)) {
         $_landing = join('/', $parts);
         $element = htmlspecialchars(array_pop($parts));
-        if (auth::check_role('readonly') && ! is_page($_landing)) { // Page not exists
+        if (auth::check_role('readonly') && !is_page($_landing)) { // Page not exists
             $topic_path[] = $element;
         } else { // Page exists or not exists
             $url = get_page_uri($_landing);
             $act = 'class="breadcrumb-item"';
-            if (! $b_link)  { // This page ($_landing == $page)
-                $b_link = TRUE;
+            if (!$b_link) { // This page ($_landing == $page)
+                $b_link = true;
                 $act = 'class="breadcrumb-item active"';
             }
             $topic_path[] = <<<EOD
-<li {$act} itemprop="itemListElement" itemscope="itemscope" itemtype="https://schema.org/ListItem">
-  <a itemprop="item" href="{$url}"><span itemprop="name">{$element}</span></a>
-  <meta itemprop="position" content="{$pos}" />
-</li>
-EOD;
+            <li {$act} itemprop="itemListElement" itemscope="itemscope" itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="{$url}"><span itemprop="name">{$element}</span></a>
+              <meta itemprop="position" content="{$pos}" />
+            </li>
+            EOD;
             $pos -= 1;
         }
     }
@@ -91,4 +99,3 @@ EOD;
     // return join(PLUGIN_TOPICPATH_TOP_SEPARATOR, array_reverse($topic_path));
     return join('', array_reverse($topic_path));
 }
-

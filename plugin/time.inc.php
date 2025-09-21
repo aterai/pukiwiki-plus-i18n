@@ -1,8 +1,10 @@
 <?php
+
 //-*- mode:java; Encoding:utf8n -*-
-function plugin_time_convert() {
+function plugin_time_convert()
+{
     global $page_pubdate;
-    if(func_num_args() == 0) {
+    if (func_num_args() == 0) {
         return '';
     }
     $aryargs = func_get_args();
@@ -12,9 +14,11 @@ function plugin_time_convert() {
     $page_pubdate = $time;
     return '';
 }
-function plugin_time_inline() {
+
+function plugin_time_inline()
+{
     global $page_pubdate;
-    if(func_num_args() == 0) {
+    if (func_num_args() == 0) {
         return '';
     }
     $aryargs = func_get_args();
@@ -23,7 +27,6 @@ function plugin_time_inline() {
     $pubdate = date('Y-m-d', $time);
     $page_pubdate = $time;
     return <<<EOD
-<time pubdate="$isotime">$pubdate</time>
-EOD;
+    <time pubdate="$isotime">$pubdate</time>
+    EOD;
 }
-

@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////
 // PukiWiki - Yet another WikiWikiWeb clone.
 //
@@ -7,11 +8,10 @@
 
 function plugin_naviurl_inline()
 {
-	global $_LINK;
+    global $_LINK;
 
-	if ($_LINK['reload'] == '') {
-		return "&naviurl: not found.\n";
-	}
-	return '<a href="'. $_LINK['reload'] .'"><span class="small">'. $_LINK['reload'] .'</span></a>';
+    if ($_LINK['reload'] == '') {
+        return "&naviurl: not found.\n";
+    }
+    return '<a href="' . $_LINK['reload'] . '"><span class="small">' . $_LINK['reload'] . '</span></a>';
 }
-

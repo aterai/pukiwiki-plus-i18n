@@ -1,7 +1,8 @@
 <?php
+
 /*
  * $Id$
- * 
+ *
  * License:  GNU General Public License
  *
  * Copyright (c) 2005 in3c.org
@@ -26,23 +27,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  * USA.
- * 
+ *
  */
 
 /**
  * 書式
  *      #blikimore
  *
- * 種別 
+ * 種別
  *      ブロック型プラグイン
- *  
+ *
  * 概要
  *      <a name="more"></a>を表示する
- * 
+ *
  * @author Yuki SHIDA <shida@in3c.org>
  */
 function plugin_blikimore_convert()
 {
-    return '<a name="more"></a>'."\n";
+    return '<a name="more"></a>' . "\n";
 }
-

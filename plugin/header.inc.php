@@ -1,24 +1,26 @@
 <?php
+
 //-*- mode:java; Encoding:utf8n -*-
 // $Id: header.inc.php $
 
-include_once(PLUGIN_DIR.'counter.inc.php');
+include_once PLUGIN_DIR . 'counter.inc.php';
 
-function plugin_header_convert() {
+function plugin_header_convert()
+{
     global $title, $newtitle, $whatsnew, $defaultpage;
     global $vars;
     global $frontmatter;
 
     $dump = Spyc::YAMLDump($frontmatter);
 
-    $_page   = isset($vars['page']) ? $vars['page'] : '';
-    $is_page = (is_pagename($_page) && ! arg_check('backup') && $_page != $whatsnew);
-    $is_read = (arg_check('read') && is_page($_page));
+    $_page = isset($vars['page']) ? $vars['page'] : '';
+    $is_page = is_pagename($_page) && !arg_check('backup') && $_page != $whatsnew;
+    $is_read = arg_check('read') && is_page($_page);
 
     $path = explode('/', $_page);
     $navi = '';
     if ($is_read && count($path) > 1) {
-        include_once(PLUGIN_DIR.'topicpath.inc.php');
+        include_once PLUGIN_DIR . 'topicpath.inc.php';
         // $navi = plugin_navi_convert($path[0]);
         $navi = plugin_topicpath_convert();
     }
@@ -26,12 +28,18 @@ function plugin_header_convert() {
     $h1 = isset($frontmatter['title']) ? $frontmatter['title'] : $title;
 
     $tags_buf = '';
-    if ( isset($frontmatter['tags']) ) {
+    if (isset($frontmatter['tags'])) {
         $tags = $frontmatter['tags'];
-        $contents = array_map("htmlspecialchars", $tags);
-        foreach ( $contents as $tag ) {
+        $contents = array_map('htmlspecialchars', $tags);
+        foreach ($contents as $tag) {
             $tag = trim($tag);
-            $tags_buf = $tags_buf . '<li><a href="/tags.html#' . $tag . '-ref" rel="tag"><span itemprop="keywords">' . $tag . '</span></a></li>';
+            $tags_buf =
+                $tags_buf .
+                '<li><a href="/tags.html#' .
+                $tag .
+                '-ref" rel="tag"><span itemprop="keywords">' .
+                $tag .
+                '</span></a></li>';
         }
         if ($tags_buf != '') {
             $tags_buf = '<ul class="tag_box inline">' . $tags_buf . '</ul>';
@@ -39,70 +47,106 @@ function plugin_header_convert() {
     }
 
     $hreflang = '';
-    if ( isset($frontmatter['hreflang']) ) {
+    if (isset($frontmatter['hreflang'])) {
         $lng = $frontmatter['hreflang']['lang'];
         //$hrf = $frontmatter['hreflang']['href'];
-        $hrf = preg_replace("/^https?:/", "", $frontmatter['hreflang']['href']);
-        $hreflang = '<ul class="tag_box inline"><li><a rel="alternate" hreflang="' . $lng . '" href="' . $hrf . '">' . $lng . '</a></li></ul>';
+        $hrf = preg_replace('/^https?:/', '', $frontmatter['hreflang']['href']);
+        $hreflang =
+            '<ul class="tag_box inline"><li><a rel="alternate" hreflang="' .
+            $lng .
+            '" href="' .
+            $hrf .
+            '">' .
+            $lng .
+            '</a></li></ul>';
     }
 
-    $time  = $is_read ? get_filetime($_page) : 0;
+    $time = $is_read ? get_filetime($_page) : 0;
     $total = plugin_counter_inline();
     $today = plugin_counter_inline('today');
     $yesterday = plugin_counter_inline('yesterday');
 
     $counter = '';
     if ($is_read) {
-// $counter =  <<<EOD
-// <ul class="list-inline">
-// <li>Total<span class="badge">$total</span></li>
-// <li>Today<span class="badge">$today</span></li>
-// <li>Yesterday<span class="badge">$yesterday</span></li>
-// </ul>
-// EOD;
+        // $counter =  <<<EOD
+        // <ul class="list-inline">
+        // <li>Total<span class="badge">$total</span></li>
+        // <li>Today<span class="badge">$today</span></li>
+        // <li>Yesterday<span class="badge">$yesterday</span></li>
+        // </ul>
+        // EOD;
         //$counter = 'Total:<span class="badge">' . $total . '</span>, Today:<span class="badge">' . $today . '</span>, Yesterday:<span class="badge">' . $yesterday . '</span>';
-        $counter = 'Total: <code>' . $total . '</code>, Today: <code>' . $today . '</code>, Yesterday: <code>' . $yesterday . '</code>';
+        $counter =
+            'Total: <code>' .
+            $total .
+            '</code>, Today: <code>' .
+            $today .
+            '</code>, Yesterday: <code>' .
+            $yesterday .
+            '</code>';
     }
 
     $last_modified_str = '';
-    if ( $time && $defaultpage != $title ) {
+    if ($time && $defaultpage != $title) {
         $isotime = date('c', $time);
         $lastmod = date('Y-m-d H:i', $time);
-        $last_modified_str = '<br />Last-modified: <a href="' . get_script_uri() . '?cmd=diff&amp;page=' . $_page . '"><time itemprop="dateModified" datetime="' . $isotime . '">' . $lastmod . '</time></a>';
+        $last_modified_str =
+            '<br />Last-modified: <a href="' .
+            get_script_uri() .
+            '?cmd=diff&amp;page=' .
+            $_page .
+            '"><time itemprop="dateModified" datetime="' .
+            $isotime .
+            '">' .
+            $lastmod .
+            '</time></a>';
+
         //$last_modified_str = '<br />Last-modified: <code><time itemprop="dateModified" datetime="' . $isotime . '">' . $lastmod . '</time></code>';
     }
 
     $posted_by_str = '';
-    if ( isset($frontmatter['pubdate']) && $defaultpage != $title ) {
+    if (isset($frontmatter['pubdate']) && $defaultpage != $title) {
         $pubdate = $frontmatter['pubdate'];
         $utime = strtotime($pubdate);
         $iso_pubdate_str = $pubdate; //date('c', $utime);
         $pubdate_str = date('Y-m-d', $utime);
 
-        $author = isset($frontmatter['author']) ? $frontmatter['author'] : "aterai";
+        $author = isset($frontmatter['author']) ? $frontmatter['author'] : 'aterai';
         $url = get_script_uri() . ':Users/' . $author . '.html';
         //$posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <code><time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time></code>';
-        $posted_by_str = '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="' . $url . '"><span itemprop="name">' . $author . '</span></a></span> at <a href="' . get_script_uri() . '?cmd=backup&amp;page=' . $_page . '"><time itemprop="datePublished" datetime="' . $iso_pubdate_str . '">' . $pubdate_str . '</time></a>';
+        $posted_by_str =
+            '<br />Posted by <span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="' .
+            $url .
+            '"><span itemprop="name">' .
+            $author .
+            '</span></a></span> at <a href="' .
+            get_script_uri() .
+            '?cmd=backup&amp;page=' .
+            $_page .
+            '"><time itemprop="datePublished" datetime="' .
+            $iso_pubdate_str .
+            '">' .
+            $pubdate_str .
+            '</time></a>';
     }
 
     return <<<EOD
-<div class="page-header">
-<h1 class="page-title" itemprop="name headline">$h1</h1>
-<div class="row">
-<div class="col-md-7 col-xs-12">
-$navi
-$tags_buf
-$hreflang
-</div><!-- col-md-7 -->
-<div class="col-md-5 col-xs-12">
-<p class="text-right" style="line-height:2em">
-$counter
-$posted_by_str
-$last_modified_str
-</p>
-</div><!-- col-md-5 -->
-</div><!-- /row -->
-</div><!-- /page-header -->
-EOD;
+    <div class="page-header">
+    <h1 class="page-title" itemprop="name headline">$h1</h1>
+    <div class="row">
+    <div class="col-md-7 col-xs-12">
+    $navi
+    $tags_buf
+    $hreflang
+    </div><!-- col-md-7 -->
+    <div class="col-md-5 col-xs-12">
+    <p class="text-right" style="line-height:2em">
+    $counter
+    $posted_by_str
+    $last_modified_str
+    </p>
+    </div><!-- col-md-5 -->
+    </div><!-- /row -->
+    </div><!-- /page-header -->
+    EOD;
 }
-

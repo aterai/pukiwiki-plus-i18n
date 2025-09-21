@@ -1,30 +1,36 @@
 <?php
+
 /**
  * Python
  */
 
-$switchHash['$'] = PLUGIN_CODE_ESCAPE;            // $ はエスケープ
+$switchHash['$'] = PLUGIN_CODE_ESCAPE; // $ はエスケープ
 $switchHash['\''] = PLUGIN_CODE_NONESCAPE_LITERAL; // ' はエスケープしない文字列リテラル
-$mkoutline = $option['outline'] = false; // アウトラインモード不可 
+$mkoutline = $option['outline'] = false; // アウトラインモード不可
 
 // コメント定義
-$switchHash['#'] = PLUGIN_CODE_COMMENT;	// コメントは # から改行まで (例外あり)
-$code_comment = Array(
-	'#' => Array(
-				 Array('/^#[^{]/', "\n", 1),
-	)
+$switchHash['#'] = PLUGIN_CODE_COMMENT;
+// コメントは # から改行まで (例外あり)
+$code_comment = array(
+    '#' => array(
+        array('/^#[^{]/', "\n", 1),
+    ),
 );
 
-$code_css = Array(
-  'operator',		// オペレータ関数
-  'identifier',	// その他の識別子
-  'pragma',		// module, import と pragma
-  'system',		// 処理系組み込みの奴 __stdcall とか
-  );
+$code_css = array(
+    'operator',
+    // オペレータ関数
+    'identifier',
+    // その他の識別子
+    'pragma',
+    // module, import と pragma
+    'system',
+    // 処理系組み込みの奴 __stdcall とか
+);
 
-$code_keyword = Array(
-  //'operator',		// オペレータ関数
-  //'identifier',	// その他の識別子
+$code_keyword = array(
+    //'operator',		// オペレータ関数
+    //'identifier',	// その他の識別子
     'access' => 2,
     'and' => 2,
     'break' => 2,
@@ -53,6 +59,6 @@ $code_keyword = Array(
     'return' => 2,
     'try' => 2,
     'while' => 2,
-  //'pragma',		// module, import と pragma
-  //'system',		// 処理系組み込みの奴 __stdcall とか
-  );
+    //'pragma',		// module, import と pragma
+    //'system',		// 処理系組み込みの奴 __stdcall とか
+);

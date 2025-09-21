@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki - Yet another WikiWikiWeb clone
 // $Id: popular.inc.php,v 1.18.6 2007/07/28 19:56:00 miko Exp $
 // Copyright (C)
@@ -32,7 +33,7 @@ defined('PLUGIN_POPULAR_DEFAULT') or define('PLUGIN_POPULAR_DEFAULT', 10);
 function plugin_popular_convert(): string
 {
     global $vars;
-//	global $_popular_plugin_frame, $_popular_plugin_today_frame;
+    //	global $_popular_plugin_frame, $_popular_plugin_today_frame;
     static $localtime;
 
     $_popular_plugin_frame_s = _('popular(%d)');
@@ -54,7 +55,10 @@ function plugin_popular_convert(): string
 
     $today = date('Y/m/d', $localtime);
     // $yesterday = gmdate('Y/m/d', strtotime('yesterday', $localtime));
-    $yesterday = date('Y/m/d', mktime(0, 0, 0, date('m', $localtime), date('d', $localtime) - 1, date('Y', $localtime)));
+    $yesterday = date(
+        'Y/m/d',
+        mktime(0, 0, 0, date('m', $localtime), date('d', $localtime) - 1, date('Y', $localtime)),
+    );
 
     $array = func_get_args();
     switch (func_num_args()) {
@@ -79,9 +83,12 @@ function plugin_popular_convert(): string
 
     $counters = array();
     foreach (auth::get_existpages(COUNTER_DIR, '.count') as $file => $page) {
-        if (($except != '' && preg_match($except, $page) === 1) ||
-            is_cantedit($page) || check_non_list($page) ||
-            !is_page($page))
+        if (
+            $except != '' && preg_match($except, $page) === 1 ||
+                is_cantedit($page) ||
+                check_non_list($page) ||
+                !is_page($page)
+        )
             continue;
 
         $array = file(COUNTER_DIR . $file);
@@ -95,7 +102,8 @@ function plugin_popular_convert(): string
             // $pageが数値に見える(たとえばencode('BBS')=424253)とき、
             // array_splice()によってキー値が変更されてしまうのを防ぐ
             // ため、キーに '_' を連結する
-            if ($today == $date) $counters['_' . $page] = $today_count;
+            if ($today == $date)
+                $counters['_' . $page] = $today_count;
         }
         if ($view == 'yesterday' or $view == 'recent') {
             if ($today == $date) {
@@ -114,7 +122,7 @@ function plugin_popular_convert(): string
     asort($counters, SORT_NUMERIC);
 
     // BugTrack2/106: Only variables can be passed by reference from PHP 5.0.5
-    $counters = array_reverse($counters, TRUE); // with array_splice()
+    $counters = array_reverse($counters, true); // with array_splice()
     $counters = array_splice($counters, 0, $max);
 
     $items = '';
@@ -127,14 +135,24 @@ function plugin_popular_convert(): string
             $s_page = htmlspecialchars($page);
             if ($page == $vars['page']) {
                 // No need to link itself, notifies where you just read
-                $pg_passage = get_pg_passage($page, FALSE);
-                $items .= ' <li><span title="' . $s_page . ' ' . $pg_passage . '">' .
-                    $s_page . '<span class="counter">(' . $count .
-                    ')</span></span></li>' . "\n";
+                $pg_passage = get_pg_passage($page, false);
+                $items .=
+                    ' <li><span title="' .
+                    $s_page .
+                    ' ' .
+                    $pg_passage .
+                    '">' .
+                    $s_page .
+                    '<span class="counter">(' .
+                    $count .
+                    ')</span></span></li>' .
+                    "\n";
             } else {
-                $items .= ' <li>' . make_pagelink($page,
-                        $s_page . '<span class="counter">(' . $count . ')</span>') .
-                    '</li>' . "\n";
+                $items .=
+                    ' <li>' .
+                    make_pagelink($page, $s_page . '<span class="counter">(' . $count . ')</span>') .
+                    '</li>' .
+                    "\n";
             }
         }
         $items .= '</ul>' . "\n";
@@ -148,4 +166,3 @@ function plugin_popular_convert(): string
     };
     return sprintf($frame, count($counters), $items);
 }
-
