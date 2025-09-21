@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 // $Id: func.php,v 1.93.36 2009/04/25 17:35:00 upk Exp $
 // Copyright (C)
@@ -20,38 +21,38 @@ function is_pagename($str): bool
 {
     global $BracketName;
 
-    $is_pagename = (!is_interwiki($str) &&
+    $is_pagename =
+        !is_interwiki($str) &&
         preg_match('/^(?!\/)' . $BracketName . '$(?<!\/$)/', $str) &&
-        !preg_match('#(^|/)\.{1,2}(/|$)#', $str));
+        !preg_match('#(^|/)\.{1,2}(/|$)#', $str);
 
     if (defined('SOURCE_ENCODING')) {
         switch (SOURCE_ENCODING) {
             case 'UTF-8':
-                $pattern =
-                    '/^(?:[\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF][\x80-\xBF])+$/';
+                $pattern = '/^(?:[\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF][\x80-\xBF])+$/';
                 break;
             case 'EUC-JP':
-                $pattern =
-                    '/^(?:[\x00-\x7F]|[\x8E\xA1-\xFE][\xA1-\xFE]|\x8F[\xA1-\xFE][\xA1-\xFE])+$/';
+                $pattern = '/^(?:[\x00-\x7F]|[\x8E\xA1-\xFE][\xA1-\xFE]|\x8F[\xA1-\xFE][\xA1-\xFE])+$/';
                 break;
         }
         if (isset($pattern) && $pattern != '')
-            $is_pagename = ($is_pagename && preg_match($pattern, $str));
+            $is_pagename = $is_pagename && preg_match($pattern, $str);
     }
 
     return $is_pagename;
 }
 
-function is_url($str, $only_http = FALSE): false|int
+function is_url($str, $only_http = false): false|int
 {
     $scheme = $only_http ? 'https?' : 'https?|ftp|news';
     return preg_match('/^(' . $scheme . ')(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:@&=+$,%#]*)$/', $str);
 }
 
 // If the page exists
-function is_page($page, $clearcache = FALSE): bool
+function is_page($page, $clearcache = false): bool
 {
-    if ($clearcache) clearstatcache();
+    if ($clearcache)
+        clearstatcache();
     return file_exists(get_filename($page));
 }
 
@@ -62,7 +63,7 @@ function is_cantedit($page): bool
 
     if (!isset($is_cantedit)) {
         foreach ($cantedit as $key) {
-            $is_cantedit[$key] = TRUE;
+            $is_cantedit[$key] = true;
         }
     }
 
@@ -74,30 +75,28 @@ function is_editable($page): bool
     static $is_editable = array();
 
     if (!isset($is_editable[$page])) {
-        $is_editable[$page] = (
-            is_pagename($page) &&
-            !is_freeze($page) &&
-            !is_cantedit($page)
-        );
+        $is_editable[$page] = is_pagename($page) && !is_freeze($page) && !is_cantedit($page);
     }
 
     return $is_editable[$page];
 }
 
-function is_freeze($page, $clearcache = FALSE): bool
+function is_freeze($page, $clearcache = false): bool
 {
     global $function_freeze;
     static $is_freeze = array();
 
-    if ($clearcache === TRUE) $is_freeze = array();
-    if (isset($is_freeze[$page])) return $is_freeze[$page];
+    if ($clearcache === true)
+        $is_freeze = array();
+    if (isset($is_freeze[$page]))
+        return $is_freeze[$page];
 
     if (!$function_freeze || !is_page($page)) {
-        $is_freeze[$page] = FALSE;
-        return FALSE;
+        $is_freeze[$page] = false;
+        return false;
     } else {
-        $fp = fopen(get_filename($page), 'rb') or
-        die('is_freeze(): fopen() failed: ' . htmlspecialchars($page, ENT_QUOTES, 'UTF-8'));
+        ($fp = fopen(get_filename($page), 'rb')) or
+            die('is_freeze(): fopen() failed: ' . htmlspecialchars($page, ENT_QUOTES, 'UTF-8'));
         // flock($fp, LOCK_SH) or die('is_freeze(): flock() failed');
         @flock($fp, LOCK_SH);
         rewind($fp);
@@ -106,7 +105,7 @@ function is_freeze($page, $clearcache = FALSE): bool
         @flock($fp, LOCK_UN);
         fclose($fp) or die('is_freeze(): fclose() failed: ' . htmlspecialchars($page, ENT_QUOTES, 'UTF-8'));
 
-        $is_freeze[$page] = ($buffer != FALSE && rtrim($buffer, "\r\n") == '#freeze');
+        $is_freeze[$page] = $buffer != false && rtrim($buffer, "\r\n") == '#freeze';
         return $is_freeze[$page];
     }
 }
@@ -118,7 +117,8 @@ function check_non_list($page = ''): false|int
     global $non_list;
     static $regex;
 
-    if (!isset($regex)) $regex = '/' . $non_list . '/';
+    if (!isset($regex))
+        $regex = '/' . $non_list . '/';
 
     return preg_match($regex, $page);
 }
@@ -128,19 +128,22 @@ function auto_template($page): array|string|null
 {
     global $auto_template_func, $auto_template_rules;
 
-    if (!$auto_template_func) return '';
+    if (!$auto_template_func)
+        return '';
 
     $body = '';
     $matches = array();
     foreach ($auto_template_rules as $rule => $template) {
         $rule_pattrn = '/' . $rule . '/';
 
-        if (!preg_match($rule_pattrn, $page, $matches)) continue;
+        if (!preg_match($rule_pattrn, $page, $matches))
+            continue;
 
         $template_page = preg_replace($rule_pattrn, $template, $page);
-        if (!is_page($template_page)) continue;
+        if (!is_page($template_page))
+            continue;
 
-        $body = get_source($template_page, TRUE, TRUE);
+        $body = get_source($template_page, true, true);
 
         // Remove fixed-heading anchors
         $body = preg_replace('/^(\*{1,3}.*)\[#[A-Za-z][\w-]+\](.*)$/m', '$1$2', $body);
@@ -158,7 +161,7 @@ function auto_template($page): array|string|null
 }
 
 // Expand search words
-function get_search_words($words, $do_escape = FALSE): array
+function get_search_words($words, $do_escape = false): array
 {
     static $init, $mb_convert_kana, $pre, $post, $quote = '/';
 
@@ -167,30 +170,38 @@ function get_search_words($words, $do_escape = FALSE): array
         if (LANG == 'ja' && function_exists('mb_convert_kana')) {
             //$mb_convert_kana = create_function('$str, $option',
             //    'return mb_convert_kana($str, $option, SOURCE_ENCODING);');
-            $mb_convert_kana = function($str, $option) { return mb_convert_kana($str, $option, SOURCE_ENCODING); };
+            $mb_convert_kana = function ($str, $option) {
+                return mb_convert_kana($str, $option, SOURCE_ENCODING);
+            };
         } else {
             //$mb_convert_kana = create_function('$str, $option', 'return $str;');
-            $mb_convert_kana = function($str, $option) { return $str; };
+            $mb_convert_kana = function ($str, $option) {
+                return $str;
+            };
         }
         if (SOURCE_ENCODING == 'EUC-JP') {
             // Perl memo - Correct pattern-matching with EUC-JP
             // http://www.din.or.jp/~ohzaki/perl.htm#JP_Match (Japanese)
             $pre = '(?<!\x8F)';
-            $post = '(?=(?:[\xA1-\xFE][\xA1-\xFE])*' . // JIS X 0208
-                '(?:[\x00-\x7F\x8E\x8F]|\z))';     // ASCII, SS2, SS3, or the last
+            $post =
+                '(?=(?:[\xA1-\xFE][\xA1-\xFE])*' .
+                // JIS X 0208
+                '(?:[\x00-\x7F\x8E\x8F]|\z))'; // ASCII, SS2, SS3, or the last
         } else {
             $pre = $post = '';
         }
-        $init = TRUE;
+        $init = true;
     }
 
-    if (!is_array($words)) $words = array($words);
+    if (!is_array($words))
+        $words = array($words);
 
     // Generate regex for the words
     $regex = array();
     foreach ($words as $word) {
         $word = trim($word);
-        if ($word == '') continue;
+        if ($word == '')
+            continue;
 
         // Normalize: ASCII letters = to single-byte. Others = to Zenkaku and Katakana
         $word_nm = $mb_convert_kana($word, 'aKCV');
@@ -206,7 +217,8 @@ function get_search_words($words, $do_escape = FALSE): array
             if (strlen($char) == 1) {
                 // An ASCII (single-byte) character
                 foreach (array(strtoupper($char), strtolower($char)) as $_char) {
-                    if ($char != '&') $or[] = preg_quote($_char, $quote); // As-is?
+                    if ($char != '&')
+                        $or[] = preg_quote($_char, $quote); // As-is?
                     $ascii = ord($_char);
                     $or[] = sprintf('&#(?:%d|x%x);', $ascii, $ascii); // As an entity reference?
                     $or[] = preg_quote($mb_convert_kana($_char, 'A'), $quote); // As Zenkaku?
@@ -227,16 +239,16 @@ function get_search_words($words, $do_escape = FALSE): array
 }
 
 // 'Search' main function
-function do_search($word, $type = 'AND', $non_format = FALSE, $base = ''): array|string
+function do_search($word, $type = 'AND', $non_format = false, $base = ''): array|string
 {
     global $script, $whatsnew, $non_list, $search_non_list;
     global $search_auth, $show_passage, $search_word_color, $ajax;
-//	global $_msg_andresult, $_msg_orresult, $_msg_notfoundresult;
+    //	global $_msg_andresult, $_msg_orresult, $_msg_notfoundresult;
     global $_string;
 
     $retval = array();
 
-    $b_type = ($type == 'AND'); // AND:TRUE OR:FALSE
+    $b_type = $type == 'AND'; // AND:TRUE OR:FALSE
     $keys = get_search_words(preg_split('/\s+/', $word, -1, PREG_SPLIT_NO_EMPTY));
     foreach ($keys as $key => $value)
         $keys[$key] = '/' . $value . '/S';
@@ -254,11 +266,11 @@ function do_search($word, $type = 'AND', $non_format = FALSE, $base = ''): array
     unset($pages[$whatsnew]);
 
     // SAFE_MODE の場合は、コンテンツ管理者以上のみ、カテゴリページ(:)も検索可能
-    $role_adm_contents = (auth::check_role('safemode')) ? auth::check_role('role_adm_contents') : FALSE;
+    $role_adm_contents = auth::check_role('safemode') ? auth::check_role('role_adm_contents') : false;
 
     $count = count($pages);
     foreach (array_keys($pages) as $page) {
-        $b_match = FALSE;
+        $b_match = false;
 
         // Search hidden for page name
         if (substr($page, 0, 1) == ':' && $role_adm_contents) {
@@ -271,9 +283,11 @@ function do_search($word, $type = 'AND', $non_format = FALSE, $base = ''): array
         if (!$non_format) {
             foreach ($keys as $key) {
                 $b_match = preg_match($key, $page);
-                if ($b_type xor $b_match) break; // OR
+                if ($b_type xor $b_match)
+                    break; // OR
             }
-            if ($b_match) continue;
+            if ($b_match)
+                continue;
         }
 
         // Search auth for page contents
@@ -285,16 +299,19 @@ function do_search($word, $type = 'AND', $non_format = FALSE, $base = ''): array
 
         // Search for page contents
         foreach ($keys as $key) {
-            $b_match = preg_match($key, get_source($page, TRUE, TRUE));
-            if ($b_match xor $b_type) break; // OR
+            $b_match = preg_match($key, get_source($page, true, true));
+            if ($b_match xor $b_type)
+                break; // OR
         }
-        if ($b_match) continue;
+        if ($b_match)
+            continue;
 
         unset($pages[$page]); // Miss
     }
 
     unset($role_adm_contents);
-    if ($non_format) return array_keys($pages);
+    if ($non_format)
+        return array_keys($pages);
 
     $r_word = rawurlencode($word);
     $s_word = htmlspecialchars($word, ENT_QUOTES, 'UTF-8');
@@ -307,12 +324,17 @@ function do_search($word, $type = 'AND', $non_format = FALSE, $base = ''): array
     foreach (array_keys($pages) as $page) {
         $r_page = rawurlencode($page);
         $s_page = htmlspecialchars($page, ENT_QUOTES, 'UTF-8');
-        $passage = $show_passage ? ' ' . get_passage(get_filetime($page)) : '';
+        $passage = $show_passage ? (' ' . get_passage(get_filetime($page))) : '';
         if ($search_word_color) {
             $uri = get_page_uri($page, '', 'word=' . $r_word);
             if ($ajax && UA_PROFILE == 'default') {
                 $pre = $script . '?' . 'cmd=preview&amp;page=' . $r_page . '&amp;word=' . $r_word;
-                $pre = ' onmouseover="showGlossaryPopup(' . "'" . $pre . "'" . ',event,0.2);" onmouseout="hideGlossaryPopup();"';
+                $pre =
+                    ' onmouseover="showGlossaryPopup(' .
+                    "'" .
+                    $pre .
+                    "'" .
+                    ',event,0.2);" onmouseout="hideGlossaryPopup();"';
             } else {
                 $pre = '';
             }
@@ -324,8 +346,15 @@ function do_search($word, $type = 'AND', $non_format = FALSE, $base = ''): array
     }
     $retval .= '</ul>' . "\n";
 
-    $retval .= str_replace('$1', $s_word, str_replace('$2', count($pages),
-        str_replace('$3', $count, $b_type ? $_string['andresult'] : $_string['orresult'])));
+    $retval .= str_replace(
+        '$1',
+        $s_word,
+        str_replace(
+            '$2',
+            count($pages),
+            str_replace('$3', $count, $b_type ? $_string['andresult'] : $_string['orresult']),
+        ),
+    );
 
     return $retval;
 }
@@ -334,14 +363,15 @@ function do_search($word, $type = 'AND', $non_format = FALSE, $base = ''): array
 function arg_check($str)
 {
     global $vars;
-    return isset($vars['cmd']) && (strpos($vars['cmd'], $str) === 0);
+    return isset($vars['cmd']) && strpos($vars['cmd'], $str) === 0;
 }
 
 // Encode page-name
 function encode($str)
 {
     $str = strval($str);
-    return ($str == '') ? '' : strtoupper(bin2hex($str));
+    return $str == '' ? '' : strtoupper(bin2hex($str));
+
     // Equal to strtoupper(join('', unpack('H*0', $str)));
     // But PHP 4.3.10 says 'Warning: unpack(): Type H: outside of string in ...'
 }
@@ -360,8 +390,7 @@ if (!function_exists('hex2bin')) {
     {
         // preg_match : Avoid warning : pack(): Type H: illegal hex digit ...
         // (string)   : Always treat as string (not int etc). See BugTrack2/31
-        return preg_match('/^[0-9a-f]+$/i', $hex_string) ?
-            pack('H*', (string)$hex_string) : $hex_string;
+        return preg_match('/^[0-9a-f]+$/i', $hex_string) ? pack('H*', (string) $hex_string) : $hex_string;
     }
 }
 
@@ -377,7 +406,7 @@ function strip_bracket($str)
 }
 
 // Create list of pages
-function page_list($pages, $cmd = 'read', $withfilename = FALSE)
+function page_list($pages, $cmd = 'read', $withfilename = false)
 {
     global $script, $list_index;
     global $pagereading_enable;
@@ -407,13 +436,11 @@ function page_list($pages, $cmd = 'read', $withfilename = FALSE)
             $url = get_resolve_uri($cmd, $page);
         }
 
-        $str = '   <li><a href="' . $url . '">' .
-            $s_page . '</a>' . $passage;
+        $str = '   <li><a href="' . $url . '">' . $s_page . '</a>' . $passage;
 
         if ($withfilename) {
             $s_file = htmlspecialchars($file, ENT_QUOTES, 'UTF-8');
-            $str .= "\n" . '    <ul><li>' . $s_file . '</li></ul>' .
-                "\n" . '   ';
+            $str .= "\n" . '    <ul><li>' . $s_file . '</li></ul>' . "\n" . '   ';
         }
         $str .= '</li>';
 
@@ -429,8 +456,9 @@ function page_list($pages, $cmd = 'read', $withfilename = FALSE)
                 $head = $other;
             }
         } else {
-            $head = (preg_match('/^([A-Za-z])/', $page, $matches)) ? $matches[1] :
-                (preg_match('/^([ -~])/', $page) ? $symbol : $other);
+            $head = preg_match('/^([A-Za-z])/', $page, $matches)
+                ? $matches[1]
+                : (preg_match('/^([ -~])/', $page) ? $symbol : $other);
         }
 
         $list[$head][$page] = $str;
@@ -449,12 +477,18 @@ function page_list($pages, $cmd = 'read', $withfilename = FALSE)
 
         if ($list_index) {
             ++$cnt;
-            $arr_index[] = '<a id="top_' . $cnt .
-                '" href="#head_' . $cnt . '"><strong>' .
-                $head . '</strong></a>';
-            $retval .= ' <li><a id="head_' . $cnt . '" href="#top_' . $cnt .
-                '"><strong>' . $head . '</strong></a>' . "\n" .
-                '  <ul>' . "\n";
+            $arr_index[] = '<a id="top_' . $cnt . '" href="#head_' . $cnt . '"><strong>' . $head . '</strong></a>';
+            $retval .=
+                ' <li><a id="head_' .
+                $cnt .
+                '" href="#top_' .
+                $cnt .
+                '"><strong>' .
+                $head .
+                '</strong></a>' .
+                "\n" .
+                '  <ul>' .
+                "\n";
         }
         ksort($pages);
         $retval .= join("\n", $pages);
@@ -467,8 +501,7 @@ function page_list($pages, $cmd = 'read', $withfilename = FALSE)
         while (!empty($arr_index))
             $top[] = join(' | ' . "\n", array_splice($arr_index, 0, 16)) . "\n";
 
-        $retval = '<div id="top" style="text-align:center">' . "\n" .
-            join('<br />', $top) . '</div>' . "\n" . $retval;
+        $retval = '<div id="top" style="text-align:center">' . "\n" . join('<br />', $top) . '</div>' . "\n" . $retval;
     }
     return $retval;
 }
@@ -479,8 +512,7 @@ function catrule()
     global $rule_page;
 
     if (!is_page($rule_page)) {
-        return '<p>Sorry, page \'' . htmlspecialchars($rule_page, ENT_QUOTES, 'UTF-8') .
-            '\' unavailable.</p>';
+        return '<p>Sorry, page \'' . htmlspecialchars($rule_page, ENT_QUOTES, 'UTF-8') . '\' unavailable.</p>';
     } else {
         return convert_html(get_source($rule_page));
     }
@@ -492,9 +524,9 @@ function die_message($msg)
     global $skin_file;
     $title = $page = 'Runtime error';
     $body = <<<EOD
-<h3>Runtime error</h3>
-<strong>Error message : $msg</strong>
-EOD;
+    <h3>Runtime error</h3>
+    <strong>Error message : $msg</strong>
+    EOD;
 
     // @miko:recover: $trackback is unused.
     global $trackback;
@@ -510,18 +542,18 @@ EOD;
     } else {
         header('Content-Type: text/html; charset=utf-8');
         print <<<EOD
-<html>
-<head>
-<title>$title</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-</head>
-<body>
-$body
-</body>
-</html>
-EOD;
+            <html>
+            <head>
+            <title>$title</title>
+            <meta http-equiv="content-type" content="text/html; charset=utf-8">
+            </head>
+            <body>
+            $body
+            </body>
+            </html>
+            EOD;
     }
-    exit;
+    exit();
 }
 
 function die_msg($msg)
@@ -533,7 +565,7 @@ function die_msg($msg)
 function getmicrotime()
 {
     list($usec, $sec) = explode(' ', microtime());
-    return ((float)$sec + (float)$usec);
+    return ((float) $sec) + ((float) $usec);
 }
 
 // Elapsed time by second
@@ -545,53 +577,52 @@ function elapsedtime()
 }
 
 // Get the date
-function get_date($format, $timestamp = NULL)
+function get_date($format, $timestamp = null)
 {
     /*
      * $format で指定される T を ZONE で置換したいが、
      * date 関数での書式指定文字となってしまう可能性を回避するための事前処理
      */
-// 	$l = strlen(ZONE);
-// 	$zone = '';
-// 	for($i=0;$i<$l;$i++) {
-// 		$zone .= '\\'.substr(ZONE,$i,1);
-// 	}
-//
-// 	$format = str_replace('\T','$$$',$format); // \T の置換は除く
-// 	$format = str_replace('T',$zone,$format);
-// 	$format = str_replace('$$$','\T',$format); // \T に戻す
+    // 	$l = strlen(ZONE);
+    // 	$zone = '';
+    // 	for($i=0;$i<$l;$i++) {
+    // 		$zone .= '\\'.substr(ZONE,$i,1);
+    // 	}
+    //
+    // 	$format = str_replace('\T','$$$',$format); // \T の置換は除く
+    // 	$format = str_replace('T',$zone,$format);
+    // 	$format = str_replace('$$$','\T',$format); // \T に戻す
 
     //$time = ZONETIME + (($timestamp !== NULL) ? $timestamp : UTIME);
-    $time = ($timestamp !== NULL) ? $timestamp : UTIME;
+    $time = $timestamp !== null ? $timestamp : UTIME;
     $str = date($format, $time);
     return $str;
-// 	if (ZONETIME == 0) return $str;
-//
-// 	$zonetime = get_zonetime_offset(ZONETIME);
-// 	return str_replace('+0000', $zonetime, $str);
+
+    // 	if (ZONETIME == 0) return $str;
+    //
+    // 	$zonetime = get_zonetime_offset(ZONETIME);
+    // 	return str_replace('+0000', $zonetime, $str);
 }
 
 function get_zonetime_offset($zonetime)
 {
-    $pm = ($zonetime < 0) ? '-' : '+';
+    $pm = $zonetime < 0 ? '-' : '+';
     $zonetime = abs($zonetime);
-    (int)$h = $zonetime / 3600;
+    (int) ($h = $zonetime / 3600);
     $m = $zonetime - ($h * 3600);
     return sprintf('%s%02d%02d', $pm, $h, $m);
 }
 
 // Format date string
-function format_date($val, $paren = FALSE)
+function format_date($val, $paren = false)
 {
     global $date_format, $time_format, $weeklabels;
 
     $val += ZONETIME;
 
-    $date = date($date_format, $val) .
-        ' (' . $weeklabels[date('w', $val)] . ') ' .
-        date($time_format, $val);
+    $date = date($date_format, $val) . ' (' . $weeklabels[date('w', $val)] . ') ' . date($time_format, $val);
 
-    return $paren ? '(' . $date . ')' : $date;
+    return $paren ? ('(' . $date . ')') : $date;
 }
 
 // Get short pagename(last token without '/')
@@ -602,26 +633,26 @@ function get_short_pagename($fullpagename)
 }
 
 // Get short string of the passage, 'N seconds/minutes/hours/days/years ago'
-function get_passage($time, $paren = TRUE)
+function get_passage($time, $paren = true)
 {
     static $units = array('m' => 60, 'h' => 24, 'd' => 1);
 
     $time = max(0, (UTIME - $time) / 60); // minutes
 
     foreach ($units as $unit => $card) {
-        if ($time < $card) break;
+        if ($time < $card)
+            break;
         $time /= $card;
     }
     $time = floor($time) . $unit;
 
-    return $paren ? '(' . $time . ')' : $time;
+    return $paren ? ('(' . $time . ')') : $time;
 }
 
 // Hide <input type="(submit|button|image)"...>
 function drop_submit($str)
 {
-    return preg_replace('/<input([^>]+)type="(submit|button|image)"/i',
-        '<input$1type="hidden"', $str);
+    return preg_replace('/<input([^>]+)type="(submit|button|image)"/i', '<input$1type="hidden"', $str);
 }
 
 function get_glossary_pattern(&$pages, $min_len = -1)
@@ -636,12 +667,11 @@ function get_glossary_pattern(&$pages, $min_len = -1)
     $auto_pages = array_merge($ignorepages, $forceignorepages);
 
     if ($min_len == -1) {
-        $min_len = $autoglossary;   // set $autoglossary, when omitted.
+        $min_len = $autoglossary; // set $autoglossary, when omitted.
     }
 
     foreach ($pages as $page)
-        if (preg_match('/^' . $WikiName . '$/', $page) ?
-            $nowikiname : mb_strlen($page) >= $min_len)
+        if (preg_match('/^' . $WikiName . '$/', $page) ? $nowikiname : mb_strlen($page) >= $min_len)
             $auto_pages[] = $page;
 
     if (empty($auto_pages)) {
@@ -672,12 +702,11 @@ function get_autolink_pattern(&$pages, $min_len = -1)
     $auto_pages = array_merge($ignorepages, $forceignorepages);
 
     if ($min_len == -1) {
-        $min_len = $autolink;   // set $autolink, when omitted.
+        $min_len = $autolink; // set $autolink, when omitted.
     }
 
     foreach ($pages as $page)
-        if (preg_match('/^' . $WikiName . '$/', $page) ?
-            $nowikiname : strlen($page) >= $min_len)
+        if (preg_match('/^' . $WikiName . '$/', $page) ? $nowikiname : strlen($page) >= $min_len)
             $auto_pages[] = $page;
 
     if (empty($auto_pages)) {
@@ -695,7 +724,6 @@ function get_autolink_pattern(&$pages, $min_len = -1)
     return array($result, $result_a, $forceignorepages);
 }
 
-
 // Generate one compact regex for quick reTRIEval,
 // that just matches with all $array values.
 //
@@ -709,26 +737,29 @@ function get_autolink_pattern(&$pages, $min_len = -1)
 //     Passing the reference, of the $array here, will save the memories,
 //     from flood of recursive call.
 //   $offset : (int) $array[$offset] is the first value to check
-//   $sentry : (int) $array[$sentry - 1] is the last value to check  
+//   $sentry : (int) $array[$sentry - 1] is the last value to check
 //   $pos    : (int) Position of the letter to start checking. (0 = the first letter)
 // REFERENCE:
 //   http://en.wikipedia.org/wiki/Trie
-function generate_trie_regex(&$array, $offset = 0, $sentry = NULL, $pos = 0)
+function generate_trie_regex(&$array, $offset = 0, $sentry = null, $pos = 0)
 {
-    if (empty($array)) return '(?!)'; // Zero
-    if ($sentry === NULL) $sentry = count($array);
+    if (empty($array))
+        return '(?!)'; // Zero
+    if ($sentry === null)
+        $sentry = count($array);
 
     // Too short. Skip this
-    $skip = ($pos >= mb_strlen($array[$offset]));
-    if ($skip) ++$offset;
+    $skip = $pos >= mb_strlen($array[$offset]);
+    if ($skip)
+        ++$offset;
 
     // Generate regex for each value
     $regex = '';
     $index = $offset;
-    $multi = FALSE;
+    $multi = false;
     while ($index < $sentry) {
         if ($index != $offset) {
-            $multi = TRUE;
+            $multi = true;
             $regex .= '|'; // OR
         }
 
@@ -738,23 +769,25 @@ function generate_trie_regex(&$array, $offset = 0, $sentry = NULL, $pos = 0)
         // How many continuous keys have the same letter
         // at the same position?
         for ($i = $index; $i < $sentry; $i++)
-            if (mb_substr($array[$i], $pos, 1) != $char) break;
+            if (mb_substr($array[$i], $pos, 1) != $char)
+                break;
 
         if ($index < ($i - 1)) {
             // Some more keys found
             // Recurse
-            $regex .= str_replace(' ', '\\ ', preg_quote($char, '/')) .
-                generate_trie_regex($array, $index, $i, $pos + 1);
+            $regex .=
+                str_replace(' ', '\\ ', preg_quote($char, '/')) . generate_trie_regex($array, $index, $i, $pos + 1);
         } else {
             // Not found
-            $regex .= str_replace(' ', '\\ ',
-                preg_quote(mb_substr($array[$index], $pos), '/'));
+            $regex .= str_replace(' ', '\\ ', preg_quote(mb_substr($array[$index], $pos), '/'));
         }
         $index = $i;
     }
 
-    if ($skip || $multi) $regex = '(?:' . $regex . ')';
-    if ($skip) $regex .= '?'; // Match for $pages[$offset - 1]
+    if ($skip || $multi)
+        $regex = '(?:' . $regex . ')';
+    if ($skip)
+        $regex .= '?'; // Match for $pages[$offset - 1]
 
     return $regex;
 }
@@ -778,7 +811,8 @@ function get_autoaliases($word = '')
     }
 
     // An array: All pairs
-    if ($word === '') return $pairs;
+    if ($word === '')
+        return $pairs;
 
     // A string: Seek the pair
     return isset($pairs[$word]) ? $pairs[$word] : array();
@@ -804,19 +838,20 @@ function get_autoaliases_from_aliaspage()
     if (!isset($pairs)) {
         $pairs = array();
         $pattern = <<<EOD
-\[\[                # open bracket
-((?:(?!]]).)+)>   # (1) alias name
-((?:(?!]]).)+)    # (2) alias link
-]]                # close bracket
-EOD;
+        \[\[                # open bracket
+        ((?:(?!]]).)+)>   # (1) alias name
+        ((?:(?!]]).)+)    # (2) alias link
+        ]]                # close bracket
+        EOD;
 
-        $postdata = get_source($aliaspage, TRUE, TRUE);
+        $postdata = get_source($aliaspage, true, true);
         $matches = array();
         $count = 0;
         $max = max($autoalias_max_words, 0);
         if (preg_match_all('/' . $pattern . '/x', $postdata, $matches, PREG_SET_ORDER)) {
             foreach ($matches as $key => $value) {
-                if ($count == $max) break;
+                if ($count == $max)
+                    break;
                 $name = trim($value[1]);
                 if (!isset($pairs[$name])) {
                     $paris[$name] = array();
@@ -847,19 +882,21 @@ function get_autoglossaries($word = '')
         $count = 0;
         $max = max($autoglossary_max_words, 0);
         foreach ($postdata as $line) {
-            if ($count == $max) break;
+            if ($count == $max)
+                break;
             if (preg_match($pattern, $line, $matches)) {
                 $name = trim($matches[1]);
                 if (!isset($pairs[$name])) {
                     ++$count;
-                    $pairs[$name] = TRUE;
+                    $pairs[$name] = true;
                 }
             }
         }
     }
 
     // An array: All pairs
-    if ($word === '') return $pairs;
+    if ($word === '')
+        return $pairs;
 
     // A string: Seek the pair
     return isset($pairs[$word]) ? $pairs[$word] : '';
@@ -874,7 +911,8 @@ function init_script_uri($init_uri = '', $get_init_value = 0)
     if ($init_uri == '') {
         // Get
         if (isset($script)) {
-            if ($get_init_value) return $script;
+            if ($get_init_value)
+                return $script;
             return $absolute_uri ? get_script_absuri() : $script;
         }
         $script = get_script_absuri();
@@ -882,8 +920,10 @@ function init_script_uri($init_uri = '', $get_init_value = 0)
     }
 
     // Set manually
-    if (isset($script)) die_message('$script: Already init');
-    if (!is_reluri($init_uri) && !is_url($init_uri, TRUE)) die_message('$script: Invalid URI');
+    if (isset($script))
+        die_message('$script: Already init');
+    if (!is_reluri($init_uri) && !is_url($init_uri, true))
+        die_message('$script: Invalid URI');
     $script = $init_uri;
 
     // Cut filename or not
@@ -892,8 +932,8 @@ function init_script_uri($init_uri = '', $get_init_value = 0)
             die_message('Directory index file not found: ' .
                 htmlspecialchars($script_directory_index, ENT_QUOTES, 'UTF-8'));
         $matches = array();
-        if (preg_match('#^(.+/)' . preg_quote($script_directory_index, '#') . '$#',
-            $script, $matches)) $script = $matches[1];
+        if (preg_match('#^(.+/)' . preg_quote($script_directory_index, '#') . '$#', $script, $matches))
+            $script = $matches[1];
     }
 
     return $absolute_uri ? get_script_absuri() : $script;
@@ -904,9 +944,11 @@ function get_script_uri($path = '')
 {
     global $absolute_uri, $script_directory_index;
 
-    if ($absolute_uri) return get_script_absuri();
+    if ($absolute_uri)
+        return get_script_absuri();
     $uri = get_baseuri($path);
-    if (!isset($script_directory_index)) $uri .= init_script_filename();
+    if (!isset($script_directory_index))
+        $uri .= init_script_filename();
     return $uri;
 }
 
@@ -918,23 +960,23 @@ function get_script_absuri()
     static $uri;
 
     // Get
-    if (isset($uri)) return $uri;
+    if (isset($uri))
+        return $uri;
 
     if (isset($script_abs) && is_url($script_abs, true)) {
         $uri = $script_abs;
         return $uri;
-    } else
-        if (isset($script) && is_url($script, true)) {
-            $uri = $script;
-            return $uri;
-        }
+    } else if (isset($script) && is_url($script, true)) {
+        $uri = $script;
+        return $uri;
+    }
 
     // Set automatically
     $msg = 'get_script_absuri() failed: Please set [$script or $script_abs] at INI_FILE manually';
 
-    $uri = (SERVER_PORT == 443) ? 'https://' : 'http://'; // scheme
+    $uri = SERVER_PORT == 443 ? 'https://' : 'http://'; // scheme
     $uri .= SERVER_NAME; // host
-    $uri .= (SERVER_PORT == 80 || SERVER_PORT == 443) ? '' : ':' . SERVER_PORT;  // port
+    $uri .= SERVER_PORT == 80 || SERVER_PORT == 443 ? '' : (':' . SERVER_PORT); // port
 
     // SCRIPT_NAME が'/'で始まっていない場合(cgiなど) REQUEST_URIを使ってみる
     $path = SCRIPT_NAME;
@@ -964,8 +1006,8 @@ function get_script_absuri()
             die_message('Directory index file not found: ' .
                 htmlspecialchars($script_directory_index, ENT_QUOTES, 'UTF-8'));
         $matches = array();
-        if (preg_match('#^(.+/)' . preg_quote($script_directory_index, '#') . '$#',
-            $uri, $matches)) $uri = $matches[1];
+        if (preg_match('#^(.+/)' . preg_quote($script_directory_index, '#') . '$#', $uri, $matches))
+            $uri = $matches[1];
     }
 
     return $uri;
@@ -989,13 +1031,14 @@ function get_resolve_uri($cmd = '', $page = '', $path_reference = 'rel', $query 
 {
     // global $script, $absolute_uri;
     // $ret = ($absolute_uri || $path_reference == 'abs') ? get_script_absuri() : $script;
-    $path = (empty($path_reference)) ? 'rel' : $path_reference;
+    $path = empty($path_reference) ? 'rel' : $path_reference;
     $ret = get_script_uri($path);
 
     $flag = '?';
     $page_pref = '';
 
-    if ($cmd == 'read') $cmd = '';
+    if ($cmd == 'read')
+        $cmd = '';
     if (!empty($cmd)) {
         $ret .= $flag . 'cmd=' . $cmd;
         $flag = '&';
@@ -1030,7 +1073,7 @@ function get_resolve_uri($cmd = '', $page = '', $path_reference = 'rel', $query 
     }
     unset($flag, $page_pref);
     // return ($location) ? $ret : htmlspecialchars( str_replace('&amp;','&',$ret), ENT_QUOTES, 'UTF-8' );
-    return ($location) ? $ret : htmlspecialchars($ret, ENT_QUOTES, 'UTF-8');
+    return $location ? $ret : htmlspecialchars($ret, ENT_QUOTES, 'UTF-8');
 }
 
 // Obsolete (明示指定用)
@@ -1068,15 +1111,16 @@ function get_location_uri($cmd = '', $page = '', $query = '', $fragment = '')
 //
 function input_filter($param): array|string
 {
-    static $magic_quotes_gpc = NULL;
-    if ($magic_quotes_gpc === NULL)
+    static $magic_quotes_gpc = null;
+    if ($magic_quotes_gpc === null)
         $magic_quotes_gpc = 0; // get_magic_quotes_gpc();
 
     if (is_array($param)) {
         return array_map('input_filter', $param);
     } else {
         $result = str_replace("\0", '', $param);
-        if ($magic_quotes_gpc) $result = stripslashes($result);
+        if ($magic_quotes_gpc)
+            $result = stripslashes($result);
         return $result;
     }
 }
@@ -1093,8 +1137,13 @@ function csv_explode($separator, $string)
     $retval = $matches = array();
 
     $_separator = preg_quote($separator, '/');
-    if (!preg_match_all('/("[^"]*(?:""[^"]*)*"|[^' . $_separator . ']*)' .
-        $_separator . '/', $string . $separator, $matches))
+    if (
+        !preg_match_all(
+            '/("[^"]*(?:""[^"]*)*"|[^' . $_separator . ']*)' . $_separator . '/',
+            $string . $separator,
+            $matches,
+        )
+    )
         return array();
 
     foreach ($matches[1] as $str) {
@@ -1109,7 +1158,7 @@ function csv_explode($separator, $string)
 // Implode an array with CSV data format (escape double quotes)
 function csv_implode($glue, $pieces): string
 {
-    $_glue = ($glue != '') ? '\\' . $glue[0] : '';
+    $_glue = $glue != '' ? ('\\' . $glue[0]) : '';
     $arr = array();
     foreach ($pieces as $str) {
         if (ereg('[' . $_glue . '"' . "\n\r" . ']', $str))
@@ -1122,7 +1171,9 @@ function csv_implode($glue, $pieces): string
 // Sugar with default settings
 function htmlsc($string = '', $flags = ENT_COMPAT, $charset = CONTENT_CHARSET)
 {
-	return htmlspecialchars($string, $flags, $charset);	// htmlsc()
+    return htmlspecialchars($string, $flags, $charset);
+
+    // htmlsc()
 }
 
 /**
@@ -1130,14 +1181,13 @@ function htmlsc($string = '', $flags = ENT_COMPAT, $charset = CONTENT_CHARSET)
  */
 function htmlsc_json($obj)
 {
-	// json_encode: PHP 5.2+
-	// JSON_UNESCAPED_UNICODE: PHP 5.4+
-	// JSON_UNESCAPED_SLASHES: PHP 5.4+
-	if (defined('JSON_UNESCAPED_UNICODE')) {
-		return htmlsc(json_encode($obj,
-			JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-	}
-	return '';
+    // json_encode: PHP 5.2+
+    // JSON_UNESCAPED_UNICODE: PHP 5.4+
+    // JSON_UNESCAPED_SLASHES: PHP 5.4+
+    if (defined('JSON_UNESCAPED_UNICODE')) {
+        return htmlsc(json_encode($obj, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+    }
+    return '';
 }
 
 /**
@@ -1149,23 +1199,24 @@ function htmlsc_json($obj)
  * @param $page page name
  * @return new page name or false
  */
-function get_pagename_on_redirect($page) {
-	global $page_redirect_rules;
-	foreach ($page_redirect_rules as $rule=>$replace) {
-		if (preg_match($rule, $page)) {
-			if (is_string($replace)) {
-				$new_page = preg_replace($rule, $replace, $page);
-			} elseif (is_object($replace) && is_callable($replace)) {
-				$new_page = preg_replace_callback($rule, $replace, $page);
-			} else {
-				die_message('Invalid redirect rule: ' . $rule . '=>' . $replace);
-			}
-			if ($page !== $new_page) {
-				return $new_page;
-			}
-		}
-	}
-	return false;
+function get_pagename_on_redirect($page)
+{
+    global $page_redirect_rules;
+    foreach ($page_redirect_rules as $rule => $replace) {
+        if (preg_match($rule, $page)) {
+            if (is_string($replace)) {
+                $new_page = preg_replace($rule, $replace, $page);
+            } elseif (is_object($replace) && is_callable($replace)) {
+                $new_page = preg_replace_callback($rule, $replace, $page);
+            } else {
+                die_message('Invalid redirect rule: ' . $rule . '=>' . $replace);
+            }
+            if ($page !== $new_page) {
+                return $new_page;
+            }
+        }
+    }
+    return false;
 }
 
 /**
@@ -1177,61 +1228,66 @@ function get_pagename_on_redirect($page) {
  *
  * @return bool Inticates a redirection occurred or not
  */
-function manage_page_redirect() {
-	global $vars;
-	if (isset($vars['page'])) {
-		$page = $vars['page'];
-	}
-	$new_page = get_pagename_on_redirect($page);
-	if ($new_page != false) {
-		header('Location: ' . get_page_uri($new_page, PKWK_URI_ROOT));
-		return TRUE;
-	}
-	return FALSE;
+function manage_page_redirect()
+{
+    global $vars;
+    if (isset($vars['page'])) {
+        $page = $vars['page'];
+    }
+    $new_page = get_pagename_on_redirect($page);
+    if ($new_page != false) {
+        header('Location: ' . get_page_uri($new_page, PKWK_URI_ROOT));
+        return true;
+    }
+    return false;
 }
 
 /**
  * Return 'u' (PCRE_UTF8) if PHP7+ and UTF-8.
  */
-function get_preg_u() {
-	static $utf8u; // 'u'(PCRE_UTF8) or ''
-	if (! isset($utf8u)) {
-		if (version_compare('7.0.0', PHP_VERSION, '<=')
-			&& defined('PKWK_UTF8_ENABLE')) {
-			$utf8u = 'u';
-		} else {
-			$utf8u = '';
-		}
-	}
-	return $utf8u;
+function get_preg_u()
+{
+    static $utf8u; // 'u'(PCRE_UTF8) or ''
+    if (!isset($utf8u)) {
+        if (version_compare('7.0.0', PHP_VERSION, '<=') && defined('PKWK_UTF8_ENABLE')) {
+            $utf8u = 'u';
+        } else {
+            $utf8u = '';
+        }
+    }
+    return $utf8u;
 }
 
 // Default Page name - URI mapping handler
-class PukiWikiStandardPageURIHandler {
-	function filter_raw_query_string($query_string) {
-		return $query_string;
-	}
+class PukiWikiStandardPageURIHandler
+{
+    function filter_raw_query_string($query_string)
+    {
+        return $query_string;
+    }
 
-	function get_page_uri_virtual_query($page) {
-		return '?' . pagename_urlencode($page);
-	}
+    function get_page_uri_virtual_query($page)
+    {
+        return '?' . pagename_urlencode($page);
+    }
 
-	function get_page_from_query_string($query_string) {
-		$param1st = preg_replace("#^([^&]*)&.*$#", "$1", $query_string);
-		if ($param1st == '') {
-			return null; // default page
-		}
-		if (strpos($param1st, '=') !== FALSE) {
-			// Found '/?key=value' (Top page with additional query params)
-			return null; // default page
-		}
-		$page = urldecode($param1st);
-		$page2 = input_filter($page);
-		if ($page !== $page2) {
-			return FALSE; // Error page
-		}
-		return $page2;
-	}
+    function get_page_from_query_string($query_string)
+    {
+        $param1st = preg_replace('#^([^&]*)&.*$#', '$1', $query_string);
+        if ($param1st == '') {
+            return null; // default page
+        }
+        if (strpos($param1st, '=') !== false) {
+            // Found '/?key=value' (Top page with additional query params)
+            return null; // default page
+        }
+        $page = urldecode($param1st);
+        $page2 = input_filter($page);
+        if ($page !== $page2) {
+            return false; // Error page
+        }
+        return $page2;
+    }
 }
 
 //// Compat ////
@@ -1239,16 +1295,16 @@ class PukiWikiStandardPageURIHandler {
 // is_a --  Returns TRUE if the object is of this class or has this class as one of its parents
 // (PHP 4 >= 4.2.0)
 if (!function_exists('is_a')) {
-
     function is_a($class, $match): bool
     {
-        if (empty($class)) return FALSE;
+        if (empty($class))
+            return false;
 
         $class = is_object($class) ? get_class($class) : $class;
         if (strtolower($class) == strtolower($match)) {
-            return TRUE;
+            return true;
         } else {
-            return is_a(get_parent_class($class), $match);    // Recurse
+            return is_a(get_parent_class($class), $match); // Recurse
         }
     }
 }
@@ -1256,11 +1312,11 @@ if (!function_exists('is_a')) {
 // array_fill -- Fill an array with values
 // (PHP 4 >= 4.2.0)
 if (!function_exists('array_fill')) {
-
     function array_fill($start_index, $num, $value)
     {
         $ret = array();
-        while ($num-- > 0) $ret[$start_index++] = $value;
+        while ($num-- > 0)
+            $ret[$start_index++] = $value;
         return $ret;
     }
 }
@@ -1268,13 +1324,14 @@ if (!function_exists('array_fill')) {
 // md5_file -- Calculates the md5 hash of a given filename
 // (PHP 4 >= 4.2.0)
 if (!function_exists('md5_file')) {
-
     function md5_file($filename)
     {
-        if (!file_exists($filename)) return FALSE;
+        if (!file_exists($filename))
+            return false;
 
         $fd = fopen($filename, 'rb');
-        if ($fd === FALSE) return FALSE;
+        if ($fd === false)
+            return false;
         $data = fread($fd, filesize($filename));
         fclose($fd);
         return md5($data);
@@ -1291,4 +1348,3 @@ if (!function_exists('sha1')) {
         }
     }
 }
-

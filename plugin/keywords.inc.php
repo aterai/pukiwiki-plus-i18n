@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 //
@@ -7,14 +8,15 @@
 
 function plugin_keywords_convert()
 {
-	global $head_tags;
+    global $head_tags;
 
-	$num = func_num_args();
-	if ($num == 0) { return 'Usage: #keywords(keyword,...)'; }
-	$args = func_get_args();
-	$contents = array_map("htmlspecialchars", $args);
+    $num = func_num_args();
+    if ($num == 0) {
+        return 'Usage: #keywords(keyword,...)';
+    }
+    $args = func_get_args();
+    $contents = array_map('htmlspecialchars', $args);
 
-	$head_tags[] = '<meta name="keywords" content="'.join(',', $contents).'" />';
-	return '';
+    $head_tags[] = '<meta name="keywords" content="' . join(',', $contents) . '" />';
+    return '';
 }
-

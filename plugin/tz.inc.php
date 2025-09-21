@@ -1,4 +1,5 @@
 <?php
+
 /**
  * tzCalculation_LocalTimeZone Plugin
  *
@@ -9,23 +10,23 @@
  */
 function plugin_tz_convert()
 {
-	global $use_local_time;
+    global $use_local_time;
 
-	if ($use_local_time) return '';
-	if (isset($_COOKIE['timezone'])) return '';
-	$url = parse_url( get_script_absuri() );
+    if ($use_local_time)
+        return '';
+    if (isset($_COOKIE['timezone']))
+        return '';
+    $url = parse_url(get_script_absuri());
 
-	if (empty($url['host'])) return '';
+    if (empty($url['host']))
+        return '';
 
-	return <<<EOD
+    return <<<EOD
 
-<script type="text/javascript">
-<!--
-    tzCalculation_LocalTimeZone ('{$url['host']}',false);
--->
-</script>
-EOD;
-
+    <script type="text/javascript">
+    <!--
+        tzCalculation_LocalTimeZone ('{$url['host']}',false);
+    -->
+    </script>
+    EOD;
 }
-
-

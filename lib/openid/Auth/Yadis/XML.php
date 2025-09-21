@@ -18,7 +18,8 @@
  *
  * @package OpenID
  */
-class Auth_Yadis_XMLParser {
+class Auth_Yadis_XMLParser
+{
     /**
      * Initialize an instance of Auth_Yadis_XMLParser with some
      * XML and namespaces.  This SHOULD NOT be overridden by
@@ -133,7 +134,8 @@ class Auth_Yadis_XMLParser {
  *
  * @package OpenID
  */
-class Auth_Yadis_domxml extends Auth_Yadis_XMLParser {
+class Auth_Yadis_domxml extends Auth_Yadis_XMLParser
+{
     function Auth_Yadis_domxml()
     {
         $this->xml = null;
@@ -145,8 +147,7 @@ class Auth_Yadis_domxml extends Auth_Yadis_XMLParser {
     function setXML($xml_string)
     {
         $this->xml = $xml_string;
-        $this->doc = @domxml_open_mem($xml_string, DOMXML_LOAD_PARSING,
-                                      $this->errors);
+        $this->doc = @domxml_open_mem($xml_string, DOMXML_LOAD_PARSING, $this->errors);
 
         if (!$this->doc) {
             return false;
@@ -216,7 +217,8 @@ class Auth_Yadis_domxml extends Auth_Yadis_XMLParser {
  *
  * @package OpenID
  */
-class Auth_Yadis_dom extends Auth_Yadis_XMLParser {
+class Auth_Yadis_dom extends Auth_Yadis_XMLParser
+{
     function Auth_Yadis_dom()
     {
         $this->xml = null;
@@ -228,7 +230,7 @@ class Auth_Yadis_dom extends Auth_Yadis_XMLParser {
     function setXML($xml_string)
     {
         $this->xml = $xml_string;
-        $this->doc = new DOMDocument;
+        $this->doc = new DOMDocument();
 
         if (!$this->doc) {
             return false;
@@ -313,17 +315,15 @@ $__Auth_Yadis_defaultParser = null;
 function Auth_Yadis_setDefaultParser(&$parser)
 {
     global $__Auth_Yadis_defaultParser;
-    $__Auth_Yadis_defaultParser =& $parser;
+    $__Auth_Yadis_defaultParser = &$parser;
 }
 
 function Auth_Yadis_getSupportedExtensions()
 {
     return array(
-                 'dom' => array('classname' => 'Auth_Yadis_dom',
-                       'libname' => array('dom.so', 'dom.dll')),
-                 'domxml' => array('classname' => 'Auth_Yadis_domxml',
-                       'libname' => array('domxml.so', 'php_domxml.dll')),
-                 );
+        'dom' => array('classname' => 'Auth_Yadis_dom', 'libname' => array('dom.so', 'dom.dll')),
+        'domxml' => array('classname' => 'Auth_Yadis_domxml', 'libname' => array('domxml.so', 'php_domxml.dll')),
+    );
 }
 
 /**
@@ -370,5 +370,3 @@ function &Auth_Yadis_getXMLParser()
 
     return $p;
 }
-
-

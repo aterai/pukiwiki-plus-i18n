@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 //
@@ -7,16 +8,17 @@
 
 function plugin_description_convert()
 {
-	global $head_tags;
+    global $head_tags;
 
-	$num = func_num_args();
-	if ($num == 0) { return 'Usage: #description(description)'; }
-	$args = func_get_args();
+    $num = func_num_args();
+    if ($num == 0) {
+        return 'Usage: #description(description)';
+    }
+    $args = func_get_args();
     //$content = htmlspecialchars(implode(',', $args));
-	$contents = array_map("htmlspecialchars", $args);
-	array_push($head_tags, '<meta name="description" content="'.join(',', $contents).'" />');
-	//array_push($head_tags, '<meta name="description" content="'.$content.'" />');
-	//$head_tags[] = '<meta http-equiv="Description" content="'.$content.'" />';
-	return '';
+    $contents = array_map('htmlspecialchars', $args);
+    array_push($head_tags, '<meta name="description" content="' . join(',', $contents) . '" />');
+    //array_push($head_tags, '<meta name="description" content="'.$content.'" />');
+    //$head_tags[] = '<meta http-equiv="Description" content="'.$content.'" />';
+    return '';
 }
-

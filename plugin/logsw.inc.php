@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PukiWiki Plus! ログ有効化プラグイン
  *
@@ -12,11 +13,11 @@ defined('USE_FREEZE_ONLY') or define('USE_FREEZE_ONLY', '1');
 
 function plugin_logsw_convert()
 {
-	global $log, $vars;
+    global $log, $vars;
 
-	if ($log['browse']['use']) return;
-	if (USE_FREEZE_ONLY && !is_freeze($vars['page'])) return;
-	$log['browse']['use'] = 1;
+    if ($log['browse']['use'])
+        return;
+    if (USE_FREEZE_ONLY && !is_freeze($vars['page']))
+        return;
+    $log['browse']['use'] = 1;
 }
-
-

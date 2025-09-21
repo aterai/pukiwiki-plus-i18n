@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki - Yet another WikiWikiWeb clone
 // $Id: version.inc.php,v 1.9.1 2007/01/21 14:25:25 miko Exp $
 // Copyright (C)
@@ -10,17 +11,18 @@
 
 function plugin_version_value()
 {
-//	if (PKWK_SAFE_MODE) return '';
-	if (auth::check_role('safemode')) return '';
-	return S_VERSION;
+    //	if (PKWK_SAFE_MODE) return '';
+    if (auth::check_role('safemode'))
+        return '';
+    return S_VERSION;
 }
 
 function plugin_version_convert()
 {
-	return '<p>' . plugin_version_value() . '</p>';
+    return '<p>' . plugin_version_value() . '</p>';
 }
 
 function plugin_version_inline()
 {
-	return plugin_version_value();
+    return plugin_version_value();
 }

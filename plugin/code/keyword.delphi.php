@@ -1,38 +1,43 @@
 <?php
+
 /**
  * Delphi
  */
 
-$mkoutline = $option['outline'] = false; // アウトラインモード不可 
+$mkoutline = $option['outline'] = false; // アウトラインモード不可
 $switchHash['\''] = PLUGIN_CODE_NONESCAPE_LITERAL;
 
 // コメント定義
-$switchHash['('] = PLUGIN_CODE_COMMENT;       // コメントは (* から *) まで
-$switchHash['{'] = PLUGIN_CODE_COMMENT;       // コメントは { から } まで
-$switchHash['/'] = PLUGIN_CODE_COMMENT;       // コメントは // から改行まで
+$switchHash['('] = PLUGIN_CODE_COMMENT; // コメントは (* から *) まで
+$switchHash['{'] = PLUGIN_CODE_COMMENT; // コメントは { から } まで
+$switchHash['/'] = PLUGIN_CODE_COMMENT; // コメントは // から改行まで
 
-$code_comment = Array(
-	'(' => Array(
-				 Array('/^\(\*/', '*)', 2),
-		),
-	'{' => Array(
-				 Array('/^{/', '}', 1),
-		),
-	'/' => Array(
-				 Array('/^\/\//', "\n", 1),
-		),
+$code_comment = array(
+    '(' => array(
+        array('/^\(\*/', '*)', 2),
+    ),
+    '{' => array(
+        array('/^{/', '}', 1),
+    ),
+    '/' => array(
+        array('/^\/\//', "\n", 1),
+    ),
 );
 
-$code_css = Array(
-  'operator',		// オペレータ関数
-  'identifier',	// その他の識別子
-  'pragma',		// module, import と pragma
-  'system',		// 処理系組み込みの奴 __stdcall とか
-  );
+$code_css = array(
+    'operator',
+    // オペレータ関数
+    'identifier',
+    // その他の識別子
+    'pragma',
+    // module, import と pragma
+    'system',
+    // 処理系組み込みの奴 __stdcall とか
+);
 
-$code_keyword = Array(
-  //'operator',		// オペレータ関数
-  //'identifier',	// その他の識別子
+$code_keyword = array(
+    //'operator',		// オペレータ関数
+    //'identifier',	// その他の識別子
     // 制御
     'begin' => 2,
     'case' => 2,
@@ -57,7 +62,6 @@ $code_keyword = Array(
     'until' => 2,
     'while' => 2,
     'with' => 2,
-
     // 型
     'array' => 2,
     'class' => 2,
@@ -72,11 +76,9 @@ $code_keyword = Array(
     'set' => 2,
     'string' => 2,
     'var' => 2,
-
     // 変数
     'inherited' => 2,
     'nil' => 2,
-
     // 演算
     'and' => 2,
     'as' => 2,
@@ -89,7 +91,6 @@ $code_keyword = Array(
     'shl' => 2,
     'shr' => 2,
     'xor' => 2,
-
     // pragma
     'abstract' => 2,
     'default' => 2,
@@ -104,33 +105,27 @@ $code_keyword = Array(
     'stored' => 2,
     'virtual' => 2,
     'write' => 2,
-
     // system
     'asm' => 2,
     'assembler' => 2,
     'exports' => 2,
     'name' => 2,
-
     'interface' => 2,
     'implementation' => 2,
     'initialization' => 2,
     'finalization' => 2,
-
     'pascal' => 2,
     'program' => 2,
     'library' => 2,
     'unit' => 2,
     'uses' => 2,
-
     'type' => 2,
     'private' => 2,
     'protected' => 2,
     'public' => 2,
     'published' => 2,
-
     // dfm
     'object' => 2,
-
     // 見たことない
     'absolute' => 2,
     'automated' => 2,
@@ -144,6 +139,6 @@ $code_keyword = Array(
     'register' => 2,
     'resident' => 2,
     'threadvar' => 2,
-  //'pragma',		// module, import と pragma
-  //'system',		// 処理系組み込みの奴 __stdcall とか
-  );
+    //'pragma',		// module, import と pragma
+    //'system',		// 処理系組み込みの奴 __stdcall とか
+);

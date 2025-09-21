@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PukiWiki Plus! 推定ユーザプラグイン
  *
@@ -12,12 +13,12 @@
  */
 function plugin_log_whois_init()
 {
-	$messages = array(
-	'_log_whois_msg' => array(
-		'msg_whois'	=> _('<div>Mr/Ms %s ?</div>'),
-		)
-	);
-	set_plugin_messages($messages);
+    $messages = array(
+        '_log_whois_msg' => array(
+            'msg_whois' => _('<div>Mr/Ms %s ?</div>'),
+        ),
+    );
+    set_plugin_messages($messages);
 }
 
 /**
@@ -25,32 +26,35 @@ function plugin_log_whois_init()
  */
 function plugin_log_whois_convert()
 {
-	global $log;
-	global $log_ua;
-	global $_log_whois_msg;
+    global $log;
+    global $log_ua;
+    global $_log_whois_msg;
 
-	if (!$log['guess_user']['use']) return '';	// 推定ユーザ処理が無効の場合
-	$filename = log::set_filename('guess_user','');	// ログファイル名
+    if (!$log['guess_user']['use'])
+        return '';
+    // 推定ユーザ処理が無効の場合
+    $filename = log::set_filename('guess_user', '');
 
-	// ログの読み込み
-	if (!file_exists($filename)) return '';
-	$src = @file( $filename );
-	$guess = array();
-	foreach($src as $_src) {
-		$data = log::table2array($_src);
-		// 0:ua 1:host 2:user
-		$guess[$data[0]][$data[1]][$data[2]] = '';
-	}
+    // ログファイル名
 
-	$host = log::ip2host();
-	if (!isset($guess[$log_ua][$host])) return '';
+    // ログの読み込み
+    if (!file_exists($filename))
+        return '';
+    $src = @file($filename);
+    $guess = array();
+    foreach ($src as $_src) {
+        $data = log::table2array($_src);
+        // 0:ua 1:host 2:user
+        $guess[$data[0]][$data[1]][$data[2]] = '';
+    }
 
-	$uname = '';
-	foreach ($guess[$log_ua][$host] as $user => $val) {
-		$uname .= (!empty($uname)) ? ','.$user : $user;
-	}
-	return sprintf($_log_whois_msg['msg_whois'],$uname);
+    $host = log::ip2host();
+    if (!isset($guess[$log_ua][$host]))
+        return '';
 
+    $uname = '';
+    foreach ($guess[$log_ua][$host] as $user => $val) {
+        $uname .= !empty($uname) ? (',' . $user) : $user;
+    }
+    return sprintf($_log_whois_msg['msg_whois'], $uname);
 }
-
-

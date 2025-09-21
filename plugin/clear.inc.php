@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki - Yet another WikiWikiWeb clone
 // $Id: clear.inc.php,v 1.4 2004/11/27 10:01:21 henoheno Exp $
 //
@@ -6,6 +7,5 @@
 
 function plugin_clear_convert()
 {
-	return '<div class="clear"></div>';
+    return '<div class="clear"></div>';
 }
-

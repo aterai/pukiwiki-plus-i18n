@@ -1,8 +1,10 @@
 <?php
-function plugin_adsensebar_convert() {
+
+function plugin_adsensebar_convert()
+{
     return <<<EOD
-<!-- banner test -->
-EOD;
+    <!-- banner test -->
+    EOD;
 }
 
 // <?php

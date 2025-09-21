@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki - Yet another WikiWikiWeb clone.
 // $Id: md5.inc.php,v 1.24.3 2008/01/05 23:16:00 upk Exp $
 // Copyright (C)
@@ -17,121 +18,131 @@
 // User interface of pkwk_hash_compute() for system admin
 function plugin_md5_action()
 {
-	global $get, $post;
+    global $get, $post;
 
-	// if (PKWK_SAFE_MODE || PKWK_READONLY) die_message(_('Prohibited'));
-	if (auth::check_role('safemode') || auth::check_role('readonly')) die_message(_('Prohibited'));
+    // if (PKWK_SAFE_MODE || PKWK_READONLY) die_message(_('Prohibited'));
+    if (auth::check_role('safemode') || auth::check_role('readonly'))
+        die_message(_('Prohibited'));
 
-	// Wait POST
-	$phrase = isset($post['phrase']) ? $post['phrase'] : '';
+    // Wait POST
+    $phrase = isset($post['phrase']) ? $post['phrase'] : '';
 
-	if ($phrase == '') {
-		// Show the form
+    if ($phrase == '') {
+        // Show the form
 
-		// If plugin=md5&md5=password, only set it (Don't compute)
-		$value  = isset($get['md5']) ? $get['md5'] : '';
+        // If plugin=md5&md5=password, only set it (Don't compute)
+        $value = isset($get['md5']) ? $get['md5'] : '';
 
-		return array(
-			'msg' =>'Compute userPassword',
-			'body'=>plugin_md5_show_form(isset($post['phrase']), $value));
+        return array(
+            'msg' => 'Compute userPassword',
+            'body' => plugin_md5_show_form(isset($post['phrase']), $value),
+        );
+    } else {
+        // Compute (Don't show its $phrase at the same time)
 
-	} else {
-		// Compute (Don't show its $phrase at the same time)
+        $prefix = isset($post['prefix']);
+        $salt = isset($post['salt']) ? $post['salt'] : '';
 
-		$prefix = isset($post['prefix']);
-		$salt   = isset($post['salt']) ? $post['salt'] : '';
+        // With scheme-prefix or not
+        if (!preg_match('/^\{.+\}.*$/', $salt)) {
+            $scheme = isset($post['scheme']) ? ('{' . $post['scheme'] . '}') : '';
+            $salt = $scheme . $salt;
+        }
 
-		// With scheme-prefix or not
-		if (! preg_match('/^\{.+\}.*$/', $salt)) {
-			$scheme = isset($post['scheme']) ? '{' . $post['scheme'] . '}': '';
-			$salt   = $scheme . $salt;
-		}
-
-		return array(
-			'msg' =>'Result',
-			'body'=>
-				//($prefix ? 'userPassword: ' : '') .
-				pkwk_hash_compute($phrase, $salt, $prefix, TRUE));
-	}
+        return array(
+            'msg' => 'Result',
+            'body' =>
+                //($prefix ? 'userPassword: ' : '') .
+                pkwk_hash_compute($phrase, $salt, $prefix, true),
+        );
+    }
 }
 
 // $nophrase = Passphrase is (submitted but) empty
 // $value    = Default passphrase value
-function plugin_md5_show_form($nophrase = FALSE, $value = '')
+function plugin_md5_show_form($nophrase = false, $value = '')
 {
-	global $script;
+    global $script;
 
-	// if (PKWK_SAFE_MODE || PKWK_READONLY) die_message(_('Prohibited'));
-	if (auth::check_role('safemode') || auth::check_role('readonly')) die_message(_('Prohibited'));
-	if (strlen($value) > PKWK_PASSPHRASE_LIMIT_LENGTH)
-		die_message(_('Limit: malicious message length'));
+    // if (PKWK_SAFE_MODE || PKWK_READONLY) die_message(_('Prohibited'));
+    if (auth::check_role('safemode') || auth::check_role('readonly'))
+        die_message(_('Prohibited'));
+    if (strlen($value) > PKWK_PASSPHRASE_LIMIT_LENGTH)
+        die_message(_('Limit: malicious message length'));
 
-	if ($value != '') $value = 'value="' . htmlspecialchars($value) . '" ';
+    if ($value != '')
+        $value = 'value="' . htmlspecialchars($value) . '" ';
 
-	$sha1_enabled = function_exists('sha1');
-	$sha1_checked = $md5_checked = '';
-	if ($sha1_enabled) {
-		$sha1_checked = 'checked="checked" ';
-	} else {
-		$md5_checked  = 'checked="checked" ';
-	}
+    $sha1_enabled = function_exists('sha1');
+    $sha1_checked = $md5_checked = '';
+    if ($sha1_enabled) {
+        $sha1_checked = 'checked="checked" ';
+    } else {
+        $md5_checked = 'checked="checked" ';
+    }
 
-	$form = '<p><strong>'
-	      . _("NOTICE: Don't use this feature via untrustful or unsure network")
-	      . '</strong></p>' . "\n" . '<hr />' . "\n";
+    $form =
+        '<p><strong>' .
+        _("NOTICE: Don't use this feature via untrustful or unsure network") .
+        '</strong></p>' .
+        "\n" .
+        '<hr />' .
+        "\n";
 
-	if ($nophrase) $form .= '<strong>' . _("NO PHRASE") . '</strong><br />';
+    if ($nophrase)
+        $form .= '<strong>' . _('NO PHRASE') . '</strong><br />';
 
-	$form .= <<<EOD
-<form action="$script" method="post">
- <div>
-  <input type="hidden" name="plugin" value="md5" />
-  <label for="_p_md5_phrase">Phrase:</label>
-  <input type="text" name="phrase"  id="_p_md5_phrase" size="60" $value/><br />
-EOD;
+    $form .= <<<EOD
+    <form action="$script" method="post">
+     <div>
+      <input type="hidden" name="plugin" value="md5" />
+      <label for="_p_md5_phrase">Phrase:</label>
+      <input type="text" name="phrase"  id="_p_md5_phrase" size="60" $value/><br />
+    EOD;
 
-	if ($sha1_enabled) $form .= <<<EOD
-  <input type="radio" name="scheme" id="_p_md5_sha1" value="x-php-sha1" />
-  <label for="_p_md5_sha1">PHP sha1()</label><br />
-EOD;
+    if ($sha1_enabled)
+        $form .= <<<EOD
+          <input type="radio" name="scheme" id="_p_md5_sha1" value="x-php-sha1" />
+          <label for="_p_md5_sha1">PHP sha1()</label><br />
+        EOD;
 
-	$form .= <<<EOD
-  <input type="radio" name="scheme" id="_p_md5_md5"  value="x-php-md5" />
-  <label for="_p_md5_md5">PHP md5()</label><br />
-  <input type="radio" name="scheme" id="_p_md5_crpt" value="x-php-crypt" />
-  <label for="_p_md5_crpt">PHP crypt() *</label><br />
-EOD;
+    $form .= <<<EOD
+      <input type="radio" name="scheme" id="_p_md5_md5"  value="x-php-md5" />
+      <label for="_p_md5_md5">PHP md5()</label><br />
+      <input type="radio" name="scheme" id="_p_md5_crpt" value="x-php-crypt" />
+      <label for="_p_md5_crpt">PHP crypt() *</label><br />
+    EOD;
 
-	if ($sha1_enabled) $form .= <<<EOD
-  <input type="radio" name="scheme" id="_p_md5_lssha" value="SSHA" $sha1_checked/>
-  <label for="_p_md5_lssha">LDAP SSHA (sha-1 with a seed) *</label><br />
-  <input type="radio" name="scheme" id="_p_md5_lsha" value="SHA" />
-  <label for="_p_md5_lsha">LDAP SHA (sha-1)</label><br />
-EOD;
+    if ($sha1_enabled)
+        $form .= <<<EOD
+          <input type="radio" name="scheme" id="_p_md5_lssha" value="SSHA" $sha1_checked/>
+          <label for="_p_md5_lssha">LDAP SSHA (sha-1 with a seed) *</label><br />
+          <input type="radio" name="scheme" id="_p_md5_lsha" value="SHA" />
+          <label for="_p_md5_lsha">LDAP SHA (sha-1)</label><br />
+        EOD;
 
-	$form .= <<<EOD
-  <input type="radio" name="scheme" id="_p_md5_lsmd5" value="SMD5" $md5_checked/>
-  <label for="_p_md5_lsmd5">LDAP SMD5 (md5 with a seed) *</label><br />
-  <input type="radio" name="scheme" id="_p_md5_lmd5" value="MD5" />
-  <label for="_p_md5_lmd5">LDAP MD5</label><br />
+    $form .= <<<EOD
+      <input type="radio" name="scheme" id="_p_md5_lsmd5" value="SMD5" $md5_checked/>
+      <label for="_p_md5_lsmd5">LDAP SMD5 (md5 with a seed) *</label><br />
+      <input type="radio" name="scheme" id="_p_md5_lmd5" value="MD5" />
+      <label for="_p_md5_lmd5">LDAP MD5</label><br />
 
-  <input type="radio" name="scheme" id="_p_md5_lcrpt" value="CRYPT" />
-  <label for="_p_md5_lcrpt">LDAP CRYPT *</label><br />
+      <input type="radio" name="scheme" id="_p_md5_lcrpt" value="CRYPT" />
+      <label for="_p_md5_lcrpt">LDAP CRYPT *</label><br />
 
-  <input type="checkbox" name="prefix" id="_p_md5_prefix" checked="checked" />
-  <label for="_p_md5_prefix">Add scheme prefix (RFC2307, Using LDAP as NIS)</label><br />
+      <input type="checkbox" name="prefix" id="_p_md5_prefix" checked="checked" />
+      <label for="_p_md5_prefix">Add scheme prefix (RFC2307, Using LDAP as NIS)</label><br />
 
-  <label for="_p_md5_salt">Salt, '{scheme}', '{scheme}salt', or userPassword itself to specify:</label><br />
-  <input type="text" name="salt" id="_p_md5_salt" size="60" /><br />
+      <label for="_p_md5_salt">Salt, '{scheme}', '{scheme}salt', or userPassword itself to specify:</label><br />
+      <input type="text" name="salt" id="_p_md5_salt" size="60" /><br />
 
-  <input type="submit" value="Compute" /><br />
+      <input type="submit" value="Compute" /><br />
 
-  <hr>
-  <p>* = Salt enabled<p/>
- </div>
-</form>
-EOD;
+      <hr>
+      <p>* = Salt enabled<p/>
+     </div>
+    </form>
+    EOD;
 
-	return $form;
+    return $form;
 }
-

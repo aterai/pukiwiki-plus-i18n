@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * PukiWiki - Yet another WikiWikiWeb clone.
@@ -30,23 +31,25 @@
  * @return    Void
  */
 
-function make_backup(string $page, bool $delete = FALSE): void
+function make_backup(string $page, bool $delete = false): void
 {
     global $cycle, $maxage;
     global $do_backup, $del_backup;
 
     // if (PKWK_READONLY || ! $do_backup) return;
-    if (auth::check_role('readonly') || !$do_backup) return;
+    if (auth::check_role('readonly') || !$do_backup)
+        return;
 
     if ($del_backup && $delete) {
         _backup_delete($page);
         return;
     }
 
-    if (!is_page($page)) return;
+    if (!is_page($page))
+        return;
 
     $lastmod = _backup_get_filetime($page);
-    if ($lastmod == 0 || UTIME - $lastmod > 60 * 60 * $cycle) {
+    if ($lastmod == 0 || (UTIME - $lastmod) > (60 * 60 * $cycle)) {
         $backups = get_backup($page);
         $count = count($backups) + 1;
 
@@ -71,9 +74,10 @@ function make_backup(string $page, bool $delete = FALSE): void
         $body = PKWK_SPLITTER . ' ' . get_filetime($page) . ' ' . UTIME . "\n" . join('', $body);
         $body = preg_replace("/\n*$/", "\n", $body);
 
-        $fp = _backup_fopen($page, 'wb')
-        or die_message('Cannot open ' . htmlspecialchars(_backup_get_filename($page), ENT_QUOTES, 'UTF-8') .
-            '<br />Maybe permission is not writable or filename is too long');
+        ($fp = _backup_fopen($page, 'wb')) or
+            die_message('Cannot open ' .
+            htmlspecialchars(_backup_get_filename($page), ENT_QUOTES, 'UTF-8') .
+                '<br />Maybe permission is not writable or filename is too long');
         _backup_fputs($fp, $strout);
         _backup_fputs($fp, $body);
         _backup_fclose($fp);
@@ -96,7 +100,8 @@ function make_backup(string $page, bool $delete = FALSE): void
 function get_backup($page, $age = 0)
 {
     $lines = _backup_file($page);
-    if (!is_array($lines)) return array();
+    if (!is_array($lines))
+        return array();
 
     $_age = 0;
     $retvars = $match = array();
@@ -106,8 +111,7 @@ function get_backup($page, $age = 0)
     foreach ($lines as $index => $line) {
         // BugTrack/685 by UPK
         // if (preg_match($regex_splitter, $line, $match)) {
-        if (preg_match($regex_splitter, $line, $match) ||
-            preg_match($regex_splitter_new, $line, $match)) {
+        if (preg_match($regex_splitter, $line, $match) || preg_match($regex_splitter_new, $line, $match)) {
             // A splitter, tells new data of backup will come
             ++$_age;
             if ($age > 0 && $_age > $age)
@@ -115,7 +119,7 @@ function get_backup($page, $age = 0)
 
             // BugTrack/685 by UPK
             // $retvars[$_age] = array('time'=>$match[1], 'data'=>array());
-            $now = (isset($match[2])) ? $match[2] : $match[1];
+            $now = isset($match[2]) ? $match[2] : $match[1];
             // Allocate
             $retvars[$_age] = array('time' => $match[1], 'real' => $now, 'data' => array());
         } else {
@@ -168,8 +172,7 @@ function _backup_file_exists($page)
 
 function _backup_get_filetime($page): int
 {
-    return _backup_file_exists($page) ?
-        filemtime(_backup_get_filename($page)) - date('Z') : 0;
+    return _backup_file_exists($page) ? (filemtime(_backup_get_filename($page)) - date('Z')) : 0;
 }
 
 /**
@@ -248,12 +251,9 @@ if (extension_loaded('zlib')) {
      */
     function _backup_file($page)
     {
-        return _backup_file_exists($page) ?
-            gzfile(_backup_get_filename($page)) :
-            array();
+        return _backup_file_exists($page) ? gzfile(_backup_get_filename($page)) : array();
     }
-} /////////////////////////////////////////////////
-else {
+} else { /////////////////////////////////////////////////
     // ファイルシステム関数
     define('BACKUP_EXT', '.txt');
 
@@ -312,9 +312,6 @@ else {
      */
     function _backup_file($page)
     {
-        return _backup_file_exists($page) ?
-            file(_backup_get_filename($page)) :
-            array();
+        return _backup_file_exists($page) ? file(_backup_get_filename($page)) : array();
     }
 }
-

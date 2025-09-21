@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////
 // PukiWiki - Yet another WikiWikiWeb clone.
 //
@@ -7,18 +8,15 @@
 
 function plugin_button_inline()
 {
-	if (func_num_args() != 1)
-	{
-		return FALSE;
-	}
-	
-	list($body) = func_get_args();
-	
-	if ($body == '')
-	{
-		return FALSE;
-	}
+    if (func_num_args() != 1) {
+        return false;
+    }
 
-	return "<button type=\"button\" style=\"text-indent:0px;line-height:1em;vertical-align:middle\"> $body </button>";
+    list($body) = func_get_args();
+
+    if ($body == '') {
+        return false;
+    }
+
+    return "<button type=\"button\" style=\"text-indent:0px;line-height:1em;vertical-align:middle\"> $body </button>";
 }
-

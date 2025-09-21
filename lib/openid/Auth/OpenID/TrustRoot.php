@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Functions for dealing with OpenID trust roots
  *
@@ -20,33 +21,35 @@ require_once 'Auth/OpenID/Discover.php';
  *
  * @access private
  */
-define('Auth_OpenID___TLDs',
-       '/\.(ac|ad|ae|aero|af|ag|ai|al|am|an|ao|aq|ar|arpa|as|asia' .
-       '|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|biz|bj|bm|bn|bo|br' .
-       '|bs|bt|bv|bw|by|bz|ca|cat|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co' .
-       '|com|coop|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg' .
-       '|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl' .
-       '|gm|gn|gov|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie' .
-       '|il|im|in|info|int|io|iq|ir|is|it|je|jm|jo|jobs|jp|ke|kg|kh' .
-       '|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly' .
-       '|ma|mc|md|me|mg|mh|mil|mk|ml|mm|mn|mo|mobi|mp|mq|mr|ms|mt' .
-       '|mu|museum|mv|mw|mx|my|mz|na|name|nc|ne|net|nf|ng|ni|nl|no' .
-       '|np|nr|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|pro|ps|pt' .
-       '|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl' .
-       '|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tel|tf|tg|th|tj|tk|tl|tm' .
-       '|tn|to|tp|tr|travel|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve' .
-       '|vg|vi|vn|vu|wf|ws|xn--0zwm56d|xn--11b5bs3a9aj6g' .
-       '|xn--80akhbyknj4f|xn--9t4b11yi5a|xn--deba0ad|xn--g6w251d' .
-       '|xn--hgbk6aj7f53bba|xn--hlcj6aya9esc7a|xn--jxalpdlp' .
-       '|xn--kgbechtv|xn--zckzah|ye|yt|yu|za|zm|zw)\.?$/');
+define(
+    'Auth_OpenID___TLDs',
+    '/\.(ac|ad|ae|aero|af|ag|ai|al|am|an|ao|aq|ar|arpa|as|asia' .
+        '|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|biz|bj|bm|bn|bo|br' .
+        '|bs|bt|bv|bw|by|bz|ca|cat|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co' .
+        '|com|coop|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg' .
+        '|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl' .
+        '|gm|gn|gov|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie' .
+        '|il|im|in|info|int|io|iq|ir|is|it|je|jm|jo|jobs|jp|ke|kg|kh' .
+        '|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly' .
+        '|ma|mc|md|me|mg|mh|mil|mk|ml|mm|mn|mo|mobi|mp|mq|mr|ms|mt' .
+        '|mu|museum|mv|mw|mx|my|mz|na|name|nc|ne|net|nf|ng|ni|nl|no' .
+        '|np|nr|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|pro|ps|pt' .
+        '|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl' .
+        '|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tel|tf|tg|th|tj|tk|tl|tm' .
+        '|tn|to|tp|tr|travel|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve' .
+        '|vg|vi|vn|vu|wf|ws|xn--0zwm56d|xn--11b5bs3a9aj6g' .
+        '|xn--80akhbyknj4f|xn--9t4b11yi5a|xn--deba0ad|xn--g6w251d' .
+        '|xn--hgbk6aj7f53bba|xn--hlcj6aya9esc7a|xn--jxalpdlp' .
+        '|xn--kgbechtv|xn--zckzah|ye|yt|yu|za|zm|zw)\.?$/',
+);
 
-define('Auth_OpenID___HostSegmentRe',
-       "/^(?:[-a-zA-Z0-9!$&'\\(\\)\\*+,;=._~]|%[a-zA-Z0-9]{2})*$/");
+define('Auth_OpenID___HostSegmentRe', "/^(?:[-a-zA-Z0-9!$&'\\(\\)\\*+,;=._~]|%[a-zA-Z0-9]{2})*$/");
 
 /**
  * A wrapper for trust-root related functions
  */
-class Auth_OpenID_TrustRoot {
+class Auth_OpenID_TrustRoot
+{
     /*
      * Return a discovery URL for this realm.
      *
@@ -74,8 +77,7 @@ class Auth_OpenID_TrustRoot {
 
             $www_domain = 'www' . $parsed['host'];
 
-            return sprintf('%s://%s%s', $parsed['scheme'],
-                           $www_domain, $parsed['path']);
+            return sprintf('%s://%s%s', $parsed['scheme'], $www_domain, $parsed['path']);
         } else {
             return $parsed['unparsed'];
         }
@@ -134,19 +136,18 @@ class Auth_OpenID_TrustRoot {
         $host = strtolower($parts['host']);
         $hostparts = explode('*', $host);
         switch (count($hostparts)) {
-        case 1:
-            $parts['wildcard'] = false;
-            break;
-        case 2:
-            if ($hostparts[0] ||
-                ($hostparts[1] && substr($hostparts[1], 0, 1) != '.')) {
+            case 1:
+                $parts['wildcard'] = false;
+                break;
+            case 2:
+                if ($hostparts[0] || $hostparts[1] && substr($hostparts[1], 0, 1) != '.') {
+                    return false;
+                }
+                $host = $hostparts[1];
+                $parts['wildcard'] = true;
+                break;
+            default:
                 return false;
-            }
-            $host = $hostparts[1];
-            $parts['wildcard'] = true;
-            break;
-        default:
-            return false;
         }
         if (strpos($host, ':') !== false) {
             return false;
@@ -167,7 +168,6 @@ class Auth_OpenID_TrustRoot {
         if (!isset($parts['port'])) {
             $parts['port'] = false;
         }
-
 
         $parts['unparsed'] = $trust_root;
 
@@ -210,7 +210,7 @@ class Auth_OpenID_TrustRoot {
         if ($parts['host'] == 'localhost') {
             return true;
         }
-        
+
         $host_parts = explode('.', $parts['host']);
         if ($parts['wildcard']) {
             // Remove the empty string from the beginning of the array
@@ -284,9 +284,7 @@ class Auth_OpenID_TrustRoot {
         if ($trust_root_parsed['wildcard']) {
             $host_tail = $trust_root_parsed['host'];
             $host = $url_parsed['host'];
-            if ($host_tail &&
-                substr($host, -(strlen($host_tail))) != $host_tail &&
-                substr($host_tail, 1) != $host) {
+            if ($host_tail && substr($host, -strlen($host_tail)) != $host_tail && substr($host_tail, 1) != $host) {
                 return false;
             }
         } else {
@@ -303,8 +301,10 @@ class Auth_OpenID_TrustRoot {
                 if (substr($path, 0, strlen($base_path)) != $base_path) {
                     return false;
                 }
-                if (substr($base_path, strlen($base_path) - 1, 1) != '/' &&
-                    substr($path, strlen($base_path), 1) != '/') {
+                if (
+                    substr($base_path, strlen($base_path) - 1, 1) != '/' &&
+                        substr($path, strlen($base_path), 1) != '/'
+                ) {
                     return false;
                 }
             }
@@ -313,15 +313,15 @@ class Auth_OpenID_TrustRoot {
             $query = @$url_parsed['query'];
             $qplus = substr($query, 0, strlen($base_query) + 1);
             $bqplus = $base_query . '&';
-            if ($base_path != $path ||
-                ($base_query != $query && $qplus != $bqplus)) {
+            if ($base_path != $path || $base_query != $query && $qplus != $bqplus) {
                 return false;
             }
         }
 
         // The port and scheme need to match exactly
-        return ($trust_root_parsed['scheme'] == $url_parsed['scheme'] &&
-                $url_parsed['port'] === $trust_root_parsed['port']);
+        return (
+            $trust_root_parsed['scheme'] == $url_parsed['scheme'] && $url_parsed['port'] === $trust_root_parsed['port']
+        );
     }
 }
 
@@ -376,12 +376,14 @@ function Auth_OpenID_returnToMatches($allowed_return_to_urls, $return_to)
         // a wildcard.
 
         $return_realm = Auth_OpenID_TrustRoot::_parse($allowed_return_to);
-        if (// Parses as a trust root
-            ($return_realm !== false) &&
-            // Does not have a wildcard
-            (!$return_realm['wildcard']) &&
-            // Matches the return_to that we passed in with it
-            (Auth_OpenID_TrustRoot::match($allowed_return_to, $return_to))) {
+        if (
+            // Parses as a trust root
+            $return_realm !== false &&
+                // Does not have a wildcard
+                !$return_realm['wildcard'] &&
+                // Matches the return_to that we passed in with it
+                Auth_OpenID_TrustRoot::match($allowed_return_to, $return_to)
+        ) {
             return true;
         }
     }
@@ -394,8 +396,7 @@ function Auth_OpenID_returnToMatches($allowed_return_to_urls, $return_to)
  * Given a relying party discovery URL return a list of return_to
  * URLs.
  */
-function Auth_OpenID_getAllowedReturnURLs($relying_party_url, &$fetcher,
-              $discover_function=null)
+function Auth_OpenID_getAllowedReturnURLs($relying_party_url, &$fetcher, $discover_function = null)
 {
     if ($discover_function === null) {
         $discover_function = array('Auth_Yadis_Yadis', 'discover');
@@ -403,17 +404,19 @@ function Auth_OpenID_getAllowedReturnURLs($relying_party_url, &$fetcher,
 
     $xrds_parse_cb = array('Auth_OpenID_ServiceEndpoint', 'fromXRDS');
 
-    list($rp_url_after_redirects, $endpoints) =
-        Auth_Yadis_getServiceEndpoints($relying_party_url, $xrds_parse_cb,
-                                       $discover_function, $fetcher);
+    list($rp_url_after_redirects, $endpoints) = Auth_Yadis_getServiceEndpoints(
+        $relying_party_url,
+        $xrds_parse_cb,
+        $discover_function,
+        $fetcher,
+    );
 
     if ($rp_url_after_redirects != $relying_party_url) {
         // Verification caused a redirect
         return false;
     }
 
-    call_user_func_array($discover_function,
-                         array($relying_party_url, $fetcher));
+    call_user_func_array($discover_function, array($relying_party_url, $fetcher));
 
     $return_to_urls = array();
     $matching_endpoints = Auth_OpenID_extractReturnURL($endpoints);
@@ -435,8 +438,7 @@ function Auth_OpenID_getAllowedReturnURLs($relying_party_url, &$fetcher,
  *
  * @return true if the return_to URL is valid for the realm
  */
-function Auth_OpenID_verifyReturnTo($realm_str, $return_to, &$fetcher,
-              $_vrfy='Auth_OpenID_getAllowedReturnURLs')
+function Auth_OpenID_verifyReturnTo($realm_str, $return_to, &$fetcher, $_vrfy = 'Auth_OpenID_getAllowedReturnURLs')
 {
     $disco_url = Auth_OpenID_TrustRoot::buildDiscoveryURL($realm_str);
 
@@ -444,8 +446,7 @@ function Auth_OpenID_verifyReturnTo($realm_str, $return_to, &$fetcher,
         return false;
     }
 
-    $allowable_urls = call_user_func_array($_vrfy,
-                           array($disco_url, &$fetcher));
+    $allowable_urls = call_user_func_array($_vrfy, array($disco_url, &$fetcher));
 
     // The realm_str could not be parsed.
     if ($allowable_urls === false) {
@@ -458,4 +459,3 @@ function Auth_OpenID_verifyReturnTo($realm_str, $return_to, &$fetcher,
         return false;
     }
 }
-

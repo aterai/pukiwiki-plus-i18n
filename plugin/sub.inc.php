@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////
 // PukiWiki - Yet another WikiWikiWeb clone.
 //
@@ -7,18 +8,15 @@
 
 function plugin_sub_inline()
 {
-	if (func_num_args() != 1)
-	{
-		return FALSE;
-	}
-	
-	list($body) = func_get_args();
-	
-	if ($body == '')
-	{
-		return FALSE;
-	}
+    if (func_num_args() != 1) {
+        return false;
+    }
 
-	return '<span style="font-size:60%;vertical-align:sub;">'.$body.'</span>';
+    list($body) = func_get_args();
+
+    if ($body == '') {
+        return false;
+    }
+
+    return '<span style="font-size:60%;vertical-align:sub;">' . $body . '</span>';
 }
-

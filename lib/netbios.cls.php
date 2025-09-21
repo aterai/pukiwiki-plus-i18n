@@ -1,4 +1,5 @@
 <?php
+
 /**
  * RFC 1002
  * Protocol standard for a NetBIOS service
@@ -65,7 +66,8 @@ class netbios
         socket_set_timeout($fp, 2);
         $this->data = fread($fp, 1024);
 
-        if (!strlen($this->data)) return; // length zero
+        if (!strlen($this->data))
+            return; // length zero
 
         // NetBIOS番号の取得
         $nbrec = ord($this->data[56]);
@@ -73,9 +75,9 @@ class netbios
         for ($i = 0; $i < $nbrec; $i++) {
             $offset = 18 * $i;
             $this->info[] = array(
-                sprintf("%02X", ord($this->data[72 + $offset])),
+                sprintf('%02X', ord($this->data[72 + $offset])),
                 trim(substr($this->data, 57 + $offset, 15)),
-                substr(sprintf("%08b", ord($this->data[73 + $offset])), 0, 1),
+                substr(sprintf('%08b', ord($this->data[73 + $offset])), 0, 1),
             );
         }
 
@@ -92,8 +94,9 @@ class netbios
         $this->macaddress = '';
         $mac = 57 + (ord($this->data[56]) * 18);
         for ($i = 0; $i < 6; $i++) {
-            if (!empty($this->macaddress)) $this->macaddress .= "-";
-            $this->macaddress .= sprintf("%02X", ord($this->data[($i + $mac)]));
+            if (!empty($this->macaddress))
+                $this->macaddress .= '-';
+            $this->macaddress .= sprintf('%02X', ord($this->data[$i + $mac]));
         }
     }
 
@@ -102,7 +105,8 @@ class netbios
      */
     function get_domain(): void
     {
-        if (!empty($this->domain)) return;
+        if (!empty($this->domain))
+            return;
         foreach ($this->info as $x) {
             switch ($x[0]) {
                 case '00': // Domain Name
@@ -130,13 +134,15 @@ class netbios
      */
     function get_computername()
     {
-        if (!empty($this->computername)) return;
+        if (!empty($this->computername))
+            return;
 
         foreach ($this->info as $x) {
             switch ($x[0]) {
                 case '00':
                     // Domain Name
-                    if ($x[2]) break;
+                    if ($x[2])
+                        break;
                     // IS~computer name
                     if (substr($x[1], 0, 3) == 'IS~') {
                         $this->computername = substr($x[1], 3);
@@ -146,7 +152,8 @@ class netbios
                     $this->computername = $x[1];
                     return;
                 case '01':
-                    if (substr($x[1], 2, 12) == '__MSBROWSE__') break;
+                    if (substr($x[1], 2, 12) == '__MSBROWSE__')
+                        break;
                     $this->computername = $x[1];
                     return;
                 case '06':
@@ -187,11 +194,14 @@ class netbios
      */
     function get_username()
     {
-        if (!empty($this->username)) return;
+        if (!empty($this->username))
+            return;
 
         foreach ($this->info as $x) {
-            if ($x[0] != '03') continue;
-            if ($this->computername == $x[1]) continue; // 設定不能
+            if ($x[0] != '03')
+                continue;
+            if ($this->computername == $x[1])
+                continue; // 設定不能
             $this->username = $x[1];
             return;
         }
@@ -203,7 +213,8 @@ class netbios
     function code2name($code, $val)
     {
         foreach ($this->netbios_name as $x) {
-            if ($code == $x[0]) return array($x[2], $val);
+            if ($code == $x[0])
+                return array($x[2], $val);
         }
 
         switch ($code) {
@@ -211,31 +222,35 @@ class netbios
             // IIS
             // Domain Name
             case '00':
-                if (substr($val, 0, 3) == 'IS~') return array('IIS', $val);
-                if ($this->domain == $val) return array('Domain Name', $val);
-                if (empty($this->computername)) $this->computername = $val;
+                if (substr($val, 0, 3) == 'IS~')
+                    return array('IIS', $val);
+                if ($this->domain == $val)
+                    return array('Domain Name', $val);
+                if (empty($this->computername))
+                    $this->computername = $val;
                 return array('Workstation Service', $val);
             // Messenger Service
             // Master Browser
             case '01':
-                if (substr($val, 2, 12) == '__MSBROWSE__') return array('Master Browser', '..__MSBROWSE__.');
-                if (empty($this->computername)) $this->computername = $val;
+                if (substr($val, 2, 12) == '__MSBROWSE__')
+                    return array('Master Browser', '..__MSBROWSE__.');
+                if (empty($this->computername))
+                    $this->computername = $val;
                 return array('Messenger Service', $val);
             // Domain Controllers
             // IIS
             case '1C':
-                if ($val == 'INet~Services') return array('IIS', $val);
+                if ($val == 'INet~Services')
+                    return array('IIS', $val);
                 return array('Domain Controllers', $val);
             // File Server Service
             // DCA IrmaLan Gateway Server Service
             case '20':
-                if ($val == 'Forte_\$ND800ZA') return array('DCA IrmaLan Gateway Server Service', $val);
+                if ($val == 'Forte_\$ND800ZA')
+                    return array('DCA IrmaLan Gateway Server Service', $val);
                 return array('File Server Service', $val);
             default:
                 return array($code, $val);
         }
     }
-
 }
-
-

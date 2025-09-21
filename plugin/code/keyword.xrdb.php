@@ -1,19 +1,19 @@
 <?php
+
 /**
  * Xrdb キーワード定義ファイル
  */
 
-$mkoutline = $option['outline'] = false; // アウトラインモード不可 
+$mkoutline = $option['outline'] = false; // アウトラインモード不可
 // コメント定義
-$switchHash['!'] = PLUGIN_CODE_COMMENT;	// コメントは ! から改行まで
-$code_comment = Array(
-	'!' => Array(
-				 Array('/^!/', "\n", 1),
-	)
+$switchHash['!'] = PLUGIN_CODE_COMMENT;
+// コメントは ! から改行まで
+$code_comment = array(
+    '!' => array(
+        array('/^!/', "\n", 1),
+    ),
 );
 
-$code_css = Array(
-);
+$code_css = array();
 
-$code_keyword = Array(
-);
+$code_keyword = array();

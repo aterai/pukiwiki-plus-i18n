@@ -1,4 +1,5 @@
 <?php
+
 /////////////////////////////////////////////////
 // PukiWiki - Yet another WikiWikiWeb clone.
 //
@@ -7,8 +8,7 @@
 
 function plugin_nomenubar_convert()
 {
-	global $menubar;
-	$menubar = '';
-	return '';
+    global $menubar;
+    $menubar = '';
+    return '';
 }
-

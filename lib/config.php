@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki - Yet another WikiWikiWeb clone.
 // $Id: config.php,v 1.6 2005/04/29 11:24:20 henoheno Exp $
 // Copyright (C)
@@ -29,34 +30,36 @@ class Config
     var $name, $page; // Page name
     var $objs = array();
 
-    function Config($name)
+    function Config($name): void
     {
-		$this->__construct($name);
-	}
-	function __construct($name)
-	{
+        $this->__construct($name);
+    }
+
+    function __construct($name)
+    {
         $this->name = $name;
         $this->page = PKWK_CONFIG_PREFIX . $name;
     }
 
     // Load the configuration-page
-    function read()
+    function read(): bool
     {
-        if (!is_page($this->page)) return FALSE;
+        if (!is_page($this->page))
+            return false;
 
         $this->objs = array();
         $obj = new ConfigTable('');
         $matches = array();
 
         foreach (get_source($this->page) as $line) {
-            if ($line == '') continue;
+            if ($line == '')
+                continue;
 
-            $head = $line[0];    // The first letter
+            $head = $line[0]; // The first letter
             $level = strspn($line, $head);
 
             if ($level > 3) {
                 $obj->add_line($line);
-
             } else if ($head == '*') {
                 // Cut fixed-heading anchors
                 $line = preg_replace('/^(\*{1,3}.*)\[#[A-Za-z][\w-]+\](.*)$/', '$1$2', $line);
@@ -69,12 +72,10 @@ class Config
                         $obj = new ConfigTable_Direct('', $obj);
                     $obj->set_key($line);
                 }
-
             } else if ($head == '-' && $level > 1) {
                 if (!is_a($obj, 'ConfigTable_Direct'))
                     $obj = new ConfigTable_Direct('', $obj);
                 $obj->add_value($line);
-
             } else if ($head == '|' && preg_match('/^\|(.+)\|\s*$/', $line, $matches)) {
                 // Table row
                 if (!is_a($obj, 'ConfigTable_Sequential'))
@@ -87,11 +88,11 @@ class Config
         }
         $this->objs[$obj->title] = $obj;
 
-        return TRUE;
+        return true;
     }
 
     // Get an array
-    function & get($title)
+    function &get($title)
     {
         $obj = &$this->get_object($title);
         return $obj->values;
@@ -112,7 +113,7 @@ class Config
     }
 
     // Get an object (or create it)
-    function & get_object($title)
+    function &get_object($title)
     {
         if (!isset($this->objs[$title]))
             $this->objs[$title] = new ConfigTable('*' . trim($title) . "\n");
@@ -136,18 +137,19 @@ class Config
 // Class holds array values
 class ConfigTable
 {
-    var $title = '';    // Table title
-    var $before = array();    // Page contents (except table ones)
-    var $after = array();    // Page contents (except table ones)
-    var $values = array();    // Table contents
+    var $title = ''; // Table title
+    var $before = array(); // Page contents (except table ones)
+    var $after = array(); // Page contents (except table ones)
+    var $values = array(); // Table contents
 
-    function ConfigTable($title, $obj = NULL)
+    function ConfigTable($title, $obj = null)
     {
-		$this->__construct($title, $obj);
-	}
-	function __construct($title, $obj = NULL)
-	{
-        if ($obj !== NULL) {
+        $this->__construct($title, $obj);
+    }
+
+    function __construct($title, $obj = null)
+    {
+        if ($obj !== null) {
             $this->title = $obj->title;
             $this->before = array_merge($obj->before, $obj->after);
         } else {
@@ -173,7 +175,7 @@ class ConfigTable_Sequential extends ConfigTable
     // Add a line
     function add_value($value)
     {
-        $this->values[] = (count($value) == 1) ? $value[0] : $value;
+        $this->values[] = count($value) == 1 ? $value[0] : $value;
     }
 
     function toString()
@@ -192,7 +194,7 @@ class ConfigTable_Sequential extends ConfigTable
 
 class ConfigTable_Direct extends ConfigTable
 {
-    var $_keys = array();    // Used at initialization phase
+    var $_keys = array(); // Used at initialization phase
 
     function set_key($line)
     {
@@ -210,10 +212,10 @@ class ConfigTable_Direct extends ConfigTable
         $arr[] = trim(substr($line, $level));
     }
 
-    function toString($values = NULL, $level = 2)
+    function toString($values = null, $level = 2)
     {
         $retval = '';
-        $root = ($values === NULL);
+        $root = $values === null;
         if ($root) {
             $retval = join('', $this->before);
             $values = &$this->values;
@@ -226,7 +228,8 @@ class ConfigTable_Direct extends ConfigTable
                 $retval .= str_repeat('-', $level - 1) . $value . "\n";
             }
         }
-        if ($root) $retval .= join('', $this->after);
+        if ($root)
+            $retval .= join('', $this->after);
 
         return $retval;
     }

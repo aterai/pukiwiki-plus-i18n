@@ -22,7 +22,8 @@
  *
  * @package OpenID
  */
-class Auth_OpenID_DatabaseConnection {
+class Auth_OpenID_DatabaseConnection
+{
     /**
      * Sets auto-commit mode on this database connection.
      *
@@ -127,4 +128,3 @@ class Auth_OpenID_DatabaseConnection {
     {
     }
 }
-

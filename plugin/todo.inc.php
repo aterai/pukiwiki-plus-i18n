@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TODO plugin for PukiWiki
  *
@@ -31,7 +32,7 @@
  *            - NOTICE 対策
  */
 
-defined('TODO_LABEL_PREFIX') or define('TODO_LABEL_PREFIX','+');
+defined('TODO_LABEL_PREFIX') or define('TODO_LABEL_PREFIX', '+');
 
 /***************************************************************************
  * プラグインモジュールインタフェースの実装
@@ -44,15 +45,15 @@ defined('TODO_LABEL_PREFIX') or define('TODO_LABEL_PREFIX','+');
  */
 function plugin_todo_action()
 {
-	global $vars;
+    global $vars;
 
-	$page = strip_bracket($vars['page']);
-	$body = todo_generate_index($vars, $page, $vars['mark']);
-	$mesg = array('msg' => 'TodoIndex', 'body' => $body);
+    $page = strip_bracket($vars['page']);
+    $body = todo_generate_index($vars, $page, $vars['mark']);
+    $mesg = array('msg' => 'TodoIndex', 'body' => $body);
 
-# echo "<pre>"; print_r($mesg); exit;
+    // echo "<pre>"; print_r($mesg); exit;
 
-	return $mesg;
+    return $mesg;
 }
 
 /**
@@ -62,24 +63,24 @@ function plugin_todo_action()
  */
 function plugin_todo_convert()
 {
-	global $vars, $script;
+    global $vars, $script;
 
-	// default is to traverse all subtopics under own topic
-	$page = strip_bracket($vars['page']);
+    // default is to traverse all subtopics under own topic
+    $page = strip_bracket($vars['page']);
 
-	switch (func_num_args()) {
-	case 2:
-		$mark = func_get_arg(1);
-	case 1:
-		$page = func_get_arg(0);
-	default:
-	}
+    switch (func_num_args()) {
+        case 2:
+            $mark = func_get_arg(1);
+        case 1:
+            $page = func_get_arg(0);
+        default:
+    }
 
-	$body = todo_generate_index($vars, $page, $mark);
+    $body = todo_generate_index($vars, $page, $mark);
 
-# echo "<pre>"; print_r($body); exit;
+    // echo "<pre>"; print_r($body); exit;
 
-	return $body;
+    return $body;
 }
 
 /***************************************************************************
@@ -87,61 +88,61 @@ function plugin_todo_convert()
  ***************************************************************************/
 function todo_generate_index($vars, $page, $mark)
 {
-	$page = trim($page);
-	$page_len = ($page == "''") ? 0 : strlen($page);
-	$mark = trim($mark);
-	if (empty($mark)) $mark = 'todo';
+    $page = trim($page);
+    $page_len = $page == "''" ? 0 : strlen($page);
+    $mark = trim($mark);
+    if (empty($mark))
+        $mark = 'todo';
 
-	$todo = todo_search($vars, $page, $mark);
-	$html = '';
+    $todo = todo_search($vars, $page, $mark);
+    $html = '';
 
-	foreach ($todo as $page => $list) {
-		//sort($list);
-		foreach ($list as $line) {
-			$msg = substr($line,strlen($mark)+2);
-			$name = ($page_len > 0) ? substr($page,$page_len) : $page;
-			if (substr($name,0,1) == '/') $name = substr($name,1);
-			$html .= TODO_LABEL_PREFIX . ' ' . $msg;
-			// 自身のページ
-			if (! empty($name)) {
-				$html .= ' ([[' . $name. '>' . $page . "]])\n";
-			} else {
-				$html .= "\n";
-			}
-
-		}
-	}
-	return convert_html($html);
+    foreach ($todo as $page => $list) {
+        //sort($list);
+        foreach ($list as $line) {
+            $msg = substr($line, strlen($mark) + 2);
+            $name = $page_len > 0 ? substr($page, $page_len) : $page;
+            if (substr($name, 0, 1) == '/')
+                $name = substr($name, 1);
+            $html .= TODO_LABEL_PREFIX . ' ' . $msg;
+            // 自身のページ
+            if (!empty($name)) {
+                $html .= ' ([[' . $name . '>' . $page . "]])\n";
+            } else {
+                $html .= "\n";
+            }
+        }
+    }
+    return convert_html($html);
 }
 
 function todo_search($vars, $page, $mark)
 {
-	if ($page == "''") $page = '';
+    if ($page == "''")
+        $page = '';
 
-	// 検索対象を選択
-	foreach (auth::get_existpages() as $file => $name) {
-		if (strncmp($name, $page, strlen($page)) == 0) {
-			$scan[$file] = $name;
-		}
-	}
+    // 検索対象を選択
+    foreach (auth::get_existpages() as $file => $name) {
+        if (strncmp($name, $page, strlen($page)) == 0) {
+            $scan[$file] = $name;
+        }
+    }
 
-	// 探索するマーク行のパターン
-	// $expr = "/^[\*\-\s]*(\[".$mark."\].*)/i";
-	$expr = "/^[\*\-\+\s]*(\[".$mark."\].*)/i";
+    // 探索するマーク行のパターン
+    // $expr = "/^[\*\-\s]*(\[".$mark."\].*)/i";
+    $expr = "/^[\*\-\+\s]*(\[" . $mark . "\].*)/i";
 
-	// [TODO] マークされているエントリを探す
-	$link = array();
-	foreach ($scan as $file => $name) {
-		foreach (get_source($name) as $line) {
-			$line = preg_replace('/^(\*{1,3}.*)\[#[A-Za-z][\w-]+\](.*)$/m','$1$2',$line);
-			if (preg_match($expr, $line, $match)) {
-				$link[$name][] = $match[1];
-			}
-		}
-	}
+    // [TODO] マークされているエントリを探す
+    $link = array();
+    foreach ($scan as $file => $name) {
+        foreach (get_source($name) as $line) {
+            $line = preg_replace('/^(\*{1,3}.*)\[#[A-Za-z][\w-]+\](.*)$/m', '$1$2', $line);
+            if (preg_match($expr, $line, $match)) {
+                $link[$name][] = $match[1];
+            }
+        }
+    }
 
-	ksort($link);
-	return $link;
+    ksort($link);
+    return $link;
 }
-
-

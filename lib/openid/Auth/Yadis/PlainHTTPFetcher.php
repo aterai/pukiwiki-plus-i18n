@@ -17,7 +17,7 @@
 /**
  * Interface import
  */
-require_once "Auth/Yadis/HTTPFetcher.php";
+require_once 'Auth/Yadis/HTTPFetcher.php';
 
 /**
  * This class implements a plain, hand-built socket-based fetcher
@@ -25,7 +25,8 @@ require_once "Auth/Yadis/HTTPFetcher.php";
  *
  * @package OpenID
  */
-class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
+class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher
+{
     /**
      * Does this fetcher support SSL URLs?
      */
@@ -45,8 +46,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
         $stop = time() + $this->timeout;
         $off = $this->timeout;
 
-        while ($redir && ($off > 0)) {
-
+        while ($redir && $off > 0) {
             $parts = parse_url($url);
 
             $specify_port = true;
@@ -76,14 +76,14 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
             $user_agent = Auth_OpenID_USER_AGENT;
 
             $headers = array(
-                             "GET ".$parts['path'].
-                             (array_key_exists('query', $parts) ?
-                              "?".$parts['query'] : "").
-                                 " HTTP/1.0",
-                             "User-Agent: $user_agent",
-                             "Host: ".$parts['host'].
-                                ($specify_port ? ":".$parts['port'] : ""),
-                             "Port: ".$parts['port']);
+                'GET ' .
+                $parts['path'] .
+                    (array_key_exists('query', $parts) ? ('?' . $parts['query']) : '') .
+                    ' HTTP/1.0',
+                "User-Agent: $user_agent",
+                'Host: ' . $parts['host'] . ($specify_port ? (':' . $parts['port']) : ''),
+                'Port: ' . $parts['port'],
+            );
 
             $errno = 0;
             $errstr = '';
@@ -94,8 +94,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
                 }
             }
 
-            @$sock = fsockopen($host, $parts['port'], $errno, $errstr,
-                               $this->timeout);
+            @($sock = fsockopen($host, $parts['port'], $errno, $errstr, $this->timeout));
             if ($sock === false) {
                 return false;
             }
@@ -104,10 +103,9 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
 
             fputs($sock, implode("\r\n", $headers) . "\r\n\r\n");
 
-            $data = "";
+            $data = '';
             $kilobytes = 0;
-            while (!feof($sock) &&
-                   $kilobytes < Auth_OpenID_FETCHER_MAX_RESPONSE_KB ) {
+            while (!feof($sock) && $kilobytes < Auth_OpenID_FETCHER_MAX_RESPONSE_KB) {
                 $data .= fgets($sock, 1024);
                 $kilobytes += 1;
             }
@@ -118,7 +116,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
             list($headers, $body) = explode("\r\n\r\n", $data, 2);
             $headers = explode("\r\n", $headers);
 
-            $http_code = explode(" ", $headers[0]);
+            $http_code = explode(' ', $headers[0]);
             $code = $http_code[1];
 
             if (in_array($code, array('301', '302'))) {
@@ -134,15 +132,14 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
         $new_headers = array();
 
         foreach ($headers as $header) {
-            if (preg_match("/:/", $header)) {
-                $parts = explode(": ", $header, 2);
+            if (preg_match('/:/', $header)) {
+                $parts = explode(': ', $header, 2);
 
                 if (count($parts) == 2) {
                     list($name, $value) = $parts;
                     $new_headers[$name] = $value;
                 }
             }
-
         }
 
         return new Auth_Yadis_HTTPResponse($url, $code, $new_headers, $body);
@@ -163,13 +160,12 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
             $post_path .= '?' . $parts['query'];
         }
 
-        $headers[] = "POST ".$post_path." HTTP/1.0";
-        $headers[] = "Host: " . $parts['host'];
-        $headers[] = "Content-type: application/x-www-form-urlencoded";
-        $headers[] = "Content-length: " . strval(strlen($body));
+        $headers[] = 'POST ' . $post_path . ' HTTP/1.0';
+        $headers[] = 'Host: ' . $parts['host'];
+        $headers[] = 'Content-type: application/x-www-form-urlencoded';
+        $headers[] = 'Content-length: ' . strval(strlen($body));
 
-        if ($extra_headers &&
-            is_array($extra_headers)) {
+        if ($extra_headers && is_array($extra_headers)) {
             $headers = array_merge($headers, $extra_headers);
         }
 
@@ -191,15 +187,14 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
         }
 
         if ($parts['scheme'] == 'https') {
-            $parts['host'] = sprintf("ssl://%s", $parts['host']);
+            $parts['host'] = sprintf('ssl://%s', $parts['host']);
         }
 
         // Connect to the remote server.
         $errno = 0;
         $errstr = '';
 
-        $sock = fsockopen($parts['host'], $parts['port'], $errno, $errstr,
-                          $this->timeout);
+        $sock = fsockopen($parts['host'], $parts['port'], $errno, $errstr, $this->timeout);
 
         if ($sock === false) {
             return null;
@@ -211,7 +206,7 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
         fputs($sock, $request);
 
         // Get the response from the server.
-        $response = "";
+        $response = '';
         while (!feof($sock)) {
             if ($data = fgets($sock, 128)) {
                 $response .= $data;
@@ -228,21 +223,18 @@ class Auth_Yadis_PlainHTTPFetcher extends Auth_Yadis_HTTPFetcher {
         // Expect the first line of the headers data to be something
         // like HTTP/1.1 200 OK.  Split the line on spaces and take
         // the second token, which should be the return code.
-        $http_code = explode(" ", $headers[0]);
+        $http_code = explode(' ', $headers[0]);
         $code = $http_code[1];
 
         $new_headers = array();
 
         foreach ($headers as $header) {
-            if (preg_match("/:/", $header)) {
-                list($name, $value) = explode(": ", $header, 2);
+            if (preg_match('/:/', $header)) {
+                list($name, $value) = explode(': ', $header, 2);
                 $new_headers[$name] = $value;
             }
-
         }
 
-        return new Auth_Yadis_HTTPResponse($url, $code,
-                                           $new_headers, $response_body);
+        return new Auth_Yadis_HTTPResponse($url, $code, $new_headers, $response_body);
     }
 }
-

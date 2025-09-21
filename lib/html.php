@@ -1,4 +1,5 @@
 <?php
+
 // PukiWiki Plus! - Yet another WikiWikiWeb clone.
 // $Id: html.php,v 1.65.30 2009/03/26 03:21:00 upk Exp $
 // Copyright (C)
@@ -25,10 +26,10 @@ function catbody($title, $page, $body)
     global $page_pubdate;
     global $_LANG, $_LINK, $_IMAGE;
 
-    global $pkwk_dtd;     // XHTML 1.1, XHTML1.0, HTML 4.01 Transitional...
-    global $page_title;   // Title of this site
-    global $do_backup;    // Do backup or not
-    global $modifier;     // Site administrator's  web page
+    global $pkwk_dtd; // XHTML 1.1, XHTML1.0, HTML 4.01 Transitional...
+    global $page_title; // Title of this site
+    global $do_backup; // Do backup or not
+    global $modifier; // Site administrator's  web page
     global $modifierlink; // Site administrator's name
 
     global $skin_file, $menubar, $sidebar;
@@ -45,7 +46,8 @@ function catbody($title, $page, $body)
     $_LINK = $_IMAGE = array();
 
     // Add JavaScript header when ...
-    if (!PKWK_ALLOW_JAVASCRIPT) unset($javascript);
+    if (!PKWK_ALLOW_JAVASCRIPT)
+        unset($javascript);
 
     $_page = isset($vars['page']) ? $vars['page'] : '';
     $r_page = rawurlencode($_page);
@@ -96,7 +98,7 @@ function catbody($title, $page, $body)
     $_LINK['rss'] = get_cmd_absuri('rss');
     $_LINK['rss10'] = get_cmd_absuri('rss', '', 'ver=1.0'); // Same as 'rdf'
     $_LINK['rss20'] = get_cmd_absuri('rss', '', 'ver=2.0');
-    $_LINK['mixirss'] = get_cmd_absuri('mixirss');         // Same as 'rdf' for mixi
+    $_LINK['mixirss'] = get_cmd_absuri('mixirss'); // Same as 'rdf' for mixi
 
     // Compat: Skins for 1.4.4 and before
     $link_add = &$_LINK['add'];
@@ -145,28 +147,29 @@ function catbody($title, $page, $body)
     $link_mixirss = &$_LINK['mixirss'];
 
     // Init flags
-    $is_page = (is_pagename($_page) && !arg_check('backup') && !is_cantedit($_page));
-    $is_read = (arg_check('read') && is_page($_page));
+    $is_page = is_pagename($_page) && !arg_check('backup') && !is_cantedit($_page);
+    $is_read = arg_check('read') && is_page($_page);
     $is_freeze = is_freeze($_page);
 
     // Last modification date (string) of the page
-    $lastmodified = $is_read ? get_date('D, d M Y H:i:s T', get_filetime($_page)) .
-        ' ' . get_pg_passage($_page, FALSE) : '';
+    $lastmodified = $is_read
+        ? (get_date('D, d M Y H:i:s T', get_filetime($_page)) . ' ' . get_pg_passage($_page, false))
+        : '';
 
     // List of attached files to the page
     $attaches = '';
     if ($attach_link && $is_read && exist_plugin_action('attach')) {
-        if (do_plugin_init('attach') !== FALSE) {
+        if (do_plugin_init('attach') !== false) {
             $attaches = attach_filelist();
         }
     }
 
     // List of related pages
-    $related = ($related_link && $is_read) ? make_related($_page) : '';
+    $related = $related_link && $is_read ? make_related($_page) : '';
 
     // List of footnotes
     ksort($foot_explain, SORT_NUMERIC);
-    $notes = !empty($foot_explain) ? $note_hr . join("\n", $foot_explain) : '';
+    $notes = !empty($foot_explain) ? ($note_hr . join("\n", $foot_explain)) : '';
 
     global $frontmatter;
     if (isset($frontmatter['title'])) {
@@ -177,28 +180,28 @@ function catbody($title, $page, $body)
     $withtitle = '';
     if ($newtitle != '') {
         if (strpos($title, 'Swing/') === false) {
-            $withtitle = $newtitle . " - " . $page_title;
+            $withtitle = $newtitle . ' - ' . $page_title;
         } else {
-            $site_name = "Java Swing Tips";
-            $withtitle = $newtitle . " - " . $site_name;
+            $site_name = 'Java Swing Tips';
+            $withtitle = $newtitle . ' - ' . $site_name;
         }
     } else {
         $newtitle = $title;
-        $withtitle = $title . " - " . $page_title;
+        $withtitle = $title . ' - ' . $page_title;
     }
     $head_tags[] = '<title>' . $withtitle . '</title>';
     $head_tags[] = '<meta property="og:title" content="' . $newtitle . '" />';
     $head_tags[] = '<meta property="og:site_name" content="' . $site_name . '" />';
     $head_tags[] = '<meta property="og:type" content="website" />';
 
-    $has_keywords = FALSE;
+    $has_keywords = false;
     if (isset($frontmatter['keywords'])) {
-        $contents = array_map("htmlspecialchars", $frontmatter['keywords']);
+        $contents = array_map('htmlspecialchars', $frontmatter['keywords']);
         $head_tags[] = '<meta name="keywords" content="' . join(', ', $contents) . '" />';
-        $has_keywords = TRUE;
+        $has_keywords = true;
     }
     if (!$has_keywords && isset($frontmatter['tags'])) {
-        $contents = array_map("htmlspecialchars", $frontmatter['tags']);
+        $contents = array_map('htmlspecialchars', $frontmatter['tags']);
         $head_tags[] = '<meta name="keywords" content="' . join(', ', $contents) . '" />';
     }
 
@@ -219,7 +222,14 @@ function catbody($title, $page, $body)
     if (isset($frontmatter['noindex'])) {
         $noindex = $frontmatter['noindex'] == 'true' ? 1 : 0;
     }
-    if ($nofollow || !$is_read || $title == $whatsnew || $title == $whatsdeleted || $title == $interwiki || $title == $menubar) {
+    if (
+        $nofollow ||
+            !$is_read ||
+            $title == $whatsnew ||
+            $title == $whatsdeleted ||
+            $title == $interwiki ||
+            $title == $menubar
+    ) {
         $head_tags[] = '<meta name="robots" content="NOINDEX,NOFOLLOW" />';
     } else if ($noindex) {
         $head_tags[] = '<meta name="robots" content="NOINDEX,FOLLOW" />';
@@ -236,11 +246,16 @@ function catbody($title, $page, $body)
     //    $head_tags[] = '<link rel="alternate" href="' . $frontmatter['hreflang']['href'] . '" hreflang="' . $frontmatter['hreflang']['lang'] . '" />';
     //}
 
-    $head_tags[] = '<link rel="alternate" href="' . $script . '?cmd=rssdiff" type="application/rss+xml" title="' . $page_title . ' - RSS" />';
+    $head_tags[] =
+        '<link rel="alternate" href="' .
+        $script .
+        '?cmd=rssdiff" type="application/rss+xml" title="' .
+        $page_title .
+        ' - RSS" />';
 
     // Tags will be inserted into <head></head>
-    $head_tag = !empty($head_tags) ? join("\n", $head_tags) . "\n" : '';
-    $foot_tag = !empty($foot_tags) ? join("\n", $foot_tags) . "\n" : '';
+    $head_tag = !empty($head_tags) ? (join("\n", $head_tags) . "\n") : '';
+    $foot_tag = !empty($foot_tags) ? (join("\n", $foot_tags) . "\n") : '';
 
     // 1.3.x compat
     // Last modification date (UNIX timestamp) of the page
@@ -248,8 +263,14 @@ function catbody($title, $page, $body)
 
     // Search words
     if ($search_word_color && isset($vars['word'])) {
-        $body = '<div class="small">' . $_string['word'] . htmlspecialchars($vars['word'], ENT_QUOTES, 'UTF-8') .
-            '</div>' . $hr . "\n" . $body;
+        $body =
+            '<div class="small">' .
+            $_string['word'] .
+            htmlspecialchars($vars['word'], ENT_QUOTES, 'UTF-8') .
+            '</div>' .
+            $hr .
+            "\n" .
+            $body;
 
         // BugTrack2/106: Only variables can be passed by reference from PHP 5.0.5
         $words = preg_split('/\s+/', $vars['word'], -1, PREG_SPLIT_NO_EMPTY);
@@ -257,21 +278,32 @@ function catbody($title, $page, $body)
         $words = array_flip($words);
 
         $keys = array();
-        foreach ($words as $word => $id) $keys[$word] = strlen($word);
+        foreach ($words as $word => $id)
+            $keys[$word] = strlen($word);
         arsort($keys, SORT_NUMERIC);
-        $keys = get_search_words(array_keys($keys), TRUE);
+        $keys = get_search_words(array_keys($keys), true);
         $id = 0;
         foreach ($keys as $key => $pattern) {
             $s_key = htmlspecialchars($key, ENT_QUOTES, 'UTF-8');
-            $pattern = '/' .
-                '<textarea[^>]*>.*?</textarea>' .    // Ignore textareas
-                '|' . '<[^>]*>' .            // Ignore tags
-                '|' . '&[^;]+;' .            // Ignore entities
-                '|' . '(' . $pattern . ')' .        // $matches[1]: Regex for a search word
+            $pattern =
+                '/' .
+                '<textarea[^>]*>.*?</textarea>' .
+                // Ignore textareas
+                '|' .
+                '<[^>]*>' .
+                // Ignore tags
+                '|' .
+                '&[^;]+;' .
+                // Ignore entities
+                '|' .
+                '(' .
+                $pattern .
+                ')' .
+                // $matches[1]: Regex for a search word
                 '/sS';
-            $decorate_Nth_word = function($matches) use ($id) {
+            $decorate_Nth_word = function ($matches) use ($id) {
                 return isset($matches[1])
-                    ? '<strong class="word' . $id . '">' . $matches[1] . '</strong>'
+                    ? ('<strong class="word' . $id . '">' . $matches[1] . '</strong>')
                     : $matches[0];
             };
             $body = preg_replace_callback($pattern, $decorate_Nth_word, $body);
@@ -283,11 +315,11 @@ function catbody($title, $page, $body)
     // Compat: 'HTML convert time' without time about MenuBar and skin
     $taketime = elapsedtime();
 
-    require(SKIN_FILE);
+    require SKIN_FILE;
 }
 
 // Show 'edit' form
-function edit_form($page, $postdata, $digest = FALSE, $b_template = TRUE)
+function edit_form($page, $postdata, $digest = false, $b_template = true)
 {
     global $script, $vars, $rows, $cols, $hr, $function_freeze;
     global $load_template_func, $load_refer_related;
@@ -296,7 +328,8 @@ function edit_form($page, $postdata, $digest = FALSE, $b_template = TRUE)
     global $ajax, $ctrl_unload;
 
     // Newly generate $digest or not
-    if ($digest === FALSE) $digest = md5(get_source($page, TRUE, TRUE));
+    if ($digest === false)
+        $digest = md5(get_source($page, true, true));
 
     $refer = $template = $addtag = $add_top = $add_ajax = '';
 
@@ -305,9 +338,12 @@ function edit_form($page, $postdata, $digest = FALSE, $b_template = TRUE)
 
     if (isset($vars['add'])) {
         $addtag = '<input type="hidden" name="add" value="true" />';
-        $add_top = '<input type="checkbox" name="add_top" value="true"' .
-            $checked_top . ' /><span class="small">' .
-            $_button['addtop'] . '</span>';
+        $add_top =
+            '<input type="checkbox" name="add_top" value="true"' .
+            $checked_top .
+            ' /><span class="small">' .
+            $_button['addtop'] .
+            '</span>';
     }
 
     if ($load_template_func && $b_template) {
@@ -316,19 +352,18 @@ function edit_form($page, $postdata, $digest = FALSE, $b_template = TRUE)
             if (is_cantedit($_page) || check_non_list($_page))
                 continue;
             $s_page = htmlspecialchars($_page, ENT_QUOTES, 'UTF-8');
-            $pages[$_page] = '   <option value="' . $s_page . '">' .
-                $s_page . '</option>';
+            $pages[$_page] = '   <option value="' . $s_page . '">' . $s_page . '</option>';
         }
         ksort($pages, SORT_STRING);
         $s_pages = join("\n", $pages);
         $template = <<<EOD
-  <select name="template_page">
-   <option value="">-- {$_button['template']} --</option>
-$s_pages
-  </select>
-  <input type="submit" name="template" value="{$_button['load']}" accesskey="r" />
-  <br />
-EOD;
+          <select name="template_page">
+           <option value="">-- {$_button['template']} --</option>
+        $s_pages
+          </select>
+          <input type="submit" name="template" value="{$_button['load']}" accesskey="r" />
+          <br />
+        EOD;
         if ($load_refer_related) {
             if (isset($vars['refer']) && $vars['refer'] != '')
                 $refer = '[[' . strip_bracket($vars['refer']) . ']]' . "\n\n";
@@ -352,24 +387,26 @@ EOD;
     }
 
     if ($ajax && !is_mobile()) {
-        $add_ajax = '<input type="button" name="add_ajax" value="' . $btn_preview . '" accesskey="p" onclick="pukiwiki_apx(this.form.page.value)" />';
+        $add_ajax =
+            '<input type="button" name="add_ajax" value="' .
+            $btn_preview .
+            '" accesskey="p" onclick="pukiwiki_apx(this.form.page.value)" />';
     } else {
         $add_ajax = '<input type="submit" name="preview" value="' . $btn_preview . '" accesskey="p" />';
     }
-
 
     $add_notimestamp = '';
     if ($notimeupdate != 0 && is_page($page)) {
         // enable 'do not change timestamp'
         $add_notimestamp = <<<EOD
-  <input type="checkbox" name="notimestamp" id="_edit_form_notimestamp" value="true"$checked_time />
-  <label for="_edit_form_notimestamp"><span class="small">{$_button['notchangetimestamp']}</span></label>
-EOD;
+          <input type="checkbox" name="notimestamp" id="_edit_form_notimestamp" value="true"$checked_time />
+          <label for="_edit_form_notimestamp"><span class="small">{$_button['notchangetimestamp']}</span></label>
+        EOD;
         if ($notimeupdate == 2 && auth::check_role('role_adm_contents')) {
             // enable only administrator
             $add_notimestamp .= <<<EOD
-  <input type="password" name="pass" size="12" />
-EOD;
+              <input type="password" name="pass" size="12" />
+            EOD;
         }
         $add_notimestamp .= '&nbsp;';
     }
@@ -377,38 +414,40 @@ EOD;
     $add_assistant = ''; //edit_form_assistant();
 
     $body = <<<EOD
-<div id="realview_outer"><div id="realview"></div><br /></div>
-<form action="$script" method="post">
- <div class="edit_form">
-$template
-  $addtag
-  <input type="hidden" name="cmd"    value="edit" />
-  <input type="hidden" name="page"   value="$s_page" />
-  <input type="hidden" name="digest" value="$s_digest" />
-  <input type="hidden" name="ticket" value="$s_ticket" />
-  <input type="hidden" name="id"     value="$s_id" />
-  <textarea id="msg" name="msg" rows="$rows" cols="$cols">$s_postdata</textarea>
-  <br />
-  $add_assistant
-  <br />
-  <input type="submit" name="write"   value="{$_button['update']}" accesskey="s" />
-  $add_top
-  $add_ajax
-  $add_notimestamp
-  <input type="submit" id="cancel" name="cancel"  value="{$_button['cancel']}" accesskey="c" />
-  <textarea id="original" name="original" rows="1" cols="1" style="display:none">$s_original</textarea>
- </div>
-</form>
-EOD;
+    <div id="realview_outer"><div id="realview"></div><br /></div>
+    <form action="$script" method="post">
+     <div class="edit_form">
+    $template
+      $addtag
+      <input type="hidden" name="cmd"    value="edit" />
+      <input type="hidden" name="page"   value="$s_page" />
+      <input type="hidden" name="digest" value="$s_digest" />
+      <input type="hidden" name="ticket" value="$s_ticket" />
+      <input type="hidden" name="id"     value="$s_id" />
+      <textarea id="msg" name="msg" rows="$rows" cols="$cols">$s_postdata</textarea>
+      <br />
+      $add_assistant
+      <br />
+      <input type="submit" name="write"   value="{$_button['update']}" accesskey="s" />
+      $add_top
+      $add_ajax
+      $add_notimestamp
+      <input type="submit" id="cancel" name="cancel"  value="{$_button['cancel']}" accesskey="c" />
+      <textarea id="original" name="original" rows="1" cols="1" style="display:none">$s_original</textarea>
+     </div>
+    </form>
+    EOD;
 
     if ($ajax) {
         global $head_tags;
         $head_tags[] = ' <script type="text/javascript" charset="utf-8" src="' . SKIN_URI . 'ajax/msxml.js"></script>';
-        $head_tags[] = ' <script type="text/javascript" charset="utf-8" src="' . SKIN_URI . 'ajax/realedit.js"></script>';
+        $head_tags[] =
+            ' <script type="text/javascript" charset="utf-8" src="' . SKIN_URI . 'ajax/realedit.js"></script>';
     }
     if ($ctrl_unload) {
         global $head_tags;
-        $head_tags[] = ' <script type="text/javascript" charset="utf-8" src="' . SKIN_URI . 'ajax/ctrl_unload.js"></script>';
+        $head_tags[] =
+            ' <script type="text/javascript" charset="utf-8" src="' . SKIN_URI . 'ajax/ctrl_unload.js"></script>';
     }
 
     return $body;
@@ -418,7 +457,7 @@ EOD;
 function edit_form_assistant()
 {
     global $pkwk_dtd, $head_tags;
-    static $assist_loaded = FALSE;    // for non-reentry
+    static $assist_loaded = false; // for non-reentry
 
     // if Mobile-Phone, do not use.
     if (defined('UA_PROFILE') && is_mobile())
@@ -428,36 +467,36 @@ function edit_form_assistant()
     if (!isset($pkwk_dtd) || $pkwk_dtd == PKWK_DTD_XHTML_1_1)
         $pkwk_dtd = PKWK_DTD_XHTML_1_0_TRANSITIONAL;
 
-    if ($assist_loaded === FALSE) {
-        $assist_loaded = TRUE;
+    if ($assist_loaded === false) {
+        $assist_loaded = true;
         $map = <<<EOD
-$head_tags
-<map id="map_button" name="map_button">
-<area shape="rect" coords="0,0,22,16" title="URL" alt="URL" href="#" onclick="javascript:pukiwiki_linkPrompt('url'); return false;" />
-<area shape="rect" coords="24,0,40,16" title="B" alt="B" href="#" onclick="javascript:pukiwiki_tag('b'); return false;" />
-<area shape="rect" coords="43,0,59,16" title="I" alt="I" href="#" onclick="javascript:pukiwiki_tag('i'); return false;" />
-<area shape="rect" coords="62,0,79,16" title="U" alt="U" href="#" onclick="javascript:pukiwiki_tag('u'); return false;" />
-<area shape="rect" coords="81,0,103,16" title="SIZE" alt="SIZE" href="#" onclick="javascript:pukiwiki_tag('size'); return false;" />
-</map>
-<map id="map_color" name="map_color">
-<area shape="rect" coords="0,0,8,8" title="Black" alt="Black" href="#" onclick="javascript:pukiwiki_tag('Black'); return false;" />
-<area shape="rect" coords="8,0,16,8" title="Maroon" alt="Maroon" href="#" onclick="javascript:pukiwiki_tag('Maroon'); return false;" />
-<area shape="rect" coords="16,0,24,8" title="Green" alt="Green" href="#" onclick="javascript:pukiwiki_tag('Green'); return false;" />
-<area shape="rect" coords="24,0,32,8" title="Olive" alt="Olive" href="#" onclick="javascript:pukiwiki_tag('Olive'); return false;" />
-<area shape="rect" coords="32,0,40,8" title="Navy" alt="Navy" href="#" onclick="javascript:pukiwiki_tag('Navy'); return false;" />
-<area shape="rect" coords="40,0,48,8" title="Purple" alt="Purple" href="#" onclick="javascript:pukiwiki_tag('Purple'); return false;" />
-<area shape="rect" coords="48,0,55,8" title="Teal" alt="Teal" href="#" onclick="javascript:pukiwiki_tag('Teal'); return false;" />
-<area shape="rect" coords="56,0,64,8" title="Gray" alt="Gray" href="#" onclick="javascript:pukiwiki_tag('Gray'); return false;" />
-<area shape="rect" coords="0,8,8,16" title="Silver" alt="Silver" href="#" onclick="javascript:pukiwiki_tag('Silver'); return false;" />
-<area shape="rect" coords="8,8,16,16" title="Red" alt="Red" href="#" onclick="javascript:pukiwiki_tag('Red'); return false;" />
-<area shape="rect" coords="16,8,24,16" title="Lime" alt="Lime" href="#" onclick="javascript:pukiwiki_tag('Lime'); return false;" />
-<area shape="rect" coords="24,8,32,16" title="Yellow" alt="Yellow" href="#" onclick="javascript:pukiwiki_tag('Yellow'); return false;" />
-<area shape="rect" coords="32,8,40,16" title="Blue" alt="Blue" href="#" onclick="javascript:pukiwiki_tag('Blue'); return false;" />
-<area shape="rect" coords="40,8,48,16" title="Fuchsia" alt="Fuchsia" href="#" onclick="javascript:pukiwiki_tag('Fuchsia'); return false;" />
-<area shape="rect" coords="48,8,56,16" title="Aqua" alt="Aqua" href="#" onclick="javascript:pukiwiki_tag('Aqua'); return false;" />
-<area shape="rect" coords="56,8,64,16" title="White" alt="White" href="#" onclick="javascript:pukiwiki_tag('White'); return false;" />
-</map>
-EOD;
+        $head_tags
+        <map id="map_button" name="map_button">
+        <area shape="rect" coords="0,0,22,16" title="URL" alt="URL" href="#" onclick="javascript:pukiwiki_linkPrompt('url'); return false;" />
+        <area shape="rect" coords="24,0,40,16" title="B" alt="B" href="#" onclick="javascript:pukiwiki_tag('b'); return false;" />
+        <area shape="rect" coords="43,0,59,16" title="I" alt="I" href="#" onclick="javascript:pukiwiki_tag('i'); return false;" />
+        <area shape="rect" coords="62,0,79,16" title="U" alt="U" href="#" onclick="javascript:pukiwiki_tag('u'); return false;" />
+        <area shape="rect" coords="81,0,103,16" title="SIZE" alt="SIZE" href="#" onclick="javascript:pukiwiki_tag('size'); return false;" />
+        </map>
+        <map id="map_color" name="map_color">
+        <area shape="rect" coords="0,0,8,8" title="Black" alt="Black" href="#" onclick="javascript:pukiwiki_tag('Black'); return false;" />
+        <area shape="rect" coords="8,0,16,8" title="Maroon" alt="Maroon" href="#" onclick="javascript:pukiwiki_tag('Maroon'); return false;" />
+        <area shape="rect" coords="16,0,24,8" title="Green" alt="Green" href="#" onclick="javascript:pukiwiki_tag('Green'); return false;" />
+        <area shape="rect" coords="24,0,32,8" title="Olive" alt="Olive" href="#" onclick="javascript:pukiwiki_tag('Olive'); return false;" />
+        <area shape="rect" coords="32,0,40,8" title="Navy" alt="Navy" href="#" onclick="javascript:pukiwiki_tag('Navy'); return false;" />
+        <area shape="rect" coords="40,0,48,8" title="Purple" alt="Purple" href="#" onclick="javascript:pukiwiki_tag('Purple'); return false;" />
+        <area shape="rect" coords="48,0,55,8" title="Teal" alt="Teal" href="#" onclick="javascript:pukiwiki_tag('Teal'); return false;" />
+        <area shape="rect" coords="56,0,64,8" title="Gray" alt="Gray" href="#" onclick="javascript:pukiwiki_tag('Gray'); return false;" />
+        <area shape="rect" coords="0,8,8,16" title="Silver" alt="Silver" href="#" onclick="javascript:pukiwiki_tag('Silver'); return false;" />
+        <area shape="rect" coords="8,8,16,16" title="Red" alt="Red" href="#" onclick="javascript:pukiwiki_tag('Red'); return false;" />
+        <area shape="rect" coords="16,8,24,16" title="Lime" alt="Lime" href="#" onclick="javascript:pukiwiki_tag('Lime'); return false;" />
+        <area shape="rect" coords="24,8,32,16" title="Yellow" alt="Yellow" href="#" onclick="javascript:pukiwiki_tag('Yellow'); return false;" />
+        <area shape="rect" coords="32,8,40,16" title="Blue" alt="Blue" href="#" onclick="javascript:pukiwiki_tag('Blue'); return false;" />
+        <area shape="rect" coords="40,8,48,16" title="Fuchsia" alt="Fuchsia" href="#" onclick="javascript:pukiwiki_tag('Fuchsia'); return false;" />
+        <area shape="rect" coords="48,8,56,16" title="Aqua" alt="Aqua" href="#" onclick="javascript:pukiwiki_tag('Aqua'); return false;" />
+        <area shape="rect" coords="56,8,64,16" title="White" alt="White" href="#" onclick="javascript:pukiwiki_tag('White'); return false;" />
+        </map>
+        EOD;
     } else {
         $map = '';
     }
@@ -474,31 +513,40 @@ function make_related($page, $tag = '')
     $links = links_get_related($page);
 
     if ($tag) {
-        ksort($links, SORT_STRING);    // Page name, alphabetical order
+        ksort($links, SORT_STRING); // Page name, alphabetical order
     } else {
-        arsort($links, SORT_NUMERIC);    // Last modified date, newer
+        arsort($links, SORT_NUMERIC); // Last modified date, newer
     }
 
     $_links = array();
     foreach ($links as $page => $lastmod) {
-        if (check_non_list($page)) continue;
+        if (check_non_list($page))
+            continue;
 
         $s_page = htmlspecialchars($page, ENT_QUOTES, 'UTF-8');
         $passage = get_passage($lastmod);
-        $_links[] = $tag ?
-            '<a href="' . get_page_uri($page) . '" title="' .
-            $s_page . ' ' . $passage . '">' . $s_page . '</a>' :
-            '<a href="' . get_page_uri($page) . '">' .
-            $s_page . '</a>' . $passage;
+        $_links[] = $tag
+            ? ('<a href="' . get_page_uri($page) . '" title="' . $s_page . ' ' . $passage . '">' . $s_page . '</a>')
+            : ('<a href="' . get_page_uri($page) . '">' . $s_page . '</a>' . $passage);
     }
-    if (empty($_links)) return ''; // Nothing
+    if (empty($_links))
+        return ''; // Nothing
 
     if ($tag == 'p') { // From the line-head
         $margin = $_ul_left_margin + $_ul_margin;
         $style = sprintf($_list_pad_str, 1, $margin, $margin);
-        $retval = "\n" . '<ul' . $style . '>' . "\n" .
-            '<li>' . join($rule_related_str, $_links) . '</li>' . "\n" .
-            '</ul>' . "\n";
+        $retval =
+            "\n" .
+            '<ul' .
+            $style .
+            '>' .
+            "\n" .
+            '<li>' .
+            join($rule_related_str, $_links) .
+            '</li>' .
+            "\n" .
+            '</ul>' .
+            "\n";
     } else if ($tag) {
         $retval = join($rule_related_str, $_links);
     } else {
@@ -516,7 +564,9 @@ function make_line_rules($str)
 
     if (!isset($pattern)) {
         // $f = create_function('$a', 'return \'/\' . $a . \'/\';');
-        $f = function ($a) { return '/' . $a . '/'; };
+        $f = function ($a) {
+            return '/' . $a . '/';
+        };
         $pattern = array_map($f, array_keys($line_rules));
         $replace = array_values($line_rules);
         unset($line_rules);
@@ -526,14 +576,14 @@ function make_line_rules($str)
 }
 
 // Remove all HTML tags(or just anchor tags), and WikiName-speific decorations
-function strip_htmltag($str, $all = TRUE)
+function strip_htmltag($str, $all = true)
 {
     global $_symbol_noexists;
     static $noexists_pattern;
 
     if (!isset($noexists_pattern))
-        $noexists_pattern = '#<span class="noexists">([^<]*)<a[^>]+>' .
-            preg_quote($_symbol_noexists, '#') . '</a></span>#';
+        $noexists_pattern =
+            '#<span class="noexists">([^<]*)<a[^>]+>' . preg_quote($_symbol_noexists, '#') . '</a></span>#';
 
     // Strip Dagnling-Link decoration (Tags and "$_symbol_noexists")
     $str = preg_replace($noexists_pattern, '$1', $str);
@@ -560,7 +610,7 @@ function make_search($page)
 }
 
 // Make heading string (remove heading-related decorations from Wiki text)
-function make_heading(&$str, $strip = TRUE)
+function make_heading(&$str, $strip = true)
 {
     global $NotePattern;
 
@@ -577,11 +627,15 @@ function make_heading(&$str, $strip = TRUE)
     // Cut footnotes and tags
     //if ($strip === TRUE)
     //	$str = strip_htmltag(make_link(preg_replace($NotePattern, '', $str)));
-    if ($strip === TRUE) {
+    if ($strip === true) {
         //$tmp = preg_replace($NotePattern, '', $str);
-        $str = preg_replace_callback($NotePattern, function ($matches) {
-            return '';
-        }, $str);
+        $str = preg_replace_callback(
+            $NotePattern,
+            function ($matches) {
+                return '';
+            },
+            $str,
+        );
         $str = strip_htmltag(make_link($str));
     }
     return $id;
@@ -589,24 +643,26 @@ function make_heading(&$str, $strip = TRUE)
 
 // Separate a page-name(or URL or null string) and an anchor
 // (last one standing) without sharp
-function anchor_explode($page, $strict_editable = FALSE)
+function anchor_explode($page, $strict_editable = false)
 {
     $pos = strrpos($page, '#');
-    if ($pos === FALSE) return array($page, '', FALSE);
+    if ($pos === false)
+        return array($page, '', false);
 
     // Ignore the last sharp letter
-    if ($pos + 1 == strlen($page)) {
+    if (($pos + 1) == strlen($page)) {
         $pos = strpos(substr($page, $pos + 1), '#');
-        if ($pos === FALSE) return array($page, '', FALSE);
+        if ($pos === false)
+            return array($page, '', false);
     }
 
     $s_page = substr($page, 0, $pos);
     $anchor = substr($page, $pos + 1);
 
-    if ($strict_editable === TRUE && preg_match('/^[a-z][a-f0-9]{7}$/', $anchor)) {
-        return array($s_page, $anchor, TRUE); // Seems fixed-anchor
+    if ($strict_editable === true && preg_match('/^[a-z][a-f0-9]{7}$/', $anchor)) {
+        return array($s_page, $anchor, true); // Seems fixed-anchor
     } else {
-        return array($s_page, $anchor, FALSE);
+        return array($s_page, $anchor, false);
     }
 }
 
@@ -614,14 +670,13 @@ function anchor_explode($page, $strict_editable = FALSE)
 // there're blank lines or something out of php blocks
 function pkwk_headers_sent()
 {
-    if (PKWK_OPTIMISE) return;
+    if (PKWK_OPTIMISE)
+        return;
 
     $file = $line = '';
     if (version_compare(PHP_VERSION, '4.3.0', '>=')) {
         if (headers_sent($file, $line))
-            die('Headers already sent at ' .
-                htmlspecialchars($file, ENT_QUOTES, 'UTF-8') .
-                ' line ' . $line . '.');
+            die('Headers already sent at ' . htmlspecialchars($file, ENT_QUOTES, 'UTF-8') . ' line ' . $line . '.');
     } else {
         if (headers_sent())
             die('Headers already sent.');
@@ -631,18 +686,22 @@ function pkwk_headers_sent()
 // Output common HTTP headers
 function pkwk_common_headers()
 {
-    if (!PKWK_OPTIMISE) pkwk_headers_sent();
+    if (!PKWK_OPTIMISE)
+        pkwk_headers_sent();
 
     $vary = get_language_header_vary();
 
     if (defined('PKWK_ZLIB_LOADABLE_MODULE')) {
         $matches = array();
-        if (ini_get('zlib.output_compression') &&
-            preg_match('/\b(gzip|deflate)\b/i', $_SERVER['HTTP_ACCEPT_ENCODING'], $matches)) {
+        if (
+            ini_get('zlib.output_compression') &&
+                preg_match('/\b(gzip|deflate)\b/i', $_SERVER['HTTP_ACCEPT_ENCODING'], $matches)
+        ) {
             // Bug #29350 output_compression compresses everything _without header_ as loadable module
             // http://bugs.php.net/bug.php?id=29350
             header('Content-Encoding: ' . $matches[1]);
-            if (!empty($vary)) $vary .= ',';
+            if (!empty($vary))
+                $vary .= ',';
             $vary .= 'Accept-Encoding';
         }
     }
@@ -671,17 +730,18 @@ define('PKWK_DTD_TYPE_HTML', 0);
 function pkwk_output_dtd($pkwk_dtd = PKWK_DTD_XHTML_1_1, $charset = CONTENT_CHARSET)
 {
     static $called;
-    if (isset($called)) die('pkwk_output_dtd() already called. Why?');
-    $called = TRUE;
+    if (isset($called))
+        die('pkwk_output_dtd() already called. Why?');
+    $called = true;
 
     $type = PKWK_DTD_TYPE_XHTML;
     $option = '';
     switch ($pkwk_dtd) {
-        case PKWK_DTD_XHTML_1_1             :
+        case PKWK_DTD_XHTML_1_1:
             $version = '1.1';
             $dtd = 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd';
             break;
-        case PKWK_DTD_XHTML_1_0_STRICT      :
+        case PKWK_DTD_XHTML_1_0_STRICT:
             $version = '1.0';
             $option = 'Strict';
             $dtd = 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd';
@@ -692,13 +752,13 @@ function pkwk_output_dtd($pkwk_dtd = PKWK_DTD_XHTML_1_1, $charset = CONTENT_CHAR
             $dtd = 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd';
             break;
 
-        case PKWK_DTD_XHTML_BASIC_1_0       :
+        case PKWK_DTD_XHTML_BASIC_1_0:
             $version = '1.0';
             $option = 'Basic';
             $dtd = 'http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd';
             break;
 
-        case PKWK_DTD_HTML_4_01_STRICT      :
+        case PKWK_DTD_HTML_4_01_STRICT:
             $type = PKWK_DTD_TYPE_HTML;
             $version = '4.01';
             $dtd = 'http://www.w3.org/TR/html4/strict.dtd';
@@ -720,19 +780,24 @@ function pkwk_output_dtd($pkwk_dtd = PKWK_DTD_XHTML_1_1, $charset = CONTENT_CHAR
     // Output XML or not
     if ($type == PKWK_DTD_TYPE_XHTML) {
         // for IEPatch: for W3C standard rendering
-//		if (!(CONTENT_CHARSET == 'UTF-8' && UA_NAME == 'MSIE')) {
+        //		if (!(CONTENT_CHARSET == 'UTF-8' && UA_NAME == 'MSIE')) {
         echo '<?xml version="1.0" encoding="' . CONTENT_CHARSET . '" ?' . '>' . "\n";
-//		}
+
+        //		}
     }
 
     // Output doctype
-    echo '<!DOCTYPE html PUBLIC "-//W3C//DTD ' .
-        ($type == PKWK_DTD_TYPE_XHTML ? 'XHTML' : 'HTML') . ' ' .
-        $version .
-        ($option != '' ? ' ' . $option : '') .
-        '//EN" "' .
-        $dtd .
-        '">' . "\n";
+    echo
+        '<!DOCTYPE html PUBLIC "-//W3C//DTD ' .
+        ($type == PKWK_DTD_TYPE_XHTML ? 'XHTML' : 'HTML') .
+            ' ' .
+            $version .
+            ($option != '' ? (' ' . $option) : '') .
+            '//EN" "' .
+            $dtd .
+            '">' .
+            "\n"
+    ;
 
     // Output <html> start tag
     $lang_code = str_replace('_', '-', LANG); // RFC3066
@@ -740,7 +805,8 @@ function pkwk_output_dtd($pkwk_dtd = PKWK_DTD_XHTML_1_1, $charset = CONTENT_CHAR
     if ($type == PKWK_DTD_TYPE_XHTML) {
         echo ' xmlns="http://www.w3.org/1999/xhtml"'; // dir="ltr" /* LeftToRight */
         echo ' xml:lang="' . $lang_code . '"';
-        if ($version == '1.0') echo ' lang="' . $lang_code . '"'; // Only XHTML 1.0
+        if ($version == '1.0')
+            echo ' lang="' . $lang_code . '"'; // Only XHTML 1.0
     } else {
         echo ' lang="' . $lang_code . '"'; // HTML
     }
@@ -759,6 +825,7 @@ function pkwk_output_dtd($pkwk_dtd = PKWK_DTD_XHTML_1_1, $charset = CONTENT_CHAR
 /**
  * Get template of List (ul, ol, dl) attributes
  */
-function pkwk_list_attrs_template() {
-	return ' class="list%d list-indent%d"';
+function pkwk_list_attrs_template()
+{
+    return ' class="list%d list-indent%d"';
 }

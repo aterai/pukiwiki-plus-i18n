@@ -1,8 +1,10 @@
 <?php
+
 //-*- mode:java; Encoding:utf8n -*-
-function plugin_pubdate_convert() {
+function plugin_pubdate_convert()
+{
     global $page_pubdate;
-    if(func_num_args() == 0) {
+    if (func_num_args() == 0) {
         $page_pubdate = 0;
         return '';
     }
@@ -10,9 +12,11 @@ function plugin_pubdate_convert() {
     $page_pubdate = strtotime($aryargs[0]);
     return '';
 }
-function plugin_pubdate_inline() {
+
+function plugin_pubdate_inline()
+{
     global $page_pubdate;
-    if(func_num_args() == 0) {
+    if (func_num_args() == 0) {
         $page_pubdate = 0;
         return '';
     }
@@ -22,7 +26,6 @@ function plugin_pubdate_inline() {
     $pubdate = date('Y-m-d', $time);
     $page_pubdate = $time;
     return <<<EOD
-<time pubdate="$isotime">$pubdate</time>
-EOD;
+    <time pubdate="$isotime">$pubdate</time>
+    EOD;
 }
-

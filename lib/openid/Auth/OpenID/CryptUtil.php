@@ -23,7 +23,8 @@ if (!defined('Auth_OpenID_RAND_SOURCE')) {
     define('Auth_OpenID_RAND_SOURCE', '/dev/urandom');
 }
 
-class Auth_OpenID_CryptUtil {
+class Auth_OpenID_CryptUtil
+{
     /**
      * Get the specified number of random bytes.
      *
@@ -45,9 +46,10 @@ class Auth_OpenID_CryptUtil {
             if (Auth_OpenID_RAND_SOURCE === null) {
                 $f = false;
             } else {
-                $f = @fopen(Auth_OpenID_RAND_SOURCE, "r");
+                $f = @fopen(Auth_OpenID_RAND_SOURCE, 'r');
                 if ($f === false) {
-                    $msg = 'Define Auth_OpenID_RAND_SOURCE as null to ' .
+                    $msg =
+                        'Define Auth_OpenID_RAND_SOURCE as null to ' .
                         ' continue with an insecure random number generator.';
                     trigger_error($msg, E_USER_ERROR);
                 }
@@ -92,7 +94,7 @@ class Auth_OpenID_CryptUtil {
 
         $duplicate = 256 % $popsize;
 
-        $str = "";
+        $str = '';
         for ($i = 0; $i < $length; $i++) {
             do {
                 $n = ord(Auth_OpenID_CryptUtil::getBytes(1));
@@ -105,4 +107,3 @@ class Auth_OpenID_CryptUtil {
         return $str;
     }
 }
-

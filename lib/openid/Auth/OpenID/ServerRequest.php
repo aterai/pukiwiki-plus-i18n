@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OpenID Server Request
  *
@@ -17,7 +18,7 @@
 /**
  * Imports
  */
-require_once "Auth/OpenID.php";
+require_once 'Auth/OpenID.php';
 
 /**
  * Object that holds the state of a request to the OpenID server
@@ -27,10 +28,10 @@ require_once "Auth/OpenID.php";
  * @see Auth_OpenID_Server
  * @package OpenID
  */
-class Auth_OpenID_ServerRequest {
+class Auth_OpenID_ServerRequest
+{
     function Auth_OpenID_ServerRequest()
     {
         $this->mode = null;
     }
 }
-

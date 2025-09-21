@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PukiWiki Plus! epoch plugin.
  *
@@ -16,8 +17,6 @@
 
 function plugin_epoch_inline()
 {
-	list($time) = func_get_args();
-	return htmlspecialchars(format_date($time));
+    list($time) = func_get_args();
+    return htmlspecialchars(format_date($time));
 }
-
-
